@@ -1,0 +1,27 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.3.4
+Title=nagato-color-picker
+Startup=FMain
+Icon=picture/pipette.png
+Version=0.0.1
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Description="pick color number from anywhere."
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=8
+Translate=1
+Language=ja
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=nagato-color-picker-0.0.1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Graphics"
+Categories=ubuntu:"Graphics;Nagato;Utility"
+Groups=ubuntu:"graphics"

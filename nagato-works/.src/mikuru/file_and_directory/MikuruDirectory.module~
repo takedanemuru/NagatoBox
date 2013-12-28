@@ -1,0 +1,20 @@
+' Gambas module file
+
+Public Function GetItems(argPath As String) As Integer
+    
+    Return RDir(argPath).Count
+    
+End
+
+Public Function GetSize(argPath As String) As Integer
+    
+    Dim yukiFilePath As String
+    Dim yukiFileSize As Integer = 0
+ 
+    For Each yukiFilePath In RDir(argPath)
+        yukiFileSize += Stat(argPath &/ yukiFilePath).Size
+    Next
+    
+    Return yukiFileSize
+    
+End

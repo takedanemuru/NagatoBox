@@ -1,0 +1,103 @@
+' Gambas class file
+
+Inherits NagatoOSD
+
+Public _$uniqueName As String = "NagatoOSDSystem"
+
+Private $observer As Observer
+Private $cpuUsage As String = "please wait..."
+Private $memoryUsage As String = "please wait..."
+Private $swapUsage As String = "please wait..."
+Private $condition As Integer = 0
+
+Private Sub addShowDetailMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "ShowDetailMenu"
+    
+    With yukiMenu
+        .Picture = MikuruMonoIconBlue.Get("oscilloscope", 2 * MikuruUX.Grid)
+        .Text = ("Show detail")
+    End With
+    
+End
+
+Private Sub drawIcon()
+    
+    Dim yukiImage As Image
+    
+    With MikuruUX
+        Paint.DrawImage(NagatoSystemGraph.Get(14 * .Grid), 2 * .Grid, 2 * .Grid)
+    End With
+    
+End
+
+Private Sub drawLine(argHeader As String, argBody As String, argOffsetTop As Integer)
+    
+    With Paint
+        .DrawText(argHeader, Me.OffsetLeft, argOffsetTop)
+        .DrawText(argBody, Me.Width - (.Font.TextWidth(argBody) + 2 * MikuruUX.Grid), argOffsetTop)
+    End With
+    
+End
+
+Private Sub drawText()
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeMediumLarge
+        drawLine("Processor:", $cpuUsage, 6 * MikuruUX.Grid)
+        drawLine("Memory:", $memoryUsage, 10 * MikuruUX.Grid)
+        drawLine("Swap:", $swapUsage, 14 * MikuruUX.Grid)
+        .Fill()
+    End With
+    
+End
+
+Public Sub _SetPicture()
+    
+    Dim yukiImage As Image = Me._GetBaseImage(MikuruColor.GetConditionColor($condition))
+    
+    Paint.Begin(yukiImage)
+        drawIcon()
+        drawText()
+    Paint.End()
+    
+    Me._$form.Picture = yukiImage.Picture
+    
+End
+
+Public Sub _SetFormPosition()
+    
+    $observer = New Observer(NagatoSystemObserver) As "Asakura"
+    
+End
+
+Public Sub _AddOtherMenu(argParentMenu As Menu) ' override
+    
+    addShowDetailMenu(argParentMenu)
+        MikuruMenuSeparator.Set(argParentMenu)
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSystemObserver.Stop()
+    
+End
+
+Public Sub Asakura_Finished()
+    
+    With NagatoSystemObserver
+        $cpuUsage = Format$(.CpuUsage * 100, "##0.00") & " %"
+        $memoryUsage = Format$(.MemoryUsage * 100, "##0.00") & " %"
+        $swapUsage = Format$(.SwapUsage * 100, "##0.00") & " %"
+        $condition = Int(Max(.CpuUsage * 100, .MemoryUsage * 100))
+    End With
+    
+End
+
+Public Sub ShowDetailMenu_Click()
+    
+    HaruhiSystemMonitor.Show()
+    
+End

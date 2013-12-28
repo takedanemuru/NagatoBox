@@ -1,0 +1,68 @@
+' Gambas class file
+
+Public _$rootMenu As Menu
+
+Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton)
+    
+    Me._$rootMenu = New Menu(argForm)
+    Me._$rootMenu.Name = "test_name"
+    argButton.Menu = "test_name"
+    
+End
+
+Private Sub addAboutMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AboutMenu"
+    
+    With yukiMenu
+        .Text = ("About")
+        .Picture = MikuruIcon.Get("star")
+    End With
+    
+End
+
+Private Sub addQuitMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "QuitMenu"
+    
+    With yukiMenu
+        .Text = ("Quit")
+        .Picture = MikuruIcon.Get("button-power")
+    End With
+    
+End
+
+Private Sub initializeChildMenus()
+    
+    Me._InitializeAdditionalMenus()
+    addAboutMenu()
+    addQuitMenu()
+
+End
+
+Public Sub _InitializeAdditionalMenus() 'virtual
+    
+    
+    
+End
+
+Public Sub _new(argForm As Form, argButton As MenuButton)
+    
+    initializeRootMenu(argForm, argButton)
+    initializeChildMenus()
+    
+End
+
+Public Sub AboutMenu_Click()
+    
+    HaruhiAbout.ShowDialog()
+    
+End
+
+Public Sub QuitMenu_Click()
+    
+    If Message.Question(("Are you sure to close nagato-dictionary ?"), ("Cancel"), ("Close")) = 2 Then
+        HaruhiMain.Close()
+    End If
+    
+End

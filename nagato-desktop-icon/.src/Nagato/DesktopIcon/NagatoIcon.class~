@@ -1,0 +1,132 @@
+' Gambas class file
+
+Create Private
+
+Property Read Height As Integer
+Property Read Name As String
+
+Public Const FormWidth As Integer = 128
+Public Const TextWidth As Integer = 112
+Public Const ButtonSize As Integer = 24
+Public Const ButtonMargin As Integer = 4
+Public Const TextMargin As Integer = 8
+Public Const Margin As Integer = 8
+
+Public _$form As Form
+Public _$starButton As MenuButton
+
+Event Move
+
+Private Sub initializeStarButton()
+    
+    Me._$starButton = New MenuButton(Me._$form) As "StarButton"
+    
+    With Me._$starButton
+        .W = Me.ButtonSize
+        .H = Me.ButtonSize
+        .X = Me.FormWidth - (Me.ButtonSize + Me.ButtonMargin)
+        .Y = Me.ButtonMargin
+        .Text = ""
+        .Border = False
+    End With
+    
+End
+
+Public Sub _AddStarMenu()
+    
+    Dim yukiMenu As NagatoButtonMenu
+    
+    yukiMenu = New NagatoButtonMenu(Me._$form, Me._$starButton)
+    
+End
+
+Public Sub _InitializeForm(argHeight As Integer)
+    
+    Me._$form = New Form As "Icon"
+    Me._$form.Width = Me.FormWidth
+    Me._$form.Height = argHeight
+    Me._$form.Border = False
+    Me._$form.Mask = True
+    Me._$form.Background = Color.Orange
+    Me._$form.SkipTaskbar = True
+    Me._$form.Sticky = True
+    Me._$form.Stacking = window.Below
+    
+    initializeStarButton()
+    Me._AddStarMenu()
+    
+End
+
+Public Sub _OnMouseEnter() 'virtual
+    
+    
+    
+End
+
+Public Sub _OnMouseLeave() 'virtual
+    
+    
+    
+End
+
+Public Sub MoveTo(argX As Integer, argY As Integer)
+    
+    Object.Lock(Me._$form)
+    
+    With Me._$form
+        .X = argX
+        .Y = argY
+    End With
+    
+    Object.Unlock(Me._$form)
+    
+End
+
+Public Sub Close()
+    
+    Me._$form.Close()
+    
+End
+
+Public Sub Icon_Enter()
+    
+    Me._$starButton.Picture = MikuruIcon.Get("star", 12)
+    Me._OnMouseEnter()
+    
+End
+
+Public Sub Icon_Leave()
+    
+    Me._$starButton.Picture = Null
+    Me._OnMouseLeave()
+    
+End
+
+Private Function Height_Read() As Integer
+
+    Return Me._$form.H
+
+End
+
+Private Function Name_Read() As String
+
+    Return Me._$form.Name
+
+End
+
+' Public Sub Icon_MouseDrag() 'Currently disebled.
+' 
+'     Object.Lock(Me._$form)
+'     With Mouse
+'         Me._$form.X = .ScreenX - .StartX
+'         Me._$form.Y = .ScreenY - .StartY
+'     End With
+'     Object.Unlock(Me._$form)
+'     
+' End
+
+Public Sub Icon_Move()
+    
+    Raise Move
+    
+End

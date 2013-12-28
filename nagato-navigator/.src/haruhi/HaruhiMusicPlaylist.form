@@ -1,0 +1,231 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,85.7143,64)
+  Text = ("Playlist")
+  Icon = Picture["super-mono/basic/blue/music.png"]
+  Arrangement = Arrange.Fill
+  { LibraryRootMenu Menu
+    Text = ("LibraryMenu")
+    Visible = False
+    { AddToCurrentPlaylistMenu Menu LibraryMenu
+      Name = "AddToCurrentPlaylistMenu"
+      Text = ("Add tocurrent playlist")
+      Picture = Picture["super-mono/basic/blue/toggle-expand-alt.png"]
+      Tag = "AddFiles"
+    }
+    { EditTagMenu Menu LibraryMenu
+      Name = "EditTagMenu"
+      Text = ("Edit tag")
+      Picture = Picture["super-mono/basic/blue/tag.png"]
+      Tag = "EditTag"
+    }
+  }
+  { AlbumRootMenu Menu
+    Text = ("AlbumMenu")
+    Visible = False
+    { AddAlbumToCurrentMenu Menu AlbumMenu
+      Name = "AddAlbumToCurrentMenu"
+      Text = ("Add to current playlist")
+      Picture = Picture["super-mono/basic/blue/toggle-expand-alt.png"]
+      Tag = "addAlbum"
+    }
+    { ChangeAlbumArtMenu Menu AlbumMenu
+      Name = "ChangeAlbumArtMenu"
+      Text = ("Change album art")
+      Picture = Picture["super-mono/basic/blue/image.png"]
+      Tag = "changeAlbumArt"
+    }
+  }
+  { CurrentPlaylistRootMenu Menu
+    Text = ("CurrentPlaylistMenu")
+    Visible = False
+    { PlayMenu Menu CurrentPlaylistMenu
+      Name = "PlayMenu"
+      Text = ("Play")
+      Picture = Picture["super-mono/basic/blue/button-play.png"]
+      Tag = "play"
+    }
+    { PauseMenu Menu CurrentPlaylistMenu
+      Name = "PauseMenu"
+      Text = ("Pause")
+      Picture = Picture["super-mono/basic/blue/button-pause.png"]
+      Tag = "pause"
+    }
+    { StopMenu Menu CurrentPlaylistMenu
+      Name = "StopMenu"
+      Text = ("Stop")
+      Picture = Picture["super-mono/basic/blue/button-stop.png"]
+      Tag = "stop"
+    }
+    { PreviousMenu Menu CurrentPlaylistMenu
+      Name = "PreviousMenu"
+      Text = ("Previous")
+      Picture = Picture["super-mono/basic/blue/button-rew.png"]
+      Tag = "previous"
+    }
+    { NextMenu Menu CurrentPlaylistMenu
+      Name = "NextMenu"
+      Text = ("Next")
+      Picture = Picture["super-mono/basic/blue/button-ff.png"]
+      Tag = "next"
+    }
+    { ShuffleMenu Menu CurrentPlaylistMenu
+      Name = "ShuffleMenu"
+      Text = ("Shuffle")
+      Tag = "shuffle"
+    }
+    { RepeatMenu Menu CurrentPlaylistMenu
+      Name = "RepeatMenu"
+      Text = ("Repeat")
+      Tag = "repeat"
+    }
+    { Spacer0 Menu
+    }
+    { AddPathsMenu Menu CurrentPlaylistMenu
+      Name = "AddPathsMenu"
+      Text = ("Add song")
+      Picture = Picture["super-mono/basic/blue/music.png"]
+      Tag = "addPaths"
+    }
+    { AddDirectoryMenu Menu CurrentPlaylistMenu
+      Name = "AddDirectoryMenu"
+      Text = ("Add directory")
+      Picture = Picture["super-mono/basic/blue/folder.png"]
+      Tag = "addDirectory"
+    }
+    { ClearMenu Menu CurrentPlaylistMenu
+      Name = "ClearMenu"
+      Text = ("Clear")
+      Picture = Picture["super-mono/basic/blue/bin.png"]
+      Tag = "clear"
+    }
+    { Spcaer1 Menu
+    }
+    { SaveAsMenu Menu CurrentPlaylistMenu
+      Name = "SaveAsMenu"
+      Text = ("Save as playlist")
+      Picture = Picture["super-mono/basic/blue/hard-drive-download.png"]
+      Tag = "saveAsPlaylist"
+    }
+  }
+  { PlayistsTabStrip TabStrip
+    MoveScaled(1,1,62,62)
+    Arrangement = Arrange.Fill
+    Count = 4
+    Index = 0
+    Text = ("Now Playing")
+    Picture = Picture["super-mono/basic/blue/button-play.png"]
+    { VBox1 VBox
+      MoveScaled(0,1,59,43)
+      { CurrentPlaylistHBox HBox
+        MoveScaled(5,4,50,4)
+        { Panel1 Panel
+          MoveScaled(0,0,20,4)
+          Expand = True
+        }
+        { CurrentPlaylistMenuButton MenuButton
+          MoveScaled(43,0,4,4)
+          Picture = Picture["super-mono/basic/blue/star(1).png"]
+          Border = False
+          Menu = "CurrentPlaylistRootMenu"
+        }
+      }
+      { !CurrentPlaylistGrid GridView
+        MoveScaled(5,14,50,35)
+        #Public = True
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+    }
+    Index = 1
+    Text = ("Playlists")
+    Picture = Picture["super-mono/basic/blue/music.png"]
+    { VBox4 VBox
+      MoveScaled(0,0,54,36)
+      Expand = True
+      { PlaylistsHBox HBox
+        MoveScaled(0,0,50,4)
+        { Panel2 Panel
+          MoveScaled(21,0,20,4)
+          Expand = True
+        }
+        { PlaylistsSearchBox ButtonBox
+          MoveScaled(25,0,24,4)
+          Picture = Picture["super-mono/basic/blue/search.png"]
+        }
+        { PlaylistsMenuButton MenuButton
+          MoveScaled(42,0,4,4)
+          Picture = Picture["super-mono/basic/blue/star(1).png"]
+          Border = False
+        }
+      }
+      { PlaylistsGridView GridView
+        MoveScaled(6,6,48,49)
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+    }
+    Index = 2
+    Text = ("Albums")
+    Picture = Picture["super-mono/basic/blue/image.png"]
+    { VBox2 VBox
+      MoveScaled(2,6,59,39)
+      Expand = True
+      { CurrentPlaylistHBox3 HBox
+        MoveScaled(0,0,50,4)
+        { Panel3 Panel
+          MoveScaled(0,0,20,4)
+          Expand = True
+        }
+        { AlbumMenuButton MenuButton
+          MoveScaled(45,0,4,4)
+          Picture = Picture["super-mono/basic/blue/star(1).png"]
+          Border = False
+          Menu = "AlbumRootMenu"
+        }
+      }
+      { AlbumIconView IconView
+        MoveScaled(14,6,40,44)
+        Expand = True
+        IconLines = 3
+      }
+    }
+    Index = 3
+    Text = ("Library")
+    Picture = Picture["super-mono/basic/blue/archive.png"]
+    { VBox3 VBox
+      MoveScaled(3,7,54,36)
+      Expand = True
+      { CurrentPlaylistHBox4 HBox
+        MoveScaled(0,0,50,4)
+        { Panel4 Panel
+          MoveScaled(21,0,20,4)
+          Expand = True
+        }
+        { LibrarySearchBox ButtonBox
+          MoveScaled(25,0,24,4)
+          Picture = Picture["super-mono/basic/blue/search.png"]
+        }
+        { AlbumMenuButton2 MenuButton
+          MoveScaled(42,0,4,4)
+          Picture = Picture["super-mono/basic/blue/star(1).png"]
+          Border = False
+          Menu = "LibraryRootMenu"
+        }
+      }
+      { LibraryGridView GridView
+        MoveScaled(6,6,48,49)
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+    }
+    Index = 0
+  }
+}

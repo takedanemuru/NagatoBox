@@ -1,0 +1,90 @@
+' Gambas class file
+
+Inherits NagatoInfobarContextMenu
+
+Private Sub addPlayMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Play")
+        .Picture = MikuruMonoIconBlue.Get("button-play", 2 * MikuruUX.Grid)
+        .Tag = "Play"
+    End With
+    
+End
+
+Private Sub addPauseMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Pause")
+        .Picture = MikuruMonoIconBlue.Get("button-pause", 2 * MikuruUX.Grid)
+        .Tag = "Pause"
+    End With
+    
+End
+
+Private Sub addStopMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Stop")
+        .Picture = MikuruMonoIconBlue.Get("button-stop", 2 * MikuruUX.Grid)
+        .Tag = "Stop"
+    End With
+    
+End
+
+Private Sub addPreviousMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Previous")
+        .Picture = MikuruMonoIconBlue.Get("button-rew", 2 * MikuruUX.Grid)
+        .Tag = "Previous"
+    End With
+    
+End
+
+Private Sub addNextMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Next")
+        .Picture = MikuruMonoIconBlue.Get("button-ff", 2 * MikuruUX.Grid)
+        .Tag = "Next"
+    End With
+    
+End
+
+Public Sub _Initialize() ' override.
+    
+    addPlayMenu()
+    addPauseMenu()
+    addStopMenu()
+    addPreviousMenu()
+    addNextMenu()
+    
+End
+
+Public Sub Menu_Click()
+    
+    Select Case Last.tag
+        Case "Play"
+            NagatoMusicPlayer.Play()
+        Case "Pause"
+            NagatoMusicPlayer.Pause()
+        Case "Stop"
+            NagatoMusicPlayer.Stop()
+        Case "Previous"
+            NagatoMusicPlayer.Previous()
+        Case "Next"
+            NagatoMusicPlayer.Next()
+    End Select
+    
+End

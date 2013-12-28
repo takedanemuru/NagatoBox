@@ -1,0 +1,51 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,70,37)
+  Icon = Picture["icon:/large/clock"]
+  Resizable = False
+  Arrangement = Arrange.Fill
+  { BaseVBox VBox
+    MoveScaled(-1,1,70.2857,37)
+    Expand = True
+    { DrawingArea1 DrawingArea
+      MoveScaled(0,0,71,3)
+      Background = &HEFD8F7&
+      Expand = True
+    }
+    { ToolButtonsHBox HBox
+      MoveScaled(1,30,71,6)
+      Background = &HEBE6E8&
+      { CalendarButton ToolButton
+        MoveScaled(1,1,21.4286,4)
+        NoTabFocus = True
+        Text = ("Calendar")
+        Picture = Picture["icon:/large/calendar"]
+        Radio = True
+        Toggle = True
+      }
+      { ClockButton ToolButton
+        MoveScaled(23,1,21.4286,4)
+        NoTabFocus = True
+        Text = ("Clock")
+        Picture = Picture["icon:/large/clock"]
+        Radio = True
+        Toggle = True
+        Value = True
+      }
+      { TimerButton ToolButton
+        MoveScaled(43,1,21.4286,4)
+        NoTabFocus = True
+        Text = ("Timer")
+        Picture = Picture["icon:/large/open-recent"]
+        Radio = True
+        Toggle = True
+      }
+      { ConfigButton ToolButton
+        MoveScaled(64,1,6,4)
+        NoTabFocus = True
+        Picture = Picture["icon:/large/options"]
+      }
+    }
+  }
+}

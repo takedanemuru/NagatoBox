@@ -1,0 +1,352 @@
+' Gambas class file
+
+Inherits NagatoTabContent
+
+Private $originalText As String
+Private $targetPath As String
+Private $saveState As Integer
+Private $textEdit As TextEdit
+Private $toolbar As NagatoTextEditorToolBar
+
+Private Sub addTextEdit()
+    
+    $textEdit = New TextEdit(Me._$vBox) As "TextEditor"
+    
+    With $textEdit
+        .Expand = True
+        .Font.Size = 14
+        .Wrap = True
+        .Grab()
+        .SetFocus()
+        .Pos = 1
+    End With
+    
+End
+
+Private Sub InitializeGui()
+    
+    Me._RefreshParentTab(File.BaseName($targetPath), Stock["small/edit"])
+    $toolbar = New NagatoTextEditorToolBar(Me._$hBox) As "Toolbar"
+    addTextEdit()
+    NagatoMessaging.setMessage("...Text edit mode  activated.")
+    
+End
+
+Private Sub initializeFileStatus(argPath As String)
+    
+    If argPath = "" Then
+        $originalText = ""
+        $targetPath = ""
+        $saveState = NagatoFileState.UntitledUnedited
+    Else
+        $originalText = File.Load(argPath)
+        $targetPath = argPath
+        $saveState = NagatoFileState.Unedited
+    Endif
+    
+End
+
+Private Sub setErrorStateToTabContent()
+    
+    NagatoMessaging.setMessage(("sorry, but I couldn't load the file."))
+    Me._RefreshParentTab(("error"), Stock["small/error"])
+    
+End
+
+Private Sub openTextFileInCurrentTab(argPath As String)
+    
+    If File.Ext(argPath) = "ntx" Or If File.Ext(argPath) = "nagatotext" Then
+        $textEdit.RichText = File.Load(argPath)
+    Else
+        $textEdit.Text = File.Load(argPath)
+    Endif
+    
+    Me._RefreshParentTab(File.BaseName($targetPath), Stock["small/edit"])
+    
+Catch
+    setErrorStateToTabContent()
+    
+End
+
+Private Function getCurrentPositionInUTF8(argQuery As String) As Integer ' read comment about return value.
+    
+    ' this function should return -1 when there's no matching word.
+    
+    Dim yukiSearchStartFrom As Integer = String.Len(Left$($textEdit.Text, $textEdit.Pos))
+    Dim yukiPosition As Integer = String.InStr($textEdit.Text, argQuery, yukiSearchStartFrom + 1, gb.IgnoreCase)
+
+    'retry searching form beginning of the text when String.Instr couldn't find any matching.
+    $textEdit.pos = 1
+    If yukiPosition = 0 Then yukiPosition = String.InStr($textEdit.Text, argQuery, 1, gb.IgnoreCase)
+    
+    Return yukiPosition - 1
+    
+End
+
+Private Sub saveFileAsPureText()
+    
+    Dialog.Title = ("Save file as pure text")
+    Dialog.Path = User.Home
+    
+    If Not Dialog.SaveFile() Then
+        File.Save(Dialog.Path & ".txt", $textEdit.Text)
+        $targetPath = Dialog.Path
+        $saveState = NagatoFileState.Unedited
+    Endif
+    
+End
+
+Private Sub saveFileAsNagatoText()
+    
+    Dialog.Title = ("Save file as NagatoText")
+    Dialog.Path = User.Home
+    
+    If Not Dialog.SaveFile() Then
+        File.Save(Dialog.Path & ".nagatotext", $textEdit.RichText)
+        $targetPath = Dialog.Path
+        $saveState = NagatoFileState.Unedited
+    Endif
+    
+End
+
+Private Sub selectSaveFileType()
+    
+    Select Case Message.Question(("Select file type to save."), ("Cancel"), ("Pure Text"), ("Nagato Text"))
+        Case 1
+            Return
+        Case 2
+            saveFileAsPureText()
+        Case 3
+            saveFileAsNagatoText()
+    End Select
+    
+End
+
+Private Sub saveOriginalFile()
+    
+    If $targetPath = "" Then Return
+    
+    File.Save($originalText, $targetPath)
+    
+End
+
+Private Sub open()
+    
+    Dialog.Title = ("Open file")
+    Dialog.Path = User.Home
+    
+    If Dialog.OpenFile(False) Then Return
+    
+    If File.Ext(Dialog.Path) = "ntx" Or If File.Ext(Dialog.Path) = "nagatotext" Then
+        If $saveState = NagatoFileState.UntitledUnedited Then
+            openTextFileInCurrentTab(Dialog.Path)
+            $targetPath = Dialog.Path
+            $saveState = NagatoFileState.Unedited
+        Else
+            NagatoTabHandler.NewTabWithPath(MikuruFunctionType.TextEditor, Dialog.Path)
+        End If
+    End If
+    
+End
+
+Private Sub save()
+    
+    If NagatoFileState.IsUntitled($saveState) Then
+        Dialog.Title = ("Save file")
+        Dialog.Path = User.Home &/ "nagatotext.nagatotext"
+        If Dialog.SaveFile() Then Return
+        $targetPath = Dialog.Path
+        $originalText = $textEdit.RichText
+        Me._RefreshParentTab(File.BaseName($targetPath), Stock["small/edit"])
+    End If
+    
+    File.Save($targetPath, $textEdit.RichText)
+    $saveState = NagatoFileState.Saved
+    
+    NagatoMessaging.SetMessage(("File saved."))
+    
+End
+
+Private Sub saveAs()
+    
+    If $saveState = NagatoFileState.UntitledUnedited Then Return
+    
+    Dialog.Title = ("Save as ...")
+    Dialog.Path = User.Home
+    
+    If Dialog.SaveFile() Then Return
+    
+    File.Save(Dialog.Path, $textEdit.RichText)
+    NagatoTabHandler.NewTabWithPath(Dialog.Path)
+    
+End
+
+Private Sub revert()
+    
+    If $originalText = "" Then Return
+    
+    $textEdit.RichText = $originalText
+    $saveState = NagatoFileState.Unedited
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip, Optional argPath As String = "") ' argPath must be full path.
+    
+    Me._Initialize(argTabStrip)
+    InitializeGui()
+    initializeFileStatus(argPath)
+    If $saveState = NagatoFileState.Unedited Then openTextFileInCurrentTab(argPath)
+    
+End
+
+Private Sub menuEventFile(argEvent As Integer)
+    
+    With MikuruMenuEventFile
+        Select Case argEvent
+            Case .New
+                NagatoTabHandler.NewTab(MikuruFunctionType.TextEditor)
+            Case .Open
+                open()
+            Case .Save
+                save()
+            Case .SaveAs
+                saveAs()
+            Case .Revert
+                revert()
+        End Select
+    End With
+    
+End
+
+Private Sub menuEventTextEffect(argEvent As Integer)
+    
+    With MikuruMenuEventTextEffect
+        Select Case argEvent
+            Case .AlignCenter
+                $textEdit.Format.Alignment = Align.Center
+            Case .AlignFill
+                $textEdit.Format.Alignment = Align.Justify
+            Case .AlignJustify
+                $textEdit.Format.Alignment = Align.Justify
+            Case .AlignLeft
+                $textEdit.Format.Alignment = Align.Left
+            Case .AlignRight
+                $textEdit.Format.Alignment = Align.Right
+            Case .Bold
+                $textEdit.Format.Font.Bold = Not $textEdit.Format.Font.Bold
+            Case .Itaric
+                $textEdit.Format.Font.Italic = Not $textEdit.Format.Font.Italic
+            Case .Strike
+                $textEdit.Format.Font.Strikeout = Not $textEdit.Format.Font.Strikeout
+            Case .UnderLine
+                $textEdit.Format.Font.Underline = Not $textEdit.Format.Font.Underline
+        End Select
+    End With
+    
+End
+
+Public Sub Toolbar_MenuEvent(argEvent As Integer)
+    
+    With MikuruSeriesHeader
+        Select Case argEvent
+            Case .File To .File + 999
+                menuEventFile(argEvent)
+            Case .TextEffect To .TextEffect + 999
+                menuEventTextEffect(argEvent)
+        End Select
+    End With
+    
+End
+
+Public Sub Toolbar_NewFontColor(argNewColor As Integer)
+    
+    $textEdit.Format.Color = argNewColor
+    
+End
+
+Public Sub Toolbar_NewFontSize(argNewSize As Integer)
+    
+    $textEdit.Format.Font.Size = argNewSize
+    
+End
+
+Public Sub Toolbar_NewFontName(argNewName As String)
+    
+    $textEdit.Format.Font.Name = argNewName
+    
+End
+
+Public Sub FontSelectButtons_NewFontName(argNewName As String)
+    
+    $textEdit.Format.Font.Name = argNewName
+    
+End
+
+Public Sub FontSelectButtons_NewFontSize(argNewSize As Integer)
+    
+    $textEdit.Format.Font.Size = argNewSize
+    
+End
+
+Public Sub FontSelectButtons_NewFontColor(argNewColor As Integer)
+    
+    $textEdit.Format.Color = argNewColor
+    
+End
+
+Public Sub Toolbar_SearchQuery(argQuery As String)
+    
+    Dim yukiPosition As Integer = getCurrentPositionInUTF8(argQuery)
+    
+    If yukiPosition = -1 Then
+        NagatoMessaging.setMessage(("I couldn't find any matching word in this file."))
+    Else
+        $textEdit.Select(yukiPosition, String.Len(argQuery))
+    Endif
+    
+End
+
+Public Sub TextEditor_Change()
+    
+    With NagatoFileState
+        Select Case $saveState
+            Case .Saved
+                $saveState = .Unsaved
+            Case .Unedited
+                $saveState = .Unsaved
+            Case .UntitledUnedited
+                $saveState = .UntitledUnsaved
+        End Select
+    End With
+    
+End
+
+Public Sub TextEditor_KeyPress()
+    
+    If Key.Control Then
+        Select Case Key.Code
+            Case Key["l"]
+                $textEdit.Format.Font.Italic = Not $textEdit.Format.Font.Italic
+            Case Key["b"]
+                $textEdit.Format.Font.Bold = Not $textEdit.Format.Font.Bold
+            Case Key["e"]
+                Debug "e"
+                $textEdit.Format.Font.Strikeout = Not $textEdit.Format.Font.Strikeout
+            Case Key["u"]
+                $textEdit.Format.Font.Underline = Not $textEdit.Format.Font.Underline
+            Case Key["s"]
+                If Not Key.Shift Then
+                    save()
+                Else
+                    saveAs()
+                Endif
+            Case Key["o"]
+                open()
+            Case Key["n"]
+                NagatoTabHandler.NewTab(MikuruFunctionType.TextEditor)
+            Case Key["f"]
+                $toolbar.GrabSearchBox()
+        End Select
+    Endif
+    
+End

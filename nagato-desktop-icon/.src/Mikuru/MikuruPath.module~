@@ -1,0 +1,13 @@
+' Gambas module file
+
+Property Read Desktop As String
+
+Private Function Desktop_Read() As String
+
+    Dim yukiReturn As String
+    
+    Shell "xdg-user-dir DESKTOP" To yukiReturn
+    
+    Return Replace$(yukiReturn, "\n", "")
+
+End

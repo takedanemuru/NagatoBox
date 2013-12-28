@@ -1,0 +1,33 @@
+' Gambas module file
+
+Property Read TypeXfce4 As String[]
+Property Read TypeFeh As String[]
+
+Private $xfce4 As String[] = [("Auto"), ("Centered"), ("Titled"), ("Stretched"), ("Scaled"), ("Zoomed")]
+Private $feh As String[] = [("Scale"), ("Center"), ("Fill"), ("Max"), ("Tile")]
+
+Public Sub Set(argPath As String, argType As Integer)
+    
+    If $originalPath = "" Then 
+        NagatoMessaging.setMessage("there's no image.")
+    Else If Desktop.Type = "XFCE" Then
+        MikuruXfce4Wallpaper.ChangeImage(0, 0, argPath)
+        MikuruXfce4Wallpaper.ChangeStyle(0, 0, argType)
+        MikuruXfce4Wallpaper.Reload(0, 0)
+    Else If Desktop.Type = "?" Then
+        MikuruFehWallpaper.SetWithIntegerType(argPath, argType)
+    Endif
+    
+End
+
+Private Function TypeXfce4_Read() As String[]
+
+    Return $xfce4
+
+End
+
+Private Function TypeFeh_Read() As String[]
+
+    Return $feh
+
+End

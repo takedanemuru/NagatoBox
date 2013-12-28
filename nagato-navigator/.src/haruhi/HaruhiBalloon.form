@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,51.4286,34.2857)
+  Text = ("nagato-navigator")
+  Picture = Picture["pictures/balloon.png"]
+  Mask = True
+  Border = False
+  SkipTaskbar = True
+  { TextArea1 TextArea
+    MoveScaled(1.1429,1.1429,49,25)
+    Foreground = Color.TextBackground
+    ReadOnly = True
+    Wrap = True
+    Border = False
+    ScrollBar = Scroll.None
+  }
+  { HaruhiTimer #Timer
+    #MoveScaled(36,17)
+    Delay = 100
+  }
+}

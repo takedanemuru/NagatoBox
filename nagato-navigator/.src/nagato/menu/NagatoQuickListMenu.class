@@ -1,0 +1,146 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addShowDesktopMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ShowDesktopMenu"
+    
+    With yukiMenu
+        .Text = ("Show desktop")
+        .Picture = MikuruMonoIconBlue.Get("desktop")
+    End With
+    
+End
+
+Private Sub addSetWallpaperMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SetWallpaperMenu"
+    
+    With yukiMenu
+        .Text = ("Set wallpaper")
+        .Picture = MikuruMonoIconBlue.Get("image")
+    End With
+    
+End
+
+Private Sub addAddVirtualDesktopMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AddVirtualDesktopMenu"
+    
+    With yukiMenu
+        .Text = ("Add a workspace")
+        .Picture = MikuruMonoIconBlue.Get("toggle-expand-alt")
+    End With
+    
+End
+
+Private Sub addRemoveVirtualDesktopMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RemoveVirtualDesktopMenu"
+    
+    With yukiMenu
+        .Text = ("Remove last workspace")
+        .Picture = MikuruMonoIconBlue.Get("toggle-collapse-alt")
+    End With
+    
+End
+
+Private Sub addVirtualDesktopMenu(argDesktopIndex As Integer)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "VirtualDesktopMenu"
+    
+    With yukiMenu
+        .Text = Subst$(("Desktop #&1"), argDesktopIndex + 1)
+        .Picture = Me._GetCheckedIcon((argDesktopIndex + 1 = Desktop.Current + 1))
+        .Tag = argDesktopIndex
+    End With
+    
+End
+
+Private Sub addWindowMenu(argDesktopIndex As Integer)
+    
+    Dim yukiMenu As Menu
+    Dim yukiWindow As DesktopWindow
+    
+    For Each yukiWindow In Desktop.Windows
+        If Not yukiWindow.SkipTaskbar And If yukiWindow.Desktop = argDesktopIndex Then
+            yukiMenu = New Menu(Me._$rootMenu) As "WindowMenu"
+            yukiMenu.Text = String.Left(yukiWindow.Name, 80)
+            Try yukiMenu.Picture = yukiWindow.Icon.Picture
+            yukiMenu.Tag = yukiWindow.Id
+        Endif
+    Next
+    
+End
+
+Private Sub addWorkspaceMenus()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To Desktop.Count - 1
+        addVirtualDesktopMenu(yukiCount)
+        addWindowMenu(yukiCount)
+        If yukiCount = Desktop.Count - 1 Then Break ' to avoid useless separator
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    Next
+    
+End
+
+Public Sub _RefreshMenu()
+    
+    Me._$rootMenu.Children.Clear()
+    Desktop.Windows.Refresh()
+    
+    addShowDesktopMenu()
+    If Desktop.Type = "?" Then addSetWallpaperMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addAddVirtualDesktopMenu()
+    addRemoveVirtualDesktopMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addWorkspaceMenus()
+    
+End
+
+Public Sub SetWallpaperMenu_Click()
+    
+    HaruhiFehWallpaper.Show()
+    
+End
+
+Public Sub AddVirtualDesktopMenu_Click()
+    
+    NagatoSettingsDesktop.Count = Desktop.Count + 1
+    Inc Desktop.Count
+    
+End
+
+Public Sub RemoveVirtualDesktopMenu_Click()
+    
+    If Desktop.Count > 1 Then
+        NagatoSettingsDesktop.Count = Desktop.Count - 1
+        Dec Desktop.Count
+    Endif
+    
+End
+
+Public Sub VirtualDesktopMenu_Click()
+    
+    Desktop.Current = Last.Tag
+    
+End
+
+Public Sub WindowMenu_Click()
+    
+    Dim yukiWindow As New DesktopWindow(Last.Tag)
+    
+    Desktop.Current = yukiWindow.Desktop
+    Desktop.ActiveWindow = Last.Tag
+    
+End
+
+Public Sub ShowDesktopMenu_Click()
+    
+    MikuruDesktop.ShowDesktop()
+    
+End

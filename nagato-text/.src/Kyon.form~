@@ -1,0 +1,36 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Arrangement = Arrange.Fill
+  { FileParentMenu Menu
+    Text = ("&File")
+    Shortcut = "Alt+F"
+    { NewMenu Menu
+      Text = ("&New")
+      Picture = Picture["icon:/small/new"]
+      Shortcut = "Ctrl+N"
+    }
+    { OpenMenu Menu
+      Text = ("&Open")
+      Picture = Picture["icon:/small/open"]
+      Shortcut = "Ctrl+O"
+    }
+    { QuitMenu Menu
+      Text = ("&Quit")
+      Picture = Picture["icon:/small/quit"]
+      Shortcut = "Ctrl+Q"
+    }
+  }
+  { HelpParentMenu Menu
+    Text = ("&Help")
+    Shortcut = "Alt+H"
+    { AboutMenu Menu
+      Text = ("&About")
+      Picture = Picture["Pictures/document-edit.png"]
+    }
+  }
+  { TextArea TextArea
+    MoveScaled(5,9,38,31)
+  }
+}

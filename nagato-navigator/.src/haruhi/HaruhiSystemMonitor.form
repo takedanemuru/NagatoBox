@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Text = ("System monitor")
+  Icon = Picture["super-mono/basic/blue/oscilloscope.png"]
+  Arrangement = Arrange.Fill
+  { SystemMonitorGrid GridView
+    MoveScaled(0,0,64,64)
+    Expand = True
+    Grid = False
+    Header = GridView.Horizontal
+    ScrollBar = Scroll.Vertical
+  }
+}

@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Private _$parent As Menu
+
+Private Sub addMenu(argIndex As Integer, argTabStrip As TabStrip)
+    
+    Dim yukiMenu As New Menu(_$parent) As "Menu"
+    
+    With yukiMenu
+        .Picture = argTabStrip[argIndex].Picture
+        .Text = argTabStrip[argIndex].Text
+        .Tag = argIndex
+    End With
+    
+End
+
+Private Sub addDummyMenu()
+    
+    'Gambas3 never raise "show" event if parent menu contains no child menu(s).
+    
+    Dim yukiDummyMenu As Menu
+    
+    yukiDummyMenu = New Menu(_$parent)
+    yukiDummyMenu.Visible = False
+    
+End
+
+Private Sub addParentMenu()
+    
+    _$parent = New Menu(Me._$rootMenu) As "ParentMenu"
+    _$parent.Text = ("CurrentTabs")
+    addDummyMenu()
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addParentMenu()
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    Dim yukiTabStrip As TabStrip = Kyon.MainTabStrip
+    Dim yukiCounter As Integer
+    
+    _$parent.Children.Clear()
+    
+    For yukiCounter = 0 To yukiTabStrip.Count - 1
+        addMenu(yukiCounter, yukiTabStrip)
+    Next
+    
+End
+
+Public Sub Menu_Click()
+    
+    Kyon.MainTabStrip.Index = Last.Tag
+    
+End

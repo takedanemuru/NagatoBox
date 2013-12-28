@@ -1,0 +1,74 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoToolButtons
+
+Property Picture As Picture
+Property Text As String
+Property Read RootMenu As Menu
+Property Read Width As Integer
+
+Public $button As MenuButton
+Private $dummyRootMenu As Menu
+
+Public Sub initializeWidget() ' This sub must be overridden
+    
+    $button = New MenuButton(Me._$parent)
+    
+End
+
+Private Sub initializeMenu()
+    
+    ' menu name is always global.
+    ' so it needs unique name to avoid name conflict.
+    
+    $dummyRootMenu = New Menu(Kyon)
+    $dummyRootMenu.Name = NagatoUniqueIndex.getUniqueIndex()
+    $button.Menu = $dummyRootMenu.Name
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    Me.initializeWidget()
+    initializeMenu()
+    
+End
+
+Private Function RootMenu_Read() As Menu
+
+    Return $dummyRootMenu
+
+End
+
+Private Function Picture_Read() As Picture
+
+    Return $button.Picture
+
+End
+
+Private Sub Picture_Write(Value As Picture)
+
+    $button.Picture = Value
+
+End
+
+Private Function Text_Read() As String
+
+    Return $button.Text
+
+End
+
+Private Sub Text_Write(Value As String)
+
+    $button.Text = Value
+
+End
+
+Private Function Width_Read() As Integer
+
+    Return $button.Width
+
+End

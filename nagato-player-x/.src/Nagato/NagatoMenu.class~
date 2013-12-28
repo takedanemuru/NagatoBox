@@ -1,0 +1,44 @@
+' Gambas class file
+
+Create Private
+
+Property Read MenuName As String
+
+Public _$uniqueName As String 
+Public _$rootMenu As Menu
+
+Public Sub _InitializeRootMenu(argForm As Form)
+    
+    Me._$rootMenu = New Menu(argForm)
+    
+    With Me._$rootMenu
+        .Visible = False
+        .Name = Me._$uniqueName
+    End With
+    
+End
+
+Public Sub _InitializeChildMenus() ' This method is virtual, MUST be overridden.
+    
+    
+    
+End
+
+Public Sub PopUp()
+    
+    Me._Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new(argForm As Form)
+    
+    Me._InitializeRootMenu(argForm)
+    Me._InitializeChildMenus()
+    
+End
+
+Private Function MenuName_Read() As String
+
+    Return Me._$uniqueName
+
+End

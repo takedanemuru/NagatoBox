@@ -1,0 +1,69 @@
+' Gambas class file
+
+Create Static
+
+Private Function getWithNoExtention(argName As String) As String
+    
+    Dim yukiCount As Integer
+    Dim yukiGenericName As String
+
+    Do
+        Inc yukiCount
+        yukiGenericName = Subst$("&1(&2)", argName, yukiCount)
+        If Not Exist(yukiGenericName) Then Return yukiGenericName
+    Loop
+    
+End
+
+Private Function getWithExtention(argName As String) As String
+    
+    Dim yukiCount As Integer
+    Dim yukiGenericName As String
+    
+    Do
+        Inc yukiCount
+        yukiGenericName = Subst$("&1(&2).&3", File.Dir(argName) &/ File.BaseName(argName), yukiCount, File.Ext(argName))
+        If Not Exist(yukiGenericName) Then Return yukiGenericName
+    Loop
+    
+End
+
+Public Function Get(argName As String) As String
+    
+    If Not Exist(argName) Then Return argName
+    
+    If File.BaseName(argName) = File.Name(argName) Then
+        Debug "no ext"
+        Return getWithNoExtention(argName)
+    Else
+        Debug "with ext"
+        Return getWithExtention(argName)
+    Endif
+    
+End
+
+Public Function GetGenericName(argName As String) As String
+    
+    If Not Exist(argName) Then Return argName
+    
+    If File.BaseName(argName) = File.Name(argName) Then
+        Return getWithNoExtention(argName)
+    Else
+        Return getWithExtention(argName)
+    Endif
+    
+End
+
+Public Function getWithExt(argName As String, argExt As String) As String
+    
+    Dim yukiCount As Integer
+    Dim yukiGenericName As String
+    
+    Do
+        Inc yukiCount
+        yukiGenericName = Subst$("&1(&2).&3", argName, yukiCount, argExt)
+        If Not Exist(yukiGenericName) Then Return yukiGenericName
+    Loop
+    
+End
+

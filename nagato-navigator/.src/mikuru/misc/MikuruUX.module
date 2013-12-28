@@ -1,0 +1,37 @@
+' Gambas module file
+
+Property Read Grid As Integer
+Property Read FontSizeLarge As Integer
+Property Read FontSizeMediumLarge As Integer
+Property Read FontSizeMedium As Integer
+Property Read FontSizeSmall As Integer
+
+Private Function Grid_Read() As Integer
+
+    Return IIf(Desktop.Resolution > 160, 16, 8)
+
+End
+
+Private Function FontSizeLarge_Read() As Integer
+
+    Return 24
+
+End
+
+Private Function FontSizeMediumLarge_Read() As Integer
+
+    Return 16
+
+End
+
+Private Function FontSizeMedium_Read() As Integer
+
+    Return 12
+
+End
+
+Private Function FontSizeSmall_Read() As Integer
+
+    Return 8
+
+End

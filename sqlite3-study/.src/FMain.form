@@ -1,0 +1,21 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,52)
+  Icon = Picture["icon:/medium/save"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(1,13,61,33)
+    { GridView1 GridView
+      MoveScaled(7,4,16,16)
+      Expand = True
+      Mode = Select.Multiple
+      ShowCursor = True
+      Header = GridView.Horizontal
+    }
+    { Button1 Button
+      MoveScaled(22,27,16,4)
+      Text = ("Refresh")
+    }
+  }
+}

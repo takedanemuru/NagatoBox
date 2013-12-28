@@ -1,0 +1,25 @@
+' Gambas module file
+
+Property Read Global As String
+Property Read User As String
+
+Public Sub Ensure()
+    
+    If Not Exist(Me.User) Then
+        Mkdir Me.User
+    End If
+    
+End
+
+Private Function Global_Read() As String
+
+    Return "/etc/xdg/autostart"
+
+End
+
+Private Function User_Read() As String
+
+    Return User.Home &/ ".config/autostart"
+
+End
+

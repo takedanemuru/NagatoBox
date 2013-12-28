@@ -1,0 +1,139 @@
+' Gambas class file
+
+Create Static
+
+Public Const TABLE_REMINDER_ITEMS As String = "ReminderItems"
+Public Const COLUMN_REMINDER_ID As String = "id"
+Public Const COLUMN_REMINDER_TEXT As String = "text"
+Public Const COLUMN_REMINDER_DONE As String = "done"
+Public Const COLUMN_REMINDER_DEADLINE As String = "deadline"
+
+Private Const DatabaseDir As String = ".nagato_software_compilation_database"
+Private Const DatabaseName As String = "integrated_data_thought_entity.sqlite3"
+
+Private $connection As Connection
+
+Private Sub checkAndCreateHost()
+    
+    If Not Exist(User.Home &/ DatabaseDir) Then
+        Mkdir User.Home &/ DatabaseDir
+    Endif
+    
+End
+
+Private Sub addConnection()
+    
+    $connection = New Connection
+    
+    With $connection
+        .Type = "sqlite3"
+        .Host = User.Home &/ DatabaseDir
+        .Name = ""
+        .Login = ""
+        .Password = ""
+        .Port = ""
+    End With
+    
+End
+
+Private Sub checkAndCreateDB()
+    
+    $connection.Open()
+    
+    If Not $connection.Databases.Exist(DatabaseName) Then
+        $connection.Databases.Add(DatabaseName)
+        Wait 1.0
+    Endif
+        
+    $connection.Close()
+    
+End
+
+Private Sub ConnectToDatabase()
+    
+    With $connection
+        .Host = User.Home &/ DatabaseDir
+        .Name = DatabaseName
+    End With
+    
+End
+
+Private Sub checkAndCreateTableReminder()
+    
+    Dim yukiTable As Table
+        
+    ConnectToDatabase()
+    $connection.Open()
+        
+    If Not $connection.Tables.Exist(TABLE_REMINDER_ITEMS) Then
+                yukiTable = $connection.Tables.Add(TABLE_REMINDER_ITEMS)
+                yukiTable.Fields.Add(COLUMN_REMINDER_ID, db.Serial)
+                yukiTable.Fields.Add(COLUMN_REMINDER_TEXT, db.String)
+                yukiTable.Fields.Add(COLUMN_REMINDER_DONE, db.Boolean)
+                yukiTable.Fields.Add(COLUMN_REMINDER_DEADLINE, db.Date)
+                yukiTable.PrimaryKey = [COLUMN_REMINDER_ID]
+                yukiTable.Update()
+    Endif
+    
+End
+
+Public Sub Connect()
+    
+    checkAndCreateHost()
+    addConnection()
+    checkAndCreateDB()
+    checkAndCreateTableReminder()
+    
+End
+
+Public Sub Close()
+    
+    Try $connection.Close()
+    
+End
+
+Public Function GetCount(argTableName As String) As Integer
+    
+    Return $connection.Find(argTableName).Count
+    
+End
+
+Public Sub CreateReminderRecord(argWhatToDo As String)
+    
+    Dim yukiResult As Result
+    
+    yukiResult = $connection.Create(TABLE_REMINDER_ITEMS)
+    yukiResult[COLUMN_REMINDER_TEXT] = argWhatToDo
+    yukiResult[COLUMN_REMINDER_DONE] = False
+    yukiResult.Update()
+    
+End
+
+Public Function GetReminderResultAll() As Result
+    
+    Dim yukiQuery As String 
+    
+    yukiQuery = Subst$("select * from &1 order by &2 desc", TABLE_REMINDER_ITEMS, COLUMN_REMINDER_DONE)
+    
+    Return $connection.Exec(yukiQuery)
+    
+End
+
+Public Sub ReverseReminderDoneById(argId As Integer)
+    
+    Dim yukiResult As Result = $connection.Edit(TABLE_REMINDER_ITEMS, "id = &1", argId)
+    
+    yukiResult[COLUMN_REMINDER_DONE] = Not yukiResult[COLUMN_REMINDER_DONE]
+    yukiResult.Update()
+    
+End
+
+Public Sub DeleteReminderRecordByDone(argValue As Boolean)
+    
+    Dim yukiResult As Result = $connection.Edit(TABLE_REMINDER_ITEMS, "done = &1", argValue)
+    
+    For Each yukiResult
+        yukiResult.Delete()
+    Next
+    
+End

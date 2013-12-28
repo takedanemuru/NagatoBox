@@ -1,0 +1,13 @@
+' Gambas module file
+
+Public Sub ShowDesktop()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    For Each yukiDesktopWindow In Desktop.Windows
+        If yukiDesktopWindow.Desktop <> Desktop.Current Then Continue
+        If yukiDesktopWindow.SkipTaskbar Then Continue
+        yukiDesktopWindow.Minimized = True
+    Next
+    
+End

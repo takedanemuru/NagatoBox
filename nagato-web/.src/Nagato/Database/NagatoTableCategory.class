@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoTable
+
+Public Sub _EnsureTable()
+    
+    Dim yukiTable As Table
+    
+    With NagatoDBWeb
+        If Not Me._$connection.Tables.Exist(.TableCategory) Then
+            yukiTable = Me._$connection.Tables.Add(.TableCategory)
+            yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnCategory, db.String)
+            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Update()
+        Endif
+    End With
+
+End
+
+Public Function GetCategoryNames() As String[]
+
+    Dim yukiNames As New String[]
+    Dim yukiResult As Result = Me._$connection.Find(NagatoDBWeb.TableCategory)
+    
+    For Each yukiResult
+        yukiNames.Add(yukiResult[NagatoDBWeb.ColumnCategory])
+    Next
+    
+    Return yukiNames.Sort()
+
+End
+
+Public Function GetCategoryId(argCategoryName As String) As Integer
+    
+    Dim yukiResult As Result 
+    
+    If argCategoryName = "" Then argCategoryName = ("uncategorized")
+    
+    yukiResult = Me._$connection.Find(NagatoDBWeb.TableCategory, "category = &1", argCategoryName)
+    
+    If yukiResult.Count = 0 Then
+        yukiResult = Me._$connection.Create(NagatoDBWeb.TableCategory)
+        yukiResult[NagatoDBWeb.ColumnCategory] = argCategoryName
+        yukiResult.Update()
+    Endif
+
+    yukiResult = Me._$connection.Find(NagatoDBWeb.TableCategory, "category = &1", argCategoryName)
+
+    Return yukiResult[NagatoDBWeb.ColumnId]
+    
+End

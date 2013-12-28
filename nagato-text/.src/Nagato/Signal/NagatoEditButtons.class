@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoMenuButtons
+
+Public Sub _InitializeButtons()
+    
+    Dim yukiButton As NagatoMenuButton
+    
+    With MikuruSignal
+        yukiButton = New NagatoMenuButton(Me._$container, "Undo", .EditUndo) As "NagatoMenu"
+        yukiButton = New NagatoMenuButton(Me._$container, "Redo", .EditRedo) As "NagatoMenu"
+        yukiButton = New NagatoMenuButton(Me._$container, "Cut", .EditCut, "scissors") As "NagatoMenu"
+        yukiButton = New NagatoMenuButton(Me._$container, "Copy", .EditCopy, "clipboard") As "NagatoMenu"
+        yukiButton = New NagatoMenuButton(Me._$container, "Paste", .EditPaste, "documents") As "NagatoMenu"
+    End With
+    
+End

@@ -1,0 +1,52 @@
+' Gambas class file
+
+Create Static
+
+Property Read CanStop As Boolean
+Property Read CanRestart As Boolean
+
+Private Const ApplicationNameConsoleKit As String = "system://org.freedesktop.ConsoleKit"
+Private Const ObjectPathConsoleKit As String = "/org/freedesktop/ConsoleKit/Manager"
+Private Const InterfaceConsoleKit As String = "org.freedesktop.ConsoleKit.Manager"
+
+Private $consoleKitManager As DBusProxy
+
+Public Function Stop() As Boolean
+    
+    If $consoleKitManager.CanStop() Then
+        $consoleKitManager.Stop()
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Public Function Restart() As Boolean
+    
+    If $consoleKitManager.CanRestart() Then
+        $consoleKitManager.Restart()
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Public Sub _new()
+
+        $consoleKitManager = DBus[ApplicationNameConsoleKit][ObjectPathConsoleKit, InterfaceConsoleKit]
+
+End
+
+Private Function CanStop_Read() As Boolean
+
+    Return $consoleKitManager.CanStop()
+
+End
+
+Private Function CanRestart_Read() As Boolean
+
+    Return $consoleKitManager.CanRestart()
+
+End

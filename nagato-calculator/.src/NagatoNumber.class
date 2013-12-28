@@ -1,0 +1,43 @@
+' Gambas class file
+
+Create Static
+
+Private Function getFracLength(argElement As NagatoCalcElement) As Integer
+        
+        If Frac(argElement.Number) = 0 Then
+                Return 0
+        Else
+                Return Len(Replace$(Str$(Frac(argElement.Number)), "0.", ""))
+        Endif
+        
+End
+
+Private Function getAdditionalZero(argElement As NagatoCalcElement) As String
+        
+        Dim yukiFracLength As Integer = getFracLength(argElement)
+        
+        If argElement.FloatingPoint > yukiFracLength And If argElement.FloatingPoint <> 0 Then
+                Return String$((argElement.FloatingPoint - 1) - yukiFracLength, "0")
+        Else
+                Return ""
+        Endif
+        
+End
+
+Public Function GetStringConversion(argElement As NagatoCalcElement) As String
+        
+        Dim yukiNumber As String = Str$(argElement.Number)
+        Dim yukiAddtionalDot As String = ""
+        Dim yukiAddtionalZero As String = getAdditionalZero(argElement)
+        
+        If InStr(yukiNumber, ".") = 0 And If argElement.FloatingPoint > 0 Then yukiAddtionalDot = "."
+        
+        Return yukiNumber & yukiAddtionalDot & yukiAddtionalZero
+        
+End
+
+Public Function GetValidLength(argText As String) As Integer
+        
+        Return IIf(InStr(argText, ".") = 0, Len(argText), Len(argText) - 1)
+        
+End

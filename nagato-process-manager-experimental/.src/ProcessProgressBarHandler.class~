@@ -1,0 +1,9 @@
+' Gambas class file
+
+Private $progressBar As ProgressBar
+
+Public Sub _new(argProgressBar As ProgressBar)
+    
+    $progressBar = argProgressBar
+    
+End

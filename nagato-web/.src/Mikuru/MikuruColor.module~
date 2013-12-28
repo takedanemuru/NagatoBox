@@ -1,0 +1,23 @@
+' Gambas module file
+
+Property Read Highlight As Integer
+Property Read ActiveTab As Integer
+Property Read NonActiveTab As Integer
+
+Private Function Highlight_Read() As Integer
+
+    Return Color.Red + 16777216 * 64
+
+End
+
+Private Function ActiveTab_Read() As Integer
+
+    Return Color.Pink + 16777216 * 64
+
+End
+
+Private Function NonActiveTab_Read() As Integer
+
+    Return Color.Violet + 16777216 * 192
+
+End

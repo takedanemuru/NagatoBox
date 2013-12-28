@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoSuperMenuButton
+
+Public Sub initializeWidget()
+    
+    Me.$button = New MenuButton(Me._$parent) As "BookmarkMenuButton" 
+    
+    With Me.$button
+        .Arrow = False
+        .Border = False
+        .Width = Me.$size
+        .Picture = Stock["medium/bookmark"]
+        .Tooltip = ("Bookmark")
+    End With
+    
+End

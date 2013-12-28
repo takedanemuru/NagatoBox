@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Const AppLauncher As Integer = 0 'Do not handle path
+Public Const Dictionary As Integer = 1 'Do not handle path
+Public Const FileSelector As Integer = 2
+Public Const HighlightEditor As Integer = 3
+Public Const ImageViewer As Integer = 4
+Public Const Map As Integer = 5 'Do not handle path
+Public Const MediaPlayer As Integer = 6
+Public Const PdfViewer As Integer = 7
+Public Const TextEditor As Integer = 8
+Public Const WebBrowser As Integer = 9
+Public Const WebBookmarkEditor As Integer = 10 'Do not handle path
+Public Const WebRecentPagesEditor As Integer = 11 'Do not handle path
+Public Const PureTextEditor As Integer = 12
+Public Const TrashBin As Integer = 13 'Do not handle path.

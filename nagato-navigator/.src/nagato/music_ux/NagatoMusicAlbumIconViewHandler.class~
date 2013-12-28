@@ -1,0 +1,40 @@
+' Gambas class file
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Private Sub initializeAlbumIconView()
+    
+    Dim yukiResult As Result = NagatoDBMedia.GetAllAlbum()
+    Dim yukiId As Integer
+    Dim yukiAlbum As String
+    Dim yukiArtist As String
+    Dim yukiAlbumArt As Picture
+    
+    For Each yukiResult
+        yukiId = yukiResult[NagatoDBMedia.ColumnId]
+        yukiAlbum = yukiResult[NagatoDBMedia.ColumnAlbum]
+        yukiArtist = yukiResult[NagatoDBMedia.ColumnArtist]
+        yukiAlbumArt = NagatoDBMedia.GetAlbumArt(yukiArtist, yukiAlbum)
+        If Not $iconView.Exist(yukiId) And If NagatoDBMedia.HasMusic(yukiArtist, yukiAlbum) Then
+            $iconView.Add(yukiId, yukiAlbum, yukiAlbumArt)
+        End If
+    Next
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    initializeAlbumIconView()
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    Dim yukiPaths As String[] = NagatoDBMedia.GetSongPathFromAlbumId($iconView.Key)
+    
+    If yukiPaths.Count > 0 Then NagatoMusicQueue.AddFile(yukiPaths)
+    
+End

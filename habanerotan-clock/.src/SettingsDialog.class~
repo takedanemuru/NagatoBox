@@ -1,0 +1,49 @@
+' Gambas class file
+
+Private Sub setPosition()
+    
+    Me.X = Desktop.Width / 2 - Me.Width / 2
+    Me.Y = Desktop.Height / 2 - Me.Height / 2
+    
+End
+
+Private Sub setLabels()
+    
+    TextLabel1.Font.Bold = True
+    TextLabel2.Font.Bold = True
+    
+End
+
+Private Sub setTimerStartFrom()
+    
+    Dim yukiStart As Integer
+    
+    yukiStart = HabaneroSettings.getTimerStartFrom()
+    
+    SpinBox1.Value = yukiStart Div 3600
+    SpinBox2.Value = (yukiStart Mod 3600) Div 60
+    SpinBox3.Value = yukiStart Mod 60
+    
+End
+
+Public Sub Form_Open()
+    
+    setPosition()
+    setLabels()
+    setTimerStartFrom()
+    
+End
+
+Public Sub Button1_Click()
+    
+    Me.Close()
+    
+End
+
+Public Sub Button2_Click()
+    
+    HabaneroSettings.setTimerStartFrom(SpinBox1.Value * 3600 + SpinBox2.Value * 60 + SpinBox3.Value)
+    Me.Close()
+    
+End
+

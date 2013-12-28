@@ -1,0 +1,16 @@
+' Gambas class file
+
+Create Static
+
+Private Const ApplicationName As String = "system://org.freedesktop.NetworkManager"
+Private Const ObjectPath As String = "/org/freedesktop/NetworkManager"
+Private Const Interface As String = "org.freedesktop.NetworkManager"
+
+Private $proxy As DBusProxy
+
+Public Sub _new()
+    
+    $proxy = DBus[ApplicationName][ObjectPath, Interface]
+    Debug $proxy.State
+    
+End

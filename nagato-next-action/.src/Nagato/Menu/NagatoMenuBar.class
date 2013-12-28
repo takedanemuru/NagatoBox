@@ -1,0 +1,81 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $menuBar As HBox
+Private $filterButton As ToggleButton
+Private $gearMenu As NagatoButtonMenu
+
+Private Sub addAddButton()
+    
+    Dim yukiButton As New Button($menuBar) As "AddButton"
+    
+    With yukiButton
+        .Text = ("Add item")
+        .Picture = MikuruIcon.Get("toggle-expand-alt")
+        .AutoResize = True
+        .Border = True
+    End With
+    
+End
+
+Private Sub addFilterButton()
+    
+    $filterButton = New ToggleButton($menuBar) As "FilterButton"
+    
+    With $filterButton
+        .Text = ("Filter")
+        .AutoResize = True
+        .Value = NagatoSettings.Filter
+        .Border = False
+    End With
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiPanel As New Panel($menuBar)
+    
+    yukiPanel.Expand = True
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiButton As New MenuButton($menuBar) As "GearButton" 
+    
+    With yukiButton
+        .Arrow = False
+        .Expand = False
+        .AutoResize = True
+        .Text = ""
+        .Picture = MikuruIcon.Get("star")
+        .Border = False
+    End With
+    
+    $gearMenu = New NagatoButtonMenu(yukiButton)
+    
+End
+
+Public Sub _new(argMenuBar As HBox)
+    
+    $menuBar = argMenuBar
+    addAddButton()
+    addFilterButton()
+        addSpacer()
+    addGearButton()
+    
+End
+
+Public Sub AddButton_Click()
+    
+    Raise MenuEvent(MikuruMenuEvent.ToDoAdd)
+    
+End
+
+Public Sub FilterButton_Click()
+    
+    NagatoSettings.Filter = Not NagatoSettings.Filter
+    Raise MenuEvent(MikuruMenuEvent.FilterChanged)
+    
+End

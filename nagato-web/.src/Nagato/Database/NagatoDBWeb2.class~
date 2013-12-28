@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public Const TableWebPages As String = "webpages"
+Public Const ColumnId As String = "id"
+Public Const ColumnIcon As String = "icon"
+Public Const ColumnUrl As String = "url"
+Public Const ColumnCategory As String = "category"
+Public Const ColumnLastAccessed As String = "last_accessed"
+
+Public Const TableWebCategories As String = "webcategories"
+
+Public _$uniqueName As String = "Web2"
+
+Private $tableWebPages As NagatoTableWebPages
+Private $tableWebCategories As NagatoTableWebCategories
+
+Public Function HasBookmark() As Boolean
+    
+    Return $tableWebPages.HasBookmark()
+    
+End
+
+Public Sub Activate()
+    
+    Me._SetConnection()
+    $tableWebPages = New NagatoTableWebPages(Me._$connection)
+    $tableWebCategories = New NagatoTableWebCategories(Me._$connection)
+    
+End

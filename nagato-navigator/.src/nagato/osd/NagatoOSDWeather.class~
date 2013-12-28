@@ -1,0 +1,194 @@
+' Gambas class file
+
+Inherits NagatoOSD
+
+Public _$uniqueName As String = "NagatoOSDWeather"
+
+Private $currentElement As NagatoWeatherElement
+Private $mainLine As NagatoScrollingText
+Private $timerCounter As Integer = 0
+Private $dataIndex As Integer = 0
+
+Private Sub addLocationSettingMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "LocationSettingMenu"
+    
+    With yukiMenu
+        .Text = ("Location Setting")
+        .Picture = MikuruMonoIconBlue.Get("home", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Private Sub addShowDetailMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "ShowDetailMenu"
+    
+    With yukiMenu
+        .Text = ("Show Detail")
+    End With
+    
+End
+
+Private Sub drawIcon()
+    
+    Dim yukiIconImage As Image
+    
+    If Not NagatoWeatherCache.IsReady Then
+        yukiIconImage = NagatoWeatherIcon.GetIconImageDay(100)
+    Else If Hour(Now) > 5 And If 18 > Hour(Now) Then
+        yukiIconImage = NagatoWeatherIcon.GetIconImageDay($currentElement.IconId)
+    Else
+        yukiIconImage = NagatoWeatherIcon.GetIconImageNight($currentElement.IconId)
+    End If
+    
+    Me._DrawIconImage(yukiIconImage)
+    
+End
+
+Private Function getMainLine() As String
+    
+    If NagatoWeatherCache.IsReady Then
+        Return NagatoWeatherCondition.GetText($currentElement.IconId)
+    Else
+        Return NagatoWeatherCondition.GetText(0)
+    End If 
+    
+End
+
+Private Sub setIndex()
+    
+    Inc $timerCounter
+    
+    If $timerCounter = 5 Then
+        $timerCounter = 0
+        Inc $dataIndex
+        If $dataIndex = 11 Then $dataIndex = 0
+    Endif
+    
+End
+
+Private Function getHeadLine() As String
+    
+    setIndex()
+    
+    Select Case $dataIndex
+        Case 0
+            Return Subst$("Temperature: &1°C", $currentElement.Temperature)
+        Case 1
+            Return Subst$("Wind Direction: &1", $currentElement.WindDirection)
+        Case 2
+            Return Subst$("Wind Speed: &1km/h", $currentElement.WindSpeed * 1.6)
+        Case 3
+            Return Subst$("Precipitation: &1mm", $currentElement.Precipitation)
+        Case 4
+            Return Subst$("Fog: &1%", $currentElement.Fog)
+        Case 5
+            Return Subst$("Pressure: &1hPa", $currentElement.Pressure)
+        Case 6
+            Return Subst$("Humidity: &1%", $currentElement.Humidity)
+        Case 7
+            Return Subst$("Cloudiness: &1%", $currentElement.Cloudiness)
+        Case 8
+            Return Subst$("High Cloud: &1%", $currentElement.HighCloud)
+        Case 9
+            Return Subst$("Medium Cloud: &1%", $currentElement.MediumCloud)
+        Case 10
+            Return Subst$("Low Cloud: &1%", $currentElement.LowCloud)
+    End Select
+    
+End
+
+Private Sub drawHeadLine()
+   
+   If Not NagatoWeatherCache.IsReady Then Return
+    
+    With Paint
+        .Brush = Paint.Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeMedium
+        .RichText("<b>" & getHeadLine() & "</b>", NagatoOSD.Offsetleft, Me.OffsetTop1st)
+        .Fill()
+    End With
+    
+End
+
+Private Sub initializeMainLine(argFont As Font)
+    
+    $mainLine = New NagatoScrollingText(argFont, 34, 2) As "MainLine"
+    
+End
+
+Private Sub setMainLineFont(argFont As Font)
+    
+    If $mainLine.Font <> argFont Then $mainLine.Font = argFont
+    
+End
+
+Private Sub drawMainLine()
+    
+    Dim yukiThanksTo As String = ("weather infomation is provided by yr.no")
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeLarge
+        If Not Object.IsValid($mainLine) Then initializeMainLine(.Font)
+        setMainLineFont(.Font)
+        $mainLine.SetText(getMainLine())
+        .Text($mainLine.Text, NagatoOSD.Offsetleft + $mainLine.Offset, Me.OffsetTop2nd)
+        .Font.Size = MikuruUX.FontSizeSmall
+        If Minute(Now) Mod 15 = 0 Then .Text(yukiThanksTo, NagatoOSD.OffsetLeft, NagatoOSD.OffsetTop3rd)
+        .Fill()
+    End With
+    
+End
+
+Private Function getLabelColor() As Integer
+    
+    If NagatoWeatherCache.IsReady Then
+        Return MikuruEnvironmentalColor.GetWeatherColor($currentElement.Temperature, $currentElement.IconId)
+    Else
+        Return Color.Lighter(Color.Red)
+    Endif
+    
+End
+
+Public Sub _SetPicture() 'override
+    
+    Dim yukiImage As Image 
+    
+    If NagatoWeatherCache.IsReady Then $currentElement = NagatoWeatherCache.GetWeatherElementMostRecent()
+    
+    yukiImage = Me._GetBaseImage(getLabelColor())
+    
+     Paint.Begin(yukiImage)
+         drawIcon()
+         Me._DrawClippingRectangle()
+        drawHeadLine()
+        drawMainLine()
+     Paint.End()
+
+    Me._$form.Picture = yukiImage.Picture
+    
+End
+
+Public Sub _AddOtherMenu(argParentMenu As Menu) ' override
+    
+    argParentMenu.Children.Clear()
+    
+    addLocationSettingMenu(argParentMenu)
+    addShowDetailMenu(argParentMenu)
+        MikuruMenuSeparator.Set(argParentMenu)
+    
+End
+
+Public Sub LocationSettingMenu_Click()
+    
+    HaruhiPreference.Show()
+    
+End
+
+Public Sub ShowDetailMenu_Click()
+    
+    HaruhiWeatherForecast.Show()
+    
+End

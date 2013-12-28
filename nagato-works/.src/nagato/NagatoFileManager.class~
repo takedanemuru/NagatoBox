@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoTabContent
+
+Private $toolbar As NagatoFileSelectorToolbar
+Private $fileView As FileView
+
+Private Sub addFileView()
+    
+    $fileView = New FileView(Me._$vBox) As "FileView"
+    
+    With $fileView
+        .Expand = True
+        .Mode = Select.Multiple
+        .ShowDirectory = True
+        .Background = Color.Background
+        .IconSize = 64
+        .ShowDetailed = True
+    End With
+    
+End
+
+Public Sub _new(argParent As TabStrip, Optional argPath As String = User.Home)
+    
+    Me._Initialize(argParent)
+    $toolbar = New NagatoFileSelectorToolBar(Me._$hBox) As "ToolBar"
+    addFileView()
+    
+End
+
+Public Sub FileView_Icon(argPath As String)
+    
+    Dim yukiMimeType As String = NagatoMimeType.GetMineType(argPath)
+    
+    If Not IsDir(argPath) Then
+        If yukiMimeType Begins "image" Then
+            $fileView.Icon = NagatoImageThumbnailer.Get(argPath, 128)
+        Else If yukiMimeType Begins "video" Then
+            $fileView.Icon = NagatoVideoThumbnailer.Get(argPath, 128)
+        Endif
+    Endif
+    
+End
+
+Public Sub FileView_DragMove()
+    
+    Debug "move it !"
+    
+End

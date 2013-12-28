@@ -1,0 +1,16 @@
+' Gambas module file
+
+Property Read ResponseCancel As Integer
+Property Read ResponseQuit As Integer
+
+Private Function ResponseCancel_Read() As Integer
+
+    Return 0
+
+End
+
+Private Function ResponseQuit_Read() As Integer
+
+    Return 2
+
+End

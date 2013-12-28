@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Static
+
+Private Const ApplicationName As String = "system://org.freedesktop.DisplayManager"
+Private Const ObjectPath As String = "/org/freedesktop/DisplayManager/Seat0"
+Private Const Interface As String = "org.freedesktop.DisplayManager.Seat"
+
+Private $proxy As DBusProxy
+
+Public Sub SwitchToGreeter()
+    
+    $proxy.SwitchToGreeter()
+    
+End
+
+Public Sub _new()
+    
+    $proxy = DBus[ApplicationName][ObjectPath, Interface]
+    
+End

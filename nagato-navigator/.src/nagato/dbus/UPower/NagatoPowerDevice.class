@@ -1,0 +1,46 @@
+' Gambas class file
+
+Property Read Icon As Picture
+Property Read Type As Integer
+Property Read TypeName As String
+Property Read Online As Boolean
+Property Read Percentage As Integer
+
+Private $deviceTypes As String[] = ["Unknown", "LinePower", "Battery", "Ups", "Monitor", "Mouse", "KeyBoard", "Pda", "Phone"]
+Private $proxy As DBusProxy
+
+Public Sub _new(argIndex As Integer)
+    
+    $proxy = NagatoUPower.GetDeviceProxy(argIndex)
+    
+End
+
+Private Function Icon_Read() As Picture
+    
+    Return MikuruPowerDeviceIcon.Get($proxy.Type)
+    
+End
+
+Private Function TypeName_Read() As String
+    
+    Return $deviceTypes[$proxy.Type]
+    
+End
+
+Private Function Online_Read() As Boolean
+
+    Return $proxy.Online
+
+End
+
+Private Function Percentage_Read() As Integer
+
+    Return Int($proxy.Percentage)
+
+End
+
+Private Function Type_Read() As Integer
+
+    Return $proxy.Type
+
+End

@@ -1,0 +1,90 @@
+' Gambas class file
+
+Property Read Current As String
+Property Read HasBack As Boolean
+Property Read HasForward As Boolean
+Property Read Back As String
+Property Read Forward As String
+
+Private $log As New String[]
+Private $level As Integer
+
+Private Sub IsForward(argPath As String) As Boolean
+    
+    If $log.Max = -1 Then
+        Return False
+    Else If $level <> $log.Max Then
+        If $log[$level + 1] = argPath Then
+            Return True
+        Else
+            Return False
+        Endif
+    Else
+        Return False
+    Endif
+    
+End
+
+Public Sub Move(argPath As String)
+    
+    Debug $log.Max
+    
+    ' If $log.Max Then
+    '     Return 'do nothing
+    ' End If
+    ' 
+    If $level <> 0 And If $log[$level - 1] = argPath Then
+        Dec $level
+    Else If isForward(argPath) Then
+        Inc $level
+    Else
+        If $level <> $log.Max Then $log.Resize($level)
+        $log.Add(argPath)
+        $level = $log.Max
+    Endif
+    
+End
+
+Private Function Current_Read() As String
+
+    Return $log[$level]
+
+End
+
+Private Function HasBack_Read() As Boolean
+
+    If $level = 0 Then 
+        Return False
+    Else
+        Return True
+    Endif
+
+End
+
+Private Function HasForward_Read() As Boolean
+
+    If $log.Max = $level Then
+        Return False
+    Else
+        Return True
+    Endif
+
+End
+
+Private Function Back_Read() As String
+
+    Return $log[$level - 1]
+
+Catch
+    Return Null
+
+End
+
+Private Function Forward_Read() As String
+
+    Return $log[$level + 1]
+
+Catch
+    Return Null
+
+End

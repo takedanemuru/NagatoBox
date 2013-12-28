@@ -1,0 +1,67 @@
+' Gambas module file
+
+Property Read Bold As Integer
+Property Read Itaric As Integer
+Property Read Strike As Integer
+Property Read UnderLine As Integer
+Property Read AlignCenter As Integer
+Property Read AlignFill As Integer
+Property Read AlignJustify As Integer
+Property Read AlignLeft As Integer
+Property Read AlignRight As Integer
+
+Private $seriesHeader As Integer = MikuruSeriesHeader.TextEffect
+
+Private Function Bold_Read() As Integer
+
+    Return $seriesHeader + 1
+
+End
+
+Private Function Itaric_Read() As Integer
+
+    Return $seriesHeader + 2
+
+End
+
+Private Function Strike_Read() As Integer
+
+    Return $seriesHeader + 3
+
+End
+
+Private Function UnderLine_Read() As Integer
+
+    Return $seriesHeader + 4
+
+End
+
+Private Function AlignCenter_Read() As Integer
+
+    Return $seriesHeader + 5
+
+End
+
+Private Function AlignFill_Read() As Integer
+
+    Return $seriesHeader + 6
+
+End
+
+Private Function AlignJustify_Read() As Integer
+
+    Return $seriesHeader + 7
+
+End
+
+Private Function AlignLeft_Read() As Integer
+
+    Return $seriesHeader + 8
+
+End
+
+Private Function AlignRight_Read() As Integer
+
+    Return $seriesHeader + 9
+
+End

@@ -1,0 +1,74 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property FontName As String
+Property FontSize As Float
+Property FontColor As Integer
+Property BackgroundColor As Integer
+Property Wrap As Boolean
+
+Private Function FontName_Read() As String
+
+    Return Me._$settings["puretext_editor/font_name", Application.Font.Name]
+
+End
+
+Private Sub FontName_Write(Value As String)
+
+    Me._$settings["puretext_editor/font_name"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function FontSize_Read() As Float
+
+    Return Me._$settings["puretext_editor/font_size", Application.Font.Size]
+
+End
+
+Private Sub FontSize_Write(Value As Float)
+
+    Me._$settings["puretext_editor/font_size"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function FontColor_Read() As Integer
+
+    Return Me._$settings["puretext_editor/font_color", Color.Violet]
+
+End
+
+Private Sub FontColor_Write(Value As Integer)
+
+    Me._$settings["puretext_editor/font_color"] = Value
+    Me._$settings.Save()
+    
+End
+
+Private Function BackgroundColor_Read() As Integer
+
+    Return Me._$settings["puretext_editor/background_color", Color.White]
+    
+End
+
+Private Sub BackgroundColor_Write(Value As Integer)
+
+    Me._$settings["puretext_editor/background_color"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Wrap_Read() As Boolean
+
+    Return Me._$settings["puretext_editor/wrap", True]
+
+End
+
+Private Sub Wrap_Write(Value As Boolean)
+
+    Me._$settings["puretext_editor/wrap"] = Value
+    Me._$settings.Save()
+
+End

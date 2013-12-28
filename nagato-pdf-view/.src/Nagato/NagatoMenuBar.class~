@@ -1,0 +1,188 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $container As Container
+Private $backButton As MenuButton
+Private $nextButton As MenuButton
+Private $pageSpinBox As SpinBox
+Private $pageLabel As Label
+Private $searchBox As ButtonBox
+
+Event NewPage(argPage As Integer)
+Event Search(argQuery As String)
+
+Private Sub addBackButton()
+    
+    $backButton = New MenuButton($container) As "MenuButton"
+    
+    With $backButton
+        .Text = ""
+        .Arrow = False
+        .Border = False
+        .Picture = MikuruIcon.Get("arrow-left")
+        .Tag = MikuruMenuEvent.PageBack
+        .Width = $container.Height
+        .Tooltip = ("Previous page")
+    End With
+    
+End
+
+Private Sub addNextButton()
+    
+    $nextButton = New MenuButton($container) As "MenuButton"
+    
+    With $nextButton
+        .Text = ""
+        .Arrow = False
+        .Border = False
+        .Picture = MikuruIcon.Get("arrow-right")
+        .Tag = MikuruMenuEvent.PageNext
+        .Width = $container.Height
+        .Tooltip = ("Next page")
+    End With
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiMenu As NagatoButtonMenu
+    Dim yukiButton As New MenuButton($container)
+    
+    With yukiButton
+        .Text = ""
+        .Arrow = False
+        .Border = False
+        .Picture = MikuruIcon.Get("star")
+        .Width = $container.Height
+        .Tooltip = ("Main menu")
+    End With
+    
+    yukiMenu = New NagatoButtonMenu(HaruhiPdfView, yukiButton) As "Menu"
+    
+End
+
+Private Sub addButton(argIcon As Picture, argTag As Integer, Optional argTooltip As String)
+    
+    Dim yukiButton As New MenuButton($container) As "MenuButton"
+    
+    With yukiButton
+        .Text = ""
+        .Arrow = False
+        .Border = False
+        .Picture = argIcon
+        .Tag = argTag
+        .Width = $container.Height
+        If argTooltip Then .Tooltip = argTooltip
+    End With
+    
+End
+
+Private Sub addPageSpinBox()
+    
+    $pageSpinBox = New SpinBox($container) As "PageSpinBox"
+    
+    With $pageSpinBox
+        .MinValue = 1
+        .Width = 64
+        .Value = 1
+    End With
+    
+End
+
+Private Sub addPageLabel()
+    
+    $pageLabel = New Label($container)
+    
+    With $pageLabel
+        .AutoResize = True
+        .Text = "of 2"
+    End With
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiPanel As New Panel($container)
+    
+    With yukiPanel
+        .Expand = True
+    End With
+    
+End
+
+Private Sub addSearchBox()
+    
+    $searchBox = New ButtonBox($container) As "SearchBox"
+    
+    With $searchBox
+        .Width = 240
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Private Sub setWidgets()
+    
+    addBackButton()
+    addPageSpinBox()
+    addPageLabel()
+    addNextButton()
+    
+    With MikuruMenuEvent
+        addButton(MikuruIcon.Get("button-add"), .ZoomIn, ("Zoom-in"))
+        addButton(MikuruIcon.Get("button-remove"), .ZoomOut, ("Zoom-out"))
+        addButton(MikuruIcon.Get("button-check"), .ZoomFit, ("Fit width"))
+        addButton(MikuruIcon.Get("button-rotate-ccw"), .ZoomNormal, ("Revert to normal zoom"))
+    End With
+    
+    addSpacer()
+    addSearchBox()
+    addGearButton()
+    
+End
+
+Public Sub SetButtonProperty(argCurrentPage As Integer, argTotalPage As Integer)
+    
+    $backButton.Enabled = Not (argCurrentPage = 1)
+    $nextButton.Enabled = Not (argCurrentPage = argTotalPage)
+    
+    Object.Lock($pageSpinBox)
+        $pageSpinBox.Value = argCurrentPage
+        $pageSpinBox.MaxValue = argTotalPage
+    Object.Unlock($pageSpinBox)
+    
+    $pageLabel.Text = Subst$((" of &1"), argTotalPage)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    setWidgets()
+    
+End
+
+Public Sub PageSpinBox_Change()
+    
+    Raise NewPage($pageSpinBox.Value)
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    If $searchBox.Text <> "" Then Raise Search($searchBox.Text)
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    If $searchBox.Text <> "" Then Raise Search($searchBox.Text)
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End

@@ -1,0 +1,93 @@
+' Gambas class file
+
+Create Private
+
+Public Const ToolPanelHeight As Integer = 36
+
+Public _$parent As TabStrip
+Public _$uniqueId As Integer
+Public _$vBox As VBox
+Public _$hBox As HBox 'for Toolbar
+Public _$mainPaneHBox As HBox
+
+Private Sub initializeVBox()
+    
+    Me._$vBox = New VBox(Me._$parent)
+    
+    With Me._$vBox
+        .Expand = True
+        .Tag = Me._$uniqueId
+    End With
+    
+End
+
+Private Sub initializeHBox()
+    
+    Me._$hBox = New HBox(Me._$vBox)
+    
+    With Me._$hBox
+        .Expand = False
+        .Padding = 1
+        .Height = Me.ToolPanelHeight
+    End With
+    
+End
+
+Private Sub initializeGui()
+    
+    initializeVBox()
+    initializeHBox()
+    
+End
+
+Private Sub initializeVariables(argParent As TabStrip)
+    
+    Me._$parent = argParent
+    Me._$uniqueId = NagatoUniqueIndex.getUniqueIndex()
+    
+End
+
+Public Sub _AddSidePane() 'This method is virtual SHOULD be overridden.
+    
+    
+    
+End
+
+Public Sub _Initialize(argParent As TabStrip)
+    
+    initializeVariables(argParent)
+    initializeGui()
+    Me._AddSidePane()
+    
+End
+
+Public Sub _RefreshParentTab(argTitle As String, Optional argPicture As Picture)
+    
+    Dim yukiIndex As Integer = NagatoUniqueIndex.getTabIndex(_$parent, _$uniqueId)
+    
+    With Me._$parent[yukiIndex]
+        .Text = argTitle
+        If argPicture Then .Picture = argPicture
+    End With
+    
+End
+
+Public Sub _RefreshParentTabTitle(argTitle As String) ' this function MUST be merged with "_RefreshParentTab"
+    
+    Dim yukiIndex As Integer = NagatoUniqueIndex.getTabIndex(_$parent, _$uniqueId)
+    
+    With Me._$parent[yukiIndex]
+        .Text = argTitle
+    End With
+    
+End
+
+Public Sub _RefreshParentTabPicture(argPicture As Picture)
+    
+    Dim yukiIndex As Integer = NagatoUniqueIndex.getTabIndex(_$parent, _$uniqueId)
+    
+    With Me._$parent[yukiIndex]
+        .Picture = argPicture
+    End With
+    
+End

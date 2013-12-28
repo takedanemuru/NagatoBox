@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# This script is licensed under S.O.S. License
+# Enjoy!
+# copyright (c) takeda.nemuru 2013 <takeda.nemuru@gmail.com>
+
+NAGATO_CONFIG_DIR="${XDG_CONFIG_HOME:-"$HOME/.config"}/nagato-software-complation"
+
+# Ensure NAGATO_CONFIG_DIR and nagato-session-rc.xml
+if [ ! -f "${NAGATO_CONFIG_DIR}/nagato-session-rc.xml" ]; then
+    mkdir -p "${NAGATO_CONFIG_DIR}"
+    cp /etc/xdg/nagato-session-rc.xml "${NAGATO_CONFIG_DIR}/nagato-session-rc.xml"
+fi
+
+# Run Openbox, and have it run the autostart stuff
+NAGATO_CONFIG_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/nagato-software-complation/nagato-session-rc.xml"
+exec openbox --config-file ${NAGATO_CONFIG_FILE} --startup "/usr/bin/nagato-session-autostart NagatoSoftwareCompilation" "$@"
+

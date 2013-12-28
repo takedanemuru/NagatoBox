@@ -1,0 +1,207 @@
+' Gambas class file
+
+Create Static
+
+Property Read Ready As Boolean
+
+Private Const DownloadTimeout As Integer = 60
+Private $ready As Boolean = False
+Private $country As String
+Private $city As String
+Private $buffer As String
+Private $confirmBuffer As String
+Private $forecastDay As Variant[]
+Private $simpleForecast As Variant[]
+Private $forecastIcons As New Picture[]
+
+Event Ready
+
+Private Function getIcon(argIndex As Integer) As Picture
+    
+    If Even(argIndex) Then
+        Return MikuruWeatherIcon.GetDayIcon($forecastDay[argIndex]["icon"])
+    Else
+        Return MikuruWeatherIcon.GetNightIcon($forecastDay[argIndex]["icon"])
+    Endif
+    
+End
+
+Private Sub setForecastIcons()
+    
+    Dim yukiPeriod As Integer
+    
+    For yukiPeriod = 0 To GetPeriodsMax()
+        $forecastIcons.Add(getIcon(yukiPeriod))
+    Next
+    
+End
+
+Private Sub decodeBuffer()
+    
+    $forecastDay = JSON.Decode($buffer)["forecast"]["txt_forecast"]["forecastday"]
+    $simpleForecast = JSON.Decode($buffer)["forecast"]["simpleforecast"]["forecastday"]
+    setForecastIcons()
+    $ready = True
+    Raise Ready
+    NagatoOSDWeather.Refresh()
+    
+    Debug "now activated."
+    
+Catch
+    Return
+    
+End
+
+Private Sub downloadData()
+    
+    Dim yukiClient As New HttpClient As "HttpClient"
+    
+    $buffer = ""
+    
+    With yukiClient
+        .URL = NagatoWundergroundApi.GeoLookUp($city, $country)
+        .Timeout = DownloadTimeout
+        .Get()
+    End With
+    
+End
+
+Public Sub Activate(argCity As String, argCountry As String)
+    
+    Debug "now activating..."
+    
+    $ready = False
+    
+    $city = argCity
+    $country = argCountry
+    $forecastIcons.Clear()
+    downloadData()
+    
+End
+
+Public Sub Confirm(argCity As String, argCountry As String)
+    
+    Dim yukiClient As New HttpClient As "ConfirmHttpClient"
+    
+    $confirmBuffer = ""
+    
+    With yukiClient
+        .URL = NagatoWundergroundApi.GeoLookUp(argCity, argCountry)
+        .Timeout = DownloadTimeout
+    End With
+    
+End
+
+Public Function GetTitles() As String[]
+    
+    Dim yukiTitles As New String[]
+    Dim yukiPeriod As Collection
+    
+    For Each yukiPeriod In $forecastDay
+        yukiTitles.Add(yukiPeriod["title"])
+    Next
+    
+    Return yukiTitles
+    
+End
+
+Public Function GetTitle(argIndex As Integer) As String
+    
+    Return $forecastDay[argIndex]["title"]
+    
+End
+
+Public Function GetPeriodsMax() As Integer
+    
+    Return GetTitles().Max
+    
+End
+
+Public Function GetForecastIcon(argIndex As Integer) As Picture
+    
+    Return $forecastIcons[argIndex]
+    
+End
+
+Public Function GetForecastIconTitle(argIndex As Integer) As String
+    
+    Return $forecastDay[argIndex]["icon"]
+    
+End
+
+Public Function GetForecastIconMono(argIndex As Integer) As Picture
+    
+    Return MikuruWeatherIcon.GetMonoIcon($forecastDay[argIndex]["icon"])
+    
+End
+
+Public Function GetForecastText(argIndex As Integer) As String
+    
+    Return $forecastDay[argIndex]["fcttext_metric"]
+    
+End
+
+Public Function GetPoP(argIndex As Integer) As String
+    
+    Return $forecastDay[argIndex]["pop"]
+    
+End
+
+' Public Function GetHighCelsius(argIndex As Integer) As Integer
+'     
+'     Return $simpleForecast[argIndex]["high"]["celsius"]
+'     
+' End
+' 
+' Public Function GetLowCelsius(argIndex As Integer) As Integer
+'     
+'     Return $simpleForecast[argIndex]["low"]["celsius"]
+'     
+' End
+
+Public Sub HttpClient_Read()
+        
+        Dim yukiBuffer As String
+        
+        yukiBuffer = Read #Last, Lof(Last)
+        $buffer &= yukiBuffer
+        
+End
+
+Public Sub HttpClient_Finished()
+        
+        decodeBuffer()
+        
+End
+
+Public Sub ConfirmHttpClient_Read()
+    
+    Dim yukiBuffer As String
+    
+    yukiBuffer = Read #Last, Lof(Last)
+    $confirmBuffer &= yukiBuffer
+    
+End
+
+Public Sub ConfirmHttpClient_Finished()
+    
+    Debug Len($confirmBuffer)
+    
+    If Len($confirmBuffer) < 600 Then
+        HaruhiBalloon.SetText(("No cities match your search query."))
+    Else
+        HaruhiBalloon.SetText(("A city matches your search query."))
+        If Message.Question(("Change location settings ?"), ("Cancel"), ("Change")) = 2 Then
+            NagatoSettingsCore.City = HaruhiPreference.WeatherCityTextBox.Text
+            NagatoSettingsCore.Country = HaruhiPreference.WeatherCountryTextBox.Text
+            Activate(NagatoSettingsCore.City, NagatoSettingsCore.Country)
+        Endif
+    Endif
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+        Return $ready
+
+End

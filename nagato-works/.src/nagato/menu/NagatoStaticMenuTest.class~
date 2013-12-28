@@ -1,0 +1,32 @@
+' Gambas class file
+
+Create Static
+
+Property Read Activated As Boolean
+
+Public Name As String = "StaticMenuTest"
+
+Private $activated As Boolean = False
+
+Public Sub Activate()
+    
+    Dim yukiRootMenu As New Menu(Kyon)
+    Dim yukiMenu As Menu
+    Dim yukiCount As Integer
+    
+    yukiRootMenu.Name = Name
+    
+    For yukiCount = 0 To 9
+        yukiMenu = New Menu(yukiRootMenu)
+        yukiMenu.Text = yukiCount
+    Next
+    
+    $activated = True
+    
+End
+
+Private Function Activated_Read() As Boolean
+
+    Return $activated
+
+End

@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property ExactMatch As Boolean
+Property IgnoreCase As Boolean
+
+Private Function ExactMatch_Read() As Boolean
+
+    Return Me._$settings["dictionary/exact_match", True]
+
+End
+
+Private Sub ExactMatch_Write(Value As Boolean)
+
+    Me._$settings["dictionary/exact_match"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function IgnoreCase_Read() As Boolean
+
+    Return Me._$settings["dictionary/ignore_case", True]
+
+End
+
+Private Sub IgnoreCase_Write(Value As Boolean)
+
+    Me._$settings["dictionary/ignore_case"] = Value
+    Me._$settings.Save()
+
+End

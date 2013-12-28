@@ -1,0 +1,27 @@
+' Gambas class file
+
+Create Static
+
+Private $index As Integer
+
+Public Function getUniqueIndex() As Integer
+    
+    Inc $index
+    
+    Return $index
+    
+End
+
+Public Function getTabIndex(argTabStrip As TabStrip, argUniqueIndex As Integer) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To (argTabStrip.Count - 1)
+        If argTabStrip[yukiCount].Children[0].Tag = argUniqueIndex Then
+            Return yukiCount
+        Endif
+    Next
+    
+    Return Null
+    
+End

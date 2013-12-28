@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Stacking = Window.Above
+  FullScreen = True
+  Arrangement = Arrange.Fill
+  { DrawingArea1 DrawingArea
+    MoveScaled(4,3,55,49)
+    Background = &H5F5F5F&
+    Expand = True
+  }
+}

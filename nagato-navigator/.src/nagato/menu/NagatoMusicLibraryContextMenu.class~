@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Event EditTag
+Event Add
+
+Private Sub addEditTagMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "EditTagMenu"
+    
+    With yukiMenu 
+        .Picture = MikuruMonoIconBlue.Get("tag")
+        .Text = ("Edit tag")
+    End With
+    
+End
+
+Private Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AddMenu"
+    
+    With yukiMenu
+        .Picture = MikuruMonoIconBlue.Get("toggle-expand-alt")
+        .Text = ("Add to current playlist")
+    End With
+    
+End
+
+Public Sub _initializeMenu()
+    
+    addEditTagMenu()
+    addDeleteMenu()
+    
+End
+
+Public Sub EditTagMenu_Click()
+    
+    Raise EditTag
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    Raise Delete
+    
+End

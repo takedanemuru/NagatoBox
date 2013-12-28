@@ -1,0 +1,65 @@
+' Gambas class file
+
+Inherits NagatoTabInfomation
+
+Private Sub showStatusForDevelopment()
+        
+        With Me.$proxy
+                Debug "NativePath: " & .NativePath
+                Debug "Vendor: " & .Vendor
+                Debug "Model: " & .Model
+                Debug "Serial: " & .Serial
+                Debug "UpdateTime: " & .UpdateTime
+                Debug "Type: " & .Type
+                Debug "PowerSupply: " & .PowerSupply
+                Debug "HasHistory: " & .HasHistory
+                Debug "HasStatics: " & .HasStatistics
+                Debug "Online: " & .Online
+                Debug "Energy: " & .Energy
+                Debug "EnergyEmpty: " & .EnergyEmpty
+                Debug "EnergyFull: " & .EnergyFull
+                Debug "EnergyFullDesign: " & .EnergyFullDesign
+                Debug "EnergyRate: " & .EnergyRate
+                Debug "Voltage: " & .Voltage
+                Debug "TimeToEmpty: " & .TimeToEmpty
+                Debug "TimeToFull: " & .TimeToFull
+                Debug "Percentage: " & .Percentage 
+                Debug "IsPresent: " & .IsPresent
+                Debug "State: " & .State
+                Debug "IsRechargeable: " & .IsRechargeable
+                Debug "Capacity: " & .Capacity
+                Debug "Technology: " & .Technology
+                Debug "RecallNotice: " & .RecallNotice
+                Debug "RecallVendor" & .RecallVendor
+                Debug "RecallUrl" & .RecallUrl
+        End With
+        
+End
+
+Private Sub addProgressBar()
+        
+        Dim yukiProgressBar As New ProgressBar(Me.$vBox) 
+        
+        With yukiProgressBar
+                .Height = 21
+                .Value = Me.$proxy.Percentage / 100
+        End With
+        
+End
+
+Public Sub addContent() ' override.
+        
+        Dim yukiPicture As Picture = MikuruDeviceStatus.GetIcon(Me.$proxy)
+        
+        Me.$textArea.Text = "This is Battery\n\n"
+        addProgressBar()
+        Me.setInfomationText()
+        Me.$drawingArea.Refresh()
+        
+End
+
+Public Sub DrawingArea_Draw()
+        
+        Draw.Picture(MikuruBatteryIcon.Get(Me.$proxy.Percentage, 120), 10, 10)
+        
+End

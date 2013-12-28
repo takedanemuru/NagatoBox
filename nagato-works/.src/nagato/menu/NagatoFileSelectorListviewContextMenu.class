@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Event Delete
+
+Private Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "DeleteMenu"
+    
+    With yukiMenu
+        .Text = ("Delete")
+        .Picture = Stock["medium/remove"]
+    End With
+    
+End
+
+Public Sub _InitializeChildMenus() 'override
+    
+    addDeleteMenu()
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    Raise Delete
+    
+End

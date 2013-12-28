@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoIcon
+
+Private $text As String = "network"
+
+Private Sub setFormPicture(Optional argBackground As Integer = Color.Lighter(Color.Blue))
+    
+    Dim yukiBaseImage As Image
+    
+    Me._$form.Height = Me._$form.Font.RichTextHeight($text) + 72
+    yukiBaseImage = New Image(Me.FormWidth, Me._$form.Height, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.DrawImage(MikuruIcon.Get("wireless-router", 48).Image, 40, Me.Margin)
+        Paint.Font.Bold = True
+        Paint.DrawRichText($text, Me.Margin, 64, Me.TextWidth, Me._$form.Height - 72, Align.Center)
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+End
+
+Public Sub _new()
+    
+    Me._$form = New Form As "Icon"
+    '$text = getText()
+    Me._InitializeForm(Me._$form.Font.RichTextHeight($text) + 72)
+    Me._$form.Show
+    setFormPicture()
+    
+End

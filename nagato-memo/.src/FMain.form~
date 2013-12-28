@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,45.7143,45.7143)
+  Border = False
+  Stacking = Window.Below
+  Sticky = True
+  Arrangement = Arrange.Fill
+  { TextArea1 TextArea
+    MoveScaled(0,0,45.7143,47)
+    Font = Font["+1"]
+    Background = &HB5A7DF&
+    Foreground = &HFFFFFF&
+    Text = ("TextArea1")
+  }
+}

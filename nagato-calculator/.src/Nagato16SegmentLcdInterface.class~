@@ -1,0 +1,46 @@
+' Gambas class file
+
+Property Length As Integer
+
+Private $lcdLabel As LCDLabel
+Private $length As Integer
+
+Private Function getSpace(argUsedLength As Integer) As String
+        
+        Return String$($length - argUsedLength, " ")
+        
+End
+
+Public Sub SetText(argText As String)
+        
+        $lcdLabel.Text = argText
+        
+End
+
+Public Sub ShowBufferState(argElement As NagatoCalcElement)
+        
+        Dim yukiHeader As String = argElement.Header
+        Dim yukiSpace As String = getSpace(argElement.TotalLength)
+        Dim yukiNumber As String = NagatoNumber.GetStringConversion(argElement)
+        
+        $lcdLabel.Text = yukiHeader & yukiSpace & yukiNumber
+        
+End
+
+Public Sub _new(argLcdLabel As LCDLabel)
+        
+        $lcdLabel = argLcdLabel
+        
+End
+
+Private Function Length_Read() As Integer
+
+        Return $length
+
+End
+
+Private Sub Length_Write(Value As Integer)
+
+        $length = Value
+
+End

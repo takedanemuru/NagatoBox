@@ -1,0 +1,208 @@
+' Gambas class file
+
+Private $previewRatio As Float
+Private $currentPath As String
+Private $currentColor As Integer
+
+Private Sub initializePreviewDrawingArea()
+    
+    $previewRatio = PreviewDrawingArea.Width / Screen.Width
+    PreviewDrawingArea.Height = Screen.Height * $previewRatio
+    
+End
+
+Private Function getUnresizedThumbnail() As Image
+    
+    Dim yukiImage As Image = Image.Load($currentPath)
+    
+    Return yukiImage.Stretch(yukiImage.Width * $previewRatio, yukiImage.Height * $previewRatio)
+    
+End
+
+Private Function getFillRate(argImage As Image) As Float
+    
+    Return Min(Screen.H / argImage.H, Screen.W / argImage.W) * $previewRatio
+    
+End
+   
+Private Function getThumbnailForFillMode() As Image
+    
+    Dim yukiImage As Image = Image.Load($currentPath)
+    Dim yukiRate As Float = getFillRate(yukiImage)
+    
+    Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
+    
+End
+
+Private Sub paintCenter()
+    
+    Dim yukiImage As Image = getUnresizedThumbnail()
+    Dim yukiPoint As PointF = getOriginPoint(yukiImage)
+    
+    Paint.DrawImage(yukiImage, yukiPoint.X, yukiPoint.Y)
+    
+End
+
+Private Function getStartPoint(argImage As Image) As PointF
+    
+    Dim yukiOriginPoint As PointF = getOriginPoint(argImage)
+    Dim yukiStartPont As New PointF
+    
+    With yukiOriginPoint
+        yukiStartPont.X = .X - (Int(.X / argImage.W + 1) * argImage.W)
+        yukiStartPont.Y = .Y - (Int(.Y / argImage.H + 1) * argImage.H)
+    End With
+    
+    Return yukiStartPont
+    
+End
+
+Private Sub paintTile()
+    
+    Dim yukiImage As Image = getUnresizedThumbnail()
+    Dim yukiStartPont As PointF = getStartPoint(yukiImage)
+    Dim yukiCurrentPoint As New PointF
+    
+    With yukiCurrentPoint
+        .Y = yukiStartPont.Y
+        Repeat
+            .X = yukiStartPont.X
+            Repeat
+                Paint.DrawImage(yukiImage, .X, .Y)
+                .X += yukiImage.Width
+            Until .X > PreviewDrawingArea.Width
+            .Y += yukiImage.Height
+        Until .Y > PreviewDrawingArea.Height
+    End With
+    
+End
+
+Private Sub paintFill()
+    
+    Dim yukiImage As Image = Image.Load($currentPath).Stretch(PreviewDrawingArea.W, PreviewDrawingArea.H)
+    
+    Paint.DrawImage(yukiImage, 0, 0)
+    
+End
+
+Private Function getOriginPoint(argImage As Image) As PointF
+    
+    Dim yukiPoint As New PointF
+
+    With PreviewDrawingArea
+        yukiPoint.X = IIf(argImage.W = .W, 0, (.W - argImage.W) / 2)
+        yukiPoint.Y = IIf(argImage.H = .W, 0, (.H - argImage.H) / 2)
+    End With
+    
+    Return yukiPoint
+    
+End
+
+Private Sub paintFull()
+    
+    Dim yukiImage As Image = getThumbnailForFillMode()
+    Dim yukiPoint As PointF = getOriginPoint(yukiImage)
+    
+    Paint.DrawImage(yukiImage, yukiPoint.X, yukiPoint.Y)
+    
+End
+
+Private Sub refreshSettings()
+    
+    With NagatoSettings
+        .LastPath = $currentPath
+        .LastColor = $currentColor
+        .LastMode = ModeComboBox.Index
+    End With
+    
+End
+
+Private Sub selectPaintMode()
+    
+    Select Case ModeComboBox.Index
+        Case MikuruRenderMode.Tile
+            paintTile()
+        Case MikuruRenderMode.Full
+            paintFull
+        Case MikuruRenderMode.Fill
+            paintFill()
+        Case MikuruRenderMode.Center
+            paintCenter()
+    End Select
+    
+End
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    Me.Center()
+    $currentPath = NagatoSettings.LastPath
+    $currentColor = NagatoSettings.LastColor
+    ColorButton.Color = $currentColor
+    initializePreviewDrawingArea()
+    ModeComboBox.Index = NagatoSettings.LastMode
+
+End
+
+Public Sub ApplyButton_Click()
+
+    If $currentPath = "" Then
+        Return
+    Else
+        NagatoHSetRoot.SetWallpaper($currentPath, $currentColor, ModeComboBox.Index)
+        refreshSettings()
+    End If
+
+End
+
+Public Sub SelectButton_Click()
+
+    If NagatoSettings.LastPath <> "" Then Dialog.Path = File.Dir(NagatoSettings.LastPath)
+    
+    Dialog.Title = ("Select picture")
+    Dialog.Path = IIf(NagatoSettings.LastPath = "", User.Home, File.Dir(NagatoSettings.LastPath))
+    
+    If Not Dialog.OpenFile() Then
+        If DesktopMime.FromFile(Dialog.Path).Type Not Begins "image" Then Return
+        $currentPath = Dialog.Path
+        PreviewDrawingArea.Refresh()
+    Endif
+
+End
+
+Public Sub PreviewDrawingArea_Draw()
+    
+    If $currentPath = "" Then Return
+    
+    With Paint
+        .Begin(PreviewDrawingArea)
+        selectPaintMode()
+        .End()
+    End With
+    
+End
+
+Public Sub ColorButton_Change()
+
+    ColorButton.Foreground = ColorButton.Color
+    PreviewDrawingArea.Background = ColorButton.Color
+    $currentColor = ColorButton.Color
+
+End
+
+Public Sub ModeComboBox_Click()
+
+    PreviewDrawingArea.Refresh()
+
+End
+
+Public Sub PreviewDrawingArea_Drop()
+
+    ' PreviewDrawingArea can accept only "text/uri-list"
+
+    If Drag.Type = Drag.Text And If MikuruDrag.CanAccept(Drag.Data) Then
+        $currentPath = MikuruDrag.GetDragPath(Drag.Data)
+        PreviewDrawingArea.Refresh()
+    End If
+
+End

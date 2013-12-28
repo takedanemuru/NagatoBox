@@ -1,0 +1,12 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Background = &H00009F&
+  Resizable = False
+  Arrangement = Arrange.Fill
+  { DrawingArea1 DrawingArea
+    MoveScaled(0,2,42,39)
+    Expand = True
+  }
+}

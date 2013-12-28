@@ -1,0 +1,30 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.4.1
+Title=nagato-quick-web
+Startup=Kyon
+Icon=icon.jpg
+Version=0.5.0
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Component=gb.qt4.webkit
+Description="view/search web as soon as possible."
+Authors="<takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=nagato-quick-web-0.5.0
+MimeTypes="text/html"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Network/Web Browsing"
+Categories=ubuntu:"Nagato;Network;Utility"
+Groups=ubuntu:"web"

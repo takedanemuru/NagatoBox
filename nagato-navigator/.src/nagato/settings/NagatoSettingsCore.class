@@ -1,0 +1,124 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Create Static
+
+Property City As String
+Property Country As String
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = Me._$settings[Subst$("&1/x", .Name), .X]
+        .Y = Me._$settings[Subst$("&1/y", .Name), .Y]
+        .W = Me._$settings[Subst$("&1/w", .Name), .W]
+        .H = Me._$settings[Subst$("&1/h", .Name), .H]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        Me._$settings[Subst$("&1/x", .Name)] = .X
+        Me._$settings[Subst$("&1/y", .Name)] = .Y
+        Me._$settings[Subst$("&1/w", .Name)] = .W
+        Me._$settings[Subst$("&1/h", .Name)] = .H
+    End With
+    
+    Me._$settings.Save()
+    
+End
+
+Public Sub LoadGridsSettings(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            .Width = Me._$settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
+        End With
+    Next
+    
+End
+
+Public Sub SaveGridsSettings(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            Me._$settings[Subst$("&1/column&2width", argGrids.Name, yukiCount)] = .Width
+        End With
+    Next
+    
+    Me._$settings.Save()
+    
+End
+
+Public Sub LoadFormPosition(argForm As Form, argDefaultX As Integer, argDefaultY As Integer)
+    
+    argForm.X = Me._$settings[Subst$("&1/x", argForm.Name), argDefaultX]
+    argForm.Y = Me._$settings[Subst$("&1/y", argForm.Name), argDefaultY]
+    
+End
+
+Public Sub SaveFormPosition(argForm As Form)
+    
+    Me._$settings[Subst$("&1/x", argForm.Name)] = argForm.X
+    Me._$settings[Subst$("&1/y", argForm.Name)] = argForm.Y
+    
+End
+
+Public Sub GetFormShow(argForm As Form) As Boolean
+    
+    Return Me._$settings[Subst$("&1/show", argForm.Name), False]
+    
+End
+
+Public Sub SetFormShow(argForm As Form, argShow As Boolean)
+    
+    Me._$settings[Subst$("&1/show", argForm.Name)] = argShow
+    Me._$settings.Save()
+    
+End
+
+Public Sub GetRecentApps() As String[]
+    
+    Return Me._$settings["apps/recent", [""]]
+    
+End
+
+Public Sub SetRecentApps(argAppPaths As String[])
+    
+    Me._$settings["apps/recent"] = argAppPaths
+    Me._$settings.Save()
+    
+End
+
+Private Function City_Read() As String
+
+    Return Me._$settings["location/city", "Nishinomiya"]
+
+End
+
+Private Sub City_Write(Value As String)
+
+    Me._$settings["location/city"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Country_Read() As String
+
+    Return Me._$settings["location/country", "Japan"]
+
+End
+
+Private Sub Country_Write(Value As String)
+
+    Me._$settings["location/country"] = Value
+    Me._$settings.Save()
+
+End

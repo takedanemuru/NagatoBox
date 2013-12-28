@@ -1,0 +1,24 @@
+' Gambas class file
+
+Private $flag As Boolean = False
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    'TextArea1.Text = Conv$(WebView1.HTML, "SHIFT-JIS", "UTF-8")
+    
+
+End
+
+Public Sub WebView1_Progress()
+    
+    If WebView1.Progress = 1 And If Not $flag Then
+        'TextArea1.Text = WebView1.HTML
+        TextArea1.Text = Conv$(WebView1.HTML, "x-sjis ", " UTF - 8 ")""
+        $flag = True
+    Endif
+    
+End

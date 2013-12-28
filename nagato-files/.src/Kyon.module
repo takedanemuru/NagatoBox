@@ -1,0 +1,21 @@
+' Gambas module file
+
+Private $path As String
+Private $paths As New String[]
+
+Private Sub parsingArguments()
+    
+    Args.Begin()
+        $path = Args.Get("d", "open-directory")
+    $paths = Args.End()
+    
+End
+
+Public Sub Main()
+    
+    parsingArguments()
+    
+    HaruhiMain.SetStartupPath($path, $paths)
+    HaruhiMain.Show()
+
+End

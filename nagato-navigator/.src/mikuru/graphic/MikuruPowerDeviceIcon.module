@@ -1,0 +1,31 @@
+' Gambas module file
+
+Public Function Get(argType As Integer) As Picture
+    
+    'argType must be "UPowerDeviceType"
+    
+    Select Case argType
+        Case 0 'Unknown
+            Return Picture["super-mono/basic/blue/question.png"]
+        Case 1 'LinePower
+            Return Picture["super-mono/basic/blue/plug.png"]
+        Case 2 'Battery
+            Return Picture["super-mono/basic/blue/battery.png"]
+        Case 3 'Ups
+            Return Picture["super-mono/basic/blue/battery.png"]
+        Case 4 'Monitor
+            Return Picture["super-mono/basic/blue/monitor.png"]
+        Case 5 'Mouse
+            Return Picture["super-mono/basic/blue/mouse.png"]
+        Case 6 'KeyBoard
+            Return Picture["super-mono/basic/blue/keyboard.png"]
+        Case 7 'Pda
+            Return Picture["super-mono/basic/blue/ipod.png"]
+        Case 8 'Phone
+            Return Picture["super-mono/basic/blue/mobile.png"]
+        Default
+            Return Picture["super-mono/basic/blue/question.png"]
+    End Select
+    
+End
+

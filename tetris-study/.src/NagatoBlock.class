@@ -1,0 +1,122 @@
+' Gambas class file
+
+Property Read CenterX As Integer
+Property Read CenterY As Integer
+Property Read OtherBlocks As Integer[]
+Property Read Color As Integer
+Property Read RotateTimes As Integer
+Property Read IsRotate As Boolean
+
+Private $centerBlock As Integer[] = [7, 1]
+Private $otherBlocks As Integer[]
+Private $rotate As Integer
+Private $color As Integer
+Private $isRotate As Boolean = True
+
+Private Sub initialize()
+        
+        Select Case Int(Rnd(0, 7))
+                Case 0
+                        $otherBlocks = [0, -1, 1, 0, 1, 1]
+                        $color = Color.Red
+                Case 1
+                        $otherBlocks = [1, -1, 1, 0, 0, 1]
+                        $color = Color.Blue
+                Case 2
+                        $otherBlocks = [0, -1, 1, 0, 0, 1]
+                        $color = Color.Green
+                Case 3
+                        $otherBlocks = [1, 1, 0, -1, 0, 1]
+                        $color = Color.Magenta
+                Case 4
+                        $otherBlocks = [0, -1, 1, -1, 0, 1]
+                        $color = Color.Cyan
+                Case 5
+                        $otherBlocks = [0, 1, 1, 0, 1, 1]
+                        $color = Color.Yellow
+                        $isRotate = False
+                Default
+                        $otherBlocks = [0, -1, 0, 1, 0, 2]
+                        $color = Color.Gray
+        End Select
+        
+End
+
+Public Sub _new(Optional argX As Integer, Optional argY As Integer, Optional argPosition As Integer[], Optional argRotate As Integer)
+        
+        If argPosition Then
+                $centerBlock[0] = argX
+                $centerBlock[1] = argY
+                $otherBlocks = argPosition
+                $rotate = argRotate
+        Else
+                initialize()
+        Endif
+        
+End
+
+Public Sub Left()
+        
+        Dec $centerBlock[0]
+        
+End
+
+Public Sub Right()
+        
+        Inc $centerBlock[0]
+        
+End
+
+Public Sub Down()
+        
+        Inc $centerBlock[1]
+        
+End
+
+Public Sub Rotate()
+        
+        Inc $rotate
+        
+End
+
+Public Sub TurnToBlack()
+        
+        $color = Color.Black
+        
+End
+
+Private Function Color_Read() As Integer
+
+        Return $color
+
+End
+
+Private Function CenterX_Read() As Integer
+
+        Return $centerBlock[0]
+
+End
+
+Private Function CenterY_Read() As Integer
+
+        Return $centerBlock[1]
+
+End
+
+Private Function OtherBlocks_Read() As Integer[]
+
+        Return $otherBlocks
+
+End
+
+Private Function IsRotate_Read() As Boolean
+
+        Return $isRotate
+
+End
+
+Private Function RotateTimes_Read() As Integer
+
+        Return $rotate
+
+End

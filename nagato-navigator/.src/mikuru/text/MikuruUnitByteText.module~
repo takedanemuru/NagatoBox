@@ -1,0 +1,34 @@
+' Gambas module file
+
+Private $unitName As String
+Private $visibleNumber As Float
+
+Private Sub setUnit(argByte As Integer)
+    
+    If argByte >= 1024 ^ 4 Then
+        $unitName = "TB"
+        $visibleNumber = Format$(argByte / (1024 ^ 4), "#.00")
+    Else If argByte >= 1024 ^ 3 Then
+        $unitName = "GB"
+        $visibleNumber = Format$(argByte / (1024 ^ 3), "#.00")
+    Else If argByte >= 1024 ^ 2 Then
+        $unitName = "MB"
+        $visibleNumber = Format$(argByte / (1024 ^ 2), "#.00")
+    Else If argByte >= 1024 ^ 1 Then
+        $unitName = "KB"
+        $visibleNumber = Format$(argByte / (1024 ^ 1), "#.00")
+    Else
+        $unitName = "Byte"
+        $visibleNumber = argByte
+    Endif
+    
+End
+
+Public Sub Get(argByte As Integer) As String
+    
+    setUnit(argByte)
+    
+    Return CStr($visibleNumber) & " " & $unitName
+    
+End
+

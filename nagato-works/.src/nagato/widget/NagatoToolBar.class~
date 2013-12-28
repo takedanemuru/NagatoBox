@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public _$parent As HBox
+
+Public Sub _Initialize() ' this method is virtual. must be overridden.
+    
+    
+    
+End
+
+Public Sub _new(argContainer As HBox)
+    
+    Me._$parent = argContainer
+    Me._Initialize()
+    
+End
+
+Public Sub ResetSize() ' only for media player (now)
+    
+    If Me._$parent.Height = 0 Then
+        Me._$parent.Height = 36
+    Else
+        Me._$parent.Height = 0
+    Endif
+    
+End

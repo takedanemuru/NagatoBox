@@ -1,0 +1,29 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.4.0
+Title=tetris-study
+Startup=FMain
+Icon=ksirtet.png
+Version=0.3.0
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Component=gb.sdl.sound
+Description="play tetris with Nagato."
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=8
+Translate=1
+Language=ja
+Maintainer=takeda-nemuru
+Vendor=takeda-nemuru
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=tetris-study-0.3.0
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Games/Puzzles"
+Categories=ubuntu:"Game;Nagato"
+Groups=ubuntu:"games"

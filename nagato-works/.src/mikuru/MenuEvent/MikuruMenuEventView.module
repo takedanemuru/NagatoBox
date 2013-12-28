@@ -1,0 +1,32 @@
+' Gambas module file
+
+Property Read Changed As Integer
+Property Read ZoomIn As Integer
+Property Read ZoomOut As Integer
+Property Read Refresh As Integer
+
+Private $seriesHeader As Integer = MikuruSeriesHeader.View
+
+Private Function Changed_Read() As Integer
+
+    Return $seriesHeader + 1
+
+End
+
+Private Function ZoomIn_Read() As Integer
+
+    Return $seriesHeader + 2
+
+End
+
+Private Function ZoomOut_Read() As Integer
+
+    Return $seriesHeader + 3
+
+End
+
+Private Function Refresh_Read() As Integer
+
+    Return $seriesHeader + 4
+
+End

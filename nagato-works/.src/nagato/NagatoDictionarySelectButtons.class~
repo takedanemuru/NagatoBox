@@ -1,0 +1,98 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Property Read StandardDictionaryEnabled As Boolean
+Property Read CompDictionaryEnabled As Boolean
+Property Read EnamDictionaryEnabled As Boolean
+
+Private $standardDictionaryButton As ToolButton
+Private $compDictionaryButton As ToolButton
+Private $enamDictionaryButton As ToolButton
+
+Private Sub addStandardDictionaryButton()
+    
+    $standardDictionaryButton = New ToolButton(Me._$parent)
+    
+    With $standardDictionaryButton
+        .AutoResize = True
+        .Picture = Stock["medium/book"]
+        .Text = ("General Dictionary")
+        .Toggle = True
+        .Value = True
+    End With
+    
+End
+
+Private Sub addCompDictionaryButton()
+    
+    $compDictionaryButton = New ToolButton(Me._$parent)
+    
+    With $compDictionaryButton
+        .AutoResize = True
+        .Picture = Stock["medium/book"]
+        .Text = ("Computer and Communication Terms")
+        .Toggle = True
+        .Value = False
+    End With
+    
+End
+
+Private Sub addEnamDictionaryButton()
+    
+    $enamDictionaryButton = New ToolButton(Me._$parent)
+    
+    With $enamDictionaryButton
+        .AutoResize = True
+        .Picture = Stock["medium/book"]
+        .Text = ("Proper Nouns")
+        .Toggle = True
+        .Value = False
+    End With
+    
+End
+
+Private Sub initializeButtons()
+    
+    addStandardDictionaryButton()
+    addCompDictionaryButton()
+    addEnamDictionaryButton()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    initializeButtons()
+    
+End
+
+Public Function IsAtLeastOneDictionatyEnabled() As Boolean
+    
+    Dim yukiResult As Boolean = False
+    
+    If $standardDictionaryButton.Value Then yukiResult = True
+    If $compDictionaryButton.Value Then yukiResult = True
+    If $enamDictionaryButton.Value Then yukiResult = True
+    
+    Return yukiResult
+    
+End
+
+Private Function StandardDictionaryEnabled_Read() As Boolean
+
+    Return $standardDictionaryButton.Value
+
+End
+
+Private Function CompDictionaryEnabled_Read() As Boolean
+
+    Return $compDictionaryButton.Value
+
+End
+
+Private Function EnamDictionaryEnabled_Read() As Boolean
+
+    Return $enamDictionaryButton.Value
+
+End

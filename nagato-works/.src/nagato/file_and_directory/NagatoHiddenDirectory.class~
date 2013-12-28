@@ -1,0 +1,92 @@
+' Gambas class file
+
+Create Static
+
+Property Read DictionaryFilePath As String
+Property Read CompDictFilePath As String
+Property Read EnamDictFilePath As String
+Property Read WebCacheDir As String
+
+Private Const AppHiddenDir As String = ".nagatoworks"
+Private Const DATA_DIR As String = "data"
+Private Const WEB_CACHE_DIR As String = "nagato-works"
+
+Private Sub createAppHiddenDir()
+    
+   Mkdir User.Home &/ AppHiddenDir 
+    
+End
+
+Private Sub copyDictionaryFile()
+    
+    Dim yukiFile As String
+    
+    yukiFile = File.Load("data/utf8ededict")
+    File.Save(User.Home &/ AppHiddenDir &/ DATA_DIR &/ "dictfile", yukiFile)
+    
+End
+
+Private Sub copyCompDictFile()
+    
+    Dim yukiFile As String
+    
+    yukiFile = File.Load("data/compdic")
+    File.Save(User.Home &/ AppHiddenDir &/ DATA_DIR &/ "compdictfile", yukiFile)
+    
+End
+
+Private Sub copyEnamDictFile()
+    
+    Dim yukiFile As String
+    
+    yukiFile = File.Load("data/enamdict")
+    File.Save(User.Home &/ AppHiddenDir &/ DATA_DIR &/ "enamdictfile", yukiFile)
+    
+End
+
+Private Sub creatDATA_DIR()
+    
+    Mkdir User.Home &/ AppHiddenDir &/ DATA_DIR
+    copyDictionaryFile()
+    copyCompDictFile()
+    copyEnamDictFile()
+    
+End
+
+Private Sub creatWEB_CACHE_DIR()
+    
+    Mkdir User.Home &/ ".cache" &/ WEB_CACHE_DIR
+    
+End
+
+Public Sub _new()
+    
+    If Not Exist(User.Home &/ AppHiddenDir) Then createAppHiddenDir()
+    If Not Exist(User.Home &/ AppHiddenDir &/ DATA_DIR) Then creatDATA_DIR()
+    If Not Exist(User.Home &/ ".cache" &/ WEB_CACHE_DIR) Then creatWEB_CACHE_DIR()
+    
+End
+
+Private Function DictionaryFilePath_Read() As String
+
+    Return User.Home &/ AppHiddenDir &/ DATA_DIR &/ "dictfile"
+
+End
+
+Private Function CompDictFilePath_Read() As String
+
+    Return User.Home &/ AppHiddenDir &/ DATA_DIR &/ "compdictfile"
+
+End
+
+Private Function EnamDictFilePath_Read() As String
+
+    Return User.Home &/ AppHiddenDir &/ DATA_DIR &/ "enamdictfile"
+
+End
+
+Private Function WebCacheDir_Read() As String
+
+    Return User.Home &/ ".cache" &/ WEB_CACHE_DIR
+
+End

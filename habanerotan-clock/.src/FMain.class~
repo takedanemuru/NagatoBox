@@ -1,0 +1,104 @@
+' Gambas class file
+
+Private $habaneroClock As Object
+
+Private Sub drawHabaneroTans()
+    
+        Draw.Picture(HabaneroPicture.getPicture($habaneroClock.HourTen), 50, 25)
+        Draw.Picture(HabaneroPicture.getPicture($habaneroClock.HourOne), 100, 25)
+        Draw.Picture(HabaneroPicture.getPicture($habaneroClock.MinuteTen), 200, 25)
+        Draw.Picture(HabaneroPicture.getPicture($habaneroClock.MinuteOne), 250, 25)
+        Draw.Picture(HabaneroPicture.getPicture($habaneroClock.SecondTen), 350, 25)
+        Draw.Picture(HabaneroPicture.getPicture($habaneroClock.SecondOne), 400, 25)
+
+End
+
+Private Sub drawColon()
+    
+    Draw.LineStyle = Line.Solid
+    Draw.LineWidth = 1
+    Draw.FillStyle = Fill.Solid
+    Draw.FillColor = &HE16B51
+    Draw.Foreground = &HE16B51
+    Draw.Circle(170, 60, 5)
+    Draw.Circle(170, 90, 5)
+    Draw.Circle(320, 60, 5)
+    Draw.Circle(320, 90, 5)
+    
+End
+
+Private Sub drawSlash()
+    
+    Draw.LineStyle = Line.Solid
+    Draw.LineWidth = 10
+    Draw.Foreground = &HE16B51
+    Draw.Line(180, 60, 160, 90)
+    Draw.Line(330, 60, 310, 90)
+    
+End
+
+Private Sub drawSeparators()
+    
+    If $habaneroClock.Type = SeparatorType.Colon Then
+        drawColon()
+    Else
+        drawSlash()
+    Endif
+    
+End
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    HabaneroSettings.loadFormSettings(Me)
+    DrawingArea1.SetFocus()
+    ToolButton2_Click()
+
+End
+
+Public Sub Form_Close()
+    
+    If Not SettingsDialog.Closed Then SettingsDialog.Close()
+    HabaneroSettings.saveFormSettings(Me)
+    
+End
+
+Public Sub ToolButton1_Click()
+
+    $habaneroClock = New HabaneroCalendar As "HabaneroClock"
+
+End
+
+Public Sub ToolButton2_Click()
+
+    $habaneroClock = New HabaneroClock As "HabaneroClock"
+
+End
+
+Public Sub ToolButton3_Click()
+    
+    $habaneroClock = New HabaneroTimer As "HabaneroClock"
+    
+End
+
+Public Sub ToolButton4_Click()
+    
+    SettingsDialog.Show()
+    
+End
+
+Public Sub HabaneroClock_Tick()
+    
+    DrawingArea1.Refresh()
+    
+End
+
+Public Sub DrawingArea1_Draw()
+    
+    drawHabaneroTans()
+    drawSeparators()
+    
+End

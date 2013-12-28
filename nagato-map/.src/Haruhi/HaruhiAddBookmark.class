@@ -1,0 +1,25 @@
+' Gambas class file
+
+Public Const Added As Integer = 1000
+
+Public Sub SetLocation(argLatitude As Float, argLongitude As Float)
+    
+    LatitudeLabel.Text = CStr(argLatitude)
+    LongitudeLabel.Text = CStr(argLongitude)
+    
+End
+
+Public Sub AddButton_Click()
+    
+    If NameTextBox.Text <> "" Then 
+        NagatoDBGeo.SetBookmark(NameTextBox.Text, CFloat(LatitudeLabel.Text), CFloat(LongitudeLabel.Text))
+        Me.Close(Me.Added)
+    End If
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(0)
+
+End

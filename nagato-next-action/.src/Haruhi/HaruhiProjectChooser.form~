@@ -1,0 +1,20 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(2,2,60,59)
+    { !ProjectView GridView
+      MoveScaled(0,0,61,42)
+      #Public = True
+      Expand = True
+      Mode = Select.Single
+      Header = GridView.Horizontal
+    }
+    { SelectButton Button
+      MoveScaled(26,49,16,4)
+      Text = ("Select")
+    }
+  }
+}

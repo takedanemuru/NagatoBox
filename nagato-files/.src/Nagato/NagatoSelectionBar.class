@@ -1,0 +1,84 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Count As Integer
+Property Read Paths As String
+
+Private $container As HBox
+Private $selection As New NagatoSelection As "Selection"
+Private $textLabel As TextLabel
+
+Private Sub refresh()
+    
+    Debug "refresh all!!!"
+    
+    $container.Visible = ($selection.Count > 0) 
+     
+     $textLabel.Text = Subst$("&1 items are selected", $selection.Count)
+     
+End
+
+Public Sub _new(argContainer As TabStrip)
+    
+    $container = New HBox(argContainer)
+    
+    $container.Height = 24
+    
+    Debug $container.W
+    
+    $textLabel = New TextLabel($container)
+    $textLabel.Foreground = Color.Black
+    $textLabel.Alignment = Align.Center
+    $textLabel.Expand = True
+    
+End
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return $selection.Exist(argPath)
+    
+End
+
+Public Sub ClearAll()
+    
+    $selection.ClearAll()
+    
+End
+
+Public Sub Remove(argPath As String)
+    
+    $selection.RemovePath(argPath)
+    
+End
+
+Public Sub Push(argPath As String)
+    
+    $selection.PushPath(argPath)
+    
+End
+
+Public Sub Toggle(argPath As String) 
+    
+    $selection.Toggle(argPath)
+    
+End
+
+Public Sub Selection_Changed()
+    
+    refresh()
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $selection.Paths.Count
+
+End
+
+
+Private Function Paths_Read() As String
+
+    Return $selection.Paths
+
+End

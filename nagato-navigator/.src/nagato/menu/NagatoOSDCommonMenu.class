@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Event Close
+
+Private Sub addShapeMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) 
+    Dim yukiShapesMenu As NagatoOSDShapesMenu
+    
+    With yukiMenu
+        .Text = ("Shape")
+        .Picture = MikuruMonoIconBlue.Get("shapes", 2 * MikuruUX.Grid)
+    End With
+    
+    yukiShapesMenu = New NagatoOSDShapesMenu(yukiMenu)
+    
+End
+
+Private Sub addCloseMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "CloseMenu"
+    
+    With yukiMenu
+        .Text = ("Close")
+        .Picture = MikuruMonoIconBlue.Get("button-cross", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override.
+    
+    addShapeMenu()
+    addCloseMenu()
+    
+End
+
+Public Sub CloseMenu_Click()
+    
+    Raise Close
+    
+End

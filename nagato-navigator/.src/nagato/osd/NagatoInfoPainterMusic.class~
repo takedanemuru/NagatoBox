@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoInfoPainter
+
+Private Function getStatusString() As String
+    
+    Select Case NagatoMusicPlayer.Status
+        Case MediaPlayer.Playing
+            Return Subst$("  &1", NagatoMusicPlayer.ProgressInText)
+        Case MediaPlayer.Paused
+            Return ("  [paused]")
+        Case MediaPlayer.Ready
+            Return ("  [stopped]")
+    End Select
+    
+End
+
+Private Function getMainLine() As String
+    
+    Dim yukiLine As String
+    
+    With NagatoMusicPlayer
+        yukiLine = .Title
+        If .Artist <> "" Then yukiLine &= Subst$("  Artist:&1", .Artist)
+        If .Album <> "" Then yukiLine &= Subst$("  Album:&1", .Album)
+        yukiLine &= getStatusString()
+    End With
+    
+    Return Subst$(("now playing: &1"), yukiLine)
+    
+End
+
+Public Sub Refresh()
+    
+    Me._$drawingArea.Refresh()
+    
+End
+
+Public Sub _InitializeDrawingArea()
+    
+    With Me._$drawingArea
+        .Expand = True
+        .Width = Me._$drawingArea.Parent.Width
+        .Background = NagatoSettingsInfobar.LabelColor
+    End With
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    If Not NagatoSystemObserver.Activated Then NagatoSystemObserver.Refresh()
+    
+    With Paint
+        .Begin(Me._$drawingArea)
+        .Font.Size = 9
+        .Font.Bold = True
+        .Brush = .Color(Color.White)
+        .Text(getMainLine(), 16, 0, Me._$drawingArea.Parent.Width - 16, 24, Align.Left)
+        .Fill()
+        .End()
+    End With
+    
+End
+
+Public Sub DrawingArea_Menu()
+    
+    Dim yukiMenu As New NagatoInfoMusicContextMenu
+    
+    yukiMenu.PopUp()
+    
+End

@@ -1,0 +1,61 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,83,47)
+  Text = ("Playlist")
+  Icon = Picture["Pictures/headphone.png"]
+  SkipTaskbar = True
+  Arrangement = Arrange.Fill
+  { PlaylistTabStrip TabStrip
+    MoveScaled(2,2,79,43)
+    Expand = True
+    Arrangement = Arrange.Fill
+    Count = 5
+    Index = 0
+    Text = ("Now playing")
+    Picture = Picture["Pictures/button-play.png"]
+    { VBox1 VBox
+      MoveScaled(0,0,81,44)
+      Expand = True
+      { HBox1 HBox
+        MoveScaled(4,5,74,4)
+        { SpacerPanel Panel
+          MoveScaled(0,0,45,3)
+          Expand = True
+        }
+        { MenuButton MenuButton
+          MoveScaled(69,0,4,4)
+          Picture = Picture["Pictures/star(1).png"]
+          Arrow = False
+        }
+      }
+      { PlaylistGrid GridView
+        MoveScaled(2,10,77,31)
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+    }
+    Index = 1
+    Text = ("Playlists")
+    Picture = Picture["Pictures/icons/music.png"]
+    Index = 2
+    Text = ("Albums")
+    Picture = Picture["Pictures/icons/disc.png"]
+    Index = 3
+    Text = ("Library")
+    Picture = Picture["Pictures/icons/hard-drive-network.png"]
+    Index = 4
+    Text = ("Internet radio")
+    Picture = Picture["Pictures/icons/wireless-router.png"]
+    { WebRadioGridView GridView
+      MoveScaled(0,0,75,33)
+      Expand = True
+      Mode = Select.Single
+      Grid = False
+      Header = GridView.Horizontal
+    }
+    Index = 0
+  }
+}

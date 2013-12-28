@@ -1,0 +1,43 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private Const ApplicationName As String = "system://org.freedesktop.NetworkManager"
+Private Const Interface As String = "org.freedesktop.NetworkManager.Device"
+
+Private $paths As String[]
+Private $currentIndex As Integer
+Private $currentProxy As DBusProxy
+Private $device As Object
+
+Private Sub setDevice()
+    
+    Select Case $currentProxy.DeviceType
+        Case 1 'Ethernet
+            
+        Case 2 '802.11 WiFi
+            $device = New NagatoNetworkDeviceWireless($paths[$currentIndex])
+            Debug $device.Bitrate
+    End Select
+    
+End
+
+Private Sub initializeCurrentProxy()
+    
+    $currentProxy = DBus[ApplicationName][$paths[$currentIndex], Interface]
+    setDevice()
+    
+End
+
+Public Sub _new(argObjectPaths As String[])
+    
+    $paths = argObjectPaths
+    initializeCurrentProxy()
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count 
+
+End

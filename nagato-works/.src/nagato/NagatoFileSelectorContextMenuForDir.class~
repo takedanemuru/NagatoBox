@@ -1,0 +1,92 @@
+' Gambas class file
+
+Inherits NagatoFileSelectorContextMenu
+
+Event OpenInNewTab
+Event SetSymbol
+Event Bookmark
+Event RemoveSymbol
+
+Private Sub addOpenInNewTabMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "OpenInNewTabMenu"
+    
+    With yukiMenu
+        .Text = ("Open in new tab")
+        .Picture = Stock["medium/new-window"]
+    End With
+    
+End
+
+Private Sub addSetSymbolMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "SetSymbolMenu"
+    
+    With yukiMenu
+        .Text = ("Set symbol")
+    End With
+    
+End
+
+Private Sub addBookmarkMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "BookmarkMenu"
+    
+    With yukiMenu
+        .Text = ("Bookmark")
+        .Picture = Stock["medium/bookmark"]
+    End With
+    
+End
+
+Private Sub addRemoveSymbolMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "RemoveSymbolMenu"
+    
+    With yukiMenu
+        .Text = ("Remove symbol")
+    End With
+    
+End
+
+Public Sub _InitializeChildMenus() 'override
+    
+    Debug "addDirMenus"
+    
+    Me.addOpenMenu()
+    addOpenInNewTabMenu()
+    Me.addMoveMenu()
+    Me.addCopyMenu()
+    Me.addCreateLinkMenu()
+    addSetSymbolMenu()
+    addRemoveSymbolMenu()
+    Me.addRenameMenu()
+    addBookmarkMenu()
+    Me.addDeleteMenu()
+    Me.addPropertyMenu()
+    
+End
+
+Public Sub OpenInNewTabMenu_Click()
+    
+    Raise OpenInNewTab
+    
+End
+
+Public Sub SetSymbolMenu_Click()
+    
+    Raise SetSymbol
+    
+End
+
+Public Sub RemoveSymbolMenu_Click()
+    
+    Raise RemoveSymbol
+    
+End
+
+Public Sub BookmarkMenu_Click()
+    
+    Raise Bookmark
+    
+End

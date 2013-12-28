@@ -1,0 +1,23 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  Text = ("Add Bookmark")
+  Picture = Picture["pictures/yukichan_29.jpg"]
+  SkipTaskbar = True
+  { CancelButton Button
+    MoveScaled(10,37,15,4)
+    Text = ("Cancel")
+  }
+  { AddButton Button
+    MoveScaled(26,37,15,4)
+    Text = ("Add")
+  }
+  { CategoryComboBox ComboBox
+    MoveScaled(9,7,32,4)
+  }
+  { UserTitleTextBox TextBox
+    MoveScaled(9,2,32,4)
+    Text = ("TextBox1")
+  }
+}

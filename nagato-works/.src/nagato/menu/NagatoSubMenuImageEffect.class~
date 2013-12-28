@@ -1,0 +1,107 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addRotateLeftMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Rotate left")
+        .Picture = Stock["medium/rotate-left"]
+        .Tag = MikuruMenuEventImageEffect.RotateLeft
+    End With
+    
+End
+
+Private Sub addRotateRightMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Rotate right")
+        .Picture = Stock["medium/rotate-right"]
+        .Tag = MikuruMenuEventImageEffect.RotateRight
+    End With
+    
+End
+
+Private Sub addZoomNormalMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Zoom normal")
+        .Picture = Stock["medium/zoom-normal"]
+        .Tag = MikuruMenuEventImageEffect.ZoomNormal
+    End With
+    
+End
+
+Private Sub addZoomInMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Zoom in")
+        .Picture = Stock["medium/zoom-in"]
+        .Tag = MikuruMenuEventImageEffect.ZoomIn
+    End With
+    
+End
+
+Private Sub addZoomOutMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Zoom out")
+        .Picture = Stock["medium/zoom-out"]
+        .Tag = MikuruMenuEventImageEffect.ZoomOut
+    End With
+    
+End
+
+Private Sub addZoomFitMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Zoom fit")
+        .Picture = Stock["medium/zoom-fit"]
+        .Tag = MikuruMenuEventImageEffect.ZoomFit
+    End With
+    
+End
+
+Private Sub addResizeMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuButton"
+    
+    With yukiMenu
+        .Text = ("Resize image")
+        .Tag = MikuruMenuEventImageEffect.Resize
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override.
+    
+    addRotateLeftMenu()
+    addRotateRightMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addZoomNormalMenu()
+    addZoomInMenu
+    addZoomOutMenu()
+    addZoomFitMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addResizeMenu()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End
+

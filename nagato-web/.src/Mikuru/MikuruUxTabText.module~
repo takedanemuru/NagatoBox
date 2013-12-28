@@ -1,0 +1,27 @@
+' Gambas module file
+
+Public Function GetCollapsedTitle(argTitle As String, argRectangle As Rect) As String
+    
+    Dim yukiTitle As String
+    Dim yukiCount As Integer
+    
+    If argTitle = "" Then Return ""
+    If (argRectangle.W - 2 * MikuruUxTab.Margin) >= Paint.Font.RichTextWidth(argTitle) Then Return argTitle
+    
+    Do
+        Inc yukiCount
+        If String.Len(argTitle) = yukiCount Then Return ""
+        yukiTitle = String.Left$(argTitle, -1 * yukiCount)
+        If yukiTitle = "" Then Return ""
+        If (argRectangle.W - 2 * MikuruUxTab.Margin) >= Paint.Font.RichTextWidth(yukiTitle & "...") Then
+            Return (yukiTitle & "...")
+        End If
+    Loop
+    
+End
+
+Public Function GetWidth(argText As String) As Integer
+    
+    Return HaruhiMain.Font.RichTextWidth(argText)
+    
+End

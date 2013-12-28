@@ -1,0 +1,25 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  Text = ("Rename a file")
+  Resizable = False
+  SkipTaskbar = True
+  { CancelButton Button
+    MoveScaled(8,37,16,4)
+    Text = ("Cancel")
+    Picture = Picture["icon:/small/cancel"]
+  }
+  { ApplyButton Button
+    MoveScaled(25,37,16,4)
+    Text = ("Apply")
+    Picture = Picture["icon:/small/apply"]
+  }
+  { RenameTextBox TextBox
+    MoveScaled(1,31,40,4)
+    Text = (" ")
+  }
+  { OriginalLabel Label
+    MoveScaled(1,26,40,4)
+  }
+}

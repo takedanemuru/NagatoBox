@@ -1,0 +1,69 @@
+' Gambas class file
+
+Public _$grids As GridView
+Public _$observer As Observer
+
+Public Sub _SetBackgroundColor(argRow As Integer, argColor As Integer)
+    
+    Dim yukiColumn As Integer
+    
+    For yukiColumn = 0 To Me._$grids.Columns.Max
+        Me._$grids[argRow, yukiColumn].Background = argColor
+    Next
+    
+End
+
+Public Sub _ClearIcon(argColumn As Integer)
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        Me._$grids[yukiRow, argColumn].Picture = Null
+    Next
+    
+End
+
+Public Sub _ClearGrids()
+    
+    Me._$grids.Clear()
+    Me._$grids.Rows.Count = 0
+    
+End
+
+Public Sub _SetGridData(argRow As Integer, argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
+    
+    Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
+    
+    Me._$grids[argRow, argColumn].Text = argData
+    
+    If argExpand And If yukiWidth > Me._$grids.Columns[argColumn].W Then
+        Me._$grids.Columns[argColumn].W = yukiWidth
+    Endif
+    
+End
+
+Public Sub _ContextMenu()
+    
+    
+    
+End
+
+Public Sub _InitializeGrids()
+    
+    
+    
+End
+
+Public Sub _new(argGrids As GridView)
+    
+    Me._$grids = argGrids
+    Me._InitializeGrids()
+    Me._$observer = New Observer(Me._$grids) As "Asakura"
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Me._ContextMenu()
+    
+End

@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits NagatoOSD 'NagatoOSD is a Static Class.
+
+Public _$uniqueName As String = "NagatoOSDBattery"
+
+Private Function getBatteryStatusText() As String
+    
+    If NagatoUPower.IsPlugged Then
+        Return ("Battery : Plugged")
+    Else
+        Return ("Battery : Unplugged")
+    End If
+    
+End
+
+Private Sub drawSubLineText()
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeMedium
+        .Text(getBatteryStatusText(), Me.OffsetLeft, Me.OffsetTop1st)
+        .Fill()
+    End With
+    
+End
+
+Private Sub drawMainLineText()
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeLarge
+        .Text(Subst$("&1%", Int(NagatoUPower.TotalBatteryPercentage)), Me.OffsetLeft, Me.OffsetTop2nd)
+        .Fill()
+    End With
+    
+End
+
+Private Sub drawIcon()
+    
+    Dim yukiIcon As Image = MikuruBatteryIcon.GetImage(Int(NagatoUPower.TotalBatteryPercentage), 12 * MikuruUX.Grid)
+    
+    Paint.DrawImage(yukiIcon, 3 * MikuruUX.Grid, 3 * MikuruUX.Grid)
+    
+End
+
+Public Sub _SetPicture() 'override
+    
+    Dim yukiBaseImage As Image
+    Dim yukiCondition As Integer = 100 - Int(NagatoUPower.TotalBatteryPercentage)
+    
+    yukiBaseImage = Me._GetBaseImage(MikuruColor.GetConditionColor(yukiCondition))
+    
+    Paint.Begin(yukiBaseImage)
+        drawSubLineText()
+        drawMainLineText()
+        drawIcon()
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+End

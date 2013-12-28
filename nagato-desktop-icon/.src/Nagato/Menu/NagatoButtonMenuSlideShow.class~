@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Event ChangeDirectory
+
+Private Sub addSelectDirectoryMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SelectDirectoryMenu"
+    
+    With yukiMenu
+        .Text = ("Select directory")
+        .Picture = MikuruIcon.Get("folder")
+    End With
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+
+Public Sub _InitializeAdditionalMenus() 'override
+    
+    addSelectDirectoryMenu()
+    Me._AddSpacer()
+    
+End
+
+Public Sub SelectDirectoryMenu_Click()
+    
+    Dialog.Title = ("Select directory for slideshow")
+    Dialog.Path = MikuruPath.Pictures
+    
+    If Not Dialog.SelectDirectory() Then
+        NagatoSettings.SlideShowDirectory = Dialog.Path
+        Raise ChangeDirectory
+    End If
+    
+End

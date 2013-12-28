@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoSearchEngineMenu
+
+Public Const _CategoryName As String = "Google"
+
+Public Sub _InitializeChildMenus() ' override
+    
+    Me._AddChildMenu(("Google"), "!g")
+    Me._AddChildMenu(("Google - Japanese"), "!gj")
+    Me._AddChildMenu(("Google - Image"), "!gi")
+    
+End

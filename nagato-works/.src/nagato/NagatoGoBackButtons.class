@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Event Back
+Event Forward
+
+Private Sub addBackButton()
+    
+    Dim yukiButton As New ToolButton(Me._$parent) As "BackButton"
+    
+    With yukiButton
+        .Width = Me.$size
+        .Picture = Stock["medium/left"]
+        .Tooltip = ("Back")
+    End With
+    
+End
+
+Private Sub addForwardButton()
+    
+    Dim yukiButton As New ToolButton(Me._$parent) As "ForwardButton"
+    
+    With yukiButton
+        .Width = Me.$size
+        .Picture = Stock["medium/right"]
+        .Tooltip = ("Forward")
+    End With
+    
+End
+
+Private Sub initializeGui()
+    
+    addBackButton()
+    addForwardButton()
+    
+End
+
+Public Sub _new(argPath As Container)
+    
+    Me.initialize(argPath)
+    initializeGui()
+    
+End
+
+Public Sub BackButton_Click()
+    
+    Raise Back
+    
+End
+
+Public Sub ForwardButton_Click()
+    
+    Raise Forward
+    
+End

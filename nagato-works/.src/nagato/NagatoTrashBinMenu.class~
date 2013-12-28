@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+Private Sub addEmptyAllMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    With yukiMenu
+        .Text = ("Empty Trash Bin")
+        .Picture = Stock["medium/delete"]
+    End With
+    
+End
+
+Public Sub _AddOtherMenu() ' override
+    
+    addEmptyAllMenu()
+    
+End

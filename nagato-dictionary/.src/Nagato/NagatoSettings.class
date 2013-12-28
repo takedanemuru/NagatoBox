@@ -1,0 +1,52 @@
+' Gambas class file
+
+Create Static
+
+Property Read ExactMatch As Boolean
+Property Read IgnoreCase As Boolean
+Property Read DictionaryFilePath As String
+Property Read EnamDictFilePath As String
+Property Read CompDictFilePath As String
+
+Private $settings As New Settings
+
+Public Sub EnsureDictionaryData()
+    
+    Dim yukiDirectory As String = User.Home &/ ".nagato-dictionary"
+    
+    If Not Exist(yukiDirectory) Then Mkdir yukiDirectory
+    If Not Exist(yukiDirectory &/ "DictionaryFile") Then Copy "dictionary_data/dictfile" To yukiDirectory &/ "DictionaryFile"
+    If Not Exist(yukiDirectory &/ "EnumDictFile") Then Copy "dictionary_data/enamdictfile" To yukiDirectory &/ "EnumDictFile"
+    If Not Exist(yukiDirectory &/ "CompDictFile") Then Copy "dictionary_data/compdictfile" To yukiDirectory &/ "CompDictFile"
+    
+End
+
+Private Function EnamDictFilePath_Read() As String
+
+    Return User.Home &/ ".nagato-dictionary" &/ "EnumDictFile"
+
+End
+
+Private Function CompDictFilePath_Read() As String
+
+    Return User.Home &/ ".nagato-dictionary" &/ "CompDictFile"
+
+End
+
+Private Function DictionaryFilePath_Read() As String
+
+    Return User.Home &/ ".nagato-dictionary" &/ "DictionaryFile"
+
+End
+
+Private Function ExactMatch_Read() As Boolean
+
+    Return False
+
+End
+
+Private Function IgnoreCase_Read() As Boolean
+
+    Return True
+
+End

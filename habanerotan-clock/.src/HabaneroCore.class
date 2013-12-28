@@ -1,0 +1,68 @@
+' Gambas class file
+
+Property Read HourTen As Integer
+Property Read HourOne As Integer
+Property Read MinuteTen As Integer
+Property Read MinuteOne As Integer
+Property Read SecondTen As Integer
+Property Read SecondOne As Integer
+
+Public $timer As Timer
+Public $hourTen As Integer
+Public $hourOne As Integer
+Public $minuteTen As Integer
+Public $minuteOne As Integer
+Public $secondTen As Integer
+Public $secondOne As Integer
+
+Event Tick
+
+Public Sub sendTick()
+    
+    Raise Tick
+    
+End
+
+Public Sub initializeTimer()
+    
+    $timer = New Timer As "HabaneroTimer"
+    $timer.Delay = 1000
+    
+End
+
+Private Function HourTen_Read() As Integer
+    
+    Return $hourTen
+    
+End
+
+Private Function HourOne_Read() As Integer
+    
+    Return $hourOne
+    
+End
+
+Private Function MinuteTen_Read() As Integer
+    
+    Return $minuteTen
+    
+End
+
+Private Function MinuteOne_Read() As Integer
+    
+    Return $minuteOne
+    
+End
+
+
+Private Function SecondTen_Read() As Integer
+    
+    Return $secondTen
+    
+End
+
+Private Function SecondOne_Read() As Integer
+    
+    Return $secondOne
+    
+End

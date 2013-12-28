@@ -1,0 +1,26 @@
+' Gambas class file
+
+Create Static
+
+Private $memoryTotal As Integer
+Private $memoryFree As Integer
+Private $memoryBuffers As Integer
+Private $memoryCached As Integer
+
+Public Sub SetVariables()
+    
+    Dim yukiArray As String[]
+    
+    yukiArray = Split(File.Load("/proc/meminfo"), "\n", "")
+    $memoryTotal = Split(yukiArray[0], " ", "", True)[1]
+    $memoryFree = Split(yukiArray[1], " ", "", True)[1]
+    $memoryBuffers = Split(yukiArray[2], " ", "", True)[1]
+    $memoryCached = Split(yukiArray[3], " ", "", True)[1]
+    
+End
+
+Public Function GetMemoryRate() As Float
+    
+    Return ($memoryTotal - ($memoryFree + $memoryBuffers + $memoryCached)) / $memoryTotal
+    
+End

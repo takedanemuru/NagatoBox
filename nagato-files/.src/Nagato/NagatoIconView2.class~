@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $iconView As ImageView
+Private $initialized As Boolean = False
+
+Private Sub initializeIconView(argContainer As Container)
+    
+    $iconView = New ImageView(argContainer) As "IconView2"
+    
+    With $iconView
+        .Expand = True
+        .Background = Color.Pink
+    End With
+    
+    $iconView.Image = Image.Load("pictures/about.png")
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeIconView(argContainer)
+    $iconView.SetFocus()
+    
+End

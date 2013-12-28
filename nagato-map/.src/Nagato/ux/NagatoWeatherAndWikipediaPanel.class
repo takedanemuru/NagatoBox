@@ -1,0 +1,175 @@
+' Gambas class file
+
+Create Static
+
+Private $sidePanel As SidePanel
+Private $tabStrip As TabStrip
+Private $weatherDrawingArea As NagatoWeatherDrawingArea
+Private $wikipediaGrid As GridView
+Private $wikipediaUrls As New String[]
+Private $wikipediaWebView As WebView
+
+Private Sub initializeSidePanel(argSidePanel As SidePanel)
+    
+    $sidePanel = argSidePanel
+    
+    With $sidePanel
+        .Arrangement = Arrange.Fill
+    End With
+    
+End
+
+Private Sub initializeTabStrip()
+    
+    $tabStrip = New TabStrip($sidePanel) As "TabStrip"
+    
+    With $tabStrip
+        .Count = 3
+        .Arrangement = Arrange.Vertical
+        .[0].Text = ("Weather")
+        .[1].Text = ("List")
+        .[2].Text = ("Article")
+    End With
+    
+End
+
+Private Sub initializeWeatherDrawingArea()
+    
+    Dim yukiDrawingArea As DrawingArea
+    
+    $tabStrip.Index = 0
+    
+    yukiDrawingArea = New DrawingArea($tabStrip) As "DrawingArea"
+    
+    With yukiDrawingArea
+        .Expand = True
+        .Background = Color.Blue
+    End With
+    
+    $weatherDrawingArea = New NagatoWeatherDrawingArea(yukiDrawingArea)
+    
+End
+
+Private Sub initializeWikipediaListGrid()
+    
+    $tabStrip.Index = 1
+    
+    $wikipediaGrid = New GridView($tabStrip) As "WikipediaGrid"
+    
+    With $wikipediaGrid
+        .Header = GridView.Horizontal
+        .Columns.Count = 3
+        .Columns[0].Text = ("Name")
+        .Columns[1].Text = ("Latitude")
+        .Columns[2].Text = ("Longitude")
+        .Rows.Count = 1
+        .Expand = True
+        .Mode = Select.Single
+    End With
+    
+End
+
+Private Sub initializeWikipediaArticleWebview()
+    
+    $tabStrip.Index = 2
+    
+    $wikipediaWebView = New WebView($tabStrip)
+    
+    With $wikipediaWebView
+        .Expand = True
+        .Background = Color.Pink
+    End With
+    
+End
+
+Private Sub setWikipediaArticleList(argGeoInfomations As NagatoGeoInfomationElement[])
+    
+    Dim yukiInfomationElement As NagatoGeoInfomationElement
+    
+    $wikipediaGrid.Clear()
+    $wikipediaGrid.Rows.Count = 1
+    $wikipediaGrid.Columns[0].Width = 200
+    
+    $wikipediaUrls.Clear()
+    
+    For Each yukiInfomationElement In argGeoInfomations
+        With $wikipediaGrid
+            $wikipediaGrid[.Rows.Max, 0].Text = yukiInfomationElement.Title
+            $wikipediaGrid[.Rows.Max, 0].Alignment = Align.Left
+            $wikipediaGrid[.Rows.Max, 1].Text = yukiInfomationElement.Latitude
+            $wikipediaGrid[.Rows.Max, 1].Alignment = Align.Right
+            $wikipediaGrid[.Rows.Max, 2].Text = yukiInfomationElement.Longitude
+            $wikipediaGrid[.Rows.Max, 2].Alignment = Align.Right
+            $wikipediaUrls.Add(yukiInfomationElement.MobileUrl)
+            Inc .Rows.Count
+        End With
+    Next
+    
+    $tabStrip.Index = 1
+    $sidePanel.Hidden = False
+    
+End
+
+Private Sub requestWikipedia(argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiObserver As Observer
+    
+    yukiObserver = New Observer(NagatoGeoInfomationWikipedia) As "Asakura"
+    
+    NagatoGeoInfomationWikipedia.Get(argLatitude, argLongitude)
+    
+End
+
+Private Sub requestWeather(argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiObserver As Observer
+    
+    yukiObserver = New Observer(NagatoWeatherCache) As "Kimidori"
+    
+    NagatoWeatherCache.Activate(argLatitude, argLongitude)
+    
+End
+
+Public Sub Activate(argSidePanel As SidePanel)
+    
+    initializeSidePanel(argSidePanel)
+    initializeTabStrip()
+    initializeWeatherDrawingArea()
+    initializeWikipediaListGrid()
+    initializeWikipediaArticleWebview()
+    
+End
+
+Public Sub Request(argLatitude As Float, argLongitude As Float)
+    
+    requestWikipedia(argLatitude, argLongitude)
+    requestWeather(argLatitude, argLongitude)
+    $weatherDrawingArea.Longitude = argLongitude
+    
+End
+
+Public Sub Asakura_Finished(argGeoInfomations As NagatoGeoInfomationElement[])
+    
+    setWikipediaArticleList(argGeoInfomations)
+    
+End
+
+Public Sub Kimidori_Finished()
+    
+    $weatherDrawingArea.Refresh()
+    
+End
+
+Public Sub WikipediaGrid_Activate()
+    
+    Dim yukiLatitude As Float
+    Dim yukiLongitude As Float
+    
+    If $wikipediaGrid[$wikipediaGrid.Row, 0].Text <> "" Then
+        $wikipediaWebView.Url = $wikipediaUrls[$wikipediaGrid.Row]
+        yukiLatitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 1].Text)
+        yukiLongitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 2].Text)
+        HaruhiMapView.SetMarker(yukiLatitude, yukiLongitude)
+    End If
+    
+End

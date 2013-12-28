@@ -1,0 +1,62 @@
+' Gambas class file
+
+Private Const ApplicationName As String = "system://org.freedesktop.UPower"
+Private Const ObjectPathUPower As String = "/org/freedesktop/UPower"
+Private Const InterfaceUPower As String = "org.freedesktop.UPower"
+
+Private $uPower As DBusProxy 
+Private $devices As New DBusProxy[] 
+
+Private Sub setUPower()
+        
+        $uPower = DBus[ApplicationName][ObjectPathUPower, InterfaceUPower]
+        
+End
+
+Private Sub setDevices()
+        
+        Dim yukiDeviceName As String
+        
+        For Each yukiDeviceName In $uPower.EnumerateDevices()
+                $devices.Add(DBus[ApplicationName][yukiDeviceName])
+        Next
+        
+End
+
+Private Sub connectSignals()
+        
+        Dim yukiSignal As DBusSignal
+
+        yukiSignal = New DBusSignal(DBus.System, "org.freedesktop.UPower.Device") As "DBusSignal"
+        
+End
+
+Private Sub showEachDeviceInfomation()
+        
+        Dim yukiDevice As DBusProxy
+        
+        For Each yukiDevice In $devices
+                If yukiDevice.Type = 2 Then 
+                        ProgressBar1.Value = yukiDevice.Percentage / 100
+                        Debug yukiDevice.Technology
+                        Debug yukiDevice.TimeToEmpty ' if it's pluged then it returns 0
+                Endif
+        Next
+        
+End
+
+Public Sub Form_Open()
+        
+        setUPower()
+        setDevices()
+        connectSignals()
+        showEachDeviceInfomation()
+        
+End
+
+Public Sub DBusSignal_Signal(Signal As String, SignalArguments As Variant[])
+        
+        Debug Signal
+        Debug SignalArguments[0]
+        
+End

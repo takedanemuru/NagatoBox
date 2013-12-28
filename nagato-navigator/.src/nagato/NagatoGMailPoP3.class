@@ -1,0 +1,82 @@
+' Gambas class file
+
+Create Static
+
+Property Read Ready As Boolean
+Property Read InboxMessage As Integer
+
+Private $pop3Client As Pop3Client
+Private $ready As Boolean = False
+
+Private Sub setUpPoP3()
+    
+    $pop3Client = Kyon.GMailPop3
+    
+    With $pop3Client
+        .Port = NagatoSettingsMail.GMailPort
+        .User = NagatoSettingsMail.UserName
+        .Password = NagatoSettingsMail.Password
+        .Host = NagatoSettingsMail.GMailHost
+        .Encrypt = Net.SSL
+    End With
+    
+End
+
+Private Sub checkMessage()
+    
+    Dim yukiMessage As _Pop3Client_Message
+    Dim yukiDebugString As String
+    
+    For Each yukiMessage In $pop3Client
+        If yukiMessage.Deleted Then Continue 
+        Debug yukiMessage.Message.Subject
+        Debug yukiMessage.Message.Sender
+    Next
+    
+Finally
+    Try $pop3Client.Reset()
+    Return
+    
+End
+
+Public Sub Refresh()
+    
+    $ready = False
+        checkMessage()
+    $ready = True
+    
+End
+
+Public Sub Activate()
+    
+    setUpPoP3()
+    
+    $pop3Client.Open()
+        $ready = False
+        checkMessage()
+        $ready = True
+    $pop3Client.Close()
+    
+End
+
+Public Sub Save()
+    
+    NagatoSettingsMail.UserName = $pop3Client.User
+    NagatoSettingsMail.Password = $pop3Client.Password
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function InboxMessage_Read() As Integer
+
+    Return $pop3Client.Count
+
+Catch
+    Return 0
+
+End

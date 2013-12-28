@@ -1,0 +1,72 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private $mainVBox As VBox
+Private $comboBox As ComboBox
+Private $webView As WebView
+Private $infomationElements As NagatoGeoInfomationElement[]
+
+Private Sub addMainVBox()
+    
+    $mainVBox = New VBox(Me._$parent)
+    
+    With $mainVBox
+        .Expand = True
+    End With
+    
+End
+
+Private Sub addToolPanel()
+    
+    $comboBox = New ComboBox($mainVBox) As "ComboBox"
+    
+    With $comboBox
+        .Expand = False
+        .Height = 36
+        .ReadOnly = True
+    End With
+    
+End
+
+Private Sub addWebView()
+    
+    $webView = New WebView($mainVBox)
+    
+    With $webView
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _Initialize(argPath As String) 'override.
+    
+    Debug argPath
+    
+    addMainVBox()
+    addToolPanel()
+    addWebView()
+    
+End
+
+Public Sub SetData(argElements As NagatoGeoInfomationElement[])
+    
+    Dim yukiElement As NagatoGeoInfomationElement
+    
+    $comboBox.Clear()
+    
+    For Each yukiElement In argElements
+        $comboBox.Add(yukiElement.Title)
+    Next
+    
+    $infomationElements = argElements
+    
+    $webView.Url = argElements[0].MobileUrl
+    
+End
+
+Public Sub ComboBox_Click()
+    
+    $webView.Url = $infomationElements[$comboBox.Index].MobileUrl
+    
+End

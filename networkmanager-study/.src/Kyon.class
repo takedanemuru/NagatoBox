@@ -1,0 +1,73 @@
+' Gambas class file
+
+Private Const DBusApplicationName As String = "System://org.freedesktop.NetworkManager"
+Private Const DBusObjectPath As String = "/org/freedesktop/NetworkManager"
+Private Const DBusInterface As String = "org.freedesktop.NetworkManager"
+Private Const AccessPointInterface As String = "org.freedesktop.NetworkManager.AccessPoint"
+Private Const ActiveConnectionInterface As String = "org.freedesktop.NetworkManager.Connection.Active"
+Private Const DeviceInterface As String = "org.freedesktop.NetworkManager.Device"
+Private Const WiredDeviceInterface As String = "org.freedesktop.NetworkManager.Device.Wired"
+Private Const WirelessDeviceInterface As String = "org.freedesktop.NetworkManager.Device.Wireless"
+
+Private $networkManager As DBusProxy
+Private $activeConnections As String[]
+Private $activeConnection As DBusProxy
+Private $deviceObjectPaths As String[]
+Private $accessPoint As DBusProxy
+
+Private Sub initializeWirelessDeviceProxy(argObjectPath As String)
+    
+    Dim yukiDBusProxy As DBusProxy
+    Dim yukiObjectPath As String
+    
+    yukiDBusProxy = DBus[DBusApplicationName][argObjectPath, WirelessDeviceInterface]
+    
+    Debug yukiDBusProxy.WirelessCapabilities
+    Debug yukiDBusProxy.Bitrate
+    Debug yukiDBusProxy.Mode
+    Debug yukiDBusProxy.ActiveAccessPoint
+    
+    yukiObjectPath = yukiDBusProxy.ActiveAccessPoint
+    
+End
+
+Private Sub initializeWiredDeviceProxy(argObjectPath As String)
+    
+    Dim yukiDBusProxy As DBusProxy
+    
+    yukiDBusProxy = DBus[DBusApplicationName][argObjectPath, WiredDeviceInterface]
+    
+    Debug yukiDBusProxy.Speed
+    
+End
+
+Private Sub initializeDevicesProxies()
+    
+    Dim yukiObjectPath As String
+    Dim yukiDBusProxy As DBusProxy
+    
+    For Each yukiObjectPath In $deviceObjectPaths
+        yukiDBusProxy = DBus[DBusApplicationName][yukiObjectPath, DeviceInterface]
+        Debug yukiDBusProxy.DeviceType
+        Debug yukiDBusProxy.State
+        If yukiDBusProxy.DeviceType = 2 Then initializeWirelessDeviceProxy(yukiObjectPath)
+        If yukiDBusProxy.DeviceType = 1 Then initializeWiredDeviceProxy(yukiObjectPath)
+    Next
+    
+End
+
+Public Sub _new()
+
+    $networkManager = DBus[DBusApplicationName][DBusObjectPath, DBusInterface]
+
+    $deviceObjectPaths = $networkManager.GetDevices()
+
+    If $deviceObjectPaths.Count > 0 Then
+        initializeDevicesProxies()
+    Endif
+
+End
+
+Public Sub Form_Open()
+
+End

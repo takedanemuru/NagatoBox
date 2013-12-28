@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoInfo
+
+Private $leftOffset As Integer = 50
+
+Private Sub drawText(argText As String)
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .DrawText(argText, $leftOffset, 0, .Font.TextWidth(argText), 16, Align.Left)
+        $leftOffset += (.Font.TextWidth(argText) + 24)
+    End With
+    
+End
+
+Private Sub drawCpuUsage()
+    
+    Dim yukiText As String = "Processor: " & Format$(NagatoSystemObserver.CpuUsage * 100, "##0.00") & " %"
+    
+    drawText(yukiText)
+    
+End
+
+Private Sub drawMemoryUsage()
+    
+    Dim yukiText As String = "Memory: " & Format$(NagatoSystemObserver.MemoryUsage * 100, "##0.00") & " %"
+    
+    drawText(yukiText)
+    
+End
+
+Private Sub drawSwapUsage()
+    
+    Dim yukiText As String = "Swap: " & Format$(NagatoSystemObserver.SwapUsage * 100, "##0.00") & " %"
+    
+    drawText(yukiText)
+    
+End
+
+Private Sub drawProcessCount()
+    
+    Dim yukiText As String = "Process: " & NagatoSystemObserver.ProcessCount 
+    
+    drawText(yukiText)
+    
+End
+
+Public Sub _SetType()
+    
+    Me._$type = NagatoInfo.System
+    
+End
+
+Public Sub DrawInfo(argOffsetLeft As Integer)
+    
+    If Not NagatoSystemObserver.Activated Then NagatoSystemObserver.Refresh()
+    
+    drawCpuUsage()
+    drawMemoryUsage()
+    drawSwapUsage()
+    drawProcessCount()
+    
+    $leftOffset = 50
+    
+End

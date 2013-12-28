@@ -1,0 +1,12 @@
+' Gambas module file
+
+Private $index As Integer
+
+Public Function Get() As Integer
+    
+    Inc $index
+    
+    Return $index
+    
+End
+

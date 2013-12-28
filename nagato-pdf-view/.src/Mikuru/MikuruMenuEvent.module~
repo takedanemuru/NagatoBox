@@ -1,0 +1,85 @@
+' Gambas module file
+
+Property Read None As Integer
+
+Property Read ZoomIn As Integer
+Property Read ZoomOut As Integer
+Property Read ZoomFit As Integer
+Property Read ZoomNormal As Integer
+
+Property Read PageBack As Integer
+Property Read PageNext As Integer
+
+Property Read MenuOpen As Integer
+Property Read MenuConvert As Integer
+Property Read MenuAbout As Integer
+Property Read MenuClose As Integer
+
+Private $header As Integer = 1000
+
+Private Function None_Read() As Integer
+
+    Return 0
+
+End
+
+Private Function ZoomIn_Read() As Integer
+
+    Return $header + 1
+
+End
+
+Private Function ZoomOut_Read() As Integer
+
+    Return $header + 2
+
+End
+
+Private Function ZoomFit_Read() As Integer
+
+    Return $header + 3
+    
+End
+
+Private Function ZoomNormal_Read() As Integer
+
+    Return $header + 4
+    
+
+End
+
+Private Function PageBack_Read() As Integer
+
+    Return $header + 5
+
+End
+
+Private Function PageNext_Read() As Integer
+
+    Return $header + 6
+
+End
+
+Private Function MenuOpen_Read() As Integer
+
+    Return $header + 7
+
+End
+
+Private Function MenuAbout_Read() As Integer
+
+    Return $header + 8
+
+End
+
+Private Function MenuClose_Read() As Integer
+
+    Return $header + 9
+
+End
+
+Private Function MenuConvert_Read() As Integer
+
+    Return $header + 10
+
+End

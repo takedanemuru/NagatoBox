@@ -1,0 +1,115 @@
+' Gambas class file
+
+Inherits NagatoTabContent
+
+Private $dictionarySelectButtons As NagatoDictionarySelectButtons
+Private $listBox As ListBox
+
+Private Sub addDictionarySelectButtons()
+    
+    $dictionarySelectButtons = New NagatoDictionarySelectButtons(Me._$hBox)
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiSpacer As NagatoSeparator
+    
+    yukiSpacer = New NagatoSeparator(Me._$hBox)
+    
+End
+
+Private Sub addSearchBox()
+    
+    Dim yukiSearchBox As NagatoSearchBox
+    
+    yukiSearchBox = New NagatoSearchBox(Me._$hBox) As "SearchBox"
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiGearButton As NagatoGearButton
+    Dim yukiMenu As NagatoDictionaryMenu
+    
+    yukiGearButton = New NagatoGearButton(Me._$hBox) As "GearBox"
+    yukiMenu = New NagatoDictionaryMenu(yukiGearButton.RootMenu) 
+    
+End
+
+Private Sub initializeToolBar()
+    
+    addDictionarySelectButtons()
+    addSpacer()
+    addSearchBox()
+    addGearButton()
+    
+End
+
+Private Sub initializeListBox()
+    
+    $listBox = New ListBox(Me._$vBox)
+    
+    With $listBox
+        .Expand = True
+        .Sorted = True
+    End With
+    
+End
+
+Private Sub initializeGui()
+    
+    initializeToolBar()
+    initializeListBox()
+    Me._RefreshParentTab(("dictionary"), Stock["small/book"])
+    
+End
+
+Private Sub setResult(argResult As String)
+
+    $listBox.List = Split(argResult, "\n", "", True)
+    If $listBox.Count = 0 Then
+        NagatoMessaging.setMessage(("sorry, but I couldn't find any word."))
+    Else If $listBox.Count = 1 Then
+        NagatoMessaging.setMessage(Subst$("I found &1 matching word.", $listBox.Count))
+    Else
+        NagatoMessaging.setMessage(Subst$("I found &1 matching words.", $listBox.Count))
+    Endif
+    
+End
+
+Private Sub getSearchResults(argText As String)
+    
+    Dim yukiBufferS As String = ""
+    Dim yukiBufferC As String = ""
+    Dim yukiBufferE As String = ""
+    
+    If $dictionarySelectButtons.StandardDictionaryEnabled Then yukiBufferS = NagatoDictionaryEngine.getSerchResultStarndardDictionary(argText)
+    If $dictionarySelectButtons.CompDictionaryEnabled Then yukiBufferC = NagatoDictionaryEngine.getSerchResultCompDictionary(argText)
+    If $dictionarySelectButtons.EnamDictionaryEnabled Then yukiBufferE = NagatoDictionaryEngine.getSerchResultEnamDictionary(argText)
+    
+    setResult(yukiBufferS & yukiBufferC & yukiBufferE)
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip, Optional argQuery As String = "")
+    
+    Debug argQuery
+    
+    Me._Initialize(argTabStrip)
+    initializeGui()
+    NagatoMessaging.setMessage(("...dictionary tab."))
+    
+    If argQuery <> "" Then SearchBox_SearchQuery(argQuery)
+    
+End
+
+Public Sub SearchBox_SearchQuery(argText As String)
+    
+    If $dictionarySelectButtons.IsAtLeastOneDictionatyEnabled() Then
+        getSearchResults(argText)
+    Else
+        NagatoMessaging.setMessage(("Enable at least one dictionary."))
+    Endif
+    
+End

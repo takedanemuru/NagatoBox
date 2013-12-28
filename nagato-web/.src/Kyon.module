@@ -1,0 +1,36 @@
+' Gambas module file
+
+Private Function getSartupUrl() As String
+    
+    Dim yukiUrl As String = ""
+    Dim yukiArgs As String[]
+    
+    Args.Begin("Usage")
+        yukiUrl = Args.Get("u", "url", "open specific url", "url to open")
+    yukiArgs = Args.End()
+    
+    If yukiUrl = "" And If Args.Count > 1 Then yukiUrl = Args[1]
+    
+    Return yukiUrl
+    
+End
+
+Public Sub Main()
+    
+    Dim yukiUrl As String = getSartupUrl()
+    
+    If NagatoDBus.IsUnique() Then
+        NagatoDBus.Register()
+        HaruhiMain.Show()
+        If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
+    Else ' has been activated
+        With NagatoDBus
+             If yukiUrl = "" Then
+                 NagatoDBus.Proxy.Show()
+            Else
+                NagatoDBus.Proxy.SetUrl(yukiUrl)
+             Endif
+        End With
+    End If
+    
+End

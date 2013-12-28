@@ -1,0 +1,63 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Sub addAddFileMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AddFileMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/toggle-expand-alt.png"]
+        .Text = ("AddMusicFiles")
+    End With
+    
+End
+
+Private Sub addAddDirectoryMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AddDirectoryMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/folder.png"]
+        .Text = ("AddDirectory")
+    End With
+    
+End
+
+Private Sub addClearMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ClearMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/toggle-collapse-alt.png"]
+        .Text = ("ClearQueue")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override.
+    
+    addAddFileMenu()
+    addAddDirectoryMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addClearMenu()
+    
+End
+
+Public Sub AddFileMenu_Click()
+    
+    NagatoMusicMenuHandler.AddFiles()
+    
+End
+
+Public Sub AddDirectoryMenu_Click()
+    
+    NagatoMusicMenuHandler.AddDirectory()
+    
+End
+
+Public Sub ClearMenu_Click()
+    
+    NagatoMusicMenuHandler.Clear()
+    
+End

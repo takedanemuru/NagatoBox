@@ -1,0 +1,61 @@
+' Gambas module file
+
+Private Const TitleHeader As String = "=== TIT2 (Title/songname/content description): "
+Private Const ArtistHeader As String = "=== TPE1 (Lead performer(s)/Soloist(s)): "
+Private Const AlbumHeader As String = "=== TALB (Album/Movie/Show title): "
+
+Private Function getId3v2Tag(argFullPath As String, argHeader As String) As String
+    
+    Dim yukiCommand As String
+    Dim yukiResult As String
+    
+    yukiCommand = Subst$("id3info &1 | grep &2", Quote$(argFullPath), Quote$(argHeader))
+    Shell yukiCommand To yukiResult
+    
+    If yukiResult <> "" Then yukiResult = Replace$(yukiResult, argHeader, "")
+    
+    Return Replace$(yukiResult, gb.NewLine, "")
+    
+End
+
+Public Function GetTitle(argFullPath As String) As String
+    
+    Dim yukiTitle As String
+    
+    If Not Exist(argFullPath) Then Return ""
+    
+    yukiTitle = getId3v2Tag(argFullPath, TitleHeader)
+    
+    If yukiTitle = "" Then
+        Return File.BaseName(argFullPath)
+    Else If DesktopMime.FromFile(argFullPath).Type = "audio/x-scpls" Then
+        Return "radio"
+    Else
+        Return getId3v2Tag(argFullPath, TitleHeader)
+    End If
+    
+End
+
+Public Function GetArtist(argFullPath As String) As String
+    
+    If Not Exist(argFullPath) Then
+        Return ""
+    Else If DesktopMime.FromFile(argFullPath).Type = "audio/x-scpls" Then
+        Return "radi"
+    Else
+        Return getId3v2Tag(argFullPath, ArtistHeader)
+    End If
+    
+End
+
+Public Function GetAlbum(argFullPath As String) As String
+    
+    If Not Exist(argFullPath) Then
+        Return ""
+    Else If DesktopMime.FromFile(argFullPath).Type = "audio/x-scpls" Then
+        Return "radio"
+    Else
+        Return getId3v2Tag(argFullPath, AlbumHeader)
+    End If
+    
+End

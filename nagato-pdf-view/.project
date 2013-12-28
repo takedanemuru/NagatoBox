@@ -1,0 +1,31 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.0
+Title=nagato-pdf-view
+Startup=Kyon
+Icon=picture/blue/document.png
+Version=0.3.1
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.pdf
+Component=gb.qt4.ext
+Description="pdf viewer"
+Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=nagato-pdf-view-0.3.1
+CreateEachDirectory=1
+MimeTypes="application/pdf","application/x-pdf"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Office"
+Categories=ubuntu:"Nagato;Office"
+Groups=ubuntu:"x11"

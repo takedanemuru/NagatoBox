@@ -1,0 +1,53 @@
+' Gambas class file
+
+Private $pdfDocument As New PdfDocument
+Private $currentPage As Integer = 1
+
+Private Sub setWindowTitle()
+    
+    Debug $pdfDocument.Info.Title
+    
+End
+
+Private Sub setButtonProperty()
+    
+    BackButton.Enabled = Not ($currentPage = 1)
+    NextButton.Enabled = Not ($currentPage = $pdfDocument.Count)
+    
+End
+
+Private Sub showCurrentPage()
+    
+    setWindowTitle()
+    setButtonProperty()
+    PdfView.Image = $pdfDocument[$currentPage].GetImage()
+    
+End
+
+Public Sub Form_Open()
+
+    PdfView.SetFocus()
+
+    $pdfDocument.Open("sample/hanairo_bento.pdf")
+
+    showCurrentPage()
+
+End
+
+Public Sub BackButton_Click()
+
+    If $currentPage <> 1 Then
+        Dec $currentPage
+        showCurrentPage()
+    End If
+
+End
+
+Public Sub NextButton_Click()
+
+    If $currentPage <> $pdfDocument.Count Then
+        Inc $currentPage
+        showCurrentPage()
+    Endif
+
+End

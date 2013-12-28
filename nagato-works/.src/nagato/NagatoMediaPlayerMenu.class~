@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+
+Public Sub _AddOtherMenu() ' override
+    
+    Dim yukiMediaControlMenu As NagatoMediaControlMenu
+    
+    yukiMediaControlMenu = New NagatoMediaControlMenu(Me._$rootMenu)
+    
+End

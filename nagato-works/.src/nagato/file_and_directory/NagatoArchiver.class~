@@ -1,0 +1,56 @@
+' Gambas class file
+
+Event Finished
+
+Static Public Function CanUnarchive(argSourcePath As String) As Boolean
+    
+    Select Case NagatoMimeType.GetMineType(argSourcePath)
+        Case "application/zip"
+            Return True
+        Case "application/x-compressed-tar"
+            Return True
+        Default
+            Return False
+    End Select
+    
+End
+
+Private Sub unzip(argSourcePath As String, argTargetPath As String)
+    
+    Dim yukiCommand As String = Subst$("unzip -d &1 &2", Quote$(argTargetPath), Quote$(argSourcePath))
+    
+    Shell yukiCommand Wait
+    
+    Raise Finished
+    
+End
+
+Private Sub tar(argSourcePath As String, argTargetPath As String)
+    
+    Dim yukiTargetDir As String = File.Dir(argTargetPath)
+    Dim yukiCommand As String 
+    Dim yukiOutput As String
+    
+    If argSourcePath Ends ".tar.gz" Then
+        yukiCommand = Subst$("tar xfvz &1 -C &2 -k", Quote$(argSourcePath), Quote$(yukiTargetDir))
+    Else If argSourcePath Ends "tar.bz" Then
+        yukiCommand = Subst$("tar xfvj &1 -C &2 -k", Quote$(argSourcePath), Quote$(yukiTargetDir))
+    Else
+        yukiCommand = Subst$("tar xfv &1 -C &2 -k", Quote$(argSourcePath), Quote$(yukiTargetDir))
+    Endif
+    
+    Shell yukiCommand Wait
+    
+    Raise Finished
+    
+End
+
+Public Sub Unarchive(argSourcePath As String, argTargetPath As String)
+    
+    If NagatoMimeType.GetMineType(argSourcePath) = "application/zip" Then
+        unzip(argSourcePath, argTargetPath)
+    Else If NagatoMimeType.GetMineType(argSourcePath) = "application/x-compressed-tar" Then
+        tar(argSourcePath, argTargetPath)
+    Endif
+    
+End

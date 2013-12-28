@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Create Static
+
+Property Feeds As String[]
+
+Private Const PATH_0 As String = "http://feeds.bbci.co.uk/news/rss.xml"
+Private Const PATH_1 As String = "http://feeds.cnn.co.jp/rss/cnn/cnn.rdf"
+Private Const PATH_2 As String = "http://ceron.jp/top/?type=rss"
+Private Const PATH_3 As String = "http://rss.rssad.jp/rss/engadget/rss?rss"
+
+Private $feeds As String[]
+
+Public Sub _new() 'override
+    
+    Me._$settings = Kyon.Settings
+    $feeds = [PATH_0, PATH_1, PATH_2, PATH_3]
+    
+End
+
+Private Function Feeds_Read() As String[]
+
+    Return Me._$settings["rss/feeds", $feeds]
+
+End
+
+Private Sub Feeds_Write(Value As String[])
+
+    Me._$settings["rss/feeds"] = Value
+    Me._$settings.Save()
+    
+End

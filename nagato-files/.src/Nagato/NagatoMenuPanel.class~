@@ -1,0 +1,93 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Path As String
+
+Private $container As Container
+Private $backButton As Button
+Private $homeButton As Button
+Private $upButton As Button
+Private $forwardButton As Button
+Private $pathBar As NagatoPathBar
+
+Private Sub addButton(argButton As Button, argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    With argButton
+        .Text = argText
+        .Tag = argTag
+        .AutoResize = True
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Private Sub initializeStarButton()
+    
+    Dim yukiButton As New MenuButton($container)
+    Dim yukiMenu As NagatoDynamicMenu
+    
+    With yukiButton
+        .Arrow = False
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("star")
+        .Border = False
+    End With
+    
+    yukiMenu = New NagatoDynamicMenu(HaruhiMain, yukiButton, "MenuIndex" & MikuruUniqueIndex.Get()) As "Menu"
+    
+End
+
+Private Sub initializeWidgets()
+    
+    $backButton = New Button($container) As "MenuButton"
+    $homeButton = New Button($container) As "MenuButton"
+    $upButton = New Button($container) As "MenuButton"
+    $forwardButton = New Button($container) As "MenuButton"
+    
+    With NagatoMenuPipe
+        addButton($backButton, "", .MoveBack, MikuruIcon.Get("arrow-left"))
+        addButton($homeButton, "", .MoveHome, MikuruIcon.Get("home"))
+        addButton($upButton, "Parent directory", .MoveUp, MikuruIcon.Get("arrow-up"))
+        addButton($forwardButton, "", .MoveForward, MikuruIcon.Get("arrow-right"))
+    End With
+    
+    $pathBar = New NagatoPathBar($container) As "Menu"
+    
+    initializeStarButton()
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $pathBar.SetPath(argPath)
+    
+End
+
+Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, argForward As Boolean)
+    
+    $backButton.Enabled = argBack
+    $homeButton.Enabled = argHome
+    $upButton.Enabled = argUp
+    $forwardButton.Enabled = argForward
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    initializeWidgets()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $pathBar.Path
+
+End

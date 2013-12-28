@@ -1,0 +1,9 @@
+' Gambas class file
+
+Event MenuEvent(argEvent As Integer)
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    Raise MenuEvent(argEvent)
+    
+End

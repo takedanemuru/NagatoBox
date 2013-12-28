@@ -1,0 +1,25 @@
+' Gambas module file
+
+Public Sub NewTitle(argFullPath As String, argNewTitle As String)
+    
+    Dim yukiCommand As String = Subst$("id3v2 --song &1 &2", Quote$(argNewTitle), Quote$(argFullPath))
+    
+    Shell yukiCommand Wait
+    
+End
+
+Public Sub NewArtist(argFullPath As String, argNewArtist As String)
+    
+    Dim yukiCommand As String = Subst$("id3v2 --artist &1 &2", Quote$(argNewArtist), Quote$(argFullPath))
+    
+    Shell yukiCommand Wait
+    
+End
+
+Public Sub NewAlbum(argFullPath As String, argNewAlbum As String)
+    
+    Dim yukiCommand As String = Subst$("id3v2 --album &1 &2", Quote$(argNewAlbum), Quote$(argFullPath))
+    
+    Shell yukiCommand Wait
+    
+End

@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoMenuSignal
+
+Public _$button As MenuButton
+
+Public Sub _InitializeButton(argContainer As Container, argText As String, argTag As Integer, argIconName As String)
+    
+    Me._$button = New MenuButton(argContainer) As "MenuButton"
+    
+    With Me._$button
+        .Arrow = False
+        .AutoResize = True
+        .Border = False
+        .Tag = argTag
+        .Text = argText
+        If argIconName <> "" Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Public Sub _InitializeMenu()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container, argText As String, argTag As Integer, Optional argIconName As String = "")
+   
+    Me._InitializeButton(argContainer, argText, argTag, argIconName)
+    Me._InitializeMenu()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise Signal(Last.Tag, [""])
+    
+End

@@ -1,0 +1,139 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Rects As Rect[]
+Property Read PlusButtonRect As Rect
+Property Read Max As Integer
+
+Public Enum TypeNull, TypeWebView, TypePlusButton
+
+Private Const MouseMissing As Integer = -1
+
+Private $tabWidth As NagatoTabWidth
+Private $tabRectangles As New Rect[]
+Private $onMouseIndex As Integer = MouseMissing
+
+Private Function getTextRectangle(argLeft As Integer, argText As String) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = argLeft
+        .Y = MikuruUxTab.Top
+        .H = MikuruUxTab.Height
+        .W = Min(MikuruUxTabText.GetWidth(argText) + 2 * MikuruUxTab.Margin, $tabWidth.Max)
+    End With
+    
+    Return yukiRect
+    
+End
+
+Private Function getPlusButtonRectangle(argLeft As Integer) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = argLeft
+        .Y = MikuruUxTab.Top
+        .W = MikuruUxTab.Height ' plus button is square
+        .H = MikuruUxTab.Height
+    End With
+    
+    Return yukiRect
+    
+End
+
+Public Function GetTabIndex(argMouseX As Integer, argMouseY As Integer) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $tabRectangles.Max
+        If $tabRectangles[yukiCount].Contains(argMouseX, argMouseY) Then
+            Return yukiCount
+        Endif
+    Next
+    
+    Return -1
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $tabWidth = New NagatoTabWidth(argDrawingArea)
+    
+End
+
+Private Sub addRectangle(argIndex As Integer, ByRef refLeft As Integer)
+    
+    Dim yukiRect As Rect
+    
+    yukiRect = getTextRectangle(refLeft, HaruhiMain.Titles[argIndex])
+    $tabRectangles.Add(yukiRect)
+    refLeft += (yukiRect.W + MikuruUxTab.Margin)
+    
+End
+
+Public Sub Refresh()
+    
+    Dim yukiCount As Integer
+    Dim yukiLeft As Integer = MikuruUxTab.Padding
+    
+    $tabRectangles.Clear()
+    
+    For yukiCount = 0 To HaruhiMain.Titles.Max
+        addRectangle(yukiCount, ByRef yukiLeft)
+    Next
+    
+    $tabRectangles.Add(getPlusButtonRectangle(yukiLeft))
+    
+End
+
+Public Function OnMouse(argIndex As Integer) As Boolean
+    
+    Return (argIndex = $onMouseIndex)
+    
+End
+
+Public Function GetTabType(argX As Integer, argY As Integer) As Integer
+    
+    Select Case getTabIndex(argX, argY)
+        Case MouseMissing
+            Return TypeNull
+        Case $tabRectangles.Max
+            Return TypePlusButton
+        Default
+            Return TypeWebView
+    End Select
+    
+End
+
+Public Sub SetOnMouseIndex(argX As Integer, argY As Integer)
+    
+    $onMouseIndex = getTabIndex(argX, argY)
+    
+End
+
+Public Sub ClearOnMouseIndex()
+    
+    $onMouseIndex = MouseMissing
+    
+End
+
+Private Function Rects_Read() As Rect[]
+
+    Return $tabRectangles
+
+End
+
+Private Function PlusButtonRect_Read() As Rect
+
+    Return $tabRectangles[$tabRectangles.Max]
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $tabRectangles.Max
+
+End

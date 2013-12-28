@@ -1,0 +1,58 @@
+' Gambas class file
+
+Private $menuBar As NagatoMenuBar
+
+Private Sub openFile()
+    
+    Dialog.Title = ("Select an image file")
+    Dialog.Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files", "*", "Any files"]
+    Dialog.Path = User.Home
+    
+    If Not Dialog.OpenFile(False) Then
+        Debug Dialog.Path
+        Try MainView.Image = Image.Load(Dialog.Path)
+    Endif
+    
+End
+
+Public Sub SetImage(argPath As String)
+
+    MainView.Image = Image.Load(argPath)
+
+End
+
+Public Sub Form_Open()
+    
+    $menuBar = New NagatoMenuBar(MenuBox) As "MenuBar"
+    
+    NagatoSettings.LoadFormSettings(Me)
+    Application.MainWindow = Me
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub MenuBar_MenuEvent(argEvent As Integer)
+    
+    Select Case argEvent
+        Case MikuruEvent.ZoomFit
+            MainView.ZoomFit()
+        Case MikuruEvent.ZoomNormal
+            MainView.Zoom = 1
+        Case MikuruEvent.ZoomIn
+            MainView.Zoom *= 1.2
+        Case MikuruEvent.ZoomOut
+            MainView.Zoom *= 0.8
+        Case MikuruEvent.FileOpen
+            openFile()
+        Case MikuruEvent.ViewRotateLeft
+            MainView.Image = MainView.Image.RotateLeft()
+        Case MikuruEvent.ViewRotateRight
+            MainView.Image = MainView.Image.RotateRight()
+    End Select
+    
+End

@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addMenu(argIndex As Integer)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = HaruhiMain.MainTabStrip[argIndex].Picture
+        .Text = HaruhiMain.MainTabStrip[argIndex].Text
+        .Tag = argIndex
+    End With
+    
+End
+
+Public Sub _RefreshMenu()
+    
+    Dim yukiCounter As Integer
+    
+    For yukiCounter = 0 To HaruhiMain.MainTabStrip.Count - 1
+        addMenu(yukiCounter)
+    Next
+    
+End
+
+Public Sub Menu_Click()
+    
+    HaruhiMain.MainTabStrip.Index = Last.Tag
+    
+End

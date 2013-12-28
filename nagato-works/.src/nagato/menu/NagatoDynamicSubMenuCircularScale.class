@@ -1,0 +1,61 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addShowScaleMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ShowScaleMenu"
+    
+    With yukiMenu
+        .Text = ("Show circular menu")
+        .Toggle = True
+        .Checked = NagatoSettingsMapView.CircularScaleShow
+    End With
+    
+End
+
+Private Sub addStepMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SettingsMenu"
+    
+    With yukiMenu
+        .Text = Subst$("Step: &1km", NagatoSettingsMapView.CircularScaleStep)
+    End With
+    
+End
+
+Private Sub addCountMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SettingsMenu"
+    
+    With yukiMenu
+        .Text = Subst$("Count: &1", NagatoSettingsMapView.CircularScaleCount)
+    End With
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    addShowScaleMenu()
+    addStepMenu()
+    addCountMenu()
+    
+End
+
+Public Sub ShowScaleMenu_Click()
+    
+    NagatoSettingsMapView.CircularScaleShow = Not NagatoSettingsMapView.CircularScaleShow
+    
+    Raise MenuEvent(MikuruMenuEventView.Changed)
+    
+End
+
+Public Sub SettingsMenu_Click()
+    
+    Dim yukiResponse As Integer = HaruhiMapViewScaleSettings.ShowModal()
+    
+    Debug yukiResponse
+    
+    If yukiResponse = 2 Then Raise MenuEvent(MikuruMenuEventView.Changed)
+    
+End

@@ -1,0 +1,86 @@
+' Gambas class file
+
+Public Const Changed As Integer = 1
+Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
+
+Private $buffer As String
+Private $cache As New Collection
+Private $httpClient As New HttpClient As "HttpClient"
+Private $xml As New XmlDocument
+
+Private Sub parseBuffer()
+    
+    Dim yukiNode As XmlNode
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    $xml.FromString($buffer)
+    
+    For Each yukiNode In $xml.GetElementsByTagName("searchresults")[0].AllChildNodes
+        With yukiNode
+            If .Attributes["display_name"] = "" Then Continue
+            yukiGeoElement = New NagatoGeoElement(.Attributes["display_name"], .Attributes["lat"], .Attributes["lon"])
+            ListView1.Add(.Attributes["display_name"], .Attributes["display_name"])
+            $cache.Add(yukiGeoElement, .Attributes["display_name"])
+            Debug .Attributes["display_name"]
+            Debug .Attributes["lat"]
+            Debug .Attributes["lon"]
+        End With
+    Next
+    
+End
+
+Private Sub startDownloading()
+    
+     $buffer = ""
+    
+    With $httpClient
+        .URL = Subst$(NominatimApi, Quote$(FindButtonBox.Text))
+        .Async = True
+        .Timeout = 20
+    End With
+    
+    Debug "go for it, yuki."
+    
+    $httpClient.Get()
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    $buffer &= Read #Last, Lof(Last)
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    parseBuffer()
+    
+End
+
+Public Sub FindButtonBox_Click()
+    
+    With FindButtonBox
+        If .Text <> "" And If IsAscii(.Text) And If InStr(.Text, " ") = 0 Then
+            ListView1.Clear()
+            $cache.Clear()
+            startDownloading()
+        End If
+    End With
+    
+End
+
+Public Sub ListView1_Activate()
+    
+    Dim yukiGeoElement As NagatoGeoElement = $cache[ListView1.Key]
+    
+    With NagatoSettingsGeo
+        .VisibleName = yukiGeoElement.VisibleName
+        .Latitude = yukiGeoElement.Latitude
+        .Longitude = yukiGeoElement.Longitude
+    End With
+    
+    Me.Close(Me.Changed)
+    
+Catch
+    Return
+End

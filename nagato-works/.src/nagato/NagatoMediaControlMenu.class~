@@ -1,0 +1,74 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Private _$parentMenu As Menu
+
+Private Sub addShuffleMenu()
+    
+    Dim yukiMenu As New Menu(_$parentMenu) As "ShuffleMenu"
+    
+    With yukiMenu
+        .Text = ("Shuffle")
+        .Toggle = True
+        .Checked = NagatoSettingsMediaPlayer.Shuffle
+    End With
+    
+End
+
+Private Sub addRepeatMenu()
+    
+    Dim yukiMenu As New Menu(_$parentMenu) As "RepeatMenu"
+    
+    With yukiMenu
+        .Text = ("Repeat")
+        .Toggle = True
+        .Checked = NagatoSettingsMediaPlayer.Repeat
+    End With
+    
+End
+
+Private Sub addDummyMenu()
+    
+    Dim yukiMenu As New Menu(_$parentMenu)
+    
+    yukiMenu.Visible = False
+    
+End
+
+Private Sub addParentMenu()
+    
+    _$parentMenu = New Menu(Me._$rootMenu) As "ParentMenu"
+    
+    _$parentMenu.Text = ("MediaControl")
+    addDummyMenu()
+
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addParentMenu()
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    _$parentMenu.Children.Clear()
+    
+    addShuffleMenu()
+    addRepeatMenu()
+    
+End
+
+Public Sub ShuffleMenu_Click()
+    
+    NagatoSettingsMediaPlayer.Shuffle = Not NagatoSettingsMediaPlayer.Shuffle
+    
+End
+
+Public Sub RepeatMenu_Click()
+    
+    NagatoSettingsMediaPlayer.Repeat = Not NagatoSettingsMediaPlayer.Repeat
+    
+End

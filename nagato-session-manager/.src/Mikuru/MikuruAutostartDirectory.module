@@ -1,0 +1,61 @@
+' Gambas module file
+
+Property Read AutostartDesktopEntries As NagatoDesktopFile[]
+Property Read Global As String
+Property Read User As String
+
+Public Sub Ensure()
+    
+    If Not Exist(Me.User) Then
+        Mkdir Me.User
+    End If
+    
+End
+
+Private Function Global_Read() As String
+
+    Return "/etc/xdg/autostart"
+
+End
+
+Private Function User_Read() As String
+
+    Return User.Home &/ ".config/autostart"
+
+End
+
+
+Private Function AutostartDesktopEntries_Read() As NagatoDesktopFile[]
+
+    Dim yukiPath As String
+    Dim yukiPrivates As New String[]
+    Dim yukiDesktopFile As NagatoDesktopFile
+    Dim yukiDesktopEntries As New NagatoDesktopFile[]
+
+    Me.Ensure()
+    
+    For Each yukiPath In Me.User
+        Try yukiDesktopFile = New NagatoDesktopFile(Me.User &/ yukiPath)
+        If Error Then Continue
+        With yukiDesktopFile
+            If .NotShowIn.Exist("NagatoBox") Then Continue
+            If .OnlyShowIn[0] <> "" And If Not .OnlyShowIn.Exist("NagatoBox") Then Continue
+            yukiPrivates.Add(yukiPath)
+            If Not .Hidden Then yukiDesktopEntries.Add(yukiDesktopFile)
+        End With
+    Next
+    
+    For Each yukiPath In Me.Global
+        If yukiPrivates.Exist(yukiPath) Then Continue
+        Try yukiDesktopFile = New NagatoDesktopFile(Me.User &/ yukiPath)
+        If Error Then Continue
+        With yukiDesktopFile
+            If .NotShowIn.Exist("NagatoBox") Then Continue
+            If .OnlyShowIn[0] <> "" And If Not .OnlyShowIn.Exist("NagatoBox") Then Continue
+            If Not .Hidden Then yukiDesktopEntries.Add(yukiDesktopFile)
+        End With 
+    Next
+    
+    Return yukiDesktopEntries
+    
+End

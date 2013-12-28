@@ -1,0 +1,24 @@
+' Gambas module file
+
+Public Function GetBlobFromPicture(argPicture As Picture) As String
+    
+    Dim yukiPath As String = Temp$() & ".png"
+    
+    argPicture.Save(yukiPath)
+    
+    Return File.Load(yukiPath)
+    
+End
+
+Public Function GetPictureFromBlob(argBlob As String) As Picture
+    
+    Dim yukiPath As String = Temp$() & ".png"
+    
+    File.Save(yukiPath, argBlob)
+    
+    Return Picture.Load(yukiPath)
+    
+Catch
+    Return Null
+    
+End

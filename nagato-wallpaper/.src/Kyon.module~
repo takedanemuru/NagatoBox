@@ -1,0 +1,27 @@
+' Gambas module file
+
+Private $options As String[]
+Private $setLastPath As Boolean
+
+Private Sub initializeApplicationArguments()
+    
+    Args.Begin()
+        $setLastPath = Args.Has("l", "last", ("set last picture"))
+    $options = Args.End()
+    
+End
+
+Public Sub Main()
+    
+    initializeApplicationArguments()
+    
+    If $setLastPath Then
+        With NagatoSettings
+            NagatoHSetRoot.SetWallpaper(.LastPath, .LastColor, .LastMode)
+        End With
+    Else
+        HaruhiEdit.Show()
+    End If
+    
+End
+

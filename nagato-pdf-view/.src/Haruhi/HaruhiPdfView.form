@@ -1,0 +1,17 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["icon:/small/pdf"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(2,2,46,47)
+    { MenuHBox HBox
+      MoveScaled(4,3,39,4.5714)
+    }
+    { PdfView ImageView
+      MoveScaled(4,9,39,35)
+      Expand = True
+    }
+  }
+}

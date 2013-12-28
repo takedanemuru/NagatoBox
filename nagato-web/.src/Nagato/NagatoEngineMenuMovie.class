@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoSearchEngineMenu
+
+Public Const _CategoryName As String = "Movie"
+
+Public Sub _InitializeChildMenus() ' override
+    
+    Me._AddChildMenu(("Youtube"), "!yt")
+    Me._AddChildMenu(("NicoNico Doga"), "!nico")
+    
+End

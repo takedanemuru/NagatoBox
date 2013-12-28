@@ -1,0 +1,25 @@
+' Gambas class file
+
+$processId As Integer
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    Shell Subst$("xterm -into &1 -bg thistle2 -fg white -leftbar", Embedder1.Id)
+
+    Shell "pgrep xterm" To $processId
+
+End
+
+Public Sub Form_Close()
+    
+    Debug Embedder1.Client
+    
+    Shell Subst$("pgrep &1|xargs kill", Quote$("xterm"))
+    
+    Quit
+    
+End

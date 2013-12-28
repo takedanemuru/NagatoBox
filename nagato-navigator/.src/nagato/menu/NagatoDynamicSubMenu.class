@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private $observer As Observer
+
+Public Sub _RefreshMenu() ' This method is virtual, MUST be overridden.
+    
+    
+    
+End
+
+Public Sub _InitializeMenu() 'override
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ""
+    
+    If Not Object.IsValid($observer) Then $observer = New Observer(Me._$rootMenu) As "Asakura"
+    
+End
+
+Public Sub Asakura_Show()
+    
+    Me._$rootMenu.Children.Clear()
+    Me._RefreshMenu()
+    
+End

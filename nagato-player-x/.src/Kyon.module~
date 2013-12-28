@@ -1,0 +1,52 @@
+' Gambas module file
+
+Private $path As String
+Private $paths As String[] = [""]
+
+Private Function isUnique() As Boolean
+    
+    Dim yukiWindow As DesktopWindow
+    
+    For Each yukiWindow In Desktop.Windows
+        If yukiWindow.Name = Application.Name Then Return False
+    Next
+    
+    Return True
+    
+End
+
+Private Sub parsingArgument()
+    
+    Args.Begin(("Usage"))
+        $path = Args.Get("p", "play", "play music", "path to play")
+    $paths = Args.End()
+    
+End
+
+Private Sub activateMusicQueue()
+    
+    Dim yukiPaths As String[] = MikuruPath.Sanitize($paths.Add($path, 0))
+    
+    If yukiPaths.Count > 0 Then
+        NagatoQueue.Activate(yukiPaths)
+        HaruhiPlayer.Show()
+        NagatoPlayer.Play()
+        Return
+    Endif
+    
+Finally
+    NagatoQueue.Activate()
+    HaruhiPlayer.Show() 
+    
+End
+
+Public Sub Main()
+    
+    If isUnique() Then
+        parsingArgument()
+        activateMusicQueue() 'and show HaruhiPlayer 
+    Else
+        Message.Warning(("nagato-player-x has been activated"), ("OK"))
+    End If
+    
+End

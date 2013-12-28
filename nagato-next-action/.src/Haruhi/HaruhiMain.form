@@ -1,0 +1,32 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["pictures/button-check.png"]
+  Arrangement = Arrange.Fill
+  { MainTabStrip TabStrip
+    MoveScaled(1,2,47,46)
+    Arrangement = Arrange.Vertical
+    Count = 3
+    Index = 0
+    Text = ("Do it now!!")
+    Picture = Picture["pictures/mono_icon/document-edit.png"]
+    { MenuHBox HBox
+      MoveScaled(0,0,46,4.5714)
+    }
+    { !ToDoGrid GridView
+      MoveScaled(2,9,45,36)
+      #Public = True
+      Expand = True
+      Mode = Select.Single
+      Header = GridView.Horizontal
+    }
+    Index = 1
+    Text = ("TreeView")
+    Picture = Picture["pictures/mono_icon/database.png"]
+    Index = 2
+    Text = ("Done")
+    Picture = Picture["pictures/mono_icon/button-check.png"]
+    Index = 0
+  }
+}

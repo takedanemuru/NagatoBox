@@ -1,0 +1,24 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,93,54)
+  Icon = Picture["pictures/icon.png"]
+  { NagatoFaceDA DrawingArea
+    MoveScaled(1,-1,79,18)
+    Background = &HF2E9EC&
+    ToolTip = ("right click here to open App Menu.")
+    { SearchBoxContainer HBox
+      MoveScaled(34,7,42.8571,5)
+    }
+  }
+  { MainTabPanel TabStrip
+    MoveScaled(0,21,86,24)
+    NoTabFocus = True
+    Expand = True
+    Arrangement = Arrange.Fill
+    Closable = True
+    Index = 0
+    Text = ("")
+    Index = 0
+  }
+}

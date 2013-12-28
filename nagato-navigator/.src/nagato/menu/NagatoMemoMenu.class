@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addNewMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "NewMenu"
+    
+    With yukiMenu
+        .Text = ("NewMemo")
+        .Picture = Picture["super-mono/basic/blue/document-edit.png"]
+    End With
+    
+End
+
+Private Sub addShowInWindowMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SearchMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/search.png"]
+        .Text = ("Search")
+    End With
+    
+End
+
+Private Sub addRecentMemo()
+    
+    Dim yukiTitle As String
+    Dim yukiMenu As Menu
+    
+    MikuruMenuSeparator.Set(Me._$rootMenu)
+    
+    For Each yukiTitle In NagatoSettingsMemo.Recent
+        If Not Exist(MikuruDirectory.Memo &/ yukiTitle) Then Continue
+        yukiMenu = New Menu(Me._$rootMenu) As "RecentMenu"
+        yukiMenu.Text = yukiTitle
+        yukiMenu.Tag = yukiTitle
+    Next
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    addNewMenu()
+    addShowInWindowMenu()
+    If NagatoSettingsMemo.Recent <> Null Then addRecentMemo()
+    
+End
+
+Public Sub NewMenu_Click()
+    
+    Dim yukiMemo As NagatoMemo
+    
+    yukiMemo = New NagatoMemo
+    
+End
+
+Public Sub SearchMenu_Click()
+    
+    HaruhiMemo.Show()
+    
+End
+
+Public Sub RecentMenu_Click()
+    
+    Dim yukiMemo As NagatoMemo
+    
+    yukiMemo = New NagatoMemo(Last.Tag)
+    
+End

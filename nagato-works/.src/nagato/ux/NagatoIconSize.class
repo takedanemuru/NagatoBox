@@ -1,0 +1,17 @@
+' Gambas class file
+
+Create Static
+
+Public Enum SIZE_SMALL, SIZE_MEDIUM, SIZE_LARGE, SIZE_HUGE, SIZE_STUPID
+
+Public Function GetIconSize(argIndex As Integer) As Integer
+    
+    Return 16 * (2 ^ argIndex)
+    
+End
+
+Public Function GetThumbnailSize(argIndex As Integer) As Integer
+    
+    Return 32 * (2 ^ argIndex)
+    
+End

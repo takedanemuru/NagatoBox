@@ -1,0 +1,127 @@
+' Gambas class file
+
+Private $gridView As GridView
+
+Private Sub initializeGui()
+    
+    With $gridView
+        .Sorted = True
+        .Columns.Count = 5
+        .Rows.Count = 1
+    
+        .Columns[0].Text = ("process id")
+        .Columns[0].Width = 100
+        .Columns[0].Background = Color.Lighter(Color.LightGray)
+    
+        .Columns[1].Text = ("status")
+        .Columns[1].width = 100
+    
+        .Columns[2].Text = ("app name")
+        .Columns[2].width = 200
+    
+        .Columns[3].Text = ("memory (RSS)")
+        .Columns[3].Width = 120
+        
+        .Columns[4].Text = ("memory (Virtual)")
+        .Columns[4].Width = 120
+    End With
+    
+End
+
+Private Sub setProcessId(argCurrentRow As Integer, argProcessStats As String[])
+    
+   Dim yukiColumnPosition As Integer = 0
+   
+   With $gridView[argCurrentRow, yukiColumnPosition]
+        .Picture = Stock["small/options"]
+        .Text = argProcessStats[0]
+   End With 
+    
+End
+
+Private Sub setProcessStatus(argCurrentRow As Integer, argProcessStatus As String[])
+    
+    Dim yukiColumnPosition As Integer = 1
+    
+    With $gridView[argCurrentRow, yukiColumnPosition]
+        .Picture = NagatoProcessStatus.getStatusPicture(argProcessStatus[2])
+        .Text = NagatoProcessStatus.getStatusString(argProcessStatus[2])
+    End With
+    
+End
+
+Private Sub setAppName(argCurrentRow As Integer, argProcessStats As String[])
+    
+   Dim yukiColumnPosition As Integer = 2
+   
+   $gridView[argCurrentRow, yukiColumnPosition].Text = argProcessStats[1] 
+    
+End
+
+Private Sub setResidentSetSize(argCurrentRow As Integer, argProcessStats As String[])
+    
+   Dim yukiColumnPosition As Integer = 3
+   
+   With $gridView[argCurrentRow, yukiColumnPosition]
+        If argProcessStats[23] <> 0 Then
+             .Text = Format$(CInt(argProcessStats[23]) / 256, "#.##MiB") '1page=4KiB(1/256MiB)
+        Else
+            .Text = "-"
+        Endif
+        
+        .Alignment = Align.Right
+    End With
+    
+End
+
+Private Sub setVirtualMemory(argCurrentRow As Integer, argProcessStats As String[])
+    
+   Dim yukiColumnPosition As Integer = 4
+   
+   With $gridView[argCurrentRow, yukiColumnPosition]
+        If argProcessStats[22] <> 0 Then
+             .Text = Format$(CInt(argProcessStats[22]) / (1024 ^ 2), "#.##MiB") 'byte to MiB
+        Else
+            .Text = "-"
+        Endif
+        
+        .Alignment = Align.Right
+    End With
+    
+End
+
+Private Sub setDataToRow(argCurrentRow As Integer, argProcessId As Integer)
+    
+   Dim yukiFileStats As String[] = Split(File.Load(Subst$("/proc/&1/stat", argProcessId)), " ", "")
+   
+   setProcessId(argCurrentRow, yukiFileStats)
+   setProcessStatus(argCurrentRow, yukiFileStats)
+   setAppName(argCurrentRow, yukiFileStats)
+   setResidentSetSize(argCurrentRow, yukiFileStats)
+   setVirtualMemory(argCurrentRow, yukiFileStats)
+
+End
+
+Public Sub _new(argGridView As GridView)
+    
+    $gridView = argGridView
+    initializeGui()
+    Refresh()
+    
+End
+
+Public Sub Refresh()
+    
+    ' read /proc/<process_id_in_integer> and set its data to each row
+    ' see "man proc" to learn more
+    
+    Dim yukiDirs As String[] = Dir("/proc", "*[0-9]", gb.Directory)
+    Dim yukiIndex As Integer
+    
+    $gridView.Rows.Count = yukiDirs.Count
+    
+    For yukiIndex = 0 To yukiDirs.Max
+        setDataToRow(yukiIndex, yukiDirs[yukiIndex])
+    Next
+    
+End

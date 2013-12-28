@@ -1,0 +1,39 @@
+' Gambas class file
+
+Create Static
+
+Public Sub MoveSingleFile(argSourceFullPath As String, argTargetDirectory As String)
+    
+    Dim yukiTargetPath As String = argTargetDirectory &/ File.Name(argSourceFullPath)
+    
+    Move argSourceFullPath To NagatoGenericName.Get(yukiTargetPath)
+    
+End
+
+Public Sub MoveMultipleFile(argSourceFullPaths As String[], argTargetDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiTargetPath As String
+    
+    For Each yukiPath In argSourceFullPaths
+        If yukiPath = argTargetDirectory Then Continue
+        yukiTargetPath = argTargetDirectory &/ File.Name(yukiPath)
+        Move yukiPath To NagatoGenericName.Get(yukiTargetPath)
+    Next
+    
+End
+
+Public Sub MoveFiles(argSourcePaths As String[], argTargetDirectory As String)
+    
+    Dim yukiSourcePath As String
+    Dim yukiTargetPath As String
+    
+    If Not IsDir(argTargetDirectory) Then Return
+    
+    For Each yukiSourcePath In argSourcePaths
+        yukiTargetPath = NagatoGenericName.Get(argTargetDirectory &/ File.Name(yukiSourcePath))
+        If yukiSourcePath = yukiTargetPath Then Continue
+        Move yukiSourcePath To yukiTargetPath
+    Next
+    
+End

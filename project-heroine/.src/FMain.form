@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42,70)
+  Icon = Picture["icon11.jpg"]
+  Resizable = False
+  { PictureBox1 PictureBox
+    MoveScaled(1,1,40,58)
+    Picture = Picture["Yuki_Nagato_Fin_by_GodsentDictator.jpg"]
+  }
+  { Label1 Label
+    MoveScaled(1,60,40,9)
+    Background = Color.TextBackground
+    Alignment = Align.Center
+  }
+}

@@ -1,0 +1,16 @@
+' Gambas class file
+
+Private Function getOpaque(argRate As Integer) As Integer
+    
+    Return argRate * (Color.White + 1)
+    
+End
+
+Public Sub Form_Open()
+    
+    Dim yukiImage As New Image(300, 300, Color.Orange + getOpaque(32))
+    
+    Me.Picture = yukiImage.Picture
+    
+End
+

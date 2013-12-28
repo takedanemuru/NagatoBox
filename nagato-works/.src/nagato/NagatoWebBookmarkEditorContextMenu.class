@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoWebRecentPagesContextMenu
+
+Event Rename
+
+Private Sub addRenameMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "RenameMenu"
+    
+    With yukiMenu
+        .Text = ("Rename")
+    End With
+    
+End
+
+Public Sub _AddAdditionalMenu()
+    
+    addRenameMenu()
+    
+End
+
+Public Sub RenameMenu_Click()
+    
+    Raise Rename
+    
+End

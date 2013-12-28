@@ -1,0 +1,35 @@
+' Gambas class file
+
+Private $data As Variant
+Private $lock As Boolean = False
+
+Private Sub setData(argData As Variant)
+    
+    If $lock Then Return
+    
+    $data = argData
+    $lock = True
+    
+End
+
+Public Sub Write(argData As Variant)
+    
+    setData(argData)
+    
+End
+
+Public Function Read() As Variant
+    
+    Return $data
+    
+Catch
+    Return Null
+    
+End
+
+Public Sub _new(Optional argData As Variant)
+    
+    If argData Then setData(argData)
+    
+End
+

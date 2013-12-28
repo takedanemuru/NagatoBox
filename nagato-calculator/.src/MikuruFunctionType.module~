@@ -1,0 +1,22 @@
+' Gambas module file
+
+Public Enum Start, Plus, Minus, Multi, Devide, Power
+
+Public Sub GetFunctionName(argType As Integer) As String
+        
+        Select Case argType
+                Case Me.Devide
+                        Return "/"
+                Case Me.Minus
+                        Return "-"
+                Case Me.Multi
+                        Return "*"
+                Case Me.Plus
+                        Return "+"
+                Case Me.Power
+                        Return "power"
+                Case Me.Start
+                        Return "start"
+        End Select
+        
+End

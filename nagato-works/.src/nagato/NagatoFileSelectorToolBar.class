@@ -1,0 +1,67 @@
+' Gambas class file
+
+Inherits NagatoToolBar
+
+Private $moveButtons As NagatoMoveButtons
+Private $addressBox As NagatoAddressBoxWithList
+
+Event AddressBoxClick(argPath As String)
+Event OpenDir(argPath As String)
+
+Private Sub addMoveButton()
+    
+    $moveButtons = New NagatoMoveButtons(Me._$parent) As "Menu"
+    
+End
+
+Private Sub addAddressBox()
+    
+    $addressBox = New NagatoAddressBoxWithList(Me._$parent) As "AddressBox"
+    $addressBox.SetFocus()
+    
+End
+
+Private Sub addBookmarkButton()
+    
+    Dim yukiGearButton As New NagatoBookmarkButton(Me._$parent)
+    Dim yukiSubMenu As NagatoSubMenuDirectoryBookmark
+    
+    yukiSubMenu = New NagatoSubMenuDirectoryBookmark(yukiGearButton.RootMenu) As "DirBookmarkMenu"
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiGearButton As New NagatoGearButton(Me._$parent) 
+    Dim yukiSubMenu As NagatoFileSelectorMenu
+    
+    yukiSubMenu = New NagatoFileSelectorMenu(yukiGearButton.RootMenu) As "Menu"
+    
+End
+
+Public Sub SetPathString(argPath As String)
+    
+    $addressBox.Text = argPath
+    
+End
+
+Public Sub _Initialize() ' override.
+    
+    addMoveButton()
+    addAddressBox()
+    addBookmarkButton()
+    addGearButton()
+    
+End
+
+Public Sub AddressBox_Click(argPath As String)
+    
+    Raise AddressBoxClick(argPath)
+    
+End
+
+Public Sub DirBookmarkMenu_Select(argTag As String)
+    
+    Raise OpenDir(argTag)
+    
+End

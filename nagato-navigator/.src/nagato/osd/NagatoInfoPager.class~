@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoInfo
+
+Private Sub setPager(argDesktopIndex As Integer, argRectangle As Rect)
+    
+    With argRectangle
+        Paint.Brush = IIf(argDesktopIndex = Desktop.Current, Paint.Color(Color.Yellow), Paint.Color(Color.White))
+        Paint.Rectangle(.X, .Y, .Width, .Height)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(NagatoSettingsInfobar.LabelColor)
+        Paint.Font.Size = 10
+        Paint.RichText(argDesktopIndex + 1, .X, .Y, .Width, .Height, Align.Center)
+        Paint.Fill()
+    End With
+
+End
+
+Public Sub DrawInfo(argOffset As Integer)
+    
+    Dim yukiCount As Integer
+    Dim yukiRectangle As Rect
+    
+    Me._$width = Desktop.Count * 26 + 8 * MikuruUX.Grid + argOffset
+    
+    For yukiCount = 0 To Desktop.Count - 1
+        yukiRectangle = New Rect(Screen.W - Me._$width + 26 * yukiCount, 1, 24, 2 * MikuruUX.Grid - 2)
+        setPager(yukiCount, yukiRectangle)
+    Next
+    
+End
+
+Public Sub PopUpMenu(argMouseX As Integer) 'override
+    
+    Dim yukiMenu As New Menu(HaruhiInfoBar2)
+    'Dim yukiSubMenu As NagatoQuickListMenu
+    
+    Debug argMouseX ' to avoid "unused argument" message.
+    
+    'yukiSubMenu = New NagatoQuickListMenu(yukiMenu)
+    'yukiMenu.Popup()
+    
+End
+
+Public Sub _SetType()
+    
+    Me._$type = NagatoInfo.Pager
+    
+End

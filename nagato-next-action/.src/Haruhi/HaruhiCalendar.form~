@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,34.2857,34.2857)
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(1,1,54,42)
+    { CalendarModeBox ComboBox
+      MoveScaled(3,7,46,4)
+      ReadOnly = True
+      List = [("Date"), ("Time"), ("Date & Time")]
+    }
+    { CalendarDateChooser DateChooser
+      MoveScaled(3,16,48,22.8571)
+      Expand = True
+    }
+  }
+}

@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public _$rootMenu As Menu
+Public _$path As String
+
+Public Sub _AddContextMenu(argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ContextMenu"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    
+    
+End
+
+Public Sub Popup()
+    
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new(argForm As Form, argPath As String)
+    
+    Me._$rootMenu = New Menu(argForm)
+    Me._$path = argPath
+    
+    Me._AddChildMenus()
+    
+End
+
+Public Sub ContextMenu_Click()
+    
+    Raise MenuEventWithArg(Last.Tag, Me._$path)
+    
+End

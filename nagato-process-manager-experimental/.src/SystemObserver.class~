@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private Const SystemSnapShotInterval As Integer = 200 ' milliseconds
+
+Private $timer As New Timer As "Timer"
+
+Private $observationStep As Integer
+Private $cpuUsage As Float
+Private $memoryUsage As Float
+
+Event SystemObservationFinished(argCpuUsage As Float, argMemoryUsage As Float)
+
+Public Sub _new()
+    
+    $timer.Delay = SystemSnapShotInterval
+    $timer.Start()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Select Case $observationStep
+        Case 0
+            CpuObserver.setPrevData()
+            MemoryObserver.loadMeminfo()
+            Inc $observationStep
+        Case 1
+            CpuObserver.setCurrentData()
+            MemoryObserver.setVariables()
+            Inc $observationStep
+        Case 2
+            $cpuUsage = CpuObserver.getCpuRate()
+            $memoryUsage = MemoryObserver.getMemoryRate()
+            Inc $observationStep
+        Case 3
+            $observationStep = 0
+            $timer.Stop()
+            Raise SystemObservationFinished($cpuUsage, $memoryUsage)
+    End Select
+    
+End

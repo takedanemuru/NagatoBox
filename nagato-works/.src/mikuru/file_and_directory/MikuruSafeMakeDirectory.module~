@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Function GetName(argParentDirectoryName As String, argTargetDirectoryName As String) As String 
+    
+    Dim yukiCounter As Integer = 0
+    Dim yukiPath As String = argParentDirectoryName &/ argTargetDirectoryName
+    
+    Debug argParentDirectoryName
+    Debug argTargetDirectoryName
+    
+    If Not Exist(yukiPath) Then Return (yukiPath)
+
+    Do 
+        Inc yukiCounter
+        Debug Subst$("&1(&2)", yukiPath, yukiCounter)
+        If Not Exist(Subst$("&1(&2)", yukiPath, yukiCounter)) Then
+            Return Subst$("&1(&2)", yukiPath, yukiCounter)
+        End If
+    Loop
+    
+End

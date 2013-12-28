@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Static
+
+Private Sub refreshNagatoFaceDA()
+    
+    With Kyon.MessagingArea
+        .X = 0
+        .Y = 0
+        .Width = Kyon.Width
+        .Height = 160
+    End With
+    
+End
+
+Private Sub refreshMainTabPanel()
+    
+    With Kyon.MainTabStrip
+        .X = 0
+        .Y = 120
+        .Width = Kyon.Width
+        .Height = Kyon.Height - 120
+    End With
+    
+End
+
+Private Sub refreshGlobalSearchBox()
+    
+    With Kyon.GlobalSearchBox
+        .Move(Kyon.Width - (Kyon.GlobalSearchBox.Width + 48), 48)
+    End With
+    
+End
+
+Public Sub SetWidgetPositionAndSize()
+    
+    refreshNagatoFaceDA()
+    refreshMainTabPanel()
+    refreshGlobalSearchBox()
+    
+End

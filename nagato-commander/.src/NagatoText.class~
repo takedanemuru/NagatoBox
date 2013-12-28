@@ -1,0 +1,65 @@
+' Gambas class file
+
+Create Static
+
+Private Const ColorCodeHeader As String = "\e["
+
+Private $headers As New String[]
+
+Private Sub test(argPosition As Integer, argSource As String)
+    
+    Dim yukiTerminatorPosition As Integer
+    Dim yukiHeader As String
+    
+    yukiTerminatorPosition = String.InStr(argSource, "m", argPosition)
+    
+    yukiHeader = String.Mid$(argSource, argPosition, (yukiTerminatorPosition - argPosition) + 1)
+    yukiHeader = Replace$(yukiHeader, "<u><i>", "")
+    
+    If Not $headers.Exist(yukiHeader) Then $headers.Add(yukiHeader)
+    
+End
+
+Private Sub initializeHeaders(argOutput As String)
+    
+    Dim yukiPosition As Integer 
+    
+    Do
+        Inc yukiPosition
+        yukiPosition = String.InStr(argOutput, "<u><i>", yukiPosition)
+        If yukiPosition <> 0 Then test(yukiPosition, argOutput)
+        If yukiPosition = 0 Then Break
+    Loop
+    
+End
+
+Private Function stripColorProperty(argOutput As String) As String
+    
+    Dim yukiHeader As String
+    Dim yukiResult As String = argOutput
+    
+    initializeHeaders(argOutput) 
+    
+    For Each yukiHeader In $headers
+        yukiResult = Replace$(yukiResult, yukiHeader, "")
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Function GetRichText(argOutput As String) As String
+    
+    Dim yukiOutput As String = argOutput
+    
+    yukiOutput = Replace$(yukiOutput, gb.NewLine, "<br>")
+    yukiOutput = Replace$(yukiOutput, ColorCodeHeader & "0m", "</i></u>")
+    yukiOutput = Replace$(yukiOutput, ColorCodeHeader, "<u><i>")
+    
+    If String.InStr(yukiOutput, "<u><i>") > 0 Then
+        yukiOutput = stripColorProperty(yukiOutput)
+    End If
+    
+    Return "<font color=violet>" & yukiOutput & "</font>"
+    
+End

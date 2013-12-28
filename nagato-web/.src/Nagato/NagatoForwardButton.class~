@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoMenuWidget
+
+Public Sub _InitializeWidget() ' override
+    
+    Dim yukiButton As New MenuButton(Me._$container) As "Button"
+    
+    With yukiButton
+        .Expand = False
+        .Border = False
+        .Width = Me._$container.Height
+        .Picture = MikuruIcon.Get("arrow-right")
+    End With
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise MenuEvent(NagatoMenuPipe.WebForward)
+    
+End

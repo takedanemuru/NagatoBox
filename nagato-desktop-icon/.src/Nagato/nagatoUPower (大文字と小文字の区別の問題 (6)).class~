@@ -1,0 +1,19 @@
+' Gambas class file
+
+Create Static
+
+Public Sub EnsureActivation()
+    
+    Dim yukiApplication As String
+    Dim yukiList As String[]
+    
+    For Each yukiApplication In DBus.System.Applications.Sort()
+        Debug yukiApplication
+        If yukiApplication = "org.freedesktop.UPower" Then Return
+    Next
+    
+    yukiList = DBus["System://org.freedesktop.DBus"]["/", "org.freedesktop.DBus"].ListActivatableNames()
+    
+    Debug yukiList.Count
+    
+End

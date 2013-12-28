@@ -1,0 +1,25 @@
+' Gambas module file
+
+Private $delay As Integer = 0
+Private $onlyActiveWindow As Boolean = False
+
+Private Sub parsingApplicationArguments()
+    
+    Dim yukiArgs As String[]
+    
+    Args.Begin()
+        $delay = Args.GetInteger("d", "delay", "delay in seconds")
+        $onlyActiveWindow = Args.Has("w", "only-active", "shoot only active window")
+    yukiArgs = Args.End()
+    
+End
+
+Public Sub Main()
+    
+    parsingApplicationArguments()
+    Application.MainWindow = HaruhiSave
+    
+    Wait $delay
+    HaruhiSave.Call($onlyActiveWindow)
+    
+End

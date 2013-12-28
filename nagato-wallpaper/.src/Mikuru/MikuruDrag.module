@@ -1,0 +1,31 @@
+' Gambas module file
+
+Private Function getFistLine(argData As String) As String
+    
+    Dim yukiPath As String = Split(argData, "\n", "", True)[0]
+    
+    Return String.Left(yukiPath, String.Len(yukiPath) - 1)
+    
+End
+
+Public Function GetDragPath(argData As String) As String
+    
+    Return Replace$(URL.Decode(getFistLine(argData)), "file://", "")
+    
+End
+
+Public Function CanAccept(argData As String) As Boolean
+    
+    Dim yukiPath As String = getFistLine(argData)
+    
+    If yukiPath Not Begins "file:///" Then Return False
+    yukiPath = Replace$(URL.Decode(yukiPath), "file://", "")
+    If DesktopMime.FromFile(yukiPath).Type Not Begins "image" Then Return False
+    If Not Exist(yukiPath) Then Return False
+
+    Return True
+    
+Catch
+    Return False
+    
+End

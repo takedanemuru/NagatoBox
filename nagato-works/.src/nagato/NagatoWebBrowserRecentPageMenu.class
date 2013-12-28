@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Const PageLimit As Integer = 30
+Private Const TextLimit As Integer = 60
+
+Private Sub addOpenWebRecentPagesEditorMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "OpenWebRecentPagesEditorMenu"
+    
+    With yukiMenu
+        .Text = ("OpenInTab")
+        .Picture = Stock["medium/edit"]
+    End With
+    
+End
+
+Private Sub addRecentPageMenu()
+    
+    Dim yukiMenu As Menu
+    Dim yukiResult As Result = NagatoDBWeb.GetHistoryResultOrderedByLastAccessed(PageLimit)
+    
+    For Each yukiResult
+        If yukiResult[NagatoDBWeb.ColumnPageName] = "" Then Continue
+        yukiMenu = New Menu(Me._$rootMenu) As "RecentPageMenu"
+        If NagatoDBWeb.HasIcon(yukiResult[NagatoDBWeb.ColumnUrl]) Then
+            yukiMenu.Picture = NagatoDBWeb.GetIcon(yukiResult[NagatoDBWeb.ColumnUrl])
+        Endif
+        yukiMenu.Text = MikuruCollapsedText.Get(yukiResult[NagatoDBWeb.ColumnPageName], TextLimit)
+        yukiMenu.Tag = yukiResult[NagatoDBWeb.ColumnUrl]
+    Next
+    
+    NagatoDBWeb.ResizeRecentPages()
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    addOpenWebRecentPagesEditorMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addRecentPageMenu()
+    
+End
+
+Public Sub OpenWebRecentPagesEditorMenu_Click()
+    
+    NagatoTabHandler.NewTab(MikuruFunctionType.WebRecentPagesEditor)
+    
+End
+
+Public Sub RecentPageMenu_Click()
+    
+    NagatoTabHandler.NewTabWithPath(MikuruFunctionType.WebBrowser, Last.Tag)
+    
+End

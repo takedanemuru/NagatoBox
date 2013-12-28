@@ -1,0 +1,20 @@
+' Gambas class file
+
+Public Sub _new(argParentKey As String, argElement As XmlElement)
+    
+    Dim yukiName As String = argElement.Attributes["name"]
+    Dim yukiElement As XmlElement
+    Dim yukiText As String = ""
+    Dim yukiCount As Integer
+    
+    For Each yukiElement In argElement.ChildElements
+        Inc yukiCount
+        If yukiCount > 1 Then yukiText &= ", "
+        yukiText &= Subst$("arg&1 As &2", yukiCount, MikuruDBusDataType.Get(yukiElement.Attributes["type"]))
+    Next
+    
+    yukiText = Subst$("&1 (&2)", yukiName, yukiText)
+    
+     Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("wireless-router"), argParentKey)
+    
+End

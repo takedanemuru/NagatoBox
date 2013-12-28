@@ -1,0 +1,109 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnPath
+
+Private Sub setPlayMark(argRow As Integer)
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        Me._$grids[yukiRow, 0].Picture = IIf(yukiRow = argRow, MikuruIcon.GetFromPath("Pictures/button-play.png"), Null)
+    Next
+    
+End
+
+Private Sub setPlayingIcon(argRowIndex As Integer)
+    
+    If argRowIndex <> NagatoQueue.CurrentPosition Then
+        Return 
+    Else 
+        Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.GetFromPath("Pictures/button-play.png")
+    End If
+    
+End
+
+Private Sub refreshData()
+    
+    Dim yukiResult As Result
+    Dim yukiRowIndex As Integer
+    
+    Me._ClearGrids()
+    
+    For yukiRowIndex = 0 To NagatoQueue.Paths.Max
+        Inc Me._$grids.Rows.Count
+        setPlayingIcon(yukiRowIndex)
+        yukiResult = NagatoDBMedia.GetMusicResultByPath(NagatoQueue.Paths[yukiRowIndex])
+        Try Me._SetGridData(yukiRowIndex, ColumnTitle, yukiResult[NagatoDBMedia.ColumnTitle])
+        If Me._$grids[yukiRowIndex, ColumnTitle].Text = "" Then 
+            Me._$grids[yukiRowIndex, ColumnTitle].Text = File.BaseName(NagatoQueue.Paths[yukiRowIndex])
+        End If
+        Try Me._SetGridData(yukiRowIndex, ColumnArtist, yukiResult[NagatoDBMedia.ColumnArtist])
+        Try Me._SetGridData(yukiRowIndex, ColumnAlbum, yukiResult[NagatoDBMedia.ColumnAlbum])
+        Me._SetGridData(yukiRowIndex, ColumnPath, NagatoQueue.Paths[yukiRowIndex])
+        If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
+    Next
+    
+End
+
+Public Sub _InitializeGrids() 'override
+    
+    With Me._$grids
+        .Columns.Count = 5
+        .Columns[ColumnIcon].W = MikuruUx.Padding
+        .Columns[ColumnTitle].Text = "Title"
+        .Columns[ColumnArtist].Text = "Artist"
+        .Columns[ColumnAlbum].Text = "Album"
+        .Columns[ColumnPath].Text = "Path/URL"
+    End With
+    
+    refreshData()
+    
+End
+
+Public Sub _ContextMenu() ' override
+    
+    Dim yukiMenu As New NagatoContectMenuCurrent As "ContextMenu"
+    
+    yukiMenu.PopUp()
+    
+End
+
+Public Sub MoveTo(argUrl As String)
+    
+    Dim yukiRow As Integer
+    
+    Me._ClearIcon(ColumnIcon)
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        If Media.URL(Me._$grids[yukiRow, ColumnPath].Text) = argUrl Then
+            Me._$grids[yukiRow, 0].EnsureVisible()
+            setPlayingIcon(yukiRow)
+        Endif
+    Next
+    
+End
+
+Public Sub SetMark(argRow As Integer)
+    
+    setPlayMark(argRow)
+    
+End
+
+Public Sub Refresh()
+    
+    refreshData()
+    
+End
+
+Public Sub ContextMenu_Delete()
+    
+    Dim yukiRow As Integer
+    
+    For Each yukiRow In Me._$grids.Rows.Selection
+        Debug Me._$grids[yukiRow, ColumnPath].Text
+        NagatoQueue.DeleteMusic(Me._$grids[yukiRow, ColumnPath].Text)
+    Next
+    
+End

@@ -1,0 +1,87 @@
+' Gambas class file
+
+Create Static
+
+Private Const XMax As Integer = 11
+Private Const YMax As Integer = 19
+
+Private $board As Integer[]
+
+Event Score
+
+Private Sub deleteLine(argLine As Integer)
+        
+        Dim yukiY As Integer
+        Dim yukiX As Integer
+        
+        For yukiY = argLine DownTo 0
+                For yukiX = 0 To XMax
+                        If yukiY = 0 Then
+                                $board[yukiX, yukiY] = 0
+                        Else
+                                $board[yukiX, yukiY] = $board[yukiX, yukiY - 1]
+                        Endif
+                Next
+        Next
+        
+        Raise Score
+        
+End
+
+Public Sub Activate()
+        
+        Dim yukiCounter As Integer
+        
+        $board = New Integer[XMax + 1, YMax + 1]
+        
+        For yukiCounter = 0 To YMax
+                $board[0, yukiCounter] = Color.White
+                $board[1, yukiCounter] = Color.White
+        Next
+        
+End
+
+Public Sub TurnToBlack()
+        
+        Dim yukiX As Integer
+        Dim yukiY As Integer
+        
+        For yukiY = 0 To YMax
+                For yukiX = 0 To XMax
+                        If $board[yukiX, yukiY] <> 0 Then $board[yukiX, yukiY] = Color.Gray
+                Next
+        Next
+        
+End
+
+Public Sub CheckLine()
+        
+        Dim yukiY As Integer = YMax
+        Dim yukiX As Integer
+
+        While yukiY > -1
+                For yukiX = 0 To XMax
+                        If $board[yukiX, yukiY] = 0 Then
+                                Dec yukiY
+                                Break
+                        Endif
+                        If yukiX = XMax Then deleteLine(yukiY)
+                Next
+        Wend
+        
+End
+
+Public Sub SetBlock(argX As Integer, argY As Integer, argColor As Integer)
+        
+        $board[argX, argY] = argColor
+        
+End
+
+Public Function GetBlock(argX As Integer, argY As Integer) As Integer
+        
+        Return $board[argx, argY]
+        
+Catch
+        Return Color.White
+        
+End

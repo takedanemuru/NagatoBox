@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,63,22)
+  Arrangement = Arrange.Fill
+  { Timer1 #Timer
+    #MoveScaled(20,23)
+    Enabled = True
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(12,6,39,11)
+    Font = Font["+2"]
+    Background = &HFFFFFF&
+    Foreground = &H9E7EFF&
+    Text = ("Unknown")
+    Alignment = Align.Center
+  }
+}

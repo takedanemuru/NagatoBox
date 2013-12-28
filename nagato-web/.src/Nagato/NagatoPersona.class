@@ -1,0 +1,134 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $observer As Observer
+Private $drawingArea As DrawingArea
+Private $tabs As NagatoTabs
+Private $painter As NagatoTabPainter
+Private $message As New NagatoMessage As "Message"
+
+Private Sub drawMessage()
+    
+    If $message.Text = "" Then Return
+    
+    Paint.Brush = Paint.Color(Color.Orange)
+    Paint.Text($message.Text, 24, 24)
+    Paint.Fill()
+    
+End
+
+Private Sub drawPlusButton()
+    
+    Dim yukiRect As Rect = $tabs.PlusButtonRect
+    
+    $painter.DrawNonActiveTab(yukiRect, $tabs.OnMouse($tabs.Max))
+    $painter.DrawTitle("+", yukiRect, False)
+    
+End
+
+Private Sub drawTab(argIndex As Integer)
+    
+    If argIndex = HaruhiMain.ActiveIndex Then
+        $painter.DrawActiveTab($tabs.Rects[argIndex], $tabs.OnMouse(argIndex))
+    Else
+        $painter.DrawNonActiveTab($tabs.Rects[argIndex], $tabs.OnMouse(argIndex))
+    End If
+
+    $painter.DrawTitle(HaruhiMain.Titles[argIndex], $tabs.Rects[argIndex])
+    
+End
+
+Private Sub drawTabs()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $tabs.Max - 1  'last tab of $tabs is plus button
+        drawTab(yukiCount)
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    $message.SetText(argText)
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $painter = New NagatoTabPainter(argDrawingArea)
+    $observer = New Observer($drawingArea) As "Asakura"
+    $tabs = New NagatoTabs(argDrawingArea)
+    
+End
+
+Public Sub Message_Stopped()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin($drawingArea)
+        Paint.DrawImage(Image.Load("pictures/default_persona.png"), 0, -88)
+        drawMessage()
+        $tabs.Refresh()
+        drawTabs()
+        drawPlusButton()
+    Paint.End()
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    Select Case $tabs.GetTabType(Mouse.X, Mouse.Y)
+        Case NagatoTabs.TypeWebView
+            If Mouse.Left Then 
+                Raise MenuEventWithArg(NagatoMenuPipe.PersonaSelect, $tabs.GetTabIndex(Mouse.X, Mouse.Y))
+            Else If Mouse.Right Then
+                Raise MenuEventWithArg(NagatoMenuPipe.PersonaDelete, $tabs.GetTabIndex(Mouse.X, Mouse.Y))
+            Endif
+        Case NagatoTabs.TypePlusButton
+            If Mouse.Left Then Raise MenuEvent(NagatoMenuPipe.PersonaNew)
+    End Select
+    
+End
+
+Public Sub Asakura_MouseMove()
+    
+    $tabs.SetOnMouseIndex(Mouse.X, Mouse.Y)
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Leave()
+    
+    $tabs.ClearOnMouseIndex()
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_MouseDrag()
+    
+   If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then
+        Drag.Icon = Stock["large/down"]
+        $drawingArea.Drag("nagato-web/tab")
+    Endif
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Drag.Hide()
+    
+End

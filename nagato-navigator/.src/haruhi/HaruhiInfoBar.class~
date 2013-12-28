@@ -1,0 +1,224 @@
+' Gambas class file
+
+Private $mainInfo As Object
+Private $clock As New NagatoInfoClock
+Private $pager As New NagatoInfoPager
+Private $backgroundColor As Integer
+
+Private Sub switchMainInfo(argMode As Integer)
+    
+    Select Case argMode
+        Case NagatoInfo.Rss
+            $mainInfo = New NagatoInfoRss
+        Case NagatoInfo.IconBox
+            $mainInfo = New NagatoInfoIconBox
+        Case NagatoInfo.Music
+            $mainInfo = New NagatoInfoMusic
+        Case NagatoInfo.System
+            $mainInfo = New NagatoInfoSystem
+    End Select
+    
+End
+
+Private Sub setMenu()
+    
+    Dim yukiRootMenu As New Menu(Me, True)
+    Dim yukiMenu As NagatoInfoBarSuperMenu
+    
+    yukiRootMenu.Name = "InfoBarRootMenu" ' This name is unique/global 
+    InfoBarMenuButton.Menu = yukiRootMenu.Name
+    
+    yukiMenu = New NagatoInfoBarSuperMenu(yukiRootMenu) As "Menu"
+    
+End
+
+Private Function getPage() As Integer ' this function should return -1 when user click "non pager area".
+    
+    Dim yukiOrigin As Integer = Desktop.W - $pager.Width
+    Dim yukiBoxWidth As Integer = 3 * MikuruUX.Grid + 2
+    
+    If yukiOrigin > Mouse.X Or If Mouse.X > (yukiOrigin + Desktop.Count * yukiBoxWidth) Then Return -1
+    
+    Return (Mouse.X - yukiOrigin) Div yukiBoxWidth
+    
+End
+
+Private Function getMousePosition() As Variant
+    
+    Dim yukiPage As Integer = getPage()
+    
+    If yukiPage = -1 Then
+        If Mouse.X > (Desktop.W - $clock.Width) Then
+            Return "clock"
+        Else If (Me.Width - $pager.Width) > Mouse.X
+            Return "main"
+        Endif
+    Else
+        Return yukiPage
+    Endif
+    
+End
+
+Private Sub leftClick()
+    
+    Dim yukiPosition As Variant = getMousePosition()
+    
+    If yukiPosition = "main" Then
+        $mainInfo.MouseDown(Mouse.X)
+    Else If yukiPosition = "clock" Then
+        HaruhiBalloon.SetText(Subst$("Today is &1.", MikuruCalendarText.Get(Now)))
+    Else 
+        Desktop.Current = yukiPosition 
+        setPicture()
+        Kyon.CallNagato()
+    Endif
+    
+Catch
+    Return
+    
+End
+
+Private Sub rightClick()
+    
+    Dim yukiPosition As Variant = getMousePosition()
+    
+    If yukiPosition = "main" Then
+        $mainInfo.PopUpMenu(Mouse.X)
+    Else If yukiPosition = "clock" Then
+        Debug "clock"
+    Else 
+        $pager.PopUpMenu(Mouse.X)
+    Endif
+    
+Catch
+    Return
+    
+End
+
+Private Sub drawMainLine()
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = 10
+        $mainInfo.DrawInfo($pager.Width)
+        .Brush = Paint.Color(MikuruColor.NagatoPurple)
+        .Fill()
+        .Brush = .Color(Color.White)
+    End With
+    
+End
+
+Private Sub refreshForm(argImage As Image)
+    
+    With argImage
+        Me.Height = .Height
+        Me.Width = .Width
+        Me.Picture = .Picture
+    End With
+    
+    Me.Move(0, (Screen.Height - 2 * MikuruUX.Grid))
+    
+End
+
+Private Sub setPicture()
+    
+    Dim yukiImage As New Image(Screen.Width, 4 * MikuruUX.Grid, $backgroundColor)
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        $clock.DrawInfo(4 * MikuruUX.Grid)
+        $pager.DrawInfo($clock.Width)
+        drawMainLine()
+    Paint.End()
+    
+    refreshForm(yukiImage)
+    
+Catch
+    Return
+    
+End
+
+Private Sub setBatteryAlert()
+    
+    $mainInfo = New NagatoInfoBatteryAlert
+    
+    With MikuruColor
+        $backgroundColor = IIf(10 > NagatoUPower.TotalBatteryPercentage, .AlertRed, .AlertAmber)
+    End With
+    
+End
+
+Private Sub setOverloadingAlert()
+    
+    $mainInfo = New NagatoInfoSystem
+    
+    With MikuruColor
+        $backgroundColor = IIf(NagatoSystemObserver.SystemLoad > 0.9, .AlertRed, .AlertAmber)
+    End With
+
+End
+
+Public Sub Refresh() 
+    
+    If Not NagatoUPower.IsPlugged And If 20 > NagatoUPower.TotalBatteryPercentage Then
+        setBatteryAlert()
+    Else If NagatoSystemObserver.SystemLoad > 0.8 Then
+        setOverloadingAlert()
+    Else
+        switchMainInfo(NagatoSettingsInfobar.Type)
+        $backgroundColor = NagatoSettingsInfobar.LabelColor
+    Endif
+    
+    setPicture()
+    
+End
+
+Public Sub Form_Show()
+    
+    $backgroundColor = NagatoSettingsInfobar.LabelColor
+    InfoBarMenuButton.Picture = MikuruMonoIconBlue.Get("star")
+    switchMainInfo(NagatoSettingsInfobar.Type)
+    setMenu()
+
+End
+
+Public Sub Form_Enter()
+    
+    If Mouse.ScreenY > (Screen.Height - MikuruUX.Grid)
+        InfoBarMenuButton.Visible = True
+        Kyon.CallNagato(Mouse.ScreenX - (Kyon.Width / 2))
+        HaruhiBalloon.TextAreaText = ("YUKI.N > click me.")
+    End If
+    
+End
+
+Public Sub Form_Leave()
+    
+    InfoBarMenuButton.Visible = False
+    HaruhiBalloon.Close()
+    
+End
+
+Public Sub Form_MouseDown()
+    
+    If Mouse.Left Then
+        leftClick()
+    Else If Mouse.Right Then
+        rightClick()
+    Endif
+    
+End
+
+Public Sub Form_Move()
+    
+    setPicture()
+    
+End
+
+Public Sub Menu_Switch(argMode As Integer)
+    
+    switchMainInfo(argMode)
+    NagatoSettingsInfobar.Type = argMode
+    setPicture()
+    
+End

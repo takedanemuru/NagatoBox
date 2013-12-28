@@ -1,0 +1,310 @@
+' Gambas class file
+
+Private $timer As New Timer As "Timer"
+Private $cpuUsages As New Collection
+Private $cpuTimeTotal As Integer
+Private $cpuTimeDifference As Integer
+Private $targetId As String
+Private $targetHeader As Integer = 0
+Private $sortAscend As Boolean = True
+
+Private Function getCpuUsageInFloat(argData As String[]) As Float
+    
+    Dim yukiTotalUsage As Integer = CInt(argData[13]) + CInt(argData[14])
+    Dim yukiBuffer As Integer
+    
+    If yukiTotalUsage = 0 Then Return 0
+    
+    If $cpuUsages.Exist(argData[0]) Then
+        yukiBuffer = CInt(yukiTotalUsage) - CInt($cpuUsages[argData[0]])
+        $cpuUsages[argData[0]] = yukiTotalUsage
+        If yukiBuffer = 0 Then
+            Return 0
+        Else If $cpuTimeDifference = 0 Then
+            Return 0
+        Else
+            Return yukiBuffer / $cpuTimeDifference
+        End If
+    Else
+        $cpuUsages[argData[0]] = yukiTotalUsage
+        Return 0
+    Endif
+    
+End
+
+Private Function convertPageToMiB(argData As String) As String
+    
+    If argData <> 0 Then
+        Return Format$(CInt(argData) / 256, "#,##0.00MiB") '1page=4KiB(1/256MiB)
+    Else
+        Return "-"
+    Endif
+    
+End
+
+Private Function convertKiloByteToMiB(argData As String) As String
+    
+    If argData <> 0 Then
+        Return Format$(CInt(argData) / (1024 ^ 2), "#,##0.00MiB") 'byte to MiB
+    Else
+        Return "-"
+    Endif
+    
+End
+
+Private Function getRowPosition(argCpuUsage As String) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To SystemMonitorGrid.Rows.Max
+        If String.Comp(SystemMonitorGrid[yukiCount, 3].Text, argCpuUsage) Then
+            Return yukiCount
+        Endif
+    Next
+    
+    Return -1
+    
+End
+
+Private Function getRowData(argDirectory As String) As Collection
+    
+    Dim yukiStatus As String[] = Split(File.Load(Subst$("/proc/&1/stat", File.Name(argDirectory))), " ", "")
+    Dim yukiResult As New Collection
+    
+    yukiResult.Add(CInt(File.Name(argDirectory)), "id")
+    yukiResult.Add(yukiStatus[2], "status")
+    yukiResult.Add(yukiStatus[1], "name")
+    yukiResult.Add(getCpuUsageInFloat(yukiStatus), "cpu")
+    yukiResult.Add(CFloat(yukiStatus[23]), "rss")
+    yukiResult.Add(CFloat(yukiStatus[22]), "virtual")
+    
+    Return yukiResult
+    
+End
+
+Private Function convertUsageToString(argCpuUsage As Float) As String
+    
+    If argCpuUsage = 0 Then
+        Return "-"
+    Else
+        Return Format$(argCpuUsage, "##0.00%")
+    Endif
+    
+End
+
+Private Sub setBackGroundColor()
+    
+    Dim yukiCount As Integer
+    Dim yukiColor As Integer = Color.Lighter(Color.Lighter(Color.Lighter(Color.Blue)))
+    
+    For yukiCount = 0 To SystemMonitorGrid.Columns.Max
+        SystemMonitorGrid[SystemMonitorGrid.Rows.Max, yukiCount].Background = yukiColor
+    Next
+    
+End
+
+Private Sub setRowData(argRowData As Collection)
+    
+    With SystemMonitorGrid
+        Inc .Rows.Count
+        SystemMonitorGrid[.Rows.Max, 0].Text = CStr(argRowData["id"])
+        SystemMonitorGrid[.Rows.Max, 1].Text = argRowData["status"]
+        SystemMonitorGrid[.Rows.Max, 2].Text = argRowData["name"]
+        SystemMonitorGrid[.Rows.Max, 3].Text = convertUsageToString(argRowData["cpu"])
+        SystemMonitorGrid[.Rows.Max, 4].Text = convertPageToMiB(CStr(argRowData["rss"]))
+        SystemMonitorGrid[.Rows.Max, 5].Text = convertKiloByteToMiB(CStr(argRowData["virtual"]))
+        SystemMonitorGrid[.Rows.Max, 3].Alignment = Align.Right
+        SystemMonitorGrid[.Rows.Max, 4].Alignment = Align.Right
+        SystemMonitorGrid[.Rows.Max, 5].Alignment = Align.Right
+        If Odd(.Rows.Max) Then setBackGroundColor()
+    End With
+    
+End
+
+Private Function isLesser(argGridData As Variant, argRowData As Variant) As Boolean
+    
+    If $sortAscend Then
+        Return (argGridData > argRowData)
+    Else
+        Return (argRowData > argGridData)
+    Endif
+    
+End
+
+Private Function getKey() As String
+    
+    Select Case $targetHeader
+        Case 0
+            Return "id"
+        Case 1
+            Return "status"
+        Case 2
+            Return "name"
+        Case 3
+            Return "cpu"
+        Case 4
+            Return "rss"
+        Case 5
+            Return "virtual"
+    End Select
+    
+End
+
+Private Sub setGridData(argRowData As Collection, ByRef refGridData As Variant[])
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To refGridData.Max
+        If isLesser(refGridData[yukiCount][getKey()], argRowData[getKey()]) Then
+            refGridData.Add(argRowData, yukiCount)
+            Return
+        Endif
+    Next
+    
+    refGridData.Add(argRowData)
+    
+End
+
+Private Sub setGridView()
+    
+    Dim yukiDirectory As String
+    Dim yukiRowData As Collection
+    Dim yukiGridData As New Variant[]
+    Dim yukiCurrentY As Integer = SystemMonitorGrid.ScrollY
+    Dim yukiCount As Integer
+    
+    SystemMonitorGrid.Clear()
+    SystemMonitorGrid.Rows.Count = 0
+    
+    For Each yukiDirectory In Dir("/proc", "*[0-9]", gb.Directory)
+        yukiRowData = getRowData(yukiDirectory)
+        If yukiGridData.Count = 0 Then
+            yukiGridData.Add(yukiRowData)
+        Else
+            setGridData(yukiRowData, ByRef yukiGridData)
+        Endif
+    Next
+    
+    For yukiCount = 0 To yukiGridData.Max
+        setRowData(yukiGridData[yukiCount])
+    Next
+    
+    Try SystemMonitorGrid.ScrollY = yukiCurrentY
+    
+End
+
+Private Function getCpuStatus() As String
+    
+    Dim yukiLine As String
+    Dim yukiElements As String[]
+    Dim yukiResult As Integer
+    Dim yukiCount As Integer
+    
+    Exec ["head", "-n", "1", "/proc/stat"] To yukiLine
+    
+    yukiElements = Split(yukiLine, " ", "", True)
+    
+    For yukiCount = 1 To 8
+        yukiResult += CInt(yukiElements[yukiCount])
+    Next
+    
+    Return yukiResult
+    
+End
+
+Private Sub setCpuTimes()
+    
+    Dim yukiCurrentTotal As Integer = getCpuStatus()
+    
+    If $cpuTimeTotal = 0 Then
+        $cpuTimeTotal = yukiCurrentTotal
+        $cpuTimeDifference = 0
+    Else
+        $cpuTimeDifference = yukiCurrentTotal - $cpuTimeTotal
+        $cpuTimeTotal = yukiCurrentTotal
+    Endif
+    
+End
+
+Public Sub Timer_Timer()
+    
+    setCpuTimes()
+    setGridView()
+    
+End
+
+Public Sub _new()
+    
+    SystemMonitorGrid.Rows.Count = 0
+    
+    With SystemMonitorGrid
+        .Columns.Count = 6
+        .Columns[0].Text = ("Process ID")
+        .Columns[1].Text = ("Status")
+        .Columns[2].Text = ("Process Name")
+        .Columns[3].Text = ("CPU Usage")
+        .Columns[4].Text = ("Memory Usage(RSS)")
+        .Columns[5].Text = ("Memory Usage(Virtual)")
+    End With
+    
+    NagatoSettingsCore.LoadGridsSettings(SystemMonitorGrid)
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    $timer.Start()
+    NagatoSettingsCore.LoadFormSettings(Me)
+    
+End
+
+Public Sub Form_Close()
+    
+    $timer.Stop()
+    NagatoSettingsCore.SaveGridsSettings(SystemMonitorGrid)
+    NagatoSettingsCore.SaveFormSettings(Me)
+    
+End
+
+Public Sub SystemMonitorGrid_MouseDown()
+    
+    Dim yukiRootMenu As New Menu(Me) 
+    Dim yukiMenu As New Menu(yukiRootMenu) As "KillMenu"
+    
+    $timer.Stop()
+    
+    With yukiMenu
+        .Text = Subst$("Kill process &1", SystemMonitorGrid[SystemMonitorGrid.Row, 0].Text)
+        $targetId = SystemMonitorGrid[SystemMonitorGrid.Row, 0].Text
+        .Picture = MikuruMonoIconBlue.Get("exclamation", 2 * MikuruUX.Grid)
+    End With
+    
+    yukiRootMenu.Popup()
+    
+    $timer.Start()
+    
+Catch
+    $timer.Start()
+    Return
+    
+End
+
+Public Sub KillMenu_Click()
+    
+    If Message.Warning(Subst$("Are you sure to kill this process &1 ?", $targetId), ("Cancel"), ("Kill")) = 2 Then
+        Debug "kill : " & $targetId
+        Try Shell Subst$("kill &1", $targetId)
+    End If 
+    
+End
+
+Public Sub SystemMonitorGrid_ColumnClick(argColumnIndex As Integer)
+
+    If $targetHeader = argColumnIndex Then
+        $sortAscend = Not $sortAscend
+    Else
+        $targetHeader = argColumnIndex
+    Endif
+    
+End

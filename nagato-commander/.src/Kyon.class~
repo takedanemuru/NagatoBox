@@ -1,0 +1,82 @@
+' Gambas class file
+
+Private $firstPrompt As String
+Private $process As Process
+Private $output As String
+Private $lastCommand As String
+
+Private Sub updateConsole()
+    
+    ConsoleTextArea.RichText = NagatoText.GetRichText($output)
+    If $lastCommand = "" Then $firstPrompt = ConsoleTextArea.Text
+    Debug $firstPrompt
+    ConsoleTextArea.ScrollY = 1000000 ' as positive infinite
+    
+End
+
+Private Sub setMessage(argMessage As String)
+    
+    If $lastCommand = "" Then Return
+
+    MessageTextLabel.Text = "YUKI.N > " & argMessage
+    
+End
+
+Private Sub initializeProcess()
+    
+    $process = Exec ["bash", "--noediting"] For Input Output As "Process"
+    
+End
+
+Public Sub Form_Open()
+    
+    initializeProcess()
+    CommandTextArea.SetFocus()
+    NagatoSettings.LoadFormSettings(Me)
+    Application.MainWindow = Me
+    
+End
+
+Public Sub Form_Close()
+    
+    Try $process.Kill()
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub Process_Read()
+
+    Dim yukiStream As String
+
+    While Not Eof($process)
+        Read #$process, yukiStream, -256
+        $output &= yukiStream
+        updateConsole()
+        setMessage(Subst$(("command <h2>&1</h2> is now going on."), $lastCommand))
+    Wend
+
+    If $output Ends $firstPrompt Then
+        setMessage(Subst$(("command <h2>&1</h2> has been done."), $lastCommand))
+        NagatoSettings.PushHistory($lastCommand)
+    End If
+
+End
+
+Public Sub Process_Error(argInput As String)
+  
+    $output = $output & argInput
+    updateConsole()
+  
+End
+
+Public Sub CommandTextArea_Activate()
+  
+    Dim yukiCommand As String = CommandTextArea.Text & gb.NewLine
+    
+    $lastCommand = CommandTextArea.Text
+    CommandTextArea.Clear()
+    $output &= yukiCommand
+    
+    Print #$process, yukiCommand;
+  
+End

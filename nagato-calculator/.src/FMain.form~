@@ -1,0 +1,120 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64.2857,51.4286)
+  Icon = Picture["icon:/48/calculator"]
+  Picture = Picture["picture/121017-bigthumbnail.jpg"]
+  { LCDNumber LCDNumber
+    MoveScaled(4,4,59,6)
+    Foreground = &HB47CC7&
+    Value = 123456789.012
+    Digits = 18
+    SmallDecimalPoint = True
+    Border = Border.Sunken
+  }
+  { Button1 Button
+    MoveScaled(1,44,6,6)
+    Text = (".")
+  }
+  { Button7 Button
+    MoveScaled(1,37,6,6)
+    Text = ("clear")
+  }
+  { Button2 Button
+    MoveScaled(8,44,6,6)
+    Text = ("0")
+  }
+  { Button3 Button
+    MoveScaled(8,37,6,6)
+    Text = ("5")
+  }
+  { Button4 Button
+    MoveScaled(15,44,6,6)
+    Text = ("1")
+  }
+  { Button5 Button
+    MoveScaled(15,37,6,6)
+    Text = ("6")
+  }
+  { Button6 Button
+    MoveScaled(22,44,6,6)
+    Text = ("2")
+  }
+  { Button8 Button
+    MoveScaled(22,37,6,6)
+    Text = ("7")
+  }
+  { Button9 Button
+    MoveScaled(29,44,6,6)
+    Text = ("3")
+  }
+  { Button10 Button
+    MoveScaled(29,37,6,6)
+    Text = ("8")
+  }
+  { Button11 Button
+    MoveScaled(36,44,6,6)
+    Text = ("4")
+  }
+  { Button12 Button
+    MoveScaled(36,37,6,6)
+    Text = ("9")
+  }
+  { Button13 Button
+    MoveScaled(43,44,6,6)
+    Text = ("-")
+  }
+  { Button14 Button
+    MoveScaled(43,37,6,6)
+    Text = ("*")
+  }
+  { Button15 Button
+    MoveScaled(50,44,6,6)
+    Text = ("=")
+  }
+  { Button16 Button
+    MoveScaled(50,37,6,6)
+    Text = ("/")
+  }
+  { Button18 Button
+    MoveScaled(57,37,6,13)
+    Text = ("+")
+  }
+  { CheckBox1 CheckBox
+    MoveScaled(1,4,3,6)
+    Text = (" ")
+  }
+  { LCDNumber2 LCDNumber
+    MoveScaled(4,11,59,6)
+    Foreground = &HB47CC7&
+    Digits = 18
+    SmallDecimalPoint = True
+    Border = Border.Sunken
+  }
+  { CheckBox2 CheckBox
+    MoveScaled(1,11,3,6)
+    Text = (" ")
+  }
+  { LCDNumber3 LCDNumber
+    MoveScaled(4,18,59,6)
+    Foreground = &HB47CC7&
+    Digits = 18
+    SmallDecimalPoint = True
+    Border = Border.Sunken
+  }
+  { CheckBox3 CheckBox
+    MoveScaled(1,18,3,6)
+    Text = (" ")
+  }
+  { LCDNumber4 LCDNumber
+    MoveScaled(4,25,59,6)
+    Foreground = &HB47CC7&
+    Digits = 18
+    SmallDecimalPoint = True
+    Border = Border.Sunken
+  }
+  { CheckBox4 CheckBox
+    MoveScaled(1,25,3,6)
+    Text = (" ")
+  }
+}

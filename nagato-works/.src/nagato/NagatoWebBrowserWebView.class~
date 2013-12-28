@@ -1,0 +1,199 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private Const TextLengthMax As Integer = 30
+
+Property Url As String
+Property Read Icon As Picture
+Property Read Title As String
+Property Read Progress As Float
+Property Read Html As String
+
+Private $webView As WebView
+Private $lastLink As String = ""
+
+Event NewBrowser(argPath As String)
+Event NewUrl(argPath As String)
+Event NewIcon(argIcon As Picture)
+Event NewTitle(argTitle As String)
+Event MoveToSearchBox
+Event InProgress
+Event Done
+
+Public Sub _Initialize(argPath As String) 'override
+    
+    If argPath = "" Then argPath = NagatoSettingsWeb.HomePage
+    
+    $webView = New WebView(Me._$parent) As "WebView"
+    
+    With $webView
+        .Expand = True
+        .Url = argPath
+        .SetFocus()
+    End With
+    
+End
+
+Public Sub HomePage()
+    
+    $webView.Url = NagatoSettingsWeb.HomePage
+    
+End
+
+Public Sub Back()
+    
+    $webView.Back()
+    
+End
+
+Public Sub Forward()
+    
+    $webView.Forward()
+    
+End
+
+Public Sub Reload()
+    
+    $webView.Reload()
+    
+End
+
+Public Sub Stop()
+    
+    $webView.Stop()
+    
+End
+
+Public Sub FindText(argStringsToSerch As String)
+    
+    $webView.FindText(argStringsToSerch, False, False, True)
+    
+End
+
+Public Sub WebView_KeyPress()
+    
+    If Key.Alt Then
+        If Key.Code = 16777234 Then $webView.Back() ' Alt+Left
+        If Key.Code = 16777236 Then $webView.Forward() 'Alt+Right
+    Else If Key.Control Then
+        If Key.Code = Key["r"] Then $webView.Reload() 
+        If Key.Code = Key["f"] Then Raise MoveToSearchBox
+    Endif
+    
+End
+
+Public Sub WebView_Progress()
+    
+    If $webView.Progress = 1 Then  ' 1 means 100%
+        NagatoMessaging.setMessage(Subst$("now displays : &1", $webView.Title))
+        NagatoDBWeb.PushHistory($webView.Url, $webView.Title, $webView.Icon)
+        Raise Done
+    Else
+        NagatoMessaging.setMessage("progress:" & ($webView.Progress * 100) & "%")
+        Raise InProgress
+    Endif
+    
+End
+
+Public Sub WebView_Link(argLink As String)
+    
+    If Not argLink = "" Then $lastLink = argLink
+    
+    NagatoMessaging.SetMessage(argLink)
+    
+End
+
+Public Sub WebView_NewWindow(argModal As Boolean)
+    
+    Debug "IsModal : " & argModal ' This statement has no mean, only for to avoid ide error mesage "unused argument"
+    
+    Raise NewBrowser($lastLink)
+    
+End
+
+Public Sub WebView_Load()
+    
+    Raise NewUrl($webView.Url)
+    
+End
+
+Public Sub WebView_Status()
+    
+    NagatoMessaging.setMessage($webView.Status)
+    
+End
+
+Public Sub WebView_Auth()
+    
+    Debug "auth required !"
+    
+End
+
+Public Sub WebView_Download(argDownload As WebDownload)
+    
+    Dim yukiProgressBar As NagatoDownloadProgressBar
+    
+    argDownload.Path = Temp$("download_" & File.Name(argDownload.Url))
+    
+    Dialog.Title = ("Save file")
+    Dialog.Path = NagatoXdgUserDirs.Download &/ File.Name(argDownload.Url)
+    
+    If Not Dialog.SaveFile() Then
+        NagatoMessaging.SetMessage(Subst$("now downloading &1", File.Name(argDownload.url)))
+        yukiProgressBar = New NagatoDownloadProgressBar(Me._$parent, argDownload, Dialog.Path)
+    Else
+        NagatoMessaging.SetMessage(("Downloading is cancelled."))
+        argDownload.Cancel()
+    End If
+
+End
+
+Public Sub WebView_Icon()
+    
+    Raise NewIcon(WebSettings.IconDatabase[$webView.Url])
+    
+End
+
+Public Sub WebView_Title()
+    
+    Raise NewTitle(MikuruCollapsedText.Get($webView.Title, TextLengthMax))
+    NagatoMessaging.setMessage(Subst$("now displays : &1", $webView.Title))
+    
+End
+
+Private Function Url_Read() As String
+
+    Return $webView.Url
+
+End
+
+Private Sub Url_Write(Value As String)
+
+    $webView.Url = Value
+
+End
+
+Private Function Icon_Read() As Picture
+
+    Return $webView.Icon
+
+End
+
+Private Function Title_Read() As String
+
+    Return $webView.Title
+
+End
+
+Private Function Progress_Read() As Float
+
+    Return $webView.Progress
+
+End
+
+Private Function Html_Read() As String
+
+    Return $webView.HTML
+
+End

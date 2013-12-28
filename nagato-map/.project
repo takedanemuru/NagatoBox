@@ -1,0 +1,35 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.1
+Title=nagato-map
+Startup=Kyon
+Icon=picture/blue/compass.png
+Version=0.6.0
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.db
+Component=gb.settings
+Component=gb.image.effect
+Component=gb.net
+Component=gb.net.curl
+Component=gb.map
+Component=gb.qt4.ext
+Component=gb.qt4.webkit
+Component=gb.xml
+Description="map viewer."
+Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=nagato-map-0.6.0
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Science/Geoscience"
+Categories=ubuntu:"Education;Geoscience;Nagato;Science"
+Groups=ubuntu:"x11"

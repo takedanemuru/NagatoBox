@@ -1,0 +1,33 @@
+' Gambas class file
+
+Public Enum MenuNone = 0
+Public Enum MoveHeader = 1000, MoveBack = 1001, MoveForward = 1002, MoveUp = 1003, MoveHome = 1004
+Public Enum PathHeader = 2000, PathNew = 2001, PathCopyToClipboard = 2002
+Public Enum AppHeader = 3000, AppAbout = 3001, AppQuit = 3002
+Public Enum ViewHeader = 4000, ViewShowHidden = 4001, ViewNewTab = 4002, ViewNewPane = 4003
+Public Enum FileHeader = 5000, FileOpen = 5001, FileOpenWith = 5002, FileDelete = 5003, FileRename = 5004
+Public Enum FileCreate = 5005, FileShowProperty = 5006, FileUnarchive = 5008, FileMoveToCurrentDir = 5009
+Public Enum DirHeader = 6000, DirOpen = 6001, DirOpenInNewTab = 6002, DirDelete = 6003, DirRename = 6004
+Public Enum DirCreate = 6005, DirShowProperty = 6006
+
+Event MenuEvent(argEvent As Integer)
+Event MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+Event MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    Raise MenuEvent(argEvent)
+    
+End
+
+Public Sub Menu_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+    
+    Raise MenuEventWithArg(argEvent, argArgument)
+    
+End
+
+Public Sub Menu_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    Raise MenuEventWithArgs(argEvent, argArguments)
+    
+End

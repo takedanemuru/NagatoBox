@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+Private $background As New NagatoPainterBackground
+Private $buttons As New NagatoButtonPainter
+Private $infoBox As New NagatoInfoBoxPainter
+Private $progressBar As New NagatoProgressBarPainter
+
+Public Sub SetMessage(argMessage As String, argDuration As Integer)
+    
+    $infoBox.SetMessage(argMessage, argDuration)
+    
+End
+
+Public Sub Refresh()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub ChangeImage()
+    
+    $background.SetBackgroundImage()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $background.SetBackgroundImage()
+    $drawingArea = argDrawingArea
+    $observer = New Observer($drawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin(Draw.Device)
+        $background.Draw()
+        If MikuruMousePosition.Entered Then $buttons.Draw()
+        $infoBox.Draw()
+        $progressBar.Draw()
+    Paint.End()
+
+    HaruhiPlayer.Title = NagatoQueue.Title
+    
+End

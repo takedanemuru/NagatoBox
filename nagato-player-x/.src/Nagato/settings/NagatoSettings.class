@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Property Read _$settings As Settings
+
+Private Function _$settings_Read() As Settings
+
+    Return HaruhiPlayer.Settings
+
+End

@@ -1,0 +1,125 @@
+' Gambas class file
+
+Create Static
+
+Property Read Desktop As String
+Property Read Documents As String
+Property Read Download As String
+Property Read Music As String
+Property Read Pictures As String
+Property Read PublicShare As String
+Property Read Templetes As String
+Property Read Videos As String
+
+Private $desktop As String
+Private $documents As String
+Private $download As String
+Private $music As String
+Private $pictures As String
+Private $publicShare As String
+Private $templates As String
+Private $videos As String
+Private $dirArray As String[]
+
+Private Function getDir(argType As String) As String
+    
+    Dim yukiResult As String
+    
+    Shell Subst$("xdg-user-dir &1", argType) To yukiResult
+    
+    Return Replace$(yukiResult, "\n", "")
+    
+End
+
+Private Sub initializeDirData()
+    
+    $desktop = getDir("DESKTOP")
+    $documents = getDir("DOCUMENTS")
+    $download = getDir("DOWNLOAD")
+    $music = getDir("MUSIC")
+    $pictures = getDir("PICTURES")
+    $publicShare = getDir("PUBLICSHARE")
+    $templates = getDir("TEMPLATES")
+    $videos = getDir("VIDEOS")
+    
+End
+
+Public Sub initializeDirArray()
+    
+    $dirArray = [$desktop, $documents, $download, $music, $pictures, $publicShare, $templates, $videos]
+    
+End
+
+Public Sub _new()
+    
+    initializeDirData()
+    initializeDirArray()
+    
+End
+
+Public Function IsXdgUserDir(argPath As String) As Boolean
+    
+    Return $dirArray.Exist(argPath)
+    
+End
+
+Public Function ExcludeXdgUserDirs(argPaths As String[]) As String[]
+    
+    Dim yukiResult As New String[]
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Not $dirArray.Exist(yukiPath) Then yukiResult.Add(yukiPath)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Private Function Videos_Read() As String
+
+    Return $videos
+
+End
+
+Private Function Templetes_Read() As String
+
+    Return $templates
+
+End
+
+Private Function Pictures_Read() As String
+
+    Return $pictures
+
+End
+
+Private Function PublicShare_Read() As String
+
+    Return $publicShare
+
+End
+
+Private Function Desktop_Read() As String
+
+    Return $desktop
+
+End
+
+Private Function Documents_Read() As String
+
+    Return $documents
+
+End
+
+Private Function Download_Read() As String
+
+    Return $download
+
+End
+
+Private Function Music_Read() As String
+
+    Return $music
+
+End

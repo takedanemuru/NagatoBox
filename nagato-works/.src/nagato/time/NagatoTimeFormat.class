@@ -1,0 +1,20 @@
+' Gambas class file
+
+Create Static
+
+Public Function Convert(argSeconds As Float) As String
+        
+       Dim yukiArg As Integer = Int(argSeconds) 
+       Dim yukiHour As Integer = yukiArg Div 3600
+       Dim yukiMinute As String  
+       Dim yukiSecond As String = Format$(yukiArg Mod 60, "0#")
+       
+       If yukiHour <> 0 Then
+                yukiMinute = Format$((yukiArg Mod 3600) Div 60, "0#")
+                Return Subst$("&1:&2:&3", yukiHour, yukiMinute, yukiSecond)
+       Else
+                yukiMinute = Format$((yukiArg Mod 3600) Div 60, "0")
+                Return Subst$("&1:&2", yukiMinute, yukiSecond)
+       Endif
+        
+End

@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoTabContentsHandler
+
+Private $menuButton As MenuButton = HaruhiMain.GlobalAutostartMenuButton
+Private $gridView As GridView = HaruhiMain.GlobalAutoStartGrid
+
+Private Sub showDetail(argRow As Integer)
+    
+    If argRow <> $gridView.Rows.Max Then
+        HaruhiMain.RefreshTabStrip($gridView[argRow, 1].Text, Stock["small/lock"])
+        NagatoEditorHandler.SetText(MikuruDesktopEntryFile.Get(argRow, $gridView), True)
+    End If
+    
+End
+
+Public Sub _InitializeGearMenu()
+    
+    $menuButton.Menu = "GlobalAutostartMenu"
+    Me._$gearMenu = New NagatoGlobalAutostartMenu($menuButton.Menu) As "Menu"
+    
+End
+
+Public Sub _InitializeObserver()
+    
+    Me._$observer = New Observer($gridView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    showDetail($gridView.RowAt(Mouse.Y))
+    
+End
+
+Public Sub Menu_Show()
+    
+    If $gridView.Rows.Selection.Count = 0 Then 
+        Return
+    Else
+        showDetail($gridView.Rows.Selection[0])
+    End If
+    
+End
+
+Public Sub Menu_Block()
+    
+    Debug "Block"
+    
+End

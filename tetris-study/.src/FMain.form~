@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,45.7143,57.1429)
+  Text = ("nagato-tetris")
+  Icon = Picture["ksirtet.png"]
+  Picture = Picture["with_bird.jpg"]
+  Resizable = False
+  { DrawingArea1 DrawingArea
+    MoveScaled(0,0,45.7143,57.1429)
+    NoBackground = True
+  }
+}

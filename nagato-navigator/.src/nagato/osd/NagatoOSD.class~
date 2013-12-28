@@ -1,0 +1,362 @@
+' Gambas class file
+
+Create Static
+
+Property FontName As String
+Property Read LastClosed As Boolean
+Property Read Closed As Boolean
+Property Read Height As Integer
+Property Read Width As Integer
+Property Read OffsetLeft As Integer
+Property Read TextAreaWidth As Integer
+Property Read OffsetTopZero As Integer
+Property Read OffsetTop1st As Integer
+Property Read OffsetTop2nd As Integer
+Property Read OffsetTop3rd As Integer
+Property Read OffsetTopProgressbar As Integer
+
+Property Read UniqueName As String 
+
+Public _$form As Form
+Public _$menuButton As MenuButton
+Public _$uniqueName As String = "NagatoOSD"
+
+Private $fontName As String = ""
+
+Private Sub initializeMenuButton()
+    
+    Me._$menuButton = New MenuButton(Me._$form) As "MenuButton"
+    
+    With Me._$menuButton
+        .Width = 4 * MikuruUX.Grid
+        .Height = 4 * MikuruUX.Grid
+        .X = Me.Width - (.Width + 1 * MikuruUX.Grid)
+        .Y = 1 * MikuruUX.Grid
+        .Picture = MikuruMonoIconBlue.Get("star")
+        .Border = False
+        .Visible = False
+        .Arrow = False
+    End With
+    
+End
+
+Private Sub addOSDCommonMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As NagatoOSDCommonMenu
+    
+    yukiMenu = New NagatoOSDCommonMenu(argParentMenu) As "Menu"
+    
+End
+
+Public Sub _DrawIconPicture(argIcon As Picture)
+    
+    Paint.DrawPicture(argIcon, 3 * MikuruUX.Grid, 3 * MikuruUX.Grid)
+    
+End
+
+Public Sub _DrawIconImage(argIcon As Image)
+    
+    With MikuruUX
+        Paint.DrawImage(argIcon.Stretch(14 * .Grid, 14 * .Grid), 2 * .Grid, 2 * .Grid)
+    End With
+    
+End
+
+Public Sub _AddSelectLabelColorMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "SelectLabelColorMenu"
+    
+    With yukiMenu
+        .Text = ("select label color")
+        .Picture = MikuruMonoIconBlue.Get("paint-bucket")
+    End With
+    
+End
+
+Public Sub _AddOtherMenu(argParentMenu As Menu) ' This method is virtual, to be overridden.
+    
+    
+    
+End
+
+Public Sub _InitializeMenu()
+    
+    Dim yukiMenu As New Menu(Me._$form) 
+    
+    yukiMenu.Name = "OSDRootMenu"
+    Me._$menuButton.Menu = yukiMenu.Name
+    
+    Me._AddOtherMenu(yukiMenu)
+    addOSDCommonMenu(yukiMenu)
+    
+End
+
+Public Function _GetBaseImage(argColor As Integer) As Image
+    
+    Dim yukiBaseImage As New Image(Me.Width, Me.Height, Color.Transparent)
+    
+    With Paint
+        .Begin(yukiBaseImage)
+        .Brush = .Color(argColor)
+        .Rectangle(0, 0, Me.Width, Me.Height, NagatoSettingsOSD.Radius)
+        .Fill()
+        .End()
+    End With
+    
+    Return yukiBaseImage
+    
+End
+
+Public Sub _InitializeForm()
+    
+    Me._$form = New Form As "Form"
+    
+    With Me._$form
+        .Width = Me.Width
+        .Height = Me.Height
+        .Stacking = Window.Below
+        .Border = Border.None
+        .Resizable = False
+        .SkipTaskbar = True
+        .Mask = True
+        .Sticky = True
+    End With
+
+    initializeMenuButton()
+    Me._InitializeMenu()
+    
+End
+
+Public Sub _SetFormPosition()
+    
+    Me._$form.X = 0
+    Me._$form.Y = 0
+    
+End
+
+Public Sub _SetPicture() ' This method is virtual, MUST be overridden.
+    
+    
+    
+End
+
+Public Sub _DrawClippingRectangle()
+    
+    With Paint
+        .Brush = .Color(Color.Transparent)
+        .Rectangle(Me.OffsetLeft, 0, 34 * MikuruUX.Grid, Me.Height)
+        .Fill(True)
+        .Clip()
+    End With
+    
+End
+
+Public Sub Show()
+    
+    If Not Object.IsValid(Me._$form) Then Me._InitializeForm()
+    
+    Me._$form.Show()
+    Me._SetFormPosition()
+    Me._SetPicture()
+    
+End
+
+Public Sub Move(argX As Integer, argY As Integer)
+    
+    Me._$form.X = argX
+    Me._$form.Y = argY
+    
+End
+
+Public Sub Sort()
+    
+    NagatoOSDManeuver.Sort()
+    
+End
+
+Public Sub Close()
+    
+    Me._$form.Close()
+    
+End
+
+Public Sub Refresh()
+    
+    If Me.Closed Then Return
+    
+    Me._$form.Sticky = True
+    Me._SetPicture()
+    
+End
+
+Public Sub _new()
+    
+    Me._InitializeForm()
+    Me._SetFormPosition()
+    
+End
+
+Public Sub Form_Open()
+    
+    NagatoSettingsOSD.SetLastClosed(Me.UniqueName, False)
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsOSD.SetLastClosed(Me.UniqueName, True)
+    
+End
+
+Public Sub Form_Enter()
+    
+    Me._$menuButton.Visible = True
+    
+End
+
+Public Sub Form_Leave()
+    
+    Me._$menuButton.Visible = False
+    
+End
+
+Public Sub Form_Show()
+    
+   Sort() 
+    
+End
+
+Public Sub Form_Move()
+    
+    'Sort()
+    
+End
+
+Public Sub Form_MouseDrag()
+    
+    Me._$form.X += (Mouse.X - Mouse.StartX)
+    Me._$form.Y += (Mouse.Y - Mouse.StartY)
+    
+End
+
+Public Sub Form_MouseUp()
+    
+    'To Do
+    'NagatoOSDOrder.ResetOrder(Me.UniqueName, [Me._$form.X, Me._$form.Y])
+    
+    Sort()
+    
+End
+
+Public Sub Form_DblClick()
+    
+    Me._$form.Close()
+    Sort()
+    
+End
+
+Public Sub Menu_Close()
+    
+    Me._$form.Close()
+   Sort()
+    
+End
+
+Public Sub SelectLabelColorMenu_Click()
+    
+    Dialog.Title = ("select label color")
+    Dialog.Color = NagatoSettingsOSD.GetColor(Me.UniqueName)
+    
+    If Not Dialog.SelectColor() Then
+        NagatoSettingsOSD.SetColor(Me.UniqueName, Dialog.Color)
+    Endif
+    
+End
+
+
+Private Function FontName_Read() As String
+
+    Return $fontName
+
+End
+
+Private Sub FontName_Write(Value As String)
+
+    $fontName = Value
+
+End
+
+Private Function Closed_Read() As Boolean
+
+    Return Me._$form.Closed
+
+Catch
+    Return True
+
+End
+
+Private Function Height_Read() As Integer
+
+    Return 18 * MikuruUX.Grid
+
+End
+
+Private Function Width_Read() As Integer
+
+    Return 54 * MikuruUX.Grid
+
+End
+
+Private Function OffsetLeft_Read() As Integer
+
+    Return 18 * MikuruUX.Grid
+
+End
+
+Private Function LastClosed_Read() As Boolean
+
+    Return NagatoSettingsOSD.GetLastClosed(Me.UniqueName)
+
+End
+
+Private Function TextAreaWidth_Read() As Integer
+
+    Return 34 * MikuruUX.Grid
+
+End
+
+Private Function OffsetTopZero_Read() As Integer
+
+    Return 5 * MikuruUX.Grid
+
+End
+
+Private Function OffsetTop1st_Read() As Integer
+
+    Return 7 * MikuruUX.Grid
+
+End
+
+Private Function OffsetTop2nd_Read() As Integer
+
+    Return 12 * MikuruUX.Grid
+
+End
+
+Private Function OffsetTop3rd_Read() As Integer
+
+    Return 15 * MikuruUX.Grid
+
+End
+
+Private Function OffsetTopProgressbar_Read() As Integer
+
+    Return 16 * MikuruUX.Grid
+
+End
+
+Private Function UniqueName_Read() As String
+
+    Return Me._$uniqueName
+
+End

@@ -1,0 +1,22 @@
+' Gambas class file
+
+Private $player As New MediaPlayer As "Player"
+
+Public Sub Form_Open()
+
+    $player.URL = "http://momori.animenfo.com:8080/"
+    '$player.URL = "http://pub6.sky.fm:80/sky_smoothjazz"
+    '$player.URL = "http://66.90.73.250:115/" 'liveireland"
+    Debug $player.State
+    $player.Play()
+    Debug $player.State
+
+End
+
+Public Sub Player_Tag(argTaglist As MediaTagList)
+    
+    If argTaglist.Tags.Find("title") <> -1 Then
+        TextLabel1.Text = argTaglist["title"]
+    Endif
+
+End

@@ -1,0 +1,22 @@
+' Gambas class file
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    
+
+End
+
+Public Sub TextArea1_MouseDrag()
+
+    Dim yukiX As Integer = Mouse.StartX - Mouse.X
+    Dim yukiY As Integer = Mouse.StartY - Mouse.Y
+
+
+    Me.Y -= yukiY 
+    Me.X -= yukiX
+
+End

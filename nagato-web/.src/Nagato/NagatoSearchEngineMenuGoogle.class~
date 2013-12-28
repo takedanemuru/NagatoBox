@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _AddMenus()
+    
+    Me._AddMenu(("Google"), "!g")
+    Me._AddMenu(("Japanese"), "!gj")
+    Me._AddMenu(("Image"), "!gi")
+    
+End

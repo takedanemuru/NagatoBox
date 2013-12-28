@@ -1,0 +1,10 @@
+' Gambas module file
+
+Property Read PictureFiles As String[] 'Act as Const
+
+
+Private Function PictureFiles_Read() As String[]
+
+    Return ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files"]
+
+End

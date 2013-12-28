@@ -1,0 +1,48 @@
+' Gambas class file
+
+Create Static
+
+Property LastPath As String
+Property LastColor As Integer
+Property LastMode As Integer
+
+Private $settings As New Settings
+
+Private Function LastPath_Read() As String
+
+    Return $settings["background/last_path", ""]
+
+End
+
+Private Sub LastPath_Write(Value As String)
+
+    $settings["background/last_path"] = Value
+    $settings.Save()
+
+End
+
+Private Function LastColor_Read() As Integer
+
+    Return $settings["background/last_color", Color.White]
+
+End
+
+Private Sub LastColor_Write(Value As Integer)
+
+    $settings["background/last_color"] = Value
+    $settings.Save()
+
+End
+
+Private Function LastMode_Read() As Integer
+
+    Return $settings["background/last_mode", MikuruRenderMode.Center]
+
+End
+
+Private Sub LastMode_Write(Value As Integer)
+
+    $settings["background/last_mode"] = Value
+    $settings.Save()
+
+End

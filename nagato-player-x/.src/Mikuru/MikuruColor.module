@@ -1,0 +1,52 @@
+' Gambas module file
+
+Property Read Widget As Integer
+Property Read WidgetLight As Integer
+Property Read WidgetToggled As Integer
+Property Read WidgetToggledLight As Integer
+Property Read WidgetOnMouse As Integer
+Property Read WidgetOnMouseLight As Integer
+
+Property Read GridBackgroundViolet As Integer
+
+Private Function Widget_Read() As Integer
+
+    Return (Color.Violet + 16777216 * 128)
+
+End
+
+Private Function WidgetLight_Read() As Integer
+
+    Return (Color.Violet + 16777216 * 192)
+
+End
+
+Private Function WidgetToggled_Read() As Integer
+
+    Return (Color.Orange + 16777216 * 128)
+
+End
+
+Private Function WidgetToggledLight_Read() As Integer
+
+    Return (Color.Orange + 16777216 * 192)
+
+End
+
+Private Function WidgetOnMouse_Read() As Integer
+
+    Return (Color.Red + 16777216 * 128)
+
+End
+
+Private Function WidgetOnMouseLight_Read() As Integer
+
+    Return (Color.Red + 16777216 * 192)
+
+End
+
+Private Function GridBackgroundViolet_Read() As Integer
+
+    Return Color.Merge(Color.White, Color.Violet, 0.2)
+
+End

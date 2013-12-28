@@ -1,0 +1,31 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64.2857,64.2857)
+  Text = ("Set Wllpaper")
+  Picture = Picture["pictures/nagamon.jpg"]
+  Resizable = False
+  SkipTaskbar = True
+  { ScalingComboBox ComboBox
+    MoveScaled(1,59,19,4)
+    ReadOnly = True
+    List = [("Scale"), ("Center"), ("Fill"), ("Max"), ("Tile")]
+    Text = ("ComboBox1")
+  }
+  { SelectImageButtonBox ButtonBox
+    MoveScaled(21,59,23,4)
+    Text = ("Select Image File")
+    Picture = Picture["icon:/16/insert-image"]
+  }
+  { ApplyButton Button
+    MoveScaled(47,59,16,4)
+    Text = ("Apply")
+    Picture = Picture["icon:/16/apply"]
+  }
+  { PreviewDrawingArea DrawingArea
+    MoveScaled(1,2,62,56)
+    Visible = False
+    Background = &H000000&
+    Cached = True
+  }
+}

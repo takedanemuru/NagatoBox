@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Paths As String[]
+Property Read Count As Integer
+
+Private $paths As New String[]
+
+Event Changed
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return $paths.Exist(argPath)
+    
+End
+
+Public Sub Toggle(argPath As String)
+    
+    If Me.Exist(argPath) Then
+        Me.RemovePath(argPath)
+        Debug "remove: " & argPath
+    Else
+        Me.PushPath(argPath)
+        Debug "push: " & argPath
+    Endif
+    
+    Raise Changed
+    
+End
+
+Public Sub ClearAll()
+    
+    $paths.Clear()
+    
+    Raise Changed
+    
+End
+
+Public Sub PushPath(argPath As String)
+    
+    If Not $paths.Exist(argPath) Then $paths.Add(argPath)
+    
+    Raise Changed
+    
+End
+
+Public Sub RemovePath(argPath As String)
+    
+    Try $paths.Remove($paths.Find(argPath))
+    
+    Raise Changed
+    
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $paths
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+End

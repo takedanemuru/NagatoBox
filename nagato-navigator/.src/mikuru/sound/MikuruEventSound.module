@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Shutter()
+    
+    Dim yukiSound As New Sound("sounds/camera-snap.wav")
+    
+    yukiSound.Play()
+    
+End

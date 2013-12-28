@@ -1,0 +1,154 @@
+' Gambas class file
+
+Property Read CenterX As Integer
+Property Read CenterY As Integer
+
+Private $clockfaceImage As Image
+Private $rectangle As Rect
+Private $timer As New Timer As "Timer"
+
+Private Function getX(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Cos(Rad(argDegree)) * argLength + Me.CenterX
+    
+End
+
+Private Function getY(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Sin(Rad(argDegree)) * argLength + Me.CenterY
+    
+End
+
+Private Function getClockText() As String
+    
+    Dim yukiText As String
+    
+    yukiText = Format$(Now, ("mm/dd/yyyy"))
+    yukiText &= "<br>"
+    yukiText &= Format$(Now, ("hh:nn:ss"))
+    
+    Return yukiText
+    
+End
+
+Private Function getOpaque(argRate As Integer) As Integer
+    
+    Return argRate * (Color.White + 1)
+    
+End
+
+Private Sub paintTextRectangle()
+    
+    With Paint
+        .Brush = .Color(Color.Orange + getOpaque(128))
+        .Rectangle($rectangle.X, $rectangle.Y, $rectangle.W, $rectangle.H, 10)
+        .Fill()
+        .Brush = .Color(Color.White)
+        .Font.Size = 20
+        .RichText(getClockText(), $rectangle.X, $rectangle.Y, $rectangle.W, $rectangle.H, Align.Center)
+        .Fill()
+    End With
+    
+End
+
+Private Sub paintClockHand(argDegree As Integer, argLength As Integer, argWidth As Integer, argColor As Integer)
+    
+    With Paint
+        .Brush = Paint.Color(argColor)
+        .LineWidth = argWidth
+        .LineCap = .LineCapRound
+        .MoveTo(getX(argDegree, 30), getY(argDegree, 30))
+        .LineTo(getX(argDegree, argLength), getY(argDegree, argLength))
+        .Stroke()
+    End With
+    
+End
+
+Private Sub paintCenterPoint()
+    
+    With Paint
+        .Brush = .Color(Color.Yellow + getOpaque(128))
+        .Ellipse(Me.CenterX - 15, Me.CenterY - 15, 30, 30)
+        .Fill()
+    End With
+    
+End
+
+Private Sub paintClockPoint()
+    
+    Dim yukiCount As Integer
+    
+    With Paint
+        .Brush = .Color(Color.White + getOpaque(64))
+        For yukiCount = 0 To 11
+            .Ellipse(getX(yukiCount * 30, 160) - 10, getY(yukiCount * 30, 160) - 10, 20, 20)
+        Next
+        .Fill()
+    End With
+    
+End
+
+Private Sub paintClock()
+    
+    $clockfaceImage = New Image(Me.Width, Me.Height)
+    $clockfaceImage = Image.Load("Pictures/ohana_clockface.png")
+    
+    With Paint
+        .Begin($clockfaceImage)
+        paintCenterPoint()
+        paintClockPoint()
+        paintClockHand(Hour(Now) * 30 + Minute(Now) * 0.5 - 90, 120, 20, Color.Lighter(Color.Red) + getOpaque(64))
+        paintClockHand(Minute(Now) * 6 - 90, 140, 12, Color.Lighter(Color.Violet) + getOpaque(64))
+        paintClockHand(Second(Now) * 6 - 90, 160, 8, Color.Lighter(Color.Magenta) + getOpaque(64))
+        paintTextRectangle()
+        .End()
+    End With
+    
+    Me.Picture = $clockfaceImage.Picture
+    
+End
+
+Public Sub _new()
+    
+    $rectangle = New Rect(130, 250, 170, 80)
+    
+End
+
+Public Sub Form_Open()
+
+    paintClock()
+
+    $timer.Enabled = True
+
+End
+
+Public Sub Timer_Timer()
+    
+    paintClock()
+    
+End
+
+Private Function CenterX_Read() As Integer
+
+    Return 215
+
+End
+
+Private Function CenterY_Read() As Integer
+
+    Return 215
+
+End
+
+Public Sub Form_MouseDrag()
+
+    Me.X = Mouse.ScreenX - Mouse.StartX
+    Me.Y = Mouse.ScreenY - Mouse.StartY
+
+End
+
+Public Sub Form_DblClick()
+    
+    Me.Close()
+    
+End

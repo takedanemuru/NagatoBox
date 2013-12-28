@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Function Get(argType As String, Optional argSize As Integer) As Picture
+    
+    Dim yukiIconSize As Integer = IIf(argSize, argSize, 2 * MikuruUX.Grid)
+    Dim yukiColor As String = "blue" 'CAUTION : NOT Integer
+    Dim yukiImage As Image = Image.Load(Subst$("super-mono/basic/&2/&1.png", argType, yukiColor))
+    
+    Return yukiImage.Stretch(yukiIconSize, yukiIconSize).Picture
+    
+Catch
+    Return Null
+    
+End

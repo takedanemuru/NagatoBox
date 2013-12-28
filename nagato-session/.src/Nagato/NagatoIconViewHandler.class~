@@ -1,0 +1,35 @@
+' Gambas class file
+
+Create Static
+
+Property Read ApplicationDirectory As String
+
+Private Const IconSize As Integer = 64
+
+Private $iconView As IconView
+
+Private Sub setApplicationIcons()
+    
+    Dim yukiPath As String
+    Dim yukiDesktopFile As DesktopFile
+    
+    For Each yukiPath In Dir(Me.ApplicationDirectory, "*", gb.File).Sort()
+        yukiDesktopFile = New DesktopFile(Me.ApplicationDirectory &/ yukiPath)
+        $iconView.Add(Me.ApplicationDirectory &/ yukiPath, yukiDesktopFile.Name, yukiDesktopFile.GetIcon(IconSize).Picture)
+    Next
+    
+End
+
+Public Sub SetIcons(argIconView As IconView)
+    
+    $iconView = argIconView
+    $iconView.Clear()
+    setApplicationIcons()
+    
+End
+
+Private Function ApplicationDirectory_Read() As String
+
+    Return "/usr/share/applications"
+
+End

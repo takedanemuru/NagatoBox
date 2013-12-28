@@ -1,0 +1,32 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.0
+Title=nagato-wallpaper
+Startup=Kyon
+Icon=Pictures/image.png
+Version=0.1.2
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.desktop
+Component=gb.settings
+Component=gb.qt4.ext
+Component=gb.web
+Description="a simple gui for hsetroot."
+Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=S.O.S.LICENSE
+PackageName=nagato-wallpaper-0.1.2
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;System;Utility"
+Groups=ubuntu:"admin"
+ExtraDependencies=ubuntu:"hsetroot\t\t"

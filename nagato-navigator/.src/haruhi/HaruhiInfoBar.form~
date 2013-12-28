@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,2.2857)
+  Font = Font["-2"]
+  Mask = True
+  Resizable = False
+  Border = False
+  Stacking = Window.Above
+  Sticky = True
+  SkipTaskbar = True
+  { !InfoHBox HBox
+    MoveScaled(61,0,3,2)
+    #Public = True
+  }
+  { InfoBarMenuButton MenuButton
+    MoveScaled(0,0,4,2.8571)
+    Visible = False
+    Arrow = False
+    Border = False
+  }
+}

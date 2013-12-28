@@ -1,0 +1,117 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Event Select(argTag As String, argNewName As String, argIcon As Picture)
+
+Private Function getParentMenu(argTitle As String, Optional argIcon As Picture) As Menu
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    With yukiMenu
+        .Text = argTitle
+        If argIcon Then .Picture = argIcon
+    End With
+    
+    Return yukiMenu
+    
+End
+
+Private Sub setEngine(argParent As Menu, argTitle As String, argTag As String, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu(argParent) As "Engine"
+    
+    With yukiMenu
+        If argIcon Then .Picture = argIcon
+        .Text = argTitle
+        .Tag = argTag
+    End With
+    
+End
+
+Private Sub addGoogleMenus()
+    
+    Dim yukiMenu As Menu = getParentMenu("Google", Picture.Load("pictures/google-g-logo-2012.png"))
+    
+    setEngine(yukiMenu, ("Google"), "!g", Picture.Load("pictures/google-g-logo-2012.png"))
+    setEngine(yukiMenu, ("Google Image"), "!gi", Picture.Load("pictures/google-g-logo-2012.png"))
+    setEngine(yukiMenu, ("Google Blogs"), "!blogs", Picture.Load("pictures/google-g-logo-2012.png"))
+    setEngine(yukiMenu, ("Google (Japanese)"), "!gjp", Picture.Load("pictures/google-g-logo-2012.png"))
+    
+End
+
+Private Sub addTechMenus()
+    
+    Dim yukiMenu As Menu = getParentMenu("Tech", Picture.Load("pictures/ubuntu-logo-better.png"))
+    
+    setEngine(yukiMenu, ("manpages"), "!man", Stock["medium/book"])
+    setEngine(yukiMenu, ("StackOverflow"), "!so", Picture.Load("pictures/logos/stackoverflow.png"))
+    setEngine(yukiMenu, ("Ubuntu Man Pages"), "!uman", Picture.Load("pictures/ubuntu-logo-better.png"))
+    setEngine(yukiMenu, ("Ubuntu Forums"), "!ubuntuf", Picture.Load("pictures/ubuntu-logo-better.png"))
+    setEngine(yukiMenu, ("Ubuntu Users"), "!ubuntuusers", Picture.Load("pictures/ubuntu-logo-better.png"))
+    setEngine(yukiMenu, ("Ubuntu Personal Package Archive"), "!ppa", Picture.Load("pictures/ubuntu-logo-better.png"))
+    setEngine(yukiMenu, ("Ubuntu Packages"), "!upackages", Picture.Load("pictures/ubuntu-logo-better.png"))
+    
+End
+
+Private Sub addVideoMenus()
+    
+    Dim yukiMenu As Menu = getParentMenu("Videos", Stock["medium/video"])
+    
+    setEngine(yukiMenu, ("niconico"), "!nico", Picture.Load("pictures/logos/niconico_logo.png"))
+    setEngine(yukiMenu, ("YouTube"), "!yt", Picture.Load("pictures/logos/youtube-logo.jpg"))
+    setEngine(yukiMenu, ("Veoh"), "!veoh")
+    setEngine(yukiMenu, ("Dailymotion"), "!dailymotion")
+    
+End
+
+Private Sub addMapMenus()
+    
+    Dim yukiMenu As Menu = getParentMenu("Maps", Picture.Load("pictures/osm_logo.png"))
+    
+    setEngine(yukiMenu, ("Google Maps"), "!gmaps", Picture.Load("pictures/google-g-logo-2012.png"))
+    setEngine(yukiMenu, ("Bing Maps"), "!bingmaps", Picture.Load("pictures/logos/bing-b-logo.png"))
+    setEngine(yukiMenu, ("Open Street Map"), "!osm", Picture.Load("pictures/osm_logo.png"))
+    
+End
+
+Private Sub addMiscMenus()
+    
+    Dim yukiMenu As Menu = getParentMenu("Misc")
+    
+    setEngine(yukiMenu, ("Twitter"), "!tw", Picture.Load("pictures/twitter-bird-white-on-blue.png"))
+    setEngine(yukiMenu, ("Wikipedia"), "!wiki", Picture.Load("pictures/logos/Wikipedia-logo.png"))
+    setEngine(yukiMenu, ("Wikipadia (Japanese)"), "!wja", Picture.Load("pictures/logos/Wikipedia-logo.png"))
+    setEngine(yukiMenu, ("Uncyclopedia"), "!unwiki")
+    setEngine(yukiMenu, ("Urban Dictionary"), "!ud")
+    
+End
+
+Private Sub addDictionaryMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Engine"
+    
+    With yukiMenu
+        .Text = ("Dictionary")
+        .Picture = Stock["medium/book"]
+        .Tag = "Dictionary"
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override
+    
+    addGoogleMenus()
+    addTechMenus()
+    addVideoMenus()
+    addMapMenus()
+    addMiscMenus()
+    addDictionaryMenu()
+    
+End
+
+Public Sub Engine_Click()
+    
+    Raise Select(Last.Tag, Last.Text, Last.Picture)
+    
+End

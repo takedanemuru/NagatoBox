@@ -1,0 +1,98 @@
+' Gambas module file
+
+Private Const ThumbnailSize As Integer = 128
+Private Const TextWidth As Integer = 112
+Private Const TextLimit As Integer = 32
+Private Const Margin As Integer = 8
+
+Private $icon As Image
+Private $text As String
+Private $textHeight As Integer
+Private $textArea As New Rect
+
+Private Function getText(argPath As String) As String
+    
+    If String.Len(File.BaseName(argPath)) > TextLimit Then
+        Return String.Left(File.BaseName(argPath), TextLimit) & "..." & File.Ext(argPath)
+    Else
+        Return File.Name(argPath)
+    End If
+    
+End
+
+Private Function getIcon(argPath As String) As Image
+    
+    Dim yukiIcon As Image
+    Dim yukiRate As Float
+    
+    yukiIcon = Image.Load(argPath)
+    yukiRate = ThumbnailSize / Min(yukiIcon.Height, yukiIcon.Width)
+    
+    Return yukiIcon.Stretch(yukiIcon.W * yukiRate, yukiIcon.H * yukiRate)
+    
+End
+
+Private Sub setIcon(argPath As String) 
+    
+    If NagatoDBThumbnailer.HasThumbnail(argPath, ThumbnailSize) Then
+        $icon = NagatoDBThumbnailer.Get(argPath, ThumbnailSize).Image
+    Else
+        $icon = getIcon(argPath)
+        NagatoDBThumbnailer.Push(argPath, ThumbnailSize, $icon.Picture)
+    End If
+    
+End
+
+Private Sub setTextRect()
+    
+    With $textArea
+        .X = Margin
+        .Y = Max(ThumbnailSize - ($textHeight + 1 * Margin), 0)
+        .W = TextWidth
+        .H = $textHeight 
+    End With
+    
+End
+
+Private Sub drawMaskArea(argColor As Integer)
+    
+    Dim yukiOpacity As Integer = 192
+    
+    Paint.Brush = Paint.Color(argColor + 16777216 * yukiOpacity)
+    Paint.Rectangle(0, ThumbnailSize - ($textArea.H + 2 * Margin), ThumbnailSize, $textArea.H + 2 * Margin)
+    Paint.Fill()
+    
+End
+
+Private Sub drawText()
+    
+    paint.Brush = paint.Color(Color.White)
+    paint.Font.Bold = True
+    With $textArea
+        paint.RichText($text, .X, .Y, .W, .H, Align.Center)
+    End With
+    paint.Fill()
+    
+End
+
+Public Function Get(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiBaseImage As Image = New Image(ThumbnailSize, ThumbnailSize, Color.Transparent)
+    
+    setIcon(argPath)
+    
+    With paint
+        .Begin(yukiBaseImage)
+        .DrawImage($icon, (ThumbnailSize - $icon.W) / 2, (ThumbnailSize - $icon.H) / 2)
+        .Font.Bold = True
+        $text = getText(argPath) 
+        $textHeight = .Font.RichTextHeight($text, TextWidth)
+        setTextRect()
+        drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
+        drawText()
+        .End()
+    End With
+    
+    Return yukiBaseImage.Picture
+    
+End

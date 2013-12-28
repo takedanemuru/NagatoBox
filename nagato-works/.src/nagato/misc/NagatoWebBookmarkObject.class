@@ -1,0 +1,59 @@
+' Gambas class file
+
+Property Icon As Picture
+Property Title As String
+Property UserDefinedTitle As String
+Property Url As String
+
+Private $icon As Picture
+Private $title As String
+Private $userDefinedTitle As String
+Private $url As String
+
+Private Function Icon_Read() As Picture
+
+    Return $icon
+
+End
+
+Private Sub Icon_Write(Value As Picture)
+
+    $icon = Value
+
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Sub Title_Write(Value As String)
+
+    $title = Value
+
+End
+
+Private Function UserDefinedTitle_Read() As String
+
+    Return $userDefinedTitle
+
+End
+
+Private Sub UserDefinedTitle_Write(Value As String)
+
+    $userDefinedTitle = Value
+
+End
+
+Private Function Url_Read() As String
+
+    Return $url
+
+End
+
+Private Sub Url_Write(Value As String)
+
+    $url = Value
+
+End

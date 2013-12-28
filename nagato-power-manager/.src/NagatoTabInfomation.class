@@ -1,0 +1,115 @@
+' Gambas class file
+
+Public $index As Integer
+Public $proxy As DBusProxy
+Public $hBox As HBox
+Public $drawingArea As DrawingArea
+Public $vBox As VBox
+Public $textArea As TextArea
+
+Public Sub setParentProperties()
+        
+        Kyon.DeviceTabStrip[$index].Picture = MikuruDeviceStatus.GetIcon(Me.$proxy)
+        
+        If $proxy.Model = "" Then
+                Kyon.DeviceTabStrip[$index].Text = MikuruDeviceStatus.GetDeviceName($proxy)
+        Else
+                Kyon.DeviceTabStrip[$index].Text = $proxy.Model
+        Endif
+        
+End
+
+Public Sub setInfomationText()
+        
+        With Me.$proxy
+                Me.$textArea.Text &= "NativePath: " & .NativePath & "\n"
+                Me.$textArea.Text &= "Vendor: " & .Vendor & "\n"
+                Me.$textArea.Text &= "Model: " & .Model & "\n"
+                Me.$textArea.Text &= "Serial: " & .Serial & "\n"
+                Me.$textArea.Text &= "UpdateTime: " & .UpdateTime & "\n"
+                Me.$textArea.Text &= "Type: " & .Type & "\n"
+                Me.$textArea.Text &= "PowerSupply: " & .PowerSupply & "\n"
+                Me.$textArea.Text &= "HasHistory: " & .HasHistory & "\n"
+                Me.$textArea.Text &= "HasStatics: " & .HasStatistics & "\n"
+                Me.$textArea.Text &= "Online: " & .Online & "\n"
+                Me.$textArea.Text &= "Energy: " & .Energy & "\n"
+                Me.$textArea.Text &= "EnergyEmpty: " & .EnergyEmpty & "\n"
+                Me.$textArea.Text &= "EnergyFull: " & .EnergyFull & "\n"
+                Me.$textArea.Text &= "EnergyFullDesign: " & .EnergyFullDesign & "\n"
+                Me.$textArea.Text &= "EnergyRate: " & .EnergyRate & "\n"
+                Me.$textArea.Text &= "Voltage: " & .Voltage & "\n"
+                Me.$textArea.Text &= "TimeToEmpty: " & .TimeToEmpty & "\n"
+                Me.$textArea.Text &= "TimeToFull: " & .TimeToFull & "\n"
+                Me.$textArea.Text &= "Percentage: " & .Percentage & "\n"
+                Me.$textArea.Text &= "IsPresent: " & .IsPresent & "\n"
+                Me.$textArea.Text &= "State: " & .State & "\n"
+                Me.$textArea.Text &= "IsRechargeable: " & .IsRechargeable & "\n"
+                Me.$textArea.Text &= "Capacity: " & .Capacity & "\n"
+                Me.$textArea.Text &= "Technology: " & .Technology & "\n"
+                Me.$textArea.Text &= "RecallNotice: " & .RecallNotice & "\n"
+                Me.$textArea.Text &= "RecallVendor" & .RecallVendor & "\n"
+                Me.$textArea.Text &= "RecallUrl" & .RecallUrl & "\n"
+        End With
+        
+End
+
+Public Sub addHBox()
+        
+        Kyon.DeviceTabStrip.Index = $index
+        $hBox = New HBox(Kyon.DeviceTabStrip)
+        
+        With $hBox
+                .Expand = True
+        End With
+        
+End
+
+Public Sub addDrawingArea()
+        
+        $drawingArea = New DrawingArea($hBox) As "DrawingArea"
+        
+        With $drawingArea
+                .Width = 140
+                .Cached = False
+        End With
+        
+End
+
+Public Sub addVBox()
+        
+        $vBox = New VBox(Me.$hBox)
+        $vBox.Expand = True
+        
+End
+
+Public Sub addTextLabel()
+        
+        $textArea = New TextArea(Me.$vBox)
+        
+        With $textArea
+                .Expand = True
+                .ReadOnly = True
+                .Background = Color.Background
+                .Border = False
+        End With
+        
+End
+
+Public Sub addContent() ' this method is virtual must be overridden.
+        
+        
+        
+End
+
+Public Sub _new(argIndex As Integer, argDBusProxy As DBusProxy)
+        
+        $index = argIndex
+        $proxy = argDBusProxy
+        setParentProperties()
+        addHBox()
+        addDrawingArea()
+        addVBox()
+        addTextLabel()
+        Me.addContent()
+        
+End

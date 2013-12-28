@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Private Sub addShowInfomationMenu()
+    
+    Dim yukiMenu As Menu
+    
+    yukiMenu = New Menu(Me._$parent) As "ShowInfomationMenu"
+    
+    With yukiMenu
+        .Text = ("Show geo infomation")
+        .Picture = Stock["medium/info"]
+    End With
+    
+End
+
+Public Sub _InitializeChildMenus() ' Override.
+    
+    addShowInfomationMenu()
+    
+End
+
+Public Sub ShowInfomationMenu_Click()
+    
+    Debug "x"
+    
+End

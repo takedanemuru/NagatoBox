@@ -1,0 +1,34 @@
+' Gambas class file
+
+Create Private
+
+Public _$rootMenu As Menu
+
+Public Sub _SetCheckedIcon(argMenu As Menu)
+    
+    argMenu.Picture = MikuruMonoIconBlue.Get("button-check", 2 * MikuruUX.Grid)
+    
+End
+
+Public Function _GetCheckedIcon(argFlag As Boolean) As Picture
+    
+    If argFlag Then
+        Return MikuruMonoIconBlue.Get("button-check", 2 * MikuruUX.Grid)
+    Else
+        Return Null
+    Endif
+    
+End
+
+Public Sub _InitializeMenu() ' This method is virtual, must be overridden.
+    
+    ' This method is virtual, must be overridden.
+    
+End
+
+Public Sub _new(argParent As Menu)
+
+    Me._$rootMenu = argParent
+    Me._InitializeMenu()
+    
+End

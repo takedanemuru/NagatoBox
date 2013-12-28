@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public _$rootMenu As Menu
+
+Private Sub initializeRootMenu(argParentForm As Form)
+    
+    Me._$rootMenu = New Menu(argParentForm)
+    
+End
+
+Public Sub _InitializeMenus() ' Virtual
+    
+    
+    
+End
+
+Public Sub PopUp()
+    
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new(argParentForm As Form)
+    
+    initializeRootMenu(argParentForm)
+    Me._InitializeMenus()
+    
+End
+

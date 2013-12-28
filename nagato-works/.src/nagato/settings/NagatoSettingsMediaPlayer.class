@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Shuffle As Boolean
+Property Repeat As Boolean
+
+Private Function Shuffle_Read() As Boolean
+
+    Return Me._$settings["media/shuffle", False]
+
+End
+
+Private Sub Shuffle_Write(Value As Boolean)
+
+    Me._$settings["media/shuffle"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Repeat_Read() As Boolean
+
+    Return Me._$settings["media/repeat", False]
+
+End
+
+Private Sub Repeat_Write(Value As Boolean)
+
+    Me._$settings["media/repeat"] = Value
+    Me._$settings.Save()
+
+End

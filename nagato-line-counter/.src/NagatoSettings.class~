@@ -1,0 +1,44 @@
+' Gambas class file
+
+Create Static
+
+Property LastDirectory As String
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = $settings[Subst$("&1/x", .Name), .X]
+        .Y = $settings[Subst$("&1/y", .Name), .Y]
+        .Width = $settings[Subst$("&1/width", .Name), .Width]
+        .Height = $settings[Subst$("&1/height", .Name), .Height]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        $settings[Subst$("&1/x", .Name)] = .X
+        $settings[Subst$("&1/y", .Name)] = .Y
+        $settings[Subst$("&1/width", .Name)] = .Width
+        $settings[Subst$("&1/height", .Name)] = .Height
+    End With
+    
+    $settings.Save()
+    
+End
+
+Private Function LastDirectory_Read() As String
+
+    Return $settings["directory/last", User.Home]
+    
+End
+
+Private Sub LastDirectory_Write(Value As String)
+
+    $settings["directory/last"] = Value
+    $settings.Save()
+
+End

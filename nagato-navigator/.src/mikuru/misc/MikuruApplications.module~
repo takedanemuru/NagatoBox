@@ -1,0 +1,44 @@
+' Gambas module file
+
+Private Const QuestionLine0 As String = ("This software is a settings applications.\n")
+Private Const QuestionLine1 As String = ("Do you want to launch this application as super user ?")
+
+Private Sub execute(argPath As String, Optional argAsSuperUser As Boolean = False)
+    
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+    Dim yukiCommandArray As String[] = Split(yukiDesktopFile.Exec, " ", "")
+    
+    If argAsSuperUser Then
+        Try Shell Subst$("gksu &1", yukiCommandArray[0])
+    Else
+        Try Shell yukiCommandArray[0]
+    End If
+    
+    If Not Error Then NagatoApplicationsConfig.PushNewApp(argPath)
+    
+End
+
+Private Sub CallMessage(argPath As String)
+    
+    Select Case HaruhiDialogUseGksu.ShowDialog()
+        Case HaruhiDialogUseGksu.NormalUser
+            execute(argPath, False)
+        Case HaruhiDialogUseGksu.SuperUser
+            execute(argPath, True)
+        Default
+            Return ' Do nothing.
+    End Select
+
+End
+
+Public Sub Launch(argPath As String)
+    
+    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
+    
+    If yukiDesktopFile.IsSettingsApplication Then
+        CallMessage(argPath)
+    Else
+        execute(argPath)
+    End If
+    
+End

@@ -1,0 +1,26 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,58,58)
+  Picture = Picture["pictures/yukichan_36.jpg"]
+  Resizable = False
+  { Button1 Button
+    MoveScaled(39,53,18,4)
+    Text = ("As super user")
+  }
+  { Button2 Button
+    MoveScaled(20,53,18,4)
+    Text = ("As normal user")
+  }
+  { Button3 Button
+    MoveScaled(1,53,18,4)
+    Text = ("Cancel")
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(1,45,55,7)
+    Background = Color.Background
+    Foreground = &H7018C8&
+    Text = ("This software is for settings.<br>\nDo you want to launch this software as a super user ?")
+    Alignment = Align.Center
+  }
+}

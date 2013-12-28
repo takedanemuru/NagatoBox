@@ -1,0 +1,277 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Property Read Zoom As Integer
+
+Public Enum OpenStreetMap, GoogleMap
+
+Private $mapView As MapView
+Private $mouseX As Integer
+Private $mouseY As Integer
+Private $mapEventLock As Boolean = False
+
+'Event ZoomChanged
+Event ChangeZoom(argZoom As Integer)
+
+Private Function getCenter() As MapPoint
+    
+    Dim yukiPoint As Point = Point($mapView.Map.PixelBox.X + $mouseX, $mapView.Map.PixelBox.Y + $mouseY)
+    
+    Return Geo.PixelToMapPoint(yukiPoint, $mapView.Map.Zoom)
+    
+End
+
+Private Function getKiloMeterPerPixel(argLatitude As Float) As Float
+    
+    Return 40075 * Cos(Rad(argLatitude)) / 2 ^ ($mapView.Map.Zoom + 8)
+    
+End
+
+Private Sub drawCircle(argRadius As Integer)
+    
+    Dim yukiSize As Float = argRadius * 2 / getKiloMeterPerPixel(getCenter().Lat)
+    Dim yukiOffset As Float = -1 * argRadius / getKiloMeterPerPixel(getCenter().Lat)
+    
+    Paint.Ellipse($mouseX + yukiOffset, $mouseY + yukiOffset, yukiSize, yukiSize)
+    
+End
+
+Private Sub drawIndivisualCircle()
+    
+    Dim yukiCount As Integer
+    
+    With NagatoSettingsMapView
+        For yukiCount = 1 To .CircularScaleCount
+            drawCircle(.CircularScaleStep * yukiCount)
+        Next
+    End With
+    
+End
+
+Private Sub drawCircleScale(argDevice As Object)
+    
+    With Paint
+        .Begin(argDevice)
+        .Brush = .Color(Color.Red)
+        drawIndivisualCircle()
+        .Stroke()
+        .End()
+    End With
+    
+End
+
+Private Function getInfomationPixelPoint(argIndex As Integer) As Point
+    
+    Dim yukiLatitude As Float = NagatoGeoInfomationWikipedia.GeoInfomations[0].Latitude
+    Dim yukiLongitude As Float = NagatoGeoInfomationWikipedia.GeoInfomations[0].Longitude
+    Dim yukiMapPoint As New MapPoint(yukiLatitude, yukiLongitude)
+    Dim yukiPixelPoint As Point = Geo.MapPointToPixel(yukiMapPoint, $mapView.Map.Zoom)
+    Dim yukiResult As New Point
+    
+    yukiResult.X = yukiPixelPoint.X - $mapView.Map.PixelBox.X 
+    yukiResult.Y = yukiPixelPoint.Y - $mapView.Map.PixelBox.Y 
+    
+    Return yukiResult
+    
+End
+
+Private Sub drawBalloon(argPoint As Point, argTitle As String)
+    
+    With argPoint
+        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 48)
+        Paint.Rectangle(.X, .Y, 16 + Paint.Font.RichTextWidth(argTitle), 48, 8)
+        Paint.Fill()
+    End With
+    
+End
+
+Private Sub drawPointer(argDevice As Object)
+    
+    Dim yukiCount As Integer
+    Dim yukiPixelPoint As Point = getInfomationPixelPoint(0)
+    Dim yukiTitle As String = NagatoGeoInfomationWikipedia.GeoInfomations[0].Title
+
+    For yukiCount = 0 To NagatoGeoInfomationWikipedia.GeoInfomations.Max
+        yukiPixelPoint = getInfomationPixelPoint(yukiCount)
+        yukiTitle = NagatoGeoInfomationWikipedia.GeoInfomations[yukiCount].Title
+        With Paint
+            .Begin(argDevice)
+            drawBalloon(yukiPixelPoint, yukiTitle)
+            .Brush = .Color(Color.White)
+            .DrawRichText(yukiTitle, yukiPixelPoint.X + 8, yukiPixelPoint.Y + 8, .Font.RichTextWidth(yukiTitle), 32, Align.Center)
+            .Fill()
+            .End()
+        End With
+        Break
+    Next
+    
+Catch
+    Return
+    
+End
+
+Private Sub setMapTile()
+    
+    With MikuruOpenStreetMap
+        $mapView.Map.AddTile(.Name, .Pattern, Null).Copyright = .Copyright
+    End With 
+    
+    MikuruGoogleMap.AddTile($mapView)
+    
+End
+
+Private Sub setVisibleLayer(argLayer As Integer)
+    
+    If argLayer = Me.OpenStreetMap Then
+        $mapView.Map[MikuruOpenStreetMap.Name].Visible = True
+        $mapView.Map[MikuruGoogleMap.Name].Visible = False
+    Else
+        $mapView.Map[MikuruOpenStreetMap.Name].Visible = False
+        $mapView.Map[MikuruGoogleMap.Name].Visible = True
+    End If
+    
+End
+
+Private Sub initializeMapView()
+    
+    $mapView = New MapView(Me._$parent) As "MapView"
+    
+    With $mapView
+        .Expand = True
+        .Map.Zoom = NagatoSettingsMapView.LastZoom
+        .Map.Center.Lat = NagatoSettingsMapView.LastLatitude
+        .Map.Center.Lon = NagatoSettingsMapView.LastLongitude
+    End With
+    
+    setMapTile()
+    setVisibleLayer(Me.OpenStreetMap)
+    
+End
+
+Public Sub SetZoom(argValue As Integer)
+    
+    $mapView.Map.Zoom = argValue
+    $mapView.Refresh()
+    
+End
+
+Public Sub ZoomIn()
+    
+    Inc $mapView.Map.Zoom
+    $mapView.Refresh()
+    
+End
+
+Public Sub ZoomOut()
+    
+    Dec $mapView.Map.Zoom
+    $mapView.Refresh()
+    
+End
+
+Public Sub Refresh()
+    
+    $mapView.Refresh()
+    
+End
+
+Public Sub SetLocation(argLatitude As Float, argLongitude As Float, argZoom As Integer)
+    
+    With $mapView.Map
+        .Center.Lat = argLatitude
+        .Center.Lon = argLongitude
+        .Zoom = argZoom
+    End With
+    
+    $mapView.Refresh()
+    
+End
+
+Public Sub ChangeVisibleLayer(argLayer As Integer)
+    
+    setVisibleLayer(argLayer)
+    $mapView.Refresh()
+    
+End
+
+Public Sub AdjustZoom(argZoom As Integer)
+    
+    If argZoom <> $mapView.Map.Zoom Then
+        $mapEventLock = True
+        $mapView.Map.Zoom = argZoom
+    Endif
+    
+End
+
+Public Sub _Initialize(argPath As String) ' override NagatoMainPane Method 
+    
+    initializeMapView()
+    $mapView.Refresh()
+    
+End
+
+Public Sub MapView_KeyPress()
+    
+    Select Key.Code
+        Case Asc("+")
+            Inc $mapView.Map.Zoom
+        Case Asc("-")
+            Dec $mapView.Map.Zoom
+    End Select
+    
+    $mapView.Map.Refresh()
+    
+End
+
+Public Sub MapView_Draw()
+    
+    With NagatoSettingsMapView
+        .LastLatitude = $mapView.Map.Center.Lat
+        .LastLongitude = $mapView.Map.Center.Lon
+        .LastZoom = $mapView.Map.Zoom
+    End With
+    
+    If NagatoSettingsMapView.CircularScaleShow Then drawCircleScale(Draw.Device)
+    If NagatoGeoInfomationWikipedia.Ready Then drawPointer(Draw.Device)
+    
+    If $mapEventLock Then
+        $mapEventLock = False
+    Else
+        Raise ChangeZoom($mapView.Map.Zoom)
+    End If
+    
+End
+
+Public Sub MapView_MouseMove()
+    
+    $mouseX = Mouse.X
+    $mouseY = Mouse.Y
+    
+    $mapView.Map.Refresh()
+    
+    NagatoMessaging.SetMessage(Subst$("Latitude : &1 , Longitude : &2", getCenter().Lat, getCenter().Lon))
+    
+End
+
+Public Sub MapView_Menu()
+    
+    Dim yukiMenu As New NagatoMapViewContextMenu(Kyon) As "ContextMenu"
+    
+    yukiMenu.PopUp()
+    
+End
+
+Private Function Zoom_Read() As Integer
+
+    Return $mapView.Map.Zoom
+
+End
+
+Public Sub ContextMenu_ShowInfomation()
+    
+    Dim yukiMapPoint As MapPoint = getCenter()
+    
+    NagatoGeoInfomationWikipedia.Activate(yukiMapPoint.Lat, yukiMapPoint.Lon)
+    
+End

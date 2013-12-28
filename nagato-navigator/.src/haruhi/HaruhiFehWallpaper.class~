@@ -1,0 +1,171 @@
+' Gambas class file
+
+Property Path As String
+
+Public Enum TYPE_SCALE, TYPE_CENTER, TYPE_FILL, TYPE_MAX, TYPE_TILE
+
+Private $type As String[] = ["scale", "center", "fill", "max", "tile"]
+Private $path As String
+Private $previewRatio As Float
+
+Private Sub setWallPaper()
+    
+    Shell Subst$("feh --bg-&1 &2", $type[ScalingComboBox.Index], Quote$($path))
+    
+    NagatoSettingsDesktop.PushNewWallpaperPath($path)
+    
+End
+
+Private Sub drawPreviewScale()
+    
+    Dim yukiImage As Image = Image.Load($path).Stretch(PreviewDrawingArea.W, PreviewDrawingArea.H)
+    
+    Paint.DrawImage(yukiImage, 0, 0)
+    
+End
+
+Private Sub drawPreviewTile()
+    
+    Dim yukiImage As Image = Image.Load($path)
+    Dim yukiHorizontalCount As Integer
+    Dim yukiVerticalCount As Integer
+    
+    yukiImage = yukiImage.Stretch(yukiImage.W * $previewRatio, yukiImage.H * $previewRatio)
+    
+    For yukiHorizontalCount = 0 To Ceil(PreviewDrawingArea.W / yukiImage.W)
+        For yukiVerticalCount = 0 To Ceil(PreviewDrawingArea.H / yukiImage.H)
+            Paint.DrawImage(yukiImage, yukiImage.W * yukiHorizontalCount, yukiImage.H * yukiVerticalCount)
+        Next
+    Next
+    
+End
+
+Private Sub drawPreviewFill()
+    
+    Dim yukiImage As Image = Image.Load($path)
+    Dim yukiRatio As Float
+    Dim yukiX As Float
+    Dim yukiY As Float
+    
+    yukiRatio = Max(PreviewDrawingArea.W / yukiImage.W, PreviewDrawingArea.H / yukiImage.H)
+    yukiImage = yukiImage.Stretch(yukiImage.W * yukiRatio, yukiImage.H * yukiRatio)
+    yukiX = (PreviewDrawingArea.W - yukiImage.W) / 2
+    yukiY = (PreviewDrawingArea.H - yukiImage.H) / 2
+    Paint.DrawImage(yukiImage, yukiX, yukiY)
+    
+End
+
+Private Sub drawPreviewMax()
+    
+    Dim yukiImage As Image = Image.Load($path)
+    Dim yukiRatio As Float
+    Dim yukiX As Float
+    Dim yukiY As Float
+    
+    yukiRatio = Min(PreviewDrawingArea.W / yukiImage.W, PreviewDrawingArea.H / yukiImage.H)
+    yukiImage = yukiImage.Stretch(yukiImage.W * yukiRatio, yukiImage.H * yukiRatio)
+    yukiX = (PreviewDrawingArea.W - yukiImage.W) / 2
+    yukiY = (PreviewDrawingArea.H - yukiImage.H) / 2
+    Paint.DrawImage(yukiImage, yukiX, yukiY)
+    
+End
+
+Private Sub drawPreviewCenter()
+    
+    Dim yukiImage As Image = Image.Load($path)
+    Dim yukiX As Float
+    Dim yukiY As Float
+    
+    yukiImage = yukiImage.Stretch(yukiImage.W * $previewRatio, yukiImage.H * $previewRatio)
+    
+    yukiX = (PreviewDrawingArea.W - yukiImage.W) / 2
+    yukiY = (PreviewDrawingArea.H - yukiImage.H) / 2
+    
+    Paint.DrawImage(yukiImage, yukiX, yukiY)
+    
+End
+
+Private Sub drawPreview()
+    
+    PreviewDrawingArea.Clear()
+    
+    Paint.Begin(PreviewDrawingArea)
+        Select Case ScalingComboBox.Index
+            Case 0 
+                drawPreviewScale()
+            Case 1
+                drawPreviewCenter()
+            Case 2
+                drawPreviewFill()
+            Case 3
+                drawPreviewMax()
+            Case 4
+                drawPreviewTile()
+        End Select
+    Paint.End()
+    
+End
+
+Private Sub setLastBg()
+    
+    $path = NagatoFehWallpaper.LastPath
+    ScalingComboBox.Index = NagatoFehWallpaper.LastType
+    PreviewDrawingArea.Visible = True
+    drawPreview()
+    
+End
+
+Public Sub SetWallPaperWithPath(argFullPath As String, argScalingType As Integer)
+    
+    Shell Subst$("feh --bg-&1 &2", $type[argScalingType], Quote$(argFullPath))
+    
+End
+
+Public Sub Form_Open()
+    
+    $path = ""
+    Me.Center()
+    ScalingComboBox.Index = 0
+    $previewRatio = PreviewDrawingArea.W / Desktop.W
+    PreviewDrawingArea.H = Min(Desktop.H * $previewRatio, PreviewDrawingArea.W)
+    
+    If NagatoFehWallpaper.LastPath <> "" Then setLastBg()
+    
+End
+
+Public Sub SelectImageButtonBox_Click()
+
+    If HaruhiWallpaperSelect.ShowDialog() = 1 Then
+        PreviewDrawingArea.Visible = True
+        drawPreview()
+    Endif
+
+End
+
+Public Sub ApplyButton_Click()
+    
+    If $path = "" Then Return
+    
+    setWallPaper()
+    
+End
+
+Public Sub ScalingComboBox_Click()
+
+    If $path = "" Then Return
+
+    drawPreview()
+
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Sub Path_Write(Value As String)
+
+    $path = Value
+    
+End

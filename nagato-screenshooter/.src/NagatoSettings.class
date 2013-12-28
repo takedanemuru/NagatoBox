@@ -1,0 +1,20 @@
+' Gambas class file
+
+Create Static
+
+Property Directory As String
+
+Private $settings As New Settings
+
+Private Function Directory_Read() As String
+
+    Return $settings["settings/directory", User.Home]
+
+End
+
+Private Sub Directory_Write(Value As String)
+
+    $settings["settings/directory"] = Value
+    $settings.Save()
+
+End

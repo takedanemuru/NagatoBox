@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Static
+
+Private $settings As New Settings
+
+Public Sub loadFormSettings(argForm As Form)
+    
+    argForm.X = $settings[Subst$("&1/x", argForm.Name), argForm.X]
+    argForm.Y = $settings[Subst$("&1/y", argForm.Name), argForm.Y]
+    argForm.Height = $settings[Subst$("&1/height", argForm.Name), argForm.Height]
+    argForm.Width = $settings[Subst$("&1/width", argForm.Name), argForm.Width]
+
+End
+
+Public Sub saveFormSettings(argForm As Form)
+    
+    $settings[Subst$("&1/x", argForm.Name)] = argForm.X
+    $settings[Subst$("&1/y", argForm.Name)] = argForm.Y
+    $settings[Subst$("&1/height", argForm.Name)] = argForm.Height
+    $settings[Subst$("&1/width", argForm.Name)] = argForm.Width
+    
+End

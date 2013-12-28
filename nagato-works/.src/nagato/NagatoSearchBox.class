@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Property Read Width As Integer
+
+Private $searchBox As ButtonBox
+
+Event SearchQuery(argText As String)
+
+Private Sub addSearchBox()
+    
+    $searchBox = New ButtonBox(Me._$parent) As "SearchBox"
+    
+    With $searchBox
+        .Width = 200
+        .Picture = Stock["medium/find"]
+        .Tooltip = ("Input text to search")
+    End With
+    
+End
+
+Private Sub raiseQuery()
+    
+    If $searchBox.Text <> "" Then Raise SearchQuery($searchBox.Text)
+    
+End
+
+Public Sub SetFocus()
+    
+    $searchBox.SetFocus()
+    NagatoMessaging.SetMessage(("Type any word(s) to search."))
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    addSearchBox()
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    raiseQuery()
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    raiseQuery()
+    
+End
+
+Private Function Width_Read() As Integer
+
+    Return $searchBox.Width
+
+End

@@ -1,0 +1,40 @@
+' Gambas class file
+
+Private Function getUris(argData As String) As String[]
+    
+    Dim yukiResult As New String[]
+    Dim yukiPath As String
+    Dim yukiUri As String
+    
+    For Each yukiPath In Split(argData, "\n", "", True)
+        If Not yukiPath Begins "file:///" Then Continue
+        yukiUri = Replace$(yukiPath, "file://", "")
+        yukiUri = URL.Decode(String.Left(yukiUri, String.Len(yukiUri) - 1))
+        Try yukiResult.Add(yukiUri)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub Form_Open()
+
+End
+
+Public Sub IconView1_Drop()
+
+    Dim yukiUri As String
+    Dim yukiIcon As Picture
+
+    For Each yukiUri In getUris(Drag.Data)
+        Debug yukiUri
+        Debug DesktopMime.FromFile(yukiUri).Type
+        If DesktopMime.FromFile(yukiUri).Type Begins "image" Then
+            yukiIcon = Image.Load(yukiUri).Stretch(64, 64).Picture
+        Else
+            yukiIcon = Desktop.GetFileIcon(yukiUri, 64, False)
+        Endif
+        Try IconView1.Add(yukiUri, File.Name(yukiUri), yukiIcon)
+    Next
+
+End

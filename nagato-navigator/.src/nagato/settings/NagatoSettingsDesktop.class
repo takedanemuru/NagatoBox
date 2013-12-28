@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Create Static
+
+Property Count As Integer
+Property WallpaperRecentPaths As String[]
+
+Private Const MaxCount As Integer = 30
+
+Public Sub PushNewWallpaperPath(argPath As String)
+    
+    Dim yukiRecentPaths As String[] = Me.WallpaperRecentPaths
+    
+    With yukiRecentPaths
+        If .Find(argPath) = -1 Then ' .Find() returns -1 when there's no path.
+            .Add(argPath, 0)
+        Else
+            .Remove(.Find(argPath), 1)
+            .Add(argPath, 0)
+        Endif
+        
+        If .Count >= MaxCount Then .Extract(MaxCount)
+    End With
+    
+    Me.WallpaperRecentPaths = yukiRecentPaths
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return Me._$settings["desktop/count", 4]
+
+End
+
+Private Sub Count_Write(Value As Integer)
+
+    Me._$settings["desktop/count"] = Value
+    Me._$settings.Save()
+    
+End
+
+Private Function WallpaperRecentPaths_Read() As String[]
+
+    Return Me._$settings["desktop/wallpaper_paths", [""]]
+
+End
+
+Private Function WallpaperRecentPaths_Write(Value As String[])
+    
+    Me._$settings["desktop/wallpaper_paths"] = Value
+    Me._$settings.Save()
+    
+End

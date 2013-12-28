@@ -1,0 +1,19 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Border = False
+  FullScreen = True
+  Sticky = True
+  SkipTaskbar = True
+  Arrangement = Arrange.Fill
+  { ScreenArea DrawingArea
+    MoveScaled(4,6,24,24)
+    Background = &HFFFEFE&
+    Expand = True
+  }
+  { Timer1 #Timer
+    #MoveScaled(41,41)
+    Delay = 100
+  }
+}

@@ -1,0 +1,39 @@
+' Gambas class file
+
+Static Private WhatToDo As String
+
+Public Sub ToDoTextBox_Change()
+    
+    WhatToDo = ToDoTextBox.Text
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close()
+
+End
+
+Public Sub AddButton_Click()
+
+    If ToDoTextBox.Text = "" Then Return
+
+    Me.Close(1)
+
+End
+
+
+Static Public Function GetWhatToDo() As String
+
+    Return WhatToDo
+
+End
+
+Public Sub Form_Show()
+
+    Me.Center()
+    Me.Height = 36 * MikuruUX.Grid
+    Me.Width = 63 * MikuruUX.Grid
+    Me.Picture = Image.Load("pictures/todo.jpg").Stretch(Me.W, Me.H).Picture
+
+End

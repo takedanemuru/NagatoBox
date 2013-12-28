@@ -1,0 +1,168 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private $observer As Observer
+Private $shuffleMenu As Menu
+Private $repeatMenu As Menu
+
+Private Sub addPlayMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "PlayMenu"
+    
+    With yukiMenu
+        .Text = ("Play")
+        .Picture = MikuruMonoIconBlue.Get("button-play")
+    End With
+    
+End
+
+Private Sub addPauseMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "PauseMenu"
+    
+    With yukiMenu
+        .Text = ("Pause")
+        .Picture = MikuruMonoIconBlue.Get("button-pause")
+    End With
+    
+End
+
+Private Sub addStopMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "StopMenu"
+    
+    With yukiMenu
+        .Text = ("Stop")
+        .Picture = MikuruMonoIconBlue.Get("button-stop")
+    End With
+    
+End
+
+Private Sub addPreviousMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "PreviousMenu"
+    
+    With yukiMenu
+        .Text = ("Previous")
+        .Picture = MikuruMonoIconBlue.Get("button-rew")
+    End With
+    
+End
+
+Private Sub addNextMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "NextMenu"
+    
+    With yukiMenu
+        .Text = ("Next")
+        .Picture = MikuruMonoIconBlue.Get("button-ff")
+    End With
+    
+End
+
+Private Sub addShuffleMenu()
+    
+    $shuffleMenu = New Menu(Me._$rootMenu) As "ShuffleMenu"
+    
+    With $shuffleMenu
+        .Text = ("Shuffle")
+    End With
+    
+End
+
+Private Sub addRepeatMenu()
+    
+    $repeatMenu = New Menu(Me._$rootMenu) As "RepeatMenu"
+    
+    With $repeatMenu
+        .Text = ("Repeat")
+    End With
+    
+End
+
+Private Sub addPlaylistMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "PlaylistMenu"
+    
+    With yukiMenu
+        .Text = ("Show playlist")
+        .Picture = MikuruMonoIconBlue.Get("music")
+    End With
+    
+End
+
+Public Sub _initializeMenu() ' override
+    
+    addPlayMenu()
+    addPauseMenu()
+    addStopMenu()
+    addPreviousMenu()
+    addNextMenu()
+    addShuffleMenu()
+    addRepeatMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addPlaylistMenu()
+    
+    $observer = New Observer(Me._$rootMenu) As "Asakura"
+    
+End
+
+Public Sub PlayMenu_Click()
+    
+    NagatoMusicPlayer.Play()
+    
+End
+
+Public Sub PauseMenu_Click()
+    
+    NagatoMusicPlayer.Pause()
+    
+End
+
+Public Sub StopMenu_Click()
+    
+    NagatoMusicPlayer.Stop()
+    
+End
+
+Public Sub PreviousMenu_Click()
+    
+    NagatoMusicPlayer.Previous()
+    
+End
+
+Public Sub NextMenu_Click()
+    
+    NagatoMusicPlayer.Next()
+    
+End
+
+Public Sub ShuffleMenu_Click()
+    
+    With NagatoSettingsMusic
+        .DoesShuffle = Not .DoesShuffle
+    End With
+    
+End
+
+Public Sub RepeatMenu_Click()
+    
+    With NagatoSettingsMusic
+        .DoesRepeat = Not .DoesRepeat
+    End With
+    
+End
+
+Public Sub PlaylistMenu_Click()
+    
+    HaruhiMusicPlaylist.Show()
+    
+End
+
+Public Sub Asakura_Show()
+    
+    $shuffleMenu.Picture = Me._GetCheckedIcon(NagatoSettingsMusic.DoesShuffle)
+    $repeatMenu.Picture = Me._GetCheckedIcon(NagatoSettingsMusic.DoesRepeat)
+    
+End

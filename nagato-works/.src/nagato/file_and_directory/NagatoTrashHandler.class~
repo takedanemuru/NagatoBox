@@ -1,0 +1,40 @@
+' Gambas class file
+
+Create Static
+
+Property Read FilesPath As String ' Act as Const
+Property Read InfoPath As String ' Act as Const
+
+Public Sub EmptyAll()
+    
+    Shell "trash-empty" Wait
+    
+End
+
+Public Sub Empty(argDay As Integer)
+    
+    Shell Subst$("trash-empty &1", argDay) Wait
+    
+End
+
+Public Sub Put(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        Shell Subst$("trash-put &1", Quote$(yukiPath)) Wait
+    Next
+    
+End
+
+Private Function FilesPath_Read() As String
+
+    Return User.Home &/ ".local/share/Trash/files"
+
+End
+
+Private Function InfoPath_Read() As String
+
+    Return User.Home &/ ".local/share/Trash/info"
+
+End

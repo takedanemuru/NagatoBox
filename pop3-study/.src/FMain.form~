@@ -1,0 +1,12 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Arrangement = Arrange.Fill
+  { NagatoPop3Client #Pop3Client
+    #MoveScaled(29,38)
+  }
+  { WebView1 WebView
+    MoveScaled(5,10,16,16)
+  }
+}

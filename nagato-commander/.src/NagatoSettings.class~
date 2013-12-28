@@ -1,0 +1,35 @@
+' Gambas class file
+
+Create Static
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = $settings[Subst$("&1/x", .Name), .X]
+        .Y = $settings[Subst$("&1/y", .Name), .Y]
+        .W = $settings[Subst$("&1/w", .Name), .W]
+        .H = $settings[Subst$("&1/h", .Name), .H]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        $settings[Subst$("&1/x", .Name)] = .X
+        $settings[Subst$("&1/y", .Name)] = .Y
+        $settings[Subst$("&1/w", .Name)] = .W
+        $settings[Subst$("&1/h", .Name)] = .H
+    End With
+    
+    $settings.Save()
+    
+End
+
+Public Function PushHistory(argCommandLine As String)
+    
+    
+    
+End

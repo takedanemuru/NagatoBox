@@ -1,0 +1,61 @@
+' Gambas class file
+
+Create Static
+
+Inherits NagatoSettings
+
+Property Shuffle As Boolean
+Property Repeat As Boolean
+Property DialogLastPath As String
+
+Private Function Shuffle_Read() As Boolean
+
+    Return Me._$settings["music/shuffle", False]
+
+End
+
+Private Sub Shuffle_Write(Value As Boolean)
+
+    Me._$settings["music/shuffle"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Repeat_Read() As Boolean
+
+    Return Me._$settings["music/repeat", False]
+
+End
+
+Private Sub Repeat_Write(Value As Boolean)
+
+    Me._$settings["music/repeat"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function DialogLastPath_Read() As String
+
+    Return Me._$settings["dialog/last_path", User.Home]
+
+End
+
+Private Sub DialogLastPath_Write(Value As String)
+
+    Me._$settings["dialog/last_path"] = Value
+    Me._$settings.Save()
+
+End
+
+Public Function LoadPaths() As String[]
+
+    Return Me._$settings["playlist/last_paths", [""]]
+
+End
+
+Public Sub SavePaths(Value As String[])
+
+    Me._$settings["playlist/last_paths"] = Value.Copy()
+    Me._$settings.Save()
+
+End

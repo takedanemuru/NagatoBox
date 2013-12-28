@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private CountDownStart As Integer = 10
+
+Property Read Text As String
+
+Private $timer As New Timer As "Timer"
+Private $count As Integer = CountDownStart
+Private $text As String = ""
+
+Public Sub SetText(argText As String)
+    
+    $text = argText
+    $count = CountDownStart
+    If Not $timer.Enabled Then $timer.Start()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Dec $count
+    
+    Debug $count
+    
+    If 0 >= $count Then
+        $timer.Stop
+        $text = ""
+    End If
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $text
+
+End

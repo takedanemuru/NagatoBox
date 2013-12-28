@@ -1,0 +1,70 @@
+' Gambas class file
+
+Create Static
+
+Property Read CalendarStyle As String
+
+Private CalendarOrderJP As Integer[] = [0, 1, 2, 3, 4, 5]
+Private CalendarOrderUS As Integer[] = [2, 3, 4, 5, 0, 1]
+Private CalendarOrderUK As Integer[] = [4, 5, 2, 3, 0, 1]
+
+Private $settings As New Settings
+
+Public Sub loadFormSettings(argForm As Form)
+    
+    argForm.X = $settings["form/x", argForm.X]
+    argForm.Y = $settings["form/y", argForm.Y]
+    
+End
+
+Public Sub saveFormSettings(argForm As Form)
+    
+    $settings["form/x"] = argForm.X
+    $settings["form/y"] = argForm.Y
+    
+End
+
+Public Function getTimerSetting() As Integer
+    
+    Return $settings["timer/startFrom", 180]
+    
+End
+
+Public Sub setTimerSetting(argNewValue As Integer)
+    
+    $settings["timer/startFrom"] = argNewValue
+    
+End
+
+Public Function getCalendarOrder() As Integer[]
+    
+    Return $settings["calendar/order", CalendarOrderJP]
+    
+End
+
+Public Sub setCalendarOrder(argIndex As Integer)
+    
+    Select Case argIndex
+        Case 0
+            $settings["calendar/order"] = CalendarOrderJP
+        Case 1
+            $settings["calendar/order"] = CalendarOrderUS
+        Case 2
+            $settings["calendar/order"] = CalendarOrderUK
+    End Select
+    
+End
+
+
+Private Function CalendarStyle_Read() As String
+
+    Select Case $settings["calendar/order"][0]
+        Case 0
+            Return "JP"
+        Case 2
+            Return "US"
+        Case 4
+            Return "UK"
+    End Select
+
+End

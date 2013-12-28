@@ -1,0 +1,83 @@
+' Gambas class file
+
+Create Static 
+
+Property Mode As Integer
+Property Duration As Integer
+Property UserDefinedPath As String
+Property UserLibrary As String[]
+
+Private $settings As New Settings
+
+Public Sub PushLibrary(argPath As String)
+    
+    If Me.UserLibrary Then
+        Me.UserLibrary = Me.UserLibrary.Insert([argPath])
+    Else
+        Me.UserLibrary = [argPath]
+    Endif
+    
+End
+
+Public Sub DeleteLibrary(argPath As String)
+    
+    If Not Me.UserLibrary.Exist(argPath) Then
+        Return
+    Else
+        Try Me.UserLibrary = Me.UserLibrary.Remove(Me.UserLibrary.Find(argPath))
+    Endif
+    
+End
+
+Private Function Duration_Read() As Integer
+
+        Return $settings["play/duration", 30]
+
+End
+
+Private Sub Duration_Write(Value As Integer)
+
+        $settings["play/duration"] = Value
+        $settings.Save()
+
+End
+
+Private Function Mode_Read() As Integer
+
+        Return $settings["play/mode", MikuruPlayMode.DefaultSound]
+
+End
+
+Private Sub Mode_Write(Value As Integer)
+
+        $settings["play/mode"] = Value
+        $settings.Save()
+
+End
+
+Private Function UserDefinedPath_Read() As String
+
+        Return $settings["play/user-defined-path", "sounds/welcumz.wav"]
+
+End
+
+Private Sub UserDefinedPath_Write(Value As String)
+
+        $settings["play/user-defined-path"] = Value
+        $settings.Save()
+
+End
+
+
+Private Function UserLibrary_Read() As String[]
+
+    Return $settings["library/user", Null]
+
+End
+
+Private Sub UserLibrary_Write(Value As String[])
+
+    $settings["library/user"] = Value
+    $settings.Save()
+
+End

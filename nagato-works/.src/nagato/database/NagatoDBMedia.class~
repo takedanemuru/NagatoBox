@@ -1,0 +1,78 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Create Static
+
+Public Const TableAlbumArt As String = "album_art"
+Public Const ColumnId As String = "id"
+Public Const ColumnArtist As String = "artist"
+Public Const ColumnAlbum As String = "album"
+Public Const ColumnPicture As String = "picture"
+
+Public _$uniqueName As String = "Media"
+
+Private Sub ensureAlbumArtTable()
+    
+    Dim yukiTable As Table
+    
+    If Not Me._$connection.Tables.Exist(TableAlbumArt) Then
+        yukiTable = Me._$connection.Tables.Add(TableAlbumArt)
+        yukiTable.Fields.Add(ColumnId, db.Serial)
+        yukiTable.Fields.Add(ColumnArtist, db.String)
+        yukiTable.Fields.Add(ColumnAlbum, db.String)
+        yukiTable.Fields.Add(ColumnPicture, db.Blob)
+        yukiTable.PrimaryKey = [ColumnId]
+        yukiTable.Update()
+    Endif
+    
+End
+
+Private Sub deleteAlbumArt(argArtist As String, argAlbum As String)
+    
+    Me._$connection.Delete(TableAlbumArt, "artist = &1 and album = &2", argArtist, argAlbum)
+    
+End
+
+Public Function HasAlbumArt(argArtist As String, argAlbum As String) As Boolean
+    
+    Dim yukiResult As Result = Me._$connection.Find(TableAlbumArt, "artist = &1 and album = &2", argArtist, argAlbum)
+    
+    Return (yukiResult.Count > 0)
+    
+End
+
+Public Function GetAlbumArt(argArtist As String, argAlbum As String) As Picture
+    
+    Dim yukiResult As Result = Me._$connection.Find(TableAlbumArt, "artist = &1 and album = &2", argArtist, argAlbum)
+    
+    Return MikuruBlob.GetPictureFromBlob(yukiResult[ColumnPicture].Data)
+    
+End
+
+Public Sub SetAlbumArt(argArtist As String, argAlbum As String, argPicture As Picture) 
+    
+    Dim yukiResult As Result
+    
+    If HasAlbumArt(argArtist, argAlbum) Then deleteAlbumArt(argArtist, argAlbum)
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(TableAlbumArt)
+        yukiResult[ColumnArtist] = argArtist
+        yukiResult[ColumnAlbum] = argAlbum
+        yukiResult[ColumnPicture] = MikuruBlob.GetBlobFromPicture(argPicture)
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    ensureAlbumArtTable()
+    
+End

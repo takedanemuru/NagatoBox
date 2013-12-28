@@ -1,0 +1,68 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Private Sub addFileOpenMenu()
+    
+    Dim yukiMenu As Menu
+    Dim yukiDesktopFiles As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
+    Dim yukiDesktopFile As DesktopFile
+    
+    If yukiDesktopFiles.Count = 0 Then Return
+
+    Try yukiDesktopFile = New DesktopFile(MikuruApplications.GlobalApplicationDirectory &/ yukiDesktopFiles[0])
+    If Error Then Return
+    
+    yukiMenu = New Menu(Me._$rootMenu) As "OpenFileMenu"
+    
+    With yukiMenu
+        .Text = Subst$(("Open with &1"), yukiDesktopFile.Name)
+        .Picture = MikuruIcon.GetDesktopEntryIcon(yukiDesktopFile.Path)
+        .Tag = NagatoMenuPipe.FileOpen
+    End With
+    
+End
+
+Private Sub addFileOpenWithMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiOpenWithMenu As NagatoOpenWithApplicationMenu
+    
+    With yukiMenu
+        .Text = ("Open with ...")
+    End With
+    
+    yukiOpenWithMenu = New NagatoOpenWithApplicationMenu(yukiMenu, Me._$path)
+    
+End
+
+Private Sub addCreateMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    With yukiMenu
+        .Text = ("Create")
+    End With
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    With NagatoMenuPipe
+        addFileOpenMenu()
+            Me._AddContextMenu("", 0) ' As Spacer
+        addFileOpenWithMenu()
+        addCreateMenu()
+        Me._AddContextMenu(("Copy file path"), .PathCopyToClipboard, MikuruIcon.Get("clipboard"))
+            Me._AddContextMenu("", 0) ' As Spacer
+        Me._AddContextMenu(("Rename"), .FileRename)
+        Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
+    End With
+    
+End
+
+Public Sub OpenFileMenu_Click()
+    
+    Raise MenuEventWithArg(NagatoMenuPipe.FileOpen, Me._$path)
+    
+End

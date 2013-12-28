@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property OnlyActiveWindow As Boolean
+
+Private Function OnlyActiveWindow_Read() As Boolean
+
+    Return Me._$settings["screenshooter", False]
+
+End
+
+Private Sub OnlyActiveWindow_Write(Value As Boolean)
+
+    Me._$settings["screenshooter"] = Value
+    Me._$settings.Save()
+
+End

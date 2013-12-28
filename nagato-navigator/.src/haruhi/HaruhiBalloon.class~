@@ -1,0 +1,150 @@
+' Gambas class file
+
+Property TextAreaText As String
+Property Read BalloonColor As Integer 'As color
+
+Private $opacity As Integer = 100
+Private $previousActiveWindow As Integer
+
+Private Sub getBaseImage() As Image
+    
+    Dim yukiImage As Image
+    
+    With MikuruUX
+        yukiImage = New Image(45 * .Grid, 30 * .Grid, Color.Transparent)
+    End With
+    
+    Return yukiImage
+    
+End
+
+Public Sub setBalloon()
+    
+    Dim yukiBaseImage As Image = getBaseImage()
+    
+    With MikuruUX
+        Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Me.BalloonColor)
+        Paint.Rectangle(0, 0, 45 * .Grid, 25 * .Grid, 2 * .Grid)
+        Paint.Polygon([16 * .Grid, 25 * .Grid, 20 * .Grid, 25 * .Grid, 25 * .Grid, 30 * .Grid])
+        Paint.Fill()
+        Paint.End()
+    End With
+    
+    Me.Picture = yukiBaseImage.Picture
+    
+End
+
+Private Sub resetPositionAndOpacity()
+    
+    Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    
+    yukiDesktopWindow.Desktop = Desktop.Current
+    
+    $opacity = 100
+    TextArea1.Visible = True
+    Me.X = Kyon.X + 5 * MikuruUX.Grid
+    Me.Y = Max(Kyon.Y - 20 * MikuruUX.Grid, 8 * MikuruUX.Grid)
+    setBalloon()
+    Me.Show()
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    $previousActiveWindow = Desktop.ActiveWindow
+    
+    resetPositionAndOpacity()
+    TextArea1.Text = argText
+    Kyon.CallNagatoWithBalloon()
+    TextArea1.Alignment = Align.Center
+    HaruhiTimer.Start()
+    
+End
+
+Public Sub SetTextWithImage(argText As String, argImage As Image)
+    
+    Dim yukiImage As Image
+    Dim yukiWidth As Float
+    
+    resetPositionAndOpacity()
+    TextArea1.Visible = False
+    
+    yukiImage = Me.Picture.Image
+    
+    With Paint
+        .Begin(yukiImage)
+        .Brush = .Color(Color.White)
+        .DrawImage(argImage, 2 * MikuruUX.Grid, (TextArea1.H - argImage.H) / 2)
+        yukiWidth = 4 * MikuruUX.Grid + argImage.W
+        .DrawText(argText, yukiWidth, MikuruUX.Grid, TextArea1.W - yukiWidth, TextArea1.H, Align.Center)
+        .End
+    End With
+    
+    Me.Picture = yukiImage.Picture
+    
+End
+
+Public Sub HaruhiTimer_Timer()
+    
+    $opacity -= 4
+    Me.Opacity = $opacity
+    
+    If $opacity <= 0 Then 
+        HaruhiTimer.Stop()
+        Try Desktop.ActiveWindow = $previousActiveWindow
+        Me.Close()
+        TextArea1.Alignment = Align.Normal
+        $opacity = 100
+    Endif
+    
+End
+
+Public Sub Form_DblClick()
+
+    Me.Close
+
+End
+
+Private Function TextAreaText_Read() As String
+
+    Return TextArea1.Text
+
+End
+
+Private Sub TextAreaText_Write(Value As String)
+
+    resetPositionAndOpacity()
+    TextArea1.Text = Value
+
+End
+
+Public Sub Form_Open()
+
+    TextArea1.Background = Me.BalloonColor
+
+    Me.Height = 30 * MikuruUX.Grid
+    Me.Width = 45 * MikuruUX.Grid
+
+    With TextArea1
+        .X = 1 * MikuruUX.Grid
+        .Y = 1 * MikuruUX.Grid
+        .Height = 23 * MikuruUX.Grid
+        .Width = 43 * MikuruUX.Grid
+    End With
+    
+End
+
+Public Sub TextArea1_DblClick()
+
+    Me.Close()
+
+End
+
+Private Function BalloonColor_Read() As Integer
+
+    'Return MikuruColor.NagatoPurple
+
+    Return MikuruColor.NagatoLightGreen
+
+End

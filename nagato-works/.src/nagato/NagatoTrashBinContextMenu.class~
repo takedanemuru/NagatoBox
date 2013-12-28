@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Private Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "DeleteMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/delete"]
+        .Text = ("delete")
+    End With
+    
+End
+
+Private Sub addRestoreMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "RestoreMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/undo"]
+        .Text = ("restore")
+    End With
+    
+End
+
+Private Sub addPropertyMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "PropertyMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/properties"]
+        .Text = ("property")
+    End With
+    
+End
+
+Private Sub _InitializeChildMenus()
+    
+    addDeleteMenu()
+    addRestoreMenu()
+    addPropertyMenu()
+    
+End

@@ -1,0 +1,81 @@
+' Gambas class file
+
+Property Read Width As Integer
+
+Private $parentForm As Form
+Private $panel As HBox
+Private $seachEngineButton As NagatoSearchEngineButton
+Private $buttonBox As NagatoSearchBox
+Private $bookmarkButton As NagatoBookmarkButton
+Private $gearButton As MenuButton
+Private $bang As String = "!g"
+
+Private Sub addSerchEngineButton()
+    
+    Dim yukiMenu As NagatoSearchEngineMenu
+    
+    $seachEngineButton = New NagatoSearchEngineButton($panel)
+    $seachEngineButton.setIcon(Image.Load("pictures/google-g-logo-2012.png").Stretch(24, 24).Picture)
+    yukiMenu = New NagatoSearchEngineMenu($seachEngineButton.RootMenu) As "Menu"
+    
+End
+
+Private Sub addSearchBox()
+    
+    $buttonBox = New NagatoSearchBox($panel) As "SearchBox"
+    
+End
+
+Private Sub resizeParent()
+    
+    $panel.Width = $seachEngineButton.Width + $buttonBox.Width 
+    NagatoFormHandler.SetWidgetPositionAndSize()
+    
+End
+
+Public Sub Move(argX As Integer, argY As Integer)
+    
+    $panel.X = argX
+    $panel.Y = argY
+    
+End
+
+Public Sub _new(argPanel As HBox)
+    
+    $panel = argPanel
+    addSerchEngineButton()
+    addSearchBox()
+    resizeParent()
+    
+End
+
+Public Sub Menu_Select(argTag As String, argNewName As String, argIcon As Picture)
+    
+    If Not argIcon Then argIcon = Stock["medium/find"]
+    
+    $seachEngineButton.Text = argNewName
+    $seachEngineButton.setIcon(argIcon.Image.Stretch(24, 24).Picture)
+    $bang = argTag
+    resizeParent()
+    
+End
+
+Public Sub SearchBox_SearchQuery(argQuery As String)
+    
+    Dim yukiNewUrl As String = Subst$("http://duckduckgo.com/?q=&1+", $bang)
+    
+    If $bang = "CurrentPage" Then
+        Return
+    Else If $bang = "Dictionary" Then
+        NagatoTabHandler.NewTabWithPath(MikuruFunctionType.Dictionary, argQuery)
+    Else
+        NagatoTabHandler.NewTabWithPath(MikuruFunctionType.WebBrowser, (yukiNewUrl & argQuery))
+    Endif
+    
+End
+
+Private Function Width_Read() As Integer
+
+    Return $panel.Width
+
+End

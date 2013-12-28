@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private $iconSizeVisibleNames As String[] = [("Small"), ("Medium"), ("Large"), ("Huge"), ("Stupid")]
+
+Public Sub _RefreshMenu() ' override
+    
+    Dim yukiCounter As Integer
+    Dim yukiMenu As Menu
+    
+    For yukiCounter = 0 To 4
+        yukiMenu = New Menu(Me._$rootMenu) As "Menu"
+        With yukiMenu
+            .Text = $iconSizeVisibleNames[yukiCounter]
+            .Tag = yukiCounter
+            .Toggle = True
+            Debug NagatoSettingsFileSelector.ThumbnailSize
+            If NagatoSettingsFileSelector.ThumbnailSize = yukiCounter Then .Checked = True
+        End With
+    Next
+    
+End
+
+Public Sub Menu_Click()
+    
+    NagatoSettingsFileSelector.ThumbnailSize = Last.Tag
+    
+    Debug "IconSize changed."
+    
+    Raise MenuEvent(MikuruMenuEventView.Changed)
+    
+End
+

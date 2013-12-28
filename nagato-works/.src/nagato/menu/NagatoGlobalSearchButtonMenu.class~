@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+Private $webBoonmarkRootMenu As Menu
+
+Private Sub addDirectoryBookmarkMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiDirectoryMenu As NagatoSubMenuDirectoryBookmark
+    
+    yukiDirectoryMenu = New NagatoSubMenuDirectoryBookmark(yukiMenu)
+    
+    With yukiMenu
+        .Text = ("Directories")
+        .Picture = Stock["medium/directory"]
+    End With
+    
+End
+
+Private Sub addWebBookmarkRootMenu()
+    
+    $webBoonmarkRootMenu = New Menu(Me._$rootMenu)
+   
+    With $webBoonmarkRootMenu
+        .Text = ("Web bookmark")
+        .Picture = Stock["medium/internet"]
+    End With
+    
+End
+
+Private Sub addWebBookmarkMenu()
+    
+    
+    
+End
+
+Public Sub _AddOtherMenu() ' override
+    
+    addDirectoryBookmarkMenu()
+    addWebBookmarkRootMenu()
+    addWebBookmarkMenu()
+    
+End

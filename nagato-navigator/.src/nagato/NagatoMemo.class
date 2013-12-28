@@ -1,0 +1,92 @@
+' Gambas class file
+
+Private $originalTitle As String
+Private $form As Form
+Private $textArea As TextEdit
+
+Private Sub pushRecentMemo(argTitle As String)
+    
+    Dim yukiResult As String[] = IIf(NagatoSettingsMemo.Recent = Null, [""], NagatoSettingsMemo.Recent)
+    Dim yukiIndex As Integer = yukiResult.Find(argTitle)
+    
+    Debug argTitle
+    
+    If yukiIndex >= 0 Then yukiResult.Remove(yukiIndex, 1)
+    yukiResult.Add(argTitle, 0)
+    yukiResult.Resize(10)
+    
+    NagatoSettingsMemo.Recent = yukiResult
+    
+End
+
+Private Sub initializeForm()
+    
+    $form = New Form As "Form"
+    
+    With $form
+        .Arrangement = Arrange.Fill
+        .Width = 40 * MikuruUX.Grid
+        .Height = 40 * MikuruUX.Grid
+        .Center()
+        .Icon = MikuruMonoIconBlue.Get("document-edit")
+    End With
+    
+End
+
+Private Sub initializeTextArea()
+    
+    $textArea = New TextEdit($form) As "TextArea"
+    
+    With $textArea
+        .Expand = True
+        .Foreground = MikuruColor.NagatoDarkBlue
+        .Wrap = True
+    End With
+    
+End
+
+Public Sub _new(Optional argOriginalPath As String = "")
+    
+    $originalTitle = Replace$(argOriginalPath, "<*slash*>", "/")
+    
+    initializeForm()
+    initializeTextArea()
+    $form.Show()
+    
+    If argOriginalPath <> "" Then
+        $textArea.Text = File.Load(MikuruDirectory.Memo &/ argOriginalPath)
+    Endif
+    
+End
+
+Public Sub Form_Close()
+    
+    Dim yukiPath As String
+    
+    If $form.Title = "" Then
+        Message.Warning("YUKI.N> Write something in first line.")
+        Return
+    Else If $form.Title <> $originalTitle Then
+        Try Kill MikuruDirectory.Memo &/ $originalTitle
+        yukiPath = MikuruAlternativeName.GetPath(MikuruDirectory.Memo, Replace$($form.Title, "/", "<*slash*>"))
+    Else
+        yukiPath = MikuruDirectory.Memo &/ Replace$($form.Title, "/", "<*slash*>")
+    Endif
+    
+    File.Save(yukiPath, $textArea.Text)
+    pushRecentMemo($form.Title)
+    HaruhiMemo.Refresh()
+    
+End
+
+Public Sub TextArea_Change()
+    
+    Dim yukiPosition As Integer = String.InStr($textArea.Text, "\n")
+    
+    If yukiPosition = 0 Then
+        $form.Title = String.Left($textArea.Text, 30)
+    Else
+        $form.Title = String.Left($textArea.Text, yukiPosition - 1)
+    Endif
+    
+End

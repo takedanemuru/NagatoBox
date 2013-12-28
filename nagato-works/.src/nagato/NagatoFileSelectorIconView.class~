@@ -1,0 +1,367 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private Const NewFolderName As String = ("new_folder")
+
+Private $iconView As IconView
+Private $iconSize As Integer 
+Private $thumbnailSize As Integer 
+Private $log As NagatoDirectoryLog
+Private $directoryObserver As NagatoDirectoryObserver
+Private $reservedVisiblePath As String = ""
+
+Event NewPath(argPath As String)
+Event OpenFile(argPath As String)
+Event Bookmark(argKey As String)
+Event Search
+
+Private Function getSelection() As String[]
+    
+    Dim yukiResult As New String[]
+    Dim yukiPath As String 'relative path
+    Dim yukiKey As String 'key for $iconView
+    
+    For Each yukiPath In Dir($log.CurrentFullPath)
+        yukiKey = $log.CurrentFullPath &/ yukiPath
+        If Not Object.IsValid($iconView[yukiKey]) Then Continue
+        If $iconView[yukiKey].Selected Then yukiResult.Add(yukiKey)
+    Next
+    
+    If $iconView.Key Then
+        If Not yukiResult.Exist($iconView.Key) Then yukiResult.Add($iconView.Key, 0)
+    End If
+    
+    Return yukiResult
+    
+End
+
+Private Sub refreshIconSizeVariables(argIndex As Integer)
+    
+    $iconSize = NagatoIconSize.getIconSize(argIndex)
+    $thumbnailSize = NagatoIconSize.getThumbnailSize(argIndex)
+    
+End
+
+Private Sub setFileIcon(argPath As String) ' argPath must be full path.
+    
+    $iconView.Add(argPath, File.Name(argPath), NagatoFileIcon.Get(argPath, $thumbnailSize))
+    
+End
+
+Private Sub addDirectoryIcon(argPath As String)
+    
+    Dim yukiFile As String
+    Dim yukiJointPath As String
+    Dim yukiPattern As String = NagatoSearchKey.GetShowHiddenKey(NagatoSettingsFileSelector.ShowHidden)
+    
+    For Each yukiFile In Dir(argPath, yukiPattern, gb.Directory).Sort()
+        yukiJointPath = argPath &/ yukiFile
+        $iconView.Add(yukiJointPath, File.Name(yukiJointPath), NagatoDirectoryIcon.Get(yukiJointPath, $iconSize))
+    Next
+    
+End
+
+Private Sub addFileIcon(argPath As String)
+    
+    Dim yukiFile As String
+    Dim yukiPattern As String = NagatoSearchKey.GetShowHiddenKey(NagatoSettingsFileSelector.ShowHidden)
+    
+    For Each yukiFile In Dir(argPath, yukiPattern, gb.File).Sort()
+        setFileIcon(argPath &/ yukiFile)
+    Next
+    
+End
+
+Private Sub initializeIconView()
+    
+    $iconView = New IconView(Me._$parent) As "IconView"
+    
+    With $iconView
+        .Expand = True
+        .Editable = False
+        .Mode = Select.Multiple
+        .Picture = Picture["pictures/iconview_picture_default.png"]
+        .Drop = True
+        .SetFocus()
+    End With
+    
+    refreshIconSizeVariables(NagatoSettingsFileSelector.ThumbnailSize)
+    
+End
+
+Private Sub changeObserverPath(argPath As String)
+    
+    If Object.IsValid($directoryObserver) Then
+        $directoryObserver.Stop()
+        $directoryObserver.Directory = argPath
+        $directoryObserver.Start()
+    End If
+    
+End
+
+Private Sub ensureVisiblePath(argPath As String)
+    
+    $iconView.MoveTo(argPath)
+    $iconView[argPath].Selected = True
+    $iconView[argPath].EnsureVisible()
+    
+    $reservedVisiblePath = ""
+    
+Catch
+    Return
+    
+End
+
+Private Sub refreshIconView(argPath As String)
+    
+    Dim yukiCurrentPath As String = ""
+    
+    If getSelection().Count > 0 Then yukiCurrentPath = getSelection().Sort()[0]
+    
+    changeObserverPath(argPath)
+    $iconView.Clear()
+    refreshIconSizeVariables(NagatoSettingsFileSelector.ThumbnailSize)
+    addDirectoryIcon(argPath)
+    addFileIcon(argPath)
+    Raise NewPath(argPath)
+    
+    If yukiCurrentPath <> "" Then ensureVisiblePath(yukiCurrentPath)
+    
+    NagatoDBThumbnail.CleanUp(argPath)
+    
+Catch
+    Return
+    
+End
+
+Private Sub setStartupPageToIconView(argPath As String)
+    
+    $log = New NagatoDirectoryLog(argPath)
+    refreshIconView(argPath)
+    
+End
+
+Private Sub openFileOrDirectory(argPath As String)
+    
+    If Not IsDir(argPath) Then
+        Raise OpenFile(argPath)
+    Else
+        openDir(argPath)
+    Endif
+    
+End
+
+Private Sub deleteSelectedFiles()
+    
+    If NagatoXdgUserDirs.ExcludeXdgUserDirs(getSelection()).Count > 0 Then
+        NagatoTrashHandler.Put(NagatoXdgUserDirs.ExcludeXdgUserDirs(getSelection()))
+    Endif
+    
+End
+
+Private Sub toggleHidden()
+    
+    NagatoSettingsFileSelector.ShowHidden = Not NagatoSettingsFileSelector.ShowHidden
+    Me.Reload()
+    
+End
+
+Private Function getDirectoryToDrop() As String
+    
+    If Not Object.IsValid($iconView.Item) Then
+        Return $log.CurrentFullPath
+    Else If Not IsDir($iconView.Item.Key) Then
+        Return $log.CurrentFullPath
+    Else
+        Return $iconView.Item.Key
+    Endif
+
+End
+
+Public Sub _Initialize(argPath As String) ' Override.
+    
+    initializeIconView()
+    setStartupPageToIconView(argPath)
+    $directoryObserver = New NagatoDirectoryObserver(argPath) As "DirectoryObserver"
+    
+End
+
+Public Sub RefreshIconViewWithSearchQuery(argQuery As String)
+    
+    Dim yukiPath As String
+    
+    $directoryObserver.Stop()
+    $iconView.Clear()
+    
+    For Each yukiPath In NagatoFileSearch.GetResult($log.CurrentFullPath, argQuery)
+        setFileIcon(yukiPath)
+    Next
+    
+    Raise NewPath($log.CurrentFullPath)
+    
+End
+
+Public Sub OpenDir(argPath As String)
+    
+    refreshIconView(argPath)
+    $log.Move(argPath)
+    
+End
+
+Public Sub Home()
+    
+    If Not $log.IsHome() Then OpenDir(User.Home)
+    
+End
+
+Public Sub Back()
+    
+     If $log.HasBack() Then refreshIconView($log.Back())
+    
+End
+
+Public Sub Up()
+    
+    If $log.CurrentFullPath = User.Home Then 
+        Return
+    Else If File.Dir($log.CurrentFullPath) = $log.PreviousFullPath Then
+        Back()
+    Else
+        OpenDir(File.Dir($log.CurrentFullPath))
+    Endif
+    
+End
+
+Public Sub Forward()
+    
+    If $log.HasForward() Then refreshIconView($log.Forward())
+    
+End
+
+Public Sub Reload()
+    
+    refreshIconView($log.CurrentFullPath)
+    
+End
+
+Public Sub GetCurrentFullPath() As String
+    
+    Return $log.CurrentFullPath
+    
+End
+
+Public Sub MakeDir()
+    
+    Mkdir MikuruSafeMakeDirectory.GetName($log.CurrentFullPath, NewFolderName)
+    
+End
+
+Public Sub Menu_MenuEvent(argEventType As Integer)
+    
+    Select Case argEventType
+        Case MikuruMenuEventFile.Bookmark
+            Raise Bookmark($iconView.Key)
+        Case MikuruMenuEventView.Refresh
+            refreshIconView($log.CurrentFullPath)
+    End Select
+    
+End
+
+Public Sub Menu_MenuEventWithArgument(argEventType As Integer, argArgument As Variant)
+    
+    Select Case argEventType
+        Case MikuruMenuEventFile.Open
+            openFileOrDirectory(argArgument)
+        Case MikuruMenuEventFile.Rename
+            $reservedVisiblePath = argArgument
+    End Select
+    
+End
+
+Public Sub IconView_KeyPress()
+    
+    If Key.Code = Key.Delete Then
+        deleteSelectedFiles()
+    Else If Key.Control Then
+        Select Case Key.Code
+            Case Key["f"]
+                Raise Search
+            Case Key["h"]
+                toggleHidden()
+            Case Key["v"]
+                If Clipboard.Format = MikuruMimeType.UriList Then
+                    NagatoFileManuever.MoveMultipleFile(NagatoDrag2.GetPaths(Clipboard.Paste()), $log.CurrentFullPath)
+                Endif
+            Case Key["c"]
+                Clipboard.Copy(NagatoDrag2.GetUriList(getSelection()), MikuruMimeType.UriList)
+        End Select
+    Else
+        ' do nothing
+        Debug Key.Code
+    Endif
+    
+End
+
+Public Sub IconView_Activate()
+    
+    openFileOrDirectory($iconView.Current.Key)
+    
+End
+
+Public Sub IconView_Menu()
+    
+    Dim yukiMenu As New NagatoFileSelectorContextMenu2(Kyon, $iconView.Key, getSelection()) As "Menu"
+    
+    yukiMenu.PopUp()
+    
+Catch ' to avoid null object.
+    Debug Error.Text
+    Return
+    
+End
+
+Public Sub IconView_MouseDrag()
+    
+    If Not $iconView.Key Then Return
+    
+    Drag.Icon = $iconView.Current.Picture
+    $iconView.Drag(NagatoDrag2.GetUriList(getSelection()), MikuruMimeType.UriList)
+    
+End
+
+Public Sub IconView_DragMove()
+    
+    If Not $iconView.FindAt(Drag.X, Drag.Y) Then
+        $iconView.Item.Selected = True
+    Else
+        $iconView.UnselectAll()
+    End If
+    
+End
+
+Public Sub IconView_Drop()
+    
+    Dim yukiUri As String
+    Dim yukiPaths As String[]
+    Dim yukiTargetDirectory As String
+    
+    If Drag.Format = MikuruMimeType.UriList Then
+        Debug Drag.Data
+        yukiPaths = NagatoDrag2.GetPaths(Drag.Data)
+        If yukiPaths.Count > 0 Then
+            NagatoFileManuever.MoveFiles(yukiPaths, getDirectoryToDrop())
+            refreshIconView($log.CurrentFullPath)
+        End If
+    Endif
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argNewPath As String[], argDeletedPath As String[])
+    
+    If Max(argNewPath.Count, argDeletedPath.Count) > 0 Then
+        refreshIconView($log.CurrentFullPath)
+        If $reservedVisiblePath <> "" Then ensureVisiblePath($reservedVisiblePath)
+    End If
+    
+End

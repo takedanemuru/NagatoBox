@@ -1,0 +1,98 @@
+' Gambas class file
+
+Property Read Text As String
+Property Read Offset As Integer
+Property Read Font As Font
+
+Private $font As Font
+Private $areaGrids As Integer
+Private $step As Integer
+Private $offsetGrids As Integer
+Private $textCutOff As Integer
+Private $text As String
+Private $offset As Integer
+Private $nonScrollingCount As Integer = 0
+
+Event Next
+
+Private Sub setOffsetGrids()
+    
+    $offsetGrids -= $step
+    If 0 > $offsetGrids Then $offsetGrids = 0
+    $offset = $offsetGrids * MikuruUX.Grid
+    
+End
+
+Private Sub setTextCutOff(argText As String)
+    
+    Inc $textCutOff
+
+    If $textCutOff > String.Len(argText) Then
+        $textCutOff = 1
+        $offsetGrids = $areaGrids
+        Raise Next
+    Endif
+    
+End
+
+Private Sub setNonScrollingText(argText As String)
+    
+    $text = argText
+    $offset = 0
+    $textCutOff = 1
+    
+    Inc $nonScrollingCount
+    
+    If $nonScrollingCount = 5 Then
+        $nonScrollingCount = 0
+        Raise Next
+    End If
+
+End
+
+Private Sub setScrollingText(argText As String)
+    
+    setOffsetGrids()
+    $text = String.Mid$(argText, $textCutOff)
+    If $offset = 0 Then setTextCutOff(argText)
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    If $areaGrids * MikuruUX.Grid >= $font.TextWidth(argText) Then
+        setNonScrollingText(argText)
+    Else
+        setScrollingText(argText)
+    Endif
+    
+End
+
+Public Sub _new(argFont As Font, argAreaGrids As Integer, argStepGrids As Integer)
+    
+    $font = argFont
+    $areaGrids = argAreaGrids
+    $step = argStepGrids
+    
+    $offsetGrids = argAreaGrids
+    $textCutOff = 1
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $text
+
+End
+
+Private Function Offset_Read() As Integer
+
+    Return $offset
+
+End
+
+Private Function Font_Read() As Font
+
+    Return $font
+
+End

@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits HabaneroCore
+
+Property Read Type As Integer
+Private $countDown As Integer
+
+Private Sub refreshProperty()
+    
+    Me.$hourTen = ($countDown Div 3600) Div 10
+    Me.$hourOne = ($countDown Div 3600) Mod 10
+    Me.$minuteTen = ($countDown Div 60) Div 10
+    Me.$minuteOne = ($countDown Div 60) Mod 10
+    Me.$secondTen = ($countDown Mod 60) Div 10
+    Me.$secondOne = ($countDown Mod 60) Mod 10
+    
+    Me.sendTick()
+    
+End
+
+Private Sub finishSequence()
+    
+    Me.$timer.Stop()
+    Music.Load("Triangle Dinner Bell-SoundBible.com-220988408.mp3")
+    Music.Play(1, 0.2)
+    
+End
+
+Public Sub _new()
+    
+    $countDown = HabaneroSettings.getTimerStartFrom()
+    Me.initializeTimer()
+    Me.$timer.Start()
+    
+End
+
+Public Sub HabaneroTimer_Timer()
+    
+    Dec $countDown
+    refreshProperty()
+    If $countDown = 0 Then finishSequence()
+    
+End
+
+Private Function Type_Read() As Integer
+    
+    Return SeparatorType.Colon
+    
+End

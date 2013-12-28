@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Private Sub addUnderLineButton()
+    
+    Dim yukiTextUnderLineButton As New ToolButton(Me._$parent) As "Menu"
+    
+    With yukiTextUnderLineButton
+        .Width = Me.$size
+        .Picture = Stock["medium/text-underline"]
+        .tooltip = "underline"
+        .Tag = MikuruMenuEventTextEffect.UnderLine
+    End With
+    
+End
+
+Private Sub addTextBoldButton()
+    
+    Dim yukiTextBoldButton As New ToolButton(Me._$parent) As "Menu"
+    
+    With yukiTextBoldButton
+        .Width = Me.$size
+        .Picture = Stock["medium/text-bold"]
+        .Tooltip = ("bold")
+        .Tag = MikuruMenuEventTextEffect.Bold
+    End With
+    
+End
+
+Private Sub addTextStrikeButton()
+    
+    Dim yukiTextStrikeButton As New ToolButton(Me._$parent) As "Menu"
+    
+    With yukiTextStrikeButton
+        .Width = Me.$size
+        .Picture = Stock["medium/text-strike"]
+        .Tooltip = ("strike")
+        .Tag = MikuruMenuEventTextEffect.Strike
+    End With
+    
+End
+
+Private Sub addTextItalicButton()
+    
+    Dim yukiTextItalicButton As New ToolButton(Me._$parent) As "Menu"
+    
+    With yukiTextItalicButton
+        .Width = Me.$size
+        .Picture = Stock["medium/text-italic"]
+        .Tooltip = ("italic")
+        .Tag = MikuruMenuEventTextEffect.Itaric
+    End With
+    
+End
+
+Private Sub initializeWidgets()
+    
+    addUnderLineButton()
+    addTextStrikeButton()
+    addTextBoldButton()
+    addTextItalicButton()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    initializeWidgets()
+    
+End

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoIcon
+
+Private $timer As New Timer As "Timer"
+
+Private Function getTimeString() As String
+    
+    Dim yukiHour As String = Format$(Hour(Now()), "0#")
+    Dim yukiMinute As String = Format$(Minute(Now()), "0#")
+    Dim yukiSecond As String = Format$(Second(Now()), "0#")
+    
+    Return Subst$("&1:&2:&3", yukiHour, yukiMinute, yukiSecond)
+    
+End
+
+Private Sub setFormPicture(Optional argBackground As Integer = Color.Lighter(Color.Orange))
+    
+    Dim yukiBaseImage As New Image(128, 128, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 18
+        Paint.Font.Bold = True
+        Paint.DrawRichText(getTimeString(), 0, 0, 128, 128, Align.Center)
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+End
+
+Public Sub _new()
+    
+    Me._InitializeForm(128)
+    Me._$form.Show
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    setFormPicture()
+    
+End

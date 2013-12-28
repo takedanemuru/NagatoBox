@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Sub addRefreshMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RefreshMenu"
+    
+    With yukiMenu
+        .Text = ("RefreshForecastData")
+        .Picture = Picture["super-mono/basic/blue/button-rotate-cw.png"]
+    End With
+    
+End
+
+Private Function getTemperatureText(argIndex As Integer) As String
+    
+    If Even(argIndex) Then
+        Return ""
+        'Return Subst$("High: &1°C", NagatoWeather.GetHighCelsius(argIndex Div 2))
+    Else
+        Return ""
+        'Return Subst$("Low: &1°C", NagatoWeather.GetLowCelsius(argIndex Div 2))
+    Endif
+    
+End
+
+Private Function getWeatherMenuText(argPeriod As Integer) As String
+    
+    With NagatoWeather
+        Return Subst$("&1% &2 (&3)", .GetPoP(argPeriod), getTemperatureText(argPeriod), .GetTitle(argPeriod))
+    End With
+    
+End
+
+Private Sub addWeatherMenu()
+    
+    Dim yukiPeriod As Integer
+    Dim yukiMenu As Menu
+    
+    For yukiPeriod = 0 To NagatoWeather.GetPeriodsMax()
+        yukiMenu = New Menu(Me._$rootMenu) As "WeatherMenu"
+        With yukiMenu
+            .Picture = NagatoWeather.GetForecastIconMono(yukiPeriod)
+            .Text = getWeatherMenuText(yukiPeriod)
+            .Tag = yukiPeriod
+        End With
+    Next
+    
+End
+
+Public Sub _InitializeMenu()
+    
+    addRefreshMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addWeatherMenu()
+    
+End
+
+Public Sub RefreshMenu_Click()
+    
+    NagatoWeather.Activate(NagatoSettingsCore.City, NagatoSettingsCore.Country)
+    
+End
+
+Public Sub WeatherMenu_Click()
+    
+    Dim yukiBaselineText As String = "Weather Forecast (&1) : \n\n&2/&3\n\n&4\n\nProbability of Precipitation : &5 %"
+    Dim yukiTitle As String = NagatoWeather.GetTitle(Last.Tag)
+    Dim yukiForecast As String = NagatoWeather.GetForecastText(Last.Tag)
+    Dim yukiPoP As Integer = NagatoWeather.GetPoP(Last.Tag)
+    
+    HaruhiBalloon.Show()
+    HaruhiBalloon.TextAreaText = Subst$(yukiBaselineText, yukiTitle, NagatoSettingsCore.City, NagatoSettingsCore.Country, yukiForecast, yukiPoP)
+    
+End

@@ -1,0 +1,20 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,75,64)
+  Arrangement = Arrange.Fill
+  { HBox1 HBox
+    MoveScaled(1,1,73,55)
+    { FileChooser1 FileChooser
+      MoveScaled(4,3,39,47)
+      Expand = True
+    }
+    { VBox1 VBox
+      MoveScaled(45,3,24,47)
+      { DrawingArea1 DrawingArea
+        MoveScaled(0,22,24,24)
+        Background = &HDFA7DF&
+      }
+    }
+  }
+}

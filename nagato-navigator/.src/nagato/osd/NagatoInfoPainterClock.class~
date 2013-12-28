@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits NagatoInfoPainter
+
+Private $clockFont As New Font
+Private $clockText As String
+
+Public Sub Refresh()
+    
+    $clockText = Format$(Now, ("yyyy-mm-dd hh:nn:ss"))
+    $clockFont.Size = 11
+    $clockFont.Bold = True
+    Me._$drawingArea.Width = $clockFont.RichTextWidth($clockText) + 16
+
+    Me._$drawingArea.Refresh()
+    
+End
+
+Public Sub _InitializeDrawingArea()
+    
+    With Me._$drawingArea
+        .Expand = False
+        .Width = 0
+        .Background = NagatoSettingsInfobar.LabelColor
+    End With
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    With Paint
+        .Begin(Me._$drawingArea)
+        .Brush = .Color(Color.White)
+        .Font = $clockFont
+        .RichText($clockText, 0, 0, $clockFont.RichTextWidth($clockText) + 16, 24, Align.Center)
+        .Fill()
+        .End()
+    End With
+    
+End

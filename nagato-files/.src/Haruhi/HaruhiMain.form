@@ -1,0 +1,33 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,72,50)
+  Drop = True
+  Icon = Picture["folder.png"]
+  Arrangement = Arrange.Horizontal
+  { LeftPanel SidePanel
+    MoveScaled(3,7,28.5714,40)
+    Arrangement = Arrange.Fill
+    Orientation = Align.Left
+  }
+  { MainTabStrip TabStrip
+    MoveScaled(19,6,34,41)
+    Expand = True
+    Closable = True
+    Index = 0
+    Text = ("TabStrip1")
+    Index = 0
+  }
+  { FileInfomationSidePanel SidePanel
+    MoveScaled(54,6,16,41)
+    Background = &HB5DFA7&
+    Arrangement = Arrange.Fill
+    Orientation = Align.Right
+    Hidden = True
+    { !FileProperties1 FileProperties
+      MoveScaled(0,-2,36,36)
+      #Public = True
+      Expand = True
+    }
+  }
+}

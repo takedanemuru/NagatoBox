@@ -1,0 +1,15 @@
+' Gambas class file
+
+Private $json As Variant
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    Dim yukiXmlDocument As XmlDocument = MikuruGDBus.GetSystem("org.freedesktop.NetworkManager", "/")
+
+    Debug yukiXmlDocument.Content
+
+End

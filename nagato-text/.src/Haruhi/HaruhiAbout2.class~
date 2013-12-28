@@ -1,0 +1,9 @@
+' Gambas class file
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    AboutTextLabel.Text = Subst$(File.Load("Text/AboutText"), Application.Version)
+    
+End
+

@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoThumbnailer
+
+Create Static
+
+Private $progress As Float = 10
+
+Public Function GetThumbnail(argFullPath As String, argSize As Integer, argProgress As Float) As Picture 'argProgress should be 0 to 100
+    
+    Dim yukiCommandLine As String = "ffmpegthumbnailer -i &1 -o &2 -s &3 -t &4"
+    Dim yukiTempPath As String = Temp$() & ".jpg"
+    
+    argFullPath = Quote$(argFullPath)
+    Shell Subst$(yukiCommandLine, argFullPath, yukiTempPath, argSize, argProgress) Wait
+    Return Picture.Load(yukiTempPath)
+    
+Catch
+    Return Stock[Subst$("&1/video", argSize)]
+    
+End
+
+Public Function Get(argPath As String, argSize As Integer) As Picture
+    
+    Dim yukiPicture As Picture
+    
+    If NagatoDBThumbnail.HasThumbnail(argPath, argSize) Then
+        Return NagatoDBThumbnail.Get(argPath, argSize)
+    Else
+        yukiPicture = getThumbnail(argPath, argSize, $progress)
+        NagatoDBThumbnail.Push(argPath, argSize, yukiPicture)
+        Return yukiPicture
+    Endif
+    
+End

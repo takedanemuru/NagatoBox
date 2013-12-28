@@ -1,0 +1,75 @@
+' Gambas module file
+
+Private $playDefault As Boolean
+Private $pathToPlay As String
+Private $defaultPath As String = "sounds/welcumz.wav"
+
+Private Sub initializeApplicationArguments()
+        
+        Dim yukiArgs As String[]
+
+        Args.Begin()
+                $playDefault = Args.Has("d", "play-default", "Play default greeter sound")
+                $pathToPlay = Args.Get("p", "play", "Play sound", "Path to play")
+        yukiArgs = Args.End()
+        
+End
+
+Private Sub playPath(argPath As String)
+        
+        Dim yukiSound As New Sound(argPath)
+        
+        yukiSound.Play()
+        
+        Wait NagatoSettings.Duration
+        
+        Quit
+        
+End
+
+Private Sub playLoginSound()
+        
+        Select Case NagatoSettings.Mode
+                Case MikuruPlayMode.DefaultSound
+                        playPath($defaultPath)
+                Case MikuruPlayMode.UserDefinedSound
+                        playPath(NagatoSettings.UserDefinedPath)
+                Case MikuruPlayMode.DoNotPlay
+                        ' do nothing.
+                        Return
+        End Select
+
+End
+
+Private Sub playSpecifiedPath()
+        
+        If Exist($pathToPlay) Then
+                playPath($pathToPlay)
+        Else
+                playPath($defaultPath)
+        Endif
+        
+End
+
+Private Sub startEditMode()
+        
+        HaruhiEdit.Center()
+        HaruhiEdit.Show()
+        
+End
+
+Public Sub Main()
+
+        initializeApplicationArguments()
+        
+        If Args.Count > 1 Then
+                If $playDefault Then
+                        playLoginSound()
+                Else
+                        playSpecifiedPath()
+                End If
+        Else
+                startEditMode()
+        Endif
+        
+End

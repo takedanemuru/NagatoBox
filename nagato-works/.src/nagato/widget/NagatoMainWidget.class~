@@ -1,0 +1,16 @@
+' Gambas class file
+
+Public _$parent As Container  'protected.
+
+Public Sub _Initialize(argPath As String) ' This method is virtual, MUST be overridden.
+    
+    Debug argPath
+    
+End
+
+Public Sub _new(argContainer As Container, Optional argPath As String = "")
+    
+    Me._$parent = argContainer
+    Me._Initialize(argPath)
+    
+End

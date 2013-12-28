@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $container As Container
+Private $backButton As NagatoBackButton
+Private $forwardButton As NagatoForwardButton
+Private $urlBox As NagatoUrlBox
+Private $bookmarkButton As NagatoBookmarkButton
+Private $startButton As NagatoStartButton
+
+Public Sub SetUrl(argUrl As String)
+    
+    $urlBox.SetUrl(argUrl)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    $backButton = New NagatoBackButton(argContainer) As "Menu"
+    $forwardButton = New NagatoForwardButton(argContainer) As "Menu"
+    $urlBox = New NagatoUrlBox(argContainer) As "Menu"
+    $bookmarkButton = New NagatoBookmarkButton(argContainer) As "Menu"
+    $startButton = New NagatoStartButton(argContainer) As "Menu"
+    
+End

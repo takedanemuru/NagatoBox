@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _AddChildMenus()
+    
+    With NagatoMenuPipe
+        Me._AddContextMenu(("Open"), .DirOpen)
+        Me._AddContextMenu(("Open in new tab"), .DirOpenInNewTab)
+        Me._AddContextMenu(("Copy path"), .PathCopyToClipboard)
+        If Not NagatoXdgUserDirs.IsXdgUserDir(Me._$path) Then
+            Me._AddContextMenu("", .MenuNone) ' As Spacer
+            Me._AddContextMenu(("Rename"), .DirRename)
+            Me._AddContextMenu(("Delete"), .DirDelete, MikuruIcon.Get("bin"))
+        End If
+    End With
+    
+End

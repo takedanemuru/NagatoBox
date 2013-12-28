@@ -1,0 +1,23 @@
+' Gambas class file
+
+Property Read Max As Integer
+
+Private $drawingArea As DrawingArea
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Dim yukiWidth As Integer
+
+    With MikuruUxTab
+        yukiWidth = (($drawingArea.W - (2 * .Padding + .Height + .Margin)) / HaruhiMain.Titles.Count) - .Margin
+    End With
+
+    Return yukiWidth
+
+End

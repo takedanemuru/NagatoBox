@@ -1,0 +1,93 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Private Sub addToggleFullScreenMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["small/fullscreen"]
+        .Text = ("Toggle FullScreen")
+        .Shortcut = "F11"
+        .Tag = "AppMenu_ToggleFullScreen"
+    End With
+    
+End
+
+Private Sub addChangeOpacityMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu)
+     
+    With yukiMenu
+        .Text = ("change opacity")
+    End With
+    
+    addOpacityRateMenu(yukiMenu)
+    
+End
+
+Private Sub addOpacityRateMenu(argParentMenu As Menu)
+    
+   Dim yukiPercentage As Integer
+   Dim yukiMenu As Menu
+   
+   For yukiPercentage = 100 DownTo 20 Step 20
+       yukiMenu = New Menu(argParentMenu) As "MenuChangeOpacity"
+       With yukiMenu
+           .Tag = yukiPercentage
+           .Text = Subst("&1%", yukiPercentage)
+       End With
+   Next
+    
+End
+
+Private Sub addTabPositionMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As NagatoTabPositionMenu
+    
+    yukiMenu = New NagatoTabPositionMenu(Me._$rootMenu)
+    
+End
+
+Private Sub addToggleMeganeMenu(argParentMenu As Menu)
+    
+   Dim yukiMenu As New Menu(argParentMenu) As "Menu" 
+    
+    With yukiMenu
+        .Text = ("on/off megane")
+        .Tag = "AppMenu_ToggleMegane"
+    End With
+    
+End
+
+Private Sub addParentMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("View")
+    addToggleFullScreenMenu(yukiMenu)
+    addTabPositionMenu(yukiMenu)
+    addChangeOpacityMenu(yukiMenu)
+    addToggleMeganeMenu(yukiMenu)
+
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addParentMenu()
+    
+End
+
+Public Sub Menu_Click()
+    
+    Object.Call(Kyon, Last.Tag)
+    
+End
+
+Public Sub MenuChangeOpacity_Click()
+    
+    Object.Call(Kyon, "AppMenu_Opacity", [Last.Tag])
+    
+End

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Private $grid As NagatoGridProjects
+
+Private Sub selectProject()
+    
+    MikuruDialog.ResponseString = ProjectView[ProjectView.Row, 0].Text
+    Me.Close(MikuruDialog.ResponseApply)
+    
+End
+
+Public Sub Form_Open()
+
+    $grid = New NagatoGridProjects(ProjectView)
+    
+    Object.Lock(FilterCheckBox)
+        FilterCheckBox.Value = NagatoSettings.FilterSelectProject
+    Object.Unlock(FilterCheckBox)
+    
+End
+
+Public Sub SelectButton_Click()
+
+    If ProjectView.Row <> -1 Then selectProject()
+
+End
+
+Public Sub ProjectView_DblClick()
+
+    selectProject()
+
+End
+
+Public Sub Cancel_Click()
+
+    Me.Close(MikuruDialog.ResponseCancel)
+
+End
+
+Public Sub FilterCheckBox_Click()
+
+    $grid.Refresh()
+
+End

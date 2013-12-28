@@ -1,0 +1,29 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,57.1429,88)
+  Text = ("nagato-navigator")
+  Icon = Picture["pictures/magic-stick.jpg"]
+  Picture = Picture["shell/endless_summer_render.png"]
+  Mask = True
+  Border = False
+  Sticky = True
+  SkipTaskbar = True
+  { Menu4 Menu
+    Text = ("Menu4")
+    Visible = False
+    { Menu3 Menu
+      Text = ("Test")
+    }
+    { Menu2 Menu
+      Text = ("Test")
+    }
+    { Menu1 Menu
+      Text = ("Test")
+    }
+  }
+  { !GMailPop3 #Pop3Client
+    #MoveScaled(60,47)
+    #Public = True
+  }
+}

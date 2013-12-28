@@ -1,0 +1,17 @@
+' Gambas class file
+
+Property Read Value As Variant
+
+Private $value As Variant
+
+Public Sub _new(argValue As Variant)
+        
+        If argValue Then $value = argValue
+        
+End
+
+Private Function Value_Read() As Variant
+
+        Return $value
+
+End

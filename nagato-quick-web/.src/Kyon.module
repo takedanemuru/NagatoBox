@@ -1,0 +1,65 @@
+' Gambas module file
+
+Private $options As String[]
+Private $url As String
+Private $query As String
+Private $engine As String
+Private $api As String
+Private $bang As String = "!g"
+
+Private Sub setBang()
+    
+    Select Case $engine
+        Case "twitter", "tw"
+            $bang = "!tw"
+        Case "google-image", "gi"
+            $bang = "!gi"
+        Case "google-jp", "gjp"
+            $bang = "!gjp"
+        Case "wikipedia", "w"
+            $bang = "!w"
+        Default
+            $bang = "!g"
+    End Select
+    
+End
+
+Private Sub setQuery()
+    
+    setBang()
+    $api = Subst$("http://duckduckgo.com/?q=&1+", $bang)
+    
+End
+
+Private Sub setOptions()
+    
+    Args.Begin(File.Load("Usage"))
+        $url = Args.Get("u", "url", "url", "url")
+        $engine = Args.Get("e", "engine", "search engine (default : google)", "engine name")
+        $query = Args.Get("s", "search", "keyword", "keyword")
+    $options = Args.End()
+    
+End
+
+Private Sub execute()
+    
+    If $query <> "" Then
+        setQuery()
+        HaruhiWebView.OpenWebView($api & Quote$($query))
+    Else If $url <> "" Then
+        HaruhiWebView.OpenWebView($url)
+    Else If $options.Count > 0 Then
+        HaruhiWebView.OpenWebView($options[0])
+    Else
+        HaruhiWebView.OpenWebView("http://www.duckduckgo.com")
+    Endif
+    
+End
+
+Public Sub Main()
+    
+    setOptions()
+    execute()
+    
+End
+

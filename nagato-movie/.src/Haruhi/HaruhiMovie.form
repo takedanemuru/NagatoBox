@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["pictures/blue/video.png"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(1,2,48,46)
+    { MenuHBox HBox
+      MoveScaled(5,8,38,4)
+    }
+    { MediaTimer #Timer
+      #MoveScaled(31,15)
+      Enabled = True
+    }
+    { MediaDrawingArea DrawingArea
+      MoveScaled(1,25,44,18)
+      Expand = True
+      Cached = True
+    }
+  }
+}

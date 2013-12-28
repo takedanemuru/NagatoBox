@@ -1,0 +1,102 @@
+' Gambas class file
+
+Public _$sortAscend As Boolean
+Public _$gridView As GridView
+Public _$columnWidthArray As Float[] 
+Public _$columnTextArray As String[] 
+Public _$backgroundColor As Integer = 0
+Public _$columnCount As Integer = 0
+Public _$columnIndexPath As Integer
+
+Private Function isLesser(argGridData As String, argRowData As String) As Boolean
+    
+    Dim yukiCompResult As Integer = Comp(argGridData, argRowData, gb.Natural + gb.IgnoreCase)
+    
+    If Me._$sortAscend Then yukiCompResult *= -1
+    
+    Select Case yukiCompResult
+        Case -1 
+            Return True
+        Case Else
+            Return False
+    End Select
+    
+End
+
+Public Sub _AddToDataArray(argRowData As Collection, argTargetHeader As String, ByRef refArray As Variant[])
+    
+    Dim yukiCount As Integer
+    Dim yukiCollection As Collection
+    
+    For yukiCount = 0 To refArray.Max
+        yukiCollection = refArray[yukiCount]
+        If isLesser(yukiCollection[argTargetHeader], argRowData[argTargetHeader])
+            refArray.Add(argRowData, yukiCount)
+            Return
+        Else
+            Continue
+        Endif
+    Next
+    
+    refArray.Add(argRowData)
+    
+End
+
+Public Sub _InitializeGridView()
+    
+    Dim yukiCount As Integer
+    
+    With Me._$gridView
+        .Columns.Count = Me._$columnCount
+        For yukiCount = 0 To Me._$columnCount - 1
+            .Columns[yukiCount].Width = Me._$columnWidthArray[yukiCount] * MikuruUX.Grid
+            .Columns[yukiCount].Text = Me._$columnTextArray[yukiCount]
+        Next
+    End With
+    
+    NagatoSettingsCore.LoadGridsSettings(Me._$gridView)
+    
+End
+
+Public Function _GetSelectionCount() As Integer
+    
+    Return Me._$gridView.Rows.Selection.Count
+    
+End
+
+Public Function _GetSelectionText(argColumnIndex As Integer) As String[]
+    
+    Dim yukiRowIndex As Integer
+    Dim yukiResult As New String[]
+    
+    For Each yukiRowIndex In Me._$gridView.Rows.Selection
+        yukiResult.Add(Me._$gridView[yukiRowIndex, argColumnIndex].Text)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub _SetBackgroundColor()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To Me._$gridView.Columns.Max
+        With Me._$gridView[Me._$gridView.Rows.Max, yukiCount]
+            .Background = Me._$backgroundColor
+        End With
+    Next
+    
+End
+
+Public Sub _RefreshGridView() ' This method is virtual, MUST be overridden
+    
+    
+    
+End
+
+Public Sub SaveSettings()
+    
+    NagatoSettingsCore.SaveGridsSettings(Me._$gridView)
+    
+End

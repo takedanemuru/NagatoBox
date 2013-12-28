@@ -1,0 +1,33 @@
+' Gambas class file
+
+Create Static
+
+Property ExactMatch As Boolean
+Property IgnoreCase As Boolean
+
+Private $exactMatch As Boolean = True
+Private $ignoreCase As Boolean = True
+
+Private Function ExactMatch_Read() As Boolean
+
+    Return $exactMatch
+
+End
+
+Private Sub ExactMatch_Write(Value As Boolean)
+
+    $exactMatch = Value
+
+End
+
+Private Function IgnoreCase_Read() As Boolean
+
+    Return $ignoreCase
+
+End
+
+Private Sub IgnoreCase_Write(Value As Boolean)
+
+    $ignoreCase = Value
+
+End

@@ -1,0 +1,112 @@
+' Gambas class file
+
+Inherits NagatoPlayer
+
+Property Read ProgressRate As Float
+Property Read ProgressText As String
+Property Read State As Integer
+Property Read Finished As Boolean
+Property Read TagTitle As String
+Property Read Mode As Integer
+
+Private $player As New MediaPlayer As "Player"
+Private $title As String
+Private $mode As Integer = Me.Radio
+
+Public Function GetProgressTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
+
+    Debug 'argRate
+
+    Return "Internet Radio Mode"
+
+End
+
+Public Sub SetPosition(argRate As Float) 
+    
+    Debug argRate 
+    
+    Return
+    
+End
+
+Public Sub SetUrlAndPlay(argUrl As String)
+    
+    Try $player.Stop()
+    $player.URL = argUrl
+    $player.Play()
+    
+Catch
+    Debug Error.Text
+    Try Me.Play()
+    
+End
+
+Public Sub Play(Optional argPosition As Float)
+    
+    Debug argPosition
+    
+    Try $player.Play()
+    
+Catch
+    Return
+    
+End
+
+Public Sub Pause()
+    
+    Try $player.Pause()
+   
+End
+
+Public Sub Stop()
+    
+    Try $player.Stop()
+    
+End
+
+Public Sub Player_Tag(argTags As MediaTagList)
+    
+    If argTags["title"] <> "" Then
+        $title = argTags["title"]
+    End If
+    
+End
+
+Private Function ProgressRate_Read() As Float
+
+    Return 0
+    
+End
+
+Private Function ProgressText_Read() As String
+
+    Return ""
+
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+Catch
+    Return MediaPlayer.Null
+
+End
+
+Private Function Finished_Read() As Boolean
+
+    Return False
+
+End
+
+Private Function TagTitle_Read() As String
+
+    Return $title
+
+End
+
+Private Function Mode_Read() As Integer
+
+    Return $mode
+
+End

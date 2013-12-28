@@ -1,0 +1,60 @@
+' Gambas class file
+
+Private $file As File
+Private $filev2 As File
+
+Private Sub getV1Tag()
+        
+        Dim yukiString As String
+
+        Seek #$file, -129
+        Read #$file, yukiString
+        Debug yukiString
+        TextBox1.Text = Mid$(yukiString, 4, 30)
+        TextBox2.Text = Mid$(yukiString, 34, 30)
+        TextBox3.Text = Mid$(yukiString, 64, 30)
+
+        $file.Close()
+        
+End
+
+Private Sub getV2Tag()
+        
+        Dim yukiHeadder As String
+        Dim yukiByte As Byte
+        Dim yukiCount As Integer
+        Dim yukiString As String = ""
+
+        $filev2 = Open "music/オベリスク.mp3" For Read
+
+        While yukiCount < 256
+                Read #$filev2, yukiByte
+                Debug String.Chr(yukiByte)
+                If String.Chr(yukiByte) <> "" Then yukiString &= String.Chr(yukiByte)
+                Inc yukiCount
+        Wend
+
+        TextArea1.Text = yukiString
+
+        ' $filev2 = Open "music/オベリスク.mp3" For Input
+        ' yukiHeadder = Read #$filev2, Lof($filev2)
+        ' 'yukiHeadder = Conv$(yukiHeadder, "ISO-8859-1", "UTF-8")
+        ' yukiHeadder = Replace$(yukiHeadder, Null, "")
+        ' TextArea1.Text = Left$(yukiHeadder, 256)
+        
+       $filev2.Close()
+        
+End
+
+Public Sub _new()
+
+        $file = Open "music/オベリスク.mp3" For Input
+
+End
+
+Public Sub Form_Open()
+
+        getV1Tag()
+        getV2Tag()
+
+End

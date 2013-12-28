@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoSearchEngines
+
+Private $container As Container
+Private $button As MenuButton
+Private $menu As NagatoSearchEngineSelectMenu
+
+Private Sub initializeButton()
+    
+    $button = New MenuButton($container)
+    
+    With $button
+        .Text = ("DuckDuckGo")
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+    End With
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    $button.Text = argText
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    initializeButton()
+    $menu = New NagatoSearchEngineSelectMenu($button) As "Menu"
+    
+End

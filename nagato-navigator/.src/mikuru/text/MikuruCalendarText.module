@@ -1,0 +1,76 @@
+' Gambas module file
+
+Private Function getWeekdayString(argDate As Date) As String
+    
+    Select Case WeekDay(argDate)
+        Case 0
+            Return "Sunday"
+        Case 1
+            Return "Monday"
+        Case 2
+            Return "Tuesday"
+        Case 3
+            Return "Wednesday"
+        Case 4
+            Return "Thursday"
+        Case 5
+            Return "Friday"
+        Case 6
+            Return "Saturday"
+    End Select
+    
+End
+
+Private Function getMonthString(argDate As Date) As String
+    
+    Select Case Month(argDate)
+        Case 1
+            Return "January"
+        Case 2
+            Return "Febrary"
+        Case 3
+            Return "March"
+        Case 4
+            Return "April"
+        Case 5
+            Return "May"
+        Case 6
+            Return "June"
+        Case 7
+            Return "July"
+        Case 8
+            Return "Augast"
+        Case 9
+            Return "September"
+        Case 10
+            Return "October"
+        Case 11
+            Return "Nobember"
+        Case 12
+            Return "December"
+    End Select
+    
+End
+
+Private Function getDayString(argDate As Date) As String
+    
+    Dim yukiDay As Integer = Day(argDate)
+    
+    Select Case yukiDay
+        Case 1, 21, 31
+            Return Subst$("&1st", yukiDay)
+        Case 2, 22
+            Return Subst$("&1nd", yukiDay)
+        Case 3
+            Return Subst$("&1rd", yukiDay)
+        Default
+            Return Subst$("&1th", yukiDay)
+    End Select
+    
+End
+
+Public Function Get(argDate As Date) As String
+    
+    Return Subst$("&1, &2 &3 &4", getWeekdayString(argDate), getMonthString(argDate), getDayString(argDate), Year(argDate))
+    
+End

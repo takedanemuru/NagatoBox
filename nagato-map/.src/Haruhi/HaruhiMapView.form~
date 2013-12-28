@@ -1,0 +1,35 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["picture/blue/compass.png"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(1,1,48,48)
+    { MenuHBox HBox
+      MoveScaled(3,2,43,4)
+    }
+    { HBox1 HBox
+      MoveScaled(2,10,45,37)
+      Expand = True
+      { WeatherWikipediaSidePanel SidePanel
+        MoveScaled(-15,8,14.2857,24)
+        Background = &HAF5FFF&
+        Arrangement = Arrange.Fill
+        Orientation = Align.Left
+        Hidden = True
+      }
+      { MapView MapView
+        MoveScaled(10,7,29,25)
+        Expand = True
+      }
+      { !BookmarkAndSearchSidePanel SidePanel
+        MoveScaled(38,8,28.5714,24)
+        #Public = True
+        Arrangement = Arrange.Fill
+        Orientation = Align.Right
+        Hidden = True
+      }
+    }
+  }
+}

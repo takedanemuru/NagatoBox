@@ -1,0 +1,202 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,75,64)
+  Text = ("Preference")
+  Icon = Picture["icon:/48/options"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(0,0,74,63)
+    { IconPanel1 IconPanel
+      MoveScaled(3,11,68,50)
+      Expand = True
+      Arrangement = Arrange.Vertical
+      Count = 3
+      Index = 0
+      Text = ("User Location")
+      Picture = Picture["super-mono/basic/blue/home.png"]
+      { TextLabel7 TextLabel
+        MoveScaled(0,0,24,4)
+        Font = Font["URW Gothic L,Bold,+1"]
+        Text = ("User Location")
+        Alignment = Align.Left
+      }
+      { HBox2 HBox
+        MoveScaled(0,5,38,5)
+        Padding = 2
+        { Panel3 Panel
+          MoveScaled(0,0,3,4)
+        }
+        { LocationNameLabel Label
+          MoveScaled(20,1,13,4)
+          Expand = True
+          Alignment = Align.Left
+        }
+        { Panel2 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      { HBox1 HBox
+        MoveScaled(0,11,38,5)
+        Padding = 2
+        { Panel4 Panel
+          MoveScaled(0,0,3,4)
+        }
+        { Label3 Label
+          MoveScaled(6,1,13,4)
+          Text = ("Latitude:")
+          Alignment = Align.Left
+        }
+        { LatitudeLabel Label
+          MoveScaled(20,1,13,4)
+          Expand = True
+          Alignment = Align.Right
+        }
+        { Panel1 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      { HBox16 HBox
+        MoveScaled(0,17,38,5)
+        Padding = 2
+        { Panel5 Panel
+          MoveScaled(0,0,3,4)
+        }
+        { Label1 Label
+          MoveScaled(4,0,13,4)
+          Text = ("Longitude:")
+          Alignment = Align.Left
+        }
+        { LongitudeLabel Label
+          MoveScaled(20,1,13,4)
+          Expand = True
+          Alignment = Align.Right
+        }
+        { Panel39 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      { HBox3 HBox
+        MoveScaled(0,23,38,5)
+        Padding = 2
+        { Panel7 Panel
+          MoveScaled(0,0,3,4)
+          Expand = True
+        }
+        { ChangeLoctionButton Button
+          MoveScaled(18,0,16,4)
+          Text = ("Change")
+        }
+        { Panel6 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      Index = 1
+      Text = ("Screenshot")
+      Picture = Picture["super-mono/basic/blue/camera.png"]
+      { TextLabel6 TextLabel
+        MoveScaled(0,0,24,4)
+        Font = Font["URW Gothic L,Bold,+1"]
+        Text = ("Save To...")
+        Alignment = Align.Left
+      }
+      { HBox7 HBox
+        MoveScaled(0,5,38,5)
+        Padding = 2
+        { RadioButton5 RadioButton
+          MoveScaled(0,0,24,4)
+          Text = ("Home Directory")
+        }
+        { Panel13 Panel
+          MoveScaled(19,0,8,5)
+          Expand = True
+        }
+        { Panel16 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      { HBox8 HBox
+        MoveScaled(0,12,38,5)
+        Padding = 2
+        { RadioButton6 RadioButton
+          MoveScaled(0,0,24,4)
+          Text = ("Ask Every Time")
+        }
+        { Panel17 Panel
+          MoveScaled(19,0,8,5)
+          Expand = True
+        }
+        { Panel18 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      { HBox9 HBox
+        MoveScaled(0,18,38,5)
+        Padding = 2
+        { RadioButton7 RadioButton
+          MoveScaled(0,0,8,4)
+          AutoResize = True
+          Text = ("Select")
+        }
+        { Panel21 Panel
+          MoveScaled(8,1,8,5)
+        }
+        { ButtonBox1 ButtonBox
+          MoveScaled(15,1,19,4)
+          Expand = True
+          Text = ("/USER/HOME")
+          Alignment = Align.Left
+          Picture = Picture["icon:/16/directory"]
+        }
+        { Panel19 Panel
+          MoveScaled(35,1,3,4)
+        }
+      }
+      Index = 2
+      Text = ("RSS")
+      Picture = Picture["super-mono/basic/blue/feed.png"]
+      { TextLabel1 TextLabel
+        MoveScaled(1,0,24,4)
+        Font = Font["URW Gothic L,Bold,+1"]
+        Text = ("Subscribe")
+        Alignment = Align.Left
+      }
+      { HBox17 HBox
+        MoveScaled(0,4,38,5)
+        Padding = 2
+        { Panel37 Panel
+          MoveScaled(0,0,4,4)
+        }
+        { RssButtonBox ButtonBox
+          MoveScaled(9,0,24,4)
+          Expand = True
+          Picture = Picture["pictures/rss1.png"]
+        }
+        { Panel41 Panel
+          MoveScaled(34,1,3,4)
+        }
+      }
+      { TextLabel9 TextLabel
+        MoveScaled(1,9,24,4)
+        Font = Font["URW Gothic L,Bold,+1"]
+        Text = ("Subscribed Feeds")
+        Alignment = Align.Left
+      }
+      { HBox18 HBox
+        MoveScaled(2,14,35,33)
+        Padding = 2
+        { Panel40 Panel
+          MoveScaled(1,0,4,27)
+        }
+        { RssGridView GridView
+          MoveScaled(7,1,22,16)
+          Expand = True
+        }
+        { Panel42 Panel
+          MoveScaled(31,1,3,26)
+        }
+      }
+      Index = 0
+    }
+  }
+}

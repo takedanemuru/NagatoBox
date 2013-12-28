@@ -1,0 +1,248 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private $tabStrip As TabStrip
+Private $treeView As TreeView
+Private $listView As ListView
+
+Event OpenDirectory(argPath As String)
+Event Dropped
+
+Private Sub addDummyItem(argParentDirectory As String)
+    
+    Dim yukiPattern As String = IIf(NagatoSettingsFileSelector.ShowHidden, "*", "[^.]*")
+    
+    If Dir(argParentDirectory, yukiPattern, gb.Directory).Count > 0 Then
+        $treeView.Add(argParentDirectory & "dummy", "",, argParentDirectory)
+    Endif
+    
+End
+
+Private Sub addTabStrip()
+    
+    $tabStrip = New TabStrip(Me._$parent)
+    
+    With $tabStrip
+        .Expand = True
+        .Count = 2
+        .Arrangement = Arrange.Fill
+    End With
+    
+End
+
+Private Sub setTabStrip(argIndex As Integer, argText As String, argPicture As Picture)
+    
+    With $tabStrip
+        .Index = argIndex
+        .Text = argText
+        .Picture = argPicture
+    End With
+    
+End
+
+Private Sub addTreeView()
+    
+    setTabStrip(0, ("Directories"), Stock["large/directory"])
+    $treeView = New TreeView($tabStrip) As "TreeView"
+    
+    With $treeView
+        .Expand = True
+        .Background = Color.Background
+        .Drop = True
+    End With
+    
+End
+
+Private Sub addListView()
+    
+    setTabStrip(1, ("Bookmark"), Stock["large/bookmark"])
+    $listView = New ListView($tabStrip) As "ListView"
+    
+    With $listView
+        .Expand = True
+        .Background = Color.Background
+        .Drop = True
+    End With
+    
+End
+
+Private Sub addTreeviewItem(argParentDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiChildPath As String
+    
+    With $treeView
+        For Each yukiPath In Dir(argParentDirectory, "[^.]*", gb.Directory).Sort()
+            yukiChildPath = argParentDirectory &/ yukiPath
+            If .Exist(yukiChildPath) Then Continue
+            .Add(yukiChildPath, yukiPath, NagatoDirectoryIcon.Get(yukiChildPath, 24), argParentDirectory)
+            addDummyItem(yukiChildPath)
+        Next
+    End With
+    
+End
+
+Private Sub initializeTreeView()
+    
+    $treeView.Add(User.Home, ("Home"), Stock["medium/home"])
+    addTreeviewItem(User.Home)
+    $treeView[User.Home].Expanded = True
+    
+End
+
+Private Sub addXdgUserDirs(argPicture As Picture, argKey As String)
+    
+    $listView.Add(argKey, File.BaseName(argKey), argPicture)
+    
+Catch
+    Return
+    
+End
+
+Private Sub addUserDefinedBookmark()
+    
+    Dim yukiPath As String
+    
+    $listView.Add("Spacer2", "")
+    
+    For Each yukiPath In NagatoDBDirectory.GetAllBookmarks()
+        $listView.Add(yukiPath, File.BaseName(yukiPath), NagatoDirectoryIcon.Get(yukiPath, 32))
+    Next
+    
+End
+
+Private Sub refreshListView()
+    
+    $listView.Clear()
+    
+    addXdgUserDirs(Stock["medium/home"], User.Home)
+    addXdgUserDirs(Stock["medium/desktop"], NagatoXdgUserDirs.Desktop)
+    addXdgUserDirs(Stock["medium/file"], NagatoXdgUserDirs.Documents)
+    addXdgUserDirs(Stock["medium/down"], NagatoXdgUserDirs.Download)
+    addXdgUserDirs(Stock["medium/audio"], NagatoXdgUserDirs.Music)
+    addXdgUserDirs(Stock["medium/image"], NagatoXdgUserDirs.Pictures)
+    addXdgUserDirs(Stock["medium/people"], NagatoXdgUserDirs.PublicShare)
+    addXdgUserDirs(Stock["medium/new"], NagatoXdgUserDirs.Templetes)
+    addXdgUserDirs(Stock["medium/video"], NagatoXdgUserDirs.Videos)
+        $listView.Add("Spacer1", "")
+    $listView.Add("TrashBin", ("Trash"), Stock["medium/trash"])
+    
+    If NagatoDBDirectory.GetAllBookmarks().Count <> 0 Then
+        addUserDefinedBookmark()
+    Endif
+    
+    $listView.Refresh()
+    
+End
+
+Public Sub _Initialize(argPath As String) 'override.
+    
+    addTabStrip()
+    addTreeView()
+    addListView()
+    initializeTreeView()
+    refreshListView()
+    $tabStrip.Index = 0
+    
+End
+
+Public Sub Refresh()
+    
+    refreshListView()
+    
+End
+
+Public Sub TreeView_DragMove()
+    
+    Debug Drag.X
+    Debug Drag.Y
+    
+    If Not $treeView.FindAt(Drag.X, Drag.Y) Then
+        $treeView.Item.Selected = True
+    Endif
+    
+End
+
+Public Sub TreeView_Drop()
+    
+    If Not $treeView.FindAt(Drag.X, Drag.Y) Then
+        NagatoFileManuever.MoveFiles(NagatoDrag2.GetPaths(Drag.Data), $treeView.Item.Key)
+        refreshListView()
+        Raise Dropped
+    Endif
+    
+End
+
+Public Sub TreeView_Activate()
+    
+    Raise OpenDirectory($treeView.Key)
+    
+End
+
+Public Sub TreeView_Expand()
+    
+    Debug $treeView.Key
+    
+    If $treeView.Exist($treeView.Key & "dummy") Then
+        $treeView.Remove($treeView.Key & "dummy")
+        addTreeviewItem($treeView.Key)
+    End If
+    
+End
+
+Public Sub ListView_Activate()
+    
+    Select Case $listView.Key
+        Case "Spacer1", "Spacer2"
+            Return
+        Case "TrashBin"
+            NagatoTabHandler.NewTab(MikuruFunctionType.TrashBin)
+        Default
+            If Not Exist($listView.Key) Then Return
+            Raise OpenDirectory($listView.Key)
+    End Select
+    
+End
+
+Public Sub ListView_DragMove()
+    
+    If Not $listView.FindAt(Drag.X, Drag.Y) Then
+        $listView[$listView.Item.Key].Selected = True
+    Else
+        $listView.UnselectAll()
+    Endif
+    
+End
+
+Public Sub ListView_Drop()
+    
+    If Not $listView.FindAt(Drag.X, Drag.Y) Then
+        Select Case $listView.Item.Key
+            Case "Spacer1", "Spacer2"
+                Return
+            Case "TrashBin"
+                NagatoTrashHandler.Put(NagatoDrag2.GetPaths(Drag.Data))
+            Default
+                NagatoFileManuever.MoveFiles(NagatoDrag2.GetPaths(Drag.Data), $listView.Item.Key)
+        End Select
+    Endif
+    
+    Raise Dropped
+    
+End
+
+Public Sub ListView_Menu()
+    
+    Dim yukiMenu As New NagatoFileSelectorListviewContextMenu(HaruhiMain) As "ListViewContextMenu"
+    
+    yukiMenu.PopUp()
+    
+End
+
+Public Sub ListViewContextMenu_Delete()
+    
+    NagatoDBDirectory.DeleteBookmark($listView.Key)
+    refreshListView()
+    
+End

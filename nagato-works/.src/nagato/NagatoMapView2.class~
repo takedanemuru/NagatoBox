@@ -1,0 +1,77 @@
+' Gambas class file
+
+Inherits NagatoTabContainerTriplePane
+
+Private $mapView As NagatoMapViewMapView
+Private $toolBar As NagatoMapViewToolBar
+Private $cantidatesPane As NagatoMapViewCantidatesPane
+Private $infomationPane As NagatoMapViewInfomationPane
+Private $zoom As Integer = 2
+Private $observer As Observer
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    Me._Initialize(argTabStrip)
+    $toolBar = New NagatoMapViewToolBar(Me._$hBox) As "Toolbar"
+    $mapView = New NagatoMapViewMapView(Me._$centerPane) As "MapView"
+    $cantidatesPane = New NagatoMapViewCantidatesPane(Me._$leftPane) As "CantidatesPane"
+    $infomationPane = New NagatoMapViewInfomationPane(Me._$rightPane)
+    Me._RefreshParentTab(("map viewer"), Picture["pictures/osm_logo.png"])
+    NagatoMessaging.setMessage(("...map mode."))
+    $observer = New Observer(NagatoGeoInfomationWikipedia) As "Kimidori"
+    
+End
+
+Public Sub Toolbar_ChangeMap(argMapType As Integer)
+    
+    $mapView.ChangeVisibleLayer(argMapType)
+    
+End
+
+Public Sub Toolbar_SliderChanged(argValue As Integer)
+    
+    $mapView.SetZoom(argValue)
+    
+End
+
+Public Sub ToolBar_SearchQuery(argQuery As String)
+    
+    Dim yukiObserver As New Observer(NagatoOpenStreetMapApi) As "Asakura"
+    
+    NagatoOpenStreetMapApi.Get(argQuery)
+    
+End
+
+Public Sub Asakura_Finished(argXmlDocument As XmlDocument)
+    
+    Dim yukiGeoElements As Collection = NagatoOpenStreetMapApi.GetElements(argXmlDocument)
+    
+    Me._$leftPane.Hidden = False
+    $cantidatesPane.Refresh(yukiGeoElements)
+    
+End
+
+Public Sub MapView_ChangeZoom(argZoom As Integer)
+    
+    $toolBar.AdjustZoom(argZoom)
+    
+End
+
+Public Sub Toolbar_ChangeZoom(argZoom As Integer)
+    
+    $mapView.AdjustZoom(argZoom)
+    
+End
+
+Public Sub CantidatesPane_Selected(argGeoElement As NagatoGeoElement)
+    
+    $mapView.SetLocation(argGeoElement.Latitude, argGeoElement.Longitude, 12)
+    $toolBar.AdjustZoom($mapView.Zoom)
+    
+End
+
+Public Sub Kimidori_WikipediaReady(argElements As NagatoGeoInfomationElement[])
+    
+    $infomationPane.SetData(argElements)
+    
+End

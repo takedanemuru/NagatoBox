@@ -1,0 +1,31 @@
+' Gambas module file
+
+Public Function Get(argPercentage As Integer, argSize As Integer) As Picture
+        
+        Dim yukiPath As String
+        
+        Select Case argPercentage
+                Case 0
+                        yukiPath = "picture/battery_009.png"
+                Case 1 To 15 'step 1
+                        yukiPath = "picture/battery_001.png"
+                Case 16 To 30 'step 2
+                        yukiPath = "picture/battery_002.png"
+                Case 31 To 45 'step 3
+                        yukiPath = "picture/battery_003.png"
+                Case 46 To 60 'step 4
+                        yukiPath = "picture/battery_004.png"
+                Case 61 To 75 'step 5
+                        yukiPath = "picture/battery_005.png"
+                Case 76 To 90 'step 6
+                        yukiPath = "picture/battery_006.png"
+                Case 91 To 99 ' step7
+                        yukiPath = "picture/battery_007.png"
+                Case 100
+                        yukiPath = "picture/battery_010.png"
+        End Select
+        
+        Return Image.Load(yukiPath).Stretch(argSize, argSize).Picture
+        
+End
+

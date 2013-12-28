@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property DefaultAccessPoint As String
+
+Private Function DefaultAccessPoint_Read() As String
+
+    Return Me._$settings["network/default_access_point", "00:1D:73:E4:87:36"]
+
+End
+
+Private Sub DefaultAccessPoint_Write(Value As String)
+
+    Me._$settings["network/default_access_point"] = Value
+    Me._$settings.Save()
+
+End

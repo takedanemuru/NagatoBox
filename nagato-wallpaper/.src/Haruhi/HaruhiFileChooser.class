@@ -1,0 +1,10 @@
+' Gambas class file
+
+Public Sub Form_Open()
+    
+    ImageFileChooser.Filter = ["*.png;*.jpg;*.jpeg;*.png", "Image files", "*", "Any files"]
+    ImageFileChooser.ShowPreview = True
+    ImageFileChooser.FileView.IconSize = 64
+    
+End
+

@@ -1,0 +1,90 @@
+' Gambas class file
+
+Inherits NagatoTabContent
+
+Private $toolBar As NagatoMediaPlayerToolBar
+Private $player As NagatoMediaPlayerDrawingArea
+Private $observer As Observer 'observes parent tabstrip to stop $mediaPlayer when its parent is invalid.
+
+Public Sub _new(argTabStrip As TabStrip, Optional argPath As String = "")
+    
+    Me._Initialize(argTabStrip)
+    $observer = New Observer(Me._$parent) As "Observer"
+    $toolBar = New NagatoMediaPlayerToolBar(Me._$hBox) As "ToolBar"
+    $player = New NagatoMediaPlayerDrawingArea(Me._$vBox, argPath) As "Player"
+    Me._RefreshParentTab($player.Title, Stock["medium/video"])
+    
+End
+
+Public Sub Player_Tick()
+    
+    $toolBar.SetProgress($player.Position, $player.Duration)
+    
+End
+
+Public Sub Player_NewTitle()
+    
+    Me._RefreshParentTabTitle($player.Title)
+    
+End
+
+Public Sub Player_Click()
+    
+    $toolBar.ResetSize()
+    
+End
+
+Public Sub ToolBar_NewFile(argPath As String)
+    
+    $player.PlayWithFile(argPath)
+    
+End
+
+Public Sub ToolBar_Play()
+    
+    $player.Play()
+    
+End
+
+Public Sub ToolBar_Pause()
+    
+    $player.Pause()
+    
+End
+
+Public Sub ToolBar_Stop()
+    
+    $player.Stop()
+    
+End
+
+Public Sub ToolBar_NewPosition(argPosition As Float)
+    
+    $player.Position = $player.Duration * argPosition
+    
+End
+
+Public Sub ToolBar_VolumeSliderShown()
+    
+    '$toolBar.SetVolume(100 * $player.AudioVolume)
+    
+End
+
+Public Sub ToolBar_NewVolume(argVolume As Float)
+    
+    '$player.AudioVolume = argVolume
+    
+End
+
+Public Sub Observer_Click()
+    
+    $player.Reactive()
+    
+End
+
+Public Sub Observer_Close(argIndex As Integer)
+    
+    Debug argIndex ' To avoid IDE's error message "unused argument".
+    $player.Kill()
+    
+End

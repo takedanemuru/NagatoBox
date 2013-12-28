@@ -1,0 +1,87 @@
+' Gambas module file
+
+Private Const DatabaseDir As String = "nagato"
+Private Const DatabaseName As String = "nagato_db.sqlite3"
+
+Private $connection As Connection
+
+Event Done
+
+Private Sub createConnection()
+        
+        $connection = New Connection
+        
+        With $connection
+                .Type = "sqlite3"
+                .Host = User.Home &/ DatabaseDir
+                .Name = ""
+                .Login = ""
+                .Password = ""
+                .Port = ""
+        End With
+        
+End
+
+Private Sub createDatabase()
+        
+        $connection.Open()
+        
+        If Not $connection.Databases.Exist(DatabaseName) Then
+                $connection.Databases.Add(DatabaseName)
+                Wait 1.0
+        Endif
+        
+        $connection.Close()
+        
+End
+
+Private Sub createTable()
+        
+        Dim yukiTable As Table
+        
+        With $connection
+                .Host = User.Home &/ DatabaseDir
+                .Name = DatabaseName
+        End With
+        
+        $connection.Open()
+        
+        If Not $connection.Tables.Exist("config") Then
+                yukiTable = $connection.Tables.Add("config")
+                yukiTable.Fields.Add("id", db.Serial)
+                yukiTable.Fields.Add("key", db.String)
+                yukiTable.Fields.Add("value", db.String)
+                yukiTable.PrimaryKey = ["id"]
+                yukiTable.Update()
+        Endif
+        
+        $connection.Close()
+        
+End
+
+Private Sub checkTable()
+        
+        Raise Done
+        
+End
+
+Public Sub Connect()
+        
+        createConnection()
+        createDatabase()
+        createTable()
+        checkTable()
+        
+End
+
+Public Sub InsertData(argPathArray As String[])
+        
+        
+        
+End
+
+Public Sub CloseConnection()
+        
+        $connection.Close()
+        
+End

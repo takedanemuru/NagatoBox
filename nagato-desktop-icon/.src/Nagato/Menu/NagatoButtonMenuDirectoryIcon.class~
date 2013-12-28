@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Public Sub _InitializeAdditionalMenus() 'override
+    
+    Me._AddMenu(("Open"), NagatoMenuPipe.DirectoryOpen, MikuruIcon.Get("folder"))
+    Me._AddMenu(("Rename"), NagatoMenuPipe.DirectoryRename)
+    Me._AddSpacer()
+    
+End

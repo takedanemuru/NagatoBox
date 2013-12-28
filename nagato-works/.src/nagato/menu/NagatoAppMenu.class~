@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _initializeChildMenus()
+    
+    NagatoMainMenuSuite.Add(Me._$parent)
+    
+End
+

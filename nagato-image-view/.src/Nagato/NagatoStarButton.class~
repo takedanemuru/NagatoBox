@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private $menu As NagatoStarMenu
+
+Public Sub _Initialize() 'override
+    
+    $menu = New NagatoStarMenu(Me._$button) As "Menu"
+    
+End

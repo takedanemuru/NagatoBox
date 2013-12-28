@@ -1,0 +1,92 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addTextMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TextMenu"
+    
+    With yukiMenu
+        .Text = ("Text")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.MimeFilterText
+    End With
+    
+End
+
+Private Sub addMusicMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MusicMenu"
+    
+    With yukiMenu
+        .Text = ("Music")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.MimeFilterMusic
+    End With
+    
+End
+
+Private Sub addVideoMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "VideoMenu"
+    
+    With yukiMenu
+        .Text = ("Video")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.MimeFilterVideo
+    End With
+    
+End
+
+Private Sub addImageMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ImageMenu"
+    
+    With yukiMenu
+        .Text = ("Text")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.MimeFilterImage
+    End With
+    
+End
+
+Public Sub _RefreshMenu()
+    
+    addTextMenu()
+    addMusicMenu()
+    addVideoMenu()
+    addImageMenu()
+    
+End
+
+Public Sub TextMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .MimeFilterText = Not .MimeFilterText
+    End With
+    
+End
+
+Public Sub MusicMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .MimeFilterMusic = Not .MimeFilterMusic
+    End With
+    
+End
+
+Public Sub VideoMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .MimeFilterVideo = Not .MimeFilterVideo
+    End With
+    
+End
+
+Public Sub ImageMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .MimeFilterImage = Not .MimeFilterImage
+    End With
+    
+End

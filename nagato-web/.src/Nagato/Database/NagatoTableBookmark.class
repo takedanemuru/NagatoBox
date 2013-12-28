@@ -1,0 +1,57 @@
+' Gambas class file
+
+Inherits NagatoTable
+
+Public Sub _EnsureTable() ' override
+    
+    Dim yukiTable As Table
+    
+    With NagatoDBWeb
+        If Not Me._$connection.Tables.Exist(.TableBookmark) Then
+            yukiTable = Me._$connection.Tables.Add(.TableBookmark)
+            yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnUrl, db.String)
+            yukiTable.Fields.Add(.ColumnPageName, db.String)
+            yukiTable.Fields.Add(.ColumnUserDefinedPageName, db.String)
+            yukiTable.Fields.Add(.ColumnCategoryId, db.Integer)
+            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Update()
+        Endif
+    End With
+
+End
+
+Public Function GetBookmarkResultFoundByCategoryName(argCategoryId As Integer) As Result
+    
+    Dim yukiQuery As String = "select * from &1 where category_id = &2 order by &3 asc"
+    
+    With NagatoDBWeb
+        yukiQuery = Subst$(yukiQuery, .TableBookmark, argCategoryId, .ColumnPageName)
+    End With
+    
+    Return Me._$connection.Exec(yukiQuery)
+    
+End
+
+Public Function HasBookmarkInCategory(argCategoryId As Integer) As Boolean
+    
+    With NagatoDBWeb
+        If Me._$connection.Find(.TableBookmark, "category_id = &1", argCategoryId).Count <> 0 Then Return True
+    End With
+    
+Finally
+    Return False
+    
+End
+
+Public Function HasBookmark(argUrl As String, argCategoryId As Integer) As Boolean
+    
+    With NagatoDBWeb
+        If Me._$connection.Find(.TableBookmark, "url = &1 and category_id = &2", argUrl, argCategoryId).Count = 0 Then
+            Return False
+        Else
+            Return True
+        Endif
+    End With
+    
+End

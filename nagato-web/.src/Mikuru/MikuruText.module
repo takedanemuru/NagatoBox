@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Function GetCollapsedText(argText As String, argLength As Integer) As String
+    
+    Dim yukiText As String
+    Dim yukiCount As Integer
+    
+    If argText = "" Then Return ""
+    If argLength >= HaruhiMain.Font.RichTextWidth(argText) Then Return argText
+    
+    Do
+        Inc yukiCount
+        If String.Len(argText) = yukiCount Then Return ""
+        yukiText = String.Left$(argText, -1 * yukiCount)
+        If yukiText = "" Then Return ""
+        If argLength >= HaruhiMain.Font.RichTextWidth(yukiText & "...") Then
+            Return (yukiText & "...")
+        End If
+    Loop
+    
+End

@@ -1,0 +1,35 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.1
+Title=nagato-web
+Startup=Kyon
+Icon=pictures/icons/web.png
+Version=0.9.2
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.db
+Component=gb.dbus
+Component=gb.desktop
+Component=gb.settings
+Component=gb.pcre
+Component=gb.qt4.ext
+Component=gb.qt4.webkit
+Description="web browser"
+Authors="takeda.nemuru@gmail.com"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=S.O.S License
+PackageName=nagato-web-0.9.2
+CreateEachDirectory=1
+MimeTypes="text/html"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Network/Web Browsing"
+Categories=ubuntu:"Nagato;Network"
+Groups=ubuntu:"net"

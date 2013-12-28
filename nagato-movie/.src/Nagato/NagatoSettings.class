@@ -1,0 +1,38 @@
+' Gambas class file
+
+Create Static
+
+Property LastDirectory As String
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    argForm.X = $settings["form/x", argForm.X]
+    argForm.Y = $settings["form/y", argForm.Y]
+    argForm.Height = $settings["form/height", argForm.Height]
+    argForm.Width = $settings["form/width", argForm.Width]
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    $settings["form/x"] = argForm.X
+    $settings["form/y"] = argForm.Y
+    $settings["form/height"] = argForm.Height
+    $settings["form/width"] = argForm.Width
+    
+End
+
+Private Function LastDirectory_Read() As String
+
+    Return $settings["directory/last", User.Home]
+
+End
+
+Private Sub LastDirectory_Write(Value As String)
+
+    $settings["directory/last"] = Value
+    $settings.Save()
+
+End

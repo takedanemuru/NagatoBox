@@ -1,0 +1,98 @@
+' Gambas class file
+
+Private $starButton As MenuButton
+Private $mainPainterContainer As NagatoInfoContainer
+Private $clockPainter As NagatoInfoPainterClock
+Private $workspacePainter As NagatoInfoPainterWorkspace
+
+Private Sub setStarMenu()
+    
+    Dim yukiRootMenu As New Menu(Me, True)
+    Dim yukiStarMenu As NagatoInfoBarSuperMenu
+    
+    yukiRootMenu.Name = "InfoBarRootMenu" ' This name is unique/global 
+    $starButton.Menu = yukiRootMenu.Name
+    $starButton.Visible = True
+    
+    yukiStarMenu = New NagatoInfoBarSuperMenu(yukiRootMenu) As "StarMenu"
+    
+End
+
+Private Sub addStarButton()
+    
+    $starButton = New MenuButton(MainHBox) As "StartButton"
+    
+    With $starButton
+        .Picture = MikuruMonoIconBlue.Get("star")
+        .Border = False
+        .Width = 4 * MikuruUX.Grid
+        .Arrow = False
+        .Text = ""
+        .Expand = False
+    End With
+
+    setStarMenu()
+    
+End
+
+Private Sub setFormSizeAndPosition()
+    
+    Me.Y = Screen.Height - Me.Height
+    Me.Width = Screen.Width
+    Me.Height = 3 * MikuruUX.Grid
+    Me.Background = NagatoSettingsInfobar.LabelColor
+    Me.Center()
+    
+End
+
+Public Sub Refresh()
+    
+    $clockPainter.Refresh()
+    $workspacePainter.Refresh()
+    $mainPainterContainer.Refresh()
+    
+End
+
+Public Sub Form_Open()
+    
+    setFormSizeAndPosition()
+    addStarButton()
+    $mainPainterContainer = New NagatoInfoContainer(MainHBox)
+    $workspacePainter = New NagatoInfoPainterWorkspace(MainHBox)
+    $clockPainter = New NagatoInfoPainterClock(MainHBox)
+    
+End
+
+Public Sub StarMenu_Switch(argMode As Integer)
+    
+    $mainPainterContainer.Switch(argMode)
+    
+End
+
+Public Sub Form_Move()
+    
+    Me.Y = Screen.Height - Me.Height
+    
+End
+
+Public Sub MainHBox_Enter()
+
+    Dim yukiPositionX As Integer = Mouse.ScreenX - (Kyon.Width / 3)
+
+    If 0 > yukiPositionX Then 
+        yukiPositionX = Mouse.ScreenX
+    Else If yukiPositionX > (Screen.Width - Kyon.Width) Then
+        yukiPositionX = Screen.Width - Kyon.Width
+    End If
+
+    Kyon.CallNagato(yukiPositionX)
+
+    '$starButton.Visible = True
+
+End
+
+Public Sub MainHBox_Leave()
+    
+    '$starButton.Visible = False
+    
+End

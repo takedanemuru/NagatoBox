@@ -1,0 +1,140 @@
+' Gambas class file
+
+Create Static
+
+Private Const RefreshRate As Integer = 2000 ' milli second
+
+Private $timer As New Timer As "Timer"
+Private $drawingAreaObserver As Observer
+Private $messageObserver As Observer
+
+Private Sub initializeTimer()
+    
+    With $timer
+        .Delay = RefreshRate
+        .Enabled = True
+    End With
+    
+End
+
+Private Sub drawPersona()
+    
+    Dim yukiImage As Image = Image.Load("pictures/1298703875_4579_FT6778_anicdb_banner_-_nagato_yuki.png")
+    
+    Paint.DrawImage(yukiImage, 0, -64)
+    
+End
+
+Private Sub drawBack()
+    
+    Paint.DrawImage(Image.Load("pictures/nagato_back.jpg"), 0, 0)
+    
+End
+
+Private Sub drawCheek()
+    
+    Paint.DrawImage(Image.Load("pictures/nagato_cheek.jpg"), 0, 0)
+    
+End
+
+Private Sub drawEyebrow()
+    
+    Dim yukiPath As String
+    
+    yukiPath = Choose(Int(Rnd(1, 3)), "pictures/nagato_eyebrow_down.jpg", "pictures/nagato_eyebrow_up.jpg")
+    Paint.DrawImage(Image.Load(yukiPath), 0, 0)
+    
+End
+
+Private Sub drawEye()
+    
+    Dim yukiPath As String
+    
+    yukiPath = Choose(Int(Rnd(1, 4)), "pictures/nagato_eye_down.jpg", "pictures/nagato_eye_half.jpg", "pictures/nagato_eye_up.jpg")
+    Paint.DrawImage(Image.Load(yukiPath), 0, 0)
+
+End
+
+Private Sub drawGlasses()
+    
+    If NagatoSettingsCore.IsMegane() Then Paint.DrawImage(Image.Load("pictures/nagato_glasses.jpg"), 0, 0)
+    
+End
+
+Private Sub drawMouse()
+    
+    Dim yukiPath As String
+    
+    yukiPath = Choose(Int(Rnd(1, 3)), "pictures/nagato_mouth_close.jpg", "pictures/nagato_mouth_open.jpg")
+    Paint.DrawImage(Image.Load(yukiPath), 0, 0)
+    
+End
+
+Private Sub drawHand()
+    
+    Dim yukiPath As String
+    
+    yukiPath = Choose(Int(Rnd(1, 4)), "pictures/nagato_hand_close.jpg", "pictures/nagato_hand_down.jpg", "pictures/nagato_hand_up.jpg")
+    Paint.DrawImage(Image.Load(yukiPath), 0, 0)
+    
+End
+
+Private Sub drawMessage()
+    
+    Dim yukiMessage As String
+    
+    If DateDiff(NagatoMessaging.TimeStamp, Now, gb.Second) > 10 Then
+        yukiMessage = ""
+    Else 
+        yukiMessage = "YUKI.N > " & NagatoMessaging.LatestMessage
+    Endif
+    
+    With Paint
+        .Brush = .Color(Color.Orange)
+        .Font.Size = 14
+        .DrawText(yukiMessage, 126, 0, Kyon.Width - 126, 126, Align.Left)
+    End With
+    
+End
+
+Public Sub Activate()
+    
+    $drawingAreaObserver = New Observer(Kyon.MessagingArea) As "Asakura"
+    $messageObserver = New Observer(NagatoMessaging) As "Kimidori"
+    initializeTimer()
+    
+End
+
+Public Sub KillTimer()
+    
+    $timer.Stop()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Kyon.MessagingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin(Kyon.MessagingArea)
+        drawPersona()
+        drawBack()
+        drawCheek()
+        drawEyebrow()
+        drawEye()
+        drawGlasses()
+        drawMouse()
+        drawHand()
+        drawMessage()
+    Paint.End()
+    
+End
+
+Public Sub Kimidori_NewMessage()
+    
+    Kyon.MessagingArea.Refresh()
+    
+End

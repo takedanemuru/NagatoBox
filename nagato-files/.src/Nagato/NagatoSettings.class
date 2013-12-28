@@ -1,0 +1,37 @@
+' Gambas class file
+
+Create Static
+
+Property ShowHidden As Boolean
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    argForm.X = $settings["form/x", argForm.X]
+    argForm.Y = $settings["form/y", argForm.Y]
+    argForm.Height = $settings["form/height", argForm.Height]
+    argForm.Width = $settings["form/width", argForm.Width]
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    $settings["form/x"] = argForm.X
+    $settings["form/y"] = argForm.Y
+    $settings["form/height"] = argForm.Height
+    $settings["form/width"] = argForm.Width
+    
+End
+
+Private Function ShowHidden_Read() As Boolean
+
+    Return $settings["view/hidden", False]
+
+End
+
+Private Sub ShowHidden_Write(Value As Boolean)
+
+    $settings["view/hidden"] = Value
+
+End

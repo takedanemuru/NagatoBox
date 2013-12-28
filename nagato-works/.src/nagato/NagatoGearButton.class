@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoSuperMenuButton
+
+Public Sub initializeWidget()
+    
+    Me.$button = New MenuButton(Me._$parent) As "MenuButton" 
+    
+    With Me.$button
+        .Arrow = False
+        .Border = False
+        .Width = Me.$size
+        .Picture = Stock["medium/options"]
+        .Tooltip = ("Menu")
+    End With
+    
+End

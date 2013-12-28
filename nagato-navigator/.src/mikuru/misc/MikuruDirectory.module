@@ -1,0 +1,27 @@
+' Gambas module file
+
+Property Read Memo As String
+
+Public Sub Activate(Optional argDirName As String)
+    
+    Dim yukiPath As String = User.Home &/ "." & Application.Name
+    
+    If Not Exist(yukiPath) Then Mkdir yukiPath
+    
+    If argDirName Then
+        If Not Exist(yukiPath &/ argDirName) Then Mkdir (yukiPath &/ argDirName)
+    Endif
+    
+End
+
+Public Sub GetSubDirectory(argDirName As String) As String
+    
+    Return User.Home &/ "." & Application.Name &/ argDirName
+    
+End
+
+Private Function Memo_Read() As String
+
+    Return GetSubDirectory("memo")
+
+End

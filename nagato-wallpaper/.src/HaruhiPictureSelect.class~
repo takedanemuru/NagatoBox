@@ -1,0 +1,8 @@
+' Gambas class file
+
+Public Sub FileChooser1_Change()
+    
+    FileChooser1.Filter = ["*.jpg", "*.png"]
+    
+End
+

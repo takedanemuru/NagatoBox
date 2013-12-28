@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property ThumbnailSize As Integer
+Property ShowHidden As Boolean
+
+Public Enum Stupid, Huge, Large, Medium, Small
+
+Private Function ThumbnailSize_Read() As Integer
+
+    Return Me._$settings["file-selector/thumbnail-size", Large]
+
+End
+
+Private Sub ThumbnailSize_Write(Value As Integer)
+
+    Me._$settings["file-selector/thumbnail-size"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function ShowHidden_Read() As Boolean
+
+    Return Me._$settings["file-selector/show-hidden", False]
+
+End
+
+Private Sub ShowHidden_Write(Value As Boolean)
+
+    Me._$settings["file-selector/show-hidden"] = Value
+    Me._$settings.Save()
+
+End

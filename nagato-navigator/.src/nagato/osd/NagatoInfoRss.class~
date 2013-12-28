@@ -1,0 +1,127 @@
+' Gambas class file
+
+Inherits NagatoInfo
+
+Private $feed As NagatoRssFeed
+Private $feedIndex As Integer = 0
+Private $itemIndex As Integer = 1
+Private $counter As Integer
+
+Private Sub showInBrowser()
+    
+    HaruhiMiniBrowser.SetUrlAndShowCenter($feed.GetLink($itemIndex))
+    
+Catch
+    Return
+    
+End
+
+Private Sub setPreviousFeed()
+    
+    Dec $itemIndex
+    
+    If 1 > $itemIndex Then
+        Dec $feedIndex
+        If 0 > $feedIndex Then $feedIndex = NagatoRss.Max
+        $feed = NagatoRss.GetFeed($feedIndex)
+        $itemIndex = $feed.Max
+    End If
+    
+End
+
+Private Sub setNextFeed()
+    
+    Inc $feedIndex
+    If $feedIndex > NagatoRss.Max Then $feedIndex = 0
+    
+    $feed = NagatoRss.GetFeed($feedIndex)
+    
+End
+
+Private Sub setNewItem()
+    
+    Inc $itemIndex
+    
+    If $itemIndex > $feed.Max Then
+        $itemIndex = 1
+        setNextFeed()
+    Endif
+    
+End
+
+Private Function getText() As String
+    
+    If NagatoRss.Ready Then
+        If Not Object.IsValid($feed) Then $feed = NagatoRss.GetFeed($feedIndex)
+        Return $feed.GetTitle($itemIndex)
+    Else
+        $feedIndex = 0
+        $itemIndex = 1
+        Return "now loading..."
+    Endif
+    
+End
+
+Private Sub setCounter()
+    
+    If $counter = 5 Then
+        $counter = 0
+        setNewItem()
+    Else
+        Inc $counter
+    Endif
+    
+End
+
+Public Sub DrawInfo(argOffsetLeft As Integer)
+    
+    Me._DrawMainLineText(getText(), argOffsetLeft)
+    setCounter()
+    
+End
+
+Public Sub MouseDown(argMouseX As Integer) ' override.
+    
+    Debug argMouseX ' to avoid  "unused argument message"
+    
+    showInBrowser()
+    
+End
+
+Public Sub _SetType()
+    
+    Me._$type = NagatoInfo.Rss
+    
+End
+
+Public Sub PopUpMenu(argMouseX As Integer) 'override
+    
+    Dim yukiContextMenu As New NagatoInfoRssContextMenu As "ContextMenu"
+    
+    yukiContextMenu.PopUp()
+    
+End
+
+Public Sub ContextMenu_Previous()
+    
+    setPreviousFeed()
+    
+End
+
+Public Sub ContextMenu_Next()
+    
+    setNextFeed()
+    
+End
+
+Public Sub ContextMenu_Browser()
+    
+    showInBrowser()
+    
+End
+
+Public Sub ContextMenu_NewFeed(argIndex As Integer)
+    
+    $feed = NagatoRss.GetFeed(argIndex)
+    
+End

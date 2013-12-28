@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoPropertyWidgetInteger
+
+Public _$sliderStep As Integer = 1
+
+Private $floatValue As Float
+
+Public Sub _AddValueWidget(argLabelTitle As String, argHeader As String) ' override 
+    
+    $floatValue = NagatoConfigFile.Properties[argHeader]
+    
+    Me._AddSpacer(32)
+    Me._AddLabel(argLabelTitle)
+    Me._AddValueLabel(Int($floatValue * 100))
+    Me._AddSpacer(16)
+    Me._AddSlider(Int($floatValue * 100))
+    
+End

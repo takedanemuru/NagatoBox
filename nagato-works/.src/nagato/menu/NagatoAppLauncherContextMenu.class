@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Private $currentPath As String
+
+Event Launch(argPath As String)
+Event AddToFavorite(argPath As String)
+
+Private Sub addLaunchMenu()
+    
+    Dim yukiMenu As Menu
+    
+    yukiMenu = New Menu(Me._$parent) As "LaunchMenu"
+    
+    With yukiMenu
+        .Text = ("Launch")
+    End With
+    
+End
+
+Private Sub addAddToFavoriteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "AddToFavoriteMenu"
+    
+    With yukiMenu
+        .Text = ("Add To Favorite")
+    End With
+    
+End
+
+Public Sub _InitializeChildMenus()
+    
+    addLaunchMenu()
+    addAddToFavoriteMenu()
+    
+End
+
+Public Sub LaunchMenu_Click()
+    
+    Raise Launch($currentPath)
+    
+End
+
+Public Sub AddToFavoriteMenu_Click()
+    
+    Raise AddToFavorite($currentPath)
+    
+End

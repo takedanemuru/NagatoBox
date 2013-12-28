@@ -1,0 +1,64 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Private $parentMenu As Menu
+
+Private Sub addPositionMenu(argAlign As Integer, argMenuText As String)
+    
+    Dim yukiMenu As New Menu($parentMenu) As "Menu"
+    
+    With yukiMenu
+        .Toggle = True
+        If Kyon.MainTabStrip.Orientation = argAlign Then .Checked = True
+        .Text = argMenuText
+        .Tag = argAlign
+    End With
+    
+End
+
+Private Sub addDummyMenu()
+    
+    Dim yukiMenu As Menu
+    
+    yukiMenu = New Menu($parentMenu)
+    yukiMenu.Text = ""
+    
+End
+
+Private Sub addParentMenu()
+    
+    $parentMenu = New Menu(Me._$rootMenu) As "Asakura"
+    
+    $parentMenu.Text = ("TabPositon")
+    addDummyMenu()
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addParentMenu()
+    
+End
+
+Public Sub Asakura_Show()
+    
+    $parentMenu.Children.Clear()
+    
+    addPositionMenu(Align.Top, ("Top"))
+    addPositionMenu(Align.Bottom, ("Bottom"))
+    addPositionMenu(Align.Left, ("Left"))
+    addPositionMenu(Align.Right, ("Right"))
+    
+End
+
+Public Sub Menu_Click()
+    
+    If Kyon.MainTabStrip.Orientation <> Last.Tag Then
+        Kyon.MainTabStrip.Orientation = Last.Tag
+        NagatoSettingsCore.TabPosition = Last.Tag
+    Endif
+    
+End
+

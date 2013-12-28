@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoGearMenu
+
+Public _$menuName As String = "GlobalAutosartMenu"
+
+Event Show
+Event Block
+
+Private Sub addShowMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ShowMenu"
+    
+    With yukiMenu
+        .Text = ("Show detail")
+        .Picture = Stock["medium/find"]
+    End With
+    
+End
+
+Private Sub addMakeBlockMenuMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "BlockMenu"
+    
+    With yukiMenu
+        .Text = ("Make block entry")
+        .Picture = Stock["medium/warning"]
+    End With
+    
+End
+
+Public Sub _AddAdditionalMenu() 'override
+    
+    addShowMenu()
+    addMakeBlockMenuMenu()
+    
+End
+
+Public Sub ShowMenu_Click()
+    
+    Raise Show
+    
+End
+
+Public Sub BlockMenu_Click()
+    
+    Raise Block
+    
+End

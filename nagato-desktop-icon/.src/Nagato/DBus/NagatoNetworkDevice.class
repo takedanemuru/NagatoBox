@@ -1,0 +1,19 @@
+' Gambas class file
+
+Public _$application As String = "system://org.freedesktop.NetworkManager"
+Public _$objectPath As String
+Public _$interface As String
+Public _$proxy As DBusProxy
+
+Public Sub _InitializeProxy()
+    
+    
+    
+End
+
+Public Sub _new(argObjectPath As String)
+    
+    Me._$objectPath = argObjectPath
+    Me._InitializeProxy()
+    
+End

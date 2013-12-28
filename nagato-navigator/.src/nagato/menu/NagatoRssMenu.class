@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Const ITEM_MAX As Integer = 30
+
+Private Sub addRefreshMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RefreshMenu"
+    
+    With yukiMenu
+        .Text = ("Refresh")
+        .Picture = Picture["super-mono/basic/blue/button-rotate-cw.png"]
+    End With
+    
+End
+
+Private Function isWorthToShow(argTitle As String) As Boolean
+    
+    If argTitle Begins "PR:" Then
+        Return False
+    Else If argTitle = "" Then
+        Return False
+    Else
+        Return True
+    End If
+    
+End
+
+Private Sub addRssMenu(argFeed As NagatoRssFeed, argParentMenu As Menu)
+    
+    Dim yukiRssMenu As Menu
+    Dim yukiCounter As Integer
+
+    For yukiCounter = 1 To Min(argFeed.Max, ITEM_MAX) ' 0 is for ParentMenu
+        If Not isWorthToShow(argFeed.GetTitle(yukiCounter)) Then Continue
+        yukiRssMenu = New Menu(argParentMenu) As "Menu"
+        yukiRssMenu.Text = MikuruCollapsedText.Get(argFeed.GetTitle(yukiCounter), 60)
+        yukiRssMenu.Tag = argFeed.GetLink(yukiCounter)
+    Next
+    
+End
+
+Private Sub addRssParentMenu(argFeed As NagatoRssFeed)
+    
+    Dim yukiParentMenu As New Menu(Me._$rootMenu)
+    
+    With yukiParentMenu
+        .Text = argFeed.GetTitle(0)
+        .Picture = Picture["super-mono/basic/blue/feed-document.png"]
+    End With
+    
+    addRssMenu(argFeed, yukiParentMenu)
+    
+End
+
+Public Sub _InitializeMenu() ' override
+    
+    Dim yukiCounter As Integer
+    
+    addRefreshMenu()
+    MikuruMenuSeparator.Set(Me._$rootMenu)
+    
+    For yukiCounter = 0 To NagatoRss.Max
+        addRssParentMenu(NagatoRss.GetFeed(yukiCounter))
+    Next
+    
+End
+
+Public Sub Menu_Click()
+    
+    Debug Last.Tag
+    
+    HaruhiMiniBrowser.SetUrl(Replace$(Last.Tag, " ", ""))
+    HaruhiMiniBrowser.Center()
+    HaruhiMiniBrowser.Show()
+    HaruhiMiniBrowser.Title = Last.Text
+    
+End
+
+Public Sub RefreshMenu_Click()
+    
+    NagatoRss.Refresh()
+    
+End

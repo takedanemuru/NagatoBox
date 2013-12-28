@@ -1,0 +1,52 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  Move(0,0,842,473)
+  #Scaled = False
+  Text = ("Logout")
+  Picture = Picture["pictures/logout_bg.jpg"]
+  Resizable = False
+  SkipTaskbar = True
+  { LogoutButton ToolButton
+    Move(21,399,154,56)
+    Foreground = &HFFFFFF&
+    NoTabFocus = True
+    Text = ("LOGOUT")
+    Picture = Picture["ILB3b/Inward Bubble - Logoff.png"]
+  }
+  { SuspendButton ToolButton
+    Move(182,399,154,56)
+    Foreground = &HFFFFFF&
+    NoTabFocus = True
+    Text = ("SUSPEND")
+    Picture = Picture["ILB3b/Inward Bubble - Stop.png"]
+  }
+  { HibernateButton ToolButton
+    Move(343,399,154,56)
+    Foreground = &HFFFFFF&
+    NoTabFocus = True
+    Text = ("HIBERNATE")
+    Picture = Picture["ILB3b/Inward Bubble - Standby.png"]
+  }
+  { ShutdownButton ToolButton
+    Move(665,399,154,56)
+    Foreground = &HFFFFFF&
+    NoTabFocus = True
+    Text = ("SHUTDOWN")
+    Picture = Picture["ILB3b/Inward Bubble - Shutdown.png"]
+  }
+  { RebootButton ToolButton
+    Move(504,399,154,56)
+    Foreground = &HFFFFFF&
+    NoTabFocus = True
+    Text = ("REBOOT")
+    Picture = Picture["ILB3b/Inward Bubble - Reboot.png"]
+  }
+  { QuitAppButton ToolButton
+    Move(14,14,196,56)
+    Foreground = &HFFFFFF&
+    NoTabFocus = True
+    Text = ("QUIT\nnagato-navigator")
+    Picture = Picture["ILB3b/Inward Bubble - Logoff.png"]
+  }
+}

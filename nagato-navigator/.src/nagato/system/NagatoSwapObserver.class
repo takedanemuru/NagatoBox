@@ -1,0 +1,26 @@
+' Gambas class file
+
+Create Static
+
+Private Function GetSwap() As Float
+    
+    Dim yukiSnapShot As String[] = Split(File.Load("/proc/swaps"), "\n", "")
+    Dim yukiSize As Integer
+    Dim yukiUsed As Integer
+    
+    yukiSize = Split(yukiSnapShot[1], "\t", "", True)[1]
+    yukiUsed = Split(yukiSnapShot[1], "\t", "", True)[2]
+    
+    Return yukiUsed / yukiSize
+    
+Catch
+    Debug Error.Text
+    Return 0
+    
+End
+
+Public Function GetSwapPercentage() As Float
+    
+    Return GetSwap()
+    
+End

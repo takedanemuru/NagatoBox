@@ -1,0 +1,255 @@
+' Gambas class file
+
+Create Static
+
+Property Read TitleCollection As Collection
+Property Read ArtistCollection As Collection
+Property Read AlbumCollection As Collection
+Property Read Count As Integer
+Property Read PathList As String[]
+
+Private $position As Integer = 0
+Private $orderedArray As New String[]
+Private $randomizedOrder As New Integer[]
+Private $titleCollection As New Collection
+Private $artistCollection As New Collection
+Private $albumCollection As New Collection
+
+Event Refresh
+
+Private Sub clearCollections()
+    
+    $titleCollection.Clear()
+    $artistCollection.Clear()
+    $albumCollection.Clear()
+    
+End
+
+Private Sub setCollections(argPath As String) ' require full path
+    
+    $titleCollection.Add(getTaggedTitle(argPath), argPath)
+    $artistCollection.Add(MikuruId3TagInfo.GetArtist(argPath), argPath)
+    $albumCollection.Add(MikuruId3TagInfo.GetAlbum(argPath), argPath)
+    
+End
+
+Private Function getTaggedTitle(argFullPath As String) As String
+    
+    Dim yukiTitle As String = MikuruId3TagInfo.GetTitle(argFullPath)
+    
+    If yukiTitle = "" Then
+        Return File.BaseName(argFullPath)
+    Else
+        Return yukiTitle
+    End If
+    
+End
+
+Private Sub initializeTitleCollection()
+    
+    Dim yukiPath As String
+    
+    clearCollections()
+    
+    For Each yukiPath In $orderedArray
+        setCollections(yukiPath)
+    Next
+    
+End
+
+Private Function addFileToArrayAndCollection(argFullPath As String, argCount As Integer) As Integer
+    
+    If MikuruMimeType.IsAudioFile(argFullPath) And If Not $orderedArray.Exist(argFullPath) Then
+        $orderedArray.Add(argFullPath)
+        setCollections(argFullPath)
+        Inc argCount
+    Endif
+    
+    Return argCount
+    
+End
+
+Private Sub refreshNagatoSettings(argCount As String)
+    
+    If argCount = 0 Then
+        Message.Error("Files are already existed or not audio file")
+    Else
+        NagatoSettingsMusic.SetQueue($orderedArray)
+        Raise Refresh
+    Endif
+    
+End
+
+Public Sub AddFile(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiCount As Integer = 0
+    
+    For Each yukiPath In argPaths
+        yukiCount = addFileToArrayAndCollection(yukiPath, yukiCount)
+    Next
+    
+    refreshNagatoSettings(yukiCount)
+    
+End
+
+Public Sub DeleteFile(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        $orderedArray.Delete($orderedArray.Find(yukiPath))
+        If argPaths.Exist(NagatoMusicPlayer.CurrentPath) Then
+            Try NagatoMusicPlayer.Next()
+        End If
+    Next
+    
+    Raise Refresh
+    
+End
+
+Public Sub AddDirectory(argDirectoryPath As String)
+    
+    Dim yukiFileName As String
+    Dim yukiCount As Integer = 0
+    
+    For Each yukiFileName In RDir(argDirectoryPath)
+        yukiCount = addFileToArrayAndCollection((argDirectoryPath &/ yukiFileName), yukiCount)
+    Next
+    
+    refreshNagatoSettings(yukiCount)
+    
+End
+
+Public Sub Clear()
+    
+    If Message.Question("Clear Queue ?", "Cancel", "Clear") = 2 Then
+        NagatoMusicPlayer.Stop()
+        $orderedArray.Clear()
+        Raise Refresh
+    Endif
+    
+End
+
+Private Function getRandomizedOrder(argOrigin As Integer, argEnd As Integer) As Integer[]
+    
+    Dim yukiResult As New Integer[]
+    Dim yukiRandomNumber As Integer
+    
+    Randomize Second(Now)
+    
+    Do
+        yukiRandomNumber = Int(Rnd(0, argEnd + 1))
+        If Not yukiResult.Exist(yukiRandomNumber) Then yukiResult.Add(yukiRandomNumber)
+        If yukiResult.Count = argEnd - argOrigin + 1 Then Return yukiResult
+    Loop
+    
+End
+
+Private Sub ensureRandomizedOrder()
+    
+    If $orderedArray.Count <> $randomizedOrder.Count Then
+        $randomizedOrder = getRandomizedOrder(0, $orderedArray.Max)
+    Endif
+    
+End
+
+Public Function getMusicPath(argIndex As Integer) As String
+    
+    If NagatoSettingsMusic.DoesShuffle Then
+        Return $orderedArray[$randomizedOrder[argIndex]]
+    Else
+        Return $orderedArray[argIndex]
+    Endif
+    
+End
+
+Public Function GetFirst() As String
+    
+    ensureRandomizedOrder()
+    
+    Return getMusicPath(0)
+    
+End
+
+Public Function GetNext() As String
+    
+    ensureRandomizedOrder()
+
+    Inc $position
+    If $position > $orderedArray.Max Then $position = 0
+    
+    Return getMusicPath($position)
+    
+End
+
+Public Function GetPrevious() As String
+    
+    ensureRandomizedOrder()
+
+    Dec $position
+    If 0 > $position Then $position = $orderedArray.Max
+    
+    Return getMusicPath($position)
+    
+End
+
+Public Sub SetPosition(argPath As String)
+    
+    If NagatoSettingsMusic.DoesShuffle Then
+        Try $position = $randomizedOrder.Find($orderedArray.Find(argPath))
+    Else
+        Try $position = $orderedArray.Find(argPath)
+    End If
+    
+    Raise Refresh
+    
+Catch
+    Return
+    
+End
+
+Public Sub Activate()
+    
+    Dim yukiPath As String
+    
+    If NagatoSettingsMusic.GetQueue() <> Null Then
+        For Each yukiPath In NagatoSettingsMusic.GetQueue()
+            If Exist(yukiPath) Then $orderedArray.Add(yukiPath)
+        Next
+    Endif
+    
+    initializeTitleCollection()
+    ensureRandomizedOrder()
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $orderedArray.Count
+
+End
+
+Private Function PathList_Read() As String[]
+
+    Return $orderedArray.Sort()
+
+End
+
+Private Function TitleCollection_Read() As Collection
+
+    Return $titleCollection
+
+End
+
+Private Function ArtistCollection_Read() As Collection
+
+    Return $artistCollection
+
+End
+
+Private Function AlbumCollection_Read() As Collection
+
+    Return $albumCollection
+
+End

@@ -1,0 +1,58 @@
+' Gambas class file
+
+Create Static
+
+Property Read RcFilePath As String
+
+Private $openboxRc As New XmlDocument
+Private $keyboard As XmlElement
+Private $margins As XmlElement
+
+Private Sub showElementContent(argElement As XmlElement) ' this is a debug function
+    
+    Dim yukiElement As XmlElement
+    
+    For Each yukiElement In argElement.ChildElements
+        Debug yukiElement.Name
+        Debug yukiElement.Attributes["key"]
+        Debug yukiElement.Value
+    Next
+    
+End
+
+Private Sub setValue(argParentElement As XmlElement, argName As String, argValue As Variant)
+    
+    Dim yukiMarginElement As XmlElement
+    
+    For Each yukiMarginElement In argParentElement.ChildElements
+        Debug yukiMarginElement.Name
+        Debug yukiMarginElement.Value
+        If yukiMarginElement.Name = argName Then yukiMarginElement.Value = argValue
+    Next
+    
+End
+
+Public Sub Init()
+    
+    ' dummy
+    
+End
+
+Public Sub _new()
+    
+    $openboxRc.Open(Me.RcFilePath)
+    $margins = $openboxRc.GetElementsByNamespace("margins")[0]
+    $keyboard = $openboxRc.GetElementsByNamespace("keyboard")[0]
+    
+    Debug $margins.ChildElements.Count
+    Debug $keyboard.ChildElements.Count
+    
+    showElementContent($keyboard)
+    
+End
+
+Private Function RcFilePath_Read() As String
+
+    Return User.Home &/ ".config/nagato-software-complation/nagato-session-rc.xml"
+
+End

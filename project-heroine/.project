@@ -1,0 +1,25 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.1.1
+Title=project-heroine
+Startup=FMain
+Icon=icon11.jpg
+Version=0.1.0
+Component=gb.image
+Component=gb.gtk
+Component=gb.form
+Component=gb.settings
+Description="a simple hello world application\n\nThis software is licensed under S.O.S. License."
+Authors="takeda.nemuru@gmail.com"
+TabSize=2
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=takedanemuru
+Address=takeda.nemuru@gmail.com
+License=Other License(s)
+PackageName=project-heroine-0.1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"GTK;Game;System"
+Groups=ubuntu:"utils"

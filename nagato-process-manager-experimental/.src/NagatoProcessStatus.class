@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Static
+
+Public Function getStatusString(argStatusInitial As String) As String
+    
+   Select Case argStatusInitial
+       Case "R"
+           Return ("Running")
+       Case "S"
+           Return ("Sleeping")
+       Case "D"
+           Return ("Disk Sleep")
+       Case "Z"
+           Return ("Zonbie")
+       Case "T"
+           Return ("Traced")
+       Case "W"
+           Return ("Paging")
+       Default
+           Return ("Undefined")
+   End Select
+    
+End
+
+Public Function getStatusPicture(argStatusInitial As String) As Picture
+    
+   Select Case argStatusInitial
+       Case "R"
+           Return Stock["small/play"]
+       Case "S"
+           Return Stock["small/pause"]
+       Case "D", "T", "W"
+           Return Stock["small/stop"]
+       Case "Z"
+           Return Stock["small/error"]
+       Default
+           Return Stock["small/question"]
+   End Select
+    
+End

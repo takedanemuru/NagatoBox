@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+Private Sub addCircularScaleMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiDynamicMenu As NagatoDynamicSubMenuCircularScale
+    
+    yukiMenu.Text = ("Circular scale")
+    yukiDynamicMenu = New NagatoDynamicSubMenuCircularScale(yukiMenu) As "Menu"
+    
+End
+
+Private Sub addLineScaleMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("Line scale")
+    
+End
+
+Public Sub _AddOtherMenu() ' override
+    
+    addCircularScaleMenu()
+    addLineScaleMenu()
+    
+End

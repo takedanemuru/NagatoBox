@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addIndivisualOpenWithMenu(argDesktopFileName As String)
+    
+    Dim yukiMenu As Menu
+    Dim yukiPath As String = "/usr/share/applications/" & argDesktopFileName
+    Dim yukiDesktopFile As DesktopFile
+
+    If Exist(yukiPath) Then
+        yukiDesktopFile = New DesktopFile(yukiPath)
+        yukiMenu = New Menu(Me._$rootMenu) As "OpenWithMenu"
+    Else
+        Return
+    End If
+    
+    With yukiMenu
+        .Picture = yukiDesktopFile.GetIcon(32).Picture
+        .Text = yukiDesktopFile.Name
+        .Tag = yukiDesktopFile.Path
+    End With
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
+    
+    Dim yukiAdditionalDesktopFile As String
+    Dim yukiMime As String = DesktopMime.FromFile(Me._$path).Type
+    Dim yukiItems As String[] = MikuruConfFlie.GetItems("/usr/share/applications/mimeinfo.cache", yukiMime)
+    Dim yukiChecker As New String[]
+    
+    For Each yukiAdditionalDesktopFile In yukiItems
+        Debug yukiAdditionalDesktopFile
+        If Not yukiChecker.Exist(yukiAdditionalDesktopFile) Then
+            addIndivisualOpenWithMenu(yukiAdditionalDesktopFile)
+            yukiChecker.Add(yukiAdditionalDesktopFile)
+        End If
+    Next
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Public Sub OpenWithMenu_Click()
+    
+    Dim yukiDesktopFile As New DesktopFile(Last.Tag)
+    
+    yukiDesktopFile.Run(Me._$path)
+    NagatoMessaging.setMessage(Subst$("Now opening file with &1 ...", yukiDesktopFile.Name))
+    
+End

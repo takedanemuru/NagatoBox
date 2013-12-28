@@ -1,0 +1,65 @@
+' Gambas class file
+
+Inherits NagatoGrid
+
+Public _$headers As String[] = [("Id"), ("Status"), ("Parent project"), ("What to do"), ("Memo"), ("Dead line")] 'override
+
+Private Function isFiltered(argStatus As Variant) As Boolean
+    
+    If argStatus = Null Then Return False
+    
+    With MikuruStatus
+        Select Case argStatus
+            Case .Calendar, .Done, .Fail, .File, .Project, .SomeDay, .Trash
+                Return True
+            Default
+                Return False
+        End Select
+    End With
+    
+End
+
+Public Sub _RefreshData()
+    
+    Dim yukiResult As Result = NagatoDBToDo.GetAll()
+    Dim yukiMax As Integer
+    
+    Me._$grid.Clear()
+    Me._$grid.Rows.Count = 0
+    
+    For Each yukiResult
+        With NagatoDBToDo
+            If NagatoSettings.Filter And If isFiltered(yukiResult[.ColumnStatus]) Then Continue
+            Inc Me._$grid.Rows.Count
+            yukiMax = Me._$grid.Rows.Max
+            Me._$grid[yukiMax, 0].Text = yukiResult[.ColumnId]
+            Try Me._$grid[yukiMax, 1].Text = MikuruStatus.List[yukiResult[.ColumnStatus]]
+            Try Me._$grid[yukiMax, 1].Picture = MikuruStatus.GetIcon(yukiResult[.ColumnStatus])
+            Try Me._$grid[yukiMax, 2].Text = NagatoDBToDo.GetProjectName(yukiResult[.ColumnProject])
+            If Me._$grid[yukiMax, 2].Text <> "" Then Me._$grid[yukiMax, 2].Picture = NagatoDBToDo.GetProjectIcon(yukiResult[.ColumnProject])
+            Me._$grid[yukiMax, 3].Text = yukiResult[.ColumnName]
+            Me._$grid[yukiMax, 4].Text = yukiResult[.ColumnMemo]
+            Me._$grid[yukiMax, 5].Text = yukiResult[.ColumnDateDeadline]
+            If Even(yukiMax) Then Me._SetGridBackground(yukiMax, MikuruUX.GridBackgroundStripe)
+            Me._AdjustColumnSize(yukiMax, [1, 2, 3, 4], [1, 2, 3])
+        End With
+    Next
+    
+End
+
+Public Function GetCurrentId() As Integer
+    
+    Return CInteger(Me._$grid[Me._$grid.Row, 0].Text)
+    
+Catch
+    Return -1
+    
+End
+
+Public Sub _new(argGridView As GridView)
+    
+    Me._$grid = argGridView
+    Me._InitializeHeader()
+    Me._RefreshData()
+    
+End

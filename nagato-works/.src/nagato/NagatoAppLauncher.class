@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoTabContent
+
+Private Enum MODE_ALL, MODE_RECENT, MODE_FAVORITE, MODE_CATEGORY
+
+Private $observer As New Observer(NagatoMenuCache) As "Asakura"
+Private $iconView As NagatoAppLauncharIconView
+Private $toolBar As NagatoAppLauncherToolBar
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    Me._Initialize(argTabStrip)
+    $toolBar = New NagatoAppLauncherToolBar(Me._$hBox) As "ToolBar"
+    $iconView = New NagatoAppLauncharIconView(Me._$vBox) As "IconView"
+    Me._RefreshParentTab(("applications"), Stock["small/program"])
+    NagatoMessaging.setMessage(("...application launcher mode."))
+    
+End
+
+Public Sub ToolBar_SelectCategory(argTag As String)
+    
+    $iconView.SetCategory(argTag)
+    
+End
+
+Public Sub ToolBar_SearchQuery(argCategory As String, argText As String)
+    
+    $iconView.SetCategoryWithQuery(argCategory, argText)
+    
+End
+
+Public Sub Asakura_Ready()
+    
+    $iconView.RefreshIcons()
+    
+End
+
+Public Sub ToolBar_Refresh()
+    
+    NagatoMenuCache.Refresh() ' NagatoMenuCache should raise "Ready" Event when refresh is finished.
+    
+End
+
+Public Sub ToolBar_Change(argIconSizeIndex As Integer)
+    
+    $iconView.ChangeIconSize(argIconSizeIndex)
+    
+End

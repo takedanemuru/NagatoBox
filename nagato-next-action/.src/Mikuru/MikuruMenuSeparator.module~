@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub Set(argMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+
+

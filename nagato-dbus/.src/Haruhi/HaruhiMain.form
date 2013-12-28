@@ -1,0 +1,43 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,83,51)
+  Icon = Picture["pictures/icons/computer.png"]
+  Arrangement = Arrange.Horizontal
+  { SidePanel1 SidePanel
+    MoveScaled(2,3,34,46)
+    Background = &HD1C3DF&
+    Arrangement = Arrange.Fill
+    Orientation = Align.Left
+    { TabStrip1 TabStrip
+      MoveScaled(0,0,34,47)
+      Arrangement = Arrange.Fill
+      Count = 2
+      Index = 0
+      Text = ("Session")
+      { SessionList ListView
+        MoveScaled(8,15,16,16)
+        Tag = "SessionList"
+      }
+      Index = 1
+      Text = ("System")
+      { SystemList ListView
+        MoveScaled(9,17,16,16)
+        Tag = "SystemList"
+      }
+      Index = 0
+    }
+  }
+  { VBox1 VBox
+    MoveScaled(39,2,43,47)
+    Expand = True
+    { MenuHBox HBox
+      MoveScaled(6,1,31,4)
+    }
+    { !TreeView1 TreeView
+      MoveScaled(2,6,45,40)
+      #Public = True
+      Expand = True
+    }
+  }
+}

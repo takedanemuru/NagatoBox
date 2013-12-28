@@ -1,0 +1,33 @@
+' Gambas module file
+
+Property NewName As String
+Property NewPicture As Picture
+
+Public Enum ResponseCancel, ResponseApply
+
+Private $newName As String
+Private $picture As Picture
+
+Private Function NewName_Read() As String
+
+    Return $newName 
+
+End
+
+Private Sub NewName_Write(Value As String)
+
+    $newName = Value
+
+End
+
+Private Function NewPicture_Read() As Picture
+
+    Return $picture
+
+End
+
+Private Sub NewPicture_Write(Value As Picture)
+
+    $picture = Value
+
+End

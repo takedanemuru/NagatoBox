@@ -1,0 +1,69 @@
+' Gambas class file
+
+Inherits NagatoTabContentsHandler
+
+Property CurrentPath As String
+
+Private $textArea As TextArea = HaruhiMain.EditorTextArea
+Private $currentPath As String
+Private $originalText As String
+
+Public Sub _InitializeGearMenu()
+    
+    HaruhiMain.EditorMenuButton.Menu = "EditorMenu"
+    Me._$gearMenu = New NagatoEditorMenu(HaruhiMain.EditorMenuButton.Menu) As "Menu"
+    Me._$gearMenu.SaveMenuEnabled = False
+    
+End
+
+Public Sub _InitializeObserver()
+    
+    Me._$observer = New Observer(HaruhiMain.EditorTextArea) As "Asakura"
+    
+End
+
+Public Sub SetText(argText As String, argReadOnly As Boolean)
+    
+    $textArea.Text = argText
+    $textArea.ReadOnly = argReadOnly
+    $originalText = argText
+    
+End
+
+Public Sub Asakura_Change()
+    
+    Me._$gearMenu.SaveMenuEnabled = True
+    Me._$gearMenu.RevertMenuEnabled = True
+    
+End
+
+Public Sub Menu_Save()
+    
+    If $currentPath Begins User.Home And If Not $textArea.ReadOnly Then
+        File.Save($currentPath, HaruhiMain.EditorTextArea.Text)
+        Me._$gearMenu.SaveMenuEnabled = False
+        NagatoGridsHandler.Refresh()
+    Else
+        Debug "i can't save"
+    Endif
+    
+End
+
+Public Sub Menu_Revert()
+    
+    $textArea.Text = $originalText
+    
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $currentPath
+
+End
+
+Private Sub CurrentPath_Write(Value As String)
+
+    $currentPath = Value
+    Me._$gearMenu.SaveMenuEnabled = False
+
+End

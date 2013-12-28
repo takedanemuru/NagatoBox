@@ -1,0 +1,77 @@
+' Gambas class file
+
+Private $nekomimiEngine As Object
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    NekomimiSettings.loadFormSettings(Me)
+    $nekomimiEngine = New NekomimiClock As "NekomimiEngine"
+    
+End
+
+Public Sub Form_Close()
+    
+    NekomimiSettings.saveFormSettings(Me)
+    
+End
+
+Public Sub CalendarButton_Click()
+    
+    Object.Detach($nekomimiEngine)
+    $nekomimiEngine = New NekomimiCalendar As "NekomimiEngine"
+    
+End
+
+Public Sub ClockButton_Click()
+
+    Object.Detach($nekomimiEngine)
+    $nekomimiEngine = New NekomimiClock As "NekomimiEngine"
+
+End
+
+Public Sub TimerButton_Click()
+    
+    Object.Detach($nekomimiEngine)
+    $nekomimiEngine = New NekomimiTimer As "NekomimiEngine"
+    
+End
+
+Public Sub ConfigButton_Click()
+
+    MilkConfig.Show()
+
+End
+
+Public Sub DrawingArea1_Draw()
+    
+    NekomimiDraw.Draw($nekomimiEngine)
+    
+End
+
+Public Sub NekomimiEngine_Changed()
+    
+    DrawingArea1.Refresh()
+    
+End
+
+Public Sub NekomimiEngine_Finished()
+    
+    NekomimiSound.PlayBell()
+    
+End
+
+Public Sub ToolButton1_Click()
+
+    NekomimiSettings.setTimerSetting(MilkConfig.GetNewTimerSettingValue())
+
+End
+
+Public Sub ToolButton2_Click()
+
+    NekomimiSettings.setCalendarOrder(ComboBox1.Index)
+
+End

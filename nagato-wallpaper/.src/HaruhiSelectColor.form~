@@ -1,0 +1,20 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(2,3,60,51)
+    { ColorChooser1 ColorChooser
+      MoveScaled(1,1,36,36)
+      Expand = True
+    }
+    { HBox1 HBox
+      MoveScaled(4,42,55,6)
+      { OkButton Button
+        MoveScaled(37,1,16,4)
+        Text = ("OK")
+      }
+    }
+  }
+}

@@ -1,0 +1,186 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Property Read CategoryCount As Integer
+Property Read CategoryNames As String[]
+
+Public Const TableCategory As String = "webpage_category"
+Public Const ColumnCategory As String = "category"
+
+Public Const TableHistory As String = "table_history"
+Public Const ColumnId As String = "id"
+Public Const ColumnPageName As String = "page_name"
+Public Const ColumnUrl As String = "url"
+Public Const ColumnLastAccessed As String = "last_accessed"
+
+Public Const TableBookmark As String = "table_bookmark"
+Public Const ColumnUserDefinedPageName As String = "user_defined_page_name"
+Public Const ColumnCategoryId As String = "category_id"
+
+Public _$uniqueName As String = "Web"
+
+Private $tableBookmark As NagatoTableBookmark
+Private $tableCategory As NagatoTableCategory
+Private $tableHistory As NagatoTableHistory
+
+Public Function HasBookmarkInCategory(argCategoryName As String) As Boolean
+    
+    Dim yukiId As Integer = $tableCategory.GetCategoryId(argCategoryName)
+    
+    Return $tableBookmark.HasBookmarkInCategory(yukiId)
+    
+End
+
+Public Sub DeleteBookmark(argUrl As String)
+    
+    Me._$connection.Delete(TableBookmark, "url = &1", argUrl)
+    
+End
+
+Public Sub RenameBookmark(argUrl As String, argNewName As String)
+    
+    Dim yukiResult As Result = Me._$connection.Edit(TableBookmark, "url = &1", argUrl)
+    
+    yukiResult[ColumnUserDefinedPageName] = argNewName
+    yukiResult.Update()
+    
+End
+
+Public Sub ChangeBookmarkCategory(argUrl As String, argCategory As String)
+    
+    Dim yukiResult As Result = Me._$connection.Edit(TableBookmark, "url = &1", argUrl)
+    
+    yukiResult[ColumnCategoryId] = $tableCategory.GetCategoryId(argCategory)
+    yukiResult.Update()
+    
+End
+
+Public Function GetBookmarkResultFoundByCategoryName(argCategoryName As String) As Result
+    
+    Dim yukiId As Integer = $tableCategory.GetCategoryId(argCategoryName)
+    
+    Return $tableBookmark.GetBookmarkResultFoundByCategoryName(yukiId)
+    
+End
+
+Public Sub PushBookmark(argUrl As String, argTitle As String, argUserTitle As String, argCategory As String, Optional argIcon As Picture)
+    
+    Dim yukiCategoryId As Integer = $tableCategory.GetCategoryId(argCategory)
+    Dim yukiResult As Result
+    
+    If $tableBookmark.HasBookmark(argUrl, yukiCategoryId) Then Return
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(TableBookmark)
+        yukiResult[ColumnUrl] = argUrl
+        yukiResult[ColumnPageName] = argTitle
+        yukiResult[ColumnUserDefinedPageName] = argUserTitle
+        yukiResult[ColumnCategoryId] = yukiCategoryId
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
+Public Function GetHistoryResultOrderedByLastAccessed(argLimit As Integer) As Result
+    
+    Dim yukiQuery As String 
+    
+    yukiQuery = Subst$("select * from &1 order by &2 desc limit &3", TableHistory, ColumnLastAccessed, argLimit)
+    
+    Return Me._$connection.Exec(yukiQuery)
+    
+End
+
+Public Sub ResizeRecentPages()
+    
+    Dim yukiDate As Date = DateAdd(Now(), gb.Week, -1)
+    
+    Me._$connection.Delete(TableHistory, "last_accessed < &1", yukiDate)
+   
+End
+
+Private Function hasHistory(argUrl As String) As Boolean
+    
+    If Me._$connection.Find(TableHistory, "url = &1", argUrl).Count > 0 Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Sub changeHistoryDate(argUrl As String, argTitle As String)
+    
+    Dim yukiResult As Result
+    Dim yukiCount As Integer = 0
+    
+    yukiResult = Me._$connection.Edit(TableHistory, "url = &1", argUrl)
+    
+    For Each yukiResult
+        If yukiCount = 0 Then
+            yukiResult[ColumnLastAccessed] = Now()
+            yukiResult.Update()
+            Inc yukiCount
+        Else
+            yukiResult.Delete()
+        Endif
+    Next
+
+End
+
+Private Sub createNewHistory(argUrl As String, argTitle As String, Optional argIcon As Picture)
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(TableHistory)
+        yukiResult[ColumnUrl] = argUrl
+        yukiResult[ColumnPageName] = argTitle
+        yukiResult[ColumnLastAccessed] = Now()
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug "transaction error."
+    Me._$connection.Rollback()
+    
+End
+
+Public Sub PushHistory(argUrl As String, argTitle As String)
+    
+    Dim yukiResult As Result 
+    
+    If hasHistory(argUrl) Then
+        changeHistoryDate(argUrl, argTitle)
+    Else
+        createNewHistory(argUrl, argTitle)
+    Endif
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+
+    $tableCategory = New NagatoTableCategory(Me._$connection)
+    $tableBookmark = New NagatoTableBookmark(Me._$connection)
+    $tableHistory = New NagatoTableHistory(Me._$connection)
+
+End
+
+Private Function CategoryCount_Read() As Integer
+
+    Return Me._$connection.Find(TableCategory).Count
+
+End
+
+Private Function CategoryNames_Read() As String[]
+
+    Return $tableCategory.GetCategoryNames()
+
+End

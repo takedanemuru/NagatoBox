@@ -1,0 +1,27 @@
+' Gambas class file
+
+Private $webView As WebView
+
+Public Sub _new()
+    
+    $webView = New WebView(Me)
+    
+    With $webView
+        .Expand = True
+    End With
+    
+End
+
+Public Sub SetUrl(argUrl As String)
+    
+    $webView.Url = argUrl
+    
+End
+
+Public Sub SetUrlAndShowCenter(argUrl As String)
+    
+    $webView.Url = argUrl
+    Me.Center()
+    Me.Show()
+    
+End

@@ -1,0 +1,59 @@
+' Gambas class file
+
+Private $gridView As GridView
+Private $observer As Observer
+
+Private Sub initializeGridView()
+    
+    With $gridView
+        .Columns.Count = 3
+        .Columns[0].W = MikuruUx.Padding
+        .Columns[1].Text = ("Radio name")
+        .Columns[2].Text = ("url")
+    End With
+    
+End
+
+Private Sub setBackgroundColor(argRowIndex As Integer)
+    
+    Dim yukiColumnIndex As Integer
+    
+    For yukiColumnIndex = 0 To $gridView.Columns.Max
+        $gridView[argRowIndex, yukiColumnIndex].Background = Color.Merge(Color.Pink, Color.White, 0.8)
+    Next
+    
+End
+
+Private Sub refreshData()
+    
+    Dim yukiRowIndex As Integer
+    Dim yukiName As String
+    
+    For yukiRowIndex = 0 To MikuruWebRadio.PlsList.Max
+        Inc $gridView.Rows.Count
+        yukiName = MikuruWebRadio.PlsList[yukiRowIndex].Title
+        $gridView[yukiRowIndex, 1].Text = yukiName
+        If $gridView.Font.RichTextWidth(yukiName) + MikuruUx.Padding > $gridView.Columns[1].W Then
+            $gridView.Columns[1].W = $gridView.Font.RichTextWidth(yukiName) + MikuruUx.Padding
+        Endif
+        $gridView[yukiRowIndex, 2].Text = MikuruWebRadio.PlsList[yukiRowIndex].Url
+        If Odd(yukiRowIndex) Then setBackgroundColor(yukiRowIndex)
+    Next
+    
+End
+
+Public Sub _new(argGridView As GridView)
+    
+    $observer = New Observer(argGridView) As "Asakura"
+    
+    $gridView = argGridView
+    initializeGridView()
+    refreshData()
+    
+End
+
+Public Sub Asakura_Activate()
+
+    MikuruWebRadio.SetUrlAndPlay($gridView[$gridView.Row, 2].Text)
+
+End

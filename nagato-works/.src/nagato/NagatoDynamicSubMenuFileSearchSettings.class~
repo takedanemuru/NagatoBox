@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addExactMatchMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ExactMatchMenu"
+    
+    With yukiMenu
+        .Text = ("Exact match")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.ExactMatch
+    End With
+    
+End
+
+Private Sub addRecursiveMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RecursiveMenu"
+    
+    With yukiMenu
+        .Text = ("Recursive search")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.Recursive
+    End With
+    
+End
+
+Private Sub addHiddenMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "HiddenMenu"
+    
+    With yukiMenu
+        .Text = ("Hidden file and folders")
+        .Toggle = True
+        .Checked = NagatoSettingsFileSearch.Hidden
+    End With
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    addExactMatchMenu()
+    addRecursiveMenu()
+    addHiddenMenu()
+    
+End
+
+Public Sub ExactMatchMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .ExactMatch = Not .ExactMatch
+    End With
+    
+End
+
+Public Sub RecursiveMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .Recursive = Not .Recursive
+    End With
+    
+End
+
+Public Sub HiddenMenu_Click()
+    
+    With NagatoSettingsFileSearch
+        .Hidden = Not .Hidden
+    End With
+    
+End

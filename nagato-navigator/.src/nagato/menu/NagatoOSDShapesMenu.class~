@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addRoundMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Round")
+        .Tag = 2 * MikuruUX.Grid
+        If NagatoSettingsOSD.Radius = .Tag Then Me._SetCheckedIcon(yukiMenu)
+    End With
+    
+End
+
+Private Sub addSquareMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Square")
+        .Tag = 0
+        If NagatoSettingsOSD.Radius = .Tag Then Me._SetCheckedIcon(yukiMenu)
+    End With
+    
+End
+
+Public Sub _RefreshMenu() ' override
+    
+    addRoundMenu()
+    addSquareMenu()
+    
+End
+
+Public Sub Menu_Click()
+    
+    NagatoSettingsOSD.Radius = Last.Tag
+    
+End

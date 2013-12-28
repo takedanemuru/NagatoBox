@@ -1,0 +1,144 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Property UrlBoxText As String
+
+Public Enum ButtonHalt, ButtonReload
+
+Private $urlBox As ButtonBox
+
+Event RecentPages(argUrl As String)
+Event HomePage
+Event Forward
+Event Back
+Event Reload
+Event Halt
+Event UrlBoxKeyPressEnter(argUrlText As String)
+Event UrlBoxClick(argUrlText As String)
+
+Private Sub addHomePageButton()
+    
+    Dim yukiBackButton As New ToolButton(Me._$parent) As "HomePageButton"
+    
+    With yukiBackButton
+        .Width = Me.$Size
+        .Expand = False
+        .Picture = Stock["medium/home"]
+    End With
+    
+End
+
+Private Sub addBackButton()
+    
+    Dim yukiBackButton As New ToolButton(Me._$parent) As "BackButton"
+    
+    With yukiBackButton
+        .Width = Me.$Size
+        .Expand = False
+        .Picture = Stock["medium/previous"]
+    End With
+    
+End
+
+Private Sub addForwardButton()
+    
+    Dim yukiForwardButton As New ToolButton(Me._$parent) As "ForwardButton"
+
+    With yukiForwardButton
+        .Width = Me.$Size
+        .Expand = False
+        .Picture = Stock["medium/next"]
+    End With
+    
+End
+
+Private Sub addUrlBox()
+    
+    $urlBox = New ButtonBox(Me._$parent) As "UrlBox" 
+    
+    With $urlBox
+        .Expand = True
+        .Picture = Stock["medium/jump"]
+        .SetFocus()
+    End With
+    
+End
+
+Private Sub constructWidgets()
+    
+    addHomePageButton()
+    addBackButton() 
+    addForwardButton()
+    addUrlBox()
+    
+End
+
+Public Sub SetButton(argButtonMode As Integer)
+    
+    If Not Object.IsValid($urlBox) Then Return
+    
+    Select Case argButtonMode
+        Case Me.ButtonHalt
+            $urlBox.Picture = Stock["medium/halt"]
+        Case Me.ButtonReload
+            $urlBox.Picture = Stock["medium/jump"]
+    End Select
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    constructWidgets()
+    
+End
+
+Public Sub HomePageButton_Click()
+    
+    Raise HomePage
+    
+End
+
+Public Sub BackButton_Click()
+    
+    Raise Back
+    
+End
+
+Public Sub ForwardButton_Click()
+    
+    Raise Forward
+    
+End
+
+Public Sub UrlBox_Click()
+    
+    If $urlBox.Picture = Stock["medium/jump"] Then
+        Raise UrlBoxClick($urlBox.Text)
+    Else
+        Raise Halt
+    End If
+    
+End
+
+Public Sub UrlBox_KeyPress()
+    
+    If Key.code = Key.Return Then Raise UrlBoxKeyPressEnter($urlBox.Text)
+    
+End
+
+Private Function UrlBoxText_Read() As String
+
+    If Object.IsValid($urlBox) Then Return $urlBox.Text
+
+End
+
+Private Sub UrlBoxText_Write(argNewValue As String)
+
+    If Object.IsValid($urlBox) Then $urlBox.Text = argNewValue
+    
+Catch
+    Return
+
+End

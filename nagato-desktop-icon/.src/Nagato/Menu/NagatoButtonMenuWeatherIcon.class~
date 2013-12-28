@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Event LocationChanged
+
+Private Sub addSelectDirectoryMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SelectLocationmenu"
+    
+    With yukiMenu
+        .Text = ("Select Location")
+        .Picture = MikuruIcon.Get("home")
+    End With
+    
+End
+
+Private Sub addShowDetailMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ShowDetailMenu"
+    
+    With yukiMenu
+        .Text = ("Show detail")
+    End With
+    
+End
+
+Public Sub _InitializeAdditionalMenus() 'override
+    
+    addSelectDirectoryMenu()
+    addShowDetailMenu()
+    Me._AddSpacer()
+    
+End
+
+Public Sub SelectLocationMenu_Click()
+    
+    If HaruhiUserLocation.ShowDialog() = MikuruDialog.ResponseApply Then
+        Raise LocationChanged
+    End If
+    
+End
+
+Public Sub ShowDetailMenu_Click()
+    
+    If NagatoWeatherCache.IsReady Then HaruhiWeatherForecast.Show()
+    
+End

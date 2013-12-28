@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $observer As Observer
+Private $drawingArea As DrawingArea
+
+Public Sub Refresh()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $observer = New Observer($drawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin($drawingArea)
+        Paint.DrawImage(Image.Load("pictures/default_persona.png"), 0, -88)
+    Paint.End()
+    
+End

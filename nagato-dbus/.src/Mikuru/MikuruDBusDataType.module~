@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Function Get(argType As String) As String
+    
+    Select Case argType
+        Case "ao"
+            Return "Object[]"
+        Case "b"
+            Return "Boolean"
+        Case "o"
+            Return "Object"
+        Case "s"
+            Return "String"
+        Case "u"
+            Return "Integer"
+        Default
+            Return argType
+    End Select
+    
+End
+

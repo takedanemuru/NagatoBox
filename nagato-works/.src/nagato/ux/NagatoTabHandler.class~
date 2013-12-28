@@ -1,0 +1,86 @@
+' Gambas class file
+
+Create Static
+
+Public Sub NewTab(argFunctionType As Integer, Optional argStartUp As Boolean = False)
+    
+    Dim yukiNewTab As Object
+    
+    If Not argStartUp Then Inc HaruhiMain.MainTabStrip.Count
+    
+    With MikuruFunctionType
+        Select Case argFunctionType
+            Case .AppLauncher
+                yukiNewTab = New NagatoAppLauncher(HaruhiMain.MainTabStrip) 
+            Case .Dictionary
+                yukiNewTab = New NagatoDictionary(HaruhiMain.MainTabStrip) 
+            Case .FileSelector
+                yukiNewTab = New NagatoFileSelector(HaruhiMain.MainTabStrip) 
+            Case .HighlightEditor
+                yukiNewTab = New NagatoHighlightEditor(HaruhiMain.MainTabStrip) 
+            Case .ImageViewer
+                yukiNewTab = New NagatoImageViewer(HaruhiMain.MainTabStrip) 
+            Case .Map
+                yukiNewTab = New NagatoMapView2(HaruhiMain.MainTabStrip) 
+            Case .MediaPlayer
+                yukiNewTab = New NagatoMediaPlayer(HaruhiMain.MainTabStrip)
+            Case .PdfViewer
+                yukiNewTab = New NagatoPdfViewer(HaruhiMain.MainTabStrip) 
+            Case .TextEditor
+                yukiNewTab = New NagatoTextEditor(HaruhiMain.MainTabStrip) 
+            Case .WebBrowser
+                yukiNewTab = New NagatoWebBrowser(HaruhiMain.MainTabStrip) 
+            Case .WebBookmarkEditor
+                yukiNewTab = New NagatoWebBookmarkEditor(HaruhiMain.MainTabStrip) 
+            Case .WebRecentPagesEditor
+                yukiNewTab = New NagatoWebRecentPagesEditor(HaruhiMain.MainTabStrip) 
+            Case .PureTextEditor
+                yukiNewTab = New NagatoPureTextEditor(HaruhiMain.MainTabStrip)
+            Case .TrashBin
+                yukiNewTab = New NagatoTrashBin(HaruhiMain.MainTabStrip)
+        End Select
+    End With
+    
+End
+
+Public Sub NewTabWithPath(argFunctionType As Integer, argPath As String)
+    
+    Dim yukiNewTab As Object
+    
+    Inc HaruhiMain.MainTabStrip.Count
+    
+    With MikuruFunctionType
+        Select Case argFunctionType
+            Case .AppLauncher
+                yukiNewTab = New NagatoAppLauncher(HaruhiMain.MainTabStrip)
+            Case .Dictionary
+                yukiNewTab = New NagatoDictionary(HaruhiMain.MainTabStrip, argPath) 
+            Case .FileSelector
+                yukiNewTab = New NagatoFileSelector(HaruhiMain.MainTabStrip, argPath) 
+            Case .HighlightEditor
+                yukiNewTab = New NagatoHighlightEditor(HaruhiMain.MainTabStrip, argPath) 
+            Case .ImageViewer
+                yukiNewTab = New NagatoImageViewer(HaruhiMain.MainTabStrip, argPath) 
+            Case .Map
+                yukiNewTab = New NagatoMapView(HaruhiMain.MainTabStrip) 
+            Case .MediaPlayer
+                yukiNewTab = New NagatoMediaPlayer(HaruhiMain.MainTabStrip, argPath) 
+            Case .PdfViewer
+                yukiNewTab = New NagatoPdfViewer(HaruhiMain.MainTabStrip, argPath) 
+            Case .TextEditor
+                yukiNewTab = New NagatoTextEditor(HaruhiMain.MainTabStrip, argPath) 
+            Case .WebBrowser
+                yukiNewTab = New NagatoWebBrowser(HaruhiMain.MainTabStrip, argPath) 
+            Case .PureTextEditor
+                yukiNewTab = New NagatoPureTextEditor(HaruhiMain.MainTabStrip, argPath)
+        End Select
+    End With
+    
+End
+
+Public Sub TabContent_NewTrashBin()
+    
+    ' NOW UNDER HEAVY CONSTRUCTION !!
+    ' PLEASE BE PATIENT !!
+    
+End

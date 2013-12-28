@@ -1,0 +1,110 @@
+' Gambas module file
+
+Property Read Grid As Integer
+Property Read Padding As Integer
+Property Read PlayButton As Rect
+Property Read PauseButton As Rect
+Property Read BackButton As Rect
+Property Read NextButton As Rect
+Property Read ShuffleButton As Rect
+Property Read RepeatButton As Rect
+Property Read PlaylistButton As Rect
+Property Read EditTagButton As Rect
+Property Read InfoBox As Rect
+Property Read ProgressBar As Rect
+
+Private Function Grid_Read() As Integer
+
+    If Desktop.Resolution > 96 Then
+        Return 16
+    Else
+        Return 8
+    End If
+
+End
+
+Private Function PlayButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 1 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function PauseButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 5 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function BackButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 9 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function NextButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 13 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function ShuffleButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 17 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function RepeatButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 21 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function PlaylistButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 25 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function EditTagButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 29 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
+Private Function InfoBox_Read() As Rect
+    
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 32 * Me.Grid, 34 * Me.Grid, 11 * Me.Grid)
+    
+    Return yukiRectangle
+    
+End
+
+Private Function ProgressBar_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 44 * Me.Grid, 34 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+    
+End
+
+Private Function Padding_Read() As Integer
+
+    Return 3 * Me.Grid
+
+End

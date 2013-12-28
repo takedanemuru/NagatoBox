@@ -1,0 +1,81 @@
+' Gambas class file
+
+Inherits NagatoGearMenu
+
+Property RevertMenuEnabled As Boolean
+Property SaveMenuEnabled As Boolean
+
+Public _$menuName As String = "EditorMenu"
+
+Private $revertMenu As Menu
+Private $saveMenu As Menu
+
+Event Revert
+Event Save
+
+Private Sub addRevertMenu()
+    
+    $revertMenu = New Menu(Me._$rootMenu) As "RevertMenu"
+    
+    With $revertMenu
+        .Text = ("Revert")
+        .Picture = Stock["small/revert"]
+        .Enabled = False
+    End With
+    
+End
+
+Private Sub addSaveMenu()
+    
+    $saveMenu = New Menu(Me._$rootMenu) As "SaveMenu"
+    
+    With $saveMenu
+        .Text = ("Save")
+        .Picture = Stock["small/save"]
+        .Enabled = False
+    End With
+    
+End
+
+Public Sub _AddAdditionalMenu() 'override
+    
+    addRevertMenu()
+    addSaveMenu()
+    
+End
+
+Public Sub SaveMenu_Click()
+    
+    Raise Save
+    
+End
+
+Public Sub RevertMenu_Click()
+    
+    Raise Revert
+    
+End
+
+Private Function SaveMenuEnabled_Read() As Boolean
+
+    Return $saveMenu.Enabled
+
+End
+
+Private Sub SaveMenuEnabled_Write(Value As Boolean)
+
+    $saveMenu.Enabled = Value
+
+End
+
+Private Function RevertMenuEnabled_Read() As Boolean
+
+    Return $revertMenu.Enabled
+
+End
+
+Private Sub RevertMenuEnabled_Write(Value As Boolean)
+
+    $revertMenu.Enabled = Value
+
+End

@@ -1,0 +1,71 @@
+' Gambas class file
+
+Private $headLines As New String[]
+Private $timer As New Timer As "Timer"
+Private $index As Integer = 0
+Private $progress As Integer = 0
+Private $ready As Boolean = False
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+        Dim yukiStream As Stream
+        Dim yukiLine As String
+        Dim yukiOffset As Integer
+
+        yukiStream = Open "rss/rss.xml" For Input
+        
+        While Not Eof(yukiStream)
+                Line Input #yukiStream, yukiLine
+                yukiOffset = String.InStr(yukiLine, "<title>")
+                If yukiOffset > 0 Then 
+                        yukiLine = String.Mid$(yukiLine, yukiOffset)
+                        yukiLine = Replace$(yukiLine, "<title>", "")
+                        yukiLine = Replace$(yukiLine, "</title>", "")
+                        Debug yukiLine
+                        $headLines.Add(yukiLine)
+                Endif
+        Wend
+        
+        Close #yukiStream
+        
+        $timer.Delay = 25
+        $ready = True
+
+End
+
+Public Sub Button1_Click()
+
+        $timer.Start()
+
+End
+
+Public Sub Timer_Timer()
+        
+        If Not $ready Then Return
+        
+        DrawingArea1.Refresh()
+        
+End
+
+Public Sub DrawingArea1_Draw()
+        
+        Dim yukiFont As New Font
+        
+        Draw.Foreground = Color.White
+        yukiFont.Size = 10
+        Draw.Font = yukiFont
+        Draw.Text($headLines[$index], $progress + 500, 100)
+        $progress -= 2
+        Debug $progress
+        If yukiFont.TextWidth($headLines[$index]) + $progress + 500 < 0 Then
+                Inc $index
+                If $index > $headLines.Max Then $index = 0
+                $progress = 0
+        Endif
+
+        
+End

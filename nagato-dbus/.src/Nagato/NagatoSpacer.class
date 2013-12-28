@@ -1,0 +1,9 @@
+' Gambas class file
+
+Public Sub _new(argContainer As Container)
+    
+    Dim yukiPanel As New Panel(argContainer)
+    
+    yukiPanel.Expand = True
+    
+End

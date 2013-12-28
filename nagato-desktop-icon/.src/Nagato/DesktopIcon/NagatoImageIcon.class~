@@ -1,0 +1,72 @@
+' Gambas class file
+
+Inherits NagatoIconThumbnail
+
+Private Const IconSize As Integer = 128
+
+Public Sub _SetIcon() 
+    
+    Dim yukiIcon As Image
+    Dim yukiRate As Float
+    
+    If NagatoDBThumbnailer.HasThumbnail(Me._$path, Me.FormWidth) Then
+        Me._$icon = NagatoDBThumbnailer.Get(Me._$path, Me.FormWidth).Image
+    Else
+        yukiIcon = Image.Load(Me._$path)
+        yukiRate = IconSize / Min(yukiIcon.Height, yukiIcon.Width)
+        Me._$icon = yukiIcon.Stretch(yukiIcon.W * yukiRate, yukiIcon.H * yukiRate)
+        NagatoDBThumbnailer.Push(Me._$path, Me.FormWidth, Me._$icon.Picture)
+    End If
+    
+    Me._$formHeight = IconSize
+    
+End
+
+Private Sub drawText()
+    
+    paint.Brush = paint.Color(Color.White)
+    paint.Font.Bold = True
+    With Me._$textArea
+        paint.RichText(Me._$text, .X, .Y, .W, .H, Align.Center)
+    End With
+    paint.Fill()
+    
+End
+
+Public Function _GetText() As String 'override
+    
+    Return File.Name(Me._$path)
+    
+End
+
+Public Sub _SetFormPicture(argBackground As Integer) 'override
+    
+    Dim yukiBaseImage As New Image(Min(Me._$icon.W, Me.FormWidth), IconSize, Color.Transparent)
+    
+    With paint
+        .Begin(yukiBaseImage)
+        .DrawImage(Me._$icon, (Me.FormWidth - Me._$icon.W) / 2, (IconSize - Me._$icon.H) / 2)
+        Me._DrawMaskArea(argBackground)
+        drawText()
+        .End()
+    End With
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+End
+
+Public Sub _SetForm()
+    
+    Me._InitializeForm(IconSize)
+    
+    Me._$form.Name = File.Name(Me._$path)
+        
+End
+
+Public Sub _AddStarMenu() 'override
+    
+    Dim yukiMenu As NagatoButtonMenuFileIcon
+    
+    yukiMenu = New NagatoButtonMenuFileIcon(Me._$form, Me._$starButton, Me._$path) As "StarMenu"
+    
+End

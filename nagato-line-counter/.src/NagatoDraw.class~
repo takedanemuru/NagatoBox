@@ -1,0 +1,30 @@
+' Gambas class file
+
+Create Static
+
+Private Function getNagatoImage(argDrawingArea As DrawingArea) As Image
+    
+    Dim yukiImage As Image = Image.Load("picture/nagato_with_book.jpg")
+    Dim yukiRate As Float = argDrawingArea.Height / yukiImage.Height
+    
+    Debug yukiImage.H
+    Debug yukiImage.W
+    Debug argDrawingArea.Height
+    Debug yukiRate
+    Debug yukiImage.H * yukiRate
+    
+    argDrawingArea.H = yukiImage.H
+    
+    Return yukiImage.Stretch(yukiImage.Height * yukiRate, yukiImage.Width * yukiRate)
+    
+End
+
+Public Sub WelcomeMessage(argDrawingArea As DrawingArea)
+    
+    With Paint
+        .Begin(argDrawingArea)
+        .DrawImage(getNagatoImage(argDrawingArea), 0, 0)
+        .End()
+    End With
+    
+End

@@ -1,0 +1,18 @@
+' Gambas module file
+
+Public Enum Center, Tile, Full, Fill
+
+Public Function getCommandLineOption(argMode As Integer) As String
+    
+    Select Case argMode
+        Case Center
+            Return "-center"
+        Case Tile
+            Return "-tile"
+        Case Full
+            Return "-full"
+        Case Fill
+            Return "-fill"
+    End Select
+    
+End

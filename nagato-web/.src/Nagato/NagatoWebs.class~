@@ -1,0 +1,133 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read ActiveTabTitle As String
+Property Read ActiveTabUrl As String
+Property Read ActiveIndex As Integer
+Property Read Titles As String[]
+
+Private $container As Container
+Private $webs As New Collection
+Private $webOrder As New Integer[]
+Private $webActiveIndex As Integer = 0
+
+Public Sub AddWeb(argUrl As String)
+    
+    Dim yukiUniqueIndex As Integer = MikuruUniqueIndex.Get()
+    Dim yukiWeb As New NagatoWeb($container, argUrl, yukiUniqueIndex) As "Menu"
+
+    $webs.Add(yukiWeb, yukiUniqueIndex)
+    $webOrder.Add(yukiUniqueIndex)
+    
+End
+
+Public Sub InsertWeb(argIndex As Integer, argUrl As String)
+    
+    Dim yukiUniqueIndex As Integer = MikuruUniqueIndex.Get()
+    Dim yukiWeb As New NagatoWeb($container, argUrl, yukiUniqueIndex) As "Menu"
+
+    $webs.Add(yukiWeb, yukiUniqueIndex)
+    $webOrder.Add(yukiUniqueIndex, argIndex)
+    
+End
+
+Public Sub ShowActiveTab()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $webOrder.Max
+        $webs[$webOrder[yukiCount]].Toggle($webOrder[$webActiveIndex])
+    Next
+    
+End
+
+Public Sub ShowLastTab()
+    
+    $webActiveIndex = $webOrder.Max
+    Me.ShowActiveTab()
+    
+End
+
+Public Sub ShowTab(argIndex As Integer)
+    
+    $webActiveIndex = argIndex
+    Me.ShowActiveTab()
+    
+End
+
+Public Sub SetActiveTabUrl(argUrl As String)
+    
+    $webs[$webOrder[$webActiveIndex]].SetUrl(argUrl)
+    
+End
+
+Public Sub RemoveTab(argTabIndex As Integer)
+    
+    Dim yukiNextActiveTabIndex As Integer = IIf(argTabIndex = $webOrder.Max, argTabIndex - 1, argTabIndex)
+    
+    If $webOrder.Count = 1 Then Return 'ignore
+    
+    $webs[$webOrder[argTabIndex]].Delete()
+    $webs.Remove($webOrder[argTabIndex])
+    $webOrder.Remove(argTabIndex)
+    
+    $webActiveIndex = yukiNextActiveTabIndex
+    Me.ShowActiveTab()
+    
+End
+
+Public Sub InPageSearch(argQuery As String)
+    
+    $webs[$webOrder[$webActiveIndex]].InPageSearch(argQuery)
+    
+End
+
+Public Sub Forward()
+    
+    $webs[$webOrder[$webActiveIndex]].Forward()
+    
+End
+
+Public Sub Back()
+    
+    $webs[$webOrder[$webActiveIndex]].Back()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    
+End
+
+Private Function ActiveTabTitle_Read() As String
+
+    Return $webs[$webOrder[$webActiveIndex]].Title
+
+End
+
+Private Function ActiveIndex_Read() As Integer
+
+    Return $webActiveIndex
+
+End
+
+Private Function ActiveTabUrl_Read() As String
+
+    Return $webs[$webOrder[$webActiveIndex]].Url
+
+End
+
+Private Function Titles_Read() As String[]
+
+    Dim yukiCount As Integer
+    Dim yukiReturn As New String[]
+
+    For yukiCount = 0 To $webOrder.Max
+        yukiReturn.Add($webs[$webOrder[yukiCount]].Title)
+    Next
+
+    Return yukiReturn
+
+End

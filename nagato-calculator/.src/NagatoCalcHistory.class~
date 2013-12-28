@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private $history As New NagatoCalcElement[]
+
+Event OutOfBounds
+
+Public Sub Undo() As Float
+        
+        Dim yukiResult As Float = 0
+        Dim yukiCounter As Integer
+        
+        If 1 >= $history.Count Then Return 0
+        
+        For yukiCounter = 0 To $history.Max - 1
+                yukiResult = $history[yukiCounter].Execute(yukiResult)
+        Next
+        
+        $history.Resize($history.Count - 1)
+        
+        Return yukiResult
+        
+End
+
+Public Sub Add(argElement As NagatoCalcElement)
+        
+        $history.Add(argElement)
+        
+End
+
+Public Sub Clear()
+        
+        $history.Clear()
+        
+End
+
+
+Public Sub _new()
+        
+        
+        
+End

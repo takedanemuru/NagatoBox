@@ -1,0 +1,17 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,46,47)
+  { ExitButton Button
+    MoveScaled(1,42,14,4)
+    Text = ("Exit")
+  }
+  { RebootButton Button
+    MoveScaled(16,42,14,4)
+    Text = ("Reboot")
+  }
+  { ShutdownButton Button
+    MoveScaled(31,42,14,4)
+    Text = ("Shutdown")
+  }
+}

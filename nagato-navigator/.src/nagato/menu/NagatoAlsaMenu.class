@@ -1,0 +1,72 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private $channel As String
+Private $volume As Integer
+
+Private Function addIndicationMenu() As Boolean
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    If MikuruAlsa.GetAlsaVolume("Master").Count > 0 Then
+        $channel = "Master"
+        $volume = MikuruAlsa.GetAlsaVolume($channel)[0]
+        yukiMenu.Picture = MikuruMonoIconBlue.Get("speaker", 2 * MikuruUX.Grid)
+        yukiMenu.Text = Subst$("ALSA Master: &1%", $volume)
+        Return True
+    Else If MikuruAlsa.GetAlsaVolume("PCM").Count > 0 Then
+        $channel = "PCM"
+        $volume = MikuruAlsa.GetAlsaVolume($channel)[0]
+        yukiMenu.Picture = MikuruMonoIconBlue.Get("speaker", 2 * MikuruUX.Grid)
+        yukiMenu.Text = Subst$("ALSA PCM: &1%", $volume)
+        Return True
+    Else
+        yukiMenu.Picture = Picture["super-mono/basic/blue/speaker-mute.png"]
+        yukiMenu.Text = ("Couldn't find valid alsa volume channel.")
+        Return False
+    Endif
+    
+End
+
+Private Sub addVolumeMenu()
+    
+    Dim yukiCount As Integer
+    Dim yukiMenu As Menu
+    
+    For yukiCount = 100 DownTo 10 Step 10
+        yukiMenu = New Menu(Me._$rootMenu) As "VolumeMenu"
+        yukiMenu.Text = Subst$(("&1%"), yukiCount)
+        yukiMenu.Tag = yukiCount
+        If yukiCount = $volume Then yukiMenu.Picture = MikuruMonoIconBlue.Get("button-check", 2 * MikuruUX.Grid)
+    Next
+    
+End
+
+Private Sub addMuteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "VolumeMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/speaker-mute.png"]
+        .Text = ("Mute")
+        .Tag = 0
+    End With
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    If addIndicationMenu() Then
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+        addVolumeMenu()
+        addMuteMenu()
+    Endif
+    
+End
+
+Public Sub VolumeMenu_Click()
+    
+    Shell Subst$("amixer sset &1 &2%", $channel, Last.Tag)
+    
+End

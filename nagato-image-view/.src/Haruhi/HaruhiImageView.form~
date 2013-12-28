@@ -1,0 +1,38 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["pictures/nagato_icons/presentation.png"]
+  Arrangement = Arrange.Vertical
+  { MenuBox HBox
+    MoveScaled(0,0,36,3.4286)
+    { ZoomInButton Button
+      MoveScaled(0,1,5,4)
+      AutoResize = True
+      Picture = Picture["icon:/medium/zoom-in"]
+    }
+    { ZoomOutButton Button
+      MoveScaled(6,1,5,4)
+      AutoResize = True
+      Picture = Picture["icon:/medium/zoom-out"]
+    }
+    { SpacerPanel Panel
+      MoveScaled(18,1,13,2)
+      Expand = True
+    }
+    { MenuButton1 MenuButton
+      MoveScaled(32,1,4,4)
+      AutoResize = True
+      Picture = Picture["pictures/nagato_icons/star.png"]
+      Arrow = False
+    }
+  }
+  { MenuBox2 HBox
+    MoveScaled(18,8,27,4)
+  }
+  { MainView ImageView
+    MoveScaled(4,17,34,28)
+    Expand = True
+    Grid = True
+  }
+}

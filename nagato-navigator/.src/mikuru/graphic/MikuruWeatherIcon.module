@@ -1,0 +1,78 @@
+' Gambas module file
+
+Public Function GetMonoIcon(argCondition As String) As Picture
+    
+    Select Case argCondition
+        Case "clear", "sunny", "mostlysunny"
+            Return Picture["super-mono/basic/blue/weather-sun.png"]
+        Case "fog", "hazy"
+            Return Picture["super-mono/basic/blue/weather-clouds.png"]
+        Case "rain", "chancerain"
+            Return Picture["super-mono/basic/blue/weather-rain.png"]
+        Case "snow", "sleet", "flurries", "chanceflurries", "chancesleet", "chancesnow"
+            Return Picture["super-mono/basic/blue/weather-snow.png"]
+        Case "tstorms", "chancetstorms"
+            Return Picture["super-mono/basic/blue/weather-thunder.png"]
+        Case "cloudy"
+            Return Picture["super-mono/basic/blue/weather-clouds.png"]
+        Case "partlycloudy"
+            Return Picture["super-mono/basic/blue/weather-cloudy.png"]
+        Case "mostlycloudy"
+            Return Picture["super-mono/basic/blue/weather-clouds.png"]
+        Default
+            Return Picture["super-mono/basic/blue/question.png"]
+    End Select
+    
+End
+
+Public Function GetDayIcon(argCondition As String) As Picture
+    
+    Select Case argCondition
+        Case "clear", "sunny", "mostlysunny"
+            Return Picture["weather_icons/sunny.png"]
+        Case "fog", "hazy"
+            Return Picture["weather_icons/fog.png"]
+        Case "rain", "chancerain"
+            Return Picture["weather_icons/shower3.png"]
+        Case "snow", "sleet", "flurries", "chanceflurries", "chancesleet", "chancesnow"
+            Return Picture["weather_icons/snow4.png"]
+        Case "tstorms", "chancetstorms"
+            Return Picture["weather_icons/tstorm3.png"]
+        Case "cloudy"
+            Return Picture["weather_icons/cloudy5.png"]
+        Case "partlycloudy"
+            Return Picture["weather_icons/cloudy2.png"]
+        Case "mostlycloudy"
+            Return Picture["weather_icons/cloudy4.png"]
+        Default
+            Return Picture["weather_icons/dunno.png"]
+    End Select
+    
+End
+
+Public Function GetNightIcon(argCondition As String) As Picture
+    
+    Select Case argCondition
+        Case "clear", "sunny", "mostlysunny"
+            Return Picture["weather_icons/sunny_night.png"]
+        Case "fog", "hazy"
+            Return Picture["weather_icons/fog.png"]
+        Case "rain", "chancerain"
+            Return Picture["weather_icons/shower3.png"]
+        Case "snow", "sleet", "flurries", "chanceflurries", "chancesleet", "chancesnow"
+            Return Picture["weather_icons/snow4.png"]
+        Case "tstorms"
+            Return Picture["weather_icons/tstorm3.png"]
+        Case "chancetstorms"
+            Return Picture["weather_icons/tstorm2_night.png"]
+        Case "cloudy"
+            Return Picture["weather_icons/cloudy5.png"]
+        Case "partlycloudy"
+            Return Picture["weather_icons/cloudy2_night.png"]
+        Case "mostlycloudy"
+            Return Picture["weather_icons/cloudy4_night.png"]
+        Default
+            Return Picture["weather_icons/dunno.png"]
+    End Select
+    
+End

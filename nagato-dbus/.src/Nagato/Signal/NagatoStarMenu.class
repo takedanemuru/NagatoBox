@@ -1,0 +1,57 @@
+' Gambas class file
+
+Inherits NagatoMenuSignal
+
+Private $button As MenuButton
+Private $rootMenu As Menu
+
+Private Sub setRootMenu()
+    
+    $rootMenu = New Menu(HaruhiMain)
+    
+    $rootMenu.Name = "UniqueName"
+    $button.Menu = $rootMenu.Name
+    
+End
+
+Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Private Sub setSubMenu()
+    
+    addMenuItem(("Refresh"), MikuruSignal.DBusRefresh, "button-rotate-cw")
+        addMenuItem("", 0)
+    addMenuItem(("About nagato-dbus-finder"), 0, "star")
+    addMenuItem(("Quit"), 1, "button-power")
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton)
+    
+    $button = argMenuButton
+    setRootMenu()
+    setSubMenu()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case 0
+            HaruhiAbout.ShowDialog()
+        Case 1
+            HaruhiMain.Close()
+        Case MikuruSignal.DBusRefresh
+            Raise Signal(Last.Tag, [""])
+    End Select
+    
+End

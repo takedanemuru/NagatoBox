@@ -1,0 +1,21 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,68,18)
+  Resizable = False
+  Arrangement = Arrange.Fill
+  Spacing = True
+  { VBox1 VBox
+    MoveScaled(0,2,67,15)
+    Expand = True
+    { Label1 Label
+      MoveScaled(1,1,65,8)
+      Background = Color.TextBackground
+      Expand = True
+      Alignment = Align.Center
+    }
+    { ProgressBar1 ProgressBar
+      MoveScaled(1,11,64,3)
+    }
+  }
+}

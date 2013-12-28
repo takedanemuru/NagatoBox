@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private $radioGridView As NagatoWebRadioGridView
+
+Private $observer As Observer
+Private $gridsPlaylist As NagatoGridsPlaylist
+
+Public Sub MoveTo(argUrl As String)
+    
+    $gridsPlaylist.MoveTo(argUrl)
+    
+End
+
+Public Sub _new()
+
+    Dim yukiMenu As New NagatoPlaylistMenu
+
+    MenuButton.Menu = yukiMenu.Name
+
+    $radioGridView = New NagatoWebRadioGridView(WebRadioGridView) As "WebRadioGrids"
+    $observer = New Observer(NagatoQueue) As "Asakura"
+    NagatoSettingsForm.Load(Me)
+    $gridsPlaylist = New NagatoGridsPlaylist(PlaylistGrid)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsMusic.SavePaths(NagatoQueue.Paths)
+    NagatoSettingsForm.Save(Me)
+    
+End
+
+Public Sub PlaylistGrid_Activate()
+    
+    Object.Lock($observer)
+        NagatoQueue.SetPathAndPlay(NagatoQueue.Paths[PlaylistGrid.Row])
+        $gridsPlaylist.SetMark(PlaylistGrid.Row)
+    Object.Unlock($observer)
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    $gridsPlaylist.Refresh()
+    
+End

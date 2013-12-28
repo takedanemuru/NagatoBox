@@ -1,0 +1,20 @@
+' Gambas module file
+
+Public Function GetUniqueRandomNumbers(argMax As Integer) As Integer[]
+    
+    Dim yukiReturn As New Integer[]
+    Dim yukiNumber As Integer
+    
+    Do
+        yukiNumber = Int(Rnd(0, argMax + 1))
+        If Not yukiReturn.Exist(yukiNumber) Then yukiReturn.Add(yukiNumber)
+        Debug yukiReturn.Count
+        If yukiReturn.Count = argMax Then Break
+    Loop
+    
+    Debug yukiReturn.Count
+    
+    Return yukiReturn
+    
+End
+

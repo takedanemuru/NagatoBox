@@ -1,0 +1,70 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Property Text As String
+
+Private $comboBox As ComboBox
+Private $baseDirectory As String = ""
+
+Event Click(argPath As String)
+
+Private Sub initializeWidget()
+    
+    $comboBox = New ComboBox(Me._$parent) As "ComboBox"
+    
+    With $comboBox
+        .Expand = True
+    End With
+    
+End
+
+Public Sub SetFocus()
+    
+    $comboBox.SetFocus()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    initializeWidget()
+    
+End
+
+Public Sub ComboBox_KeyPress()
+    
+    If Key.Code = String.Code("\n") Then Return
+    
+    If Exist($comboBox.Text) Then Raise Click($comboBox.Text)
+    
+End
+
+Public Sub ComboBox_Click()
+    
+    $comboBox.Text = $baseDirectory &/ $comboBox.List[$comboBox.Index]
+    
+    If Exist($comboBox.Text) Then Raise Click($comboBox.Text)
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $comboBox.Text
+
+End
+
+Private Sub Text_Write(Value As String)
+    
+    Object.Lock($comboBox)
+    
+    $comboBox.Text = Value
+    
+    If Exist($comboBox.Text) Then
+        $baseDirectory = Value
+        $comboBox.List = Dir($comboBox.Text, "*", gb.Directory).Sort()
+    Endif
+    
+    Object.Unlock($comboBox)
+    
+End

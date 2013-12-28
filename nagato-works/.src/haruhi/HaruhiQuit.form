@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  Text = ("Are you sure to close ?")
+  Picture = Picture["pictures/yuki_quit.jpg"]
+  Resizable = False
+  { QuitButton Button
+    MoveScaled(28,37,13,4)
+    Text = ("Quit")
+  }
+  { CancelButton Button
+    MoveScaled(14,37,13,4)
+    Text = ("Cancel")
+  }
+}

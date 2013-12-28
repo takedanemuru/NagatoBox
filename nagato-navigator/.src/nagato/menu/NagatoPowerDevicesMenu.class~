@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Sub addProperties(argMenu As Menu, argText As String)
+    
+    Dim yukiMenu As Menu
+    
+    yukiMenu = New Menu(argMenu)
+    yukiMenu.Text = argText
+    
+End
+
+Private Sub addPowerDeviceMenu(argIndex As Integer)
+    
+    Dim yukiMenu As Menu = New Menu(Me._$rootMenu)
+    Dim yukiDevice As New NagatoPowerDevice(argIndex)
+    
+    With yukiMenu
+        .Text = yukiDevice.TypeName
+        .Picture = yukiDevice.Icon
+    End With
+    
+    addProperties(yukiMenu, IIf(yukiDevice.Online, "Online", "Offline"))
+    If yukiDevice.Type = 2 Then addProperties(yukiMenu, Subst$("&1%", yukiDevice.Percentage))
+    
+End
+
+Public Sub _InitializeMenu() 'override
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To NagatoUPower.Count - 1
+        addPowerDeviceMenu(yukiIndex)
+    Next
+    
+    Debug NagatoUPower.LidForceSleep
+    
+End

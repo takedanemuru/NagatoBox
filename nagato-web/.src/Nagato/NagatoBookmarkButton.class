@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoMenuWidget
+
+Public Sub _InitializeWidget() ' override
+    
+    Dim yukiButton As New MenuButton(Me._$container)
+    Dim yukiMenu As New NagatoBookmarkMenu(yukiButton) As "Menu"
+    
+    With yukiButton
+        .Expand = False
+        .Border = False
+        .Width = Me._$container.Height
+        .Picture = MikuruIcon.Get("book-bookmark")
+    End With
+    
+End

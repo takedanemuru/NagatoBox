@@ -1,0 +1,18 @@
+' Gambas module file
+
+Public Function Get(argRow As Integer, argGrid As GridView) As String
+    
+    Dim yukiDirectory As String 
+    Dim yukiPath As String
+    
+    yukiDirectory = IIf(argGrid = .GlobalAutostartGrid, MikuruAutostartDirectory.Global, MikuruAutostartDirectory.User)
+    yukiPath = yukiDirectory &/ argGrid[argRow, 1].Text & ".desktop"
+    
+    NagatoEditorHandler.CurrentPath = yukiPath
+    
+    Return File.Load(yukiPath)
+    
+Catch
+    Return "YUKI.N > Sorry, but I couldn't load any file..."
+    
+End

@@ -1,0 +1,68 @@
+' Gambas class file
+
+Private Sub newTab(Optional argPath As String = "")
+    
+    Dim yukiTextPad As NagatoTextPad
+    
+    Inc MainTabs.Count
+    MainTabs.Index = MainTabs.Count - 1
+
+    yukiTextPad = New NagatoTextPad(MainTabs, argPath) As "TextPad"
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    
+    yukiDesktopWindow.Desktop = Desktop.Current
+    yukiDesktopWindow.Activate()
+    
+    newTab(argPath)
+    
+End
+
+Public Sub OpenWithPath(Optional argPath As String = "")
+    
+    Dim yukiTextPad As NagatoTextPad
+    
+    yukiTextPad = New NagatoTextPad(MainTabs, argPath) As "TextPad"
+    
+    Object.Lock(Me)
+        Me.Show()
+        NagatoSettings.LoadFormSettings(Me)
+    Object.Unlock(Me)
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    NagatoDBus.Unregister()
+    
+End
+
+Public Sub TextPad_Signal(argSignal As Integer, argValue As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ViewNewTab
+            newTab()
+        Case MikuruSignal.ViewNewTabWithPath
+            newTab(argValue[0])
+    End Select
+    
+End
+
+Public Sub MainTabs_Close(Index As Integer)
+
+    Dim yukiCount As Integer
+
+    If MainTabs.Count = 1 Then Return
+
+    For yukiCount = MainTabs[Index].Children.Count - 1 DownTo 0
+        MainTabs[Index].Children[yukiCount].Delete()
+    Next
+    
+    MainTabs[Index].Delete()
+
+End

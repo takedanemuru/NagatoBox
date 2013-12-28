@@ -1,0 +1,54 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Path As String
+
+Private $pathBar As ButtonBox
+
+Private Sub initializeButtonBox(argContainer As Container)
+    
+    $pathBar = New ButtonBox(argContainer) As "PathBar"
+    
+    With $pathBar
+        .Expand = True
+        .Picture = MikuruIcon.Get("button-rotate-ccw")
+    End With
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    If Not Exist(argPath) Then Return
+    
+    Object.Lock($pathBar)
+        $pathBar.Text = argPath
+    Object.Unlock($pathBar)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButtonBox(argContainer)
+    
+End
+
+Public Sub PathBar_Activate()
+    
+    If Not Exist($pathBar.Text) Then Return
+    
+    Raise MenuEventWithArg(NagatoMenuPipe.PathNew, $pathBar.Text)
+    
+End
+
+Public Sub PathBar_Click()
+    
+    PathBar_Activate()
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $pathBar.Text
+
+End

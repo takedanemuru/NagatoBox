@@ -1,0 +1,60 @@
+' Gambas class file
+
+Inherits NagatoIcon
+
+Private $timer As New Timer As "Timer"
+Private $onMouse As Boolean
+
+Private Function getBatteryText() As String
+    
+    Dim yukiStatus As String = IIf(NagatoUPower.IsOnline, "Plugged", "On battery")
+    
+    Return Subst$("&1<br>&2%", yukiStatus, NagatoUPower.TotalBatteryPercentage)
+    
+End
+
+Private Sub setFormPicture(Optional argBackground As Integer = Color.Lighter(Color.Blue))
+    
+    Dim yukiBaseImage As New Image(Me.FormWidth, Me._$form.Width, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.DrawImage(MikuruIcon.Get("battery", 48).Image, 40, 8)
+        Paint.Font.Bold = True
+        Paint.DrawRichText(getBatteryText(), 0, 64, 128, Me._$form.Height - 72, Align.Center)
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+End
+
+Public Sub _new()
+    
+    Me._InitializeForm(128)
+    Me._$form.Show
+    Me._$form.Height = Me._$form.Font.RichTextHeight(getBatteryText()) + 72
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    With NagatoSettings
+        setFormPicture(IIf($onMouse, .BackgroundHighlight, .BackgroundFile))
+    End With
+    
+End
+
+Public Sub _OnMouseEnter()
+    
+    $onMouse = True
+    setFormPicture(NagatoSettings.BackgroundHighlight)
+    
+End
+
+Public Sub _OnMouseLeave()
+    
+    $onMouse = False
+    setFormPicture(NagatoSettings.BackgroundFile)
+    
+End

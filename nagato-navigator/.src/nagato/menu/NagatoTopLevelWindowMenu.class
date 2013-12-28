@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Function getDesktopWindowFromObject(argWindow As Object) As DesktopWindow
+    
+    Return Desktop.Windows.FromHandle(Object.GetProperty(argWindow, "id"))
+    
+End
+
+Private Sub setIndivisualMenu(argWindow As Object)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TopLevelWindowMenu"
+    Dim yukiDesktopWindow As DesktopWindow = getDesktopWindowFromObject(argWindow)
+
+    With yukiMenu
+        .Text = yukiDesktopWindow.Name
+        If yukiDesktopWindow.Icon <> Null Then .Picture = yukiDesktopWindow.Icon.Picture
+        .Tag = yukiDesktopWindow.Id
+    End With
+    
+End
+
+Public Sub _InitializeMenu()
+    
+    Dim yukiWindow As Object
+    
+    For Each yukiWindow In Desktop.Windows
+        setIndivisualMenu(yukiWindow)
+    Next
+    
+End
+
+Public Sub TopLevelWindowMenu_Click()
+    
+    Desktop.Current = Desktop.Windows.FromHandle(Last.Tag).Desktop
+    Debug Last.Tag
+    Desktop.ActiveWindow = Last.Tag
+    
+End

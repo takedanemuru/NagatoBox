@@ -1,0 +1,140 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private $desktopFileArray As Object[]
+Private $iconSize As Integer 
+Private $iconView As IconView
+
+Private Sub initializeIconView(argPath As String)
+    
+    $iconView = New IconView(Me._$parent) As "IconView"
+    
+    With $iconView
+        .Expand = True
+        .Sorted = True
+        .Picture = Picture["pictures/dounidemonare.jpg"]
+    End With
+    
+    $iconSize = NagatoIconSize.SIZE_LARGE
+    RefreshIcons()
+    
+    Debug argPath ' check path, must be "".
+    
+End
+
+Private Function getDesktopFileArray(argCategory As String) As Object[]
+    
+    Select Case argCategory
+        Case "Utility"
+            Return NagatoMenuCache.Utilities
+        Case "Network"
+            Return NagatoMenuCache.Networks
+        Case "Office"
+            Return NagatoMenuCache.Offices
+        Case "Graphics"
+            Return NagatoMenuCache.Graphics
+        Case "Game"
+            Return NagatoMenuCache.Games
+        Case "System"
+            Return NagatoMenuCache.Systems
+        Case "Media"
+            Return NagatoMenuCache.Medias
+        Case "Development"
+            Return NagatoMenuCache.Developments
+        Case "Education"
+            Return NagatoMenuCache.Educations
+        Case "Settings"
+            Return NagatoMenuCache.Settings
+        Case "Nagato"
+            Return NagatoMenuCache.NagatoSoftwareCompilationApplications
+        Default
+            Return NagatoMenuCache.AllApplications
+    End Select
+
+End
+
+Private Function filterWithQuery(argQuery As String) As Object[]
+    
+    Dim yukiDesktopFile As NagatoDesktopFile
+    Dim yukiResult As New Object[]
+    
+    For Each yukiDesktopFile In $desktopFileArray
+        If yukiDesktopFile.Name Like ("*" & argQuery & "*") Then yukiResult.Add(yukiDesktopFile)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub _Initialize(argPath As String) ' override NagatoMainPane Method
+    
+    If Not NagatoMenuCache.Ready Then NagatoMenuCache.Activate()
+    $desktopFileArray = NagatoMenuCache.AllApplications
+    initializeIconView(argPath)
+    
+End
+
+Public Sub RefreshIcons()
+    
+    Dim yukiDesktopFile As NagatoDesktopFile
+    
+    $iconView.Clear()
+    
+    For Each yukiDesktopFile In $desktopFileArray
+        With yukiDesktopFile
+            $iconView.Add(.Path, .Name, .GetIcon(NagatoIconSize.GetIconSize($iconSize)))
+        End With
+    Next
+    
+End
+
+Public Sub SetCategory(argCategory As String)
+    
+    $desktopFileArray = getDesktopFileArray(argCategory)
+    RefreshIcons()
+    
+End
+
+Public Sub SetCategoryWithQuery(argCategory As String, argQuery As String)
+    
+    $desktopFileArray = getDesktopFileArray(argCategory)
+    $desktopFileArray = filterWithQuery(argQuery)
+    RefreshIcons()
+    
+End
+
+Public Sub ChangeIconSize(argIconSizeIndex As Integer)
+    
+    $iconSize = argIconSizeIndex
+    RefreshIcons()
+    
+End
+
+Public Sub IconView_Menu()
+    
+    Dim yukiMenu As NagatoAppLauncherContextMenu
+    
+    yukiMenu = New NagatoAppLauncherContextMenu(Kyon, $iconView.Current.Key) As "ContextMenu"
+    yukiMenu.PopUp()
+    
+Catch ' to avoid crash, when no icon selected.
+    Return
+    
+End
+
+Public Sub IconView_Activate() ' "Activate" means "double click"
+    
+    Dim yukiDesktopFile As New DesktopFile($iconView.Key) 
+    
+    yukiDesktopFile.Run("")
+    
+End
+
+Public Sub ContextMenu_Launch(argPath As String)
+    
+    Dim yukiDesktopFile As New DesktopFile($iconView.Key) 
+    
+    yukiDesktopFile.Run("")
+    
+End

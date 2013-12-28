@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NekomimiEngineCore
+
+Private Function getCalendarValue(argOrder As Integer) As Integer
+    
+    Dim nekomimiNow As Date = Now
+    
+    Select Case argOrder
+        Case 0
+            Return (Year(nekomimiNow) Mod 100) Div 10
+        Case 1
+            Return Year(nekomimiNow) Mod 10
+        Case 2
+            Return Month(nekomimiNow) Div 10
+        Case 3
+            Return Month(nekomimiNow) Mod 10
+        Case 4
+            Return Day(nekomimiNow) Div 10
+        Case 5
+            Return Day(nekomimiNow) Mod 10
+    End Select
+    
+End
+
+Public Sub _setProperties()
+    
+    Dim nekomimiOrder As Integer[] = NekomimiSettings.getCalendarOrder()
+    
+    Me.$hourTen = getCalendarValue(nekomimiOrder[0])
+    Me.$hourOne = getCalendarValue(nekomimiOrder[1])
+    Me.$MinuteTen = getCalendarValue(nekomimiOrder[2])
+    Me.$MinuteOne = getCalendarValue(nekomimiOrder[3])
+    Me.$secondTen = getCalendarValue(nekomimiOrder[4])
+    Me.$secondOne = getCalendarValue(nekomimiOrder[5])
+    
+    Me.$timer.Stop()
+    
+End

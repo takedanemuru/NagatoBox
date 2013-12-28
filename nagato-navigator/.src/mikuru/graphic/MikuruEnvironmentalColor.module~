@@ -1,0 +1,97 @@
+' Gambas module file
+
+Private Function getSunnyColor(argCelsius As Integer) As Integer
+    
+    If argCelsius >= 30 Then
+        Return MikuruColor.SunnyHot
+    Else If 30 > argCelsius And If argCelsius >= 20 Then
+        Return MikuruColor.SunnyWarm
+    Else If 20 > argCelsius And If argCelsius >= 10 Then
+        Return MikuruColor.SunnyNormal
+    Else If 10 > argCelsius And If argCelsius >= 0 Then
+        Return MikuruColor.SunnyCold
+    Else If 0 > argCelsius Then
+        Return MikuruColor.SunnyChill
+    Endif
+    
+End
+
+Private Function getCloudyColor(argCelsius As Integer) As Integer
+    
+    If argCelsius >= 30 Then
+        Return MikuruColor.CloudyHot
+    Else If 30 > argCelsius And If argCelsius >= 20 Then
+        Return MikuruColor.CloudyWarm
+    Else If 20 > argCelsius And If argCelsius >= 10 Then
+        Return MikuruColor.CloudyNormal
+    Else If 10 > argCelsius And If argCelsius >= 0 Then
+        Return MikuruColor.CloudyCold
+    Else If 0 > argCelsius Then
+        Return MikuruColor.CloudyChill
+    Endif
+    
+End
+
+Private Function getRainyColor(argCelsius As Integer) As Integer
+    
+    If argCelsius >= 30 Then
+        Return MikuruColor.RainyHot
+    Else If 30 > argCelsius And If argCelsius >= 20 Then
+        Return MikuruColor.RainyWarm
+    Else If 20 > argCelsius And If argCelsius >= 10 Then
+        Return MikuruColor.RainyNormal
+    Else If 10 > argCelsius And If argCelsius >= 0 Then
+        Return MikuruColor.RainyCold
+    Else If 0 > argCelsius Then
+        Return MikuruColor.RainyChill
+    Endif
+    
+End
+
+Private Function getSnowyColor(argCelsius As Integer) As Integer
+    
+    If argCelsius >= 10 Then
+        Return MikuruColor.SnowyNormal
+    Else If 10 > argCelsius And If argCelsius >= 0 Then
+        Return MikuruColor.SnowyCold
+    Else If 0 > argCelsius Then
+        Return MikuruColor.SnowyChill
+    Endif
+    
+End
+
+Public Function GetWeather(argCelsius As Integer, argCondition As String) As Integer
+    
+    Select Case argCondition
+        Case "clear", "sunny", "mostlysunny"
+            Return getSunnyColor(argCelsius)
+        Case "fog", "hazy", "cloudy", "partlycloudy", "mostlycloudy"
+            Return getCloudyColor(argCelsius)
+        Case "rain", "chancerain"
+            Return getRainyColor(argCelsius)
+        Case "snow", "sleet", "flurries", "chanceflurries", "chancesleet", "chancesnow"
+            Return getSnowyColor(argCelsius)
+        Case "tstorms", "chancetstorms"
+            Return getCloudyColor(argCelsius)
+        Default
+            Return getSunnyColor(argCelsius)
+    End Select
+    
+End
+
+Public Function GetWeatherColor(argCelsius As Integer, argIconIndex As Integer) As Integer
+    
+    Select Case argIconIndex
+        Case 1, 2, 16
+            Return getSunnyColor(argCelsius)
+        Case 3, 4, 15, 17
+            Return getCloudyColor(argCelsius)
+        Case 5, 6, 9, 10, 11, 18, 22
+            Return getRainyColor(argCelsius)
+        Case 7, 8, 9, 12, 13, 14, 19, 20, 21, 23
+            Return getSnowyColor(argCelsius)
+        Default
+            Return getSunnyColor(argCelsius)
+    End Select
+    
+End

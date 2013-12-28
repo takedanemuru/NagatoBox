@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoMenuSignal
+
+Private $tabstrip As TabStrip
+Private $container As VBox
+Private $menuBar As NagatoMenuBar
+Private $textArea As NagatoTextArea
+Private $status As NagatoTextStatus
+
+Private Sub setTitle(argTitle As String)
+    
+    $tabstrip[$tabstrip.FindIndex($container)].Text = argTitle
+    
+End
+
+Private Sub openInCurrentTab()
+    
+    If Not MikuruDialog.SelectTextFile() Then
+        Try $textArea.Text = File.Load(MikuruDialog.TextFilePath)
+        If Not Error Then
+            $status.NewPath(MikuruDialog.TextFilePath)
+            setTitle(File.Name(MikuruDialog.TextFilePath))
+        End If
+    Endif
+    
+End
+
+Private Sub openInNewTab()
+    
+    If Not MikuruDialog.SelectTextFile() Then Raise Signal(MikuruSignal.ViewNewTabWithPath, [MikuruDialog.TextFilePath])
+    
+End
+
+Private Sub openFile()
+    
+    Select Case Message.Question(("Where Do you Open the file ?"), ("Current tab"), ("New tab"), ("Cancel"))
+        Case 1
+            openInCurrentTab()
+        Case 2
+            openInNewTab()
+    End Select
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    $textArea.Text = argText
+    
+End
+
+Public Sub _new(argTabstrip As TabStrip, Optional argPath As String = "")
+    
+    $tabstrip = argTabstrip
+    $container = New VBox($tabstrip)
+    $container.Expand = True
+    
+    $menuBar = New NagatoMenuBar($container) As "NagatoMenu"
+    $textArea = New NagatoTextArea($container) As "NagatoMenu"
+    $status = New NagatoTextStatus(argPath) As "NagatoMenu"
+    
+    If argPath <> "" Then 
+        $textArea.Text = File.Load(argPath)
+        setTitle(File.Name(argPath))
+    Else
+        setTitle(("untitled"))
+    End If 
+    
+End
+
+Public Sub NagatoMenu_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ViewNewTab
+            Raise Signal(argSignal, argValues)
+        Case MikuruSignal.FileOpen
+            openFile()
+        Case MikuruSignal.FileSave
+            $status.Save($textArea.Text)
+            setTitle(File.Name($status.Path))
+        Case MikuruSignal.EditChange
+            $status.Change()
+    End Select
+    
+End

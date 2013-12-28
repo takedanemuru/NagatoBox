@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,72,51)
+  Arrangement = Arrange.Vertical
+  { HPanel1 HPanel
+    MoveScaled(1,2,68,4)
+  }
+  { GridView1 GridView
+    MoveScaled(2,7,69,42)
+    Expand = True
+  }
+}

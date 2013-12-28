@@ -1,0 +1,13 @@
+' Gambas class file
+
+Event Finished
+
+Public Sub UnzipOverwrite(argWorkingDirectory As String, argSourcePath As String, argTargetPath As String)
+    
+    If Exist(argTargetPath) Then Kill argTargetPath
+    
+    Shell Subst$("unzip -d &1 &2", argWorkingDirectory, argSourcePath) Wait
+    
+    Raise Finished
+    
+End

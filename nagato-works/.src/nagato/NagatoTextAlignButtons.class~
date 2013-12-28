@@ -1,0 +1,96 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Event Left
+Event Center
+Event Fill
+Event Right
+
+Private Sub addButtonAlignLeft()
+    
+    Dim yukiAlignLeft As New ToolButton(Me._$parent) As "AlignLeft"
+
+    With yukiAlignLeft
+        .Width = Me.$size
+        .Picture = Stock["medium/text-left"]
+        .Tooltip = ("left")
+    End With
+    
+End
+
+Private Sub addButtonAlignCenter()
+    
+    Dim yukiAlignCenter As New ToolButton(Me._$parent) As "AlignCenter"
+
+    With yukiAlignCenter
+        .Width = Me.$size
+        .Picture = Stock["medium/text-center"]
+        .Tooltip = ("center")
+    End With
+    
+End
+
+Private Sub addButtonAlignFill()
+    
+    Dim yukiAlignFill As New ToolButton(Me._$parent) As "AlignFill"
+
+    With yukiAlignFill
+        .Width = Me.$size
+        .Picture = Stock["medium/text-fill"]
+        .Tooltip = ("fill")
+    End With
+    
+End
+
+Private Sub addButtonAlignRight()
+    
+    Dim yukiAlignRight As New ToolButton(Me._$parent) As "AlignRight"
+    
+    With yukiAlignRight
+        .Width = Me.$size
+        .Picture = Stock["medium/text-right"]
+        .Tooltip = ("right")
+    End With
+    
+End
+
+Private Sub initializeWidgets()
+    
+   addButtonAlignLeft()
+   addButtonAlignCenter() 
+   addButtonAlignFill()
+   addButtonAlignRight()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    initializeWidgets()
+    
+End
+
+Public Sub AlignLeft_Click()
+    
+    Raise Left
+    
+End
+
+Public Sub AlignFill_Click()
+    
+    Raise Fill
+    
+End
+
+Public Sub AlignCenter_Click()
+    
+    Raise Center
+    
+End
+
+Public Sub AlignRight_Click()
+    
+    Raise Right
+    
+End

@@ -1,0 +1,96 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+Private $recentPagesMenu As NagatoWebBrowserRecentPageMenu
+Private $bookmarksMenu As NagatoWebBrowserBookmarkMenu
+
+Event SetHomePage
+Event NewPage(argUrl As String)
+Event AddBookmark
+Event EditPage
+
+Private Sub addSetHomePageMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SetHomePageMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/home"]
+        .Text = ("Set this page as HomePage")
+    End With
+    
+End
+
+Private Sub addRecentPagesMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) 
+    
+    With yukiMenu
+        .Text = ("RecentPages")
+        .Picture = Stock["medium/open-recent"]
+    End With
+    
+    $recentPagesMenu = New NagatoWebBrowserRecentPageMenu(yukiMenu) As "Menu"
+    
+End
+
+Private Sub addBookmarksMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) 
+    
+    With yukiMenu
+        .Text = ("Bookmarks")
+        .Picture = Stock["medium/bookmark"]
+    End With
+    
+    $bookmarksMenu = New NagatoWebBrowserBookmarkMenu(yukiMenu) As "Menu"
+    
+End
+
+Private Sub addEditMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "EditMenu"
+    
+    With yukiMenu
+        .Text = ("Edit page")
+        .Picture = Stock["medium/edit"]
+    End With
+    
+End
+
+Public Sub _AddOtherMenu() ' override
+    
+    addSetHomePageMenu()
+    addBookmarksMenu()
+    addRecentPagesMenu()
+    addEditMenu()
+    
+End
+
+Public Sub SetHomePageMenu_Click()
+    
+    Dim yukiResponse As Integer
+    
+    yukiResponse = Message.Question("Are you sure to set this page as your home page ?", "Cansel", "Set this page as home page")
+    
+    If yukiResponse = 2 Then Raise SetHomePage
+    
+End
+
+Public Sub Menu_AddBookmark()
+    
+    Raise AddBookmark
+    
+End
+
+Public Sub Menu_NewPage(argTag As String)
+    
+    Raise NewPage(argTag)
+    
+End
+
+Public Sub EditMenu_Click()
+    
+    Raise EditPage
+    
+End

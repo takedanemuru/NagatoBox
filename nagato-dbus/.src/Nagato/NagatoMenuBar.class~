@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $container As Container
+Private $spacer As NagatoSpacer
+
+Private Sub addButton()
+    
+    Dim yukiButton As New MenuButton($container)
+    Dim yukiMenu As NagatoStarMenu
+    
+    With yukiButton
+        .W = $container.H
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+        .Picture = MikuruIcon.Get("star")
+        .Expand = False
+    End With
+    
+    yukiMenu = New NagatoStarMenu(yukiButton) As "NagatoMenu"
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    $spacer = New NagatoSpacer($container)
+    addButton()
+    
+End

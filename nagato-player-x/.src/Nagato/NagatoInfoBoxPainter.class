@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoWidgetPainter
+
+Private $messageDuration As Integer = 0
+Private $message As String = ""
+
+Private Function getInfoText() As String
+    
+    If NagatoQueue.Count = 0 Then
+        Return Subst$("<b>YUKI.N > Can you see this ?</b>")
+    Else
+        Return Subst$("<b>&1</b>", NagatoQueue.Title)
+    Endif
+    
+End
+
+Public Sub SetMessage(argText As String, argDuration As Integer)
+    
+    $message = argText
+    $messageDuration = argDuration
+    
+End
+
+Public Sub Draw()
+    
+    Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
+    
+    If $messageDuration > 0 Then
+        Me._PaintRichText(MikuruUx.InfoBox, $message)
+    Else
+        Me._PaintRichText(MikuruUx.InfoBox, getInfoText())
+    End If
+    
+    Dec $messageDuration
+    
+End

@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Function AvoidNull(argText As String) As String
+    
+    If argText = Null Then
+        Return " "
+    Else
+        Return argText
+    Endif
+    
+End

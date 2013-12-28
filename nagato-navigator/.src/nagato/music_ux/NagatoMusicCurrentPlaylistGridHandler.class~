@@ -1,0 +1,185 @@
+' Gambas class file
+
+Inherits NagatoMusicGridHandler
+
+'Private Const PathColumnIndex As Integer = 4
+
+Public _$columnWidthArray As Float[] = [2.5, 20, 20, 20, 0]
+Public _$columnTextArray As String[] = [(""), ("Title"), ("Artist"), ("Album"), ("Path")]
+Public _$columnCount As Integer = 5
+Public _$columnIndexPath As Integer = 4
+
+Private $playlistObserver As Observer
+Private $gridViewObserver As Observer
+
+Private Function setRow(argPath As String) As Integer
+    
+    If argPath = NagatoMusicPlayer.CurrentPath Then 
+        Me._$gridView[Me._$gridView.Rows.Max, 0].Picture = MikuruMonoIconBlue.Get("button-play")
+    End If
+    
+    With NagatoMusicQueue
+        Me._$gridView[Me._$gridView.Rows.Max, 1].Text = MikuruText.AvoidNull(.TitleCollection[argPath])
+        Me._$gridView[Me._$gridView.Rows.Max, 2].Text = MikuruText.AvoidNull(.ArtistCollection[argPath])
+        Me._$gridView[Me._$gridView.Rows.Max, 3].Text = MikuruText.AvoidNull(.AlbumCollection[argPath])
+        Me._$gridView[Me._$gridView.Rows.Max, 4].Text = argPath
+    End With
+    
+    If Odd(Me._$gridView.Rows.Max) Then Me._SetBackgroundColor()
+
+End
+
+Private Sub setGridView()
+    
+    Dim yukiPath As String
+    Dim yukiPlayingRow As Integer = 0
+    
+    Me._$gridView.Clear()
+    Me._$gridView.Rows.Count = 0
+    
+    For Each yukiPath In NagatoMusicQueue.PathList
+        If Not Exist(yukiPath) Then Continue
+        Inc Me._$gridView.Rows.Count
+        If yukiPath = NagatoMusicPlayer.CurrentPath Then yukiPlayingRow = Me._$gridView.Rows.Max
+        setRow(yukiPath)
+    Next
+    
+    Try Me._$gridView.ScrollY = Me._$gridView[yukiPlayingRow, 0].Y
+    
+Catch
+    Return
+    
+End
+
+Private Sub setSortedData(argDataArray As Variant[])
+    
+    Dim yukiCount As Integer
+    
+    With Me._$gridView
+        .Clear()
+        .Rows.Count = 0
+        For yukiCount = 0 To argDataArray.Max
+            Inc .Rows.Count
+            If argDataArray[yukiCount]["path"] = NagatoMusicPlayer.CurrentPath Then 
+                Me._$gridView[.Rows.Max, 0].Picture = MikuruMonoIconBlue.Get("button-play")
+            End If
+            Me._$gridView[.Rows.Max, 1].Text = argDataArray[yukiCount]["title"]
+            Me._$gridView[.Rows.Max, 2].Text = argDataArray[yukiCount]["artist"]
+            Me._$gridView[.Rows.Max, 3].Text = argDataArray[yukiCount]["album"]
+            Me._$gridView[.Rows.Max, 4].Text = argDataArray[yukiCount]["path"]
+            If Odd(yukiCount) Then Me._SetBackgroundColor()
+        Next
+    End With
+    
+End
+
+Private Sub getHeader(argIndex As Integer) As String
+    
+    Select Case argIndex
+        Case 1
+            Return "title"
+        Case 2
+            Return "artist"
+        Case 3
+            Return "album"
+        Case 4
+            Return "path"
+        Default
+            Return ""
+    End Select
+    
+End
+
+Private Sub sort(argColumnIndex As Integer)
+    
+    Dim yukiDataArray As New Variant[]
+    Dim yukiData As Collection
+    Dim yukiRowsCount As Integer
+    
+    If argColumnIndex = 0 Then Return
+    
+    For yukiRowsCount = 0 To Me._$gridView.Rows.Max
+        yukiData = New Collection
+        yukiData["title"] = Me._$gridView[yukiRowsCount, 1].Text
+        yukiData["artist"] = Me._$gridView[yukiRowsCount, 2].Text
+        yukiData["album"] = Me._$gridView[yukiRowsCount, 3].Text
+        yukiData["path"] = Me._$gridView[yukiRowsCount, 4].Text
+        If yukiDataArray.Count = 0 Then 
+            yukiDataArray.Add(yukiData)
+        Else
+            Me._AddToDataArray(yukiData, getHeader(argColumnIndex), ByRef yukiDataArray)
+        End If
+    Next
+    
+    setSortedData(yukiDataArray)
+    
+End
+
+Public Sub _RefreshGridView()
+    
+    $playlistObserver = New Observer(NagatoMusicQueue) As "PlaylistObserver"
+    $gridViewObserver = New Observer(Me._$gridView) As "GridViewObserver"
+    Me._InitializeGridView()
+    
+End
+
+Public Sub _new(argGridView As GridView)
+    
+    Me._$gridView = argGridView
+    Me._$backgroundColor = MikuruColor.GridStripeLightBlue
+    Me._RefreshGridView()
+    If NagatoMusicQueue.Count > 0 Then setGridView()
+    
+End
+
+Public Sub PlaylistObserver_Refresh()
+    
+    setGridView()
+    
+End
+
+Public Sub GridViewObserver_Activate()
+
+    Debug Me._$gridView.Row
+
+    NagatoMusicPlayer.SetUrlAndPlay(Me._$gridView[Me._$gridView.Row, Me._$columnIndexPath].Text)
+    setGridView()
+
+Catch
+    Return 'to avoid Me._$gridView.Row = -1
+
+End
+
+Public Sub GridViewObserver_Menu()
+    
+    Dim yukiRootMenu As New Menu(HaruhiMusicPlaylist)
+    Dim yukiMenu As New NagatoPlaylistContextMenu(yukiRootMenu) As "ContextMenu"
+    
+    If Not Me._$gridView.Current Then Return
+    
+    yukiRootMenu.Popup()
+    
+End
+
+Public Sub GridViewObserver_ColumnClick(argColumnIndex As Integer)
+
+    Me._$sortAscend = Not Me._$sortAscend
+    
+    sort(argColumnIndex)
+    
+End
+
+Public Sub ContextMenu_EditTag()
+    
+    If Me._GetSelectionCount() > 0 Then
+        HaruhiTagEditBulk.StartEdit(Me._GetSelectionText(Me._$columnIndexPath))
+        If HaruhiTagEditBulk.ShowDialog() = MikuruDialog.ResponseApply Then Me._RefreshGridView()
+    Endif
+    
+End
+
+Public Sub ContextMenu_Delete()
+    
+    NagatoMusicQueue.DeleteFile(Me._GetSelectionText(Me._$columnIndexPath))
+    
+End

@@ -1,0 +1,116 @@
+' Gambas class file
+
+Create Static
+
+Property Read Activated As Boolean
+Property Read Categories As String[]
+
+Private $activated As Boolean = False
+Private $categories As New String[]
+Private $cache As New Collection
+
+Private Sub setCategories()
+    
+    $categories = NagatoDBWeb.CategoryNames.Sort()
+    
+End
+
+Private Function getCategoryCache(argCategory As String) As NagatoWebBookmarkObject[]
+    
+    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultFindedByCategoryName(argCategory)
+    Dim yukiCache As New NagatoWebBookmarkObject[]
+    Dim yukiObject As NagatoWebBookmarkObject
+    
+    For Each yukiResult
+        yukiObject = New NagatoWebBookmarkObject
+        With yukiObject
+            If NagatoDBWeb.HasIcon(yukiResult[NagatoDBWeb.ColumnUrl]) Then
+                .Icon = NagatoDBWeb.GetIcon(yukiResult[NagatoDBWeb.ColumnUrl])
+            Endif
+            .Title = yukiResult[NagatoDBWeb.ColumnPageName]
+            .UserDefinedTitle = yukiResult[NagatoDBWeb.ColumnUserDefinedPageName]
+            .Url = yukiResult[NagatoDBWeb.ColumnUrl]
+        End With
+        yukiCache.Add(yukiObject)
+    Next
+    
+    Return yukiCache
+    
+End
+
+Private Sub setCache()
+    
+    Dim yukiCategory As String
+    Dim yukiResult As Result
+    
+    $cache.Clear()
+    
+    For Each yukiCategory In $categories
+        yukiResult = NagatoDBWeb.GetBookmarkResultFindedByCategoryName(yukiCategory)
+        If yukiResult.Count = 0 Then Continue
+        $cache.Add(getCategoryCache(yukiCategory), yukiCategory)
+    Next
+    
+End
+
+Private Sub getObjects(argElement As XmlElement) As NagatoWebBookmarkObject[]
+    
+    Dim yukiObject As NagatoWebBookmarkObject
+    Dim yukiElement As XmlElement
+    Dim yukiResult As New NagatoWebBookmarkObject[]
+    Dim yukiPath As String
+    
+    For Each yukiElement In argElement.GetChildrenByTagName("bookmark")
+         yukiObject = New NagatoWebBookmarkObject
+         With yukiObject
+             .Title = yukiElement.GetChildrenByTagName("title")[0].Value
+             .Url = yukiElement.GetAttribute("href")
+             .UserDefinedTitle = yukiElement.GetChildrenByTagName("title")[0].Value
+             yukiPath = Replace$(User.Home &/ "NagatoTestWeb" &/ "icons" & .url, "/", "_")
+             If Exist(yukiPath) Then .Icon = Picture.Load(yukiPath)
+         End With
+         yukiResult.Add(yukiObject)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub RefreshCategory(argCategory As String)
+    
+    Dim yukiResult As Result
+    
+    If Not $categories.Exist(argCategory) Then $categories.Add(argCategory)
+    $cache.Remove(argCategory)
+    yukiResult = NagatoDBWeb.GetBookmarkResultFindedByCategoryName(argCategory)
+    If yukiResult.Count = 0 Then Return
+    $cache.Add(getCategoryCache(argCategory), argCategory)
+    
+End
+
+Public Sub Activate()
+    
+    setCategories()
+    setCache()
+    
+    $activated = True
+    
+End
+
+Public Function GetCache(argCategory As String) As NagatoWebBookmarkObject[]
+    
+    Return $cache[argCategory]
+    
+End
+
+Private Function Activated_Read() As Boolean
+
+    Return $activated
+
+End
+
+Private Function Categories_Read() As String[]
+
+    Return $categories
+
+End

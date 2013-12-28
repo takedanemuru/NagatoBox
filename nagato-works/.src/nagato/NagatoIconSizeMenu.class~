@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Private $iconSizeTags As String[] = [("small"), ("medium"), ("large"), ("huge"), ("stupid")]
+
+Event Change(argIconSizeIndex As Integer)
+
+Private Sub addIconSizeMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As Menu
+    Dim yukiCounter As Integer
+    
+    For yukiCounter = 0 To $iconSizeTags.Max
+        yukiMenu = New Menu(argParentMenu) As "IconSizeMenu"
+        yukiMenu.Text = $iconSizeTags[yukiCounter]
+        yukiMenu.Tag = yukiCounter
+    Next
+    
+End
+
+Private Sub addParentMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("IconSize")
+    addIconSizeMenu(yukiMenu)
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addParentMenu()
+    
+End
+
+Public Sub IconSizeMenu_Click()
+    
+    Raise Change(Last.Tag)
+    
+End

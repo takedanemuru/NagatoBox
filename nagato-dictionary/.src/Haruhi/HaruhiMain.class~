@@ -1,0 +1,115 @@
+' Gambas class file
+
+Private Sub initializeStarButton()
+    
+    Dim yukiMenu As New NagatoButtonMenu(Me, StarButton)
+    
+    With StarButton
+        .Expand = False
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("star")
+        .Arrow = False
+        .Text = ""
+        .Border = False
+    End With
+    
+End
+
+Private Sub initializeResultGrid()
+    
+    With ResultGridView
+        .Columns.Count = 3
+        .Rows.Count = 1
+        .Columns[0].Text = ("Japanese")
+        .Columns[1].Text = ("Pronunciation")
+        .Columns[2].Text = ("English")
+        .ScrollBar = Scroll.Both
+    End With
+    
+End
+
+Private Sub clearGrid()
+    
+    With ResultGridView
+        .Clear()
+        .Rows.Count = 0
+    End With
+    
+End
+
+Private Sub setBackgroundColor(argRow As Integer)
+    
+    Dim yukiColumn As Integer
+    
+    For yukiColumn = 0 To ResultGridView.Columns.Max
+        ResultGridView[argRow, yukiColumn].Background = Color.Lighter(Color.Lighter(Color.Violet))
+    Next
+    
+End
+
+Private Sub setData(argColumn As Integer, argText As String)
+    
+    With ResultGridView
+        .[.Rows.Max, argColumn].Text = argText
+        If .Font.TextWidth(argText) + 12 > .Columns[argColumn].W Then
+            .Columns[argColumn].Width = .Font.TextWidth(argText) + 12
+        End If
+    End With
+    
+End
+
+Private Sub refresh(argData As String[])
+    
+    Dim yukiLine As String
+    Dim yukiArticle As NagatoArticle
+    
+    clearGrid()
+    
+    With ResultGridView.Rows
+        For Each yukiLine In argData
+            Inc .Count
+            yukiArticle = New NagatoArticle(yukiLine)
+            setData(0, yukiArticle.Japanese)
+            setData(1, yukiArticle.Pronunciation)
+            setData(2, yukiArticle.English)
+            If Even(.Max) Then setBackgroundColor(.Max)
+        Next
+    End With
+    
+End
+
+Public Sub _new()
+
+    initializeStarButton()
+    initializeResultGrid()
+
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+    Application.MainWindow = Me
+
+End
+
+Public Sub SearchButtonBox_Activate()
+
+    Dim yukiResult As String 
+
+    If GeneralButton.Value Then
+        yukiResult = NagatoDictionaryEngine.GetSerchResultStarndardDictionary(SearchButtonBox.Text)
+    Else If CompTermButton.Value Then
+        yukiResult = NagatoDictionaryEngine.GetSerchResultCompDictionary(SearchButtonBox.Text)
+    Else ' if PropNounButton.Value Then
+        yukiResult = NagatoDictionaryEngine.GetSerchResultEnamDictionary(SearchButtonBox.Text)
+    Endif
+
+    If yukiResult <> "" Then refresh(Split(yukiResult, "\n", "", True))
+
+End
+
+Public Sub SearchButtonBox_Click()
+
+    SearchButtonBox_Activate()
+
+End

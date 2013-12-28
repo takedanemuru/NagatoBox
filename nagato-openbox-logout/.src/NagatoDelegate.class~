@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $object As Object
+Private $method As String
+Private $args As Variant[]
+
+Public Sub Invoke()
+    
+    If $args Then
+        Object.Call($object, $method, $args)
+    Else
+        Object.Call($object, $method, [False])
+    Endif
+    
+End
+
+Public Sub _new(argObject As Object, argMethod As String, Optional argArgs As Variant[])
+    
+    $object = argObject
+    $method = argMethod
+    If argArgs Then $args = argArgs
+    
+End

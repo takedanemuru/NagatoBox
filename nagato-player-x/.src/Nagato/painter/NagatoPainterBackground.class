@@ -1,0 +1,21 @@
+' Gambas class file
+
+Private $backgroundImage As Image
+
+Public Sub Draw()
+    
+    Dim yukiXOffset As Float = (HaruhiPlayer.W - $backgroundImage.W) / 2
+    Dim yukiYOffset As Float = (HaruhiPlayer.H - $backgroundImage.H) / 2
+    
+    Paint.DrawImage($backgroundImage, yukiXOffset, yukiYOffset)
+    
+End
+
+Public Sub SetBackgroundImage()
+    
+    Dim yukiImage As Image = Image.Load(NagatoSettingsForm.GetBackgroundPath())
+    Dim yukiRate As Float = Max(HaruhiPlayer.H / yukiImage.H, HaruhiPlayer.W / yukiImage.W)
+    
+    $backgroundImage = yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)
+    
+End

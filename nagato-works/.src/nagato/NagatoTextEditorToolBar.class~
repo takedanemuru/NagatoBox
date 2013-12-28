@@ -1,0 +1,106 @@
+' Gambas class file
+
+Inherits NagatoToolBar
+
+Private $fontSelectButtons As NagatoFontSelectButtons
+Private $searchBox As NagatoSearchBox
+
+Event NewFontColor(argNewColor As Integer)
+Event NewFontSize(argNewSize As Integer)
+Event NewFontName(argNewName As String)
+Event SearchQuery(argQuery As String)
+
+Private Sub addFileActionButtons()
+    
+        Dim yukiButtons As NagatoFileActionButtons
+        
+        yukiButtons = New NagatoFileActionButtons(Me._$parent) As "Menu"
+    
+End
+
+Private Sub addFontEffectButtons()
+    
+    Dim yukiButtons As NagatoFontEffectButtons
+    
+    yukiButtons = New NagatoFontEffectButtons(Me._$parent) As "Menu"
+    
+End
+
+Private Sub addTextAlignButtons()
+    
+    Dim yukiButtons As NagatoTextAlignButtons
+    
+    yukiButtons = New NagatoTextAlignButtons(Me._$parent) As "Menu"
+    
+End
+
+Private Sub addFontSelectButtons()
+    
+    $fontSelectButtons = New NagatoFontSelectButtons(Me._$parent) As "FontSelectMenu"
+    
+End
+
+Private Sub addSeparator()
+    
+    Dim yukiSeparator As NagatoSeparator
+    
+    yukiSeparator = New NagatoSeparator(Me._$parent) 
+    
+End
+
+Private Sub addSearchBox()
+    
+    $searchBox = New NagatoSearchBox(Me._$parent) As "SearchBox"
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiGearButton As New NagatoGearButton(Me._$parent) 
+    Dim yukiMenu As NagatoTextEditorMenu
+    
+    yukiMenu = New NagatoTextEditorMenu(yukiGearButton.RootMenu) As "Menu"
+    
+End
+
+Public Sub GrabSearchBox()
+    
+    $searchBox.SetFocus()
+    
+End
+
+Public Sub _Initialize() 'override.
+    
+    addFileActionButtons()
+    addFontEffectButtons()
+    addTextAlignButtons()
+    addFontSelectButtons()
+    addSeparator()
+    addSearchBox()
+    addGearButton()
+    
+End
+
+Public Sub FontSelectMenu_NewFontColor(argNewColor As Integer)
+    
+    Raise NewFontColor(argNewColor)
+    
+End
+
+Public Sub FontSelectMenu_NewFontSize(argNewSize As Integer)
+    
+    Raise NewFontSize(argNewSize)
+    
+End
+
+Public Sub FontSelectMenu_NewFontName(argNewName As String)
+    
+    Raise NewFontName(argNewName)
+    
+End
+
+Public Sub SearchBox_SearchQuery(argQuery As String)
+    
+    Raise SearchQuery(argQuery)
+    
+End

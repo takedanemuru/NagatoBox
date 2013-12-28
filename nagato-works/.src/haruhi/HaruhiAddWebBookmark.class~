@@ -1,0 +1,41 @@
+' Gambas class file
+
+Static Public UserTitle As String
+Static Public Category As String
+
+Public Sub SetTitle(argTitle As String)
+    
+    UserTitleTextBox.Text = argTitle
+    
+End
+
+Public Sub SetList(argList As String[])
+    
+    argList.Add("", 0)
+    CategoryComboBox.List = argList
+    
+End
+
+Public Sub Form_Open()
+
+    Dim yukiImage As Image = Image.Load("pictures/yukichan_29.jpg")
+
+    Me.Picture = yukiImage.Stretch(Me.Width, Me.Height).Picture
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(0)
+
+End
+
+Public Sub AddButton_Click()
+    
+    UserTitle = UserTitleTextBox.Text
+    Category = CategoryComboBox.Text
+    
+    ' see NagatoWebBrowser.Toolbar_AddBookmark()
+    Me.Close(1)
+    
+End

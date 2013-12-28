@@ -1,0 +1,92 @@
+' Gambas class file
+
+Inherits NagatoToolBar
+
+Private $mediaControlButtons As NagatoMediaControlButtons
+
+Event NewFile(argPath As String)
+Event Play
+Event Pause
+Event Stop
+Event NewPosition(argPosition As Float)
+Event NewVolume(argVolume As Float)
+Event VolumeSliderShown
+
+Private Sub addToolPanel()
+    
+    $mediaControlButtons = New NagatoMediaControlButtons(Me._$parent) As "ControlButtons"
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiButton As New NagatoGearButton(Me._$parent) As "GearButton"
+    Dim yukiMenu As NagatoMediaPlayerMenu
+    
+    yukiMenu = New NagatoMediaPlayerMenu(yukiButton.RootMenu) As "GearMenu"
+    
+End
+
+Public Sub _Initialize()
+    
+    addToolPanel()
+    addGearButton()
+    
+End
+
+Public Sub SetProgress(argPosition As Float, argDuration As Float)
+    
+    $mediaControlButtons.SetProgress(argPosition, argDuration)
+    
+End
+
+Public Sub SetVolume(argVolume As Integer)
+    
+    $mediaControlButtons.SetVolume(argVolume)
+    
+End
+
+Public Sub ControlButtons_OpenFile()
+    
+    Dialog.Path = User.Home
+    Dialog.Filter = ["*.mp3;*.mp4", "Media Files"]
+    
+    If Not Dialog.OpenFile() Then Raise NewFile(Dialog.Path)
+    
+End
+
+Public Sub ControlButtons_Play()
+    
+    Raise Play
+    
+End
+
+Public Sub ControlButtons_Pause()
+    
+    Raise Pause
+    
+End
+
+Public Sub ControlButtons_Stop()
+    
+    Raise Stop
+    
+End
+
+Public Sub ControlButtons_PositionChanged(argPosition As Float)
+    
+    Raise NewPosition(argPosition)
+    
+End
+
+Public Sub ControlButtons_VolumeSliderShown()
+    
+    Raise VolumeSliderShown
+    
+End
+
+Public Sub ControlButtons_VolumeChanged(argVolume As Float)
+    
+    Raise NewVolume(argVolume)
+    
+End

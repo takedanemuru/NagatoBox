@@ -1,0 +1,214 @@
+' Gambas class file
+
+Create Static
+
+Property Read CurrentPath As String
+Property Read Title As String
+Property Read Artist As String
+Property Read Album As String
+Property Read ImagePreview As Variant
+Property Read Progress As Float ' 0 to 1
+Property Read ProgressInText As String
+Property Read Status As Integer
+
+Private $player As New MediaPlayer As "Player"
+Private $currentPath As String = ""
+Private $title As String = ""
+Private $artist As String = ""
+Private $album As String = ""
+Private $imagePreview As Variant = Null
+Private $tagChanged As Boolean = False
+
+Public Sub SetUrlAndPlay(argUrl As String)
+    
+    Try $player.Stop
+    $currentPath = argUrl
+    $player.URL = Media.URL(argUrl)
+    $player.Play()
+    
+    NagatoMusicQueue.SetPosition(argUrl)
+    
+End
+
+Public Sub Play()
+    
+    If NagatoMusicQueue.Count = 0 Then Return
+
+    With NagatoMusicQueue
+        If $currentPath = "" Then
+            SetUrlAndPlay(.GetFirst())
+        Else
+            Try $player.Play()
+            Try $player.Audio.SoftwareVolume = True
+            Try $player.Audio.Volume = NagatoSettingsMusic.SoutwareVolume
+        Endif
+    End With
+    
+End
+
+Public Sub Pause()
+    
+    Try $player.Pause()
+    
+End
+
+Public Sub Stop()
+    
+    Try $player.Stop()
+    
+End
+
+Public Sub Previous()
+    
+    If NagatoMusicQueue.Count = 0 Then
+        Return
+    Else If $player.Position > 10 Then
+        $player.Position = 0
+    Else
+        SetUrlAndPlay(NagatoMusicQueue.GetPrevious()) 
+    End If
+    
+Catch
+    Return
+    
+End
+
+Public Sub Next()
+    
+    If NagatoMusicQueue.Count = 0 Then Return
+    SetUrlAndPlay(NagatoMusicQueue.GetNext())
+    
+End
+
+Public Sub RefreshTag() ' to refresh tag
+    
+    Dim yukiPosition As Float = $player.Position ' to store current position
+    
+    $player.Stop()
+    $player.Play()
+    $player.Position = yukiPosition
+    
+Catch
+    Return
+    
+End
+
+Public Sub SetProgress(argProgress As Float) ' argProgress must be 0 to 1.
+    
+    $player.Position = $player.Duration * argProgress
+    
+Catch
+    Return
+    
+End
+
+Public Sub SetSoftwareVolume(argVolume As Float)
+    
+    Try $player.Audio.Volume = argVolume
+    
+End
+
+Public Sub Player_Tag(argTagList As MediaTagList)
+    
+    With argTagList.Tags
+        If .Find("title") + .Find("artist") + .Find("album") > -3 Then
+            $title = argTagList["title"]
+            $artist = argTagList["artist"]
+            $album = argTagList["album"]
+            $tagChanged = True
+        End If
+        
+    End With
+    
+End
+
+Public Sub Player_AudioChanged()
+    
+    Dim yukiImage As Image
+    
+    If Not $tagChanged Then
+        $title = ""
+        $artist = ""
+        $album = ""
+        $imagePreview = Null
+    Endif
+    
+    $tagChanged = False
+    'HaruhiBalloon.SetText(Subst$("&1\n\n&2\n\n&3", Me.Title, $artist, $album))
+    yukiImage = NagatoDBMedia.GetAlbumArt($artist, $album).Image
+    HaruhiBalloon.SetTextWithImage(Subst$("&1\n&2\n&3", Me.Title, $artist, $album), yukiImage)
+    
+End
+
+Public Sub Player_End()
+    
+    If NagatoSettingsMusic.DoesRepeat Then
+        $player.Position = 0
+    Else
+        SetUrlAndPlay(NagatoMusicQueue.GetNext())
+    Endif
+    
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $currentPath
+
+End
+
+Private Function Title_Read() As String
+
+    If $currentPath = "" Then 
+        Return ("No Music, No Life.")
+    Else If $title = "" Then
+        Return File.BaseName($currentPath)
+    Else
+        Return $title
+    Endif
+
+End
+
+Private Function Artist_Read() As String
+
+    Return $artist
+
+End
+
+Private Function Album_Read() As String
+
+    Return $album
+
+End
+
+Private Function Progress_Read() As Float
+
+    Return $player.Position / $player.Duration
+
+Catch
+    Return 0
+
+End
+
+Private Function ProgressInText_Read() As String
+
+    Dim yukiString As String
+    
+    With MikuruTimerText
+        yukiString = Subst$("&1 / &2", .GetSecondToString($player.Position), .GetSecondToString($player.Duration))
+    End With
+
+    Return yukiString
+
+End
+
+Private Function ImagePreview_Read() As Variant
+
+    Return $imagePreview
+
+End
+
+Private Function Status_Read() As Integer
+
+    Return $player.State
+
+End

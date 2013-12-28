@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Create Static
+
+Property Type As Integer
+Property LabelColor As Integer ' as color
+
+Private Function LabelColor_Read() As Integer
+
+    Return Me._$settings["infobar/label-color", MikuruColor.NagatoPurple]
+
+End
+
+Private Sub LabelColor_Write(Value As Integer)
+
+    Me._$settings["infobar/label-color"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Type_Read() As Integer
+
+    Return Me._$settings["infobar/type", NagatoInfo.Music]
+    
+End
+
+Private Sub Type_Write(Value As Integer)
+
+    Me._$settings["infobar/type"] = Value
+    Me._$settings.Save()
+    
+End

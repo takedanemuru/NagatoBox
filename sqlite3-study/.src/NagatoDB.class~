@@ -1,0 +1,213 @@
+' Gambas class file
+
+Create Static
+
+Private Const DatabaseDir As String = "nagato"
+Private Const DatabaseName As String = "nagato_db.sqlite3"
+Private Const IconSize As Integer = 64
+
+Private $connection As Connection
+Private $result As Result
+Private $debugCount As Integer = 0 ' only for debug
+Private $pictureCount As Integer = 0
+
+Event Done
+
+Private Sub createConnection()
+        
+        $connection = New Connection
+        
+        With $connection
+                .Type = "sqlite3"
+                .Host = User.Home &/ DatabaseDir
+                .Name = ""
+                .Login = ""
+                .Password = ""
+                .Port = ""
+        End With
+        
+End
+
+Private Sub createDatabase()
+        
+        $connection.Open()
+        
+        If Not $connection.Databases.Exist(DatabaseName) Then
+                $connection.Databases.Add(DatabaseName)
+                Wait 1.0
+        Endif
+        
+        $connection.Close()
+        
+End
+
+Private Sub createTable()
+        
+        Dim yukiTable As Table
+        
+        With $connection
+                .Host = User.Home &/ DatabaseDir
+                .Name = DatabaseName
+        End With
+        
+        $connection.Open()
+        
+        If Not $connection.Tables.Exist("picture") Then
+                yukiTable = $connection.Tables.Add("picture")
+                yukiTable.Fields.Add("id", db.Serial)
+                'yukiTable.Fields.Add("icon", db.String)                              ' path to icon, not picture.
+                yukiTable.Fields.Add("icon", db.Blob)
+                yukiTable.Fields.Add("name", db.String)
+                yukiTable.Fields.Add("last_modefied", db.Date)
+                yukiTable.Fields.Add("size", db.Integer)
+                yukiTable.PrimaryKey = ["id"]
+                yukiTable.Update()
+        Endif
+        
+End
+
+Private Function getIcon(argPath As String) As Picture
+        
+        Dim yukiImage As Image
+        Dim yukiScale As Float
+        Dim yukiPicture As Picture
+        Dim yukiTempPath As String
+        
+        yukiImage = Image.Load(argPath)
+        
+        If yukiImage.Height > IconSize Or If yukiImage.Width > IconSize Then
+                yukiScale = Min(IconSize / yukiImage.Height, IconSize / yukiImage.Width)
+                yukiImage = yukiImage.Stretch(yukiImage.Width * yukiScale, yukiImage.Height * yukiScale)
+        Endif
+        
+        yukiTempPath = Temp$() & ".png"
+        yukiImage.Save(yukiTempPath)
+        yukiPicture = Picture.Load(yukiTempPath)
+        Kill yukiTempPath
+        
+        Return yukiPicture
+        
+End
+
+Private Sub setIconData(argPath As String)
+        
+        Dim yukiImage As Image
+        Dim yukiScale As Float
+        
+        yukiImage = Image.Load(argPath)
+        
+        If yukiImage.Height > IconSize Or If yukiImage.Width > IconSize Then
+                yukiScale = Min(IconSize / yukiImage.Height, IconSize / yukiImage.Width)
+                yukiImage = yukiImage.Stretch(yukiImage.Width * yukiScale, yukiImage.Height * yukiScale)
+        Endif
+        
+        yukiImage.Save(User.Home &/ DatabaseDir &/ "icons" &/ Replace$(argPath, "/", "_"))
+        
+Catch
+        Return
+        
+End
+
+Public Sub AddRow(argPath As String)
+        
+        If IsDir(argPath) Then Return
+        
+        $result = $connection.Create("picture")
+        ' $result["icon"] = User.Home &/ DatabaseDir &/ "icons" &/ Replace$(argPath, "/", "_")
+        ' setIconData(argPath)
+        $result["icon"] = getIcon(argPath)
+        $result["name"] = File.Name(argPath)
+        $result["last_modefied"] = Stat(argPath).LastModified
+        $result["size"] = Stat(argPath).Size
+        $result.Update()
+        
+        Inc $debugCount
+        Debug $debugCount
+        
+End
+
+Public Sub Connect()
+        
+        createConnection()
+        createDatabase()
+        createTable()
+        
+End
+
+Public Sub Select()
+        
+        $result = $connection.Edit("picture")
+        
+End
+
+Public Function GetDataCountMax() As Integer
+        
+        Return $result.Max
+
+Catch
+        Return 0
+        
+End
+
+Public Function GetIconPicture(argRowIndex As Integer) As Picture
+        
+        Dim yukiTempPath As String 
+        Dim yukiPictureBlob As Blob
+        Dim yukiPicture As Picture
+        
+        yukiTempPath = Replace(Temp$(), ".tmp", ".png")
+        Debug yukiTempPath
+        $result.MoveTo(argRowIndex)
+        yukiPictureBlob = $result["icon"]
+        File.Save(yukiTempPath, yukiPictureBlob.Data)
+        yukiPicture = Picture.Load(yukiTempPath)
+        Kill yukiTempPath
+        
+        Return yukiPicture
+        
+End
+
+' Public Function GetIconPicture(argRowIndex As Integer) As Picture
+'         
+'         Return Picture.Load($result["icon"])
+'         
+' End
+
+Public Function GetName(argRowIndex As Integer) As String
+        
+        $result.MoveTo(argRowIndex)
+        
+        Return $result["name"]
+        
+Catch 
+        Return ""
+        
+End
+
+Public Function GetSize(argRowIndex As Integer) As Integer
+        
+        $result.MoveTo(argRowIndex)
+        
+        Return $result["size"]
+        
+Catch
+        Return 0
+        
+End
+
+Public Function GetLastModefied(argRowIndex As Integer) As Date
+        
+        $result.MoveTo(argRowIndex)
+        
+        Return $result["last_modefied"]
+        
+Catch
+        Return Date()
+        
+End
+
+Public Sub CloseConnection()
+        
+        $connection.Close()
+        
+End

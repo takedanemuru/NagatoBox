@@ -1,0 +1,16 @@
+' Gambas module file
+
+Property Read LinkForNovelList As String
+Property Read NameForNovelList As String
+
+Private Function LinkForNovelList_Read() As String
+
+    Return "http://www.aozora.gr.jp/index_pages/list_person_all_extended_utf8.zip"
+
+End
+
+Private Function NameForNovelList_Read() As String
+
+    Return "list_person_all_extended_utf8.csv"
+
+End

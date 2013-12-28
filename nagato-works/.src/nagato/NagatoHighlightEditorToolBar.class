@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoToolBar
+
+Private Sub addSpacer()
+    
+    Dim yukiSpacer As New Panel(Me._$parent)
+    
+    yukiSpacer.Expand = True
+    
+End
+
+Private Sub addSearchBox()
+    
+    Dim yukiSearchBox As NagatoSearchBox
+    
+    yukiSearchBox = New NagatoSearchBox(Me._$parent) As "SearchBox"
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiButton As New NagatoGearButton(Me._$parent)
+    Dim yukiMenu As NagatoTextEditorMenu
+
+    yukiMenu = New NagatoTextEditorMenu(yukiButton.RootMenu)
+    
+End
+
+Public Sub _Initialize() 'override.
+    
+    addSpacer()
+    addSearchBox()
+    addGearButton()
+    
+End

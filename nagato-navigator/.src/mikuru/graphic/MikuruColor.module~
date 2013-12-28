@@ -1,0 +1,239 @@
+' Gambas module file
+
+Property Read NagatoPurple As Integer
+Property Read NagatoDarkBlue As Integer
+Property Read NagatoLightGreen As Integer
+
+Property Read ConditionGreen As Integer
+Property Read ConditionYellowishGreen As Integer
+Property Read ConditionYellow As Integer
+Property Read ConditionOrange As Integer
+Property Read ConditionRed As Integer
+
+Property Read AlertRed As Integer
+Property Read AlertAmber As Integer
+
+Property Read GridStripeLightBlue As Integer
+Property Read GridStripeLightPink As Integer
+
+Property Read SunnyHot As Integer
+Property Read SunnyWarm As Integer
+Property Read SunnyNormal As Integer
+Property Read SunnyCold As Integer
+Property Read SunnyChill As Integer
+
+Property Read CloudyHot As Integer
+Property Read CloudyWarm As Integer
+Property Read CloudyNormal As Integer
+Property Read CloudyCold As Integer
+Property Read CloudyChill As Integer
+
+Property Read RainyHot As Integer
+Property Read RainyWarm As Integer
+Property Read RainyNormal As Integer
+Property Read RainyCold As Integer
+Property Read RainyChill As Integer
+
+Property Read SnowyNormal As Integer
+Property Read SnowyCold As Integer
+Property Read SnowyChill As Integer
+
+Public Function GetConditionColor(argCondition As Integer) As Integer ' as color
+    
+    Select Case argCondition
+        Case 0 To 49
+            Return Color.DarkBlue
+        Case 50 To 69
+            Return Color.Merge(Color.DarkBlue, Color.Blue)
+        Case 70 To 79
+            Return Color.Merge(Color.Orange, Color.Yellow)
+        Case 80 To 89
+            Return Color.Orange
+        Case 90 To 100
+            Return Color.Red
+        Case Else
+            Return Color.Red
+    End Select
+    
+End
+
+Private Function NagatoPurple_Read() As Integer
+
+    Return 10757841
+
+End
+
+Private Function NagatoDarkBlue_Read() As Integer
+
+    Return 3084884
+
+End
+
+Private Function NagatoLightGreen_Read() As Integer
+
+    Return 7461343
+
+End
+
+Private Function SunnyHot_Read() As Integer
+
+    Return 16711680
+
+End
+
+Private Function SunnyWarm_Read() As Integer
+
+    Return 16711807
+
+End
+
+Private Function SunnyNormal_Read() As Integer
+
+    Return 16744192
+
+End
+
+Private Function SunnyCold_Read() As Integer
+
+    Return 16752446
+
+End
+
+Private Function SunnyChill_Read() As Integer
+
+    Return 16760702
+
+End
+
+Private Function CloudyHot_Read() As Integer
+
+    Return 7829439
+
+End
+
+Private Function CloudyWarm_Read() As Integer
+
+    Return 9408447
+
+End
+
+Private Function CloudyNormal_Read() As Integer
+
+    Return 10987455
+
+End
+
+Private Function CloudyCold_Read() As Integer
+
+    Return 12566463
+
+End
+
+Private Function CloudyChill_Read() As Integer
+
+    Return 14671839
+
+End
+
+Private Function RainyHot_Read() As Integer
+
+    Return 255
+
+End
+
+Private Function RainyWarm_Read() As Integer
+
+    Return 4079359
+
+End
+
+Private Function RainyNormal_Read() As Integer
+
+    Return 8290047
+
+End
+
+Private Function RainyCold_Read() As Integer
+
+    Return 12566527
+
+End
+
+Private Function RainyChill_Read() As Integer
+    
+  Return 14671871
+    
+End
+
+Private Function SnowyNormal_Read() As Integer
+
+    Return 10473471
+
+End
+
+Private Function SnowyCold_Read() As Integer
+
+    Return 11917311
+
+End
+
+Private Function SnowyChill_Read() As Integer
+
+    Return 14675967
+
+End
+
+Private Function ConditionGreen_Read() As Integer
+
+    Return 7274302
+
+End
+
+Private Function ConditionYellowishGreen_Read() As Integer
+
+    Return 10485566
+
+End
+
+Private Function ConditionYellow_Read() As Integer
+
+    Return 16777022
+
+End
+
+Private Function ConditionOrange_Read() As Integer
+
+    Return 16752446
+
+End
+
+
+Private Function ConditionRed_Read() As Integer
+
+    Return 16739902
+
+End
+
+Private Function AlertRed_Read() As Integer
+
+    Return 16711807
+
+End
+
+Private Function AlertAmber_Read() As Integer
+
+    Return 16762654
+
+End
+
+Private Function GridStripeLightBlue_Read() As Integer
+
+    Return Color.Lighter(Color.Lighter(Color.Lighter(Color.Blue)))
+
+End
+
+Private Function GridStripeLightPink_Read() As Integer
+
+    Return Color.Lighter(Color.Lighter(Color.Pink))
+
+End

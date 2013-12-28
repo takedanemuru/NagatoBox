@@ -1,0 +1,100 @@
+' Gambas class file
+
+Create Static
+
+Private $iconSize As Integer
+
+Private Function getIconWithSymbol(argSymbol As String) As Picture
+    
+    Dim yukiIcon As Picture
+    Dim yukiSymbol As Picture
+    
+    Stock.Refresh()
+    yukiIcon = Stock[Subst$("&1/directory", $iconSize)]
+    yukiSymbol = Stock[Subst$("&1/&2", Int($iconSize * 0.7), argSymbol)]
+    
+    With Paint
+        .Begin(yukiIcon)
+        .DrawImage(yukiSymbol.Image, Int($iconSize * 0.25), Int($iconSize * 0.3))
+        .End
+    End With
+    
+    Return yukiIcon
+    
+End
+
+Private Function getIconWithUserDefinedSymbol(argFullPath As String) As Picture
+    
+    Dim yukiIcon As Picture
+    Dim yukiSymbol As Picture
+    
+    Stock.Refresh()
+    yukiIcon = Stock[Subst$("&1/directory", $iconSize)]
+    yukiSymbol = NagatoDBDirectory.GetSymbol(argFullPath)
+    
+    With Paint
+        .Begin(yukiIcon)
+        .DrawImage(yukiSymbol.Image.Stretch($iconSize * 0.7, $iconSize * 0.7), Int($iconSize * 0.25), Int($iconSize * 0.3))
+        .End
+    End With
+    
+    Return yukiIcon
+    
+End
+
+Private Function getIconFromStock(argStockIcon As String) As Picture
+    
+    Stock.Refresh()
+    Return Stock[Subst$("&1/&2", $iconSize, argStockIcon)]
+    
+End
+
+Private Function getIconWithPredefinedSymbol(argFullPath As String) As Picture
+    
+    Dim yukiSymbol As String
+    
+    With NagatoXdgUserDirs
+        Select Case argFullPath
+            Case .Desktop
+                Return getIconFromStock("desktop")
+            Case .Documents
+                yukiSymbol = "edit"
+            Case .Download
+                yukiSymbol = "save"
+            Case .Music
+                yukiSymbol = "audio"
+            Case .Videos
+                yukiSymbol = "video"
+            Case .Pictures
+                yukiSymbol = "image"
+            Case .PublicShare
+                yukiSymbol = "people"
+            Case .Templetes
+                yukiSymbol = "new"
+            Case User.Home &/ "Dropbox"
+                Return getIconFromStock("network")
+            Case User.Home &/ "Gambas3Projects"
+                yukiSymbol = "gambas"
+            Case Else
+                Return getIconFromStock("directory")
+        End Select
+    End With
+    
+    Return getIconWithSymbol(yukiSymbol)
+    
+End
+
+Public Function Get(argPath As String, argSize As Integer) As Picture
+    
+    $iconSize = argSize
+    
+    If NagatoMimeType.GetMineType(argPath) = "inode/symlink" Then
+        Return getIconWithSymbol("jump")
+    Else If NagatoDBDirectory.HasSymbol(argPath) Then
+        Return getIconWithUserDefinedSymbol(argPath)
+    Else
+        Return getIconWithPredefinedSymbol(argPath)
+    Endif
+    
+End
+

@@ -1,0 +1,29 @@
+' Gambas class file
+
+Event MenuEvent(argEvent As Integer)
+Event MenuEventWithArg(argEvent As Integer, argArg As Variant)
+Event MenuEventWithArgs(argEvent As Integer, argArgs As Variant[])
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    Debug argEvent
+    
+    Raise MenuEvent(argEvent)
+    
+End
+
+Public Sub Menu_MenuEventWithArg(argEvent As Integer, argArg As Variant)
+    
+    Debug argEvent
+    
+    Raise MenuEventWithArg(argEvent, argArg)
+    
+End
+
+Public Sub Menu_MenuEventWithArgs(argEvent As Integer, argArgs As Variant[])
+    
+    Debug argEvent
+    
+    Raise MenuEventWithArgs(argEvent, argArgs)
+    
+End

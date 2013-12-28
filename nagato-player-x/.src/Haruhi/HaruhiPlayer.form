@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Drop = True
+  Icon = Picture["Pictures/headphone.png"]
+  Resizable = False
+  Arrangement = Arrange.Fill
+  { DrawingArea DrawingArea
+    MoveScaled(2,3,24,24)
+    Background = &HEFBFFF&
+    Tracking = True
+    Drop = True
+    Expand = True
+  }
+}

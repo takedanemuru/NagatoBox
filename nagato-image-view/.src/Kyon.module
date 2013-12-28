@@ -1,0 +1,32 @@
+' Gambas module file
+
+Private $path As String
+
+Private Sub parseArguments()
+    
+    Dim yukiOptions As String[] 
+    Dim yukiPath As String
+    
+    args.Begin("nagato-image-view usage")
+        $path = args.Get("o", "open", "open image", "path to image")
+    yukiOptions = args.End()
+    
+    For Each yukiPath In yukiOptions
+        If Exist(yukiPath) Then $path = yukiPath
+    Next
+    
+End
+
+Public Sub Main()
+    
+    parseArguments()
+    
+    HaruhiImageView.Show()
+    
+    If $path <> "" Then
+        HaruhiImageView.SetImage($path)
+    Else
+        HaruhiImageView.SetImage("pictures/default_picture.jpg")
+    End If
+    
+End

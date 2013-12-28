@@ -1,0 +1,131 @@
+' Gambas class file
+
+Property Read ProgressRate As Float
+Property Read ProgressText As String
+Property Read State As Integer
+'Property Read TagTitle As String
+
+Private $player As New MediaPlayer As "Player"
+'Private $title As String
+
+Event MusicEnd
+
+Public Function GetProgressTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
+
+    Dim yukiResult As String
+    
+    If argRate > 1 Then argRate = 1
+    
+    With MikuruTextConvert
+        yukiResult = Subst$("&1 / &2", .FloatToTimeFormat($player.Duration * argRate), .FloatToTimeFormat($player.Duration))
+    End With
+    
+    Return yukiResult
+
+Catch
+    Return ""
+
+End
+
+Public Sub SetPosition(argRate As Float) 
+    
+    If argRate > 1 Then argRate = 1
+    
+    $player.Position = $player.Duration * argRate
+    
+End
+
+Public Sub SetUrlAndPlay(argPath As String)
+    
+    If NagatoQueue.SetPath(argPath) Then
+        Try $player.Stop
+        MikuruWebRadio.Stop()
+        $player.URL = MikuruPath.GetUrl(argPath)
+        $player.Play()
+    End If
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Public Sub Play(Optional argPosition As Float)
+    
+    If $player.State <> Media.Paused Then
+        Try $player.Stop
+        MikuruWebRadio.Stop()
+        Try $player.URL = NagatoQueue.CurrentPath
+    End If
+    
+    If argPosition Then $player.Position = argPosition
+    $player.Play()
+    
+Catch
+    Return
+    
+End
+
+Public Sub Pause()
+    
+    Try $player.Pause()
+   
+End
+
+Public Sub Stop()
+    
+    Try $player.Stop()
+    
+End
+
+Public Sub Player_End()
+    
+    Raise MusicEnd
+    
+End
+
+' Public Sub Player_Tag(argTags As MediaTagList)
+'     
+'     ' If argTags["title"] <> "" Then
+'     '     $title = argTags["title"]
+'     ' End If
+'     
+' End
+
+Private Function ProgressRate_Read() As Float
+
+    Return ($player.Position / $player.Duration)
+
+Catch
+    Return 0
+    
+End
+
+Private Function ProgressText_Read() As String
+
+    Dim yukiResult As String
+    
+    If $player.Duration = 0 Then Return ""
+    
+    With MikuruTextConvert
+        yukiResult = Subst$("&1 / &2", .FloatToTimeFormat($player.Position), .FloatToTimeFormat($player.Duration))
+    End With
+    
+    Return yukiResult
+
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+Catch
+    Return MediaPlayer.Null
+
+End
+
+' Private Function TagTitle_Read() As String
+' 
+'     Return $title
+' 
+' End

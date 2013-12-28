@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private $iconView As IconView
+
+Private Sub addIconView()
+    
+    $iconView = New IconView(Me._$parent) As "IconView"
+    
+    With $iconView
+        .Expand = True
+        .Sorted = False
+        .Picture = Picture["pictures/Tanigawa_YukiChanV2_TP.jpg"]
+    End With
+    
+    refreshIconView()
+    
+End
+
+Private Sub setFileIcon(argPath As String) ' argPath must be full path.
+    
+    $iconView.Add(argPath, File.Name(argPath), NagatoFileIcon.Get(argPath, 128))
+    
+End
+
+Private Sub refreshIconView()
+    
+    Dim yukiRelativePath As String
+    
+    For Each yukiRelativePath In Dir(NagatoTrashHandler.FilesPath, "*", gb.Directory).Sort()
+        $iconView.Add(yukiRelativePath, yukiRelativePath, Stock["64/directory"])
+    Next
+
+    For Each yukiRelativePath In Dir(NagatoTrashHandler.FilesPath, "*", gb.File).Sort()
+        setFileIcon(NagatoTrashHandler.FilesPath &/ yukiRelativePath)
+    Next
+    
+    NagatoDBThumbnail.CleanUp(NagatoTrashHandler.FilesPath)
+    
+End
+
+Public Sub _Initialize(argPath As String) ' override NagatoMainPane Method
+    
+    addIconView()
+    
+End

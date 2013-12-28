@@ -1,0 +1,85 @@
+' Gambas class file
+
+Create Private
+
+Property Read HourTen As Integer
+Property Read HourOne As Integer
+Property Read MinuteTen As Integer
+Property Read MinuteOne As Integer
+Property Read SecondTen As Integer
+Property Read SecondOne As Integer
+
+Public $hourTen As Integer
+Public $hourOne As Integer
+Public $MinuteTen As Integer
+Public $MinuteOne As Integer
+Public $secondTen As Integer
+Public $secondOne As Integer
+
+Public $timer As Timer
+
+Event Changed
+
+Public Sub _SetProperties()
+    
+    'to be overridden.
+    
+End
+
+Private Sub _initializeTimer()
+    
+    $timer = New Timer As "Timer"
+    $timer.Delay = 1000
+    $timer.Enabled = False
+    
+End
+
+Public Sub _new()
+    
+    _initializeTimer()
+    $timer.Start()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Me._setProperties()
+    Raise Changed
+    
+End
+
+Private Function HourTen_Read() As Integer
+
+    Return $hourTen
+
+End
+
+Private Function HourOne_Read() As Integer
+
+    Return $hourOne
+
+End
+
+Private Function MinuteTen_Read() As Integer
+
+    Return $MinuteTen
+
+End
+
+Private Function MinuteOne_Read() As Integer
+
+    Return $MinuteOne
+
+End
+
+Private Function SecondTen_Read() As Integer
+
+    Return $secondTen
+
+End
+
+Private Function SecondOne_Read() As Integer
+
+    Return $secondOne
+
+End

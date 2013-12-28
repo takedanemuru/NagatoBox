@@ -1,0 +1,38 @@
+' Gambas class file
+
+Property Function As Integer
+Property Number As Float
+
+Private $function As Integer
+Private $number As Float
+
+Public Sub _new()
+        
+        $function = MikuruFunctionType.Plus
+        $number = 0
+        
+End
+
+Private Function Function_Read() As Integer
+
+        Return $function
+
+End
+
+Private Sub Function_Write(Value As Integer)
+
+        $function = Value
+
+End
+
+Private Function Number_Read() As Float
+
+        Return $number
+
+End
+
+Private Sub Number_Write(Value As Float)
+
+        $number = Value
+
+End

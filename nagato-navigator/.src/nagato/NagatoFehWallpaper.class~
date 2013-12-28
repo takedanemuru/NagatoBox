@@ -1,0 +1,55 @@
+' Gambas class file
+
+Create Static
+
+Property Read HasConfig As Boolean
+Property Read LastCommand As String
+Property Read lastType As Integer
+Property Read LastPath As String
+
+Private Const FehBgConfigPath As String = ".fehbg"
+
+Private $type As String[] = ["scale", "center", "fill", "max", "tile"]
+
+Public Sub ExecuteLastCommand()
+    
+    If Me.HasConfig Then Shell Me.LastCommand
+    
+Catch
+    Return
+    
+End
+
+Private Function HasConfig_Read() As Boolean
+
+    Return Exist(User.Home &/ FehBgConfigPath)
+
+End
+
+Private Function LastCommand_Read() As String
+
+    Return Replace$(File.Load(User.Home &/ FehBgConfigPath), "\n", "")
+
+End
+
+Private Function LastPath_Read() As String
+
+    Dim yukiPath As String 
+    Dim yukiFirst As Integer = InStr(Me.LastCommand, "'") ' to store first position of apostrofy
+
+    yukiPath = Right(Left(Me.LastCommand, -2), -1 * yukiFirst)
+
+    If Exist(yukiPath) Then Return yukiPath
+
+Finally
+    Return ""
+
+End
+
+Private Function lastType_Read() As Integer
+
+    Dim yukiType As String = Replace$(Split(Me.LastCommand, " ", "", True, False)[1], " ", "")
+
+    Return $type.Find(Replace$(yukiType, "--bg-", ""))
+
+End

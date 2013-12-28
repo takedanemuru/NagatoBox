@@ -1,0 +1,50 @@
+' Gambas class file
+
+Create Static
+
+Private $timer As New Timer As "ScreenshotTimer" 
+
+Private Function getActiveWindowScreenshot() As Picture
+    
+    Dim yukiWindow As DesktopWindow
+    
+    yukiWindow = New DesktopWindow(Desktop.ActiveWindow)
+    Return Desktop.Screenshot(yukiWindow.X, yukiWindow.Y, yukiWindow.W, yukiWindow.H)
+    
+Catch
+    HaruhiBalloon.SetText("I couldn't find active window.")
+    Return Desktop.Screenshot()
+    
+End
+
+Private Sub CallDialog()
+    
+
+    MikuruEventSound.Shutter()
+    
+    If NagatoSettingsScreenshooter.OnlyActiveWindow Then
+        HaruhiSave.Ask(getActiveWindowScreenshot())
+    Else
+        HaruhiSave.Ask(Desktop.Screenshot())
+    Endif
+    
+End
+
+Public Sub Take(argDelay As Integer)
+    
+    If argDelay = 0 Then
+        CallDialog()
+    Else
+        $timer.Delay = argDelay * 1000
+        $timer.Start()
+    End If
+    
+End
+
+Public Sub ScreenshotTimer_Timer()
+    
+    CallDialog()
+    
+    $timer.Stop()
+    
+End

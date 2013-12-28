@@ -1,0 +1,60 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addItemsMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TrashBinMenu"
+    
+    yukiMenu.Text = (Subst$("Items: &1", MikuruDirectory.GetItems(NagatoTrashHandler.FilesPath)))
+    
+End
+
+Private Sub addSizeMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TrashBinMenu"
+    Dim yukiSize As Float = MikuruDirectory.GetSize(NagatoTrashHandler.FilesPath)
+    
+    yukiMenu.Text = Subst$("size: &1 Byte", yukiSize)
+    
+End
+
+Private Sub addShowTrashBinMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TrashBinMenu"
+    
+    With yukiMenu
+        .Text = ("Show Trash Bin")
+    End With
+    
+End
+
+Private Sub addDeleteAllMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "EmptyAllMenu"
+    
+    yukiMenu.Text = ("Empty Trash Bin")
+    
+End
+
+Public Sub _InitializeMenu() ' override.
+    
+    addItemsMenu()
+    addSizeMenu()
+    addShowTrashBinMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addDeleteAllMenu()
+    
+End
+
+Public Sub TrashBinMenu_Click()
+    
+    NagatoTabHandler.NewTab(MikuruFunctionType.TrashBin)
+    
+End
+
+Public Sub EmptyAllMenu_Click()
+    
+    NagatoTrashHandler.EmptyAll()
+    
+End

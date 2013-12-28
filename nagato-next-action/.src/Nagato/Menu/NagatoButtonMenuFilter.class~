@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Public _$uniqueName As String = "FilterMenuSet"
+
+Public Sub _InitializeRootMenu(argForm As Form, argButton As MenuButton)
+    
+    Me._$rootMenu = New Menu(argForm)
+    Me._$rootMenu.Name = Me._$uniqueName
+    argButton.Menu = Me._$uniqueName
+    
+End
+
+Private Sub addFilterMenu(argText As String, argType As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "FilterMenu"
+    
+    With yukiMenu
+        .Text = argText
+    End With
+    
+    Debug Me._$uniqueName
+    
+End
+
+Public Sub _AddMenus() 'override
+    
+    addFilterMenu("test1", "test")
+    addFilterMenu("test2", "test")
+    addFilterMenu("test3", "test")
+    
+End

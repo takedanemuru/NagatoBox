@@ -1,0 +1,77 @@
+' Gambas class file
+
+Inherits NagatoInfoBar
+
+Private $searchBox As NagatoSearchBox
+Private $toolButton As ToolButton
+
+Event FindText(argStringsToSerch As String)
+
+Private Sub addSpacer()
+    
+    Dim yukiSpacer As New Label(Me.$infobar)
+    
+    With yukiSpacer
+        .Expand = True
+    End With
+    
+End
+
+Private Sub addSearchBox()
+    
+    $searchBox = New NagatoSearchBox(Me.$infobar) As "SearchBox"
+    
+End
+
+Private Sub addCloseButton()
+    
+    $toolButton = New ToolButton(Me.$infobar) As "CloseButton"
+    
+    With $toolButton
+        .Width = Me.$size
+        .Picture = Stock["medium/delete"]
+        .Tooltip = ("Close search bar")
+    End With
+    
+End
+
+Private Sub initializeWidgets()
+    
+    addSpacer()
+    addSearchBox()
+    addCloseButton()
+    
+End
+
+Public Sub Hide()
+    
+    Me.$infobar.Visible = False
+    
+End
+
+Public Sub Show()
+    
+    Me.$infobar.Visible = True
+    $searchBox.SetFocus()
+    
+End
+
+Public Sub _new(argParent As Container)
+    
+    Me.initializeInfobar(argParent)
+    initializeWidgets()
+    Me.$infobar.Visible = False
+    
+End
+
+Public Sub SearchBox_SearchQuery(argStringsToSerch As String)
+    
+    Raise FindText(argStringsToSerch)
+    
+End
+
+Public Sub CloseButton_Click()
+    
+    Me.Hide()
+    
+End

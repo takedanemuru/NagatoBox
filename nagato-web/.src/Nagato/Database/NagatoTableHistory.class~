@@ -1,0 +1,29 @@
+' Gambas class file
+
+Private $connection As Connection
+
+Private Sub checkAndCreateHistoryTable()
+    
+    Dim yukiTable As Table
+    
+    With NagatoDBWeb
+        If Not $connection.Tables.Exist(.TableHistory) Then
+            yukiTable = $connection.Tables.Add(.TableHistory)
+            yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnUrl, db.String)
+            yukiTable.Fields.Add(.ColumnPageName, db.String)
+            yukiTable.Fields.Add(.ColumnLastAccessed, db.Date)
+            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Update()
+        Endif
+    End With
+
+End
+
+Public Sub _new(argConnection As Connection)
+    
+    $connection = argConnection
+    checkAndCreateHistoryTable()
+    
+End
+

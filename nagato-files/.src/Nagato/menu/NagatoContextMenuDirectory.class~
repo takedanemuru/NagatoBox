@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Private Sub addTestMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TestMenu"
+    
+    With yukiMenu
+        .Text = "Test"
+        .Picture = MikuruIcon.Get("question")
+    End With
+    
+End
+
+Public Sub _initalizeChildMenus() 'virtual
+    
+    addTestMenu()
+    
+    With NagatoMenuPipe
+        Me._AddMenuItem(("Open"), .DirOpen, MikuruIcon.Get("folder"))
+        Me._AddMenuItem(("Open in new tab"), .DirOpenInNewTab, MikuruIcon.Get("toggle-expand-alt"))
+        Me._AddMenuItem(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
+    End With
+    
+End
+
+Public Sub _new(argPath As String)
+    
+    Me._$path = argPath
+    Me._$rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    Me._InitalizeChildMenus()
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub MenuItem_Show()
+    
+    Debug "Shown"
+    
+End
+
+Public Sub MenuItem_Close()
+    
+    Debug "Close"
+    
+End
+
+Public Sub TestMenu_Click()
+    
+    Debug "Clicked"
+    
+End

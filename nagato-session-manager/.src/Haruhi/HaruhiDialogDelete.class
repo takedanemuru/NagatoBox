@@ -1,0 +1,20 @@
+' Gambas class file
+
+Public Sub Form_Open()
+
+    Me.Picture = Image.Load("pictures/yukichan_17.jpg").Stretch(Me.W, Me.H).Picture
+    Me.Center()
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(MikuruDialog.ResponseCancel)
+
+End
+
+Public Sub DeleteButton_Click()
+
+    Me.Close(MikuruDialog.ResponseDelete)
+
+End

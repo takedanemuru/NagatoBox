@@ -1,0 +1,29 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.1.1
+Title=habanero-tan-clock
+Startup=FMain
+Icon=icon.gif
+Version=0.0.1
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.image.effect
+Component=gb.qt4.ext
+Component=gb.sdl.sound
+Description="clock"
+Authors="takeda.nemuru\n<takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takeda.nemuru
+Vendor=n.labs
+Address=takeda.nemuru@gmail.com
+License=General Public License
+UseRelease=1
+PackageName=habanerotan-clock-0.0.1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Games/Toys"
+Categories=ubuntu:"Amusement;Utility"
+Groups=ubuntu:"utils"

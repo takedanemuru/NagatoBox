@@ -1,0 +1,253 @@
+' Gambas class file
+
+Create Static
+
+Property Read CurrentPath As String
+Property Read CurrentPosition As Integer
+Property Read Paths As String[]
+Property Read Count As Integer
+
+Property Title As String
+Property Album As String
+Property Artist As String
+
+Property Read State As Integer
+Property Read ProgressRate As Float
+Property Read ProgressText As String
+
+Private $observer As Observer
+Private $player As New NagatoPlayerLegacy As "Player"
+Private $tags As New NagatoTags
+Private $musicPaths As New NagatoMusicPaths As "MusicPaths"
+
+Event Changed 
+
+Private Sub changePath()
+    
+    $tags.SetTag($musicPaths.CurrentPath)
+    HaruhiPlayList.MoveTo(Me.CurrentPath)
+    
+End
+
+Public Function SetPath(argPath As String) As Boolean
+    
+    Return $musicPaths.SetPath(argPath)
+    
+End
+
+Public Sub AddMusics(argPaths As String[])
+    
+    $musicPaths.AddMusics(argPaths)
+    
+End
+
+Public Sub AddDirectory(argPath As String)
+    
+    $musicPaths.AddDirectory(argPath)
+    
+End
+
+Public Sub InsertMusic(argPaths As String[])
+    
+    $player.Stop()
+        $musicPaths.InsertMusic(argPaths)
+    $player.Play()
+    
+End
+
+Public Sub DeleteMusic(argPath As String)
+    
+    $player.Stop()
+        $musicPaths.DeleteMusic(argPath)
+    If $musicPaths.Count > 0 Then $player.Play()
+    
+End
+
+Public Sub ClearAll()
+    
+    $player.Stop()
+    $musicPaths.ClearAll()
+    
+End
+
+Public Sub RefreshTag()
+    
+    $tags.SetTag($musicPaths.CurrentPath)
+    
+End
+
+Public Sub Activate(Optional argPaths As String[] = [""])
+    
+    $musicPaths.EnsurePaths(argPaths)
+    $observer = New Observer(Me) As "Asakura"
+    
+End
+
+Public Function GetProgressTextByRate(argRate As Float) As String
+    
+    Return $player.GetProgressTextByRate(argRate)
+    
+End
+
+Public Sub Play()
+    
+    If Me.Count = 0 Then Return
+    If $player.State <> Media.Playing Then $player.Play()
+    
+End
+
+Public Sub Pause()
+    
+    $player.Pause()
+    
+End
+
+Public Sub Next()
+    
+    If Me.Count = 0 Then Return
+    
+    $musicPaths.Next()
+    $player.Play(0)
+    
+End
+
+Public Sub Back()
+    
+    If Me.Count = 0 Then Return
+    
+    If $player.ProgressRate > 0.05 Then
+        $player.SetPosition(0)
+    Else 
+        $musicPaths.Back()
+        $player.Play(0)
+    End If
+    
+End
+
+Public Sub SetPathAndPlay(argPath As String)
+    
+    $player.SetUrlAndPlay(argPath)
+    changePath()
+    
+End
+
+Public Sub SetProgress(argProgress As Float) ' argFloat must be between 0 to 1
+    
+    $player.SetPosition(argProgress)
+    
+End
+
+Public Sub StartRadio()
+    
+    Try $player.Stop()
+    
+End
+
+Public Sub Player_MusicEnd()
+    
+    If NagatoSettingsMusic.Repeat Then
+        Me.Back()
+    Else
+        Me.Next()
+    End If
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    $tags.SetTag($musicPaths.CurrentPath)
+    NagatoSettingsMusic.SavePaths($musicPaths.Paths)
+    
+End
+
+Public Sub MusicPaths_Moved()
+    
+    changePath()
+    
+End
+
+Public Sub MusicPaths_Changed()
+    
+    Raise Changed
+    
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $musicPaths.Paths
+
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return MikuruPath.GetUrl($musicPaths.CurrentPath)
+
+End
+
+Private Function Title_Read() As String
+    
+    If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPath)
+    
+    Return $tags.Title
+    
+End
+
+Private Sub Title_Write(Value As String)
+
+    $tags.Title = Value
+
+End
+
+Private Function Album_Read() As String
+
+    Return $tags.Album
+
+End
+
+Private Sub Album_Write(Value As String)
+
+    $tags.Album = Value
+
+End
+
+Private Function Artist_Read() As String
+
+    Return $tags.Artist
+
+End
+
+Private Sub Artist_Write(Value As String)
+
+    $tags.Artist = Value
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $musicPaths.Count
+
+End
+
+Private Function CurrentPosition_Read() As Integer
+
+    Return $musicPaths.CurrentPosition
+    
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+End
+
+Private Function ProgressText_Read() As String
+
+    Return $player.ProgressText
+    
+End
+
+Private Function ProgressRate_Read() As Float
+
+    Return $player.ProgressRate
+
+End

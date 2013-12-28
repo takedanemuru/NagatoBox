@@ -1,0 +1,148 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Property BackButtonEnabled As Boolean
+Property UpButtonEnabled As Boolean
+Property ForwardButtonEnabled As Boolean
+Property HomeButtonEnabled As Boolean
+
+Private $backButton As ToolButton
+Private $upButton As ToolButton
+Private $forwardButton As ToolButton
+Private $homeButton As ToolButton
+
+Private Sub addHomeButton()
+    
+    $homeButton = New ToolButton(Me._$parent) As "MenuButton"
+    
+    With $homeButton
+        .Width = Me.$size
+        .Picture = Stock["medium/home"]
+        .Tooltip = ("Move to Home")
+        .Tag = MikuruMenuEventMove.Home
+    End With
+    
+End
+
+Private Sub addUpButton()
+    
+    $upButton = New ToolButton(Me._$parent) As "MenuButton"
+    
+    With $upButton
+        .Width = Me.$size
+        .Picture = Stock["medium/up"]
+        .Tooltip = ("Move to Parent Directory")
+        .Tag = MikuruMenuEventMove.Up
+    End With
+    
+End
+
+Private Sub addBackButton()
+    
+    $backButton = New ToolButton(Me._$parent) As "MenuButton"
+    
+    With $backButton
+        .Width = Me.$size
+        .Picture = Stock["medium/left"]
+        .Tag = MikuruMenuEventMove.Back
+    End With
+    
+End
+
+Private Sub addForwardButton()
+    
+    $forwardButton = New ToolButton(Me._$parent) As "MenuButton"
+    
+    With $forwardButton
+        .Width = Me.$size
+        .Picture = Stock["medium/right"]
+        .Tag = MikuruMenuEventMove.Forward
+    End With
+    
+    
+End
+
+Private Sub addReloadButton()
+    
+   Dim yukiButton As New ToolButton(Me._$parent) As "MenuButton"
+    
+    With yukiButton
+        .Width = Me.$size
+        .Picture = Stock["medium/refresh"]
+        .Tooltip = ("reload")
+        .Tag = MikuruMenuEventMove.Reload
+    End With 
+    
+End
+
+Private Sub initializeWidgets()
+    
+    addHomeButton()
+    addBackButton()
+    addUpButton()
+    addForwardButton()
+    addReloadButton()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    initializeWidgets()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End
+
+Private Function BackButtonEnabled_Read() As Boolean
+
+    Return $backButton.Enabled
+
+End
+
+Private Sub BackButtonEnabled_Write(Value As Boolean)
+
+    $backButton.Enabled = Value
+
+End
+
+Private Function UpButtonEnabled_Read() As Boolean
+
+    Return $upButton.Enabled
+
+End
+
+Private Sub UpButtonEnabled_Write(Value As Boolean)
+
+    $upButton.Enabled = Value
+
+End
+
+Private Function ForwardButtonEnabled_Read() As Boolean
+
+    Return $forwardButton.Enabled
+
+End
+
+Private Sub ForwardButtonEnabled_Write(Value As Boolean)
+
+    $forwardButton.Enabled = Value
+
+End
+
+Private Function HomeButtonEnabled_Read() As Boolean
+
+    Return $homeButton.Enabled
+
+End
+
+Private Sub HomeButtonEnabled_Write(Value As Boolean)
+
+    $homeButton.Enabled = Value
+
+End

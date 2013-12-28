@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Property Text As String
+
+Private $buttonBox As ButtonBox
+
+Event Click(argPath As String)
+
+Private Sub initializeWidget()
+    
+    $buttonBox = New ButtonBox(Me._$parent) As "AddressBox"
+    
+    With $buttonBox
+        .Expand = True
+        .Picture = Stock["medium/jump"]
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me.initialize(argContainer)
+    initializeWidget()
+    
+End
+
+Public Sub SetFucusOnAdressBox()
+    
+    $buttonBox.SetFocus()
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $buttonBox.Text
+
+End
+
+Private Sub Text_Write(Value As String)
+
+    $buttonBox.Text = Value
+
+End
+
+Public Sub AddressBox_Click()
+    
+    If $buttonBox.Text = "" Then Return
+    Raise Click($buttonBox.Text)
+    
+End
+
+Public Sub AddressBox_KeyPress()
+    
+    If $buttonBox.Text = "" Then Return
+    If Key.Code = Key.Return Then Raise Click($buttonBox.Text)
+    
+End

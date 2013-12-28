@@ -1,0 +1,61 @@
+' Gambas module file
+
+Property Read ZoomFit As Integer
+Property Read ZoomNormal As Integer
+Property Read ZoomIn As Integer
+Property Read ZoomOut As Integer
+Property Read RotateRight As Integer
+Property Read RotateLeft As Integer
+Property Read Execute As Integer
+Property Read Resize As Integer
+
+Private Const $seriesHeader As Integer = 2000
+
+Private Function ZoomFit_Read() As Integer
+
+    Return $seriesHeader + 1
+
+End
+
+Private Function ZoomNormal_Read() As Integer
+
+    Return $seriesHeader + 2
+
+End
+
+Private Function ZoomIn_Read() As Integer
+
+    Return $seriesHeader + 3
+    
+
+End
+
+Private Function ZoomOut_Read() As Integer
+
+    Return $seriesHeader + 4
+    
+End
+
+Private Function RotateRight_Read() As Integer
+
+    Return $seriesHeader + 5
+    
+End
+
+Private Function RotateLeft_Read() As Integer
+
+    Return $seriesHeader + 6
+    
+End
+
+Private Function Execute_Read() As Integer
+
+    Return $seriesHeader + 7
+
+End
+
+Private Function Resize_Read() As Integer
+
+    Return $seriesHeader + 8
+
+End

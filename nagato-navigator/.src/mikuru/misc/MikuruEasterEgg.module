@@ -1,0 +1,13 @@
+' Gambas module file
+
+Public Sub Message()
+    
+    If Month(Now) = 1 Then
+        If Day(Now) = 1 Then HaruhiBalloon.SetText(Subst$("Happy New Year, &1.", User.Name))
+    Else If Month(Now) = 12 Then
+        If Day(Now) = 24 Or If Day(Now) = 25 Then
+            HaruhiBalloon.SetText(Subst$("Merry Christmas, &1.", User.Name))
+        Endif
+    Endif
+    
+End

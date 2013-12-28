@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoMenuSignal
+
+Property Read Path As String
+Property Read Saved As Boolean
+
+Private $path As String
+Private $saved As Boolean = False
+
+Public Sub Save(argText As String)
+    
+    If $path <> "" Then
+        File.Save($path, argText)
+    Else If Not MikuruDialog.SaveTextFile() Then
+        Debug "save to " & MikuruDialog.TextFilePath
+        File.Save(MikuruDialog.TextFilePath, argText)
+        $path = MikuruDialog.TextFilePath
+    Else
+        Return
+    End If
+    
+    $saved = True
+    
+End
+
+Public Sub NewPath(argPath As String)
+    
+    $path = argPath
+    $saved = True
+    
+End
+
+Public Sub Change()
+    
+    $saved = False
+    
+End
+
+Public Sub _new(Optional argPath As String = "")
+    
+    $path = argPath
+    
+End
+
+Private Function Saved_Read() As Boolean
+
+    Return $saved
+
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End

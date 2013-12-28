@@ -1,0 +1,41 @@
+' Gambas class file
+
+Public _$rootMenu As Menu
+
+Event Delete
+
+Public Sub _InitializeRootMenu()
+    
+    Me._$rootMenu = New Menu(HaruhiPlayList)
+    Me._$rootMenu.Visible = False
+    
+End
+
+Public Sub _InitializeChildMenus()
+    
+    Dim yukiDeleteMenu As New Menu(Me._$rootMenu) As "DeleteMenu"
+    
+    With yukiDeleteMenu
+        .Text = ("Delete")
+    End With
+    
+End
+
+Public Sub PopUp()
+    
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new()
+    
+    Me._InitializeRootMenu()
+    Me._InitializeChildMenus()
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    Raise Delete
+    
+End

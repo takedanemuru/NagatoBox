@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Function GetTime(argSecond As Integer) As String
+    
+    Dim yukiHour As Integer = argSecond Div 3600
+    Dim yukiMinute As Integer = (argSecond Mod 3600) Div 60
+    Dim yukiSecond As String = Format$((argSecond Mod 3600) Mod 60, "0#")
+    
+    If yukiHour > 0 Then
+        Return Subst$(("&1:&2:&3"), yukiHour, Format$(yukiMinute, "0#"), yukiSecond)
+    Else
+        Return Subst$(("&1:&2"), yukiMinute, yukiSecond)
+    Endif
+    
+End
+

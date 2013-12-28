@@ -1,0 +1,33 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,67,25)
+  { Separator1 Separator
+    MoveScaled(1,16,65,4)
+  }
+  { ApplyButton Button
+    MoveScaled(49,20,16,4)
+    Text = ("Apply")
+  }
+  { CancelButton Button
+    MoveScaled(32,20,16,4)
+    Text = ("Cancel")
+  }
+  { NewNameTextBox TextBox
+    MoveScaled(18,12,47,4)
+    Text = ("TextBox1")
+  }
+  { CurrentNameTextLabel TextLabel
+    MoveScaled(18,7,47,4)
+    Text = ("TextLabel1")
+    Alignment = Align.Left
+  }
+  { DirectoryButtonBox ButtonBox
+    MoveScaled(18,2,47,4)
+    Text = ("ButtonBox1")
+  }
+  { IconPictureBox PictureBox
+    MoveScaled(2,2,14,14)
+    Alignment = Align.Center
+  }
+}

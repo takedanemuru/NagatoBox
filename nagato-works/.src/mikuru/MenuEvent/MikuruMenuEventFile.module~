@@ -1,0 +1,67 @@
+' Gambas module file
+
+Property Read New As Integer
+Property Read Open As Integer
+Property Read Save As Integer
+Property Read SaveAs As Integer
+Property Read Revert As Integer
+Property Read OpenTerminalHere As Integer
+Property Read MakeNewDirectory As Integer
+Property Read Search As Integer
+Property Read Rename As Integer
+
+Private $seriesHeader As Integer = MikuruSeriesHeader.File
+
+Private Function New_Read() As Integer
+
+    Return $seriesHeader + 1
+
+End
+
+Private Function Open_Read() As Integer
+
+    Return $seriesHeader + 2
+
+End
+
+Private Function Save_Read() As Integer
+
+    Return $seriesHeader + 3
+
+End
+
+Private Function SaveAs_Read() As Integer
+
+    Return $seriesHeader + 4
+
+End
+
+Private Function Revert_Read() As Integer
+
+    Return $seriesHeader + 5
+
+End
+
+Private Function OpenTerminalHere_Read() As Integer
+
+    Return $seriesHeader + 6
+
+End
+
+Private Function MakeNewDirectory_Read() As Integer
+
+    Return $seriesHeader + 7
+
+End
+
+Private Function Search_Read() As Integer
+
+    Return $seriesHeader + 8
+
+End
+
+Private Function Rename_Read() As Integer
+
+    Return $seriesHeader + 9
+
+End

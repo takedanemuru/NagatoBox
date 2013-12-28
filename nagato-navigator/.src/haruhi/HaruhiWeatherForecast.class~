@@ -1,0 +1,130 @@
+' Gambas class file
+
+Private Sub getIcon(argCount As Integer, argElement As NagatoWeatherElement) As Picture
+    
+    If argCount >= 6 And If 18 > argCount Then
+        Return NagatoWeatherIcon.GetIconImageDay(argElement.IconId).Stretch(64, 64).Picture
+    Else
+        Return NagatoWeatherIcon.GetIconImageNight(argElement.IconId).Stretch(64, 64).Picture
+    Endif
+    
+End
+
+Private Sub setNightColor()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To WeatherforecastGrid.Columns.Max
+        With WeatherforecastGrid[WeatherforecastGrid.Rows.Max, yukiCount]
+            .Background = Color.Lighter(Color.Lighter(Color.Violet))
+        End With
+    Next
+    
+End
+
+Private Sub setDayColor()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To WeatherforecastGrid.Columns.Max
+        With WeatherforecastGrid[WeatherforecastGrid.Rows.Max, yukiCount]
+            .Background = Color.Lighter(Color.Lighter(Color.Orange))
+        End With
+    Next
+    
+End
+
+Private Sub setGridColor(argCount As Integer)
+    
+    If 6 > argCount Or If argCount >= 18 Then
+         setNightColor()
+    Else
+        setDayColor()
+    End If
+    
+End
+
+Private Function getReadableTime(argTime As String) As String
+    
+    Dim yukiResult As String
+    
+    Debug argTime
+    
+    yukiResult = Replace$(argTime, "T", " ")
+    yukiResult = Replace$(argTime, "Z", "")
+    
+    Return yukiResult
+    
+End
+
+Private Sub setData(argDate As String)
+    
+    Dim yukiCount As Integer
+    Dim yukiTime As String
+    Dim yukiElement As NagatoWeatherElement
+    
+    For yukiCount = 0 To 21
+        yukiTime = Subst$("&1T&2:00:00Z", argDate, Format$(yukiCount, "0#"))
+        If NagatoWeatherCache.HasElement(yukiTime) Then
+            Inc WeatherforecastGrid.Rows.Count
+            yukiElement = NagatoWeatherCache.GetElement(yukiTime)
+            setGridColor(yukiCount)
+            WeatherforecastGrid[WeatherforecastGrid.Rows.Max, 0].Picture = getIcon(yukiCount, yukiElement)
+            WeatherforecastGrid[WeatherforecastGrid.Rows.Max, 1].Text = getReadableTime(yukiTime)
+            WeatherforecastGrid[WeatherforecastGrid.Rows.Max, 2].Text = Subst$("&1°C", yukiElement.Temperature)
+            WeatherforecastGrid[WeatherforecastGrid.Rows.Max, 2].Alignment = Align.Right
+            WeatherforecastGrid[WeatherforecastGrid.Rows.Max, 3].Text = Subst$("&1mm", yukiElement.Precipitation)
+            WeatherforecastGrid[WeatherforecastGrid.Rows.Max, 3].Alignment = Align.Right
+        Endif
+    Next
+    
+End
+
+Private Sub refresh()
+    
+    Dim yukiCount As Integer
+    Dim yukiDate As String
+    
+    If Not NagatoWeatherCache.IsReady Then Return
+    
+    For yukiCount = 0 To 6
+        yukiDate = Format$(DateAdd(Now, gb.Day, yukiCount), "yyyy-mm-dd")
+        setData(yukiDate)
+    Next
+    
+End
+
+Private Sub initializeGridView()
+    
+    With WeatherforecastGrid
+        .Grid = False
+        .Header = GridView.Horizontal
+        .Columns.Count = 4
+        .Columns[0].Width = 64
+        .Columns[1].Width = 256
+        .Columns[2].Width = 128
+        .Columns[3].Width = 128
+        .Columns[0].Text = "Condition"
+        .Columns[1].Text = "Time"
+        .Columns[2].Text = "Temperature"
+        .Columns[3].Text = "Precipitation"
+        .Rows.Height = 64
+    End With
+    
+    NagatoSettingsCore.LoadGridsSettings(WeatherforecastGrid)
+    
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+    initializeGridView()
+    refresh()
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsCore.SaveGridsSettings(WeatherforecastGrid)
+    
+End

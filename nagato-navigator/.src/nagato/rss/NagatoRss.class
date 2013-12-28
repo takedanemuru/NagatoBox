@@ -1,0 +1,84 @@
+' Gambas class file
+
+Create Static
+
+Property Read Ready As Boolean
+Property Read Count As Integer
+Property Read Max As Integer
+
+Private $urls As String[] 
+Private $feeds As New Object[]
+Private $ready As Boolean = False
+Private $feedIndex As Integer = 0
+
+Private Sub setFeed()
+    
+    Dim yukiFeed As NagatoRssFeed
+    
+    If $feedIndex > $urls.Max Then
+        $ready = True
+        $feedIndex = 0
+        Debug "RSS feeds are ready"
+    Else
+        Debug "FeedIndex: " & ($feedIndex + 1) & " of " & ($urls.Max + 1)
+        yukiFeed = New NagatoRssFeed($urls[$feedIndex]) As "Feed"
+    Endif
+    
+End
+
+Public Sub _new()
+    
+    $urls = NagatoSettingsRss.Feeds
+    
+End
+
+Public Sub Refresh()
+    
+    $ready = False
+    $feeds.Clear()
+    setFeed()
+    
+End
+
+Public Sub GetFeed(argIndex As Integer) As Object
+    
+    If $feeds.Count = 0 Then Return
+    
+    Return $feeds[argIndex]
+    
+End
+
+Public Sub Feed_Error()
+    
+    Inc $feedIndex
+    setFeed()
+    
+    Debug "RSS Error"
+    
+End
+
+Public Sub Feed_Finish(argFeed As NagatoRssFeed)
+    
+    $feeds.Add(argFeed)
+    Inc $feedIndex
+    setFeed()
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $feeds.Count
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $feeds.Max
+
+End

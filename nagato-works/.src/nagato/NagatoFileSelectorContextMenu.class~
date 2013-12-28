@@ -1,0 +1,306 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoContextMenu
+
+Property Read CurrentDir As String
+
+Event Open
+Event Move(argPath As String) ' argPath should be FullPath
+Event SelectDirectory
+Event Copy
+Event CopyFilePth
+Event CreateLink
+Event Rename
+Event Status
+Event Delete
+ 
+Private Sub setSingleItem(argParent As Menu, argPath As String, argPicture As Picture)
+    
+    Dim yukiMenu As New Menu(argParent) As "MoveMenu"
+    
+    With yukiMenu
+        .Text = File.Name(argPath)
+        .Tag = argPath
+        .Picture = argPicture
+    End With
+    
+End
+
+Private Sub setMutiItems(argParent As Menu, argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        setSingleItem(argParent, yukiPath, Stock["medium/directory"])
+    Next
+    
+End
+
+Private Sub addBookmarkDirs(argParent As Menu)
+    
+    If Me.CurrentDir <> User.Home Then setSingleItem(argParent, User.Home, Stock["medium/home"])
+    setSingleItem(argParent, NagatoXdgUserDirs.Desktop, Stock["medium/desktop"])
+    setSingleItem(argParent, NagatoXdgUserDirs.Documents, Stock["medium/file"])
+    setSingleItem(argParent, NagatoXdgUserDirs.Download, Stock["medium/down"])
+    setSingleItem(argParent, NagatoXdgUserDirs.Music, Stock["medium/audio"])
+    setSingleItem(argParent, NagatoXdgUserDirs.Pictures, Stock["medium/image"])
+    setSingleItem(argParent, NagatoXdgUserDirs.Videos, Stock["medium/video"])
+    
+End
+
+Private Sub addBookmarkDir(argParent As Menu)
+    
+    Dim yukiMenu As New Menu(argParent)
+    
+    With yukiMenu
+        .Picture = Stock["medium/bookmark"]
+        .Text = ("Bookmark")
+    End With
+    
+    addBookmarkDirs(yukiMenu)
+    
+End
+
+Public Sub addUpperDir(argParent As Menu)
+    
+    Dim yukiMenu As New Menu(argParent)
+    
+    With yukiMenu
+        .Picture = Stock["medium/up"]
+        .Text = File.Name(NagatoDirectory.getUpperDir(Me.CurrentDir))
+    End With
+    
+    setSingleItem(yukiMenu, NagatoDirectory.getUpperDir(Me.CurrentDir), Stock["medium/up"])
+    setMutiItems(yukiMenu, NagatoDirectory.getUpperDirs(Me.CurrentDir))
+    
+End
+
+Private Sub addCurrentDir(argParent As Menu)
+    
+    setMutiItems(argParent, NagatoDirectory.getCurrentDirs(Me.CurrentDir))
+    
+End
+
+Private Sub addDirMenues(argParent As Menu)
+    
+    addBookmarkDir(argParent)
+    If Me.CurrentDir <> User.Home Then Me.addUpperDir(argParent)
+    If NagatoDirectory.HasDir(Me.CurrentDir) Then addCurrentDir(argParent)
+    
+End
+
+Public Sub addOpenMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "OpenMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/open"]
+        .Text = ("Open")
+    End With
+    
+End
+
+Private Sub addIndivisualOpenWithMenu(argParentMenu As Menu, argDesktopFileName As String)
+    
+    Dim yukiMenu As Menu
+    Dim yukiDesktopFile As New DesktopFile("/usr/share/applications/" & argDesktopFileName)
+
+    yukiMenu = New Menu(argParentMenu) As "OpenWithMenu"
+    
+    With yukiMenu
+        .Picture = yukiDesktopFile.GetIcon(32).Picture
+        .Text = yukiDesktopFile.Name
+        .Tag = yukiDesktopFile.Path
+    End With
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Public Sub setOpenWithMenu(argMenu As Menu)
+    
+    Dim yukiAdditionalDesktopFile As String
+    Dim yukiMime As String = DesktopMime.FromFile(Me._$currentPath).Type
+    
+    For Each yukiAdditionalDesktopFile In MikuruConfFlie.GetItems("/usr/share/applications/mimeinfo.cache", yukiMime)
+        addIndivisualOpenWithMenu(argMenu, yukiAdditionalDesktopFile)
+    Next
+    
+Catch
+    Return
+    
+End
+
+Public Sub addOpenWithMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent)
+    
+    With yukiMenu
+        .Text = ("Open with ...")
+    End With
+    
+    setOpenWithMenu(yukiMenu)
+    
+End
+
+Public Sub addMoveMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent)
+    
+    With yukiMenu
+        .Text = ("Move")
+    End With
+    
+    addSelectDirectoryMenu(yukiMenu)
+        MikuruMenuSeparator.Set(yukiMenu)
+    addDirMenues(yukiMenu)
+    
+End
+
+Public Sub addCopyMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "CopyMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/copy"]
+        .Text = ("Copy")
+    End With
+    
+End
+
+Public Sub _AddCopyFilePathMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "CopyFilePathMenu"
+    
+    With yukiMenu
+        .Text = ("Copy File Path")
+    End With
+    
+End
+
+Public Sub addCreateLinkMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "CreateLinkMenu"
+    
+    With yukiMenu
+        .Text = ("Create Link")
+    End With
+    
+End
+
+Public Sub addRenameMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "RenameMenu"
+    
+    With yukiMenu
+        .Text = ("Rename")
+    End With
+    
+End
+
+Public Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "DeleteMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/delete"]
+        .Text = ("Send To Trash Bin")
+    End With
+    
+End
+
+Public Sub addPropertyMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parent) As "PropertyMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/properties"]
+        .Text = ("Property")
+    End With
+    
+End
+
+Private Sub addSelectDirectoryMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "SelectDirectoryMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/directory"]
+        .Text = ("Select Directory")
+    End With
+    
+End
+
+Public Sub OpenMenu_Click()
+    
+    Raise Open
+    
+End
+
+Public Sub OpenWithMenu_Click()
+    
+    Dim yukiDesktopFile As DesktopFile
+    
+    yukiDesktopFile = New DesktopFile(Last.Tag)
+    yukiDesktopFile.Run(Me._$currentPath)
+    NagatoMessaging.setMessage(Subst$("Now opening file with &1 ...", yukiDesktopFile.Name))
+    
+End
+
+Public Sub MoveMenu_Click()
+    
+    Raise Move(Last.Tag)
+    
+End
+
+Public Sub SelectDirectoryMenu_Click()
+    
+    Raise SelectDirectory
+    
+End
+
+Public Sub CreateLinkMenu_Click()
+    
+    Raise CreateLink
+    
+End
+
+Public Sub CopyMenu_Click()
+    
+    Raise Copy
+    
+End
+
+Public Sub CopyFilePathMenu_Click()
+    
+    Raise CopyFilePth
+    
+End
+
+Public Sub RenameMenu_Click()
+    
+    Raise Rename
+    
+End
+
+Public Sub PropertyMenu_Click()
+    
+    Raise Status
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    Raise Delete
+    
+End
+
+Private Function CurrentDir_Read() As String
+
+    Return File.Dir(Me._$currentPath)
+
+End

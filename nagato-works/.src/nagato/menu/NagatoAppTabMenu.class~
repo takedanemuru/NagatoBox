@@ -1,0 +1,167 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Event NewTab(argFunctionType As Integer)
+
+Private Sub addAppLauncherMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/program"]
+        .Text = ("AppLauncher")
+        .Tag = MikuruFunctionType.AppLauncher
+    End With
+    
+End
+Private Sub addFileSelectorMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/file-manager"]
+        .Text = ("FileSelector")
+        .Tag = MikuruFunctionType.FileSelector
+    End With
+    
+End
+
+Private Sub addFileManagerMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("FileManager")
+        .Tag = MikuruFunctionType.FileSelector
+    End With
+    
+End
+
+Private Sub addTextEditorMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/text"]
+        .Text = ("TextEditor")
+        .Tag = MikuruFunctionType.TextEditor
+    End With
+    
+End
+
+Private Sub AddHighlightEditorMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/edit"]
+        .Text = ("HighlightEditor")
+        .Tag = MikuruFunctionType.HighlightEditor
+    End With
+    
+End
+
+Private Sub addPureTextEditorMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/pen"]
+        .Text = ("PureTextEditor")
+        .Tag = MikuruFunctionType.PureTextEditor
+    End With
+    
+End
+
+Private Sub addWebViewMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/internet"]
+        .Text = ("WebBrowser")
+        .Tag = MikuruFunctionType.WebBrowser
+    End With
+    
+End
+
+Private Sub addDictionaryMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/book"]
+        .Text = ("Dictionary")
+        .Tag = MikuruFunctionType.Dictionary
+    End With
+    
+End
+
+Private Sub addImageViewMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/image"]
+        .Text = ("ImageViwer")
+        .Tag = MikuruFunctionType.ImageViewer
+    End With
+    
+End
+
+Private Sub addMapViewMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Picture["pictures/osm_logo.png"]
+        .Text = ("Map")
+        .Tag = MikuruFunctionType.Map
+    End With
+    
+End
+
+Private Sub addMediaPlayerMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["16/video"]
+        .Text = ("MediaPlayer")
+        .Tag = MikuruFunctionType.MediaPlayer
+    End With
+    
+End
+
+Private Sub addParentMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("NewTab")
+    addAppLauncherMenu(yukiMenu)
+    addDictionaryMenu(yukiMenu)
+    addFileSelectorMenu(yukiMenu)
+    'addFileManagerMenu(yukiMenu)
+    addHighlightEditorMenu(yukiMenu)
+    addImageViewMenu(yukiMenu)
+    addMapViewMenu(yukiMenu)
+    addMediaPlayerMenu(yukiMenu)
+    addPureTextEditorMenu(yukiMenu)
+    addTextEditorMenu(yukiMenu)
+    addWebViewMenu(yukiMenu)
+
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addParentMenu()
+    
+End
+
+Public Sub Menu_Click()
+    
+    Raise NewTab(Last.Tag)
+    
+End

@@ -1,0 +1,60 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private Const UniqueName As String = "SuperMenu"
+Private $rootMenu As Menu
+
+Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton)
+    
+    $rootMenu = New Menu(argForm)
+    $rootMenu.Name = UniqueName
+    argButton.Menu = UniqueName
+    
+End
+
+Private Sub addMenu(argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Private Sub initializeChildMenus()
+    
+    With MikuruMenuEvent
+        addMenu(("Open"), .MenuOpen, MikuruIcon.Get("folder"))
+        addMenu(("Convert to picture file"), .MenuConvert, MikuruIcon.Get("button-synchronize"))
+        addMenu("", .None) ' menu separator
+        addMenu(("About"), .MenuAbout, MikuruIcon.Get("star"))
+        addMenu(("Close"), .MenuClose, MikuruIcon.Get("button-cross"))
+    End With
+    
+End
+
+Public Sub _new(argForm As Form, argButton As MenuButton)
+    
+    initializeRootMenu(argForm, argButton)
+    initializeChildMenus()
+    
+End
+
+Public Sub Menu_Click()
+    
+    With MikuruMenuEvent
+        Select Case Last.Tag
+            Case .MenuAbout
+                HaruhiAbout.ShowDialog()
+            Case .MenuClose
+                HaruhiPdfView.Close()
+            Default
+                Raise MenuEvent(Last.Tag)
+        End Select
+    End With
+    
+End

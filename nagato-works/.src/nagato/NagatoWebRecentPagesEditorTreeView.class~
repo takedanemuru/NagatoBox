@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private Const ResultLimit As Integer = 2000
+
+Private $treeView As TreeView
+
+Private Sub addGridView()
+    
+    $treeView = New TreeView(Me._$parent) As "TreeView"
+    
+    With $treeView
+        .Expand = True
+        .Mode = Select.Single
+    End With
+    
+End
+
+Private Sub setData()
+    
+    Dim yukiResult As Result = NagatoDBWeb.GetHistoryResultOrderedByLastAccessed(ResultLimit)
+    Dim yukiDate As String
+    Dim yukiIcon As Picture
+    
+    For Each yukiResult
+        If yukiResult[NagatoDBWeb.ColumnPageName] = "" Then Continue
+        If yukiResult[NagatoDBWeb.ColumnLastAccessed] = "" Then Continue
+        If $treeView.Exist(yukiResult[NagatoDBWeb.ColumnUrl]) Then Continue
+        yukiDate = Format$(yukiResult[NagatoDBWeb.ColumnLastAccessed], ("dd-mm-yyyy"))
+        If Not $treeView.Exist(yukiDate) Then $treeView.Add(yukiDate, yukiDate, Stock["medium/directory"])
+        yukiIcon = NagatoDBWeb.GetIcon(yukiResult[NagatoDBWeb.ColumnUrl])
+        $treeView.Add(yukiResult[NagatoDBWeb.ColumnUrl], yukiResult[NagatoDBWeb.ColumnPageName], yukiIcon, yukiDate)
+    Next
+    
+End
+
+Public Sub _Initialize(argPath As String) ' override
+    
+    Debug argPath ' to avoid "unused" message.
+    
+    addGridView()
+    setData()
+    
+End
+
+Public Sub TreeView_Activate()
+    
+    If $treeView.Current.Picture = Stock["medium/directory"] Then Return
+    
+    NagatoTabHandler.NewTabWithPath(MikuruFunctionType.WebBrowser, $treeView.Current.Key)
+    
+End
+
+Public Sub TreeView_Menu()
+    
+    Dim yukiContextMenu As New NagatoWebRecentPagesContextMenu(Kyon) As "ContextMenu"
+    
+    yukiContextMenu.PopUp()
+    
+End
+
+Public Sub ContextMenu_Open()
+    
+    TreeView_Activate()
+    
+End
+
+Public Sub ContextMenu_Delete()
+    
+    Debug $treeView.Key
+    
+End

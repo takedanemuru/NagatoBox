@@ -1,0 +1,61 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Event OpenFileWith(argDesktopFile As DesktopFile)
+
+Private Sub addOpenFileMenu()
+    
+    Dim yukiMenu As Menu
+    Dim yukiDesktopFiles As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
+    Dim yukiDesktopFile As DesktopFile
+    
+    If yukiDesktopFiles.Count = 0 Then Return
+
+    Try yukiDesktopFile = New DesktopFile(MikuruApplications.GlobalApplicationDirectory &/ yukiDesktopFiles[0])
+    If Error Then Return
+    
+    yukiMenu = New Menu(Me._$rootMenu) As "OpenFileMenu"
+    
+    With yukiMenu
+        .Text = Subst$(("Open with &1"), yukiDesktopFile.Name)
+        .Picture = MikuruIcon.GetDesktopEntryIcon(yukiDesktopFile.Path)
+        .Tag = yukiDesktopFile
+    End With
+    
+End
+
+Private Sub addOpenWithMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiOpenFileWithMenu As NagatoOpenWithApplicationMenu
+    
+    With yukiMenu
+        .Text = ("Open with...")
+    End With
+    
+    yukiOpenFileWithMenu = New NagatoOpenWithApplicationMenu(yukiMenu, Me._$path)
+    
+End
+
+Public Sub _InitializeAdditionalMenus() 'override
+    
+    addOpenFileMenu()
+        Me._AddMenu("", 0) 'Separator
+    addOpenWithMenu()
+    Me._AddMenu(("Rename"), NagatoMenuPipe.FileRename)
+    Me._AddSpacer()
+    
+End
+
+Public Sub OpenFileMenu_Click()
+    
+    Dim yukiDesktopFile As DesktopFile = Last.Tag
+    
+    Try yukiDesktopFile.Run(Me._$path)
+    
+Catch
+    Message.Warning("YUKI.N > I couldn't open file", ("OK"))
+    Return
+    
+End

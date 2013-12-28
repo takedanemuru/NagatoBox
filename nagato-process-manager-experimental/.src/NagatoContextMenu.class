@@ -1,0 +1,39 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+Private $id As String
+Private $name As String
+
+Private Sub constructMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "KillMenu"
+    
+    With yukiMenu
+        .Text = Subst$("kill &1", $name)
+    End With
+    
+End
+
+Public Sub _new(argId As String, argName As String)
+    
+    $rootMenu = New Menu(FMain)
+    $id = argId
+    $name = argName
+    constructMenu()
+    
+End
+
+Public Sub PopUp()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub KillMenu_Click()
+    
+    Dim yukiResponse As Integer
+    
+    yukiResponse = Message.Warning(Subst$("YUKI.N > Are you sure to KILL &1 ?", $name), ("Cancel"), ("Kill"))
+    If yukiResponse = 2 Then Shell Subst$("kill &1", $id)
+    
+End

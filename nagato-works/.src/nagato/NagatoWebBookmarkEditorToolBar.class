@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoToolBar
+
+Event SearchQuery(argText As String)
+Event Open
+Event Delete
+
+Private Sub addSpacer()
+    
+    Dim yukiSpacer As NagatoSeparator
+    
+    yukiSpacer = New NagatoSeparator(Me._$parent)
+    
+End
+
+Private Sub addSearchBox()
+    
+    Dim yukiSearchBox As NagatoSearchBox
+    
+    yukiSearchBox = New NagatoSearchBox(Me._$parent) As "SearchBox"
+    
+End
+
+Private Sub addGearButton()
+    
+    Dim yukiGearButton As NagatoGearButton
+    Dim yukiMenu As NagatoWebBookmarkEditorMenu
+    
+    yukiGearButton = New NagatoGearButton(Me._$parent) 
+    yukiMenu = New NagatoWebBookmarkEditorMenu(yukiGearButton.RootMenu) As "GearMenu"
+    
+End
+
+Public Sub _Initialize() 'override.
+    
+    addSpacer()
+    addSearchBox()
+    addGearButton()
+    
+End
+
+Public Sub SearchBox_SearchQuery(argText As String)
+    
+    Raise SearchQuery(argText)
+    
+End
+
+Public Sub GearMenu_Open()
+    
+    Raise Open
+    
+End
+
+Public Sub GearMenu_Delete()
+    
+    Raise Delete
+    
+End

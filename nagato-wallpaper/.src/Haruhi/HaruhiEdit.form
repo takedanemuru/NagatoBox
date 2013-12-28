@@ -1,0 +1,31 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,59,44)
+  Icon = Picture["Pictures/image.png"]
+  Resizable = False
+  { SelectButton Button
+    MoveScaled(42,39,16,4)
+    Text = ("Open")
+    Picture = Picture["icon:/small/open"]
+  }
+  { PreviewDrawingArea DrawingArea
+    MoveScaled(1,1,57,37)
+    Background = &HFFFFFF&
+    Drop = True
+  }
+  { ApplyButton Button
+    MoveScaled(1,39,16,4)
+    Text = ("Apply")
+    Picture = Picture["icon:/small/ok"]
+  }
+  { ColorButton ColorButton
+    MoveScaled(33,39,8,4)
+  }
+  { ModeComboBox ComboBox
+    MoveScaled(18,39,14,4)
+    ReadOnly = True
+    List = [("Center"), ("Tile"), ("Fill"), ("Full")]
+    Text = ("ComboBox1")
+  }
+}

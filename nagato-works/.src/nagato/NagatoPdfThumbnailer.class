@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoThumbnailer
+
+Create Static
+
+Public Function GetThumbnail(argPath As String, argSize As Integer) As Picture
+    
+    Dim yukiPdfDocument As New PdfDocument
+    Dim yukiImage As Image
+    
+    yukiPdfDocument.Open(argPath)
+    yukiImage = yukiPdfDocument[1].GetImage()
+    
+    If Max(yukiImage.H, yukiImage.W) > argSize Then
+        If yukiImage.Height >= yukiImage.Width Then
+            yukiImage = yukiImage.Stretch(Int(argSize * (yukiImage.Width / yukiImage.Height)), argSize)
+        Else
+            yukiImage = yukiImage.Stretch(argSize, Int(argSize * (yukiImage.Height / yukiImage.Width)))
+        Endif
+    Endif
+    
+    Return yukiImage.Picture
+    
+Catch
+    ' to avoid encripted pdf error
+    Return Stock["large/pdf"]
+    
+End
+
+Public Function Get(argPath As String, argSize As Integer) As Picture
+    
+    Dim yukiPicture As Picture
+    
+    If NagatoDBThumbnail.HasThumbnail(argPath, argSize) Then
+        Return NagatoDBThumbnail.Get(argPath, argSize)
+    Else
+        yukiPicture = GetThumbnail(argPath, argSize)
+        NagatoDBThumbnail.Push(argPath, argSize, yukiPicture)
+        Return yukiPicture
+    Endif
+    
+End

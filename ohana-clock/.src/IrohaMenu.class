@@ -1,0 +1,122 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Private Sub addSizeMenu(argTitle As String, argSize As Integer)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "SizeMenu"
+    
+    With yukiMenu
+        .Text = argTitle
+        .Tag = argSize
+        If IrohaSettings.Size = argSize Then .Picture = Stock["medium/apply"]
+    End With
+    
+End
+
+Private Sub addSeparator()
+    
+    Dim yukiMenu As New Menu($rootMenu)
+    
+    With yukiMenu
+        .Text = ""
+    End With
+    
+End
+
+Private Sub addSkipTaskbarMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "SkipTaskbarMenu"
+    
+    With yukiMenu
+        .Text = ("Skip taskbar")
+        If Ohana.SkipTaskbar Then .Picture = Stock["medium/apply"]
+    End With
+    
+End
+
+Private Sub addStickyMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "StickyMenu"
+    
+    With yukiMenu
+        .Text = ("Sticky")
+        If Ohana.Sticky Then .Picture = Stock["medium/apply"]
+    End With
+    
+End
+
+Private Sub addAboutMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "AboutMenu"
+    
+    With yukiMenu
+        .Text = ("About")
+        .Picture = Stock["medium/info"]
+    End With
+    
+End
+
+Private Sub addCloseMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "CloseMenu"
+    
+    With yukiMenu
+        .Text = ("Close")
+        .Picture = Stock["medium/quit"]
+    End With
+    
+End
+
+Public Sub Popup()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new(argParent As Form)
+    
+    $rootMenu = New Menu(argParent)
+    addSizeMenu(("Large"), 400)
+    addSizeMenu(("Medium"), 300)
+    addSizeMenu(("Small"), 200)
+        addSeparator()
+    addSkipTaskbarMenu()
+    addStickyMenu()
+        addSeparator()
+    addAboutMenu()
+        addSeparator()
+    addCloseMenu()
+    
+End
+
+Public Sub SizeMenu_Click()
+    
+    IrohaSettings.Size = Last.Tag
+    
+End
+
+Public Sub SkipTaskbarMenu_Click()
+    
+    Ohana.SkipTaskbar = Not Ohana.SkipTaskbar
+    
+End
+
+Public Sub StickyMenu_Click()
+    
+    Ohana.Sticky = Not Ohana.Sticky
+    
+End
+
+Public Sub AboutMenu_Click()
+    
+    Message.Title = ("About ohana-clock")
+    Message.Info(IrohaText.Info, ("OK"))
+    
+End
+
+Public Sub CloseMenu_Click()
+    
+    Ohana.Close()
+    
+End

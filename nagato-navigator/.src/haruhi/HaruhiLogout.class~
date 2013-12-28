@@ -1,0 +1,59 @@
+' Gambas class file
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    
+    HibernateButton.Enabled = False
+    SuspendButton.Enabled = False
+    
+End
+
+Public Sub LogoutButton_Click()
+    
+    ' Dim yukiDelegate As New NagatoDelegate(NagatoDisplayManager, "SwitchToGreeter")
+    Dim yukiDelegate As New NagatoDelegate(NagatoOpenbox, "KillAll")
+    
+    HaruhiQuit.Start(yukiDelegate)
+    
+End
+
+Public Sub SuspendButton_Click()
+    
+    If Not NagatoUPower.Suspend() Then
+        Message.Error("Suspend Failed.")
+    Endif
+    
+End
+
+Public Sub HibernateButton_Click()
+
+    If Not NagatoUPower.Hibernate() Then
+        Message.Error("Hibernate Failed.")
+    Endif
+
+End
+
+Public Sub RebootButton_Click()
+    
+    Dim yukiDelegate As New NagatoDelegate(NagatoConsoleKitManager, "Restart")
+    
+    HaruhiQuit.Start(yukiDelegate)
+    
+End
+
+Public Sub ShutdownButton_Click()
+    
+    Dim yukiDelegate As New NagatoDelegate(NagatoConsoleKitManager, "Stop")
+    
+    HaruhiQuit.Start(yukiDelegate)
+    
+End
+
+Public Sub QuitAppButton_Click()
+
+    Dim yukiDelegate As New NagatoDelegate(Kyon, "QuitApplication")
+    
+    HaruhiQuit.Start(yukiDelegate)
+    
+End

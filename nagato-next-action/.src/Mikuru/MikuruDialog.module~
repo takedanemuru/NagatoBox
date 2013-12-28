@@ -1,0 +1,89 @@
+' Gambas module file
+
+Property Status As Integer
+Property ParentProject As Integer ' as db_id
+Property ResponseString As String
+Property Name As String
+Property Memo As String
+Property DeadLine As Date
+
+Public Enum ResponseCancel = 100, ResponseApply = 101
+
+Private $status As Integer
+Private $responseString As String = ""
+Private $name As String
+Private $parentProject As Integer
+Private $memo As String
+Private $deadLine As Date
+
+Private Function ResponseString_Read() As String
+
+    Return $responseString
+
+End
+
+Private Sub ResponseString_Write(Value As String)
+
+    $responseString = Value
+
+End
+
+Private Function Status_Read() As Integer
+
+    Return $status
+
+End
+
+Private Sub Status_Write(Value As Integer)
+
+    $status = Value
+
+End
+
+Private Function ParentProject_Read() As Integer
+
+    Return $parentProject
+
+End
+
+Private Sub ParentProject_Write(Value As Integer)
+
+    $parentProject = Value
+
+End
+
+Private Function Memo_Read() As String
+
+    Return $memo
+
+End
+
+Private Sub Memo_Write(Value As String)
+
+    $memo = Value
+
+End
+
+Private Function Name_Read() As String
+
+    Return $name
+
+End
+
+Private Sub Name_Write(Value As String)
+
+    $name = Value
+
+End
+
+Private Function DeadLine_Read() As Date
+
+    Return $deadLine
+
+End
+
+Private Sub DeadLine_Write(Value As Date)
+
+    $deadLine = Value
+
+End

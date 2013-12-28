@@ -1,0 +1,11 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,57.1429,45.5714)
+  Arrangement = Arrange.Fill
+  { PictureBox1 PictureBox
+    MoveScaled(1,2,16,16)
+    Expand = True
+    Picture = Picture["pictures/welcome_to_sos.jpg"]
+  }
+}

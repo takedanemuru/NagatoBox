@@ -1,0 +1,175 @@
+' Gambas class file
+
+Create Static
+
+Private $orderIndex As Integer[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Private Function getRowCount() As Integer
+    
+    Return (Screen.Height - 4 * MikuruUX.Grid) Div (NagatoOSD.Height + 2 * MikuruUX.Grid)
+    
+End
+
+Private Function getRowPosition(argY As Integer) As Integer
+    
+    If 0 >= (argY - 4 * MikuruUX.Grid) Then
+        Return 0
+    Else
+        Return (argY - 4 * MikuruUX.Grid) Div (NagatoOSD.Height + 2 * MikuruUX.Grid) 
+    End If
+    
+End
+
+Private Function getColumnPosition(argX As Integer) As Integer
+    
+    Return (Screen.Width - argX) Div (NagatoOSD.Width + 2 * MikuruUX.Grid)
+    
+End
+
+Private Function getScreenPosition(argX As Integer, argY As Integer) As Integer
+    
+    Return getRowPosition(argY) + getColumnPosition(argX) * getRowCount()
+    
+End
+
+Private Function getShownOrder() As Integer[]
+    
+    Dim yukiResult As New Integer[]
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To NagatoOSDManeuver.MaxCount
+        If Not Me.GetProperty(yukiCount, "Closed") Then yukiResult.Add(yukiCount)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Private Function convertShowOrderToAllOrder(argShownOrderIndex As Integer) As Integer
+    
+    Dim yukiShownOrder As Integer[] = getShownOrder()
+    
+    Return $orderIndex.Find(yukiShownOrder[argShownOrderIndex])
+    
+Catch
+    Return $orderIndex.Find(yukiShownOrder[yukiShownOrder.Max])
+    
+End
+
+Private Function getOriginalIndex(argUniqueName As String) As Integer
+    
+    Dim yukiCount As Integer
+    Dim yukiShownOrder As Integer[] = getShownOrder()
+    
+    For yukiCount = 0 To NagatoOSDManeuver.MaxCount
+        If Me.GetProperty(yukiShownOrder[yukiCount], "UniqueName") = argUniqueName Then Return yukiCount 
+    Next
+    
+    Return NagatoOSDManeuver.MaxCount
+    
+End
+
+Private Sub changeOrder(argIndexFrom As Integer, argIndexTo As Integer)
+    
+    $orderIndex = $orderIndex.Insert([$orderIndex[argIndexFrom]], argIndexTo)
+    
+    If argIndexTo > argIndexFrom Then
+        $orderIndex.Remove(argIndexFrom)
+    Else
+        $orderIndex.Remove(argIndexFrom + 1)
+    Endif
+    
+End
+
+Public Sub ResetOrder(argUniqueName As String, argNewPoint As Integer[])
+    
+    Dim yukiNewPointIndex As Integer = getScreenPosition(argNewPoint[0], argNewPoint[1])
+    Dim yukiOriginalPointIndex As Integer = getOriginalIndex(argUniqueName)
+    
+    yukiNewPointIndex = convertShowOrderToAllOrder(yukiNewPointIndex)
+    yukiOriginalPointIndex = convertShowOrderToAllOrder(yukiOriginalPointIndex)
+    
+    changeOrder(yukiOriginalPointIndex, yukiNewPointIndex)
+    
+End
+
+Public Function GetProperty(argIndex As Integer, argProperty As String) As Variant
+    
+    Select Case $orderIndex[argIndex]
+        Case 0
+            Return Object.GetProperty(NagatoOSDClock, argProperty)
+        Case 1
+            Return Object.GetProperty(NagatoOSDWeather, argProperty)
+        Case 2
+            Return Object.GetProperty(NagatoOSDMusic, argProperty)
+        Case 3
+            Return Object.GetProperty(NagatoOSDRadio, argProperty)
+        Case 4
+            Return Object.GetProperty(NagatoOSDRss, argProperty)
+        Case 5
+            Return Object.GetProperty(NagatoOSDBattery, argProperty)
+        Case 6
+            Return Object.GetProperty(NagatoOSDSystem, argProperty)
+        Case 7
+            Return Object.GetProperty(NagatoOSDNetwork, argProperty)
+        Case 8
+            Return Object.GetProperty(NagatoOSDTrashBin, argProperty)
+        Case 9
+            Return Object.GetProperty(NagatoOSDGMail, argProperty)
+    End Select
+    
+End
+
+Public Function CallWithArgumants(argIndex As Integer, argMethod As String, argArguments As Variant[])
+    
+    Select Case $orderIndex[argIndex]
+        Case 0
+            Object.Call(NagatoOSDClock, argMethod, argArguments)
+        Case 1
+            Object.Call(NagatoOSDWeather, argMethod, argArguments)
+        Case 2
+            Object.Call(NagatoOSDMusic, argMethod, argArguments)
+        Case 3
+            Object.Call(NagatoOSDRadio, argMethod, argArguments)
+        Case 4
+            Object.Call(NagatoOSDRss, argMethod, argArguments)
+        Case 5
+            Object.Call(NagatoOSDBattery, argMethod, argArguments)
+        Case 6
+            Object.Call(NagatoOSDSystem, argMethod, argArguments)
+        Case 7
+            Object.Call(NagatoOSDNetwork, argMethod, argArguments)
+        Case 8
+            Object.Call(NagatoOSDTrashBin, argMethod, argArguments)
+        Case 9
+            Object.Call(NagatoOSDGMail, argMethod, argArguments)
+    End Select
+    
+End
+
+Public Function Call(argIndex As Integer, argMethod As String)
+    
+    Select Case $orderIndex[argIndex]
+        Case 0
+            Object.Call(NagatoOSDClock, argMethod)
+        Case 1
+            Object.Call(NagatoOSDWeather, argMethod)
+        Case 2
+            Object.Call(NagatoOSDMusic, argMethod)
+        Case 3
+            Object.Call(NagatoOSDRadio, argMethod)
+        Case 4
+            Object.Call(NagatoOSDRss, argMethod)
+        Case 5
+            Object.Call(NagatoOSDBattery, argMethod)
+        Case 6
+            Object.Call(NagatoOSDSystem, argMethod)
+        Case 7
+            Object.Call(NagatoOSDNetwork, argMethod)
+        Case 8
+            Object.Call(NagatoOSDTrashBin, argMethod)
+        Case 9
+            Object.Call(NagatoOSDGMail, argMethod)
+    End Select
+    
+End

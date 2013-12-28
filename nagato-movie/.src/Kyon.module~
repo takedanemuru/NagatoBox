@@ -1,0 +1,32 @@
+' Gambas module file
+
+Private $path As String
+Private $options As String[]
+
+Private Sub parsingArgs()
+    
+    Dim yukiOption As String 
+    
+    Args.Begin(("nagato-movie-usage"))
+        $path = Args.Get("p", "play", "play movie file", "path to play")
+        If Not Exist($path) Then $path = ""
+    $options = Args.End()
+    
+    If $path <> "" Then Return
+    
+    For Each yukiOption In $options
+        If Exist(yukiOption) Then 
+            $path = yukiOption
+            Break
+        End If
+    Next
+    
+End
+
+Public Sub Main()
+    
+    parsingArgs()
+    HaruhiMovie.Show()
+    If $path <> "" Then HaruhiMovie.SetPathAndPlay($path)
+    
+End

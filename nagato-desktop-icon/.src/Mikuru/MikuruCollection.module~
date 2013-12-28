@@ -1,0 +1,37 @@
+' Gambas module file
+
+Private Function getRandomizedNumbers(argMax As Integer) As Integer[]
+    
+    Dim yukiReturn As New Integer[]
+    Dim yukiNumber As Integer
+    
+    Do
+        yukiNumber = Int(Rnd(0, argMax))
+        If Not yukiReturn.Exist(yukiNumber) Then yukiReturn.Add(yukiNumber)
+        If yukiReturn.Count = argMax Then Break
+    Loop
+    
+    Return yukiReturn
+    
+End
+
+Public Function GetRandomizedArray(argCollection As Collection) As Variant[]
+    
+    Dim yukiVariant As Variant
+    Dim yukiReturn As New Variant[argCollection.Count]
+    Dim yukiNumbers As Integer[] = getRandomizedNumbers(argCollection.Count)
+    Dim yukiCount As Integer
+    
+    Debug argCollection.Count
+    Debug yukiNumbers.Count
+    
+    For Each yukiVariant In argCollection
+        yukiReturn[yukiNumbers[yukiCount]] = yukiVariant
+        Debug yukiCount
+        Inc yukiCount
+    Next
+    
+    Return yukiReturn
+    
+End
+

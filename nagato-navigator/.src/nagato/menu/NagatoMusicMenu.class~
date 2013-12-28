@@ -1,0 +1,119 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Const ShowMax As Integer = 50
+Private Const TitleLengthMax As Integer = 30
+
+Private Sub addShowInWindowMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ShowInWindowMenu"
+    
+    With yukiMenu
+        .Text = ("Show in window")
+        .Picture = MikuruMonoIconBlue.Get("music", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Private Sub addMusicFileMenu()
+    
+    Dim yukiMusicFileMenu As NagatoMusicFileMenu
+    
+    yukiMusicFileMenu = New NagatoMusicFileMenu(Me._$rootMenu)
+    
+End
+
+Private Sub addNoFileMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("NoFile")
+    
+End
+
+Private Sub addOverMaxMenu()
+    
+    Dim yukiMenu As Menu
+    
+    MikuruMenuSeparator.Set(Me._$rootMenu)
+    yukiMenu = New Menu(Me._$rootMenu)
+    
+    With yukiMenu
+        .Text = ("Click show in window menu to see all titles")
+        .Picture = MikuruMonoIconBlue.Get("exclamation", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Private Sub addIndivisualMusicMenu(argPath As String)
+    
+    Dim yukiMenu As Menu
+    
+    yukiMenu = New Menu(Me._$rootMenu) As "MusicMenu"
+
+    With yukiMenu
+        .Text = NagatoMusicQueue.TitleCollection[argPath]
+        .Tag = argPath
+        .Picture = getIcon(argPath)
+    End With
+
+End
+
+Private Sub addMusicMenu()
+    
+    Dim yukiPath As String
+    Dim yukiCount As Integer = 0
+    
+    For Each yukiPath In NagatoMusicQueue.PathList
+        If Not Exist(yukiPath) Then Continue
+        addIndivisualMusicMenu(yukiPath)
+        Inc yukiCount
+        If yukiCount >= ShowMax Then
+            addOverMaxMenu()
+            Break
+        End If
+    Next
+    
+End
+
+Private Sub addMusicQueueMenu()
+    
+    If NagatoMusicQueue.Count = 0 Then
+        addNoFileMenu()
+    Else
+        addMusicMenu()
+    Endif
+    
+End
+
+Private Function getIcon(argPath As String) As Picture
+    
+    If argPath = NagatoMusicPlayer.CurrentPath Then
+        Return MikuruMonoIconBlue.Get("button-play", 2 * MikuruUX.grid)
+    Else
+        Return Null
+    End If
+    
+End
+
+Public Sub _InitializeMenu() ' override.
+    
+    addShowInWindowMenu()
+    addMusicFileMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addMusicQueueMenu()
+    
+End
+
+Public Sub ShowInWindowMenu_Click()
+    
+    HaruhiMusicPlaylist.Show()
+    
+End
+
+Public Sub MusicMenu_Click()
+    
+    NagatoMusicPlayer.SetUrlAndPlay(Last.Tag)
+    
+End

@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoTabContainerWithSidePane
+
+Private $toolBar As NagatoPdfViewerToolBar
+Private $sidePane As NagatoPdfViewerSidePane
+Private $scrollArea As NagatoPdfViewerScrollView
+Private $pdfDocument As New PdfDocument
+Private $currentPage As Integer = 1
+
+Public Sub _new(argParent As Container, Optional argPath As String = "")
+    
+    Me._Initialize(argParent)
+    $toolBar = New NagatoPdfViewerToolBar(Me._$hBox) As "ToolBar"
+    
+    If argPath <> "" Then 
+        $pdfDocument.Open(argPath)
+        $pdfDocument.Zoom = 1
+        Me._RefreshParentTab(File.Name(argPath), Stock["small/pdf"])
+        $sidePane = New NagatoPdfViewerSidePane(Me._$sidePanel, argPath) As "SidePane"
+        $scrollArea = New NagatoPdfViewerScrollView(Me._$paneHBox) As "MainView"
+        $scrollArea.DrawImage($pdfDocument[$currentPage].GetImage())
+    Endif
+    
+End
+
+Public Sub MainView_Forward()
+    
+    If $pdfDocument.Count > $currentPage Then
+        Inc $currentPage
+        $scrollArea.DrawImage($pdfDocument[$currentPage].GetImage())
+    End If
+    
+End
+
+Public Sub ToolBar_Back()
+    
+    If $currentPage > 1 Then
+        Dec $currentPage
+        $scrollArea.DrawImage($pdfDocument[$currentPage].GetImage())
+    End If
+    
+End
+
+Public Sub ToolBar_Forward()
+    
+    If $pdfDocument.Count > $currentPage Then
+        Inc $currentPage
+        $scrollArea.DrawImage($pdfDocument[$currentPage].GetImage())
+    End If
+    
+End
+
+Public Sub ToolBar_MenuEvent(argEvent As Integer)
+    
+    Debug "Toolbar responsed: " & argEvent
+    
+    Select Case argEvent
+        Case MikuruMenuEventImageEffect.ZoomIn
+            $pdfDocument.Zoom *= 1.2
+        Case MikuruMenuEventImageEffect.ZoomOut
+            $pdfDocument.Zoom *= 0.8
+        Case MikuruMenuEventImageEffect.ZoomNormal
+            $pdfDocument.Zoom = 1
+    End Select
+    
+    $scrollArea.DrawImage($pdfDocument[$currentPage].GetImage())
+    
+End
+
+Public Sub SidePane_PageJump(argPage As Integer)
+    
+    $currentPage = argPage
+    $scrollArea.DrawImage($pdfDocument[$currentPage].GetImage())
+    
+End

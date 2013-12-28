@@ -1,0 +1,33 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(2,2,60,59)
+    { !ProjectView GridView
+      MoveScaled(0,0,61,42)
+      #Public = True
+      Expand = True
+      Mode = Select.Single
+      Header = GridView.Horizontal
+    }
+    { HBox2 HBox
+      MoveScaled(1,43,59,5)
+      Padding = 3
+      { FilterCheckBox CheckBox
+        MoveScaled(1,0,24,4)
+        Expand = True
+        Text = ("Only show \"project\" ")
+      }
+      { Cancel Button
+        MoveScaled(29,0,14,4)
+        Text = ("Cancel")
+      }
+      { SelectButton Button
+        MoveScaled(44,0,14,4)
+        Text = ("Select")
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+' Gambas class file
+
+Private $timer As Timer
+Private $aboutButtonColor As Integer
+Private $licenseButtonColor As Integer
+Private $image As Image
+Private $position As Integer
+Private $text As String 
+Private $offset As Integer
+Private $duration As Integer
+
+Private Sub initializeTimer()
+        
+        $timer = New Timer As "Timer"
+        $timer.Delay = 100
+        $timer.Start()
+        
+End
+
+Private Sub initializeBackgroundDrawingArea()
+        
+        $aboutButtonColor = Color.Magenta
+        $licenseButtonColor = Color.Lighter(Color.Violet)
+        $image = Image.Load("pictures/with_bird.jpg").Stretch(Me.Width, Me.Height)
+        BackgroundDrawingArea.Refresh()
+        
+End
+
+Private Sub swapButtonColor()
+        
+        Swap $licenseButtonColor, $aboutButtonColor
+        BackgroundDrawingArea.Refresh()
+        
+End
+
+Private Sub startAbout()
+        
+        $position = 0
+        
+        $text = File.Load("data/about")
+        $text = Subst$($text, Application.Version)
+        $offset = 300
+        $duration = 600
+        
+End
+
+Private Sub startLicense()
+        
+        $position = 0
+        
+        $text = File.Load("data/sosLicense")
+        $offset = 500
+        $duration = 1000
+        
+End
+
+Public Sub Form_Show()
+        
+        initializeBackgroundDrawingArea()
+        startAbout()
+        initializeTimer()
+        
+End
+
+Public Sub Form_Close()
+        
+        $timer.Stop()
+        
+End
+
+Public Sub Timer_Timer()
+        
+        Dec $position
+        
+        TextDrawingArea.Refresh()
+        If $position < -1 * ($duration) Then $position = 0
+        
+End
+
+Public Sub TextDrawingArea_Draw()
+        
+        Draw.Foreground = Color.White
+        Draw.RichText($text, 0, $offset + $position, 270, 355, Align.Center)
+        
+End
+
+Public Sub BackgroundDrawingArea_Draw()
+        
+        Draw.Image($image, 0, 0)
+        
+        Draw.Foreground = Color.White
+        Draw.FillStyle = Fill.Dense50
+ 
+        Draw.FillColor = $aboutButtonColor
+        Draw.Rect(15, 15, 100, 20)
+        Draw.RichText("<b>about</b>", 20, 15, 95, 20, Align.Left)
+ 
+        Draw.FillColor = $licenseButtonColor
+        Draw.Rect(120, 15, 100, 20)
+        Draw.RichText("<b>license</b>", 125, 15, 95, 20, Align.Left)
+
+        Draw.FillColor = Color.Lighter(Color.Violet)
+        Draw.Rect(15, 40, 300, 380)
+        
+End
+
+Public Sub BackgroundDrawingArea_MouseDown()
+        
+        If Mouse.Y >= 15 And If Mouse.Y <= 35 Then
+                If Mouse.X >= 15 And If Mouse.X <= 115 Then
+                        Debug "about !"
+                        swapButtonColor()
+                        startAbout()
+                Else If Mouse.X >= 120 And If Mouse.X <= 220 Then
+                        Debug "license !"
+                        swapButtonColor()
+                        startLicense()
+                Endif
+        Endif
+        
+End
+
+

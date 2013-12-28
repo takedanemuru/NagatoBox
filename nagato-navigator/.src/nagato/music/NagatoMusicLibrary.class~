@@ -1,0 +1,44 @@
+' Gambas class file
+
+Create Static
+
+Private Function avoidNull(argString As String) As String
+    
+    If argString = Null Then
+        Return ""
+    Else
+        Return argString
+    Endif
+    
+End
+
+Private Sub setData(argFullPath As String)
+    
+    Dim yukiTitle As String = avoidNull(MikuruId3TagInfo.GetTitle(argFullPath))
+    Dim yukiArtist As String = avoidNull(MikuruId3TagInfo.GetArtist(argFullPath))
+    Dim yukiAlbum As String = avoidNull(MikuruId3TagInfo.GetAlbum(argFullPath))
+    
+    If yukiTitle = "" Then yukiTitle = File.BaseName(argFullPath)
+    
+    NagatoDBMedia.AddLibrary(argFullPath, yukiTitle, yukiArtist, yukiAlbum)
+    
+End
+
+Public Sub Initialize()
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    NagatoDBMedia.ClearLibrsary()
+    
+    For Each yukiPath In RDir(NagatoXdgUserDirs.Music)
+        yukiFullPath = NagatoXdgUserDirs.Music &/ yukiPath
+        If IsDir(yukiFullPath) Then Continue
+        If MikuruMimeType.IsAudioFile(yukiFullPath) Then
+            setData(yukiFullPath)
+            Debug yukiFullPath
+        End If
+    Next
+    
+End
+

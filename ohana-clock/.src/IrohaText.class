@@ -1,0 +1,37 @@
+' Gambas class file
+
+Create Static
+
+Property Read Info As String
+Property Read Clock As String
+
+Private Function getDateDiff() As Integer
+    
+    Dim yukiYear As Integer = IIf(Date(Now) > Date(Year(Now), 10, 12), Year(Now) + 1, Year(Now))
+    
+    Return DateDiff(Now, Date(yukiYear, 10, 12), gb.Day)
+    
+End
+
+Private Function Info_Read() As String
+
+    Dim yukiText As String = Subst$(File.Load("text/About"), Application.Version)
+
+    Return yukiText
+
+End
+
+Private Function Clock_Read() As String
+
+    Dim yukiText As String
+    
+    If 5 >= Second(Now) Then
+        yukiText = Subst$(("&1 days until <br>Yuwaku Bonbori Matsuri."), getDateDiff())
+    Else
+        yukiText = Format$(Now, ("mm/dd/yyyy")) & "<br>"
+        yukiText &= Format$(Now, ("hh:nn:ss"))
+    End If
+    
+    Return yukiText
+
+End

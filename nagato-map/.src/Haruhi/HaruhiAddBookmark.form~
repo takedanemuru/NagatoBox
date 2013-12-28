@@ -1,0 +1,47 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,54,24)
+  Picture = Picture["picture/about.png"]
+  Resizable = False
+  SkipTaskbar = True
+  { Separator1 Separator
+    MoveScaled(0,15,53,4)
+  }
+  { AddButton Button
+    MoveScaled(37,19,16,4)
+    Text = ("Add")
+  }
+  { CancelButton Button
+    MoveScaled(20,19,16,4)
+    Text = ("Cancel")
+  }
+  { TextBox1 TextBox
+    MoveScaled(19,1,34,4)
+  }
+  { LatitudeLabel TextLabel
+    MoveScaled(19,6,34,4)
+    Text = ("TextLabel1")
+    Alignment = Align.Left
+  }
+  { LongitudeLabel TextLabel
+    MoveScaled(19,11,34,4)
+    Text = ("TextLabel2")
+    Alignment = Align.Left
+  }
+  { HeaderLabel1 TextLabel
+    MoveScaled(1,1,17,4)
+    Text = ("<b>Name:</b>")
+    Alignment = Align.Left
+  }
+  { HeaderLabel2 TextLabel
+    MoveScaled(1,6,17,4)
+    Text = ("<b>Latitude: </b>")
+    Alignment = Align.Left
+  }
+  { HeaderLabel3 TextLabel
+    MoveScaled(1,11,17,4)
+    Text = ("<b>Longitude:</b>")
+    Alignment = Align.Left
+  }
+}

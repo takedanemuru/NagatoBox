@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits HabaneroCore
+
+Property Read Type As Integer
+
+Private Sub refreshProperty()
+    
+    Dim yukiNow As Date
+    
+    yukiNow = Date(Now)
+    Me.$hourTen = (Year(yukiNow) Mod 100) Div 10
+    Me.$hourOne = Year(yukiNow) Mod 10
+    Me.$minuteTen = Month(yukiNow) Div 10
+    Me.$minuteOne = Month(yukiNow) Mod 10
+    Me.$secondTen = Day(yukiNow) Div 10
+    Me.$secondOne = Day(yukiNow) Mod 10
+    
+    Me.sendTick()
+    
+End
+
+Public Sub _new()
+    
+    Me.initializeTimer()
+    Me.$timer.Trigger()
+    
+End
+
+Public Sub HabaneroTimer_Timer()
+    
+    refreshProperty()
+    
+End
+
+Public Function Type_Read() As Integer
+    
+    Return SeparatorType.Slash
+    
+End

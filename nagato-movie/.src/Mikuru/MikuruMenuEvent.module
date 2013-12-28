@@ -1,0 +1,6 @@
+' Gambas module file
+
+Public Enum None = 0
+Public Enum MediaHeader = 1000, MediaPlay = 1001, MediaPause = 1002, MediaBack = 1003, MediaNext = 1004
+Public Enum FileHeader = 2000, FileOpen = 2001
+Public Enum AppHeader = 3000, AppAbout = 3001, AppClose = 3002

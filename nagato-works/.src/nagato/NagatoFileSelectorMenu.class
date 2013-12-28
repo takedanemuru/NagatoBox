@@ -1,0 +1,111 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+Private $showHiddenMenu As Menu
+
+Private Sub addOpenTerminalMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/terminal"]
+        .Text = ("OpenTerminalHere")
+        .Tag = MikuruMenuEventFile.OpenTerminalHere
+    End With
+    
+End
+
+Private Sub addNewDirMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/new-dir"]
+        .Text = ("CreateNewFolder")
+        .Tag = MikuruMenuEventFile.MakeNewDirectory
+    End With
+    
+End
+
+Private Sub addHiddenFolderMenu()
+    
+    $showHiddenMenu = New Menu(Me._$rootMenu) As "HiddenFolderMenu"
+    
+    With $showHiddenMenu
+        .Text = ("ShowHidden")
+        .Toggle = True
+        .Value = NagatoSettingsFileSelector.ShowHidden
+    End With
+    
+End
+
+Private Sub addIconSizeMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiSubMenu As NagatoDynamicSubMenuFileSelectorIconSize
+    
+    With yukiMenu
+        .Text = ("Icon Size")
+    End With
+    
+    yukiSubMenu = New NagatoDynamicSubMenuFileSelectorIconSize(yukiMenu) As "Menu"
+    
+End
+
+Private Sub addSearchMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = ("Search")
+        .Picture = Stock["medium/find"]
+        .Tag = MikuruMenuEventFile.Search
+    End With
+    
+End
+
+Private Sub addTrashMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiSubMenu As NagatoDynamicSubMenuTrash
+    
+    With yukiMenu
+        .Text = ("Trash")
+        .Picture = Stock["medium/trash"]
+    End With
+    
+    yukiSubMenu = New NagatoDynamicSubMenuTrash(yukiMenu)
+    
+End
+
+Public Sub _AddOtherMenu() ' override
+   
+    addOpenTerminalMenu()
+    addNewDirMenu()
+    addSearchMenu()
+    addHiddenFolderMenu()
+    addIconSizeMenu()
+    addTrashMenu()
+    
+End
+
+Public Sub _ResetMenuVariables() 'override
+    
+    $showHiddenMenu.Checked = NagatoSettingsFileSelector.ShowHidden
+    
+End
+
+Public Sub Menu_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End
+
+Public Sub HiddenFolderMenu_Click()
+    
+    NagatoSettingsFileSelector.ShowHidden = Not NagatoSettingsFileSelector.ShowHidden
+    
+    Raise MenuEvent(MikuruMenuEventView.Changed)
+    
+End

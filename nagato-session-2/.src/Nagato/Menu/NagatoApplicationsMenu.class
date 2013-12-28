@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoGearMenu
+
+Public _$menuName As String = "ApplicationsMenu"
+
+Event Add
+Event Edit
+
+Private Sub addAddMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AddMenu"
+    
+    With yukiMenu
+        .Text = ("Add")
+        .Picture = Stock["medium/add"]
+    End With
+    
+End
+
+Private Sub addEditMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "EditMenu"
+    
+    With yukiMenu
+        .Text = ("Edit")
+        .Picture = Stock["medium/pen"]
+    End With
+    
+End
+
+Public Sub _AddAdditionalMenu() 'override
+    
+    addAddMenu()
+    addEditMenu()
+    
+End
+
+Public Sub AddMenu_Click()
+    
+    Raise Add
+    
+End
+
+Public Sub EditMenu_Click()
+    
+    Raise Edit
+    
+End

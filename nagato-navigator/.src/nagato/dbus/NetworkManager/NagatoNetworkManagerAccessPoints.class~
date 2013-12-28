@@ -1,0 +1,115 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private Const ApplicationName As String = "system://org.freedesktop.NetworkManager"
+Private Const ObjectPath As String = "/org/freedesktop/NetworkManager/AccessPoint"
+Private Const Interface As String = "org.freedesktop.NetworkManager.AccessPoint"
+
+Private $accessPoints As New String[]
+
+'test
+'Private Const ActiveId As String = "00:1D:73:E4:87:36"
+
+Private Function getAccessPointElements() As XmlElement[]
+    
+    Dim yukiXmlDocument As New XmlDocument
+    
+    yukiXmlDocument.FromString(DBus[ApplicationName]._Introspect(ObjectPath))
+    
+    Return yukiXmlDocument.All
+    
+End
+
+Private Sub refreshAccessPoints()
+    
+    Dim yukiXmlElement As XmlElement
+    Dim yukiAttribute As String
+
+    $accessPoints.Clear()
+
+    For Each yukiXmlElement In getAccessPointElements()
+        yukiAttribute = yukiXmlElement.GetAttribute("name")
+        If yukiAttribute <> "" Then $accessPoints.Add(yukiAttribute)
+    Next
+    
+End
+
+Private Function getProxy(argIndex As Integer) As DBusProxy
+    
+    Dim yukiObjectPath As String = ObjectPath &/ $accessPoints[argIndex]
+    
+    Return DBus[ApplicationName][yukiObjectPath, Interface]
+    
+End 
+
+Private Function getActiveProxy() As DBusProxy
+    
+    Dim yukiCount As Integer
+    Dim yukiProxy As DBusProxy
+    
+    For yukiCount = 0 To $accessPoints.Max
+        yukiProxy = getProxy(yukiCount)
+        If yukiProxy.HwAddress = NagatoSettingsNetwork.DefaultAccessPoint Then Return yukiProxy
+    Next
+    
+    Return Null
+    
+End
+
+Public Sub Refresh()
+    
+    refreshAccessPoints()
+    
+End
+
+Public Function GetHwAddress(Optional argIndex As Integer) As String
+    
+    If argIndex Then
+        Return getProxy(argIndex).HwAddress
+    Else
+        Return getActiveProxy().HwAddress
+    End If
+    
+Catch
+    Return ""
+    
+End
+
+Public Function GetStrength(Optional argIndex As Integer) As Integer
+    
+    If argIndex Then
+        Return getProxy(argIndex).Strength
+    Else
+        Return getActiveProxy().Strength
+    End If
+    
+Catch
+    Return 0
+    
+End
+
+Public Function GetMaxBitrate(Optional argIndex As Integer) As Integer
+    
+    If argIndex Then
+        Return getProxy(argIndex).MaxBitrate
+    Else
+        Return getActiveProxy().MaxBitrate
+    End If
+    
+Catch
+    Return 0
+    
+End
+
+Public Sub _new()
+    
+    refreshAccessPoints()
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return getAccessPointElements().Count - 1
+
+End

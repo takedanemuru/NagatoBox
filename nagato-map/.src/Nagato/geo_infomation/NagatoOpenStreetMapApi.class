@@ -1,0 +1,74 @@
+' Gambas class file
+
+Create Static
+
+Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
+
+Private $buffer As String
+Private $httpClient As New HttpClient As "HttpClient"
+
+Event Finished(argXmlDocument As XmlDocument)
+
+Private Sub parseBuffer()
+    
+    Dim yukiXmlDocument As New XmlDocument
+    
+    yukiXmlDocument.FromString($buffer)
+    
+    Raise Finished(yukiXmlDocument)
+    
+End
+
+Private Sub startDownloading(argQuery As String)
+    
+     $buffer = ""
+    
+    With $httpClient
+        .URL = Subst$(NominatimApi, Quote$(argQuery))
+        .Async = True
+        .Timeout = 20
+    End With
+    
+    Debug "go for it, yuki."
+    
+    $httpClient.Get()
+    
+End
+
+Public Sub Get(argQuery As String)
+    
+    Dim yukiQuery As String = Replace$(argQuery, " ", "+")
+    
+    startDownloading(yukiQuery)
+    
+End
+
+Public Sub GetElements(argXmlDocument As XmlDocument) As Collection
+    
+    Dim yukiResult As New Collection
+    Dim yukiNode As XmlNode
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    For Each yukiNode In argXmlDocument.GetElementsByTagName("searchresults")[0].AllChildNodes
+        With yukiNode.Attributes
+            If .["display_name"] = "" Then Continue
+            yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])
+            yukiResult.Add(yukiGeoElement, .["display_name"])
+        End With
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    $buffer &= Read #Last, Lof(Last)
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    parseBuffer()
+    
+End

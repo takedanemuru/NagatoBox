@@ -1,0 +1,14 @@
+' Gambas class file
+
+Create Static
+
+Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMode As Integer)
+    
+    Dim yukiCommandLineOption As String = MikuruRenderMode.getCommandLineOption(argRenderMode)
+    Dim yukiColor As String = "#" & Hex$(argBackground, 6) 'hsetroot requires hexadecimal number with #
+    
+    If argPath = "" Then Return
+    
+    Shell Subst$("hsetroot -solid &3 &1 &2", yukiCommandLineOption, Quote$(argPath), Quote$(yukiColor))
+    
+End

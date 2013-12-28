@@ -1,0 +1,104 @@
+' Gambas class file
+
+Inherits NagatoInfobarContextMenu
+
+Event Previous
+Event Next
+Event NewFeed(argIndex As Integer)
+Event Browser
+
+Private Sub addFeedMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As Menu
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To NagatoRss.Max
+        yukiMenu = New Menu(argParentMenu) As "FeedMenu"
+        With yukiMenu
+            .Text = NagatoRss.GetFeed(yukiCount).GetTitle(0)
+            .Picture = MikuruMonoIconBlue.Get("feed-document", 2 * MikuruUX.Grid)
+            .Tag = yukiCount
+        End With
+    Next
+    
+End
+
+Private Sub addFeedSelectMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    With yukiMenu
+        .Text = ("SelectFeed")
+        .Picture = MikuruMonoIconBlue.Get("feed", 2 * MikuruUX.Grid)
+    End With
+    
+    addFeedMenu(yukiMenu)
+    
+End
+
+Private Sub addPreviousMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "PreviousMenu"
+    
+    With yukiMenu
+        .Text = ("Back")
+        .Picture = MikuruMonoIconBlue.Get("button-rew", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Private Sub addNextMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "NextMenu"
+    
+    With yukiMenu
+        .Text = ("Next")
+        .Picture = MikuruMonoIconBlue.Get("button-ff", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Private Sub addShowInBrowserMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "BrowserMenu"
+    
+    With yukiMenu
+        .Text = ("Show in Browser")
+        .Picture = MikuruMonoIconBlue.Get("web", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Public Sub _Initialize() 'override
+    
+    addFeedSelectMenu()
+    addPreviousMenu()
+    addNextMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addShowInBrowserMenu()
+    
+End
+
+Public Sub FeedMenu_Click()
+    
+    Raise NewFeed(Last.Tag)
+    
+End
+
+Public Sub PreviousMenu_Click()
+    
+    Raise Previous
+    
+End
+
+Public Sub NextMenu_Click()
+    
+    Raise Next
+    
+End
+
+Public Sub BrowserMenu_Click()
+    
+    Raise Browser
+    
+End

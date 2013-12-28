@@ -1,0 +1,31 @@
+' Gambas module file
+
+Private Const baselineCommand As String = "xfconf-query -c xfce4-desktop -p /backdrop/screen&1/monitor&2/&3 -s &4"
+
+Public Sub ChangeImage(argScreen As Integer, argMonitor As Integer, argPath As String) ' argPath can contain space.
+    
+    Shell Subst$(baselineCommand, argScreen, argMonitor, "image-path", Quote$(argPath))
+    
+End
+
+Public Sub ChangeStyle(argScreen As Integer, argMonitor As Integer, argStyle As Integer)
+    
+    ' argStyle shall mean...
+    ' 0  = Auto
+    ' 1 = Centered
+    ' 2 = Titled
+    ' 3 = Stretched
+    ' 4 = Scaled
+    ' 5 = Zoomed
+    
+    Shell Subst$(baselineCommand, argScreen, argMonitor, "image-style", argStyle)
+    
+End
+
+Public Sub Reload(argScreen As Integer, argMonitor As Integer)
+    
+    Shell Subst$(baselineCommand, argScreen, argMonitor, "image-show", "false")
+    Wait 0.1
+    Shell Subst$(baselineCommand, argScreen, argMonitor, "image-show", "true")
+    
+End

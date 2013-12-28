@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoMenuButtonHandler
+
+Public _$uniqueName As String = "CurrentPlaylist"
+
+Private Sub addClear()
+    
+    Dim yukiMenu As New Menu(Me._$dummyRootMenu) As "ClearMenu"
+    
+    With yukiMenu
+        .Text = ("Clear")
+        .Visible = True
+    End With
+    
+End
+
+Public Sub _AddMenu()
+    
+    Debug "i came here."
+    
+    addClear()  
+    
+End
+

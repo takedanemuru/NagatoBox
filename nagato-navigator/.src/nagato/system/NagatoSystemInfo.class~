@@ -1,0 +1,65 @@
+' Gambas class file
+
+Create Static
+
+Public Function GetKernelName() As String
+    
+    Dim yukiOutput As String
+    
+    Shell "uname -s" To yukiOutput
+    
+    Return yukiOutput
+    
+End
+
+Public Function GetKernelRelease() As String
+    
+    Dim yukiOutput As String
+    
+    Shell "uname -r" To yukiOutput
+    
+    Return yukiOutput
+    
+End
+
+Public Function GetNodeName() As String
+    
+    Dim yukiOutput As String
+    
+    Shell "uname -n" To yukiOutput
+    
+    Return yukiOutput
+    
+End
+
+Public Function GetProcessorInfo() As String
+    
+    Dim yukiOutput As String
+    
+    Shell "uname -p" To yukiOutput
+    
+    Return yukiOutput
+    
+End
+
+Public Function GetFreeSpace() As String
+    
+    Dim yukiResult As Float = Dfree("/") / (1024 ^ 3)
+    
+    Return Format(yukiResult, "#.### GiB")
+    
+End
+
+Public Function GetMemoryInfo() As String
+    
+    Dim yukiDataSheet As String = File.Load("/proc/meminfo")
+    Dim yukiMemTotal As String = Replace(Split(yukiDataSheet, "\n", "")[0], "MemTotal:         ", "")
+    
+    yukiMemTotal = Replace$(yukiMemTotal, " kB", "")
+    
+    Return Format$(CInt(yukiMemTotal), "#,###,### KiB")
+    
+Catch
+    Return "?"
+    
+End

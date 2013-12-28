@@ -1,0 +1,38 @@
+' Gambas module file
+
+Private $path As String
+
+Private Sub setPath(argOptions As String[])
+    
+    Dim yukiPath As String
+    
+    If Exist($path) Then Return
+    
+    $path = ""
+    
+    For Each yukiPath In argOptions
+        If Exist(yukiPath) Then $path = yukiPath
+    Next
+    
+End
+
+Private Sub parsingArguments()
+    
+    Dim yukiOptions As String[]
+    
+    Args.Begin("nagato-pdf-view usege")
+        $path = Args.Get("o", "open", "open pdf file", "path to file")
+    yukiOptions = Args.End()
+    
+    setPath(yukiOptions)
+    
+End
+
+Public Sub Main()
+    
+    parsingArguments()
+    
+    HaruhiPdfView.Show()
+    If $path <> "" Then HaruhiPdfView.SetDocument($path)
+    
+End

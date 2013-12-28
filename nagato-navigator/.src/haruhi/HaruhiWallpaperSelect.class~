@@ -1,0 +1,62 @@
+' Gambas class file
+
+Private Const ThumbnailSize As Integer = 256
+
+Private $thumbnailerRecent As New NagatoThumbnailLoader As "RecentThumbnailer"
+Private $pictureSelector As NagatoPictureSelector
+
+Event Select(argPath As String)
+
+Private Sub addRecentThumbnails()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoSettingsDesktop.WallpaperRecentPaths
+        If Exist(yukiPath) Then
+            RecentIconView.Add(yukiPath, File.Name(yukiPath), Stock["large/file"])
+        Endif
+    Next
+    
+    $thumbnailerRecent.StartWithArray(NagatoSettingsDesktop.WallpaperRecentPaths, ThumbnailSize)
+    
+End
+
+Private Sub addSelectTab()
+    
+    Inc SelectTabStrip.Count
+    SelectTabStrip.Text = ("Select")
+    $pictureSelector = New NagatoPictureSelector(SelectTabStrip) As "PictureSelector"
+    
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+
+    addRecentThumbnails()
+    addSelectTab()
+
+End
+
+Public Sub RecentThumbnailer_ThumbnailWithFullPath(argPath As String, argThumbnail As Picture)
+    
+    RecentIconView[argPath].Picture = argThumbnail
+    
+Catch
+    Return
+    
+End
+
+Public Sub RecentIconView_Activate()
+    
+    Raise Select(RecentIconView.Key)
+    Me.Close()
+    
+End
+
+Public Sub PictureSelector_Select(argFullPath As String)
+    
+    Raise Select(argFullPath)
+    Me.Close()
+    
+End

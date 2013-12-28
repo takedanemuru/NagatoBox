@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["pictures/nagato_icons/presentation.png"]
+  Arrangement = Arrange.Vertical
+  { MenuBox HBox
+    MoveScaled(13,1,27,4)
+  }
+  { MainView ImageView
+    MoveScaled(4,17,34,28)
+    Expand = True
+    Grid = True
+  }
+}

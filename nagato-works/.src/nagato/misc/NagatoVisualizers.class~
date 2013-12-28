@@ -1,0 +1,32 @@
+' Gambas class file
+
+Private $mediaPlayer As MediaPlayer
+Private $visualizers As New MediaControl[]
+Private $visualizerNames As String[] = ["goom", "libvisual_corona", "libvisual_jakdaw", "libvisual_jess", "libvisual_infinite"]
+
+Private Sub addVisualizer()
+        
+        Dim yukiName As String
+        Dim yukiVisualizer As MediaControl
+        
+        For Each yukiName In $visualizerNames
+                 yukiVisualizer = New MediaContainer($mediaPlayer, yukiName)
+                 $visualizers.Add(yukiVisualizer)
+        Next
+        
+End
+
+Public Sub _new(argMediaPlayer As MediaPlayer)
+        
+        $mediaPlayer = argMediaPlayer
+        addVisualizer()
+        
+End
+
+Public Function GetVisualizer(argIndex As Integer) As MediaControl
+        
+        If argIndex > $visualizers.Max Then argIndex = 0
+        
+        Return $visualizers[argIndex]
+        
+End

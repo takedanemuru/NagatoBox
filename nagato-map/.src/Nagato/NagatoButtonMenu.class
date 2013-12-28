@@ -1,0 +1,63 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $uniqueName As String = "GearMenu"
+Private $rootMenu As Menu
+
+Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton)
+    
+    $rootMenu = New Menu(argForm)
+    $rootMenu.Name = $uniqueName
+    argButton.Menu = $uniqueName
+    
+End
+
+Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Private Sub addMenus()
+    
+    With NagatoMenuPipe
+        addMenuItem(("Search"), .MenuSearch, MikuruIcon.Get("search"))
+        addMenuItem(("Information"), .MenuInformation, MikuruIcon.Get("information-balloon"))
+        addMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
+            addMenuItem((""), 0) ' as a separator
+        addMenuItem(("About"), .MenuAbout, MikuruIcon.Get("star"))
+        addMenuItem(("Close"), .MenuQuit, MikuruIcon.Get("button-cross"))
+    End With
+    
+End
+
+Public Sub _new(argForm As Form, argButton As MenuButton)
+    
+    initializeRootMenu(argForm, argButton)
+    addMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    With NagatoMenuPipe
+        Select Case Last.Tag
+            Case .MenuAbout
+                HaruhiAbout.ShowDialog()
+            Case .MenuQuit
+                HaruhiMapView.Close()
+            Case .MenuSearch
+                NagatoBookmarkAndSearchPanel.Toggle()
+            Default
+                Raise MenuEvent(Last.Tag)
+        End Select
+    End With
+    
+End

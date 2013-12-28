@@ -1,0 +1,76 @@
+' Gambas class file
+
+Private Const ApplicationName As String = "system://org.freedesktop.UPower"
+Private Const ObjectPathUPower As String = "/org/freedesktop/UPower"
+Private Const InterfaceUPower As String = "org.freedesktop.UPower"
+
+Private $uPower As DBusProxy 
+Private $devices As New DBusProxy[] 
+Private $signal As DBusSignal
+
+Private Sub setUPower()
+        
+        $uPower = DBus[ApplicationName][ObjectPathUPower, InterfaceUPower]
+        
+End
+
+Private Sub setDevices()
+        
+        Dim yukiDeviceName As String
+        
+        For Each yukiDeviceName In $uPower.EnumerateDevices()
+                $devices.Add(DBus[ApplicationName][yukiDeviceName])
+        Next
+        
+End
+
+Private Sub setSignal()
+        
+        $signal = New DBusSignal(DBus.System, "org.freedesktop.UPower.Device") As "DBusSignal"
+        $signal.Enabled = True
+        
+End
+
+Private Sub showEachDeviceInfomation()
+        
+        Dim yukiTabInfomation As Object
+        Dim yukiCount As Integer
+        
+        DeviceTabStrip.Count = $devices.Count
+        
+        For yukiCount = 0 To $devices.Max
+                If $devices[yukiCount].Type = 1 Then
+                        yukiTabInfomation = New NagatoLinePowerInfomation(yukiCount, $devices[yukiCount]) 
+                Else If $devices[yukiCount].Type = 2 Then
+                        yukiTabInfomation = New NagatoBatteryInfomation(yukiCount, $devices[yukiCount]) 
+                Else
+                        yukiTabInfomation = New NagatoTabInfomation(yukiCount, $devices[yukiCount]) 
+                Endif
+        Next
+        
+End
+
+Public Sub Form_Open()
+        
+        NagatoSettings.LoadFormPosition(Me)
+        setUPower()
+        setDevices()
+        setSignal()
+        showEachDeviceInfomation()
+        
+End
+
+Public Sub Form_Close()
+        
+        $signal.Enabled = False
+        NagatoSettings.SaveFormPosition(Me)
+        Quit
+        
+End
+
+Public Sub DBusSignal_Signal(Signal As String, SignalArguments As Variant[])
+        
+        Debug Signal
+        Debug SignalArguments[0]
+        
+End

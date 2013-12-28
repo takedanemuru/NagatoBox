@@ -1,0 +1,82 @@
+' Gambas class file
+
+Public Sub SetFormProperty(argTitle As String, argButton As String)
+    
+    MikuruDialog.Clear()
+    
+    Me.Title = argTitle
+    ApplyButton.Text = argButton
+    
+End
+
+Public Sub SetData(argId As Integer)
+    
+    Dim yukiResult As Result = NagatoDBToDo.GetResultById(argId)
+    
+    StatusBox.List = MikuruStatus.List
+    
+    With NagatoDBToDo
+        If yukiResult[.ColumnStatus] Then StatusBox.Index = yukiResult[.ColumnStatus]
+        If yukiResult[.ColumnProject] Then
+            MikuruDialog.ParentProject = yukiResult[.ColumnProject]
+            ProjectBox.Text = NagatoDBToDo.GetProjectName(yukiResult[.ColumnProject])
+        End If
+        WhatToDoBox.Text = yukiResult[.ColumnName]
+        If yukiResult[.ColumnMemo] Then MemoBox.Text = yukiResult[.ColumnMemo]
+        If yukiResult[.ColumnDateDeadline] Then CalendarBox.Text = MikuruCalendar.GetDateText(yukiResult[.ColumnDateDeadline])
+    End With
+    
+End
+
+Public Sub SetParentProject(argParentProject As Integer)
+    
+    MikuruDialog.ParentProject = argParentProject
+    ProjectBox.Text = NagatoDBToDo.GetProjectName(argParentProject)
+    
+End
+
+Public Sub form_Open()
+    
+    StatusBox.List = MikuruStatus.List
+    
+End
+
+Public Sub ApplyButton_Click()
+
+    Debug StatusBox.Index
+    Debug ProjectBox.Text
+
+    If WhatToDoBox.Text <> "" Then
+        With MikuruDialog
+            .Status = IIf(StatusBox.Index = Null, 0, StatusBox.Index)
+            .ResponseString = WhatToDoBox.Text
+            .Memo = MemoBox.Text
+            .DeadLine = IIf(CalendarBox.Text <> "", .DeadLine, Null)
+            Me.Close(.ResponseApply)
+        End With
+    End If
+
+End
+
+Public Sub CalendarBox_Click()
+
+    If MikuruDialog.ResponseApply = HaruhiCalendar.ShowDialog() Then
+        CalendarBox.Text = MikuruCalendar.GetDateText(MikuruDialog.DeadLine)
+    Endif
+
+End
+
+Public Sub ProjectBox_Click()
+
+    If HaruhiProjectChooser.ShowDialog() = MikuruDialog.ResponseApply Then
+        MikuruDialog.ParentProject = CInteger(MikuruDialog.ResponseString)
+        ProjectBox.Text = NagatoDBToDo.GetProjectName(CInteger(MikuruDialog.ResponseString))
+    Endif
+
+End
+
+Public Sub Cancel_Click()
+
+    Me.Close(MikuruDialog.ResponseCancel)
+
+End

@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoSuperMenu
+
+Private Sub addMoveMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("Move")
+    
+End
+
+Private Sub addCovertMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ("Convert")
+    
+End
+
+Public Sub _AddOtherMenu() ' Override
+    
+    addMoveMenu()
+    addCovertMenu()
+    
+End

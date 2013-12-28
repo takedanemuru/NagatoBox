@@ -1,0 +1,54 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Event Select(argTag As String)
+
+Private Sub addXdgUserDirs(argPicture As Picture, argTranslatableText As String, argTag As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "XdgUserDir"
+    
+    With yukiMenu
+        .Picture = argPicture
+        .Text = argTranslatableText
+        .Tag = argTag
+    End With
+    
+End
+
+Private Sub addTrashMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TrashMenu"
+    
+    With yukiMenu
+        .Text = ("Trash")
+        .Picture = Stock["medium/trash"]
+    End With
+    
+End
+
+Public Sub _InitializeMenu()
+    
+    addXdgUserDirs(Stock["medium/home"], ("home"), User.Home)
+    addXdgUserDirs(Stock["medium/desktop"], ("desktop"), NagatoXdgUserDirs.Desktop)
+    addXdgUserDirs(Stock["medium/file"], ("documents"), NagatoXdgUserDirs.Documents)
+    addXdgUserDirs(Stock["medium/down"], ("download"), NagatoXdgUserDirs.Download)
+    addXdgUserDirs(Stock["medium/audio"], ("music"), NagatoXdgUserDirs.Music)
+    addXdgUserDirs(Stock["medium/image"], ("pictures"), NagatoXdgUserDirs.Pictures)
+    addXdgUserDirs(Stock["medium/video"], ("videos"), NagatoXdgUserDirs.Videos)
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addTrashMenu()
+    
+End
+
+Public Sub XdgUserDir_Click()
+    
+    Raise Select(Last.Tag)
+    
+End
+
+Public Sub TrashMenu_Click()
+    
+    NagatoTabHandler.NewTab(MikuruFunctionType.TrashBin)
+    
+End

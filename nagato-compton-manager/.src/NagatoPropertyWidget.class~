@@ -1,0 +1,30 @@
+' Gambas class file
+
+Public _$hBox As HBox
+Public _$maxValue As Float
+Public _$minValue As Float
+
+Private Sub addHBox(argParent As VBox)
+    
+    Me._$hBox = New HBox(argParent)
+    
+    With Me._$hBox
+        .Height = 32
+    End With
+    
+End
+
+Public Sub _AddValueWidget(argLabelTitle As String, argHeader As String) ' this method is virtual, MUST be overridden. 
+    
+    
+    
+End
+
+Public Sub _new(argParent As Container, argLabelTitle As String, argHeader As String, Optional argMax As Float = 1, Optional argMin As Float = 0)
+    
+    Me._$maxValue = argMax
+    Me._$minValue = argMin
+    addHBox(argParent)
+    Me._AddValueWidget(argLabelTitle, argHeader)
+    
+End

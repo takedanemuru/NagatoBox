@@ -1,0 +1,90 @@
+' Gambas class file
+
+Property Directory As String
+Property IntervalSecond As Integer
+
+Private $directory As String
+Private $timer As New Timer As "Timer"
+Private $previousPaths As New String[]
+
+Event Modefied(argNewPaths As String[], argdeletedPaths As String[])
+
+Public Sub Start()
+    
+    $timer.Start()
+    
+End
+
+Public Sub Stop()
+    
+    $timer.Stop()
+    
+End
+
+Public Sub _new(argPath As String)
+
+    $directory = argPath
+    $timer.Delay = 2000
+    $timer.Start()
+
+End
+
+Public Sub Timer_Timer()
+    
+    Dim yukiCurrentPaths As String[]
+    Dim yukiNewPaths As String[]
+    Dim yukiDeletedPaths As New String[]
+    Dim yukiPath As String
+    
+    If Not Exist(Me.Directory) Then Return
+    
+    yukiCurrentPaths = Dir(Me.Directory)
+    yukiNewPaths = yukiCurrentPaths.Copy()
+    
+    If $previousPaths.Count > 0 Then
+
+        For Each yukiPath In $previousPaths
+            If Not yukiCurrentPaths.Exist(yukiPath) Then
+                yukiDeletedPaths.Add(yukiPath)
+            Else
+                yukiNewPaths.Delete(yukiNewPaths.Find(yukiPath))
+            Endif
+        Next
+    
+        If Max(yukiNewPaths.Count, yukiDeletedPaths.Count) > 0 Then
+            Raise Modefied(yukiNewPaths, yukiDeletedPaths)
+        Endif
+
+    End If
+    
+    $previousPaths = yukiCurrentPaths
+    
+Catch 
+    Return
+    
+End
+
+Private Function Directory_Read() As String
+
+    Return $directory
+
+End
+
+Private Sub Directory_Write(Value As String)
+
+    $directory = Value
+    $previousPaths = New String[]
+
+End
+
+Private Function IntervalSecond_Read() As Integer
+
+    Return $timer.Delay / 1000
+
+End
+
+Private Sub IntervalSecond_Write(Value As Integer)
+
+    $timer.Delay = Value * 1000
+
+End

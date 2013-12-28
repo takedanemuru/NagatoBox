@@ -1,0 +1,27 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.3.3
+Title=nagato-process-manager-experimental
+Startup=FMain
+Icon=pictures/process_icon.jpg
+Version=0.3.1
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Description="process manager\nthis software is licensed under s.o.s. license."
+Authors="takeda nemuru"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takeda.nemuru
+Vendor=n.labs
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=Other License(s)
+PackageName=nagato-process-manager-experimental-0.3.1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Monitoring"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"x11"

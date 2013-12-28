@@ -1,0 +1,15 @@
+' Gambas module file
+
+Private $types As String[] = [("scale"), ("center"), ("fill"), ("max"), ("tile")]
+
+Public Sub SetWithStringType(argFullPath As String, argType As String)
+    
+    Shell Subst$("feh --bg-&1 &2", argType, Quote$(argFullPath))
+    
+End
+
+Public Sub SetWithIntegerType(argFullPath As String, argType As Integer)
+    
+    Shell Subst$("feh --bg-&1 &2", $types[argType], Quote$(argFullPath))
+    
+End

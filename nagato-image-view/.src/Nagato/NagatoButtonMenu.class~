@@ -1,0 +1,37 @@
+' Gambas class file
+
+Private $button As MenuButton
+Private $rootMenu As Menu
+
+Private Sub setRootMenu()
+    
+    $rootMenu = New Menu(HaruhiImageView)
+    
+    $rootMenu.Name = "UniqueName"
+    $button.Menu = $rootMenu.Name
+    
+End
+
+Private Sub setSubMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "QuitMenu"
+    
+    With yukiMenu
+        .Text = "Quit"
+    End With
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton)
+    
+    $button = argMenuButton
+    setRootMenu()
+    setSubMenu()
+    
+End
+
+Public Sub QuitMenu_Click()
+    
+    HaruhiImageView.Close()
+    
+End

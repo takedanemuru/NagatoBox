@@ -1,0 +1,99 @@
+' Gambas class file
+
+Create Static
+
+Property Read GeoInfomations As NagatoGeoInfomationElement[]
+Property Read Ready As Boolean
+
+Private Const Api As String = "http://api.wikilocation.org/articles?lat=&1&lng=&2&limit=100&radius=10000&format=xml&locale=en"
+
+Private $geoInfomations As New NagatoGeoInfomationElement[]
+Private $buffer As String
+Private $ready As Boolean = False
+
+Event Finished(argElements As NagatoGeoInfomationElement[])
+
+Private Sub parsingArticles(argArticles As XmlElement[])
+    
+    Dim yukiCount As Integer
+    Dim yukiElement As NagatoGeoInfomationElement
+    Dim yukiElements As New NagatoGeoInfomationElement[]
+    
+    If argArticles.Count = 0 Then Return
+    
+    For yukiCount = 0 To argArticles.Max
+        With argArticles[yukiCount]
+            yukiElement = New NagatoGeoInfomationElement
+            yukiElement.Latitude = CFloat(.GetChildrenByTagName("lat")[0].TextContent)
+            yukiElement.Longitude = CFloat(.GetChildrenByTagName("lng")[0].TextContent)
+            yukiElement.Type = .GetChildrenByTagName("type")[0].TextContent
+            yukiElement.Title = .GetChildrenByTagName("title")[0].TextContent
+            yukiElement.MobileUrl = .GetChildrenByTagName("mobileurl")[0].TextContent
+            yukiElements.Add(yukiElement)
+        End With
+    Next
+    
+    Raise Finished(yukiElements)
+    
+    $geoInfomations = yukiElements.Copy()
+    $ready = True
+    
+End
+
+Private Sub parsingXml()
+    
+    Dim yukiXmlDocument As New XmlDocument
+    
+    yukiXmlDocument.FromString($buffer)
+    parsingArticles(yukiXmlDocument.GetElementsByTagName("article"))
+    
+End
+
+Private Sub startDownloading(argUrl As String)
+    
+    Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    $ready = False
+    $buffer = ""
+    
+    With yukiHttpClient
+        .URL = argUrl
+        .Async = True
+        .Timeout = 30
+        .Get()
+    End With
+    
+End
+
+Public Sub Get(argLatitude As Float, argLongitude As Float)
+    
+    startDownloading(Subst$(Api, argLatitude, argLongitude))
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    Dim yukiBuffer As String
+
+    yukiBuffer = Read #Last, Lof(Last)
+    $buffer &= yukiBuffer
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    parsingXml()
+    
+End
+
+Private Function GeoInfomations_Read() As NagatoGeoInfomationElement[]
+
+    Return $geoInfomations
+
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End

@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoTabContent
+
+Private $toolbar As NagatoHighlightEditorToolBar
+Private $editor As NagatoHighlightEditorEditor
+
+Public Sub _new(argTabStrip As TabStrip, Optional argFullPath As String = "") ' argPath must be full pat
+    
+    Dim yukiTitle As String = ("untitled")
+    
+    Me._Initialize(argTabStrip)
+    $toolBar = New NagatoHighlightEditorToolBar(Me._$hBox) As "ToolBar"
+    $editor = New NagatoHighlightEditorEditor(Me._$vBox, argFullPath) As "Editor"
+    If argFullPath <> "" Then yukiTitle = File.Name(argFullPath)
+    Me._RefreshParentTab(yukiTitle, Stock["small/pen"])
+    NagatoMessaging.setMessage(("highlight it !"))
+    
+End

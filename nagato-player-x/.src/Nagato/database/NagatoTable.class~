@@ -1,0 +1,16 @@
+' Gambas class file
+
+Public _$connection As Connection
+
+Public Sub _EnsureTable() 'virtual
+    
+    
+    
+End
+
+Public Sub _new(argConnection As Connection)
+    
+    Me._$connection = argConnection
+    Me._EnsureTable()
+    
+End

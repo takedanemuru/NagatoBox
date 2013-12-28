@@ -1,0 +1,138 @@
+' Gambas class file
+
+Private Enum MODE_BUFFER, MODE_RESULT
+
+Private $result As Float = 0
+Private $floatingPoint As Integer = 0
+Private $mode As Integer = MODE_BUFFER
+Private $element As New NagatoCalculationElement
+Private $elements As New NagatoCalculationElement[]
+
+Event Show(argNumber As Float)
+
+Private Function calculation(argElement As NagatoCalculationElement) As Float
+        
+        Select Case argElement.Function
+                Case MikuruFunctionType.Plus
+                        Return $result + argElement.Number
+                Case MikuruFunctionType.Minus
+                        Return $result - argElement.Number
+                Case MikuruFunctionType.Multi
+                        Return $result * argElement.Number
+                Case MikuruFunctionType.Devide
+                        Return $result / argElement.Number
+                Case MikuruFunctionType.Power
+                        Return $result ^ argElement.Number
+                Case MikuruFunctionType.SquareRoot
+                        Return Sqr($result)
+        End Select
+        
+Catch
+        Message.Warning("Devided by Zero")
+
+End
+
+Private Sub undo()
+        
+        Dim yukiCounter As Integer
+        
+        $result = 0
+        
+        For yukiCounter = 0 To $elements.Max - 1
+                $result = calculation($elements[yukiCounter])
+        Next
+        
+        $elements.Remove($elements.Max)
+        bufferModeClosure()
+        
+End
+
+Private Sub bufferModeClosure()
+        
+        $mode = MODE_RESULT
+        $floatingPoint = 0
+        Raise Show($result)
+        
+End
+
+Public Sub InputNumber(argNumber As Integer)
+        
+        With $element
+                If $floatingPoint = 0 Then
+                        .Number = .Number * 10 + argNumber
+                Else
+                        .Number = .Number + argNumber * (0.1 ^ $floatingPoint)
+                        Inc $floatingPoint
+                Endif
+        End With
+        
+        $mode = MODE_BUFFER
+        
+        Raise Show($element.Number)
+        
+End
+
+Public Sub InputFunction(argFunction As Integer)
+        
+        $result = calculation($element)
+        $elements.Add($element)
+        $element = New NagatoCalculationElement
+        $element.Function = argFunction
+        bufferModeClosure()
+        
+End
+
+Public Sub InputClear()
+        
+        $elements.Clear()
+        $element = New NagatoCalculationElement
+        $result = 0
+        $mode = MODE_BUFFER
+        $floatingPoint = 0
+        
+        Raise Show($result)
+        
+End
+
+Public Sub InputDot()
+        
+        If $floatingPoint = 0 Then
+                $floatingPoint = 1
+                $mode = MODE_BUFFER
+        Endif
+        
+End
+
+Public Sub InputReverse()
+        
+        If $mode = MODE_BUFFER Then
+                $element.Number *= -1
+                Raise Show($element.Number)
+        Else ' if $mode = MODE_RESULT
+                $result *= -1
+                Raise Show($result)
+        Endif
+        
+End
+
+Public Sub InputEnter()
+        
+        If $mode = MODE_BUFFER Then
+                InputFunction(MikuruFunctionType.Plus)
+        Else ' if $mode = MODE_RESULT
+                $result = calculation($elements[$elements.Max])
+                $elements.Add($elements[$elements.Max])
+                bufferModeClosure()
+        Endif
+        
+End
+
+Public Sub InputUndo()
+        
+        If $elements.Count = 0 Then
+                Return
+        Else
+                undo()
+        Endif
+        
+End

@@ -1,0 +1,131 @@
+' Gambas class file
+
+Private $grid As NagatoGridToDo
+Private $tree As NagatoToDoTree
+Private $tabDone As NagatoTabDone
+Private $bar As NagatoMenuBar
+
+Private Sub addChildToDo(argId As Integer)
+    
+    HaruhiAddToDo.SetFormProperty("Add new ToDo", "Add")
+    HaruhiAddToDo.SetParentProject(argId)
+    
+    If HaruhiAddToDo.ShowDialog() = MikuruDialog.ResponseApply Then
+        With MikuruDialog
+            NagatoDBToDo.AddItem(.ResponseString, argId, .Status, .Memo, .DeadLine)
+        End With
+        refreshViews()
+    Endif
+    
+End
+
+Private Sub editToDo()
+    
+    HaruhiAddToDo.SetFormProperty("Edit ToDo", "Apply")
+    HaruhiAddToDo.SetData($grid.GetCurrentId())
+    
+    If HaruhiAddToDo.ShowDialog() = MikuruDialog.ResponseApply Then
+        With MikuruDialog
+            NagatoDBToDo.EditItem($grid.GetCurrentId())
+        End With
+        refreshViews()
+    Endif
+    
+End
+
+Private Sub refreshViews()
+    
+    $grid.Refresh()
+    $tree.Refresh()
+    $tabDone.Refresh()
+    
+End
+
+Public Sub Form_Open()
+
+    System.FirstDayOfWeek = 0
+    Application.MainWindow = Me
+    NagatoSettings.LoadFromSettings(Me)
+    $grid = New NagatoGridToDo(ToDoGrid)
+    MainTabStrip.Index = 1
+    $tree = New NagatoToDoTree(MainTabStrip) As "ToDoTree"
+    MainTabStrip.Index = 2
+    $tabDone = New NagatoTabDone(MainTabStrip)
+    $bar = New NagatoMenuBar(MenuHBox) As "Menu"
+
+    MainTabStrip.Index = 0
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFromSettings(Me)
+    
+End
+
+Private Sub addToDo()
+
+    HaruhiAddToDo.SetFormProperty("Add new ToDo", "Add")
+    
+    If HaruhiAddToDo.ShowDialog() = MikuruDialog.ResponseApply Then
+        With MikuruDialog
+            NagatoDBToDo.AddItem(.ResponseString, .ParentProject, .Status, .Memo, .DeadLine)
+        End With
+        refreshViews()
+    Endif
+
+End
+
+Public Sub ToDoGrid_Menu()
+
+    Dim yukiMenu As New NagatoContextMenuToDoGrid(HaruhiMain) As "Menu"
+
+    yukiMenu.PopUp()
+
+End
+
+Public Sub ToDoTree_MenuEvent(argEvent As Integer)
+    
+     With MikuruMenuEvent
+        Select Case argEvent
+            Case .MenuDone
+                NagatoDBToDo.SetDone($tree.GetCurrentId())
+                refreshViews()
+            Case .MenuAddNew
+                addToDo()
+            Case .MenuAddChild
+                addChildToDo($tree.GetCurrentId())
+            Case .MenuDelete
+                NagatoDBToDo.Delete($tree.GetCurrentId())
+                refreshViews()
+            Case .MenuEdit
+                editToDo()
+        End Select
+    End With
+    
+End
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    With MikuruMenuEvent
+        Select Case argEvent
+            Case .MenuDone
+                NagatoDBToDo.SetDone($grid.GetCurrentId())
+                refreshViews()
+            Case .MenuAddNew
+                addToDo()
+            Case .MenuAddChild
+                addChildToDo($grid.GetCurrentId())
+            Case .MenuDelete
+                NagatoDBToDo.Delete($grid.GetCurrentId())
+                refreshViews()
+            Case .MenuEdit
+                editToDo()
+            Case .ToDoAdd
+                addToDo()
+            Case .FilterChanged
+                refreshViews()
+        End Select
+    End With
+    
+End

@@ -1,0 +1,118 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private $scrollView As ScrollView
+Private $drawingArea As DrawingArea
+Private $image As Image
+Private $offsetX As Integer
+Private $offsetY As Integer
+
+Event Forward
+
+Private Sub addScrollArea()
+    
+    $scrollView = New ScrollView(Me._$parent) As "ScrollArea"
+    
+    With $scrollView
+        .Expand = True
+        .ScrollBar = Scroll.Both
+        .Arrangement = Arrange.Fill
+        .Background = Color.Pink
+    End With
+    
+End
+
+Private Sub addDrawingArea()
+    
+    $drawIngArea = New DrawingArea($scrollView) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = True
+        .Background = Color.Orange
+    End With
+    
+End
+
+Private Sub resetDrawingAreaSize()
+    
+    $drawingArea.Height = Max($image.Height + 60, $scrollView.Height)
+    $drawingArea.Width = Max($image.Width + 60, $scrollView.Width)
+    
+End
+
+Public Sub _Initialize(argPath As String) ' override.
+    
+    addScrollArea()
+    addDrawingArea()
+    
+End
+
+Public Sub DrawImage(argImage As Image)
+    
+    $offsetX = 0
+    $offsetY = 0
+    
+    $image = argImage
+    resetDrawingAreaSize() 
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    If $offsetX = 0 Then $offsetX = Int(($drawingArea.Width - $image.W) / 2)
+    If $offsetY = 0 Then $offsetY = 30
+    
+    With Paint
+        .Begin($drawingArea)
+        .DrawImage($image, $offsetX, $offsetY)
+        .End()
+    End With
+    
+End
+
+Public Sub DrawingArea_Arrange()
+    
+    resetDrawingAreaSize()
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub DrawingArea_DblClick()
+    
+    Raise Forward
+    
+End
+
+Public Sub DrawingArea_MouseDown()
+    
+    $drawingArea.Mouse = Mouse.SizeAll
+    
+End
+
+Public Sub DrawingArea_MouseWheel()
+    
+    $offsetY += (Mouse.Delta * 16)
+    
+End
+
+Public Sub DrawingArea_MouseMove()
+    
+    With Mouse
+        $offsetX -= (.StartX - .X)
+        $offsetY -= (.StartY - .Y)
+    End With
+    
+    If $drawingArea.Mouse = Mouse.SizeAll Then
+        resetDrawingAreaSize()
+        $drawingArea.Refresh()
+    End If
+    
+End
+
+Public Sub DrawingArea_MouseUp()
+    
+    $drawingArea.Mouse = Mouse.Default
+    
+End

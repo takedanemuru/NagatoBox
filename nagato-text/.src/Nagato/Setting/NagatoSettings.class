@@ -1,0 +1,27 @@
+' Gambas class file
+
+Create Static
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = $settings["form/x", .X]
+        .Y = $settings["form/y", .Y]
+        .Height = $settings["form/height", .Height]
+        .Width = $settings["form/width", .Width]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        $settings["form/x"] = .X
+        $settings["form/y"] = .Y
+        $settings["form/height"] = .Height
+        $settings["form/width"] = .Width
+    End With
+    
+End

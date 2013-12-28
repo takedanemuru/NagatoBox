@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private $clockDA As DrawingArea
+Private $clockFont As New Font
+Private $clockText As String
+
+Public Sub Refresh()
+    
+    $clockText = Format$(Now, ("yyyy-mm-dd hh:nn:ss"))
+    $clockFont.Size = 11
+    $clockFont.Bold = True
+    $clockDA.Width = $clockFont.RichTextWidth($clockText) + 16
+
+    $clockDA.Refresh()
+    
+End
+
+Public Sub _new(argHBox As HBox)
+    
+     $clockDA = New DrawingArea(argHBox) As "ClockDA"
+    
+    With $clockDA
+        .Expand = False
+        .Width = 160
+        .Background = Color.DarkBlue
+    End With
+    
+End
+
+Public Sub ClockDA_Draw()
+    
+    With Paint
+        .Begin($clockDA)
+        .Brush = .Color(Color.White)
+        .Font = $clockFont
+        .RichText(yukiClockText, 0, 0, $clockFont.RichTextWidth($clockText) + 16, 24, Align.Center)
+        .Fill()
+        .End()
+    End With
+    
+End

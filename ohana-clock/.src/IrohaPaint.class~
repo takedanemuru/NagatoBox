@@ -1,0 +1,114 @@
+' Gambas class file
+
+Property Read CenterX As Integer
+Property Read CenterY As Integer
+
+Private $rectangle As Rect
+
+Private Function getX(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Cos(Rad(argDegree)) * argLength + Me.CenterX
+    
+End
+
+Private Function getY(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Sin(Rad(argDegree)) * argLength + Me.CenterY
+    
+End
+
+Private Sub paintText()
+    
+    With $rectangle
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 20
+        Paint.RichText(IrohaText.Clock, .X, .Y, .Width, .Height, Align.Center)
+        Paint.Fill()
+    End With
+    
+End
+
+Private Sub paintRectangle()
+    
+    With $rectangle
+        Paint.Brush = Paint.Color(IrohaOpaque.Get(Color.Orange, 128))
+        Paint.Rectangle(.X, .Y, .Width, .Height, 10)
+        Paint.Fill()
+    End With
+    
+End
+
+Private Sub paintClockHand(argDegree As Integer, argLength As Integer, argWidth As Integer, argColor As Integer)
+    
+    With Paint
+        .Brush = Paint.Color(argColor)
+        .LineWidth = argWidth
+        .LineCap = .LineCapRound
+        .MoveTo(getX(argDegree, 30), getY(argDegree, 30))
+        .LineTo(getX(argDegree, argLength), getY(argDegree, argLength))
+        .Stroke()
+    End With
+    
+End
+
+Private Sub paintCenterPoint()
+    
+    With Paint
+        .Brush = .Color(IrohaOpaque.Get(Color.Yellow, 128))
+        .Ellipse(Me.CenterX - 15, Me.CenterY - 15, 30, 30)
+        .Fill()
+    End With
+    
+End
+
+Private Sub paintClockPoint()
+    
+    Dim yukiCount As Integer
+    
+    With Paint
+        .Brush = .Color(IrohaOpaque.Get(Color.White, 64))
+        For yukiCount = 0 To 11
+            .Ellipse(getX(yukiCount * 30, 160) - 5, getY(yukiCount * 30, 160) - 5, 10, 10)
+        Next
+        .Fill()
+    End With
+    
+End
+
+Public Sub Refresh()
+    
+    Dim yukiImage As Image = Image.Load("Pictures/ohana_clockface.png")
+    
+    With Paint
+        .Begin(yukiImage)
+        paintCenterPoint()
+        paintClockPoint()
+        paintClockHand(Hour(Now) * 30 + Minute(Now) * 0.5 - 90, 120, 20, IrohaOpaque.Get(Color.Lighter(Color.Red), 32))
+        paintClockHand(Minute(Now) * 6 - 90, 140, 12, IrohaOpaque.Get(Color.Lighter(Color.Violet), 32))
+        paintClockHand(Second(Now) * 6 - 90, 160, 8, IrohaOpaque.Get(Color.Lighter(Color.Magenta), 32))
+        paintRectangle()
+        paintText()
+        .End()
+    End With
+    
+    Ohana.Picture = yukiImage.Stretch(IrohaSettings.Size, IrohaSettings.Size).Picture
+    
+End
+
+Public Sub _new()
+    
+    $rectangle = New Rect(130, 250, 170, 80)
+    
+End
+
+Private Function CenterX_Read() As Integer
+
+    Return 215
+
+End
+
+Private Function CenterY_Read() As Integer
+
+    Return 215
+
+End

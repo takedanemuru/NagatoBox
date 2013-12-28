@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoTable
+
+Public Sub _EnsureTable()
+    
+    Dim yukiTable As Table
+    
+    With NagatoDBWeb2
+        If Not Me._$connection.Tables.Exist(.TableWebCategories) Then
+            yukiTable = Me._$connection.Tables.Add(.TableWebCategories)
+            yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnCategory, db.String)
+            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Update()
+        Endif
+    End With
+    
+End

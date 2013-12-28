@@ -1,0 +1,69 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public _$rootMenu As Menu
+Public _$path As String
+
+Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton)
+    
+    Me._$rootMenu = New Menu(argForm)
+    Me._$rootMenu.Name = "test_name"
+    argButton.Menu = "test_name"
+    
+End
+
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture)  
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Private Sub initializeChildMenus()
+    
+    Me._InitializeAdditionalMenus()
+    Me._AddMenu(("About"), NagatoMenuPipe.AppAbout, MikuruIcon.Get("star"))
+    Me._AddMenu(("Quit"), NagatoMenuPipe.AppQuit, MikuruIcon.Get("button-power"))
+
+End
+
+Public Sub _AddSpacer()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+
+Public Sub _InitializeAdditionalMenus() 'virtual
+    
+    
+    
+End
+
+Public Sub _new(argForm As Form, argButton As MenuButton, Optional argPath As String)
+    
+    If argPath Then Me._$path = argPath
+    initializeRootMenu(argForm, argButton)
+    initializeChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case NagatoMenuPipe.AppAbout
+            HaruhiAbout.ShowDialog
+        Case NagatoMenuPipe.AppQuit
+            If Message.Question(("Are you sure to close nagato-desktop-icon ?"), ("Cancel"), ("Close")) = 2 Then HaruhiMain.Close()
+        Default
+            Raise MenuEvent(Last.Tag)
+    End Select
+    
+End

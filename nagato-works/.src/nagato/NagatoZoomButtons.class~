@@ -1,0 +1,79 @@
+' Gambas class file
+
+Inherits NagatoToolButtons
+
+Private Sub addZoomInButton()
+    
+    Dim yukiButton As New ToolButton(Me._$parent) As "ZoomButton"
+    
+    With yukiButton
+        .Picture = Stock["medium/zoom-in"]
+        .Width = Me.$size
+        .Border = False
+        .Tooltip = ("zoom in")
+        .Tag = MikuruMenuEventImageEffect.ZoomIn
+    End With
+    
+End
+
+Private Sub addZoomOutButton()
+    
+    Dim yukiButton As New ToolButton(Me._$parent) As "ZoomButton"
+    
+    With yukiButton
+        .Picture = Stock["medium/zoom-out"]
+        .Width = Me.$size
+        .Border = False
+        .Tooltip = ("zoom out")
+        .Tag = MikuruMenuEventImageEffect.ZoomOut
+    End With
+    
+End
+Private Sub addZoomFitButton()
+    
+    Dim yukiButton As New ToolButton(Me._$parent) As "ZoomButton"
+    
+    With yukiButton
+        .Picture = Stock["medium/zoom-fit"]
+        .Width = Me.$size
+        .Border = False
+        .Tooltip = ("zoom fit")
+        .Tag = MikuruMenuEventImageEffect.ZoomFit
+    End With
+    
+End
+Private Sub addZoomNormalButton()
+    
+    Dim yukiButton As New ToolButton(Me._$parent) As "ZoomButton"
+    
+    With yukiButton
+        .Picture = Stock["medium/zoom-normal"]
+        .Width = Me.$size
+        .Border = False
+        .Tooltip = ("zoom normal")
+        .Tag = MikuruMenuEventImageEffect.ZoomNormal
+    End With
+    
+End
+
+Private Sub initializeGui()
+    
+    addZoomInButton()
+    addZoomOutButton()
+    addZoomFitButton()
+    addZoomNormalButton()
+    
+End
+
+Public Sub _new(argParent As Container)
+    
+    Me.initialize(argParent)
+    initializeGui()
+    
+End
+
+Public Sub ZoomButton_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End

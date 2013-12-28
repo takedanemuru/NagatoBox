@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoDBusService
+
+Private Const ApplicationName As String = "system://org.freedesktop.NetworkManager"
+Private Const ObjectPath As String = "/org/freedesktop/NetworkManager"
+Private Const Interface As String = "org.freedesktop.NetworkManager"
+
+Private $proxy As DBusProxy
+Private $activeConnections As NagatoActiveConnections
+
+Public Sub EnsureActivation()
+    
+    Me._EnsureService("org.freedesktop.NetworkManager")
+    
+    $proxy = DBus[ApplicationName][ObjectPath, Interface]
+    $activeConnections = New NagatoActiveConnections($proxy.ActiveConnections)
+    
+End

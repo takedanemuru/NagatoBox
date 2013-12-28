@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Public _$settings As Settings
+
+Public Sub _new()
+    
+    Me._$settings = HaruhiMain.Settings
+    
+End

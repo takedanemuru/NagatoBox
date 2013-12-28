@@ -1,0 +1,165 @@
+' Gambas class file
+
+Property Read HasNumber As Boolean
+Property Read IsNegative As Boolean
+Property Read FunctionType As Integer
+Property Read Header As String
+Property Read FloatingPoint As Integer
+Property Read TotalLength As Integer
+Property Read Number As Float 
+Property Lock As Boolean
+
+Private $hasNumber As Boolean = False
+Private $functionType As Integer
+Private $isNegative As Boolean = False
+Private $number As Float = 0
+Private $floatingPoint As Integer = 0
+Private $lock As Boolean = False
+
+Event Change
+Event DivisionByZero
+
+Private Sub getDivision(argNumber As Float) As Float
+        
+        If $number = 0 Then
+                Raise DivisionByZero
+                Return 0
+        Else
+                Return argNumber / $number
+        Endif
+        
+End
+
+Public Sub SwitchSign()
+        
+        $isNegative = Not $isNegative
+        $number *= -1
+        
+        Raise Change
+        
+End
+
+Public Sub PushNumber(argNumber As Integer)
+        
+        If Not $hasNumber Then $hasNumber = True
+        
+        If $floatingPoint = 0 Then
+                $number = $number * 10 + argNumber
+        Else
+                $number += ((1 / 10) ^ $floatingPoint * argNumber)
+                Inc $floatingPoint
+        Endif
+        
+        If $isNegative And If $number > 0 Then $number *= -1
+        
+        Debug "number: " & $number
+        Debug "floating point: " & $floatingPoint
+        Debug "length: " & String.Len($number)
+        
+        Raise Change
+        
+End
+
+Public Sub Back()
+        
+        $number = 0
+        $floatingPoint = 0
+        
+        Raise Change
+        
+End
+
+Public Sub PushDot()
+        
+        If $floatingPoint <> 0 Then Return
+        
+        If Not $hasNumber Then $hasNumber = True
+        $floatingPoint = 1
+        
+        Raise Change
+        
+End
+
+Public Sub SetFunction(argFunctionType As Integer)
+        
+        $functionType = argFunctionType
+        
+        Raise Change
+        
+End
+
+Public Function Execute(argNumber As Float) As Float
+        
+        With MikuruFunctionType
+                Select Case $functionType
+                        Case .Devide
+                                Return getDivision(argNumber)
+                        Case .Minus
+                                Return argNumber - $number
+                        Case .Multi
+                                Return argNumber * $number
+                        Case .Plus, .Start
+                                Return argNumber + $number
+                        Case .Power
+                                Return argNumber ^ $number
+                End Select
+        End With
+        
+End
+
+Private Function Number_Read() As Float
+
+        Return $number
+
+End
+
+Private Function HasNumber_Read() As Boolean
+        
+        Return $hasNumber
+        
+End
+
+Private Function IsNegative_Read() As Boolean
+
+        Return $isNegative
+
+End
+
+Private Function Header_Read() As String
+
+        Return MikuruFunctionType.GetFunctionName($functionType) & ":"
+
+End
+
+Private Function FloatingPoint_Read() As Integer
+
+        Return $floatingPoint
+
+End
+
+Private Function TotalLength_Read() As Integer
+
+        Dim yukiHeaderLength As Integer = Len(MikuruFunctionType.GetFunctionName($functionType))
+        Dim yukiNumberLength As Integer = NagatoNumber.GetValidLength(NagatoNumber.GetStringConversion(Me)) 
+
+        Return yukiHeaderLength + yukiNumberLength
+
+End
+
+Private Function Lock_Read() As Boolean
+
+        Return $lock
+
+End
+
+Private Sub Lock_Write(Value As Boolean)
+
+        $lock = Value
+
+End
+
+Private Function FunctionType_Read() As Integer
+
+        Return $functionType
+
+End

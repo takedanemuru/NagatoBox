@@ -1,0 +1,90 @@
+' Gambas class file
+
+Inherits NagatoOSD 'NagatoOSD is STATIC, so This class is NOT CREATABLE.
+
+Property Read Limit As Integer ' Act As Const.
+
+Public _$uniqueName As String = "NagatoOSDTrashBin"
+
+Private Sub addEmptyMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "EmptyTrashMenu"
+    
+    With yukiMenu
+        .Text = ("Empty Trash Bin")
+        .Picture = MikuruMonoIconBlue.Get("bin")
+    End With
+    
+End
+
+Private Sub drawSubLineText()
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeMedium
+        .DrawText(Subst$("&1 Items in Trash Bin.", NagatoTrashHandler.ItemCount), Me.OffsetLeft, Me.OffsetTop1st)
+    End With
+    
+End
+
+Private Sub drawMainLineText()
+    
+    With Paint
+        .Brush = .Color(Color.White)
+        .Font.Size = MikuruUX.FontSizeLarge
+        .DrawText(MikuruUnitByteText.Get(NagatoTrashHandler.ItemSize), Me.OffsetLeft, Me.OffsetTop2nd)
+    End With
+    
+End
+
+Private Function getIcon() As Image
+    
+    If NagatoTrashHandler.ItemSize = 0 Then
+        Return Image.Load("pictures/EmptyTrash_128x128x32.png").Stretch(12 * MikuruUX.Grid, 12 * MikuruUX.Grid)
+    Else
+        Return Image.Load("pictures/FullTrash_128x128x32.png").Stretch(12 * MikuruUX.Grid, 12 * MikuruUX.Grid)
+    Endif
+    
+End
+
+Private Sub drawIcon()
+    
+    Paint.DrawImage(getIcon(), 3 * MikuruUX.Grid, 3 * MikuruUX.Grid)
+    
+End
+
+Public Sub _SetPicture() 'override
+    
+    Dim yukiBaseImage As Image
+    Dim yukiCondition As Integer = Int(NagatoTrashHandler.ItemSize / Me.Limit * 100)
+    
+    yukiBaseImage = Me._GetBaseImage(MikuruColor.GetConditionColor(yukiCondition))
+    
+    Paint.Begin(yukiBaseImage)
+        drawSubLineText()
+        drawMainLineText()
+        drawIcon()
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+End
+
+Public Sub _AddOtherMenu(argParentMenu As Menu) ' override
+    
+    addEmptyMenu(argParentMenu)
+        MikuruMenuSeparator.Set(argParentMenu)
+    
+End
+
+Public Sub EmptyTrashMenu_Click()
+
+    NagatoTrashHandler.EmptyAll()
+    
+End
+
+Private Function Limit_Read() As Integer
+
+    Return 1024 ^ 3 / 10
+
+End

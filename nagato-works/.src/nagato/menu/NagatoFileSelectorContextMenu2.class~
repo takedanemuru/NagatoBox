@@ -1,0 +1,391 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $primePath As String
+Private $paths As String[]
+Private $parentMenu As Menu
+Private $hasNotXdgUserDir As Boolean = False
+Private $hasDirectory As Boolean = False
+Private $hasFile As Boolean = False
+
+Private Sub addHeaderMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "PropertyMenu"
+    
+    With yukiMenu
+        .Picture = IIf(IsDir($primePath), Stock["medium/directory"], Stock["medium/file"])
+        .Text = IIf(IsDir($primePath), ("Directory property"), ("File property"))
+    End With
+    
+End
+
+Private Sub addOpenDirectoryMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "OpenMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/open"]
+        .Text = ("Open directory")
+    End With
+    
+End
+
+Private Sub addOpenDirectoryInNewTabMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "OpenDirectoryInNewTabMenu"
+    
+    With yukiMenu
+        .Text = ("Open in new tab")
+        .Picture = Stock["medium/new-window"]
+    End With
+    
+End
+
+Private Sub addOpenFileMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "OpenMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/open"]
+        .Text = ("Open file")
+    End With
+    
+End
+
+Private Sub addOpenFileWithApplicationMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu)
+    Dim yukiOpenWithMenu As NagatoOpenWithApplicationMenu
+    
+    With yukiMenu
+        .Picture = Stock["medium/package"]
+        .Text = ("Open with ...")
+    End With
+    
+    yukiOpenWithMenu = New NagatoOpenWithApplicationMenu(yukiMenu, $primePath)
+    
+End
+
+Private Sub addOpenFileOrDirectoryMenu()
+    
+    If IsDir($primePath) Then
+        addOpenDirectoryMenu()
+        addOpenDirectoryInNewTabMenu()
+    Else
+        addOpenFileMenu()
+        If NagatoMimeType.HandlingApplicationsCount($primePath) > 0 Then
+            addOpenFileWithApplicationMenu()
+        End If
+    Endif
+    
+    
+End
+
+Private Sub addRenameMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "RenameMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/pen"]
+        .Text = ("Rename")
+    End With
+    
+End
+
+Private Sub addCopyPathMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "CopyPathMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/copy"]
+        .Text = ("Copy file path")
+    End With
+    
+End
+
+Private Sub addCopyMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "CopyMenu"
+    
+    With yukiMenu 
+        .Picture = Stock["medium/copy"]
+        .Text = ("Copy to clipboard")
+    End With
+    
+End
+
+Private Sub addCutMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "CutMenu"
+    
+    With yukiMenu 
+        .Picture = Stock["medium/cut"]
+        .Text = ("Cut")
+    End With
+    
+End
+
+Private Sub addPasteMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "PasteMenu"
+    
+    With yukiMenu 
+        .Picture = Stock["medium/paste"]
+        .Text = ("Paste")
+    End With
+    
+End
+
+Private Sub addMakeCopyMenu()
+    
+    Dim yukiPath As New Menu($parentMenu) As "CopyMenu"
+    
+    With yukiPath
+        .Picture = Stock["medium/copy"]
+        .Text = ("Create clone here")
+    End With
+    
+End
+
+Private Sub addCreateLinkMenu()
+    
+    Dim yukiPath As New Menu($parentMenu) As "CreateLinkMenu"
+    
+    With yukiPath
+        .Picture = Stock["medium/jump"]
+        .Text = ("Create link")
+    End With
+    
+End
+
+Private Sub addUnarchiveMenu()
+    
+    Dim yukiPath As New Menu($parentMenu) As "UnarchiveMenu"
+    
+    With yukiPath
+        .Picture = Stock["medium/archive"]
+        .Text = ("Unarchive")
+    End With
+    
+End
+
+Private Sub addAddSymbolMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "AddSymbolMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/insert-image"]
+        .Text = ("Add symbol")
+    End With
+    
+End
+
+Private Sub addRemoveSymbolMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "RemoveSymbolMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/erase"]
+        .Text = ("Remove symbol")
+    End With
+    
+End
+
+Private Sub addBookmarkMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "BookmarkMenu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/bookmark"]
+        .Text = ("Bookmark")
+    End With
+    
+End
+
+Private Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "DeleteMenu"
+    
+    With yukiMenu
+        .Text = ("Send to trash bin")
+        .Picture = Stock["medium/delete"]
+    End With
+    
+End
+
+Private Sub initializeChildMenus() 
+    
+    ' --- only for $primePath ---
+    addHeaderMenu() ' shows file or directory name and toggle property window
+        MikuruMenuSeparator.Set($parentMenu)
+    addOpenFileOrDirectoryMenu()
+    If Not NagatoXdgUserDirs.IsXdgUserDir($primePath) Then addRenameMenu()
+    If NagatoArchiver.CanUnarchive($primePath) Then addUnarchiveMenu()
+    addCopyPathMenu()
+        MikuruMenuSeparator.Set($parentMenu)
+        
+    ' --- for all of $paths
+    addCopyMenu()
+    addCutMenu()
+    If Clipboard.Format = MikuruMimeType.UriList Then addPasteMenu()
+    If $hasDirectory And If $hasNotXdgUserDir Then
+        addAddSymbolMenu()
+        addRemoveSymbolMenu()
+        addBookmarkMenu()
+    End If
+    If $hasFile Then addMakeCopyMenu()
+    addCreateLinkMenu()
+    addDeleteMenu()
+    
+End
+
+Private Sub checkPaths()
+    
+    Dim yukiPath As String
+    
+    If Not $paths.Exist($primePath) Then $paths.Add($primePath)
+    If NagatoXdgUserDirs.ExcludeXdgUserDirs($paths).Count > 0 Then $hasNotXdgUserDir = True
+    
+    For Each yukiPath In $paths
+        Debug yukiPath
+        If Not Exist(yukiPath) Then
+            $paths.Remove($paths.Find(yukiPath))
+        Else If IsDir(yukiPath) Then 
+            $hasDirectory = True
+        Else
+            $hasFile = True
+        End If
+    Next
+    
+End
+
+Public Sub _new(argParentForm As Form, argPrimePath As String, argFullPaths As String[])
+    
+    $primePath = argPrimePath
+    $paths = argFullPaths
+    checkPaths()
+    $parentMenu = New Menu(argParentForm) As "ParentMenu"
+    initializeChildMenus()
+    
+End
+
+Public Sub PopUp()
+    
+    $parentMenu.Popup()
+    
+End
+
+Public Sub PropertyMenu_Click()
+    
+    NagatoFileInfomationDialog.Show($primePath)
+    
+End
+
+Public Sub OpenMenu_Click()
+    
+    Raise MenuEventWithArgument(MikuruMenuEventFile.Open, $primePath)
+    
+End
+
+Public Sub OpenDirectoryInNewTabMenu_Click()
+    
+    NagatoTabHandler.NewTabWithPath(MikuruFunctionType.FileSelector, $primePath)
+    
+End
+
+Public Sub RenameMenu_Click()
+    
+    Dim yukiArguments As New String[]
+    
+    HaruhiDialogRenameFile.SetPath($primePath)
+
+    If HaruhiDialogRenameFile.ShowDialog() = MikuruDialogResponse.ResponseApply Then
+        Try Move $primePath To MikuruDialogResponse.NewName
+        Raise MenuEventWithArgument(MikuruMenuEventFile.Rename, MikuruDialogResponse.NewName)
+    End If
+    
+End
+
+Public Sub CreateLinkMenu_Click()
+    
+    Dim yukiDirectory As String = File.Dir($primePath)
+    Dim yukiTargetPath As String = Subst$("LINK_TO_&1", File.Name($primePath))
+    
+    With MikuruSafePathName
+        Link $primePath To .GetName(yukiDirectory, yukiTargetPath)
+    End With
+    
+End
+
+Public Sub CopyMenu_Click()
+    
+    Dim yukiPath As String
+    
+    If Not $hasFile Then 
+        NagatoMessaging.SetMessage(("Sorry..., but I can't copy directories."))
+        Return
+    Else
+        For Each yukiPath In $paths
+            Copy yukiPath To MikuruSafePathName.GetName(File.Dir(yukiPath), File.Name(yukiPath))
+        Next
+    Endif
+    
+End
+
+Public Sub CopyPathMenu_Click()
+    
+    Clipboard.Copy($primePath, MikuruMimeType.Plain)
+    
+End
+
+Public Sub UnarchiveMenu_Click()
+    
+    NagatoArchiver.Unarchive($primePath, MikuruSafeMakeDirectory.Ensure($primePath))
+    
+End
+
+Public Sub AddSymbolMenu_Click()
+    
+    Dim yukiPath As String
+    
+    If MikuruDialogResponse.ResponseApply = HaruhiSelectSymbol.ShowDialog() Then
+        For Each yukiPath In $paths
+            NagatoDBDirectory.SetSymbol(yukiPath, MikuruDialogResponse.NewPicture)
+        Next
+    Endif
+    
+    Raise MenuEvent(MikuruMenuEventView.Refresh)
+    
+End
+
+Public Sub RemoveSymbolMenu_Click()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In $paths
+        NagatoDBDirectory.DeleteSymbol(yukiPath)
+    Next
+    
+    Raise MenuEvent(MikuruMenuEventView.Refresh)
+    
+End
+
+Public Sub BookmarkMenu_Click()
+    
+    Raise MenuEvent(MikuruMenuEventFile.Bookmark)
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    Dim yukiPaths As String[] = NagatoXdgUserDirs.ExcludeXdgUserDirs($paths)
+    
+    Select Case yukiPaths.Count
+        Case 0
+            NagatoMessaging.SetMessage(("XDG User Directories are NOT deletable."))
+        Default
+            NagatoTrashHandler.Put(yukiPaths)
+    End Select
+    
+End

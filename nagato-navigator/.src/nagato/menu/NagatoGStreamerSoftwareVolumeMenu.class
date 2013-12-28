@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addCurrentVolumeMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    With yukiMenu
+        .Text = Subst$("Current volume: &1%", NagatoSettingsMusic.SoutwareVolume * 100)
+        .Picture = MikuruMonoIconBlue.Get("speaker", 2 * MikuruUX.Grid)
+    End With
+    
+End
+
+Private Sub addVolumeStepMenu()
+    
+    Dim yukiMenu As Menu
+    Dim yukiCount As Integer
+    
+    For yukiCount = 100 DownTo 10 Step 10
+        yukiMenu = New Menu(Me._$rootMenu) As "VolumeStepMenu"
+        With yukiMenu
+            .Text = Subst$("&1%", yukiCount)
+            .Tag = yukiCount / 100
+            If yukiCount / 100 = NagatoSettingsMusic.SoutwareVolume Then 
+                .Picture = MikuruMonoIconBlue.Get("button-check", 2 * MikuruUX.Grid)
+            Endif
+        End With
+    Next
+    
+End
+
+Private Sub addMuteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "VolumeStepMenu"
+    
+    With yukiMenu
+        .Text = ("Mute")
+        .Tag = 0
+        If NagatoSettingsMusic.SoutwareVolume = 0 Then
+            .Picture = MikuruMonoIconBlue.Get("button-check", 2 * MikuruUX.Grid)
+        Else
+            .Picture = MikuruMonoIconBlue.Get("speaker-mute", 2 * MikuruUX.Grid)
+        Endif
+    End With
+    
+End
+
+Public Sub _RefreshMenu() ' Override.
+    
+    addCurrentVolumeMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addVolumeStepMenu()
+    addMuteMenu()
+    
+End
+
+Public Sub VolumeStepMenu_Click()
+    
+    Debug Last.Tag
+    
+    NagatoMusicPlayer.SetSoftwareVolume(Last.Tag)
+    NagatoSettingsMusic.SoutwareVolume = Last.Tag
+    
+End

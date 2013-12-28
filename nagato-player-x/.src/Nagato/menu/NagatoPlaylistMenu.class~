@@ -1,0 +1,135 @@
+' Gambas class file
+
+Property Read Name As String
+
+Private $rootMenu As Menu
+
+Private Sub initializeRootMenu()
+    
+    $rootMenu = New Menu(HaruhiPlayList)
+    $rootMenu.Visible = False
+    $rootMenu.Name = Me.Name
+    
+End
+
+Private Sub addAddMusicMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "AddMusicMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/music.png")
+        .Text = ("AddMusic")
+    End With
+    
+End
+
+Private Sub addAddDirectoryMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "AddDirectoryMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/folder.png")
+        .Text = ("AddDirectory")
+    End With
+    
+End
+
+Private Sub addClearMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "ClearMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/bin.png")
+        .Text = ("Clear all")
+    End With
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiMenu As New Menu($rootMenu)
+    
+    With yukiMenu 
+        .Text = ""
+    End With
+    
+End
+
+Private Sub addAboutMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "AboutMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/headphone.png")
+        .Text = ("About nagato-player-x")
+    End With
+    
+End
+
+Private Sub addClosePlaylistMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "ClosePlaylistMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/button-cross.png")
+        .Text = ("Close playlist")
+    End With
+    
+End
+
+Public Sub _new()
+    
+    initializeRootMenu()
+    addAddMusicMenu()
+    addAddDirectoryMenu()
+    addClearMenu()
+        addSpacer()
+    addAboutMenu()
+        addSpacer()
+    addClosePlaylistMenu()
+    
+End
+
+Public Sub AddMusicMenu_Click()
+    
+    Dialog.Title = ("Select music")
+    Dialog.Path = NagatoSettingsMusic.DialogLastPath
+    
+    If Not Dialog.OpenFile(True) Then
+        NagatoQueue.AddMusics(Dialog.Paths)
+    Endif
+    
+End
+
+Public Sub AddDirectoryMenu_Click()
+    
+    Dialog.Title = ("Select directory")
+    Dialog.Path = User.Home
+    
+    If Not Dialog.SelectDirectory() Then NagatoQueue.AddDirectory(Dialog.Path)
+    
+End
+
+Public Sub ClearMenu_Click()
+    
+    NagatoQueue.ClearAll()
+    
+End
+
+Public Sub ClosePlaylistMenu_Click()
+    
+    HaruhiPlayList.Close()
+    
+End
+
+Public Sub AboutMenu_Click()
+    
+    HaruhiAbout.Show()
+    
+End
+
+Private Function Name_Read() As String
+
+    Return "PlaylistMenu"
+
+End

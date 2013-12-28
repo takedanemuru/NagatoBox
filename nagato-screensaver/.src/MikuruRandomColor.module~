@@ -1,0 +1,24 @@
+' Gambas module file
+
+Public Sub Get() As Integer
+    
+     Select Case Int(Rnd(0, 7))
+        Case 0
+            Return Color.Violet
+        Case 1
+            Return Color.Red
+        Case 2
+            Return Color.Pink
+        Case 3
+            Return Color.Orange
+        Case 4
+            Return Color.Cyan
+        Case 5
+            Return Color.Blue
+        Case 6
+            Return Color.Green
+        Default
+            Return Color.White
+    End Select
+    
+End

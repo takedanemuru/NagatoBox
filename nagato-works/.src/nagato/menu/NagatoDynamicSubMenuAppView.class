@@ -1,0 +1,96 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addToggleFullScreenMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "FullScreenMenu"
+    
+    With yukiMenu
+        .Picture = Stock["small/fullscreen"]
+        .Text = ("Toggle FullScreen")
+        .Shortcut = "F11"
+    End With
+    
+End
+
+Private Sub addChangeOpacityMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+     
+    With yukiMenu
+        .Text = ("change opacity")
+    End With
+    
+    addOpacityRateMenu(yukiMenu)
+    
+End
+
+Private Sub addOpacityRateMenu(argParentMenu As Menu)
+    
+   Dim yukiPercentage As Integer
+   Dim yukiMenu As Menu
+   
+   For yukiPercentage = 100 DownTo 20 Step 20
+       yukiMenu = New Menu(argParentMenu) As "OpacityMenu"
+       With yukiMenu
+           .Tag = yukiPercentage
+           .Text = Subst("&1%", yukiPercentage)
+           .Toggle = True
+           .Checked = IIf(HaruhiMain.Opacity = yukiPercentage, True, False)
+       End With
+   Next
+    
+End
+
+Private Sub addTabPositionMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiSubMenu As NagatoDynamicSubMenuTabPosition
+    
+    With yukiMenu
+        .Text = ("Tab Position")
+    End With
+    
+    yukiSubMenu = New NagatoDynamicSubMenuTabPosition(yukiMenu)
+    
+End
+
+Private Sub addToggleMeganeMenu()
+    
+   Dim yukiMenu As New Menu(Me._$rootMenu) As "MeganeMenu" 
+    
+    With yukiMenu
+        .Text = ("show megane")
+        .Toggle = True
+        .Value = NagatoSettingsCore.IsMegane()
+    End With
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    addToggleFullScreenMenu()
+    addTabPositionMenu()
+    addChangeOpacityMenu()
+    addToggleMeganeMenu()
+    
+End
+
+Public Sub FullScreenMenu_Click()
+    
+    HaruhiMain.FullScreen = Not HaruhiMain.FullScreen
+    
+End
+
+Public Sub OpecityMenu_Click()
+    
+    HaruhiMain.Opacity = Last.Tag
+    
+End
+
+Public Sub MeganeMenu_Click()
+    
+    NagatoSettingsCore.changeMeganeSettings()
+    
+End

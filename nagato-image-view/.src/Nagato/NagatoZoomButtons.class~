@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoMenuButtons
+
+Public Sub _SetButtons() ' override
+    
+    Dim yukiButton As Object
+    
+    With MikuruEvent
+        yukiButton = New NagatoMenuButton(Me._$container, .ZoomIn, "Zoom-In", "zoom-in") As "Menu"
+        yukiButton = New NagatoMenuButton(Me._$container, .ZoomOut, "Zoom-Out", "zoom-out") As "Menu"
+        yukiButton = New NagatoMenuButton(Me._$container, .ZoomFit, "Fit") As "Menu"
+        yukiButton = New NagatoMenuButton(Me._$container, .ZoomNormal, "Normal") As "Menu"
+    End With
+    
+End

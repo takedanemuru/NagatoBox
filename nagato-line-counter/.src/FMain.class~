@@ -1,0 +1,193 @@
+' Gambas class file
+
+Private $currentRow As Integer = 0
+Private $moduleCount As Integer = 0
+Private $formCount As Integer = 0
+Private $classCount As Integer = 0
+Private $lineCountTotal As Integer = 0
+Private $lineCountWithoutVoid As Integer = 0
+
+Private Sub readLine(argFullPath As String) As Integer
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    Dim yukiLocalLineCount As Integer = 0
+    
+    yukiStream = Open argFullPath For Input
+    
+    While Not Eof(yukiStream)
+      Line Input #yukiStream, yukiLine
+      Inc $lineCountTotal
+      Inc yukiLocalLineCount
+    Wend
+    
+    Close #yukiStream
+    
+    Return yukiLocalLineCount
+    
+End
+
+Private Sub readLineWithoutVoid(argFullPath As String) As Integer
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    Dim yukiLocalLineCount As Integer = 0
+    
+    yukiStream = Open argFullPath For Input
+    
+    While Not Eof(yukiStream)
+      Line Input #yukiStream, yukiLine
+      If yukiLine = "" Then Continue
+      Inc $lineCountWithoutVoid
+      Inc yukiLocalLineCount
+    Wend
+    
+    Close #yukiStream
+    
+    Return yukiLocalLineCount
+    
+End
+
+Private Sub setBackgroundColor()
+    
+    If CInt(GridView1[$currentRow, 2].Text) >= 100 Then
+        GridView1[$currentRow, 0].Background = Color.Pink
+        GridView1[$currentRow, 1].Background = Color.Pink
+        GridView1[$currentRow, 2].Background = Color.Pink
+        GridView1[$currentRow, 3].Background = Color.Pink
+    Endif
+    
+End
+
+Private Sub setType(argDirectory As String, argFileName As String)
+    
+    Dim yukiType As String
+    
+    If argFileName Like "*.module" Then
+        yukiType = "Module"
+        Inc $moduleCount
+    Else If Exist(argDirectory &/ File.BaseName(argFileName) & ".form") Then
+        yukiType = "Form"
+        Inc $formCount
+    Else
+        yukiType = "Class"
+        Inc $classCount
+    Endif
+    
+    GridView1[$currentRow, 0].Text = yukiType
+    GridView1[$currentRow, 0].Alignment = Align.Left 
+    
+End
+
+Private Sub setDataRow(argPath As String)
+    
+    GridView1[$currentRow, 1].Text = File.Name(argPath)
+    GridView1[$currentRow, 1].Alignment = Align.Left 
+    GridView1[$currentRow, 2].Text = readLine(argPath)
+    GridView1[$currentRow, 2].Alignment = Align.Right
+    GridView1[$currentRow, 3].Text = readLineWithoutVoid(argPath)
+    GridView1[$currentRow, 3].Alignment = Align.Right
+    setBackgroundColor()
+    GridView1.Rows.Count += 1
+    Inc $currentRow
+    
+End
+
+Private Sub setText()
+    
+    Dim yukiMessage As String = ("YUKI.N > This project contains ...<br><br>")
+    
+    yukiMessage &= $formCount & " Forms.<br>" 
+    yukiMessage &= $classCount & " Classes.<br>"
+    yukiMessage &= $moduleCount & " Modules.<br>"
+    yukiMessage &= Format$($lineCountTotal, "#,###,###") & " Lines of code."
+    
+    TextLabel1.Text = yukiMessage
+    
+End
+
+Private Sub countLine(argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiJointPath As String
+    
+    For Each yukiPath In Dir(argDirectory)
+        yukiJointPath = argDirectory &/ yukiPath
+        If IsDir(yukiJointPath) Then
+            countLine(yukiJointPath)
+        Else If yukiPath Like "*~" Then
+            Continue
+        Else If yukiJointPath Like "*.class" Or If yukiJointPath Like "*.module" Then
+            setType(argDirectory, yukiPath)
+            setDataRow(yukiJointPath)
+        Else
+            Continue
+        Endif
+    Next
+    
+End
+
+Private Sub initializeGridView()
+    
+    With GridView1
+        .Header = GridView.Horizontal
+        .Resizable = True
+        .Columns.Count = 4
+        .Columns[0].Text = ("Type")
+        .Columns[0].Width = 100
+        .Columns[0].Alignment = Align.Left
+        .Columns[1].Text = ("Name")
+        .Columns[1].Width = 250
+        .Columns[1].Alignment = Align.Left
+        .Columns[2].Text = ("Lines")
+        .Columns[2].Alignment = Align.Left
+        .Columns[2].Width = 150
+        .Columns[3].Text = ("Lines exclude void")
+        .Columns[3].Alignment = Align.Left
+        .Columns[3].Width = 150
+        .Rows.Count = 1
+    End With
+    
+End
+
+Private Sub setSumRow()
+    
+    GridView1[$currentRow, 1].Text = ("TOTAL")
+    GridView1[$currentRow, 2].Text = Format$($lineCountTotal, "#,###,###")
+    GridView1[$currentRow, 2].Alignment = Align.Right
+    GridView1[$currentRow, 3].Text = Format$($lineCountWithoutVoid, "#,###,###")
+    GridView1[$currentRow, 3].Alignment = Align.Right
+    
+End
+
+Public Sub Form_Open()
+    
+    NagatoSettings.LoadFormSettings(Me)
+    initializeGridView()
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub OpenButton_Click()
+
+    Dialog.Title = ("Select Directory")
+    Dialog.ShowHidden = True
+    
+    If Not Dialog.SelectDirectory() Then
+        countLine(Dialog.Path)
+        setSumRow()
+        setText()
+    Endif
+
+End
+
+Public Sub GridView1_RowClick(argRowIndex As Integer)
+    
+    Debug argRowIndex
+    
+End

@@ -1,0 +1,87 @@
+' Gambas class file
+
+Create Static
+
+Public Const MaxCount As Integer = 9
+
+Private $availableRowsCount As Integer
+
+Private Function getAvailableRowsCount() As Integer
+    
+    Return (Screen.AvailableHeight - 9 * MikuruUX.Grid) Div (NagatoOSD.Height + 3 * MikuruUX.Grid)
+    
+End
+
+Private Function getTopOffset(argCount As Integer) As Integer
+    
+    Return (6 * MikuruUX.Grid) + ((NagatoOSD.Height + 3 * MikuruUX.Grid) * (argCount Mod $availableRowsCount))
+    
+End
+
+Private Function getLeftOffsetLeft(argCount As Integer) As Integer
+    
+    Return (NagatoOSD.Width + 3 * MikuruUX.Grid) * (argCount Div $availableRowsCount)
+    
+End
+
+Private Function getLeftOffsetRight(argCount As Integer) As Integer
+    
+    Dim yukiBaseLine As Integer = (Screen.Width - NagatoOSD.Width)
+    
+    Return yukiBaseLine - ((NagatoOSD.Width + 3 * MikuruUX.Grid) * (argCount Div $availableRowsCount))
+    
+End
+
+Private Function getLeftOffset(argCount As Integer) As Integer
+    
+    Select Case NagatoSettingsOSD.Positions
+        Case NagatoSettingsOSD.RightSide
+            Return getLeftOffsetRight(argCount)
+        Default
+            Return getLeftOffsetLeft(argCount)
+    End Select
+    
+End
+
+Public Sub Sort()
+    
+    Dim yukiIndex As Integer
+    Dim yukiCount As Integer
+    
+    If NagatoSettingsOSD.Positions = NagatoSettingsOSD.FreePosition Then Return
+    
+    $availableRowsCount = getAvailableRowsCount()
+    
+    For yukiIndex = 0 To MaxCount
+        If NagatoOSDOrder.GetProperty(yukiIndex, "Closed") Then Continue
+        NagatoOSDOrder.CallWithArgumants(yukiIndex, "Move", [getLeftOffset(yukiCount), getTopOffset(yukiCount)])
+        Inc yukiCount
+    Next
+    
+End
+
+Public Sub ShowAll()
+    
+    Dim yukiCounter As Integer
+    
+    For yukiCounter = 0 To MaxCount
+        If Not NagatoOSDOrder.GetProperty(yukiCounter, "LastClosed") Then
+            NagatoOSDOrder.Call(yukiCounter, "Show")
+        Endif
+    Next
+    
+    Me.Sort()
+    
+End
+
+Public Sub RefreshAll()
+    
+    Dim yukiCounter As Integer
+    
+    For yukiCounter = 0 To MaxCount
+        If Not NagatoOSDOrder.GetProperty(yukiCounter, "Closed") Then
+            NagatoOSDOrder.Call(yukiCounter, "Refresh")
+        Endif
+    Next
+    
+End

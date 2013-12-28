@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoTable
+
+Public Sub _EnsureTable() 'override
+    
+    Dim yukiTable As Table
+    
+    With NagatoDBMedia
+        If Not Me._$connection.Tables.Exist(.TableLibrary) Then
+            yukiTable = Me._$connection.Tables.Add(.TablePlaylistData)
+            yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnPlaylistName, db.Integer)
+            yukiTable.Fields.Add(.ColumnPath, db.String)
+            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Update()
+        Endif
+    End With
+    
+End

@@ -1,0 +1,64 @@
+' Gambas class file
+
+Private $originalPath As String
+
+Private Sub checkPath()
+    
+    Dim yukiPath As String = File.Dir($originalPath) &/ RenameTextBox.Text
+    
+    If OriginalLabel.Text = RenameTextBox.Text Then
+        Return
+    Else If OriginalLabel.Text = "" Then
+        Return
+    Else If Exist(yukiPath) Then
+        WarningLabel.Visible = True
+        WarningLabel.Text = ("Path has been existed.")
+    Else If RenameTextBox.Text Like "*/*" Then
+        WarningLabel.Visible = True
+        WarningLabel.Text = ("Path can't contain slash")
+    Else
+        MikuruDialogResponse.NewName = yukiPath
+        Me.Close(MikuruDialogResponse.ResponseApply)
+    Endif
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $originalPath = argPath
+    OriginalLabel.Text = File.Name(argPath)
+    RenameTextBox.Text = File.Name(argPath)
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.Picture = Image.Load("pictures/yukisapo.jpg").Stretch(Me.W, Me.H).Picture
+    
+    Me.Center()
+    
+End
+
+Public Sub Form_Close()
+
+    Me.Close(MikuruDialogResponse.ResponseCancel)
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(MikuruDialogResponse.ResponseCancel)
+
+End
+
+Public Sub ApplyButton_Click()
+    
+    checkPath()
+    
+End
+
+Public Sub RenameTextBox_Activate()
+    
+    checkPath()
+    
+End

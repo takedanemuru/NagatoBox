@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoDynamicSubMenu
+
+Private Sub addXSecondLaterMenu(argDelay As Integer, Optional argText As String = "")
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "TakeScreenShotMenu"
+    
+    With yukiMenu
+      .Text = IIf(argText = "", Subst$("&1 seconds later", argDelay), argText)
+      .Tag = argDelay
+      .Picture = IIf(argDelay = 0, MikuruMonoIconBlue.Get("camera"), MikuruMonoIconBlue.Get("alarm-clock"))
+    End With
+    
+End
+
+Private Sub addOnlyActiveWindowMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "OnlyActiveWindowMenu"
+    
+    With yukiMenu
+        If NagatoSettingsScreenshooter.OnlyActiveWindow Then .Picture = MikuruMonoIconBlue.Get("button-check")
+        .Text = ("Shoot only active window")
+    End With
+    
+End
+
+Public Sub _RefreshMenu() 'override
+    
+    addXSecondLaterMenu(0, ("Now"))
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addXSecondLaterMenu(5)
+    addXSecondLaterMenu(15)
+    addXSecondLaterMenu(30)
+    addXSecondLaterMenu(60, ("1 min later"))
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addOnlyActiveWindowMenu()
+    
+End
+
+Public Sub TakeScreenShotMenu_Click()
+    
+    NagatoScreenShooter.Take(Last.Tag)
+    
+End
+
+Public Sub OnlyActiveWindowMenu_Click()
+    
+    With NagatoSettingsScreenshooter
+        .OnlyActiveWindow = Not .OnlyActiveWindow
+    End With
+    
+End

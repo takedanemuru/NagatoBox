@@ -1,0 +1,42 @@
+' Gambas module file
+
+Private $pdf As PdfDocument
+Private $directory As String
+
+Private Sub safeMakeDirectory(argDirectory As String, argName As String)
+    
+    Dim yukiPath As String = argDirectory &/ argName
+    Dim yukiCount As Integer = 0
+    
+    Do
+        yukiPath = argDirectory &/ argName & IIf(yukiCount = 0, "", Subst$("(&1)", yukiCount))
+        If Not Exist(yukiPath) Then
+            $directory = yukiPath
+            Mkdir $directory
+            Break
+        Else
+            Inc yukiCount
+        Endif
+    Loop
+    
+End
+
+Private Sub convertPages()
+    
+    Dim yukiPage As Integer
+    
+    For yukiPage = 1 To $pdf.Count ' pdf page index starts from 1, not 0.
+        $pdf[yukiPage].Image.Save($directory &/ Subst$("page&1.png", yukiPage))
+    Next
+    
+End
+
+Public Sub BulkConvert(argDirectory As String, argPdf As PdfDocument, argName As String)
+    
+    If argPdf.Count = 0 Then Return
+
+    $pdf = argPdf
+    safeMakeDirectory(argDirectory, argName)
+    convertPages()
+    
+End

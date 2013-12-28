@@ -1,0 +1,35 @@
+' Gambas class file
+
+Property Read VisibleName As String
+Property Read Latitude As Float
+Property Read Longitude As Float
+
+Private $visibleName As String
+Private $latitude As Float
+Private $longitude As Float
+
+Public Sub _new(argName As String, argLatitude As Float, argLongitude As Float)
+    
+    $visibleName = argName
+    $latitude = argLatitude
+    $longitude = argLongitude
+    
+End
+
+Private Function VisibleName_Read() As String
+
+    Return $visibleName
+
+End
+
+Private Function Latitude_Read() As Float
+
+    Return $latitude
+
+End
+
+Private Function Longitude_Read() As Float
+
+    Return $longitude
+
+End

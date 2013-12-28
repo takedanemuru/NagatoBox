@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Stacking = Window.Below
+  FullScreen = True
+  Arrangement = Arrange.Fill
+  { IconView1 IconView
+    MoveScaled(3,4,44,43)
+    Drop = True
+    Expand = True
+  }
+}

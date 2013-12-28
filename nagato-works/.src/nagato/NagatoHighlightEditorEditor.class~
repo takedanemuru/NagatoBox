@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMainPane
+
+Private $editor As Editor
+
+Public Sub _Initialize(argPath As String) ' override
+    
+    $editor = New Editor(Me._$parent) As "Editor"
+    $editor.Foreground = Color.Lighter(Color.Violet)
+    $editor.Font.Size = 14
+    $editor.Highlight = Highlight.JavaScript
+    $editor.Expand = True
+    $editor.Border = True
+    $editor.Flags[Editor.ShowLineNumbers] = True
+    If argPath Then $editor.Text = File.Load(argPath)
+    
+End

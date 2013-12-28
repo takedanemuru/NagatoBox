@@ -1,0 +1,29 @@
+' Gambas module file
+
+Public Function GetStrengthIcon(argStrength As Integer) As Picture
+    
+    Select Case argStrength
+        Case 0 To 19
+            Return Picture.Load("network_icons/nm-signal-0.png")
+        Case 20 To 39
+            Return Picture.Load("network_icons/nm-signal-25.png")
+        Case 40 To 59
+            Return Picture.Load("network_icons/nm-signal-50.png")
+        Case 60 To 79
+            Return Picture.Load("network_icons/nm-signal-75.png")
+        Case 80 To 100
+            Return Picture.Load("network_icons/nm-signal-100.png")
+    End Select
+    
+End
+
+Public Function GetWiredIcon(argConnected As Boolean) As Picture
+    
+    If argConnected Then
+        Return Picture.Load("network_icons/nm-device-wired-secure.png")
+    Else
+        Return Picture.Load("network_icons/nm-no-connection.png")
+    End If 
+    
+End
+

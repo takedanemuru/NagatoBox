@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Public $settings As Settings
+
+Public Sub _new()
+    
+    Me.$settings = Kyon.Settings
+    
+End

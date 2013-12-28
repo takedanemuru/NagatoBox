@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoToolButtonMenu
+
+Private Sub addCloseMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "Menu"
+    
+    With yukiMenu
+        .Picture = Stock["medium/quit"]
+        .Text = ("QuitApplication")
+        .Tag = "AppMenu_Close"
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    addCloseMenu()
+    
+End
+
+Public Sub Menu_Click()
+    
+    Object.Call(Kyon, Last.Tag)
+    
+End

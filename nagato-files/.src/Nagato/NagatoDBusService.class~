@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Public Sub Test() As String
+    
+    Return "YUKI.N > Can you see this ?"
+    
+End
+
+Public Sub OpenDirectory(argDirectory As String)
+    
+    Debug argDirectory
+    
+End
+
+Public Sub OpenDirectories(argDirectories As String[])
+    
+    
+    
+End

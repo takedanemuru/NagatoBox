@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property UserName As String
+Property Password As String
+Property Read GMailPort As Integer
+Property Read GMailHost As String
+
+Private Function UserName_Read() As String
+
+    Dim yukiUserName As String = Me._$settings["mail/user_name", ""]
+
+    If yukiUserName = "" Then
+        Return "takeda.nemuru@gmail.com"
+    Else
+        Return NagatoCipher.Decryption(yukiUserName)
+    Endif
+
+End
+
+Private Sub UserName_Write(Value As String)
+
+    Me._$settings["mail/user_name"] = NagatoCipher.Encryption(Value)
+    Me._$settings.Save()
+
+End
+
+Private Function Password_Read() As String
+
+    Dim yukiPassword As String = Me._$settings["mail/password", ""]
+
+    If yukiPassword = "" Then
+        Return "sleeping"
+    Else
+        Return NagatoCipher.Decryption(yukiPassword)
+    Endif
+
+End
+
+Private Sub Password_Write(Value As String)
+
+    Me._$settings["mail/password"] = NagatoCipher.Encryption(Value)
+    Me._$settings.Save()
+
+End
+
+Private Function GMailPort_Read() As Integer
+
+    Return 995
+
+End
+
+Private Function GMailHost_Read() As String
+
+    Return "pop.gmail.com"
+
+End

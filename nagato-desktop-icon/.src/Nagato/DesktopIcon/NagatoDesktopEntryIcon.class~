@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoIconStandard
+
+Public Function _GetText() As String 'override
+    
+    Dim yukiDesktopFile As New DesktopFile(Me._$path)
+    
+    Return yukiDesktopFile.Name
+    
+End
+
+Public Sub _SetIcon()
+    
+    Dim yukiDesktopFile As New DesktopFile(Me._$path)
+    Dim yukiIcon As Image
+    
+    If Exist(yukiDesktopFile.Icon) Then
+        yukiIcon = Image.Load(yukiDesktopFile.Icon)
+        If Me.IconSize > Max(yukiIcon.H, yukiIcon.W) Then
+            Me._$icon = yukiIcon
+        Else
+            Me._$icon = yukiIcon.Stretch(Me.IconSize, Me.IconSize)
+        End If
+    Else
+        Me._$icon = yukiDesktopFile.GetIcon(Me.IconSize)
+    End If
+    
+End
+
+Public Sub _AddStarMenu() 'override
+    
+    Dim yukiMenu As NagatoButtonMenuDesktopEntryIcon
+    
+    yukiMenu = New NagatoButtonMenuDesktopEntryIcon(Me._$form, Me._$starButton) As "StarMenu"
+    
+End
+
+Public Sub _OnActivate()
+    
+    MikuruApplications.Launch(Me._$path)
+    
+End
+
+Public Sub StarMenu_Launch()
+    
+    Me._OnActivate()
+    
+End

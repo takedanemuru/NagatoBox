@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoNetworkDevice
+
+Property Read Bitrate As Integer
+
+Public Sub _InitializeProxy()
+
+    Me._$interface As String = "org.freedesktop.NetworkManager.Device.Wireless" 'override
+    Me._$proxy = DBus[Me._$application][Me._$objectPath, Me._$interface]
+    
+End
+
+Private Function Bitrate_Read() As Integer
+
+    Return Me._$proxy.Bitrate
+
+End

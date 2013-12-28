@@ -1,0 +1,99 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private Sub addAddNewItemMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AddNewItemMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/toggle-expand-alt.png"]
+        .Text = ("Add New Item")
+    End With
+    
+End
+
+Private Sub addRemoveCheckedItemMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RemoveCheckedItemsMenu"
+    
+    With yukiMenu
+        .Picture = Picture["super-mono/basic/blue/toggle-collapse-alt.png"]
+        .Text = ("Remove Checked Items")
+    End With
+    
+End
+
+Private Sub addSeparatorMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+
+Private Sub addItemMenu()
+    
+    Dim yukiMenu As Menu
+    Dim yukiResult As Result = NagatoDBReminder.GetReminderResultAll()
+    
+    If yukiResult.Count = 0 Then Return
+    
+    For Each yukiResult
+        yukiMenu = New Menu(Me._$rootMenu) As "ItemMenu"
+        With yukiMenu
+            .Text = yukiResult[NagatoDBReminder.COLUMN_REMINDER_TEXT]
+            .Picture = getCheckedIcon(yukiResult[NagatoDBReminder.COLUMN_REMINDER_DONE])
+            .Tag = yukiResult[NagatoDBReminder.COLUMN_REMINDER_ID]
+        End With
+    Next
+    
+End
+
+Private Function getCheckedIcon(argChecked As Boolean) As Picture
+    
+    If argChecked Then
+        Return MikuruMonoIconBlue.Get("button-check", 2 * MikuruUX.Grid)
+    Else
+        Return Null
+    End If
+    
+End
+
+Public Sub _InitializeMenu() ' override.
+    
+    addAddNewItemMenu()
+    addRemoveCheckedItemMenu()
+    addSeparatorMenu()
+    addItemMenu()
+    
+End
+
+Public Sub AddNewItemMenu_Click()
+    
+    If HaruhiReminderRegistration.ShowDialog() = 1 Then
+        Debug HaruhiReminderRegistration.GetWhatToDo()
+        NagatoDBReminder.CreateReminderRecord(HaruhiReminderRegistration.GetWhatToDo())
+    Endif
+    
+End
+
+Public Sub RemoveCheckedItemsMenu_Click()
+    
+    Dim yukiResponse As Integer
+    
+    If NagatoDBReminder.GetCount(NagatoDBReminder.TABLE_REMINDER_ITEMS) = 0 Then Return
+    
+    yukiResponse = HaruhiDialogRemoveToDo.ShowDialog()
+    
+    If yukiResponse = HaruhiDialogRemoveToDo.ResponseRemove Then
+        NagatoDBReminder.DeleteReminderRecordByDone(True)
+    Endif
+    
+End
+
+Public Sub ItemMenu_Click()
+    
+    NagatoDBReminder.ReverseReminderDoneById(Last.Tag)
+    
+End
