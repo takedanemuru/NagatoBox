@@ -1,0 +1,62 @@
+' Gambas class file
+
+Private $menuButton As MenuButton
+Private $rootMenu As Menu
+
+Private Sub initializeMenus()
+    
+    Dim yukiPath As String
+    Dim yukiDesktopFile As NagatoDesktopFile
+    Dim yukiMenu As Menu
+    
+    For Each yukiPath In NagatoSettings.RecentApplications
+        If Not Exist(yukiPath) Then Continue
+        yukiDesktopFile = New NagatoDesktopFile(yukiPath) 
+        yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
+        yukiMenu.Text = yukiDesktopFile.Name
+        yukiMenu.Tag = yukiPath
+        yukiMenu.Picture = yukiDesktopFile.GetIcon(16)
+    Next
+    
+End
+
+Private Sub initializeMenuButton(argMenuButton As MenuButton, argUniqueName As String)
+    
+    $menuButton = argMenuButton
+    $menuButton.Menu = argUniqueName
+    
+End
+
+Private Sub initializeRootMenu(argUniqueName As String)
+    
+    Dim yukiDummyMenu As Menu
+    
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    $rootMenu.Visible = False
+    $rootMenu.Name = argUniqueName
+    
+    yukiDummyMenu = New Menu($rootMenu)
+    yukiDummyMenu.Text = "can you see this ?"
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton, Optional argUniqueName As String = "recent")
+    
+    initializeMenuButton(argMenuButton, argUniqueName)
+    initializeRootMenu(argUniqueName)
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    $rootMenu.Children.Clear()
+    initializeMenus()
+    
+End
+
+Public Sub ApplicationMenu_Click()
+    
+    MikuruApplications.Launch(Last.Tag)
+    NagatoSettings.PushApplicationPath(Last.Tag)
+    
+End

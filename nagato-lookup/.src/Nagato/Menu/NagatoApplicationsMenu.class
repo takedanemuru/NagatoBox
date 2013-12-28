@@ -1,0 +1,89 @@
+' Gambas class file
+
+Private $menuButton As MenuButton
+Private $rootMenu As Menu
+
+Private Sub sortByName(argCategory As String, ByRef refNames As String[], ByRef refCollection As Collection)
+    
+    Dim yukiDesktopFile As Variant
+    
+    For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
+        refNames.Add(yukiDesktopFile.Name)
+        refCollection.Add(yukiDesktopFile, yukiDesktopFile.Name)
+    Next
+    
+    refNames.Sort(gb.IgnoreCase)
+    
+End
+
+Private Sub setEachApplicationMenu(argDesktopFile As NagatoDesktopFile)
+    
+    Dim yukiMenu As Menu
+    
+    If Not Exist(argDesktopFile.Path) Then Return
+    
+    yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
+    
+    With yukiMenu
+        .Text = argDesktopFile.Name
+        .Tag = argDesktopFile.Path
+        .Picture = argDesktopFile.GetIcon(16)
+    End With
+    
+End
+
+Private Sub initializeMenus(argCategory As String)
+    
+    Dim yukiNames As New String[]
+    Dim yukiCollection As New Collection
+    Dim yukiCount As Integer
+    
+    sortByName(argCategory, ByRef yukiNames, ByRef yukiCollection)
+    
+    For yukiCount = 0 To yukiNames.Max
+        setEachApplicationMenu(yukiCollection[yukiNames[yukiCount]])
+    Next
+    
+End
+
+Private Sub initializeMenuButton(argMenuButton As MenuButton, argUniqueName As String)
+    
+    $menuButton = argMenuButton
+    $menuButton.Menu = argUniqueName
+    
+End
+
+Private Sub initializeRootMenu(argUniqueName As String, argCategory As String)
+    
+    Dim yukiDummyMenu As Menu
+    
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    $rootMenu.Visible = False
+    $rootMenu.Name = argUniqueName
+    $rootMenu.Tag = argCategory
+    
+    yukiDummyMenu = New Menu($rootMenu)
+    yukiDummyMenu.Text = "can you see this ?"
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton, argCategory As String, argUniqueName As String)
+    
+    initializeMenuButton(argMenuButton, argUniqueName)
+    initializeRootMenu(argUniqueName, argCategory)
+    
+End
+
+Public Sub ApplicationMenu_Click()
+    
+    MikuruApplications.Launch(Last.Tag)
+    NagatoSettings.PushApplicationPath(Last.Tag)
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    $rootMenu.Children.Clear()
+    initializeMenus(Last.Tag)
+    
+End

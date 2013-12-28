@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public Sub _InitializeWidget()
+    
+    Dim yukiSpacer As New Panel(Me._$container)
+    
+    With yukiSpacer
+        .Expand = True
+    End With
+    
+End

@@ -1,0 +1,30 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.1
+Title=nagato-lookup
+Startup=Kyon
+Icon=icons/arrow-up.png
+Version=0.9.0
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.dbus
+Component=gb.desktop
+Component=gb.settings
+Component=gb.qt4.ext
+Description="a simple application launcher."
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=S.O.S.License
+PackageName=nagato-lookup-0.9.0
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"utils"

@@ -1,0 +1,30 @@
+' Gambas class file
+
+Property Read Color As Integer
+
+Public Enum ResponseCancel, ResponseApply
+
+Public Sub SetColor(argColor As Integer)
+    
+    ColorChooser1.SelectedColor = argColor
+    
+End
+
+Public Sub CancelButton_Click()
+    
+    MikuruDialog.Color = ColorChooser1.Value
+    Me.Close(ResponseCancel)
+    
+End
+
+Public Sub ApplyButton_Click()
+    
+    Me.Close(ResponseApply)
+    
+End
+
+Private Function Color_Read() As Integer
+
+    Return ColorChooser1.SelectedColor
+
+End

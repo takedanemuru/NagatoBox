@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub Activate()
+    
+    Dim yukiTitle As String = "YUKI.N > nagato-lookup is activated"
+    Dim yukiBody As String = "move mouse to the top of the screen"
+    
+    Shell Subst$("notify-send &1 &2 --icon=&3", Quote$(yukiTitle), Quote$(yukiBody), "go-up")
+    
+End

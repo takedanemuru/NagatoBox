@@ -1,0 +1,325 @@
+' Gambas class file
+
+Create Static
+
+Property Read Ready As Boolean
+Property Read AllApplications As Collection
+Property Read NagatoSoftwareCompilationApplications As Collection 
+Property Read Settings As Collection
+Property Read Graphics As Collection
+Property Read Medias As Collection
+Property Read Educations As Collection
+Property Read Networks As Collection
+Property Read Developments As Collection
+Property Read Offices As Collection
+Property Read Games As Collection
+Property Read Utilities As Collection
+Property Read Systems As Collection
+Property Read Kde4 As Collection
+
+Property Read ApplicationDirectoryLocal As String
+
+Private Const ApplicationDirectory As String = "/usr/share/applications"
+Private Const ApplicationDirectoryKDE4 As String = "/usr/share/applications/kde4"
+
+Private $ready As Boolean = False
+Private $allApllications As New Collection
+Private $nagatoSoftwareCompilationApplications As New Collection
+Private $settings As New Collection
+Private $graphics As New Collection
+Private $medias As New Collection
+Private $educations As New Collection
+Private $networks As New Collection
+Private $developments As New Collection
+Private $offices As New Collection
+Private $games As New Collection
+Private $utilities As New Collection
+Private $systems As New Collection
+Private $kde4 As New Collection
+
+Private $applicationDirectoryObserver As NagatoDirectoryObserver
+Private $kdeApplicationDirectoryObserver As NagatoDirectoryObserver
+Private $localApplicationDirectoryObserver As NagatoDirectoryObserver
+
+Event Reloaded
+
+Private Function isMediaApplication(argDesktopFile As NagatoDesktopFile) As Boolean
+    
+    With argDesktopFile
+        If .HasCategory("Audio") Or If .HasCategory("video") Or If .HasCategory("AudioVideo") Then Return True
+    End With
+    
+    Return False
+    
+End
+
+Private Sub addDesktopFiles(argPath As String)
+    
+    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
+    
+    With yukiDesktopFile
+        If .Path = "" Then Return
+        $allApllications.Add(yukiDesktopFile, .Path)
+        If Not .ShowIn Then Return
+        If .HasCategory("Nagato") Then $nagatoSoftwareCompilationApplications.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Settings") Then $settings.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Graphics") Then $graphics.Add(yukiDesktopFile, .Path)
+        If isMediaApplication(yukiDesktopFile) Then $medias.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Education") Then $educations.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Development") Then $developments.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Network") Or If .HasCategory("Internet") Then $networks.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Office") Then $offices.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Game") Then $games.Add(yukiDesktopFile, .Path)
+        If .HasCategory("Utility") Then $utilities.Add(yukiDesktopFile, .Path)
+        If .HasCategory("System") Then $systems.Add(yukiDesktopFile, .Path)
+    End With
+    
+End
+
+Private Sub removeDesktopFiles(argPath As String)
+    
+    Try $allApllications.Remove(argPath)
+    Try $nagatoSoftwareCompilationApplications.Remove(argPath)
+    Try $settings.Remove(argPath)
+    Try $graphics.Remove(argPath)
+    Try $medias.Remove(argPath)
+    Try $educations.Remove(argPath)
+    Try $developments.Remove(argPath)
+    Try $networks.Remove(argPath)
+    Try $offices.Remove(argPath)
+    Try $games.Remove(argPath)
+    Try $utilities.Remove(argPath)
+    Try $systems.Remove(argPath)
+    
+End
+
+Private Sub addKde4DesktopFiles(argPath As String)
+    
+    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
+    
+    $allApllications.Add(yukiDesktopFile, yukiDesktopFile.Path)
+    $kde4.Add(yukiDesktopFile, yukiDesktopFile.Path)
+
+End
+
+Private Sub addApplications()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(ApplicationDirectory).Sort()
+        If File.Ext(ApplicationDirectory &/ yukiPath) = "desktop" Then
+            addDesktopFiles(ApplicationDirectory &/ yukiPath)
+        Endif
+    Next
+    
+End
+
+Private Sub addLocalApplications()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(Me.ApplicationDirectoryLocal).Sort()
+        If File.Ext(Me.ApplicationDirectoryLocal &/ yukiPath) = "desktop" Then
+            addDesktopFiles(Me.ApplicationDirectoryLocal &/ yukiPath)
+        Endif
+    Next
+    
+End
+
+Private Sub addKdeApplications()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(ApplicationDirectoryKDE4).Sort()
+        If File.Ext(ApplicationDirectoryKDE4 &/ yukiPath) = "desktop" Then
+            addDesktopFiles(ApplicationDirectoryKDE4 &/ yukiPath)
+            addKde4DesktopFiles(ApplicationDirectoryKDE4 &/ yukiPath)
+        Endif
+    Next
+    
+End
+
+Private Sub initializeDirectoryObservers()
+    
+    $applicationDirectoryObserver = New NagatoDirectoryObserver As "ApplicationObserver"
+    $applicationDirectoryObserver.Directory = ApplicationDirectory
+    
+    $kdeApplicationDirectoryObserver = New NagatoDirectoryObserver As "Kde4ApplicationObserver"
+    $kdeApplicationDirectoryObserver.Directory = ApplicationDirectoryKDE4
+    
+    $localApplicationDirectoryObserver = New NagatoDirectoryObserver As "LocalApplicationObserver"
+    $localApplicationDirectoryObserver.Directory = Me.ApplicationDirectoryLocal
+    
+End
+
+Public Function GetApplications(argCategory As String) As Collection
+    
+    Select Case argCategory
+        Case "All"
+            Return Me.AllApplications
+        Case "Nagato"
+            Return Me.NagatoSoftwareCompilationApplications 
+        Case "Settings"
+            Return Me.Settings
+        Case "Graphics"
+            Return Me.Graphics
+        Case "Medias"
+            Return Me.Medias
+        Case "Educations"
+            Return Me.Educations
+        Case "Networks"
+            Return Me.Networks
+        Case "Developments"
+            Return Me.Developments
+        Case "Offices"
+            Return Me.Offices 
+        Case "Games"
+            Return Me.Games
+        Case "Utilities"
+            Return Me.Utilities
+        Case "Systems"
+            Return Me.Systems
+        Case "Kde4"
+            Return Me.Kde4
+    End Select
+    
+End
+
+Public Sub Activate()
+    
+    $ready = False
+        addApplications()
+        addKdeApplications()
+        addLocalApplications()
+        initializeDirectoryObservers()
+    $ready = True
+    
+End
+
+Public Sub ApplicationObserver_Deleted(argPath As String)
+    
+    removeDesktopFiles(ApplicationDirectory &/ argPath)
+    
+End
+
+Public Sub ApplicationObserver_Modefied(argPath As String)
+    
+    removeDesktopFiles(ApplicationDirectory &/ argPath)
+    addDesktopFiles(ApplicationDirectory &/ argPath)
+    
+End
+
+Public Sub LocalApplicationObserver_Deleted(argPath As String)
+    
+    removeDesktopFiles(Me.ApplicationDirectoryLocal &/ argPath)
+    
+End
+
+Public Sub LocalApplicationObserver_Modefied(argPath As String)
+    
+    removeDesktopFiles(Me.ApplicationDirectoryLocal &/ argPath)
+    addDesktopFiles(Me.ApplicationDirectoryLocal &/ argPath)
+    
+End
+
+Public Sub Kde4ApplicationObserver_Deleted(argPath As String)
+    
+    removeDesktopFiles(ApplicationDirectory &/ argPath)
+    
+End
+
+Public Sub Kde4ApplicationObserver_Modefied(argPath As String)
+    
+    removeDesktopFiles(ApplicationDirectoryKDE4 &/ argPath)
+    addDesktopFiles(ApplicationDirectoryKDE4 &/ argPath)
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function Games_Read() As Collection
+
+    Return $games
+
+End
+
+Private Function Utilities_Read() As Collection
+
+    Return $utilities
+
+End
+
+Private Function Offices_Read() As Collection
+
+    Return $offices
+
+End
+
+Private Function Networks_Read() As Collection
+
+    Return $networks
+
+End
+
+Private Function Settings_Read() As Collection
+
+    Return $settings
+End
+
+Private Function Graphics_Read() As Collection
+
+    Return $graphics
+
+End
+
+Private Function Educations_Read() As Collection
+
+    Return $educations
+
+End
+
+Private Function Systems_Read() As Collection
+
+    Return $systems
+
+End
+
+Private Function Medias_Read() As Collection
+
+    Return $medias
+
+End
+
+Private Function Developments_Read() As Collection
+
+    Return $developments
+
+End
+
+Private Function NagatoSoftwareCompilationApplications_Read() As Collection
+
+    Return $nagatoSoftwareCompilationApplications
+
+End
+
+Private Function AllApplications_Read() As Collection
+
+    Return $allApllications
+
+End
+
+Private Function Kde4_Read() As Collection
+
+    Return $kde4
+
+End
+
+Private Function ApplicationDirectoryLocal_Read() As String
+
+    Return User.Home &/ ".local/share/applications/"
+
+End

@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,68.5714)
+  Text = ("Application Finder")
+  Icon = Picture["icons/search.png"]
+  Picture = Picture["icons/search.png"]
+  Arrangement = Arrange.Fill
+  { ApplicationsIconView IconView
+    MoveScaled(0,0,62,56)
+    Expand = True
+  }
+}

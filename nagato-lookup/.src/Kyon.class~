@@ -1,0 +1,162 @@
+' Gambas class file
+
+Private Const HeightHide As Integer = 1
+Private Const HeightShow As Integer = 28
+
+Private $recentApplicationsButton As NagatoRecentApplicationsButton
+Private $searchBox As NagatoSearchBox
+Private $infomationButton As NagatoInfomationButton
+
+Private Sub initializeForm()
+    
+    Me.X = 0
+    Me.Y = 0
+    Me.Width = Screen.Width
+    Me.Height = HeightHide
+    Me.Background = NagatoSettings.FormColor
+    MainHBox.Visible = False
+    
+End
+
+Private Sub addMenuButton(argTitle As String, argCategory As String, Optional argIcon As Picture)
+    
+    Dim yukiButton As MenuButton
+    Dim yukiMenu As NagatoApplicationsMenu
+    
+    If NagatoMenuCache3.GetApplications(argCategory).Count = 0 Then Return
+    
+    yukiButton = New MenuButton(MainHBox) As "AppMenuButton"
+    
+    With yukiButton
+        .Text = (argTitle)
+        .AutoResize = True
+        .Arrow = False
+        If argIcon Then .Picture = argIcon
+        .Border = False
+        .Foreground = NagatoSettings.FontColor
+        .Font.Bold = True
+    End With
+
+    yukiMenu = New NagatoApplicationsMenu(yukiButton, argCategory, argTitle)
+    
+Catch
+    Return
+    
+End
+
+Private Sub initializeMenuButtons()
+
+    If NagatoSettings.RecentApplications Then $recentApplicationsButton = New NagatoRecentApplicationsButton(MainHBox)
+    addMenuButton(("Nagato"), "Nagato", MikuruIcons.Get("star"))
+    addMenuButton(("Develop"), "Developments", MikuruIcons.Get("wrench"))
+    addMenuButton(("Education"), "Educations", MikuruIcons.Get("bank"))
+    addMenuButton(("Game"), "Games", MikuruIcons.Get("game-controller"))
+    addMenuButton(("Graphics"), "Graphics", MikuruIcons.Get("image"))
+    addMenuButton(("Office"), "Offices", MikuruIcons.Get("document-edit"))
+    addMenuButton(("Media"), "Medias", MikuruIcons.Get("video-music"))
+    addMenuButton(("Network"), "Networks", MikuruIcons.Get("web"))
+    addMenuButton(("Settings"), "Settings", MikuruIcons.Get("equalizer"))
+    addMenuButton(("System"), "Systems", MikuruIcons.Get("computer"))
+    addMenuButton(("Utility"), "Utilities", MikuruIcons.Get("scissors"))
+    'addMenuButton(("KDE"), "Kde4", MikuruIcons.Get("gear"))
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiSpacer As New Panel(MainHBox)
+    
+    With yukiSpacer
+        .Expand = True
+    End With
+    
+End
+
+'Private Sub addInformationButton()
+    
+    ' Dim yukiButton As New MenuButton(MainHBox)
+    ' Dim yukiMenu As NagatoMainMenu
+    ' 
+    ' With yukiButton
+    '     .Picture = MikuruIcons.Get("star")
+    '     .Width = MainHBox.Height
+    '     .Border = False
+    '     .Name = "HelpAndPreference"
+    ' End With
+    ' 
+    ' yukiMenu = New NagatoMainMenu(yukiButton.Menu)
+    
+'End
+
+Private Sub sendNotifyMessage()
+    
+    Dim yukiTitle As String = "YUKI.N > nagato-lookup is activated"
+    Dim yukiBody As String = "move mouse to the top of the screen"
+    
+    Shell Subst$("notify-send &1 &2 --icon=&3", Quote$(yukiTitle), Quote$(yukiBody), "go-up")
+    
+End
+
+Private Function IsUnique() As Boolean
+    
+    Dim yukiWindow As DesktopWindow
+    
+    For Each yukiWindow In Desktop.Windows
+        If yukiWindow.VisibleName = Application.Name Then Return False
+    Next
+    
+    Return True
+    
+End
+
+Public Sub SetForegroundColor(argColor As Integer)
+    
+    Dim yukiObject As Object
+    
+    For Each yukiObject In MainHBox.Children
+        If Object.Type(yukiObject) = "MenuButton" Then yukiObject.Foreground = argColor 
+    Next
+    
+End
+
+Public Sub _new()
+    
+    NagatoMenuCache3.Activate()
+    
+End
+
+Public Sub Form_Open()
+    
+    Application.MainWindow = Me
+    initializeForm()
+    initializeMenuButtons()
+    addSpacer()
+    $searchBox = New NagatoSearchBox(MainHBox)
+    $infomationButton = New NagatoInfomationButton(MainHBox)
+    If Not IsUnique() Then Me.Close()
+
+    sendNotifyMessage()
+
+End
+
+Public Sub Form_Enter()
+    
+    Me.Height = HeightShow
+    MainHBox.Visible = True
+    
+End
+
+Public Sub Form_Leave()
+    
+    Me.Height = HeightHide
+    MainHBox.Visible = False
+    $searchBox.Clear()
+    
+End
+
+Public Sub Form_Move()
+    
+    Me.X = 0
+    Me.Y = 0
+    
+End

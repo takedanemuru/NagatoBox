@@ -1,0 +1,17 @@
+' Gambas module file
+
+Property Color As Integer
+
+Private $color As Integer
+
+Private Function Color_Read() As Integer
+
+    Return $color
+
+End
+
+Private Sub Color_Write(Value As Integer)
+
+    $color = Value
+
+End

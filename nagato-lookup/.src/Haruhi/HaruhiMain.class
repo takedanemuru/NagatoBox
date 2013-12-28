@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private Const HeightHide As Integer = 1
+Private Const HeightShow As Integer = 28
+
+Private $applicationButtons As NagatoApplicationButtons
+Private $spacer As NagatoSpacer
+Private $searchBox As NagatoSearchBox
+Private $infomationButton As NagatoInfomationButton
+
+Private Sub initializeForm()
+    
+    Me.X = 0
+    Me.Y = 0
+    Me.Width = Screen.Width
+    Me.Height = HeightHide
+    Me.Background = NagatoSettings.FormColor
+    MainHBox.Visible = False
+    
+End
+
+Public Sub SetForegroundColor(argColor As Integer)
+    
+    Dim yukiObject As Object
+    
+    For Each yukiObject In MainHBox.Children
+        If Object.Type(yukiObject) = "MenuButton" Then yukiObject.Foreground = argColor 
+    Next
+    
+End
+
+Public Sub Form_Open()
+    
+    Application.MainWindow = Me
+    initializeForm()
+    $applicationButtons = New NagatoApplicationButtons(MainHBox)
+    $spacer = New NagatoSpacer(MainHBox)
+    $searchBox = New NagatoSearchBox(MainHBox)
+    $infomationButton = New NagatoInfomationButton(MainHBox)
+    
+    MikuruNotify.Activate()
+    
+End
+
+Public Sub Form_Enter()
+    
+    Me.Height = HeightShow
+    MainHBox.Visible = True
+    
+End
+
+Public Sub Form_Leave()
+    
+    Me.Height = HeightHide
+    MainHBox.Visible = False
+    $searchBox.Clear()
+    
+End
+
+Public Sub Form_Move()
+    
+    Me.X = 0
+    Me.Y = 0
+    
+End
