@@ -1,9 +1,0 @@
-' Gambas class file
-
-Create Static
-
-Public Function getPicture(argIndex As Integer) As Picture
-    
-    Return Picture[Subst$("Counter/&1.gif", argIndex)]
-    
-End
