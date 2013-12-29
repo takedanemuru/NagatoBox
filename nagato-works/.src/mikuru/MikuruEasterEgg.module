@@ -1,9 +1,0 @@
-' Gambas module file
-
-Public Sub Check()
-    
-    If Month(Now) = 12 Then 
-        If HaruhiMerryChristmas.ShowDialog() <> 1 Then Stop Event
-    Endif
-    
-End
