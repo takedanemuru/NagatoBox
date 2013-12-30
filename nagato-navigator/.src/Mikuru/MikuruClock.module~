@@ -1,0 +1,28 @@
+' Gambas module file
+
+Private $timer As Timer
+
+Event ClockTic
+
+Public Sub Activate()
+    
+    $timer = New Timer As "Timer"
+    
+    With $timer
+        .Delay = 1000
+        .Enabled = True
+    End With
+    
+End
+
+Public Sub Stop()
+    
+    $timer.Stop()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Raise ClockTic
+    
+End

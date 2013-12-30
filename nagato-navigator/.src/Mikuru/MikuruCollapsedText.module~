@@ -1,0 +1,17 @@
+' Gambas module file
+
+Public Function Get(argText As String, argFont As Font, argLength As Integer) As String
+    
+    Dim yukiCount As Integer
+    Dim yukiText As String
+    
+    If argLength >= argFont.TextWidth(argText) Then Return argText
+    
+    Do
+        Inc yukiCount
+        If String.Len(argText) = yukiCount Then Return ""
+        yukiText = String.Right(argText, -1 * yukiCount) & "..."
+        If argLength >= argFont.TextWidth(yukiText) Then Return yukiText
+    Loop
+    
+End

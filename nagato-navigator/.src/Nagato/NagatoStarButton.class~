@@ -1,0 +1,25 @@
+' Gambas class file
+
+Private $container As Container
+Private $button As MenuButton
+
+Private Sub addButton()
+    
+    $button = New MenuButton($container) 
+    
+    With $button
+        .Width = $container.H
+        .Expand = False
+        .Picture = MikuruIcon.Get("star")
+        .Arrow = False
+        .Border = False
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    addButton()
+    
+End

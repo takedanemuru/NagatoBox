@@ -1,0 +1,13 @@
+' Gambas class file
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    Me.Y = Screen.H - Me.H
+    Me.X = 0
+    Me.W = Screen.W
+
+End

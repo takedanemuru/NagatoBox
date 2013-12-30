@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private $button As NagatoStarButton
+Private $taskBar As NagatoTaskBar
+Private $clock As NagatoClock
+
+Private Sub setForm()
+    
+    Me.H = 3 * MikuruUx.Grid
+    Me.Y = Screen.H - Me.H
+    Me.X = 0
+    Me.W = Screen.W
+    
+End
+
+Public Sub Form_Open()
+
+    setForm()
+    NagatoTimer.Activate()
+
+    $button = New NagatoStarButton(HBox1) As "StarButton"
+    $taskBar = New NagatoTaskBar(HBox1) As "TaskBar"
+    $clock = New NagatoClock(HBox1) As "Clock"
+
+End
+
+Public Sub Form_Enter()
+
+    If Mouse.ScreenY > Screen.H - 2 Then HaruhiPersona.Show()
+
+End

@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,55,6)
+  Background = &HCFBFFF&
+  Border = False
+  SkipTaskbar = True
+  Arrangement = Arrange.Fill
+  { HBox1 HBox
+    MoveScaled(14,0,30,4)
+    Expand = True
+  }
+}

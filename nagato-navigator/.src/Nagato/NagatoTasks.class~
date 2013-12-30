@@ -1,0 +1,29 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Public Function Get() As DesktopWindow[]
+    
+    Dim yukiDesktopIndex As Integer
+    Dim yukiWindow As DesktopWindow
+    Dim yukiWindows As New DesktopWindow[]
+    
+    Desktop.Windows.Refresh()
+    
+    For yukiDesktopIndex = 0 To Desktop.Count - 1
+        For Each yukiWindow In Desktop.Windows
+            If yukiWindow.Desktop <> yukiDesktopIndex Then Continue
+            If yukiWindow.SkipTaskbar Then Continue
+            yukiWindows.Add(yukiWindow)
+        Next
+    Next
+    
+    Return yukiWindows
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return Desktop.Windows.Count
+
+End

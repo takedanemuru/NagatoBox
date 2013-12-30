@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Function Get(argName As String, Optional argSize As Integer = 2 * MikuruUx.Grid) As Picture
+    
+    Dim yukiImage As Image = Image.Load(Subst$("Pictures/icons/&1.png", argName)).Stretch(argSize, argSize)
+    
+    Return yukiImage.Picture
+    
+End

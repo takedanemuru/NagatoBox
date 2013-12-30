@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private $label As Label
+Private $observer As Observer
+
+Private Sub addLabel(argContainer As Container)
+    
+    $label = New Label(argContainer) As "NagatoMenu"
+    
+    With $label
+        .AutoResize = True
+        .Text = "please wait..."
+        .Alignment = Align.Left
+        .Foreground = Color.White
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    addLabel(argContainer)
+    
+    $observer = New Observer(NagatoTimer) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    $label.Text = Format$(Now(), ("hh:mm:ss"))
+    
+End

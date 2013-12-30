@@ -1,0 +1,22 @@
+' Gambas class file
+
+Private $persona As Picture
+
+Public Sub Form_Open()
+    
+    $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
+    Me.Picture = $persona
+    
+    Me.H = $persona.H
+    Me.W = $persona.W
+    
+    Me.Y = Screen.H - $persona.H
+    Me.X = 100
+    
+End
+
+Public Sub Form_DblClick()
+    
+    Me.Close()
+    
+End
