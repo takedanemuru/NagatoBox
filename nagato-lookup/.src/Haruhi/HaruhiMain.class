@@ -42,6 +42,12 @@ Public Sub Form_Open()
     
 End
 
+Public Sub Form_Close()
+    
+    NagatoDBus.Unregister()
+    
+End
+
 Public Sub Form_Enter()
     
     Me.Height = HeightShow

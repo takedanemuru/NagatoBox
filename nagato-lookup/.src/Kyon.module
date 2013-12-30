@@ -2,13 +2,10 @@
 
 Private Function IsUnique() As Boolean
     
-    Dim yukiWindow As DesktopWindow
-    
-    For Each yukiWindow In Desktop.Windows
-        If yukiWindow.VisibleName = Application.Name Then Return False
-    Next
-    
-    Return True
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.lookup") Then
+        NagatoDBus.Register()
+        Return True
+    End If
     
 End
 
@@ -20,4 +17,3 @@ Public Sub Main()
     End If
     
 End
-

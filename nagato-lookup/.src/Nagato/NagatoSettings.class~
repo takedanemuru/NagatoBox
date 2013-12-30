@@ -5,6 +5,7 @@ Create Static
 Property Read RecentApplications As String[]
 Property FormColor As Integer
 Property FontColor As Integer
+Property Directory As String
 
 Private Const StoreMax As Integer = 30
 
@@ -71,6 +72,19 @@ End
 Private Sub FontColor_Write(Value As Integer)
 
     $settings["color/font"] = Value
+    $settings.Save()
+
+End
+
+Private Function Directory_Read() As String
+
+    Return $settings["screenshot/directory", User.Home]
+
+End
+
+Private Sub Directory_Write(Value As String)
+
+    $settings["screenshot/directory"] = Value
     $settings.Save()
 
 End

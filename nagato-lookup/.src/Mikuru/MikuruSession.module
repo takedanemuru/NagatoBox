@@ -7,11 +7,24 @@ Private Const LogindManagerObjectPath As String = "/org/freedesktop/login1"
 Private Const LogindManagerInterface As String = "org.freedesktop.login1.Manager"
 
 Private $logindManager As DBusProxy
+Private $observer As Observer
 
-Private Sub initializeConsolekitManager()
+Private Sub initializeLogindManager()
     
     $logindManager = DBus[LogindBus][LogindManagerObjectPath, LogindManagerInterface]
     
+End
+
+Private Function question(argText As String) As Boolean
+    
+    Dim yukiResponse As Integer = Message.Question(Subst$(("Are you sure to &1 ?"), argText), ("Cancel"), (argText))
+    
+    If yukiResponse = 2 Then
+        Return True
+    Else
+        Return False
+    End If
+     
 End
 
 Public Function IsOpenbox() As Boolean
@@ -46,7 +59,22 @@ End
 
 Public Sub Logout(argType As Integer)
     
-    If Not Object.IsValid($logindManager) Then initializeConsolekitManager()
+    If Not Object.IsValid($logindManager) Then initializeLogindManager()
+    
+    $observer = New Observer(HaruhiQuit) As "Asakura"
+    
+    Select Case argType
+        Case TypeExit
+            If question(("EXIT")) Then HaruhiQuit.Start(argType)
+        Case TypeReboot
+            If question(("REBOOT")) Then HaruhiQuit.Start(argType)
+        Case TypeShutdown
+            If question(("SHUTDOWN")) Then HaruhiQuit.Start(argType)
+    End Select
+    
+End
+
+Public Sub Asakura_Finished(argType As Integer)
     
     Select Case argType
         Case TypeExit
@@ -56,5 +84,6 @@ Public Sub Logout(argType As Integer)
         Case TypeShutdown
             $logindManager.PowerOff(True)
     End Select
+
     
 End

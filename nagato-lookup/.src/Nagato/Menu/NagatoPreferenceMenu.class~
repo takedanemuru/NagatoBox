@@ -1,0 +1,91 @@
+' Gambas class file
+
+Private $observer As Observer
+Private $parentMenu As Menu
+
+Private Sub addParentMenu(argRootMenu As Menu)
+    
+    $parentMenu = New Menu(argRootMenu) 
+    
+    With $parentMenu
+        .Picture = MikuruIcons.Get("equalizer")
+        .Text = ("Preference")
+    End With
+    
+End
+
+Private Sub addFormColorMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "FormColorMenu"
+    
+    With yukiMenu
+        .Picture = MikuruColorChip.Get(NagatoSettings.FormColor)
+        .Text = ("Change form color")
+    End With
+    
+End
+
+Private Sub addFontColorMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "FontColorMenu"
+    
+    With yukiMenu
+        .Picture = MikuruColorChip.Get(NagatoSettings.FontColor)
+        .Text = ("Change font color")
+    End With
+
+End
+
+Private Sub initializeMenu()
+    
+    addFormColorMenu()
+    addFontColorMenu()
+    
+End
+
+Private Sub initializeDummyMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu)
+    
+    yukiMenu.Text = "can you see this?"
+    
+End
+
+Public Sub _new(argMenu As Menu)
+    
+    addParentMenu(argMenu)
+    $observer = New Observer($parentMenu) As "Asakura"
+    initializeDummyMenu()
+    
+End
+
+Public Sub Asakura_Show()
+    
+    $parentMenu.Children.Clear()
+    initializeMenu()
+    
+End
+
+Public Sub FormColorMenu_Click()
+    
+    HaruhiColorChooser.Title = ("Select form color")
+    HaruhiColorChooser.SetColor(NagatoSettings.FormColor)
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        NagatoSettings.FormColor = MikuruDialog.Color
+        HaruhiMain.Background = MikuruDialog.Color
+    Endif
+    
+End
+
+Public Sub FontColorMenu_Click()
+    
+    HaruhiColorChooser.Title = ("Select font color")
+    HaruhiColorChooser.SetColor(NagatoSettings.FontColor)
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        NagatoSettings.FontColor = MikuruDialog.Color
+        HaruhiMain.SetForegroundColor(MikuruDialog.Color)
+    Endif
+    
+End

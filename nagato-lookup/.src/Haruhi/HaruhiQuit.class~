@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private $timer As Timer
+Private $count As Integer = 0
+Private $message As String = ("YUKI.N > See you again, in the library.")
+Private $tag As Integer
+
+Event Finished(argCallback As Integer)
+
+Private Sub initializeTimer()
+    
+    $timer = New Timer As "Timer"
+    
+    With $timer
+        .Delay = 250
+        .Enabled = True
+    End With
+    
+End
+
+Private Function getCursor() As String
+    
+    If $count >= String.Len($message) And If Odd($count) Then
+        Return ""
+    Else
+        Return "_"
+    Endif
+    
+End
+
+Public Sub Start(argTag As Integer)
+    
+    $tag = argTag
+    initializeTimer()
+    Me.Show()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    If $count = String.Len($message) + 10 Then
+        Raise Finished($tag)
+        Me.Close()
+    Endif
+    
+    DrawingArea1.Refresh()
+    Inc $count
+    
+End
+
+Public Sub DrawingArea1_Draw()
+    
+    Dim yukiX As Integer = 200
+    Dim yukiY As Integer = DrawingArea1.Height / 2
+    
+    With Paint
+        .Begin(DrawingArea1)
+        .Brush = Paint.Color(Color.White)
+        .MoveTo(yukiX, yukiY)
+        .DrawText(String.Left($message, $count) & getCursor())
+        .Fill()
+        .End()
+    End With
+    
+End

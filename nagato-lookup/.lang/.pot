@@ -42,8 +42,8 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: HaruhiColorChooser.form:34 HaruhiDialogUseGksu.form:28
-#: NagatoMainMenu.class:96
+#: HaruhiColorChooser.form:34 HaruhiDialogUseGksu.form:28 HaruhiSave.form:37
+#: MikuruSession.module:20 NagatoMainMenu.class:74
 msgid "Cancel"
 msgstr ""
 
@@ -65,12 +65,68 @@ msgid ""
 "Do you want to launch this software as a super user ?"
 msgstr ""
 
+#: HaruhiQuit.class:5
+msgid "YUKI.N > See you again, in the library."
+msgstr ""
+
+#: HaruhiSave.form:16
+msgid "nagato-screenshooter"
+msgstr ""
+
+#: HaruhiSave.form:31
+msgid "Save"
+msgstr ""
+
+#: HaruhiSave.form:43
+msgid "Home"
+msgstr ""
+
+#: HaruhiSave.form:49
+msgid "FileName"
+msgstr ""
+
+#: HaruhiSave.form:55
+msgid "Directory :"
+msgstr ""
+
+#: HaruhiSave.form:61
+msgid "File Name :"
+msgstr ""
+
+#: HaruhiSave.form:67
+msgid "Change default directory"
+msgstr ""
+
+#: HaruhiSave.class:56
+msgid "yyyy/mm/dd_hh:nn:mm"
+msgstr ""
+
+#: HaruhiSave.class:105
+msgid "Select directory"
+msgstr ""
+
 #: MikuruApplications.module:3
 msgid "This software is a settings applications.\n"
 msgstr ""
 
 #: MikuruApplications.module:4
 msgid "Do you want to launch this application as super user ?"
+msgstr ""
+
+#: MikuruSession.module:20
+msgid "Are you sure to &1 ?"
+msgstr ""
+
+#: MikuruSession.module:68
+msgid "EXIT"
+msgstr ""
+
+#: MikuruSession.module:70
+msgid "REBOOT"
+msgstr ""
+
+#: MikuruSession.module:72
+msgid "SHUTDOWN"
 msgstr ""
 
 #: NagatoApplicationButtons.class:39
@@ -129,50 +185,50 @@ msgstr ""
 msgid "Shutdown"
 msgstr ""
 
-#: NagatoMainMenu.class:19
-msgid "Preference"
-msgstr ""
-
-#: NagatoMainMenu.class:33
+#: NagatoMainMenu.class:22
 msgid "Logout (NagatoBox)"
 msgstr ""
 
-#: NagatoMainMenu.class:33
+#: NagatoMainMenu.class:22
 msgid "Logout (Openbox)"
 msgstr ""
 
-#: NagatoMainMenu.class:46
-msgid "Help"
-msgstr ""
-
-#: NagatoMainMenu.class:57
+#: NagatoMainMenu.class:35
 msgid "About"
 msgstr ""
 
-#: NagatoMainMenu.class:68
+#: NagatoMainMenu.class:46
 msgid "Close"
 msgstr ""
 
-#: NagatoMainMenu.class:96
+#: NagatoMainMenu.class:74
 msgid "YUKI.N > Are you sure to close this application ?"
 msgstr ""
 
-#: NagatoPereferenceMenu.class:12
+#: NagatoPreferenceMenu.class:12
+msgid "Preference"
+msgstr ""
+
+#: NagatoPreferenceMenu.class:23
 msgid "Change form color"
 msgstr ""
 
-#: NagatoPereferenceMenu.class:23
+#: NagatoPreferenceMenu.class:34
 msgid "Change font color"
 msgstr ""
 
-#: NagatoPereferenceMenu.class:60
+#: NagatoPreferenceMenu.class:71
 msgid "Select form color"
 msgstr ""
 
-#: NagatoPereferenceMenu.class:72
+#: NagatoPreferenceMenu.class:83
 msgid "Select font color"
 msgstr ""
 
 #: NagatoRecentApplicationsButton.class:15
 msgid "Recent"
+msgstr ""
+
+#: NagatoScreenshotMenu.class:12
+msgid "Screenshot"
 msgstr ""

@@ -1,11 +1,22 @@
 ' Gambas class file
 
 Private $observer As Observer
-Private $rootMenu As Menu
+Private $parentMenu As Menu
+
+Private Sub addParentMenu(argRootMenu As Menu)
+    
+    $parentMenu = New Menu(argRootMenu) 
+    
+    With $parentMenu
+        .Picture = MikuruIcons.Get("equalizer")
+        .Text = ("Preference")
+    End With
+    
+End
 
 Private Sub addFormColorMenu()
     
-    Dim yukiMenu As New Menu($rootMenu) As "FormColorMenu"
+    Dim yukiMenu As New Menu($parentMenu) As "FormColorMenu"
     
     With yukiMenu
         .Picture = MikuruColorChip.Get(NagatoSettings.FormColor)
@@ -16,13 +27,13 @@ End
 
 Private Sub addFontColorMenu()
     
-    Dim yukiMenu As New Menu($rootMenu) As "FontColorMenu"
+    Dim yukiMenu As New Menu($parentMenu) As "FontColorMenu"
     
     With yukiMenu
         .Picture = MikuruColorChip.Get(NagatoSettings.FontColor)
         .Text = ("Change font color")
     End With
-    
+
 End
 
 Private Sub initializeMenu()
@@ -34,7 +45,7 @@ End
 
 Private Sub initializeDummyMenu()
     
-    Dim yukiMenu As New Menu($rootMenu)
+    Dim yukiMenu As New Menu($parentMenu)
     
     yukiMenu.Text = "can you see this?"
     
@@ -42,15 +53,15 @@ End
 
 Public Sub _new(argMenu As Menu)
     
-    $rootMenu = argMenu
-    $observer = New Observer($rootMenu) As "Asakura"
+    addParentMenu(argMenu)
+    $observer = New Observer($parentMenu) As "Asakura"
     initializeDummyMenu()
     
 End
 
 Public Sub Asakura_Show()
     
-    $rootMenu.Children.Clear()
+    $parentMenu.Children.Clear()
     initializeMenu()
     
 End
