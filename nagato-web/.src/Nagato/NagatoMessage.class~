@@ -10,6 +10,8 @@ Private $timer As New Timer As "Timer"
 Private $count As Integer = CountDownStart
 Private $text As String = ""
 
+Event Stopped
+
 Public Sub SetText(argText As String)
     
     $text = argText
@@ -22,11 +24,10 @@ Public Sub Timer_Timer()
     
     Dec $count
     
-    Debug $count
-    
     If 0 >= $count Then
         $timer.Stop
         $text = ""
+        Raise Stopped
     End If
     
 End

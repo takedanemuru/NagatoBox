@@ -50,10 +50,19 @@ Private Sub setFortune()
     
 End
 
-Public Sub Form_Open()
-
+Public Sub NewFortune()
+    
+    Dim yukiWindow As New DesktopWindow(Me.Id)
+    
+    Me.Show()
+    yukiWindow.Desktop = Desktop.Current
+    
     setFortune()
     setForm()
+    
+End
+
+Public Sub Form_Open()
 
     Me.X = 120
     Me.Y = 30

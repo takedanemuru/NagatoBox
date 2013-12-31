@@ -118,8 +118,6 @@ Public Sub SaveButton_Click()
 
     $screenshot.Save(getPath())
     If CheckBox1.Value Then NagatoSettings.Directory = DirectoryButtonBox.Text 
-    Debug DirectoryButtonBox.Text
-    Debug NagatoSettings.Directory
     Me.Close()
 
 End

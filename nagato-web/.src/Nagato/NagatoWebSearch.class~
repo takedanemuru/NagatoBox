@@ -8,26 +8,15 @@ Private Const RightOffset As Integer = 48
 Private $container As Container
 Private $button As NagatoSearchEngineSelectButton
 Private $queryBox As NagatoWebSearchQueryBox
-Private $starButton As MenuButton
-
-Private Sub addStarButton(argContainer As Container)
-    
-    $starButton = New MenuButton(argContainer)
-    
-    With $starButton
-        .Width = argContainer.H
-        .Picture = MikuruIcon.Get("star")
-        .Border = False
-    End With
-    
-End
+Private $observer As Observer
 
 Public Sub _new(argContainer As Container)
     
     $container = argContainer
     $button = New NagatoSearchEngineSelectButton(argContainer) As "Menu"
     $queryBox = New NagatoWebSearchQueryBox(argContainer) As "Menu"
-    addStarButton($container)
+    
+    $observer = New Observer($button) As "Asakura"
     
 End
 
@@ -45,5 +34,11 @@ Public Sub Menu_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[]
             $queryBox.SetBang(argArguments[0])
             $button.SetText(argArguments[1])
     End Select
+    
+End
+
+Public Sub Asakura_SizeChanged(argSize As Integer)
+    
+    $container.W = argSize + $queryBox.FixedWidth
     
 End

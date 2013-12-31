@@ -26,8 +26,6 @@ End
 
 Public Sub Form_Enter()
 
-    Debug Mouse.ScreenY
-
-    If Mouse.ScreenY > Screen.H - 2 Then HaruhiPersona.Show()
-
+    If Mouse.ScreenY > Screen.H - 2 Then HaruhiPersona.EnsureVisible()
+        
 End

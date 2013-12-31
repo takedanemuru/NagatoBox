@@ -2,7 +2,7 @@
 
 Private $timer As Timer
 Private $count As Integer = 0
-Private $message As String = ("YUKI.N > See you again, in the library.")
+Private $message As String = ("YUKI.N > Another visit to the library would.")
 Private $tag As Integer
 
 Event Finished(argCallback As Integer)
@@ -38,11 +38,8 @@ End
 
 Public Sub Timer_Timer()
     
-    If $count = String.Len($message) + 10 Then
-        Raise Finished($tag)
-        Me.Close()
-    Endif
-    
+    If $count = String.Len($message) + 10 Then Raise Finished($tag)
+        
     DrawingArea1.Refresh()
     Inc $count
     

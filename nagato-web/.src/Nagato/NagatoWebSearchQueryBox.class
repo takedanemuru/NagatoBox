@@ -2,6 +2,8 @@
 
 Inherits NagatoSearchEngines
 
+Property Read FixedWidth As Integer
+
 Private $container As Container
 Private $queryBox As ButtonBox
 Private $api As New NagatoDuckDuckGo
@@ -42,4 +44,10 @@ Public Sub QueryBox_Click()
     
     QueryBox_Activate()
     
+End
+
+Private Function FixedWidth_Read() As Integer
+
+    Return 240
+
 End

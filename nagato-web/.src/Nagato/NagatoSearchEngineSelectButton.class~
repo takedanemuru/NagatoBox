@@ -1,14 +1,16 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoSearchEngines
 
 Private $container As Container
 Private $button As MenuButton
 Private $menu As NagatoSearchEngineSelectMenu
 
+Event SizeChanged(argSize As Integer)
+
 Private Sub initializeButton()
     
-    $button = New MenuButton($container)
+    $button = New MenuButton($container) As "MenuButton"
     
     With $button
         .Text = ("DuckDuckGo")
@@ -30,5 +32,11 @@ Public Sub _new(argContainer As Container)
     $container = argContainer
     initializeButton()
     $menu = New NagatoSearchEngineSelectMenu($button) As "Menu"
+    
+End
+
+Public Sub MenuButton_Arrange()
+    
+    Raise SizeChanged($button.Width)
     
 End

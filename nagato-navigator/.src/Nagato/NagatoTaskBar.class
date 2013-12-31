@@ -63,6 +63,9 @@ Public Sub DrawingArea_Draw()
     Paint.Fill()
     Paint.End()
     
+Catch
+    Return
+    
 End
 
 Public Sub DrawingArea_MouseDown()
@@ -76,5 +79,8 @@ Public Sub DrawingArea_MouseDown()
         Try Desktop.Current = yukiTasks[yukiIndex].Desktop
         Try yukiTasks[yukiIndex].Activate()
     End If
+    
+Catch
+    Return 'to avoid division by zero
     
 End

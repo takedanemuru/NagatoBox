@@ -2,6 +2,17 @@
 
 Private $persona As Picture
 
+Public Sub EnsureVisible()
+    
+    Dim yukiWindow As New DesktopWindow(Me.Id)
+    
+    Me.Show()
+    yukiWindow.Desktop = Desktop.Current
+    
+    HaruhiBalloon.NewFortune()
+    
+End
+
 Public Sub Form_Open()
     
     $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
@@ -9,13 +20,14 @@ Public Sub Form_Open()
     
     Me.H = $persona.H
     Me.W = $persona.W
-    
     Me.Y = Screen.H - $persona.H
     Me.X = 100
     
 End
 
 Public Sub Form_DblClick()
+    
+    HaruhiBalloon.Close()
     
     Me.Close()
     

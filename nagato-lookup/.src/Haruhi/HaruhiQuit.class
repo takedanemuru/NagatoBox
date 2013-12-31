@@ -2,7 +2,7 @@
 
 Private $timer As Timer
 Private $count As Integer = 0
-Private $message As String = ("YUKI.N > See you again, in the library.")
+Private $message As String = ("YUKI.N > Another visit to the library would.")
 Private $tag As Integer
 
 Event Finished(argCallback As Integer)

@@ -22,7 +22,7 @@ Public Sub Main()
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()
-        If yukiUrl <> "" Then HaruhiMain.AddUrl(yukiUrl)
+        If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
     Else ' has been activated
         With NagatoDBus
              If yukiUrl = "" Then
