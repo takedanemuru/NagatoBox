@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Public Sub org_mpris_MediaPlayer2_Player_Play()
+    
+    NagatoQueue.Play()
+    
+End

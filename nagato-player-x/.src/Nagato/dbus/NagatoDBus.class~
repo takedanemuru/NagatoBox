@@ -1,0 +1,15 @@
+' Gambas class file
+
+Create Static
+
+Public Sub Register()
+    
+    DBus.Session.Register(NagatoInterface, "/org/nagato/player/x")
+    
+End
+
+Public Sub Unregister()
+    
+    DBus.Session.Unregister(NagatoInterface)
+    
+End

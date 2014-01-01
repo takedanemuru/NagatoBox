@@ -75,6 +75,19 @@ Private Sub drawText()
     
 End
 
+Private Sub drawSelectedLabel()
+    
+    paint.Brush = paint.Color(Color.Red)
+        Paint.Rectangle(0, 0, ThumbnailSize, 24)
+    paint.Fill()
+        Paint.DrawPicture(MikuruIcon.Get("button-check"), 4, 4)
+    paint.Brush = paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText("SELECTED", 24, 0, ThumbnailSize - 24, 24, Align.Center)
+    paint.Fill()
+    
+End
+
 Public Function Get(argPath As String, argSelected As Boolean) As Picture
     
     Dim yukiBaseImage As Image = New Image(ThumbnailSize, ThumbnailSize, Color.Transparent)
@@ -90,6 +103,7 @@ Public Function Get(argPath As String, argSelected As Boolean) As Picture
         setTextRect()
         drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
         drawText()
+        If argSelected Then drawSelectedLabel()
         .End()
     End With
     

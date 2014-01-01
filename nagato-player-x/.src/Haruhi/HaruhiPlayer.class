@@ -15,9 +15,10 @@ Public Sub SetMessage(argMessage As String, argDuration As Integer) ' argDuratio
 End
 
 Public Sub Form_Open()
-
+    
     Application.MainWindow = Me
     MikuruWebRadio.EnsureDefault()
+    NagatoDBus.Register()
     
     NagatoSettingsForm.SetMainFormSize(Me)
     NagatoSettingsForm.Load(Me)
@@ -29,6 +30,7 @@ End
 
 Public Sub Form_Close()
     
+    NagatoDBus.Unregister()
     NagatoSettingsForm.Save(Me)
     
 End

@@ -5,7 +5,7 @@ Private Const TextWidth As Integer = 112
 Private Const IconSize As Integer = 64
 Private Const Margin As Integer = 8
 
-Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argText As String) As Picture
+Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argText As String, argSelected As Boolean) As Picture
     
     Dim yukiHeight As Integer
     
@@ -17,6 +17,7 @@ Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argTe
         .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin)
         .RichText(argText, Margin, TileSize - yukiHeight - Margin, TextWidth, yukiHeight, Align.Center)
         .Fill()
+        If argSelected Then drawSelectedLabel()
         .End()
     End With
     
@@ -42,6 +43,19 @@ Private Function getDesktopEntryIcon(argPath As String) As Picture
     
 End
 
+Private Sub drawSelectedLabel()
+    
+    paint.Brush = paint.Color(Color.Red)
+        Paint.Rectangle(0, 0, TileSize, 24)
+    paint.Fill()
+        Paint.DrawPicture(MikuruIcon.Get("button-check"), 4, 4)
+    paint.Brush = paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText("SELECTED", 24, 0, TileSize - 24, 24, Align.Center)
+    paint.Fill()
+    
+End
+
 Public Function GetApplicationTile(argPath As String, Optional argSize As Integer = TileSize) As Picture
     
     Dim yukiBaseImage As New Image(argSize, argSize, Color.Red + 16777216 * 192) 
@@ -49,7 +63,7 @@ Public Function GetApplicationTile(argPath As String, Optional argSize As Intege
     Dim yukiIcon As Picture = getDesktopEntryIcon(argPath)
     Dim yukiText As String = yukiDesktopFile.Name
     
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText)
+    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText, False)
     
 End
 
@@ -62,7 +76,7 @@ Public Function GetDirectoryTile(argPath As String, argSelected As Boolean, Opti
     Dim yukiFiles As String = Subst$("file:&1", Dir(argPath, "*", gb.File).Count)
     Dim yukiText As String = File.Name(argPath) & "<br>" & yukiFolders & " " & yukiFiles
     
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText)
+    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText, argSelected)
     
 End
 
@@ -73,6 +87,6 @@ Public Function GetFileTile(argPath As String, argSelected As Boolean, Optional 
     Dim yukiIcon As Picture = Desktop.GetFileIcon(argPath, IconSize)
     Dim yukiText As String = File.Name(argPath)
     
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText)
+    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText, argSelected)
     
 End

@@ -47,7 +47,7 @@ Public Sub _new(argContainer As Container)
     $container = argContainer
     initializeDownloadsHBox()
     initializeCloseButton()
-    $container.Visible = True
+    $container.Visible = False
     
 End
 

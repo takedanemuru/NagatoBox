@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Ready As String
+Property Read Title As String
+Property Read Artist As String
+Property Read Album As String
+Property Read ProgressInText As String
+
+Public Function Play() As Boolean
+    
+    NagatoQueue.Play()
+    
+    Return True
+    
+End
+
+Public Function Pause() As Boolean
+    
+    NagatoQueue.Pause()
+    
+    Return True
+    
+End
+
+Public Function Back() As Boolean
+    
+    NagatoQueue.Back()
+    
+    Return True
+    
+End
+
+Public Function Next() As Boolean
+    
+    NagatoQueue.Next()
+    
+    Return True
+    
+End
+
+Private Function Ready_Read() As String
+
+    Return "Can you see this ?"
+
+End
+
+Private Function Title_Read() As String
+
+    Return NagatoQueue.Title
+
+End
+
+Private Function ProgressInText_Read() As String
+
+    Return NagatoQueue.ProgressText
+
+End
+
+Private Function Artist_Read() As String
+
+    Return NagatoQueue.Artist
+
+End
+
+Private Function Album_Read() As String
+
+    Return NagatoQueue.Album
+
+End

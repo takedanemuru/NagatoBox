@@ -55,6 +55,14 @@ Public Sub InsertMusic(argPaths As String[])
     
 End
 
+Public Sub DeleteMusic(argPath As String)
+    
+    $player.Stop()
+        $musicPaths.DeleteMusic(argPath)
+    If $musicPaths.Count > 0 Then $player.Play()
+    
+End
+
 Public Sub ClearAll()
     
     $player.Stop()
