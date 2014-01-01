@@ -51,8 +51,14 @@ Public Sub _new(argButton As MenuButton)
     
 End
 
+Public Sub AboutMenu_Click()
+    
+    HaruhiAbout.ShowDialog()
+    
+End
+
 Public Sub QuitMenu_Click()
     
-    HaruhiMain.Close()
+    If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then HaruhiMain.Close()
     
 End

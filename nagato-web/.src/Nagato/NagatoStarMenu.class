@@ -59,6 +59,6 @@ End
 
 Public Sub QuitMenu_Click()
     
-    HaruhiMain.Close()
+    If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then HaruhiMain.Close()
     
 End

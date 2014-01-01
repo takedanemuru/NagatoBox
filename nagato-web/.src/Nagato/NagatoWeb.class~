@@ -11,6 +11,8 @@ Private $webView As WebView
 Private $uniqueIndex As Integer
 Private $lastLink As String
 
+Private $timer As New Timer As "Timer"
+
 Private Sub addWebView(argUrl As String)
     
     $webView = New WebView($container) As "WebView"
@@ -118,18 +120,24 @@ End
 
 Public Sub WebView_Download(argDownload As WebDownload)
     
-    Dialog.Title = ("Download")
-    Dialog.Path = MikuruSafePath.Get(NagatoSettings.DownloadDirectory &/ File.Name(argDownload.Url))
+    ' Dialog.Title = ("Download")
+    ' Dialog.Path = MikuruSafePath.Get(NagatoXdgUserDirs.Download &/ File.Name(argDownload.Url))
+    ' 
+    ' If Not Dialog.SaveFile() Then
+    '     argDownload.Path = MikuruSafePath.Get(NagatoXdgUserDirs.Download &/ "download")
+    '     $timer.Start
+    ' Endif
     
-    If Not Dialog.SaveFile() Then
-        argDownload.Path = Dialog.Path
-    End If
+    Raise MenuEventWithArg(NagatoMenuPipe.WebDownload, argDownload)
+    
+    ' argDownload.Path = MikuruSafePath.Get(NagatoXdgUserDirs.Download &/ "download")
+    ' $timer.Start()
     
 End
 
 Public Sub WebView_Progress()
     
-    Debug Me.UniqueIndex & " " & $webView.Progress
+    Raise MenuEventWithArgs(NagatoMenuPipe.WebProgress, [Me.UniqueIndex, $webView.Url, $webView.Progress])
     
 End
 
@@ -149,4 +157,21 @@ Private Function Url_Read() As String
 
     Return $webView.Url
 
+End
+
+Public Sub Timer_Timer()
+    
+    Dim yukiCount As Integer
+    Dim yukiDownload As WebDownload
+    
+    If WebDownloads.Count = 0 Then $timer.Stop()
+    
+    For yukiCount = WebDownloads.Count - 1 DownTo 0
+        yukiDownload = WebDownloads[yukiCount]
+        Debug yukiDownload.Url
+        Debug yukiDownload.Path
+        Debug yukiDownload.Progress
+        If yukiDownload.Progress = 1 Then yukiDownload.Delete()
+    Next
+    
 End

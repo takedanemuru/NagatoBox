@@ -8,6 +8,8 @@ Private $menubar As NagatoMenuBar
 Private $searchBox As NagatoWebSearch
 Private $webs As NagatoWebs
 Private $inPageSearch As NagatoInPageSearch
+Private $downloadBar As NagatoWebdownloadsBar
+Private $bookmarkTreeView As NagatoBookmarkTreeView
 
 Private Sub addWeb(Optional argUrl As String = NagatoSettings.HomePage)
     
@@ -52,6 +54,8 @@ Public Sub Form_Open()
     $menubar = New NagatoMenuBar(MenuHBox) As "MenuBar"
     $webs = New NagatoWebs(WebsVBox) As "Webs"
     $inPageSearch = New NagatoInPageSearch(InPageSearchHBox) As "InPageSearch"
+    $bookmarkTreeView = New NagatoBookmarkTreeView(LeftPanel) As "BookmarkTreeView"
+    $downloadBar = New NagatoWebdownloadsBar(WebDownloadsHBox) As "DownloadBar"
     
     addWeb()
     
@@ -93,6 +97,16 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
     
 End
 
+Public Sub BookmarkTreeView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.WebNew
+            addWeb(argArgument)
+            $webs.ShowLastTab()
+    End Select
+    
+End
+
 Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
@@ -128,6 +142,9 @@ Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
         Case NagatoMenuPipe.WebNewInsert
             insertWeb($webs.ActiveIndex + 1, argArgument) ' insert new web tab next to active tab
             $webs.ShowActiveTab()
+        Case NagatoMenuPipe.WebDownload
+            Debug "Download"
+            Debug argArgument.Url
     End Select
     
 End

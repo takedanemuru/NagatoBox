@@ -1,0 +1,64 @@
+' Gambas class file
+
+Private $container As Container
+Private $downloadsHBox As HBox
+Private $timer As New Timer As "Timer"
+
+Private Sub initializeDownloadsHBox()
+    
+    $downloadsHBox = New HBox($container)
+    
+    With $downloadsHBox
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeCloseButton()
+    
+    Dim yukiWidget As New MenuButton($container) As "CloseButton"
+    
+    With yukiWidget
+        .Width = $container.Height
+        .Expand = False
+        .Picture = MikuruIcon.Get("button-cross")
+        .Border = False
+    End With
+    
+End
+
+Public Sub SetWebDownload(argWebDownload As WebDownload)
+    
+    Dim yukiDownload As NagatoWebDownload
+    
+    Dialog.Title = ("Download")
+    Dialog.Path = MikuruSafePath.Get(NagatoSettings.DownloadDirectory &/ File.Name(argWebDownload.Url))
+    
+    If Not Dialog.SaveFile() Then
+        argWebDownload.Path = Temp$("download_" & File.Name(argWebDownload.Url))
+        Debug Dialog.Path
+        yukiDownload = New NagatoWebDownload($downloadsHBox, argWebDownload, Dialog.Path) As "Download"
+    Endif
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    initializeDownloadsHBox()
+    initializeCloseButton()
+    $container.Visible = True
+    
+End
+
+Public Sub CloseButton_Click()
+    
+    $container.Visible = False
+    
+End
+
+Public Sub Download_Finish()
+    
+    If WebDownloads.Count = 0 Then $container.Visible = False
+    
+End

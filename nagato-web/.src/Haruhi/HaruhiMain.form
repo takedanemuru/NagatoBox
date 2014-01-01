@@ -3,24 +3,38 @@
 { Form Form
   MoveScaled(0,0,75,55)
   Icon = Picture["pictures/icons/web.png"]
-  Arrangement = Arrange.Vertical
-  { DrawingArea1 DrawingArea
-    MoveScaled(0,0,68,17.7143)
-    Tracking = True
-    Drop = True
-    { SearchBoxContainer HBox
-      MoveScaled(22,5,45,4)
-    }
+  Arrangement = Arrange.Horizontal
+  { LeftPanel SidePanel
+    MoveScaled(-1,1,22.8571,53)
+    Arrangement = Arrange.Fill
+    Orientation = Align.Left
+    Hidden = True
   }
-  { MenuHBox HBox
-    MoveScaled(5,19,62,4)
-  }
-  { WebsVBox VBox
-    MoveScaled(10,24,58,18)
+  { VBox1 VBox
+    MoveScaled(13,3,59,49)
     Expand = True
-  }
-  { InPageSearchHBox HBox
-    MoveScaled(4,43,67,4)
-    Visible = False
+    { DrawingArea1 DrawingArea
+      MoveScaled(0,0,68,17.7143)
+      Tracking = True
+      Drop = True
+      { SearchBoxContainer HBox
+        MoveScaled(22,5,45,4)
+      }
+    }
+    { MenuHBox HBox
+      MoveScaled(5,19,62,4)
+    }
+    { WebsVBox VBox
+      MoveScaled(5,22,58,18)
+      Expand = True
+    }
+    { InPageSearchHBox HBox
+      MoveScaled(4,39,67,4)
+      Visible = False
+    }
+    { WebDownloadsHBox HBox
+      MoveScaled(1,44,67,4)
+      Visible = False
+    }
   }
 }
