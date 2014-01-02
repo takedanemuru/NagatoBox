@@ -5,11 +5,29 @@ Create Static
 Property Read Info As String
 Property Read Clock As String
 
+Private Function getBonborimaturiDate() As Integer
+    
+    Dim yukiFirstWeekdayOfOctober As Integer = WeekDay(Date(Year(Now), 10, 1))
+    
+    Return (14 - yukiFirstWeekdayOfOctober)
+    
+End
+
+Private Function getBonborimaturiDateNextYear() As Integer
+    
+    Dim yukiFirstWeekdayOfOctober As Integer = WeekDay(Date(Year(Now) + 1, 10, 1))
+    
+    Return (14 - yukiFirstWeekdayOfOctober)
+    
+End
+
 Private Function getDateDiff() As Integer
     
-    Dim yukiYear As Integer = IIf(Date(Now) > Date(Year(Now), 10, 12), Year(Now) + 1, Year(Now))
-    
-    Return DateDiff(Now, Date(yukiYear, 10, 12), gb.Day)
+    If Date(Now) > Date(Year(Now), 10, getBonborimaturiDate()) Then
+        Return DateDiff(Now, Date(Year(Now) + 1, 10, getBonborimaturiDateNextYear()), gb.Day)
+    Else
+        Return DateDiff(Now, Date(Year(Now), 10, getBonborimaturiDate()), gb.Day)
+    Endif
     
 End
 

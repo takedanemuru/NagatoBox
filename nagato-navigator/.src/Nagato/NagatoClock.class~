@@ -26,6 +26,6 @@ End
 
 Public Sub Asakura_Timer()
     
-    $label.Text = Format$(Now(), ("hh:mm:ss"))
+    $label.Text = Format$(Now(), ("hh:nn:ss"))
     
 End

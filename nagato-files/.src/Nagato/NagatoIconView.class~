@@ -133,7 +133,7 @@ End
 
 Public Sub IconView_DragMove()
     
-    If Not $iconView.FindAt(Drag.X, Drag.Y) Then
+    If Not $iconView.FindAt(Drag.X, Drag.Y) And If IsDir($iconView.Item.Key) Then
         $iconView.UnselectAll()
         $iconView.Item.Selected = True
     Else
