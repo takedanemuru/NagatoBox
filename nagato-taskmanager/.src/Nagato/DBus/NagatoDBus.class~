@@ -1,0 +1,15 @@
+' Gambas class file
+
+Create Static
+
+Public Sub Register()
+    
+    DBus.Session.Register(NagatoInterface, "/org/nagato/taskmanager")
+    
+End
+
+Public Sub Unregster()
+    
+    DBus.Session.Unregister(NagatoInterface)
+    
+End
