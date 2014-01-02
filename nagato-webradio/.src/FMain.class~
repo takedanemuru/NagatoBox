@@ -1,0 +1,46 @@
+' Gambas class file
+
+Private $player As New MediaPlayer As "Player"
+
+Public Sub initializeTunesTree()
+    
+    TunesTree.Add("default_dir", "Tunes", Stock["medium/directory"])
+    TunesTree.Add("http://momori.animenfo.com:8080/", "AnimeNfo Radio", Stock["medium/audio"], "default_dir")
+    TunesTree.Add("http://pub6.sky.fm:80/sky_smoothjazz", "SkyFM Smooth Jazz", Stock["medium/audio"], "default_dir")
+    TunesTree.Add("http://66.90.73.250:115/", "Live Ireland", Stock["medium/audio"], "default_dir")
+    
+End
+
+Public Sub Form_Open()
+
+    $player.URL = "http://momori.animenfo.com:8080/"
+    '$player.URL = "http://pub6.sky.fm:80/sky_smoothjazz"
+    '$player.URL = "http://66.90.73.250:115/" 'liveireland"
+    $player.Play()
+
+    initializeTunesTree()
+
+End
+
+Public Sub Player_Tag(argTaglist As MediaTagList)
+    
+    ' Find() returns -1 when argument is not found.
+    
+    If argTaglist.Tags.Find("title") <> -1 Then
+        TagLabel.Text = argTaglist["title"]
+    Endif
+
+End
+
+Public Sub TunesTree_Activate()
+
+    If TunesTree.Current.Picture = Stock["medium/directory"] Then Return
+    If $player.URL = TunesTree.Current.Key Then Return
+    
+    With $player
+        .Stop()
+        .URL = TunesTree.Key
+        .Play()
+    End With
+    
+End

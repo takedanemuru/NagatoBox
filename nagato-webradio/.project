@@ -1,0 +1,28 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.1
+Title=nagato-webradio
+Startup=FMain
+Version=0.0.1
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.media
+Component=gb.qt4.ext
+Description="a internet radio client"
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=nagato-webradio-0.0.1
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Sound"
+Categories=ubuntu:"Audio;Music;Nagato"
+Groups=ubuntu:"sound"
