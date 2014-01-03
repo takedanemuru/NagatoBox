@@ -51,9 +51,12 @@ Private Sub drawSelectedLabel()
         Paint.DrawPicture(MikuruIcon.Get("button-check"), 4, 4)
     paint.Brush = paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.RichText("SELECTED", 24, 0, TileSize - 24, 24, Align.Center)
+        Paint.RichText("SELECTED", 24, 0, TileSize - 48, 24, Align.Center)
     paint.Fill()
-    
+        Paint.LineWidth = 2
+        Paint.MoveTo(0, 24)
+        Paint.LineTo(TileSize, 24)
+    Paint.Stroke()
 End
 
 Public Function GetApplicationTile(argPath As String, Optional argSize As Integer = TileSize) As Picture
@@ -69,7 +72,7 @@ End
 
 Public Function GetDirectoryTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
     
-    Dim yukiColor As Integer = IIf(argSelected, Color.Red, Color.Blue + 16777216 * 192)
+    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Color.Blue) + 16777216 * 192)
     Dim yukiBaseImage As New Image(argSize, argSize, yukiColor) 
     Dim yukiIcon As Picture = MikuruIcon.GetDirectory(argPath, IconSize)
     Dim yukiFolders As String = Subst$("folder:&1", Dir(argPath, "*", gb.Directory).Count)
@@ -82,7 +85,7 @@ End
 
 Public Function GetFileTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
     
-    Dim yukiColor As Integer = IIf(argSelected, Color.Red, Color.Magenta + 16777216 * 192)
+    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Color.Magenta) + 16777216 * 192)
     Dim yukiBaseImage As New Image(argSize, argSize, yukiColor) 
     Dim yukiIcon As Picture = Desktop.GetFileIcon(argPath, IconSize)
     Dim yukiText As String = File.Name(argPath)

@@ -7,30 +7,108 @@ Property Read Paths As String
 
 Private $container As HBox
 Private $selection As New NagatoSelection As "Selection"
+Private $cancelButton As MenuButton
 Private $textLabel As TextLabel
+Private $whatList As ComboBox
+Private $whereList As ComboBox
+Private $execButton As MenuButton
+
+Event Cancel
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $container = New HBox(argContainer)
+    
+    With $container
+        .Height = 32
+        .Padding = 2
+    End With
+    
+End
+
+Private Sub initializeCancelButton()
+    
+    $cancelButton = New MenuButton($container) As "CancelButton"
+    
+    With $cancelButton
+        .Text = ("Cancel")
+        .AutoResize = True
+        .Border = True
+        .Arrow = False
+    End With
+    
+End
+
+Private Sub initializeTextLabel()
+    
+    $textLabel = New TextLabel($container)
+    
+    With $textLabel
+        .Alignment = Align.Center
+        .Expand = True
+        .Padding = 2
+    End With
+    
+End
+
+Private Sub initializeWhatList()
+    
+    $whatList = New ComboBox($container) As "WhatList"
+    
+    With $whatList
+        .ReadOnly = True
+        .List = ["Cut/Move to", "Copy to", "Delete", "Create link", "Archive"]
+        .W = 160
+    End With
+    
+End
+
+Private Sub initializeWhereList()
+    
+    Dim yukiPath As String
+    
+    $whereList = New ComboBox($container) As "WhatList"
+    
+    With $whereList
+        .ReadOnly = True
+        .List = ["ClipBoard", "Home", "Dialog"]
+        .W = 160
+        For Each yukiPath In NagatoXdgUserDirs.AllXdgUserDirs
+            .Add(File.Name(yukiPath))
+        Next
+    End With
+    
+End
+
+Private Sub initializeExecButton()
+    
+    $execButton = New MenuButton($container) As "CancelButton"
+    
+    With $execButton
+        .Text = ("Execute")
+        .AutoResize = True
+        .Border = True
+        .Arrow = False
+    End With
+    
+End
 
 Private Sub refresh()
     
-    Debug "refresh all!!!"
-    
     $container.Visible = ($selection.Count > 0) 
      
-     $textLabel.Text = Subst$("&1 items are selected", $selection.Count)
+    $textLabel.Text = Subst$(IIf($selection.Count = 1, "<b>1</b> item is selected", "<b>&1</b> items are selected"), $selection.Count)
      
 End
 
 Public Sub _new(argContainer As TabStrip)
     
-    $container = New HBox(argContainer)
-    
-    $container.Height = 24
-    
-    Debug $container.W
-    
-    $textLabel = New TextLabel($container)
-    $textLabel.Foreground = Color.Black
-    $textLabel.Alignment = Align.Center
-    $textLabel.Expand = True
+    initializeContainer(argContainer)
+    initializeCancelButton()
+    initializeTextLabel()
+    initializeWhatList()
+    initializeWhereList()
+    initializeExecButton()
     
 End
 
@@ -61,6 +139,14 @@ End
 Public Sub Toggle(argPath As String) 
     
     $selection.Toggle(argPath)
+    
+End
+
+Public Sub CancelButton_Click()
+    
+    Debug "Cancel"
+    
+    Raise Cancel
     
 End
 

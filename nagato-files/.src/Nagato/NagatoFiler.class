@@ -115,6 +115,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                     $iconView.SetFocus(argArgument)
                 Endif
             Case .FileMoveToCurrentDir
+                If $log.Current = File.Dir(argArgument) Then Return
                 Try Move argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument)) 
         End Select
     End With

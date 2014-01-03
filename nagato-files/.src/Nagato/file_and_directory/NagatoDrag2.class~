@@ -42,6 +42,7 @@ Public Function GetPaths(argData As String) As String[]
     For Each yukiLine In Split(argData, "\n", "", True)
         If yukiLine = "" Then Continue
         yukiDecodedUrl = getConvertedUri(yukiLine)
+        Debug yukiDecodedUrl
         If Exist(yukiDecodedUrl) Then yukiResult.Add(yukiDecodedUrl)
     Next
     
