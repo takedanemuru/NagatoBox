@@ -112,7 +112,7 @@ Public Function GetTabType(argX As Integer, argY As Integer) As Integer
     Select Case getTabIndex(argX, argY)
         Case MouseMissing
             Return TypeNull
-        Case $tabRectangles.Max
+        Case $tabRectangles.Max 
             Return TypePlusButton
         Default
             Return TypeWebView

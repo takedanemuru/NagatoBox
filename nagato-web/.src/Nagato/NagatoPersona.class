@@ -120,6 +120,8 @@ End
 
 Public Sub Asakura_MouseDrag()
     
+    If $tabs.GetTabOrder(Mouse.StartX) = ($tabs.Max + 1) Then Return
+    
    If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then
         Drag.Icon = Stock["large/down"]
         $drawingArea.Drag(CStr(Mouse.StartX), "text/nagato-web")
@@ -133,7 +135,6 @@ Public Sub Asakura_Drop()
     Dim yukiDropX As Integer
     
     If Drag.Format <> "text/nagato-web" Then Return
-    Debug $tabs.Max
     If $tabs.Max = 1 Then Return
     
     yukiOriginX = $tabs.GetTabOrder(Mouse.StartX)
