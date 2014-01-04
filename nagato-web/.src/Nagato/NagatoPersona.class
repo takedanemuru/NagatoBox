@@ -73,7 +73,7 @@ End
 
 Public Sub Message_Stopped()
     
-    $drawingArea.Refresh()
+    Try $drawingArea.Refresh()
     
 End
 
