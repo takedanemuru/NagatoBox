@@ -143,8 +143,7 @@ Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
             insertWeb($webs.ActiveIndex + 1, argArgument) ' insert new web tab next to active tab
             $webs.ShowActiveTab()
         Case NagatoMenuPipe.WebDownload
-            Debug "Download"
-            Debug argArgument.Url
+            $downloadBar.SetWebDownload(argArgument)
     End Select
     
 End
@@ -174,6 +173,21 @@ Public Sub Persona_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
             $webs.ShowTab(argArgument)
         Case NagatoMenuPipe.PersonaDelete
             $webs.RemoveTab(argArgument)
+    End Select
+    
+    $menubar.SetUrl($webs.ActiveTabUrl)
+    $persona.Refresh()
+    
+End
+
+Public Sub Persona_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.PersonaReorder
+            Debug argArguments[0]
+            Debug argArguments[1]
+            If argArguments[0] = argArguments[1] Then Return
+            $webs.Reorder(argArguments[0], argArguments[1])
     End Select
     
     $menubar.SetUrl($webs.ActiveTabUrl)

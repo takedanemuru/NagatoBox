@@ -73,7 +73,7 @@ End
 
 Public Sub Message_Stopped()
     
-    $drawingArea.Refresh()
+    Try $drawingArea.Refresh()
     
 End
 
@@ -122,13 +122,25 @@ Public Sub Asakura_MouseDrag()
     
    If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then
         Drag.Icon = Stock["large/down"]
-        $drawingArea.Drag("nagato-web/tab")
+        $drawingArea.Drag(CStr(Mouse.StartX), "text/nagato-web")
     Endif
     
 End
 
 Public Sub Asakura_Drop()
     
+    Dim yukiOriginX As Integer
+    Dim yukiDropX As Integer
+    
+    If Drag.Format <> "text/nagato-web" Then Return
+    Debug $tabs.Max
+    If $tabs.Max = 1 Then Return
+    
+    yukiOriginX = $tabs.GetTabOrder(Mouse.StartX)
+    yukiDropX = $tabs.GetTabOrder(Drag.X)
+    
     Drag.Hide()
+    
+    Raise MenuEventWithArgs(NagatoMenuPipe.PersonaReorder, [yukiOriginX, yukiDropX])
     
 End

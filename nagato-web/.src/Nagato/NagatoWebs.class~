@@ -95,6 +95,29 @@ Public Sub Back()
     
 End
 
+Public Sub Reorder(argOrigin As Integer, argTarget As Integer)
+    
+    Dim yukiActiveTab As Integer = -1
+    
+    If argOrigin = $webActiveIndex Then yukiActiveTab = argTarget
+    
+    Debug $webOrder.Max
+    Debug argOrigin
+    Debug argTarget
+
+    If argOrigin > argTarget Then
+        $webOrder.Add($webOrder[argOrigin], argTarget)
+        $webOrder.Remove(argOrigin + 1, 1)
+    Else
+        Try $webOrder.Add($webOrder[argOrigin], argTarget + 1)
+        If Error Then $webOrder.Add($webOrder[argOrigin])
+        $webOrder.Remove(argOrigin, 1)
+    Endif
+    
+    If yukiActiveTab <> -1 Then $webActiveIndex = yukiActiveTab
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = argContainer
@@ -116,6 +139,9 @@ End
 Private Function ActiveTabUrl_Read() As String
 
     Return $webs[$webOrder[$webActiveIndex]].Url
+
+Catch
+    Return ""
 
 End
 

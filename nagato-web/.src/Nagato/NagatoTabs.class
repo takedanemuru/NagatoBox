@@ -44,6 +44,18 @@ Private Function getPlusButtonRectangle(argLeft As Integer) As Rect
     
 End
 
+Public Function GetTabOrder(argMouseX As Integer) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $tabRectangles.Max - 1
+        If $tabRectangles[yukiCount].X + $tabRectangles[yukiCount].W > argMouseX Then Return yukiCount
+    Next
+    
+    Return $tabRectangles.Max + 1
+    
+End
+
 Public Function GetTabIndex(argMouseX As Integer, argMouseY As Integer) As Integer
     
     Dim yukiCount As Integer

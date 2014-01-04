@@ -180,6 +180,21 @@ Public Sub Persona_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
 End
 
+Public Sub Persona_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.PersonaReorder
+            Debug argArguments[0]
+            Debug argArguments[1]
+            If argArguments[0] = argArguments[1] Then Return
+            $webs.Reorder(argArguments[0], argArguments[1])
+    End Select
+    
+    $menubar.SetUrl($webs.ActiveTabUrl)
+    $persona.Refresh()
+    
+End
+
 Public Sub InPageSearch_MenuEvent(argEvent As Integer)
     
     Select Case argEvent

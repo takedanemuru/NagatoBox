@@ -120,18 +120,7 @@ End
 
 Public Sub WebView_Download(argDownload As WebDownload)
     
-    ' Dialog.Title = ("Download")
-    ' Dialog.Path = MikuruSafePath.Get(NagatoXdgUserDirs.Download &/ File.Name(argDownload.Url))
-    ' 
-    ' If Not Dialog.SaveFile() Then
-    '     argDownload.Path = MikuruSafePath.Get(NagatoXdgUserDirs.Download &/ "download")
-    '     $timer.Start
-    ' Endif
-    
     Raise MenuEventWithArg(NagatoMenuPipe.WebDownload, argDownload)
-    
-    ' argDownload.Path = MikuruSafePath.Get(NagatoXdgUserDirs.Download &/ "download")
-    ' $timer.Start()
     
 End
 
