@@ -1,9 +1,37 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,64,64)
+  MoveScaled(0,0,75,64)
   Arrangement = Arrange.Fill
-  { ImageFileChooser FileChooser
-    MoveScaled(11,9,48,42)
+  { ChooserTabs TabStrip
+    MoveScaled(3,2,60,51)
+    Arrangement = Arrange.Fill
+    Count = 2
+    Index = 0
+    Text = ("Recent")
+    { RecentIcons IconView
+      MoveScaled(8,6,46,37)
+    }
+    Index = 1
+    Text = ("Select")
+    { HBox1 HBox
+      MoveScaled(1,1,57,44)
+      { SidePanel1 SidePanel
+        MoveScaled(2,6,24,24)
+        Arrangement = Arrange.Fill
+        Orientation = Align.Left
+        { DirChooser1 DirChooser
+          MoveScaled(0,0,18,48)
+          Expand = True
+        }
+      }
+      { SelectIcons IconView
+        MoveScaled(23,5,32,40)
+        Background = &HF7DFFF&
+        Foreground = &HFFFFFF&
+        Expand = True
+      }
+    }
+    Index = 0
   }
 }

@@ -3,10 +3,24 @@
 Create Static
 
 Property LastPath As String
+Property Read RecentPath As String[]
 Property LastColor As Integer
 Property LastMode As Integer
 
 Private $settings As New Settings
+
+Public Sub PushToRecentPaths(argPath As String)
+    
+    Dim yukiPaths As String[] = $settings["background/recent", [""]]
+    
+    Try yukiPaths.Remove(yukiPaths.Find(argPath), 1)
+    yukiPaths.Add(argPath, 0)
+    yukiPaths.Resize(20)
+    
+    $settings["background/recent"] = yukiPaths
+    $settings.Save()
+    
+End
 
 Private Function LastPath_Read() As String
 
@@ -44,5 +58,13 @@ Private Sub LastMode_Write(Value As Integer)
 
     $settings["background/last_mode"] = Value
     $settings.Save()
+
+End
+
+Private Function RecentPath_Read() As String[]
+
+    Dim yukiPaths As String[] = $settings["background/recent", [""]]
+
+    Return yukiPaths
 
 End

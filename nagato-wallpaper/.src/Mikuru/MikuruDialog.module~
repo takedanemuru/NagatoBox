@@ -1,19 +1,2 @@
 ' Gambas module file
 
-Property ResponseColor As String
-
-Public Enum ResponseCancel, ResponseOk 
-
-Private $responseColor As String
-
-Private Function ResponseColor_Read() As String
-
-    Return $responseColor
-
-End
-
-Private Sub ResponseColor_Write(Value As String)
-
-    $responseColor = "#" & Value
-
-End

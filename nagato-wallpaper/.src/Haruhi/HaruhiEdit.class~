@@ -157,14 +157,9 @@ End
 
 Public Sub SelectButton_Click()
 
-    If NagatoSettings.LastPath <> "" Then Dialog.Path = File.Dir(NagatoSettings.LastPath)
-    
-    Dialog.Title = ("Select picture")
-    Dialog.Path = IIf(NagatoSettings.LastPath = "", User.Home, File.Dir(NagatoSettings.LastPath))
-    
-    If Not Dialog.OpenFile() Then
-        If DesktopMime.FromFile(Dialog.Path).Type Not Begins "image" Then Return
-        $currentPath = Dialog.Path
+    If HaruhiFileChooser.ShowDialog() = MikuruDialog.ResponseSelected Then
+        Debug MikuruDialog.Path
+        $currentPath = MikuruDialog.Path
         PreviewDrawingArea.Refresh()
     Endif
 

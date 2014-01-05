@@ -1,0 +1,27 @@
+' Gambas class file
+
+Private Const IconSize As Integer = 128
+
+Private Function setThumbnail(argPath As String) As Picture
+    
+    Dim yukiIcon As Image
+    Dim yukiRate As Float
+    
+    yukiIcon = Image.Load(argPath)
+    yukiRate = IconSize / Min(yukiIcon.Height, yukiIcon.Width)
+    yukiIcon = yukiIcon.Stretch(yukiIcon.W * yukiRate, yukiIcon.H * yukiRate)
+    NagatoDBThumbnailer.Push(argPath, IconSize, yukiIcon.Picture)
+    
+    Return yukiIcon
+    
+End
+
+Public Function Get(argPath As String) As Picture
+    
+    If NagatoDBThumbnailer.HasThumbnail(argPath, IconSize) Then
+        Return NagatoDBThumbnailer.Get(argPath, IconSize)
+    Else
+        Return setThumbnail(argPath)
+    Endif
+    
+End
