@@ -50,6 +50,25 @@ Private Sub setFormPicture(Optional argBackground As Integer = Color.Lighter(Col
     
 End
 
+Private Sub initializeObserver()
+    
+    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
+    
+    With $directoryObserver
+        .IntervalSecond = 2
+        .Directory = Me.TrashFilesDir
+    End With
+    
+End
+
+Public Sub _AddStarMenu() 'override
+    
+    Dim yukiMenu As NagatoButtonMenuTrashBin
+    
+    yukiMenu = New NagatoButtonMenuTrashBin(Me._$form, Me._$starButton) As "StarMenu"
+    
+End
+
 Public Sub _new()
     
     Me._$form = New Form As "Icon"
@@ -57,10 +76,7 @@ Public Sub _new()
     Me._InitializeForm(Me._$form.Font.RichTextHeight($text) + 72)
     Me._$form.Show
     setFormPicture()
-    
-    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
-    $directoryObserver.IntervalSecond = 2
-    $directoryObserver.Directory = Me.TrashFilesDir
+    initializeObserver()
     
 End
 

@@ -1,9 +1,26 @@
 ' Gambas module file
 
+Private $nonGuiMode As Boolean = False
+
+Private Sub pursingArgs()
+    
+    Dim yukiOptions As String[]
+    
+    Args.Begin()
+        $nonGuiMode = Args.Has("n", "non-gui", "Activate with no gui")
+    yukiOptions = Args.End()
+    
+End
+
 Public Sub Main()
     
-    MikuruObserver.Activate()
+    pursingArgs()
     
-    'haruhiMain.Show()
+    'TODO
+    If $nonGuiMode Then
+        MikuruObserver.Activate()
+    Else
+        haruhiMain.Show()
+    End If
     
 End

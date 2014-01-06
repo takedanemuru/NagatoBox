@@ -24,6 +24,8 @@ End
 
 Public Sub _new()
     
+    NagatoNetworkManager.EnsureActivation()
+    
     Me._$form = New Form As "Icon"
     '$text = getText()
     Me._InitializeForm(Me._$form.Font.RichTextHeight($text) + 72)

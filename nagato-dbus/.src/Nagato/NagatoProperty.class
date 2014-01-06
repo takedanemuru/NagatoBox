@@ -9,6 +9,6 @@ Public Sub _new(argParentKey As String, argElement As XmlElement)
     
     yukiText = Subst$(yukiText, yukiName, yukiAccess, yukiType)
     
-    Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("exclamation-circle"), argParentKey)
+    Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("information-balloon"), argParentKey)
     
 End

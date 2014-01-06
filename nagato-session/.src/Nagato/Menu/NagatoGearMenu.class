@@ -64,6 +64,12 @@ Public Sub _new(argRootMenuName As String)
     
 End
 
+Public Sub AboutMenu_Click()
+    
+    HaruhiAbout.ShowDialog()
+    
+End
+
 Public Sub QuitMenu_Click()
     
     If HaruhiDialogQuitApplication.ShowDialog() = MikuruDialog.ResponseQuit Then

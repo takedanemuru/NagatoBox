@@ -158,9 +158,9 @@ End
 Public Sub SelectButton_Click()
 
     If HaruhiFileChooser.ShowDialog() = MikuruDialog.ResponseSelected Then
-        Debug MikuruDialog.Path
         $currentPath = MikuruDialog.Path
         PreviewDrawingArea.Refresh()
+        NagatoSettings.PushToRecentPaths(MikuruDialog.Path)
     Endif
 
 End

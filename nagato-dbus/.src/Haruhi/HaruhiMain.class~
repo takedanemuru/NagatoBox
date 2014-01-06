@@ -75,6 +75,7 @@ Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.DBusRefresh
+            TreeView1.Clear()
             SessionList.Clear()
             SystemList.Clear()
             setSession()

@@ -103,6 +103,15 @@ Private Sub addWeatherForecast()
     
 End
 
+Private Sub addNetworkIcon()
+    
+    Dim yukiMemo As NagatoNetworkMonitor
+    
+    yukiMemo = New NagatoNetworkMonitor As "Icon"
+    $icons.Add(yukiMemo, "nagato-network-monitor-key")
+    
+End
+
 Private Sub addBatteryIcon()
     
     Dim yukiMemo As NagatoBattery
@@ -130,6 +139,7 @@ Private Sub refreshAll()
     addSlideShow()
     addFileIcons()
     If NagatoUPower.HasBattery Then addBatteryIcon()
+    addNetworkIcon()
     addTrashBin()
     
 End

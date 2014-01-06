@@ -1,27 +1,87 @@
 ' Gambas module file
 
-Private $options As String[]
+Property Read HiddenPath As String
+
+Private $options As New String[]
 Private $setLastPath As Boolean
+
+Private Sub sanitizeOptions(argOptions As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argOptions
+        If Exist(yukiPath) And If DesktopMime.FromFile(yukiPath).Type Begins "image" Then
+            $options.Add(yukiPath)
+        End If
+    Next
+    
+End
 
 Private Sub initializeApplicationArguments()
     
+    Dim yukiOptions As String[]
+    
     Args.Begin()
         $setLastPath = Args.Has("l", "last", ("set last picture"))
-    $options = Args.End()
+    yukiOptions = Args.End()
+    
+    If yukiOptions.Count > 0 Then sanitizeOptions(yukiOptions)
+    
+End
+
+Private Sub saveOriginalImage(argPath As String)
+    
+    Dim yukiImage As Image = Image.Load("Pictures/default.jpg")
+    
+    yukiImage.Save(argPath, 100)
+    
+End
+
+Private Sub saveModefiedImage(argPath As String)
+    
+    Dim yukiImage As Image = Image.Load("Pictures/default.jpg")
+    
+    yukiImage.Save(argPath, 100)
+    
+End
+
+Private Sub initializeHiddenDirectory()
+    
+    If Not Exist(Me.HiddenPath) Then Mkdir Me.HiddenPath
+    If Not Exist(Me.HiddenPath &/ "original.png") Then saveOriginalImage(Me.HiddenPath &/ "original.png")
+    If Not Exist(Me.HiddenPath &/ "modefied.png") Then saveModefiedImage(Me.HiddenPath &/ "modefied.png")
+    
+End
+
+Private Sub setLastPath()
+    
+    With NagatoSettings
+        If .LastPath = "" Then
+            NagatoHSetRoot.SetWallpaper(Me.HiddenPath &/ "original.png", .LastColor, .LastMode)
+        Else
+            NagatoHSetRoot.SetWallpaper(.LastPath, .LastColor, .LastMode)
+        End If
+    End With
     
 End
 
 Public Sub Main()
     
     initializeApplicationArguments()
+    initializeHiddenDirectory()
     
     If $setLastPath Then
-        With NagatoSettings
-            NagatoHSetRoot.SetWallpaper(.LastPath, .LastColor, .LastMode)
-        End With
+        setLastPath()
     Else
         HaruhiEdit.Show()
+        If $options.Count > 0 Then HaruhiEdit.SetPath($options[0])
     End If
     
 End
 
+
+Private Function HiddenPath_Read() As String
+
+    Return User.Home &/ ".nagato-wallpaper"
+
+End

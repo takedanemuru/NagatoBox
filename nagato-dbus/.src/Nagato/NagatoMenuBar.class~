@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoMenuSignal
 
 Private $container As Container
 Private $spacer As NagatoSpacer
