@@ -41,6 +41,7 @@ Private Sub shuffleNext()
     
     Do
         yukiIndex = Rnd(0, $paths.Count)
+        Debug yukiIndex
         If yukiIndex <> $currentPosition Then
             $currentPosition = yukiIndex
             Break

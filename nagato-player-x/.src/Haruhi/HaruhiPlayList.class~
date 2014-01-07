@@ -1,9 +1,8 @@
 ' Gambas class file
 
-Private $radioGridView As NagatoWebRadioGridView
-
 Private $observer As Observer
 Private $gridsPlaylist As NagatoGridsPlaylist
+Private $gridsPlaylists As NagatoGridsPlaylists
 
 Public Sub MoveTo(argUrl As String)
     
@@ -13,14 +12,15 @@ End
 
 Public Sub _new()
 
-    Dim yukiMenu As New NagatoPlaylistMenu
+    Dim yukiMenu As New NagatoPlaylistMenu As "PlaylistMenu"
 
     MenuButton.Menu = yukiMenu.Name
 
-    $radioGridView = New NagatoWebRadioGridView(WebRadioGridView) As "WebRadioGrids"
     $observer = New Observer(NagatoQueue) As "Asakura"
     NagatoSettingsForm.Load(Me)
+    
     $gridsPlaylist = New NagatoGridsPlaylist(PlaylistGrid)
+    $gridsPlaylists = New NagatoGridsPlaylists(PlaylistsGrid)
 
 End
 
@@ -37,6 +37,14 @@ Public Sub PlaylistGrid_Activate()
         NagatoQueue.SetPathAndPlay(NagatoQueue.Paths[PlaylistGrid.Row])
         $gridsPlaylist.SetMark(PlaylistGrid.Row)
     Object.Unlock($observer)
+    
+End
+
+Public Sub PlaylistMenu_SavePlaylist()
+    
+    Debug MikuruDialog.PlaylistName
+    Debug $gridsPlaylist.GetPaths().Count
+    Debug $gridsPlaylist.GetPaths()[3]
     
 End
 

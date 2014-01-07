@@ -4,6 +4,8 @@ Property Read Name As String
 
 Private $rootMenu As Menu
 
+Event SavePlaylist
+
 Private Sub initializeRootMenu()
     
     $rootMenu = New Menu(HaruhiPlayList)
@@ -32,6 +34,17 @@ Private Sub addAddDirectoryMenu()
         .Text = ("AddDirectory")
     End With
     
+End
+
+Private Sub addSaveAsPlaylistMenu()
+    
+    Dim yukiMenu As New Menu($rootMenu) As "SaveAsPlaylistMenu"
+    
+    With yukiMenu 
+        .Picture = MikuruIcon.Get("hard-drive-download")
+        .Text = ("Save as playlist")
+    End With
+
 End
 
 Private Sub addClearMenu()
@@ -82,6 +95,8 @@ Public Sub _new()
     initializeRootMenu()
     addAddMusicMenu()
     addAddDirectoryMenu()
+    addSaveAsPlaylistMenu()
+        addSpacer()
     addClearMenu()
         addSpacer()
     addAboutMenu()
@@ -107,6 +122,12 @@ Public Sub AddDirectoryMenu_Click()
     Dialog.Path = User.Home
     
     If Not Dialog.SelectDirectory() Then NagatoQueue.AddDirectory(Dialog.Path)
+    
+End
+
+Public Sub SaveAsPlaylistMenu_Click()
+    
+    If HaruhiSaveAsPlaylist.ShowDialog() = MikuruDialog.ResponseApply Then Raise SavePlaylist
     
 End
 

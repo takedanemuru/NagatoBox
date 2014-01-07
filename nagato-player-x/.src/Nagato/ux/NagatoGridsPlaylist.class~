@@ -39,6 +39,7 @@ Private Sub refreshData()
         If Me._$grids[yukiRowIndex, ColumnTitle].Text = "" Then 
             Me._$grids[yukiRowIndex, ColumnTitle].Text = File.BaseName(NagatoQueue.Paths[yukiRowIndex])
         End If
+        Me._AdjustColumnWidth(ColumnTitle, yukiRowIndex)
         Try Me._SetGridData(yukiRowIndex, ColumnArtist, yukiResult[NagatoDBMedia.ColumnArtist])
         Try Me._SetGridData(yukiRowIndex, ColumnAlbum, yukiResult[NagatoDBMedia.ColumnAlbum])
         Me._SetGridData(yukiRowIndex, ColumnPath, NagatoQueue.Paths[yukiRowIndex])
@@ -94,6 +95,21 @@ End
 Public Sub Refresh()
     
     refreshData()
+    
+End
+
+Public Function GetPaths() As String[]
+    
+    Dim yukiPaths As New String[]
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        If Exist(Me._$grids[yukiRow, ColumnPath].Text) Then
+            yukiPaths.Add(Me._$grids[yukiRow, ColumnPath].Text)
+        Endif
+    Next
+    
+    Return yukiPaths
     
 End
 

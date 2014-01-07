@@ -42,6 +42,16 @@ Public Sub _SetGridData(argRow As Integer, argColumn As Integer, argData As Stri
     
 End
 
+Public Sub _AdjustColumnWidth(argColumn As Integer, argRow As Integer)
+    
+    With Me._$grids
+        If .Font.TextWidth(.[argRow, argColumn].Text) > .Columns[argColumn].W Then
+            .Columns[argColumn].W = .Font.TextWidth(.[argRow, argColumn].Text)
+        Endif
+    End With
+    
+End
+
 Public Sub _ContextMenu()
     
     

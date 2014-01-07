@@ -18,6 +18,9 @@ End
 
 Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
 
+    Debug Mouse.X
+    Debug Mouse.Y
+
     If MikuruUx.PlayButton.Contains(argMouseX, argMouseY) Then
         NagatoQueue.Play()
     Else If MikuruUx.PauseButton.Contains(argMouseX, argMouseY) Then

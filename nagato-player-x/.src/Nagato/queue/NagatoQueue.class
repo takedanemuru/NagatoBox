@@ -16,7 +16,7 @@ Property Read ProgressRate As Float
 Property Read ProgressText As String
 
 Private $observer As Observer
-Private $player As New NagatoPlayerLegacy As "Player"
+Private $player As New NagatoPlayer As "Player"
 Private $tags As New NagatoTags
 Private $musicPaths As New NagatoMusicPaths As "MusicPaths"
 
@@ -91,8 +91,16 @@ End
 
 Public Sub Play()
     
+    Debug "Play it !!"
+    
     If Me.Count = 0 Then Return
     If $player.State <> Media.Playing Then $player.Play()
+    
+    Debug Me.CurrentPath
+    Debug $player.State
+    Debug Media.Null
+    
+    Debug "OK ?"
     
 End
 

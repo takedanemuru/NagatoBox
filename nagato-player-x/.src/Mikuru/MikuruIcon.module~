@@ -5,4 +5,3 @@ Public Function GetFromPath(argPath As String) As Picture
     Return Image.Load(argPath).Stretch(2 * MikuruUx.Grid, 2 * MikuruUx.Grid).Picture
     
 End
-

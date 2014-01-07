@@ -5,3 +5,11 @@ Public Function GetFromPath(argPath As String) As Picture
     Return Image.Load(argPath).Stretch(2 * MikuruUx.Grid, 2 * MikuruUx.Grid).Picture
     
 End
+
+Public Function Get(argName As String, Optional argSize As Integer = 2 * MikuruUx.Grid) As Picture
+    
+    Dim yukiImage As Image = Image.Load(Subst$("Pictures/icons/&1.png", argName))
+    
+    Return yukiImage.Stretch(argSize, argSize).Picture
+    
+End

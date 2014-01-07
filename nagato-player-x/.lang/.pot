@@ -18,7 +18,7 @@ msgstr ""
 msgid "a music player with gstreamer backend."
 msgstr ""
 
-#: HaruhiAbout.form:10 NagatoPlaylistMenu.class:64
+#: HaruhiAbout.form:10 NagatoPlaylistMenu.class:77
 msgid "About nagato-player-x"
 msgstr ""
 
@@ -26,28 +26,41 @@ msgstr ""
 msgid "TextLabel1"
 msgstr ""
 
-#: HaruhiPlayList.form:14
+#: HaruhiPlayList.form:16
 msgid "Playlist"
 msgstr ""
 
-#: HaruhiPlayList.form:25
+#: HaruhiPlayList.form:27
 msgid "Now playing"
 msgstr ""
 
-#: HaruhiPlayList.form:56
+#: HaruhiPlayList.form:53
 msgid "Playlists"
 msgstr ""
 
-#: HaruhiPlayList.form:59
+#: HaruhiPlayList.form:79
 msgid "Albums"
 msgstr ""
 
-#: HaruhiPlayList.form:62
+#: HaruhiPlayList.form:82
 msgid "Library"
 msgstr ""
 
-#: HaruhiPlayList.form:65
-msgid "Internet radio"
+#: HaruhiSaveAsPlaylist.form:13
+msgid "Save"
+msgstr ""
+
+#: HaruhiSaveAsPlaylist.form:18 HaruhiTagEdit.form:75
+#: HaruhiTagEditBulk.form:77
+msgid "Cancel"
+msgstr ""
+
+#: HaruhiSaveAsPlaylist.form:23
+msgid "Input or select Playlist Name"
+msgstr ""
+
+#: HaruhiSaveAsPlaylist.class:32
+msgid "Input or select Playlist name"
 msgstr ""
 
 #: HaruhiTagEdit.form:24 HaruhiTagEditBulk.form:24
@@ -68,10 +81,6 @@ msgstr ""
 
 #: HaruhiTagEdit.form:69 HaruhiTagEditBulk.form:71
 msgid "Apply"
-msgstr ""
-
-#: HaruhiTagEdit.form:75 HaruhiTagEditBulk.form:77
-msgid "Cancel"
 msgstr ""
 
 #: HaruhiTagEdit.form:81 HaruhiTagEditBulk.form:83
@@ -126,7 +135,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: NagatoMusicPaths.class:141
+#: NagatoMusicPaths.class:142
 msgid "Playlist is cleared."
 msgstr ""
 
@@ -134,38 +143,34 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: NagatoPlaylistMenu.class:21
+#: NagatoPlaylistMenu.class:23
 msgid "AddMusic"
 msgstr ""
 
-#: NagatoPlaylistMenu.class:32
+#: NagatoPlaylistMenu.class:34
 msgid "AddDirectory"
 msgstr ""
 
-#: NagatoPlaylistMenu.class:43
+#: NagatoPlaylistMenu.class:45
+msgid "Save as playlist"
+msgstr ""
+
+#: NagatoPlaylistMenu.class:56
 msgid "Clear all"
 msgstr ""
 
-#: NagatoPlaylistMenu.class:75
+#: NagatoPlaylistMenu.class:88
 msgid "Close playlist"
 msgstr ""
 
-#: NagatoPlaylistMenu.class:95
+#: NagatoPlaylistMenu.class:110
 msgid "Select music"
 msgstr ""
 
-#: NagatoPlaylistMenu.class:106
+#: NagatoPlaylistMenu.class:121
 msgid "Select directory"
 msgstr ""
 
 #: NagatoTags.class:22
 msgid "UNKNOWN"
-msgstr ""
-
-#: NagatoWebRadioGridView.class:11
-msgid "Radio name"
-msgstr ""
-
-#: NagatoWebRadioGridView.class:12
-msgid "url"
 msgstr ""

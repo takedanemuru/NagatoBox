@@ -37,7 +37,6 @@ Public Sub SetUrlAndPlay(argPath As String)
     
     If NagatoQueue.SetPath(argPath) Then
         Try $player.Stop
-        MikuruWebRadio.Stop()
         $player.URL = MikuruPath.GetUrl(argPath)
         $player.Play()
     End If
@@ -51,7 +50,6 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        MikuruWebRadio.Stop()
         Try $player.URL = NagatoQueue.CurrentPath
     End If
     

@@ -1,3 +1,19 @@
 ' Gambas module file
 
+Property PlaylistName As String
+
 Public Enum ResponseCancel = 1001, ResponseApply = 1002
+
+Private $playlistName As String
+
+Private Function PlaylistName_Read() As String
+
+    Return $playlistName
+
+End
+
+Private Sub PlaylistName_Write(Value As String)
+
+    $playlistName = Value
+
+End

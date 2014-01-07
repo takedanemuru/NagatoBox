@@ -17,7 +17,6 @@ End
 Public Sub Form_Open()
     
     Application.MainWindow = Me
-    MikuruWebRadio.EnsureDefault()
     NagatoDBus.Register()
     
     NagatoSettingsForm.SetMainFormSize(Me)

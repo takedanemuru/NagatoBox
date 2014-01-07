@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Private Enum ColumnIcon, ColumnTitle, ColumnCount
+
+Public Sub _InitializeGrids() 'override
+    
+    With Me._$grids
+        .Columns.Count = 3
+        .Columns[ColumnIcon].W = MikuruUx.Padding
+        .Columns[ColumnTitle].Text = "Name"
+        .Columns[ColumnCount].Text = "Musics"
+    End With
+    
+    'refreshData()
+    
+End

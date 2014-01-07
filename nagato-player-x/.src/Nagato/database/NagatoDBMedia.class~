@@ -18,8 +18,10 @@ Public Const ColumnStars As String = "stars"
 
 Public Const TablePlaylistNames As String = "playlist_names"
 Public Const ColumnPlaylistName As String = "playlist_name"
+Public Const ColumnPlaylistOrder As String = "playlist_order"
 
 Public Const TablePlaylistData As String = "playlist_data"
+Public Const ColumnPlaylistNameId As String = "playlist_name_id"
 
 Public _$uniqueName As String = "Media"
 
@@ -130,6 +132,7 @@ Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
         yukiResult[ColumnTitle] = MikuruId3TagInfo.GetTitle(argPath)
         yukiResult[ColumnArtist] = MikuruId3TagInfo.GetArtist(argPath)
         yukiResult[ColumnAlbum] = MikuruId3TagInfo.GetAlbum(argPath)
+        yukiResult[ColumnPath] = argPath
         yukiResult.Update()
     Me._$connection.Commit()
     
@@ -177,6 +180,19 @@ Public Function GetLibrary() As Result
     Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableLibrary, ColumnTitle)
     
     Return Me._$connection.Exec(yukiQuery)
+    
+End
+
+Public Sub SaveAsPlaylist(argPlaylistName As String, argPaths As String[])
+    
+    $tablePlaylistNames.EnsurePlaylistName(argPlaylistName)
+    $tablePlaylistData.OverwritePlaylist($tablePlaylistNames.GetPlaylistNameId(argPlaylistName), argPaths)
+    
+End
+
+Public Sub HasPlaylist() As Boolean
+    
+    Return $tablePlaylistNames.HasResult()
     
 End
 

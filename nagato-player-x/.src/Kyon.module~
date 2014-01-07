@@ -30,7 +30,7 @@ Private Sub activateMusicQueue()
     If yukiPaths.Count > 0 Then
         NagatoQueue.Activate(yukiPaths)
         HaruhiPlayer.Show()
-        NagatoPlayer.Play()
+        NagatoQueue.Play()
         Return
     Endif
     

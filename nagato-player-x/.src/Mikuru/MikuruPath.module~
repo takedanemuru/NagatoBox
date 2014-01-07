@@ -98,10 +98,6 @@ End
 
 Public Function GetUrl(argPath As String) As String
     
-    If DesktopMime.FromFile(argPath).Type = "audio/x-scpls" Then
-        Return NagatoPls.GetUrlFromPath(argPath)
-    Else
-        Return Media.URL(argPath)
-    End If
+    Return Media.URL(argPath)
     
 End

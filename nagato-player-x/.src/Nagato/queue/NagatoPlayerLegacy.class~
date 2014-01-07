@@ -3,10 +3,8 @@
 Property Read ProgressRate As Float
 Property Read ProgressText As String
 Property Read State As Integer
-'Property Read TagTitle As String
 
 Private $player As New MediaPlayer As "Player"
-'Private $title As String
 
 Event MusicEnd
 
@@ -45,7 +43,6 @@ Public Sub SetUrlAndPlay(argPath As String)
     End If
     
 Catch
-    Debug Error.Text
     Return
     
 End
@@ -84,14 +81,6 @@ Public Sub Player_End()
     
 End
 
-' Public Sub Player_Tag(argTags As MediaTagList)
-'     
-'     ' If argTags["title"] <> "" Then
-'     '     $title = argTags["title"]
-'     ' End If
-'     
-' End
-
 Private Function ProgressRate_Read() As Float
 
     Return ($player.Position / $player.Duration)
@@ -123,9 +112,3 @@ Catch
     Return MediaPlayer.Null
 
 End
-
-' Private Function TagTitle_Read() As String
-' 
-'     Return $title
-' 
-' End
