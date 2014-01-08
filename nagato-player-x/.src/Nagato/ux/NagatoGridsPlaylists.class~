@@ -2,17 +2,33 @@
 
 Inherits NagatoGrids
 
-Private Enum ColumnIcon, ColumnTitle, ColumnCount
+Private Enum ColumnIcon, ColumnTitle, ColumnCount, ColumnSpacer
+
+Private Sub refreshData()
+    
+    Dim yukiResult As Result = NagatoDBMedia.GetAllIdResult()
+    
+    For Each yukiResult
+        Inc Me._$grids.Rows.Count
+        Me._$grids[Me._$grids.Rows.Max, ColumnTitle].Text = yukiResult[NagatoDBMedia.ColumnPlaylistName]
+        Me._AdjustColumnWidth(ColumnTitle, Me._$grids.Rows.Max)
+        Me._$grids[Me._$grids.Rows.Max, ColumnCount].Text = NagatoDBMedia.GetMusicCountInPlaylist(yukiResult[NagatoDBMedia.ColumnId])
+        Me._$grids[Me._$grids.Rows.Max, ColumnCount].Alignment = Align.Right
+        Me._AdjustColumnWidth(ColumnCount, Me._$grids.Rows.Max)
+        If Odd(Me._$grids.Rows.Max) Then Me._SetBackgroundColor(Me._$grids.Rows.Max, MikuruColor.GridBackgroundViolet)
+    Next
+    
+End
 
 Public Sub _InitializeGrids() 'override
     
     With Me._$grids
-        .Columns.Count = 3
+        .Columns.Count = 4
         .Columns[ColumnIcon].W = MikuruUx.Padding
         .Columns[ColumnTitle].Text = "Name"
         .Columns[ColumnCount].Text = "Musics"
     End With
     
-    'refreshData()
+    If NagatoDBMedia.HasPlaylist() Then refreshData()
     
 End

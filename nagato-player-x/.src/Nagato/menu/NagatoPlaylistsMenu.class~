@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoStarMenu
+
+Property Read Name As String
+
+Private Sub initializeRootMenu()
+    
+    $rootMenu = New Menu(HaruhiPlayList)
+    $rootMenu.Visible = False
+    $rootMenu.Name = Me.Name
+    
+End
+
+Public Sub _new()
+    
+    initializeRootMenu()
+
+End 
+
+Private Function Name_Read() As String
+
+    Return "PlaylistsMenu"
+
+End

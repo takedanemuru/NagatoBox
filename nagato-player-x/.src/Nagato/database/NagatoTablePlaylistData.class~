@@ -42,13 +42,10 @@ Public Sub OverwritePlaylist(argPlaylistNameId As Integer, argPaths As String[])
     
     Dim yukiPath As String
     
-    Debug argPlaylistNameId
-    
     Try Me._$connection.Delete(NagatoDBMedia.TablePlaylistData, "playlist_name_id = &1", argPlaylistNameId)
     
     For Each yukiPath In argPaths
         save(argPlaylistNameId, yukiPath)
-        Debug yukiPath
     Next
     
 End

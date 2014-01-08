@@ -4,6 +4,8 @@ Property Read Name As String
 
 Private $rootMenu As Menu
 
+Event SavePlaylist
+
 Private Sub initializeRootMenu()
     
     $rootMenu = New Menu(HaruhiPlayList)
@@ -125,7 +127,7 @@ End
 
 Public Sub SaveAsPlaylistMenu_Click()
     
-    HaruhiSaveAsPlaylist.ShowDialog()
+    If HaruhiSaveAsPlaylist.ShowDialog() = MikuruDialog.ResponseApply Then Raise SavePlaylist
     
 End
 

@@ -20,7 +20,7 @@
         MoveScaled(0,0,45,3)
         Expand = True
       }
-      { MenuButton MenuButton
+      { StarButtonNowPlaying MenuButton
         MoveScaled(69,0,4,4)
         Picture = Picture["Pictures/star(1).png"]
         Arrow = False
@@ -42,13 +42,13 @@
         MoveScaled(0,0,45,3)
         Expand = True
       }
-      { MenuButton2 MenuButton
+      { StarButtonPlaylists MenuButton
         MoveScaled(69,0,4,4)
         Picture = Picture["Pictures/star(1).png"]
         Arrow = False
       }
     }
-    { PlaylistGrid2 GridView
+    { PlaylistsGrid GridView
       MoveScaled(0,5,77,31)
       Expand = True
       Mode = Select.Multiple

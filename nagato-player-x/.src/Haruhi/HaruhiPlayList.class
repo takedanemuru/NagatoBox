@@ -1,55 +1,28 @@
 ' Gambas class file
 
-Private $observer As Observer
-Private $gridsPlaylist As NagatoGridsPlaylist
 Private $gridsPlaylists As NagatoGridsPlaylists
+Private $nowPlayingTab As NagatoTabNowPlaying
+Private $playlistsTab As NagatoTabPlaylists
 
 Public Sub MoveTo(argUrl As String)
     
-    $gridsPlaylist.MoveTo(argUrl)
+    $nowPlayingTab.MoveTo(argUrl)
     
 End
 
 Public Sub _new()
 
-    Dim yukiMenu As New NagatoPlaylistMenu As "PlaylistMenu"
-
-    MenuButton.Menu = yukiMenu.Name
-
-    $observer = New Observer(NagatoQueue) As "Asakura"
     NagatoSettingsForm.Load(Me)
     
-    $gridsPlaylist = New NagatoGridsPlaylist(PlaylistGrid)
-    $gridsPlaylists = New NagatoGridsPlaylists(PlaylistsGrid)
-
+    $nowPlayingTab = New NagatoTabNowPlaying(StarButtonNowPlaying, NowPlayingGrid) As "NowPlayingTab"
+    '$gridsPlaylists = New NagatoGridsPlaylists(PlaylistsGrid) 
+    $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
+    
 End
 
 Public Sub Form_Close()
     
     NagatoSettingsMusic.SavePaths(NagatoQueue.Paths)
     NagatoSettingsForm.Save(Me)
-    
-End
-
-Public Sub PlaylistGrid_Activate()
-    
-    Object.Lock($observer)
-        NagatoQueue.SetPathAndPlay(NagatoQueue.Paths[PlaylistGrid.Row])
-        $gridsPlaylist.SetMark(PlaylistGrid.Row)
-    Object.Unlock($observer)
-    
-End
-
-Public Sub PlaylistMenu_SavePlaylist()
-    
-    If $gridsPlaylist.GetPaths().Count = 0 Then Return
-    
-    NagatoDBMedia.SaveAsPlaylist(MikuruDialog.PlaylistName, $gridsPlaylist.GetPaths())
-    
-End
-
-Public Sub Asakura_Changed()
-    
-    $gridsPlaylist.Refresh()
     
 End

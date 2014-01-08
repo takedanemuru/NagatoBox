@@ -1,0 +1,78 @@
+' Gambas class file
+
+Property Read Name As String
+
+Public _$rootMenu As Menu
+
+Public Sub _InitializeRootMenu()
+    
+    Me._$rootMenu = New Menu(HaruhiPlayList)
+    
+    With Me._$rootMenu
+        .Visible = False
+        .Name = Me.Name
+    End With
+    
+End
+
+Public Sub _AddMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Public Sub _AddSpacer()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    
+    With yukiMenu 
+        .Text = ""
+    End With
+    
+End
+
+Public Sub _AddAboutMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AboutMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/headphone.png")
+        .Text = ("About nagato-player-x")
+    End With
+    
+End
+
+Public Sub _AddClosePlaylistMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ClosePlaylistMenu"
+    
+    With yukiMenu 
+        .Picture = Picture.Load("Pictures/button-cross.png")
+        .Text = ("Close playlist")
+    End With
+    
+End
+
+Public Sub ClosePlaylistMenu_Click()
+    
+    HaruhiPlayList.Close()
+    
+End
+
+Public Sub AboutMenu_Click()
+    
+    HaruhiAbout.Show()
+    
+End
+
+Private Function Name_Read() As String
+    
+    Return "StarMenu"
+    
+End

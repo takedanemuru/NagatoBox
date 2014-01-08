@@ -4,6 +4,8 @@ Inherits NagatoGrids
 
 Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnPath
 
+Private $observer As Observer
+
 Private Sub setPlayMark(argRow As Integer)
     
     Dim yukiRow As Integer
@@ -58,6 +60,8 @@ Public Sub _InitializeGrids() 'override
         .Columns[ColumnAlbum].Text = "Album"
         .Columns[ColumnPath].Text = "Path/URL"
     End With
+    
+    $observer = New Observer(Me._$grids) As "Asakura"
     
     refreshData()
     
@@ -123,3 +127,15 @@ Public Sub ContextMenu_Delete()
     Next
     
 End
+
+Public Sub Asakura_Activate()
+    
+    Debug Me._$grids.Row
+    
+    Object.Lock($observer)
+        NagatoQueue.SetPathAndPlay(NagatoQueue.Paths[Me._$grids.Row])
+        Me.SetMark(Me._$grids.Row)
+    Object.Unlock($observer)
+    
+End
+' 

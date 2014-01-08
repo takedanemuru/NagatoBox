@@ -45,8 +45,8 @@ End
 Public Sub _AdjustColumnWidth(argColumn As Integer, argRow As Integer)
     
     With Me._$grids
-        If .Font.TextWidth(.[argRow, argColumn].Text) > .Columns[argColumn].W Then
-            .Columns[argColumn].W = .Font.TextWidth(.[argRow, argColumn].Text)
+        If .Font.TextWidth(.[argRow, argColumn].Text) + MikuruUx.Grid > .Columns[argColumn].W Then
+            .Columns[argColumn].W = .Font.TextWidth(.[argRow, argColumn].Text) + MikuruUx.Grid
         Endif
     End With
     

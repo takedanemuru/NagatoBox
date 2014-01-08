@@ -55,3 +55,19 @@ Public Function GetPlaylistNameId(argPlaylistName As String) As Integer
     Return yukiResult[NagatoDBMedia.ColumnId]
     
 End
+
+Public Function GetAllResult() As Result
+    
+    Return Me._$connection.Find(NagatoDBMedia.TablePlaylistNames)
+    
+End
+
+Public Function HasResult() As Boolean
+    
+    If Me._$connection.Find(NagatoDBMedia.TablePlaylistNames).Count > 0 Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
