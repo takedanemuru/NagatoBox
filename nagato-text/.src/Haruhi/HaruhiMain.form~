@@ -6,11 +6,16 @@
   Arrangement = Arrange.Fill
   { MainTabs TabStrip
     MoveScaled(3,4,46,40)
-    Background = &HB5A7DF&
+    Background = &HCFBFFF&
     Arrangement = Arrange.Vertical
     Closable = True
     Index = 0
-    Text = ("TabStrip1")
+    Text = ("Recent files")
+    { RecentFilesIconView IconView
+      MoveScaled(14,6,16,16)
+      Background = &HF7DFFF&
+      Expand = True
+    }
     Index = 0
   }
 }

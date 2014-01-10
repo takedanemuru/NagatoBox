@@ -15,7 +15,7 @@ Private Sub initializeIconView(argContainer As Container)
     With $iconView
         .Expand = True
         .Picture = picture.Load("pictures/about.png")
-        .Mode = Select.Multiple
+        .Mode = Select.Single
         .IconLines = 0
         .Drop = True
         .Orientation = Arrange.Horizontal

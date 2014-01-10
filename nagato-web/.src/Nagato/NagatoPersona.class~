@@ -120,10 +120,6 @@ End
 
 Public Sub Asakura_MouseDrag()
     
-    Debug $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypePlusButton
-    Debug $tabs.GetTabOrder(Mouse.StartX)
-    Debug $tabs.Max
-    
     If $tabs.GetTabOrder(Mouse.StartX) = ($tabs.Max + 1) Then Return
     
    If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then

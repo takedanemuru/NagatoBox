@@ -43,6 +43,29 @@ Catch
     
 End
 
+Public Function IsArchiveFile(argFullPath As String) As Boolean
+    
+    Dim yukiMimeType As String = DesktopMime.FromFile(argFullPath).Type
+    
+    Debug yukiMimeType
+    
+    If yukiMimeType Begins "application/x-compress" Then Return True
+    If yukiMimeType = "application/zip" Then Return True
+    If yukiMimeType = "x-zip-compressed" Then Return True
+    If yukiMimeType = "application/lha" Then Return True
+    If yukiMimeType = "application/x-rar-compressed" Then Return True
+    If yukiMimeType = "application/x-rar" Then Return True
+    If yukiMimeType = "application/x-commpress" Then Return True
+    If yukiMimeType = "application/x-tar" Then Return True
+    If yukiMimeType = "application/x-gzip" Then Return True
+    
+    Return False
+    
+Catch
+    Return False
+    
+End
+
 Private Function UriList_Read() As String
 
     Return "text/uri-list"

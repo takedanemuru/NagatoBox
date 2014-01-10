@@ -1,8 +1,10 @@
 ' Gambas class file
 
 Private $button As NagatoStarButton
-Private $taskBar As NagatoTaskBar
+Private $taskBar As NagatoTaskBarTint2Mode
 Private $clock As NagatoClock
+Private $observer As Observer
+Private $watcher As New DesktopWatcher As "Watcher"
 
 Private Sub setForm()
     
@@ -19,8 +21,10 @@ Public Sub Form_Open()
     NagatoTimer.Activate()
 
     $button = New NagatoStarButton(HBox1) As "StarButton"
-    $taskBar = New NagatoTaskBar(HBox1) As "TaskBar"
+    $taskBar = New NagatoTaskBarTint2Mode(HBox1) As "TaskBar"
     $clock = New NagatoClock(HBox1) As "Clock"
+    $observer = New Observer(NagatoTimer) As "Asakura"
+    $watcher.RootWindow = True
 
 End
 
@@ -28,4 +32,16 @@ Public Sub Form_Enter()
 
     If Mouse.ScreenY > Screen.H - 2 Then HaruhiPersona.EnsureVisible()
         
+End
+
+Public Sub Watcher_Change()
+    
+    Debug Desktop.Current
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    setForm()
+    
 End

@@ -10,7 +10,11 @@
     Arrangement = Arrange.Vertical
     Closable = True
     Index = 0
-    Text = ("TabStrip1")
+    Text = ("Recent files")
+    { RecentFilesIconView IconView
+      MoveScaled(14,6,16,16)
+      Expand = True
+    }
     Index = 0
   }
 }

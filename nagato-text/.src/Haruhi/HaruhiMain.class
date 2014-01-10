@@ -7,6 +7,7 @@ Private Sub newTab(Optional argPath As String = "")
     Inc MainTabs.Count
     MainTabs.Index = MainTabs.Count - 1
 
+    refreshRecentPaths(argPath)
     yukiTextPad = New NagatoTextPad(MainTabs, argPath) As "TextPad"
     
 End
@@ -20,8 +21,25 @@ Private Sub activateMe()
     
 End
 
+Private Sub refreshRecentPaths(argPath As String)
+    
+    Dim yukiPath As String
+    
+    If Exist(argPath) Then NagatoSettings.PushRecentPath(argPath)
+    
+    RecentFilesIconView.Clear()
+    
+    For Each yukiPath In NagatoSettings.RecentPaths
+        If Not RecentFilesIconView.Exist(yukiPath) Then
+            RecentFilesIconView.Add(yukiPath, File.Name(yukiPath), MikuruTextTile.Get(yukiPath))
+        End If
+    Next
+    
+End
+
 Public Sub SetPath(argPath As String)
     
+    refreshRecentPaths(argPath)
     activateMe()
     newTab(argPath)
     
@@ -31,12 +49,23 @@ Public Sub OpenWithPath(Optional argPath As String = "")
     
     Dim yukiTextPad As NagatoTextPad
     
+    refreshRecentPaths(argPath)
+    
+    Inc MainTabs.Count
+    MainTabs.Index = MainTabs.Count - 1
+    
     yukiTextPad = New NagatoTextPad(MainTabs, argPath) As "TextPad"
     
     Object.Lock(Me)
         Me.Show()
         NagatoSettings.LoadFormSettings(Me)
     Object.Unlock(Me)
+    
+End
+
+Public Sub InitializeRecentIconView()
+    
+    refreshRecentPaths("")
     
 End
 
@@ -54,6 +83,8 @@ Public Sub TextPad_Signal(argSignal As Integer, argValue As Variant[])
             newTab()
         Case MikuruSignal.ViewNewTabWithPath
             newTab(argValue[0])
+        Case MikuruSignal.FileNewPath
+            refreshRecentPaths(argValue[0])
     End Select
     
 End
@@ -62,6 +93,7 @@ Public Sub MainTabs_Close(Index As Integer)
 
     Dim yukiCount As Integer
 
+    If Index = 0 Then Return
     If MainTabs.Count = 1 Then Return
 
     For yukiCount = MainTabs[Index].Children.Count - 1 DownTo 0
@@ -69,5 +101,13 @@ Public Sub MainTabs_Close(Index As Integer)
     Next
     
     MainTabs[Index].Delete()
+
+End
+
+Public Sub RecentFilesIconView_Activate()
+
+    Debug RecentFilesIconView.Key
+
+    OpenWithPath(RecentFilesIconView.Key)
 
 End

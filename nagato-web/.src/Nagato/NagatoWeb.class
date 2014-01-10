@@ -21,6 +21,7 @@ Private Sub addWebView(argUrl As String)
         .Expand = True
         .Url = argUrl
         .UserAgent = "NagatoWeb"
+        .Tracking = True
     End With
     
 End
@@ -86,11 +87,20 @@ Public Sub WebView_Load()
     
 End
 
-Public Sub WebView_Link(argLink As String)
+Public Sub WebView_MouseMove()
     
-    If Not argLink = "" Then $lastLink = argLink
+    Dim yukiHitTest As WebHitTest = $webView.HitTest(Mouse.X, Mouse.Y)
+    Dim yukiUrl As String = yukiHitTest.Url
+    
+    If yukiUrl <> "" Then $lastLink = yukiUrl
     
 End
+
+' Public Sub WebView_Link(argLink As String)
+'     
+'     If Not argLink = "" Then $lastLink = argLink
+'     
+' End
 
 Public Sub WebView_NewWindow(argModal As Boolean)
     

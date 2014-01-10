@@ -27,6 +27,7 @@ Public Sub Main()
         Debug "unique"
         NagatoDBus.Register()
         HaruhiMain.OpenWithPath($startUpPath)
+        HaruhiMain.InitializeRecentIconView()
     Else
         Debug "non unique"
         Try DBus["org.gambas.nagato.text"]["/org/nagato/text", "org.gambas.nagato.text.nagatointerface"].SetFilePath($startUpPath)

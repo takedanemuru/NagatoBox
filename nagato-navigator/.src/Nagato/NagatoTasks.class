@@ -47,6 +47,18 @@ Public Function Get() As DesktopWindow[]
     
 End
 
+Public Function GetWindowsInDesktop(argDesktop As Integer) As DesktopWindow[]
+    
+    Dim yukiWindows As New DesktopWindow[]
+    
+    Desktop.Windows.Refresh()
+    
+    yukiWindows = pushWindow(yukiWindows, argDesktop)
+    
+    Return yukiWindows
+    
+End
+
 Private Function Count_Read() As Integer
 
     Return Desktop.Windows.Count

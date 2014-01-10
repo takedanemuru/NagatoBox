@@ -19,6 +19,7 @@ Private Sub openInCurrentTab()
     If Not MikuruDialog.SelectTextFile() Then
         Try $textArea.Text = File.Load(MikuruDialog.TextFilePath)
         If Not Error Then
+            Raise Signal(MikuruSignal.FileNewPath, [MikuruDialog.TextFilePath])
             $status.NewPath(MikuruDialog.TextFilePath)
             setTitle(File.Name(MikuruDialog.TextFilePath))
         End If

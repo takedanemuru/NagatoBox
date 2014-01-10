@@ -1,6 +1,5 @@
 ' Gambas class file
 
-Private $gridsPlaylists As NagatoGridsPlaylists
 Private $nowPlayingTab As NagatoTabNowPlaying
 Private $playlistsTab As NagatoTabPlaylists
 
@@ -15,7 +14,6 @@ Public Sub _new()
     NagatoSettingsForm.Load(Me)
     
     $nowPlayingTab = New NagatoTabNowPlaying(StarButtonNowPlaying, NowPlayingGrid) As "NowPlayingTab"
-    '$gridsPlaylists = New NagatoGridsPlaylists(PlaylistsGrid) 
     $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
     
 End
