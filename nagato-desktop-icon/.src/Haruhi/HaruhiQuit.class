@@ -19,8 +19,10 @@ End
 
 
 Public Sub QuitButton_Click()
-
+    
     NagatoDBus.Unregister()
+    
+    Shell Subst$("nagato-taskmanager --unregister &1", Application.Name)
     
     Me.Close(Me.ResponseQuit)
 

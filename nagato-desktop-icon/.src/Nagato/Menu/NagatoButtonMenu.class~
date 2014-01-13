@@ -61,7 +61,7 @@ Public Sub MenuItem_Click()
         Case NagatoMenuPipe.AppAbout
             HaruhiAbout.ShowDialog
         Case NagatoMenuPipe.AppQuit
-                If HaruhiQuit.ShowDialog() = 1001 Then Quit
+            If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then Quit
         Default
             Raise MenuEvent(Last.Tag)
     End Select

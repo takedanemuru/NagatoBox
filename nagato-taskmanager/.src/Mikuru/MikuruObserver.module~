@@ -1,14 +1,10 @@
 ' Gambas module file
 
-Private $timer As New Timer As "Timer"
-
 Public Sub Activate()
     
     NagatoDBus.Register()
     
     NagatoSystemObserver.Refresh()
-    
-    $timer.Start()
     
 End
 
@@ -17,16 +13,3 @@ Public Sub Deactivate()
     NagatoDBus.Unregster()
     
 End
-
-Public Sub Timer_Timer()
-    
-    With NagatoSystemObserver
-        Debug .Activated
-        Debug .CpuUsage
-        Debug .MemoryUsage
-        Debug .SwapUsage
-        Debug .ProcessCount
-    End With
-    
-End
-

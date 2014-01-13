@@ -11,11 +11,27 @@ Property Read MemoryUsage As Float
 Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
 
-Public Sub Quit()
+Public Function Quit() As Boolean
     
     NagatoDBus.Unregster()
     
+    Return True
+    
     Quit 0
+    
+End
+
+Public Sub SignIn(argApplicationName As String)
+    
+    NagatoReservation.SignIn(argApplicationName)
+    
+End
+
+Public Sub SignOut(argApplicationName As String)
+    
+    NagatoReservation.SignOut(argApplicationName)
+    
+    If Not NagatoReservation.Has Then Quit 0
     
 End
 

@@ -21,6 +21,20 @@ Public Function Quit() As Boolean
     
 End
 
+Public Sub SignIn(argApplicationName As String)
+    
+    NagatoReservation.SignIn(argApplicationName)
+    
+End
+
+Public Sub SignOut(argApplicationName As String)
+    
+    NagatoReservation.SignOut(argApplicationName)
+    
+    If Not NagatoReservation.Has Then Quit 0
+    
+End
+
 Private Function Ready_Read() As String
 
     Return "Can you see this ?"

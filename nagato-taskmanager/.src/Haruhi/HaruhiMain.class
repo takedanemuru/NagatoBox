@@ -245,6 +245,7 @@ End
 Public Sub Form_Open()
     
     Application.MainWindow = Me
+    NagatoSettings.LoadFormSettings(Me)
     
     NagatoDBus.Register()
     NagatoSystemObserver.Refresh()
@@ -257,18 +258,11 @@ End
 Public Sub Form_Close()
     
     NagatoDBus.Unregster()
+    NagatoSettings.SaveFormSettings(Me)
     
 End
 
 Public Sub Timer_Timer()
-    
-    ' With NagatoSystemObserver
-    '     Debug .Activated
-    '     Debug .CpuUsage
-    '     Debug .MemoryUsage
-    '     Debug .SwapUsage
-    '     Debug .ProcessCount
-    ' End With
     
     setCpuTimes()
     setGridView()

@@ -1,5 +1,6 @@
 ' Gambas class file
 
+Public Enum ResponseCancel = 1001, ResponseQuit = 1002
 
 Public Sub Form_Open()
 
@@ -12,15 +13,17 @@ End
 
 Public Sub CancelButton_Click()
 
-    Me.Close(1000)
+    Me.Close(Me.ResponseCancel)
 
 End
 
 
 Public Sub QuitButton_Click()
-
+    
     NagatoDBus.Unregister()
     
-    Me.Close(1001)
+    Shell Subst$("nagato-taskmanager --unregister &1", Application.Name)
+    
+    Me.Close(Me.ResponseQuit)
 
 End

@@ -1,13 +1,35 @@
 ' Gambas module file
 
-Private $nonGuiMode As Boolean = False
+Private $applicationToRegister As String = ""
+Private $applicationToUnregister As String = ""
+
+Private Function isActivated() As Boolean
+    
+    If DBus.Session.Applications.Exist("org.gambas.nagato.taskmanager") Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Function isMainWindowActivated() As Boolean
+    
+    If HaruhiMain.Closed Then
+        Return False
+    Else
+        Return True
+    Endif
+    
+End
 
 Private Sub pursingArgs()
     
     Dim yukiOptions As String[]
     
     Args.Begin()
-        $nonGuiMode = Args.Has("n", "non-gui", "Activate with no gui")
+        $applicationToRegister = Args.Get("r", "register", "regiter", "application name to register")
+        $applicationToUnregister = Args.Get("u", "unregister", "unregiter", "application name to unregister")
     yukiOptions = Args.End()
     
 End
@@ -16,11 +38,15 @@ Public Sub Main()
     
     pursingArgs()
     
-    'TODO
-    If $nonGuiMode Then
+    If $applicationToUnregister <> "" And If isActivated() Then
+        NagatoReservation.SignOut($applicationToUnregister)
+        If Not NagatoReservation.Has Then Quit 0
+    Else If $applicationToRegister <> "" Then
         MikuruObserver.Activate()
+        NagatoReservation.SignIn($applicationToRegister)
+        If Not HaruhiMain.Closed Then HaruhiMain.Show()
     Else
-        haruhiMain.Show()
+        HaruhiMain.Show()
     End If
     
 End

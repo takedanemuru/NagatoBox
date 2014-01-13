@@ -169,6 +169,8 @@ Public Sub Main()
     
     If Not isUnique() Then Return
     
+    Shell Subst$("nagato-taskmanager --register &1", Application.Name)
+    
     NagatoUPower.EnsureActivation()
     refreshAll()
     sortIcons()
