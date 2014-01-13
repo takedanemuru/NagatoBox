@@ -1,0 +1,26 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+
+    Dim yukiImage As Image = Image.Load("pictures/yukichan_23.jpg").Stretch(Me.W, Me.H)
+
+    Me.Picture = yukiImage.Picture
+    Me.Center()
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(1000)
+
+End
+
+
+Public Sub QuitButton_Click()
+
+    NagatoDBus.Unregister()
+    
+    Me.Close(1001)
+
+End

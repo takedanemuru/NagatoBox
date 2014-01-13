@@ -8,6 +8,7 @@ Property Read Name As String
 Public Const FormWidth As Integer = 128
 Public Const TextWidth As Integer = 112
 Public Const ButtonSize As Integer = 24
+Public Const ButtonIconSize As Integer = 12
 Public Const ButtonMargin As Integer = 4
 Public Const TextMargin As Integer = 8
 Public Const Margin As Integer = 8
@@ -90,7 +91,7 @@ End
 
 Public Sub Icon_Enter()
     
-    Me._$starButton.Picture = MikuruIcon.Get("star", 12)
+    Me._$starButton.Picture = MikuruIcon.Get("star", Me.ButtonIconSize)
     Me._OnMouseEnter()
     
 End

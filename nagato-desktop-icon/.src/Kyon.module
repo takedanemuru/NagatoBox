@@ -9,6 +9,16 @@ Private $timer As New Timer As "MainTimer"
 Private $weatherCheckFlag As Boolean = False
 Private $directoryObserver As NagatoDirectoryObserver
 
+Private Function isUnique() As Boolean
+    
+    If DBus.Session.Applications.Exist("org.gambas.nagato.desktop.icon") Then
+        Return False
+    Else
+        Return True
+    Endif
+    
+End
+
 Private Sub sortIcons()
     
     Dim yukiIcon As Object
@@ -157,6 +167,8 @@ End
 
 Public Sub Main()
     
+    If Not isUnique() Then Return
+    
     NagatoUPower.EnsureActivation()
     refreshAll()
     sortIcons()
@@ -164,6 +176,8 @@ Public Sub Main()
     $timer.Enabled = True
     
     initializeDirectoryObserverForDesktopDirectory()
+    
+    NagatoDBus.Register()
     
 End
 
