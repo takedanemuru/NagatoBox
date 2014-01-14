@@ -1,19 +1,73 @@
 ' Gambas class file
 
-Public _$application As String = "system://org.freedesktop.NetworkManager"
-Public _$objectPath As String
-Public _$interface As String
-Public _$proxy As DBusProxy
+Private Const InterfaceMain As String = "org.freedesktop.NetworkManager.Device"
+Private Const InterfaceWired As String = "org.freedesktop.NetworkManager.Device.Wired"
+Private Const InterfaceWireless As String = "org.freedesktop.NetworkManager.Device.Wireless"
 
-Public Sub _InitializeProxy()
-    
-    
-    
-End
+Property Read ReadableType As String
+Property Read Type As Integer
+Property Read Speed As Integer
+Property Read HardwareAddress As String
+
+Private $path As String
+Private $proxy As DBusProxy
 
 Public Sub _new(argObjectPath As String)
     
-    Me._$objectPath = argObjectPath
-    Me._InitializeProxy()
+    $path = argObjectPath
+    $proxy = DBus[NagatoNetworkManager.ApplicationName][argObjectPath, InterfaceMain]
     
+End
+
+Private Function Type_Read() As Integer
+
+    Return $proxy.DeviceType
+
+End
+
+Private Function Speed_Read() As Integer
+
+    Dim yukiProxy As DBusProxy
+
+   Select Case Me.Type
+       Case 1 'wired
+           yukiProxy = DBus[NagatoNetworkManager.ApplicationName][$path, InterfaceWired]
+           Return yukiProxy.Speed
+       Case 2 'wireless
+           yukiProxy = DBus[NagatoNetworkManager.ApplicationName][$path, InterfaceWireless]
+           Return yukiProxy.Bitrate
+       Default
+           Return 0
+   End Select
+
+End
+
+Private Function HardwareAddress_Read() As String
+
+    Dim yukiProxy As DBusProxy
+
+   Select Case Me.Type
+       Case 1 'wired
+           yukiProxy = DBus[NagatoNetworkManager.ApplicationName][$path, InterfaceWired]
+           Return yukiProxy.HwAddress
+       Case 2 'wireless
+           yukiProxy = DBus[NagatoNetworkManager.ApplicationName][$path, InterfaceWireless]
+           Return yukiProxy.HwAddress
+       Default
+           Return ""
+   End Select
+
+End
+
+Private Function ReadableType_Read() As String
+
+    Select Case $proxy.DeviceType
+        Case 1
+            Return ("Wired")
+        Case 2
+            Return ("Wireless")
+        Default
+            Return ("Unknown")
+    End Select
+
 End

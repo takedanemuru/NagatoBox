@@ -100,7 +100,8 @@ msgstr ""
 msgid "Do you want to launch this application as super user ?"
 msgstr ""
 
-#: MikuruNetworkManagerState.module:7 NagatoWeatherCondition.class:55
+#: MikuruNetworkManagerState.module:7 NagatoNetworkDevice.class:70
+#: NagatoNetworkManager.class:29 NagatoWeatherCondition.class:55
 msgid "Unknown"
 msgstr ""
 
@@ -128,7 +129,7 @@ msgstr ""
 msgid "Site-Local Connectivity"
 msgstr ""
 
-#: MikuruNetworkManagerState.module:21
+#: MikuruNetworkManagerState.module:21 NagatoNetworkManager.class:43
 msgid "Connected"
 msgstr ""
 
@@ -179,6 +180,38 @@ msgstr ""
 #: NagatoDirectoryIcon.class:39 NagatoFileIcon.class:25
 #: NagatoIconThumbnail.class:64
 msgid "YUKI.N > Sorry, but I couldn't find any application to open this file."
+msgstr ""
+
+#: NagatoNetworkDevice.class:66
+msgid "Wired"
+msgstr ""
+
+#: NagatoNetworkDevice.class:68
+msgid "Wireless"
+msgstr ""
+
+#: NagatoNetworkManager.class:31
+msgid "Asleep"
+msgstr ""
+
+#: NagatoNetworkManager.class:33
+msgid "Disconnected"
+msgstr ""
+
+#: NagatoNetworkManager.class:35
+msgid "Disconnecting"
+msgstr ""
+
+#: NagatoNetworkManager.class:37
+msgid "Connecting"
+msgstr ""
+
+#: NagatoNetworkManager.class:39
+msgid "Connected: Local"
+msgstr ""
+
+#: NagatoNetworkManager.class:41
+msgid "Connected: Site"
 msgstr ""
 
 #: NagatoSystemMonitor.class:11

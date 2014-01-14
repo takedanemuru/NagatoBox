@@ -187,7 +187,11 @@ Public Sub IconView_MouseDown()
     
     If $iconView.Key = "" Then Return
     
-    $selectionBar.Toggle($iconView.Key)
+    If Mouse.Left Then
+        $selectionBar.Toggle($iconView.Key)
+    Else If Mouse.Right
+        $selectionBar.Push($iconView.Key)
+    End If
     
     If IsDir($iconView.Key) Then
         $iconView[$iconView.Key].Picture = MikuruTile.GetDirectoryTile($iconView.Key, $selectionBar.Exist($iconView.Key))
@@ -211,6 +215,19 @@ Public Sub IconView_Menu()
         yukiContextMenu = New NagatoContextMenuFile(HaruhiMain, yukiPath) As "Menu"
         yukiContextMenu.Popup()
     End If
+    
+End
+
+Public Sub IconView_KeyPress()
+    
+    If Not Key.Control Then Return
+    
+    If Key.Code = Key["c"] Then
+        Clipboard.Copy(NagatoDrag2.GetUriList($selectionBar.Paths), MikuruMimeType.UriList)
+    Else If Key.Code = Key["v"] Then
+         Clipboard.Format <> MikuruMimeType.UriList Then Return
+        Try Debug Clipboard.Paste()
+    Endif
     
 End
 

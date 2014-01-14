@@ -2,4 +2,9 @@
 
 Inherits NagatoNetworkDevice
 
+Public Sub _InitializeProxy()
 
+    Me._$interface As String = "org.freedesktop.NetworkManager.Device.Wired" 'override
+    Me._$proxy = DBus[Me._$application][Me._$objectPath, Me._$interface]
+    
+End

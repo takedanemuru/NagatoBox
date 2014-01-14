@@ -58,6 +58,18 @@ Private Sub setData(argColumn As Integer, argText As String)
     
 End
 
+Private Function getResult() As String
+    
+    If GeneralButton.Value Then
+        Return NagatoDictionaryEngine.GetSerchResultStarndardDictionary(SearchButtonBox.Text)
+    Else If CompTermButton.Value Then
+        Return NagatoDictionaryEngine.GetSerchResultCompDictionary(SearchButtonBox.Text)
+    Else ' if PropNounButton.Value Then
+        Return NagatoDictionaryEngine.GetSerchResultEnamDictionary(SearchButtonBox.Text)
+    Endif
+    
+End
+
 Private Sub refresh(argData As String[])
     
     Dim yukiLine As String
@@ -94,17 +106,13 @@ End
 
 Public Sub SearchButtonBox_Activate()
 
-    Dim yukiResult As String 
+    Dim yukiResult As String = getResult()
 
-    If GeneralButton.Value Then
-        yukiResult = NagatoDictionaryEngine.GetSerchResultStarndardDictionary(SearchButtonBox.Text)
-    Else If CompTermButton.Value Then
-        yukiResult = NagatoDictionaryEngine.GetSerchResultCompDictionary(SearchButtonBox.Text)
-    Else ' if PropNounButton.Value Then
-        yukiResult = NagatoDictionaryEngine.GetSerchResultEnamDictionary(SearchButtonBox.Text)
-    Endif
-
-    If yukiResult <> "" Then refresh(Split(yukiResult, "\n", "", True))
+    If yukiResult = "" Then 
+        Message.Error(("YUKI.N > Not found..."), ("OK"))
+    Else
+        refresh(Split(yukiResult, "\n", "", True))
+    End If
 
 End
 

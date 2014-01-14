@@ -3,7 +3,7 @@
 Inherits NagatoMenuPipe
 
 Property Read Count As Integer
-Property Read Paths As String
+Property Read Paths As String[]
 
 Private $container As HBox
 Private $selection As New NagatoSelection As "Selection"
@@ -163,7 +163,7 @@ Private Function Count_Read() As Integer
 End
 
 
-Private Function Paths_Read() As String
+Private Function Paths_Read() As String[]
 
     Return $selection.Paths
 

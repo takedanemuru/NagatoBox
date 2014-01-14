@@ -1,0 +1,48 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read Devices As NagatoNetworkDevice[]
+
+Private $devices As New NagatoNetworkDevice[]
+
+Public Function GetType(argIndex As Integer) As Integer
+    
+    Return $devices[argIndex].Type
+    
+End
+
+Public Function GetHardwareAddress(argIndex As Integer) As String
+    
+    Return $devices[argIndex].HardwareAddress
+    
+End
+
+Public Function GetSpeed(argIndex As Integer) As Integer 'kbps
+    
+    Return $devices[argIndex].Speed
+    
+End
+
+Public Sub _new(argObjectPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiDevice As NagatoNetworkDevice
+    
+    For Each yukiPath In argObjectPaths
+        yukiDevice = New NagatoNetworkDevice(yukiPath) As "NetworkDevice"
+        $devices.Add(yukiDevice)
+    Next
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $devices.Count
+
+End
+
+Private Function Devices_Read() As NagatoNetworkDevice[]
+
+    Return $devices
+
+End
