@@ -11,11 +11,29 @@ Property Read HardwareAddress As String
 
 Private $path As String
 Private $proxy As DBusProxy
+Private $signalDevice As DBusSignal
+
+Event PropertiesChanged
 
 Public Sub _new(argObjectPath As String)
     
     $path = argObjectPath
     $proxy = DBus[NagatoNetworkManager.ApplicationName][argObjectPath, InterfaceMain]
+    
+    Select Case Me.Type
+        Case 1 'wired
+            $signalDevice = New DBusSignal(DBus.System, InterfaceWired, True) As "DeviceSignal"
+        Case 2 'wireless
+            $signalDevice = New DBusSignal(DBus.System, InterfaceWireless, True) As "DeviceSignal"
+    End Select
+    
+End
+
+Public Sub DeviceSignal_Signal(argSignal As String, argValues As Variant[])
+    
+    Debug Me.Speed
+    
+    Raise PropertiesChanged
     
 End
 

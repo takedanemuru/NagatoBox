@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu)
+    
+    With Me._$parentMenu
+        .Text = ("Preference")
+        .Picture = MikuruIcon.Get("equalizer")
+    End With
+    
+End
+
+Public Sub _InitializeMenus()
+    
+    Me._AddMenu(("Show Nagato"), 0)
+        Me._AddMenu((""), 0)
+    Me._AddMenu(("Form color"), 0)
+    Me._AddMenu(("Font color"), 0)
+        Me._AddMenu((""), 0)
+    Me._AddMenu(("Clock format"), 0, MikuruIcon.Get("alarm-clock"))
+    
+End

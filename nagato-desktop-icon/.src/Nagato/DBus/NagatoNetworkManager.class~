@@ -13,12 +13,22 @@ Public Const Interface As String = "org.freedesktop.NetworkManager"
 Private $proxy As DBusProxy
 Private $devices As NagatoNetworkDevices
 
+Event PropertiesChanged
+
 Public Sub EnsureActivation()
     
     Me._EnsureService("org.freedesktop.NetworkManager")
     
     $proxy = DBus[Me.ApplicationName][Me.ObjectPath, Me.Interface]
-    $devices = New NagatoNetworkDevices($proxy.GetDevices())
+    $devices = New NagatoNetworkDevices($proxy.GetDevices()) As "Device"
+    
+End
+
+Public Sub Device_PropertiesChanged()
+    
+    Debug "changed"
+    
+    Raise PropertiesChanged
     
 End
 
@@ -40,7 +50,7 @@ Private Function ReadableState_Read() As String
         Case 60
             Return ("Connected: Site")
         Case 70
-            Return ("Connected: global")
+            Return ("Connected")
     End Select
 
 Catch

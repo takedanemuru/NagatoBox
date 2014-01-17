@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Property Read Count As Integer
+Property Read Devices As NagatoNetworkDevice[]
 
 Private $devices As New NagatoNetworkDevice[]
 
@@ -37,5 +38,11 @@ End
 Private Function Count_Read() As Integer
 
     Return $devices.Count
+
+End
+
+Private Function Devices_Read() As NagatoNetworkDevice[]
+
+    Return $devices
 
 End

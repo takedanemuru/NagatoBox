@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public _$parentMenu As Menu
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu)
+    
+    
+End
+
+Public Sub _InitializeMenus()
+    
+    
+    
+End
+
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._InitializeParentMenu(argRootMenu)
+    Me._InitializeMenus()
+    
+End
+

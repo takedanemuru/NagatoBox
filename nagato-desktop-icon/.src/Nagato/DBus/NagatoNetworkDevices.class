@@ -5,6 +5,8 @@ Property Read Devices As NagatoNetworkDevice[]
 
 Private $devices As New NagatoNetworkDevice[]
 
+Event PropertiesChanged
+
 Public Function GetType(argIndex As Integer) As Integer
     
     Return $devices[argIndex].Type
@@ -29,9 +31,15 @@ Public Sub _new(argObjectPaths As String[])
     Dim yukiDevice As NagatoNetworkDevice
     
     For Each yukiPath In argObjectPaths
-        yukiDevice = New NagatoNetworkDevice(yukiPath) As "NetworkDevice"
+        yukiDevice = New NagatoNetworkDevice(yukiPath) As "Device"
         $devices.Add(yukiDevice)
     Next
+    
+End
+
+Public Sub Device_PropertiesChanged()
+    
+    Raise PropertiesChanged
     
 End
 

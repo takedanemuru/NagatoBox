@@ -1,0 +1,27 @@
+' Gambas class file
+
+Public _$drawingArea As DrawingArea
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    Me._$drawingArea = argDrawingArea
+    
+End
+
+Public Sub Paint()
+    
+    ' virtual
+    
+End
+
+Public Sub LeftClick(argMouseX As Integer, argMouseY As Integer)
+    
+    
+    
+End
+
+Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
+    
+    
+    
+End

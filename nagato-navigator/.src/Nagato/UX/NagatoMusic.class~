@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Private Const ApplicationName As String = "org.gambas.nagato.player.x"
+Private Const ObjectPath As String = "/org/nagato/player/x"
+Private Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
+
+Private $player As DBusProxy
+
+Private Function getText() As String
+    
+    Dim yukiText As String
+    
+    If DBus.Session.Applications.Exist(ApplicationName) Then
+        If Not Object.IsValid($player) Then $player = DBus[ApplicationName][ObjectPath, Interface]
+        yukiText = ($player.Title & Space$(4))
+        yukiText &= ($player.Artist & Space$(4))
+        yukiText &= ($player.Album & Space$(4))
+        yukiText &= ($player.ProgressInText)
+        Return yukiText
+    Else
+        Return "nagato-player-x is not activated"
+    End If
+    
+End
+
+Public Sub Paint()
+    
+    Paint.Begin(Me._$drawingArea)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Text(getText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
+        Paint.Fill()
+    Paint.End()
+    
+End

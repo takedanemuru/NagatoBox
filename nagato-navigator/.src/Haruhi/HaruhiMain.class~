@@ -1,10 +1,20 @@
 ' Gambas class file
 
 Private $button As NagatoStarButton
-Private $taskBar As NagatoTaskBarTint2Mode
+Private $drawingArea As DrawingArea
+Private $taskBar As NagatoContentBar
 Private $clock As NagatoClock
 Private $observer As Observer
-Private $watcher As New DesktopWatcher As "Watcher"
+
+Private Sub addDrawingArea()
+    
+    $drawingArea = New DrawingArea(HBox1) 
+    
+    With $drawingArea
+        .Expand = True
+    End With
+    
+End
 
 Private Sub setForm()
     
@@ -21,10 +31,10 @@ Public Sub Form_Open()
     NagatoTimer.Activate()
 
     $button = New NagatoStarButton(HBox1) As "StarButton"
-    $taskBar = New NagatoTaskBarTint2Mode(HBox1) As "TaskBar"
+    addDrawingArea()
+    $taskBar = New NagatoContentBar($drawingArea) As "TaskBar"
     $clock = New NagatoClock(HBox1) As "Clock"
     $observer = New Observer(NagatoTimer) As "Asakura"
-    $watcher.RootWindow = True
 
 End
 
@@ -34,9 +44,11 @@ Public Sub Form_Enter()
         
 End
 
-Public Sub Watcher_Change()
+Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
     
-    Debug Desktop.Current
+    If argSignal = MikuruSignal.ModeChanged Then
+        $taskBar.Swich(argValues[0])
+    Endif
     
 End
 

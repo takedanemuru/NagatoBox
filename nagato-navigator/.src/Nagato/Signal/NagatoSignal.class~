@@ -1,0 +1,9 @@
+' Gambas class file
+
+Event Signal(argSignal As Integer, argValues As Variant[])
+
+Public Sub NagatoSignal_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Raise Signal(argSignal, argValues)
+    
+End

@@ -1,7 +1,12 @@
 ' Gambas class file
 
+Inherits NagatoSignal
+
 Private $container As Container
 Private $button As MenuButton
+Private $rootMenu As Menu 
+Private $preferenceMenu As NagatoPreferenceMenu
+Private $modeMenu As NagatoModeMenu
 
 Private Sub addButton()
     
@@ -17,9 +22,21 @@ Private Sub addButton()
     
 End
 
+Private Sub addRootMenu()
+    
+    $rootMenu = New Menu(HaruhiMain)
+    $rootMenu.Name = "RootMenu"
+    $button.Menu = "RootMenu"
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = argContainer
     addButton()
+    addRootMenu()
+    
+    $preferenceMenu = New NagatoPreferenceMenu($rootMenu) As "NagatoSignal"
+    $modeMenu = New NagatoModeMenu($rootMenu) As "NagatoSignal"
     
 End

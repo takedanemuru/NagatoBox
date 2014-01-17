@@ -3,6 +3,7 @@
 Inherits NagatoIcon
 
 Private $text As String = "network"
+Private $observer As Observer
 
 Private Function getText() As String
     
@@ -45,6 +46,15 @@ Public Sub _new()
     $text = getText()
     Me._InitializeForm(Me._$form.Font.RichTextHeight($text) + 72)
     Me._$form.Show
+    setFormPicture()
+    
+    $observer = New Observer(NagatoNetworkManager) As "Asakura"
+    
+End
+
+Public Sub Asakura_PropertiesChanged()
+    
+     $text = getText()
     setFormPicture()
     
 End

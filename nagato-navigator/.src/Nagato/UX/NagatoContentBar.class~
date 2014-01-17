@@ -1,0 +1,61 @@
+' Gambas class file
+
+Public _$drawingArea As DrawingArea
+Public _$observer As Observer
+Private $painter As Object
+
+Public Sub _InitializeDrawingArea(argDrawingArea As DrawingArea)
+    
+    Dim yukiObserver As Observer
+    
+    Me._$drawingArea = argDrawingArea
+    
+    yukiObserver = New Observer(Me._$drawingArea) As "DrawingArea"
+    
+End
+
+Public Sub Swich(argMode As Integer)
+    
+    Debug argMode
+    
+    Select Case argMode
+        Case NagatoModeMenu.ModeTasks
+            $painter = New NagatoTaskBar(Me._$drawingArea)
+        Case NagatoModeMenu.ModeTasks2
+            $painter = New NagatoTaskBarTint2Mode(Me._$drawingArea)
+        Case NagatoModeMenu.ModeSystem
+            $painter = New NagatoSystemMonitor(Me._$drawingArea)
+    End Select
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    Me._InitializeDrawingArea(argDrawingArea)
+    Me._$observer = New Observer(NagatoTimer) As "Asakura"
+    
+    $painter = New NagatoTaskBarTint2Mode(argDrawingArea)
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    Me._$drawingArea.Refresh()
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    $painter.Paint()
+    
+End
+
+Public Sub DrawingArea_MouseDown()
+    
+    If Mouse.Left Then
+        $painter.LeftClick(Mouse.X, Mouse.Y)
+    Else If Mouse.Right Then
+        $painter.RightClick(Mouse.X, Mouse.Y)
+    Endif
+    
+End

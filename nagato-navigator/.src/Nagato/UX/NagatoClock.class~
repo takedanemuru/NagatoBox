@@ -8,7 +8,7 @@ Private Sub addLabel(argContainer As Container)
     $label = New Label(argContainer) As "NagatoMenu"
     
     With $label
-        .AutoResize = True
+        .AutoResize = False
         .Text = "please wait..."
         .Alignment = Align.Left
         .Foreground = Color.White
@@ -27,5 +27,9 @@ End
 Public Sub Asakura_Timer()
     
     $label.Text = Format$(Now(), NagatoSettings.ClockFormat)
+    
+    If $label.Font.TextWidth($label.Text) > $label.W Then
+        $label.W = $label.Font.TextWidth($label.Text)
+    Endif
     
 End

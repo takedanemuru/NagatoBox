@@ -1,26 +1,16 @@
 ' Gambas class file
 
-Private $drawingArea As DrawingArea
-Private $tasks As New NagatoTasks
-Private $observer As Observer
+Inherits NagatoPainter
 
-Private Sub addDrawingArea(argContainer As Container)
-    
-    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
-    
-    With $drawingArea
-        .Expand = True
-    End With
-    
-End
+Private $tasks As New NagatoTasks
 
 Private Sub paintTask(argWindow As DesktopWindow, argWidth As Integer, ByRef refX As Integer)
     
     Dim yukiText As String
     
     Paint.DrawImage(argWindow.Icon.Stretch(2 * MikuruUx.Grid, 2 * MikuruUx.Grid), refX + 4, 4)
-    yukiText = MikuruCollapsedText.Get(argWindow.Name, $drawingArea.Font, argWidth - 3 * MikuruUx.Grid)
-    Paint.Text(yukiText, refX + 3 * MikuruUx.Grid, 0, argWidth - 3 * MikuruUx.Grid, $drawingArea.H, Align.Left)
+    yukiText = MikuruCollapsedText.Get(argWindow.Name, Me._$drawingArea.Font, argWidth - 3 * MikuruUx.Grid)
+    Paint.Text(yukiText, refX + 3 * MikuruUx.Grid, 0, argWidth - 3 * MikuruUx.Grid, Me._$drawingArea.H, Align.Left)
     refX += argWidth
     
 Catch
@@ -29,20 +19,7 @@ Catch
     
 End
 
-Public Sub _new(argContainer As Container)
-    
-    addDrawingArea(argContainer)
-    $observer = New Observer(NagatoTimer) As "Asakura"
-    
-End
-
-Public Sub Asakura_Timer()
-    
-    $drawingArea.Refresh()
-    
-End
-
-Public Sub DrawingArea_Draw()
+Public Sub Paint()
     
     Dim yukiWidth As Integer
     Dim yukiX As Integer
@@ -53,9 +30,9 @@ Public Sub DrawingArea_Draw()
     
     yukiTasks = $tasks.Get()
     
-    yukiWidth = $drawingArea.W / yukiTasks.Count
+    yukiWidth = Me._$drawingArea.W / yukiTasks.Count
     
-    Paint.Begin($drawingArea)
+    Paint.Begin(Me._$drawingArea)
     Paint.Brush = Paint.Color(Color.White)
         For Each yukiWindow In yukiTasks
             paintTask(yukiWindow, yukiWidth, ByRef yukiX)
@@ -68,11 +45,11 @@ Catch
     
 End
 
-Public Sub DrawingArea_MouseDown()
+Public Sub LeftClick(argMouseX As Integer, argMouseY As Integer)
     
     Dim yukiTasks As DesktopWindow[] = $tasks.Get()
-    Dim yukiWidth As Integer = $drawingArea.W / yukiTasks.Count
-    Dim yukiIndex As Integer = Mouse.X / yukiWidth
+    Dim yukiWidth As Integer = Me._$drawingArea.W / yukiTasks.Count
+    Dim yukiIndex As Integer = argMouseX / yukiWidth
     
     If Mouse.Left Then
         Try Debug yukiTasks[yukiIndex].Name
