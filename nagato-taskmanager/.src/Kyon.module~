@@ -38,7 +38,7 @@ Public Sub Main()
     
     pursingArgs()
     
-    If $applicationToUnregister <> "" And If isActivated Then
+    If $applicationToUnregister <> "" And If isActivated() Then
         NagatoReservation.SignOut($applicationToUnregister)
         If Not NagatoReservation.Has Then Quit 0
     Else If $applicationToRegister <> "" Then

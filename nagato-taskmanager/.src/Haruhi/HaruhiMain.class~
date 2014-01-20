@@ -6,6 +6,7 @@ Private $timer As New Timer As "Timer"
 Private $cpuUsages As New Collection
 Private $cpuTimeTotal As Integer
 Private $cpuTimeDifference As Integer
+Private $targetId As String
 Private $targetHeader As Integer = 0
 Private $sortAscend As Boolean = True
 

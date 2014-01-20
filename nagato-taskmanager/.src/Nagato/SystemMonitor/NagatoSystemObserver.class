@@ -8,15 +8,24 @@ Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
 Property Read Activated As Boolean
 Property Read SystemLoad As Float
+Property Read CpuHistory As Float[]
+Property Read MemoryHistory As Float[]
+Property Read SwapHistory As Float[]
 
 Private Const SystemSnapShotInterval As Integer = 2000 ' milliseconds
 
 Private $timer As Timer
 Private $observationStep As Integer
+
 Private $cpuUsage As Float
 Private $memoryUsage As Float
 Private $swapUsage As Float
 Private $processCount As Integer
+
+Private $cpuHistory As New NagatoHistory
+Private $memoryHistory As New NagatoHistory
+Private $swapHistory As New NagatoHistory
+Private $processesHistory As New NagatoHistory
 
 Event Finished
 
@@ -26,6 +35,11 @@ Private Sub setProperty()
     $memoryUsage = NagatoMemoryObserver.GetMemoryRate()
     $swapUsage = NagatoSwapObserver.GetSwapPercentage()
     $processCount = NagatoProcessObserver.GetProcessCount()
+
+    $cpuHistory.Push($cpuUsage)
+    $memoryHistory.Push($memoryUsage)
+    $swapHistory.Push($swapUsage)
+    $processesHistory.Push($processCount)
 
 End
 
@@ -97,5 +111,23 @@ End
 Private Function SystemLoad_Read() As Float
 
     Return Max($cpuUsage, $memoryUsage)
+
+End
+
+Private Function CpuHistory_Read() As Float[]
+
+    Return $cpuHistory.History
+
+End
+
+Private Function MemoryHistory_Read() As Float[]
+
+    Return $memoryHistory.History
+
+End
+
+Private Function SwapHistory_Read() As Float[]
+
+    Return $swapHistory.History
 
 End
