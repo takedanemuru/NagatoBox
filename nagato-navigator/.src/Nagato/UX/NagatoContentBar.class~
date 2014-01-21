@@ -9,6 +9,7 @@ Public Sub _InitializeDrawingArea(argDrawingArea As DrawingArea)
     Dim yukiObserver As Observer
     
     Me._$drawingArea = argDrawingArea
+    Me._$drawingArea.Drop = True
     
     yukiObserver = New Observer(Me._$drawingArea) As "DrawingArea"
     
@@ -25,6 +26,8 @@ Public Sub Swich(argMode As Integer)
             $painter = New NagatoTaskBarTint2Mode(Me._$drawingArea)
         Case NagatoModeMenu.ModeSystem
             $painter = New NagatoSystemMonitor(Me._$drawingArea)
+        Case NagatoModeMenu.ModeMusic
+            $painter = New NagatoMusic(Me._$drawingArea)
     End Select
     
 End
@@ -57,5 +60,19 @@ Public Sub DrawingArea_MouseDown()
     Else If Mouse.Right Then
         $painter.RightClick(Mouse.X, Mouse.Y)
     Endif
+    
+End
+
+Public Sub DrawingArea_MouseDrag()
+    
+    Me._$drawingArea.Drop = True
+    
+    $painter.DragBegin(Mouse.X, Mouse.Y)
+    
+End
+
+Public Sub DrawingArea_Drop()
+    
+    $painter.Drop(Drag.X, Drag.Y)
     
 End

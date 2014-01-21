@@ -6,7 +6,6 @@ Private $timer As New Timer As "Timer"
 Private $cpuUsages As New Collection
 Private $cpuTimeTotal As Integer
 Private $cpuTimeDifference As Integer
-Private $targetId As String
 Private $targetHeader As Integer = 0
 Private $sortAscend As Boolean = True
 
@@ -75,11 +74,16 @@ Private Function getRowData(argDirectory As String) As Collection
     
     Dim yukiStatus As String[] = Split(File.Load(Subst$("/proc/&1/stat", File.Name(argDirectory))), " ", "")
     Dim yukiResult As New Collection
+    Dim yukiCpuStatus As Float = getCpuUsageInFloat(yukiStatus)
+    Dim yukiName As String = ""
+    
+    If yukiCpuStatus > 0 Then yukiName = File.Load(Subst$("/proc/&1/cmdline", File.Name(argDirectory)))
+    If yukiName = "" Then yukiName = yukiStatus[1]
     
     yukiResult.Add(CInt(File.Name(argDirectory)), "id")
     yukiResult.Add(yukiStatus[2], "status")
-    yukiResult.Add(yukiStatus[1], "name")
-    yukiResult.Add(getCpuUsageInFloat(yukiStatus), "cpu")
+    yukiResult.Add(yukiName, "name")
+    yukiResult.Add(yukiCpuStatus, "cpu")
     yukiResult.Add(CFloat(yukiStatus[23]), "rss")
     yukiResult.Add(CFloat(yukiStatus[22]), "virtual")
     
@@ -183,6 +187,7 @@ Private Sub setGridView()
     SystemMonitorGrid.Rows.Count = 0
     
     For Each yukiDirectory In Dir("/proc", "*[0-9]", gb.Directory)
+        If Not Exist("/proc" &/ yukiDirectory) Then Continue
         yukiRowData = getRowData(yukiDirectory)
         If yukiGridData.Count = 0 Then
             yukiGridData.Add(yukiRowData)
@@ -267,6 +272,18 @@ Public Sub Form_Close()
     
     NagatoDBus.Unregster()
     NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Private Function overrideGridView(argPID As Integer) As String
+    
+    Dim yukiOutput As String
+    
+    Shell Subst$("cat /proc/&1/cmdline", argPID)
+    
+    Debug yukiOutput
+    
+    Return yukiOutput
     
 End
 

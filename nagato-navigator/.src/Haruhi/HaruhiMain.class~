@@ -2,7 +2,7 @@
 
 Private $button As NagatoStarButton
 Private $drawingArea As DrawingArea
-Private $taskBar As NagatoContentBar
+Private $contentBar As NagatoContentBar
 Private $clock As NagatoClock
 Private $observer As Observer
 
@@ -12,6 +12,7 @@ Private Sub addDrawingArea()
     
     With $drawingArea
         .Expand = True
+        .Drop = True
     End With
     
 End
@@ -32,7 +33,7 @@ Public Sub Form_Open()
 
     $button = New NagatoStarButton(HBox1) As "StarButton"
     addDrawingArea()
-    $taskBar = New NagatoContentBar($drawingArea) As "TaskBar"
+    $contentBar = New NagatoContentBar($drawingArea) As "contentBar"
     $clock = New NagatoClock(HBox1) As "Clock"
     $observer = New Observer(NagatoTimer) As "Asakura"
 
@@ -47,7 +48,7 @@ End
 Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.ModeChanged Then
-        $taskBar.Swich(argValues[0])
+        $contentBar.Swich(argValues[0])
     Endif
     
 End

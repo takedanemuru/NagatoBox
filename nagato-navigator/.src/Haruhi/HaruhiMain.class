@@ -12,6 +12,7 @@ Private Sub addDrawingArea()
     
     With $drawingArea
         .Expand = True
+        .Drop = True
     End With
     
 End

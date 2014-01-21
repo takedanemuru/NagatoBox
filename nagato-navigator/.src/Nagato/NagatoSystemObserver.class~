@@ -23,6 +23,10 @@ End
 
 Public Sub Refresh()
     
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.taskmanager") Then
+        Shell Subst$("nagato-taskmanager --register &1", Application.Name)
+    Endif
+    
     initializeTaskmanager()
     
 End

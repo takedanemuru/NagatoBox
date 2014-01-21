@@ -1,0 +1,77 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private Enum MenuNone = 0
+Private Enum WindowMaximize = 1001, WindowMinimize = 1002, WindowClose = 1003
+Private Enum DesktopAdd = 2001, DesktopRemove = 2002
+
+Private $rootMenu As Menu
+Private $windowId As Integer
+
+Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "ContextMenu"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Private Sub initializeWindowMenus()
+    
+    addMenu(("Maximize window"), WindowMaximize, "navigation-up")
+    addMenu(("Minimize window"), WindowMinimize, "navigation-down")
+    addMenu(("Close window"), WindowClose, "button-cross")
+        addMenu((""), MenuNone)
+    
+End
+
+Private Sub initializeDesktopMenus()
+    
+    addMenu(("Add desktop"), DesktopAdd, "toggle-expand-alt")
+    If Desktop.Count > 1 Then addMenu(("Remove desktop"), DesktopRemove, "toggle-collapse-alt")
+    
+End
+
+Public Sub PopUp()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new(argDesktop As Integer, argWindowId As Integer)
+    
+    $rootMenu = New Menu(HaruhiMain)
+    $windowId = argWindowId
+    If argWindowId <> -1 Then initializeWindowMenus()
+    initializeDesktopMenus() 
+   
+End
+
+Public Sub ContextMenu_Click()
+    
+    Dim yukiWindow As DesktopWindow
+    
+    If $windowId <> -1 Then yukiWindow = New DesktopWindow($windowId)
+    
+    Select Case Last.Tag
+        Case WindowMaximize
+            yukiWindow.Maximized = True
+        Case WindowMinimize
+            yukiWindow.Minimized = True
+        Case WindowClose
+            yukiWindow.Close()
+        Case DesktopAdd
+            Inc Desktop.Count
+        Case DesktopRemove
+            Dec Desktop.Count
+    End Select
+
+Catch
+    Return
+    
+End

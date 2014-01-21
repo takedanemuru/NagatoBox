@@ -38,8 +38,8 @@ msgstr ""
 msgid "As normal user"
 msgstr ""
 
-#: HaruhiDialogUseGksu.form:28 HaruhiRename.form:27 MikuruFile.module:31
-#: NagatoDynamicMenu.class:70 NagatoSelectionBar.class:34
+#: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
+#: MikuruFile.module:31 NagatoDynamicMenu.class:70 NagatoSelectionBar.class:34
 msgid "Cancel"
 msgstr ""
 
@@ -51,6 +51,22 @@ msgstr ""
 
 #: HaruhiMain.form:26
 msgid "TabStrip1"
+msgstr ""
+
+#: HaruhiNewDirectory.form:10
+msgid "Create New Folder"
+msgstr ""
+
+#: HaruhiNewDirectory.form:18 NagatoContextMenuFile.class:66
+msgid "Create"
+msgstr ""
+
+#: HaruhiNewDirectory.class:37
+msgid "YUKI.N > Same name directory or file has been existed"
+msgstr ""
+
+#: HaruhiNewDirectory.class:37 HaruhiRename.class:50
+msgid "OK"
 msgstr ""
 
 #: HaruhiRename.form:14
@@ -69,19 +85,15 @@ msgstr ""
 msgid "ButtonBox1"
 msgstr ""
 
-#: HaruhiRename.class:40
+#: HaruhiRename.class:50
 msgid "YUKI.N > Input any name."
 msgstr ""
 
-#: HaruhiRename.class:40
-msgid "OK"
-msgstr ""
-
-#: HaruhiRename.class:42
+#: HaruhiRename.class:52
 msgid "YUKI.N > The file path has been existed. Please use another name."
 msgstr ""
 
-#: HaruhiRename.class:64
+#: HaruhiRename.class:74
 msgid "Select directory"
 msgstr ""
 
@@ -132,10 +144,6 @@ msgstr ""
 msgid "Open with ..."
 msgstr ""
 
-#: NagatoContextMenuFile.class:66
-msgid "Create"
-msgstr ""
-
 #: NagatoContextMenuFile.class:78
 msgid "Copy file path"
 msgstr ""
@@ -161,19 +169,27 @@ msgid "Quit"
 msgstr ""
 
 #: NagatoDynamicMenu.class:70
-msgid "Are you sure to close nagato-desktop-icon ?"
+msgid "Are you sure to close nagato-files ?"
 msgstr ""
 
 #: NagatoDynamicMenu.class:70
 msgid "Close"
 msgstr ""
 
-#: NagatoFiler.class:143
+#: NagatoFiler.class:144
 msgid "New directory"
 msgstr ""
 
 #: NagatoGtkBookmarks.class:75
 msgid "Trash bin"
+msgstr ""
+
+#: NagatoLeftPane.class:27
+msgid "Bookmarks"
+msgstr ""
+
+#: NagatoLeftPane.class:27
+msgid "TreeView"
 msgstr ""
 
 #: NagatoSelectionBar.class:88

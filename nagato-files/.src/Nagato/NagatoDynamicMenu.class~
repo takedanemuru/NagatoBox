@@ -67,7 +67,7 @@ Public Sub MenuItem_Click()
         Case NagatoMenuPipe.AppAbout
             HaruhiAbout.ShowDialog
         Case NagatoMenuPipe.AppQuit
-            If Message.Question(("Are you sure to close nagato-desktop-icon ?"), ("Cancel"), ("Close")) = 2 Then HaruhiMain.Close()
+            If Message.Question(("Are you sure to close nagato-files ?"), ("Cancel"), ("Close")) = 2 Then Raise MenuEvent(Last.Tag)
         Default
             Raise MenuEvent(Last.Tag)
     End Select

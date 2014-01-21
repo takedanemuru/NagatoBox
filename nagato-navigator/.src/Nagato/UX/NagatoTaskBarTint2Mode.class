@@ -5,6 +5,43 @@ Inherits NagatoPainter
 Private $tasks As New NagatoTasks
 Private $observer As Observer
 
+Private Function getDesktop(argX As Integer) As Integer
+    
+    Dim yukiDesktopWidth As Integer = CInt((Me._$drawingArea.W / Desktop.Count))
+    Dim yukiDesktop As Integer = CInt(argX / yukiDesktopWidth)
+    
+    If yukiDesktop > Desktop.Count - 1 Then yukiDesktop = Desktop.Count - 1
+    
+    Return yukiDesktop
+    
+Catch
+    Return 0
+    
+End
+
+Private Sub getWindowId(argMouseX As Integer) As Integer 'should return -1 if there's no window
+    
+    Dim yukiDesktopWidth As Integer = CInt((Me._$drawingArea.W / Desktop.Count))
+    Dim yukiDesktop As Integer = CInt(argMouseX / yukiDesktopWidth)
+    Dim yukiWindows As DesktopWindow[]
+    Dim yukiTaskIndex As Integer
+    
+    If yukiDesktop > Desktop.Count - 1 Then yukiDesktop = Desktop.Count - 1
+    yukiDesktop = getDesktop(argMouseX)
+    yukiWindows = $tasks.GetWindowsInDesktop(yukiDesktop) 
+    
+    If yukiWindows.Count > 0 Then
+        yukiTaskIndex = CInt((argMouseX - (yukiDesktopWidth * yukiDesktop)) / (yukiDesktopWidth / yukiWindows.Count))
+        Return yukiWindows[yukiTaskIndex].Id
+    Else
+        Return -1
+    Endif
+    
+Catch
+    Return -1
+    
+End
+
 Private Sub paintHighlightRectangle(argX As Integer, argWidth As Integer)
     
     Paint.Brush = Paint.Color(Color.Pink)
@@ -78,5 +115,50 @@ Public Sub LeftClick(argMouseX As Integer, argMouseY As Integer)
     
 Catch
     Return
+    
+End
+
+Public Sub DragBegin(argMouseX As Integer, argMouseY As Integer)
+    
+    Dim yukiId As Integer = getWindowId(argMouseX)
+    Dim yukiWindow As DesktopWindow
+    
+    If yukiId = -1 Then Return
+    
+    yukiWindow = New DesktopWindow(yukiId)
+    
+    Drag.Icon = yukiWindow.Icon.Picture
+    Me._$drawingArea.Drag(CStr(yukiId), "text/nagato-navigator")
+    
+End
+
+Public Sub DragMove(argMouseX As Integer, argMouseY As Integer)
+    
+    
+    
+End
+
+Public Sub Drop(argDropX As Integer, argDropY As Integer)
+    
+    Dim yukiWindow As DesktopWindow
+    Dim yukiDesktop As Integer = getDesktop(argDropX)
+    
+    If Drag.Format = "text/nagato-navigator" Then
+        Try yukiWindow = New DesktopWindow(CInt(Drag.Data))
+        If Not Error Then Try yukiWindow.Desktop = yukiDesktop
+        yukiWindow.Activate()
+    End If
+    
+Catch
+    Return
+    
+End
+
+Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
+    
+    Dim yukiContextMenu As NagatoContextMenuTint2
+    
+    yukiContextMenu = New NagatoContextMenuTint2(getDesktop(argMouseX), getWindowId(argMouseX))
+    yukiContextMenu.PopUp()
     
 End

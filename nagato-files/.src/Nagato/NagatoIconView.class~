@@ -225,7 +225,7 @@ Public Sub IconView_KeyPress()
     If Key.Code = Key["c"] Then
         Clipboard.Copy(NagatoDrag2.GetUriList($selectionBar.Paths), MikuruMimeType.UriList)
     Else If Key.Code = Key["v"] Then
-         Clipboard.Format <> MikuruMimeType.UriList Then Return
+         If Clipboard.Format <> MikuruMimeType.UriList Then Return
         Try Debug Clipboard.Paste()
     Endif
     

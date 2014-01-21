@@ -1,0 +1,106 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $treeView As TreeView
+
+Private Function getFileIcon(argPath As String) As Picture
+    
+    Dim yukiMimeType As String = DesktopMime.FromFile(argPath).Type
+    
+    If yukiMimeType Begins "image" Then
+        Return MikuruIcon.Get("image", 16)
+    Else If yukiMimeType Begins "audio" Then
+        Return MikuruIcon.Get("music", 16)
+    Else If yukiMimeType Begins "video" Then
+        Return MikuruIcon.Get("video", 16)
+    Else 
+        Return MikuruIcon.Get("document", 16)
+    Endif
+    
+End
+
+Private Sub setFile(argDirectory As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.File).Sort(gb.IgnoreCase)
+        $treeView.Add(argDirectory &/ yukiPath, yukiPath, getFileIcon(argDirectory &/ yukiPath), argDirectory)
+    Next
+    
+End
+
+Private Sub setDummyDirectory(argDirectory As String, argParent As String)
+    
+    $treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent, argParent)
+    
+    If Dir(argDirectory, "*").Count > 0 Then
+        $treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
+    Endif
+    
+End
+
+Private Sub setDirectory(argDirectory As String)
+    
+    Dim yukiDirectoryName As String = File.Name(argDirectory)
+    Dim yukiPath As String
+    
+    If Not $treeView.Exist(argDirectory) Then
+        $treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", 24))
+    Endif
+    
+    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.Directory).Sort(gb.IgnoreCase)
+        setDummyDirectory(argDirectory &/ yukiPath, argDirectory)
+    Next
+    
+    setFile(argDirectory)
+    
+End
+
+Private Sub initializeTreeView(argContainer As Container)
+    
+    $treeView = New TreeView(argContainer) As "TreeView"
+    
+    With $treeView
+        .Expand = True
+        .Background = Color.Lighter(Color.Lighter(Color.Violet))
+        .Foreground = Color.White
+        .Visible = False
+    End With
+    
+    setDirectory(User.Home)
+    
+    Object.Lock($treeView)
+        $treeView[User.Home].Expanded = True
+    Object.Unlock($treeView)
+    
+End
+
+Public Sub ToggleVisible()
+    
+    $treeView.Visible = Not $treeView.Visible
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeTreeView(argContainer)
+    
+End
+
+Public Sub TreeView_Activate()
+    
+    If IsDir($treeView.Key) Then
+        HaruhiMain.SetNewDirectory($treeView.Key)
+    End If
+    
+End
+
+Public Sub TreeView_Expand()
+    
+    If $treeView.Exist($treeView.Key & "dummy") Then 
+        $treeView[$treeView.Key & "dummy"].Delete()
+        setDirectory($treeView.Key)
+    End If
+    
+End

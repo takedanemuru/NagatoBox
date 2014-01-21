@@ -10,6 +10,7 @@ Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoDirectoryObserver
 
 Event NewTab(argPath As String)
+Event AppQuit
 
 Private Sub initializeDirectoryObserver(argDirectory As String)
     
@@ -140,7 +141,11 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             Case .ViewNewTab
                 Raise NewTab(User.Home)
             Case .DirCreate
-                Mkdir MikuruPath.GetSafePathName($log.Current &/ ("New directory"))
+                HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
+                HaruhiNewDirectory.ShowDialog()
+                'Mkdir MikuruPath.GetSafePathName($log.Current &/ ("New directory"))
+            Case .AppQuit
+                Raise AppQuit
         End Select
     End With
     

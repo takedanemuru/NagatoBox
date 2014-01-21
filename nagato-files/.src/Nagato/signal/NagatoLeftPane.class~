@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $container As VBox
+Private $modeComboBox As ComboBox
+Private $gtkBookmarks As NagatoGtkBookmarks
+Private $treeView As NagatoTreeView
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $container = New VBox(argContainer)
+    
+    With $container
+        .Expand = True
+    End With
+    
+End
+
+Private Sub ininializeModeComboBox()
+    
+    $modeComboBox = New ComboBox($container) As "ModeComboBox"
+    
+    With $modeComboBox
+        .Expand = False
+        .Height = 32
+        .List = [("Bookmarks"), ("TreeView")]
+        .ReadOnly = True
+        .Index = 0
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    ininializeModeComboBox()
+    $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
+    $treeView = New NagatoTreeView($container) As "TFEI"
+    
+End
+
+Public Sub ModeComboBox_Click()
+    
+    $gtkBookmarks.ToggleVisible()
+    $treeView.ToggleVisible()
+    
+End

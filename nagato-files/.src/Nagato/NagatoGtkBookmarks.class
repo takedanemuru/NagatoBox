@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoSignal
 
 Private Const SeparatorKey As String = "NagatoSeparatorKey"
 Private Const TrashBinKey As String = "NagatoTrashBinKey"
@@ -107,6 +107,12 @@ Private Sub moveDroppedFiles()
             Endif
         Next
     End If
+    
+End
+
+Public Sub ToggleVisible()
+    
+    $listView.Visible = Not $listView.Visible
     
 End
 

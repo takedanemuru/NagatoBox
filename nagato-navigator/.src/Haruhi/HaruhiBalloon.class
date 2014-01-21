@@ -68,3 +68,9 @@ Public Sub Form_Open()
     Me.Y = 30
 
 End
+
+Public Sub Form_DblClick()
+
+    Me.Close()
+
+End

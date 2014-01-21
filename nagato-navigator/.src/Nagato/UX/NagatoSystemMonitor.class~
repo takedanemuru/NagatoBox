@@ -16,12 +16,10 @@ End
 
 Public Sub Paint()
     
-    Dim yukiText As String = getText()
-    
     Paint.Begin(Me._$drawingArea)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.Text(yukiText, 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
+        Paint.Text(getText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
         Paint.Fill()
     Paint.End()
     

@@ -14,6 +14,8 @@ End
 
 Public Sub SetPath(argPath As String, Optional argIcon As Picture)
     
+    Dim yukiExt As String = File.Ext(argPath)
+    
     If Not Exist(argPath) Then Return
     
     $directory = File.Dir(argPath)
@@ -22,7 +24,15 @@ Public Sub SetPath(argPath As String, Optional argIcon As Picture)
     setDirectoryButtonBox($directory)
     
     CurrentNameTextLabel.Text = $fileName
-    NewNameTextBox.Text = $fileName
+    
+    With NewNameTextBox
+        .Text = $fileName
+        If yukiExt = "" Then
+            .Select()
+        Else
+            .Select(0, String.Len(.Text) - String.Len(File.Ext(argPath)) - 1)
+        End If
+    End With
     
     If argIcon Then IconPictureBox.Picture = argIcon
     

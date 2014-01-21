@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $startUpPath As String
+Private $leftPane As NagatoLeftPane
 Private $filers As New NagatoFiler[]
 
 Private Sub addTab(Optional argPath As String = User.Home)
@@ -63,9 +64,8 @@ End
 Public Sub Form_Open()
     
     Dim yukiFiler As NagatoFiler
-    Dim yukiDirChooser As NagatoGtkBookmarks
-    
-    yukiDirChooser = New NagatoGtkBookmarks(LeftPanel) As "BookmarkList"
+
+    $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
     
     If $startUpPath <> "" Then
         yukiFiler = New NagatoFiler(MainTabStrip, $startUpPath) As "Filer"
@@ -111,5 +111,11 @@ End
 Public Sub Filer_NewTab(argPath As String)
     
     addTab(argPath)
+    
+End
+
+Public Sub Filer_AppQuit()
+    
+    Me.Close()
     
 End

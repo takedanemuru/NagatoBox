@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  { DirectoryNameBox TextBox
+    MoveScaled(8,32,33,4)
+  }
+  { CreateButton Button
+    MoveScaled(25,37,16,4)
+    Text = ("Create")
+  }
+  { CancelButton Button
+    MoveScaled(8,37,16,4)
+    Text = ("Cancel")
+  }
+}

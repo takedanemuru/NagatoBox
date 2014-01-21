@@ -25,3 +25,21 @@ Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
     
     
 End
+
+Public Sub DragBegin(argMouseX As Integer, argMouseY As Integer)
+    
+    'ignore
+    
+End
+
+Public Sub DragMove(argMouseX As Integer, argMouseY As Integer)
+    
+    'ignore
+    
+End
+
+Public Sub Drop(argMouseX As Integer, argMouseY As Integer)
+    
+    'ignore
+    
+End
