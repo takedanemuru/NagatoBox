@@ -1,0 +1,106 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Property Read LastSelected As String
+
+Private $lastSelected As String = ""
+
+Event Kill
+
+Public Sub _InitializeGridView()
+    
+    Me._$gridView.Rows.Count = 0
+    
+    With Me._$gridView
+        .Columns.Count = 6
+        .Columns[0].Text = ("Process ID")
+        .Columns[1].Text = ("Status")
+        .Columns[2].Text = ("Process Name")
+        .Columns[3].Text = ("CPU Usage")
+        .Columns[4].Text = ("Memory Usage(RSS)")
+        .Columns[5].Text = ("Memory Usage(Virtual)")
+    End With
+    
+End
+
+Private Sub setRowData(argRowData As Collection)
+    
+    With Me._$gridView
+        Inc .Rows.Count
+        Me._SetText(0, CStr(argRowData["id"]))
+        Me._SetText(1, argRowData["status"])
+        Me._SetText(2, argRowData["name"])
+        Me._SetText(3, MikuruUnitConversion.UsageToString(argRowData["cpu"]), True)
+        Me._SetText(4, MikuruUnitConversion.PageToMiB(CStr(argRowData["rss"])), True)
+        Me._SetText(5, MikuruUnitConversion.KiloByteToMiB(CStr(argRowData["virtual"])), True)
+        If Odd(.Rows.Max) Then Me._SetBackGroundColor()
+        If .[.Rows.Max, 0].Text = $lastSelected Then .Select(.Rows.Max, 1)
+    End With
+    
+End
+
+Private Sub setGridView()
+    
+    Dim yukiGridData As Variant[] = MikuruGrids.GetData()
+    Dim yukiCount As Integer
+    
+    Me._Clear()
+        For yukiCount = 0 To yukiGridData.Max
+            setRowData(yukiGridData[yukiCount])
+        Next
+    Me._Restore()
+    
+End
+
+Private Sub popUpKillMenu()
+    
+    Dim yukiMenu As New Menu(HaruhiMain) 
+    Dim yukiKillMenu As New Menu(yukiMenu) As "KillMenu"
+    
+    yukiMenu.Visible = False
+    yukiKillMenu.Text = "KILL"
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub Refresh()
+    
+    MikuruUnitConversion.SetCpuTimes()
+    setGridView()
+    
+End
+
+Public Sub Unselect()
+    
+    $lastSelected = ""
+    
+End
+
+Public Sub Asakura_ColumnClick(argColumnIndex As Integer)
+
+    MikuruGrids.SwitchSort(argColumnIndex)
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    If Me._$gridView.RowAt(Mouse.Y) = -1 Then Return
+    $lastSelected = Me._$gridView[Me._$gridView.Row, 0].Text
+    
+    If Mouse.Right Then popUpKillMenu()
+
+End
+
+Public Sub KillMenu_Click()
+    
+    Raise Kill
+    
+End
+
+Private Function LastSelected_Read() As String
+
+    Return $lastSelected
+
+End

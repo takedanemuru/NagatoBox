@@ -1,0 +1,69 @@
+' Gambas class file
+
+Public _$gridView As GridView
+Public _$observer As Observer
+
+Private $scrollY As Integer
+
+Public Sub _InitializeGridView() 'virtual
+    
+    
+    
+End
+
+Public Function _GetRowPosition(argText As String, argColumnIndex As Integer) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To Me._$gridView.Rows.Max
+        If String.Comp(Me._$gridView[yukiCount, argColumnIndex].Text, argText) Then
+            Return yukiCount
+        Endif
+    Next
+    
+    Return -1
+    
+End
+
+Public Sub _SetText(argColumn As Integer, argText As String, Optional argAlignRight As Boolean)
+    
+    With Me._$gridView
+        .[.Rows.Max, argColumn].Text = argText
+        If argAlignRight Then .[.Rows.Max, argColumn].Alignment = Align.Right
+    End With
+    
+End
+
+Public Sub _SetBackGroundColor()
+    
+    Dim yukiCount As Integer
+    Dim yukiColor As Integer = Color.Lighter(Color.Lighter(Color.Lighter(Color.Blue)))
+    
+    For yukiCount = 0 To Me._$gridView.Columns.Max
+        Me._$gridView[Me._$gridView.Rows.Max, yukiCount].Background = yukiColor
+    Next
+    
+End
+
+Public Sub _Clear()
+    
+    $scrollY = Me._$gridView.ScrollY
+    
+    Me._$gridView.Clear()
+    Me._$gridView.Rows.Count = 0
+    
+End
+
+Public Sub _Restore()
+    
+    Try Me._$gridView.ScrollY = $scrollY
+    
+End
+
+Public Sub _new(argGridView As GridView)
+    
+    Me._$gridView = argGridView
+    Me._$observer = New Observer(Me._$gridView) As "Asakura"
+    Me._InitializeGridView()
+    
+End

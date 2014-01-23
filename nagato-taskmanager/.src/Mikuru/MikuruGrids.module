@@ -1,0 +1,81 @@
+' Gambas module file
+
+Private $sortAscend As Boolean = True
+Private $targetHeader As Integer = 0
+Private $headers As String[] = ["id", "status", "name", "cpu", "rss", "virtual"]
+            
+Private Function isLesser(argGridData As Variant, argRowData As Variant) As Boolean
+    
+    If $sortAscend Then
+        Return (argGridData > argRowData)
+    Else
+        Return (argRowData > argGridData)
+    Endif
+    
+End
+
+Private Function getRowData(argDirectory As String) As Collection
+    
+    Dim yukiStatus As String[] = Split(File.Load(Subst$("/proc/&1/stat", File.Name(argDirectory))), " ", "")
+    Dim yukiResult As New Collection
+    Dim yukiCpuStatus As Float = MikuruUnitConversion.CpuUsageInFloat(yukiStatus)
+    Dim yukiName As String = ""
+    
+    If yukiCpuStatus > 0 Then yukiName = File.Load(Subst$("/proc/&1/cmdline", File.Name(argDirectory)))
+    If yukiName = "" Then yukiName = yukiStatus[1]
+    
+    yukiResult.Add(CInt(File.Name(argDirectory)), $headers[0])
+    yukiResult.Add(yukiStatus[2], $headers[1])
+    yukiResult.Add(yukiName, $headers[2])
+    yukiResult.Add(yukiCpuStatus, $headers[3])
+    yukiResult.Add(CFloat(yukiStatus[23]), $headers[4])
+    yukiResult.Add(CFloat(yukiStatus[22]), $headers[5])
+    
+    Return yukiResult
+    
+End
+
+Private Sub setGridData(argRowData As Collection, ByRef refGridData As Variant[])
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To refGridData.Max
+        If isLesser(refGridData[yukiCount][$headers[$targetHeader]], argRowData[$headers[$targetHeader]]) Then
+            refGridData.Add(argRowData, yukiCount)
+            Return
+        Endif
+    Next
+    
+    refGridData.Add(argRowData)
+    
+End
+
+Public Function GetData() As Variant[]
+    
+    Dim yukiDirectory As String
+    Dim yukiRowData As Collection
+    Dim yukiGridData As New Variant[]
+    
+    For Each yukiDirectory In Dir("/proc", "*[0-9]", gb.Directory)
+        If Not Exist("/proc" &/ yukiDirectory) Then Continue
+        yukiRowData = getRowData(yukiDirectory)
+        If yukiGridData.Count = 0 Then
+            yukiGridData.Add(yukiRowData)
+        Else
+            setGridData(yukiRowData, ByRef yukiGridData)
+        Endif
+    Next
+    
+    Return yukiGridData
+    
+End
+
+Public Sub SwitchSort(argColumnIndex As Integer)
+    
+    If $targetHeader = argColumnIndex Then
+        $sortAscend = Not $sortAscend
+    Else
+        $targetHeader = argColumnIndex
+    Endif
+    
+End

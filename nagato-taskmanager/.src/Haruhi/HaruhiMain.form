@@ -6,8 +6,7 @@
   Icon = Picture["Icons/oscilloscope.png"]
   Arrangement = Arrange.Vertical
   { GraphArea DrawingArea
-    MoveScaled(3,2,59,14.2857)
-    Background = &HFFFFFF&
+    MoveScaled(3,2,59,17.1429)
   }
   { HBox1 HBox
     MoveScaled(4,17,59,4)
@@ -16,7 +15,6 @@
       MoveScaled(1,1,24,4)
       Foreground = &HFFFFFF&
       Expand = True
-      Text = ("Label1")
     }
   }
   { SystemMonitorGrid GridView

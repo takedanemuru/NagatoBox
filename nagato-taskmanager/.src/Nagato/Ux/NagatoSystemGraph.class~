@@ -1,0 +1,74 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+Private $nagatoImage As Image
+
+Private Sub paintGridLine()
+    
+    Dim yukiCount As Integer
+    
+    Paint.Brush = Paint.Color(Color.Gray)
+    Paint.LineJoin = Paint.LineJoinRound
+    Paint.LineWidth = 0.05
+        For yukiCount = 10 To 120 Step 25
+            Paint.MoveTo(0, yukiCount)
+            Paint.LineTo($drawingArea.W, yukiCount)
+        Next
+    Paint.Stroke()
+    
+End
+
+Private Sub paintLine(argColor As Integer, argHistory As Float[])
+    
+    Dim yukiCount As Integer
+    Dim yukiX As Integer
+    
+    If 2 > argHistory.Count Then Return
+    
+    Paint.Brush = Paint.Color(argColor)
+    Paint.LineJoin = Paint.LineJoinRound
+    Paint.LineWidth = 1
+        For yukiCount = 0 To argHistory.Max - 1
+            yukiX = $drawingArea.W - (yukiCount * 4)
+            Paint.MoveTo(yukiX, 100 - argHistory[argHistory.Max - yukiCount] * 100 + 10)
+            Paint.LineTo(yukiX - 4, 100 - argHistory[argHistory.Max - yukiCount - 1] * 100 + 10)
+        Next
+    Paint.Stroke()
+    
+End
+
+Private Sub paintImage()
+    
+    Dim yukiScreen As New Image($drawingArea.W, $drawingArea.H, Color.White + 16777216 * 128)
+    
+    Paint.DrawImage($nagatoImage, 0, -172)
+    Paint.DrawImage(yukiScreen, 0, 0)
+    
+End
+
+Public Sub Refresh()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $observer = New Observer($drawingArea) As "Asakura"
+    $nagatoImage = Image.Load("Pictures/yukisamishen.png")
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin($drawingArea)
+        paintImage()
+        paintGridLine()
+        paintLine(Color.Red, NagatoSystemObserver.CpuHistory)
+        paintLine(Color.Blue, NagatoSystemObserver.MemoryHistory)
+        paintLine(Color.Green, NagatoSystemObserver.SwapHistory)
+    Paint.End()
+    
+End
