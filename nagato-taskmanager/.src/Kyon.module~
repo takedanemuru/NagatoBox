@@ -13,16 +13,6 @@ Private Function isActivated() As Boolean
     
 End
 
-Private Function isMainWindowActivated() As Boolean
-    
-    If HaruhiMain.Closed Then
-        Return False
-    Else
-        Return True
-    Endif
-    
-End
-
 Private Sub pursingArgs()
     
     Dim yukiOptions As String[]

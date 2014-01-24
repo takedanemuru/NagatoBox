@@ -1,7 +1,21 @@
 ' Gambas module file
 
+Private Sub ensureNagatoTaskmanagerActivation()
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.taskmanager") Then
+        Shell Subst$("nagato-taskmanager --register &1", Application.Name) 
+    Endif
+    
+End
+
 Public Sub Main()
     
-    HaruhiMain.Show()
+    If NagatoDBus.IsUnique() Then
+        ensureNagatoTaskmanagerActivation()
+        NagatoDBus.Register()
+        HaruhiMain.Show()
+    Else
+        Message.Info(("YUKI.N > nagato-navigator has been activated."), ("OK"))
+    End If
     
 End

@@ -5,6 +5,7 @@ Inherits NagatoGrids
 Property Read LastSelected As String
 
 Private $lastSelected As String = ""
+Private $lock As Boolean = False
 
 Event Kill
 
@@ -65,10 +66,17 @@ Private Sub popUpKillMenu()
     
 End
 
-Public Sub Refresh()
+Private Sub forceRefresh()
     
     MikuruUnitConversion.SetCpuTimes()
     setGridView()
+    
+End
+
+Public Sub Refresh()
+    
+    MikuruUnitConversion.SetCpuTimes()
+    If Not $lock Then setGridView()
     
 End
 
@@ -82,6 +90,8 @@ Public Sub Asakura_ColumnClick(argColumnIndex As Integer)
 
     MikuruGrids.SwitchSort(argColumnIndex)
     
+    forceRefresh()
+    
 End
 
 Public Sub Asakura_MouseDown()
@@ -91,6 +101,18 @@ Public Sub Asakura_MouseDown()
     
     If Mouse.Right Then popUpKillMenu()
 
+End
+
+Public Sub Asakura_Enter()
+    
+    $lock = True
+    
+End
+
+Public Sub Asakura_Leave()
+    
+    $lock = False
+    
 End
 
 Public Sub KillMenu_Click()

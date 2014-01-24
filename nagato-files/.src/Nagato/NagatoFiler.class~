@@ -143,7 +143,6 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             Case .DirCreate
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
                 HaruhiNewDirectory.ShowDialog()
-                'Mkdir MikuruPath.GetSafePathName($log.Current &/ ("New directory"))
             Case .AppQuit
                 Raise AppQuit
         End Select

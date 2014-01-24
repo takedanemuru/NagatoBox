@@ -12,7 +12,7 @@ Property Read CpuHistory As Float[]
 Property Read MemoryHistory As Float[]
 Property Read SwapHistory As Float[]
 
-Private Const SystemSnapShotInterval As Integer = 2000 ' milliseconds
+Private Const SystemSnapShotInterval As Integer = 1000 ' milliseconds
 
 Private $timer As Timer
 Private $observationStep As Integer
