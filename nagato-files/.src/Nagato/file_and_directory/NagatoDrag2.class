@@ -66,3 +66,37 @@ Public Function GetUriList(argPaths As String[]) As String
     Return yukiResult
     
 End
+
+Public Function GetUriListCopy(argPaths As String[]) As String
+    
+    Dim yukiPath As String = "#nagato-files_mode=copy" & gb.CrLf
+    Dim yukiResult As String
+    
+    For Each yukiPath In argPaths
+        If Exist(yukiPath) Then
+            yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+            yukiResult &= ("file://" & uriEncode(yukiPath) & gb.CrLf)
+            yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
+        Endif
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Function GetUriListCut(argPaths As String[]) As String
+    
+    Dim yukiPath As String = "#nagato-files_mode=cut" & gb.CrLf
+    Dim yukiResult As String
+    
+    For Each yukiPath In argPaths
+        If Exist(yukiPath) Then
+            yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+            yukiResult &= ("file://" & uriEncode(yukiPath) & gb.CrLf)
+            yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
+        Endif
+    Next
+    
+    Return yukiResult
+    
+End

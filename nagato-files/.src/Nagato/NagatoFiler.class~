@@ -155,13 +155,10 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     Select Case argEvent
         Case NagatoMenuPipe.PathNew
             If IsDir(argArgument) Then move(argArgument)
+        Case NagatoMenuPipe.FileCopy
+            Debug "Copy"
+            MikuruFileManuever.CopyUriList(argArgument)
     End Select
-    
-End
-
-Public Sub IconView_MenuEvent(argEvent As Integer)
-    
-    Debug argEvent
     
 End
 

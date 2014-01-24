@@ -220,13 +220,22 @@ End
 
 Public Sub IconView_KeyPress()
     
+    Dim yukiPaths As String
+    
+    If Key.Enter Then
+        If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
+    Endif
+    
     If Not Key.Control Then Return
     
-    If Key.Code = Key["c"] Then
-        Clipboard.Copy(NagatoDrag2.GetUriList($selectionBar.Paths), MikuruMimeType.UriList)
+    If Key.Code = Key["x"] Then
+        Clipboard.Copy(NagatoDrag2.GetUriListCut($selectionBar.Paths), MikuruMimeType.UriList)
+    Else If Key.Code = Key["c"] Then
+        Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), MikuruMimeType.UriList)
     Else If Key.Code = Key["v"] Then
-         If Clipboard.Format <> MikuruMimeType.UriList Then Return
-        Try Debug Clipboard.Paste()
+        If Clipboard.Format <> MikuruMimeType.UriList Then Return
+        yukiPaths = Clipboard.Paste()
+        Raise MenuEventWithArg(Me.FileCopy, yukiPaths)
     Endif
     
 End

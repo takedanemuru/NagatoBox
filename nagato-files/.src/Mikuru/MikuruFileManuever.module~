@@ -2,6 +2,11 @@
 
 Public Sub CopyUriList(argTargetDirectory As String, argUriList As String)
     
+    Dim yukiPath As String
     
+    For Each yukiPath In NagatoDrag2.GetPaths(argUriList)
+        Debug yukiPath
+        Try Copy yukiPath To MikuruPath.GetSafePathName(argTargetDirectory &/ File.Name(yukiPath))
+    Next
     
 End
