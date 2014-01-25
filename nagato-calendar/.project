@@ -1,17 +1,17 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.1
+# Compiled with Gambas 3.5.2
 Title=nagato-calendar
-Startup=FMain
+Startup=Kyon
 Version=0.0.1
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.db
-Component=gb.db.sqlite3
+Component=gb.db.form
 Component=gb.settings
 Component=gb.image.effect
 Component=gb.qt4.ext
 TabSize=4
 Translate=1
-Language=en
+Language=ja_JP.UTF-8
 Packager=1
