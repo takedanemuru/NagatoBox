@@ -1,0 +1,47 @@
+' Gambas module file
+
+Property Read LastDayOfMonth As Integer
+Property Read FirstWeekDay As Integer
+
+Private $lastDayOfMonths As Integer[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+Private Function isLeapYear(argYear As Integer) As Boolean
+    
+    If argYear Mod 4 <> 0 Then Return False
+    
+    If argYear Mod 100 = 0 Then
+        If argYear Mod 900 = 200 Or If argYear Mod 900 = 600 Then
+            Return False
+        End If
+    End If
+
+    Return True
+    
+End
+
+Public Function GetWeekDaySingleText(argIndex As Integer) As String
+    
+    Dim yukiWeekTextSingle As String[] = [("Sun"), ("Mon"), ("Tue"), ("Wed"), ("Thu"), ("Fri"), ("Sat")]
+    
+    Return String.Left(yukiWeekTextSingle[argIndex])
+    
+End
+
+Private Function LastDayOfMonth_Read() As Integer
+
+    Dim yukiYear As Integer = Year(Now())
+    Dim yukiMonth As Integer = Month(Now())
+
+    If isLeapYear(yukiYear) And If yukiMonth = 2 Then
+        Return 29
+    Else
+        Return $lastDayOfMonths[yukiMonth - 1]
+    Endif
+
+End
+
+Private Function FirstWeekDay_Read() As Integer
+
+    Return WeekDay(Subst$("&1/1/&2", Month(Now()), Year(Now())))
+
+End
