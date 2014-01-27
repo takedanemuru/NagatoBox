@@ -34,7 +34,7 @@ End
 
 Public Sub DeleteBookmark(argUrl As String)
     
-    Me._$connection.Delete(TableBookmark, "url = &1", argUrl)
+    Try Me._$connection.Delete(TableBookmark, "url = &1", argUrl)
     
 End
 

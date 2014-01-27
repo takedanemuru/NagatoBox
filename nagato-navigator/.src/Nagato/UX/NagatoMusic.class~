@@ -35,3 +35,14 @@ Public Sub Paint()
     Paint.End()
     
 End
+
+Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
+    
+    Dim yukiContextMenu As NagatoContextMenuMusic
+    
+    If DBus.Session.Applications.Exist(ApplicationName) Then
+        yukiContextMenu = New NagatoContextMenuMusic
+        yukiContextMenu.PopUp()
+    End If
+    
+End

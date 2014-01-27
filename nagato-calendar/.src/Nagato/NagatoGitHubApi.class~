@@ -1,0 +1,17 @@
+' Gambas class file
+
+Create Static
+
+Public Const ApiIsuueOpen As String = "curl -i https://api.github.com/repos/&1/&2/issues?status=open"
+
+Public Function GetIssue() As String
+    
+    Dim yukiUserName As String = "takedanemuru"
+    Dim yukiRepoName As String = "NagatoBox"
+    Dim yukiOutput As String
+    
+    Shell Subst$(ApiIsuueOpen, yukiUserName, yukiRepoName) To yukiOutput
+    
+    Return yukiOutput
+    
+End

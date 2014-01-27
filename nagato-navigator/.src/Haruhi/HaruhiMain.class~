@@ -39,6 +39,12 @@ Public Sub Form_Open()
 
 End
 
+Public Sub Form_Close()
+    
+    NagatoDBus.Unregister()
+    
+End
+
 Public Sub Form_Enter()
 
     If Mouse.ScreenY > Screen.H - 2 Then HaruhiPersona.EnsureVisible()

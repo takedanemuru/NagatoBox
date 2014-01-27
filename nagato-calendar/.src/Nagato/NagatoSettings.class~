@@ -1,0 +1,29 @@
+' Gambas class file
+
+Create Static
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = $settings[Subst$("&1/x", .Name), .X]
+        .Y = $settings[Subst$("&1/y", .Name), .Y]
+        .H = $settings[Subst$("&1/h", .Name), .H]
+        .W = $settings[Subst$("&1/w", .Name), .W]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        $settings[Subst$("&1/x", .Name)] = .X
+        $settings[Subst$("&1/y", .Name)] = .Y
+        $settings[Subst$("&1/h", .Name)] = .H
+        $settings[Subst$("&1/w", .Name)] = .W
+    End With
+    
+    $settings.Save()
+    
+End

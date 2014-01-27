@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoSignal
+
 Public _$parentMenu As Menu
 
 Public Sub _InitializeParentMenu(argRootMenu As Menu)

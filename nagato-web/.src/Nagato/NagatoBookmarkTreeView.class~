@@ -29,6 +29,12 @@ Private Sub setCategory()
     
 End
 
+Private Sub setTrashBin()
+    
+    $treeView.Add("NagatoTrashBin", "Delete", MikuruIcon.Get("bin"))
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $treeView = New TreeView(argContainer) As "TreeView"
@@ -36,6 +42,7 @@ Public Sub _new(argContainer As Container)
     $treeView.Drop = True
     
     setCategory()
+    setTrashBin()
     
 End
 
@@ -74,13 +81,15 @@ Public Sub TreeView_Drop()
     If $title = "" Then Return
     If Drag.Data Not Begins "http://" Then Return
     
-    yukiCategory = IIf($treeView.Item.Key Begins "http://", $treeView.Item.ParentKey, $treeView.Item.Key)
-    
-    Try $treeView.Remove(Drag.Data)
-    Try $treeView.Add(Drag.Data, $title,, yukiCategory)
-    
-    If Not Error Then NagatoDBWeb.ChangeBookmarkCategory(Drag.Data, yukiCategory)
-    
-    $title = ""
+    If $treeView.Item.Key = "NagatoTrashBin" Then
+        Try $treeView.Remove(Drag.Data)
+        If Not Error Then NagatoDBWeb.DeleteBookmark(Drag.Data)
+    Else
+        yukiCategory = IIf($treeView.Item.Key Begins "http://", $treeView.Item.ParentKey, $treeView.Item.Key)
+        Try $treeView.Remove(Drag.Data)
+        Try $treeView.Add(Drag.Data, $title,, yukiCategory)
+        If Not Error Then NagatoDBWeb.ChangeBookmarkCategory(Drag.Data, yukiCategory)
+        $title = ""
+    End If
     
 End
