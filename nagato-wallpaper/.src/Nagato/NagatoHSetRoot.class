@@ -2,6 +2,36 @@
 
 Create Static
 
+Private $originalImage As Image
+Private $modefiedImage As Image
+
+Private Sub setOriginalImage(argPath As String)
+    
+    $originalImage = Image.Load(argPath)
+    $originalImage.Save(Kyon.HiddenPathOriginalImage)
+    
+End
+
+Private Sub setModefiedImageCenter(argColor As Integer)
+    
+    Dim yukiImage As Image = New Image(Screen.W, Screen.H, argColor)
+    
+    Paint.Begin(yukiImage)
+        Paint.DrawImage($originalImage, (Screen.W - $originalImage.W) * 0.5, (Screen.H - $originalImage.H) * 0.5)
+    Paint.End()
+    
+    $modefiedImage = yukiImage
+    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+
+End
+
+Private Sub setModefiedImageFill()
+    
+    $modefiedImage = $originalImage.Stretch(Screen.W, Screen.H)
+    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+
+End
+
 Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMode As Integer)
     
     Dim yukiCommandLineOption As String = MikuruRenderMode.getCommandLineOption(argRenderMode)
@@ -9,6 +39,11 @@ Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMo
     
     If argPath = "" Then Return
     
-    Shell Subst$("hsetroot -solid &3 &1 &2", yukiCommandLineOption, Quote$(argPath), Quote$(yukiColor))
+    setOriginalImage(argPath)
+    setModefiedImageCenter(argBackground)
+    
+    'Shell Subst$("hsetroot -solid &3 &1 &2", yukiCommandLineOption, Quote$(argPath), Quote$(yukiColor))
+    Shell Subst$("hsetroot -solid &3 &1 &2", "-center", Kyon.HiddenPathModefiedImage, Quote$(yukiColor))
+    
     
 End

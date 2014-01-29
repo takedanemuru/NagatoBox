@@ -28,6 +28,8 @@ End
 
 Private Sub setSubMenu()
     
+    addMenuItem(("Edit"), MikuruEvent.StarEdit, "brush")
+        addMenuItem("", 0)
     addMenuItem(("About nagato-image-view"), MikuruEvent.StarAbout, "star")
     addMenuItem(("Quit"), MikuruEvent.StarQuit, "button-power")
     
@@ -48,6 +50,8 @@ Public Sub MenuItem_Click()
             HaruhiAbout.ShowDialog()
         Case MikuruEvent.StarQuit
             HaruhiImageView.Close()
+        Case MikuruEvent.StarEdit
+            Raise MenuEvent(Last.Tag)
     End Select
     
 End

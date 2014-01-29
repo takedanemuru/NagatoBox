@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $selector As NagatoEffectSelector 
+Private $propertyVBox As VBox
+Private $previewButton As Button
+Private $applyButton As Button
+Private $effectProperties As Object
+
+Private Sub initializeSelectorComboBox(argContainer As Container)
+    
+    $selector = New NagatoEffectSelector(argContainer) As "EffectSelector"
+    
+End
+
+Private Sub initializePropertyVBox(argContainer As Container)
+    
+    $propertyVBox = New VBox(argContainer)
+    
+    With $propertyVBox
+        .Expand = True
+        .Background = Color.Lighter(Color.Blue)
+        .Padding = 2
+    End With
+    
+End
+
+Private Sub initializePreviewButton(argContainer As Container)
+    
+    $previewButton = New Button(argContainer) As "PreviewButton"
+    
+    With $previewButton
+        .Text = ("Preview")
+        .H = 32
+    End With
+    
+End
+
+Private Sub initializeApplyButton(argContainer As Container)
+    
+    $applyButton = New Button(argContainer) As "ApplyButton"
+    
+    With $applyButton
+        .Text = ("Apply")
+        .H = 32
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeSelectorComboBox(argContainer)
+    initializePropertyVBox(argContainer)
+    initializePreviewButton(argContainer)
+    initializeApplyButton(argContainer)
+    
+    $effectProperties = New NagatoEffectPropertiesOilPaint($propertyVBox)
+    
+End
+
+Public Sub EffectSelector_MenuEvent(argEvent As Integer)
+    
+    If argEvent <> MikuruEffect.Changed Then Return
+    
+    Select Case $selector.Effect
+        Case MikuruEffect.Charcoal
+             $effectProperties = New NagatoEffectPropertiesCharcoal($propertyVBox)
+        Case MikuruEffect.OilPaint
+             $effectProperties = New NagatoEffectPropertiesOilPaint($propertyVBox)
+    End Select
+    
+End
+
+Public Sub PreviewButton_Click()
+    
+    Raise MenuEventWithArgs($selector.Effect, $effectProperties.Values)
+    
+End
+
+Public Sub ApplyButton_Click()
+    
+    Raise MenuEventWithArgs(MikuruEffect.Apply, [""])
+    
+End

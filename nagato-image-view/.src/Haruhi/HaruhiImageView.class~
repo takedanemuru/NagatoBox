@@ -1,6 +1,8 @@
 ' Gambas class file
 
 Private $menuBar As NagatoMenuBar
+Private $twinView As NagatoTwinView
+Private $editorPane As NagatoEditorPane
 
 Private Sub openFile()
     
@@ -9,21 +11,22 @@ Private Sub openFile()
     Dialog.Path = User.Home
     
     If Not Dialog.OpenFile(False) Then
-        Debug Dialog.Path
-        Try MainView.Image = Image.Load(Dialog.Path)
+        $twinView.SetPath(Dialog.Path)
     Endif
     
 End
 
 Public Sub SetImage(argPath As String)
-
-    MainView.Image = Image.Load(argPath)
-
+    
+    $twinView.SetPath(argPath)
+    
 End
 
 Public Sub Form_Open()
     
     $menuBar = New NagatoMenuBar(MenuBox) As "MenuBar"
+    $twinView = New NagatoTwinView(MainView, MainViewAfter) As "TwinView"
+    $editorPane = New NagatoEditorPane(SidePanel1) As "EditorPane"
     
     NagatoSettings.LoadFormSettings(Me)
     Application.MainWindow = Me
@@ -40,19 +43,32 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
         Case MikuruEvent.ZoomFit
-            MainView.ZoomFit()
+            $twinView.SetZoomFit()
         Case MikuruEvent.ZoomNormal
-            MainView.Zoom = 1
+            $twinView.SetZoomNormal()
         Case MikuruEvent.ZoomIn
-            MainView.Zoom *= 1.2
+            $twinView.SetZoom(1.2)
         Case MikuruEvent.ZoomOut
-            MainView.Zoom *= 0.8
+            $twinView.SetZoom(0.8)
         Case MikuruEvent.FileOpen
             openFile()
         Case MikuruEvent.ViewRotateLeft
-            MainView.Image = MainView.Image.RotateLeft()
+            $twinView.Rotate(90)
         Case MikuruEvent.ViewRotateRight
-            MainView.Image = MainView.Image.RotateRight()
+            $twinView.Rotate(-90)
+        Case MikuruEvent.StarEdit
+            $twinView.Toggle()
+            SidePanel1.Hidden = Not SidePanel1.Hidden
     End Select
+    
+End
+
+Public Sub EditorPane_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+    
+    If argEvent = MikuruEffect.Apply Then
+        $twinView.ApplyEffect()
+    Else
+        $twinView.PreviewEffect(argEvent, argValues)
+    End If
     
 End

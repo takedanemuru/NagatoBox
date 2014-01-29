@@ -1,0 +1,93 @@
+' Gambas class file
+
+Private $before As ImageView
+Private $after As ImageView
+Private $previousZoom As Float
+
+Private Sub reserveZoom()
+    
+    $previousZoom = $before.Zoom
+    
+End
+
+Private Sub restoreZoom()
+    
+    $before.Zoom = $previousZoom
+    $after.Zoom = $previousZoom
+    
+End
+
+Public Sub Rotate(argAngle As Float)
+    
+    $previousZoom = $before.Zoom
+    
+    $before.Image = $before.Image.Rotate(Rad(argAngle))
+    $after.Image = $after.Image.Rotate(Rad(argAngle))
+    
+    restoreZoom()
+    
+End
+
+Public Sub SetZoom(argZoom As Float)
+    
+    $before.Zoom *= argZoom
+    $after.Zoom *= argZoom
+    
+End
+
+Public Sub SetZoomNormal()
+    
+    $before.Zoom = 1
+    $after.Zoom = 1
+    
+End
+
+Public Sub SetZoomFit()
+    
+    $before.ZoomFit()
+    $after.ZoomFit()
+
+End
+
+Public Sub Toggle()
+    
+    $after.Visible = Not $after.Visible
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Try $before.Image = Image.Load(argPath)
+    If Not Error Then $after.Image = $before.Image
+    
+End
+
+Public Sub ApplyEffect()
+    
+    $before.Image = $after.Image
+    
+End
+
+Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
+    
+    $after.Image = $before.Image
+    
+    Select Case argEffect
+        Case MikuruEffect.OilPaint
+            reserveZoom()
+                $after.Image = $before.Image.OilPaint(argValues[0])
+            restoreZoom()
+        Case MikuruEffect.Charcoal
+            reserveZoom()
+                $after.Image = $before.Image.Gray()
+            restoreZoom()
+    End Select
+    
+End
+
+Public Sub _new(argViewBefore As ImageView, argViewAfter As ImageView)
+    
+    $before = argViewBefore
+    $after = argViewAfter
+    
+End

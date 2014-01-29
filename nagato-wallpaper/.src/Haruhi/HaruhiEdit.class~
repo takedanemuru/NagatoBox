@@ -132,6 +132,14 @@ Private Sub selectPaintMode()
     
 End
 
+Public Sub SetPath(argPath As String)
+    
+    $currentPath = argPath
+    PreviewDrawingArea.Refresh()
+    NagatoSettings.PushToRecentPaths(argPath)
+    
+End
+
 Public Sub Form_Open()
 
     Application.MainWindow = Me
