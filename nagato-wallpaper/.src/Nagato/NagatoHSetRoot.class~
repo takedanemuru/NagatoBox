@@ -2,6 +2,7 @@
 
 Create Static
 
+Private $lastPath As String = ""
 Private $originalImage As Image
 Private $modefiedImage As Image
 
@@ -12,17 +13,94 @@ Private Sub setOriginalImage(argPath As String)
     
 End
 
+Private Function getOriginCenter() As PointF
+    
+    Dim yukiPoint As New PointF
+    
+    yukiPoint.X = (Screen.W - $originalImage.W) * 0.5
+    yukiPoint.Y = (Screen.H - $originalImage.H) * 0.5
+    
+    Return yukiPoint
+    
+End
+
+Private Function getOriginTopLeft() As PointF
+    
+    Dim yukiPoint As New PointF
+    Dim yukiPointCenter As PointF = getOriginCenter()
+    
+    yukiPoint.X = yukiPointCenter.X - $originalImage.W * (CInt(yukiPointCenter.X) Div $originalImage.W + 1)
+    yukiPoint.Y = yukiPointCenter.Y - $originalImage.H * (CInt(yukiPointCenter.Y) Div $originalImage.H + 1)
+    
+    Return yukiPoint
+    
+End
+
 Private Sub setModefiedImageCenter(argColor As Integer)
     
     Dim yukiImage As Image = New Image(Screen.W, Screen.H, argColor)
+    Dim yukiPoint As PointF = getOriginCenter()
     
     Paint.Begin(yukiImage)
-        Paint.DrawImage($originalImage, (Screen.W - $originalImage.W) * 0.5, (Screen.H - $originalImage.H) * 0.5)
+        Paint.DrawImage($originalImage, yukiPoint.X, yukiPoint.Y)
     Paint.End()
     
     $modefiedImage = yukiImage
     $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
 
+End
+
+Private Sub setModefiedImageTileCenter(argColor As Integer)
+    
+    Dim yukiImage As Image = New Image(Screen.W, Screen.H, argColor)
+    Dim yukiPoint As PointF = getOriginTopLeft()
+    Dim yukiX As Integer 
+    Dim yukiY As Integer = yukiPoint.Y
+    
+    Paint.Begin(yukiImage)
+        Repeat
+            yukiX = yukiPoint.X
+            Repeat
+                Paint.DrawImage($originalImage, yukiX, yukiY)
+                yukiX += $originalImage.W
+            Until yukiX > Screen.W 
+            yukiY += $originalImage.H
+        Until yukiY > Screen.H
+    Paint.End()
+    
+    $modefiedImage = yukiImage
+    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+
+End
+
+Private Sub setModefiedImageFull(argBackground As Integer)
+    
+    Dim yukiRate As Float = Min(Screen.H / $originalImage.H, Screen.W / $originalImage.W)
+    Dim yukiImage As Image = $originalImage.Stretch($originalImage.W * yukiRate, $originalImage.H * yukiRate)
+    Dim yukiBaseImage As New Image(Screen.W, Screen.H, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
+    Paint.End()
+    
+    $modefiedImage = yukiBaseImage
+    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+    
+End
+
+Private Sub setModefiedImageFit(argBackground As Integer)
+    
+    Dim yukiRate As Float = Max(Screen.H / $originalImage.H, Screen.W / $originalImage.W)
+    Dim yukiImage As Image = $originalImage.Stretch($originalImage.W * yukiRate, $originalImage.H * yukiRate)
+    Dim yukiBaseImage As New Image(Screen.W, Screen.H, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
+    Paint.End()
+    
+    $modefiedImage = yukiBaseImage
+    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+    
 End
 
 Private Sub setModefiedImageFill()
@@ -32,18 +110,33 @@ Private Sub setModefiedImageFill()
 
 End
 
-Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMode As Integer)
+Private Sub setModefiedImage(argRenderMode As Integer, argBackground As Integer)
     
-    Dim yukiCommandLineOption As String = MikuruRenderMode.getCommandLineOption(argRenderMode)
-    Dim yukiColor As String = "#" & Hex$(argBackground, 6) 'hsetroot requires hexadecimal number with #
+    Select argRenderMode
+        Case MikuruRenderMode.Center
+            setModefiedImageCenter(argBackground)
+        Case MikuruRenderMode.Tile
+            setModefiedImageTileCenter(argBackground)
+        Case MikuruRenderMode.Full
+            setModefiedImageFull(argBackground)
+        Case MikuruRenderMode.Fit
+            setModefiedImageFit(argBackground)
+        Case MikuruRenderMode.Fill
+            setModefiedImageFill()
+    End Select
+    
+End
+
+Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMode As Integer)
     
     If argPath = "" Then Return
     
-    setOriginalImage(argPath)
-    setModefiedImageCenter(argBackground)
+    If $lastPath <> argPath Then
+        $lastPath = argPath
+        setOriginalImage(argPath)
+    End If
     
-    'Shell Subst$("hsetroot -solid &3 &1 &2", yukiCommandLineOption, Quote$(argPath), Quote$(yukiColor))
-    Shell Subst$("hsetroot -solid &3 &1 &2", "-center", Kyon.HiddenPathModefiedImage, Quote$(yukiColor))
-    
+    setModefiedImage(argRenderMode, argBackground)
+    Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
     
 End

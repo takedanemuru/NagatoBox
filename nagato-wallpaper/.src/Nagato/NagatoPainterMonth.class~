@@ -1,0 +1,102 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Property Read TopOffset As Integer
+Property Read LeftOffset As Integer
+
+Private Const BoxSize As Integer = 40
+Private Const Margine As Integer = 1
+
+Private Function getX(argColumn As Integer) As Integer
+    
+    Return Me.LeftOffset + argColumn * (BoxSize + Margine)
+    
+End
+
+Private Function getY(argRow As Integer) As Integer
+    
+    Return Me.TopOffset + argRow * (BoxSize + Margine)
+    
+End
+
+Private Sub paintBox(argColumn As Integer, argRow As Integer, argColor As Integer)
+    
+    Paint.Brush = Paint.Color(argColor)
+        Paint.Rectangle(getX(argColumn), getY(argRow), BoxSize, BoxSize)
+    Paint.Fill()
+    
+End
+
+Private Sub paintText(argText As String, argColumn As Integer, argRow As Integer)
+    
+    Paint.Brush = Paint.Color(Color.White)
+        Paint.Text(argText, getX(argColumn), getY(argRow), BoxSize, BoxSize, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Sub paintHeader(argColumn As Integer)
+
+    paintBox(argColumn, 0, MikuruColor.BoxHeader)
+    paintText(MikuruDate.GetWeekDaySingleText(argColumn), argColumn, 0)
+    
+End
+
+Private Sub paintBody(argColumn As Integer, argRow As Integer, ByRef refDate As Integer)
+    
+    Dim yukiColor As Integer
+    
+    If refDate = 0 And If argColumn <> MikuruDate.FirstWeekDay Then
+        paintBox(argColumn, argRow, MikuruColor.BoxVoid)
+    Else If refDate = MikuruDate.LastDayOfMonth Then
+        paintBox(argColumn, argRow, MikuruColor.BoxVoid)
+    Else
+        Inc refDate
+        yukiColor = IIf(refDate = Day(Now()), MikuruColor.BoxHighlight, MikuruColor.BoxNormal)
+        paintBox(argColumn, argRow, yukiColor)
+        If refDate > MikuruDate.LastDayOfMonth Then Return
+        paintText(CStr(refDate), argColumn, argRow)
+    End If
+    
+End
+
+Private Sub paintCalendar()
+    
+    Dim yukiColumn As Integer
+    Dim yukiRow As Integer
+    Dim yukiDate As Integer 
+
+    For yukiRow = 0 To 6
+        For yukiColumn = 0 To 6
+            If yukiRow = 0 Then
+                paintHeader(yukiColumn)
+            Else 
+                paintBody(yukiColumn, yukiRow, ByRef yukiDate)
+            End If
+        Next
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    Paint.Begin(Me._$baseImage)
+        Paint.Font.Size = BoxSize * 0.5
+        Paint.Font.Bold = True
+        paintCalendar()
+    Paint.End()
+    
+End
+
+Private Function LeftOffset_Read() As Integer
+
+    Return Me._$baseImage.W - ((BoxSize + Margine) * 7 + Me.Padding)
+
+End
+
+Private Function TopOffset_Read() As Integer
+
+    Return Me.Padding 
+
+End

@@ -25,10 +25,25 @@ Private Function getFillRate(argImage As Image) As Float
     
 End
    
+Private Function getFillRateMax(argImage As Image) As Float
+    
+    Return Max(Screen.H / argImage.H, Screen.W / argImage.W) * $previewRatio
+    
+End
+
 Private Function getThumbnailForFillMode() As Image
     
     Dim yukiImage As Image = Image.Load($currentPath)
     Dim yukiRate As Float = getFillRate(yukiImage)
+    
+    Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
+    
+End
+
+Private Function getThumbnailForFitMode() As Image
+    
+    Dim yukiImage As Image = Image.Load($currentPath)
+    Dim yukiRate As Float = getFillRateMax(yukiImage)
     
     Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
     
@@ -107,6 +122,15 @@ Private Sub paintFull()
     
 End
 
+Private Sub paintFit()
+    
+    Dim yukiImage As Image = getThumbnailForFitMode()
+    Dim yukiPoint As PointF = getOriginPoint(yukiImage)
+    
+    Paint.DrawImage(yukiImage, yukiPoint.X, yukiPoint.Y)
+    
+End
+
 Private Sub refreshSettings()
     
     With NagatoSettings
@@ -126,6 +150,8 @@ Private Sub selectPaintMode()
             paintFull
         Case MikuruRenderMode.Fill
             paintFill()
+        Case MikuruRenderMode.Fit
+            paintFit()
         Case MikuruRenderMode.Center
             paintCenter()
     End Select
@@ -149,7 +175,7 @@ Public Sub Form_Open()
     ColorButton.Color = $currentColor
     initializePreviewDrawingArea()
     ModeComboBox.Index = NagatoSettings.LastMode
-
+    
 End
 
 Public Sub ApplyButton_Click()
@@ -157,6 +183,7 @@ Public Sub ApplyButton_Click()
     If $currentPath = "" Then
         Return
     Else
+        Debug "Go"
         NagatoHSetRoot.SetWallpaper($currentPath, $currentColor, ModeComboBox.Index)
         refreshSettings()
     End If
@@ -177,6 +204,8 @@ Public Sub PreviewDrawingArea_Draw()
     
     If $currentPath = "" Then Return
     
+    PreviewDrawingArea.Background = $currentColor
+
     With Paint
         .Begin(PreviewDrawingArea)
         selectPaintMode()

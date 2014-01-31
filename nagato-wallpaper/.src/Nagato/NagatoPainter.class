@@ -1,0 +1,19 @@
+' Gambas class file
+
+Create Private
+
+Public Const Padding As Integer = 4
+
+Public _$baseImage As Image
+
+Public Sub _new(argBaseImage As Image)
+    
+    Me._$baseImage = argBaseImage
+    
+End
+
+Public Sub Refresh()
+    
+    
+    
+End
