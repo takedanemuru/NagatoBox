@@ -184,9 +184,11 @@ Public Sub ApplyButton_Click()
         Return
     Else
         Debug "Go"
-        NagatoHSetRoot.SetWallpaper($currentPath, $currentColor, ModeComboBox.Index)
+        NagatoWallpaper.Set($currentPath, $currentColor, ModeComboBox.Index, CalendarComboBox.Index)
         refreshSettings()
     End If
+
+    Debug "Done"
 
 End
 

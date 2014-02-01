@@ -55,25 +55,13 @@ Private Sub initializeHiddenDirectory()
     
 End
 
-Private Sub setLastPath()
-    
-    With NagatoSettings
-        If .LastPath = "" Then
-            NagatoHSetRoot.SetWallpaper(Me.HiddenPath &/ "original.png", .LastColor, .LastMode)
-        Else
-            NagatoHSetRoot.SetWallpaper(.LastPath, .LastColor, .LastMode)
-        End If
-    End With
-    
-End
-
 Public Sub Main()
     
     initializeApplicationArguments()
     initializeHiddenDirectory()
     
     If $setLastPath Then
-        setLastPath()
+        NagatoWallpaper.SetLast()
     Else
         HaruhiEdit.Show()
         If $options.Count > 0 Then HaruhiEdit.SetPath($options[0])

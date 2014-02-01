@@ -5,12 +5,20 @@ Create Static
 Private $lastPath As String = ""
 Private $originalImage As Image
 Private $modefiedImage As Image
-Private $calendarPainter As NagatoPainterMonth
+Private $calendarMode As Integer
 
 Private Sub setOriginalImage(argPath As String)
     
     $originalImage = Image.Load(argPath)
     $originalImage.Save(Kyon.HiddenPathOriginalImage)
+    
+End
+
+Private Sub saveModefiedImage(argImage As Image)
+    
+    setCalendar(argImage)
+    $modefiedImage = argImage
+    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
     
 End
 
@@ -37,6 +45,20 @@ Private Function getOriginTopLeft() As PointF
     
 End
 
+Private Sub setCalendar(argImage As Image)
+    
+    Select Case $calendarMode
+        Case 0
+            ' ignore
+        Case 1, 2
+            NagatoCalendarHorizontal.Paint(argImage, $calendarMode)
+        Case 3, 4, 5, 6
+            NagatoCalendarBox.Paint(argImage, $calendarMode)
+    End Select
+    
+    
+End
+
 Private Sub setModefiedImageCenter(argColor As Integer)
     
     Dim yukiImage As Image = New Image(Screen.W, Screen.H, argColor)
@@ -46,12 +68,8 @@ Private Sub setModefiedImageCenter(argColor As Integer)
         Paint.DrawImage($originalImage, yukiPoint.X, yukiPoint.Y)
     Paint.End()
     
-    $calendarPainter = New NagatoPainterMonth(yukiImage)
-    $calendarPainter.Refresh()
+    saveModefiedImage(yukiImage)
     
-    $modefiedImage = yukiImage
-    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
-
 End
 
 Private Sub setModefiedImageTileCenter(argColor As Integer)
@@ -72,9 +90,8 @@ Private Sub setModefiedImageTileCenter(argColor As Integer)
         Until yukiY > Screen.H
     Paint.End()
     
-    $modefiedImage = yukiImage
-    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
-
+    saveModefiedImage(yukiImage)
+    
 End
 
 Private Sub setModefiedImageFull(argBackground As Integer)
@@ -87,8 +104,7 @@ Private Sub setModefiedImageFull(argBackground As Integer)
         Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
     Paint.End()
     
-    $modefiedImage = yukiBaseImage
-    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+    saveModefiedImage(yukiBaseImage)
     
 End
 
@@ -102,16 +118,14 @@ Private Sub setModefiedImageFit(argBackground As Integer)
         Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
     Paint.End()
     
-    $modefiedImage = yukiBaseImage
-    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
+    saveModefiedImage(yukiBaseImage)
     
 End
 
 Private Sub setModefiedImageFill()
     
-    $modefiedImage = $originalImage.Stretch(Screen.W, Screen.H)
-    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
-
+    saveModefiedImage($originalImage.Stretch(Screen.W, Screen.H))
+    
 End
 
 Private Sub setModefiedImage(argRenderMode As Integer, argBackground As Integer)
@@ -131,9 +145,11 @@ Private Sub setModefiedImage(argRenderMode As Integer, argBackground As Integer)
     
 End
 
-Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMode As Integer)
+Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer, argCalendar As Integer)
     
     If argPath = "" Then Return
+    
+    $calendarMode = argCalendar
     
     If $lastPath <> argPath Then
         $lastPath = argPath
@@ -142,5 +158,13 @@ Public Sub SetWallpaper(argPath As String, argBackground As Integer, argRenderMo
     
     setModefiedImage(argRenderMode, argBackground)
     Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
+    
+End
+
+Public Sub SetLast()
+    
+    If Exist(Kyon.HiddenPathModefiedImage) Then
+        Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
+    Endif
     
 End

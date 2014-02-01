@@ -32,7 +32,6 @@
   }
   { CalendarComboBox ComboBox
     MoveScaled(29,39,16,4)
-    Enabled = False
     ToolTip = ("Calendar")
     ReadOnly = True
     List = [("None"), ("Top"), ("Bottom"), ("Side"), ("Top Left"), ("Top Right"), ("Bottom Left"), ("Bottom Right")]

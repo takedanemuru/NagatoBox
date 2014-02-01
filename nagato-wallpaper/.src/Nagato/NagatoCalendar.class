@@ -7,13 +7,7 @@ Public Const Padding As Integer = 4
 
 Public _$baseImage As Image
 
-Public Sub _new()
-    
-    
-    
-End
-
-Public Sub PaintCalendar(argBaseImage As Image, argPosition As Integer)
+Public Sub Paint(argBaseImage As Image, argPosition As Integer) 'virtual
     
     
     

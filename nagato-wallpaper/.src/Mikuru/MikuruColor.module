@@ -4,6 +4,8 @@ Property Read BoxHeader As Integer
 Property Read BoxHighlight As Integer
 Property Read BoxNormal As Integer
 Property Read BoxVoid As Integer
+Property Read Sunday As Integer
+Property Read SundayBox As Integer
 
 Public Function HalfTransParent(argColor As Integer) As Integer
     
@@ -38,5 +40,17 @@ End
 Private Function BoxHeader_Read() As Integer
 
     Return Color.Violet + 16777216 * 80
+
+End
+
+Private Function Sunday_Read() As Integer
+
+    Return Color.Pink + 16777216 * 80
+    
+End
+
+Private Function SundayBox_Read() As Integer
+
+    Return Color.Pink + 16777216 * 220
 
 End

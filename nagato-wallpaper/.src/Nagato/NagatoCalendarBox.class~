@@ -1,12 +1,15 @@
 ' Gambas class file
 
-Inherits NagatoPainter
+Inherits NagatoCalendar
 
 Property Read TopOffset As Integer
 Property Read LeftOffset As Integer
 
 Private Const BoxSize As Integer = 40
 Private Const Margine As Integer = 1
+
+Private $topOffset As Integer
+Private $leftOffset As Integer
 
 Private Function getX(argColumn As Integer) As Integer
     
@@ -79,7 +82,32 @@ Private Sub paintCalendar()
     
 End
 
-Public Sub Refresh()
+Private Sub setPosition(argPosition As Integer)
+    
+    Debug argPosition
+    
+    Select Case argPosition
+        Case 4
+            $topOffset = Me.Padding
+            $leftOffset = Me.Padding
+        Case 5
+            $topOffset = Me.Padding
+            $leftOffset = Me._$baseImage.W - ((BoxSize + Margine) * 7 + Me.Padding)
+        Case 6
+            $topOffset = Desktop.H - ((BoxSize + Margine) * 7 + Me.Padding)
+            $leftOffset = Me.Padding
+        Case 7
+            $topOffset = Desktop.H - ((BoxSize + Margine) * 7 + Me.Padding)
+            $leftOffset = Me._$baseImage.W - ((BoxSize + Margine) * 7 + Me.Padding)
+    End Select
+    
+End
+
+Public Sub Paint(argBaseImage As Image, argPosition As Integer)
+    
+    Me._$baseImage = argBaseImage
+    
+    setPosition(argPosition)
     
     Paint.Begin(Me._$baseImage)
         Paint.Font.Size = BoxSize * 0.5
@@ -91,12 +119,12 @@ End
 
 Private Function LeftOffset_Read() As Integer
 
-    Return Me._$baseImage.W - ((BoxSize + Margine) * 7 + Me.Padding)
+    Return $leftOffset
 
 End
 
 Private Function TopOffset_Read() As Integer
 
-    Return Me.Padding 
+    Return $topOffset
 
 End

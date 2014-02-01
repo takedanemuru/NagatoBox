@@ -1,18 +1,19 @@
 ' Gambas class file
 
+Create Static
 Create Private
 
 Public Const Padding As Integer = 4
 
 Public _$baseImage As Image
 
-Public Sub _new(argBaseImage As Image)
+Public Sub _new()
     
-    Me._$baseImage = argBaseImage
+    
     
 End
 
-Public Sub Refresh()
+Public Sub PaintCalendar(argBaseImage As Image, argPosition As Integer)
     
     
     

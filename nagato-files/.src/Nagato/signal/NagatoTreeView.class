@@ -32,7 +32,9 @@ End
 
 Private Sub setDummyDirectory(argDirectory As String, argParent As String)
     
-    $treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent, argParent)
+    Debug argDirectory
+    
+    $treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
     
     If Dir(argDirectory, "*").Count > 0 Then
         $treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
@@ -49,7 +51,7 @@ Private Sub setDirectory(argDirectory As String)
         $treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", 24))
     Endif
     
-    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.Directory).Sort(gb.IgnoreCase)
+    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.Directory).Sort(gb.IgnoreCase + gb.Natural)
         setDummyDirectory(argDirectory &/ yukiPath, argDirectory)
     Next
     
