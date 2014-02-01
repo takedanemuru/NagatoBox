@@ -1,7 +1,0 @@
-' Gambas module file
-
-Public Enum None = 0
-Public Enum MenuHeader = 1000, MenuDone = 1001, MenuAddNew = 1002, MenuAddChild = 1003, MenuEdit = 1004
-Public Enum MenuDelete = 1005, MenuAbout = 1006, MenuQuit = 1007
-Public Enum FilterHeader = 2000, FilterChanged = 2001
-Public Enum ToDoHeader = 3000, ToDoAdd = 3001

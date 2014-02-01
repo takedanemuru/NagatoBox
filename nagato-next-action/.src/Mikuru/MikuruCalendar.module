@@ -1,8 +1,0 @@
-' Gambas module file
-
-Public Function GetDateText(argDate As Date) As String
-    
-    Return Subst$(("&2/&3/&1"), Year(argDate), Month(argDate), Day(argDate))
-    
-End
-
