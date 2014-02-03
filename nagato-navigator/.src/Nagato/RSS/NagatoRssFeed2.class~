@@ -1,0 +1,67 @@
+' Gambas class file
+
+Property Read Items As NagatoRssItem[]
+
+Private $xmlDocument As New XmlDocument
+Private $items As New NagatoRssItem[]
+Private $buffer As String
+
+Event Finished(argRssFeed As NagatoRssFeed2)
+Event Error
+
+Private Sub setItems()
+    
+    Dim yukiItem As XmlElement
+    Dim yukiRssItem As NagatoRssItem
+    
+    $xmlDocument.FromString($buffer)
+    
+    For Each yukiItem In $xmlDocument.GetElementsByTagName("item")
+        yukiRssItem = New NagatoRssItem(yukiItem)
+        If yukiRssItem.Valid Then $items.Add(yukiRssItem)
+    Next
+    
+    Raise Finished(Me)
+    
+End
+
+Public Sub _new(argUrl As String)
+    
+    Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    With yukiHttpClient
+        .URL = argUrl
+        .Async = True
+        .Timeout = 60
+        .Get()
+    End With
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    Dim yukiBuffer As String
+    
+    yukiBuffer = Read #Last, Lof(Last)
+    
+    $buffer &= yukiBuffer
+    
+End
+
+Public Sub HttpClient_Error()
+    
+    Raise Error
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    setItems()
+    
+End
+
+Private Function Items_Read() As NagatoRssItem[]
+
+    Return $items
+
+End

@@ -50,27 +50,40 @@ Private Sub setFortune()
     
 End
 
-Public Sub NewFortune()
+Private Sub ensureVisible()
     
     Dim yukiWindow As New DesktopWindow(Me.Id)
     
     Me.Show()
     yukiWindow.Desktop = Desktop.Current
     
+End
+
+Public Sub NewFortune()
+    
+    ensureVisible
     setFortune()
     setForm()
     
 End
 
-Public Sub Form_Open()
+Public Sub SetText(argText As String)
+    
+    ensureVisible()
+    $fortune = argText
+    setForm()
+    
+End
 
+Public Sub Form_Open()
+    
     Me.X = 120
     Me.Y = 30
-
+    
 End
 
 Public Sub Form_DblClick()
-
+    
     Me.Close()
-
+    
 End

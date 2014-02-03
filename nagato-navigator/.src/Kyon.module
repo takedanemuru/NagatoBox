@@ -12,6 +12,7 @@ Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
         ensureNagatoTaskmanagerActivation()
+        NagatoRss.Refresh()
         NagatoDBus.Register()
         HaruhiMain.Show()
     Else

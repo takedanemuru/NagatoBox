@@ -28,6 +28,8 @@ Public Sub Swich(argMode As Integer)
             $painter = New NagatoSystemMonitor(Me._$drawingArea)
         Case NagatoModeMenu.ModeMusic
             $painter = New NagatoMusic(Me._$drawingArea)
+        Case NagatoModeMenu.ModeRss
+            $painter = New NagatoRssTicker(Me._$drawingArea)
     End Select
     
 End

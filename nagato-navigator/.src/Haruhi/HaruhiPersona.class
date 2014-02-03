@@ -13,6 +13,17 @@ Public Sub EnsureVisible()
     
 End
 
+Public Sub SetText(argText As String)
+    
+    Dim yukiWindow As New DesktopWindow(Me.Id)
+    
+    Me.Show()
+    yukiWindow.Desktop = Desktop.Current
+    
+    HaruhiBalloon.SetText(argText)
+    
+End
+
 Public Sub Form_Open()
     
     $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")

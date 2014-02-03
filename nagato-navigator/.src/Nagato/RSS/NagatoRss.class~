@@ -1,0 +1,62 @@
+' Gambas class file
+
+Create Static
+
+Property Read Feeds As NagatoRssFeed2[]
+
+Private Const BBCTop As String = "http://feeds.bbci.co.uk/news/rss.xml"
+Private Const BBCWorld As String = "http://feeds.bbci.co.uk/news/world/rss.xml"
+Private Const BBCTechnology As String = "http://feeds.bbci.co.uk/news/technology/rss.xml"
+
+Private $feeds As New NagatoRssFeed2[]
+Private $feedLines As New String[]
+Private $count As Integer
+
+Event Ready 
+
+Private Sub setFeeds()
+    
+    Dim yukiLine As String
+    Dim yukiFeed As NagatoRssFeed2
+    
+    For Each yukiLine In $feedLines
+        yukiFeed = New NagatoRssFeed2(yukiLine) As "RssFeed"
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    $feedLines.Add(BBCTop)
+    $feedLines.Add(BBCWorld)
+    $feedLines.Add(BBCTechnology)
+    
+    setFeeds()
+    
+End
+
+Public Sub RssFeed_Finished(argFeed As NagatoRssFeed2)
+    
+    Debug argFeed.Items.Count
+    
+    If argFeed.Items.Count > 0 Then 
+        Try $feeds.Add(argFeed)
+    End If
+    
+    Inc $count
+    If $count = $feedLines.Count Then Raise Ready
+    
+End
+
+Public Sub RssFeed_Error()
+    
+    Inc $count
+    If $count = $feedLines.Count Then Raise Ready
+    
+End
+
+Private Function Feeds_Read() As NagatoRssFeed2[]
+
+    Return $feeds
+
+End

@@ -1,0 +1,54 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Private $count As Integer 
+Private $feedIndex As Integer
+Private $itemIndex As Integer
+
+Private Sub changeItem()
+    
+    $count = 0
+    Inc $itemIndex
+    
+    If $itemIndex > NagatoRss.Feeds[$feedIndex].Items.Max Then
+        $itemIndex = 0
+        Inc $feedIndex
+        If $feedIndex > NagatoRss.Feeds.Max Then $feedIndex = 0
+    Endif
+    
+End
+
+Private Sub getText() As String
+    
+    If NagatoRss.Feeds.Count = 0 Then
+        Return "YUKI.N > RSS Feed is not ready."
+    Else
+        Inc $count
+        If $count = 10 Then
+            changeItem()
+            Me._$drawingArea.Tooltip = NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Description
+        End If
+        Return NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Title
+    Endif
+    
+End
+
+Public Sub Paint()
+    
+    Paint.Begin(Me._$drawingArea)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Text(getText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub LeftClick(argMouseX As Integer, argMouseY As Integer)
+    
+    Debug "left"
+    
+    HaruhiPersona.SetText(NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Description)
+    
+End

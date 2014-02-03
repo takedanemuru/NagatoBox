@@ -2,6 +2,8 @@
 
 Create Static
 
+Property Delay As Integer
+
 Private $timer As Timer
 
 Event Timer
@@ -27,4 +29,16 @@ Public Sub Timer_Timer()
     
     Raise Timer
     
+End
+
+Private Function Delay_Read() As Integer
+
+    Return $timer.Delay
+
+End
+
+Private Sub Delay_Write(Value As Integer)
+
+    $timer.Delay = Value
+
 End

@@ -1,0 +1,54 @@
+' Gambas class file
+
+Property Read Valid As Boolean
+Property Read Title As String
+Property Read Description As String
+Property Read Link As String
+
+Private $valid As Boolean = False
+Private $title As String
+Private $description As String
+Private $link As String
+
+Public Sub _new(argXmlElement As XmlElement)
+    
+    Dim yukiNode As XmlNode
+    
+    For Each yukiNode In argXmlElement.Children
+        Select Case yukiNode.Name
+            Case "title"
+                $title = yukiNode.Value
+            Case "description"
+                $description = yukiNode.Value
+            Case "link"
+                $link = yukiNode.Value
+        End Select
+    Next
+    
+    If $title <> "" And If $description <> "" And If $link <> "" Then $valid = True
+    
+End
+
+Private Function Valid_Read() As Boolean
+
+    Return $valid
+
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Function Description_Read() As String
+
+    Return $description
+
+End
+
+Private Function Link_Read() As String
+
+    Return $link
+
+End
