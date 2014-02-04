@@ -47,6 +47,8 @@ End
 
 Public Sub Form_Enter()
 
+    If Not NagatoSettings.ShowNagato Then Return
+
     If Mouse.ScreenY > Screen.H - 2 Then HaruhiPersona.EnsureVisible()
         
 End

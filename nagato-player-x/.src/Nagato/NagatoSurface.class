@@ -32,6 +32,12 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
         NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
     Else If MikuruUx.PlaylistButton.Contains(argMouseX, argMouseY) Then
         HaruhiPlayList.Show()
+    Else If MikuruUx.VolumeButton.Contains(argMouseX, argMouseY) Then
+        With MikuruUx.VolumeButton
+            Debug "software volume"
+            Debug (argMouseX - .X) / (.W - .X)
+            NagatoQueue.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
+        End With
     Else If MikuruUx.InfoBox.Contains(argMouseX, argMouseY) Then
         HaruhiTagEdit.ShowDialog()
     Else If MikuruUx.ProgressBar.Contains(argMouseX, argMouseY) Then

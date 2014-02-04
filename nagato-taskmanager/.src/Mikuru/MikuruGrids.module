@@ -57,7 +57,7 @@ Public Function GetData() As Variant[]
     Dim yukiGridData As New Variant[]
     
     For Each yukiDirectory In Dir("/proc", "*[0-9]", gb.Directory)
-        If Not Exist("/proc" &/ yukiDirectory) Then Continue
+        If Not Exist("/proc" &/ yukiDirectory &/ "stat") Then Continue
         yukiRowData = getRowData(yukiDirectory)
         If yukiGridData.Count = 0 Then
             yukiGridData.Add(yukiRowData)

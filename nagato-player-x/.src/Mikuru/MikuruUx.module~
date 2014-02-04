@@ -9,6 +9,7 @@ Property Read NextButton As Rect
 Property Read ShuffleButton As Rect
 Property Read RepeatButton As Rect
 Property Read PlaylistButton As Rect
+Property Read VolumeButton As Rect
 Property Read EditTagButton As Rect
 Property Read InfoBox As Rect
 Property Read ProgressBar As Rect
@@ -79,6 +80,14 @@ Private Function PlaylistButton_Read() As Rect
 
 End
 
+Private Function VolumeButton_Read() As Rect
+
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 29 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
+    
+    Return yukiRectangle
+
+End
+
 Private Function EditTagButton_Read() As Rect
 
     Dim yukiRectangle As New Rect(1 * Me.Grid, 29 * Me.Grid, 12 * Me.Grid, 3 * Me.Grid)
@@ -89,7 +98,7 @@ End
 
 Private Function InfoBox_Read() As Rect
     
-    Dim yukiRectangle As New Rect(1 * Me.Grid, 32 * Me.Grid, 34 * Me.Grid, 11 * Me.Grid)
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 36 * Me.Grid, 34 * Me.Grid, 11 * Me.Grid)
     
     Return yukiRectangle
     
@@ -97,7 +106,7 @@ End
 
 Private Function ProgressBar_Read() As Rect
 
-    Dim yukiRectangle As New Rect(1 * Me.Grid, 44 * Me.Grid, 34 * Me.Grid, 3 * Me.Grid)
+    Dim yukiRectangle As New Rect(1 * Me.Grid, 48 * Me.Grid, 34 * Me.Grid, 3 * Me.Grid)
     
     Return yukiRectangle
     
@@ -108,3 +117,4 @@ Private Function Padding_Read() As Integer
     Return 3 * Me.Grid
 
 End
+

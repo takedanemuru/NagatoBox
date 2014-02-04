@@ -26,6 +26,8 @@ Public Function Sanitize(argPaths As String[]) As String[]
             Continue
         Else If DesktopMime.FromFile(yukiPath).Type Begins "audio" Then
             yukiResult.Add(yukiPath)
+        Else If DesktopMime.FromFile(yukiPath).Type Begins "video" Then
+            yukiResult.Add(yukiPath)
         End If
     Next
     

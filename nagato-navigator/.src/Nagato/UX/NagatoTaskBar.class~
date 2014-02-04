@@ -33,7 +33,7 @@ Public Sub Paint()
     yukiWidth = Me._$drawingArea.W / yukiTasks.Count
     
     Paint.Begin(Me._$drawingArea)
-    Paint.Brush = Paint.Color(Color.White)
+    Paint.Brush = Paint.Color(NagatoSettings.ForegroundColor)
         For Each yukiWindow In yukiTasks
             paintTask(yukiWindow, yukiWidth, ByRef yukiX)
         Next

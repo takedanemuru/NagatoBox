@@ -3,6 +3,9 @@
 Create Static
 
 Property ClockFormat As String
+Property ForegroundColor As Integer
+Property BackgroundColor As Integer
+Property ShowNagato As Boolean
 
 Private $settings As New Settings
 
@@ -15,6 +18,45 @@ End
 Private Sub ClockFormat_Write(Value As String)
 
     $settings["clock/format"] = Value
+    $settings.Save()
+
+End
+
+Private Function ForegroundColor_Read() As Integer
+
+    Return $settings["color/foreground", Color.White]
+
+End
+
+Private Sub ForegroundColor_Write(Value As Integer)
+
+    $settings["color/foreground"] = Value
+    $settings.Save()
+
+End
+
+Private Function BackgroundColor_Read() As Integer
+
+    Return $settings["color/background", Color.Lighter(Color.Violet)]
+
+End
+
+Private Sub BackgroundColor_Write(Value As Integer)
+
+    $settings["color/background"] = Value
+    $settings.Save()
+
+End
+
+Private Function ShowNagato_Read() As Boolean
+
+    Return $settings["nagato/show", True]
+
+End
+
+Private Sub ShowNagato_Write(Value As Boolean)
+
+    $settings["nagato/show"] = Value
     $settings.Save()
 
 End

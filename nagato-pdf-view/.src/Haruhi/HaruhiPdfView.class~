@@ -27,6 +27,9 @@ Private Sub showCurrentPage()
     
     setWindowTitle()
     PdfView.Image = $pdfDocument[$currentPage].GetImage()
+    Debug PdfView.Zoom
+    Debug PdfView.Image.H
+    Debug PdfView.Image.W
     $menuBar.SetButtonProperty($currentPage, $pdfDocument.Count)
     
 End
@@ -122,8 +125,6 @@ Public Sub Form_Open()
     PdfView.SetFocus()
     $pdfDocument.Open($pdfPath)
     showCurrentPage()
-
-    zoomFit()
 
 End
 

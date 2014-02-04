@@ -1,0 +1,17 @@
+' Gambas module file
+
+Public Function GetAlsaVolume(argChannel As String) As Integer[] ' as percentage
+        
+        Dim yukiOutput As String
+        Dim yukiResult As String[]
+        
+        Shell Subst$("amixer get &1 | egrep -o &2", argChannel, Quote$("[0-9]+%")) To yukiOutput
+        
+        yukiResult = Split(Replace$(yukiOutput, "%", ""), "\n", "", True)
+        
+        Return yukiResult
+        
+Catch
+        Return Null
+        
+End

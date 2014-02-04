@@ -2,6 +2,7 @@
 
 Property Read ProgressRate As Float
 Property Read ProgressText As String
+Property SoftwareVolume As Float
 Property Read State As Integer
 
 Private $player As New MediaPlayer As "Player"
@@ -108,5 +109,20 @@ Private Function State_Read() As Integer
 
 Catch
     Return MediaPlayer.Null
+
+End
+
+Private Function SoftwareVolume_Read() As Float
+
+    Return $player.Audio.Volume
+
+Catch
+    Return 0
+
+End
+
+Private Sub SoftwareVolume_Write(Value As Float)
+
+    Try $player.Audio.Volume = Min(Value, 1)
 
 End

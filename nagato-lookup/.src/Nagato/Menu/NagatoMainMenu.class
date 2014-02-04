@@ -4,6 +4,7 @@ Private $rootMenu As Menu
 
 Private $preferenceMenu As NagatoPreferenceMenu
 Private $screenshotMenu As NagatoScreenshotMenu
+Private $alsaMenu As NagatoAlsaMenu
 
 Private Sub initializeRootMenu(argMenuName As String)
     
@@ -53,6 +54,7 @@ Public Sub _new(argMenuName As String)
     initializeRootMenu(argMenuName)
     $preferenceMenu = New NagatoPreferenceMenu($rootMenu)
     $screenshotMenu = New NagatoScreenshotMenu($rootMenu)
+    $alsaMenu = New NagatoAlsaMenu($rootMenu)
         MikuruMenuSeparator.Set($rootMenu)
     addAboutMenu()
     addCloseMenu()

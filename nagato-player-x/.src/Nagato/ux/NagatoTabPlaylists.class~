@@ -6,9 +6,9 @@ Private $grids As NagatoGridsPlaylists
 
 Private Sub initializeStarMenu(argButton As MenuButton)
     
-    Dim yukiMenu As New NagatoPlaylistsMenu As "StarMenu"
-    
-    argButton.Name = yukiMenu.Name
+    ' Dim yukiMenu As New NagatoPlaylistsMenu As "StarMenu"
+    ' 
+    ' argButton.Name = yukiMenu.Name
     
 End
 

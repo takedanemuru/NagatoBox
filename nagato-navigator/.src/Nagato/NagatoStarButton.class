@@ -30,6 +30,18 @@ Private Sub addRootMenu()
     
 End
 
+Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = (argText)
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = argContainer
@@ -38,5 +50,20 @@ Public Sub _new(argContainer As Container)
     
     $preferenceMenu = New NagatoPreferenceMenu($rootMenu) As "NagatoSignal"
     $modeMenu = New NagatoModeMenu($rootMenu) As "NagatoSignal"
+    
+    addMenuItem("", 0)
+    addMenuItem(("About"), 1, "star")
+    'addMenuItem(("Close"), 2, "button-cross")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case 1
+            HaruhiAbout.ShowDialog()
+        Case 2
+            HaruhiMain.Close()
+    End Select
     
 End

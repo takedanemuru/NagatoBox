@@ -4,6 +4,7 @@ Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $background As New NagatoPainterBackground
 Private $buttons As New NagatoButtonPainter
+Private $volumeButton As New NagatoVolumeButtonPainter
 Private $infoBox As New NagatoInfoBoxPainter
 Private $progressBar As New NagatoProgressBarPainter
 
@@ -37,7 +38,10 @@ Public Sub Asakura_Draw()
     
     Paint.Begin(Draw.Device)
         $background.Draw()
-        If MikuruMousePosition.Entered Then $buttons.Draw()
+        If MikuruMousePosition.Entered Then
+            $buttons.Draw()
+            $volumeButton.Draw()
+        End If
         $infoBox.Draw()
         $progressBar.Draw()
     Paint.End()

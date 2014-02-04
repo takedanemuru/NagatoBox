@@ -27,6 +27,7 @@ End
 Public Sub Asakura_Timer()
     
     $label.Text = Format$(Now(), NagatoSettings.ClockFormat)
+    $label.Foreground = NagatoSettings.ForegroundColor
     
     If $label.Font.TextWidth($label.Text) > $label.W Then
         $label.W = $label.Font.TextWidth($label.Text)

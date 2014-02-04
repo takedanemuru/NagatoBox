@@ -20,7 +20,7 @@ Public Sub Form_Open()
     NagatoDBus.Register()
     
     NagatoSettingsForm.SetMainFormSize(Me)
-    NagatoSettingsForm.Load(Me)
+    NagatoSettingsForm.SetPosition(Me)
     
     $timer.Enabled = True
     $painter = New NagatoPainter(DrawingArea)
@@ -30,7 +30,7 @@ End
 Public Sub Form_Close()
     
     NagatoDBus.Unregister()
-    NagatoSettingsForm.Save(Me)
+    NagatoSettingsForm.SavePosition(Me)
     
 End
 

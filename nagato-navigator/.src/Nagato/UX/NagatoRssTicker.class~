@@ -37,7 +37,7 @@ End
 Public Sub Paint()
     
     Paint.Begin(Me._$drawingArea)
-        Paint.Brush = Paint.Color(Color.White)
+        Paint.Brush = Paint.Color(NagatoSettings.ForegroundColor)
         Paint.Font.Bold = True
         Paint.Text(getText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
         Paint.Fill()
@@ -47,8 +47,14 @@ End
 
 Public Sub LeftClick(argMouseX As Integer, argMouseY As Integer)
     
-    Debug "left"
-    
     HaruhiPersona.SetText(NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Description)
+    
+End
+
+Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
+    
+    Debug "right click"
+    
+    
     
 End

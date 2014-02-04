@@ -14,6 +14,7 @@ Property Artist As String
 Property Read State As Integer
 Property Read ProgressRate As Float
 Property Read ProgressText As String
+Property SoftwareVolume As Float
 
 Private $observer As Observer
 Private $player As New NagatoPlayer As "Player"
@@ -249,5 +250,17 @@ End
 Private Function ProgressRate_Read() As Float
 
     Return $player.ProgressRate
+
+End
+
+Private Function SoftwareVolume_Read() As Float
+
+    Return $player.SoftwareVolume
+
+End
+
+Private Sub SoftwareVolume_Write(Value As Float)
+
+    $player.SoftwareVolume = Value
 
 End

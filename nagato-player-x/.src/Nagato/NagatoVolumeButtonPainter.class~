@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoWidgetPainter
+
+Private Function getRate() As Float
+    
+    Dim yukiRate As Float
+    
+    With MikuruUx
+        yukiRate = (MikuruMousePosition.X - .VolumeButton.X) / (.VolumeButton.W - .VolumeButton.X)
+    End With
+    
+    If 0 > yukiRate Then yukiRate = 0
+    If yukiRate > 1 Then yukiRate = 1
+    
+    Return yukiRate
+    
+End
+
+Private Sub paintProgressBarOnMouse()
+    
+    Dim yukiRate As Float = getRate()
+    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.VolumeButton, yukiRate)
+    
+    Me._PaintClipRectangle(MikuruUx.VolumeButton, 2 * MikuruUx.Grid)
+    Me._PaintRectangle(MikuruUx.VolumeButton, MikuruColor.WidgetOnMouseLight) 'frame
+    Me._PaintRectangle(yukiBarRectangle, MikuruColor.WidgetOnMouse, 2 * MikuruUx.Grid) 'bar
+    Me._PaintRichText(MikuruUx.VolumeButton, Subst$("<b>VOL : &1%</b>", Min(CInt(yukiRate * 100), 100)))
+    Paint.Restore() 'restore clip rectangle
+    
+End
+
+Private Sub paintProgressBarNormal()
+    
+    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.VolumeButton, NagatoQueue.SoftwareVolume)
+    
+    Me._PaintClipRectangle(MikuruUx.VolumeButton, 2 * MikuruUx.Grid)
+    Me._PaintRectangle(MikuruUx.VolumeButton, MikuruColor.WidgetLight) 'frame
+    Me._PaintRectangle(yukiBarRectangle, MikuruColor.Widget, 2 * MikuruUx.Grid) 'bar
+    Me._PaintRichText(MikuruUx.VolumeButton, Subst$("<b>VOL : &1%</b>", CInt(NagatoQueue.SoftwareVolume * 100)))
+    Paint.Restore() 'restore clip rectangle
+    
+End
+
+Public Sub Draw()
+    
+    If MikuruUx.VolumeButton.Contains(MikuruMousePosition.X, MikuruMousePosition.Y) Then
+        paintProgressBarOnMouse()
+    Else
+        paintProgressBarNormal()
+    Endif
+    
+End

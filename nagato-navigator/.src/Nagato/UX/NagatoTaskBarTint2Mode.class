@@ -56,7 +56,7 @@ Private Sub paintTask(argWindow As DesktopWindow, argWidth As Integer, ByRef ref
     
     If (Desktop.ActiveWindow = argWindow.Id) Then paintHighlightRectangle(refX, argWidth)
     
-    Paint.Brush = Paint.Color(Color.White)
+    Paint.Brush = Paint.Color(NagatoSettings.ForegroundColor)
     Paint.DrawImage(argWindow.Icon.Stretch(2 * MikuruUx.Grid, 2 * MikuruUx.Grid), refX + 4, 4)
     yukiText = MikuruCollapsedText.Get(argWindow.Name, Me._$drawingArea.Font, argWidth - 3 * MikuruUx.Grid)
     Paint.Text(yukiText, refX + 3 * MikuruUx.Grid, 0, argWidth - 3 * MikuruUx.Grid, Me._$drawingArea.H, Align.Left)
