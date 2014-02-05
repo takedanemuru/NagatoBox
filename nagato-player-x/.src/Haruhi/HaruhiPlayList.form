@@ -60,9 +60,47 @@
     Index = 2
     Text = ("Albums")
     Picture = Picture["Pictures/icons/disc.png"]
+    { AlbumsHBox HBox
+      MoveScaled(0,0,74,4)
+      { SpacerPanel3 Panel
+        MoveScaled(0,0,45,3)
+        Expand = True
+      }
+      { AlbumsStarButton MenuButton
+        MoveScaled(69,0,4,4)
+        Picture = Picture["Pictures/star(1).png"]
+        Arrow = False
+        Border = False
+      }
+    }
+    { AlbumsIconView IconView
+      MoveScaled(7,13,16,16)
+      Background = &HDFBFFF&
+      Expand = True
+    }
     Index = 3
     Text = ("Library")
     Picture = Picture["Pictures/icons/hard-drive-network.png"]
+    { AlbumsHBox2 HBox
+      MoveScaled(0,0,74,4)
+      { SpacerPanel4 Panel
+        MoveScaled(0,0,45,3)
+        Expand = True
+      }
+      { LibraryStarButton MenuButton
+        MoveScaled(69,0,4,4)
+        Picture = Picture["Pictures/star(1).png"]
+        Arrow = False
+        Border = False
+      }
+    }
+    { LibraryGrids GridView
+      MoveScaled(3,8,16,16)
+      Expand = True
+      Mode = Select.Multiple
+      Grid = False
+      Header = GridView.Horizontal
+    }
     Index = 0
   }
 }

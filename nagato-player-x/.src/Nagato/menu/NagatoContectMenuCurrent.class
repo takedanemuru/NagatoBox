@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Public _$rootMenu As Menu
+Inherits NagatoContextMenu
 
 Event Delete
 

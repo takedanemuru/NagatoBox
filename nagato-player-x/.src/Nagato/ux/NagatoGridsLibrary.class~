@@ -1,0 +1,179 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnPath
+
+Private $sortAscend As Boolean
+Private $targetColumn As Integer
+Private $gridsData As Variant[]
+
+Private Function isLesser(argGridData As Variant, argRowData As Variant) As Boolean
+    
+    If argRowData = Null Then Return $sortAscend
+    
+    Select Case String.Comp(CStr(argGridData), CStr(argRowData), gb.Natural) * IIf($sortAscend, 1, -1)
+        Case 0, 1
+            Return True
+        Case -1
+            Return False
+    End Select
+    
+End
+
+Private Function getKey(argIndex As Integer) As String
+    
+    Select Case argIndex
+        Case ColumnTitle
+            Return "title"
+        Case ColumnArtist
+            Return "artist"
+        Case ColumnAlbum
+            Return "album"
+        Case ColumnPath
+            Return "path"
+    End Select
+    
+End
+
+Private Sub setGridData(argRowData As Collection)
+    
+    Dim yukiCount As Integer
+    
+   If $gridsData.Count = 0 Or If $targetColumn = -1 Then
+       $gridsData.Add(argRowData)
+       Return
+   Endif
+    
+    For yukiCount = 0 To $gridsData.Max
+        If isLesser($gridsData[yukiCount][getKey($targetColumn)], argRowData[getKey($targetColumn)]) Then
+            $gridsData.Add(argRowData, yukiCount)
+            Return
+        Endif
+    Next
+    
+    $gridsData.Add(argRowData)
+    
+End
+
+Private Sub setData()
+    
+    Dim yukiResult As Result = NagatoDBMedia.GetLibrary()
+    Dim yukiCollection As Collection
+    
+    For Each yukiResult
+        yukiCollection = New Collection
+        If Not Exist(yukiResult[NagatoDBMedia.ColumnPath]) Then Continue
+        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnTitle], getKey(ColumnTitle))
+        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnArtist], getKey(ColumnArtist))
+        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnAlbum], getKey(ColumnAlbum))
+        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnPath], getKey(ColumnPath))
+        setGridData(yukiCollection)
+    Next
+    
+End
+
+Private Sub ensureGridsData()
+    
+    If Not Object.IsValid($gridsData) Then
+        $gridsData = New Variant[]
+    Else
+        $gridsData.Clear()
+    Endif
+    
+End
+
+Private Sub setDataToGrids()
+    
+    Dim yukiRowData As Collection
+    
+    For Each yukiRowData In $gridsData
+        With Me._$grids
+            Inc Me._$grids.Rows.Count
+            .[.Rows.Max, ColumnTitle].Text = yukiRowData[getKey(ColumnTitle)]
+            Me._AdjustColumnWidth(ColumnTitle, .Rows.Max)
+            .[.Rows.Max, ColumnArtist].Text = yukiRowData[getKey(ColumnArtist)]
+            Me._AdjustColumnWidth(ColumnArtist, .Rows.Max)
+            .[.Rows.Max, ColumnAlbum].Text = yukiRowData[getKey(ColumnAlbum)]
+            Me._AdjustColumnWidth(ColumnAlbum, .Rows.Max)
+            .[.Rows.Max, ColumnPath].Text = yukiRowData[getKey(ColumnPath)]
+            If Odd(.Rows.Max) Then Me._SetBackgroundColor(.Rows.Max, Color.Lighter(Color.Pink))
+        End With
+    Next
+    
+End
+
+Private Sub refreshData()
+    
+    ensureGridsData()
+    Me._ClearGrids()
+    setData()
+    setDataToGrids()
+    
+End
+
+Public Sub _InitializeGrids() 'override
+    
+    With Me._$grids
+        .Columns.Count = 5
+        .Columns[ColumnIcon].W = MikuruUx.Padding
+        .Columns[ColumnTitle].Text = "Title"
+        .Columns[ColumnArtist].Text = "Artist"
+        .Columns[ColumnAlbum].Text = "Album"
+        .Columns[ColumnPath].Text = "Path/URL"
+    End With
+    
+    $targetColumn = ColumnTitle
+    $sortAscend = True
+    
+    refreshData()
+    
+End
+
+Public Sub Asakura_ColumnClick(argIndex As Integer)
+    
+    Select Case argIndex
+        Case 1 To 3
+            $targetColumn = argIndex
+            $sortAscend = Not $sortAscend
+            refreshData()
+    End Select
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuLibrary As "ContextMenu"
+    
+    If Me._$grids.Rows.Selection.Count > 0 Then yukiMenu.PopUp()
+        
+End
+
+Public Sub ContextMenu_Edit()
+    
+    If Me._$grids.Rows.Selection.Count > 1 Then
+        HaruhiTagEditBulk.StartEdit(Me._GetSelectionText(ColumnPath))
+        If HaruhiTagEditBulk.ShowDialog() = MikuruDialog.ResponseApply Then refreshData()
+    Else If Me._$grids.Rows.Selection.Count = 1 Then
+        HaruhiTagEdit.SetPath(Me._GetSelectionText(ColumnPath)[0])
+        If HaruhiTagEdit.ShowDialog() = MikuruDialog.ResponseApply Then refreshData()
+    End If
+    
+End
+
+Public Sub ContextMenu_Add()
+    
+    If Me._$grids.Rows.Selection.Count >= 1 Then
+        NagatoQueue.AddMusics(Me._GetSelectionText(ColumnPath))
+    Endif
+    
+End
+
+Public Sub ContextMenu_Replace()
+    
+    If Me._$grids.Rows.Selection.Count >= 1 Then
+        NagatoQueue.ClearAll()
+        NagatoQueue.AddMusics(Me._GetSelectionText(ColumnPath))
+    Endif
+    
+End

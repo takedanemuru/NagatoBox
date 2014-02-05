@@ -7,10 +7,12 @@ Private $observer As Observer
 
 Private Sub setTags()
     
-    With NagatoQueue
-        If .Title <> "" Then TitleTextBox.Text = .Title
-        If .Artist <> "" Then ArtistTextBox.Text = .Artist
-        If .Album <> "" Then AlbumTextBox.Text = .Album
+    Dim yukiResult As Result = NagatoDBMedia.GetMusicResultByPath($targetPath)
+    
+    With NagatoDBMedia
+        If yukiResult[.ColumnTitle] <> "" Then TitleTextBox.Text = yukiResult[.ColumnTitle]
+        If yukiResult[.ColumnArtist] <> "" Then ArtistTextBox.Text = yukiResult[.ColumnArtist]
+        If yukiResult[.ColumnAlbum] <> "" Then AlbumTextBox.Text = yukiResult[.ColumnAlbum]
     End With
     
 End
@@ -52,14 +54,18 @@ Private Sub setNewPicture()
     
 End
 
+Public Sub SetPath(argPath As String)
+    
+    $edited = False
+    $targetPath = argPath
+    setTags()
+    setPicture()
+    
+End
+
 Public Sub Form_Open()
 
     Me.Center()
-
-    $edited = False
-    $targetPath = NagatoQueue.CurrentPath
-    setTags()
-    setPicture()
 
 End
 
@@ -76,7 +82,7 @@ Public Sub ApplyButton_Click()
     setNewTag()
     setNewPicture()
     
-    Me.Close()
+    Me.Close(MikuruDialog.ResponseApply)
     
 End
 

@@ -122,7 +122,6 @@ Public Sub ContextMenu_Delete()
     Dim yukiRow As Integer
     
     For Each yukiRow In Me._$grids.Rows.Selection
-        Debug Me._$grids[yukiRow, ColumnPath].Text
         NagatoQueue.DeleteMusic(Me._$grids[yukiRow, ColumnPath].Text)
     Next
     

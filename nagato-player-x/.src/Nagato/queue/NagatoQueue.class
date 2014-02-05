@@ -3,6 +3,7 @@
 Create Static
 
 Property Read CurrentPath As String
+Property Read CurrentPathUndecoded As String
 Property Read CurrentPosition As Integer
 Property Read Paths As String[]
 Property Read Count As Integer
@@ -182,6 +183,12 @@ End
 Private Function CurrentPath_Read() As String
 
     Return MikuruPath.GetUrl($musicPaths.CurrentPath)
+
+End
+
+Private Function CurrentPathUndecoded_Read() As String
+
+    Return $musicPaths.CurrentPath
 
 End
 

@@ -1,6 +1,8 @@
 ' Gambas class file
 
-Public _$rootMenu As Menu
+Inherits NagatoContextMenu
+
+Event Delete
 
 Public Sub _InitializeRootMenu()
     
@@ -29,5 +31,11 @@ Public Sub _new()
     
     Me._InitializeRootMenu()
     Me._InitializeChildMenus()
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    Raise Delete
     
 End

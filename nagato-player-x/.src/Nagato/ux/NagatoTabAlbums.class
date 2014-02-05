@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $iconView As IconView
+Private $starButton As MenuButton
+Private $observer As Observer
+
+Private Sub setIcons()
+    
+    Dim yukiResult As Result = NagatoDBMedia.GetAllAlbum()
+    Dim yukiId As Integer
+    Dim yukiAlbum As String
+    Dim yukiArtist As String
+    Dim yukiPicture As Picture
+    
+    For Each yukiResult
+        yukiId = yukiResult[NagatoDBMedia.ColumnId]
+        yukiAlbum = yukiResult[NagatoDBMedia.ColumnAlbum]
+        yukiArtist = yukiResult[NagatoDBMedia.ColumnArtist]
+        yukiPicture = NagatoDBMedia.GetAlbumArt(yukiArtist, yukiAlbum)
+        $iconView.Add(yukiId, yukiAlbum, yukiPicture)
+    Next
+    
+End
+
+Public Sub _new(argButton As MenuButton, argIconView As IconView)
+    
+    $starButton = argButton
+    $iconView = argIconView
+    $observer = New Observer($iconView) As "Asakura"
+    
+    setIcons()
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    Dim yukiPaths As String[]
+    
+    yukiPaths = NagatoDBMedia.GetSongPathsFromAlbumId($iconView.Key)
+    NagatoQueue.AddMusics(yukiPaths)
+    
+End

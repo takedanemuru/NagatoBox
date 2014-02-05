@@ -1,0 +1,15 @@
+' Gambas class file
+
+Public _$rootMenu As Menu
+
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End

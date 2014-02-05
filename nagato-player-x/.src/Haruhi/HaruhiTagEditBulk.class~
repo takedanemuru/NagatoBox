@@ -66,9 +66,6 @@ Private Sub setNewTag()
         End With
     Next
     
-    NagatoPlayer.RefreshTag()
-    Me.Close(MikuruDialog.ResponseApply)
-    
 End
 
 Private Sub setNewPicture()
@@ -108,6 +105,9 @@ End
 Public Sub ApplyButton_Click()
     
     setNewTag()
+    setNewPicture()
+    
+    Me.Close(MikuruDialog.ResponseApply)
     
 End
 

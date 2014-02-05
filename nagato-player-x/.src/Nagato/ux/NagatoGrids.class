@@ -5,6 +5,19 @@ Inherits NagatoSignal
 Public _$grids As GridView
 Public _$observer As Observer
 
+Public Function _GetSelectionText(argColumnIndex As Integer) As String[]
+    
+    Dim yukiRowIndex As Integer
+    Dim yukiResult As New String[]
+    
+    For Each yukiRowIndex In Me._$grids.Rows.Selection
+        yukiResult.Add(Me._$grids[yukiRowIndex, argColumnIndex].Text)
+    Next
+    
+    Return yukiResult
+    
+End
+
 Public Sub _SetBackgroundColor(argRow As Integer, argColor As Integer)
     
     Dim yukiColumn As Integer

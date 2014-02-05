@@ -181,6 +181,20 @@ Public Function GetMusicCountInPlaylist(argPlaylistId As Integer) As Integer
     
 End
 
+Public Function GetMusicPathsInPlaylist(argPlaylistName As String) As String[]
+    
+    Dim yukiResultForId As Result = Me._$connection.Find(TablePlaylistNames, "playlist_name = &1", argPlaylistName)
+    Dim yukiResult As Result = Me._$connection.Find(TablePlaylistData, "playlist_name_id = &1", yukiResultForId[Me.ColumnId])
+    Dim yukiPaths As New String[]
+    
+    For Each yukiResult
+        yukiPaths.Add(yukiResult[Me.ColumnPath])
+    Next
+    
+    Return yukiPaths
+    
+End
+
 Public Function GetLibrary() As Result
     
     Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableLibrary, ColumnTitle)
