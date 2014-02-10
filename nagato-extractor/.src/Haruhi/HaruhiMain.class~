@@ -1,0 +1,66 @@
+' Gambas class file
+
+Private $fileStore As NagatoFileStore
+Private $iconView As NagatoIconView
+
+Public Sub _new()
+
+    $iconView = New NagatoIconView(FilesIconView) As "IconView"
+    $fileStore = New NagatoFileStore As "FileStore"
+
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+    TypeComboBox.Index = 0
+    $iconView.SetEmptyView()
+    
+End
+
+Public Sub OpenFilesButton_Click()
+
+    Dialog.Title = ("Open file")
+    Dialog.Path = User.Home
+
+    If Not Dialog.OpenFile(True) Then
+        $fileStore.SetPaths(Dialog.Paths)
+    Endif
+
+End
+
+Public Sub IconView_Drop(argPaths As String[])
+
+    $fileStore.SetPaths(argPaths)
+    
+End
+
+Public Sub ClearButton_Click()
+
+    $fileStore.Clear()
+
+End
+
+Public Sub ExtractButton_Click()
+
+    If Not $iconView.IsEmpty Then NagatoPatool.Create($fileStore.PathsInLine)
+
+End
+
+Public Sub FileStore_New(argPaths As String[])
+    
+    $iconView.Add(argPaths)
+    
+End
+
+Public Sub FileStore_Remove(argPaths As String[])
+    
+    $iconView.Remove(argPaths)
+    
+End
+
+Public Sub FileStore_Clear()
+    
+    $iconView.SetEmptyView()
+    
+End

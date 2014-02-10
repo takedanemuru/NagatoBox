@@ -1,0 +1,39 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,45.7143)
+  Icon = Picture["Pictures/Icons/hard-drive-download.png"]
+  Arrangement = Arrange.Vertical
+  { FilesIconView IconView
+    MoveScaled(0,0,50,38)
+    Drop = True
+    Expand = True
+  }
+  { BottonsHBox HBox
+    MoveScaled(-2,39,50,5)
+    { OpenFilesButton Button
+      MoveScaled(0,0,5,5)
+      Picture = Picture["icon:/medium/open"]
+      Border = False
+    }
+    { ClearButton Button
+      MoveScaled(5,0,5,5)
+      Picture = Picture["icon:/medium/clear"]
+      Border = False
+    }
+    { Panel1 Panel
+      MoveScaled(10,1,2,4)
+      Expand = True
+    }
+    { TypeComboBox ComboBox
+      MoveScaled(18,1,15,4)
+      ReadOnly = True
+      List = [("zip"), ("tar")]
+      Text = ("ComboBox1")
+    }
+    { ApplyButton Button
+      MoveScaled(33,1,16,4)
+      Text = ("Create")
+    }
+  }
+}

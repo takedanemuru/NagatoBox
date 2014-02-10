@@ -1,0 +1,13 @@
+' Gambas class file
+
+Create Static
+
+Public Sub Create(argPathsLine As String)
+    
+    Dim yukiPath As String = MikuruSafePath.Get(User.Home &/ "myfile.zip")
+    
+    Shell Subst$("patool --verbose create &1 &2", yukiPath, argPathsLine) Wait
+    
+    Message.Info(Subst$("YUKI.N > &1 has been created.", File.Name(yukiPath)))
+    
+End

@@ -1,0 +1,79 @@
+' Gambas class file
+
+Property Read IsEmpty As Boolean
+
+Private Const NoFilesKey As String = "nofiles"
+Private Const IconSize As Integer = 64
+
+Private $iconView As IconView
+Private $obsever As Observer
+
+Event Drop(argPaths As String[])
+
+Public Sub SetEmptyView()
+    
+    With $iconView
+        .Clear()
+        .Foreground = Color.Violet
+        .Font.Size = 24
+        .Add(NoFilesKey, ("Drop file(s) here."))
+        .Picture = Picture.Load("Pictures/yukichan_29.jpg")
+    End With
+    
+End
+
+Public Sub ShiftToNormalMode()
+    
+    If Me.IsEmpty Then $iconView.Clear()
+    $iconView.Font.Size = HaruhiMain.Font.Size
+    
+End
+
+Public Sub Add(argPaths As String[])
+    
+    Dim yukiPath As String 
+    
+    For Each yukiPath In argPaths
+        Me.ShiftToNormalMode()
+        $iconView.Add(yukiPath, File.Name(yukiPath), Desktop.GetFileIcon(yukiPath, IconSize))
+    Next
+    
+End
+
+Public Sub Remove(argPaths As String[])
+    
+    Dim yukiPath As String 
+    
+    For Each yukiPath In argPaths
+        Me.ShiftToNormalMode()
+        Try $iconView.Remove(yukiPath)
+    Next
+    
+    If $iconView.Count = 0 Then Me.SetEmptyView()
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $obsever = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    If Drag.Format <> "text/uri-list" Then Return
+    
+    Raise Drop(NagatoDrag2.GetPaths(Drag.Data))
+    
+End
+
+Private Function IsEmpty_Read() As Boolean
+
+    If $iconView.Count = 1 And If $iconView.Exist(NoFilesKey) Then
+        Return True
+    Else
+        Return False
+    Endif
+
+End

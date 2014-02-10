@@ -1,0 +1,32 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.2
+Title=nagato-archiver
+Startup=Kyon
+Icon=Pictures/Icons/hard-drive-download.png
+Version=0.1.0
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.desktop
+Component=gb.settings
+Component=gb.mime
+Component=gb.qt4.ext
+Component=gb.web
+Description="an archiver."
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=colonel-in-cheese
+Vendor=colonel-in-cheese
+Address=takeda.nemuru@gmail.com
+Url=http://bloominabc.blogspot.jp/
+License=General Public License
+PackageName=nagato-archiver-0.1.0
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/File Management"
+Categories=ubuntu:"Nagato;Utility"
+Groups=ubuntu:"x11"

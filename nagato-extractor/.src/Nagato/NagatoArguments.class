@@ -1,0 +1,31 @@
+' Gambas class file
+
+Create Static
+
+Property Read Type As String
+Property Read Paths As String[]
+
+Private $type As String = "zip"
+Private $arguments As String[]
+
+Public Sub Parsing()
+    
+    Args.Begin("nagato-archiver usage")
+        $type = Args.Get("t", "type", "Archive type to create.")
+    $arguments = Args.End()
+    
+    If $arguments.Count > 0 Then NagatoFileStore.SetPaths($arguments)
+
+End
+
+Private Function Type_Read() As String
+
+    Return $type
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $arguments
+
+End
