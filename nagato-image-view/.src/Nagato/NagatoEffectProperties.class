@@ -1,3 +1,11 @@
 ' Gambas class file
 
 Inherits NagatoMenuPipe
+
+Property Read Values As Variant[]
+
+Private Function Values_Read() As Variant[]
+
+    Return [""]
+
+End

@@ -1,5 +1,8 @@
 ' Gambas class file
 
+Property Read BeforeImage As Image
+Property Read AfterImage As Image
+
 Private $before As ImageView
 Private $after As ImageView
 Private $previousZoom As Float
@@ -81,6 +84,10 @@ Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
             reserveZoom()
                 $after.Image = $before.Image.Gray()
             restoreZoom()
+        Case MikuruEffect.Resize
+            reserveZoom()
+                $after.Image = $before.Image.Stretch(argValues[1], argValues[0])
+            restoreZoom()
     End Select
     
 End
@@ -90,4 +97,16 @@ Public Sub _new(argViewBefore As ImageView, argViewAfter As ImageView)
     $before = argViewBefore
     $after = argViewAfter
     
+End
+
+Private Function BeforeImage_Read() As Image
+
+    Return $before.Image
+
+End
+
+Private Function AfterImage_Read() As Image
+
+    Return $after.Image
+
 End

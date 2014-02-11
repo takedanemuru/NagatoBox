@@ -20,7 +20,7 @@ Private Sub initializePropertyVBox(argContainer As Container)
     
     With $propertyVBox
         .Expand = True
-        .Background = Color.Lighter(Color.Blue)
+        .Background = Color.Lighter(Color.Violet)
         .Padding = 2
     End With
     
@@ -68,6 +68,8 @@ Public Sub EffectSelector_MenuEvent(argEvent As Integer)
              $effectProperties = New NagatoEffectPropertiesCharcoal($propertyVBox)
         Case MikuruEffect.OilPaint
              $effectProperties = New NagatoEffectPropertiesOilPaint($propertyVBox)
+        Case MikuruEffect.Resize
+            $effectProperties = New NagatoEffectPropertiesResize($propertyVBox)
     End Select
     
 End

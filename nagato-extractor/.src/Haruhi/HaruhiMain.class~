@@ -43,7 +43,7 @@ End
 
 Public Sub ExtractButton_Click()
 
-    If Not $iconView.IsEmpty Then NagatoPatool.Create($fileStore.PathsInLine)
+    If Not $iconView.IsEmpty Then NagatoPatool.Extract($fileStore.PathsInLine)
 
 End
 

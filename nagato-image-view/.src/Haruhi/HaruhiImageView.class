@@ -1,5 +1,8 @@
 ' Gambas class file
 
+Property Read BeforeImage As Image
+Property Read AfterImage As Image
+
 Private $menuBar As NagatoMenuBar
 Private $twinView As NagatoTwinView
 Private $editorPane As NagatoEditorPane
@@ -71,4 +74,16 @@ Public Sub EditorPane_MenuEventWithArgs(argEvent As Integer, argValues As Varian
         $twinView.PreviewEffect(argEvent, argValues)
     End If
     
+End
+
+Private Function BeforeImage_Read() As Image
+
+    Return $twinView.BeforeImage
+
+End
+
+Private Function AfterImage_Read() As Image
+
+    Return $twinView.AfterImage
+
 End

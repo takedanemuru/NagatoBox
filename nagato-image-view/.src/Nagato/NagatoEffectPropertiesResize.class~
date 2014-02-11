@@ -1,0 +1,103 @@
+' Gambas class file
+
+Inherits NagatoEffectProperties
+
+Property Read Values As Variant[]
+
+Private $container As Container
+Private $heightSlider As SliderBox
+Private $widthSlider As SliderBox
+Private $linkCheckbox As CheckBox
+
+Private Sub addLabel(argText As String)
+    
+    Dim yukiLabel As New Label($container)
+    
+    With yukiLabel
+        .Font.Bold = True
+        .Foreground = Color.White
+        .Alignment = Align.Center
+        .H = 32
+        .Text = argText
+    End With
+    
+End
+
+Private Sub addHeightSliderBox()
+    
+    $heightSlider = New SliderBox($container) As "HeightSlider"
+    
+    With $heightSlider
+        .MinValue = 1
+        .MaxValue = HaruhiImageView.BeforeImage.H * 2
+        .H = 32
+        .Value = HaruhiImageView.BeforeImage.H
+        .Step = 1
+    End With
+    
+End
+
+Private Sub addWidthSliderBox()
+    
+    $widthSlider = New SliderBox($container) As "WidthSlider"
+    
+    With $widthSlider
+        .MinValue = 1
+        .MaxValue = HaruhiImageView.BeforeImage.W * 2
+        .H = 32
+        .Value = HaruhiImageView.BeforeImage.W
+        .Step = 1
+    End With
+    
+End
+
+Private Sub addLinkCheckbox()
+    
+    $linkCheckbox = New CheckBox($container) As "LinkCheckbox"
+    
+    With $linkCheckbox
+        .Text = ("Link")
+        .Value = True
+        .H = 48
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    Try $container.Children.Clear()
+    
+    addLabel(("Height"))
+    addHeightSliderBox()
+    addLabel(("Width"))
+    addWidthSliderBox()
+    addLinkCheckbox()
+    
+End
+
+Public Sub HeightSlider_Change()
+    
+    If $linkCheckbox.Value Then
+        With HaruhiImageView
+            $widthSlider.Value = CInt(.BeforeImage.W * ($heightSlider.Value / .BeforeImage.H))
+        End With
+    Endif
+    
+End
+
+Public Sub WidthSlider_Change()
+    
+    If $linkCheckbox.Value Then
+        With HaruhiImageView
+            $heightSlider.Value = CInt(.BeforeImage.H * ($widthSlider.Value / .BeforeImage.W))
+        End With
+    Endif
+    
+End
+
+Private Function Values_Read() As Variant[]
+
+    Return [$heightSlider.Value, $widthSlider.Value]
+
+End

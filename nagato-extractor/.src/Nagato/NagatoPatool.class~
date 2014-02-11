@@ -11,3 +11,13 @@ Public Sub Create(argPathsLine As String)
     Message.Info(Subst$("YUKI.N > &1 has been created.", File.Name(yukiPath)))
     
 End
+
+Public Sub Extract(argPathsLine As String)
+    
+    Dim yukiDirectory As String = MikuruSafePath.Get(User.Home &/ "nagato_extract")
+    
+    Shell Subst$("patool extract --outdir &1 &2", yukiDirectory, argPathsLine) Wait
+    
+    Message.Info(Subst$("YUKI.N > Files has been extracted to &1", yukiDirectory))
+    
+End
