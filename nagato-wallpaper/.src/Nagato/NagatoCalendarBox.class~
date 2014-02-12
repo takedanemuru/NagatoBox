@@ -87,16 +87,16 @@ Private Sub setPosition(argPosition As Integer)
     Debug argPosition
     
     Select Case argPosition
+        Case 3
+            $topOffset = Me.Padding
+            $leftOffset = Me.Padding
         Case 4
             $topOffset = Me.Padding
-            $leftOffset = Me.Padding
-        Case 5
-            $topOffset = Me.Padding
             $leftOffset = Me._$baseImage.W - ((BoxSize + Margine) * 7 + Me.Padding)
-        Case 6
+        Case 5
             $topOffset = Desktop.H - ((BoxSize + Margine) * 7 + Me.Padding)
             $leftOffset = Me.Padding
-        Case 7
+        Case 6
             $topOffset = Desktop.H - ((BoxSize + Margine) * 7 + Me.Padding)
             $leftOffset = Me._$baseImage.W - ((BoxSize + Margine) * 7 + Me.Padding)
     End Select

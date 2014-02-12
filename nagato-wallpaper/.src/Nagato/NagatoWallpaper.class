@@ -163,8 +163,11 @@ End
 
 Public Sub SetLast()
     
-    If Exist(Kyon.HiddenPathModefiedImage) Then
-        Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
-    Endif
+    With NagatoSettings
+        If Exist(Kyon.HiddenPathOriginalImage) Then
+            'Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
+            Me.Set(Kyon.HiddenPathOriginalImage, .LastColor, .LastMode, .LastCalendarPosition)
+        Endif
+    End With
     
 End

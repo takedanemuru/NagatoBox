@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoEffectProperties
+
+Property Read Values As Variant[]
+
+Private Enum IndexBrightness, IndexSaturation, IndexHue, IndexContrast, IndexLightness, IndexGamma
+
+Private $balanceData As Float[] = [0, 0, 0, 0, 0, 0]
+
+Private Sub addSliderBox(argIndex As Integer)
+    
+    Dim yukiSliderBox As New SliderBox(Me._$container) As "SliderBox"
+    
+    With yukiSliderBox
+        .Value = 0
+        .Tag = argIndex
+        .MaxValue = 100
+        .MinValue = -100
+        .Step = 1
+        .H = 32
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Try Me._$container.Children.Clear()
+    
+    Me._AddLabel(("Brightness"))
+    addSliderBox(IndexBrightness)
+    Me._AddLabel(("Saturation"))
+    addSliderBox(IndexSaturation)
+    Me._AddLabel(("Hue"))
+    addSliderBox(IndexHue)
+    Me._AddLabel(("Contrast"))
+    addSliderBox(IndexContrast)
+    Me._AddLabel(("Lightness"))
+    addSliderBox(IndexLightness)
+    Me._AddLabel(("Gamma"))
+    addSliderBox(IndexGamma)
+    
+End
+
+Public Sub SliderBox_Change()
+    
+    $balanceData[Last.Tag] = Last.Value / 100
+    
+End
+
+Private Function Values_Read() As Variant[]
+
+    With $balanceData
+        Return [.[IndexBrightness], .[IndexSaturation], .[IndexHue], .[IndexContrast], .[IndexLightness], .[IndexGamma]]
+    End With
+
+End

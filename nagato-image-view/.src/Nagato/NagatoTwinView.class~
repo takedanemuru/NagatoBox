@@ -71,24 +71,37 @@ Public Sub ApplyEffect()
     
 End
 
+Private Sub setBalance(argValues As Float[])
+    
+    Dim yukiImage As Image = $before.Image.Copy()
+    
+    yukiImage.BeginBalance()
+        yukiImage.Brightness(argValues[0])
+        yukiImage.Saturation(argValues[1])
+        yukiImage.Hue(argValues[2])
+        yukiImage.Contrast(argValues[3])
+        yukiImage.Lightness(argValues[4])
+        yukiImage.Gamma(argValues[5])
+    $after.Image = yukiImage.EndBalance()
+    
+End
+
 Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
     
     $after.Image = $before.Image
     
+    reserveZoom()
     Select Case argEffect
         Case MikuruEffect.OilPaint
-            reserveZoom()
-                $after.Image = $before.Image.OilPaint(argValues[0])
-            restoreZoom()
+            $after.Image = $before.Image.OilPaint(argValues[0])
         Case MikuruEffect.Charcoal
-            reserveZoom()
-                $after.Image = $before.Image.Gray()
-            restoreZoom()
+            $after.Image = $before.Image.Gray()
         Case MikuruEffect.Resize
-            reserveZoom()
-                $after.Image = $before.Image.Stretch(argValues[1], argValues[0])
-            restoreZoom()
+            $after.Image = $before.Image.Stretch(argValues[1], argValues[0])
+        Case MikuruEffect.Balance
+            setBalance(argValues)
     End Select
+    restoreZoom()
     
 End
 

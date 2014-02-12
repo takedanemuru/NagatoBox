@@ -188,6 +188,8 @@ Public Sub ApplyButton_Click()
         refreshSettings()
     End If
 
+    Debug "Done"
+
 End
 
 Public Sub SelectButton_Click()

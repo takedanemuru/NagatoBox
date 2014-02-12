@@ -137,6 +137,7 @@ Private Sub refreshSettings()
         .LastPath = $currentPath
         .LastColor = $currentColor
         .LastMode = ModeComboBox.Index
+        .LastCalendarPosition = CalendarComboBox.Index
     End With
     
 End
@@ -175,6 +176,7 @@ Public Sub Form_Open()
     ColorButton.Color = $currentColor
     initializePreviewDrawingArea()
     ModeComboBox.Index = NagatoSettings.LastMode
+    CalendarComboBox.Index = NagatoSettings.LastCalendarPosition
     
 End
 
@@ -183,12 +185,11 @@ Public Sub ApplyButton_Click()
     If $currentPath = "" Then
         Return
     Else
-        Debug "Go"
         NagatoWallpaper.Set($currentPath, $currentColor, ModeComboBox.Index, CalendarComboBox.Index)
         refreshSettings()
     End If
 
-    Debug "Done"
+    Message.Info("YUKI.N > It 's done.", ("OK"))
 
 End
 

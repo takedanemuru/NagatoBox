@@ -70,6 +70,8 @@ Public Sub EffectSelector_MenuEvent(argEvent As Integer)
              $effectProperties = New NagatoEffectPropertiesOilPaint($propertyVBox)
         Case MikuruEffect.Resize
             $effectProperties = New NagatoEffectPropertiesResize($propertyVBox)
+        Case MikuruEffect.Balance
+            $effectProperties = New NagatoeffectPropertiesBalance($propertyVBox)
     End Select
     
 End

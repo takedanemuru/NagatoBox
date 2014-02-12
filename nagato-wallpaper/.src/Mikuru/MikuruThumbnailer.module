@@ -14,6 +14,9 @@ Private Function setThumbnail(argPath As String) As Picture
 
     Return yukiIcon.Picture
 
+Catch
+    Return Stock["huge/image"]
+
 End
 
 Public Function Get(argPath As String) As Picture
@@ -23,5 +26,16 @@ Public Function Get(argPath As String) As Picture
     Else
         Return setThumbnail(argPath)
     Endif
+    
+End
+
+Public Function IsLoadable(argPath As String) As Boolean
+    
+    Dim yukiImage As Image = Image.Load(argPath)
+    
+    Return True
+    
+Catch
+    Return False
     
 End
