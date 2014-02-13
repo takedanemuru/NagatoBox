@@ -169,6 +169,16 @@ Public Sub Back()
     
 End
 
+Public Sub MoveToPath(argPath As String)
+    
+    If Not $paths.Exist(argPath) Then Return
+    
+    $currentPosition = $paths.Find(argPath)
+    
+    Raise Moved
+    
+End
+
 Private Function CurrentPath_Read() As String
 
     Return $paths[$currentPosition]

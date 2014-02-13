@@ -9,6 +9,10 @@ Property Read Title As String
 Property Read Artist As String
 Property Read Album As String
 Property Read ProgressInText As String
+Property Read Paths As String[]
+Property Read Queue As Collection
+Property Read Shuffle As Boolean
+Property Read Repeat As Boolean
 
 Public Function Play() As Boolean
     
@@ -42,6 +46,33 @@ Public Function Next() As Boolean
     
 End
 
+Public Function ToggleShuffle() As Boolean
+    
+    NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
+    
+    Return True
+    
+End
+
+Public Function ToggleRepeat() As Boolean
+    
+    NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
+    
+    Return True
+    
+End
+
+Public Function PlayPathInQueue(argPath As String) As Boolean
+    
+    If NagatoQueue.Paths.Exist(argPath) Then
+        NagatoQueue.SetPathAndPlay(argPath)
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
 Private Function Ready_Read() As String
 
     Return "Can you see this ?"
@@ -69,5 +100,38 @@ End
 Private Function Album_Read() As String
 
     Return NagatoQueue.Album
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return NagatoQueue.Paths
+
+End
+
+Private Function Queue_Read() As Collection
+
+    Dim yukiPath As String
+    Dim yukiTitle As String
+    Dim yukiCollection As New Collection
+    
+    For Each yukiPath In NagatoQueue.Paths
+        yukiTitle = NagatoDBMedia.GetTitleFromPath(yukiPath)
+        yukiCollection.Add(yukiTitle, yukiPath)
+    Next
+
+    Return yukiCollection
+
+End
+
+Private Function Shuffle_Read() As Boolean
+
+    Return NagatoSettingsMusic.Shuffle
+
+End
+
+Private Function Repeat_Read() As Boolean
+
+    Return NagatoSettingsMusic.Repeat
 
 End

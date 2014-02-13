@@ -2,7 +2,7 @@
 
 Inherits NagatoSignal
 
-Public Sub _$rootMenu As Menu
+Public _$rootMenu As Menu
 
 Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
     

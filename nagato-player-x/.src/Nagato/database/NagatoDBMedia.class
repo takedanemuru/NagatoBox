@@ -87,6 +87,16 @@ Public Function HasMusic(argArtist As String, argAlbum As String) As Boolean
     
 End
 
+Public Function GetTitleFromPath(argPath As String) As String
+    
+    Dim yukiResult As Result
+    
+    yukiResult = Me._$connection.Find(TableLibrary, "path = &1", argPath)
+    
+    Return yukiResult[ColumnTitle]
+    
+End
+
 Public Function GetAllAlbum() As Result
     
     Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableAlbumArt, ColumnAlbum)

@@ -5,13 +5,7 @@ Private $paths As String[] = [""]
 
 Private Function isUnique() As Boolean
     
-    Dim yukiWindow As DesktopWindow
-    
-    For Each yukiWindow In Desktop.Windows
-        If yukiWindow.Name = Application.Name Then Return False
-    Next
-    
-    Return True
+    Return Not DBus.Session.Applications.Exist("org.gambas.nagato.player.x")
     
 End
 

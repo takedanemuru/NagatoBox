@@ -6,22 +6,27 @@ Private Const ApplicationName As String = "org.gambas.nagato.player.x"
 Private Const ObjectPath As String = "/org/nagato/player/x"
 Private Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
 
+Private $proxy As DBusProxy
 Private $rootMenu As Menu
+Private $queueMenu As NagatoCurrentQueueMenu
 
 Private Sub initializeMenus()
+    
+    $queueMenu = New NagatoCurrentQueueMenu(Me._$rootMenu)
     
     Me._AddMenu("Play", 0, "button-play")
     Me._AddMenu("Pause", 1, "button-pause")
     Me._AddMenu("Back", 2, "button-rew")
     Me._AddMenu("Next", 3, "button-ff")
-    'Me._AddMenu("Shuffle", 0, "button-shuffle")
-    'Me._AddMenu("Repeat", 0, "button-synchronize")
+    Me._AddMenu("Shuffle", 4, IIf($proxy.Shuffle, "button-check", Null))
+    Me._AddMenu("Repeat", 5, IIf($proxy.Repeat, "button-check", Null))
     
 End
 
 Public Sub _new()
     
     Me._$rootMenu = New Menu(HaruhiMain)
+    $proxy = DBus[ApplicationName][ObjectPath, Interface]
     initializeMenus()
     
 End
@@ -39,6 +44,10 @@ Public Sub ContextMenu_Click()
             yukiPlayer.Back()
         Case 3
             yukiPlayer.Next()
+        Case 4
+            yukiPlayer.ToggleShuffle()
+        Case 5
+            yukiPlayer.ToggleRepeat()
     End Select
     
 End

@@ -24,7 +24,7 @@ End
 
 Private Sub addRootMenu()
     
-    $rootMenu = New Menu(HaruhiMain)
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
     $rootMenu.Name = "RootMenu"
     $button.Menu = "RootMenu"
     
@@ -42,18 +42,35 @@ Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconNa
     
 End
 
+Private Sub addTaskMenuItem(argDesktopWindow As DesktopWindow)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "TaskMenuItem"
+    
+    With yukiMenu
+        .Text = argDesktopWindow.Name
+        .Tag = argDesktopWindow
+        .Picture = argDesktopWindow.Icon.Picture
+    End With
+    
+End
+
+Private Sub addTaskMenu()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    For Each yukiDesktopWindow In Desktop.Windows
+        If Not yukiDesktopWindow.SkipTaskbar Then addTaskMenuItem(yukiDesktopWindow)
+        'addMenuItem(yukiDesktopWindow.Name, yukiDesktopWindow.Id)
+    Next
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = argContainer
     addButton()
     addRootMenu()
-    
-    $preferenceMenu = New NagatoPreferenceMenu($rootMenu) As "NagatoSignal"
-    $modeMenu = New NagatoModeMenu($rootMenu) As "NagatoSignal"
-    
-    addMenuItem("", 0)
-    addMenuItem(("About"), 1, "star")
-    'addMenuItem(("Close"), 2, "button-cross")
+    addMenuItem("can you see this ?", 0)
     
 End
 
@@ -65,5 +82,29 @@ Public Sub MenuItem_Click()
         Case 2
             HaruhiMain.Close()
     End Select
+    
+End
+
+Public Sub TaskMenuItem_Click()
+    
+    Dim yukiDesktopWindow As DesktopWindow = Last.Tag
+    
+    Desktop.Current = yukiDesktopWindow.Desktop
+    yukiDesktopWindow.Activate()
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    $rootMenu.Children.Clear()
+    
+    $preferenceMenu = New NagatoPreferenceMenu($rootMenu) As "NagatoSignal"
+    $modeMenu = New NagatoModeMenu($rootMenu) As "NagatoSignal"
+    
+        addMenuItem("", 0)
+    addTaskMenu()
+        addMenuItem("", 0)
+    addMenuItem(("About nagato-navigator"), 1, "star")
+    'addMenuItem(("Close"), 2, "button-cross")
     
 End
