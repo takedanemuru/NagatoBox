@@ -1,0 +1,18 @@
+' Gambas module file
+
+Private $timer As Timer
+
+Public Sub Activate()
+    
+    $timer = New Timer As "Timer"
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Debug "HasBattery: " & NagatoUPower.HasBattery
+    Debug "IsOnline: " & NagatoUPower.IsOnline
+    Debug "TotalBatteryPercentage: " & NagatoUPower.TotalBatteryPercentage
+    
+End

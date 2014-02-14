@@ -1,17 +1,19 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.3.4
+# Compiled with Gambas 3.5.2
 Title=nagato-power-manager
 Startup=Kyon
-Icon=picture/battery_011.png
-Version=0.0.1
+Icon=pictures/icons/battery.png
+Version=0.1.0
+Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.dbus
 Component=gb.settings
 Component=gb.qt4.ext
-Description="a simple power manager through d-bus."
-TabSize=8
+Description="a power manager"
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=4
 Translate=1
 Language=ja
 Maintainer=colonel-in-cheese
@@ -19,10 +21,10 @@ Vendor=colonel-in-cheese
 Address=takeda.nemuru@gmail.com
 Url=http://bloominabc.blogspot.jp/
 License=General Public License
-PackageName=nagato-power-manager-0.0.1
+PackageName=nagato-power-manager-0.1.0
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Hardware"
-Categories=ubuntu:"Nagato;System;Utility"
-Groups=ubuntu:"x11"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"admin"

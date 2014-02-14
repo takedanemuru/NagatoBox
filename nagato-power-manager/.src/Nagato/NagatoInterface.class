@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Read As String
+Property Read HasBattery As Boolean
+Property Read IsOnline As Boolean
+Property Read TotalBatteryPercentage As Float
+
+Public Function Quit()
+    
+    Kyon.Quit()
+    
+End
+
+Private Function Read_Read() As String
+
+    Return "YUKI.N > Can you see this ?"
+
+End
+
+Private Function HasBattery_Read() As Boolean
+
+    Return NagatoUPower.HasBattery
+
+End
+
+Private Function IsOnline_Read() As Boolean
+
+    Return NagatoUPower.IsOnline
+
+End
+
+Private Function TotalBatteryPercentage_Read() As Float
+
+    Return NagatoUPower.TotalBatteryPercentage
+
+End

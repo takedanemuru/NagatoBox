@@ -1,0 +1,19 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoArguments.Parsing()
+    
+    NagatoDBus.Register()
+    
+    NagatoUPower.EnsureActivation()
+    
+    If Not NagatoArguments.NonGui Then HaruhiMain.Show()
+    
+End
+
+Public Sub Quit()
+    
+    Quit(0)
+    
+End

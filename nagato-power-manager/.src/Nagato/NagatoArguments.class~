@@ -1,0 +1,32 @@
+' Gambas class file
+
+Property Read Reservations As String[]
+Property Read ReservationCount As Integer
+Property Read NonGui As Boolean
+
+Private $reservations As New String[]
+Private $nonGui As Boolean = False
+
+Public Sub Parsing()
+    
+    
+    
+End
+
+Private Function Reservations_Read() As String[]
+
+    Return $reservations
+
+End
+
+Private Function ReservationCount_Read() As Integer
+
+    Return $reservations.Count
+
+End
+
+Private Function NonGui_Read() As Boolean
+
+    Return $nonGui
+
+End
