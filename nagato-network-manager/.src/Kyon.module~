@@ -1,0 +1,12 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoArguments.Parsing()
+    NagatoDBus.Register()
+    NagatoNetworkManager.EnsureActivation()
+    'MikuruTimer.Activate() 'for testing
+    
+    If Not NagatoArguments.NonGui Then HaruhiMain.Show()
+    
+End

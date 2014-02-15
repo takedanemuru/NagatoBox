@@ -1,0 +1,12 @@
+' Gambas class file
+
+Create Static
+
+Public Sub _EnsureService(argService As String)
+    
+    If Not DBus.System.Applications.Exist(argService) Then
+        ' 0 means nothing. secondary argument is currently not used.
+        DBus["System://org.freedesktop.DBus"]["/", "org.freedesktop.DBus"].StartServiceByName(argService, 0)
+    End If
+    
+End

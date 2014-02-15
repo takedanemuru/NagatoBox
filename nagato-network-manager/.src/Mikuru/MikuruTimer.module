@@ -1,0 +1,22 @@
+' Gambas module file
+
+'
+' for testing
+' 
+Private $timer As Timer
+
+Public Sub Activate()
+    
+    $timer = New Timer As "Timer"
+    
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Debug NagatoNetworkManager.Devices[0].ReadableType
+    Debug NagatoNetworkManager.Devices[0].Speed
+    
+End
+

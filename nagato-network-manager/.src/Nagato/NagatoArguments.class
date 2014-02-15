@@ -1,0 +1,22 @@
+' Gambas class file
+
+Create Static
+
+Property Read NonGui As Boolean
+
+Private $nonGui As Boolean
+Private $arguments As String[]
+
+Public Sub Parsing()
+    
+    Args.Begin(("Usage"))
+        $nonGui = Args.Has("n", "non-gui", "non gui mode")
+    $arguments = Args.End()
+    
+End
+
+Private Function NonGui_Read() As Boolean
+
+    Return $nonGui
+
+End
