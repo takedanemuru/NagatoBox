@@ -32,7 +32,11 @@ Public Sub Main()
     
     parsingArguments()
     
-    HaruhiPdfView.Show()
-    If $path <> "" Then HaruhiPdfView.SetDocument($path)
+    If $path <> "" Then
+        HaruhiPdfView.Show()
+        HaruhiPdfView.SetDocument($path)
+    Else
+        HaruhiNofilesOpen.Show()
+    End If
     
 End

@@ -3,6 +3,7 @@
 Create Static
 
 Property Read RecentPaths As String[]
+Property Read StickyPaths As String[]
 
 Private $settings As New Settings
 
@@ -48,6 +49,19 @@ End
 Private Function RecentPaths_Read() As String[]
 
     Dim yukiPaths As String[] = $settings["file/recent_paths", [""]]
+    Dim yukiCount As Integer
+
+    For yukiCount = yukiPaths.Max DownTo 0
+        If Not Exist(yukiPaths[yukiCount]) Then yukiPaths.Remove(yukiCount)
+    Next
+
+    Return yukiPaths
+
+End
+
+Private Function StickyPaths_Read() As String[]
+
+    Dim yukiPaths As String[] = $settings["file/sticky_paths", [""]]
     Dim yukiCount As Integer
 
     For yukiCount = yukiPaths.Max DownTo 0

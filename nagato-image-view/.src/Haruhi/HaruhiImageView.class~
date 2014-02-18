@@ -19,6 +19,17 @@ Private Sub openFile()
     
 End
 
+Private Sub saveAs()
+    
+    Dialog.Title = ("Save file as...")
+    Dialog.Path = User.Home &/ "image.png"
+    
+    If Not Dialog.SaveFile() Then
+        $twinView.BeforeImage.Save(MikuruSafePath.Get(Dialog.Path))
+    Endif
+    
+End
+
 Public Sub SetImage(argPath As String)
     
     $twinView.SetPath(argPath)
@@ -55,11 +66,13 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             $twinView.SetZoom(0.8)
         Case MikuruEvent.FileOpen
             openFile()
+        Case MikuruEvent.FileSaveAs
+            saveAs()
         Case MikuruEvent.ViewRotateLeft
             $twinView.Rotate(90)
         Case MikuruEvent.ViewRotateRight
             $twinView.Rotate(-90)
-        Case MikuruEvent.StarEdit
+        Case MikuruEvent.StarEdit, MikuruEvent.FileEdit
             $twinView.Toggle()
             SidePanel1.Hidden = Not SidePanel1.Hidden
     End Select

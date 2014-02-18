@@ -38,7 +38,7 @@ End
 
 Private Sub paintHeader(argColumn As Integer)
 
-    paintBox(argColumn, 0, MikuruColor.BoxHeader)
+    paintBox(argColumn, 0, IIf(argColumn = 0, Color.Pink + 16777216 * 64, MikuruColor.BoxHeader))
     paintText(MikuruDate.GetWeekDaySingleText(argColumn), argColumn, 0)
     
 End
@@ -53,7 +53,13 @@ Private Sub paintBody(argColumn As Integer, argRow As Integer, ByRef refDate As 
         paintBox(argColumn, argRow, MikuruColor.BoxVoid)
     Else
         Inc refDate
-        yukiColor = IIf(refDate = Day(Now()), MikuruColor.BoxHighlight, MikuruColor.BoxNormal)
+        If refDate = Day(Now()) Then
+            yukiColor = MikuruColor.BoxHighlight
+        Else If argColumn = 0 Then
+            yukiColor = Color.Pink + 16777216 * 64
+        Else
+            yukiColor = MikuruColor.BoxNormal
+        Endif
         paintBox(argColumn, argRow, yukiColor)
         If refDate > MikuruDate.LastDayOfMonth Then Return
         paintText(CStr(refDate), argColumn, argRow)

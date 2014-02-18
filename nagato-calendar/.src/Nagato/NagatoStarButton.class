@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $starButton As MenuButton
+
+Public Sub _new(argForm As Form)
+    
+    Dim yukiMenu As NagatoStarMenu
+    
+    $starButton = New MenuButton(argForm) As "StarButton"
+    
+    With $starButton
+        .W = 24
+        .H = 24
+        .X = argForm.W - 32
+        .Y = 8
+        .Border = False
+        .Arrow = False
+        .Picture = MikuruIcon.Get("star")
+        .Menu = "StarMenu"
+        yukiMenu = New NagatoStarMenu(.Menu)
+    End With
+    
+End

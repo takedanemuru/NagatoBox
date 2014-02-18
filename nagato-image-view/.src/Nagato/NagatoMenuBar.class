@@ -13,7 +13,10 @@ Private Sub initializeWidgets()
     
     Dim yukiSeparator As Separator
     
-    $openButton = New NagatoMenuButton($container, MikuruEvent.FileOpen, ("Open"), "outbox") As "Menu"
+    $openButton = New NagatoMenuButton($container, MikuruEvent.FileEdit, ("Edit"), "brush") As "Menu"
+        yukiSeparator = New Separator($container)
+    $openButton = New NagatoMenuButton($container, MikuruEvent.FileOpen, ("Open"), "hard-drive-upload") As "Menu"
+    $openButton = New NagatoMenuButton($container, MikuruEvent.FileSaveAs, ("Save as"), "hard-drive-download") As "Menu"
         yukiSeparator = New Separator($container)
     $zoomButtons = New NagatoZoomButtons($container) As "Menu"
         yukiSeparator = New Separator($container)

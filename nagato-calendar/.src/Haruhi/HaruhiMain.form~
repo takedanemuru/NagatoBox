@@ -1,13 +1,11 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,42.2857,85.7143)
+  MoveScaled(0,0,45,86)
   Icon = Picture["pictures/icons/calendar.png"]
   Resizable = False
-  Arrangement = Arrange.Fill
   { DrawingArea1 DrawingArea
-    MoveScaled(5,3,38,50)
-    Background = &HD8C3DF&
+    MoveScaled(0,0,46,86)
     Expand = True
   }
 }

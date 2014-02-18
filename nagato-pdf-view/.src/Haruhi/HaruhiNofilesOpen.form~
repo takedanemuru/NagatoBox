@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  Text = ("No files open")
+  Resizable = False
+  { Button1 Button
+    MoveScaled(25,37,16,4)
+    Text = ("Open")
+  }
+  { CancelButton Button
+    MoveScaled(8,37,16,4)
+    Text = ("Cancel")
+  }
+}

@@ -1,47 +1,18 @@
 ' Gambas class file
 
+Private $starButton As NagatoStarButton
 Private $painter As NagatoPainter
-Private $image As Image
-Private $calendarRect As Rect
-
-Private Sub drawBackGround()
-    
-    Dim yukiRate As Float = Max(DrawingArea1.W / $image.W, DrawingArea1.H / $image.H)
-    Dim yukiImage As Image = $image.Stretch($image.W * yukiRate, $image.H * yukiRate)
-    Dim yukiX As Float = -1 * (yukiImage.W - DrawingArea1.W) / 2
-    Dim yukiY As Float = -1 * (yukiImage.H - DrawingArea1.H) / 2
-    
-    Paint.DrawImage(yukiImage, yukiX, yukiY)
-    
-End
-
-Private Sub drawDate()
-    
-    With $calendarRect
-    Paint.Brush = Paint.Color(Color.Red + 16777216 * 64)
-        Paint.Rectangle(.X, .Y, .W, .H)
-    Paint.Fill()
-    
-    Paint.Brush = Paint.Color(Color.White + 16777216 * 64)
-        Paint.Font.Size = 16
-        Paint.Text(("January"), .X, .Y, .W, 40, Align.Center)
-        Paint.Font.Size = 32
-        Paint.Text(Format$(Now(), "d"), .X, .Y + 40, .W, 40, Align.Center)
-        Paint.Font.Size = 12
-        Paint.Text(Format$(Week(Now()), "Week 0#/52"), .X, .Y + 80, .W, 40, Align.Center)
-    Paint.Fill()
-    End With
-    
-End
 
 Public Sub _new()
 
     $painter = New NagatoPainterMonth(DrawingArea1)
+    $starButton = New NagatoStarButton(Me)
 
 End
 
 Public Sub Form_Open()
-
+    
+    DrawingArea1.SetFocus()
     Me.Center()
 
 End

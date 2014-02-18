@@ -20,12 +20,32 @@ Public Sub _DrawBackGround()
     
 End
 
+Public Sub _DrawHeader(Optional argIndex As Integer = 0)
+    
+    Paint.Brush = Paint.Color(IIf(argIndex = 0, Color.Red, Color.White))
+        Paint.Font.Size = 10.5
+        Paint.Text("Calendar", 0, 0, HaruhiMain.W / 2, 32, Align.Center)
+    Paint.Fill()
+
+    Paint.Brush = Paint.Color(IIf(argIndex = 1, Color.Red, Color.White))
+        Paint.Font.Size = 10.5
+        Paint.Text("ToDo", HaruhiMain.W / 2, 0, HaruhiMain.W / 2, 32, Align.Center)
+    Paint.Fill()
+
+    Paint.Brush = Paint.Color(Color.White)
+        Paint.LineWidth = 0.5
+        Paint.MoveTo(0, 32)
+        Paint.LineTo(HaruhiMain.W, 32)
+    Paint.Stroke()
+    
+End
+
 Public Sub _new(argDrawingArea As DrawingArea)
     
     Me._$drawingArea = argDrawingArea
     Me._$observer = New Observer(Me._$drawingArea) As "Asakura"
-    '$image = Image.Load("pictures/default_bg.jpg")
-    $image = Image.Load("pictures/welcome.png")
+    $image = Image.Load("pictures/default_bg.jpg")
+    '$image = Image.Load("pictures/welcome.png")
     Me._$drawingArea.Refresh()
     
 End

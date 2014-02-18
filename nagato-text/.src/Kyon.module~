@@ -1,6 +1,7 @@
 ' Gambas module file
 
 Private $startUpPath As String = ""
+Private $stickyMode As Boolean = False
 
 Private Sub parsingApplicationArguments()
     
@@ -9,6 +10,7 @@ Private Sub parsingApplicationArguments()
     
     Args.Begin(("Usage"))
         yukiPath = Args.Get("o", "open", ("Open a file"), ("Path to open"))
+        $stickyMode = Args.Has("s", "sticky", ("Sticky mode"))
     yukiOtherOptions = Args.End()
     
     If yukiPath <> "" Then
@@ -23,7 +25,10 @@ Public Sub Main()
     
     parsingApplicationArguments()
     
-    If NagatoDBus.IsUnique() Then
+    If Not $stickyMode Then
+        Debug "sticky"
+        MikuruStickies.ShowStickies()
+    Else If NagatoDBus.IsUnique() Then
         Debug "unique"
         NagatoDBus.Register()
         HaruhiMain.OpenWithPath($startUpPath)

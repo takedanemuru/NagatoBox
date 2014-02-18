@@ -2,16 +2,80 @@
 
 Create Static
 
+Property Read Ready As Boolean
+Property Read IssueCount As Integer
+Property Read Issues As NagatoIssue[]
+
 Public Const ApiIsuueOpen As String = "curl -i https://api.github.com/repos/&1/&2/issues?status=open"
 
-Public Function GetIssue() As String
+Private $data As New NagatoIssue[]
+Private $ready As Boolean
+
+Private Sub parsingIssueData(argData As String)
+    
+    Dim yukiCollection As Collection
+    Dim yukiIssue As NagatoIssue
+    
+    For Each yukiCollection In JSON.Decode(argData)
+        yukiIssue = New NagatoIssue(yukiCollection)
+        If yukiIssue.Labels.Count > 0 Then
+            Debug yukiIssue.Number
+            Debug yukiIssue.Title
+            Debug yukiIssue.Labels[0]["name"]
+            Debug yukiIssue.Labels[0]["color"]
+        Endif
+        $data.Add(yukiIssue)
+    Next
+    
+    $ready = True
+    
+End
+
+Private Function sanitize(argData As String) As String
+    
+    Dim yukiLine As String
+    Dim yukiLock As Boolean = True
+    Dim yukiData As String = ""
+    
+    For Each yukiLine In Split(argData, "\n", "", True)
+        If yukiLine Begins "[" Then yukiLock = False
+        If yukiLock Then Continue
+        yukiData &= yukiLine
+    Next
+    
+    Return yukiData
+    
+End
+
+Public Sub Set()
     
     Dim yukiUserName As String = "takedanemuru"
     Dim yukiRepoName As String = "NagatoBox"
     Dim yukiOutput As String
+    Dim yukiData As String
     
     Shell Subst$(ApiIsuueOpen, yukiUserName, yukiRepoName) To yukiOutput
     
-    Return yukiOutput
+    yukiData = sanitize(yukiOutput)
     
+    parsingIssueData(yukiData)
+    
+End
+
+Private Function IssueCount_Read() As Integer
+
+    Return $data.Count
+
+End
+
+Private Function Issues_Read() As NagatoIssue[]
+
+    Return $data
+
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
 End

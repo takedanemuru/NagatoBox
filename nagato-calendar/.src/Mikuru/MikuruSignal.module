@@ -1,0 +1,4 @@
+' Gambas module file
+
+Public Enum MenuNone = 0
+Public Enum MenuShowList = 9001, MenuAbout = 9002, MenuQuit = 9003

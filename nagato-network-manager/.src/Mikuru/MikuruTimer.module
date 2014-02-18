@@ -15,8 +15,10 @@ End
 
 Public Sub Timer_Timer()
     
+    Debug NagatoNetworkManager.Devices.Count
     Debug NagatoNetworkManager.Devices[0].ReadableType
     Debug NagatoNetworkManager.Devices[0].Speed
+    Debug NagatoNetworkManager.Devices[0].HardwareAddress
     
 End
 

@@ -4,6 +4,6 @@ Public Sub Main()
     
     HaruhiMain.Show()
     
-    Debug NagatoGitHubApi.GetIssue()
+    NagatoGitHubApi.Set()
     
 End

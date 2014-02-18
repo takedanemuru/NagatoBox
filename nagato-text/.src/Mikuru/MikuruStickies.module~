@@ -1,0 +1,30 @@
+' Gambas module file
+
+Public Sub ShowAll()
+    
+    Dim yukiPath As String
+    Dim yukiForm As Form
+    Dim yukiX As Integer = 16
+    Dim yukiY As Integer = 16
+    
+    For Each yukiPath In NagatoSettings.RecentPaths
+        Debug yukiPath
+        yukiForm = New Form
+        yukiForm.W = 256
+        yukiForm.H = 256
+        yukiForm.X = yukiX
+        yukiForm.Y = yukiY
+        yukiForm.Border = False
+        yukiForm.Stacking = Window.Below
+        yukiForm.Sticky = True
+        yukiForm.Picture = MikuruTextTile.Get(yukiPath)
+        yukiForm.Show()
+        yukiX += 272
+        If yukiX + 272 > Desktop.W Then
+            yukiX = 16
+            yukiY += 272
+        Endif
+    Next
+    
+End
+

@@ -1,0 +1,52 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Private Sub initializeRootMenu(argName As String)
+    
+    $rootMenu = New Menu(HaruhiMain)
+    
+    With $rootMenu
+        .Name = argName
+        .Text = ""
+        .Visible = False
+    End With
+    
+End
+
+Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Public Sub _new(argName As String)
+    
+    initializeRootMenu(argName)
+    addMenu("Open schedules", MikuruSignal.MenuShowList, "book-open-bookmark")
+        addMenu("", MikuruSignal.MenuNone)
+    addMenu("About", MikuruSignal.MenuAbout, "star")
+    addMenu("Quit", MikuruSignal.MenuQuit, "button-cross")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Debug Last.Tag
+    
+    Select Case Last.Tag
+        Case MikuruSignal.MenuShowList
+            HaruhiList.Show()
+        Case MikuruSignal.MenuAbout
+            HaruhiAbout.Show()
+        Case MikuruSignal.MenuQuit
+            HaruhiMain.Close()
+    End Select
+    
+End

@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,91.4286,68.5714)
+  Arrangement = Arrange.Vertical
+  { TabStrip1 TabStrip
+    MoveScaled(2,1,65,43)
+    Expand = True
+    Arrangement = Arrange.Fill
+    Index = 0
+    Text = ("Issue")
+    Picture = Picture["pictures/icons/button-check.png"]
+    { IssueGrids GridView
+      MoveScaled(1,1,62,36)
+    }
+    Index = 0
+  }
+}

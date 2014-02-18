@@ -2,6 +2,6 @@
 
 Public Enum EventNull = 0
 Public Enum ZoomHeader = 1000, ZoomIn = 1001, ZoomOut = 1002, ZoomFit = 1003, ZoomNormal = 1004
-Public Enum FileHeader = 2000, FileOpen = 2001
+Public Enum FileHeader = 2000, FileOpen = 2001, FileSaveAs = 2002, FileEdit = 2003
 Public Enum ViewHeader = 3000, ViewRotateRight = 3001, ViewRotateLeft = 3002
 Public Enum StarHeader = 4000, StarAbout = 4001, StarQuit = 4002, StarEdit = 4003

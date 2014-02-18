@@ -1,0 +1,30 @@
+' Gambas class file
+
+Public Sub Form_Show()
+    
+    Dim yukiImage As Image = Image.Load("picture/yukichan_20.jpg")
+    
+    Me.Picture = yukiImage.Stretch(Me.W, Me.H).Picture
+    
+    Me.Center()
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close()
+
+End
+
+Public Sub Button1_Click()
+
+    Dialog.Path = User.Home
+    Dialog.Title = ("Open pdf file")
+    Dialog.Filter = ["*.pdf", "PDF file"]
+
+    If Not Dialog.OpenFile(False) Then
+        HaruhiPdfView.Show()
+        HaruhiPdfView.SetDocument(Dialog.Path)
+    Endif
+
+End

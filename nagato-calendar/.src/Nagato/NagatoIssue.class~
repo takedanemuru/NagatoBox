@@ -1,0 +1,38 @@
+' Gambas class file
+
+Property Read Number As Integer
+Property Read Title As String
+Property Read State As String
+Property Read Labels As Variant[]
+
+Private $collection As Collection
+
+Public Sub _new(argCollection As Collection)
+    
+    $collection = argCollection
+    
+End
+
+Private Function Number_Read() As Integer
+
+    Return $collection["number"]
+
+End
+
+Private Function Title_Read() As String
+
+    Return $collection["title"]
+
+End
+
+Private Function State_Read() As String
+
+    Return $collection["state"]
+
+End
+
+Private Function Labels_Read() As Variant[]
+
+    Return $collection["labels"]
+
+End
