@@ -14,10 +14,14 @@ End
 
 Public Sub Extract(argPathsLine As String)
     
-    Dim yukiDirectory As String = MikuruSafePath.Get(User.Home &/ "nagato_extract")
+    ' Dim yukiDirectory As String = MikuruSafePath.Get(User.Home &/ "nagato_extract")
+    ' 
+    Dialog.Title = ("Select directory")
+    Dialog.Path = User.Home
     
-    Shell Subst$("patool extract --outdir &1 &2", yukiDirectory, argPathsLine) Wait
-    
-    Message.Info(Subst$("YUKI.N > Files has been extracted to &1", yukiDirectory))
+    If Not Dialog.SelectDirectory() Then
+        Shell Subst$("patool extract --outdir &1 &2", Dialog.Path, argPathsLine) Wait
+        Message.Info(Subst$("YUKI.N > Files has been extracted to &1", Dialog.Path))
+    Endif
     
 End

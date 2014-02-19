@@ -1,158 +1,8 @@
 ' Gambas module file
 
-Private Const Offset As Integer = 32
-Private Const Margin As Integer = 8
-Private Const IconWidth As Integer = 128
-
-Private $icons As New Collection
 Private $timer As New Timer As "MainTimer"
 Private $weatherCheckFlag As Boolean = False
 Private $directoryObserver As NagatoDirectoryObserver
-
-Private Function isUnique() As Boolean
-    
-    If DBus.Session.Applications.Exist("org.gambas.nagato.desktop.icon") Then
-        Return False
-    Else
-        Return True
-    Endif
-    
-End
-
-Private Sub sortIcons()
-    
-    Dim yukiIcon As Object
-    Dim yukiX As Integer = Offset
-    Dim yukiY As Integer = Offset
-    
-    'For Each yukiIcon In MikuruCollection.GetRandomizedArray($icons)
-    For Each yukiIcon In $icons
-         If yukiY + Margin + yukiIcon.Height > Desktop.Height Then
-             yukiX += (Margin + IconWidth)
-             yukiY = Offset
-         Endif
-         yukiIcon.MoveTo(yukiX, yukiY)
-         yukiY += (yukiIcon.Height + Margin)
-    Next
-    
-End
-
-Private Sub addSlideShow()
-    
-    Dim yukiSlideShow As NagatoSlideShow
-    
-    yukiSlideShow = New NagatoSlideShow As "Icon"
-    $icons.Add(yukiSlideShow, "nagato-slideshow-key")
-    
-End
-
-Private Sub addFileIcon(argFileName As String)
-    
-    Dim yukiIcon As Object
-    Dim yukiMimeType As String = DesktopMime.FromFile(MikuruPath.Desktop &/ argFileName).Type
-    
-    If yukiMimeType = "application/x-desktop" Then
-        yukiIcon = New NagatoDesktopEntryIcon(argFileName) As "Icon"
-    Else If IsDir(MikuruPath.Desktop &/ argFileName) Then
-        yukiIcon = New NagatoDirectoryIcon(argFileName) As "Icon"
-    Else If yukiMimeType Begins "image" Then
-         yukiIcon = New NagatoImageIcon(argFileName) As "Icon"
-    Else If yukiMimeType = "application/pdf" Or If yukiMimeType = "application/x-pdf" Then
-        yukiIcon = New NagatoPdfIcon(argFileName) As "Icon"
-    Else
-        yukiIcon = New NagatoFileIcon(argFileName) As "Icon"
-    End If
-    
-    $icons.Add(yukiIcon, argFileName)
-
-End
-
-Private Sub addFileIcons()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In Dir(MikuruPath.Desktop)
-        addFileIcon(yukiPath)
-    Next
-    
-End
-
-Private Sub addClock()
-    
-    Dim yukiClock As NagatoClock
-    
-    yukiClock = New NagatoClock As "Icon"
-    $icons.Add(yukiClock, "nagato-clock-key")
-    
-End
-
-Private Sub addMemos()
-    
-    Dim yukiMemo As NagatoStickyNote
-    
-    yukiMemo = New NagatoStickyNote As "Icon"
-    $icons.Add(yukiMemo, "nagato-stickynote-key")
-    
-End
-
-Private Sub addSystemMonitor()
-    
-    Dim yukiMemo As NagatoSystemMonitor
-    
-    yukiMemo = New NagatoSystemMonitor As "Icon"
-    $icons.Add(yukiMemo, "nagato-systemmonitor-key")
-    
-End
-
-Private Sub addWeatherForecast()
-    
-    Dim yukiMemo As NagatoWeatherForecast
-    
-    yukiMemo = New NagatoWeatherForecast As "Icon"
-    $icons.Add(yukiMemo, "nagato-weatherforecast-key")
-    
-End
-
-Private Sub addNetworkIcon()
-    
-    Dim yukiMemo As NagatoNetworkMonitor
-    
-    yukiMemo = New NagatoNetworkMonitor As "Icon"
-    $icons.Add(yukiMemo, "nagato-network-monitor-key")
-    
-End
-
-Private Sub addBatteryIcon()
-    
-    Dim yukiMemo As NagatoBattery
-    
-    yukiMemo = New NagatoBattery As "Icon"
-    $icons.Add(yukiMemo, "nagato-battery-key")
-    
-End
-
-Private Sub addTrashBin()
-    
-    Dim yukiTrash As NagatoTrashBin
-    
-    yukiTrash = New NagatoTrashBin As "Icon"
-    $icons.Add(yukiTrash, "nagato-trash-key")
-    
-End
-
-Private Sub refreshAll()
-    
-    addClock()
-    addMemos()
-    addSystemMonitor()
-    addWeatherForecast()
-    addSlideShow()
-    addFileIcons()
-    If NagatoUPower.HasBattery Then addBatteryIcon()
-    addNetworkIcon()
-    addTrashBin()
-    
-End
 
 Private Sub initializeDirectoryObserverForDesktopDirectory()
     
@@ -167,13 +17,14 @@ End
 
 Public Sub Main()
     
-    If Not isUnique() Then Return
+    If Not NagatoDBus.IsUnique() Then Return
     
     Shell Subst$("nagato-taskmanager --register &1", Application.Name)
     
     NagatoUPower.EnsureActivation()
-    refreshAll()
-    sortIcons()
+    
+    NagatoIconOrder.RefreshAll()
+    NagatoIconOrder.Sort()
     
     $timer.Enabled = True
     
@@ -185,13 +36,13 @@ End
 
 Public Sub Icon_Move()
     
-    sortIcons()
+    NagatoIconOrder.Sort()
     
 End
 
 Public Sub MainTimer_Timer()
     
-    $icons["nagato-systemmonitor-key"].Refresh()
+    NagatoIconOrder.Refresh("nagato-systemmonitor-key")
     
     If Minute(Now()) = 0 Or If Not NagatoWeatherCache.IsReady Then
         If $weatherCheckFlag And If NagatoWeatherCache.IsReady Then Return
@@ -205,19 +56,12 @@ End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
-    If $icons.Exist(argFileName) Then
-        $icons[argFileName].Close()
-        $icons.Remove(argFileName)
-        sortIcons()
-    Endif
+    NagatoIconOrder.Delete(argFileName)
     
 End
 
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
-    If Not $icons.Exist(argFileName) Then
-        addFileIcon(argFileName)
-        sortIcons()
-    Endif
+    NagatoIconOrder.Modefied(argFileName)
     
 End

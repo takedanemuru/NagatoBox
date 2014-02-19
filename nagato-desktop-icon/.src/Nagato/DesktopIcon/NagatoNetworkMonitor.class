@@ -4,6 +4,7 @@ Inherits NagatoIcon
 
 Private $text As String = "network"
 Private $observer As Observer
+Private $onMouse As Boolean = False
 
 Private Function getText() As String
     
@@ -56,5 +57,19 @@ Public Sub Asakura_PropertiesChanged()
     
      $text = getText()
     setFormPicture()
+    
+End
+
+Public Sub _OnMouseEnter()
+    
+    $onMouse = True
+    setFormPicture(NagatoSettings.BackgroundHighlight)
+    
+End
+
+Public Sub _OnMouseLeave()
+    
+    $onMouse = False
+    setFormPicture(NagatoSettings.BackgroundFile)
     
 End

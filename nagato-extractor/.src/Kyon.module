@@ -5,7 +5,7 @@ Private $type As String
 
 Public Sub Main()
     
-    NagatoArguments.Parsing()
     HaruhiMain.Show()
+    NagatoArguments.Parsing()
     
 End

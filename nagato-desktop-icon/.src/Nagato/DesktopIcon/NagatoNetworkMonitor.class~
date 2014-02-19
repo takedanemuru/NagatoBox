@@ -54,8 +54,6 @@ End
 
 Public Sub Asakura_PropertiesChanged()
     
-    Debug "reset"
-    
      $text = getText()
     setFormPicture()
     

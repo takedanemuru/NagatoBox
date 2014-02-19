@@ -1,20 +1,20 @@
 ' Gambas class file
 
-Private $fileStore As NagatoFileStore
 Private $iconView As NagatoIconView
+Private $observer As Observer
 
 Public Sub _new()
 
-    $iconView = New NagatoIconView(FilesIconView) As "IconView"
-    $fileStore = New NagatoFileStore As "FileStore"
+    $observer = New Observer(NagatoFileStore) As "Asakura"
 
+    $iconView = New NagatoIconView(FilesIconView) As "IconView"
+    $iconView.SetEmptyView()
+    
 End
 
 Public Sub Form_Open()
 
     Me.Center()
-    TypeComboBox.Index = 0
-    $iconView.SetEmptyView()
     
 End
 
@@ -24,42 +24,42 @@ Public Sub OpenFilesButton_Click()
     Dialog.Path = User.Home
 
     If Not Dialog.OpenFile(True) Then
-        $fileStore.SetPaths(Dialog.Paths)
+        NagatoFileStore.SetPaths(Dialog.Paths)
     Endif
 
 End
 
 Public Sub IconView_Drop(argPaths As String[])
 
-    $fileStore.SetPaths(argPaths)
+    NagatoFileStore.SetPaths(argPaths)
     
 End
 
 Public Sub ClearButton_Click()
 
-    $fileStore.Clear()
+    NagatoFileStore.Clear()
 
 End
 
 Public Sub ExtractButton_Click()
 
-    If Not $iconView.IsEmpty Then NagatoPatool.Extract($fileStore.PathsInLine)
+    If Not $iconView.IsEmpty Then NagatoPatool.Extract(NagatoFileStore.PathsInLine)
 
 End
 
-Public Sub FileStore_New(argPaths As String[])
+Public Sub Asakura_New(argPaths As String[])
     
     $iconView.Add(argPaths)
     
 End
 
-Public Sub FileStore_Remove(argPaths As String[])
+Public Sub Asakura_Remove(argPaths As String[])
     
     $iconView.Remove(argPaths)
     
 End
 
-Public Sub FileStore_Clear()
+Public Sub Asakura_Clear()
     
     $iconView.SetEmptyView()
     
