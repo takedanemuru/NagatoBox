@@ -3,6 +3,7 @@
 Private $button As NagatoStarButton
 Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
+Private $pager As NagatoPager
 Private $clock As NagatoClock
 Private $observer As Observer
 
@@ -34,6 +35,7 @@ Public Sub Form_Open()
     $button = New NagatoStarButton(HBox1) As "StarButton"
     addDrawingArea()
     $contentBar = New NagatoContentBar($drawingArea) As "contentBar"
+    $pager = New NagatoPager(HBox1) As "Pager"
     $clock = New NagatoClock(HBox1) As "Clock"
     $observer = New Observer(NagatoTimer) As "Asakura"
 

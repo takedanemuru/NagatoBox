@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoPaint
+
+Private Sub paintCenterPoint()
+    
+    Paint.Brush = Paint.Color(IrohaOpaque.Get(Color.Yellow, 128))
+    Paint.Ellipse(NagatoCenter.X - 15, NagatoCenter.Y - 15, 30, 30)
+    Paint.Fill()
+    
+End
+
+Private Sub paintClockPoints()
+    
+    Dim yukiCount As Integer
+    
+    Paint.Brush = Paint.Color(IrohaOpaque.Get(Color.White, 64))
+    For yukiCount = 0 To 11
+        Paint.Ellipse(NagatoCenter.GetX(yukiCount * 30, 160) - 5, NagatoCenter.GetY(yukiCount * 30, 160) - 5, 10, 10)
+    Next
+    Paint.Fill()
+    
+End
+
+Public Sub Paint()
+    
+    paintCenterPoint()
+    paintClockPoints()
+    
+End

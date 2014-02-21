@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Create Static
+
 Property Read Reservations As String[]
 Property Read ReservationCount As Integer
 Property Read NonGui As Boolean
@@ -9,7 +11,11 @@ Private $nonGui As Boolean = False
 
 Public Sub Parsing()
     
+    Dim yukiArgs As String[]
     
+    Args.Begin("Usage")
+        $nonGui = Args.Has("n", "non-gui", "non gui mode")
+    yukiArgs = Args.End()
     
 End
 

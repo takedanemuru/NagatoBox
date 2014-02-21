@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoPaint
+
+Private Sub paintClockHand(argDegree As Integer, argLength As Integer, argWidth As Integer, argColor As Integer)
+    
+    Paint.Brush = Paint.Color(argColor)
+    Paint.LineWidth = argWidth
+    Paint.LineCap = Paint.LineCapRound
+    Paint.MoveTo(NagatoCenter.GetX(argDegree, 30), NagatoCenter.GetY(argDegree, 30))
+    Paint.LineTo(NagatoCenter.GetX(argDegree, argLength), NagatoCenter.GetY(argDegree, argLength))
+    Paint.Stroke()
+    
+End
+
+Public Sub Paint()
+    
+    paintClockHand(Hour(Now) * 30 + Minute(Now) * 0.5 - 90, 120, 20, IrohaOpaque.Get(Color.Lighter(Color.Red), 32))
+    paintClockHand(Minute(Now) * 6 - 90, 140, 12, IrohaOpaque.Get(Color.Lighter(Color.Violet), 32))
+    paintClockHand(Second(Now) * 6 - 90, 160, 8, IrohaOpaque.Get(Color.Lighter(Color.Magenta), 32))
+    
+End

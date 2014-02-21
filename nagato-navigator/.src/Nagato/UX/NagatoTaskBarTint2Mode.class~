@@ -162,3 +162,15 @@ Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
     yukiContextMenu.PopUp()
     
 End
+
+Public Sub Watcher_Change()
+    
+    Me.Paint()
+    
+End
+
+Public Sub Watcher_Count()
+    
+    Me.Paint()
+    
+End

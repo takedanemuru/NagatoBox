@@ -4,17 +4,28 @@ Inherits NagatoPainter
 
 Private $tasks As New NagatoTasks
 
+Private Sub paintBox(argWidth As Integer, argX As Integer)
+    
+    Paint.Brush = Paint.Color(Color.Pink)
+        Paint.Rectangle(argX, 0, argWidth, 3 * MikuruUx.Grid)
+    Paint.Fill()
+    
+End
+
 Private Sub paintTask(argWindow As DesktopWindow, argWidth As Integer, ByRef refX As Integer)
     
     Dim yukiText As String
     
+    If argWindow.Id = Desktop.ActiveWindow Then paintBox(argWidth, refX)
+    
+    Paint.Brush = Paint.Color(NagatoSettings.ForegroundColor)
     Paint.DrawImage(argWindow.Icon.Stretch(2 * MikuruUx.Grid, 2 * MikuruUx.Grid), refX + 4, 4)
     yukiText = MikuruCollapsedText.Get(argWindow.Name, Me._$drawingArea.Font, argWidth - 3 * MikuruUx.Grid)
     Paint.Text(yukiText, refX + 3 * MikuruUx.Grid, 0, argWidth - 3 * MikuruUx.Grid, Me._$drawingArea.H, Align.Left)
     refX += argWidth
+    Paint.Fill()
     
 Catch
-    Debug "ignore"
     Return
     
 End
@@ -29,15 +40,12 @@ Public Sub Paint()
     If $tasks.Count = 0 Then Return
     
     yukiTasks = $tasks.Get()
-    
     yukiWidth = Me._$drawingArea.W / yukiTasks.Count
     
     Paint.Begin(Me._$drawingArea)
-    Paint.Brush = Paint.Color(NagatoSettings.ForegroundColor)
         For Each yukiWindow In yukiTasks
             paintTask(yukiWindow, yukiWidth, ByRef yukiX)
         Next
-    Paint.Fill()
     Paint.End()
     
 Catch
@@ -59,5 +67,17 @@ Public Sub LeftClick(argMouseX As Integer, argMouseY As Integer)
     
 Catch
     Return 'to avoid division by zero
+    
+End
+
+Public Sub Watcher_Change()
+    
+    Me.Paint()
+    
+End
+
+Public Sub Watcher_Count()
+    
+    Me.Paint()
     
 End

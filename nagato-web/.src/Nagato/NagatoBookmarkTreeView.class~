@@ -5,6 +5,18 @@ Inherits NagatoMenuPipe
 Private $treeView As TreeView
 Private $title As String
 
+Private Function isWebPage(argKey As String) As Boolean
+    
+    If argKey Begins "http://" Then
+        Return True
+    Else If argKey Begins "https://" Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
 Private Sub setBookmark(argCategory As String)
     
     Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultFoundByCategoryName(argCategory)
@@ -56,11 +68,11 @@ End
 
 Public Sub TreeView_MouseDrag()
     
-    If $treeView.Key Not Begins "http://" Then Return
-    
-    $title = $treeView.Current.Text
-    Drag.Icon = Stock["medium/file"]
-    $treeView.Drag($treeView.Key, "text/plain")
+    If isWebPage($treeView.Key) Then
+        $title = $treeView.Current.Text
+        Drag.Icon = Stock["medium/file"]
+        $treeView.Drag($treeView.Key, "text/plain")
+    End If
     
 End
 
@@ -79,13 +91,13 @@ Public Sub TreeView_Drop()
     Dim yukiCategory As String
     
     If $title = "" Then Return
-    If Drag.Data Not Begins "http://" Then Return
+    If Not isWebPage(Drag.Data) Then Return
     
     If $treeView.Item.Key = "NagatoTrashBin" Then
         Try $treeView.Remove(Drag.Data)
         If Not Error Then NagatoDBWeb.DeleteBookmark(Drag.Data)
     Else
-        yukiCategory = IIf($treeView.Item.Key Begins "http://", $treeView.Item.ParentKey, $treeView.Item.Key)
+        yukiCategory = IIf(isWebPage($treeView.Item.Key), $treeView.Item.ParentKey, $treeView.Item.Key)
         Try $treeView.Remove(Drag.Data)
         Try $treeView.Add(Drag.Data, $title,, yukiCategory)
         If Not Error Then NagatoDBWeb.ChangeBookmarkCategory(Drag.Data, yukiCategory)

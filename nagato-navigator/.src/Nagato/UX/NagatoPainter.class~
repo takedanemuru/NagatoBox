@@ -1,10 +1,12 @@
 ' Gambas class file
 
 Public _$drawingArea As DrawingArea
+Public _$watcher As DesktopWatcher
 
 Public Sub _new(argDrawingArea As DrawingArea)
     
     Me._$drawingArea = argDrawingArea
+    Me._$watcher = New DesktopWatcher(True) As "Watcher"
     
 End
 

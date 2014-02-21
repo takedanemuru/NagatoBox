@@ -2,68 +2,19 @@
 
 Private $rootMenu As Menu
 
-Private Sub addSizeMenu(argTitle As String, argSize As Integer)
-    
-    Dim yukiMenu As New Menu($rootMenu) As "SizeMenu"
-    
-    With yukiMenu
-        .Text = argTitle
-        .Tag = argSize
-        If IrohaSettings.Size = argSize Then .Picture = Stock["medium/apply"]
-    End With
-    
-End
+Private Enum MenuNone = 0
+Private Enum MenuSize400 = 400, MenuSize300 = 300, MenuSize200 = 200
+Private Enum MenuSkipTaskBar = 1001, MenuSticky = 1002 
+Private Enum MenuAbout = 2001, MenuQuit = 2002
 
-Private Sub addSeparator()
+Public Sub addMenuItem(argText As String, argTag As Integer, Optional argIcon As Picture)
     
-    Dim yukiMenu As New Menu($rootMenu)
-    
-    With yukiMenu
-        .Text = ""
-    End With
-    
-End
-
-Private Sub addSkipTaskbarMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "SkipTaskbarMenu"
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
     
     With yukiMenu
-        .Text = ("Skip taskbar")
-        If Ohana.SkipTaskbar Then .Picture = Stock["medium/apply"]
-    End With
-    
-End
-
-Private Sub addStickyMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "StickyMenu"
-    
-    With yukiMenu
-        .Text = ("Sticky")
-        If Ohana.Sticky Then .Picture = Stock["medium/apply"]
-    End With
-    
-End
-
-Private Sub addAboutMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "AboutMenu"
-    
-    With yukiMenu
-        .Text = ("About")
-        .Picture = Stock["medium/info"]
-    End With
-    
-End
-
-Private Sub addCloseMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "CloseMenu"
-    
-    With yukiMenu
-        .Text = ("Close")
-        .Picture = Stock["medium/quit"]
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
     End With
     
 End
@@ -77,46 +28,33 @@ End
 Public Sub _new(argParent As Form)
     
     $rootMenu = New Menu(argParent)
-    addSizeMenu(("Large"), 400)
-    addSizeMenu(("Medium"), 300)
-    addSizeMenu(("Small"), 200)
-        addSeparator()
-    addSkipTaskbarMenu()
-    addStickyMenu()
-        addSeparator()
-    addAboutMenu()
-        addSeparator()
-    addCloseMenu()
+    addMenuItem(("Large"), MenuSize400, IIf(IrohaSettings.Size = 400, Stock["medium/apply"], Null))
+    addMenuItem(("Medium"), MenuSize300, IIf(IrohaSettings.Size = 300, Stock["medium/apply"], Null))
+    addMenuItem(("Small"), MenuSize200, IIf(IrohaSettings.Size = 200, Stock["medium/apply"], Null))
+        addMenuItem("", MenuNone)
+    addMenuItem(("Skip Taskbar"), MenuSkipTaskBar, IIf(Ohana.SkipTaskbar, Stock["medium/apply"], Null))
+    addMenuItem(("Sticky"), MenuSticky, IIf(Ohana.Sticky, Stock["medium/apply"], Null))
+        addMenuItem("", MenuNone)
+    addMenuItem(("About"), MenuAbout, Stock["medium/info"])
+        addMenuItem("", MenuNone)
+    addMenuItem(("Close"), MenuQuit, Stock["medium/quit"])
     
 End
 
-Public Sub SizeMenu_Click()
+Public Sub MenuItem_Click()
     
-    IrohaSettings.Size = Last.Tag
-    
-End
-
-Public Sub SkipTaskbarMenu_Click()
-    
-    Ohana.SkipTaskbar = Not Ohana.SkipTaskbar
-    
-End
-
-Public Sub StickyMenu_Click()
-    
-    Ohana.Sticky = Not Ohana.Sticky
-    
-End
-
-Public Sub AboutMenu_Click()
-    
-    Message.Title = ("About ohana-clock")
-    Message.Info(IrohaText.Info, ("OK"))
-    
-End
-
-Public Sub CloseMenu_Click()
-    
-    Ohana.Close()
+    Select Case Last.Tag
+        Case MenuSize200, MenuSize300, MenuSize400
+            IrohaSettings.Size = Last.Tag
+        Case MenuSkipTaskBar
+             Ohana.SkipTaskbar = Not Ohana.SkipTaskbar
+        Case MenuSticky
+            Ohana.Sticky = Not Ohana.Sticky
+        Case MenuAbout
+            Message.Title = ("About ohana-clock")
+            Message.Info(IrohaText.Info, ("OK"))
+        Case MenuQuit
+            Ohana.Close()
+    End Select
     
 End

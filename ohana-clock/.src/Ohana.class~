@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private $timer As New Timer As "Timer"
-Private $painter As New IrohaPaint
+Private $painter As New IrohaSurface
 
 Public Sub Form_Open()
     

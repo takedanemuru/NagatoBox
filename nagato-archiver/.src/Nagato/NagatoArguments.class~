@@ -11,13 +11,12 @@ Private $arguments As String[]
 Public Sub Parsing()
     
     Args.Begin("nagato-archiver usage")
-        $type = Args.Get("t", "type", "archive type to create.")
+        $type = Args.Get("t", "type", "Archive type to create.")
     $arguments = Args.End()
     
     If $arguments.Count > 0 Then NagatoFileStore.SetPaths($arguments)
 
 End
-
 
 Private Function Type_Read() As String
 
