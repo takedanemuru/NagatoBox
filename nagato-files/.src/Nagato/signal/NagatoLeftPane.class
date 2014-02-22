@@ -31,6 +31,12 @@ Private Sub ininializeModeComboBox()
     
 End
 
+Public Sub RefreshTreeView()
+    
+    $treeView.Refresh()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)

@@ -14,3 +14,25 @@ Public Function GetSafePathName(argPath As String) As String
     Loop
     
 End
+
+Public Sub GetChildrenFile(argDirectory As String, argShowHidden As Boolean) As String[]
+    
+     Dim yukiPaths As String[]
+     Dim yukiPattern As String = IIf(argShowHidden, "*", "[^.]*")
+     
+     yukiPaths = Dir(argDirectory, yukiPattern, gb.File).Sort(gb.IgnoreCase + gb.Natural)
+    
+    Return yukiPaths
+    
+End
+
+Public Sub GetChildrenDirectory(argDirectory As String, argShowHidden As Boolean) As String[]
+    
+     Dim yukiPaths As String[]
+     Dim yukiPattern As String = IIf(argShowHidden, "*", "[^.]*")
+     
+     yukiPaths = Dir(argDirectory, yukiPattern, gb.Directory).Sort(gb.IgnoreCase + gb.Natural)
+    
+    Return yukiPaths
+    
+End

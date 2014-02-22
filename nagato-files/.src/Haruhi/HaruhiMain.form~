@@ -9,23 +9,6 @@
     MoveScaled(3,7,28.5714,40)
     Arrangement = Arrange.Fill
     Orientation = Align.Left
-    { LeftTabStrip TabStrip
-      MoveScaled(2,8,24,24)
-      Background = &HCF9FFF&
-      Arrangement = Arrange.Fill
-      Count = 3
-      Orientation = Align.Left
-      Index = 0
-      Text = ("Tag")
-      Picture = Picture["pictures/icons/tag.png"]
-      Index = 1
-      Text = ("Tree view")
-      Picture = Picture["pictures/icons/database.png"]
-      Index = 2
-      Text = ("Places")
-      Picture = Picture["pictures/icons/book-bookmark.png"]
-      Index = 0
-    }
   }
   { MainTabStrip TabStrip
     MoveScaled(19,6,34,41)

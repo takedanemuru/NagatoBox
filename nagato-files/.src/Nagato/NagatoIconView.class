@@ -199,6 +199,8 @@ Public Sub IconView_MouseDown()
         $iconView[$iconView.Key].Picture = getFileIconPicture($iconView.Key)
     Endif
     
+    Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    
 End
 
 Public Sub IconView_Menu()
@@ -222,8 +224,12 @@ Public Sub IconView_KeyPress()
     
     Dim yukiPaths As String
     
-    If Key.Enter Then
+    If Key.Code = Key.Enter Then
         If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
+        Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    Else If Key.Code = Key.Esc Then
+        $selectionBar.ClearAll()
+        Me.Refresh($currentDirectory)
     Endif
     
     If Not Key.Control Then Return
@@ -236,6 +242,9 @@ Public Sub IconView_KeyPress()
         If Clipboard.Format <> MikuruMimeType.UriList Then Return
         yukiPaths = Clipboard.Paste()
         Raise MenuEventWithArg(Me.FileCopy, yukiPaths)
+    Else If Key.Code = Key["h"] Then
+        NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+        Me.Refresh($currentDirectory)
     Endif
     
 End

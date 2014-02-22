@@ -9,6 +9,7 @@ Private $iconView As NagatoIconView
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoDirectoryObserver
 
+Event ShowProperty(argPath As String)
 Event NewTab(argPath As String)
 Event AppQuit
 
@@ -121,6 +122,8 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
              Case NagatoMenuPipe.FileCopy
                 Debug "Copy files"
                 MikuruFileManuever.CopyUriList($log.Current, argArgument)
+             Case .FileShowProperty
+                 Raise ShowProperty(argArgument)
         End Select
     End With
     

@@ -6,6 +6,8 @@ Property ShowHidden As Boolean
 
 Private $settings As New Settings
 
+Event ShowHiddenChanged
+
 Public Sub LoadFormSettings(argForm As Form)
     
     argForm.X = $settings["form/x", argForm.X]
@@ -32,6 +34,9 @@ End
 
 Private Sub ShowHidden_Write(Value As Boolean)
 
-    $settings["view/hidden"] = Value
-
+    If Value <> $settings["view/hidden"] Then
+        $settings["view/hidden"] = Value
+        Raise ShowHiddenChanged
+    End If
+    
 End

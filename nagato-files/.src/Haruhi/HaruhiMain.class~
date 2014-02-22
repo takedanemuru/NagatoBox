@@ -2,7 +2,9 @@
 
 Private $startUpPath As String
 Private $leftPane As NagatoLeftPane
+Private $rightPane As NagatoRightPane
 Private $filers As New NagatoFiler[]
+Private $observer As Observer
 
 Private Sub addTab(Optional argPath As String = User.Home)
     
@@ -66,6 +68,7 @@ Public Sub Form_Open()
     Dim yukiFiler As NagatoFiler
 
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
+    $rightPane = New NagatoRightPane(RightPanel) As "RightPane"
     
     If $startUpPath <> "" Then
         yukiFiler = New NagatoFiler(MainTabStrip, $startUpPath) As "Filer"
@@ -82,6 +85,8 @@ Public Sub Form_Open()
     MainTabStrip.Count = 1
     MainTabStrip.Index = MainTabStrip.Count - 1
     MainTabStrip.Arrangement = Arrange.Vertical
+    
+    $observer = New Observer(NagatoSettings) As "Asakura"
     
 End
 
@@ -108,6 +113,12 @@ Public Sub MainTabStrip_Close(argIndex As Integer)
 
 End
 
+Public Sub Filer_ShowProperty(argPath As String)
+    
+    Debug argPath
+    
+End
+
 Public Sub Filer_NewTab(argPath As String)
     
     addTab(argPath)
@@ -117,5 +128,11 @@ End
 Public Sub Filer_AppQuit()
     
     Me.Close()
+    
+End
+
+Public Sub Asakura_ShowHiddenChanged()
+    
+    $leftPane.RefreshTreeView()
     
 End

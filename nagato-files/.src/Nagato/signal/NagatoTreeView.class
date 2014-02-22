@@ -24,15 +24,13 @@ Private Sub setFile(argDirectory As String)
     
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.File).Sort(gb.IgnoreCase)
+    For Each yukiPath In MikuruPath.GetChildrenFile(argDirectory, NagatoSettings.ShowHidden)
         $treeView.Add(argDirectory &/ yukiPath, yukiPath, getFileIcon(argDirectory &/ yukiPath), argDirectory)
     Next
     
 End
 
 Private Sub setDummyDirectory(argDirectory As String, argParent As String)
-    
-    Debug argDirectory
     
     $treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
     
@@ -42,20 +40,39 @@ Private Sub setDummyDirectory(argDirectory As String, argParent As String)
     
 End
 
-Private Sub setDirectory(argDirectory As String)
+Private Sub setHomeDirectory(argDirectory As String)
     
     Dim yukiDirectoryName As String = File.Name(argDirectory)
-    Dim yukiPath As String
     
     If Not $treeView.Exist(argDirectory) Then
         $treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", 24))
     Endif
     
-    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.Directory).Sort(gb.IgnoreCase + gb.Natural)
+End
+
+Private Sub setSubDirectory(argDirectory As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In MikuruPath.GetChildrenDirectory(argDirectory, NagatoSettings.ShowHidden)
         setDummyDirectory(argDirectory &/ yukiPath, argDirectory)
     Next
     
+End
+
+Private Sub setDirectory(argDirectory As String)
+    
+    setHomeDirectory(argDirectory)
+    setSubDirectory(argDirectory)
     setFile(argDirectory)
+    
+End
+
+Private Sub expandHomeDirectory()
+    
+    Object.Lock($treeView)
+        $treeView[User.Home].Expanded = True
+    Object.Unlock($treeView)
     
 End
 
@@ -71,16 +88,21 @@ Private Sub initializeTreeView(argContainer As Container)
     End With
     
     setDirectory(User.Home)
-    
-    Object.Lock($treeView)
-        $treeView[User.Home].Expanded = True
-    Object.Unlock($treeView)
+    expandHomeDirectory()
     
 End
 
 Public Sub ToggleVisible()
     
     $treeView.Visible = Not $treeView.Visible
+    
+End
+
+Public Sub Refresh()
+    
+    $treeView.Clear()
+    setDirectory(User.Home)
+    expandHomeDirectory()
     
 End
 

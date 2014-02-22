@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $container As Container
+Private $textArea As TextArea
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $container = New VBox(argContainer)
+    
+    With $container
+        .Expand = True
+    End With
+    
+End
+
+Public Sub SetProperty(argPath As String)
+    
+    $textArea.Text = argPath
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    $textArea = New TextArea(argContainer)
+    
+    $textArea.Expand = True
+    $textArea.Background = Color.Lighter(Color.Green)
+    
+End

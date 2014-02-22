@@ -4,6 +4,7 @@ Inherits NagatoMenuPipe
 
 Property Read Count As Integer
 Property Read Paths As String[]
+Property Read LastSelected As String
 
 Private $container As HBox
 Private $selection As New NagatoSelection As "Selection"
@@ -144,8 +145,6 @@ End
 
 Public Sub CancelButton_Click()
     
-    Debug "Cancel"
-    
     Raise Cancel
     
 End
@@ -166,5 +165,11 @@ End
 Private Function Paths_Read() As String[]
 
     Return $selection.Paths
+
+End
+
+Private Function LastSelected_Read() As String
+
+    $selection.LastPath
 
 End
