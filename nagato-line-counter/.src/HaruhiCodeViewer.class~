@@ -15,6 +15,10 @@ End
 
 Public Sub Form_Show()
     
+    Editor1.TabSize = 4
+    Editor1.Flags[Editor1.ShowLineNumbers] = True
+    Editor1.Flags[Editor1.ShowLimits] = True
+    
     Me.Center()
     
 End
