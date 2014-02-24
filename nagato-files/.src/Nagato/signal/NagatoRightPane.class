@@ -2,8 +2,11 @@
 
 Inherits NagatoSignal
 
+Private Const IconSize As Integer = 128
+
 Private $container As Container
-Private $textArea As TextArea
+Private $drawingArea As DrawingArea
+Private $currentPath As String
 
 Private Sub initializeContainer(argContainer As Container)
     
@@ -17,16 +20,127 @@ End
 
 Public Sub SetProperty(argPath As String)
     
-    $textArea.Text = argPath
+    If Not Exist(argPath) Then Return
     
+    $currentPath = argPath
+    $drawingArea.Refresh()
+    
+    Debug Stat(argPath).Auth
+    Debug Stat(argPath).Group
+    Debug Stat(argPath).Hidden
+    Debug Stat(argPath).LastAccess
+    Debug Stat(argPath).LastChange
+    Debug Stat(argPath).LastModified
+    Debug Stat(argPath).Link
+    Debug Stat(argPath).Mode
+    Debug Stat(argPath).Path
+    Debug Stat(argPath).Size
+
 End
 
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
-    $textArea = New TextArea(argContainer)
     
-    $textArea.Expand = True
-    $textArea.Background = Color.Lighter(Color.Green)
+    $drawingArea = New DrawingArea($container) As "DrawingArea"
+    $drawingArea.Expand = True
+    $drawingArea.Background = Color.Pink
+    $drawingArea.Font.Bold = True
+    
+End
+
+Private Function getIcon() As Picture
+    
+    Dim yukiImage As Image
+    Dim yukiRate As Float
+    
+    If DesktopMime.FromFile($currentPath).Type Begins "image" Then
+        yukiImage = Image.Load($currentPath)
+        yukiRate = Min(IconSize / yukiImage.H, IconSize / yukiImage.W)
+        yukiImage = yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)
+        Return yukiImage.Picture
+    Else
+        Return Desktop.GetFileIcon($currentPath, IconSize / 2)
+    Endif
+    
+Catch
+    Return Stock["huge/file"]
+    
+End
+
+Private Function drawPath(argY As Integer) As Integer
+    
+    Dim yukiRect As New Rect(16, argY, IconSize + 32, $drawingArea.Font.RichTextHeight(File.Name($currentPath)))
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText(File.Name($currentPath), yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+    Return argY + yukiRect.H + 16
+    
+End
+
+Private Function drawRichText(argY As Integer, argText As String) As Integer
+    
+    Dim yukiRect As New Rect(16, argY, IconSize + 32, $drawingArea.Font.RichTextHeight(argText))
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+    Return argY + yukiRect.H + 16
+    
+End
+
+Private Sub drawHeader(argY As Integer)
+    
+    Dim yukiTemplate As String = "Size:<br>Permission:<br>Access:<br>Modefy:<br>Change:<br>"
+    Dim yukiRect As New Rect(16, argY + 16, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText(yukiTemplate, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Left)
+    Paint.Fill()
+    
+End
+
+Private Function getPropertyText(argTemplate As String) As String
+    
+    Dim yukiStat As Stat = Stat($currentPath)
+    Dim yukiSize As String = MikuruFile.getFileSizeText($currentPath)
+    Dim yukiPermission As String = MikuruFile.GetPermissionText($currentPath)
+    Dim yukiLastAccess As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastAccess)
+    Dim yukiLastModefy As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastModified)
+    Dim yukiLastChange As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastChange)
+    
+    Return Subst$(argTemplate, yukiSize, yukiPermission, yukiLastAccess, yukiLastModefy, yukiLastChange)
+    
+Catch
+    Return ""
+    
+End
+
+Private Sub drawProperty(argY As Integer)
+    
+    Dim yukiTemplate As String = "&1<br>&2<br>&3<br>&4<br>&5<br>"
+    Dim yukiRect As New Rect(16, argY + 16, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText(getPropertyText(yukiTemplate), yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Right)
+    Paint.Fill()
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    Dim yukiIcon As Picture = getIcon()
+    Dim yukiY As Integer
+    
+    Paint.Begin($drawingArea)
+        Paint.DrawPicture(yukiIcon, 32 + ((IconSize - yukiIcon.W) / 2), 16)
+        yukiY = drawPath(yukiIcon.H + 48)
+        yukiY = drawRichText(yukiY, DesktopMime.FromFile($currentPath).Type)
+        drawHeader(yukiY)
+        drawProperty(yukiY)
+    Paint.End()
     
 End

@@ -1,0 +1,80 @@
+' Gambas class file
+
+Create Static
+
+Private $sidePanel As SidePanel
+Private $tabStrip As TabStrip
+Private $weather As NagatoInfoWeather
+Private $bookmark As NagatoInfoBookmarks
+Private $search As NagatoInfoSearch
+Private $cantidates As NagatoInfoWikipediaCantidates
+Private $article As NagatoInfoWikipediaArticle
+
+Private Sub initializeSidePanel(argSidePanel As SidePanel)
+    
+    $sidePanel = argSidePanel
+    
+    With $sidePanel
+        .Arrangement = Arrange.Fill
+    End With
+    
+End
+
+Private Sub initializeTabStrip()
+    
+    $tabStrip = New TabStrip($sidePanel) As "TabStrip"
+    
+    With $tabStrip
+        .Count = 5
+        .Arrangement = Arrange.Vertical
+        .Orientation = Align.Left
+        .[0].Text = ("Weather")
+        .[1].Text = ("Articles")
+        .[2].Text = ("Wikipedia")
+        .[3].Text = ("Search")
+        .[4].Text = ("Bookmark")
+    End With
+    
+End
+
+Public Sub Activate(argSidePanel As SidePanel)
+    
+    initializeSidePanel(argSidePanel)
+    initializeTabStrip()
+    $weather = New NagatoInfoWeather($tabStrip)
+    $cantidates = New NagatoInfoWikipediaCantidates($tabStrip) As "Cantidates"
+    $article = New NagatoInfoWikipediaArticle($tabStrip)
+    $bookmark = New NagatoInfoBookmarks($tabStrip)
+    $search = New NagatoInfoSearch($tabStrip)
+    
+    $tabStrip.Index = 0
+    
+End
+
+Public Sub Toggle()
+    
+    $sidePanel.Hidden = False
+    $tabStrip.Index = 3
+    $search.SetFocus()
+    
+End
+
+Public Sub Request(argLatitude As Float, argLongitude As Float)
+    
+    $cantidates.Request(argLatitude, argLongitude)
+    $weather.Request(argLatitude, argLongitude)
+    
+End
+
+Public Sub AddBookmark()
+    
+    $bookmark.Refresh()
+    
+End
+
+Public Sub Cantidates_NewArticle(argUrl As String)
+    
+    $article.Url = argUrl
+    $tabStrip.Index = 1
+    
+End

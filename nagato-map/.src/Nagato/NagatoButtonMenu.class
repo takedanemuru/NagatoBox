@@ -54,7 +54,7 @@ Public Sub MenuItem_Click()
             Case .MenuQuit
                 HaruhiMapView.Close()
             Case .MenuSearch
-                NagatoBookmarkAndSearchPanel.Toggle()
+                NagatoLeftPanel.Toggle()
             Default
                 Raise MenuEvent(Last.Tag)
         End Select

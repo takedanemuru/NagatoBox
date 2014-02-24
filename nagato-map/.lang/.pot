@@ -54,27 +54,8 @@ msgstr ""
 msgid "<b>Longitude:</b>"
 msgstr ""
 
-#: NagatoBookmarkAndSearchPanel.class:30
-msgid "Bookmark"
-msgstr ""
-
-#: NagatoBookmarkAndSearchPanel.class:31 NagatoButtonMenu.class:31
+#: NagatoButtonMenu.class:31 NagatoLeftPanel.class:34
 msgid "Search"
-msgstr ""
-
-#: NagatoBookmarkAndSearchPanel.class:81
-#: NagatoWeatherAndWikipediaPanel.class:62
-msgid "Name"
-msgstr ""
-
-#: NagatoBookmarkAndSearchPanel.class:82
-#: NagatoWeatherAndWikipediaPanel.class:63
-msgid "Latitude"
-msgstr ""
-
-#: NagatoBookmarkAndSearchPanel.class:83
-#: NagatoWeatherAndWikipediaPanel.class:64
-msgid "Longitude"
 msgstr ""
 
 #: NagatoButtonMenu.class:32
@@ -93,20 +74,39 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: NagatoMenuBar.class:77
-msgid "<b>Latitude:</b> &1, <b>Longitude:</b> &2"
+#: NagatoInfoBookmarks.class:39 NagatoInfoSearch.class:31
+#: NagatoInfoWikipediaCantidates.class:18
+msgid "Name"
 msgstr ""
 
-#: NagatoWeatherAndWikipediaPanel.class:29
+#: NagatoInfoBookmarks.class:40 NagatoInfoSearch.class:32
+#: NagatoInfoWikipediaCantidates.class:19
+msgid "Latitude"
+msgstr ""
+
+#: NagatoInfoBookmarks.class:41 NagatoInfoSearch.class:33
+#: NagatoInfoWikipediaCantidates.class:20
+msgid "Longitude"
+msgstr ""
+
+#: NagatoLeftPanel.class:31
 msgid "Weather"
 msgstr ""
 
-#: NagatoWeatherAndWikipediaPanel.class:30
-msgid "List"
+#: NagatoLeftPanel.class:32
+msgid "Articles"
 msgstr ""
 
-#: NagatoWeatherAndWikipediaPanel.class:31
-msgid "Article"
+#: NagatoLeftPanel.class:33
+msgid "Wikipedia"
+msgstr ""
+
+#: NagatoLeftPanel.class:35
+msgid "Bookmark"
+msgstr ""
+
+#: NagatoMenuBar.class:77
+msgid "<b>Latitude:</b> &1, <b>Longitude:</b> &2"
 msgstr ""
 
 #: NagatoWeatherCondition.class:9

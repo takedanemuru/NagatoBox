@@ -115,7 +115,8 @@ End
 
 Public Sub Filer_ShowProperty(argPath As String)
     
-    Debug argPath
+    $rightPane.SetProperty(argPath)
+    'RightPanel.Hidden = False
     
 End
 

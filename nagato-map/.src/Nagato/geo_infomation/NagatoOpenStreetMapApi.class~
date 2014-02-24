@@ -33,6 +33,10 @@ Private Sub startDownloading(argQuery As String)
     
     $httpClient.Get()
     
+Catch
+    Debug Error.Text
+    Return
+    
 End
 
 Public Sub Get(argQuery As String)

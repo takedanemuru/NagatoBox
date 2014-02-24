@@ -24,11 +24,14 @@ Private Sub initializeTabStrip()
     $tabStrip = New TabStrip($sidePanel) As "TabStrip"
     
     With $tabStrip
-        .Count = 3
+        .Count = 5
         .Arrangement = Arrange.Vertical
+        .Orientation = Align.Left
         .[0].Text = ("Weather")
-        .[1].Text = ("List")
-        .[2].Text = ("Article")
+        .[1].Text = ("Articles")
+        .[2].Text = ("Wikipedia")
+        .[3].Text = ("Search")
+        .[4].Text = ("Bookmark")
     End With
     
 End
@@ -138,12 +141,22 @@ Public Sub Activate(argSidePanel As SidePanel)
     initializeWikipediaListGrid()
     initializeWikipediaArticleWebview()
     
+    NagatoBookmarkAndSearchPanel.Activate($tabStrip)
+    
+End
+
+Public Sub Toggle()
+    
+    $sidePanel.Hidden = False
+    $tabStrip.Index = 3
+    
 End
 
 Public Sub Request(argLatitude As Float, argLongitude As Float)
     
     requestWikipedia(argLatitude, argLongitude)
     requestWeather(argLatitude, argLongitude)
+    $weatherDrawingArea.Longitude = argLongitude
     
 End
 
@@ -154,8 +167,6 @@ Public Sub Asakura_Finished(argGeoInfomations As NagatoGeoInfomationElement[])
 End
 
 Public Sub Kimidori_Finished()
-    
-    Debug "Finished"
     
     $weatherDrawingArea.Refresh()
     

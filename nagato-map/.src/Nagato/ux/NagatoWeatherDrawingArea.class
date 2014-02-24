@@ -5,110 +5,15 @@ Property Longitude As Float
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $currentWeather As NagatoWeatherElement
-Private $textRect As New Rect
+Private $textPainter As NagatoWeatherPainterText
 Private $longitude As Float
-
-Private Function getUTCHour() As Integer
-    
-    Dim yukiResult As String
-    
-    Shell Subst$("date -u &1", Quote$("+%k")) To yukiResult
-    
-    Return CInteger(Replace$(yukiResult, "\n", ""))
-    
-End
-
-Private Function getUTCMinute() As Integer
-    
-    Dim yukiResult As String
-    
-    Shell Subst$("date -u &1", Quote$("+%M")) To yukiResult
-    
-    Return (CInteger(Replace$(yukiResult, "\n", "")) / 60)
-    
-End
-
-Private Function isDay() As Boolean
-    
-    Dim yukiCurrentTime As Float = getUTCHour() + getUTCMinute() + ($longitude / 15)
-    
-    If 18 > yukiCurrentTime And If yukiCurrentTime >= 6 Then
-        Return True
-    Else
-        Return False
-    Endif
-    
-End
-
-Private Sub setTextRect()
-    
-    With $textRect
-        .X = 8
-        .Y = 8
-        .W = $drawingArea.W - 16
-        .H = $drawingArea.H - 16
-    End With
-    
-End
-
-Private Function getTitle() As String
-    
-    Return Subst$("<h2>&1</h2>&2", Upper$(NagatoWeatherCondition.GetText($currentWeather.IconId)), String$(8, "<br>"))
-    
-End
-
-Private Function getHeaders() As String
-    
-    Dim yukiReturn As String = "<h2> </h2><br>"
-    
-    yukiReturn &= "Temp.:<br>"
-    yukiReturn &= "Wind(S):<br>"
-    yukiReturn &= "Wind(D):<br>"
-    yukiReturn &= "Hum.:<br>"
-    yukiReturn &= "Cloud:<br>"
-    yukiReturn &= "Press.:<br>"
-    yukiReturn &= "Prec.:<br>"
-    
-    Return yukiReturn
-    
-End
-
-Private Function getStatus() As String
-    
-    Dim yukiReturn As String = "<h2> </h2><br>"
-    
-    With $currentWeather
-        yukiReturn &= Subst$("&1°C<br>", .Temperature)
-        yukiReturn &= Subst$("&1m<br>", .WindSpeed)
-        yukiReturn &= Subst$("&1<br>", .WindDirection)
-        yukiReturn &= Subst$("&1%<br>", .Humidity)
-        yukiReturn &= Subst$("&1%<br>", .Cloudiness)
-        yukiReturn &= Subst$("&1HPa<br>", .Pressure)
-        yukiReturn &= Subst$("&1mm<br>", .Precipitation)
-    End With
-    
-    Return yukiReturn
-    
-End
-
-Private Sub drawWatherText()
-    
-    setTextRect()
-
-    With $textRect
-        Paint.DrawRichText(getTitle(), .X, .Y, .W, .H, Align.Center)
-        Paint.DrawRichText(getHeaders(), .X, .Y, .W, .H, Align.Left)
-        Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
-    End With
-    
-End
 
 Private Function getWeatherIcon() As Image
     
-    If isDay() Then
-            Return NagatoWeatherIcon.GetIconImageDay($currentWeather.IconId).Stretch(96, 96)
+    If MikuruTime.IsDay($longitude) Then
+        Return NagatoWeatherIcon.GetIconImageDay($currentWeather.IconId).Stretch(96, 96)
     Else
-            Return NagatoWeatherIcon.GetIconImageNight($currentWeather.IconId).Stretch(96, 96)
+        Return NagatoWeatherIcon.GetIconImageNight($currentWeather.IconId).Stretch(96, 96)
     End If
     
 End
@@ -121,7 +26,7 @@ Private Sub setWeatherInfomation(argBackground As Integer)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(getWeatherIcon(), ($drawingArea.W - 96) / 2, 16)
-        drawWatherText()
+        $textPainter.Draw($currentWeather)
     Paint.End()
     
 Catch
@@ -156,6 +61,7 @@ End
 Public Sub _new(argDrawingArea As DrawingArea)
     
     $drawingArea = argDrawingArea
+    $textPainter = New NagatoWeatherPainterText($drawingArea)
     
     $observer = New Observer($drawingArea) As "Asakura"
     
@@ -163,11 +69,12 @@ End
 
 Public Sub Asakura_Draw()
     
-    Debug isDay()
+    Dim yukiBackground As Integer
     
      If NagatoWeatherCache.IsReady
         $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
-        setWeatherInfomation(NagatoWeatherCondition.GetColor($currentWeather.IconId, isDay()))
+        yukiBackground = NagatoWeatherCondition.GetColor($currentWeather.IconId, MikuruTime.IsDay($longitude))
+        setWeatherInfomation(yukiBackground)
     Else
         setPleaseWait(Color.DarkBlue)
     End If

@@ -199,6 +199,8 @@ Public Sub IconView_MouseDown()
         $iconView[$iconView.Key].Picture = getFileIconPicture($iconView.Key)
     Endif
     
+    Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    
 End
 
 Public Sub IconView_Menu()
@@ -224,6 +226,7 @@ Public Sub IconView_KeyPress()
     
     If Key.Code = Key.Enter Then
         If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
+        Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
     Else If Key.Code = Key.Esc Then
         $selectionBar.ClearAll()
         Me.Refresh($currentDirectory)

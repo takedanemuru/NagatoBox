@@ -1,0 +1,125 @@
+' Gambas class file
+
+Private $tabStrip As TabStrip
+Private $searchBox As ButtonBox
+Private $searchGrid As GridView
+
+Private Sub initializeSearchBox()
+    
+    $searchBox = New ButtonBox($tabStrip) As "SearchBox"
+    
+    With $searchBox
+        .Expand = False
+        .Height = 32
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Private Sub initializeSearchGrid()
+    
+    $tabStrip.Index = 3
+
+    $searchGrid = New GridView($tabStrip) As "SearchGrid"
+
+    With $searchGrid
+        .Columns.Count = 3
+        .Rows.Count = 1
+        .Header = GridView.Horizontal
+        .Expand = True
+        .Mode = Select.Single
+        .Columns[0].Text = ("Name")
+        .Columns[1].Text = ("Latitude")
+        .Columns[2].Text = ("Longitude")
+    End With
+    
+End
+
+Private Sub initializeSearchTab()
+    
+    $tabStrip.Index = 3
+    
+    initializeSearchBox()
+    initializeSearchGrid()
+    
+End
+
+Private Sub search()
+    
+    Dim yukiObserver As Observer
+    
+    yukiObserver = New Observer(NagatoOpenStreetMapApi) As "Asakura"
+    
+    NagatoOpenStreetMapApi.Get($searchBox.Text)
+    
+End
+
+Private Sub refreshSearchGridData(argCollection As Collection)
+    
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    $searchGrid.Clear()
+    $searchGrid.Rows.Count = 1
+    $searchGrid.Width = 300
+    
+    For Each yukiGeoElement In argCollection
+        With $searchGrid
+            $searchGrid[.Rows.Max, 0].Text = yukiGeoElement.VisibleName
+            $searchGrid[.Rows.Max, 0].Alignment = Align.Left
+            $searchGrid[.Rows.Max, 1].Text = yukiGeoElement.Latitude
+            $searchGrid[.Rows.Max, 1].Alignment = Align.Right
+            $searchGrid[.Rows.Max, 2].Text = yukiGeoElement.Longitude
+            $searchGrid[.Rows.Max, 2].Alignment = Align.Right
+            Inc .Rows.Count
+        End With
+    Next
+    
+End
+
+Public Sub SetFocus()
+    
+    $searchBox.SetFocus()
+    
+End
+
+Public Sub _new(argTabstrip As TabStrip)
+    
+    $tabStrip = argTabstrip
+    initializeSearchTab()
+    
+End
+
+Public Sub Asakura_Finished(argXmlDocument As XmlDocument) ' see Private Sub search()
+    
+    Dim yukiGeoElements As Collection = NagatoOpenStreetMapApi.GetElements(argXmlDocument)
+    
+    refreshSearchGridData(yukiGeoElements)
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    If $searchBox.Text <> "" Then search()
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    If $searchBox.Text <> "" Then search()
+    
+End
+
+Public Sub SearchGrid_Activate()
+    
+    Dim yukiRowIndex As Integer = $searchGrid.Row
+    Dim yukiLatitude As Float
+    Dim yukiLongitude As Float
+    
+    If $searchGrid[yukiRowIndex, 1].Text <> "" And If $searchGrid[yukiRowIndex, 2].Text <> "" Then
+        yukiLatitude = CFloat($searchGrid[yukiRowIndex, 1].Text)
+        yukiLongitude = CFloat($searchGrid[yukiRowIndex, 2].Text)
+        HaruhiMapView.SetLocation(yukiLatitude, yukiLongitude, 12)
+        NagatoLeftPanel.Request(yukiLatitude, yukiLongitude)
+    Endif
+    
+End

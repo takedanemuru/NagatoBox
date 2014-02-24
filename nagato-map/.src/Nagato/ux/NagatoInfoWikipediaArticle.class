@@ -1,0 +1,39 @@
+' Gambas class file
+
+Property Url As String
+
+Private $tabStrip As TabStrip
+Private $wikipediaWebView As WebView
+
+Private Sub initializeWikipediaArticleWebview()
+    
+    $tabStrip.Index = 2
+    
+    $wikipediaWebView = New WebView($tabStrip)
+    
+    With $wikipediaWebView
+        .Expand = True
+        .Background = Color.Pink
+    End With
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $tabStrip = argTabStrip
+    initializeWikipediaArticleWebview()
+    
+End
+
+
+Private Function Url_Read() As String
+
+    Return $wikipediaWebView.Url
+
+End
+
+Private Sub Url_Write(Value As String)
+
+    $wikipediaWebView.Url = Value
+
+End

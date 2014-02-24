@@ -18,16 +18,11 @@
     Text = ("TabStrip1")
     Index = 0
   }
-  { FileInfomationSidePanel SidePanel
-    MoveScaled(54,6,16,41)
+  { RightPanel SidePanel
+    MoveScaled(54,6,22.8571,41)
     Background = &HB5DFA7&
-    Arrangement = Arrange.Fill
+    Arrangement = Arrange.Vertical
     Orientation = Align.Right
     Hidden = True
-    { !FileProperties1 FileProperties
-      MoveScaled(0,-2,36,36)
-      #Public = True
-      Expand = True
-    }
   }
 }

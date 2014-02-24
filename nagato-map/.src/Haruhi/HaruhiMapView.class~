@@ -62,8 +62,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
     NagatoSettings.LoadFormSettings(Me)
-    NagatoBookmarkAndSearchPanel.Activate(BookmarkAndSearchSidePanel)
-    NagatoWeatherAndWikipediaPanel.Activate(WeatherWikipediaSidePanel)
+    NagatoLeftPanel.Activate(WeatherWikipediaSidePanel)
 
     MapView.Map.Zoom = 4
     setMapTile()
@@ -144,11 +143,11 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
         Case NagatoMenuPipe.MenuInformation
-            NagatoWeatherAndWikipediaPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
+            NagatoLeftPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
         Case NagatoMenuPipe.MenuBookmark
             HaruhiAddBookmark.SetLocation(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
             If HaruhiAddBookmark.ShowDialog() = HaruhiAddBookmark.Added Then
-                NagatoBookmarkAndSearchPanel.RefreshBookmark()
+                NagatoLeftPanel.AddBookmark()
             Endif
     End Select
     

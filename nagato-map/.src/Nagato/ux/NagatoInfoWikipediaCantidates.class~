@@ -1,0 +1,91 @@
+' Gambas class file
+
+Private $tabstrip As TabStrip
+Private $wikipediaUrls As New String[]
+Private $wikipediaGrid As GridView
+
+Event NewArticle(argUrl As String)
+
+Private Sub initializeWikipediaListGrid()
+    
+    $tabStrip.Index = 1
+    
+    $wikipediaGrid = New GridView($tabStrip) As "CantidatesGrid"
+    
+    With $wikipediaGrid
+        .Header = GridView.Horizontal
+        .Columns.Count = 3
+        .Columns[0].Text = ("Name")
+        .Columns[1].Text = ("Latitude")
+        .Columns[2].Text = ("Longitude")
+        .Rows.Count = 1
+        .Expand = True
+        .Mode = Select.Single
+    End With
+    
+End
+
+Private Sub setWikipediaArticleList(argGeoInfomations As NagatoGeoInfomationElement[])
+    
+    Dim yukiInfomationElement As NagatoGeoInfomationElement
+    
+    $wikipediaGrid.Clear()
+    $wikipediaGrid.Rows.Count = 1
+    $wikipediaGrid.Columns[0].Width = 200
+    
+    $wikipediaUrls.Clear()
+    
+    For Each yukiInfomationElement In argGeoInfomations
+        With $wikipediaGrid
+            $wikipediaGrid[.Rows.Max, 0].Text = yukiInfomationElement.Title
+            $wikipediaGrid[.Rows.Max, 0].Alignment = Align.Left
+            $wikipediaGrid[.Rows.Max, 1].Text = yukiInfomationElement.Latitude
+            $wikipediaGrid[.Rows.Max, 1].Alignment = Align.Right
+            $wikipediaGrid[.Rows.Max, 2].Text = yukiInfomationElement.Longitude
+            $wikipediaGrid[.Rows.Max, 2].Alignment = Align.Right
+            $wikipediaUrls.Add(yukiInfomationElement.MobileUrl)
+            Inc .Rows.Count
+        End With
+    Next
+    
+    $tabStrip.Index = 1
+    
+End
+
+Public Sub Request(argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiObserver As Observer
+    
+    yukiObserver = New Observer(NagatoGeoInfomationWikipedia) As "Asakura"
+    
+    NagatoGeoInfomationWikipedia.Get(argLatitude, argLongitude)
+    
+End
+
+Public Sub _new(argTabstrip As TabStrip)
+    
+    $tabstrip = argTabstrip
+    initializeWikipediaListGrid()
+    
+End
+
+Public Sub Asakura_Finished(argGeoInfomations As NagatoGeoInfomationElement[])
+    
+    setWikipediaArticleList(argGeoInfomations)
+    
+End
+
+Public Sub CantidatesGrid_Activate()
+    
+    Dim yukiLatitude As Float
+    Dim yukiLongitude As Float
+    
+    If $wikipediaGrid[$wikipediaGrid.Row, 0].Text <> "" Then
+        '$wikipediaWebView.Url = $wikipediaUrls[$wikipediaGrid.Row]
+        Raise NewArticle($wikipediaUrls[$wikipediaGrid.Row])
+        yukiLatitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 1].Text)
+        yukiLongitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 2].Text)
+        HaruhiMapView.SetMarker(yukiLatitude, yukiLongitude)
+    End If
+    
+End
