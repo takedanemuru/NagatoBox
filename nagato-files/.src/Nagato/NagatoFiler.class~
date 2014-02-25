@@ -63,7 +63,7 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
-Public Sub _new(argContainer As TabStrip, Optional argDirectory As String = User.Home)
+Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $container = argContainer
     $log = New NagatoDirectoryLog
@@ -73,7 +73,7 @@ Public Sub _new(argContainer As TabStrip, Optional argDirectory As String = User
     $menuBar = New NagatoMenuPanel($menuPanel) As "MenuBar"
     $iconView = New NagatoIconView(argContainer) As "IconView"
     
-    move(argDirectory)
+    move(IIf(argDirectory = "", User.Home, argDirectory))
     
 End
 

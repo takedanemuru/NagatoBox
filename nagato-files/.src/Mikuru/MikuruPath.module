@@ -36,3 +36,13 @@ Public Sub GetChildrenDirectory(argDirectory As String, argShowHidden As Boolean
     Return yukiPaths
     
 End
+
+Public Function UrlToPath(argUrl As String) As String
+    
+    If String.InStr(argUrl, " ") > 0 Then argUrl = String.Left(argUrl, String.InStr(argUrl, " ") - 1)
+    argUrl = Replace$(argUrl, "file://", "")
+    argUrl = URL.Decode(argUrl)
+    
+    Return argUrl
+    
+End

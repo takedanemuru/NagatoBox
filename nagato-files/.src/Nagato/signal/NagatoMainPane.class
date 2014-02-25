@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $filers As New NagatoFiler[]
+Private $tabStripHandler As NagatoTabStripHandler
+Private $observer As Observer
+
+Event ShowProperty(argPath As String)
+Event AppQuit
+
+Private Sub addTab(Optional argPath As String = User.Home)
+    
+    Dim yukiFiler As NagatoFiler
+    
+    $tabStripHandler.AddNewTab()
+    
+    yukiFiler = New NagatoFiler($tabStripHandler.TabStrip, argPath) As "Filer"
+    $filers.Add(yukiFiler)
+    
+End
+
+Public Sub SetMainTabStrip(argTitle As String, argPicture As Picture)
+    
+    $tabStripHandler.SetTabTextAndPicture(argTitle, argPicture)
+    
+End
+
+Public Sub SetNewDirectory(argDirectory As String)
+    
+    $filers[$tabStripHandler.Index].SetNewDirectory(argDirectory)
+    
+End
+
+Public Sub SetInitialPath(argPath As String)
+    
+    Dim yukiFiler As New NagatoFiler($tabStripHandler.TabStrip, argPath) As "Filer"
+    
+    $filers.Add(yukiFiler)
+    $tabStripHandler.InitializeTabStrip()
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $tabStripHandler = New NagatoTabStripHandler(argTabStrip)
+    $observer = New Observer(argTabStrip) As "Asakura"
+    
+End
+
+Public Sub Asakura_Close(argIndex As Integer)
+
+    If $tabStripHandler.Count > 1 Then 
+        $tabStripHandler.Delete(argIndex)
+        $filers.Remove(argIndex)
+    End If
+
+End
+
+Public Sub Filer_ShowProperty(argPath As String)
+    
+    Raise ShowProperty(argPath)
+    
+End
+
+Public Sub Filer_NewTab(argPath As String)
+    
+    addTab(argPath)
+    
+End
+
+Public Sub Filer_AppQuit()
+    
+    Raise AppQuit
+    
+End

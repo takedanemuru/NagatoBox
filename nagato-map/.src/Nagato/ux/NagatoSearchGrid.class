@@ -1,0 +1,79 @@
+' Gambas class file
+
+Private $tabStrip As TabStrip
+Private $searchGrid As GridView
+
+Private Sub initializeSearchGrid()
+    
+    $searchGrid = New GridView($tabStrip) As "SearchGrid"
+
+    With $searchGrid
+        .Columns.Count = 3
+        .Rows.Count = 1
+        .Header = GridView.Horizontal
+        .Expand = True
+        .Mode = Select.Single
+        .Columns[0].Text = ("Name")
+        .Columns[1].Text = ("Latitude")
+        .Columns[2].Text = ("Longitude")
+    End With
+    
+End
+
+Private Sub clearGrid()
+    
+    With $searchGrid
+        .Clear()
+        .Rows.Count = 1
+        .Width = 300
+        .Columns[0].W = 200
+    End With
+    
+End
+
+Private Sub setData(argCollection As Collection)
+    
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    For Each yukiGeoElement In argCollection
+        With $searchGrid
+            $searchGrid[.Rows.Max, 0].Text = yukiGeoElement.VisibleName
+            $searchGrid[.Rows.Max, 0].Alignment = Align.Left
+            $searchGrid[.Rows.Max, 1].Text = yukiGeoElement.Latitude
+            $searchGrid[.Rows.Max, 1].Alignment = Align.Right
+            $searchGrid[.Rows.Max, 2].Text = yukiGeoElement.Longitude
+            $searchGrid[.Rows.Max, 2].Alignment = Align.Right
+            Inc .Rows.Count
+        End With
+    Next
+    
+End
+
+Public Sub RefreshSearchGridData(argCollection As Collection)
+    
+    clearGrid()
+    setData(argCollection)
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $tabStrip = argTabStrip
+    initializeSearchGrid()
+    
+End
+
+Public Sub SearchGrid_Activate()
+    
+    Dim yukiRowIndex As Integer = $searchGrid.Row
+    Dim yukiLatitude As Float
+    Dim yukiLongitude As Float
+    
+    If $searchGrid[yukiRowIndex, 1].Text <> "" And If $searchGrid[yukiRowIndex, 2].Text <> "" Then
+        yukiLatitude = CFloat($searchGrid[yukiRowIndex, 1].Text)
+        yukiLongitude = CFloat($searchGrid[yukiRowIndex, 2].Text)
+        HaruhiMain.SetLocation(yukiLatitude, yukiLongitude, 12)
+        NagatoLeftPanel.Request(yukiLatitude, yukiLongitude)
+    Endif
+    
+End

@@ -74,9 +74,6 @@ End
 
 Public Sub SetLocation(argLatitude As Float, argLongitude As Float)
     
-    Debug argLatitude
-    Debug argLongitude
-    
     $locationLabel.Text = Subst$(("<b>Latitude:</b> &1, <b>Longitude:</b> &2"), argLatitude, argLongitude)
     
 Catch

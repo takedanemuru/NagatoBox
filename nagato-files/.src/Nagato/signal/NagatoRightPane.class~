@@ -18,34 +18,31 @@ Private Sub initializeContainer(argContainer As Container)
     
 End
 
+Private Sub initializeDrawingArea()
+    
+    $drawingArea = New DrawingArea($container) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = True
+        .Background = Color.Pink
+        .Font.Bold = True
+    End With
+    
+End
+
 Public Sub SetProperty(argPath As String)
     
-    If Not Exist(argPath) Then Return
-    
-    $currentPath = argPath
-    $drawingArea.Refresh()
-    
-    Debug Stat(argPath).Auth
-    Debug Stat(argPath).Group
-    Debug Stat(argPath).Hidden
-    Debug Stat(argPath).LastAccess
-    Debug Stat(argPath).LastChange
-    Debug Stat(argPath).LastModified
-    Debug Stat(argPath).Link
-    Debug Stat(argPath).Mode
-    Debug Stat(argPath).Path
-    Debug Stat(argPath).Size
+    If Exist(argPath) Then
+        $currentPath = argPath
+        $drawingArea.Refresh()
+    End If
 
 End
 
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
-    
-    $drawingArea = New DrawingArea($container) As "DrawingArea"
-    $drawingArea.Expand = True
-    $drawingArea.Background = Color.Pink
-    $drawingArea.Font.Bold = True
+    initializeDrawingArea()
     
 End
 

@@ -71,7 +71,7 @@ Public Sub BookmarkGrid_Activate()
     If $bookmarkGrid[yukiRowIndex, 1].Text <> "" And If $bookmarkGrid[yukiRowIndex, 2].Text <> "" Then
         yukiLatitude = CFloat($bookmarkGrid[yukiRowIndex, 1].Text)
         yukiLongitude = CFloat($bookmarkGrid[yukiRowIndex, 2].Text)
-        HaruhiMapView.SetMarker(yukiLatitude, yukiLongitude)
+        HaruhiMain.SetMarker(yukiLatitude, yukiLongitude)
     Endif
     
 End

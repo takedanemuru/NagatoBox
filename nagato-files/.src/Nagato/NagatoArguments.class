@@ -1,0 +1,42 @@
+' Gambas class file
+
+Create Static
+
+Property Read StartupPath As String
+
+Private $startUpPath As String = ""
+Private $path As String
+Private $paths As New String[]
+
+Private Sub setStartupPath(argPath As String, argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    If Exist(argPath) Then
+        $startUpPath = argPath
+    Else
+        For Each yukiPath In argPaths
+            If Exist(yukiPath) Then
+                $startUpPath = yukiPath
+                Break
+            Endif
+        Next
+    Endif
+    
+End
+
+Public Sub Parsing()
+    
+    Args.Begin()
+        $path = Args.Get("d", "open-directory")
+    $paths = Args.End()
+    
+    setStartupPath($path, $paths)
+    
+End
+
+Private Function StartupPath_Read() As String
+
+    Return $startUpPath
+    
+End

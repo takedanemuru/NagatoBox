@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read List As String[]
+
+Private $bookmarkList As New String[]
+
+Private Sub addBookmarkList(argPath As String)
+    
+    Dim yukiFile As File
+    Dim yukiLine As String
+    
+    If Not Exist(argPath) Then Return
+    
+    yukiFile = Open argPath For Input
+
+    While Not Eof(yukiFile)
+        Line Input #yukiFile, yukiLine
+        yukiLine = MikuruPath.UrlToPath(yukiLine)
+        If Exist(yukiLine) And If Not $bookmarkList.Exist(yukiLine) Then $bookmarkList.Add(yukiLine)
+    Wend
+    
+    Close #yukiFile
+    
+End
+
+Public Sub _new()
+    
+    addBookmarkList(User.Home &/ ".gtk-bookmarks") 'gtk-2.0 bookmarks
+    addBookmarkList(Desktop.ConfigDir &/ "gtk-3.0/bookmarks")
+    
+End
+
+Private Function List_Read() As String[]
+
+    Return $bookmarkList.Sort(gb.IgnoreCase)
+
+End

@@ -58,14 +58,14 @@ Private Sub addGearButton()
         .Picture = MikuruIcon.Get("star")
     End With
     
-    yukiMenu = New NagatoButtonMenu(HaruhiMapView, $gearButton) As "Menu"
+    yukiMenu = New NagatoButtonMenu(HaruhiMain, $gearButton) As "Menu"
     
 End
 
 Private Sub initializeWidgets()
     
-    addMapSelectButton("GoogleEarth", HaruhiMapView.GoogleMap, False)
-    addMapSelectButton("OpenStreetMap", HaruhiMapView.OpenStreetMap, True)
+    addMapSelectButton("GoogleEarth", HaruhiMain.GoogleMap, False)
+    addMapSelectButton("OpenStreetMap", HaruhiMain.OpenStreetMap, True)
     addLocationLabel()
         addSpacer()
     addGearButton()

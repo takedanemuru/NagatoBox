@@ -2,6 +2,7 @@
 
 Public Enum MenuHeader = 1000, MenuAbout = 1001, MenuQuit = 1002, MenuSearch = 1003, MenuInformation = 1004
 Public Enum MenuBookmark = 1005
+Public Enum MapHeader = 2000, MapNewLocation = 2001
 
 Event MenuEvent(argEvent As Integer)
 Event MenuEventWithArg(argEvent As Integer, argArgument As Variant)

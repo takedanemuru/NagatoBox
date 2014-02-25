@@ -5,44 +5,8 @@ Inherits NagatoSignal
 Private Const SeparatorKey As String = "NagatoSeparatorKey"
 Private Const TrashBinKey As String = "NagatoTrashBinKey"
 
-Private $bookmarkList As New String[]
+Private $bookmarks As NagatoBookmarksArray
 Private $listView As ListView
-
-Private Function urlToPath(argUrl As String) As String
-    
-    If String.InStr(argUrl, " ") > 0 Then argUrl = String.Left(argUrl, String.InStr(argUrl, " ") - 1)
-    argUrl = Replace$(argUrl, "file://", "")
-    argUrl = URL.Decode(argUrl)
-    
-    Return argUrl
-    
-End
-
-Private Sub addBookmarkList(argPath As String)
-    
-    Dim yukiFile As File
-    Dim yukiLine As String
-    
-    If Not Exist(argPath) Then Return
-    
-    yukiFile = Open argPath For Input
-
-    While Not Eof(yukiFile)
-        Line Input #yukiFile, yukiLine
-        yukiLine = urlToPath(yukiLine)
-        If Exist(yukiLine) And If Not $bookmarkList.Exist(yukiLine) Then $bookmarkList.Add(yukiLine)
-    Wend
-    
-    Close #yukiFile
-    
-End
-
-Private Sub initializeBookmarkList()
-    
-    addBookmarkList(User.Home &/ ".gtk-bookmarks") 'gtk-2.0 bookmarks
-    addBookmarkList(Desktop.ConfigDir &/ "gtk-3.0/bookmarks")
-    
-End
 
 Private Sub addListItems(argPaths As String[])
     
@@ -67,10 +31,16 @@ Private Sub initializeListView(argContainer As Container)
         .Mode = Select.Single
     End With
     
+    addBookmarkItems()
+    
+End
+
+Private Sub addBookmarkItems()
+    
     addListItems([User.Home, NagatoXdgUserDirs.Desktop])
     addListItems(NagatoXdgUserDirs.AllXdgUserDirs)
         $listView.Add(SeparatorKey & "1", "")
-    addListItems($bookmarkList.Sort(gb.IgnoreCase))
+    addListItems($bookmarks.List)
         $listView.Add(SeparatorKey & "2", "")
     $listView.Add(TrashBinKey, ("Trash bin"), MikuruIcon.Get("bin", 36))
     
@@ -88,24 +58,38 @@ Private Sub addDroppedDirectory()
     
 End
 
-Private Sub moveDroppedFiles()
+Private Sub trashFiles()
     
     Dim yukiPath As String
     
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            MikuruFile.TrashFile(yukiPath)
+        Endif
+    Next
+    
+End
+
+Private Sub moveFiles()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            Try Move yukiPath To MikuruPath.GetSafePathName($listView.Item.Key &/ File.Name(yukiPath))
+        Endif
+    Next
+    
+End
+
+Private Sub moveDroppedFiles()
+    
     If $listView.Item.Key = TrashBinKey Then
-        For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-            If Exist(yukiPath) Then 
-                MikuruFile.TrashFile(yukiPath)
-            Endif
-        Next
+        trashFiles()
     Else If Not Exist($listView.Item.Key) Then
          If $listView.Item.Key Not Begins SeparatorKey Then $listView.Remove($listView.Item.Key)
     Else
-        For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-            If Exist(yukiPath) Then 
-                Try Move yukiPath To MikuruPath.GetSafePathName($listView.Item.Key &/ File.Name(yukiPath))
-            Endif
-        Next
+        moveFiles()
     End If
     
 End
@@ -118,7 +102,7 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    initializeBookmarkList()
+    $bookmarks = New NagatoBookmarksArray
     initializeListView(argContainer)
     
 End

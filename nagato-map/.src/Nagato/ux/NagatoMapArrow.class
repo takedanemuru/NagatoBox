@@ -1,0 +1,75 @@
+' Gambas class file
+
+Property Visible As Boolean
+
+Private $visible As Boolean = False
+Private $currentMapPoint As MapPoint
+
+Private Function getMarkerPolygon(argStartingPoint As Point) As Float[]
+    
+    Dim yukiRetun As New Float[]
+    
+    yukiRetun.Add(argStartingPoint.X)
+    yukiRetun.Add(argStartingPoint.Y)
+    yukiRetun.Add(argStartingPoint.X - 30)
+    yukiRetun.Add(argStartingPoint.Y - 20)
+    yukiRetun.Add(argStartingPoint.X - 10)
+    yukiRetun.Add(argStartingPoint.Y - 20)
+    yukiRetun.Add(argStartingPoint.X - 10)
+    yukiRetun.Add(argStartingPoint.Y - 60)
+    yukiRetun.Add(argStartingPoint.X + 10)
+    yukiRetun.Add(argStartingPoint.Y - 60)
+    yukiRetun.Add(argStartingPoint.X + 10)
+    yukiRetun.Add(argStartingPoint.Y - 20)
+    yukiRetun.Add(argStartingPoint.X + 30)
+    yukiRetun.Add(argStartingPoint.Y - 20)
+    yukiRetun.Add(argStartingPoint.X)
+    yukiRetun.Add(argStartingPoint.Y)
+
+    Return yukiRetun
+
+End
+
+Private Function getInfomationPixelPoint(argMapView As MapView) As Point
+    
+    Dim yukiMapPoint As New MapPoint($currentMapPoint.Lat, $currentMapPoint.Lon)
+    Dim yukiPixelPoint As Point = Geo.MapPointToPixel(yukiMapPoint, argMapView.Map.Zoom)
+    Dim yukiResult As New Point
+    
+    yukiResult.X = yukiPixelPoint.X - argMapView.Map.PixelBox.X 
+    yukiResult.Y = yukiPixelPoint.Y - argMapView.Map.PixelBox.Y 
+    
+    Return yukiResult
+    
+End
+
+Public Sub Draw(argMapView As MapView)
+    
+    Dim yukiPoint As Point = getInfomationPixelPoint(argMapView)
+    
+    Paint.Begin(Draw.Device)
+        Paint.Brush = Paint.Color(Color.Violet + 128 * 16777216)
+        Paint.Polygon(getMarkerPolygon(yukiPoint))
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub SetArrow(argLatitude As Float, argLongitude As Float)
+    
+    $visible = True
+    $currentMapPoint = New MapPoint(argLatitude, argLongitude)
+    
+End
+
+Private Function Visible_Read() As Boolean
+
+    Return $visible
+
+End
+
+Private Sub Visible_Write(Value As Boolean)
+
+    $visible = Value
+
+End

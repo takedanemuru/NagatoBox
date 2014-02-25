@@ -1,0 +1,60 @@
+' Gambas class file
+
+Public Enum OpenStreetMap, GoogleMap
+
+Private $menuBar As NagatoMenuBar
+Private $mapView As NagatoMapView
+
+Public Sub SetLocation(argLatitude As Float, argLongitude As Float, argZoom As Integer)
+    
+    $mapView.SetLocation(argLatitude, argLongitude, argZoom)
+    
+End
+' 
+Public Sub SetMarker(argLatitude As Float, argLongitude As Float)
+    
+    $mapView.SetMarker(argLatitude, argLongitude)
+    
+End
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
+    $mapView = New NagatoMapView(MapView) As "MapView"
+    NagatoSettings.LoadFormSettings(Me)
+    NagatoLeftPanel.Activate(WeatherWikipediaSidePanel)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub MenuBar_MapSelect(argMapType As Integer)
+    
+    $mapView.ChangeLayer(argMapType)
+    
+End
+
+Public Sub MapView_NewPoint(argLatitude As Float, argLongitude As Float)
+    
+    $menuBar.SetLocation(argLatitude, argLongitude)
+    
+End
+
+Public Sub MenuBar_MenuEvent(argEvent As Integer)
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.MenuInformation
+            NagatoLeftPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
+        Case NagatoMenuPipe.MenuBookmark
+            HaruhiAddBookmark.SetLocation(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
+            If HaruhiAddBookmark.ShowDialog() = HaruhiAddBookmark.Added Then
+                NagatoLeftPanel.AddBookmark()
+            Endif
+    End Select
+    
+End

@@ -81,11 +81,10 @@ Public Sub CantidatesGrid_Activate()
     Dim yukiLongitude As Float
     
     If $wikipediaGrid[$wikipediaGrid.Row, 0].Text <> "" Then
-        '$wikipediaWebView.Url = $wikipediaUrls[$wikipediaGrid.Row]
         Raise NewArticle($wikipediaUrls[$wikipediaGrid.Row])
         yukiLatitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 1].Text)
         yukiLongitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 2].Text)
-        HaruhiMapView.SetMarker(yukiLatitude, yukiLongitude)
+        HaruhiMain.SetMarker(yukiLatitude, yukiLongitude)
     End If
     
 End

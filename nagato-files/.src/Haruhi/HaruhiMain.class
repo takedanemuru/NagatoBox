@@ -1,90 +1,32 @@
 ' Gambas class file
 
-Private $startUpPath As String
 Private $leftPane As NagatoLeftPane
 Private $rightPane As NagatoRightPane
-Private $filers As New NagatoFiler[]
+Private $mainPane As NagatoMainPane
 Private $observer As Observer
 
-Private Sub addTab(Optional argPath As String = User.Home)
+Public Sub SetMainTabStrip(argTitle As String, argPicture As Picture)
     
-    Dim yukiFiler As NagatoFiler
-    
-    Inc MainTabStrip.Count
-    MainTabStrip.Index = MainTabStrip.Count - 1
-    
-    yukiFiler = New NagatoFiler(MainTabStrip, argPath) As "Filer"
-    $filers.Add(yukiFiler)
-    
-End
-
-Private Sub clearAllTabContent()
-    
-    Dim yukiTabIndex As Integer
-    
-    $filers.Clear()
-    
-    For yukiTabIndex = MainTabStrip.Count - 1 DownTo 0
-        MainTabStrip[yukiTabIndex].Children[1].Delete()
-        MainTabStrip[yukiTabIndex].Children[0].Delete()
-    Next
-    
-End
-
-Public Sub SetMainTabStrip(argTitle As String, Optional argPicture As Picture)
-    
-    MainTabStrip.Text = argTitle
-    If argPicture Then MainTabStrip.Picture = argPicture
-    
-End
-
-Public Sub SetStartupPath(argPath As String, argPaths As String[])
-    
-    Dim yukiPath As String
-    
-    If Exist(argPath) Then
-        $startUpPath = argPath
-    Else
-        For Each yukiPath In argPaths
-            If Exist(yukiPath) Then
-                $startUpPath = yukiPath
-                Break
-            Endif
-        Next
-    Endif
+    $mainPane.SetMainTabStrip(argTitle, argPicture)
     
 End
 
 Public Sub SetNewDirectory(argDirectory As String)
     
-    Debug argDirectory
-    
-    $filers[MainTabStrip.Index].SetNewDirectory(argDirectory)
+    $mainPane.SetNewDirectory(argDirectory)
     
 End
 
 Public Sub Form_Open()
     
-    Dim yukiFiler As NagatoFiler
-
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
+    $mainPane = New NagatoMainPane(MainTabStrip) As "MainPane"
     $rightPane = New NagatoRightPane(RightPanel) As "RightPane"
     
-    If $startUpPath <> "" Then
-        yukiFiler = New NagatoFiler(MainTabStrip, $startUpPath) As "Filer"
-    Else
-        yukiFiler = New NagatoFiler(MainTabStrip) As "Filer"
-    Endif
-    
-    $filers.Add(yukiFiler)
+    $mainPane.SetInitialPath(NagatoArguments.StartupPath)
     
     Application.MainWindow = Me
-    
     NagatoSettings.LoadFormSettings(Me)
-    
-    MainTabStrip.Count = 1
-    MainTabStrip.Index = MainTabStrip.Count - 1
-    MainTabStrip.Arrangement = Arrange.Vertical
     
     $observer = New Observer(NagatoSettings) As "Asakura"
     
@@ -93,40 +35,18 @@ End
 Public Sub Form_Close()
     
     NagatoSettings.SaveFormSettings(Me)
-    clearAllTabContent()
     
-    Quit
+    Quit 0
     
 End
 
-Public Sub MainTabStrip_Close(argIndex As Integer)
-
-    If MainTabStrip.Count = 1 Then Return
-
-    With MainTabStrip[argIndex]
-        .Children[1].Delete()
-        .Children[0].Delete()
-        .Delete()
-    End With
-
-    $filers.Remove(argIndex)
-
-End
-
-Public Sub Filer_ShowProperty(argPath As String)
+Public Sub MainPane_ShowProperty(argPath As String)
     
     $rightPane.SetProperty(argPath)
-    'RightPanel.Hidden = False
     
 End
 
-Public Sub Filer_NewTab(argPath As String)
-    
-    addTab(argPath)
-    
-End
-
-Public Sub Filer_AppQuit()
+Public Sub MainPane_AppQuit()
     
     Me.Close()
     
