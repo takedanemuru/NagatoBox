@@ -95,6 +95,7 @@ End
 Public Function Get(argPath As String, argSelected As Boolean) As Picture
     
     Dim yukiBaseImage As Image = New Image(ThumbnailSize, ThumbnailSize, Color.Transparent)
+    Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
     
     setIcon(argPath)
     
@@ -108,6 +109,7 @@ Public Function Get(argPath As String, argSelected As Boolean) As Picture
         drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
         drawText()
         If argSelected Then drawSelectedLabel()
+        If yukiSymbol <> "" Then Paint.DrawImage(MikuruIcon.Get(yukiSymbol, 32).Image, 8, 8)
         .End()
     End With
     

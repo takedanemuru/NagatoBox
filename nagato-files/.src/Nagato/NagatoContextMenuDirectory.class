@@ -13,6 +13,8 @@ Public Sub _AddChildMenus()
             Me._AddContextMenu(("Rename"), .DirRename)
             Me._AddContextMenu(("Delete"), .DirDelete, MikuruIcon.Get("bin"))
         End If
+        Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
+        Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("tag"))
     End With
     
 End

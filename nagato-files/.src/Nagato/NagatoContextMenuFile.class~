@@ -77,6 +77,7 @@ Public Sub _AddChildMenus()
         addCreateMenu()
         Me._AddContextMenu(("Copy file path"), .PathCopyToClipboard, MikuruIcon.Get("clipboard"))
             Me._AddContextMenu("", 0) ' As Spacer
+        Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
         Me._AddContextMenu(("Rename"), .FileRename)
         Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
     End With

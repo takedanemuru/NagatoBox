@@ -79,6 +79,8 @@ Public Sub _AddChildMenus()
             Me._AddContextMenu("", 0) ' As Spacer
         Me._AddContextMenu(("Rename"), .FileRename)
         Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
+        Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
+        Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("tag"))
     End With
     
 End

@@ -39,7 +39,8 @@ msgid "As normal user"
 msgstr ""
 
 #: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
-#: MikuruFile.module:31 NagatoDynamicMenu.class:70 NagatoSelectionBar.class:35
+#: HaruhiTagging.form:22 MikuruFile.module:31 NagatoDBTag.class:20
+#: NagatoDynamicMenu.class:70 NagatoSelectionBar.class:35
 msgid "Cancel"
 msgstr ""
 
@@ -65,7 +66,7 @@ msgstr ""
 msgid "YUKI.N > Same name directory or file has been existed"
 msgstr ""
 
-#: HaruhiNewDirectory.class:37 HaruhiRename.class:50
+#: HaruhiNewDirectory.class:37 HaruhiRename.class:50 NagatoDBTag.class:54
 msgid "OK"
 msgstr ""
 
@@ -73,7 +74,7 @@ msgstr ""
 msgid "Rename file"
 msgstr ""
 
-#: HaruhiRename.form:22
+#: HaruhiRename.form:22 HaruhiTagging.form:17
 msgid "Apply"
 msgstr ""
 
@@ -95,6 +96,22 @@ msgstr ""
 
 #: HaruhiRename.class:74
 msgid "Select directory"
+msgstr ""
+
+#: HaruhiTagging.form:13
+msgid "Set tag"
+msgstr ""
+
+#: HaruhiTagging.form:27
+msgid "ComboBox1"
+msgstr ""
+
+#: HaruhiTagging.form:39
+msgid "Tag Name"
+msgstr ""
+
+#: HaruhiTagging.form:46
+msgid "Tag Color :"
 msgstr ""
 
 #: MikuruApplications.module:8
@@ -132,6 +149,14 @@ msgstr ""
 msgid "Rename"
 msgstr ""
 
+#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:82
+msgid "Tagging"
+msgstr ""
+
+#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:83
+msgid "Remove Tag"
+msgstr ""
+
 #: NagatoContextMenuFile.class:10
 msgid "Unarchive"
 msgstr ""
@@ -146,6 +171,38 @@ msgstr ""
 
 #: NagatoContextMenuFile.class:78
 msgid "Copy file path"
+msgstr ""
+
+#: NagatoDBTag.class:18
+msgid "This tag name has been used, and not matched with registered tag color."
+msgstr ""
+
+#: NagatoDBTag.class:20
+msgid "Change Tag Color"
+msgstr ""
+
+#: NagatoDBTag.class:20
+msgid "Use Original Color"
+msgstr ""
+
+#: NagatoDBTag.class:33
+msgid "This tag color has been used, and not matched with registered tag name."
+msgstr ""
+
+#: NagatoDBTag.class:35
+msgid "Change Tag Name"
+msgstr ""
+
+#: NagatoDBTag.class:35
+msgid "Use Original Name"
+msgstr ""
+
+#: NagatoDBTag.class:54
+msgid "This tag name has been used."
+msgstr ""
+
+#: NagatoDBTag.class:56
+msgid "This tag color has been used."
 msgstr ""
 
 #: NagatoDynamicMenu.class:39
@@ -176,7 +233,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: NagatoFiler.class:150
+#: NagatoFiler.class:157
 msgid "New directory"
 msgstr ""
 

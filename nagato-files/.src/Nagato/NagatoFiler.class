@@ -120,10 +120,17 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                 If $log.Current = File.Dir(argArgument) Then Return
                 Try Move argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument)) 
              Case NagatoMenuPipe.FileCopy
-                Debug "Copy files"
                 MikuruFileManuever.CopyUriList($log.Current, argArgument)
              Case .FileShowProperty
                  Raise ShowProperty(argArgument)
+             Case .TagAdd
+                 If HaruhiSelectSymbol.ShowDialog() = MikuruDialog.ResponseApply Then
+                     NagatoDBSymbol.PushPaths($iconView.Selection, MikuruDialog.LastSelectedSymbol)
+                     $iconView.Refresh($log.Current)
+                 Endif
+             Case .TagRemove
+                 NagatoDBSymbol.RemovePaths($iconView.Selection)
+                 $iconView.Refresh($log.Current)
         End Select
     End With
     

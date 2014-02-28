@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Property Read Ready As Boolean
+Property Read Count As Integer
+
+Public Const SequenceAbort As Integer = -1
+
+Public _$uniqueName As String = "Tag"
+
+Private $tableTag As NagatoTableTag
+Private $tableTaggedPath As NagatoTableTaggedPath
+Private $ready As Boolean = False
+
+Public Function GetTagId(argName As String, argColor As Integer) As Integer
+    
+    Debug $tableTag.GetMatch(argName, argColor)
+    
+    Return Me.SequenceAbort
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    $tableTag = New NagatoTableTag(Me._$connection)
+    $tableTaggedPath = New NagatoTableTaggedPath(Me._$connection)
+    
+    $ready = True
+    
+    Debug "DBTag is created."
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function Count_Read() As Integer
+    
+    Return $tableTag.Count
+    
+End

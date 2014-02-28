@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuPipe
 
+Property Read Selection As String[]
+
 Private $iconView As IconView
 Private $selectionBar As NagatoSelectionBar 
 Private $currentDirectory As String
@@ -253,4 +255,10 @@ Public Sub SelectionBar_Cancel()
     
     Me.Refresh($currentDirectory)
     
+End
+
+Private Function Selection_Read() As String[]
+
+    Return $selectionBar.Paths
+
 End

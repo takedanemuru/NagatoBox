@@ -1,0 +1,34 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  Text = ("Set tag")
+  { ApplyButton Button
+    MoveScaled(25,37,16,4)
+    Text = ("Apply")
+  }
+  { CancelButton Button
+    MoveScaled(8,37,16,4)
+    Text = ("Cancel")
+  }
+  { ComboBox1 ComboBox
+    MoveScaled(17,24,24,4)
+    Text = ("ComboBox1")
+  }
+  { ColorButton1 ColorButton
+    MoveScaled(33,29,8,4)
+    Value = &HD1A7DF&
+  }
+  { Label1 Label
+    MoveScaled(2,24,14,4)
+    Font = Font["Bold"]
+    Foreground = &HFFFFFF&
+    Text = ("Tag Name")
+  }
+  { Label2 Label
+    MoveScaled(2,30,14,4)
+    Font = Font["Bold"]
+    Foreground = &HFFFFFF&
+    Text = ("Tag Color :")
+  }
+}

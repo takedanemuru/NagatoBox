@@ -2,6 +2,8 @@
 
 Public Sub Main()
     
+    Debug NagatoDBSymbol.Ready
+    
     NagatoArguments.Parsing()
     HaruhiMain.Show()
 

@@ -170,6 +170,9 @@ End
 
 Private Function LastSelected_Read() As String
 
-    $selection.LastPath
+    Return $selection.LastPath
+
+Catch
+    Return ""
 
 End

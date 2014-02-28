@@ -1,36 +1,38 @@
 ' Gambas class file
 
-Private $path As String
-Private $stat As Stat
-
-Private Function getFileSizeText() As String
-    
-    If 1024 > $stat.Size Then 'byte
-        Return Format$($stat.Size, "##0Byte")
-    Else If 1024 ^ 2 > $stat.Size Then 'KiB
-        Return Format$($stat.Size / 1024, "##0.00KiB")
-    Else If 1024 ^ 3 > $stat.Size Then 'MiB
-        Return Format$($stat.Size / (1024 ^ 2), "##0.00MiB")
-    Else If 1024 ^ 4 > $stat.Size Then 'GiB
-        Return Format$($stat.Size / (1024 ^ 3), "##0.00GiB")
-    Else If 1024 ^ 5 > $stat.Size Then 'TiB
-        Return Format$($stat.Size / (1024 ^ 4), "##0.00TiB")
-    Else
-        Return "What the fuck is this ?"
-    Endif
-    
-End
-
-Private Sub setProperties()
-    
-    
-    
-End
-
-Public Sub SetPath(argPath As String)
-    
-    $path = argPath
-    $stat = Stat(argPath)
-    setProperties()
-    
-End
+' ' Gambas class file
+' 
+' Private $path As String
+' Private $stat As Stat
+' 
+' Private Function getFileSizeText() As String
+'     
+'     If 1024 > $stat.Size Then 'byte
+'         Return Format$($stat.Size, "##0Byte")
+'     Else If 1024 ^ 2 > $stat.Size Then 'KiB
+'         Return Format$($stat.Size / 1024, "##0.00KiB")
+'     Else If 1024 ^ 3 > $stat.Size Then 'MiB
+'         Return Format$($stat.Size / (1024 ^ 2), "##0.00MiB")
+'     Else If 1024 ^ 4 > $stat.Size Then 'GiB
+'         Return Format$($stat.Size / (1024 ^ 3), "##0.00GiB")
+'     Else If 1024 ^ 5 > $stat.Size Then 'TiB
+'         Return Format$($stat.Size / (1024 ^ 4), "##0.00TiB")
+'     Else
+'         Return "What the fuck is this ?"
+'     Endif
+'     
+' End
+' 
+' Private Sub setProperties()
+'     
+'     
+'     
+' End
+' 
+' Public Sub SetPath(argPath As String)
+'     
+'     $path = argPath
+'     $stat = Stat(argPath)
+'     setProperties()
+'     
+' End

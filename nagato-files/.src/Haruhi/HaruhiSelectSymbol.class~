@@ -1,0 +1,27 @@
+' Gambas class file
+
+Private Sub initializeIconView()
+    
+    Dim yukiPath As String
+    Dim yukiIcon As Picture
+    
+    For Each yukiPath In Dir("pictures/icons").Sort(gb.Natural)
+        IconView1.Add(File.BaseName(yukiPath), File.BaseName(yukiPath), Picture.Load("pictures/icons" &/ yukiPath))
+    Next
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    IconView1.Clear()
+    initializeIconView()
+    
+End
+
+Public Sub IconView1_Activate()
+    
+    MikuruDialog.LastSelectedSymbol = IconView1.Key
+    Me.Close(MikuruDialog.ResponseApply)
+    
+End

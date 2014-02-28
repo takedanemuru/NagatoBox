@@ -1,0 +1,63 @@
+' Gambas class file
+
+Property Paths As String[]
+
+Public Enum ResponseCancel = 1001, ResponseApply = 1002
+
+Private $paths As String[] = [""]
+
+Private Sub setDefaultTag()
+    
+    ComboBox1.Text = "Nagato"
+    ColorButton1.Value = Color.Violet
+    
+End
+
+Private Sub setForm()
+    
+    Dim yukiImage As Image = Image.Load("pictures/yukichan_31.jpg").Stretch(Me.W, Me.H)
+    
+    Me.Picture = yukiImage.Picture
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    setForm()
+    
+    If NagatoDBTag.Count = 0 Then
+        setDefaultTag()
+    Else
+        Debug NagatoDBTag.Count
+    Endif
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(Me.ResponseCancel)
+
+End
+
+Public Sub ApplyButton_Click()
+
+    If ComboBox1.Text = "" Then Return
+
+    NagatoDBTag.GetTagId(ComboBox1.Text, ColorButton1.Value)
+
+    Me.Close(Me.ResponseApply)
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $paths
+
+End
+
+Private Sub Paths_Write(Value As String[])
+
+    $paths = Value
+
+End
