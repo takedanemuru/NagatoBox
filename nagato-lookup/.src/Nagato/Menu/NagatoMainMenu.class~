@@ -4,6 +4,7 @@ Private $rootMenu As Menu
 
 Private $preferenceMenu As NagatoPreferenceMenu
 Private $screenshotMenu As NagatoScreenshotMenu
+Private $alsaMenu As NagatoAlsaMenu
 
 Private Sub initializeRootMenu(argMenuName As String)
     
@@ -14,15 +15,12 @@ End
 
 Private Sub addLogoutMenu()
     
-    Dim yukiMenu As New Menu($rootMenu)
-    Dim yukiLogoutMenu As NagatoLogoutMenu
+    Dim yukiMenu As New Menu($rootMenu) As "LogoutMenu"
     
     With yukiMenu
         .Picture = MikuruIcons.Get("button-power")
         .Text = IIf(MikuruSession.IsNagatoBox(), ("Logout (NagatoBox)"), ("Logout (Openbox)"))
     End With
-    
-    yukiLogoutMenu = New NagatoLogoutMenu(yukiMenu)
     
 End
 
@@ -53,6 +51,7 @@ Public Sub _new(argMenuName As String)
     initializeRootMenu(argMenuName)
     $preferenceMenu = New NagatoPreferenceMenu($rootMenu)
     $screenshotMenu = New NagatoScreenshotMenu($rootMenu)
+    $alsaMenu = New NagatoAlsaMenu($rootMenu)
         MikuruMenuSeparator.Set($rootMenu)
     addAboutMenu()
     addCloseMenu()
@@ -74,5 +73,11 @@ Public Sub CloseMenu_Click()
     If Message.Question(("YUKI.N > Are you sure to close this application ?"), ("Cancel"), ("Close")) = 2 Then
         HaruhiMain.Close()
     End If
+    
+End
+
+Public Sub LogoutMenu_Click()
+    
+    Shell "nagato-power-manager -l"
     
 End

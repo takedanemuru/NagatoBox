@@ -8,7 +8,13 @@ Public Sub Main()
     
     NagatoUPower.EnsureActivation()
     
-    If Not NagatoArguments.NonGui Then HaruhiMain.Show()
+    If Not NagatoArguments.NonGui Then 
+        If NagatoArguments.LogoutDialog Then
+            HaruhiDialog.Show()
+        Else
+            HaruhiMain.Show()
+        End If
+    End If
     
 End
 
