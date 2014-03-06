@@ -27,12 +27,10 @@ End
 
 Public Sub Move(argPath As String)
     
-    Debug $log.Max
-    
-    ' If $log.Max Then
-    '     Return 'do nothing
-    ' End If
-    ' 
+    If $log.Max <> -1 Then
+        If $log[$level] = argPath Then Return ' do nothing
+    Endif
+     
     If $level <> 0 And If $log[$level - 1] = argPath Then
         Dec $level
     Else If isForward(argPath) Then

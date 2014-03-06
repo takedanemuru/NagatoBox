@@ -1,0 +1,121 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Filtered As Boolean
+Property Read Paths As String[]
+Property CurrentDirectory As String
+
+Private $container As Container
+Private $filtered As Boolean = False
+Private $paths As New String[]
+Private $seachBox As ButtonBox
+Private $currentDirectory As String
+
+Event Changed
+
+Private Sub initializeSpacer()
+    
+    Dim yukiSpacer As New Panel($container)
+    
+    With yukiSpacer
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeSearchBox()
+    
+    $seachBox = New ButtonBox($container) As "SearchBox"
+    
+    With $seachBox
+        .W = 300
+        .H = 32
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Public Sub Toggle(argShow As Boolean)
+    
+    $container.Visible = argShow
+    
+    If $container.Visible Then $seachBox.SetFocus()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    initializeSpacer()
+    initializeSearchBox()
+    $container.Visible = False
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    Dim yukiPath As String
+    
+    $paths.Clear()
+
+    If $seachBox.Text = "" Then 
+        $filtered = False
+        Return
+    End If
+    
+    For Each yukiPath In Dir($currentDirectory, Subst$("*&1*", $seachBox.Text))
+        If Not NagatoSettings.ShowHidden And If yukiPath Begins "." Then Continue
+        $paths.Add($currentDirectory &/ yukiPath)
+    Next
+    
+    If $paths.Count > 0 Then
+        $filtered = True
+        Raise Changed
+    Else
+        $filtered = False
+    Endif
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    SearchBox_Activate()
+    
+End
+
+Private Function FilterOn_Read() As Boolean
+
+    Return $filtered
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $paths
+
+End
+
+Private Function Filtered_Read() As Boolean
+
+    Return $filtered
+
+End
+
+Private Function CurrentDirectory_Read() As String
+
+    Return $currentDirectory
+
+End
+
+Private Sub CurrentDirectory_Write(Value As String)
+
+    $currentDirectory = Value
+
+End
+
+Private Sub Filtered_Write(Value As Boolean)
+
+    $filtered = Value
+
+End

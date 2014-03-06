@@ -25,7 +25,7 @@ Private Sub getText() As String
         Return "YUKI.N > RSS Feed is not ready."
     Else
         Inc $count
-        If $count = 10 Then
+        If $count = 15 Then
             changeItem()
             Me._$drawingArea.Tooltip = NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Description
         End If
@@ -55,6 +55,6 @@ Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
     
     Debug "right click"
     
-    
+    Shell Subst$("nagato-web &1", NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Link)
     
 End

@@ -48,7 +48,7 @@ Public Function GetDirectory(argDirectory As String, Optional argSize As Integer
         Case NagatoXdgUserDirs.Music
             Return getDirectoryWithSymbol("music", argSize)
         Case NagatoXdgUserDirs.Documents
-            Return getDirectoryWithSymbol("document", argSize)
+            Return getDirectoryWithSymbol("document-edit", argSize)
         Case NagatoXdgUserDirs.Pictures
             Return getDirectoryWithSymbol("image", argSize)
         Case NagatoXdgUserDirs.Videos
@@ -56,7 +56,7 @@ Public Function GetDirectory(argDirectory As String, Optional argSize As Integer
         Case NagatoXdgUserDirs.PublicShare
             Return getDirectoryWithSymbol("users", argSize)
         Case NagatoXdgUserDirs.Templetes
-            Return getDirectoryWithSymbol("documents", argSize)
+            Return getDirectoryWithSymbol("ruler", argSize)
         Default
             If Stat(argDirectory).Link <> "" Then
                 Return getDirectoryWithSymbol("link", argSize)

@@ -1,0 +1,43 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Private Sub initializeRootMenu(argForm As Form)
+    
+    $rootMenu = New Menu(argForm)
+    
+    With $rootMenu
+        .Visible = False
+    End With
+    
+End
+
+Private Sub addMenu(argPath As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "LaunchMenu"
+    
+    With yukiMenu
+        .Text = ("Launch")
+        .Tag = argPath
+    End With
+    
+End
+
+Public Sub PopUp()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new(argForm As Form, argPath As String)
+    
+    initializeRootMenu(argForm)
+    addMenu(argPath)
+    
+End
+
+Public Sub LaunchMenu_Click()
+    
+    MikuruApplications.Launch(Last.Tag)
+    
+End

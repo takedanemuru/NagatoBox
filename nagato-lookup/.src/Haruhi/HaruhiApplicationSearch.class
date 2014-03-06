@@ -51,6 +51,18 @@ Public Sub ApplicationsIconView_Activate()
 
 End
 
+Public Sub ApplicationsIconView_Menu()
+    
+    Dim yukiMenu As NagatoContextMenu
+    
+    If ApplicationsIconView.Key Then
+        yukiMenu = New NagatoContextMenu(Me, ApplicationsIconView.Key)
+    Endif
+    
+    yukiMenu.PopUp()
+    
+End
+
 Public Sub Form_Open()
 
     Me.Center()

@@ -29,8 +29,9 @@ Private Sub refreshMenu()
     For Each yukiPath In $proxy.Paths
         yukiMenu = New Menu(Me._$parentMenu) As "QueueMenu"
         yukiMenu.Tag = yukiPath
-        yukiMenu.Text = $proxy.Queue[yukiPath]
+        yukiMenu.Text = MikuruCollapsedText.Get($proxy.Queue[yukiPath], HaruhiMain.Font, 300)
         If yukiMenu.Text = $proxy.Title Then yukiMenu.Picture = MikuruIcon.Get("button-play")
+        If Me._$parentMenu.Children.Count > 60 Then Break
     Next
     
 End

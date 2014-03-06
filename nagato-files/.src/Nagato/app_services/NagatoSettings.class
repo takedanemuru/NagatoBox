@@ -3,10 +3,12 @@
 Create Static
 
 Property ShowHidden As Boolean
+Property MultipleSelection As Boolean
 
 Private $settings As New Settings
 
 Event ShowHiddenChanged
+Event MultipleSelectionChanged
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -39,4 +41,19 @@ Private Sub ShowHidden_Write(Value As Boolean)
         Raise ShowHiddenChanged
     End If
     
+End
+
+Private Function MultipleSelection_Read() As Boolean
+
+    Return $settings["view/multiple_selection", False]
+
+End
+
+Private Sub MultipleSelection_Write(Value As Boolean)
+
+    If Value <> $settings["view/multiple_selection"] Then
+        $settings["view/multiple_selection"] = Value
+        Raise MultipleSelectionChanged
+    End If
+
 End

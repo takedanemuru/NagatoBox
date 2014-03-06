@@ -2,10 +2,12 @@
 
 Inherits NagatoMenuPipe
 
+Property Read LastPath As String
 Property Read Paths As String[]
 Property Read Count As Integer
 
 Private $paths As New String[]
+Private $lastPath As String = ""
 
 Event Changed
 
@@ -19,10 +21,8 @@ Public Sub Toggle(argPath As String)
     
     If Me.Exist(argPath) Then
         Me.RemovePath(argPath)
-        Debug "remove: " & argPath
     Else
         Me.PushPath(argPath)
-        Debug "push: " & argPath
     Endif
     
     Raise Changed
@@ -39,7 +39,10 @@ End
 
 Public Sub PushPath(argPath As String)
     
-    If Not $paths.Exist(argPath) Then $paths.Add(argPath)
+    If Not $paths.Exist(argPath) Then
+        $paths.Add(argPath)
+        $lastPath = argPath
+    End If
     
     Raise Changed
     
@@ -62,5 +65,11 @@ End
 Private Function Count_Read() As Integer
 
     Return $paths.Count
+
+End
+
+Private Function LastPath_Read() As String
+
+    Return $lastPath
 
 End

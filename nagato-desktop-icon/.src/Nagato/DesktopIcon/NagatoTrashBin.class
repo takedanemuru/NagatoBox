@@ -77,6 +77,7 @@ Public Sub _new()
     Me._$form.Show
     setFormPicture()
     initializeObserver()
+    Me._$form.Drop = True
     
 End
 
@@ -91,6 +92,20 @@ Public Sub _OnMouseLeave()
     
     $onMouse = False
     setFormPicture(NagatoSettings.BackgroundFile)
+    
+End
+
+Public Sub Icon_Drop()
+    
+    Dim yukiPath As String
+    
+    If Drag.Format <> "text/uri-list" Then Return
+    
+    Debug Drag.Data
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        Try Shell Subst$("trash-put &1", yukiPath)
+    Next
     
 End
 

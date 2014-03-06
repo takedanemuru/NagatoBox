@@ -52,6 +52,7 @@ Public Sub _InitializeForm(argHeight As Integer)
     Me._$form.SkipTaskbar = True
     Me._$form.Sticky = True
     Me._$form.Stacking = window.Below
+    Me._$form.Drop = True
     
     initializeStarButton()
     Me._AddStarMenu()

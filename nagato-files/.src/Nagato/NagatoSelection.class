@@ -37,6 +37,17 @@ Public Sub ClearAll()
     
 End
 
+Public Sub ClearWithoutLastSelection()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In $paths
+        If yukiPath = $lastPath Then Continue
+        $paths.Remove($paths.Find(yukiPath))
+    Next
+    
+End
+
 Public Sub PushPath(argPath As String)
     
     If Not $paths.Exist(argPath) Then

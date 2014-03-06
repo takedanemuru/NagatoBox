@@ -21,6 +21,8 @@ Private Function getBoxRectangle(argIndex As Integer) As Rect
         .Y = 2
     End With
     
+    Return yukiRect
+    
 End
 
 Private Sub paintBox(argIndex As Integer, argRectangle As Rect)

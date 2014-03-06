@@ -97,6 +97,19 @@ Public Sub _new(argName As String)
     
 End
 
+Public Sub Icon_MouseDrag()
+    
+    Drag.Icon = Me._$form.Picture
+    Me._$form.Drag("nagato", "text/nagato-desktop-icon")
+    
+End
+
+Public Sub Icon_Drop()
+    
+    Debug Drag.Data
+    
+End
+
 Public Sub Icon_DblClick()
     
     Me._OpenFile()

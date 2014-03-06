@@ -163,7 +163,7 @@ End
 
 Public Sub Sort()
     
-    sortRight()
+    sortLeft()
     
 End
 
@@ -189,8 +189,6 @@ End
 Public Sub Refresh(argKey As String)
     
     $icons[argKey].Refresh()
-    
-    
     
 End
 

@@ -94,11 +94,21 @@ Private Sub initializeExecButton()
     
 End
 
+Private Function getLabelTemplate() As String
+    
+    Return IIf($selection.Count = 1, "<b>1</b> item is selected", "<b>&1</b> items are selected")
+    
+End
+
 Private Sub refresh()
     
-    $container.Visible = ($selection.Count > 0) 
+    If NagatoSettings.MultipleSelection Then
+        $container.Visible = ($selection.Count > 0) 
+     Else
+        $container.Visible = False
+     End If
      
-    $textLabel.Text = Subst$(IIf($selection.Count = 1, "<b>1</b> item is selected", "<b>&1</b> items are selected"), $selection.Count)
+    $textLabel.Text = Subst$(getLabelTemplate(), $selection.Count)
      
 End
 
@@ -125,21 +135,27 @@ Public Sub ClearAll()
     
 End
 
+Public Sub ClearWithoutLastSelected()
+    
+    $selection.ClearWithoutLastSelection()
+    
+End
+
 Public Sub Remove(argPath As String)
     
     $selection.RemovePath(argPath)
     
 End
 
-Public Sub Push(argPath As String)
+Public Sub Push(argPath As String, argLeftClick As Boolean)
     
-    $selection.PushPath(argPath)
-    
-End
-
-Public Sub Toggle(argPath As String) 
-    
-    $selection.Toggle(argPath)
+    If argLeftClick Then
+        $selection.Toggle(argPath)
+        Debug $selection.Count
+    Else
+        $selection.PushPath(argPath)
+        Debug $selection.Count
+    End If
     
 End
 

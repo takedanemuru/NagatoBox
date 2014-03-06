@@ -97,6 +97,13 @@ Public Sub _new(argName As String)
     
 End
 
+Public Sub Icon_MouseDrag()
+    
+    Drag.Icon = Me._$form.Picture
+    Me._$form.Drag(NagatoDrag2.GetUriList([Me._$path]), "text/uri-list")
+    
+End
+
 Public Sub Icon_DblClick()
     
     Me._OpenFile()

@@ -45,6 +45,22 @@ Public Sub _OnActivate()
     
 End
 
+Public Sub Icon_Drop()
+    
+    Dim yukiPath As String
+    
+    If Drag.Format <> "text/uri-list" Then Return
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+         Try Move yukiPath To MikuruSafePath.Get(Me._$path &/ File.Name(yukiPath))
+    Next
+    
+Catch 
+    Message.Error(Error.Text, ("OK"))
+    Debug Error.Text
+    
+End
+
 Public Sub StarMenu_MenuEvent(argEvent As Integer)
     
     Select Case argEvent

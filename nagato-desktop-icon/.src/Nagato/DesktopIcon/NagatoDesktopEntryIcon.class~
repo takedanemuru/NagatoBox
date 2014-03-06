@@ -42,6 +42,12 @@ Public Sub _OnActivate()
     
 End
 
+Public Sub Icon_Drop()
+    
+    Debug Drag.Data
+    
+End
+
 Public Sub StarMenu_Launch()
     
     Me._OnActivate()

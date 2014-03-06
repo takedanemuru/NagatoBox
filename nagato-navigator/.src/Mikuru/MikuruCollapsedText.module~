@@ -10,7 +10,7 @@ Public Function Get(argText As String, argFont As Font, argLength As Integer) As
     Do
         Inc yukiCount
         If String.Len(argText) = yukiCount Then Return ""
-        yukiText = String.Right(argText, -1 * yukiCount) & "..."
+        yukiText = String.Left(argText, String.Len(argText) - yukiCount) & "..."
         If argLength >= argFont.TextWidth(yukiText) Then Return yukiText
     Loop
     

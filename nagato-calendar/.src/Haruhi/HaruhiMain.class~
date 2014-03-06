@@ -5,6 +5,8 @@ Private $painter As NagatoPainter
 
 Public Sub _new()
 
+    Application.MainWindow = Me
+
     $painter = New NagatoPainterMonth(DrawingArea1)
     $starButton = New NagatoStarButton(Me)
 

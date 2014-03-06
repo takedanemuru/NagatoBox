@@ -5,6 +5,8 @@ Inherits NagatoMenuPipe
 Private $container As TabStrip
 Private $menuPanel As HBox
 Private $menuBar As NagatoMenuPanel
+Private $filterPanel As HBox
+Private $filterBar As NagatoFilterBar
 Private $iconView As NagatoIconView
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoDirectoryObserver
@@ -35,8 +37,22 @@ Private Sub initializeMenuPanel()
     
 End
 
+Private Sub initializeFilterPanel()
+    
+    $filterPanel = New HBox($container)
+
+    With $filterPanel
+        .Height = 32
+        .Expand = False
+    End With
+    
+End
+
 Private Sub move(argDirectory As String)
     
+    $filterBar.CurrentDirectory = argDirectory
+    $filterBar.Filtered = False
+
     HaruhiMain.SetMainTabStrip(File.BaseName(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
     $log.Move(argDirectory)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
@@ -50,7 +66,11 @@ End
 Private Sub refresh(argDirectory As String)
     
     $menuBar.SetPath(argDirectory)
-    $iconView.Refresh(argDirectory)
+    If $filterBar.Filtered Then
+        $iconView.RefreshFiltered(argDirectory, $filterBar.Paths)
+    Else
+        $iconView.Refresh(argDirectory)
+    End If
     
 Catch
     Return
@@ -69,8 +89,10 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     $log = New NagatoDirectoryLog
     
     initializeMenuPanel()
+    initializeFilterPanel()
     
     $menuBar = New NagatoMenuPanel($menuPanel) As "MenuBar"
+    $filterBar = New NagatoFilterBar($filterPanel) As "FilterBar"
     $iconView = New NagatoIconView(argContainer) As "IconView"
     
     move(IIf(argDirectory = "", User.Home, argDirectory))
@@ -172,6 +194,12 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
 End
 
+Public Sub MenuBar_ToggleFilterBar(argShow As Boolean)
+    
+    $filterBar.Toggle(argShow)
+    
+End
+
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
     If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
@@ -185,5 +213,11 @@ Public Sub DirectoryObserver_Deleted(argFileName As String)
     If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
     
     $iconView.Delete($log.Current &/ argFileName)
+    
+End
+
+Public Sub FilterBar_Changed()
+    
+    refresh($log.Current)
     
 End
