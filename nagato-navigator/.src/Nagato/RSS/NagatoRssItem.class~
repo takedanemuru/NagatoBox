@@ -25,7 +25,7 @@ Public Sub _new(argXmlElement As XmlElement)
         End Select
     Next
     
-    If $title <> "" And If $description <> "" And If $link <> "" Then $valid = True
+    If $title <> "" And If $link <> "" Then $valid = True
     
 End
 

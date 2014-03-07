@@ -7,6 +7,10 @@ Property Read Feeds As NagatoRssFeed2[]
 Private Const BBCTop As String = "http://feeds.bbci.co.uk/news/rss.xml"
 Private Const BBCWorld As String = "http://feeds.bbci.co.uk/news/world/rss.xml"
 Private Const BBCTechnology As String = "http://feeds.bbci.co.uk/news/technology/rss.xml"
+Private Const SourceforgeJpMagazine As String = "http://rss.rssad.jp/rss/sourceforge/magazine/rss"
+Private Const MyNavi As String = "http://feeds.journal.mycom.co.jp/rss/mycom/pc"
+Private Const Phoronix As String = "http://www.phoronix.com/rss.php"
+Private Const Slashdot As String = "http://rss.slashdot.org/Slashdot/slashdot"
 
 Private $feeds As New NagatoRssFeed2[]
 Private $feedLines As New String[]
@@ -30,6 +34,10 @@ Public Sub Refresh()
     $feedLines.Add(BBCTop)
     $feedLines.Add(BBCWorld)
     $feedLines.Add(BBCTechnology)
+    $feedLines.Add(SourceforgeJpMagazine)
+    $feedLines.Add(MyNavi)
+    $feedLines.Add(Phoronix)
+    $feedLines.Add(Slashdot)
     
     setFeeds()
     

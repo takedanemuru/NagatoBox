@@ -19,17 +19,52 @@ Private Sub changeItem()
     
 End
 
+Private Function getCursor() As String
+    
+    If $count > String.Len(NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Title) And If Odd($count Div 4) Then
+        Return ""
+    Else
+        Return "_"
+    Endif
+    
+End
+
+Private Function getTitle() As String
+    
+    Dim yukiCount As String = Subst$("(&1/&2)", $itemIndex + 1, NagatoRss.Feeds[$feedIndex].Items.Count)
+    
+    If NagatoRss.Feeds[$feedIndex].Title = "" Then
+        Return ""
+    Else
+        Return NagatoRss.Feeds[$feedIndex].Title & " " & yukiCount & "  "
+    End If
+    
+End
+
+Private Function getBody() As String
+    
+  Return String.Left(NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Title, $count)
+    
+End
+
+Private Function getTicker() As String
+    
+    Inc $count
+    If $count = (String.Len(NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Title) + 50) Then
+        changeItem()
+        Me._$drawingArea.Tooltip = NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Description
+    End If
+    
+    Return getTitle() & getBody() & getCursor()
+    
+End
+
 Private Sub getText() As String
     
     If NagatoRss.Feeds.Count = 0 Then
         Return "YUKI.N > RSS Feed is not ready."
     Else
-        Inc $count
-        If $count = 15 Then
-            changeItem()
-            Me._$drawingArea.Tooltip = NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Description
-        End If
-        Return NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Title
+        Return getTicker()
     Endif
     
 End
@@ -53,8 +88,23 @@ End
 
 Public Sub RightClick(argMouseX As Integer, argMouseY As Integer)
     
-    Debug "right click"
+    Dim yukiMenu As New NagatoContextMenuRss As "ContextMenu"
     
-    Shell Subst$("nagato-web &1", NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Link)
+    yukiMenu.PopUp()
+    
+End
+
+Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case NagatoContextMenuRss.MenuOpen
+            Shell Subst$("nagato-web &1", NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Link)
+        Case NagatoContextMenuRss.MenuEdit
+            HaruhiRssEdit.ShowDialog()
+        Case NagatoContextMenuRss.MenuSelect
+            $feedIndex = argValues[0]
+            $itemIndex = 0
+            $count = 0
+    End Select
     
 End

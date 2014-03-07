@@ -21,14 +21,19 @@ Public Sub Swich(argMode As Integer)
     
     Select Case argMode
         Case NagatoModeMenu.ModeTasks
+            NagatoTimer.Delay = 1000
             $painter = New NagatoTaskBar(Me._$drawingArea)
         Case NagatoModeMenu.ModeTasks2
+            NagatoTimer.Delay = 1000
             $painter = New NagatoTaskBarTint2Mode(Me._$drawingArea)
         Case NagatoModeMenu.ModeSystem
+            NagatoTimer.Delay = 1000
             $painter = New NagatoSystemMonitor(Me._$drawingArea)
         Case NagatoModeMenu.ModeMusic
+            NagatoTimer.Delay = 1000
             $painter = New NagatoMusic(Me._$drawingArea)
         Case NagatoModeMenu.ModeRss
+            NagatoTimer.Delay = 100
             $painter = New NagatoRssTicker(Me._$drawingArea)
     End Select
     
