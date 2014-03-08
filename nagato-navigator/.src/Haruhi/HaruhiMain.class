@@ -38,7 +38,7 @@ Public Sub Form_Open()
     $pager = New NagatoPager(HBox1) As "Pager"
     $clock = New NagatoClock(HBox1) As "Clock"
     $observer = New Observer(NagatoTimer) As "Asakura"
-
+    
 End
 
 Public Sub Form_Close()

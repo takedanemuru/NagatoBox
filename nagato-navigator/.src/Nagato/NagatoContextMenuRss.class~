@@ -2,7 +2,7 @@
 
 Inherits NagatoSignal
 
-Public Enum MenuOpen, MenuEdit, MenuSelect
+Public Enum MenuNone, MenuOpen, MenuRefresh, MenuEdit, MenuSelect
 
 Private $rootMenu As Menu
 
@@ -53,8 +53,10 @@ Public Sub _new()
     
     initializeRootMenu()
     addMenuItem(("Open with browser"), Me.MenuOpen, "web")
+        addMenuItem("", Me.MenuNone) 'as blank  
+    addMenuItem(("Refresh feed"), Me.MenuRefresh, "button-rotate-ccw")
     addMenuItem(("Edit feed"), Me.MenuEdit, "document-edit")
-    addMenuItem("", 0) 'as blank  
+        addMenuItem("", Me.MenuNone) 'as blank  
     initializeRssMenus()
     
 End

@@ -1,0 +1,34 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,68,22)
+  Text = ("Add RSS Feed")
+  Resizable = False
+  { TitleBox TextBox
+    MoveScaled(15,2,52,4)
+  }
+  { UrlBox TextBox
+    MoveScaled(15,8,52,4)
+  }
+  { AddButton Button
+    MoveScaled(51,16,16,4)
+    Text = ("Add")
+  }
+  { Separator1 Separator
+    MoveScaled(1,12,66,4)
+  }
+  { CancelButton Button
+    MoveScaled(34,16,16,4)
+    Text = ("Cancel")
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(1,2,11,4)
+    Text = ("Title")
+    Alignment = Align.Right
+  }
+  { TextLabel2 TextLabel
+    MoveScaled(1,8,11,4)
+    Text = ("URL")
+    Alignment = Align.Right
+  }
+}

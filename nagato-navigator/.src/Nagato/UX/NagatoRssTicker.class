@@ -6,6 +6,21 @@ Private $count As Integer
 Private $feedIndex As Integer
 Private $itemIndex As Integer
 
+Private Sub setIndex(Optional argFeedIndex As Integer = 0)
+    
+    $feedIndex = argFeedIndex
+    $itemIndex = 0
+    $count = 0
+    
+End
+
+Private Sub refreshFeed()
+    
+    NagatoRss.Refresh()
+    setIndex()
+    
+End
+
 Private Sub changeItem()
     
     $count = 0
@@ -14,7 +29,7 @@ Private Sub changeItem()
     If $itemIndex > NagatoRss.Feeds[$feedIndex].Items.Max Then
         $itemIndex = 0
         Inc $feedIndex
-        If $feedIndex > NagatoRss.Feeds.Max Then $feedIndex = 0
+        If $feedIndex > NagatoRss.Feeds.Max Then refreshFeed()
     Endif
     
 End
@@ -56,6 +71,10 @@ Private Function getTicker() As String
     End If
     
     Return getTitle() & getBody() & getCursor()
+    
+Catch
+    Return "YUKI.N > RSS Feed is not ready."
+    setIndex()
     
 End
 
@@ -99,12 +118,12 @@ Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case NagatoContextMenuRss.MenuOpen
             Shell Subst$("nagato-web &1", NagatoRss.Feeds[$feedIndex].Items[$itemIndex].Link)
+        Case NagatoContextMenuRss.MenuRefresh
+            refreshFeed()
         Case NagatoContextMenuRss.MenuEdit
             HaruhiRssEdit.ShowDialog()
         Case NagatoContextMenuRss.MenuSelect
-            $feedIndex = argValues[0]
-            $itemIndex = 0
-            $count = 0
+            setIndex(argValues[0])
     End Select
     
 End

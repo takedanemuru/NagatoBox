@@ -12,10 +12,13 @@ Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
         ensureNagatoTaskmanagerActivation()
+        NagatoRss.Refresh()
         NagatoDBus.Register()
         HaruhiMain.Show()
     Else
         Message.Info(("YUKI.N > nagato-navigator has been activated."), ("OK"))
     End If
+    
+    NagatoRssFeedLines.Refresh()
     
 End

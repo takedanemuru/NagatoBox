@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Text = ("Edit RSS")
+  Arrangement = Arrange.Vertical
+  { MenuHBox HBox
+    MoveScaled(24,8,34,4)
+  }
+  { RssGrids GridView
+    MoveScaled(5,35,53,20)
+    Expand = True
+  }
+}

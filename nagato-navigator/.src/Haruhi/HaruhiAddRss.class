@@ -1,0 +1,18 @@
+' Gambas class file
+
+
+Public Sub CancelButton_Click()
+
+    Me.Close()
+
+End
+
+Public Sub AddButton_Click()
+
+    If TitleBox.Text <> "" And If UrlBox.Text <> "" Then
+        NagatoSettings.AddFeed(TitleBox.Text, UrlBox.Text)
+        NagatoRss.Refresh()
+        Me.Close()
+    Endif
+
+End

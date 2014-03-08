@@ -30,6 +30,26 @@ msgstr ""
 msgid "License"
 msgstr ""
 
+#: HaruhiAddRss.form:14
+msgid "Add RSS Feed"
+msgstr ""
+
+#: HaruhiAddRss.form:27 NagatoRssMenuBar.class:14
+msgid "Add"
+msgstr ""
+
+#: HaruhiAddRss.form:36 HaruhiClockFormat.form:37 HaruhiColorChooser.form:34
+msgid "Cancel"
+msgstr ""
+
+#: HaruhiAddRss.form:41 HaruhiRssEdit.class:10
+msgid "Title"
+msgstr ""
+
+#: HaruhiAddRss.form:47
+msgid "URL"
+msgstr ""
+
 #: HaruhiClockFormat.form:26
 msgid "Label1"
 msgstr ""
@@ -38,12 +58,16 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: HaruhiClockFormat.form:37 HaruhiColorChooser.form:34
-msgid "Cancel"
-msgstr ""
-
 #: HaruhiClockFormat.class:12 NagatoPreferenceMenu.class:27
 msgid "Clock format"
+msgstr ""
+
+#: HaruhiRssEdit.form:9
+msgid "Edit RSS"
+msgstr ""
+
+#: HaruhiRssEdit.class:12
+msgid "Url"
 msgstr ""
 
 #: Kyon.module:19
@@ -58,7 +82,11 @@ msgstr ""
 msgid "Open with browser"
 msgstr ""
 
-#: NagatoContextMenuRss.class:56
+#: NagatoContextMenuRss.class:57
+msgid "Refresh feed"
+msgstr ""
+
+#: NagatoContextMenuRss.class:58
 msgid "Edit feed"
 msgstr ""
 
@@ -126,6 +154,10 @@ msgstr ""
 msgid "Font color"
 msgstr ""
 
-#: NagatoSettings.class:14
+#: NagatoRssMenuBar.class:28
+msgid "Remove"
+msgstr ""
+
+#: NagatoSettings.class:35
 msgid "hh:nn:ss"
 msgstr ""
