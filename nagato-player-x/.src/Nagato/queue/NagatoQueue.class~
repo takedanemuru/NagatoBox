@@ -108,8 +108,9 @@ Public Sub Next()
     
     If Me.Count = 0 Then Return
     
-    $musicPaths.Next()
-    $player.Play(0)
+    If $player.State = 4 Then $musicPaths.Next()
+      
+    Try $player.Play(0)
     
 End
 
@@ -117,14 +118,19 @@ Public Sub Back()
     
     If Me.Count = 0 Then Return
     
-    If $player.ProgressRate > 0.05 Then
-        $player.SetPosition(0)
-    Else 
-        $musicPaths.Back()
+    If $player.State = 4 Then
+        If $player.ProgressRate > 0.05 Then
+            $player.SetPosition(0)
+        Else 
+            $musicPaths.Back()
+            $player.Play(0)
+        End If
+    Else
         $player.Play(0)
     End If
     
 End
+
 
 Public Sub SetPathAndPlay(argPath As String)
     

@@ -38,15 +38,18 @@ End
 Private Sub shuffleNext()
     
     Dim yukiIndex As Integer
+
+    Debug $currentPosition
     
     Do
         yukiIndex = Rnd(0, $paths.Count)
-        Debug yukiIndex
         If yukiIndex <> $currentPosition Then
             $currentPosition = yukiIndex
             Break
         End If
     Loop
+    
+    Debug yukiIndex
     
     Raise Moved
     
@@ -166,6 +169,16 @@ Public Sub Back()
     Else 
         normalBack()
     End If
+    
+End
+
+Public Sub MoveToPath(argPath As String)
+    
+    If Not $paths.Exist(argPath) Then Return
+    
+    $currentPosition = $paths.Find(argPath)
+    
+    Raise Moved
     
 End
 

@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $powerButton As MenuButton
+Private $observer As Observer
+
+Private Sub initializeButton(argContainer As Container)
+    
+    $powerButton = New MenuButton(argContainer) As "PowerButton"
+    
+    With $powerButton
+        .Picture = MikuruIcon.Get(IIf(NagatoPowerManager.HasBattery, "battery", "plug"))
+        .Border = False
+        .Foreground = NagatoSettings.ForegroundColor
+        .AutoResize = True
+        .Arrow = False
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButton(argContainer)
+    $observer = New Observer(NagatoTimer) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    $powerButton.Text = NagatoPowerManager.TotalBatteryPercentage & "%"
+    
+End

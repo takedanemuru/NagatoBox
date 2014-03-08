@@ -1,0 +1,37 @@
+' Gambas class file
+
+Create Static
+
+Property Read HasBattery As Boolean
+Property Read TotalBatteryPercentage As Float
+
+Private Const Service As String = "Session://org.gambas.nagato.power.manager"
+Private Const ObjectPath As String = "/org/nagato/power/manager"
+Private Const Interface As String = "org.gambas.nagato.power.manager.nagatointerface"
+
+Private $proxy As DBusProxy
+
+Public Sub _new()
+    
+    $proxy = DBus[Service][ObjectPath, Interface]
+    
+End
+
+
+Private Function HasBattery_Read() As Boolean
+
+    Return $proxy.HasBattery
+
+Catch
+    Return False
+
+End
+
+Private Function TotalBatteryPercentage_Read() As Float
+
+    Return $proxy.TotalBatteryPercentage
+
+Catch
+    Return 0
+
+End

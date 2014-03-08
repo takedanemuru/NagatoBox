@@ -8,7 +8,7 @@ Private Const BBCTechnology As String = "http://feeds.bbci.co.uk/news/technology
 
 Public Function GetDefault() As Collection
     
-    Dim yukiLines As Collection
+    Dim yukiLines As New Collection
     
     With yukiLines
         .Add(BBCTop, "BBC Top")

@@ -32,6 +32,7 @@ Public Sub Form_Open()
     setForm()
     NagatoTimer.Activate()
 
+    Me.Background = NagatoSettings.BackgroundColor
     $button = New NagatoStarButton(HBox1) As "StarButton"
     addDrawingArea()
     $contentBar = New NagatoContentBar($drawingArea) As "contentBar"
@@ -66,5 +67,8 @@ End
 Public Sub Asakura_Timer()
     
     setForm()
+    
+    Debug NagatoPowerManager.HasBattery
+    Debug NagatoNetworkManager.DeviceCount
     
 End

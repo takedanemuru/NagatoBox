@@ -58,6 +58,7 @@ Public Sub Play(Optional argPosition As Float)
     $player.Play()
     
 Catch
+    Debug Error.Text
     Return
     
 End
