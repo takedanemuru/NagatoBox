@@ -11,8 +11,6 @@ Private $webView As WebView
 Private $uniqueIndex As Integer
 Private $lastLink As String
 
-Private $timer As New Timer As "Timer"
-
 Private Sub addWebView(argUrl As String)
     
     $webView = New WebView($container) As "WebView"
@@ -96,15 +94,7 @@ Public Sub WebView_MouseMove()
     
 End
 
-' Public Sub WebView_Link(argLink As String)
-'     
-'     If Not argLink = "" Then $lastLink = argLink
-'     
-' End
-
 Public Sub WebView_NewWindow(argModal As Boolean)
-    
-    Debug argModal
     
     Raise MenuEventWithArg(NagatoMenuPipe.WebNewInsert, $lastLink)
     
@@ -156,21 +146,4 @@ Private Function Url_Read() As String
 
     Return $webView.Url
 
-End
-
-Public Sub Timer_Timer()
-    
-    Dim yukiCount As Integer
-    Dim yukiDownload As WebDownload
-    
-    If WebDownloads.Count = 0 Then $timer.Stop()
-    
-    For yukiCount = WebDownloads.Count - 1 DownTo 0
-        yukiDownload = WebDownloads[yukiCount]
-        Debug yukiDownload.Url
-        Debug yukiDownload.Path
-        Debug yukiDownload.Progress
-        If yukiDownload.Progress = 1 Then yukiDownload.Delete()
-    Next
-    
 End

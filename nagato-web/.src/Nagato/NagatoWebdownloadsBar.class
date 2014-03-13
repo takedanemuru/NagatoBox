@@ -31,13 +31,16 @@ Public Sub SetWebDownload(argWebDownload As WebDownload)
     
     Dim yukiDownload As NagatoWebDownload
     
+    argWebDownload.Path = Temp$("download_" & File.Name(argWebDownload.Url))
+    
     Dialog.Title = ("Download")
     Dialog.Path = MikuruSafePath.Get(NagatoSettings.DownloadDirectory &/ File.Name(argWebDownload.Url))
     
     If Not Dialog.SaveFile() Then
-        argWebDownload.Path = Temp$("download_" & File.Name(argWebDownload.Url))
         yukiDownload = New NagatoWebDownload($downloadsHBox, argWebDownload, Dialog.Path) As "Download"
         $container.Visible = True
+    Else
+        argWebDownload.Cancel()
     Endif
     
 End

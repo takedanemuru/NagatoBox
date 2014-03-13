@@ -15,28 +15,29 @@ End
 
 Private Sub play(argPath As String)
     
+    Dim yukiPath As String = argPath
+    
     With $mediaPlayer
         Try .Stop()
-        .URL = Media.URL(argPath)
+        .URL = Media.URL(yukiPath)
         $mediaControl.SetWindow(MediaDrawingArea)
         .Play()
     End With
+    
+Catch
+    Return
     
 End
 
 Private Sub setBackground()
     
-    Dim yukiImage As Image = Image.Load("pictures/da_bg.jpg")
-    
     MediaDrawingArea.Clear()
-    
     MediaDrawingArea.Background = Color.Lighter(Color.Violet)
     
     Draw.Begin(MediaDrawingArea)
         Draw.Font.Size = 24
         Draw.Foreground = Color.White
         Draw.RichText("<b>YUKI.N > Open file to play.</b>", 0, 0, MediaDrawingArea.W, MediaDrawingArea.H, Align.Center)
-        'Draw.Image(yukiImage, (MediaDrawingArea.W - yukiImage.W) / 2, (MediaDrawingArea.H - yukiImage.H) / 2)
     Draw.End()
     
 End

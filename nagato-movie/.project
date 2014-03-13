@@ -1,16 +1,18 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.0
+# Compiled with Gambas 3.5.2
 Title=nagato-movie
 Startup=Kyon
 Icon=pictures/blue/video.png
-Version=0.1.2
+Version=0.2.0
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
+Component=gb.desktop
 Component=gb.settings
 Component=gb.media
 Component=gb.qt4.ext
+Component=gb.xml
 Description="movie player"
 Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
 TabSize=4

@@ -26,7 +26,7 @@ End
 Public Sub Main()
     
     parsingArgs()
-    HaruhiMovie.Show()
-    HaruhiMovie.SetPathAndPlay($path)
+    HaruhiMain.Show()
+    HaruhiMain.SetPathAndPlay($path)
     
 End

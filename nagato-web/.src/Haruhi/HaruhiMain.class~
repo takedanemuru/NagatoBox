@@ -90,6 +90,8 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                 .SetTitle($webs.ActiveTabTitle)
                 .SetList(NagatoDBWeb.CategoryNames)
                 If .ShowDialog() = 1 Then
+                    Debug .UserTitle
+                    Debug .Category
                     NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
                 Endif
             End With

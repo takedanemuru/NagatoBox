@@ -2,7 +2,24 @@
 
 Inherits NagatoSubMenu
 
-Private Enum MenuNagato, MenuForeground, MenuBackground, MenuFormat
+Private Enum MenuNagato, MenuNetwork, MenuPower, MenuForeground, MenuBackground, MenuFormat
+
+Private Sub setBackground()
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        HaruhiMain.Background = MikuruDialog.Color
+        NagatoSettings.BackgroundColor = MikuruDialog.Color
+    Endif
+    
+End
+
+Private Sub setForeground()
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        NagatoSettings.ForegroundColor = MikuruDialog.Color
+    Endif
+    
+End
 
 Public Sub _InitializeParentMenu(argRootMenu As Menu)
     
@@ -19,12 +36,16 @@ Private Sub refreshMenu()
     
     Me._$parentMenu.Children.Clear()
     
-    Me._AddMenu(("Show Nagato"), MenuNagato, IIf(NagatoSettings.ShowNagato, MikuruIcon.Get("button-check"), Null))
-        Me._AddMenu((""), 0)
-    Me._AddMenu(("Form color"), MenuBackground, MikuruColorChip.Get(NagatoSettings.BackgroundColor))
-    Me._AddMenu(("Font color"), MenuForeground, MikuruColorChip.Get(NagatoSettings.ForegroundColor))
-        Me._AddMenu((""), 0)
-    Me._AddMenu(("Clock format"), MenuFormat, MikuruIcon.Get("alarm-clock"))
+    With NagatoSettings
+        Me._AddMenu(("Show Nagato"), MenuNagato, IIf(.ShowNagato, MikuruIcon.Get("button-check"), Null))
+        Me._AddMenu(("Show Network Button"), MenuNetwork, IIf(.ShowNetworkButton, MikuruIcon.Get("button-check"), Null))
+        Me._AddMenu(("Show Power Button"), MenuPower, IIf(.ShowPowerButon, MikuruIcon.Get("button-check"), Null))
+            Me._AddMenu((""), 0)
+        Me._AddMenu(("Form color"), MenuBackground, MikuruColorChip.Get(.BackgroundColor))
+        Me._AddMenu(("Font color"), MenuForeground, MikuruColorChip.Get(.ForegroundColor))
+            Me._AddMenu((""), 0)
+        Me._AddMenu(("Clock format"), MenuFormat, MikuruIcon.Get("alarm-clock"))
+    End With
     
 End
 
@@ -45,15 +66,14 @@ Public Sub MenuItem_Click()
     Select Case Last.Tag
         Case MenuNagato
             NagatoSettings.ShowNagato = Not NagatoSettings.ShowNagato
+        Case MenuPower
+            NagatoSettings.ShowPowerButon = Not NagatoSettings.ShowPowerButon
+        Case MenuNetwork
+            NagatoSettings.ShowNetworkButton = Not NagatoSettings.ShowNetworkButton
         Case MenuBackground
-            If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
-                HaruhiMain.Background = MikuruDialog.Color
-                NagatoSettings.BackgroundColor = MikuruDialog.Color
-            Endif
+            setBackground()
         Case MenuForeground
-            If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
-                NagatoSettings.ForegroundColor = MikuruDialog.Color
-            Endif
+            setForeground()
         Case MenuFormat
             HaruhiClockFormat.ShowDialog()
     End Select

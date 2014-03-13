@@ -66,8 +66,6 @@ Public Sub Timer_Timer()
     $progressBar.Value = $webDownload.Progress
     
     If $webDownload.Progress = 1 Then
-        Debug Exist($webDownload.Path)
-        Debug Exist($destinationPath)
         Move $webDownload.Path To $destinationPath
         $timer.Stop()
         $webDownload.Delete()

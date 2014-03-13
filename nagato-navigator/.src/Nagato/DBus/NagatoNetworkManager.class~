@@ -16,7 +16,6 @@ Public Sub _new()
     
 End
 
-
 Private Function DeviceCount_Read() As Integer
 
     Return $proxy.DeviceCount

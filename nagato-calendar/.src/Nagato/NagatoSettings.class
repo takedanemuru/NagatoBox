@@ -2,6 +2,9 @@
 
 Create Static
 
+Property TodaysTask As String
+Property Read TodaysTaskLastUpdated As Date
+
 Private $settings As New Settings
 
 Public Sub LoadFormSettings(argForm As Form)
@@ -26,4 +29,24 @@ Public Sub SaveFormSettings(argForm As Form)
     
     $settings.Save()
     
+End
+
+Private Function TodaysTask_Read() As String
+
+    Return $settings["todays_task/body", ""]
+
+End
+
+Private Sub TodaysTask_Write(Value As String)
+
+    $settings["todays_task/body"] = Value
+    $settings["todays_task/last_updated"] = Now()
+    $settings.Save()
+
+End
+
+Private Function TodaysTaskLastUpdated_Read() As Date
+
+    Return $settings["todays_task/last_updated"]
+
 End

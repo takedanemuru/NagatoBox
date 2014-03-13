@@ -9,15 +9,16 @@ Property Read ProcessCount As Integer
 Property Read Activated As Boolean
 Property Read SystemLoad As Float
 
+Private Const ObjectPath As String = "/org/nagato/taskmanager"
+Private Const Interface As String = "org.gambas.nagato.taskmanager.nagatointerface"
+
 Private $taskmanager As DBusProxy
 
 Event Finished
 
 Private Sub initializeTaskmanager()
     
-    Dim yukiInterface As String = "org.gambas.nagato.taskmanager.nagatointerface"
-    
-    $taskmanager = DBus["org.gambas.nagato.taskmanager"]["/org/nagato/taskmanager", yukiInterface]
+    $taskmanager = DBus["org.gambas.nagato.taskmanager"][ObjectPath, Interface]
     
 End
 

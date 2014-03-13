@@ -1,0 +1,149 @@
+' Gambas class file
+
+Private $mediaPlayer As MediaPlayer
+Private $mediaControl As MediaControl
+Private $visualizers As NagatoVisualizers
+Private $path As String
+Private $menuBar As NagatoMenuBar
+
+Private Sub initializeVisualizer()
+    
+    $visualizers = New NagatoVisualizers($mediaPlayer)
+    $mediaPlayer.Video.Visualisation = $visualizers.GetVisualizer(NagatoVisualizers.Corona)
+    
+End
+
+Private Sub play(argPath As String)
+    
+    Dim yukiPath As String = argPath
+    
+    With $mediaPlayer
+        Try .Stop()
+        .URL = Media.URL(yukiPath)
+        $mediaControl.SetWindow(MediaDrawingArea)
+        .Play()
+    End With
+    
+Catch
+    Return
+    
+End
+
+Private Sub setBackground()
+    
+    MediaDrawingArea.Clear()
+    MediaDrawingArea.Background = Color.Lighter(Color.Violet)
+    
+    Draw.Begin(MediaDrawingArea)
+        Draw.Font.Size = 24
+        Draw.Foreground = Color.White
+        Draw.RichText("<b>YUKI.N > Open file to play.</b>", 0, 0, MediaDrawingArea.W, MediaDrawingArea.H, Align.Center)
+    Draw.End()
+    
+End
+
+Public Sub SetPathAndPlay(argPath As String)
+    
+    If argPath = "" Then
+        setBackground()
+    Else
+        play(argPath)
+    End If
+    
+End
+
+Public Sub _new()
+
+    $path = user.Home &/ "sample_movie.mp4"
+
+End
+
+Private Sub initializeMediaPlayerAndControl()
+    
+    $mediaPlayer = New MediaPlayer As "MediaPlayer"
+    $mediaControl = New MediaControl($mediaPlayer, "ximagesink") As "MediaControl"
+    $mediaPlayer.Video.Output = $mediaControl
+    $mediaPlayer.Audio.Volume = 1
+    
+End
+
+Private Sub playbackMenuHandler(argEvent As Integer)
+    
+    With MikuruMenuEvent
+        Select Case argEvent
+            Case .MediaPlay
+                Try $mediaPlayer.Play
+            Case .MediaPause
+                Try $mediaPlayer.Pause
+            Case .MediaBack
+                ' pass
+            Case .MediaNext
+                ' pass
+        End Select
+    End With
+    
+End
+
+Private Sub openFile()
+    
+    Dialog.Title = ("Open file")
+    Dialog.Path = NagatoSettings.LastDirectory
+    
+    If Not Dialog.OpenFile(False) Then
+        play(Dialog.Path)
+        NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
+    Endif
+    
+End
+
+Public Sub Form_Open()
+
+    NagatoSettings.LoadFormSettings(Me)
+    Application.MainWindow = Me
+    $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
+
+    initializeMediaPlayerAndControl()
+    initializeVisualizer()
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub Form_Resize()
+    
+    setBackground()
+    
+End
+
+Public Sub MenuBar_NewPosition(argPosition As Float)
+    
+    $mediaPlayer.Position = $mediaPlayer.Duration * (argPosition / 100)
+    
+End
+
+Public Sub MenuBar_MenuEvent(argEvent As Integer)
+    
+    With MikuruMenuEvent
+        Select Case argEvent
+            Case .MediaHeader To .MediaHeader + 999
+                playbackMenuHandler(argEvent)
+            Case .FileOpen
+                openFile()
+            Case .AppAbout
+                HaruhiAbout.ShowDialog()
+            Case .AppClose
+                Me.Close()
+        End Select
+    End With
+    
+End
+
+Public Sub MediaTimer_Timer()
+
+    $menuBar.SetWidgetProperty($mediaPlayer.Position, $mediaPlayer.Duration)
+
+End

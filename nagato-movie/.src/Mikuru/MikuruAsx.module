@@ -1,0 +1,17 @@
+' Gambas module file
+
+Public Function GetMms(argPath As String) As String
+    
+    Dim yukiXmlDocument As New XmlDocument
+    Dim yukiXmlElements As XmlElement[]
+    
+    yukiXmlDocument.FromString(File.Load(argPath))
+    yukiXmlElements = yukiXmlDocument.GetElementsByTagName("REF")
+    
+    Return yukiXmlElements[0].Attributes["HREF"]
+    
+Catch
+    Return "" 
+    
+End
+

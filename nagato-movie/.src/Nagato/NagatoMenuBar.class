@@ -60,7 +60,7 @@ Private Sub addGearButton()
         .Picture = MikuruIcon.Get("star")
     End With
     
-    yukiMenu = New NagatoButtonMenu(HaruhiMovie, $gearButton) As "Menu"
+    yukiMenu = New NagatoButtonMenu(HaruhiMain, $gearButton) As "Menu"
     
 End
 

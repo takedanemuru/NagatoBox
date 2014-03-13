@@ -27,6 +27,6 @@ Public Sub Main()
     
     parsingArgs()
     HaruhiMovie.Show()
-    If $path <> "" Then HaruhiMovie.SetPathAndPlay($path)
+    HaruhiMovie.SetPathAndPlay($path)
     
 End

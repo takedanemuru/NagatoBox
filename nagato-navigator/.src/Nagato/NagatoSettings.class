@@ -6,6 +6,8 @@ Property ClockFormat As String
 Property ForegroundColor As Integer
 Property BackgroundColor As Integer
 Property ShowNagato As Boolean
+Property ShowNetworkButton As Boolean
+Property ShowPowerButon As Boolean
 Property FeedLines As Collection
 
 Private $settings As New Settings
@@ -91,6 +93,32 @@ End
 Private Sub FeedLines_Write(Value As Collection)
 
     $settings["rss/feed_lines"] = Value
+    $settings.Save()
+
+End
+
+Private Function ShowNetworkButton_Read() As Boolean
+
+    Return $settings["network_button/show", True]
+
+End
+
+Private Sub ShowNetworkButton_Write(Value As Boolean)
+
+    $settings["network_button/show"] = Value
+    $settings.Save()
+
+End
+
+Private Function ShowPowerButon_Read() As Boolean
+
+    Return $settings["power_button/show", True]
+
+End
+
+Private Sub ShowPowerButon_Write(Value As Boolean)
+
+    $settings["power_button/show"] = Value
     $settings.Save()
 
 End

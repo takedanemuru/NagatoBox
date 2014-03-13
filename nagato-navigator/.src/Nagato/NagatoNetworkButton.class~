@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $button As MenuButton
+Private $observer As Observer
+Private $deviceIndex As Integer = 0 
+
+Private Sub initializeButton(argContainer As Container)
+    
+    $button = New MenuButton(argContainer) As "PowerButton"
+    
+    With $button
+        .Picture = MikuruIcon.Get("wireless-router")
+        .Border = False
+        .Foreground = NagatoSettings.ForegroundColor
+        .AutoResize = True
+        .Arrow = False
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButton(argContainer)
+    $observer = New Observer(NagatoTimer) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    Dim yukiSpeed As Float = NagatoNetworkManager.GetSpeed($deviceIndex)
+    
+    $button.Visible = NagatoSettings.ShowNetworkButton
+    
+    If yukiSpeed = 0 Then
+        $button.Text = ("Disconnected")
+    Else
+        $button.Text = Format$(yukiSpeed / 1000, "##0Mbps")
+    End If
+    
+Catch
+    Return
+    
+End
+

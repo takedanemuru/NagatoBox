@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,13)
+  Arrangement = Arrange.Vertical
+  { TaskTextBox TextBox
+    MoveScaled(8,2,49,4)
+    Expand = True
+    Text = ("YUKI.N > What do you do Today ?")
+  }
+  { Button1 Button
+    MoveScaled(9,9,44,4)
+    Text = ("Apply")
+  }
+}

@@ -38,6 +38,9 @@ Private Sub setItems()
     
     Raise Finished(Me)
     
+Catch
+    Raise Error
+    
 End
 
 Public Sub _new(argUrl As String)

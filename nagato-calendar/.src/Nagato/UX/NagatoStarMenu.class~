@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Public Enum MenuNone, MenuSetTodaysTask, MenuShowList, MenuAbout, MenuQuit
+
 Private $rootMenu As Menu
 
 Private Sub initializeRootMenu(argName As String)
@@ -29,23 +31,24 @@ End
 Public Sub _new(argName As String)
     
     initializeRootMenu(argName)
-    addMenu("Open schedules", MikuruSignal.MenuShowList, "book-open-bookmark")
-        addMenu("", MikuruSignal.MenuNone)
-    addMenu("About", MikuruSignal.MenuAbout, "star")
-    addMenu("Quit", MikuruSignal.MenuQuit, "button-cross")
+    addMenu(("Set Today's Task"), Me.MenuSetTodaysTask, "button-check")
+    addMenu("Open schedules", Me.MenuShowList, "book-open-bookmark")
+        addMenu("", Me.MenuNone)
+    addMenu("About", Me.MenuAbout, "star")
+    addMenu("Quit", Me.MenuQuit, "button-cross")
     
 End
 
 Public Sub MenuItem_Click()
     
-    Debug Last.Tag
-    
     Select Case Last.Tag
-        Case MikuruSignal.MenuShowList
+        Case Me.MenuSetTodaysTask
+            HaruhiAddTodaysTask.ShowDialog()
+        Case Me.MenuShowList
             HaruhiList.Show()
-        Case MikuruSignal.MenuAbout
+        Case Me.MenuAbout
             HaruhiAbout.Show()
-        Case MikuruSignal.MenuQuit
+        Case Me.MenuQuit
             HaruhiMain.Close()
     End Select
     
