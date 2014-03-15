@@ -52,7 +52,7 @@ Public Sub MenuItem_Click()
             Case .MenuAbout
                 HaruhiAbout.ShowDialog()
             Case .MenuQuit
-                HaruhiMapView.Close()
+                HaruhiMain.Close()
             Case .MenuSearch
                 NagatoLeftPanel.Toggle()
             Default

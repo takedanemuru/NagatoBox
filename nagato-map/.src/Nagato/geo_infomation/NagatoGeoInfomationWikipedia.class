@@ -5,7 +5,7 @@ Create Static
 Property Read GeoInfomations As NagatoGeoInfomationElement[]
 Property Read Ready As Boolean
 
-Private Const Api As String = "http://api.wikilocation.org/articles?lat=&1&lng=&2&limit=100&radius=10000&format=xml&locale=en"
+' Private Const Api As String = "http://api.wikilocation.org/articles?lat=&1&lng=&2&limit=100&radius=10000&format=xml&locale=en"
 
 Private $geoInfomations As New NagatoGeoInfomationElement[]
 Private $buffer As String
@@ -67,7 +67,8 @@ End
 
 Public Sub Get(argLatitude As Float, argLongitude As Float)
     
-    startDownloading(Subst$(Api, argLatitude, argLongitude))
+    'startDownloading(Subst$(Api, argLatitude, argLongitude))
+    startDownloading(NagatoWikipediaApi.Get(argLatitude, argLongitude))
     
 End
 

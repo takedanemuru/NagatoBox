@@ -11,6 +11,7 @@ Private Const Interface As String = "org.freedesktop.UPower"
 Property Read TotalBatteryPercentage As Float
 Property Read HasBattery As Boolean
 Property Read IsOnline As Boolean
+Property Read Count As Integer
 
 Private $uPower As DBusProxy
 
@@ -64,5 +65,11 @@ End
 Private Function IsOnline_Read() As Boolean
 
     Return Not $uPower.OnBattery
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $uPower.EnumerateDevices.Count
 
 End

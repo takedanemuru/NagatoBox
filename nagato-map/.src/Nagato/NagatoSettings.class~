@@ -2,7 +2,12 @@
 
 Create Static
 
+Property WikipediaRadius As Integer
+Property WikipediaLimit As Integer
+
 Private $settings As New Settings
+
+Event WikipediaApiChanged
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -20,4 +25,38 @@ Public Sub SaveFormSettings(argForm As Form)
     $settings["form/height"] = argForm.Height
     $settings["form/width"] = argForm.Width
     
+End
+
+Private Function WikipediaRadius_Read() As Integer
+
+    Return $settings["wikipedia/radius", 1000000]
+
+End
+
+Private Sub WikipediaRadius_Write(Value As Integer)
+
+    If $settings["wikipedia/radius"] = Value Then Return
+
+    $settings["wikipedia/radius"] = Value
+    $settings.Save()
+
+    Raise WikipediaApiChanged
+
+End
+
+Private Function WikipediaLimit_Read() As Integer
+
+    Return $settings["wikipedia/limit", 100]
+
+End
+
+Private Sub WikipediaLimit_Write(Value As Integer)
+
+    If $settings["wikipedia/limit"] = Value Then Return
+
+    $settings["wikipedia/limit"] = Value
+    $settings.Save()
+
+    Raise WikipediaApiChanged
+
 End

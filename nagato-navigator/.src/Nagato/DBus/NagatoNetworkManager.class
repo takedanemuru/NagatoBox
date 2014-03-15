@@ -4,7 +4,7 @@ Create Static
 
 Property Read DeviceCount As Integer
 
-Private Const Service As String = "Session://org.gambas.nagato.network.manager"
+Private Const Service As String = "org.gambas.nagato.network.manager"
 Private Const ObjectPath As String = "/org/nagato/network/manager"
 Private Const Interface As String = "org.gambas.nagato.network.manager.nagatointerface"
 
@@ -14,9 +14,20 @@ Public Function GetSpeed(argDeviceIndex As Integer) As Float
     
     Return $proxy.GetDeviceSpeed(argDeviceIndex)
     
+Catch
+    Return 0
+    
 End
 
-Public Sub _new()
+Public Sub Activate()
+    
+    If Not DBus.Session.Applications.Exist(Service) Then
+        Shell "nagato-network-manager --non-gui"
+    Endif
+    
+End
+
+Private Sub initializeProxy()
     
     $proxy = DBus[Service][ObjectPath, Interface]
     
@@ -24,6 +35,11 @@ End
 
 Private Function DeviceCount_Read() As Integer
 
+    If Not Object.IsValid($proxy) Then initializeProxy()
+
     Return $proxy.DeviceCount
+
+Catch
+    Return 0
 
 End

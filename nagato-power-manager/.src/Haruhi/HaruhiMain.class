@@ -6,6 +6,9 @@ End
 
 Public Sub Form_Open()
     
+    TabStrip1.Count = NagatoUPower.Count + 1
+    TabStrip1.Index = 0
     
+    Me.Center()
     
 End

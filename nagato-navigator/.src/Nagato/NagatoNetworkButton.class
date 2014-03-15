@@ -4,7 +4,7 @@ Inherits NagatoSignal
 
 Private $button As MenuButton
 Private $observer As Observer
-Private $deviceIndex As Integer = 0 
+Private $deviceIndex As Integer = 0
 
 Private Sub initializeButton(argContainer As Container)
     
@@ -27,20 +27,20 @@ Public Sub _new(argContainer As Container)
     
 End
 
-Public Sub Asakura_Timer()
+Private Sub setButtonText()
     
     Dim yukiSpeed As Float = NagatoNetworkManager.GetSpeed($deviceIndex)
     
-    $button.Visible = NagatoSettings.ShowNetworkButton
+    Debug NagatoNetworkManager.DeviceCount
     
-    If yukiSpeed = 0 Then
-        $button.Text = ("Disconnected")
-    Else
-        $button.Text = Format$(yukiSpeed / 1000, "##0Mbps")
-    End If
-    
-Catch
-    Return
+    $button.Text = Format$(yukiSpeed / 1000, "##0Mbps")
     
 End
 
+Public Sub Asakura_Timer()
+    
+    $button.Visible = NagatoSettings.ShowNetworkButton
+    
+    If $button.Visible Then setButtonText()
+    
+End

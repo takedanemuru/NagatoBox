@@ -8,28 +8,12 @@ Private Sub ensureNagatoTaskmanagerActivation()
     
 End
 
-Private Sub ensureNagatoPowerManagerActivation()
-    
-    If Not DBus.Session.Applications.Exist("org.gambas.nagato.power.manager") Then
-        Shell "nagato-power-manager --non-gui" Wait
-    Endif
-    
-End
-
-Private Sub ensureNagatoNetworkManagerActivation()
-    
-    If Not DBus.Session.Applications.Exist("org.gambas.nagato.network.manager") Then
-        Shell "nagato-network-manager --non-gui" Wait
-    Endif
-    
-End
-
 Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
         ensureNagatoTaskmanagerActivation()
-        ensureNagatoPowerManagerActivation()
-        ensureNagatoNetworkManagerActivation()
+        NagatoPowerManager.Activate()
+        NagatoNetworkManager.Activate()
         NagatoRss.Refresh()
         NagatoDBus.Register()
         HaruhiMain.Show()

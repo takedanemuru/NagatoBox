@@ -5,22 +5,29 @@ Create Static
 Property Read HasBattery As Boolean
 Property Read TotalBatteryPercentage As Float
 
-Private Const Service As String = "Session://org.gambas.nagato.power.manager"
+Private Const Service As String = "org.gambas.nagato.power.manager"
 Private Const ObjectPath As String = "/org/nagato/power/manager"
 Private Const Interface As String = "org.gambas.nagato.power.manager.nagatointerface"
 
 Private $proxy As DBusProxy
 
-Public Sub _new()
+Public Sub Activate()
     
-    Shell "nagato-power-manager --non-gui"
+    If Not DBus.Session.Applications.Exist(Service) Then
+        Shell "nagato-power-manager --non-gui"
+    Endif
+    
+End
+
+Private Sub initializeProxy()
     
     $proxy = DBus[Service][ObjectPath, Interface]
     
 End
 
-
 Private Function HasBattery_Read() As Boolean
+
+    If Not Object.IsValid($proxy) Then initializeProxy()
 
     Return $proxy.HasBattery
 
@@ -30,6 +37,8 @@ Catch
 End
 
 Private Function TotalBatteryPercentage_Read() As Float
+
+    If Not Object.IsValid($proxy) Then initializeProxy()
 
     Return $proxy.TotalBatteryPercentage
 

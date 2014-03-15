@@ -29,8 +29,6 @@ Private Sub startDownloading(argQuery As String)
         .Timeout = 20
     End With
     
-    Debug "go for it, yuki."
-    
     $httpClient.Get()
     
 Catch

@@ -3,6 +3,7 @@
 Private $tabstrip As TabStrip
 Private $wikipediaUrls As New String[]
 Private $wikipediaGrid As GridView
+Private $limitSliderBox As SliderBox
 
 Event NewArticle(argUrl As String)
 
@@ -21,6 +22,16 @@ Private Sub initializeWikipediaListGrid()
         .Rows.Count = 1
         .Expand = True
         .Mode = Select.Single
+    End With
+    
+End
+
+Private Sub initializeLimitSliderBox()
+    
+    $limitSliderBox = New SliderBox($tabstrip)
+    
+    With $limitSliderBox
+        .Value = NagatoSettings.WikipediaLimit
     End With
     
 End
@@ -66,6 +77,7 @@ Public Sub _new(argTabstrip As TabStrip)
     
     $tabstrip = argTabstrip
     initializeWikipediaListGrid()
+    initializeLimitSliderBox()
     
 End
 

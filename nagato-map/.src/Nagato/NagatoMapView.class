@@ -73,6 +73,7 @@ Public Sub _new(argMapView As MapView)
     $mapView.Map.Zoom = 4
     setMapTile()
     setVisibleLayer(HaruhiMain.OpenStreetMap)
+    $mapView.SetFocus()
     
 End
 

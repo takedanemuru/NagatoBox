@@ -8,6 +8,19 @@ Private $gearButton As MenuButton
 
 Event MapSelect(argMapType As Integer)
 
+Private Sub addSearchButton()
+    
+    Dim yukiButton As New Button($container) As "MenuButton"
+    
+    With yukiButton
+        .Border = False
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("search")
+        .Text = ("Search")
+    End With
+    
+End
+
 Private Sub addMapSelectButton(argText As String, argTag As Integer, argValue As Boolean)
     
     Dim yukiButton As New ToggleButton($container) As "MapSelectButton"
@@ -31,16 +44,7 @@ Private Sub addLocationLabel()
         .Alignment = Align.Left
         .Expand = True
         .Padding = 2
-    End With
-    
-End
-
-Private Sub addSpacer()
-    
-    Dim yukiSpacer As New Panel($container)
-    
-    With yukiSpacer
-        .Expand = True
+        .AutoResize = True
     End With
     
 End
@@ -56,6 +60,7 @@ Private Sub addGearButton()
         .Width = $container.Height
         .AutoResize = True
         .Picture = MikuruIcon.Get("star")
+        .Border = False
     End With
     
     yukiMenu = New NagatoButtonMenu(HaruhiMain, $gearButton) As "Menu"
@@ -64,10 +69,10 @@ End
 
 Private Sub initializeWidgets()
     
+    addSearchButton()
     addMapSelectButton("GoogleEarth", HaruhiMain.GoogleMap, False)
     addMapSelectButton("OpenStreetMap", HaruhiMain.OpenStreetMap, True)
     addLocationLabel()
-        addSpacer()
     addGearButton()
     
 End
@@ -91,5 +96,11 @@ End
 Public Sub MapSelectButton_Click()
     
     Raise MapSelect(Last.Tag)
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    NagatoLeftPanel.Toggle()
     
 End
