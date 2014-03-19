@@ -1,13 +1,25 @@
 ' Gambas class file
 
-Public Sub _new()
-
+Private Sub setTabStrip()
+    
+    Dim yukiDeviceIndex As Integer
+    Dim yukiProperty As NagatoDeviceProperty
+    
+    For yukiDeviceIndex = 0 To NagatoUPower.Count - 1
+        Inc DeviceTabs.Count
+        With NagatoUPower.Devices[yukiDeviceIndex]
+            DeviceTabs.Index = yukiDeviceIndex + 1
+            DeviceTabs.Text = File.Name(.NativePath)
+            DeviceTabs.Picture = MikuruDataTypes.GetDeviceIcon(.Type)
+            yukiProperty = New NagatoDeviceProperty(DeviceTabs, yukiDeviceIndex)
+        End With
+    Next
+    
 End
 
 Public Sub Form_Open()
     
-    TabStrip1.Count = NagatoUPower.Count + 1
-    TabStrip1.Index = 0
+    setTabStrip()
     
     Me.Center()
     
