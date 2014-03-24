@@ -55,6 +55,8 @@ Private Sub addApplications(argDirectory As String, Optional argKDE As Boolean =
     
     Dim yukiPath As String
     
+    If Not Exist(argDirectory) Then Return
+    
     For Each yukiPath In Dir(argDirectory).Sort()
         If File.Ext(argDirectory &/ yukiPath) = "desktop" Then
             addDesktopFiles(argDirectory &/ yukiPath)

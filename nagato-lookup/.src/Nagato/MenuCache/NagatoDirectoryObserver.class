@@ -58,6 +58,9 @@ Public Sub Timer_Timer()
     $lastObserved = Now
     $previousPaths = yukiCurrentPaths
     
+Catch 'to avoid error when ~/.local/share/applications/foobar not existed
+    Return
+    
 End
 
 Private Function Directory_Read() As String
