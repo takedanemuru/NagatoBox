@@ -4,8 +4,6 @@ Private $valide As Boolean = False
 
 Public Sub Form_Open()
     
-    Debug DateDiff(Date(2014, 3, 13, 12, 1), Date(2014, 3, 13, 12, 2), gb.Day)
-    
     If NagatoSettings.TodaysTaskLastUpdated Then
         If 1 > DateDiff(NagatoSettings.TodaysTaskLastUpdated, Now(), gb.Date) Then
             TaskTextBox.Text = NagatoSettings.TodaysTask

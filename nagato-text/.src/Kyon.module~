@@ -27,7 +27,7 @@ Public Sub Main()
     
     If Not $stickyMode Then
         Debug "sticky"
-        MikuruStickies.ShowStickies()
+        MikuruStickies.ShowAll()
     Else If NagatoDBus.IsUnique() Then
         Debug "unique"
         NagatoDBus.Register()

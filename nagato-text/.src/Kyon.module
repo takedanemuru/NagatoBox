@@ -25,7 +25,7 @@ Public Sub Main()
     
     parsingApplicationArguments()
     
-    If Not $stickyMode Then
+    If $stickyMode Then
         Debug "sticky"
         MikuruStickies.ShowAll()
     Else If NagatoDBus.IsUnique() Then

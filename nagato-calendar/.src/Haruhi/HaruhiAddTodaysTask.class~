@@ -27,6 +27,7 @@ Public Sub Button1_Click()
 
     If $valide And If TaskTextBox.Text <> "" Then
         NagatoSettings.TodaysTask = TaskTextBox.Text
+        Me.Close()
     Endif
 
 End

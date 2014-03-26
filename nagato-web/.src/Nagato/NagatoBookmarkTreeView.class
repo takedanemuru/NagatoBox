@@ -23,6 +23,7 @@ Private Sub setBookmark(argCategory As String)
     
     For Each yukiResult
         With NagatoDBWeb
+            If $treeView.Exist(yukiResult[.ColumnUrl]) Then Continue
             $treeView.Add(yukiResult[.ColumnUrl], yukiResult[.ColumnUserDefinedPageName],, argCategory)
         End With
     Next

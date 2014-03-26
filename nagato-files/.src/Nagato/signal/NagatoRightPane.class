@@ -140,4 +140,8 @@ Public Sub DrawingArea_Draw()
         drawProperty(yukiY)
     Paint.End()
     
+Catch
+    Debug Error.Text
+    Try Paint.End()
+    
 End
