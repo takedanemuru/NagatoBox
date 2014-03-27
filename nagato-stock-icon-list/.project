@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.1
+# Compiled with Gambas 3.5.2
 Title=nagato-stock-icon-list
-Startup=FMain
+Startup=Kyon
 Icon=pictures/give-me-megane-back.jpg
-Version=0.2.0
+Version=0.2.1
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -12,12 +12,12 @@ Component=gb.qt4.ext
 Description="nagato shows you all stock icons for gambas3"
 Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
 TabSize=8
-Maintainer=takeda.nemuru
-Vendor=n.labs
+Maintainer=takedanemuru
+Vendor=The Alien and RadioNoise
 Address=takeda.nemuru@gmail.com
-Url=http://bloominabc.blogspot.jp/
-License=General Public License
-PackageName=nagato-stock-icon-list-0.2.0
+Url=http://takedanemuru.github.io/
+License=S.O.S. License
+PackageName=nagato-stock-icon-list-0.2.1
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

@@ -19,9 +19,10 @@ Private Sub initializeIconView(argContainer As Container)
         .Expand = True
         .Picture = picture.Load("pictures/about.png")
         .Mode = Select.Single
-        .IconLines = 0
+        '.IconLines = 0
         .Drop = True
         .Orientation = Arrange.Horizontal
+        .Tracking = True
     End With
     
 End
@@ -146,21 +147,21 @@ Public Sub IconView_MouseDrag()
     
     If $selectionBar.Count = 0 Then Return
     
-    'If Not $iconView.Key Then Return
-    
     Drag.Icon = $iconView.Current.Picture
-    Drag.IconX = -128
-    Drag.IconY = -128
     $iconView.Drag(NagatoDrag2.GetUriList($selectionBar.Paths), MikuruMimeType.UriList)
     
 End
 
 Public Sub IconView_DragMove()
     
-    If Not $iconView.FindAt(Drag.X, Drag.Y) And If IsDir($iconView.Item.Key) Then
+    Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
+    
+    If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
+        Debug "selected"
         $iconView.UnselectAll()
         $iconView.Item.Selected = True
     Else
+        Debug "not selected"
         $iconView.UnselectAll()
     End If
     

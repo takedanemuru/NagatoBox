@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.3.4
+# Compiled with Gambas 3.5.2
 Title=nagato-color-picker
-Startup=FMain
+Startup=Kyon
 Icon=picture/pipette.png
-Version=0.0.1
+Version=0.0.2
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -14,12 +14,12 @@ Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
 TabSize=8
 Translate=1
 Language=ja
-Maintainer=colonel-in-cheese
-Vendor=colonel-in-cheese
+Maintainer=takedanemuru
+Vendor=The Alien and RadioNoise
 Address=takeda.nemuru@gmail.com
-Url=http://bloominabc.blogspot.jp/
-License=General Public License
-PackageName=nagato-color-picker-0.0.1
+Url=http://takedanemuru.github.io/
+License=S.O.S. License
+PackageName=nagato-color-picker-0.0.2
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Graphics"

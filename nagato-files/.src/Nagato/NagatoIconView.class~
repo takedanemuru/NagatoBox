@@ -19,9 +19,10 @@ Private Sub initializeIconView(argContainer As Container)
         .Expand = True
         .Picture = picture.Load("pictures/about.png")
         .Mode = Select.Single
-        .IconLines = 0
+        '.IconLines = 0
         .Drop = True
         .Orientation = Arrange.Horizontal
+        .Tracking = True
     End With
     
 End
@@ -146,21 +147,27 @@ Public Sub IconView_MouseDrag()
     
     If $selectionBar.Count = 0 Then Return
     
-    'If Not $iconView.Key Then Return
-    
     Drag.Icon = $iconView.Current.Picture
-    Drag.IconX = -128
-    Drag.IconY = -128
     $iconView.Drag(NagatoDrag2.GetUriList($selectionBar.Paths), MikuruMimeType.UriList)
     
 End
 
 Public Sub IconView_DragMove()
     
-    If Not $iconView.FindAt(Drag.X, Drag.Y) And If IsDir($iconView.Item.Key) Then
+    Dim yukiShift As Integer
+    Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
+    
+    Debug $iconView.W
+    Debug yukiScrollArea.ScrollX
+    Debug yukiScrollArea.ScrollWidth
+    Debug Drag.X
+    
+    If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
+        Debug "selected"
         $iconView.UnselectAll()
         $iconView.Item.Selected = True
     Else
+        Debug "not selected"
         $iconView.UnselectAll()
     End If
     
@@ -172,22 +179,22 @@ Public Sub IconView_Drop()
     
     If Drag.Format <> MikuruMimeType.UriList Then Return 
     
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        'xdg-user-dirs will be ignored. 
-        If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
-        Select Case getItemType()
-            Case MikuruDrop.TypeVoid
-                Debug "Move to current directory"
-                Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, yukiPath)
-            Case MikuruDrop.TypeFile
-                Debug "ignore"
-            Case MikuruDrop.TypeDirectory
-                Debug "move file(s) to " & $iconView.Item.Key
-                Try Move yukiPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(yukiPath))
-            Case MikuruDrop.TypeApplication
-                Debug "Try execute app with: " & yukiPath
-        End Select
-    Next
+    ' For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+    '     'xdg-user-dirs will be ignored. 
+    '     If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
+    '     Select Case getItemType()
+    '         Case MikuruDrop.TypeVoid
+    '             Debug "Move to current directory"
+    '             Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, yukiPath)
+    '         Case MikuruDrop.TypeFile
+    '             Debug "ignore"
+    '         Case MikuruDrop.TypeDirectory
+    '             Debug "move file(s) to " & $iconView.Item.Key
+    '             Try Move yukiPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(yukiPath))
+    '         Case MikuruDrop.TypeApplication
+    '             Debug "Try execute app with: " & yukiPath
+    '     End Select
+    ' Next
     
 End
 
