@@ -1,11 +1,8 @@
 ' Gambas module file
 
-Private $arguments As New String[]
-Private $type As String
-
 Public Sub Main()
     
-    HaruhiMain.Show()
     NagatoArguments.Parsing()
+    HaruhiMain.Show()
     
 End

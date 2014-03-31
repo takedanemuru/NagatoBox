@@ -6,9 +6,15 @@ Private $observer As Observer
 Public Sub _new()
 
     $observer = New Observer(NagatoFileStore) As "Asakura"
-
     $iconView = New NagatoIconView(FilesIconView) As "IconView"
-    $iconView.SetEmptyView()
+    
+    Debug NagatoFileStore.Count
+    
+    If NagatoFileStore.Count = 0 Then
+        $iconView.SetEmptyView()
+    Else
+        $iconView.SetFileIcons()
+    End If
     
 End
 

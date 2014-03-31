@@ -2,25 +2,19 @@
 
 Create Static
 
-Property Read Type As String
 Property Read Paths As String[]
 
-Private $type As String = "zip"
 Private $arguments As String[]
 
 Public Sub Parsing()
     
+    Dim yukiOption As Boolean
+    
     Args.Begin("nagato-archiver usage")
-        '$type = Args.Get("t", "type", "Archive type to create.")
+        yukiOption = Args.Get("e", "extract-files-here ", " Extract files In current directory ")
     $arguments = Args.End()
     
     If $arguments.Count > 0 Then NagatoFileStore.SetPaths($arguments)
-
-End
-
-Private Function Type_Read() As String
-
-    Return $type
 
 End
 

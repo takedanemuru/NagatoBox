@@ -15,7 +15,7 @@ Private Sub initializeIconView()
     
      With $iconView
         .Clear()
-        .Foreground = Color.Orange
+        .Foreground = Color.Violet
         .Font.Size = FontSize
         .Picture = Picture.Load("Pictures/yukichan_29.jpg")
     End With

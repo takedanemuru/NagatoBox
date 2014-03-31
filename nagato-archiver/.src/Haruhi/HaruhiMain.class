@@ -3,6 +3,25 @@
 Private $fileStore As NagatoFileStore
 Private $iconView As NagatoIconView
 
+Private Function getArchiveType() As String
+    
+    Select Case TypeComboBox.Index
+        Case 0
+            Return ".zip"
+        Case 1
+            Return ".tar"
+        Case 2
+            Return ".bz2"
+        Case 3
+            Return ".gz"
+        Case 4
+            Return ".rar"
+        Case 5
+            Return ".xz"
+    End Select
+    
+End
+
 Public Sub SetPaths(argPaths As String[])
     
     $fileStore.SetPaths(argPaths)
@@ -52,10 +71,11 @@ Public Sub ApplyButton_Click()
     If $iconView.IsEmpty Then Return 
     
     Dialog.Title = ("Set path to create")
-    Dialog.Path = MikuruSafePath.Get(User.Home &/ "my_archive.zip")
+    Dialog.Path = MikuruSafePath.Get(User.Home &/ "new_archive" & getArchiveType())
     
-    If Not Dialog.SaveFile() Then NagatoPatool.Create($fileStore.PathsInLine, Dialog.Path)
-
+    If Not Dialog.SaveFile() Then 
+        NagatoPatool.Create($fileStore.PathsInLine, Dialog.Path)
+    End If
 
 End
 

@@ -154,13 +154,7 @@ End
 
 Public Sub IconView_DragMove()
     
-    Dim yukiShift As Integer
     Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
-    
-    Debug $iconView.W
-    Debug yukiScrollArea.ScrollX
-    Debug yukiScrollArea.ScrollWidth
-    Debug Drag.X
     
     If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
         Debug "selected"
@@ -179,22 +173,22 @@ Public Sub IconView_Drop()
     
     If Drag.Format <> MikuruMimeType.UriList Then Return 
     
-    ' For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-    '     'xdg-user-dirs will be ignored. 
-    '     If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
-    '     Select Case getItemType()
-    '         Case MikuruDrop.TypeVoid
-    '             Debug "Move to current directory"
-    '             Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, yukiPath)
-    '         Case MikuruDrop.TypeFile
-    '             Debug "ignore"
-    '         Case MikuruDrop.TypeDirectory
-    '             Debug "move file(s) to " & $iconView.Item.Key
-    '             Try Move yukiPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(yukiPath))
-    '         Case MikuruDrop.TypeApplication
-    '             Debug "Try execute app with: " & yukiPath
-    '     End Select
-    ' Next
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        'xdg-user-dirs will be ignored. 
+        If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
+        Select Case getItemType()
+            Case MikuruDrop.TypeVoid
+                Debug "Move to current directory"
+                Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, yukiPath)
+            Case MikuruDrop.TypeFile
+                Debug "ignore"
+            Case MikuruDrop.TypeDirectory
+                Debug "move file(s) to " & $iconView.Item.Key
+                Try Move yukiPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(yukiPath))
+            Case MikuruDrop.TypeApplication
+                Debug "Try execute app with: " & yukiPath
+        End Select
+    Next
     
 End
 

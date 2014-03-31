@@ -4,6 +4,7 @@ Create Static
 
 Property Read Paths As String[]
 Property Read PathsInLine As String
+Property Read Count As Integer
 
 Private $paths As New String[]
 
@@ -18,6 +19,15 @@ Private Function isAcceptable(argPath As String) As Boolean
     
     If yukiType = "application/x-compress" Then Return True
     If yukiType = "application/zip" Then Return True
+    If yukiType = "application/lha" Then Return True
+    If yukiType = "application/x-gtar" Then Return True
+    If yukiType = "application/x-gzip" Then Return True
+    If yukiType = "application/x-lha" Then Return True
+    If yukiType = "application/x-lha-compressed" Then Return True
+    If yukiType = "application/x-rar-compressed" Then Return True
+    If yukiType = "application/x-tar" Then Return True
+    If yukiType = "application/x-zip-compressed" Then Return True
+    If yukiType = "application/x-zx" Then Return True
     
     Return False
     
@@ -65,5 +75,14 @@ Private Function PathsInLine_Read() As String
     Next
 
     Return yukiLine
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+Catch
+    Return 0
 
 End

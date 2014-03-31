@@ -157,11 +157,9 @@ Public Sub IconView_DragMove()
     Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
     
     If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
-        Debug "selected"
         $iconView.UnselectAll()
         $iconView.Item.Selected = True
     Else
-        Debug "not selected"
         $iconView.UnselectAll()
     End If
     

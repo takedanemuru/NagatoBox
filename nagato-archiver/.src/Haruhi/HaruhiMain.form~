@@ -16,6 +16,11 @@
       Picture = Picture["icon:/medium/open"]
       Border = False
     }
+    { ClearButton Button
+      MoveScaled(5,0,5,5)
+      Picture = Picture["icon:/medium/clear"]
+      Border = False
+    }
     { Panel1 Panel
       MoveScaled(10,1,2,4)
       Expand = True

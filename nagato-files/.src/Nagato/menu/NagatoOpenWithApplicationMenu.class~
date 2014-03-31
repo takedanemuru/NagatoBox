@@ -11,6 +11,8 @@ Private Sub addIndivisualOpenWithMenu(argDesktopFileName As String)
     Dim yukiPath As String = "/usr/share/applications/" & argDesktopFileName
     Dim yukiDesktopFile As DesktopFile
 
+    Debug argDesktopFileName
+
     If Not Exist(yukiPath) Then Return
     
     yukiDesktopFile = New DesktopFile(yukiPath)
