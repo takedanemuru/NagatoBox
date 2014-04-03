@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public Enum TypeExit, TypeReboot, TypeShutdown
+Public Enum TypeExit, TypeReboot, TypeShutdown, TypeLockScreen
 
 Private Const LogindBus As String = "system://org.freedesktop.login1"
 Private Const LogindManagerObjectPath As String = "/org/freedesktop/login1"
@@ -56,6 +56,8 @@ Public Sub Logout(argType As Integer)
             $logindManager.Reboot(False)
         Case TypeShutdown
             $logindManager.PowerOff(True)
+        Case TypeLockScreen
+            $logindManager.LockSessions()
     End Select
     
 End

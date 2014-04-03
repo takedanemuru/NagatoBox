@@ -1,0 +1,71 @@
+' Gambas class file
+
+Private $directory As String
+Private $fileName As String
+
+Private Sub setDirectoryButtonBox(argPath As String)
+    
+    With DirectoryButtonBox
+        .Text = argPath
+        .Picture = IIf(argPath = MikuruPath.Desktop, MikuruIcon.Get("desktop"), MikuruIcon.Get("folder"))
+    End With
+    
+End
+
+Public Sub SetPath(argPath As String, Optional argIcon As Picture)
+    
+    If Not Exist(argPath) Then Return
+    
+    $directory = File.Dir(argPath)
+    $fileName = File.Name(argPath)
+    
+    setDirectoryButtonBox($directory)
+    
+    CurrentNameTextLabel.Text = $fileName
+    NewNameTextBox.Text = $fileName
+    
+    If argIcon Then IconPictureBox.Picture = argIcon
+    
+End
+
+Public Sub Form_Open()
+
+    MikuruDialog.NewFileName = ""
+
+End
+
+Public Sub ApplyButton_Click()
+
+    If NewNameTextBox.Text = "" Then
+        Message.Warning(("YUKI.N > Input any name."), ("OK"))
+    Else If Exist(DirectoryButtonBox.Text &/ NewNameTextBox.Text) Then
+        Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
+    Else
+        Move $directory &/ $fileName To DirectoryButtonBox.Text &/ NewNameTextBox.Text
+        Me.Close(MikuruDialog.ResponseApply)
+    Endif
+
+End
+
+Public Sub NewNameTextBox_Activate()
+
+    ApplyButton_Click()
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(MikuruDialog.ResponseCancel)
+
+End
+
+Public Sub DirectoryButtonBox_Click()
+
+    Dialog.Title = ("Select directory")
+    Dialog.Path = File.Dir($directory)
+    
+    If Not Dialog.SelectDirectory() Then
+        setDirectoryButtonBox(Dialog.Path)
+    Endif
+
+End

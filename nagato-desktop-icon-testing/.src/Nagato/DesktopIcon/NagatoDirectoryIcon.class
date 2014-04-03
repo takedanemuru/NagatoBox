@@ -1,0 +1,74 @@
+' Gambas class file
+
+Inherits NagatoIconStandard
+
+Public Const IconSize As Integer = 48 'override
+
+Public Function _GetMime() As String
+    
+    Return "inode/directory"
+    
+End
+
+Public Sub _SetIcon() ' override
+    
+    Me._$icon = MikuruIcon.Get("folder", Me.IconSize).Image
+    
+End
+
+Public Sub _GetText() As String
+    
+    Return File.Name(Me._$path) & "<br>-" & RDir(Me._$path).Count & " items-"
+    
+End
+
+Public Sub _AddStarMenu() 'override
+    
+    Dim yukiMenu As NagatoButtonMenuDirectoryIcon
+    
+    yukiMenu = New NagatoButtonMenuDirectoryIcon(Me._$form, Me._$starButton) As "StarMenu"
+    
+End
+
+Public Sub _OnActivate()
+    
+    Dim yukiDesktopFiles As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
+    Dim yukiDesktopFile As DesktopFile
+    
+    If yukiDesktopFiles.Count = 0 Then
+        Message.Warning(("YUKI.N > Sorry, but I couldn't find any application to open this file."), ("OK"))
+    Else
+        yukiDesktopFile = New DesktopFile(MikuruApplications.GlobalApplicationDirectory &/ yukiDesktopFiles[0])
+        Try Shell Subst$("&1 &2", yukiDesktopFile.Exec, Quote$(Me._$path))
+        If Error Then yukiDesktopFile.Run(Quote$(Me._$path))
+    End If
+    
+End
+
+Public Sub Icon_Drop()
+    
+    Dim yukiPath As String
+    
+    If Drag.Format <> "text/uri-list" Then Return
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+         Try Move yukiPath To MikuruSafePath.Get(Me._$path &/ File.Name(yukiPath))
+    Next
+    
+Catch 
+    Message.Error(Error.Text, ("OK"))
+    Debug Error.Text
+    
+End
+
+Public Sub StarMenu_MenuEvent(argEvent As Integer)
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.DirectoryOpen
+            Me._OnActivate()
+        Case NagatoMenuPipe.DirectoryRename
+            HaruhiRename.SetPath(Me._$path, Me._$icon.Picture)
+            HaruhiRename.ShowDialog()
+    End Select
+    
+End

@@ -1,0 +1,27 @@
+' Gambas class file
+
+Public Enum AppHeader = 1000, AppAbout = 1001, AppQuit = 1002
+Public Enum FileHeader = 2000, FileOpen = 2001, FileRename = 2002
+Public Enum DirectoryHeader = 3000, DirectoryOpen = 3001, DirectoryRename = 3002
+
+Event MenuEvent(argEvent As Integer)
+Event MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+Event MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    Raise MenuEvent(argEvent)
+    
+End
+
+Public Sub Menu_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+    
+    Raise MenuEventWithArg(argEvent, argArgument)
+    
+End
+
+Public Sub Menu_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    Raise MenuEventWithArgs(argEvent, argArguments)
+    
+End

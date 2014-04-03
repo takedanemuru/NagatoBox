@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Event Launch
+
+Private Sub addOpenMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "LaunchMenu"
+    
+    With yukiMenu
+        .Text = ("Launch")
+        .Picture = MikuruIcon.Get("gear")
+    End With
+    
+End
+
+Public Sub _InitializeAdditionalMenus() 'override
+    
+    addOpenMenu()
+    Me._AddSpacer()
+    
+End
+
+Public Sub LaunchMenu_Click()
+    
+    Raise Launch
+    
+End

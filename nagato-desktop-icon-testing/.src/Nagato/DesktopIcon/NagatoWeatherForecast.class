@@ -1,0 +1,162 @@
+' Gambas class file
+
+Inherits NagatoIcon
+
+Private $timer As New Timer As "Timer"
+Private $currentWeather As NagatoWeatherElement
+Private $textRect As New Rect
+
+Private Function getTitle() As String
+    
+    Return Subst$("<h2>&1</h2>&2", Upper$(NagatoWeatherCondition.GetText($currentWeather.IconId)), String$(8, "<br>"))
+    
+End
+
+Private Function getHeaders() As String
+    
+    Dim yukiReturn As String = "<h2> </h2><br>"
+    
+    yukiReturn &= "Temp.:<br>"
+    yukiReturn &= "Wind(S):<br>"
+    yukiReturn &= "Wind(D):<br>"
+    yukiReturn &= "Hum.:<br>"
+    yukiReturn &= "Cloud:<br>"
+    yukiReturn &= "Press.:<br>"
+    yukiReturn &= "Prec.:<br>"
+    
+    Return yukiReturn
+    
+End
+
+Private Function getStatus() As String
+    
+    Dim yukiReturn As String = "<h2> </h2><br>"
+    
+    With $currentWeather
+        yukiReturn &= Subst$("&1°C<br>", .Temperature)
+        yukiReturn &= Subst$("&1m<br>", .WindSpeed)
+        yukiReturn &= Subst$("&1<br>", .WindDirection)
+        yukiReturn &= Subst$("&1%<br>", .Humidity)
+        yukiReturn &= Subst$("&1%<br>", .Cloudiness)
+        yukiReturn &= Subst$("&1HPa<br>", .Pressure)
+        yukiReturn &= Subst$("&1mm<br>", .Precipitation)
+    End With
+    
+    Return yukiReturn
+    
+End
+
+Private Sub drawWatherText()
+    
+    setTextRect()
+
+    With $textRect
+        Paint.DrawRichText(getTitle(), .X, .Y, .W, .H, Align.Center)
+        Paint.DrawRichText(getHeaders(), .X, .Y, .W, .H, Align.Left)
+        Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
+    End With
+    
+End
+
+Private Function getWeatherIcon() As Image
+    
+    If Hour(Now()) >= 6 And If 18 > Hour(Now()) Then
+            Return NagatoWeatherIcon.GetIconImageDay($currentWeather.IconId).Stretch(96, 96)
+    Else
+            Return NagatoWeatherIcon.GetIconImageNight($currentWeather.IconId).Stretch(96, 96)
+    End If
+    
+End
+
+Private Sub setWeatherInfomation(argBackground As Integer)
+    
+    Dim yukiBaseImage As Image = New Image(Me.FormWidth, 320, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.DrawImage(getWeatherIcon(), 16, 8)
+        drawWatherText()
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Private Sub setPleaseWait(argBackground As Integer)
+    
+    Dim yukiBaseImage As Image = New Image(Me.FormWidth, 320, argBackground)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.DrawImage(MikuruIcon.Get("question", 48).Image, 40, 8)
+        Paint.DrawRichText("Please wait...", 0, 0, Me.FormWidth, Me._$form.Height, Align.Center)
+    Paint.End()
+    
+    Me._$form.Picture = yukiBaseImage.Picture
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Private Sub setFormPicture(Optional argBackground As Integer = Color.DarkBlue)
+    
+    If NagatoWeatherCache.IsReady
+        setWeatherInfomation(Color.Lighter(NagatoWeatherCondition.GetColor($currentWeather.IconId)))
+    Else
+        setPleaseWait(argBackground)
+    End If
+    
+End
+
+Private Sub setTextRect()
+    
+    With $textRect
+        .X = Me.TextMargin
+        .Y = 124
+        .W = 112
+        .H = Me._$form.Font.RichTextHeight(getTitle()) 
+    End With
+    
+End
+
+Public Sub _AddStarMenu() 'override
+    
+    Dim yukiMenu As NagatoButtonMenuWeatherIcon
+    
+    yukiMenu = New NagatoButtonMenuWeatherIcon(Me._$form, Me._$starButton) As "StarMenu"
+    
+End
+
+Public Sub _new()
+    
+    Me._InitializeForm(320)
+    Me._$form.Show
+    
+    setFormPicture()
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    If NagatoWeatherCache.IsReady Then
+        $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
+    End If
+    
+    setFormPicture()
+    
+End
+
+Public Sub StarMenu_LocationChanged()
+    
+    NagatoWeatherCache.Activate()
+    
+End

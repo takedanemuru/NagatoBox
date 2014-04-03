@@ -1,0 +1,83 @@
+' Gambas class file
+
+Property Index As Integer
+Property Read Room As Integer
+
+Private Const Offset As Integer = 32
+Private Const Margin As Integer = 8
+Private Const IconWidth As Integer = 128
+
+Static Private $indexCount As Integer = -1
+
+Private $index As Integer
+Private $room As Integer
+Private $icons As New Collection
+
+Public Sub Add(argIcon As Object, argKey As String)
+    
+    $room -= argIcon.Height
+    $icons.Add(argIcon, argKey)
+    
+End
+
+Public Sub Sort()
+    
+    Dim yukiIcon As Object
+    Dim yukiX As Integer
+    Dim yukiY As Integer = Offset
+    
+    For Each yukiIcon In $icons
+        yukiX = Margin + $index * (Margin + IconWidth)
+        yukiIcon.MoveTo(yukiX, yukiY)
+        yukiY += yukiIcon.Height + Margin
+    Next
+    
+End
+
+Public Sub Exist(argKey As String) As Boolean
+    
+    Return $icons.Exist(argKey)
+    
+End
+
+Public Sub Close(argKey As String)
+    
+    $icons[argKey].Close()
+    $icons.Remove(argKey)
+    
+End
+
+Public Sub Refresh(argKey As String)
+    
+    If $icons.Exist(argKey) Then $icons[argKey].Refresh()
+    
+End
+
+Public Sub _new()
+    
+    Debug "new"
+    
+    Inc $indexCount
+    $index = $indexCount
+    
+    $room = Desktop.H - 2 * Offset
+    
+End
+
+Private Function Index_Read() As Integer
+
+    Return $index
+
+End
+
+Private Sub Index_Write(Value As Integer)
+
+    $index = Value
+
+End
+
+Private Function Room_Read() As Integer
+
+    Return $room
+
+End

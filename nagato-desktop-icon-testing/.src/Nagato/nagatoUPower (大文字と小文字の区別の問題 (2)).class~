@@ -1,0 +1,13 @@
+' Gambas class file
+
+Create Static
+
+Public Sub EnsureActivation()
+    
+    Dim yukiApplication As String
+    
+    For Each yukiApplication In DBus[dbus.System
+        Debug
+    Next
+    
+End

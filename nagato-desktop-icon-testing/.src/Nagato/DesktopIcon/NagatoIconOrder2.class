@@ -1,0 +1,217 @@
+' Gambas class file
+
+Create Static
+
+Private Const Offset As Integer = 32
+Private Const Margin As Integer = 8
+Private Const IconWidth As Integer = 128
+
+Private $icons As New Collection
+Private $columns As New NagatoIconColumn[]
+
+Private Sub addToColumn(argIcon As Object, argKey As String)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $columns.Max
+        If $columns[yukiCount].Room > (argIcon.Height + Margin) Then
+            $columns[yukiCount].Add(argIcon, argKey)
+            Return
+        Endif
+    Next
+    
+    ' if overfolow
+    addColumn()
+    $columns[$columns.Max].Add(argIcon, argKey)
+    
+End
+
+Private Sub addSlideShow()
+    
+    Dim yukiSlideShow As NagatoSlideShow
+    
+    yukiSlideShow = New NagatoSlideShow As "Icon"
+    addToColumn(yukiSlideShow, "nagato-slideshow-key")
+    
+End
+
+Private Sub addFileIcon(argFileName As String)
+    
+    Dim yukiIcon As Object
+    Dim yukiMimeType As String = DesktopMime.FromFile(MikuruPath.Desktop &/ argFileName).Type
+    
+    If yukiMimeType = "application/x-desktop" Then
+        yukiIcon = New NagatoDesktopEntryIcon(argFileName) As "Icon"
+    Else If IsDir(MikuruPath.Desktop &/ argFileName) Then
+        yukiIcon = New NagatoDirectoryIcon(argFileName) As "Icon"
+    Else If yukiMimeType Begins "image" Then
+         yukiIcon = New NagatoImageIcon(argFileName) As "Icon"
+    Else If yukiMimeType = "application/pdf" Or If yukiMimeType = "application/x-pdf" Then
+        yukiIcon = New NagatoPdfIcon(argFileName) As "Icon"
+    Else
+        yukiIcon = New NagatoFileIcon(argFileName) As "Icon"
+    End If
+    
+    addToColumn(yukiIcon, argFileName)
+
+End
+
+Private Sub addFileIcons()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(MikuruPath.Desktop)
+        addFileIcon(yukiPath)
+    Next
+    
+End
+
+Private Sub addClock()
+    
+    Dim yukiClock As NagatoClock
+    
+    yukiClock = New NagatoClock As "Icon"
+    addToColumn(yukiClock, "nagato-clock-key")
+    
+End
+
+Private Sub addMemos()
+    
+    Dim yukiMemo As NagatoStickyNote
+    
+    yukiMemo = New NagatoStickyNote As "Icon"
+    addToColumn(yukiMemo, "nagato-stickeynote-key")
+    
+End
+
+Private Sub addSystemMonitor()
+    
+    Dim yukiMemo As NagatoSystemMonitor
+    
+    yukiMemo = New NagatoSystemMonitor As "Icon"
+    addToColumn(yukiMemo, "nagato-systemmonitor-key")
+    
+End
+
+Private Sub addWeatherForecast()
+    
+    Dim yukiMemo As NagatoWeatherForecast
+    
+    yukiMemo = New NagatoWeatherForecast As "Icon"
+    addToColumn(yukiMemo, "nagato-weatherforecast-key")
+    
+End
+
+Private Sub addNetworkIcon()
+    
+    Dim yukiMemo As NagatoNetworkMonitor
+    
+    yukiMemo = New NagatoNetworkMonitor As "Icon"
+    addToColumn(yukiMemo, "nagato-network-monitor-key")
+    
+End
+
+Private Sub addBatteryIcon()
+    
+    Dim yukiMemo As NagatoBattery
+    
+    yukiMemo = New NagatoBattery As "Icon"
+    addToColumn(yukiMemo, "nagato-battery-key")
+    
+End
+
+Private Sub addTrashBin()
+    
+    Dim yukiTrash As NagatoTrashBin
+    
+    yukiTrash = New NagatoTrashBin As "Icon"
+    addToColumn(yukiTrash, "nagato-trash-key")
+    
+End
+
+Private Sub addColumn()
+    
+    Dim yukiColumn As New NagatoIconColumn
+    
+    $columns.Add(yukiColumn)
+    
+End
+
+Public Sub RefreshAll()
+    
+    addClock()
+    addMemos()
+    addSystemMonitor()
+    addWeatherForecast()
+    addSlideShow()
+    addFileIcons()
+    If NagatoUPower.HasBattery Then addBatteryIcon()
+    addNetworkIcon()
+    addTrashBin()
+    
+End
+
+Public Sub Clear()
+    
+    Dim yukiColumn As NagatoIconColumn
+    
+    For Each yukiColumn In $columns
+        yukiColumn.Clear()
+    Next
+    
+    
+End
+
+Public Sub Sort()
+    
+    Dim yukiColumn As NagatoIconColumn
+    
+    For Each yukiColumn In $columns
+        Debug "sort it !!"
+        yukiColumn.Sort()
+    Next
+    
+End
+
+Public Sub Delete(argFileName As String)
+    
+    Dim yukiColumn As NagatoIconColumn
+    
+    For Each yukiColumn In $columns
+        If yukiColumn.Exist(argFileName) Then
+            yukiColumn.Close(argFileName)
+            Me.Sort()
+            Return
+        Endif
+    Next
+    
+End
+
+Public Sub Modefied(argFileName As String)
+    
+    Dim yukiColumn As NagatoIconColumn
+    
+    For Each yukiColumn In $columns
+        If yukiColumn.Exist(argFileName) Then Return
+    Next
+    
+    addFileIcon(argFileName)
+    Me.Sort()
+    
+End
+
+Public Sub Refresh(argKey As String)
+    
+    Dim yukiColumn As NagatoIconColumn
+    
+    For Each yukiColumn In $columns
+        yukiColumn.Refresh(argKey)
+    Next
+    
+End
+
+Public Sub Icon_Move()
+    
+    Me.Sort()
+    
+End

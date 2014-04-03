@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoDBusService
+
+Property Read Connectable As Boolean
+Property Read ReadableState As String
+Property Read Devices As NagatoNetworkDevice[]
+
+Public Const ApplicationName As String = "system://org.freedesktop.NetworkManager"
+Public Const ObjectPath As String = "/org/freedesktop/NetworkManager"
+Public Const Interface As String = "org.freedesktop.NetworkManager"
+
+Private $proxy As DBusProxy
+Private $devices As NagatoNetworkDevices
+
+Event PropertiesChanged
+
+Public Sub EnsureActivation()
+    
+    Me._EnsureService("org.freedesktop.NetworkManager")
+    
+    $proxy = DBus[Me.ApplicationName][Me.ObjectPath, Me.Interface]
+    $devices = New NagatoNetworkDevices($proxy.GetDevices()) As "Device"
+    
+End
+
+Public Sub Device_PropertiesChanged()
+    
+    Raise PropertiesChanged
+    
+End
+
+Private Function ReadableState_Read() As String
+
+    Select Case $proxy.State
+        Case 0
+            Return ("Unknown")
+        Case 10
+            Return ("Asleep")
+        Case 20
+            Return ("Disconnected")
+        Case 30
+            Return ("Disconnecting")
+        Case 40
+            Return ("Connecting")
+        Case 50
+            Return ("Connected: Local")
+        Case 60
+            Return ("Connected: Site")
+        Case 70
+            Return ("Connected")
+    End Select
+
+Catch
+    Return ("Unknown")
+
+End
+
+Private Function Devices_Read() As NagatoNetworkDevice[]
+
+    Return $devices.Devices
+
+End
+
+Private Function Connectable_Read() As Boolean
+
+    If $proxy.State >= 50 Then
+        Return True
+    Else
+        Return False
+    Endif
+
+End

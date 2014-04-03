@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Private Sub addEmptyMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "EmptyMenu"
+    
+    With yukiMenu
+        .Text = ("Empty")
+        .Picture = MikuruIcon.Get("bin")
+    End With
+    
+End
+
+Public Sub _InitializeAdditionalMenus() 'override
+    
+    addEmptyMenu()
+    Me._AddSpacer()
+    
+End
+
+Public Sub EmptyMenu_Click()
+    
+    Try Shell "trash-empty"
+    
+End

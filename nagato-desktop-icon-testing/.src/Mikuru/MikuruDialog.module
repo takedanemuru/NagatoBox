@@ -1,0 +1,19 @@
+' Gambas module file
+
+Property NewFileName As String 
+
+Public Enum ResponseApply = 1001, ResponseCancel = 1002
+
+Private $newFileName As String = ""
+
+Private Function NewFileName_Read() As String
+
+    Return $newFileName
+
+End
+
+Private Sub NewFileName_Write(Value As String)
+
+    $newFileName = Value
+
+End

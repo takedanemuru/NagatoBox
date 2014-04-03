@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Public Enum ModeStartup, ModeLogout, ModeReboot, ModeShutDown
+Public Enum ModeStartup, ModeLogout, ModeReboot, ModeShutdown, ModeLockScreen
 
 Private $mode As Integer = Me.ModeStartup
 Private $messages As New String[]

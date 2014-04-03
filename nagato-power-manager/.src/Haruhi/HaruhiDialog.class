@@ -32,7 +32,7 @@ Public Sub MessageScreen_KeyPress()
             Me.Close()
         Case Key.Enter, 16777220
             Me.Close()
-        Case Key["L"]
+        Case Key["E"]
             $message.Set(NagatoMessage.ModeLogout)
             $legend.Hide()
         Case Key["R"]
@@ -40,6 +40,9 @@ Public Sub MessageScreen_KeyPress()
             $legend.Hide()
         Case Key["S"]
             $message.Set(NagatoMessage.ModeShutDown)
+            $legend.Hide()
+        Case Key["L"]
+            $message.Set(NagatoMessage.ModeLockScreen)
             $legend.Hide()
     End Select
     
@@ -68,6 +71,9 @@ Public Sub Message_Finished(argMode As Integer)
             MikuruSession.Logout(MikuruSession.TypeReboot)
         Case NagatoMessage.ModeShutDown
             MikuruSession.Logout(MikuruSession.TypeShutdown)
+        Case NagatoMessage.ModeLockScreen
+            MikuruSession.Logout(MikuruSession.TypeLockScreen)
     End Select
     
 End
+

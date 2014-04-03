@@ -7,9 +7,9 @@ Private Function getArchiveType() As String
     
     Select Case TypeComboBox.Index
         Case 0
-            Return ".zip"
-        Case 1
             Return ".tar"
+        Case 1
+            Return ".zip"
         Case 2
             Return ".bz2"
         Case 3

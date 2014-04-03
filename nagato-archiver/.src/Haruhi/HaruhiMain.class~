@@ -17,8 +17,6 @@ Private Function getArchiveType() As String
         Case 4
             Return ".rar"
         Case 5
-            Return ".lzh"
-        Case 6
             Return ".xz"
     End Select
     

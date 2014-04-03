@@ -1,0 +1,22 @@
+' Gambas class file
+
+Create Static
+
+Public Sub EnsureActivation()
+    
+    Dim yukiApplication As String
+    Dim yukiList As String[]
+    
+    Debug DBus.System.Applications.Exist("org.freedesktop.UPower")
+    
+    For Each yukiApplication In DBus.System.Applications.Sort()
+        If yukiApplication = "org.freedesktop.UPower" Then Return
+    Next
+    
+    Debug "start upower"
+    
+    DBus["System://org.freedesktop.DBus"]["/", "org.freedesktop.DBus"].StartServiceByName("org.freedesktop.UPower", 0)
+    
+    Debug "done"
+    
+End

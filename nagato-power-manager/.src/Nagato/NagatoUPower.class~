@@ -12,8 +12,10 @@ Property Read TotalBatteryPercentage As Float
 Property Read HasBattery As Boolean
 Property Read IsOnline As Boolean
 Property Read Count As Integer
+Property Read Devices As DBusProxy[]
 
 Private $uPower As DBusProxy
+'Private $devices As DBusProxy[]
 
 Private Function getDeviceProxies(argFilter As Integer) As DBusProxy[]
     
@@ -71,5 +73,18 @@ End
 Private Function Count_Read() As Integer
 
     Return $uPower.EnumerateDevices.Count
+
+End
+
+Private Function Devices_Read() As DBusProxy[]
+
+    Dim yukiDeviceName As String
+    Dim yukiDevices As New DBusProxy[]
+    
+    For Each yukiDeviceName In $uPower.EnumerateDevices()
+        yukiDevices.Add(DBus[ApplicationName][yukiDeviceName])
+    Next
+    
+    Return yukiDevices
 
 End
