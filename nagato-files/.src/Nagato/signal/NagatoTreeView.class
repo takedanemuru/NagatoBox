@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoLeftPaneContent
 
 Private $treeView As TreeView
 
@@ -92,12 +92,6 @@ Private Sub initializeTreeView(argContainer As Container)
     
 End
 
-Public Sub ToggleVisible()
-    
-    $treeView.Visible = Not $treeView.Visible
-    
-End
-
 Public Sub Refresh()
     
     $treeView.Clear()
@@ -109,6 +103,7 @@ End
 Public Sub _new(argContainer As Container)
     
     initializeTreeView(argContainer)
+    Me._$mainContent = $treeView
     
 End
 

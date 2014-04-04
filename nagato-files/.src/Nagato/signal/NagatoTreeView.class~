@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoLeftPaneContent
 
 Private $treeView As TreeView
 
@@ -109,6 +109,7 @@ End
 Public Sub _new(argContainer As Container)
     
     initializeTreeView(argContainer)
+    Me._$mainContent = $treeView
     
 End
 

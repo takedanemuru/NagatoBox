@@ -19,7 +19,6 @@ Private Sub initializeIconView(argContainer As Container)
         .Expand = True
         .Picture = picture.Load("pictures/about.png")
         .Mode = Select.Single
-        '.IconLines = 0
         .Drop = True
         .Orientation = Arrange.Horizontal
         .Tracking = True
@@ -93,6 +92,23 @@ Private Sub refreshIconView(argDirectory As String)
     
 End
 
+Private Sub dropFile(argPath As String)
+    
+    Select Case getItemType()
+            Case MikuruDrop.TypeVoid
+                Debug "Move to current directory"
+                Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, argPath)
+            Case MikuruDrop.TypeFile
+                Debug "ignore"
+            Case MikuruDrop.TypeDirectory
+                Debug "move file(s) to " & $iconView.Item.Key
+                Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
+            Case MikuruDrop.TypeApplication
+                Debug "Try execute app with: " & argPath
+        End Select
+    
+End
+
 Public Sub SetFocus(argPath As String)
     
     $iconView[argPath].Selected = True
@@ -115,6 +131,12 @@ Public Sub RefreshFiltered(argDirectory As String, argFilter As String[])
     $currentDirectory = argDirectory
     $selectionBar.ClearAll()
     refreshIconView(argDirectory)
+    
+End
+
+Public Sub RefreshWithSearchQuery(argPaths As String[])
+    
+    
     
 End
 
@@ -157,11 +179,9 @@ Public Sub IconView_DragMove()
     Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
     
     If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
-        Debug "selected"
         $iconView.UnselectAll()
         $iconView.Item.Selected = True
     Else
-        Debug "not selected"
         $iconView.UnselectAll()
     End If
     
@@ -176,18 +196,7 @@ Public Sub IconView_Drop()
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         'xdg-user-dirs will be ignored. 
         If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
-        Select Case getItemType()
-            Case MikuruDrop.TypeVoid
-                Debug "Move to current directory"
-                Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, yukiPath)
-            Case MikuruDrop.TypeFile
-                Debug "ignore"
-            Case MikuruDrop.TypeDirectory
-                Debug "move file(s) to " & $iconView.Item.Key
-                Try Move yukiPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(yukiPath))
-            Case MikuruDrop.TypeApplication
-                Debug "Try execute app with: " & yukiPath
-        End Select
+        dropFile(yukiPath)
     Next
     
 End
@@ -225,6 +234,26 @@ Private Sub clearSelection()
     
 End
 
+Private Sub keyPressWithControl(argKeyCode As Integer)
+    
+    Dim yukiPaths As String
+    
+    Select Case argKeyCode
+        Case Key["x"]
+            Clipboard.Copy(NagatoDrag2.GetUriListCut($selectionBar.Paths), MikuruMimeType.UriList)
+        Case Key["c"] 
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), MikuruMimeType.UriList)
+        Case Key["v"] 
+            If Clipboard.Format <> MikuruMimeType.UriList Then Return
+            yukiPaths = Clipboard.Paste()
+            Raise MenuEventWithArg(Me.FileCopy, yukiPaths)
+        Case Key["h"] 
+            NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+            Me.Refresh($currentDirectory)
+    End Select
+    
+End
+
 Public Sub IconView_MouseDown()
     
     If $iconView.Key = "" Then Return
@@ -256,8 +285,6 @@ End
 
 Public Sub IconView_KeyPress()
     
-    Dim yukiPaths As String
-    
     If Key.Code = Key.Enter Then
         If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
         Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
@@ -268,18 +295,7 @@ Public Sub IconView_KeyPress()
     
     If Not Key.Control Then Return
     
-    If Key.Code = Key["x"] Then
-        Clipboard.Copy(NagatoDrag2.GetUriListCut($selectionBar.Paths), MikuruMimeType.UriList)
-    Else If Key.Code = Key["c"] Then
-        Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), MikuruMimeType.UriList)
-    Else If Key.Code = Key["v"] Then
-        If Clipboard.Format <> MikuruMimeType.UriList Then Return
-        yukiPaths = Clipboard.Paste()
-        Raise MenuEventWithArg(Me.FileCopy, yukiPaths)
-    Else If Key.Code = Key["h"] Then
-        NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
-        Me.Refresh($currentDirectory)
-    Endif
+    keyPressWithControl(Key.Code)
     
 End
 

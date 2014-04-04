@@ -16,6 +16,17 @@ Private $observer As Observer
 
 Event ToggleFilterBar(argShow As Boolean)
 
+Private Sub initializeMenuPanel(argContainer As Container)
+    
+    $container = New HBox(argContainer)
+
+    With $container 
+        .Height = 32
+        .Expand = False
+    End With
+    
+End
+
 Private Sub addButton(argButton As Button, argText As String, argTag As Integer, Optional argIcon As Picture)
     
     With argButton
@@ -113,7 +124,7 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $container = argContainer
+    initializeMenuPanel(argContainer)
     initializeWidgets()
     
 End

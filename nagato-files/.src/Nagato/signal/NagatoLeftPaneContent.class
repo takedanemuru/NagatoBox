@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Property Visible As Boolean
+
+Public _$mainContent As Object
+
+Private Function Visible_Read() As Boolean
+
+    Return Me._$mainContent.Visible
+
+End
+
+Private Sub Visible_Write(Value As Boolean)
+
+    Me._$mainContent.Visible = Value
+
+End

@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoLeftPaneContent
 
 Private Const SeparatorKey As String = "NagatoSeparatorKey"
 Private Const TrashBinKey As String = "NagatoTrashBinKey"
@@ -104,6 +104,7 @@ Public Sub _new(argContainer As Container)
     
     $bookmarks = New NagatoBookmarksArray
     initializeListView(argContainer)
+    Me._$mainContent = $listView
     
 End
 

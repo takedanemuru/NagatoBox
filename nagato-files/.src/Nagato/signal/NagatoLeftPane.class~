@@ -6,6 +6,7 @@ Private $container As VBox
 Private $modeComboBox As ComboBox
 Private $gtkBookmarks As NagatoGtkBookmarks
 Private $treeView As NagatoTreeView
+Private $fileSearch As NagatoFileSearch
 
 Private Sub initializeContainer(argContainer As Container)
     
@@ -24,7 +25,7 @@ Private Sub ininializeModeComboBox()
     With $modeComboBox
         .Expand = False
         .Height = 32
-        .List = [("Bookmarks"), ("TreeView")]
+        .List = [("Bookmarks"), ("Tree View"), ("File Search")]
         .ReadOnly = True
         .Index = 0
     End With
@@ -43,12 +44,14 @@ Public Sub _new(argContainer As Container)
     ininializeModeComboBox()
     $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
     $treeView = New NagatoTreeView($container) As "TFEI"
+    $fileSearch = New NagatoFileSearch($container) As "TFEI"
     
 End
 
 Public Sub ModeComboBox_Click()
     
-    $gtkBookmarks.ToggleVisible()
-    $treeView.ToggleVisible()
+    $gtkBookmarks.Visible = ($modeComboBox.Index = 0)
+    $treeView.Visible = ($modeComboBox.Index = 1)
+    $fileSearch.Visible = ($modeComboBox.Index = 2)
     
 End

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoLeftPaneContent
+
+Private $vBox As VBox
+Private $searchBox As ButtonBox
+
+Private Sub initializeVBox(argContainer As Container)
+    
+    $vBox = New VBox(argContainer)
+    
+    With $vBox
+        .Expand = True
+        .Background = Color.Pink
+        .Visible = False
+    End With
+    
+End
+
+Private Sub initializeSearchBox()
+    
+    $searchBox = New ButtonBox($vBox)
+    
+    With $searchBox
+        .Expand = False
+        .Height = 32
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Public Sub SetFocus()
+    
+    $searchBox.SetFocus()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeVBox(argContainer)
+    initializeSearchBox()
+    Me._$mainContent = $vBox
+    
+End

@@ -14,6 +14,17 @@ Private $currentDirectory As String
 
 Event Changed
 
+Private Sub initializeFilterPanel(argContainer As Container)
+    
+    $container = New HBox(argContainer)
+
+    With $container
+        .Height = 32
+        .Expand = False
+    End With
+    
+End
+
 Private Sub initializeSpacer()
     
     Dim yukiSpacer As New Panel($container)
@@ -36,6 +47,39 @@ Private Sub initializeSearchBox()
     
 End
 
+Private Function isVoidQuery() As Boolean
+    
+    If $seachBox.Text = "" Then 
+        $filtered = False
+        Return True
+    End If
+    
+    Return False
+    
+End
+
+Private Sub setResult()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir($currentDirectory, Subst$("*&1*", $seachBox.Text))
+        If Not NagatoSettings.ShowHidden And If yukiPath Begins "." Then Continue
+        $paths.Add($currentDirectory &/ yukiPath)
+    Next
+    
+End
+
+Private Sub checkItemCount()
+    
+    If $paths.Count > 0 Then
+        $filtered = True
+        Raise Changed
+    Else
+        $filtered = False
+    Endif
+    
+End 
+
 Public Sub Toggle(argShow As Boolean)
     
     $container.Visible = argShow
@@ -46,7 +90,7 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $container = argContainer
+    initializeFilterPanel(argContainer)
     initializeSpacer()
     initializeSearchBox()
     $container.Visible = False
@@ -55,26 +99,10 @@ End
 
 Public Sub SearchBox_Activate()
     
-    Dim yukiPath As String
-    
     $paths.Clear()
-
-    If $seachBox.Text = "" Then 
-        $filtered = False
-        Return
-    End If
-    
-    For Each yukiPath In Dir($currentDirectory, Subst$("*&1*", $seachBox.Text))
-        If Not NagatoSettings.ShowHidden And If yukiPath Begins "." Then Continue
-        $paths.Add($currentDirectory &/ yukiPath)
-    Next
-    
-    If $paths.Count > 0 Then
-        $filtered = True
-        Raise Changed
-    Else
-        $filtered = False
-    Endif
+    If isVoidQuery() Then Return
+    setResult()
+    checkItemCount()
     
 End
 
