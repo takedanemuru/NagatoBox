@@ -85,10 +85,38 @@ Private Sub initializeTreeView(argContainer As Container)
         .Background = Color.Lighter(Color.Lighter(Color.Violet))
         .Foreground = Color.White
         .Visible = False
+        .Drop = True
+        .Mode = Select.Single
     End With
     
     setDirectory(User.Home)
     expandHomeDirectory()
+    
+End
+
+Private Sub moveFiles()
+    
+    Dim yukiPath As String
+    Dim yukiFlag As Boolean = False
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            Try Move yukiPath To MikuruPath.GetSafePathName($treeView.Item.Key &/ File.Name(yukiPath))
+            yukiFlag = True
+        Endif
+    Next
+    
+    If yukiFlag Then Me.Refresh()
+    
+End
+
+Private Sub moveDroppedFiles()
+    
+    If Not Exist($treeView.Item.Key) Then
+        $treeView.Remove($treeView.Item.Key)
+    Else
+        moveFiles()
+    End If
     
 End
 
@@ -121,5 +149,21 @@ Public Sub TreeView_Expand()
         $treeView[$treeView.Key & "dummy"].Delete()
         setDirectory($treeView.Key)
     End If
+    
+End
+
+Public Sub TreeView_DragMove()
+    
+    If Not $treeView.FindAt(Drag.X, Drag.Y) Then
+        $treeView[$treeView.Item.Key].Selected = True
+    Else
+        $treeView.UnselectAll()
+    End If
+    
+End
+
+Public Sub TreeView_Drop()
+    
+    If Drag.Format = "text/uri-list" Then moveDroppedFiles()
     
 End
