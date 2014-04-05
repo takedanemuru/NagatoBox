@@ -30,6 +30,10 @@ Private Function getIcon(argPath As String) As Image
     
     Return yukiIcon.Stretch(yukiIcon.W * yukiRate, yukiIcon.H * yukiRate)
     
+Catch
+    Debug argPath
+    Return Stock["huge/file"]
+    
 End
 
 Private Sub setIcon(argPath As String) 

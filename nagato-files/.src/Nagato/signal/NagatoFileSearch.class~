@@ -19,7 +19,7 @@ End
 
 Private Sub initializeSearchBox()
     
-    $searchBox = New ButtonBox($vBox)
+    $searchBox = New ButtonBox($vBox) As "QueryBox"
     
     With $searchBox
         .Expand = False
@@ -29,10 +29,32 @@ Private Sub initializeSearchBox()
     
 End
 
+Public Sub SetFocus()
+    
+    $searchBox.SetFocus()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeVBox(argContainer)
     initializeSearchBox()
     Me._$mainContent = $vBox
+    
+End
+
+Public Sub QueryBox_Click()
+    
+    Dim yukiValues As New Variant[]
+    
+    yukiValues.Add($searchBox)
+    
+    If $searchBox.Text <> "" Then Raise Signal(MikuruSignal.LeftSearch, yukiValues)
+    
+End
+
+Public Sub QueryBox_Activate()
+    
+    Me.QueryBox_Click()
     
 End

@@ -40,6 +40,12 @@ Public Sub Form_Close()
     
 End
 
+Public Sub LeftPane_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Debug argValues[0]
+    
+End
+
 Public Sub MainPane_ShowProperty(argPath As String)
     
     $rightPane.SetProperty(argPath)

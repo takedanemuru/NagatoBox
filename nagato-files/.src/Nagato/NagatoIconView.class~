@@ -95,17 +95,17 @@ End
 Private Sub dropFile(argPath As String)
     
     Select Case getItemType()
-            Case MikuruDrop.TypeVoid
-                Debug "Move to current directory"
-                Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, argPath)
-            Case MikuruDrop.TypeFile
-                Debug "ignore"
-            Case MikuruDrop.TypeDirectory
-                Debug "move file(s) to " & $iconView.Item.Key
-                Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
-            Case MikuruDrop.TypeApplication
-                Debug "Try execute app with: " & argPath
-        End Select
+        Case MikuruDrop.TypeVoid
+            Debug "Move to current directory"
+            Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, argPath)
+        Case MikuruDrop.TypeFile
+            Debug "ignore"
+        Case MikuruDrop.TypeDirectory
+            Debug "move file(s) to " & $iconView.Item.Key
+            Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
+        Case MikuruDrop.TypeApplication
+            Debug "Try execute app with: " & argPath
+    End Select
     
 End
 
@@ -136,7 +136,23 @@ End
 
 Public Sub RefreshWithSearchQuery(argPaths As String[])
     
+    Dim yukiPath As String
     
+    $iconView.Clear()
+    
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        Debug yukiPath
+        If IsDir(yukiPath) Then
+            $iconView.Add(yukiPath, "", MikuruTile.GetDirectoryTile(yukiPath, $selectionBar.Exist(yukiPath)))
+        Endif
+    Next
+    
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        Debug yukiPath
+        If Not IsDir(yukiPath) Then
+            $iconView.Add(yukiPath, "", getFileIconPicture(yukiPath))
+        Endif
+    Next
     
 End
 
@@ -234,6 +250,18 @@ Private Sub clearSelection()
     
 End
 
+Private Sub keyPress(argKeyCode As Integer)
+    
+    If argKeyCode = Key.Enter Then
+        If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
+        Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    Else If argKeyCode = Key.Esc Then
+        $selectionBar.ClearAll()
+        Me.Refresh($currentDirectory)
+    Endif
+    
+End
+
 Private Sub keyPressWithControl(argKeyCode As Integer)
     
     Dim yukiPaths As String
@@ -285,17 +313,11 @@ End
 
 Public Sub IconView_KeyPress()
     
-    If Key.Code = Key.Enter Then
-        If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
-        Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
-    Else If Key.Code = Key.Esc Then
-        $selectionBar.ClearAll()
-        Me.Refresh($currentDirectory)
-    Endif
-    
-    If Not Key.Control Then Return
-    
-    keyPressWithControl(Key.Code)
+    If Key.Control Then
+        keyPressWithControl(Key.Code)
+    Else
+        keyPress(Key.Code)
+    End If
     
 End
 

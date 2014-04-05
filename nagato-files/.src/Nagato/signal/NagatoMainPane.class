@@ -41,6 +41,12 @@ Public Sub SetInitialPath(argPath As String)
     
 End
 
+Public Sub SearchQuery(argQuery As String)
+    
+    $filers[$tabStripHandler.Index].SetSeachResult(argQuery)
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     $tabStripHandler = New NagatoTabStripHandler(argTabStrip)

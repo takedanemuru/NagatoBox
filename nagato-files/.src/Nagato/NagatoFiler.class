@@ -74,6 +74,12 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
+Public Sub SetSeachResult(argQuery As String)
+    
+    $iconView.RefreshWithSearchQuery(MikuruFileSearch.Seach($log.Current, argQuery))
+    
+End
+
 Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog

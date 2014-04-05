@@ -136,7 +136,21 @@ End
 
 Public Sub RefreshWithSearchQuery(argPaths As String[])
     
+    Dim yukiPath As String
     
+    $iconView.Clear()
+    
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        If IsDir(yukiPath) Then
+            $iconView.Add(yukiPath, "", MikuruTile.GetDirectoryTile(yukiPath, $selectionBar.Exist(yukiPath)))
+        Endif
+    Next
+    
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        If Not IsDir(yukiPath) Then
+            $iconView.Add(yukiPath, "", getFileIconPicture(yukiPath))
+        Endif
+    Next
     
 End
 

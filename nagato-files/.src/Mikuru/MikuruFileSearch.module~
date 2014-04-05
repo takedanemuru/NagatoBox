@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Function Seach(argDirectory As String, argQuery As String) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    Dim yukiCount As Integer 
+    
+    For Each yukiPath In RDir(argDirectory).Sort(gb.IgnoreCase)
+        If File.Name(argDirectory &/ yukiPath) Like "*" & argQuery & "*" Then 
+            If Not NagatoSettings.ShowHidden And If File.Name(argDirectory &/ yukiPath) Begins "." Then Continue
+            yukiPaths.Add(argDirectory &/ yukiPath)
+            Inc yukiCount
+            If yukiCount = 200 Then Break
+        Endif
+    Next
+    
+    Return yukiPaths
+    
+End
+

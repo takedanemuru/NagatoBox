@@ -74,6 +74,17 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
+Public Sub SetSeachResult(argQuery As String)
+    
+    Debug argQuery
+    Debug $log.Current
+    
+    MikuruFileSearch.Seach($log.Current, argQuery)
+    
+    '$iconView.RefreshWithSearchQuery([""])
+    
+End
+
 Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
@@ -84,15 +95,6 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     move(IIf(argDirectory = "", User.Home, argDirectory))
     
 End
-
-' Public Sub BookmarkList_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-'     
-'     Select Case argEvent
-'         Case NagatoMenuPipe.DirOpen
-'             move(argArgument)
-'     End Select
-'     
-' End
 
 Public Sub IconView_DirectoryClicked(argDirectory As String)
     

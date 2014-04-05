@@ -42,9 +42,9 @@ Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
     ininializeModeComboBox()
-    $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
-    $treeView = New NagatoTreeView($container) As "TFEI"
-    $fileSearch = New NagatoFileSearch($container) As "TFEI"
+    $gtkBookmarks = New NagatoGtkBookmarks($container) As "Pane"
+    $treeView = New NagatoTreeView($container) As "Pane"
+    $fileSearch = New NagatoFileSearch($container) As "Pane"
     
 End
 
@@ -53,5 +53,7 @@ Public Sub ModeComboBox_Click()
     $gtkBookmarks.Visible = ($modeComboBox.Index = 0)
     $treeView.Visible = ($modeComboBox.Index = 1)
     $fileSearch.Visible = ($modeComboBox.Index = 2)
+    
+    If $modeComboBox.Index = 2 Then $fileSearch.SetFocus()
     
 End
