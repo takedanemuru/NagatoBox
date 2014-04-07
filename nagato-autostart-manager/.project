@@ -1,0 +1,26 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.2
+Title=nagato-autostart-manager
+Startup=Kyon
+Version=0.0.2
+Component=gb.image
+Component=gb.qt4
+Component=gb.desktop
+Component=gb.settings
+Description="autostart script"
+Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=Integrated Data Thought Entity
+Address=takedanemuru@voyagertrain
+Url=http://takedanemuru.github.io/
+License=S.O.S. License
+PackageName=nagato-autostart-manager-0.0.2
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"admin"

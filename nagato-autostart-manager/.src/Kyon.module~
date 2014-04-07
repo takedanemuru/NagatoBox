@@ -1,0 +1,11 @@
+' Gambas module file
+
+Private $userAutoStarts As NagatoAutoStarts
+Private $globalAutoStarts As NagatoAutoStarts
+
+Public Sub Main()
+
+    $userAutoStarts = New NagatoAutoStarts(User.Home &/ ".config/autostart")
+    $globalAutoStarts = New NagatoAutoStarts("/etc/xdg/autostart")
+
+End

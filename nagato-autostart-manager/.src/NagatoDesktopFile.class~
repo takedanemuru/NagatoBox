@@ -1,0 +1,78 @@
+' Gambas class file
+
+Property Read Name As String
+Property Read Exec As String
+Property Read TryExec As String
+Property Read Required As Boolean
+
+Private $name As String
+Private $exec As String
+Private $tryExec As String
+Private $onlyShowIn As Boolean = False
+Private $notShowIn As Boolean = False
+Private $hide As Boolean = False
+
+Private Sub getProperty(argLine As String, argTargetSession As String) As Boolean
+    
+    Dim yukiTargets As String[] = Split(argLine, ";", "", True)
+    
+    If yukiTargets.Count > 0 Then Debug yukiTargets[0]
+    
+    Return yukiTargets.Exist(argTargetSession)
+    
+End
+
+Private Sub setProperties(argPath As String)
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    
+    yukiStream = Open (argPath) For Read
+    
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine Begins "Exec" Then $exec = Replace$(yukiLine, "Exec=", "")
+        If yukiLine Begins "TryExec" Then $tryExec = Replace$(yukiLine, "TryExec=", "")
+        If yukiLine Begins "NotShowIn" Then $notShowIn = getProperty(Replace$(yukiLine, "NotShowIn=", ""), "NagatoBox")
+        If yukiLine Begins "OnlyShowIn" Then $onlyShowIn = Not getProperty(Replace$(yukiLine, "OnlyShowIn=", ""), "NagatoBox")
+        If yukiLine Begins "Hidden" Then $hide = (Replace$(yukiLine, "Hidden=", "") Like "true")
+    Wend
+    
+    Close #yukiStream
+    
+End
+
+Public Sub _new(argPath As String)
+    
+    $name = File.Name(argPath)
+    setProperties(argPath)
+    
+End
+
+Private Function Name_Read() As String
+
+    Return $name
+
+End
+
+Private Function Required_Read() As Boolean
+
+    If $hide Then Return False
+    If $onlyShowIn Then Return False
+    If $notShowIn Then Return False
+    
+    Return True
+
+End
+
+Private Function Exec_Read() As String
+
+    Return $exec
+
+End
+
+Private Function TryExec_Read() As String
+
+    Return $tryExec
+
+End
