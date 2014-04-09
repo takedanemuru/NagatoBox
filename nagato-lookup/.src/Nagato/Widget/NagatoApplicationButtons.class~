@@ -20,8 +20,8 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, Optional ar
         If argIcon Then .Picture = argIcon
         .Border = False
         .Foreground = NagatoSettings.FontColor
-        ' .Font.Bold = True
-        ' .Font.Size = 9
+        .Font.Bold = True
+        .Font.Size = 9
     End With
 
     yukiMenu = New NagatoApplicationsMenu(yukiButton, argCategory, argTitle)

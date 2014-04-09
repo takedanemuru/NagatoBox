@@ -3,6 +3,8 @@
 Create Static
 
 Property HomePage As String
+Property DownloadDirectory As String
+Property WebViewFont As Font
 
 Private $settings As New Settings
 
@@ -34,5 +36,33 @@ Private Sub HomePage_Write(Value As String)
 
     $settings["web/homepage"] = Value
     $settings.Save()
+
+End
+
+Private Function DownloadDirectory_Read() As String
+
+    Return $settings["web/download_directory", NagatoXdgUserDirs.Download]
+
+End
+
+Private Sub DownloadDirectory_Write(Value As String)
+
+    $settings["web/download_directory"] = Value
+    $settings.Save()
+
+End
+
+Private Function WebViewFont_Read() As Font
+
+    Return $settings["web/font", HaruhiMain.Font]
+
+End
+
+Private Sub WebViewFont_Write(Value As Font)
+
+    $settings["web/font"] = Value
+    $settings.Save()
+
+    Debug Me.WebViewFont.Name
 
 End

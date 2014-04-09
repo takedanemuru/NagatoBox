@@ -4,6 +4,8 @@ Public Sub Main()
     
     Debug NagatoDBSymbol.Ready
     
+    Application.Theme = "MATE-Faenza"
+    
     NagatoArguments.Parsing()
     HaruhiMain.Show()
 

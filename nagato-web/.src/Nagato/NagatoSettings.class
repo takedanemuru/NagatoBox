@@ -4,6 +4,7 @@ Create Static
 
 Property HomePage As String
 Property DownloadDirectory As String
+Property WebFontName As String
 
 Private $settings As New Settings
 
@@ -47,6 +48,19 @@ End
 Private Sub DownloadDirectory_Write(Value As String)
 
     $settings["web/download_directory"] = Value
+    $settings.Save()
+
+End
+
+Private Function WebFontName_Read() As String
+
+    Return $settings["web/font", HaruhiMain.Font.Name]
+
+End
+
+Private Sub WebFontName_Write(Value As String)
+
+    $settings["web/font"] = Value
     $settings.Save()
 
 End

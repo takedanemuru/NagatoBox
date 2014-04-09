@@ -26,6 +26,9 @@ Private Sub showDirectory(argDirectory As String)
         SelectIcons.Add(argDirectory &/ yukiPath, yukiPath, MikuruThumbnailer.Get(argDirectory &/ yukiPath))
     Next
     
+Catch
+    Debug argDirectory &/ yukiPath
+    
 End
 
 Public Sub Form_Open()

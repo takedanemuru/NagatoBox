@@ -21,6 +21,7 @@ Private Sub showDirectory(argDirectory As String)
     SelectIcons.Clear()
     
     For Each yukiPath In Dir(argDirectory, "*", gb.File)
+        If Not Exist(argDirectory &/ yukiPath) Then Continue
         If DesktopMime.FromFile(argDirectory &/ yukiPath).Type Not Begins "image" Then Continue
         If Not MikuruThumbnailer.IsLoadable(argDirectory &/ yukiPath) Then Continue
         SelectIcons.Add(argDirectory &/ yukiPath, yukiPath, MikuruThumbnailer.Get(argDirectory &/ yukiPath))

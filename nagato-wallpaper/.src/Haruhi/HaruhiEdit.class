@@ -40,12 +40,24 @@ Private Function getThumbnailForFillMode() As Image
     
 End
 
+Private Function getNullImage() As Image
+    
+    Dim yukiImage As New Image(400, 300, Color.White)
+    
+    Return yukiImage
+    
+End
+
 Private Function getThumbnailForFitMode() As Image
     
     Dim yukiImage As Image = Image.Load($currentPath)
     Dim yukiRate As Float = getFillRateMax(yukiImage)
     
     Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
+    
+Catch
+    Debug $currentPath
+    Return getNullImage()
     
 End
 

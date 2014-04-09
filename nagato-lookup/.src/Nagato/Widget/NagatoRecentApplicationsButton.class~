@@ -18,7 +18,7 @@ Public Sub _InitializeWidget() 'override
         .Picture = MikuruIcons.Get("alarm-clock")
         .Border = False
         .Foreground = NagatoSettings.FontColor
-        '.Font.Bold = True
+        .Font.Bold = True
     End With
     
     yukiMenu = New NagatoRecentApplicationsMenu(yukiButton)

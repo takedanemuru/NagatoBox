@@ -5,6 +5,7 @@ Public Sub Initialize()
     With WebSettings
         .[.PluginsEnabled] = True
         .[.JavascriptEnabled] = True
+        .[.JavaEnabled] = True
     End With
     
 End

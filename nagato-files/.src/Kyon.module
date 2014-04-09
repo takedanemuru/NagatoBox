@@ -4,6 +4,8 @@ Public Sub Main()
     
     Debug NagatoDBSymbol.Ready
     
+    Application.Theme = "Numix-Circle"
+    
     NagatoArguments.Parsing()
     HaruhiMain.Show()
 
