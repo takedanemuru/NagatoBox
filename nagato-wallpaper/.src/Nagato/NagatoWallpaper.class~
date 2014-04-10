@@ -2,171 +2,45 @@
 
 Create Static
 
-Private $lastPath As String = ""
-Private $originalImage As Image
-Private $modefiedImage As Image
-Private $calendarMode As Integer
-
-Private Sub setOriginalImage(argPath As String)
-    
-    $originalImage = Image.Load(argPath)
-    $originalImage.Save(Kyon.HiddenPathOriginalImage)
-    
-End
-
-Private Sub saveModefiedImage(argImage As Image)
-    
-    setCalendar(argImage)
-    $modefiedImage = argImage
-    $modefiedImage.Save(Kyon.HiddenPathModefiedImage)
-    
-End
-
-Private Function getOriginCenter() As PointF
-    
-    Dim yukiPoint As New PointF
-    
-    yukiPoint.X = (Screen.W - $originalImage.W) * 0.5
-    yukiPoint.Y = (Screen.H - $originalImage.H) * 0.5
-    
-    Return yukiPoint
-    
-End
-
-Private Function getOriginTopLeft() As PointF
-    
-    Dim yukiPoint As New PointF
-    Dim yukiPointCenter As PointF = getOriginCenter()
-    
-    yukiPoint.X = yukiPointCenter.X - $originalImage.W * (CInt(yukiPointCenter.X) Div $originalImage.W + 1)
-    yukiPoint.Y = yukiPointCenter.Y - $originalImage.H * (CInt(yukiPointCenter.Y) Div $originalImage.H + 1)
-    
-    Return yukiPoint
-    
-End
-
-Private Sub setCalendar(argImage As Image)
-    
-    Select Case $calendarMode
-        Case 0
-            ' ignore
-        Case 1, 2
-            NagatoCalendarHorizontal.Paint(argImage, $calendarMode)
-        Case 3, 4, 5, 6
-            NagatoCalendarBox.Paint(argImage, $calendarMode)
-    End Select
-    
-    
-End
-
-Private Sub setModefiedImageCenter(argColor As Integer)
-    
-    Dim yukiImage As Image = New Image(Screen.W, Screen.H, argColor)
-    Dim yukiPoint As PointF = getOriginCenter()
-    
-    Paint.Begin(yukiImage)
-        Paint.DrawImage($originalImage, yukiPoint.X, yukiPoint.Y)
-    Paint.End()
-    
-    saveModefiedImage(yukiImage)
-    
-End
-
-Private Sub setModefiedImageTileCenter(argColor As Integer)
-    
-    Dim yukiImage As Image = New Image(Screen.W, Screen.H, argColor)
-    Dim yukiPoint As PointF = getOriginTopLeft()
-    Dim yukiX As Integer 
-    Dim yukiY As Integer = yukiPoint.Y
-    
-    Paint.Begin(yukiImage)
-        Repeat
-            yukiX = yukiPoint.X
-            Repeat
-                Paint.DrawImage($originalImage, yukiX, yukiY)
-                yukiX += $originalImage.W
-            Until yukiX > Screen.W 
-            yukiY += $originalImage.H
-        Until yukiY > Screen.H
-    Paint.End()
-    
-    saveModefiedImage(yukiImage)
-    
-End
-
-Private Sub setModefiedImageFull(argBackground As Integer)
-    
-    Dim yukiRate As Float = Min(Screen.H / $originalImage.H, Screen.W / $originalImage.W)
-    Dim yukiImage As Image = $originalImage.Stretch($originalImage.W * yukiRate, $originalImage.H * yukiRate)
-    Dim yukiBaseImage As New Image(Screen.W, Screen.H, argBackground)
-    
-    Paint.Begin(yukiBaseImage)
-        Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
-    Paint.End()
-    
-    saveModefiedImage(yukiBaseImage)
-    
-End
-
-Private Sub setModefiedImageFit(argBackground As Integer)
-    
-    Dim yukiRate As Float = Max(Screen.H / $originalImage.H, Screen.W / $originalImage.W)
-    Dim yukiImage As Image = $originalImage.Stretch($originalImage.W * yukiRate, $originalImage.H * yukiRate)
-    Dim yukiBaseImage As New Image(Screen.W, Screen.H, argBackground)
-    
-    Paint.Begin(yukiBaseImage)
-        Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
-    Paint.End()
-    
-    saveModefiedImage(yukiBaseImage)
-    
-End
-
-Private Sub setModefiedImageFill()
-    
-    saveModefiedImage($originalImage.Stretch(Screen.W, Screen.H))
-    
-End
-
 Private Sub setModefiedImage(argRenderMode As Integer, argBackground As Integer)
+    
+    Dim yukiRendarer As Object
     
     Select argRenderMode
         Case MikuruRenderMode.Center
-            setModefiedImageCenter(argBackground)
+            yukiRendarer = New NagatoWallPaperCenter
         Case MikuruRenderMode.Tile
-            setModefiedImageTileCenter(argBackground)
+            yukiRendarer = New NagatoWallpaperTileCenter
         Case MikuruRenderMode.Full
-            setModefiedImageFull(argBackground)
+            yukiRendarer = New NagatoWallpaperFull
         Case MikuruRenderMode.Fit
-            setModefiedImageFit(argBackground)
+            yukiRendarer = New NagatoWallpaperFit
         Case MikuruRenderMode.Fill
-            setModefiedImageFill()
+            yukiRendarer = New NagatoWallpaperFill
     End Select
+    
+    yukiRendarer.Set(MikuruOriginalImage.Image)
     
 End
 
-Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer, argCalendar As Integer)
+Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer)
     
     If argPath = "" Then Return
+    If Not Exist(argPath) Then Return
     
-    $calendarMode = argCalendar
-    
-    If $lastPath <> argPath Then
-        $lastPath = argPath
-        setOriginalImage(argPath)
-    End If
-    
+    MikuruOriginalImage.SetPath(argPath)
     setModefiedImage(argRenderMode, argBackground)
-    Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
+    
+    Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     
 End
 
 Public Sub SetLast()
     
     With NagatoSettings
-        If Exist(Kyon.HiddenPathOriginalImage) Then
-            'Shell Subst$("hsetroot &1 &2", "-center", Kyon.HiddenPathModefiedImage)
-            Me.Set(Kyon.HiddenPathOriginalImage, .LastColor, .LastMode, .LastCalendarPosition)
+        If Exist(MikuruHidden.PathOriginalImage) Then
+            NagatoPreview.CalendarPosition = .LastCalendarPosition
+            Me.Set(MikuruHidden.PathOriginalImage, .LastColor, .LastMode)
         Endif
     End With
     

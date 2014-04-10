@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoThumbnail
+
+Private Function getThumbnailForFitMode() As Image
+    
+    Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
+    Dim yukiRate As Float = Me._GetFillRateMax(yukiImage)
+    
+    Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
+    
+End
+
+Public Sub Paint()
+    
+    Dim yukiImage As Image = getThumbnailForFitMode()
+    Dim yukiPoint As PointF = Me._GetOriginPoint(yukiImage)
+    
+    Paint.DrawImage(yukiImage, yukiPoint.X, yukiPoint.Y)
+    
+End

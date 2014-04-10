@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoThumbnail
+
+Private Function getFillRate(argImage As Image) As Float
+    
+    Return Min(Screen.H / argImage.H, Screen.W / argImage.W) * NagatoPreview.Ratio
+    
+End
+   
+Private Function getFillRateMax(argImage As Image) As Float
+    
+    Return Max(Screen.H / argImage.H, Screen.W / argImage.W) * NagatoPreview.Ratio
+    
+End
+
+Private Function getThumbnailForFillMode() As Image
+    
+    Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
+    Dim yukiRate As Float = getFillRate(yukiImage)
+    
+    Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
+    
+End
+
+' Private Function getOriginPoint(argImage As Image) As PointF
+'     
+'     Dim yukiPoint As New PointF
+' 
+'     With HaruhiEdit.PreviewDA
+'         yukiPoint.X = IIf(argImage.W = .W, 0, (.W - argImage.W) / 2)
+'         yukiPoint.Y = IIf(argImage.H = .W, 0, (.H - argImage.H) / 2)
+'     End With
+'     
+'     Return yukiPoint
+'     
+' End
+
+Public Sub Paint()
+    
+    Dim yukiImage As Image = getThumbnailForFillMode()
+    Dim yukiPoint As PointF = Me._GetOriginPoint(yukiImage)
+    
+    Paint.DrawImage(yukiImage, yukiPoint.X, yukiPoint.Y)
+    
+End

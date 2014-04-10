@@ -1,0 +1,25 @@
+' Gambas module file
+
+Public Function GetTopLeft(argImage As Image) As PointF
+    
+    Dim yukiPoint As New PointF
+    Dim yukiPointCenter As PointF = Me.GetCenter(argImage)
+    
+    yukiPoint.X = yukiPointCenter.X - argImage.W * (CInt(yukiPointCenter.X) Div argImage.W + 1)
+    yukiPoint.Y = yukiPointCenter.Y - argImage.H * (CInt(yukiPointCenter.Y) Div argImage.H + 1)
+    
+    Return yukiPoint
+    
+End
+
+Public Function GetCenter(argImage As Image) As PointF
+    
+    Dim yukiPoint As New PointF
+    
+    yukiPoint.X = (Screen.W - argImage.W) * 0.5
+    yukiPoint.Y = (Screen.H - argImage.H) * 0.5
+    
+    Return yukiPoint
+    
+End
+

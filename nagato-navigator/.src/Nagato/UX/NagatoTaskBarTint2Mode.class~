@@ -127,7 +127,9 @@ Public Sub DragBegin(argMouseX As Integer, argMouseY As Integer)
     
     yukiWindow = New DesktopWindow(yukiId)
     
+    Drag.IconY = 64
     Drag.Icon = yukiWindow.Icon.Picture
+    Debug Drag.IconY
     Me._$drawingArea.Drag(CStr(yukiId), "text/nagato-navigator")
     
 End

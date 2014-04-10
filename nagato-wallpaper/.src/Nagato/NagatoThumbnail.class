@@ -1,0 +1,51 @@
+' Gambas class file
+
+Create Private
+
+Static Public Sub Set(argMode As Integer)
+    
+    Dim yukiThumbnail As Object
+    
+    Select Case argMode
+        Case MikuruRenderMode.Tile
+            yukiThumbnail = New NagatoThumbnailTile
+        Case MikuruRenderMode.Full
+            yukiThumbnail = New NagatoThumbnailFull
+        Case MikuruRenderMode.Fill
+            yukiThumbnail = New NagatoThumbnailFill
+        Case MikuruRenderMode.Fit
+            yukiThumbnail = New NagatoThumbnailFit
+        Case MikuruRenderMode.Center
+            yukiThumbnail = New NagatoThumbnailCenter
+    End Select
+    
+    yukiThumbnail.Paint()
+    
+End
+
+Private Function getNullImage() As Image
+    
+    Dim yukiImage As New Image(HaruhiEdit.PreviewDA.W, HaruhiEdit.PreviewDA.H, NagatoPreview.Color)
+    
+    Return yukiImage
+    
+End
+
+Public Function _GetOriginPoint(argImage As Image) As PointF
+    
+    Dim yukiPoint As New PointF
+
+    With HaruhiEdit.PreviewDA
+        yukiPoint.X = IIf(argImage.W = .W, 0, (.W - argImage.W) / 2)
+        yukiPoint.Y = IIf(argImage.H = .W, 0, (.H - argImage.H) / 2)
+    End With
+    
+    Return yukiPoint
+    
+End
+
+Public Sub Paint()
+    
+    ' virtual
+    
+End

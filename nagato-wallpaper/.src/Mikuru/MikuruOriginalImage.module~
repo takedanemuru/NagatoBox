@@ -1,0 +1,22 @@
+' Gambas module file
+
+Property Read Image As Image
+
+Private $lastPath As String = ""
+Private $originalImage As Image
+
+Public Sub SetPath(argPath As String)
+    
+    If $lastPath = argPath Then Return
+    
+    $lastPath = argPath
+    $originalImage = Image.Load(argPath)
+    $originalImage.Save(MikuruHidden.PathOriginalImage)
+    
+End
+
+Private Function Image_Read() As Image
+
+    Return $originalImage
+
+End

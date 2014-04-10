@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoThumbnail
+
+Public Function _GetUnresizedThumbnail() As Image
+    
+    Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
+    
+    Return yukiImage.Stretch(yukiImage.Width * NagatoPreview.Ratio, yukiImage.Height * NagatoPreview.Ratio)
+    
+End

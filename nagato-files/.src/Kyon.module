@@ -2,7 +2,7 @@
 
 Public Sub Main()
     
-    Debug NagatoDBSymbol.Ready
+    Debug NagatoDBSymbol.Ready ' this call activate NagatoDBSymbol, so do not delete
     
     Application.Theme = "Numix-Circle"
     

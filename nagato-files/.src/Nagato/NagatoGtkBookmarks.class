@@ -50,6 +50,8 @@ Private Sub addDroppedDirectory()
     
     Dim yukiPath As String
     
+    Debug "add"
+    
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If IsDir(yukiPath) And If Not $listView.Exist(yukiPath) Then 
             $listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
@@ -121,9 +123,11 @@ End
 Public Sub ListView_Drop()
     
     If Not $listView.FindAt(Drag.X, Drag.Y) Then
-        moveDroppedFiles()
-    Else
-        addDroppedDirectory()
+        If $listView.Key Begins SeparatorKey Then
+            addDroppedDirectory()
+        Else
+            moveDroppedFiles()
+        Endif
     End If
     
 End

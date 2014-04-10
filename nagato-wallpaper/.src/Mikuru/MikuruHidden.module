@@ -1,0 +1,39 @@
+' Gambas module file
+
+Property Read Path As String
+Property Read PathOriginalImage As String
+Property Read PathModefiedImage As String
+
+Private Sub saveImage(argPath As String)
+    
+    Dim yukiImage As Image = Image.Load("Pictures/default.jpg")
+    
+    yukiImage.Save(argPath, 100)
+    
+End
+
+Public Sub Ensure()
+    
+    If Not Exist(Me.Path) Then Mkdir Me.HiddenPath
+    If Not Exist(Me.Path &/ "original.png") Then saveImage(Me.Path &/ "original.png")
+    If Not Exist(Me.Path &/ "modefied.png") Then saveImage(Me.Path &/ "modefied.png")
+    
+End
+
+Private Function Path_Read() As String
+
+    Return User.Home &/ ".nagato-wallpaper"
+
+End
+
+Private Function PathOriginalImage_Read() As String
+
+    Return Me.Path &/ "original.png"
+
+End
+
+Private Function PathModefiedImage_Read() As String
+
+    Return Me.Path &/ "modefied.png"
+
+End

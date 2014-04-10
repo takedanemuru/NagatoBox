@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoThumbnail
+
+Public Sub Paint()
+    
+    Dim yukiImage As Image = Image.Load(NagatoPreview.Path).Stretch(HaruhiEdit.PreviewDA.W, HaruhiEdit.PreviewDA.H)
+    
+    Paint.DrawImage(yukiImage, 0, 0)
+    
+End

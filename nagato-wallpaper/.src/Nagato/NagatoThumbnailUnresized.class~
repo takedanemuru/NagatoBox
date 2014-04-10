@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoThumbnail
+
+Public Function _GetUnresizedThumbnail() As Image
+    
+    Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
+    
+    Return yukiImage.Stretch(yukiImage.Width * NagatoPreview.Ratio, yukiImage.Height * NagatoPreview.Ratio)
+    
+End
+
+Public Function _GetOriginPoint(argImage As Image) As PointF
+    
+    Dim yukiPoint As New PointF
+
+    With HaruhiEdit.PreviewDA
+        yukiPoint.X = IIf(argImage.W = .W, 0, (.W - argImage.W) / 2)
+        yukiPoint.Y = IIf(argImage.H = .W, 0, (.H - argImage.H) / 2)
+    End With
+    
+    Return yukiPoint
+    
+End

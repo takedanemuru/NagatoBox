@@ -97,12 +97,16 @@ End
 Private Sub moveFiles()
     
     Dim yukiPath As String
+    Dim yukiFlag As Boolean = False
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If Exist(yukiPath) Then 
             Try Move yukiPath To MikuruPath.GetSafePathName($treeView.Item.Key &/ File.Name(yukiPath))
+            yukiFlag = True
         Endif
     Next
+    
+    If yukiFlag Then Me.Refresh()
     
 End
 
@@ -149,6 +153,8 @@ Public Sub TreeView_Expand()
 End
 
 Public Sub TreeView_DragMove()
+    
+    Debug $treeView.Item.Key
     
     If Not $treeView.FindAt(Drag.X, Drag.Y) Then
         $treeView[$treeView.Item.Key].Selected = True

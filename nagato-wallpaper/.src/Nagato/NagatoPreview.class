@@ -1,0 +1,64 @@
+' Gambas class file
+
+Create Static
+
+Property Read Ratio As Float
+Property Path As String
+Property Color As Integer
+Property CalendarPosition As Integer
+
+Private $path As String
+Private $color As Integer
+Private $calendarPosition As Integer
+
+Public Sub LoadLastProperties()
+    
+    With Me
+        .Path = NagatoSettings.LastPath
+        .Color = NagatoSettings.LastColor
+        .CalendarPosition = NagatoSettings.LastCalendarPosition
+    End With
+    
+End
+
+Private Function Ratio_Read() As Float
+
+    Return HaruhiEdit.PreviewDA.Width / Screen.Width
+
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Sub Path_Write(Value As String)
+
+    $path = Value
+
+End
+
+Private Function Color_Read() As Integer
+
+    Return $color
+
+End
+
+Private Sub Color_Write(Value As Integer)
+
+    $color = Value
+
+End
+
+Private Function CalendarPosition_Read() As Integer
+
+    Return $calendarPosition
+
+End
+
+Private Sub CalendarPosition_Write(Value As Integer)
+
+    $calendarPosition = Value
+
+End

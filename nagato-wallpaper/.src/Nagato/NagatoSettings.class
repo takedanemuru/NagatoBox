@@ -10,6 +10,17 @@ Property LastCalendarPosition As Integer
 
 Private $settings As New Settings
 
+Public Sub Refresh(argWallpaperMode As Integer, argCalendarMode As Integer)
+    
+    With Me
+        .LastPath = NagatoPreview.Path
+        .LastColor = NagatoPreview.Color
+        .LastMode = argWallpaperMode
+        .LastCalendarPosition = argCalendarMode
+    End With
+    
+End
+
 Public Sub PushToRecentPaths(argPath As String)
     
     Dim yukiPaths As String[] = $settings["background/recent", [""]]

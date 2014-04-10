@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoWallpaperRendarer
+
+Public Sub Set(argImage As Image)
+    
+    Me._SaveModefiedImage(argImage.Stretch(Screen.W, Screen.H))
+    
+End

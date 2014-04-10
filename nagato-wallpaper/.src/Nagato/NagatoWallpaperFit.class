@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoWallpaperRendarer
+
+Public Sub Set(argImage As Image)
+    
+    Dim yukiRate As Float = Max(Screen.H / argImage.H, Screen.W / argImage.W)
+    Dim yukiImage As Image = argImage.Stretch(argImage.W * yukiRate, argImage.H * yukiRate)
+    Dim yukiBaseImage As New Image(Screen.W, Screen.H, HaruhiEdit.PreviewDA.Background)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.DrawImage(yukiImage, (Screen.W - yukiImage.W) * 0.5, (Screen.H - yukiImage.H) * 0.5)
+    Paint.End()
+    
+    Me._SaveModefiedImage(yukiBaseImage)
+    
+End

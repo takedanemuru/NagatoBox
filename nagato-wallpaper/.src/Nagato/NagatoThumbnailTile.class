@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoThumbnailUnresized
+
+Private Function getStartPoint(argImage As Image) As PointF
+    
+    Dim yukiOriginPoint As PointF = Me._GetOriginPoint(argImage)
+    Dim yukiStartPont As New PointF
+    
+    With yukiOriginPoint
+        yukiStartPont.X = .X - (Int(.X / argImage.W + 1) * argImage.W)
+        yukiStartPont.Y = .Y - (Int(.Y / argImage.H + 1) * argImage.H)
+    End With
+    
+    Return yukiStartPont
+    
+End
+
+Public Sub Paint()
+    
+    Dim yukiImage As Image = Me._GetUnresizedThumbnail()
+    Dim yukiStartPont As PointF = getStartPoint(yukiImage)
+    Dim yukiCurrentPoint As New PointF
+    
+    With yukiCurrentPoint
+        .Y = yukiStartPont.Y
+        Repeat
+            .X = yukiStartPont.X
+            Repeat
+                Paint.DrawImage(yukiImage, .X, .Y)
+                .X += yukiImage.Width
+            Until .X > HaruhiEdit.PreviewDA.Width
+            .Y += yukiImage.Height
+        Until .Y > HaruhiEdit.PreviewDA.Height
+    End With
+    
+End
