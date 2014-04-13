@@ -6,6 +6,8 @@ Private Enum MenuNagato, MenuNetwork, MenuPower, MenuForeground, MenuBackground,
 
 Private Sub setBackground()
     
+    HaruhiColorChooser.SetColor(NagatoSettings.BackgroundColor)
+
     If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
         HaruhiMain.Background = MikuruDialog.Color
         NagatoSettings.BackgroundColor = MikuruDialog.Color
@@ -14,6 +16,8 @@ Private Sub setBackground()
 End
 
 Private Sub setForeground()
+    
+    HaruhiColorChooser.SetColor(NagatoSettings.ForegroundColor)
     
     If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
         NagatoSettings.ForegroundColor = MikuruDialog.Color

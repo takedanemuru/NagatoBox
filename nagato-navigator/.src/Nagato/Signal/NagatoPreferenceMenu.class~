@@ -15,6 +15,8 @@ End
 
 Private Sub setForeground()
     
+    HaruhiColorChooser.SetColor(NagatoSettings.ForegroundColor)
+    
     If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
         NagatoSettings.ForegroundColor = MikuruDialog.Color
     Endif

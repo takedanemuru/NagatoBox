@@ -1,7 +1,22 @@
 ' Gambas class file
 
 Private $label As Label
+Private $button As MenuButton
 Private $observer As Observer
+
+Private Sub addButton(argContainer As Container)
+    
+    $button = New MenuButton(argContainer) As "NagatoMenu"
+    
+    With $button
+        .AutoResize = False
+        .Text = " ClockButtonTest "
+        .Border = False
+        .Foreground = Color.White
+        .Arrow = False
+    End With
+    
+End
 
 Private Sub addLabel(argContainer As Container)
     
@@ -18,7 +33,8 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    addLabel(argContainer)
+    addButton(argContainer)
+    'addLabel(argContainer)
     
     $observer = New Observer(NagatoTimer) As "Asakura"
     
@@ -26,11 +42,20 @@ End
 
 Public Sub Asakura_Timer()
     
-    $label.Text = Format$(Now(), NagatoSettings.ClockFormat)
-    $label.Foreground = NagatoSettings.ForegroundColor
+    ' $label.Text = Format$(Now(), NagatoSettings.ClockFormat)
+    ' $label.Foreground = NagatoSettings.ForegroundColor
+    ' 
+    ' If $label.Font.TextWidth($label.Text) > $label.W Then
+    '     $label.W = $label.Font.TextWidth($label.Text)
+    ' Endif
     
-    If $label.Font.TextWidth($label.Text) > $label.W Then
-        $label.W = $label.Font.TextWidth($label.Text)
-    Endif
+    With $button
+        .Text = Format$(Now(), NagatoSettings.ClockFormat)
+        .Foreground = NagatoSettings.ForegroundColor
+    
+        If .Font.TextWidth(.Text) > .W Then
+            .W = .Font.TextWidth(.Text)
+        Endif
+    End With
     
 End
