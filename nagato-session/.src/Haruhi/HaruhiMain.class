@@ -9,9 +9,11 @@ End
 
 Public Sub RefreshTabStrip(argTitle As String, argIcon As Picture)
     
-        MainTabStrip.Index = 3
-        MainTabStrip.Text = argTitle
-        MainTabStrip.Picture = argIcon
+    With MainTabStrip
+        .Index = 3
+        .Text = argTitle
+        .Picture = argIcon
+    End With
     
 End
 

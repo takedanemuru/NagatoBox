@@ -1,0 +1,25 @@
+' Gambas class file
+
+Create Static
+
+Private $userAutoStarts As NagatoAutoStarts
+Private $globalAutoStarts As NagatoAutoStarts
+
+Private Sub execAll()
+    
+    Dim yukiExecuted As String[]
+    
+    yukiExecuted = $globalAutoStarts.Execute([""], $userAutoStarts)
+    $userAutoStarts.Execute(yukiExecuted)
+    
+End
+
+Public Sub Execute()
+    
+    HaruhiGreeter.Show()
+    $userAutoStarts = New NagatoAutoStarts(User.Home &/ ".config/autostart")
+    $globalAutoStarts = New NagatoAutoStarts("/etc/xdg/autostart")
+    execAll()
+    HaruhiGreeter.Close()
+
+End

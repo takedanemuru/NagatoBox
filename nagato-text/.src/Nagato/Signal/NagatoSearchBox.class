@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoMenuSignal
+
+Private $searchBox As ButtonBox
+
+Private Sub initializeSearchBox(argContainer As Container)
+    
+    $searchBox = New ButtonBox(argContainer) As "SearchBox"
+    
+    With $searchBox
+        .Width = 160
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Public Sub SetFocus()
+    
+    $searchBox.SetFocus()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeSearchBox(argContainer)
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    Dim yukiArgs As New Variant[]
+    
+    If $searchBox.Text = "" Then Return
+    
+    yukiArgs.Add($searchBox.Text)
+    
+    Raise Signal(MikuruSignal.EditQuery, yukiArgs)
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    Me.SearchBox_Activate()
+    
+End

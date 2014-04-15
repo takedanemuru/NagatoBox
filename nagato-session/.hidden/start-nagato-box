@@ -14,4 +14,5 @@ fi
 
 # Run Openbox, and have it run the autostart stuff
 NAGATO_CONFIG_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/nagato-box/nagato-box-rc.xml"
-exec openbox --config-file ${NAGATO_CONFIG_FILE} --startup "/usr/bin/nagato-box-autostart NagatoBox" "$@"
+nagato-session -a &
+openbox --config-file ${NAGATO_CONFIG_FILE} "$@"

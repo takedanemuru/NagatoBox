@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Static
+
+Property Read Autostart As Boolean
+
+Private $autostart As Boolean = False
+
+Public Sub Parsing()
+    
+    Args.Begin("Usage")
+        $autostart = Args.Has("a", "autostart", "execute xdg autostart")
+    Args.End()
+    
+End
+
+Private Function Autostart_Read() As Boolean
+
+    Return $autostart
+
+End

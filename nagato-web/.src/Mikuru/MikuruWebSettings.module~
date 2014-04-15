@@ -7,6 +7,9 @@ Public Sub Initialize()
         .[.JavascriptEnabled] = True
         .[.JavaEnabled] = True
         .[.JavascriptCanOpenWindows] = True
+        .[.DeveloperExtrasEnabled] = True
+        .[.JavascriptCanAccessClipboard] = True
+        .[.LocalStorageDatabaseEnabled] = True
     End With
     
 End

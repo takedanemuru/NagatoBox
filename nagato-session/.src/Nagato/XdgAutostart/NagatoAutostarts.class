@@ -1,0 +1,50 @@
+' Gambas class file
+
+Private $desktopFiles As New NagatoAutostartFile[]
+
+Private Sub setDesktopFiles(argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiDesktopFile As NagatoAutostartFile
+    
+    For Each yukiPath In Dir(argDirectory)
+        yukiDesktopFile = New NagatoAutostartFile(argDirectory &/ yukiPath)
+        $desktopFiles.Add(yukiDesktopFile)
+    Next
+    
+End
+
+Public Function IsBlocked(argName As String) As Boolean
+    
+    Dim yukiDesktopFile As NagatoAutostartFile
+    
+    For Each yukiDesktopFile In $desktopFiles
+        If yukiDesktopFile.Name = argName And If Not yukiDesktopFile.Required Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Function Execute(argExecuted As String[], Optional argBlocks As NagatoAutoStarts) As String[]
+    
+    Dim yukiResult As New String[]
+    Dim yukiDesktopFile As NagatoAutostartFile
+    
+    For Each yukiDesktopFile In $desktopFiles
+        If argExecuted.Exist(yukiDesktopFile.Name) Then Continue
+        If argBlocks And If argBlocks.IsBlocked(yukiDesktopFile.Name) Then Continue
+        If Not yukiDesktopFile.Required Then Continue
+        If yukiDesktopFile.Exec <> "" Then Try Shell yukiDesktopFile.Exec
+        If Not Error Then yukiResult.Add(yukiDesktopFile.Name)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub _new(argDirectory As String)
+    
+    setDesktopFiles(argDirectory)
+    
+End

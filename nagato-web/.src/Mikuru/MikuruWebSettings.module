@@ -6,6 +6,7 @@ Public Sub Initialize()
         .[.PluginsEnabled] = True
         .[.JavascriptEnabled] = True
         .[.JavaEnabled] = True
+        .[.JavascriptCanOpenWindows] = True
     End With
     
 End

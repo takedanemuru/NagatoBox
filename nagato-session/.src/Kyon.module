@@ -2,6 +2,12 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
+    NagatoArguments.Parsing()
+    
+    If Not NagatoArguments.Autostart Then
+        HaruhiMain.Show()
+    Else
+        NagatoXdgAutostarts.Execute()
+    End If
     
 End
