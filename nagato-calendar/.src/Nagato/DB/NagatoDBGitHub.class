@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public _$uniqueName As String = "NagatoDBGitHub" ' override
+
+Public Const ColumnId As String = "id"
+Public Const ColumnUserName As String = "user_name"
+Public Const ColumnRepository As String = "repository"
+

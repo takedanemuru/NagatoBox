@@ -56,8 +56,6 @@ Public Sub Set()
     
     Shell Subst$(ApiIsuueOpen, yukiUserName, yukiRepoName) To yukiOutput
     
-    
-    
     yukiData = sanitize(yukiOutput)
     
     parsingIssueData(yukiData)

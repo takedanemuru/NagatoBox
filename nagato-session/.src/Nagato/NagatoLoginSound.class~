@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Public Sub PlayDefault()
+    
+    Dim yukiSound As New Sound("sounds/choir.wav")
+    
+    yukiSound.Play()
+    
+End

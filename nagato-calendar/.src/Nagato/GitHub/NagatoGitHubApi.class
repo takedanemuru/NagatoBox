@@ -47,14 +47,14 @@ Private Function sanitize(argData As String) As String
     
 End
 
-Public Sub Set()
+Public Sub Set(argUserName As String, argRepoName As String)
     
     Dim yukiUserName As String = "takedanemuru"
     Dim yukiRepoName As String = "NagatoBox"
     Dim yukiOutput As String
     Dim yukiData As String
     
-    Shell Subst$(ApiIsuueOpen, yukiUserName, yukiRepoName) To yukiOutput
+    Shell Subst$(ApiIsuueOpen, argUserName, argRepoName) To yukiOutput
     
     yukiData = sanitize(yukiOutput)
     

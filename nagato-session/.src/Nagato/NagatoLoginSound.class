@@ -1,0 +1,13 @@
+' Gambas class file
+
+Create Static
+
+Public Enum None, Choir, Ubuntu, Welcumz, UserDefined
+
+Public Sub PlayDefault()
+    
+    Dim yukiSound As New Sound("sounds/welcumz.wav")
+    
+    yukiSound.Play()
+    
+End

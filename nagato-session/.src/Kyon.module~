@@ -2,6 +2,15 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
+    NagatoArguments.Parsing()
+    
+    If Not NagatoArguments.Autostart Then
+        HaruhiMain.Show()
+    Else
+        HaruhiWelcome.Show()
+        NagatoLoginSound.PlayDefault()
+        NagatoXdgAutostarts.Execute()
+        HaruhiWelcome.Close()
+    End If
     
 End
