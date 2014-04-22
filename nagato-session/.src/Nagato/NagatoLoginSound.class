@@ -6,8 +6,20 @@ Public Enum None, Choir, Ubuntu, Welcumz, UserDefined
 
 Public Sub PlayDefault()
     
-    Dim yukiSound As New Sound("sounds/welcumz.wav")
+    Dim yukiSound As Sound
+    
+    Select Case NagatoSettings.LoginSoundMode
+        Case Me.None
+            Return
+        Case Me.Choir
+            yukiSound = New Sound("sounds/choir.wav")
+        Case Me.Welcumz
+            yukiSound = New Sound("sounds/welcumz.wav")
+        Case Me.Ubuntu
+            yukiSound = New Sound("sounds/ubuntu.wav")
+    End Select
     
     yukiSound.Play()
-    
+
 End
+

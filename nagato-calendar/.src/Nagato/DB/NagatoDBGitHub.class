@@ -4,7 +4,29 @@ Inherits NagatoDB
 
 Public _$uniqueName As String = "NagatoDBGitHub" ' override
 
+Public Const TableGitHub As String = "git_hub"
 Public Const ColumnId As String = "id"
 Public Const ColumnUserName As String = "user_name"
 Public Const ColumnRepository As String = "repository"
 
+Private Sub ensureTable()
+    
+    Dim yukiTable As Table
+    
+    If Not Me._$connection.Tables.Exist(TableGitHub) Then
+        yukiTable = Me._$connection.Tables.Add(TableGitHub)
+        yukiTable.Fields.Add(ColumnId, db.Serial)
+        yukiTable.Fields.Add(ColumnUserName, db.String)
+        yukiTable.Fields.Add(ColumnRepository, db.String)
+        yukiTable.PrimaryKey = [ColumnId]
+        yukiTable.Update()
+    End If
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    ensureTable()
+    
+End

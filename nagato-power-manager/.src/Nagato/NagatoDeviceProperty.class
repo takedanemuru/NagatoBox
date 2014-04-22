@@ -23,8 +23,6 @@ Private Sub setData(argTitle As String, argValue As String)
     
     yukiRow = $grids.Rows.Max
     
-    Debug argValue
-    
     $grids[yukiRow, 0].Text = argTitle
     $grids[yukiRow, 1].Text = argValue
     
@@ -37,9 +35,6 @@ Public Sub _new(argContainer As Container, argDeviceIndex As Integer)
     With NagatoUPower.Devices[argDeviceIndex]
         $deviceType = .Type
         setData("Type", MikuruDataTypes.GetDeviceType(.Type))
-        ' setData("Vendor", .Vendor)
-        'setData("Model", .Model)
-        ' setData("Serial", .Serial)
         setData("Capacity", .Capacity)
         setData("Power Supply", IIf(.PowerSupply, "True", "False"))
         setData("Online", IIf(.Online, "True", "False"))

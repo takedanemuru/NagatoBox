@@ -1,5 +1,8 @@
 ' Gambas class file
 
+Private $observerGlobal As NagatoDirectoryObserver
+Private $observerUser As NagatoDirectoryObserver
+
 Private Sub initializeTabStrip()
     
     MainTabStrip.Index = 1
@@ -9,9 +12,11 @@ End
 
 Public Sub RefreshTabStrip(argTitle As String, argIcon As Picture)
     
-        MainTabStrip.Index = 3
-        MainTabStrip.Text = argTitle
-        MainTabStrip.Picture = argIcon
+    With MainTabStrip
+        .Index = 3
+        .Text = argTitle
+        .Picture = argIcon
+    End With
     
 End
 
@@ -19,6 +24,12 @@ Public Sub _new()
     
     MikuruAutostartDirectory.Ensure()
     NagatoTabContentsHandler.ActivateAll()
+    
+    $observerGlobal = New NagatoDirectoryObserver As "Asakura"
+    $observerUser = New NagatoDirectoryObserver As "Asakura"
+    
+    $observerGlobal.Directory = MikuruAutostartDirectory.Global
+    $observerUser.Directory = MikuruAutostartDirectory.User
     
 End
 
@@ -42,3 +53,14 @@ Public Sub Form_Close()
     
 End
 
+Public Sub Asakura_Deleted(argFileName As String)
+    
+    NagatoGridsHandler.Refresh()
+    
+End
+
+Public Sub Asakura_Modefied(argFileName As String)
+    
+    NagatoGridsHandler.Refresh()
+    
+End

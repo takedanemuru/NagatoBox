@@ -2,6 +2,9 @@
 
 Create Static
 
+Property LoginSoundMode As Integer
+Property LoginSoundPath As String
+
 Private $settings As New Settings
 
 Public Sub LoadFormSettings(argForm As Form)
@@ -48,4 +51,32 @@ Public Sub SaveGridsSettings(argGrids As GridView)
     
     $settings.Save()
     
+End
+
+Private Function LoginSoundMode_Read() As Integer
+
+    Return $settings["login_sound/mode", NagatoLoginSound.Choir]
+
+End
+
+Private Sub LoginSoundMode_Write(Value As Integer)
+
+    Debug Value
+
+    $settings["login_sound/mode"] = Value
+    $settings.Save()
+
+End
+
+Private Function LoginSoundPath_Read() As String
+
+    Return $settings["login_sound/path", ""]
+
+End
+
+Private Sub LoginSoundPath_Write(Value As String)
+
+    $settings["login_sound/path"] = Value
+    $settings.Save()
+
 End

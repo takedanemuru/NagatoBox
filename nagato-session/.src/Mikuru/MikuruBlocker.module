@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub Create(argApplicationName As String)
+    
+    Dim yukiPath As String = MikuruAutostartDirectory.User &/ argApplicationName & ".desktop"
+    Dim yukiText As String = File.Load("text/BlockerTemplate")
+    
+    Try File.Save(yukiPath, yukiText)
+    
+End

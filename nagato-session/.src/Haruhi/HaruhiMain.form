@@ -5,10 +5,10 @@
   Icon = Picture["pictures/icon.jpg"]
   Arrangement = Arrange.Fill
   { MainTabStrip TabStrip
-    MoveScaled(2,3,76,53)
+    MoveScaled(2,3,81,53)
     Expand = True
     Arrangement = Arrange.Fill
-    Count = 4
+    Count = 5
     Index = 0
     Text = ("System Autostart")
     Picture = Picture["pictures/mono_icon/computer.png"]
@@ -116,6 +116,42 @@
         MoveScaled(2,15,65,23)
         #Public = True
         Expand = True
+      }
+    }
+    Index = 4
+    Text = ("Login Sound")
+    Picture = Picture["pictures/mono_icon/speaker.png"]
+    { VBox5 VBox
+      MoveScaled(2,3,77,44)
+      { HBox5 HBox
+        MoveScaled(3,9,70,5)
+        { LoginSoundTypeLabel TextLabel
+          MoveScaled(8,1,24,4)
+          Expand = True
+          Text = ("Login Sound")
+          Alignment = Align.Left
+        }
+        { !TypeSelectComboBox ComboBox
+          MoveScaled(33,1,35,4)
+          #Public = True
+          ReadOnly = True
+          List = [("None"), ("Choir"), ("Ubuntu"), ("Welcomz"), ("User Defied")]
+          Text = ("ComboBox1")
+        }
+      }
+      { HBox6 HBox
+        MoveScaled(3,17,70,5)
+        { LoginSoundTypeLabel2 TextLabel
+          MoveScaled(8,1,24,4)
+          Expand = True
+          Text = ("Select File")
+          Alignment = Align.Left
+        }
+        { !FileSelectBox ButtonBox
+          MoveScaled(33,1,35,4)
+          #Public = True
+          Picture = Picture["pictures/mono_icon/folder.png"]
+        }
       }
     }
     Index = 0

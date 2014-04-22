@@ -1,6 +1,17 @@
 ' Gambas class file
 
-Private Sub setTabStrip()
+Private Sub setDisplayTabStrip()
+    
+    Dim yukiDisplayProperty As NagatoDisplayProperty
+    
+    DeviceTabs.Text = ("Display")
+    DeviceTabs.Picture = MikuruIcon.Get("monitor")
+    
+    yukiDisplayProperty = New NagatoDisplayProperty(DeviceTabs)
+    
+End
+
+Private Sub setDevicesTabStrip()
     
     Dim yukiDeviceIndex As Integer
     Dim yukiProperty As NagatoDeviceProperty
@@ -19,7 +30,8 @@ End
 
 Public Sub Form_Open()
     
-    setTabStrip()
+    setDisplayTabStrip()
+    setDevicesTabStrip()
     
     Me.Center()
     

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Private $comboBox As ComboBox
+Private $observer As Observer
+
+Event Change
+
+Public Sub _new(argComboBox As ComboBox)
+    
+    $comboBox = argComboBox
+    $comboBox.Index = NagatoSettings.LoginSoundMode
+    $observer = New Observer(argComboBox) As "Asakura"
+    
+End
+
+Public Sub Asakura_Click()
+    
+    NagatoSettings.LoginSoundMode = $comboBox.Index
+    
+End
+

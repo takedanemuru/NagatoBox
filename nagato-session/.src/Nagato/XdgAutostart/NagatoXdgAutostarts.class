@@ -16,8 +16,8 @@ End
 
 Public Sub Execute()
     
-    $userAutoStarts = New NagatoAutoStarts(User.Home &/ ".config/autostart")
-    $globalAutoStarts = New NagatoAutoStarts("/etc/xdg/autostart")
+    $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
+    $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
     execAll()
 
 End

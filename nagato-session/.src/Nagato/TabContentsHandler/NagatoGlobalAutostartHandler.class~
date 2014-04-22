@@ -45,6 +45,15 @@ End
 
 Public Sub Menu_Block()
     
-    Debug "Block"
+    Dim yukiPath As String
+    
+    If $gridView.Row = -1 Then Return
+    
+    yukiPath = MikuruAutostartDirectory.User &/ $gridView[$gridView.Row, 1].Text & ".desktop"
+    Debug yukiPath
+    
+    If Not Exist(MikuruAutostartDirectory.User &/ $gridView[$gridView.Row, 1].Text & ".desktop") Then
+        
+    Endif
     
 End

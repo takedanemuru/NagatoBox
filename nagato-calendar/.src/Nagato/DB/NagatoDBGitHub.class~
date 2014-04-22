@@ -1,3 +1,34 @@
 ' Gambas class file
 
 Inherits NagatoDB
+
+Public _$uniqueName As String = "NagatoDBGitHub" ' override
+
+Public Const TableGitHub As String = "git_hub"
+Public Const ColumnId As String = "id"
+Public Const ColumnUserName As String = "user_name"
+Public Const ColumnRepository As String = "repository"
+
+Private Sub ensureTable()
+    
+    Dim yukiTable As Table
+    
+    If Not Me._$connection.Tables.Exist(TableThumbnail) Then
+        yukiTable = Me._$connection.Tables.Add(TableThumbnail)
+        yukiTable.Fields.Add(ColumnId, db.Serial)
+        yukiTable.Fields.Add(ColumnSize, db.Integer)
+        yukiTable.Fields.Add(ColumnDirectory, db.String)
+        yukiTable.Fields.Add(ColumnPath, db.String)
+        yukiTable.Fields.Add(ColumnPicture, db.Blob)
+        yukiTable.PrimaryKey = [ColumnId]
+        yukiTable.Update()
+    End If
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    ensureTable()
+    
+End

@@ -1,0 +1,13 @@
+' Gambas class file
+
+Create Static
+
+Private $typeSelector As NagatoWidgetModeSelector
+Private $fileSelector As NagatoWidgetFileSelect
+
+Public Sub Activate()
+    
+    $typeSelector = New NagatoWidgetModeSelector(HaruhiMain.TypeSelectComboBox) 
+    $fileSelector = New NagatoWidgetFileSelect(HaruhiMain.FileSelectBox)
+    
+End

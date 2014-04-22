@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public _$uniqueName As String = "NagatoDBHoliday" ' override
+
+Public Const TableHoliday As String = "holiday"
+Public Const ColumnId As String = "id"
+Public Const ColumnName As String = "name"
+Public Const ColumnDate As String = "date"
+
+Private Sub ensureTable()
+    
+    Dim yukiTable As Table
+    
+    If Not Me._$connection.Tables.Exist(TableHoliday) Then
+        yukiTable = Me._$connection.Tables.Add(TableHoliday)
+        yukiTable.Fields.Add(ColumnId, db.Serial)
+        yukiTable.Fields.Add(ColumnName, db.String)
+        yukiTable.Fields.Add(ColumnDate, db.Date)
+        yukiTable.PrimaryKey = [ColumnId]
+        yukiTable.Update()
+    End If
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    ensureTable()
+    
+End

@@ -37,5 +37,6 @@ Public Sub ActivateAll()
     NagatoUserAutostartHandler.Activate()
     NagatoApplicationsHandler.Activate()
     NagatoEditorHandler.Activate()
+    NagatoTabLoginSound.Activate()
     
 End

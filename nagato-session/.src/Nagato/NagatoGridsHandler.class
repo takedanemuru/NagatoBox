@@ -14,6 +14,7 @@ Private $hiddenByUser As New String[]
 Private Sub initializeGrid(argGrid As GridView)
     
     $grid = argGrid
+    $grid.Clear()
     
     With $grid
         .Rows.Count = 1
