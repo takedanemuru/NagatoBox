@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoDBusList
+
+Public Sub _Initialize()
+    
+    Me._$header = "Session"
+    Me._SetApplications(DBus.Session.Applications, MikuruIcon.Get("button-play"))
+    Me._SetApplications(Me._GetActivatables(), MikuruIcon.Get("button-pause"))
+    
+End

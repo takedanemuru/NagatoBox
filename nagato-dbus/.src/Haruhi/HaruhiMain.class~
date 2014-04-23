@@ -1,47 +1,18 @@
 ' Gambas class file
 
 Private $menuBar As NagatoMenuBar
-
-Private Sub setApplications(argApplications As String[], argList As ListView, argIcon As Picture)
-    
-    Dim yukiName As String
-    
-    For Each yukiName In argApplications.Sort()
-        If yukiName Begins ":" Then Continue
-        Try argList.Add(yukiName, yukiName, argIcon)
-    Next
-    
-End
-
-Private Function getActivatables(argHeader As String) As String[]
-    
-    Return DBus[argHeader & "://org.freedesktop.DBus"]["/", "org.freedesktop.DBus"].ListActivatableNames()
-    
-End
-
-Private Sub setSession()
-    
-    setApplications(DBus.Session.Applications, SessionList, MikuruIcon.Get("button-play"))
-    setApplications(getActivatables("Session"), SessionList, MikuruIcon.Get("button-pause"))
-    
-End
-
-Private Sub setSystem()
-    
-    setApplications(DBus.System.Applications, SystemList, MikuruIcon.Get("button-play"))
-    setApplications(getActivatables("System"), SystemList, MikuruIcon.Get("button-pause"))
-    
-End
+Private $listSystem As NagatoDBusListSystem
+Private $listSession As NagatoDBusListSession
 
 Public Sub Form_Open()
 
     $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
 
     NagatoSettings.LoadFormSettings(Me)
-
     Application.MainWindow = Me
-    setSession()
-    setSystem()
+
+    $listSession = New NagatoDBusListSession(SessionList)
+    $listSystem = New NagatoDBusListSystem(SystemList)
 
 End
 
@@ -51,35 +22,43 @@ Public Sub Form_Close()
     
 End
 
-Public Sub SessionList_Click()
+Public Sub DBusList_Click()
 
     Dim yukiNode As NagatoNode
     
     Me.TreeView1.Clear()
-    MikuruGDBus.Mode = MikuruGDBus.ModeSession
-    yukiNode = New NagatoNode(SessionList.Key, "", "/")
+    MikuruGDBus.Mode = IIf(Last.Tag = 0, MikuruGDBus.ModeSession, MikuruGDBus.ModeSystem)
+    yukiNode = New NagatoNode(Last.Key, "", "/")
 
 End
 
-Public Sub SystemList_Click()
-
-    Dim yukiNode As NagatoNode
-    
-    Me.TreeView1.Clear()
-    MikuruGDBus.Mode = MikuruGDBus.ModeSystem
-    yukiNode = New NagatoNode(SystemList.Key, "", "/")
-
-End
+' Public Sub SessionList_Click()
+' 
+'     Dim yukiNode As NagatoNode
+'     
+'     Me.TreeView1.Clear()
+'     MikuruGDBus.Mode = MikuruGDBus.ModeSession
+'     yukiNode = New NagatoNode(SessionList.Key, "", "/")
+' 
+' End
+' 
+' Public Sub SystemList_Click()
+' 
+'     Dim yukiNode As NagatoNode
+'     
+'     Me.TreeView1.Clear()
+'     MikuruGDBus.Mode = MikuruGDBus.ModeSystem
+'     yukiNode = New NagatoNode(SystemList.Key, "", "/")
+' 
+' End
 
 Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.DBusRefresh
             TreeView1.Clear()
-            SessionList.Clear()
-            SystemList.Clear()
-            setSession()
-            setSystem()
+            $listSession.Refresh()
+            $listSystem.Refresh()
     End Select
     
 End

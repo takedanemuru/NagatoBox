@@ -9,6 +9,8 @@ Private Function getBonborimaturiDate() As Integer
     
     Dim yukiFirstWeekdayOfOctober As Integer = WeekDay(Date(Year(Now), 10, 1))
     
+    Debug 14 - yukiFirstWeekdayOfOctober
+    
     Return (14 - yukiFirstWeekdayOfOctober)
     
 End

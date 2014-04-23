@@ -14,6 +14,7 @@ End
 Private Function containsSearchQuery(argDesktopFile As NagatoDesktopFile, argQuery As String) As Boolean
     
     With argDesktopFile
+        If File.BaseName(.Path) Like Subst$("*&1*", argQuery) Then Return True
         If .CommonName Like Subst$("*&1*", argQuery) Then Return True
         If .Name Like Subst$("*&1*", argQuery) Then Return True
         If .GenericName Like Subst$("*&1*", argQuery) Then Return True

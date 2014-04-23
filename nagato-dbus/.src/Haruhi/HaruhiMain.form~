@@ -11,17 +11,20 @@
     Orientation = Align.Left
     { TabStrip1 TabStrip
       MoveScaled(0,0,34,47)
+      Tag = "SessionList"
       Arrangement = Arrange.Fill
       Count = 2
       Index = 0
       Text = ("Session")
-      { SessionList ListView
+      { SessionList ListView DBusList
+        Name = "SessionList"
         MoveScaled(8,15,16,16)
-        Tag = "SessionList"
+        Tag = "0"
       }
       Index = 1
       Text = ("System")
-      { SystemList ListView
+      { SystemList ListView DBusList
+        Name = "SystemList"
         MoveScaled(9,17,16,16)
         Tag = "SystemList"
       }
@@ -31,9 +34,8 @@
   { VBox1 VBox
     MoveScaled(39,2,43,47)
     Expand = True
-    { HPanel1 HPanel
-      MoveScaled(0,0,41,4)
-      Background = &HA7DFA7&
+    { MenuHBox HBox
+      MoveScaled(6,1,31,4)
     }
     { !TreeView1 TreeView
       MoveScaled(2,6,45,40)

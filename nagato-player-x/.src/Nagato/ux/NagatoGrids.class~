@@ -43,6 +43,9 @@ Public Sub _ClearGrids()
     Me._$grids.Clear()
     Me._$grids.Rows.Count = 0
     
+Catch
+    Return
+    
 End
 
 Public Sub _SetGridData(argRow As Integer, argColumn As Integer, argData As String, Optional argExpand As Boolean = True)

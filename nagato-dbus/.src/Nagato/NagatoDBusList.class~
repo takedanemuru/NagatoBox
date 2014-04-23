@@ -1,0 +1,42 @@
+' Gambas class file
+
+Create Private
+
+Public _$listView As ListView
+Public _$header As String = ""
+
+Public Sub _SetApplications(argApplications As String[], argIcon As Picture)
+    
+    Dim yukiName As String
+    
+    For Each yukiName In argApplications.Sort()
+        If yukiName Begins ":" Then Continue
+        Try Me._$listView.Add(yukiName, yukiName, argIcon)
+    Next
+    
+End
+
+Public Function _GetActivatables() As String[]
+    
+    Return DBus[Me._$header & "://org.freedesktop.DBus"]["/", "org.freedesktop.DBus"].ListActivatableNames()
+    
+End
+
+Public Sub _Initialize()
+    
+    'virtual, must be overridden
+    
+End
+
+Public Sub Refresh()
+    
+    Me._$listView.Clear()
+    Me._Initialize()
+    
+End
+
+Public Sub _new(argListView As ListView)
+    
+    Me._$listView = argListView
+    
+End

@@ -105,8 +105,6 @@ End
 
 Public Sub Asakura_Enter()
     
-    If Me._$gridView.RowAt(Mouse.Y) = -1 Then Return
-    
     $lock = True
     
 End

@@ -1,0 +1,81 @@
+' Gambas class file
+
+Private Sub addDesktopFileIcon(argDesktopFile As NagatoDesktopFile)
+    
+    Dim yukiIcon As Picture = argDesktopFile.GetIcon(64).Image.Stretch(64, 64).Picture
+    
+    ' To avoid key error, because KDE apps are added twice in menu-cache. 
+    If ApplicationsIconView.Exist(argDesktopFile.Path) Then Return
+    
+    ApplicationsIconView.Add(argDesktopFile.Path, argDesktopFile.CommonName, yukiIcon)
+    
+End
+
+Private Function containsSearchQuery(argDesktopFile As NagatoDesktopFile, argQuery As String) As Boolean
+    
+    With argDesktopFile
+        If .CommonName Like Subst$("*&1*", argQuery) Then Return True
+        If .Name Like Subst$("*&1*", argQuery) Then Return True
+        If .GenericName Like Subst$("*&1*", argQuery) Then Return True
+        If .Comment Like Subst$("*&1*", argQuery) Then Return True
+        If .LocaleGenericName Like Subst$("*&1*", argQuery) Then Return True
+        If .LocaleComment Like Subst$("*&1*", argQuery) Then Return True
+    End With
+    
+    Return False
+    
+End
+
+Public Sub SetIconViewWithSearchQuery(argQuery As String)
+    
+    Dim yukiDesktopFile As NagatoDesktopFile
+
+    ApplicationsIconView.Clear()
+
+    For Each yukiDesktopFile In NagatoMenuCache3.GetApplications("All")
+        If Not containsSearchQuery(yukiDesktopFile, argQuery) Then Continue
+        addDesktopFileIcon(yukiDesktopFile)
+    Next
+    
+    If ApplicationsIconView.Count > 0 Then
+         Me.Show()
+    Else
+        Message.Error(("YUKI.N > Sorry, but I coundn't find any application."), ("OK"))
+    End If
+    
+End
+
+Public Sub ApplicationsIconView_Activate()
+
+    MikuruApplications.Launch(ApplicationsIconView.Key)
+
+End
+
+Public Sub ApplicationsIconView_Menu()
+    
+    Dim yukiMenu As NagatoContextMenu
+    
+    If ApplicationsIconView.Key Then
+        yukiMenu = New NagatoContextMenu(Me, ApplicationsIconView.Key)
+    Endif
+    
+    yukiMenu.PopUp()
+    
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+
+End
+
+Public Sub ApplicationsIconView_Arrange()
+
+    Dim yukiImage As Image = Image.Load("pictures/welcome_to_SOS.jpg")
+    Dim yukiRate As Float = ApplicationsIconView.H / yukiImage.H
+
+    With yukiImage
+        ApplicationsIconView.Picture = .Stretch(.W * yukiRate, .H * yukiRate).Picture
+    End With
+
+End

@@ -1,0 +1,49 @@
+' Gambas class file
+
+Property FilePaths As String[]
+
+Private $filePaths As New String[]
+Private $timer As New Timer As "Timer"
+Private $lastObserved As Date
+
+Event Modefied(argPath As String)
+
+Private Sub checkModefied()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In $filePaths
+        If Not Exist(yukiPath) Then Continue
+        If DateDiff(Stat(yukiPath).LastChange, $lastObserved, gb.Second) > 1 Then Continue
+        Raise Modefied(yukiPath)
+    Next
+    
+End
+
+Public Sub _new()
+    
+    $lastObserved = Now
+    $timer.Delay = 2000
+    $timer.Start()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    checkModefied()
+    
+    $lastObserved = Now
+    
+End
+
+Private Function FilePaths_Read() As String[]
+
+    Return $filePaths
+
+End
+
+Private Sub FilePaths_Write(Value As String[])
+
+    $filePaths = Value
+
+End

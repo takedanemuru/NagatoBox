@@ -7,6 +7,19 @@ Private Const TrashBinKey As String = "NagatoTrashBinKey"
 
 Private $bookmarks As NagatoBookmarksArray
 Private $listView As ListView
+Private $observer As NagatoFileObserver
+
+Private Sub initializeFileObserver()
+    
+    Dim yukiFilePaths As New String[]
+    
+    Try yukiFilePaths.Add(User.Home &/ ".gtk-bookmarks")
+    Try yukiFilePaths.Add(Desktop.ConfigDir &/ "gtk-3.0/bookmarks")
+    
+    $observer = New NagatoFileObserver As "FilesObserver"
+    $observer.FilePaths = yukiFilePaths.Copy()
+    
+End
 
 Private Sub addListItems(argPaths As String[])
     
@@ -37,6 +50,8 @@ End
 
 Private Sub addBookmarkItems()
     
+    Debug "add bookmarks"
+    
     addListItems([User.Home, NagatoXdgUserDirs.Desktop])
     addListItems(NagatoXdgUserDirs.AllXdgUserDirs)
         $listView.Add(SeparatorKey & "1", "")
@@ -50,10 +65,9 @@ Private Sub addDroppedDirectory()
     
     Dim yukiPath As String
     
-    Debug "add"
-    
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If IsDir(yukiPath) And If Not $listView.Exist(yukiPath) Then 
+            $bookmarks.AddBookmark(yukiPath)
             $listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
         Endif
     Next
@@ -99,6 +113,7 @@ End
 Public Sub _new(argContainer As Container)
     
     $bookmarks = New NagatoBookmarksArray
+    initializeFileObserver()
     initializeListView(argContainer)
     Me._$mainContent = $listView
     
@@ -129,5 +144,11 @@ Public Sub ListView_Drop()
             moveDroppedFiles()
         Endif
     End If
+    
+End
+
+Public Sub FilesObserver_Modefied(argPath As String)
+    
+    
     
 End

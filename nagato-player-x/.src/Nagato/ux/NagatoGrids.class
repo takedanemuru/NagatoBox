@@ -40,6 +40,8 @@ End
 
 Public Sub _ClearGrids()
     
+    If Not Object.IsValid(Me._$grids) Then Return
+    
     Me._$grids.Clear()
     Me._$grids.Rows.Count = 0
     
