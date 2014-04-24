@@ -41,7 +41,7 @@ Public Sub TrashFile(argPath As String)
     
 End
 
-Public Function getFileSizeText(argPath As String) As String
+Public Function GetFileSizeText(argPath As String) As String
     
     Dim yukiSize As Long = Stat(argPath).Size 
     
@@ -86,29 +86,5 @@ Public Function GetTimeDifferenceText(argDate As Date) As String
     Else
         Return Format$(DateDiff(argDate, Now(), gb.Year), "### years ago")
     End If
-    
-End
-
-Private Function getGroupPermissionText(argPermission As String) As String
-    
-    Dim yukiText As String
-    
-    yukiText = IIf(String.InStr(argPermission, "r") = 0, "-", "r")
-    yukiText &= IIf(String.InStr(argPermission, "w") = 0, "-", "w")
-    yukiText &= IIf(String.InStr(argPermission, "x") = 0, "-", "x")
-    
-    Return yukiText
-    
-End
-
-Public Function GetPermissionText(argPath As String) As String
-    
-    Dim yukiText As String = IIf(IsDir(argPath), "d", "-")
-    
-    yukiText &= getGroupPermissionText(Stat(argPath).Perm.User)
-    yukiText &= getGroupPermissionText(Stat(argPath).Perm.Group)
-    yukiText &= getGroupPermissionText(Stat(argPath).Perm.Other)
-    
-    Return yukiText
     
 End

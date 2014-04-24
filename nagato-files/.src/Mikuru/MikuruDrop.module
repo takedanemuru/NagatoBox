@@ -1,3 +1,17 @@
 ' Gambas module file
 
 Public Enum TypeVoid, TypeDirectory, TypeApplication, TypeFile
+
+Public Function GetType(argIconView As IconView) As Integer
+    
+    If Not Object.IsValid(argIconView.Item) Then
+        Return Me.TypeVoid
+    Else If IsDir(argIconView.Item.Key) Then
+        Return Me.TypeDirectory
+    Else If MikuruMimeType.GetType(argIconView.Item.Key) = MikuruMimeType.TypeApplication Then
+        Return Me.TypeApplication
+    Else
+        Return Me.TypeFile
+    Endif
+    
+End

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+' Private Sub keyPressWithControl(argKeyCode As Integer)
+'     
+'     Dim yukiPaths As String
+'     
+'     Select Case argKeyCode
+'         Case Key["x"]
+'             Clipboard.Copy(NagatoDrag2.GetUriListCut($selectionBar.Paths), MikuruMimeType.UriList)
+'         Case Key["c"] 
+'             Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), MikuruMimeType.UriList)
+'         Case Key["v"] 
+'             If Clipboard.Format <> MikuruMimeType.UriList Then Return
+'             yukiPaths = Clipboard.Paste()
+'             Raise MenuEventWithArg(Me.FileCopy, yukiPaths)
+'         Case Key["h"] 
+'             NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+'             Me.Refresh($currentDirectory)
+'     End Select
+'     
+' End
+' 
+ 'Public Sub IconView_KeyPress()
+'     
+'     If Key.Control Then
+'         keyPressWithControl(Key.Code)
+'     Else
+'         keyPress(Key.Code)
+'     End If
+'     
+' End
+' 

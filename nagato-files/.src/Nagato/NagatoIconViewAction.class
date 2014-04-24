@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoIconViewHandler
+
+Public Sub SetFocus(argPath As String)
+    
+    Me._$iconView[argPath].Selected = True
+    Me._$iconView[argPath].EnsureVisible()
+    
+End
+
+Public Function Delete(argPath As String) As Boolean
+    
+    Try Me._$iconView.Remove(argPath)
+    
+    If Not Error Then
+        Me._$iconView.Refresh()
+        Return True
+    Endif
+    
+End
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return Me._$iconView.Exist(argPath)
+    
+End

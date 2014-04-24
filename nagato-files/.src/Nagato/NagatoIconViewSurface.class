@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoIconViewHandler
+
+Private $filter As New String[]
+
+Private Sub setDirectoryIcon(argDirectory As String, argPattern As String, argSelection As String[])
+    
+    Dim yukiFullPath As String
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory, argPattern, gb.Directory).Sort(gb.Natural + gb.IgnoreCase)
+        yukiFullPath = argDirectory &/ yukiPath
+        If $filter.Count > 0 And If Not $filter.Exist(yukiFullPath) Then Continue
+        Me._$iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, argSelection.Exist(yukiFullPath)))
+    Next
+    
+End
+
+Private Sub setFileIcon(argDirectory As String, argPattern As String, argSelection As String[])
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    For Each yukiPath In Dir(argDirectory, argPattern, gb.File).Sort(gb.Natural + gb.IgnoreCase)
+        yukiFullPath = argDirectory &/ yukiPath
+        If $filter.Count > 0 And If Not $filter.Exist(yukiFullPath) Then Continue
+        Me._$iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, argSelection.Exist(yukiFullPath)))
+    Next
+    
+End
+
+Private Sub ensureVisible(argPath As String)
+    
+    If Me._$iconView.Exist(argPath) Then Me._$iconView[argPath].EnsureVisible()
+    
+End
+
+Private Sub refreshIconView(argDirectory As String, argSelection As String[], argLastSelected As String)
+    
+    Dim yukiPattern As String = IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
+    
+    Me._$iconView.Clear()
+    setDirectoryIcon(argDirectory, yukiPattern, argSelection)
+    setFileIcon(argDirectory, yukiPattern, argSelection)
+    NagatoDBThumbnailer.CleanUp(argDirectory)
+    ensureVisible(argLastSelected)
+    
+End
+
+Public Sub ResetIcon(argPath As String, argSelected As Boolean)
+    
+    Me._$iconView[argPath].Picture = MikuruTiles.Get(argPath, argSelected)
+    
+End
+
+Public Sub Refresh(argDirectory As String, argSelection As String[], argLastSelected As String)
+    
+    $filter.Clear()
+    refreshIconView(argDirectory, argSelection, argLastSelected)
+    
+End
+
+Public Sub RefreshFiltered(argDirectory As String, argSelection As String[], argLastSelected As String, argFilter As String[])
+    
+    $filter = argFilter.Copy()
+    refreshIconView(argDirectory, argSelection, argLastSelected)
+    
+End
+
+Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[])
+    
+    Dim yukiPath As String
+    
+    Me._$iconView.Clear()
+    
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        If IsDir(yukiPath) Then Me._$iconView.AddIcon(yukiPath, argSelection.Exist(yukiPath))
+    Next
+    
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        If Not IsDir(yukiPath) Then Me._$iconView.AddIcon(yukiPath, argSelection.Exist(yukiPath))
+    Next
+    
+End

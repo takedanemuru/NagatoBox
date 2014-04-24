@@ -1,0 +1,16 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoMenuPipe
+
+Public _$iconView As IconView
+Public _$observer As Observer
+
+Public Sub _new(argIconView As IconView)
+    
+    Me._$iconView = argIconView
+    Me._$iconView.SetFocus()
+    Me._$observer = New Observer(Me._$iconView) As "Asakura"
+    
+End

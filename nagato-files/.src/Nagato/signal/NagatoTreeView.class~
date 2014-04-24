@@ -154,8 +154,6 @@ End
 
 Public Sub TreeView_DragMove()
     
-    Debug $treeView.Item.Key
-    
     If Not $treeView.FindAt(Drag.X, Drag.Y) Then
         $treeView[$treeView.Item.Key].Selected = True
     Else

@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read IconView As IconView
+
+Private $iconView As IconView
+
+Public Sub _new(argContainer As Container)
+    
+     $iconView = New IconView(argContainer) As "IconView"
+    
+    With $iconView
+        .Expand = True
+        .Picture = picture.Load("pictures/about.png")
+        .Mode = Select.Single
+        .Drop = True
+        .Orientation = Arrange.Horizontal
+        .Tracking = True
+    End With
+    
+End
+
+Private Function IconView_Read() As IconView
+
+    Return $iconView
+
+End

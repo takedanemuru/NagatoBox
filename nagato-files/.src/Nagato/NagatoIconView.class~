@@ -4,163 +4,45 @@ Inherits NagatoMenuPipe
 
 Property Read Selection As String[]
 
-Private $filter As New String[]
-Private $iconView As IconView
+Private $iconView As NagatoIconViewSurface
+Private $iconViewMouseAction As NagatoIconViewMouse
+Private $iconViewKeyboard As NagatoIconViewKeyboard
 Private $selectionBar As NagatoSelectionBar 
 Private $currentDirectory As String
 
 Event DirectoryClicked(argDirectory As String)
 
-Private Sub initializeIconView(argContainer As Container)
-    
-    $iconView = New IconView(argContainer) As "IconView"
-    
-    With $iconView
-        .Expand = True
-        .Picture = picture.Load("pictures/about.png")
-        .Mode = Select.Single
-        .Drop = True
-        .Orientation = Arrange.Horizontal
-        .Tracking = True
-    End With
-    
-End
-
-Private Sub getItemType() As Integer
-    
-    If Not Object.IsValid($iconView.Item) Then
-        Return MikuruDrop.TypeVoid
-    Else If IsDir($iconView.Item.Key) Then
-        Return MikuruDrop.TypeDirectory
-    Else If MikuruMimeType.GetType($iconView.Item.Key) = MikuruMimeType.TypeApplication Then
-        Return MikuruDrop.TypeApplication
-    Else
-        Return MikuruDrop.TypeFile
-    Endif
-    
-End
-
-Private Sub setDirectoryIcon(argDirectory As String, argPattern As String)
-    
-    Dim yukiFullPath As String
-    Dim yukiPath As String
-    
-    For Each yukiPath In Dir(argDirectory, argPattern, gb.Directory).Sort(gb.Natural + gb.IgnoreCase)
-        yukiFullPath = argDirectory &/ yukiPath
-        If $filter.Count > 0 And If Not $filter.Exist(yukiFullPath) Then Continue
-        $iconView.Add(yukiFullPath, "", MikuruTile.GetDirectoryTile(yukiFullPath, $selectionBar.Exist(yukiFullPath)))
-    Next
-    
-End
-
-Private Sub getFileIconPicture(argPath As String) As Picture
-    
-    Select Case MikuruMimeType.GetType(argPath)
-        Case MikuruMimeType.TypeImage
-            Return MikuruImageThumbnail.Get(argPath, $selectionBar.Exist(argPath))
-        Case MikuruMimeType.TypeApplication
-            Return MikuruTile.GetApplicationTile(argPath)
-        Default
-            Return MikuruTile.GetFileTile(argPath, $selectionBar.Exist(argPath))
-    End Select
-
-End
-
-Private Sub setFileIcon(argDirectory As String, argPattern As String)
-    
-    Dim yukiPath As String
-    Dim yukiFullPath As String
-    
-    For Each yukiPath In Dir(argDirectory, argPattern, gb.File).Sort(gb.Natural + gb.IgnoreCase)
-        yukiFullPath = argDirectory &/ yukiPath
-        If $filter.Count > 0 And If Not $filter.Exist(yukiFullPath) Then Continue
-        $iconView.Add(yukiFullPath, "", getFileIconPicture(yukiFullPath))
-    Next
-    
-End
-
-Private Sub refreshIconView(argDirectory As String)
-    
-    Dim yukiPattern As String = IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
-    
-    $iconView.Clear()
-    setDirectoryIcon(argDirectory, yukiPattern)
-    setFileIcon(argDirectory, yukiPattern)
-    NagatoDBThumbnailer.CleanUp(argDirectory)
-    
-    If $iconView.Exist($selectionBar.LastSelected) Then $iconView[$selectionBar.LastSelected].EnsureVisible()
-    
-End
-
-Private Sub dropFile(argPath As String)
-    
-    Select Case getItemType()
-        Case MikuruDrop.TypeVoid
-            Debug "Move to current directory"
-            Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, argPath)
-        Case MikuruDrop.TypeFile
-            Debug "ignore"
-        Case MikuruDrop.TypeDirectory
-            Debug "move file(s) to " & $iconView.Item.Key
-            Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
-        Case MikuruDrop.TypeApplication
-            Debug "Try execute app with: " & argPath
-    End Select
-    
-End
-
 Public Sub SetFocus(argPath As String)
     
-    $iconView[argPath].Selected = True
-    $iconView[argPath].EnsureVisible()
+    $iconView.SetFocus(argPath)
     
 End
 
 Public Sub Refresh(argDirectory As String)
     
-    $filter.Clear()
     $currentDirectory = argDirectory
     $selectionBar.ClearAll()
-    refreshIconView(argDirectory)
+    $iconView.Refresh(argDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
     
 End
 
 Public Sub RefreshFiltered(argDirectory As String, argFilter As String[])
     
-    $filter = argFilter
     $currentDirectory = argDirectory
     $selectionBar.ClearAll()
-    refreshIconView(argDirectory)
+    $iconView.RefreshFiltered(argDirectory, $selectionBar.Paths, $selectionBar.LastSelected, argFilter)
     
 End
 
 Public Sub RefreshWithSearchQuery(argPaths As String[])
     
-    Dim yukiPath As String
-    
-    $iconView.Clear()
-    
-    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        Debug yukiPath
-        If IsDir(yukiPath) Then
-            $iconView.Add(yukiPath, "", MikuruTile.GetDirectoryTile(yukiPath, $selectionBar.Exist(yukiPath)))
-        Endif
-    Next
-    
-    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        Debug yukiPath
-        If Not IsDir(yukiPath) Then
-            $iconView.Add(yukiPath, "", getFileIconPicture(yukiPath))
-        Endif
-    Next
+    $iconView.RefreshWithSearchResult(argPaths, $selectionBar.Paths)
     
 End
 
 Public Sub Delete(argPath As String)
     
-    Try $iconView.Remove(argPath)
-    If Not Error Then $selectionBar.Remove(argPath)
-    $iconView.Refresh()
+    If $iconView.Delete(argPath) Then $selectionBar.Remove(argPath)
     
 End
 
@@ -168,72 +50,29 @@ Public Sub HasKey(argDirectory As String, argPath As String) As Boolean
     
     Return $iconView.Exist(argDirectory &/ argPath)
     
-Catch
-    Return False
-    
 End
 
 Public Sub _new(argContainer As Container)
     
-    initializeIconView(argContainer)
-    $iconView.SetFocus()
+    Dim yukiIconViewInitializer As New NagatoIconViewInitializer(argContainer)
+    
+    $iconView = New NagatoIconViewSurface(yukiIconViewInitializer.IconView) As "Menu"
+    $iconViewMouseAction = New NagatoIconViewMouse(yukiIconViewInitializer.IconView) As "Menu"
     $selectionBar = New NagatoSelectionBar(argContainer) As "SelectionBar"
     
 End
 
-Public Sub IconView_MouseDrag()
+Public Sub Menu_MouseDrag()
     
     If $selectionBar.Count = 0 Then Return
     
-    Drag.Icon = $iconView.Current.Picture
-    $iconView.Drag(NagatoDrag2.GetUriList($selectionBar.Paths), MikuruMimeType.UriList)
-    
+    $iconViewMouseAction.MouseDrag(NagatoDrag2.GetUriList($selectionBar.Paths))
+    ' 
 End
 
-Public Sub IconView_DragMove()
+Public Sub Menu_DirectoryClicked(argPath As String)
     
-    Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
-    
-    If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
-        $iconView.UnselectAll()
-        $iconView.Item.Selected = True
-    Else
-        $iconView.UnselectAll()
-    End If
-    
-End
-
-Public Sub IconView_Drop()
-    
-    Dim yukiPath As String
-    
-    If Drag.Format <> MikuruMimeType.UriList Then Return 
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        'xdg-user-dirs will be ignored. 
-        If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
-        dropFile(yukiPath)
-    Next
-    
-End
-
-Public Sub IconView_Activate()
-    
-    If IsDir($iconView.Key) Then
-        Raise DirectoryClicked($iconView.Key)
-    Else
-        MikuruFile.Exec($iconView.Key)
-    End If
-    
-End
-
-Private Sub resetIcon(argPath As String, argSelected As Boolean)
-    
-    If IsDir(argPath) Then
-        $iconView[argPath].Picture = MikuruTile.GetDirectoryTile(argPath, argSelected)
-    Else 'IsFile
-        $iconView[argPath].Picture = getFileIconPicture(argPath)
-    Endif
+    Raise DirectoryClicked(argPath)
     
 End
 
@@ -245,79 +84,18 @@ Private Sub clearSelection()
     $selectionBar.ClearWithoutLastSelected()
     
     For Each yukiPath In yukiSelectedPaths
-        resetIcon(yukiPath, False)
+        $iconView.ResetIcon(yukiPath, False)
     Next
     
 End
 
-Private Sub keyPress(argKeyCode As Integer)
+Public Sub Menu_MouseDown(argPath As String)
     
-    If argKeyCode = Key.Enter Then
-        If IsDir($iconView.Key) Then Raise DirectoryClicked($iconView.Key)
-        Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
-    Else If argKeyCode = Key.Esc Then
-        $selectionBar.ClearAll()
-        Me.Refresh($currentDirectory)
-    Endif
-    
-End
-
-Private Sub keyPressWithControl(argKeyCode As Integer)
-    
-    Dim yukiPaths As String
-    
-    Select Case argKeyCode
-        Case Key["x"]
-            Clipboard.Copy(NagatoDrag2.GetUriListCut($selectionBar.Paths), MikuruMimeType.UriList)
-        Case Key["c"] 
-            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), MikuruMimeType.UriList)
-        Case Key["v"] 
-            If Clipboard.Format <> MikuruMimeType.UriList Then Return
-            yukiPaths = Clipboard.Paste()
-            Raise MenuEventWithArg(Me.FileCopy, yukiPaths)
-        Case Key["h"] 
-            NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
-            Me.Refresh($currentDirectory)
-    End Select
-    
-End
-
-Public Sub IconView_MouseDown()
-    
-    If $iconView.Key = "" Then Return
-    
-    $selectionBar.Push($iconView.Key, Mouse.Left)
+     $selectionBar.Push(argPath, Mouse.Left)
     If Not NagatoSettings.MultipleSelection Then clearSelection()
-    resetIcon($iconView.Key, $selectionBar.Exist($iconView.Key))
+    $iconView.ResetIcon(argPath, $selectionBar.Exist(argPath))
     
     Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
-    
-End
-
-Public Sub IconView_Menu()
-    
-    Dim yukiPath As String = $iconView.Key
-    Dim yukiContextMenu As Object
-    
-    If yukiPath = "" Then
-        Debug "IconViewContextMenu"
-    Else If IsDir(yukiPath) Then
-        yukiContextMenu = New NagatoContextMenuDirectory(HaruhiMain, yukiPath) As "Menu"
-        yukiContextMenu.Popup()
-    Else 
-        yukiContextMenu = New NagatoContextMenuFile(HaruhiMain, yukiPath) As "Menu"
-        yukiContextMenu.Popup()
-    End If
-    
-End
-
-Public Sub IconView_KeyPress()
-    
-    If Key.Control Then
-        keyPressWithControl(Key.Code)
-    Else
-        keyPress(Key.Code)
-    End If
     
 End
 

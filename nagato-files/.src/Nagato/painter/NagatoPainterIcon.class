@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private Const IconSize As Integer = 128
+
+Private $currentPath As String
+
+Private Function getIcon() As Picture
+    
+    Dim yukiImage As Image
+    Dim yukiRate As Float
+    
+    If DesktopMime.FromFile($currentPath).Type Begins "image" Then
+        yukiImage = Image.Load($currentPath)
+        yukiRate = Min(IconSize / yukiImage.H, IconSize / yukiImage.W)
+        yukiImage = yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)
+        Return yukiImage.Picture
+    Else
+        Return Desktop.GetFileIcon($currentPath, IconSize / 2)
+    Endif
+    
+Catch
+    Return Stock["huge/file"]
+    
+End
+
+Public Function Paint(argPath As String) As Integer
+    
+    Dim yukiIcon As Picture 
+    
+    $currentPath = argPath
+    yukiIcon = getIcon()
+    Paint.DrawPicture(yukiIcon, 32 + ((IconSize - yukiIcon.W) / 2), 16)
+    
+    Return yukiIcon.H + 48
+    
+End

@@ -4,28 +4,14 @@ Inherits NagatoLeftPaneContent
 
 Private $treeView As TreeView
 
-Private Function getFileIcon(argPath As String) As Picture
-    
-    Dim yukiMimeType As String = DesktopMime.FromFile(argPath).Type
-    
-    If yukiMimeType Begins "image" Then
-        Return MikuruIcon.Get("image", 16)
-    Else If yukiMimeType Begins "audio" Then
-        Return MikuruIcon.Get("music", 16)
-    Else If yukiMimeType Begins "video" Then
-        Return MikuruIcon.Get("video", 16)
-    Else 
-        Return MikuruIcon.Get("document", 16)
-    Endif
-    
-End
-
 Private Sub setFile(argDirectory As String)
     
     Dim yukiPath As String
+    Dim yukiFullPath As String
     
     For Each yukiPath In MikuruPath.GetChildrenFile(argDirectory, NagatoSettings.ShowHidden)
-        $treeView.Add(argDirectory &/ yukiPath, yukiPath, getFileIcon(argDirectory &/ yukiPath), argDirectory)
+        yukiFullPath = argDirectory &/ yukiPath
+        $treeView.Add(yukiFullPath, yukiPath, MikuruIconMono.GetFromPath(yukiFullPath), argDirectory)
     Next
     
 End
