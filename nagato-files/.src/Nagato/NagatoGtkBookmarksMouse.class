@@ -12,7 +12,6 @@ Private Sub addDroppedDirectory()
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If IsDir(yukiPath) And If Not Me._$listView.Exist(yukiPath) Then 
             NagatoBookmarksArray.AddBookmark(yukiPath)
-            Me._$listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
         Endif
     Next
     

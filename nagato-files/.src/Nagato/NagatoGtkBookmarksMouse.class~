@@ -12,7 +12,6 @@ Private Sub addDroppedDirectory()
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If IsDir(yukiPath) And If Not Me._$listView.Exist(yukiPath) Then 
             NagatoBookmarksArray.AddBookmark(yukiPath)
-            Me._$listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
         Endif
     Next
     
@@ -54,7 +53,7 @@ Private Sub moveDroppedFiles()
     
 End
 
-Public Sub ListView_DragMove()
+Public Sub Asakura_DragMove()
     
     If Not Me._$listView.FindAt(Drag.X, Drag.Y) Then
         Me._$listView[Me._$listView.Item.Key].Selected = True
@@ -64,7 +63,7 @@ Public Sub ListView_DragMove()
     
 End
 
-Public Sub ListView_Drop()
+Public Sub Asakura_Drop()
     
     If Not Me._$listView.FindAt(Drag.X, Drag.Y) Then
         If Me._$listView.Key Begins SeparatorKey Then

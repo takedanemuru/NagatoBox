@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Create Static
+
 Property Read List As String[]
 
 Private $bookmarkList As New String[]

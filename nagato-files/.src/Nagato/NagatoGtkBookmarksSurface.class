@@ -23,3 +23,11 @@ Public Sub AddBookmarkItems()
     Me._$listView.Add(NagatoGtkBookmarks.TrashBinKey, ("Trash bin"), MikuruIcon.Get("bin", 36))
     
 End
+
+Public Sub Refresh()
+    
+    Me._$listView.Clear()
+    Me.AddBookmarkItems()
+    Me._$listView.Refresh()
+    
+End

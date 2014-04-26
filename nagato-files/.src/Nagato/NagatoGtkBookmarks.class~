@@ -2,75 +2,29 @@
 
 Inherits NagatoLeftPaneContent
 
-Private Const SeparatorKey As String = "NagatoSeparatorKey"
-Private Const TrashBinKey As String = "NagatoTrashBinKey"
+Public Const SeparatorKey As String = "NagatoSeparatorKey"
+Public Const TrashBinKey As String = "NagatoTrashBinKey"
 
 Private $initializer As NagatoGtkBookmarksInitializer
 Private $actionHandler As NagatoGtkBookmarksAction
 Private $mouseHandler As NagatoGtkBookmarksMouse
-Private $observer As NagatoFileObserver
-
-Private Sub initializeFileObserver()
-    
-    Dim yukiFilePaths As New String[]
-    
-    Try yukiFilePaths.Add(User.Home &/ ".gtk-bookmarks")
-    Try yukiFilePaths.Add(Desktop.ConfigDir &/ "gtk-3.0/bookmarks")
-    
-    $observer = New NagatoFileObserver As "FilesObserver"
-    $observer.FilePaths = yukiFilePaths.Copy()
-    
-End
-
-Private Sub addListItems(argPaths As String[])
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In argPaths
-        If $initializer.ListView.Exist(yukiPath) Then Continue
-        $initializer.ListView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
-    Next
-    
-End
-
-' Private Sub initializeListView(argContainer As Container)
-'     
-'     $initializer.ListView = New ListView(argContainer) As "ListView"
-'     
-'     With $initializer.ListView
-'         .Expand = True
-'         .Foreground = Color.White
-'         .Background = Color.Merge(Color.Violet, Color.White, 0.75)
-'         .Drop = True
-'         .Mode = Select.Single
-'     End With
-'     
-' End
-
-Private Sub addBookmarkItems()
-    
-    addListItems([User.Home, NagatoXdgUserDirs.Desktop])
-    addListItems(NagatoXdgUserDirs.AllXdgUserDirs)
-        $initializer.ListView.Add(SeparatorKey & "1", "")
-    addListItems(NagatoBookmarksArray.List)
-        $initializer.ListView.Add(SeparatorKey & "2", "")
-    $initializer.ListView.Add(TrashBinKey, ("Trash bin"), MikuruIcon.Get("bin", 36))
-    
-End
+Private $surfaceHandler As NagatoGtkBookmarksSurface
+Private $observer As NagatoGtkBookmarksObserver 
 
 Public Sub _new(argContainer As Container)
     
-    initializeFileObserver()
     $initializer = New NagatoGtkBookmarksInitializer(argContainer)
-    addBookmarkItems()
+    $surfaceHandler = New NagatoGtkBookmarksSurface($initializer.ListView)
+    $surfaceHandler.AddBookmarkItems()
     Me._$mainContent = $initializer.ListView
     $actionHandler = New NagatoGtkBookmarksAction($initializer.ListView)
     $mouseHandler = New NagatoGtkBookmarksMouse($initializer.ListView)
+    $observer = New NagatoGtkBookmarksObserver As "BookmarksObserver"
     
 End
 
-Public Sub FilesObserver_Modefied(argPath As String)
+Public Sub BookmarksObserver_Change()
     
-    
+    Debug "reload all"
     
 End
