@@ -1,0 +1,62 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private Const Limit As Integer = 500
+
+Private $paths As New String[]
+
+Private Sub initializePaths()
+    
+    Dim yukiDirectory As String = NagatoSettings.SlideShowDirectory
+    Dim yukiPath As String
+    Dim yukiCount As Integer
+    
+    If Not Exist(NagatoSettings.SlideShowDirectory) Then
+        NagatoSettings.SlideShowDirectory = MikuruPath.Pictures
+        yukiDirectory = MikuruPath.Pictures
+    Endif
+    
+    $paths.Clear()
+    
+    For Each yukiPath In RDir(yukiDirectory, "*", gb.File)
+        If Desktopmime.FromFile(yukiDirectory &/ yukiPath).Type Begins "image" Then 
+            $paths.Add(yukiDirectory &/ yukiPath)
+            Inc yukiCount
+            If yukiCount = 500 Then Break
+        Endif
+    Next
+    
+End
+
+Public Function GetImagePath() As String
+    
+    Dim yukiPath As String
+    Dim yukiRetryCount As Integer
+    
+    Do
+        yukiPath = $paths[Int(Rnd(0, $paths.Count))]
+        If Exist(yukiPath) And If DesktopMime.FromFile(yukiPath).Type Begins "image" Then Return yukiPath
+        Inc yukiRetryCount
+        If yukiRetryCount > 5 Then Return "pictures/about.png"
+    Loop
+    
+End
+
+Public Sub Refresh()
+    
+    initializePaths()
+    
+End
+
+Public Sub _new()
+    
+    initializePaths()
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+End

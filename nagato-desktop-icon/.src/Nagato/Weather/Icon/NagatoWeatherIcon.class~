@@ -1,0 +1,15 @@
+' Gambas class file
+
+Create Static
+
+Public Function GetIconImageNight(argIndex As Integer) As Image
+    
+    NagatoWeatherIconNight.Get(argIndex)
+    
+End
+
+Public Function GetIconImageDay(argIndex As Integer) As Image
+    
+    NagatoWeatherIconDay.Get(argIndex)
+    
+End

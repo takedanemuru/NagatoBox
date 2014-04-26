@@ -1,0 +1,63 @@
+' Gambas class file
+
+Property Read X As Integer
+Property Read Y As Integer
+
+Private Const FormHeight As Integer = 194
+Private Const FormWidth As Integer = 128
+
+Private $image As Image
+Private $offset As New Point
+Private $miniumCount As Integer
+Private $scrollReverse As Boolean = False
+
+Event Change
+
+Private Sub setScrollDirection()
+    
+    If Odd(Int(Rnd(0, 7))) Then $scrollReverse = Not $scrollReverse
+    
+End
+
+Public Sub SetOffset()
+    
+    If 0 >= Max($image.W - ($offset.X + FormWidth), $image.H - ($offset.Y + FormHeight)) Then
+        If $miniumCount > 30 Then
+            $miniumCount = 0
+            'setImage()
+            Raise Change
+            setScrollDirection()
+            $offset.X = 0
+            $offset.Y = 0
+        End If
+    Else
+        If ($image.W - FormWidth) > ($image.H - FormHeight) Then
+            Inc $offset.X
+            If $offset.X > ($image.W - FormWidth) Then $offset.X = ($image.W - FormWidth)
+        Else
+            Inc $offset.Y 
+            If $offset.Y > ($image.H - FormHeight) Then $offset.Y = ($image.H - FormHeight)
+        Endif
+    Endif
+    
+    Inc $miniumCount
+    
+End
+
+Public Sub SetImage(argImage As Image)
+    
+    $image = argImage
+    
+End
+
+Private Function X_Read() As Integer
+
+    Return IIf($scrollReverse, -1 * ($image.W - (FormWidth + $offset.X)), -1 * $offset.X)
+
+End
+
+Private Function Y_Read() As Integer
+
+    Return IIf($scrollReverse, -1 * ($image.H - (FormHeight + $offset.Y)), -1 * $offset.Y)
+
+End

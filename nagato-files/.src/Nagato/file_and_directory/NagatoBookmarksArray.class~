@@ -28,7 +28,7 @@ Public Sub AddBookmark(argPath As String)
     Dim yukiBookmarks As String = File.Load(Desktop.ConfigDir &/ "gtk-3.0/bookmarks")
     Dim yukiNewBookmark As String = MikuruPath.PathToUri(argPath)
     
-    File.Save(Desktop.ConfigDir &/ "gtk-3.0/bookmarks", yukiBookmarks & yukiBookmarks)
+    File.Save(Desktop.ConfigDir &/ "gtk-3.0/bookmarks", yukiBookmarks & yukiNewBookmark)
     
 End
 

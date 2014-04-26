@@ -34,12 +34,6 @@ Public Sub Main()
     
 End
 
-Public Sub Icon_Move()
-    
-    NagatoIconOrder.Sort()
-    
-End
-
 Public Sub MainTimer_Timer()
     
     NagatoIconOrder.Refresh("nagato-systemmonitor-key")

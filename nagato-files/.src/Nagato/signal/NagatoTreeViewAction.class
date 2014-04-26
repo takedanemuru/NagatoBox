@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoTreeViewHandler
+
+Event Expand(argKey As String)
+
+Public Sub ExpandHomeDirectory()
+    
+    Object.Lock(Me._$treeView)
+        Me._$treeView[User.Home].Expanded = True
+    Object.Unlock(Me._$treeView)
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    If IsDir(Me._$treeView.Key) Then
+        HaruhiMain.SetNewDirectory(Me._$treeView.Key)
+    End If
+    
+End
+
+Public Sub Asakura_Expand()
+    
+    If Me._$treeView.Exist(Me._$treeView.Key & "dummy") Then 
+        Me._$treeView[Me._$treeView.Key & "dummy"].Delete()
+        'Me._$treeViewSurface.SetDirectory(Me._$treeView.Key)
+        Raise Expand(Me._$treeView.Key)
+    End If
+    
+End

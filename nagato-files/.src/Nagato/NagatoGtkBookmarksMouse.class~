@@ -1,0 +1,77 @@
+' Gambas class file
+
+Inherits NagatoGtkBookmarksHandler
+
+Private Const SeparatorKey As String = "NagatoSeparatorKey"
+Private Const TrashBinKey As String = "NagatoTrashBinKey"
+
+Private Sub addDroppedDirectory()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If IsDir(yukiPath) And If Not Me._$listView.Exist(yukiPath) Then 
+            NagatoBookmarksArray.AddBookmark(yukiPath)
+            Me._$listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
+        Endif
+    Next
+    
+End
+
+Private Sub trashFiles()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            MikuruFile.TrashFile(yukiPath)
+        Endif
+    Next
+    
+End
+
+Private Sub moveFiles()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            Try Move yukiPath To MikuruPath.GetSafePathName(Me._$listView.Item.Key &/ File.Name(yukiPath))
+        Endif
+    Next
+    
+End
+
+Private Sub moveDroppedFiles()
+    
+    If Me._$listView.Item.Key = TrashBinKey Then
+        trashFiles()
+    Else If Not Exist(Me._$listView.Item.Key) Then
+         If Me._$listView.Item.Key Not Begins SeparatorKey Then Me._$listView.Remove(Me._$listView.Item.Key)
+    Else
+        moveFiles()
+    End If
+    
+End
+
+Public Sub ListView_DragMove()
+    
+    If Not Me._$listView.FindAt(Drag.X, Drag.Y) Then
+        Me._$listView[Me._$listView.Item.Key].Selected = True
+    Else
+        Me._$listView.UnselectAll()
+    End If
+    
+End
+
+Public Sub ListView_Drop()
+    
+    If Not Me._$listView.FindAt(Drag.X, Drag.Y) Then
+        If Me._$listView.Key Begins SeparatorKey Then
+            addDroppedDirectory()
+        Else
+            moveDroppedFiles()
+        Endif
+    End If
+    
+End

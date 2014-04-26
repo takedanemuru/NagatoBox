@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoGtkBookmarksHandler
+
+Public Sub Asakura_Activate()
+    
+    HaruhiMain.SetNewDirectory($listView.Key)
+    
+End

@@ -23,8 +23,8 @@ Public Sub Main()
     
     NagatoUPower.EnsureActivation()
     
-    NagatoIconOrder.RefreshAll()
-    NagatoIconOrder.Sort()
+    NagatoIconOrder2.RefreshAll()
+    NagatoIconOrder2.Sort()
     
     $timer.Enabled = True
     
@@ -36,7 +36,7 @@ End
 
 Public Sub MainTimer_Timer()
     
-    NagatoIconOrder.Refresh("nagato-systemmonitor-key")
+    NagatoIconOrder2.Refresh("nagato-systemmonitor-key")
     
     If Minute(Now()) = 0 Or If Not NagatoWeatherCache.IsReady Then
         If $weatherCheckFlag And If NagatoWeatherCache.IsReady Then Return
@@ -50,12 +50,12 @@ End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
-    NagatoIconOrder.Delete(argFileName)
+    NagatoIconOrder2.Delete(argFileName)
     
 End
 
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
-    NagatoIconOrder.Modefied(argFileName)
+    NagatoIconOrder2.Modefied(argFileName)
     
 End

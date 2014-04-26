@@ -2,11 +2,13 @@
 
 Inherits NagatoLeftPaneContent
 
-Private Const SeparatorKey As String = "NagatoSeparatorKey"
-Private Const TrashBinKey As String = "NagatoTrashBinKey"
+Public Const SeparatorKey As String = "NagatoSeparatorKey"
+Public Const TrashBinKey As String = "NagatoTrashBinKey"
 
-Private $bookmarks As NagatoBookmarksArray
-Private $listView As ListView
+Private $initializer As NagatoGtkBookmarksInitializer
+Private $actionHandler As NagatoGtkBookmarksAction
+Private $mouseHandler As NagatoGtkBookmarksMouse
+Private $surfaceHandler As NagatoGtkBookmarksSurface
 Private $observer As NagatoFileObserver
 
 Private Sub initializeFileObserver()
@@ -21,129 +23,37 @@ Private Sub initializeFileObserver()
     
 End
 
-Private Sub addListItems(argPaths As String[])
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In argPaths
-        If $listView.Exist(yukiPath) Then Continue
-        $listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
-    Next
-    
-End
-
-Private Sub initializeListView(argContainer As Container)
-    
-    $listView = New ListView(argContainer) As "ListView"
-    
-    With $listView
-        .Expand = True
-        .Foreground = Color.White
-        .Background = Color.Merge(Color.Violet, Color.White, 0.75)
-        .Drop = True
-        .Mode = Select.Single
-    End With
-    
-    addBookmarkItems()
-    
-End
-
-Private Sub addBookmarkItems()
-    
-    Debug "add bookmarks"
-    
-    addListItems([User.Home, NagatoXdgUserDirs.Desktop])
-    addListItems(NagatoXdgUserDirs.AllXdgUserDirs)
-        $listView.Add(SeparatorKey & "1", "")
-    addListItems($bookmarks.List)
-        $listView.Add(SeparatorKey & "2", "")
-    $listView.Add(TrashBinKey, ("Trash bin"), MikuruIcon.Get("bin", 36))
-    
-End
-
-Private Sub addDroppedDirectory()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        If IsDir(yukiPath) And If Not $listView.Exist(yukiPath) Then 
-            $bookmarks.AddBookmark(yukiPath)
-            $listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
-        Endif
-    Next
-    
-End
-
-Private Sub trashFiles()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        If Exist(yukiPath) Then 
-            MikuruFile.TrashFile(yukiPath)
-        Endif
-    Next
-    
-End
-
-Private Sub moveFiles()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        If Exist(yukiPath) Then 
-            Try Move yukiPath To MikuruPath.GetSafePathName($listView.Item.Key &/ File.Name(yukiPath))
-        Endif
-    Next
-    
-End
-
-Private Sub moveDroppedFiles()
-    
-    If $listView.Item.Key = TrashBinKey Then
-        trashFiles()
-    Else If Not Exist($listView.Item.Key) Then
-         If $listView.Item.Key Not Begins SeparatorKey Then $listView.Remove($listView.Item.Key)
-    Else
-        moveFiles()
-    End If
-    
-End
+' Private Sub addListItems(argPaths As String[])
+'     
+'     Dim yukiPath As String
+'     
+'     For Each yukiPath In argPaths
+'         If $initializer.ListView.Exist(yukiPath) Then Continue
+'         $initializer.ListView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
+'     Next
+'     
+' End
+' 
+' Private Sub addBookmarkItems()
+'     
+'     addListItems([User.Home, NagatoXdgUserDirs.Desktop])
+'     addListItems(NagatoXdgUserDirs.AllXdgUserDirs)
+'         $initializer.ListView.Add(SeparatorKey & "1", "")
+'     addListItems(NagatoBookmarksArray.List)
+'         $initializer.ListView.Add(SeparatorKey & "2", "")
+'     $initializer.ListView.Add(TrashBinKey, ("Trash bin"), MikuruIcon.Get("bin", 36))
+'     
+' End
 
 Public Sub _new(argContainer As Container)
     
-    $bookmarks = New NagatoBookmarksArray
     initializeFileObserver()
-    initializeListView(argContainer)
-    Me._$mainContent = $listView
-    
-End
-
-Public Sub ListView_Activate()
-    
-    HaruhiMain.SetNewDirectory($listView.Key)
-    
-End
-
-Public Sub ListView_DragMove()
-    
-    If Not $listView.FindAt(Drag.X, Drag.Y) Then
-        $listView[$listView.Item.Key].Selected = True
-    Else
-        $listView.UnselectAll()
-    End If
-    
-End
-
-Public Sub ListView_Drop()
-    
-    If Not $listView.FindAt(Drag.X, Drag.Y) Then
-        If $listView.Key Begins SeparatorKey Then
-            addDroppedDirectory()
-        Else
-            moveDroppedFiles()
-        Endif
-    End If
+    $initializer = New NagatoGtkBookmarksInitializer(argContainer)
+    $surfaceHandler = New NagatoGtkBookmarksSurface($initializer.ListView)
+    $surfaceHandler.AddBookmarkItems()
+    Me._$mainContent = $initializer.ListView
+    $actionHandler = New NagatoGtkBookmarksAction($initializer.ListView)
+    $mouseHandler = New NagatoGtkBookmarksMouse($initializer.ListView)
     
 End
 

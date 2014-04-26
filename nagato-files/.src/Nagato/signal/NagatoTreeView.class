@@ -3,64 +3,9 @@
 Inherits NagatoLeftPaneContent
 
 Private $treeView As TreeView
-
-Private Sub setFile(argDirectory As String)
-    
-    Dim yukiPath As String
-    Dim yukiFullPath As String
-    
-    For Each yukiPath In MikuruPath.GetChildrenFile(argDirectory, NagatoSettings.ShowHidden)
-        yukiFullPath = argDirectory &/ yukiPath
-        $treeView.Add(yukiFullPath, yukiPath, MikuruIconMono.GetFromPath(yukiFullPath), argDirectory)
-    Next
-    
-End
-
-Private Sub setDummyDirectory(argDirectory As String, argParent As String)
-    
-    $treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
-    
-    If Dir(argDirectory, "*").Count > 0 Then
-        $treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
-    Endif
-    
-End
-
-Private Sub setHomeDirectory(argDirectory As String)
-    
-    Dim yukiDirectoryName As String = File.Name(argDirectory)
-    
-    If Not $treeView.Exist(argDirectory) Then
-        $treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", 24))
-    Endif
-    
-End
-
-Private Sub setSubDirectory(argDirectory As String)
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In MikuruPath.GetChildrenDirectory(argDirectory, NagatoSettings.ShowHidden)
-        setDummyDirectory(argDirectory &/ yukiPath, argDirectory)
-    Next
-    
-End
-
-Private Sub setDirectory(argDirectory As String)
-    
-    setHomeDirectory(argDirectory)
-    setSubDirectory(argDirectory)
-    setFile(argDirectory)
-    
-End
-
-Private Sub expandHomeDirectory()
-    
-    Object.Lock($treeView)
-        $treeView[User.Home].Expanded = True
-    Object.Unlock($treeView)
-    
-End
+Private $treeViewAction As NagatoTreeViewAction
+Private $treeViewMouse As NagatoTreeViewMouse
+Private $treeViewSurface As NagatoTreeViewSurface
 
 Private Sub initializeTreeView(argContainer As Container)
     
@@ -75,81 +20,37 @@ Private Sub initializeTreeView(argContainer As Container)
         .Mode = Select.Single
     End With
     
-    setDirectory(User.Home)
-    expandHomeDirectory()
-    
-End
-
-Private Sub moveFiles()
-    
-    Dim yukiPath As String
-    Dim yukiFlag As Boolean = False
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        If Exist(yukiPath) Then 
-            Try Move yukiPath To MikuruPath.GetSafePathName($treeView.Item.Key &/ File.Name(yukiPath))
-            yukiFlag = True
-        Endif
-    Next
-    
-    If yukiFlag Then Me.Refresh()
-    
-End
-
-Private Sub moveDroppedFiles()
-    
-    If Not Exist($treeView.Item.Key) Then
-        $treeView.Remove($treeView.Item.Key)
-    Else
-        moveFiles()
-    End If
-    
 End
 
 Public Sub Refresh()
     
     $treeView.Clear()
-    setDirectory(User.Home)
-    expandHomeDirectory()
+    $treeViewSurface.SetDirectory(User.Home)
+    $treeViewAction.ExpandHomeDirectory()
     
 End
 
 Public Sub _new(argContainer As Container)
     
     initializeTreeView(argContainer)
+    $treeViewSurface = New NagatoTreeViewSurface($treeView)
+    $treeViewSurface.SetDirectory(User.Home)
+    $treeViewMouse = New NagatoTreeViewMouse($treeView) As "MouseHandler"
+    $treeViewAction = New NagatoTreeViewAction($treeView) As "ActionHandler"
+    $treeViewAction.ExpandHomeDirectory()
+    
     Me._$mainContent = $treeView
     
 End
 
-Public Sub TreeView_Activate()
+Public Sub ActionHandler_Expand(argKey As String)
     
-    If IsDir($treeView.Key) Then
-        HaruhiMain.SetNewDirectory($treeView.Key)
-    End If
+    $treeViewSurface.SetDirectory(argKey) 
     
 End
 
-Public Sub TreeView_Expand()
+Public Sub MouseHandler_Move()
     
-    If $treeView.Exist($treeView.Key & "dummy") Then 
-        $treeView[$treeView.Key & "dummy"].Delete()
-        setDirectory($treeView.Key)
-    End If
-    
-End
-
-Public Sub TreeView_DragMove()
-    
-    If Not $treeView.FindAt(Drag.X, Drag.Y) Then
-        $treeView[$treeView.Item.Key].Selected = True
-    Else
-        $treeView.UnselectAll()
-    End If
-    
-End
-
-Public Sub TreeView_Drop()
-    
-    If Drag.Format = "text/uri-list" Then moveDroppedFiles()
+    Me.Refresh()
     
 End

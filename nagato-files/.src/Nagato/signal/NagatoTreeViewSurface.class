@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoTreeViewHandler
+
+Private Sub setFile(argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    For Each yukiPath In MikuruPath.GetChildrenFile(argDirectory, NagatoSettings.ShowHidden)
+        yukiFullPath = argDirectory &/ yukiPath
+        Me._$treeView.Add(yukiFullPath, yukiPath, MikuruIconMono.GetFromPath(yukiFullPath), argDirectory)
+    Next
+    
+End
+
+Private Sub setDummyDirectory(argDirectory As String, argParent As String)
+    
+    Me._$treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
+    
+    If Dir(argDirectory, "*").Count > 0 Then
+        Me._$treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
+    Endif
+    
+End
+
+Private Sub setHomeDirectory(argDirectory As String)
+    
+    Dim yukiDirectoryName As String = File.Name(argDirectory)
+    
+    If Not Me._$treeView.Exist(argDirectory) Then
+        Me._$treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", 24))
+    Endif
+    
+End
+
+Private Sub setSubDirectory(argDirectory As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In MikuruPath.GetChildrenDirectory(argDirectory, NagatoSettings.ShowHidden)
+        setDummyDirectory(argDirectory &/ yukiPath, argDirectory)
+    Next
+    
+End
+
+Public Sub SetDirectory(argDirectory As String)
+    
+    setHomeDirectory(argDirectory)
+    setSubDirectory(argDirectory)
+    setFile(argDirectory)
+    
+End

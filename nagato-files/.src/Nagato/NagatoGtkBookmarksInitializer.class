@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoLeftPaneContent
+
+Property Read ListView As ListView
+
+Private $listView As ListView
+
+Public Sub _new(argContainer As Container)
+    
+    $listView = New ListView(argContainer)
+    
+    With $listView
+        .Expand = True
+        .Foreground = Color.White
+        .Background = Color.Merge(Color.Violet, Color.White, 0.75)
+        .Drop = True
+        .Mode = Select.Single
+    End With
+    
+End
+
+Private Function ListView_Read() As ListView
+
+    Return $listView
+
+End
