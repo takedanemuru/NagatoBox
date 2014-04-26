@@ -1,21 +1,38 @@
 ' Gambas module file
 
+Private Sub setResult(argPath As String, argQuery As String, ByRef refPaths As String[])
+    
+    If File.Name(argPath) Like "*" & argQuery & "*" Then 
+        If Not NagatoSettings.ShowHidden And If File.Name(argPath) Begins "." Then Return
+        refPaths.Add(argPath)
+    Endif
+    
+End
+
 Public Function Seach(argDirectory As String, argQuery As String) As String[]
     
     Dim yukiPath As String
     Dim yukiPaths As New String[]
-    Dim yukiCount As Integer 
     
     For Each yukiPath In RDir(argDirectory).Sort(gb.IgnoreCase)
-        If File.Name(argDirectory &/ yukiPath) Like "*" & argQuery & "*" Then 
-            If Not NagatoSettings.ShowHidden And If File.Name(argDirectory &/ yukiPath) Begins "." Then Continue
-            yukiPaths.Add(argDirectory &/ yukiPath)
-            Inc yukiCount
-            If yukiCount = 500 Then Break
-        Endif
+        setResult(argDirectory &/ yukiPath, argQuery, ByRef yukiPaths)
+        If yukiPaths.Count >= 500 Then Break
     Next
     
     Return yukiPaths
     
 End
 
+Public Function SeachNonRecursive(argDirectory As String, argQuery As String) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In Dir(argDirectory).Sort(gb.IgnoreCase)
+        setResult(argDirectory &/ yukiPath, argQuery, ByRef yukiPaths)
+        If yukiPaths.Count >= 500 Then Break
+    Next
+    
+    Return yukiPaths
+    
+End

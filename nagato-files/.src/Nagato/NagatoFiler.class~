@@ -76,12 +76,7 @@ End
 
 Public Sub SetSeachResult(argQuery As String)
     
-    Debug argQuery
-    Debug $log.Current
-    
-    MikuruFileSearch.Seach($log.Current, argQuery)
-    
-    '$iconView.RefreshWithSearchQuery([""])
+    $iconView.RefreshWithSearchQuery(MikuruFileSearch.Seach($log.Current, argQuery))
     
 End
 

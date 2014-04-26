@@ -43,9 +43,7 @@ End
 
 Public Sub SearchQuery(argQuery As String)
     
-    Debug argQuery
-    
-    '$filers[$tabStripHandler.Index]
+    $filers[$tabStripHandler.Index].SetSeachResult(argQuery)
     
 End
 

@@ -75,11 +75,15 @@ Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[
     Me._$iconView.Clear()
     
     For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If IsDir(yukiPath) Then Me._$iconView.AddIcon(yukiPath, argSelection.Exist(yukiPath))
+        If IsDir(yukiPath) Then 
+            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        End If
     Next
     
     For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If Not IsDir(yukiPath) Then Me._$iconView.AddIcon(yukiPath, argSelection.Exist(yukiPath))
+        If Not IsDir(yukiPath) Then 
+            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        End If
     Next
     
 End

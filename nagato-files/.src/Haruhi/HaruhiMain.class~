@@ -42,7 +42,7 @@ End
 
 Public Sub LeftPane_Signal(argSignal As Integer, argValues As Variant[])
     
-    Debug argValues[0]
+    If argSignal = MikuruSignal.LeftSearch Then $mainPane.SearchQuery(argValues[0])
     
 End
 

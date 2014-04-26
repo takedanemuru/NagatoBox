@@ -2,32 +2,9 @@
 
 Inherits NagatoLeftPaneContent
 
-Private $vBox As VBox
-Private $searchBox As ButtonBox
-
-Private Sub initializeVBox(argContainer As Container)
-    
-    $vBox = New VBox(argContainer)
-    
-    With $vBox
-        .Expand = True
-        .Background = Color.Pink
-        .Visible = False
-    End With
-    
-End
-
-Private Sub initializeSearchBox()
-    
-    $searchBox = New ButtonBox($vBox) As "QueryBox"
-    
-    With $searchBox
-        .Expand = False
-        .Height = 32
-        .Picture = MikuruIcon.Get("search")
-    End With
-    
-End
+Private $container As NagatoFileSearchContainer
+Private $searchBox As NagatoFileSearchBox
+Private $checkBox As NagatoFileSearchCheckBox
 
 Public Sub SetFocus()
     
@@ -37,24 +14,20 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    initializeVBox(argContainer)
-    initializeSearchBox()
-    Me._$mainContent = $vBox
+    $container = New NagatoFileSearchContainer(argContainer)
+    $searchBox = New NagatoFileSearchBox($container.VBox) As "Box"
+    $checkBox = New NagatoFileSearchCheckBox($container.VBox)
+    Me._$mainContent = $container.VBox
     
 End
 
-Public Sub QueryBox_Click()
+Public Sub Box_Query(argQuery As String)
     
-    Dim yukiValues As New Variant[]
+    Dim yukiArgs As New Variant[]
     
-    yukiValues.Add($searchBox)
+    yukiArgs.Add(argQuery)
+    yukiArgs.Add($checkBox.Value)
     
-    If $searchBox.Text <> "" Then Raise Signal(MikuruSignal.LeftSearch, yukiValues)
-    
-End
-
-Public Sub QueryBox_Activate()
-    
-    Me.QueryBox_Click()
+    Raise Signal(MikuruSignal.LeftSearch, [argQuery])
     
 End

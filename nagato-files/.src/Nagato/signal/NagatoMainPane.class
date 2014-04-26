@@ -41,9 +41,9 @@ Public Sub SetInitialPath(argPath As String)
     
 End
 
-Public Sub SearchQuery(argQuery As String)
+Public Sub SearchQuery(argQuery As String, argRecursive As Boolean)
     
-    $filers[$tabStripHandler.Index].SetSeachResult(argQuery)
+    $filers[$tabStripHandler.Index].SetSeachResult(argQuery, argRecursive)
     
 End
 

@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoFileSearchHandler
+
+Private $searchBox As ButtonBox
+
+Event Query(argQuery As String)
+
+Public Sub _Initialize()
+    
+    $searchBox = New ButtonBox(Me._$container) As "QueryBox"
+    
+    With $searchBox
+        .Expand = False
+        .Height = Me.Height
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Public Sub SetFocus()
+    
+    $searchBox.SetFocus()
+    
+End
+
+Public Sub QueryBox_Click()
+    
+    If $searchBox.Text <> "" Then Raise Query($searchBox.Text) 
+    
+End
+
+Public Sub QueryBox_Activate()
+    
+    Me.QueryBox_Click()
+    
+End

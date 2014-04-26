@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoFileSearchHandler
+
+Property Read Value As Boolean
+
+Private $checkBox As CheckBox
+
+Public Sub _Initialize()
+    
+    $checkBox = New CheckBox(Me._$container) As "QueryBox"
+    
+    With $checkBox
+        .Expand = False
+        .Height = Me.Height
+        .Text = ("Recursive")
+        .Value = True
+    End With
+    
+End
+
+Private Function Value_Read() As Boolean
+
+    Return $checkBox.Value
+
+End

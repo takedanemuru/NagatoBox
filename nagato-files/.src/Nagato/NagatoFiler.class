@@ -74,9 +74,13 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
-Public Sub SetSeachResult(argQuery As String)
+Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
-    $iconView.RefreshWithSearchQuery(MikuruFileSearch.Seach($log.Current, argQuery))
+    If argRecursive Then
+        $iconView.RefreshWithSearchQuery(MikuruFileSearch.Seach($log.Current, argQuery))
+    Else
+        $iconView.RefreshWithSearchQuery(MikuruFileSearch.SeachNonRecursive($log.Current, argQuery))
+    End If
     
 End
 

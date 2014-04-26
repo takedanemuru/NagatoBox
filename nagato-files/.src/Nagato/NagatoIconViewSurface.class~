@@ -3,8 +3,6 @@
 Inherits NagatoIconViewHandler
 
 Private $filter As New String[]
-' Private Me._$iconView As IconView
-' Private $observer As Observer
 
 Private Sub setDirectoryIcon(argDirectory As String, argPattern As String, argSelection As String[])
     
@@ -77,19 +75,15 @@ Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[
     Me._$iconView.Clear()
     
     For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If IsDir(yukiPath) Then Me._$iconView.AddIcon(yukiPath, argSelection.Exist(yukiPath))
+        If IsDir(yukiPath) Then 'Me._$iconView.Add(yukiPath, argSelection.Exist(yukiPath))
+            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        End If
     Next
     
     For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If Not IsDir(yukiPath) Then Me._$iconView.AddIcon(yukiPath, argSelection.Exist(yukiPath))
+        If Not IsDir(yukiPath) Then 'Me._$iconView.Add(yukiPath, argSelection.Exist(yukiPath))
+            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        End If
     Next
     
 End
-
-' Public Sub _new(argIconView As IconView)
-'     
-'     Me._$iconView = argIconView
-'     Me._$iconView.SetFocus()
-'     $observer = New Observer(Me._$iconView) As "Asakura"
-'     
-' End
