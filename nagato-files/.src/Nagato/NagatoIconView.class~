@@ -11,7 +11,7 @@ Private $iconViewKeyboard As NagatoIconViewKeyboard
 Private $selectionBar As NagatoSelectionBar 
 Private $currentDirectory As String
 
-Event DirectoryClicked(argDirectory As String)
+'Event DirectoryClicked(argDirectory As String)
 
 Public Sub SetFocus(argPath As String)
     
@@ -24,14 +24,6 @@ Public Sub Refresh(argDirectory As String)
     $currentDirectory = argDirectory
     $selectionBar.ClearAll()
     $iconView.Refresh(argDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
-    
-End
-
-Public Sub RefreshFiltered(argDirectory As String, argFilter As String[])
-    
-    $currentDirectory = argDirectory
-    $selectionBar.ClearAll()
-    $iconView.RefreshFiltered(argDirectory, $selectionBar.Paths, $selectionBar.LastSelected, argFilter)
     
 End
 
@@ -72,11 +64,11 @@ Public Sub Menu_MouseDrag()
     ' 
 End
 
-Public Sub Menu_DirectoryClicked(argPath As String)
-    
-    Raise DirectoryClicked(argPath)
-    
-End
+' Public Sub Menu_DirectoryClicked(argPath As String)
+'     
+'     Raise DirectoryClicked(argPath)
+'     
+' End
 
 Private Sub clearSelection()
     

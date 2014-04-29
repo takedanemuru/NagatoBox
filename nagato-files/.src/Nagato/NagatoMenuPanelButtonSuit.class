@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoMenuPanelWidget
+
+Private $backButton As Button
+Private $homeButton As Button
+Private $upButton As Button
+Private $forwardButton As Button
+
+Private Sub addButton(argButton As Button, argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    With argButton
+        .Text = argText
+        .Tag = argTag
+        .AutoResize = True
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Private Sub setButtonProperty()
+    
+    With NagatoMenuPipe
+        addButton($backButton, "", .MoveBack, MikuruIcon.Get("arrow-left"))
+        addButton($homeButton, "", .MoveHome, MikuruIcon.Get("home"))
+        addButton($upButton, "Parent directory", .MoveUp, MikuruIcon.Get("arrow-up"))
+        addButton($forwardButton, "", .MoveForward, MikuruIcon.Get("arrow-right"))
+    End With
+    
+End
+
+Public Sub _Initialize()
+    
+    $backButton = New Button(Me._$container) As "MenuButton"
+    $homeButton = New Button(Me._$container) As "MenuButton"
+    $upButton = New Button(Me._$container) As "MenuButton"
+    $forwardButton = New Button(Me._$container) As "MenuButton"
+    
+    setButtonProperty()
+    
+End
+
+Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, argForward As Boolean)
+    
+    $backButton.Enabled = argBack
+    $homeButton.Enabled = argHome
+    $upButton.Enabled = argUp
+    $forwardButton.Enabled = argForward
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End

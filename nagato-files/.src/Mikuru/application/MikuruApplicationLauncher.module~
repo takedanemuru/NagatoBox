@@ -35,7 +35,7 @@ End
 
 Public Sub Launch(argPath As String)
     
-    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
+    Dim yukiDesktopFile As New NagatoDesktopFile2(argPath)
     
     If yukiDesktopFile.IsSettingsApplication Then
         CallMessage(argPath)

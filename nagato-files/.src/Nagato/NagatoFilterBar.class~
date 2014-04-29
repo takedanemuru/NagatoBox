@@ -14,6 +14,17 @@ Private $currentDirectory As String
 
 Event Changed
 
+Private Sub initializeFilterPanel(argContainer As Container)
+    
+    $container = New HBox(argContainer)
+
+    With $container
+        .Height = 32
+        .Expand = False
+    End With
+    
+End
+
 Private Sub initializeSpacer()
     
     Dim yukiSpacer As New Panel($container)
@@ -79,7 +90,7 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $container = argContainer
+    initializeFilterPanel(argContainer)
     initializeSpacer()
     initializeSearchBox()
     $container.Visible = False

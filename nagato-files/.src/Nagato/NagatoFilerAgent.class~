@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $filer As NagatoFiler
+
+Public Sub MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+    
+    With NagatoMenuPipe
+        Select Case argEvent
+            Case .PathCopyToClipboard
+                Clipboard.Copy(argArgument, "text/plain")
+            Case .DirOpen
+                $filer.OpenDirectory(argArgument)
+            Case .DirOpenInNewTab
+                Raise NewTab(argArgument)
+            Case .DirRename
+                HaruhiRename.SetPath(argArgument, Stock["64/directory"])
+                HaruhiRename.ShowDialog()
+            Case .DirDelete
+                MikuruFile.TrashDirectory(argArgument)
+            Case .FileOpen
+                MikuruFile.Exec(argArgument)
+            Case .FileDelete
+                MikuruFile.TrashFile(argArgument)
+            Case .FileRename
+                If NagatoFilerDialogs.Rename(argArgument) Then $filer.IconView.SetFocus(argArgument)
+            Case .FileMoveToCurrentDir
+                If $filer.Log.Current = File.Dir(argArgument) Then Return
+                Try Move argArgument To MikuruPath.GetSafePathName($filer.Log.Current &/ File.Name(argArgument)) 
+             Case NagatoMenuPipe.FileCopy
+                MikuruFileManuever.CopyUriList($filer.Log.Current, argArgument)
+             Case .FileShowProperty
+                 Raise ShowProperty(argArgument)
+             Case .TagAdd
+                 If NagatoFilerDialogs.Tagging($filer.IconView.Selection) Then $filer.IconView.Refresh($filer.Log.Current)
+             Case .TagRemove
+                 NagatoDBSymbol.RemovePaths($filer.IconView.Selection)
+                 $filer.IconView.Refresh($filer.Log.Current)
+        End Select
+    End With
+    
+End
+
+Public Sub _new(argFiler As NagatoFiler)
+    
+    $filer = argFiler
+    
+End

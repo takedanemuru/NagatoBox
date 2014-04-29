@@ -1,17 +1,15 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoSubMenu
 
-Public _$rootMenu As Menu
-Public _$path As String
+' Public _$rootMenu As Menu
+' Public _$path As String
 
 Private Sub addIndivisualOpenWithMenu(argDesktopFileName As String)
     
     Dim yukiMenu As Menu
     Dim yukiPath As String = "/usr/share/applications/" & argDesktopFileName
     Dim yukiDesktopFile As DesktopFile
-
-    Debug argDesktopFileName
 
     If Not Exist(yukiPath) Then Return
     
@@ -59,13 +57,13 @@ Catch
     
 End
 
-Public Sub _new(argRootMenu As Menu, Optional argPath As String)
-    
-    Me._$rootMenu = argRootMenu
-    If argPath Then Me._$path = argPath
-    Me._InitializeMenu()
-    
-End
+' Public Sub _new(argRootMenu As Menu, Optional argPath As String)
+'     
+'     Me._$rootMenu = argRootMenu
+'     If argPath Then Me._$path = argPath
+'     Me._InitializeMenu()
+'     
+' End
 
 Public Sub OpenWithMenu_Click()
     

@@ -39,8 +39,8 @@ msgid "As normal user"
 msgstr ""
 
 #: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
-#: HaruhiTagging.form:22 MikuruFile.module:31 NagatoDBTag.class:20
-#: NagatoDynamicMenu.class:70 NagatoSelectionBar.class:35
+#: HaruhiTagging.form:22 MikuruFile.module:47 NagatoDBTag.class:20
+#: NagatoDynamicMenu.class:70 NagatoSelectionBarCancelButton.class:12
 msgid "Cancel"
 msgstr ""
 
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Create New Folder"
 msgstr ""
 
-#: HaruhiNewDirectory.form:18 NagatoContextMenuFile.class:66
+#: HaruhiNewDirectory.form:18 NagatoContextMenuFile.class:67
 msgid "Create"
 msgstr ""
 
@@ -114,22 +114,14 @@ msgstr ""
 msgid "Tag Color :"
 msgstr ""
 
-#: MikuruApplicationLauncher.module:3
-msgid "This software is a settings applications.\n"
-msgstr ""
-
-#: MikuruApplicationLauncher.module:4
-msgid "Do you want to launch this application as super user ?"
-msgstr ""
-
-#: MikuruFile.module:28
+#: MikuruFile.module:44
 msgid ""
 "YUKI.N > This directory contains some file. Are you sure to delete this "
 "directory?"
 msgstr ""
 
-#: MikuruFile.module:31 NagatoContextMenuDirectory.class:14
-#: NagatoContextMenuFile.class:81
+#: MikuruFile.module:47 NagatoContextMenuDirectory.class:14
+#: NagatoContextMenuFile.class:84
 msgid "Delete"
 msgstr ""
 
@@ -145,15 +137,15 @@ msgstr ""
 msgid "Copy path"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:13 NagatoContextMenuFile.class:80
+#: NagatoContextMenuDirectory.class:13 NagatoContextMenuFile.class:83
 msgid "Rename"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:82
+#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:85
 msgid "Tagging"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:83
+#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:86
 msgid "Remove Tag"
 msgstr ""
 
@@ -169,8 +161,16 @@ msgstr ""
 msgid "Open with ..."
 msgstr ""
 
-#: NagatoContextMenuFile.class:78
+#: NagatoContextMenuFile.class:81
 msgid "Copy file path"
+msgstr ""
+
+#: NagatoCreateMenu.class:19
+msgid "Create archive"
+msgstr ""
+
+#: NagatoCreateMenu.class:20
+msgid "Create clone"
 msgstr ""
 
 #: NagatoDBTag.class:18
@@ -237,7 +237,7 @@ msgstr ""
 msgid "Recursive"
 msgstr ""
 
-#: NagatoFiler.class:160
+#: NagatoFiler.class:132
 msgid "New directory"
 msgstr ""
 
@@ -257,14 +257,10 @@ msgstr ""
 msgid "File Search"
 msgstr ""
 
-#: NagatoMenuPanel.class:65
+#: NagatoMenuPanelSelectionButton.class:16
 msgid "Multiple selection"
 msgstr ""
 
-#: NagatoMenuPanel.class:79
-msgid "Toggle filter bar"
-msgstr ""
-
-#: NagatoSelectionBar.class:89
+#: NagatoSelectionBarDoItButton.class:12
 msgid "Execute"
 msgstr ""

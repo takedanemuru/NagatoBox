@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoMenuPanelWidget
+
+Private $selectionButton As ToggleButton
+Private $observer As Observer
+
+Public Sub _Initialize()
+    
+    $selectionButton = New ToggleButton(Me._$container) As "SelectionButton"
+    
+    With $selectionButton
+        .Picture = MikuruIcon.Get("documents")
+        .AutoResize = True
+        .Border = False
+        .Tooltip = ("Multiple selection")
+        .Value = NagatoSettings.MultipleSelection
+    End With
+    
+    $observer = New Observer(NagatoSettings) As "Asakura"
+    
+End
+
+Public Sub Asakura_MultipleSelectionChanged()
+    
+    Object.Lock($selectionButton)
+        $selectionButton.Value = NagatoSettings.MultipleSelection
+    Object.Unlock($selectionButton)
+    
+End
+
+Public Sub SelectionButton_Click()
+    
+    NagatoSettings.MultipleSelection = $selectionButton.Value
+    
+End

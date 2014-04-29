@@ -1,24 +1,26 @@
 ' Gambas module file
 
 Private Const ThumbnailSize As Integer = 128
-Private Const TextWidth As Integer = 112
-Private Const TextLimit As Integer = 32
+' Private Const TextWidth As Integer = 112
+' Private Const TextLimit As Integer = 32
 Private Const Margin As Integer = 8
 
 Private $icon As Image
-Private $text As String
-Private $textHeight As Integer
-Private $textArea As New Rect
+' Private $text As String
+' Private $textHeight As Integer
+' Private $textArea As New Rect
+Private $pathLabelPainter As New NagatoPainterPathLabel
+Private $selectedLabelPainter As New NagatoPainterSelectedLabel
 
-Private Function getText(argPath As String) As String
-    
-    If String.Len(File.BaseName(argPath)) > TextLimit Then
-        Return String.Left(File.BaseName(argPath), TextLimit) & "..." & File.Ext(argPath)
-    Else
-        Return File.Name(argPath)
-    End If
-    
-End
+' Private Function getText(argPath As String) As String
+'     
+'     If String.Len(File.BaseName(argPath)) > TextLimit Then
+'         Return String.Left(File.BaseName(argPath), TextLimit) & "..." & File.Ext(argPath)
+'     Else
+'         Return File.Name(argPath)
+'     End If
+'     
+' End
 
 Private Function getIcon(argPath As String) As Image
     
@@ -32,7 +34,7 @@ Private Function getIcon(argPath As String) As Image
     
 Catch
     Debug argPath
-    Return Stock["huge/file"]
+    Return Stock["huge/file"].Image
     
 End
 
@@ -47,54 +49,37 @@ Private Sub setIcon(argPath As String)
     
 End
 
-Private Sub setTextRect()
-    
-    With $textArea
-        .X = Margin
-        .Y = Max(ThumbnailSize - ($textHeight + 1 * Margin), 0)
-        .W = TextWidth
-        .H = $textHeight 
-    End With
-    
-End
+' Private Sub setTextRect()
+'     
+'     With $textArea
+'         .X = Margin
+'         .Y = Max(ThumbnailSize - ($textHeight + 1 * Margin), 0)
+'         .W = TextWidth
+'         .H = $textHeight 
+'     End With
+'     
+' End
 
-Private Sub drawMaskArea(argColor As Integer)
-    
-    Dim yukiOpacity As Integer = 192
-    
-    Paint.Brush = Paint.Color(argColor + 16777216 * yukiOpacity)
-    Paint.Rectangle(0, ThumbnailSize - ($textArea.H + 2 * Margin), ThumbnailSize, $textArea.H + 2 * Margin)
-    Paint.Fill()
-    
-End
+' Private Sub drawMaskArea(argColor As Integer)
+'     
+'     Dim yukiOpacity As Integer = 192
+'     
+'     Paint.Brush = Paint.Color(argColor + 16777216 * yukiOpacity)
+'     Paint.Rectangle(0, ThumbnailSize - ($textArea.H + 2 * Margin), ThumbnailSize, $textArea.H + 2 * Margin)
+'     Paint.Fill()
+'     
+' End
 
-Private Sub drawText()
-    
-    paint.Brush = paint.Color(Color.White)
-    paint.Font.Bold = True
-    With $textArea
-        paint.RichText($text, .X, .Y, .W, .H, Align.Center)
-    End With
-    paint.Fill()
-    
-End
-
-Private Sub drawSelectedLabel()
-    
-    paint.Brush = paint.Color(Color.Red)
-        Paint.Rectangle(0, 0, ThumbnailSize, 24)
-    paint.Fill()
-        Paint.DrawPicture(MikuruIcon.Get("button-check"), 4, 4)
-    paint.Brush = paint.Color(Color.White)
-        Paint.Font.Bold = True
-        Paint.RichText("SELECTED", 24, 0, ThumbnailSize - 48, 24, Align.Center)
-    Paint.Fill()
-        Paint.LineWidth = 2
-        Paint.MoveTo(0, 24)
-        Paint.LineTo(ThumbnailSize, 24)
-    Paint.Stroke()
-    
-End
+' Private Sub drawText()
+'     
+'     paint.Brush = paint.Color(Color.White)
+'     paint.Font.Bold = True
+'     With $textArea
+'         paint.RichText($text, .X, .Y, .W, .H, Align.Center)
+'     End With
+'     paint.Fill()
+'     
+' End
 
 Public Function Get(argPath As String, argSelected As Boolean) As Picture
     
@@ -103,16 +88,19 @@ Public Function Get(argPath As String, argSelected As Boolean) As Picture
     
     setIcon(argPath)
     
+    Debug argPath
+    
     With paint
         .Begin(yukiBaseImage)
         .DrawImage($icon, (ThumbnailSize - $icon.W) / 2, (ThumbnailSize - $icon.H) / 2)
-        .Font.Bold = True
-        $text = getText(argPath) 
-        $textHeight = .Font.RichTextHeight($text, TextWidth)
-        setTextRect()
-        drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
-        drawText()
-        If argSelected Then drawSelectedLabel()
+        $pathLabelPainter.PaintLabel(argPath, argSelected)
+        ' .Font.Bold = True
+        ' $text = getText(argPath) 
+        ' $textHeight = .Font.RichTextHeight($text, TextWidth)
+        ' setTextRect()
+        ' drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
+        ' drawText()
+        If argSelected Then $selectedLabelPainter.Paint()
         If yukiSymbol <> "" Then Paint.DrawImage(MikuruIcon.Get(yukiSymbol, 32).Image, 8, 8)
         .End()
     End With

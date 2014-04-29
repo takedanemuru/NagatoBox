@@ -37,12 +37,6 @@ Public Function GetDefaultDesktopFiles(argPath As String) As String[]
     
 End
 
-Public Sub Launch(argPath As String)
-    
-    MikuruApplicationLauncher.Launch(argPath)
-    
-End
-
 Private Function LocalDefaultList_Read() As String
 
     Return User.Home &/ ".local/share/applications/mimeapps.list"

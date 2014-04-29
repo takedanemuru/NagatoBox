@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Static
+
+Inherits NagatoMenuPipe
+
+Public Function Rename(argArgument As Variant) As Boolean
+    
+    HaruhiRename.SetPath(argArgument, Desktop.GetFileIcon(argArgument, 64))
+    Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+    
+End
+
+Public Function Tagging(argSelection As String[]) As Boolean
+    
+    If HaruhiSelectSymbol.ShowDialog() = MikuruDialog.ResponseApply Then
+        NagatoDBSymbol.PushPaths(argSelection, MikuruDialog.LastSelectedSymbol)
+        Return True
+    Else
+        Return False
+    Endif
+    
+End

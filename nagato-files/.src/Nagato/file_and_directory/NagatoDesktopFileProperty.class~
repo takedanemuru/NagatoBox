@@ -1,0 +1,35 @@
+' Gambas class file
+
+Property Read IsSettingApplication As Boolean
+
+Private $isSettingApplication As Boolean = False
+
+Private Sub initialize(argPath As String)
+    
+    Dim yukiLine As String
+    Dim yukiStream As Stream 
+    
+    yukiStream = Open argPath For Input
+    
+    Do While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine Begins "Categories" Then
+            $isSettingApplication = Split(Replace(yukiLine, "Categories=", ""), ";", "", True, False).Exist("Settings", gb.IgnoreCase)
+        Endif
+    Loop
+    
+    Close #yukiStream
+    
+End
+
+Public Sub _new(argPath As String)
+    
+    initialize(argPath)
+    
+End
+
+Private Function IsSettingApplication_Read() As Boolean
+
+    Return $isSettingApplication
+
+End

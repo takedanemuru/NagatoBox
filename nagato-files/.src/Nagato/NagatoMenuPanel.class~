@@ -4,108 +4,11 @@ Inherits NagatoMenuPipe
 
 Property Read Path As String
 
-Private $container As Container
-Private $selectionButton As ToggleButton
-Private $filterButton As ToggleButton
-Private $backButton As Button
-Private $homeButton As Button
-Private $upButton As Button
-Private $forwardButton As Button
+Private $container As NagatoPanelContainer
+Private $selectionButton As NagatoMenuPanelSelectionButton
+Private $buttonSuit As NagatoMenuPanelButtonSuit
 Private $pathBar As NagatoPathBar
-Private $observer As Observer
-
-Event ToggleFilterBar(argShow As Boolean)
-
-Private Sub initializeMenuPanel(argContainer As Container)
-    
-    $container = New HBox($container)
-
-    With $container 
-        .Height = 32
-        .Expand = False
-    End With
-    
-End
-
-Private Sub addButton(argButton As Button, argText As String, argTag As Integer, Optional argIcon As Picture)
-    
-    With argButton
-        .Text = argText
-        .Tag = argTag
-        .AutoResize = True
-        If argIcon Then .Picture = argIcon
-    End With
-    
-End
-
-Private Sub initializeStarButton()
-    
-    Dim yukiButton As New MenuButton($container)
-    Dim yukiMenu As NagatoDynamicMenu
-    
-    With yukiButton
-        .Arrow = False
-        .AutoResize = True
-        .Picture = MikuruIcon.Get("star")
-        .Border = False
-    End With
-    
-    yukiMenu = New NagatoDynamicMenu(HaruhiMain, yukiButton, "MenuIndex" & MikuruUniqueIndex.Get()) As "Menu"
-    
-End
-
-Private Sub initializeSelectionButton()
-    
-    $selectionButton = New ToggleButton($container) As "SelectionButton"
-    
-    With $selectionButton
-        .Picture = MikuruIcon.Get("documents")
-        .AutoResize = True
-        .Border = False
-        .Tooltip = ("Multiple selection")
-        .Value = NagatoSettings.MultipleSelection
-    End With
-    
-End
-
-Private Sub initializeFilterButton()
-    
-    $filterButton = New ToggleButton($container) As "FilterButton"
-    
-    With $filterButton
-        .Picture = MikuruIcon.Get("search")
-        .AutoResize = True
-        .Border = False
-        .Tooltip = ("Toggle filter bar")
-        .Value = False
-    End With
-    
-End
-
-Private Sub initializeWidgets()
-    
-    initializeSelectionButton()
-    
-    $backButton = New Button($container) As "MenuButton"
-    $homeButton = New Button($container) As "MenuButton"
-    $upButton = New Button($container) As "MenuButton"
-    $forwardButton = New Button($container) As "MenuButton"
-    
-    With NagatoMenuPipe
-        addButton($backButton, "", .MoveBack, MikuruIcon.Get("arrow-left"))
-        addButton($homeButton, "", .MoveHome, MikuruIcon.Get("home"))
-        addButton($upButton, "Parent directory", .MoveUp, MikuruIcon.Get("arrow-up"))
-        addButton($forwardButton, "", .MoveForward, MikuruIcon.Get("arrow-right"))
-    End With
-    
-    $pathBar = New NagatoPathBar($container) As "Menu"
-    
-    initializeFilterButton()
-    initializeStarButton()
-    
-    $observer = New Observer(NagatoSettings) As "Asakura"
-    
-End
+Private $starButton As NagatoMenuPanelStarButton
 
 Public Sub SetPath(argPath As String)
     
@@ -115,43 +18,17 @@ End
 
 Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, argForward As Boolean)
     
-    $backButton.Enabled = argBack
-    $homeButton.Enabled = argHome
-    $upButton.Enabled = argUp
-    $forwardButton.Enabled = argForward
+    $buttonSuit.SetEnable(argBack, argHome, argUp, argForward)
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    initializeMenuPanel(argContainer)
-    initializeWidgets()
-    
-End
-
-Public Sub Asakura_MultipleSelectionChanged()
-    
-    Object.Lock($selectionButton)
-        $selectionButton.Value = NagatoSettings.MultipleSelection
-    Object.Unlock($selectionButton)
-    
-End
-
-Public Sub SelectionButton_Click()
-    
-    NagatoSettings.MultipleSelection = $selectionButton.Value
-    
-End
-
-Public Sub FilterButton_Click()
-    
-    Raise ToggleFilterBar($filterButton.Value)
-    
-End
-
-Public Sub MenuButton_Click()
-    
-    Raise MenuEvent(Last.Tag)
+    $container = New NagatoPanelContainer(argContainer)
+    $selectionButton = New NagatoMenuPanelSelectionButton($container.HBox)
+    $buttonSuit = New NagatoMenuPanelButtonSuit($container.HBox) As "Menu"
+    $pathBar = New NagatoPathBar($container.HBox) As "Menu"
+    $starButton = New NagatoMenuPanelStarButton($container.HBox) As "Menu"
     
 End
 

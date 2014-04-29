@@ -26,12 +26,8 @@ End
 
 Public Sub Refresh()
     
-    Debug "refresh"
-    
     Me._$listView.Clear()
     Me.AddBookmarkItems()
     Me._$listView.Refresh()
-    
-    Debug "done?"
     
 End

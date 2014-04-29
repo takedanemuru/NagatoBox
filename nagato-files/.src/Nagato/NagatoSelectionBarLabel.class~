@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $textLabel As TextLabel
+
+Private Function getLabelTemplate(argCount As Integer) As String
+    
+    Return IIf(argCount = 1, "<b>1</b> item is selected", "<b>&1</b> items are selected")
+    
+End
+
+Public Sub SetText(argCount As Integer)
+    
+    $textLabel.Text = Subst$(getLabelTemplate(argCount), argCount)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $textLabel = New TextLabel(argContainer)
+    
+    With $textLabel
+        .Alignment = Align.Center
+        .Expand = True
+        .Padding = 2
+    End With
+    
+End

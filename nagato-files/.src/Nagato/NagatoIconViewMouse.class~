@@ -1,25 +1,21 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
-
-Private $iconView As IconView
-Private $observer As Observer
+Inherits NagatoIconViewHandler
 
 Event MouseDrag
-Event DirectoryClicked(argPath As String)
+'Event DirectoryClicked(argPath As String)
 Event MouseDown(argPath As String)
 
 Private Sub dropFile(argPath As String)
     
-    Select Case MikuruDrop.GetType($iconView)
-        Case MikuruDrop.TypeVoid
-            Debug "Move to current directory"
+    Select Case MikuruDrop.GetType(Me._$iconView)
+        Case MikuruDrop.TypeVoid ' Move to current directory
             Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, argPath)
         Case MikuruDrop.TypeFile
             Debug "ignore"
         Case MikuruDrop.TypeDirectory
-            Debug "move file(s) to " & $iconView.Item.Key
-            Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
+            Debug "move file(s) to " & Me._$iconView.Item.Key
+            Try Move argPath To MikuruPath.GetSafePathName(Me._$iconView.Item.Key &/ File.Name(argPath))
         Case MikuruDrop.TypeApplication
             Debug "Try execute app with: " & argPath
     End Select
@@ -28,15 +24,8 @@ End
 
 Public Sub MouseDrag(argUriList As String)
     
-    Drag.Icon = $iconView.Current.Picture
-    $iconView.Drag(argUriList, MikuruMimeType.UriList)
-    
-End
-
-Public Sub _new(argIconView As IconView)
-    
-    $iconView = argIconView
-    $observer = New Observer($iconView) As "Asakura"
+    Drag.Icon = Me._$iconView.Current.Picture
+    Me._$iconView.Drag(argUriList, MikuruMimeType.UriList)
     
 End
 
@@ -48,13 +37,13 @@ End
 
 Public Sub Asakura_DragMove()
     
-    Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
+    Dim yukiScrollArea As ScrollArea = Me._$iconView.Children[0]
     
-    If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir($iconView.Item.Key) Then
-        $iconView.UnselectAll()
-        $iconView.Item.Selected = True
+    If Not Me._$iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir(Me._$iconView.Item.Key) Then
+        Me._$iconView.UnselectAll()
+        Me._$iconView.Item.Selected = True
     Else
-        $iconView.UnselectAll()
+        Me._$iconView.UnselectAll()
     End If
     
 End
@@ -67,7 +56,7 @@ Public Sub Asakura_Drop()
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         'xdg-user-dirs will be ignored. 
-        If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
+        If NagatoXdg.IsUserDir(yukiPath) Then Continue
         dropFile(yukiPath)
     Next
     
@@ -75,25 +64,26 @@ End
 
 Public Sub Asakura_Activate()
     
-    If IsDir($iconView.Key) Then
-        Raise DirectoryClicked($iconView.Key)
+    If IsDir(Me._$iconView.Key) Then
+        'Raise DirectoryClicked(Me._$iconView.Key)
+        Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, Me._$iconView.Key)
     Else
-        MikuruFile.Exec($iconView.Key)
+        MikuruFile.Exec(Me._$iconView.Key)
     End If
     
 End
 
 Public Sub Asakura_MouseDown()
     
-    If $iconView.Key = "" Then Return
+    If Me._$iconView.Key = "" Then Return
     
-    Raise MouseDown($iconView.Key)
+    Raise MouseDown(Me._$iconView.Key)
     
 End
 
 Public Sub Asakura_Menu()
     
-    Dim yukiPath As String = $iconView.Key
+    Dim yukiPath As String = Me._$iconView.Key
     Dim yukiContextMenu As Object
     
     If yukiPath = "" Then

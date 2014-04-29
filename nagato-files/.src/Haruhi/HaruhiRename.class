@@ -7,7 +7,7 @@ Private Sub setDirectoryButtonBox(argPath As String)
     
     With DirectoryButtonBox
         .Text = argPath
-        .Picture = IIf(argPath = NagatoXdgUserDirs.Desktop, MikuruIcon.Get("desktop"), MikuruIcon.Get("folder"))
+        .Picture = IIf(argPath = NagatoXdg.UserDirs.Desktop, MikuruIcon.Get("desktop"), MikuruIcon.Get("folder"))
     End With
     
 End

@@ -9,7 +9,7 @@ Public Function GetSafePathName(argPath As String) As String
     
     Do
          Inc yukiCount
-         yukiPath = Subst$("&1(&2)", argPath, yukiCount)
+         yukiPath = Subst$("&1/&2(&3).&4", File.Dir(argPath), File.BaseName(argPath), yukiCount, File.Ext(argPath))
          If Not Exist(yukiPath) Then Return yukiPath
     Loop
     

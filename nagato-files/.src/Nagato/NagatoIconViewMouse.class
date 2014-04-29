@@ -3,7 +3,6 @@
 Inherits NagatoIconViewHandler
 
 Event MouseDrag
-Event DirectoryClicked(argPath As String)
 Event MouseDown(argPath As String)
 
 Private Sub dropFile(argPath As String)
@@ -56,7 +55,7 @@ Public Sub Asakura_Drop()
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         'xdg-user-dirs will be ignored. 
-        If NagatoXdgUserDirs.IsXdgUserDir(yukiPath) Then Continue
+        If NagatoXdg.IsUserDir(yukiPath) Then Continue
         dropFile(yukiPath)
     Next
     
@@ -65,7 +64,8 @@ End
 Public Sub Asakura_Activate()
     
     If IsDir(Me._$iconView.Key) Then
-        Raise DirectoryClicked(Me._$iconView.Key)
+        'Raise DirectoryClicked(Me._$iconView.Key)
+        Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, Me._$iconView.Key)
     Else
         MikuruFile.Exec(Me._$iconView.Key)
     End If

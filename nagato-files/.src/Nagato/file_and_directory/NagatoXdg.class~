@@ -1,0 +1,63 @@
+' Gambas class file
+
+Create Static
+
+Public Struct Directories 
+    All As String[]
+    Desktop As String
+    Documents As String
+    Download As String
+    Music As String
+    Pictures As String
+    PublicShare As String
+    Templetes As String
+    Videos As String
+End Struct
+
+Public UserDirs As New Directories
+
+Private Function getDir(argType As String) As String
+    
+    Dim yukiResult As String
+    
+    Shell Subst$("xdg-user-dir &1", argType) To yukiResult
+    
+    Return Replace$(yukiResult, "\n", "")
+    
+End
+
+Private Sub initializeDirData()
+    
+    With UserDirs
+        .Desktop = getDir("DESKTOP")
+        .Documents = getDir("DOCUMENTS")
+        .Download = getDir("DOWNLOAD")
+        .Music = getDir("MUSIC")
+        .Pictures = getDir("PICTURES")
+        .PublicShare = getDir("PUBLICSHARE")
+        .Templetes = getDir("TEMPLATES")
+        .Videos = getDir("VIDEOS")
+    End With
+    
+End
+
+Public Sub initializeDirArray()
+    
+    With UserDirs
+        .All = [.Desktop, .Documents, .Download, .Music, .Pictures, .PublicShare, .Templetes, .Videos]
+    End With
+    
+End
+
+Public Sub _new()
+    
+    initializeDirData()
+    initializeDirArray()
+    
+End
+
+Public Function IsXdgUserDir(argPath As String) As Boolean
+    
+    Return UserDirs.All.Exist(argPath)
+    
+End

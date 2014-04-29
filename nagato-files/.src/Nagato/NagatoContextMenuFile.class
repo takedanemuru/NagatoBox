@@ -61,10 +61,13 @@ End
 Private Sub addCreateMenu()
     
     Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiSubMenu As NagatoCreateMenu
     
     With yukiMenu
         .Text = ("Create")
     End With
+    
+    yukiSubMenu = New NagatoCreateMenu(yukiMenu) As "Menu"
     
 End
 
@@ -93,6 +96,8 @@ End
 
 Public Sub UnarchiveMenu_Click()
     
-    Shell Subst$("patool extract &1", Me._$path)
+    'Shell Subst$("patool extract &1", Me._$path)
+    
+    Shell Subst$("nagato-extractor &1", Me._$path)
     
 End

@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read HBox As HBox
+Property Visible As Boolean
+
+Private $hBox As HBox
+
+Public Sub _new(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .Height = 32
+        .Padding = 2
+    End With
+    
+End
+
+Private Function HBox_Read() As HBox
+
+    Return $hBox
+
+End
+
+Private Function Visible_Read() As Boolean
+
+    Return $hBox.Visible
+
+End
+
+Private Sub Visible_Write(Value As Boolean)
+
+    $hBox.Visible = Value
+
+End

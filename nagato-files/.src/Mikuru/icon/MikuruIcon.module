@@ -41,21 +41,21 @@ Public Function GetDirectory(argDirectory As String, Optional argSize As Integer
     Select Case argDirectory
         Case User.Home
             Return MikuruIcon.Get("home", argSize)
-        Case NagatoXdgUserDirs.Desktop
+        Case NagatoXdg.UserDirs.Desktop
             Return Stock[Subst$("&1/desktop", argSize)]
-        Case NagatoXdgUserDirs.Download
+        Case NagatoXdg.UserDirs.Download
             Return getDirectoryWithSymbol("hard-drive-download", argSize)
-        Case NagatoXdgUserDirs.Music
+        Case NagatoXdg.UserDirs.Music
             Return getDirectoryWithSymbol("music", argSize)
-        Case NagatoXdgUserDirs.Documents
+        Case NagatoXdg.UserDirs.Documents
             Return getDirectoryWithSymbol("document-edit", argSize)
-        Case NagatoXdgUserDirs.Pictures
+        Case NagatoXdg.UserDirs.Pictures
             Return getDirectoryWithSymbol("image", argSize)
-        Case NagatoXdgUserDirs.Videos
+        Case NagatoXdg.UserDirs.Videos
             Return getDirectoryWithSymbol("video", argSize)
-        Case NagatoXdgUserDirs.PublicShare
+        Case NagatoXdg.UserDirs.PublicShare
             Return getDirectoryWithSymbol("users", argSize)
-        Case NagatoXdgUserDirs.Templetes
+        Case NagatoXdg.UserDirs.Templetes
             Return getDirectoryWithSymbol("ruler", argSize)
         Default
             If Stat(argDirectory).Link <> "" Then
@@ -72,21 +72,21 @@ Public Function GetDirectoryMono(argDirectory As String, Optional argSize As Int
     Select Case argDirectory
         Case User.Home
             Return Me.Get("home", argSize)
-        Case NagatoXdgUserDirs.Desktop
+        Case NagatoXdg.UserDirs.Desktop
             Return Me.Get("desktop", argSize)
-        Case NagatoXdgUserDirs.Documents
+        Case NagatoXdg.UserDirs.Documents
             Return Me.Get("document", argSize)
-        Case NagatoXdgUserDirs.Music
+        Case NagatoXdg.UserDirs.Music
             Return Me.Get("music", argSize)
-        Case NagatoXdgUserDirs.Download
+        Case NagatoXdg.UserDirs.Download
             Return Me.Get("hard-drive-download", argSize)
-        Case NagatoXdgUserDirs.Pictures
+        Case NagatoXdg.UserDirs.Pictures
             Return Me.Get("image", argSize)
-        Case NagatoXdgUserDirs.PublicShare
+        Case NagatoXdg.UserDirs.PublicShare
             Return Me.Get("users", argSize)
-        Case NagatoXdgUserDirs.Videos
+        Case NagatoXdg.UserDirs.Videos
             Return Me.Get("video", argSize)
-        Case NagatoXdgUserDirs.Templetes
+        Case NagatoXdg.UserDirs.Templetes
             Return Me.Get("documents", argSize)
         Default
             Return Me.Get("folder", argSize)

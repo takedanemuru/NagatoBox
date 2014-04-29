@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu 
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
+    
+    addMenuItem(("Create archive"), NagatoMenuPipe.CreateArchive, "hard-drive-download")
+    addMenuItem(("Create clone"), NagatoMenuPipe.CreateClone, "documents")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Debug Last.Tag
+    
+    Raise MenuEvent(Last.Tag)
+    
+End

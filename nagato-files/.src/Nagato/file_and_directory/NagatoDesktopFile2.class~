@@ -1,0 +1,17 @@
+' Gambas class file
+
+Property Read IsSettingsApplication As Boolean
+
+Private $property As NagatoDesktopFileProperty
+
+Public Sub _new(argPath As String)
+    
+    $property = NagatoDesktopFileProperty(argPath)
+    
+End
+
+Private Function IsSettingsApplication_Read() As Boolean
+
+    Return $property.IsSettingApplication
+
+End

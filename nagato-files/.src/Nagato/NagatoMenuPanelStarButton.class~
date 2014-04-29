@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoMenuPanelWidget
+
+Public Sub _Initialize()
+    
+    Dim yukiButton As New MenuButton($container.HBox)
+    Dim yukiMenu As NagatoDynamicMenu
+    
+    With yukiButton
+        .Arrow = False
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("star")
+        .Border = False
+    End With
+    
+    yukiMenu = New NagatoDynamicMenu(HaruhiMain, yukiButton, "MenuIndex" & MikuruUniqueIndex.Get()) As "Menu"
+    
+End

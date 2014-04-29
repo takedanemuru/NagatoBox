@@ -65,8 +65,8 @@ Public Function PathToUri(argPath As String) As String
     Dim yukiPath As String
     Dim yukiResult As String
     
-    yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
-    yukiResult &= ("file://" & uriEncode(yukiPath) & gb.CrLf)
+    yukiPath = Replace(argPath, " ", "NagatoSpaceEncodeFlag")
+    yukiResult = ("file://" & uriEncode(yukiPath) & gb.CrLf)
     yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
     
     Return yukiResult

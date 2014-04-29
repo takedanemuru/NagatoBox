@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Directory As String
+
+Private $directoryObserver As NagatoDirectoryObserver
+
+Public Sub _new(argDirectory As String)
+    
+    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
+    
+    With $directoryObserver
+        .IntervalSecond = 1
+        .Directory = argDirectory
+    End With
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
+    'If Not $iconView.HasKey($log.Current, argFileName) Then refresh($log.Current)
+    Raise MenuEventWithArg(NagatoMenuPipe.ObserverModefy, argFileName)
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argFileName As String)
+    
+    If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
+    '$iconView.Delete($log.Current &/ argFileName)
+    Raise MenuEventWithArg(NagatoMenuPipe.ObserverDelete, argFileName)
+    
+End
+
+Private Function Directory_Read() As String
+
+    Return $directoryObserver.Directory
+
+End
+
+Private Sub Directory_Write(Value As String)
+
+    $directoryObserver.Directory = Value
+
+End

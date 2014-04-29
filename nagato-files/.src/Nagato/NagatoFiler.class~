@@ -3,65 +3,35 @@
 Inherits NagatoMenuPipe
 
 Private $menuBar As NagatoMenuPanel
-Private $filterBar As NagatoFilterBar
 Private $iconView As NagatoIconView
 Private $log As NagatoDirectoryLog
-Private $directoryObserver As NagatoDirectoryObserver
+Private $directoryObserver As NagatoFilerDirectoryObserver
 
 Event ShowProperty(argPath As String)
 Event NewTab(argPath As String)
 Event AppQuit
 
-Private Sub initializeDirectoryObserver(argDirectory As String)
+Private Sub ensureObserver(argDirectory As String)
     
-    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
-    
-    With $directoryObserver
-        .IntervalSecond = 1
-        .Directory = argDirectory
-    End With
+    If Object.IsValid($directoryObserver) Then Return
+    $directoryObserver = New NagatoFilerDirectoryObserver(argDirectory) As "DirectoryObserver"
     
 End
 
 Private Sub move(argDirectory As String)
     
-    $filterBar.CurrentDirectory = argDirectory
-    $filterBar.Filtered = False
     HaruhiMain.SetMainTabStrip(File.BaseName(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
     $log.Move(argDirectory)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
     refresh(argDirectory)
-    If Not Object.IsValid($directoryObserver) Then initializeDirectoryObserver(argDirectory)
-    $directoryObserver.Directory = argDirectory
-    
-End
-
-Private Sub rename(argArgument As Variant)
-    
-    HaruhiRename.SetPath(argArgument, Desktop.GetFileIcon(argArgument, 64))
-    If HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply Then
-        $iconView.SetFocus(argArgument)
-    Endif
-    
-End
-
-Private Sub addTag()
-    
-    If HaruhiSelectSymbol.ShowDialog() = MikuruDialog.ResponseApply Then
-        NagatoDBSymbol.PushPaths($iconView.Selection, MikuruDialog.LastSelectedSymbol)
-        $iconView.Refresh($log.Current)
-    Endif
+    ensureObserver(argDirectory)
     
 End
 
 Private Sub refresh(argDirectory As String)
     
     $menuBar.SetPath(argDirectory)
-    If $filterBar.Filtered Then
-        $iconView.RefreshFiltered(argDirectory, $filterBar.Paths)
-    Else
-        $iconView.Refresh(argDirectory)
-    End If
+    $iconView.Refresh(argDirectory)
     
 Catch
     Return
@@ -74,9 +44,9 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
-Public Sub SetSeachResult(argQuery As String)
+Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
-    $iconView.RefreshWithSearchQuery(MikuruFileSearch.Seach($log.Current, argQuery))
+    $iconView.RefreshWithSearchQuery(MikuruFileSearch.SeachQuery($log.Current, argQuery, argRecursive))
     
 End
 
@@ -84,20 +54,21 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuBar"
-    $filterBar = New NagatoFilterBar(argContainer) As "FilterBar"
     $iconView = New NagatoIconView(argContainer) As "IconView"
     
     move(IIf(argDirectory = "", User.Home, argDirectory))
     
 End
 
-Public Sub IconView_DirectoryClicked(argDirectory As String)
+Public Sub IconView_MenuEvent(argEvent As Integer)
     
-    move(argDirectory)
+    Debug argEvent
     
 End
 
 Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+    
+    Debug argEvent
     
     With NagatoMenuPipe
         Select Case argEvent
@@ -117,7 +88,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
             Case .FileDelete
                 MikuruFile.TrashFile(argArgument)
             Case .FileRename
-                rename(argArgument)
+                If NagatoFilerDialogs.Rename(argArgument) Then $iconView.SetFocus(argArgument)
             Case .FileMoveToCurrentDir
                 If $log.Current = File.Dir(argArgument) Then Return
                 Try Move argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument)) 
@@ -126,7 +97,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
              Case .FileShowProperty
                  Raise ShowProperty(argArgument)
              Case .TagAdd
-                 addTag()
+                 If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
              Case .TagRemove
                  NagatoDBSymbol.RemovePaths($iconView.Selection)
                  $iconView.Refresh($log.Current)
@@ -146,7 +117,7 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             Case .MoveHome
                 If $log.Current <> User.Home Then move(User.Home)
             Case .MoveUp
-                If $log.Current <> User.Home Then move(File.Dir($log.Current))
+                If $log.Current <> "/" Then move(File.Dir($log.Current))
             Case .ViewShowHidden
                 NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
                 refresh($menuBar.Path)
@@ -171,28 +142,13 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
 End
 
-Public Sub MenuBar_ToggleFilterBar(argShow As Boolean)
+Public Sub DirectoryObserver_MenuEventWithArg(argEvent As Integer, argFileName As Variant)
     
-    $filterBar.Toggle(argShow)
-    
-End
-
-Public Sub DirectoryObserver_Modefied(argFileName As String)
-    
-    If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
-    If Not $iconView.HasKey($log.Current, argFileName) Then refresh($log.Current)
-    
-End
-
-Public Sub DirectoryObserver_Deleted(argFileName As String)
-    
-    If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
-    $iconView.Delete($log.Current &/ argFileName)
-    
-End
-
-Public Sub FilterBar_Changed()
-    
-    refresh($log.Current)
+    Select Case argEvent
+        Case NagatoMenuPipe.ObserverModefy
+            If Not $iconView.HasKey($log.Current, argFileName) Then refresh($log.Current)
+        Case NagatoMenuPipe.ObserverDelete
+            $iconView.Delete($log.Current &/ argFileName)
+    End Select
     
 End

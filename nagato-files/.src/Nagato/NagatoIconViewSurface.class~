@@ -2,29 +2,19 @@
 
 Inherits NagatoIconViewHandler
 
-Private $filter As New String[]
-
-Private Sub setDirectoryIcon(argDirectory As String, argPattern As String, argSelection As String[])
+Public Function getPattern() As String
     
-    Dim yukiFullPath As String
-    Dim yukiPath As String
-    
-    For Each yukiPath In Dir(argDirectory, argPattern, gb.Directory).Sort(gb.Natural + gb.IgnoreCase)
-        yukiFullPath = argDirectory &/ yukiPath
-        If $filter.Count > 0 And If Not $filter.Exist(yukiFullPath) Then Continue
-        Me._$iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, argSelection.Exist(yukiFullPath)))
-    Next
+    Return IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
     
 End
 
-Private Sub setFileIcon(argDirectory As String, argPattern As String, argSelection As String[])
+Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
     
     Dim yukiPath As String
     Dim yukiFullPath As String
     
-    For Each yukiPath In Dir(argDirectory, argPattern, gb.File).Sort(gb.Natural + gb.IgnoreCase)
+    For Each yukiPath In Dir(argDirectory, getPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
         yukiFullPath = argDirectory &/ yukiPath
-        If $filter.Count > 0 And If Not $filter.Exist(yukiFullPath) Then Continue
         Me._$iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, argSelection.Exist(yukiFullPath)))
     Next
     
@@ -38,13 +28,23 @@ End
 
 Private Sub refreshIconView(argDirectory As String, argSelection As String[], argLastSelected As String)
     
-    Dim yukiPattern As String = IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
-    
     Me._$iconView.Clear()
-    setDirectoryIcon(argDirectory, yukiPattern, argSelection)
-    setFileIcon(argDirectory, yukiPattern, argSelection)
+    setIcon(argDirectory, argSelection, gb.Directory)
+    setIcon(argDirectory, argSelection, gb.File)
     NagatoDBThumbnailer.CleanUp(argDirectory)
     ensureVisible(argLastSelected)
+    
+End
+
+Private Sub setSearchResult(argPaths As String[], argDirectory As Boolean)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If IsDir(yukiPath) = argDirectory Then 
+            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        End If
+    Next
     
 End
 
@@ -56,14 +56,6 @@ End
 
 Public Sub Refresh(argDirectory As String, argSelection As String[], argLastSelected As String)
     
-    $filter.Clear()
-    refreshIconView(argDirectory, argSelection, argLastSelected)
-    
-End
-
-Public Sub RefreshFiltered(argDirectory As String, argSelection As String[], argLastSelected As String, argFilter As String[])
-    
-    $filter = argFilter.Copy()
     refreshIconView(argDirectory, argSelection, argLastSelected)
     
 End
@@ -74,16 +66,19 @@ Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[
     
     Me._$iconView.Clear()
     
-    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If IsDir(yukiPath) Then 'Me._$iconView.Add(yukiPath, argSelection.Exist(yukiPath))
-            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
-        End If
-    Next
+    setSearchResult(argPaths.Sort(gb.IgnoreCase + gb.Natural), True)
+    setSearchResult(argPaths.Sort(gb.IgnoreCase + gb.Natural), False)
     
-    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If Not IsDir(yukiPath) Then 'Me._$iconView.Add(yukiPath, argSelection.Exist(yukiPath))
-            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
-        End If
-    Next
+    ' For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+    '     If IsDir(yukiPath) Then 
+    '         Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+    '     End If
+    ' Next
+    ' 
+    ' For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+    '     If Not IsDir(yukiPath) Then 
+    '         Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+    '     End If
+    ' Next
     
 End

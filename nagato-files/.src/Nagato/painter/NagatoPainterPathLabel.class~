@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private Const ThumbnailSize As Integer = 128
+Private Const TextWidth As Integer = 112
+Private Const TextLimit As Integer = 32
+Private Const Margin As Integer = 8
+
+Private $text As String
+Private $textHeight As Integer
+Private $textArea As New Rect
+
+Private Function getText(argPath As String) As String
+    
+    If String.Len(File.BaseName(argPath)) > TextLimit Then
+        Return String.Left(File.BaseName(argPath), TextLimit) & "..." & File.Ext(argPath)
+    Else
+        Return File.Name(argPath)
+    End If
+    
+End
+
+Private Sub setTextRect()
+    
+    With $textArea
+        .X = Margin
+        .Y = Max(ThumbnailSize - ($textHeight + 1 * Margin), 0)
+        .W = TextWidth
+        .H = $textHeight 
+    End With
+    
+End
+
+Private Sub drawMaskArea(argColor As Integer)
+    
+    Dim yukiOpacity As Integer = 192
+    
+    Paint.Brush = Paint.Color(argColor + 16777216 * yukiOpacity)
+    Paint.Rectangle(0, ThumbnailSize - ($textArea.H + 2 * Margin), ThumbnailSize, $textArea.H + 2 * Margin)
+    Paint.Fill()
+    
+End
+
+Private Sub drawText()
+    
+    paint.Brush = paint.Color(Color.White)
+    paint.Font.Bold = True
+    With $textArea
+        paint.RichText($text, .X, .Y, .W, .H, Align.Center)
+    End With
+    paint.Fill()
+    
+End
+
+Public Sub Paint(argPath As String, argSelected As Boolean)
+    
+    With Paint
+        Paint.Font.Bold = True
+        $text = getText(argPath) 
+        $textHeight = .Font.RichTextHeight($text, TextWidth)
+        setTextRect()
+        drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
+        drawText()
+    End With
+    
+End

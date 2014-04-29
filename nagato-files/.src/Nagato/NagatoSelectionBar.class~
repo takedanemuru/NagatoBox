@@ -6,120 +6,24 @@ Property Read Count As Integer
 Property Read Paths As String[]
 Property Read LastSelected As String
 
-Private $container As HBox
 Private $selection As New NagatoSelection As "Selection"
-Private $cancelButton As MenuButton
-Private $textLabel As TextLabel
-Private $whatList As ComboBox
-Private $whereList As ComboBox
-Private $execButton As MenuButton
+Private $container As NagatoSelectionBarContainer
+Private $cancelButton As NagatoSelectionBarCancelButton
+Private $label As NagatoSelectionBarLabel
+Private $whatList As NagatoSelectionBarWhatList
+Private $whereList As NagatoSelectionBarWhereList
+Private $doItButton As NagatoSelectionBarDoItButton
 
 Event Cancel
 
-Private Sub initializeContainer(argContainer As Container)
-    
-    $container = New HBox(argContainer)
-    
-    With $container
-        .Height = 32
-        .Padding = 2
-    End With
-    
-End
-
-Private Sub initializeCancelButton()
-    
-    $cancelButton = New MenuButton($container) As "CancelButton"
-    
-    With $cancelButton
-        .Text = ("Cancel")
-        .AutoResize = True
-        .Border = True
-        .Arrow = False
-    End With
-    
-End
-
-Private Sub initializeTextLabel()
-    
-    $textLabel = New TextLabel($container)
-    
-    With $textLabel
-        .Alignment = Align.Center
-        .Expand = True
-        .Padding = 2
-    End With
-    
-End
-
-Private Sub initializeWhatList()
-    
-    $whatList = New ComboBox($container) As "WhatList"
-    
-    With $whatList
-        .ReadOnly = True
-        .List = ["Cut/Move to", "Copy to", "Delete", "Create link", "Archive"]
-        .W = 160
-    End With
-    
-End
-
-Private Sub initializeWhereList()
-    
-    Dim yukiPath As String
-    
-    $whereList = New ComboBox($container) As "WhatList"
-    
-    With $whereList
-        .ReadOnly = True
-        .List = ["ClipBoard", "Home", "Dialog"]
-        .W = 160
-        For Each yukiPath In NagatoXdgUserDirs.AllXdgUserDirs
-            .Add(File.Name(yukiPath))
-        Next
-    End With
-    
-End
-
-Private Sub initializeExecButton()
-    
-    $execButton = New MenuButton($container) As "CancelButton"
-    
-    With $execButton
-        .Text = ("Execute")
-        .AutoResize = True
-        .Border = True
-        .Arrow = False
-    End With
-    
-End
-
-Private Function getLabelTemplate() As String
-    
-    Return IIf($selection.Count = 1, "<b>1</b> item is selected", "<b>&1</b> items are selected")
-    
-End
-
-Private Sub refresh()
-    
-    If NagatoSettings.MultipleSelection Then
-        $container.Visible = ($selection.Count > 0) 
-     Else
-        $container.Visible = False
-     End If
-     
-    $textLabel.Text = Subst$(getLabelTemplate(), $selection.Count)
-     
-End
-
 Public Sub _new(argContainer As TabStrip)
     
-    initializeContainer(argContainer)
-    initializeCancelButton()
-    initializeTextLabel()
-    initializeWhatList()
-    initializeWhereList()
-    initializeExecButton()
+    $container = New NagatoSelectionBarContainer(argContainer)
+    $cancelButton = New NagatoSelectionBarCancelButton($container.HBox)
+    $label = New NagatoSelectionBarLabel($container.HBox)
+    $whatList = New NagatoSelectionBarWhatList($container.HBox)
+    $whereList = New NagatoSelectionBarWhereList($container.HBox)
+    $doItButton = New NagatoSelectionBarDoItButton($container.HBox)
     
 End
 
@@ -149,13 +53,7 @@ End
 
 Public Sub Push(argPath As String, argLeftClick As Boolean)
     
-    If argLeftClick Then
-        $selection.Toggle(argPath)
-        Debug $selection.Count
-    Else
-        $selection.PushPath(argPath)
-        Debug $selection.Count
-    End If
+    $selection.Push(argPath, argLeftClick)
     
 End
 
@@ -167,7 +65,8 @@ End
 
 Public Sub Selection_Changed()
     
-    refresh()
+    $container.Visible = IIf(NagatoSettings.MultipleSelection, ($selection.Count > 0), False)
+    $label.SetText($selection.Count)
     
 End
 
@@ -176,7 +75,6 @@ Private Function Count_Read() As Integer
     Return $selection.Paths.Count
 
 End
-
 
 Private Function Paths_Read() As String[]
 

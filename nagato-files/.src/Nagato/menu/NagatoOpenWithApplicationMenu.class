@@ -1,9 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
-
-Public _$rootMenu As Menu
-Public _$path As String
+Inherits NagatoSubMenu
 
 Private Sub addIndivisualOpenWithMenu(argDesktopFileName As String)
     
@@ -54,14 +51,6 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
 Catch
     Debug Error.Text
     Return
-    
-End
-
-Public Sub _new(argRootMenu As Menu, Optional argPath As String)
-    
-    Me._$rootMenu = argRootMenu
-    If argPath Then Me._$path = argPath
-    Me._InitializeMenu()
     
 End
 

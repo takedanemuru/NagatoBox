@@ -36,3 +36,28 @@ Public Function SeachNonRecursive(argDirectory As String, argQuery As String) As
     Return yukiPaths
     
 End
+
+Private Function getTagetPath(argDirectory As String, argRecursive As Boolean) As String[]
+    
+    If argRecursive Then
+        Return RDir(argDirectory).Sort(gb.IgnoreCase)
+    Else
+        Return Dir(argDirectory).Sort(gb.IgnoreCase)
+    Endif
+    
+End
+
+Public Function SeachQuery(argDirectory As String, argQuery As String, argRecursive As Boolean) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiTarget As String[]
+    Dim yukiResult As New String[]
+    
+    For Each yukiPath In getTagetPath(argDirectory, argRecursive)
+        setResult(argDirectory &/ yukiPath, argQuery, ByRef yukiResult)
+        If yukiResult.Count >= 500 Then Break
+    Next
+    
+    Return yukiResult
+    
+End
