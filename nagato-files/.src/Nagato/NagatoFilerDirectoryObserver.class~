@@ -20,7 +20,6 @@ End
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
     If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
-    'If Not $iconView.HasKey($log.Current, argFileName) Then refresh($log.Current)
     Raise MenuEventWithArg(NagatoMenuPipe.ObserverModefy, argFileName)
     
 End
@@ -28,7 +27,6 @@ End
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
     If Not NagatoSettings.ShowHidden And If argFileName Begins "." Then Return
-    '$iconView.Delete($log.Current &/ argFileName)
     Raise MenuEventWithArg(NagatoMenuPipe.ObserverDelete, argFileName)
     
 End

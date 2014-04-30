@@ -2,7 +2,7 @@
 
 Inherits NagatoTreeViewHandler
 
-Event Move
+Event Move(argDirectory As String)
 
 Private Sub moveFiles()
     
@@ -16,7 +16,7 @@ Private Sub moveFiles()
         Endif
     Next
     
-    If yukiFlag Then Raise Move
+    If yukiFlag Then Raise Move(Me._$treeView.Item.Key)
     
 End
 

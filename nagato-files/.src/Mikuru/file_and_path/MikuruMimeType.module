@@ -17,6 +17,9 @@ Public Function GetType(argFullPath As String) As Integer
         Return Me.TypeElse
     End If
     
+Catch
+    Return Me.TypeElse
+    
 End
 
 Public Function GetDesktopFiles(argFullPath As String) As DesktopFile[] 

@@ -1,0 +1,19 @@
+' Gambas module file
+
+Public Function GetParents(argDirectory As String) As String[]
+    
+    Dim yukiDirectory As String = argDirectory
+    Dim yukiResult As New String[]
+    
+    yukiResult.Add(argDirectory)
+    
+    Do
+        yukiDirectory = File.Dir(yukiDirectory)
+        If yukiDirectory = "/" Then Break
+        yukiResult.Add(yukiDirectory, 0)
+        If yukiDirectory = User.Home Then Break
+    Loop
+    
+    Return yukiResult
+    
+End

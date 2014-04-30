@@ -9,17 +9,17 @@ Private Sub setFile(argDirectory As String)
     
     For Each yukiPath In MikuruPath.GetChildrenFile(argDirectory, NagatoSettings.ShowHidden)
         yukiFullPath = argDirectory &/ yukiPath
-        Me._$treeView.Add(yukiFullPath, yukiPath, MikuruIconMono.GetFromPath(yukiFullPath), argDirectory)
+        Try Me._$treeView.Add(yukiFullPath, yukiPath, MikuruIconMono.GetFromPath(yukiFullPath), argDirectory)
     Next
     
 End
 
 Private Sub setDummyDirectory(argDirectory As String, argParent As String)
     
-    Me._$treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
+    Try Me._$treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
     
     If Dir(argDirectory, "*").Count > 0 Then
-        Me._$treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
+        Try Me._$treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
     Endif
     
 End
@@ -47,6 +47,15 @@ End
 Public Sub SetDirectory(argDirectory As String)
     
     setHomeDirectory(argDirectory)
+    setSubDirectory(argDirectory)
+    setFile(argDirectory)
+    
+End
+
+Public Sub SetChildDirectory(argDirectory As String)
+    
+    Try Me._$treeView.Remove(argDirectory & "dummy")
+    
     setSubDirectory(argDirectory)
     setFile(argDirectory)
     

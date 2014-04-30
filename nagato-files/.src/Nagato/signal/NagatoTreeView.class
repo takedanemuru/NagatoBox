@@ -49,8 +49,16 @@ Public Sub ActionHandler_Expand(argKey As String)
     
 End
 
-Public Sub MouseHandler_Move()
+Public Sub MouseHandler_Move(argDirectory As String)
+    
+    Dim yukiDirectory As String
     
     Me.Refresh()
+    
+    For Each yukiDirectory In MikuruDirectory.GetParents(argDirectory)
+        Debug yukiDirectory
+        $treeViewSurface.SetChildDirectory(yukiDirectory)
+        $treeViewAction.ExpandDirectory(yukiDirectory)
+    Next
     
 End

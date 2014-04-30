@@ -19,6 +19,8 @@ End
 
 Public Sub Refresh(argDirectory As String)
     
+    Debug "refresh"
+    
     $currentDirectory = argDirectory
     $selectionBar.ClearAll()
     $iconView.Refresh(argDirectory, $selectionBar.Paths, $selectionBar.LastSelected)

@@ -20,11 +20,14 @@ End
 
 Private Sub move(argDirectory As String)
     
+    Debug "move"
+    
     HaruhiMain.SetMainTabStrip(File.BaseName(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
     $log.Move(argDirectory)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
     refresh(argDirectory)
     ensureObserver(argDirectory)
+    $directoryObserver.Directory = argDirectory
     
 End
 
@@ -62,7 +65,12 @@ End
 
 Public Sub IconView_MenuEvent(argEvent As Integer)
     
-    Debug argEvent
+    Select Case argEvent
+        Case NagatoMenuPipe.CreateArchive
+            MikuruCreate.Archive($iconView.Selection)
+        Case NagatoMenuPipe.CreateClone
+            MikuruCreate.Clone($log.Current, $iconView.Selection)
+    End Select
     
 End
 

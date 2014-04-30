@@ -38,3 +38,11 @@ Public Sub CreateButton_Click()
     Endif
 
 End
+
+Public Sub DirectoryNameBox_Activate()
+
+    If DirectoryNameBox.Text = "" Then Return
+    
+    CreateButton_Click()
+
+End

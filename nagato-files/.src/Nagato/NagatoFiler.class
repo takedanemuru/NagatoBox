@@ -25,6 +25,7 @@ Private Sub move(argDirectory As String)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
     refresh(argDirectory)
     ensureObserver(argDirectory)
+    $directoryObserver.Directory = argDirectory
     
 End
 

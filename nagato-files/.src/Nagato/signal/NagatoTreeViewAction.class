@@ -12,6 +12,14 @@ Public Sub ExpandHomeDirectory()
     
 End
 
+Public Sub ExpandDirectory(argDirectory As String)
+    
+    Object.Lock(Me._$treeView)
+        Try Me._$treeView[argDirectory].Expanded = True
+    Object.Unlock(Me._$treeView)
+    
+End
+
 Public Sub Asakura_Activate()
     
     If IsDir(Me._$treeView.Key) Then

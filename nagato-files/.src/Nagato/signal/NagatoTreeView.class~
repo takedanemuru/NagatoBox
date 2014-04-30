@@ -24,7 +24,7 @@ End
 
 Public Sub Refresh()
     
-    ' $treeView.Clear()
+    $treeView.Clear()
     $treeViewSurface.SetDirectory(User.Home)
     $treeViewAction.ExpandHomeDirectory()
     
@@ -49,8 +49,16 @@ Public Sub ActionHandler_Expand(argKey As String)
     
 End
 
-Public Sub MouseHandler_Move()
+Public Sub MouseHandler_Move(argDirectory As String)
+    
+    Dim yukiDirectory As String
     
     Me.Refresh()
+    
+    For Each yukiDirectory In MikuruDirectory.GetParents(argDirectory)
+        Debug yukiDirectory
+        $treeViewSurface.SetDirectory(yukiDirectory)
+        $treeViewAction.ExpandDirectory(yukiDirectory)
+    Next
     
 End

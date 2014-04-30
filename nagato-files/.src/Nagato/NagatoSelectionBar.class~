@@ -7,7 +7,7 @@ Property Read Paths As String[]
 Property Read LastSelected As String
 
 Private $selection As New NagatoSelection As "Selection"
-Private $container As NagatoSelectionBarContainer
+Private $container As NagatoPanelContainer
 Private $cancelButton As NagatoSelectionBarCancelButton
 Private $label As NagatoSelectionBarLabel
 Private $whatList As NagatoSelectionBarWhatList
@@ -18,7 +18,7 @@ Event Cancel
 
 Public Sub _new(argContainer As TabStrip)
     
-    $container = New NagatoSelectionBarContainer(argContainer)
+    $container = New NagatoPanelContainer(argContainer)
     $cancelButton = New NagatoSelectionBarCancelButton($container.HBox)
     $label = New NagatoSelectionBarLabel($container.HBox)
     $whatList = New NagatoSelectionBarWhatList($container.HBox)
@@ -34,6 +34,8 @@ Public Function Exist(argPath As String) As Boolean
 End
 
 Public Sub ClearAll()
+    
+    Debug "claer all"
     
     $selection.ClearAll()
     
