@@ -75,6 +75,7 @@ Public Sub Timer_Timer()
     
 Catch
     $timer.Stop
+    Message.Warning("YUKI.N > Something wrong is occured.", ("OK"))
     Try $webDownload.Delete()
     Return
     

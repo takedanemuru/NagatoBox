@@ -23,6 +23,8 @@ Public Sub _InitializeGridView()
         .Columns[5].Text = ("Memory Usage(Virtual)")
     End With
     
+    NagatoSettings.LoadGridsSettings(Me._$gridView)
+    
 End
 
 Private Sub setRowData(argRowData As Collection)
@@ -112,6 +114,14 @@ End
 Public Sub Asakura_Leave()
     
     $lock = False
+    
+End
+
+Public Sub Asakura_ColumnResize(argColumnIndex As Integer)
+    
+    Debug argColumnIndex
+    
+    NagatoSettings.SaveGridsSettings(Me._$gridView)
     
 End
 

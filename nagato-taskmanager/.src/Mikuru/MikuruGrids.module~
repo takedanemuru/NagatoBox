@@ -21,7 +21,11 @@ Private Function getRowData(argDirectory As String) As Collection
     Dim yukiCpuStatus As Float = MikuruUnitConversion.CpuUsageInFloat(yukiStatus)
     Dim yukiName As String = ""
     
-    If yukiCpuStatus > 0 Then yukiName = File.Load(Subst$("/proc/&1/cmdline", File.Name(argDirectory)))
+    If yukiCpuStatus > 0 Or If (CFloat(yukiStatus[22]), $headers[5]) > 0 Then 
+        yukiName = File.Load(Subst$("/proc/&1/cmdline", File.Name(argDirectory)))
+        yukiName = Replace$(yukiName, "\0", " ") 'convert null bytes ("\0") to space (" ")
+    End If
+
     If yukiName = "" Then yukiName = yukiStatus[1]
     
     yukiResult.Add(CInt(File.Name(argDirectory)), $headers[0])

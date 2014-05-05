@@ -41,6 +41,8 @@ End
 
 Public Sub Asakura_Changed()
     
+    If Not Object.IsValid($grids) Then Return
+    
     $grids.Refresh()
     
 End
