@@ -68,18 +68,17 @@ Public Sub IconView_MenuEvent(argEvent As Integer)
             MikuruCreate.Archive($iconView.Selection)
         Case NagatoMenuPipe.CreateClone
             MikuruCreate.Clone($log.Current, $iconView.Selection)
+        Case NagatoMenuPipe.ViewShowHidden
+                NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+                refresh($menuBar.Path)
     End Select
     
 End
 
 Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
-    Debug argEvent
-    
     With NagatoMenuPipe
         Select Case argEvent
-            Case .PathCopyToClipboard
-                Clipboard.Copy(argArgument, "text/plain")
             Case .DirOpen
                 move(argArgument)
             Case .DirOpenInNewTab

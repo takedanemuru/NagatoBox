@@ -19,8 +19,6 @@ End
 
 Public Sub Refresh(argDirectory As String)
     
-    Debug "refresh"
-    
     $currentDirectory = argDirectory
     $selectionBar.ClearAll()
     $iconView.Refresh(argDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
@@ -52,6 +50,7 @@ Public Sub _new(argContainer As Container)
     $iconViewAction = New NagatoIconViewAction(yukiIconViewInitializer.IconView) As "Menu"
     $iconView = New NagatoIconViewSurface(yukiIconViewInitializer.IconView) As "Menu"
     $iconViewMouse = New NagatoIconViewMouse(yukiIconViewInitializer.IconView) As "Menu"
+    $iconViewKeyboard = New NagatoIconViewKeyboard(yukiIconViewInitializer.IconView) As "Keyboard"
     $selectionBar = New NagatoSelectionBar(argContainer) As "SelectionBar"
     
 End
@@ -84,6 +83,40 @@ Public Sub Menu_MouseDown(argPath As String)
     $iconView.ResetIcon(argPath, $selectionBar.Exist(argPath))
     
     Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    
+End
+
+Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key["x"]
+            Debug "cut"
+            If $selectionBar.Paths.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/uri-list")
+        Case Key["c"]
+            If $selectionBar.Paths.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/uri-list")
+        Case Key["v"]
+            Debug Clipboard.Format
+            If Clipboard.Format <> "text/uri-list" Then Return
+            Debug NagatoDrag2.GetPaths(Clipboard.Paste("text/uri-list")).Count
+            MikuruFileManuever.CopyUriList($currentDirectory, Clipboard.Paste("text/uri-list"))
+        Case Key["h"]
+            Raise MenuEvent(NagatoMenuPipe.ViewShowHidden)
+        Case Key["t"]
+            Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
+    End Select
+    
+End
+
+Public Sub KeyBoard_KeyPress(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key.Enter, 16777220
+            If IsDir($selectionBar.LastSelected) Then Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, $selectionBar.LastSelected)
+        Case Key.Esc, 16777216
+            Me.Refresh($currentDirectory)
+    End Select
     
 End
 

@@ -9,7 +9,7 @@ Private Sub runDesktopFile(argPath As String)
     
 End
 
-Private Sub openFile(argPath)
+Private Sub openFile(argPath As String)
     
     Dim yukiDesktopFile As DesktopFile
     
@@ -54,6 +54,18 @@ End
 Public Sub TrashFile(argPath As String)
     
     Try Shell Subst$("trash &1", Quote$(argPath))
+    
+End
+
+Public Sub TrashFiles(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        Debug yukiPath
+        If Not Exist(yukiPath) Then Continue
+        Try Shell Subst$("trash &1", Quote$(yukiPath))
+    Next
     
 End
 

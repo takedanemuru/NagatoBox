@@ -10,3 +10,41 @@ Public Sub CopyUriList(argTargetDirectory As String, argUriList As String)
     Next
     
 End
+
+Public Sub MoveTo(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    Dialog.Title = ("Move To ...")
+    
+    If Not Dialog.SelectDirectory() Then
+        For Each yukiPath In argPaths
+            Try Move yukiPath To MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+        Next
+    Endif
+    
+End
+
+Public Sub CopyTo(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    Dialog.Title = ("Move To ...")
+    
+    If Not Dialog.SelectDirectory() Then
+        For Each yukiPath In argPaths
+            Try Copy yukiPath To MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+        Next
+    Endif
+    
+End
+
+Public Sub Remove(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        MikuruFile.TrashFile(yukiPath)
+    Next
+    
+End

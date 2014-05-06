@@ -2,6 +2,9 @@
 
 Inherits NagatoIconViewHandler
 
+Event KeyPress(argKeyCode As Integer)
+Event KeyPressWithControl(argKeyCode As Integer)
+
 ' Private Sub keyPressWithControl(argKeyCode As Integer)
 '     
 '     Dim yukiPaths As String
@@ -21,14 +24,41 @@ Inherits NagatoIconViewHandler
 '     End Select
 '     
 ' End
-' 
- 'Public Sub IconView_KeyPress()
+
+' Private Sub keyPress(argKeyCode As Integer)
 '     
-'     If Key.Control Then
-'         keyPressWithControl(Key.Code)
-'     Else
-'         keyPress(Key.Code)
-'     End If
+'     Select Case argKeyCode
+'         Case Key.Enter, 16777220
+'             Debug "enter"
+'         Case Key.Esc, 16777216
+'             Debug "escape"
+'     End Select
 '     
 ' End
-' 
+
+' Private Sub keyPressWithControl(argKeyCode As Integer)
+'     
+'     Select Case argKeyCode
+'         Case Key["x"]
+'             Debug "cut"
+'         Case Key["c"]
+'             Debug "copy"
+'         Case Key["v"]
+'             Debug "paste"
+'         Case Key["h"]
+'             Debug "toggle hidden"
+'     End Select
+'     
+' End
+
+Public Sub Asakura_KeyPress()
+    
+    If Not Key.Control Then
+        Raise KeyPress(Key.Code)
+    Else
+        Raise KeyPressWithControl(Key.Code)
+        'keyPressWithControl(Key.Code)
+    End If
+    
+End
+

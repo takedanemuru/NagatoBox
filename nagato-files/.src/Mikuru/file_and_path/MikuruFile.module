@@ -57,6 +57,17 @@ Public Sub TrashFile(argPath As String)
     
 End
 
+Public Sub TrashFiles(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        Try Shell Subst$("trash &1", Quote$(yukiPath))
+    Next
+    
+End
+
 Public Function GetFileSizeText(argPath As String) As String
     
     Return MikuruFileSize.GetFileSizeText(argPath)

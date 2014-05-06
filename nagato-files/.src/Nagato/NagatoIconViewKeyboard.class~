@@ -1,16 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
-
-Private $iconView As IconView
-Private $observer As Observer
-
-Public Sub _new(argIconView As IconView)
-    
-    $iconView = argIconView
-    $observer = New Observer($iconView) As "Asakura"
-    
-End
+Inherits NagatoIconViewHandler
 
 ' Private Sub keyPressWithControl(argKeyCode As Integer)
 '     
@@ -31,14 +21,42 @@ End
 '     End Select
 '     
 ' End
-' 
- 'Public Sub IconView_KeyPress()
-'     
-'     If Key.Control Then
-'         keyPressWithControl(Key.Code)
-'     Else
-'         keyPress(Key.Code)
-'     End If
-'     
-' End
-' 
+
+Private Sub keyPress(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key.Enter, 16777220
+            Debug "enter"
+        Case Key.Esc, 16777216
+            Debug "escape"
+    End Select
+    
+End
+
+Private Sub keyPressWithControl(argKeyCode As Integer)
+    
+    Debug argKeyCode
+    
+    Select Case argKeyCode
+        Case Key["x"]
+            Debug "cut"
+        Case Key["c"]
+            Debug "copy"
+        Case Key["v"]
+            Debug "paste"
+        Case Key["h"]
+            Debug "toggle hidden"
+    End Select
+    
+End
+
+Public Sub Asakura_KeyPress()
+    
+    If Not Key.Control Then
+        keyPress(Key.Code)
+    Else
+        keyPressWithControl(Key.Code)
+    End If
+    
+End
+

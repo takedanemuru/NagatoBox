@@ -6,24 +6,35 @@ Property Read Count As Integer
 Property Read Paths As String[]
 Property Read LastSelected As String
 
-Private $selection As New NagatoSelection As "Selection"
+Private Enum ButtonCancel, ButtonArchive, ButtonMoveTo, ButtonCopyTo, ButtonDelete
+
 Private $container As NagatoPanelContainer
-Private $cancelButton As NagatoSelectionBarCancelButton
+Private $selection As New NagatoSelection As "Selection"
 Private $label As NagatoSelectionBarLabel
-Private $whatList As NagatoSelectionBarWhatList
-Private $whereList As NagatoSelectionBarWhereList
-Private $doItButton As NagatoSelectionBarDoItButton
 
 Event Cancel
+
+Private Sub addButton(argText As String, argTag As Integer)
+    
+    Dim yukiButton As New Button($container.HBox) As "ActionButton"
+    
+    With yukiButton
+        .Text = argText
+        .Tag = argTag
+        .AutoResize = True
+    End With
+    
+End
 
 Public Sub _new(argContainer As TabStrip)
     
     $container = New NagatoPanelContainer(argContainer)
-    $cancelButton = New NagatoSelectionBarCancelButton($container.HBox)
+    addButton("Cancel", ButtonCancel)
     $label = New NagatoSelectionBarLabel($container.HBox)
-    $whatList = New NagatoSelectionBarWhatList($container.HBox)
-    $whereList = New NagatoSelectionBarWhereList($container.HBox)
-    $doItButton = New NagatoSelectionBarDoItButton($container.HBox)
+    addButton("Move To...", ButtonMoveTo)
+    addButton("Copy To...", ButtonCopyTo)
+    addButton("Remove", ButtonDelete)
+    
     
 End
 
@@ -34,8 +45,6 @@ Public Function Exist(argPath As String) As Boolean
 End
 
 Public Sub ClearAll()
-    
-    Debug "claer all"
     
     $selection.ClearAll()
     
@@ -59,9 +68,18 @@ Public Sub Push(argPath As String, argLeftClick As Boolean)
     
 End
 
-Public Sub CancelButton_Click()
+Public Sub ActionButton_Click()
     
-    Raise Cancel
+    Select Case Last.Tag
+        Case ButtonCancel
+            Raise Cancel
+        Case ButtonCopyTo
+            MikuruFileManuever.CopyTo($selection.Paths)
+        Case ButtonMoveTo
+            MikuruFileManuever.MoveTo($selection.Paths)
+        Case ButtonDelete
+            
+    End Select
     
 End
 
