@@ -12,6 +12,12 @@ Public Sub SetFocus()
     
 End
 
+Public Sub SetRecursive(argRecursive As Boolean)
+    
+    $checkBox.Value = argRecursive
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = New NagatoFileSearchContainer(argContainer)
@@ -29,5 +35,11 @@ Public Sub Box_Query(argQuery As String)
     yukiArgs.Add($checkBox.Value)
     
     Raise Signal(MikuruSignal.LeftSearch, yukiArgs)
+    
+End
+
+Public Sub Box_Refresh()
+    
+    Raise Signal(MikuruSignal.LeftRefresh, [Null])
     
 End

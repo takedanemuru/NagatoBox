@@ -3,6 +3,7 @@
 Inherits NagatoIconViewHandler
 
 Event KeyPress(argKeyCode As Integer)
+Event KeyPressWithAlt(argKeyCode As Integer)
 Event KeyPressWithControl(argKeyCode As Integer)
 
 ' Private Sub keyPressWithControl(argKeyCode As Integer)
@@ -53,11 +54,15 @@ Event KeyPressWithControl(argKeyCode As Integer)
 
 Public Sub Asakura_KeyPress()
     
-    If Not Key.Control Then
-        Raise KeyPress(Key.Code)
-    Else
+    If Key.Control Then
+        Debug "ctrl"
         Raise KeyPressWithControl(Key.Code)
-        'keyPressWithControl(Key.Code)
+    Else If Key.Alt Then
+        Debug "alt"
+        Raise KeyPressWithAlt(Key.Code)
+    Else
+        Debug "normal"
+        Raise KeyPress(Key.Code)
     End If
     
 End

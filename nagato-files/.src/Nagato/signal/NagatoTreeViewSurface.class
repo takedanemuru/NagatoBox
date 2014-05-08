@@ -14,9 +14,26 @@ Private Sub setFile(argDirectory As String)
     
 End
 
+Private Function getDirectoryIcon(argDirectory As String) As Picture
+    
+    Dim yukiSymbolName As String
+    
+    If NagatoXdg.IsUserDir(argDirectory) Then
+        Return MikuruIcon.GetDirectoryMono(argDirectory, 24)
+    Else
+        yukiSymbolName = NagatoDBSymbol.GetSymbolName(argDirectory)
+        If yukiSymbolName = "" Then
+            Return MikuruIcon.Get("folder", 24)
+        Else
+            Return MikuruIcon.Get(yukiSymbolName, 24)
+        End If
+    Endif
+    
+End
+
 Private Sub setDummyDirectory(argDirectory As String, argParent As String)
     
-    Try Me._$treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
+    Try Me._$treeView.Add(argDirectory, File.Name(argDirectory), getDirectoryIcon(argDirectory), argParent)
     
     If Dir(argDirectory, "*").Count > 0 Then
         Try Me._$treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)

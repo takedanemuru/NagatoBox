@@ -8,7 +8,7 @@ Private $checkBox As CheckBox
 
 Public Sub _Initialize()
     
-    $checkBox = New ButtonBox(Me._$container) As "QueryBox"
+    $checkBox = New CheckBox(Me._$container) As "QueryBox"
     
     With $checkBox
         .Expand = False

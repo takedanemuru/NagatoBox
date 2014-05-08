@@ -5,6 +5,7 @@ Inherits NagatoFileSearchHandler
 Private $searchBox As ButtonBox
 
 Event Query(argQuery As String)
+Event Refresh
 
 Public Sub _Initialize()
     
@@ -12,7 +13,7 @@ Public Sub _Initialize()
     
     With $searchBox
         .Expand = False
-        .Height = 32
+        .Height = Me.Height
         .Picture = MikuruIcon.Get("search")
     End With
     
@@ -26,13 +27,11 @@ End
 
 Public Sub QueryBox_Click()
     
-    ' Dim yukiValues As New Variant[]
-    ' 
-    ' yukiValues.Add($searchBox.Text)
-    ' 
-    ' If $searchBox.Text <> "" Then Raise Signal(MikuruSignal.LeftSearch, yukiValues)
-     
-    If $searchBox.Text <> "" Then Raise Query($searchBox.Text) 
+    Dim yukiArgs As New Variant[]
+        Raise Query($searchBox.Text) 
+    Else
+        Raise Refresh
+    End If
     
 End
 

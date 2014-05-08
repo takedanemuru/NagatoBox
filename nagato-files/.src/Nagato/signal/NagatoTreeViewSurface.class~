@@ -14,9 +14,20 @@ Private Sub setFile(argDirectory As String)
     
 End
 
+Private Function getDirectoryIcon(argDirectory As String) As Picture
+    
+    If NagatoXdg.IsUserDir(argDirectory) Then
+        Return MikuruIcon.GetDirectoryMono(argDirectory, 24)
+    Else
+        Debug NagatoDBSymbol.GetSymbolName(argDirectory)
+        Return MikuruIcon.Get("folder", 24)
+    Endif
+    
+End
+
 Private Sub setDummyDirectory(argDirectory As String, argParent As String)
     
-    Try Me._$treeView.Add(argDirectory, File.Name(argDirectory), MikuruIcon.Get("folder", 24), argParent)
+    Try Me._$treeView.Add(argDirectory, File.Name(argDirectory), getDirectoryIcon(argDirectory), argParent)
     
     If Dir(argDirectory, "*").Count > 0 Then
         Try Me._$treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
@@ -54,7 +65,8 @@ End
 
 Public Sub SetChildDirectory(argDirectory As String)
     
-    'setHomeDirectory(argDirectory)
+    Try Me._$treeView.Remove(argDirectory & "dummy")
+    
     setSubDirectory(argDirectory)
     setFile(argDirectory)
     

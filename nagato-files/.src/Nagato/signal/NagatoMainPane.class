@@ -47,6 +47,12 @@ Public Sub SearchQuery(argQuery As String, argRecursive As Boolean)
     
 End
 
+Public Sub Refresh()
+    
+    $filers[$tabStripHandler.Index].SetRefresh()
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     $tabStripHandler = New NagatoTabStripHandler(argTabStrip)

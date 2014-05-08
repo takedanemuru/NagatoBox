@@ -12,6 +12,22 @@ Private $webs As New Collection
 Private $webOrder As New Integer[]
 Private $webActiveIndex As Integer = 0
 
+Private Function getNextTabOrder(argTabIndex) As Integer
+    
+    If $webOrder.Count = 1 Then
+        Return -1
+    Else If $webOrder.Count = 2 Then
+        Return 0
+    Else If argTabIndex = $webActiveIndex Then
+        Return IIf(argTabIndex = $webOrder.Max, argTabIndex - 1, argTabIndex)
+    Else If argTabIndex > $webActiveIndex Then
+        Return $webActiveIndex
+    Else
+        Return $webActiveIndex - 1
+    Endif
+    
+End
+
 Public Sub AddWeb(argUrl As String)
     
     Dim yukiUniqueIndex As Integer = MikuruUniqueIndex.Get()
@@ -64,9 +80,9 @@ End
 
 Public Sub RemoveTab(argTabIndex As Integer)
     
-    Dim yukiNextActiveTabIndex As Integer = IIf(argTabIndex = $webOrder.Max, argTabIndex - 1, argTabIndex)
+    Dim yukiNextActiveTabIndex As Integer = getNextTabOrder(argTabIndex)
     
-    If $webOrder.Count = 1 Then Return 'ignore
+    If $webOrder.Count = 1 Then Return
     
     $webs[$webOrder[argTabIndex]].Delete()
     $webs.Remove($webOrder[argTabIndex])

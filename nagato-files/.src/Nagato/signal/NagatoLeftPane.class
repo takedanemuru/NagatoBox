@@ -38,6 +38,13 @@ Public Sub RefreshTreeView()
     
 End
 
+Public Sub SetSearch(argRecursive As Boolean)
+    
+    $modeComboBox.Index = 2
+    $fileSearch.SetRecursive(argRecursive)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)

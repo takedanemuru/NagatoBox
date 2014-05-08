@@ -38,13 +38,19 @@ Public Sub RefreshTreeView()
     
 End
 
+Public Sub SetSearch()
+    
+    $modeComboBox.Index = 2
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
     ininializeModeComboBox()
-    $gtkBookmarks = New NagatoGtkBookmarks($container) As "Pane"
-    $treeView = New NagatoTreeView($container) As "Pane"
-    $fileSearch = New NagatoFileSearch($container) As "Pane"
+    $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
+    $treeView = New NagatoTreeView($container) As "TFEI"
+    $fileSearch = New NagatoFileSearch($container) As "TFEI"
     
 End
 

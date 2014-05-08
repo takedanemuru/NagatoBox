@@ -2,7 +2,7 @@
 
 Inherits NagatoFileSearchHandler
 
-Property Read Value As Boolean
+Property Value As Boolean
 
 Private $checkBox As CheckBox
 
@@ -22,5 +22,11 @@ End
 Private Function Value_Read() As Boolean
 
     Return $checkBox.Value
+
+End
+
+Private Sub Value_Write(Value As Boolean)
+
+    $checkBox.Value = Value
 
 End

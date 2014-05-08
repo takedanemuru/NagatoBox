@@ -26,6 +26,35 @@ Public Sub _InitilazeTable() 'override
     
 End
 
+Public Function Push(argName As String, argColor As Integer) As Integer
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(Me.TableName)
+        yukiResult[Me.ColumnTagName] = argName
+        yukiResult[Me.ColumnTagColor] = argColor
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+    If Not Error Then Return Me.GetTagId(argName, argColor)
+    
+Catch
+    Me._$connection.Rollback()
+    Return NagatoDBTag.SequenceAbort
+    
+End
+
+Public Function GetTagId(argName As String, argColor As Integer) As Integer
+    
+    Dim yukiResult As Result 
+    
+    yukiResult = Me._$connection.Find(Me.TableName, "tag_name = &1 and tag_color = &2", argName, argColor)
+    
+    Return yukiResult[ColumnId]
+    
+End
+
 Public Function GetMatch(argName As String, argColor As Integer) As Integer ' As Enum. see above.
     
     Dim yukiNameMatch As Integer = Me._$connection.Find(Me.TableName, "tag_name = &1", argName).Count

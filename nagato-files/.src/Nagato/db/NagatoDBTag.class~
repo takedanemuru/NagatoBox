@@ -13,10 +13,50 @@ Private $tableTag As NagatoTableTag
 Private $tableTaggedPath As NagatoTableTaggedPath
 Private $ready As Boolean = False
 
+Public Function matchNameOnly() As Integer
+    
+    Dim yukiMessage As String = ("This tag name has been used, and not matched with registered tag color.")
+    
+    Select Case Message.Warning(yukiMessage, ("Cancel"), ("Change Tag Color"), ("Use Original Color"))
+        Case 1
+            Return Me.SequenceAbort
+        Case 2
+            
+        Case 3
+            
+    End Select
+    
+End
+
+Public Function matchColorOnly() As Integer
+    
+    Dim yukiMessage As String = ("This tag color has been used, and not matched with registered tag name.")
+    
+    Select Case Message.Warning(yukiMessage, ("Cancel"), ("Change Tag Name"), ("Use Original Name"))
+        Case 1
+            Return Me.SequenceAbort
+        Case 2
+            Return Me.SequenceAbort
+        Case 3
+            Return Me.SequenceAbort
+    End Select
+    
+End
+
 Public Function GetTagId(argName As String, argColor As Integer) As Integer
     
-    Debug $tableTag.GetMatch(argName, argColor)
+    Select Case $tableTag.GetMatch(argName, argColor)
+        Case NagatoTableTag.MatchNone
+            Return $tableTag.Push(argName, argColor)
+        Case NagatoTableTag.MatchExact
+            Return $tableTag.GetTagId(argName, argColor)
+        Case NagatoTableTag.MatchNameOnly
+            Message.Warning(("This tag name has been used."), ("OK"))
+        Case NagatoTableTag.MatchColorOnly
+             Message.Warning(("This tag color has been used."), ("OK"))
+    End Select
     
+Finally
     Return Me.SequenceAbort
     
 End

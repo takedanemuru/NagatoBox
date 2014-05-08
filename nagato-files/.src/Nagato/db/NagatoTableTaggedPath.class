@@ -21,3 +21,11 @@ Public Sub _InitilazeTable() 'override
     Endif
     
 End
+
+Public Function HasTag(argPath As String) As Integer ' this function retuerns -1 when arg has no tag.
+    
+    
+    
+    Return Me._$connection.Find(Me.TableName, "file_path = &1", argPath).Count > 0
+    
+End

@@ -51,6 +51,12 @@ Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
 End
 
+Public Sub SetRefresh()
+    
+    refresh($log.Current)
+    
+End
+
 Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
@@ -63,6 +69,8 @@ End
 
 Public Sub IconView_MenuEvent(argEvent As Integer)
     
+    Debug argEvent
+    
     Select Case argEvent
         Case NagatoMenuPipe.CreateArchive
             MikuruCreate.Archive($iconView.Selection)
@@ -71,6 +79,14 @@ Public Sub IconView_MenuEvent(argEvent As Integer)
         Case NagatoMenuPipe.ViewShowHidden
                 NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
                 refresh($menuBar.Path)
+        Case NagatoMenuPipe.MoveBack
+            If $log.HasBack Then move($log.Back)
+        Case NagatoMenuPipe.MoveForward
+            If $log.HasForward Then move($log.Forward)
+        Case NagatoMenuPipe.MoveHome
+            If $log.Current <> User.Home Then move(User.Home)
+        Case NagatoMenuPipe.MoveUp
+            If $log.Current <> "/" Then move(File.Dir($log.Current))
     End Select
     
 End

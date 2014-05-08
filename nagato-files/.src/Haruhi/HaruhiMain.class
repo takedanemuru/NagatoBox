@@ -17,6 +17,12 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
+Public Sub SetSearch(argRecursive As Boolean)
+    
+    $leftPane.SetSearch(argRecursive)
+    
+End
+
 Public Sub Form_Open()
     
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
@@ -43,6 +49,7 @@ End
 Public Sub LeftPane_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.LeftSearch Then $mainPane.SearchQuery(argValues[0], argValues[1])
+    If argSignal = MikuruSignal.LeftRefresh Then $mainPane.Refresh()
     
 End
 

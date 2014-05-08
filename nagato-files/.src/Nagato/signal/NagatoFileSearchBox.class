@@ -5,6 +5,7 @@ Inherits NagatoFileSearchHandler
 Private $searchBox As ButtonBox
 
 Event Query(argQuery As String)
+Event Refresh
 
 Public Sub _Initialize()
     
@@ -26,7 +27,11 @@ End
 
 Public Sub QueryBox_Click()
     
-    If $searchBox.Text <> "" Then Raise Query($searchBox.Text) 
+    If $searchBox.Text <> "" Then
+        Raise Query($searchBox.Text) 
+    Else
+        Raise Refresh
+    End If
     
 End
 

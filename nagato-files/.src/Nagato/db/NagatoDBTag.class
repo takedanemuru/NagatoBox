@@ -61,6 +61,12 @@ Finally
     
 End
 
+Public Function HasTag(argPath As String) As Boolean
+    
+    Return $tableTaggedPath.HasTag(argPath)
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()

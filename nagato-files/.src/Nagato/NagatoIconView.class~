@@ -91,6 +91,8 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
     Select Case argKeyCode
         Case Key["x"]
             Debug "cut"
+            If $selectionBar.Paths.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/uri-list")
         Case Key["c"]
             If $selectionBar.Paths.Count = 0 Then Return
             Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/uri-list")
@@ -103,6 +105,25 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
             Raise MenuEvent(NagatoMenuPipe.ViewShowHidden)
         Case Key["t"]
             Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
+        Case Key["f"]
+            HaruhiMain.SetSearch(False)
+    End Select
+    
+End
+
+Public Sub KeyBoard_KeyPressWithAlt(argKeyCode As Integer)
+    
+    Debug argKeyCode
+    
+    Select Case argKeyCode
+        Case Key["h"]
+            Raise MenuEvent(NagatoMenuPipe.MoveHome)
+        Case Key["u"]
+            Raise MenuEvent(NagatoMenuPipe.MoveUp)
+        Case Key["b"]
+            Raise MenuEvent(NagatoMenuPipe.MoveBack)
+        Case Key["f"]
+            Raise MenuEvent(NagatoMenuPipe.MoveForward)
     End Select
     
 End

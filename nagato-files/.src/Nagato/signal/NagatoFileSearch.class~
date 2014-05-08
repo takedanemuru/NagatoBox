@@ -28,6 +28,12 @@ Public Sub Box_Query(argQuery As String)
     yukiArgs.Add(argQuery)
     yukiArgs.Add($checkBox.Value)
     
-    Raise Signal(MikuruSignal.LeftSearch, [argQuery])
+    Raise Signal(MikuruSignal.LeftSearch, yukiArgs)
+    
+End
+
+Public Sub Box_Refresh()
+    
+    Raise Signal(MikuruSignal.LeftRefresh, [Null])
     
 End
