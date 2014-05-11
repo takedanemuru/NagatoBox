@@ -1,0 +1,39 @@
+' Gambas class file
+
+Create Static
+
+Property Read Count As Integer
+
+Private $repositories As New NagatoGitHubRepository[]
+
+Event Raedy
+
+Public Sub Refresh()
+    
+    Dim yukiResult As Result
+    Dim yukiRepository As NagatoGitHubRepository
+    
+    If NagatoDBGitHub.Count = 0 Then Return
+    
+    yukiResult = NagatoDBGitHub.GetAllResult()
+    
+    For Each yukiResult
+        yukiRepository = New NagatoGitHubRepository As "GitHubRepo"
+        yukiRepository.Set(yukiResult[NagatoDBGitHub.ColumnUserName], yukiResult[NagatoDBGitHub.ColumnRepository])
+    Next
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $repositories.Count
+
+End
+
+Public Sub GitHubRepo_ApiReady(argRepository As NagatoGitHubRepository)
+    
+    Debug "one down"
+    
+    $repositories.Add(argRepository)
+    
+End

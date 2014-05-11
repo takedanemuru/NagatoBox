@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Create Static
-
 Property Read Ready As Boolean
 Property Read IssueCount As Integer
 Property Read Issues As NagatoIssue[]
@@ -16,16 +14,13 @@ Private Sub parsingIssueData(argData As String)
     Dim yukiCollection As Collection
     Dim yukiIssue As NagatoIssue
     
-    If argData = "" Then Message.Error("YUKI.N > I couldn't get GitHub data.")
+    If argData = "" Then 
+        Message.Error("YUKI.N > I couldn't get GitHub data.")
+        Return
+    End If
     
     For Each yukiCollection In JSON.Decode(argData)
         yukiIssue = New NagatoIssue(yukiCollection)
-        If yukiIssue.Labels.Count > 0 Then
-            Debug yukiIssue.Number
-            Debug yukiIssue.Title
-            Debug yukiIssue.Labels[0]["name"]
-            Debug yukiIssue.Labels[0]["color"]
-        Endif
         $data.Add(yukiIssue)
     Next
     
@@ -51,8 +46,6 @@ End
 
 Public Sub Set(argUserName As String, argRepoName As String)
     
-    Dim yukiUserName As String = "takedanemuru"
-    Dim yukiRepoName As String = "NagatoBox"
     Dim yukiOutput As String
     Dim yukiData As String
     

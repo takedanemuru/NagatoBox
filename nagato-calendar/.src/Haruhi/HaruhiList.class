@@ -43,15 +43,12 @@ Private Sub setIssues()
     
     Dim yukiIssue As NagatoIssue
     
-    For Each yukiIssue In NagatoGitHubApi.Issues
+    For Each yukiIssue In NagatoGitHubRepositories.GetRepository(0).Issues
         With IssueGrids
             Inc .Rows.Count
             .[.Rows.Max, 0].Text = yukiIssue.Number
             .[.Rows.Max, 1].Text = yukiIssue.Title
             adjustColumnWidth(yukiIssue.Title, 1)
-            ' If .Font.TextWidth(yukiIssue.Title) + 16 > IssueGrids[.Rows.Max, 1].W Then 
-            '     .Columns[1].W = .Font.TextWidth(yukiIssue.Title) + 16
-            ' Endif
             If yukiIssue.Labels.Count > 0 Then setLabels(yukiIssue)
         End With
     Next
@@ -62,8 +59,10 @@ Public Sub Form_Open()
     
     Me.Center()
     
-    initializeGrids()
-    setIssues()
+    If NagatoGitHubRepositories.Count > 0 Then
+        initializeGrids()
+        setIssues()
+    End If
     
 End
 

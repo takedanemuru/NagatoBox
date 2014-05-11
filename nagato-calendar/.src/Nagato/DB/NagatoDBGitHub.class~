@@ -2,6 +2,8 @@
 
 Inherits NagatoDB
 
+Property Read Count As Integer
+
 Public _$uniqueName As String = "NagatoDBGitHub" ' override
 
 Public Const TableGitHub As String = "git_hub"
@@ -13,16 +15,31 @@ Private Sub ensureTable()
     
     Dim yukiTable As Table
     
-    If Not Me._$connection.Tables.Exist(TableThumbnail) Then
-        yukiTable = Me._$connection.Tables.Add(TableThumbnail)
+    If Not Me._$connection.Tables.Exist(TableGitHub) Then
+        yukiTable = Me._$connection.Tables.Add(TableGitHub)
         yukiTable.Fields.Add(ColumnId, db.Serial)
-        yukiTable.Fields.Add(ColumnSize, db.Integer)
-        yukiTable.Fields.Add(ColumnDirectory, db.String)
-        yukiTable.Fields.Add(ColumnPath, db.String)
-        yukiTable.Fields.Add(ColumnPicture, db.Blob)
+        yukiTable.Fields.Add(ColumnUserName, db.String)
+        yukiTable.Fields.Add(ColumnRepository, db.String)
         yukiTable.PrimaryKey = [ColumnId]
         yukiTable.Update()
     End If
+    
+End
+
+Public Sub Push(argRepository As String, argUserName As String)
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(TableGitHub)
+        yukiResult[ColumnRepository] = argRepository
+        yukiResult[ColumnUserName] = argUserName
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
     
 End
 
@@ -31,4 +48,10 @@ Public Sub _new()
     Me._SetConnection()
     ensureTable()
     
+End
+
+Private Function Count_Read() As Integer
+
+    Return Me._$connection.Find(Me.TableGitHub).Count
+
 End

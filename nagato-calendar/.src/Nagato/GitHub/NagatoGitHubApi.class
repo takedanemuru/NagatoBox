@@ -16,6 +16,11 @@ Private Sub parsingIssueData(argData As String)
     Dim yukiCollection As Collection
     Dim yukiIssue As NagatoIssue
     
+    If argData = "" Then 
+        Message.Error("YUKI.N > I couldn't get GitHub data.")
+        Return
+    End If
+    
     For Each yukiCollection In JSON.Decode(argData)
         yukiIssue = New NagatoIssue(yukiCollection)
         If yukiIssue.Labels.Count > 0 Then

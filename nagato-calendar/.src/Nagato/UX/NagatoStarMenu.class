@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Public Enum MenuNone, MenuSetTodaysTask, MenuShowList, MenuAbout, MenuQuit
+Public Enum MenuNone, MenuSetTodaysTask, MenuAddRepository, MenuShowList, MenuAbout, MenuQuit
 
 Private $rootMenu As Menu
 
@@ -32,6 +32,7 @@ Public Sub _new(argName As String)
     
     initializeRootMenu(argName)
     addMenu(("Set Today's Task"), Me.MenuSetTodaysTask, "button-check")
+    addMenu(("Add GitHub Repository"), Me.MenuAddRepository)
     addMenu("Open schedules", Me.MenuShowList, "book-open-bookmark")
         addMenu("", Me.MenuNone)
     addMenu("About", Me.MenuAbout, "star")
@@ -44,6 +45,8 @@ Public Sub MenuItem_Click()
     Select Case Last.Tag
         Case Me.MenuSetTodaysTask
             HaruhiAddTodaysTask.ShowDialog()
+        Case Me.MenuAddRepository
+            HaruhiAddRepository.ShowDialog()
         Case Me.MenuShowList
             HaruhiList.Show()
         Case Me.MenuAbout

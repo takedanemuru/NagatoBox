@@ -1,0 +1,9 @@
+' Gambas class file
+
+Public Sub ApplyButton_Click()
+
+    If RepositoryTextBox.Text = "" Or If UserNameTextBox.Text = "" Then Return
+
+    NagatoDBGitHub.Push(RepositoryTextBox.Text, UserNameTextBox.Text)
+
+End

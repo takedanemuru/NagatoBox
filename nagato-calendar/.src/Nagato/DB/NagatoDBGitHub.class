@@ -2,6 +2,8 @@
 
 Inherits NagatoDB
 
+Property Read Count As Integer
+
 Public _$uniqueName As String = "NagatoDBGitHub" ' override
 
 Public Const TableGitHub As String = "git_hub"
@@ -24,9 +26,38 @@ Private Sub ensureTable()
     
 End
 
+Public Sub GetAllResult() As Result
+    
+    Return Me._$connection.Find(TableGitHub)
+    
+End
+
+Public Sub Push(argRepository As String, argUserName As String)
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(TableGitHub)
+        yukiResult[ColumnRepository] = argRepository
+        yukiResult[ColumnUserName] = argUserName
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()
     ensureTable()
     
+End
+
+Private Function Count_Read() As Integer
+
+    Return Me._$connection.Find(Me.TableGitHub).Count
+
 End

@@ -4,7 +4,8 @@ Public Sub Main()
     
     HaruhiMain.Show()
     
-    'NagatoGitHubApi.Set("takedanemuru", "NagatoBox")
-    NagatoGitHubApi.Set("foooooooooooooooooooo", "baaaaaaaaaaaaaaaaaaaaaaaar")
+    NagatoGitHubApi.Set("takedanemuru", "NagatoBox")
+    'NagatoGitHubApi.Set("fooooooooooooooooo", "baaaaaaaaaaaaaaaaaaaaaaar")
+    NagatoGitHubRepositories.Refresh()
     
 End

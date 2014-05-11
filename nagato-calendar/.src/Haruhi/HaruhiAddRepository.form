@@ -1,0 +1,27 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,59,22)
+  Resizable = False
+  { RepositoryTextBox TextBox
+    MoveScaled(34,3,24,4)
+  }
+  { UserNameTextBox TextBox
+    MoveScaled(34,9,24,4)
+  }
+  { Separator1 Separator
+    MoveScaled(1,13,57,4)
+  }
+  { ApplyButton Button
+    MoveScaled(41,17,17,4)
+    Text = ("Apply")
+  }
+  { Label1 Label
+    MoveScaled(2,3,30,4)
+    Text = ("GitHub Repository")
+  }
+  { Label2 Label
+    MoveScaled(2,9,30,4)
+    Text = ("User Name")
+  }
+}
