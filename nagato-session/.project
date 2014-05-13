@@ -1,13 +1,14 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.2
+# Compiled with Gambas 3.5.3
 Title=nagato-session
 Startup=Kyon
 Icon=pictures/mono_icon/gear.png
-Version=0.17.0
+Version=0.18.0
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
+Component=gb.dbus
 Component=gb.desktop
 Component=gb.settings
 Component=gb.qt4.ext
@@ -22,7 +23,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@gmail.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-session-0.17.0
+PackageName=nagato-session-0.18.0
 PackageVersion=2
 CreateEachDirectory=1
 Packager=1

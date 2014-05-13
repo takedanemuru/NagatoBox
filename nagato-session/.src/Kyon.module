@@ -5,11 +5,13 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
-    If Not NagatoArguments.Autostart Then
-        HaruhiMain.Show()
-    Else
+    If NagatoArguments.Autostart Then
         NagatoLoginSound.PlayDefault()
         NagatoXdgAutostarts.Execute()
+    Else If NagatoArguments.Logout Then
+        HaruhiDialog.Show()
+    Else
+        HaruhiMain.Show()
     End If
-    
+    ' 
 End

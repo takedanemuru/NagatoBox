@@ -1,0 +1,73 @@
+' Gambas class file
+
+Public Enum ModeStartup, ModeLogout, ModeReboot, ModeShutdown, ModeLockScreen
+
+Private $mode As Integer = Me.ModeStartup
+Private $messages As New String[]
+Private $line As Integer = 0
+Private $position As Integer = 0
+
+Event Finished(argMode As Integer)
+
+Private Sub initializeMessages()
+    
+    With $messages
+        .Add("This is an emergency escape program.")
+        .Add("If you wish to restore the world to its original state, press the ENTER key. If this is not the case, please press any other key.")
+        .Add("If the program is started, you will have a chance to return time and space to its previous values. Success is not guaranteed. Also, your return is not guaranteed.")
+        .Add("This program will only run once. After that, it is erased.")
+        .Add("If it is not started, the program will be deleted.")
+        .Add("READY?")
+    End With
+    
+End
+
+Private Sub setPosition()
+    
+    Inc $position
+    
+    If $position > String.Len($messages[$line]) + 20 And If $line <> $messages.Max Then
+        $position = 0
+        Inc $line
+    Else If $position > String.Len($messages[$line]) + 20 And If $mode <> ModeStartup Then
+        Raise Finished($mode)
+    End If
+    
+End
+
+Private Function getCursor() As String
+    
+    If $position > String.Len($messages[$line]) And If Odd($position Div 2) Then
+        Return ""
+    Else
+        Return "_"
+    Endif
+    
+End
+
+Public Function Get() As String
+    
+    Dim yukiMessage As String = "YUKI.N > " & String.Left($messages[$line], $position) & getCursor()
+    
+    setPosition()
+    
+    Return yukiMessage
+    
+End
+
+Public Sub Set(argMode As Integer)
+    
+    $messages.Clear()
+    $messages.Add("Another visit to the library would.")
+    
+    $line = 0
+    $position = 0
+    $mode = argMode
+    
+End
+
+Public Sub _new()
+    
+    initializeMessages()
+    
+End

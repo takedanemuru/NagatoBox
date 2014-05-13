@@ -12,7 +12,7 @@ Public Sub _new(argContainer As Container)
     
     With $vBox
         .Expand = True
-        .Background = Color.Pink
+        .Background = Color.Lighter(Color.Green)
         .Visible = False
     End With
     

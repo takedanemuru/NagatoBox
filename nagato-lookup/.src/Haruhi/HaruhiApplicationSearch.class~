@@ -11,9 +11,18 @@ Private Sub addDesktopFileIcon(argDesktopFile As NagatoDesktopFile)
     
 End
 
+Private Sub ensureVisible()
+    
+    Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    
+    Debug yukiDesktopWindow.Desktop
+    
+End
+
 Private Function containsSearchQuery(argDesktopFile As NagatoDesktopFile, argQuery As String) As Boolean
     
     With argDesktopFile
+        If File.BaseName(.Path) Like Subst$("*&1*", argQuery) Then Return True
         If .CommonName Like Subst$("*&1*", argQuery) Then Return True
         If .Name Like Subst$("*&1*", argQuery) Then Return True
         If .GenericName Like Subst$("*&1*", argQuery) Then Return True
@@ -29,6 +38,8 @@ End
 Public Sub SetIconViewWithSearchQuery(argQuery As String)
     
     Dim yukiDesktopFile As NagatoDesktopFile
+
+    ensureVisible()
 
     ApplicationsIconView.Clear()
 

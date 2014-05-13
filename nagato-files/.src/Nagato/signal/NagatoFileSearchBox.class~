@@ -15,6 +15,7 @@ Public Sub _Initialize()
         .Expand = False
         .Height = Me.Height
         .Picture = MikuruIcon.Get("search")
+        .Foreground = Color.White
     End With
     
 End
@@ -27,7 +28,7 @@ End
 
 Public Sub QueryBox_Click()
     
-    Dim yukiArgs As New Variant[]
+    If $searchBox.Text <> "" Then
         Raise Query($searchBox.Text) 
     Else
         Raise Refresh

@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Enum ContextRefresh
+
+Public Sub _AddChildMenus()
+    
+    Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
+    
+End

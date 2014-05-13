@@ -13,7 +13,7 @@ Private Sub initializeTreeView(argContainer As Container)
     
     With $treeView
         .Expand = True
-        .Background = Color.Lighter(Color.Lighter(Color.Violet))
+        .Background = Color.Lighter(Color.Magenta)
         .Foreground = Color.White
         .Visible = False
         .Drop = True
@@ -56,9 +56,14 @@ Public Sub MouseHandler_Move(argDirectory As String)
     Me.Refresh()
     
     For Each yukiDirectory In MikuruDirectory.GetParents(argDirectory)
-        Debug yukiDirectory
         $treeViewSurface.SetChildDirectory(yukiDirectory)
         $treeViewAction.ExpandDirectory(yukiDirectory)
     Next
+    
+End
+
+Public Sub MouseHandler_RequestRefresh()
+    
+    Me.Refresh()
     
 End

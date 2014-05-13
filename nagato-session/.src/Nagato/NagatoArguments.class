@@ -3,13 +3,16 @@
 Create Static
 
 Property Read Autostart As Boolean
+Property Read Logout As Boolean
 
 Private $autostart As Boolean = False
+Private $logout As Boolean = False
 
 Public Sub Parsing()
     
     Args.Begin("Usage")
         $autostart = Args.Has("a", "autostart", "execute xdg autostart")
+        $logout = Args.Has("l", "logout", "show logout screen")
     Args.End()
     
 End
@@ -17,5 +20,11 @@ End
 Private Function Autostart_Read() As Boolean
 
     Return $autostart
+
+End
+
+Private Function Logout_Read() As Boolean
+
+    Return $logout
 
 End

@@ -1,14 +1,17 @@
 ' Gambas module file
 
+
 Public Sub Main()
     
     NagatoArguments.Parsing()
     
-    If Not NagatoArguments.Autostart Then
-        HaruhiMain.Show()
-    Else
-        NagatoLoginSound.PlayDefault()
-        NagatoXdgAutostarts.Execute()
-    End If
+    HaruhiDialog.ShowDialog()
     
+    ' If Not NagatoArguments.Autostart Then
+    '     HaruhiMain.Show()
+    ' Else
+    '     NagatoLoginSound.PlayDefault()
+    '     NagatoXdgAutostarts.Execute()
+    ' End If
+    ' 
 End

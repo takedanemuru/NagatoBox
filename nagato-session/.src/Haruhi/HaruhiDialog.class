@@ -1,0 +1,79 @@
+' Gambas class file
+
+Private $message As New NagatoMessage As "Message"
+Private $legend As New NagatoLogoutLegend
+
+Public Sub Form_Open()
+
+    Me.H = Screen.H
+    Me.W = Screen.W
+
+    MessageScreen.SetFocus()
+    MessageTimer.Enabled = True
+
+End
+
+Public Sub MessageTimer_Timer()
+    
+    MessageScreen.Refresh()
+    
+End
+
+Public Sub MessageScreen_DblClick()
+
+    Me.Close()
+
+End
+
+Public Sub MessageScreen_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Esc
+            Me.Close()
+        Case Key.Enter, 16777220
+            Me.Close()
+        Case Key["E"]
+            $message.Set(NagatoMessage.ModeLogout)
+            $legend.Hide()
+        Case Key["R"]
+            $message.Set(NagatoMessage.ModeReboot)
+            $legend.Hide()
+        Case Key["S"]
+            $message.Set(NagatoMessage.ModeShutDown)
+            $legend.Hide()
+        Case Key["L"]
+            $message.Set(NagatoMessage.ModeLockScreen)
+            $legend.Hide()
+    End Select
+    
+End
+
+Public Sub MessageScreen_Draw()
+    
+    With Paint
+        .Begin(MessageScreen)
+        .Brush = .Color(Color.White)
+        .Font.Bold = True
+        .Text($message.Get(), 120, Screen.H / 2)
+        .Text($legend.Legend, (Screen.W - Paint.Font.TextWidth($legend.Legend)) / 2, Screen.H - 36)
+        .Fill()
+        .End()
+    End With
+    
+End
+
+Public Sub Message_Finished(argMode As Integer)
+    
+    Select Case argMode
+        Case NagatoMessage.ModeLogout
+            MikuruSession.Logout(MikuruSession.TypeExit)
+        Case NagatoMessage.ModeReboot
+            MikuruSession.Logout(MikuruSession.TypeReboot)
+        Case NagatoMessage.ModeShutDown
+            MikuruSession.Logout(MikuruSession.TypeShutdown)
+        Case NagatoMessage.ModeLockScreen
+            MikuruSession.Logout(MikuruSession.TypeLockScreen)
+    End Select
+    
+End
+

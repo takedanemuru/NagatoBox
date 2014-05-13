@@ -2,6 +2,9 @@
 
 Inherits NagatoTreeViewHandler
 
+Private Const DummyKey As String = "dummy"
+Private Const TreeViewIconSize As Integer = 24
+
 Private Sub setFile(argDirectory As String)
     
     Dim yukiPath As String
@@ -14,19 +17,20 @@ Private Sub setFile(argDirectory As String)
     
 End
 
+Private Function getTreeviewIconSymbol(argDirectory As String) As Picture
+    
+    Dim yukiSymbolName As String = NagatoDBSymbol.GetSymbolName(argDirectory)
+    
+    Return MikuruIcon.Get(IIf(yukiSymbolName = "", "folder", yukiSymbolName), TreeViewIconSize)
+    
+End
+
 Private Function getDirectoryIcon(argDirectory As String) As Picture
     
-    Dim yukiSymbolName As String
-    
     If NagatoXdg.IsUserDir(argDirectory) Then
-        Return MikuruIcon.GetDirectoryMono(argDirectory, 24)
+        Return MikuruIcon.GetDirectoryMono(argDirectory, TreeViewIconSize)
     Else
-        yukiSymbolName = NagatoDBSymbol.GetSymbolName(argDirectory)
-        If yukiSymbolName = "" Then
-            Return MikuruIcon.Get("folder", 24)
-        Else
-            Return MikuruIcon.Get(yukiSymbolName, 24)
-        End If
+        Return getTreeviewIconSymbol(argDirectory)
     Endif
     
 End
@@ -36,7 +40,7 @@ Private Sub setDummyDirectory(argDirectory As String, argParent As String)
     Try Me._$treeView.Add(argDirectory, File.Name(argDirectory), getDirectoryIcon(argDirectory), argParent)
     
     If Dir(argDirectory, "*").Count > 0 Then
-        Try Me._$treeView.Add(argDirectory & "dummy", "dummy",, argDirectory)
+        Try Me._$treeView.Add(argDirectory & DummyKey, DummyKey,, argDirectory)
     Endif
     
 End
@@ -46,7 +50,7 @@ Private Sub setHomeDirectory(argDirectory As String)
     Dim yukiDirectoryName As String = File.Name(argDirectory)
     
     If Not Me._$treeView.Exist(argDirectory) Then
-        Me._$treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", 24))
+        Me._$treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", TreeViewIconSize))
     Endif
     
 End
@@ -71,7 +75,7 @@ End
 
 Public Sub SetChildDirectory(argDirectory As String)
     
-    Try Me._$treeView.Remove(argDirectory & "dummy")
+    Try Me._$treeView.Remove(argDirectory & DummyKey)
     
     setSubDirectory(argDirectory)
     setFile(argDirectory)

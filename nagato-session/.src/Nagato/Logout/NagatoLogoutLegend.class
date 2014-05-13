@@ -1,0 +1,56 @@
+' Gambas class file
+
+Property Read Legend As String
+Property Read Length As Integer
+
+Private $legend As String
+
+Private Function isOpenbox() As Boolean
+    
+    Dim yukiOutput As String
+    
+    Shell "printenv | grep DESKTOP_SESSION" To yukiOutput
+    
+    If (yukiOutput Ends "openbox\n") Then
+        Return True
+    Else If (yukiOutput Ends "NagatoBox\n") Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Sub initializeLegend()
+    
+    If isOpenbox() Then
+        $legend = ("[E] Exit [R] Reboot [S] Shutdown [L] Lock Screen")
+    Else
+        $legend = ("[R] Reboot [S] Shutdown")
+    Endif
+    
+End
+
+Public Sub Hide()
+    
+    $legend = ""
+    
+End
+
+Public Sub _new()
+    
+    initializeLegend()
+    
+End
+
+Private Function Legend_Read() As String
+
+    Return $legend
+
+End
+
+Private Function Length_Read() As Integer
+
+    Return String.Len($legend)
+
+End
