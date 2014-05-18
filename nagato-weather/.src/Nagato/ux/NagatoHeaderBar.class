@@ -1,0 +1,11 @@
+' Gambas class file
+
+Private $container As Container
+Private $label As NagatoHeaderLabel
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    $label = New NagatoHeaderLabel($container)
+    
+End

@@ -4,6 +4,7 @@ Inherits NagatoMenuPipe
 
 Public _$rootMenu As Menu
 Public _$path As String
+Public _$window As Window
 
 Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton, argUniqueName As String)
     
@@ -21,7 +22,7 @@ Private Sub initializeDummyMenu()
     
 End
 
-Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture)  
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture, Optional argShortcut As String)  
     
     Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
     
@@ -29,25 +30,34 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Pi
         .Text = argText
         .Tag = argTag
         If argIcon Then .Picture = argIcon
+        If argShortcut Then .Shortcut = argShortcut
+        .Window = Me._$window
     End With
+    
+End
+
+Private Function getHiddenMenuIcon() As Picture
+    
+    Return IIf(NagatoSettings.ShowHidden, MikuruIcon.Get("button-check"), Null)
     
 End
 
 Private Sub refreshChildMenus()
     
     With NagatoMenuPipe
-        Me._AddMenu(("New tab"), .ViewNewTab)
-        Me._AddMenu(("Show hidden"), .ViewShowHidden, IIf(NagatoSettings.ShowHidden, MikuruIcon.Get("button-check"), Null))
-        Me._AddMenu(("New folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"))
+        Me._AddMenu(("New tab"), .ViewNewTab,, "Ctrl+T")
+        Me._AddMenu(("Show hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
+        Me._AddMenu(("New &folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
             Me._AddMenu("", 0) ' Spacer
-        Me._AddMenu(("About"), .AppAbout, MikuruIcon.Get("star"))
-        Me._AddMenu(("Quit"), .AppQuit, MikuruIcon.Get("button-power"))
+        Me._AddMenu(("&About"), .AppAbout, MikuruIcon.Get("star"))
+        Me._AddMenu(("&Quit"), .AppQuit, MikuruIcon.Get("button-power"))
     End With
     
 End
 
 Public Sub _new(argForm As Form, argButton As MenuButton, argUniqueName As String, Optional argPath As String)
     
+    Me._$window = argForm.Window
     If argPath Then Me._$path = argPath
     initializeRootMenu(argForm, argButton, argUniqueName)
     initializeDummyMenu()

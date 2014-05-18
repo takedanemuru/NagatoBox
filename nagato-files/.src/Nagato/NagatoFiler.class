@@ -77,8 +77,11 @@ Public Sub IconView_MenuEvent(argEvent As Integer)
         Case NagatoMenuPipe.CreateClone
             MikuruCreate.Clone($log.Current, $iconView.Selection)
         Case NagatoMenuPipe.ViewShowHidden
-                NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
-                refresh($menuBar.Path)
+            NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+            refresh($menuBar.Path)
+        Case NagatoMenuPipe.DirCreate
+            HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
+            HaruhiNewDirectory.ShowDialog()
         Case NagatoMenuPipe.MoveBack
             If $log.HasBack Then move($log.Back)
         Case NagatoMenuPipe.MoveForward

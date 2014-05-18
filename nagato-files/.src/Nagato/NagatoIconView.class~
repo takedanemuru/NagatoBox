@@ -105,6 +105,8 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
             Raise MenuEvent(NagatoMenuPipe.ViewShowHidden)
         Case Key["t"]
             Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
+        Case Key["n"]
+            Raise MenuEvent(NagatoMenuPipe.DirCreate)
         Case Key["f"]
             HaruhiMain.SetSearch(False)
     End Select
@@ -112,8 +114,6 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
 End
 
 Public Sub KeyBoard_KeyPressWithAlt(argKeyCode As Integer)
-    
-    Debug argKeyCode
     
     Select Case argKeyCode
         Case Key["h"]

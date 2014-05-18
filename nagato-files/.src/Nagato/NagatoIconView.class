@@ -105,6 +105,9 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
             Raise MenuEvent(NagatoMenuPipe.ViewShowHidden)
         Case Key["t"]
             Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
+        Case Key["n"]
+            Debug "new dir"
+            Raise MenuEvent(NagatoMenuPipe.DirCreate)
         Case Key["f"]
             HaruhiMain.SetSearch(False)
     End Select

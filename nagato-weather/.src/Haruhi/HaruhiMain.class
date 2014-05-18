@@ -1,0 +1,26 @@
+' Gambas class file
+
+Private $observer As Observer
+Private $headerBar As NagatoHeaderBar
+
+Public Sub _new()
+
+    $observer = New Observer(NagatoWeatherCache) As "Asakura"
+    
+    NagatoWeatherCache.Activate()
+
+End
+
+Public Sub Form_Open()
+
+    Me.Center() ' to be removed
+
+    $headerBar = New NagatoHeaderBar(HeaderBar)
+
+End
+
+Public Sub Asakura_Ready()
+    
+    Debug NagatoWeatherCache.GetWeatherElementMostRecent().Cloudiness
+    
+End

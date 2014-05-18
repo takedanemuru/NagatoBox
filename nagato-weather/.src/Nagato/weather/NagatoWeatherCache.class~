@@ -1,0 +1,134 @@
+' Gambas class file
+
+Create Static
+
+Property Read IsReady As Boolean
+
+'Private $xmlDocument As New XmlDocument
+Private $xmlParser As New NagatoWeatherXmlParser
+Private $cache As New Collection
+Private $ready As Boolean = False
+Private $buffer As String
+Private $bufferLock As Boolean = False
+Private $httpClient As New HttpClient As "HttpClient"
+
+Event Ready
+
+Private Function getRecentTimeStamp(Optional argAddition As Integer = 0) As String
+    
+    Dim yukiDate As String = Format$(Now, "yyyy-mm-dd")
+    Dim yukiHour As String = Format$(((Hour(Now) Div 3) * 3 + argAddition * 3), "0#")
+    
+    Return Subst$("&1T&2:00:00Z", yukiDate, yukiHour)
+    
+End
+' 
+Private Sub setAdditionalData(argWeatherElement As NagatoWeatherElement, argData As XmlElement[], argTimeStamp As String)
+    
+    If Not Object.IsValid(argWeatherElement) Then
+        Return
+    Else If Not argWeatherElement.HasIcon Then
+        argWeatherElement.SetAdditionalData(argData)
+    Else
+        $cache.Add(argWeatherElement, argTimeStamp)
+    End If 
+    
+End
+
+Private Sub refresh(argBuffer As String)
+    
+    ' Dim yukiXmlElement As XmlElement
+    ' Dim yukiWeatherElement As NagatoWeatherElement
+    ' Dim yukiChildElements As XmlElement[]
+    ' 
+    ' $xmlDocument.FromString(argBuffer)
+    ' 
+    ' For Each yukiXmlElement In $xmlDocument.GetElementsByTagName("time")
+    '     yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
+    '     If yukiChildElements.Count > 2 Then
+    '         yukiWeatherElement = New NagatoWeatherElement
+    '         yukiWeatherElement.SetEssentialData(yukiChildElements)
+    '     Else
+    '         setAdditionalData(yukiWeatherElement, yukiChildElements, yukiXmlElement.Attributes["to"])
+    '     Endif
+    ' Next
+    
+    $cache = $xmlParser.GetCache(argBuffer)
+    $ready = True
+    $bufferLock = False
+    
+    Raise Ready
+    
+Catch
+    Return
+    
+End
+
+Public Sub Activate()
+    
+    If $bufferLock Then Return
+        
+    $ready = False
+    $bufferLock = True
+    $buffer = ""
+    
+    With $httpClient
+        .Async = True
+        .URL = NagatoWeatherApi.Get(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude, 5)
+        .Timeout = 30
+    End With
+    
+    $httpClient.Get()
+    
+Catch 
+    Return 'to avoid changing property during downloading.
+    
+End
+
+Public Function GetWeatherElementMostRecent() As NagatoWeatherElement
+    
+    Return $cache[getRecentTimeStamp()]
+    
+End
+
+Public Function HasElement(argTime As String) As Boolean
+    
+    Return $cache.Exist(argTime)
+    
+End
+
+Public Function GetElement(argTime As String) As NagatoWeatherElement
+    
+    Return $cache[argTime]
+    
+Catch
+    Return Null
+    
+End
+
+Public Sub HttpClient_Read()
+     
+    $buffer &= Read #Last, Lof(Last)
+     
+End
+
+Public Sub HttpClient_Error()
+    
+    Debug "Error"
+    
+    $bufferLock = False
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    $httpClient.Close()
+    refresh($buffer)
+    
+End
+
+Private Function IsReady_Read() As Boolean
+
+    Return $ready
+
+End

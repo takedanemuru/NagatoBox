@@ -8,12 +8,9 @@ Private Sub initializeScreenshot(argOnlyActive As Boolean)
     
     Dim yukiWindow As DesktopWindow
     
-    If argOnlyActive Then
+    If Not argOnlyActive Then
         yukiWindow = New DesktopWindow(Desktop.ActiveWindow)
         $screenshot = Desktop.Screenshot(yukiWindow.X, yukiWindow.Y, yukiWindow.W, yukiWindow.H)
-        Debug yukiWindow.H
-        Debug yukiWindow.W
-        Debug Desktop.Scale
     Else
         $screenshot = Desktop.Screenshot()
     End If

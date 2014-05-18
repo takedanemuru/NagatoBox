@@ -1,0 +1,42 @@
+' Gambas class file
+
+Private $xmlDocument As XmlDocument
+Private $cache As New Collection
+
+Private Sub setAdditionalData(argWeatherElement As NagatoWeatherElement, argData As XmlElement[], argTimeStamp As String)
+    
+    If Not Object.IsValid(argWeatherElement) Then
+        Return
+    Else If Not argWeatherElement.HasIcon Then
+        argWeatherElement.SetAdditionalData(argData)
+    Else
+        Debug "added"
+        Debug $cache.Count
+        $cache.Add(argWeatherElement, argTimeStamp)
+    End If 
+    
+End
+
+Public Function GetCache(argBuffer As String) As Collection
+    
+    Dim yukiXmlElement As XmlElement
+    Dim yukiWeatherElement As NagatoWeatherElement
+    Dim yukiChildElements As XmlElement[]
+    
+    $xmlDocument.FromString(argBuffer)
+    Debug $xmlDocument.GetElementsByTagName("time").Count
+    
+    For Each yukiXmlElement In $xmlDocument.GetElementsByTagName("time")
+        Debug "loop"
+        yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
+        If yukiChildElements.Count > 2 Then
+            yukiWeatherElement = New NagatoWeatherElement
+            yukiWeatherElement.SetEssentialData(yukiChildElements)
+        Else
+            setAdditionalData(yukiWeatherElement, yukiChildElements, yukiXmlElement.Attributes["to"])
+        Endif
+    Next
+    
+    Return $cache
+    
+End

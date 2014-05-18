@@ -7,14 +7,14 @@ Public Sub _new()
 
     Application.MainWindow = Me
 
-    $painter = New NagatoPainterMonth(DrawingArea1)
+    $painter = New NagatoPainterMonth(MainDrawingArea)
     $starButton = New NagatoStarButton(Me)
 
 End
 
 Public Sub Form_Open()
     
-    DrawingArea1.SetFocus()
+    MainDrawingArea.SetFocus()
     Me.Center()
 
 End

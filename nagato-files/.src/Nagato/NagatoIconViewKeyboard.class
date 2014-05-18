@@ -55,13 +55,10 @@ Event KeyPressWithControl(argKeyCode As Integer)
 Public Sub Asakura_KeyPress()
     
     If Key.Control Then
-        Debug "ctrl"
         Raise KeyPressWithControl(Key.Code)
     Else If Key.Alt Then
-        Debug "alt"
         Raise KeyPressWithAlt(Key.Code)
     Else
-        Debug "normal"
         Raise KeyPress(Key.Code)
     End If
     

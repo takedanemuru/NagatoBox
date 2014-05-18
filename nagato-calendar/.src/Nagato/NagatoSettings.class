@@ -33,7 +33,9 @@ End
 
 Private Function TodaysTask_Read() As String
 
-    Return $settings["todays_task/body", ""]
+    Dim yukiTimeDiff As Integer = DateDiff($settings["todays_task/last_updated"], Now(), gb.Hour)
+    
+    Return IIf(24 > yukiTimeDiff, $settings["todays_task/body", ""], "")
 
 End
 
@@ -47,6 +49,6 @@ End
 
 Private Function TodaysTaskLastUpdated_Read() As Date
 
-    Return $settings["todays_task/last_updated"]
+    Return $settings["todays_task/last_updated", Date(1999)]
 
 End

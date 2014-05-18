@@ -75,8 +75,8 @@ End
 
 Private Sub paintTask()
     
-    Paint.Brush = Paint.Color(Color.Violet)
-        Paint.RichText(NagatoSettings.TodaysTask, 0, 0, Me._$drawingArea.W, 100)
+    Paint.Brush = Paint.Color(Color.Orange)
+        Paint.RichText("Today's Task:<br><br>" & NagatoSettings.TodaysTask, 32, 32, Me._$drawingArea.W - 64, 200)
     Paint.Fill()
     
 End
@@ -109,9 +109,11 @@ Public Sub Asakura_Draw()
     
     Paint.Begin(Me._$drawingArea)
         Me._DrawBackGround()
+        Paint.Font.Size = BoxSize * 0.4
+        Paint.Font.Bold = False
+        If NagatoSettings.TodaysTask <> "" Then paintTask()
         Paint.Font.Size = BoxSize * 0.5
         Paint.Font.Bold = True
-        If NagatoSettings.TodaysTask <> "" Then paintTask()
         paintCalendar()
     Paint.End()
     

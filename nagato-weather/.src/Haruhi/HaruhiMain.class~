@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $observer As Observer
+
+Public Sub _new()
+
+    $observer = New Observer(NagatoWeatherCache) As "Asakura"
+    
+    NagatoWeatherCache.Activate()
+
+End
+
+Public Sub Form_Open()
+
+    Me.Center() ' to be removed
+
+End
+
+Public Sub Asakura_Ready()
+    
+    Debug NagatoWeatherCache.GetWeatherElementMostRecent().Cloudiness
+    
+End

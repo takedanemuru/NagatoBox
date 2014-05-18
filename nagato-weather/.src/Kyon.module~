@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoWeatherCache.Activate()
+    
+    HaruhiMain.Show()
+    
+End

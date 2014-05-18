@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Private Const IconSize As Integer = 128
+
 Private $drawingArea As DrawingArea
 Private $currentPath As String
 

@@ -36,7 +36,7 @@ Public Function Paint(argY As Integer, argPath As String) As Integer
     $currentPath = argPath
     
     yukiY = drawPath(yukiY)
-    yukiY = drawRichText(yukiY, DesktopMime.FromFile($currentPath).Type)
+    yukiY = drawRichText(yukiY, IIf(IsDir(argPath), "inode/directory", DesktopMime.FromFile($currentPath).Type))
     
     Return yukiY
     

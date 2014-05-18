@@ -18,6 +18,7 @@ Private Sub addMenu(argPath As String)
     
     With yukiMenu
         .Text = ("Launch")
+        .Picture = MikuruIcons.Get("arrow-up")
         .Tag = argPath
     End With
     

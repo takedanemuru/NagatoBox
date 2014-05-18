@@ -11,11 +11,17 @@ Private $textArea As New Rect
 
 Private Function getText(argPath As String) As String
     
+    ' Dim yukiImage As Image = Image.Load(argPath)
+    ' Dim yukiImageStatus As String = "<br>" & yukiImage.Width & " x " & yukiImage.Height
+    ' 
     If String.Len(File.BaseName(argPath)) > TextLimit Then
-        Return String.Left(File.BaseName(argPath), TextLimit) & "..." & File.Ext(argPath)
+        Return String.Left(File.BaseName(argPath), TextLimit) & "..." & File.Ext(argPath) '& yukiImageStatus
     Else
-        Return File.Name(argPath)
+        Return File.Name(argPath) '& yukiImageStatus
     End If
+    
+Catch
+    Debug Error.Text
     
 End
 

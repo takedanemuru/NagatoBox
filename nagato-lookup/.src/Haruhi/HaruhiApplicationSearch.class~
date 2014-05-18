@@ -1,8 +1,12 @@
 ' Gambas class file
 
+Private Const IconSize As Integer = 64
+
+Private $iconViewHandler As NagatoIconViewHandler
+
 Private Sub addDesktopFileIcon(argDesktopFile As NagatoDesktopFile)
     
-    Dim yukiIcon As Picture = argDesktopFile.GetIcon(64).Image.Stretch(64, 64).Picture
+    Dim yukiIcon As Picture = argDesktopFile.GetIcon(IconSize).Image.Stretch(IconSize, IconSize).Picture
     
     ' To avoid key error, because KDE apps are added twice in menu-cache. 
     If ApplicationsIconView.Exist(argDesktopFile.Path) Then Return
@@ -15,9 +19,21 @@ Private Sub ensureVisible()
     
     Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
     
-    Debug yukiDesktopWindow.Desktop
+    yukiDesktopWindow.Desktop = Desktop.Current
     
 End
+
+Private Sub showResult()
+    
+    If ApplicationsIconView.Count > 0 Then
+        ensureVisible()
+         Me.Show()
+    Else
+        Message.Error(("YUKI.N > Sorry, but I coundn't find any application."), ("OK"))
+    End If
+    
+End
+
 
 Private Function containsSearchQuery(argDesktopFile As NagatoDesktopFile, argQuery As String) As Boolean
     
@@ -39,8 +55,6 @@ Public Sub SetIconViewWithSearchQuery(argQuery As String)
     
     Dim yukiDesktopFile As NagatoDesktopFile
 
-    ensureVisible()
-
     ApplicationsIconView.Clear()
 
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications("All")
@@ -48,45 +62,43 @@ Public Sub SetIconViewWithSearchQuery(argQuery As String)
         addDesktopFileIcon(yukiDesktopFile)
     Next
     
-    If ApplicationsIconView.Count > 0 Then
-         Me.Show()
-    Else
-        Message.Error(("YUKI.N > Sorry, but I coundn't find any application."), ("OK"))
-    End If
+    showResult()
     
 End
 
-Public Sub ApplicationsIconView_Activate()
-
-    MikuruApplications.Launch(ApplicationsIconView.Key)
-
-End
-
-Public Sub ApplicationsIconView_Menu()
-    
-    Dim yukiMenu As NagatoContextMenu
-    
-    If ApplicationsIconView.Key Then
-        yukiMenu = New NagatoContextMenu(Me, ApplicationsIconView.Key)
-    Endif
-    
-    yukiMenu.PopUp()
-    
-End
+' Public Sub ApplicationsIconView_Activate()
+' 
+'     MikuruApplications.Launch(ApplicationsIconView.Key)
+' 
+' End
+' 
+' Public Sub ApplicationsIconView_Menu()
+'     
+'     Dim yukiMenu As NagatoContextMenu
+'     
+'     If ApplicationsIconView.Key Then
+'         yukiMenu = New NagatoContextMenu(Me, ApplicationsIconView.Key)
+'         yukiMenu.PopUp()
+'     Endif
+'     
+' End
 
 Public Sub Form_Open()
 
     Me.Center()
+    If Not Object.IsValid($iconViewHandler) Then
+        $iconViewHandler = New NagatoIconViewHandler(ApplicationsIconView)
+    End If
 
 End
 
-Public Sub ApplicationsIconView_Arrange()
-
-    Dim yukiImage As Image = Image.Load("pictures/welcome_to_SOS.jpg")
-    Dim yukiRate As Float = ApplicationsIconView.H / yukiImage.H
-
-    With yukiImage
-        ApplicationsIconView.Picture = .Stretch(.W * yukiRate, .H * yukiRate).Picture
-    End With
-
-End
+' Public Sub ApplicationsIconView_Arrange()
+' 
+'     Dim yukiImage As Image = Image.Load("pictures/welcome_to_SOS.jpg")
+'     Dim yukiRate As Float = ApplicationsIconView.H / yukiImage.H
+' 
+'     With yukiImage
+'         ApplicationsIconView.Picture = .Stretch(.W * yukiRate, .H * yukiRate).Picture
+'     End With
+' 
+' End

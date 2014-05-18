@@ -9,7 +9,7 @@ Private Sub parsingApplicationArguments()
     
     Args.Begin()
         $delay = Args.GetInteger("d", "delay", "delay in seconds")
-        $onlyActiveWindow = Args.Has("w", "only-active", "shoot only active window")
+        $onlyActiveWindow = Args.Has("w", "only-active", "only active window")
     yukiArgs = Args.End()
     
 End

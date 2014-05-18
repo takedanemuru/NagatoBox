@@ -1,0 +1,39 @@
+' Gambas class file
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Activate()
+
+    MikuruApplications.Launch($iconView.Key)
+
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As NagatoContextMenu
+    
+    If $iconView.Key Then
+        yukiMenu = New NagatoContextMenu(Me, $iconView.Key)
+        yukiMenu.PopUp()
+    Endif
+    
+End
+
+Public Sub Asakura_Arrange()
+
+    Dim yukiImage As Image = Image.Load("pictures/welcome_to_SOS.jpg")
+    Dim yukiRate As Float = $iconView.H / yukiImage.H
+
+    With yukiImage
+        $iconView.Picture = .Stretch(.W * yukiRate, .H * yukiRate).Picture
+    End With
+
+End
