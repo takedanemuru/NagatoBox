@@ -4,7 +4,7 @@ Inherits NagatoWidget
 
 Private $recentApplicationsButton As NagatoRecentApplicationsButton
 
-Private Sub addMenuButton(argTitle As String, argCategory As String, Optional argIcon As Picture)
+Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As Picture)
     
     Dim yukiButton As MenuButton
     Dim yukiMenu As NagatoApplicationsMenu
@@ -48,6 +48,6 @@ Public Sub _InitializeWidget()
     addMenuButton(("Settings"), "Settings", MikuruIcons.Get("equalizer"))
     addMenuButton(("System"), "Systems", MikuruIcons.Get("computer"))
     addMenuButton(("Utility"), "Utilities", MikuruIcons.Get("scissors"))
-    'addMenuButton(("KDE"), "Kde4", MikuruIcons.Get("gear")
+    'addMenuButton(("KDE"), "Kde4", MikuruIcons.Get("gear"))
     
 End

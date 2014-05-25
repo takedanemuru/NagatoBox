@@ -1,0 +1,46 @@
+' Gambas class file
+
+Create Static
+
+Property Read Directory As String
+
+Private $directory As String = ""
+
+Private Sub sanitizeDirectories(argDirectories As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argDirectories
+        If Not Exist(yukiPath) Then Continue
+        If IsDir(yukiPath) Then
+            $directory = yukiPath
+        Else
+            $directory = File.Dir(yukiPath)
+        End If
+    Next
+    
+End
+
+Public Sub Parsing()
+    
+    Dim yukiDirectories As String[]
+    
+    Args.Begin("Usage")
+        '$directory = Args.Get("o", "open-terminal-here", "open terminal in specific directory", "directory to open")
+    yukiDirectories = Args.End()
+    
+    If yukiDirectories.Count > 0 Then sanitizeDirectories(yukiDirectories)
+    
+End
+
+Private Function Directory_Read() As String
+
+    ' If $directory = "" Then Return ""
+    ' If Not Exist($directory) Then Return ""
+    ' If Not IsDir($directory) Then Return File.Dir($directory)
+    ' 
+    ' Return $directory
+
+    Return "~/NagatoBox"
+
+End

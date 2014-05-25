@@ -52,8 +52,8 @@ Public Sub ScreenArea_Draw()
     With Paint
         .Begin(ScreenArea)
         .Brush = .Color($color)
-        .Font.Size = $fontSize
-        .DrawText("NagatoSoftwareCompilation", Screen.Width - ($count * 8) Mod Screen.w, $x)
+        '.Font.Size = $fontSize
+        .DrawText("NagatoBox", Screen.Width - ($count * 8) Mod Screen.w, $x)
         $stars1.DrawScreenSaver($count)
         $stars2.DrawScreenSaver($count)
         $stars3.DrawScreenSaver($count)

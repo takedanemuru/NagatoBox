@@ -1,0 +1,43 @@
+' Gambas class file
+
+Property Read Picture As Picture
+Property Read Thumbnail As Picture
+
+Private Const ThumbnailSize As Integer = 200
+
+Private $screenshot As Picture
+
+Event Ready
+
+Public Sub Get(argOnlyActive As Boolean) 
+    
+    Dim yukiWindow As DesktopWindow
+    
+    If argOnlyActive Then
+        yukiWindow = New DesktopWindow(Desktop.ActiveWindow)
+        $screenshot = Desktop.Screenshot(yukiWindow.X, yukiWindow.Y, yukiWindow.W, yukiWindow.H)
+    Else
+        $screenshot = Desktop.Screenshot()
+    End If
+    
+Finally
+    If Error Then $screenshot = Desktop.Screenshot()
+    Raise Ready
+    
+End
+
+Private Function Picture_Read() As Picture
+
+    Return $screenshot
+
+End
+
+Private Function Thumbnail_Read() As Picture
+
+    Dim yukiRate As Float = Min(ThumbnailSize / $screenshot.H, ThumbnailSize / $screenshot.W)
+    
+    With $screenshot
+        Return .Image.Stretch(.W * yukiRate, .H * yukiRate).Picture
+    End With
+
+End

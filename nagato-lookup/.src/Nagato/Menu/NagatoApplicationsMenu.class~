@@ -86,4 +86,6 @@ Public Sub RootMenu_Show()
     $rootMenu.Children.Clear()
     initializeMenus(Last.Tag)
     
+    $rootMenu.Popup(, 16)
+    
 End

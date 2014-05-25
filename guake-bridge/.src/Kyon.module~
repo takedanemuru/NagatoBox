@@ -1,0 +1,17 @@
+' Gambas module file
+
+Public Sub Main()
+
+    NagatoArgs.Parsing()
+
+    If Not NagatoDBus.ConfirmService() Then Return
+
+    Debug NagatoArgs.Directory
+
+    If NagatoArgs.Directory = "" Then
+        NagatoDBus.ShowHide()
+    Else
+        NagatoDBus.AddTab()
+    Endif
+
+End

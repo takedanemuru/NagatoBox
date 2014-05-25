@@ -1,0 +1,23 @@
+' Gambas module file
+
+Private Function IsUnique() As Boolean
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.lookup") Then
+        NagatoDBus.Register()
+        Return True
+    End If
+    
+End
+
+Public Sub Main()
+    
+    NagatoArgs.Parsing()
+    
+    If IsUnique() Then
+        NagatoMenuCache3.Activate()
+        HaruhiMain.Show()
+    End If
+    
+    Print NagatoMenuXml.Get()
+    
+End

@@ -74,10 +74,14 @@ End
 Public Function KiloByteToMiB(argData As String) As String
     
     If argData <> 0 Then
-        Return Format$(CInt(argData) / (1024 ^ 2), "#,##0.00MiB") 'byte to MiB
+        Return Format$(CInt(argData) / (1024 ^ 2), "###,###,###,##0.00MiB") 'byte to MiB
     Else
         Return "-"
     Endif
+    
+Catch
+    Debug argData
+    Return "?"
     
 End
 

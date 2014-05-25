@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Static
+
+Property Read Xml As Boolean
+
+Private $xml As Boolean = False
+
+Public Sub Parsing()
+    
+    Args.Begin("Usage: nagato-lookup [option]")
+        $xml = Args.Has("x", "menu-xml", "get menu xml")
+    Args.End()
+    
+End
+
+Private Function Xml_Read() As Boolean
+
+    Return $xml
+
+End
