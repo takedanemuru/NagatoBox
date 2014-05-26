@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Ready As String
+Property TodaysTask As String
+Property Read RepositoryCount As Integer
+
+Public Function GetRepositoryName(argIndex As Integer) As String
+    
+    Return NagatoGitHubRepositories.GetRepository(argIndex).Name
+    
+End
+
+Public Function GetRepositoryIssues(argIndex As Integer) As String[]
+    
+    Dim yukiIssue As NagatoIssue
+    Dim yukiIssueNames As New String[]
+    
+    For Each yukiIssue In NagatoGitHubRepositories.GetRepository(argIndex).Issues
+        yukiIssueNames.Add(yukiIssue.Title)
+    Next
+    
+    Return yukiIssueNames
+    
+End
+
+Private Function Ready_Read() As String
+
+    Return "YUKI.N >  Can you see this ?"
+
+End
+
+Private Function TodaysTask_Read() As String
+
+    Return NagatoSettings.TodaysTask
+
+End
+
+Private Sub TodaysTask_Write(Value As String)
+
+    NagatoSettings.TodaysTask = Value
+
+End
+
+Private Function RepositoryCount_Read() As Integer
+
+    Return NagatoGitHubRepositories.Count
+
+End

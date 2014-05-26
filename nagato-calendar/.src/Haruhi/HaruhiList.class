@@ -1,57 +1,80 @@
 ' Gambas class file
 
-Private Sub initializeGrids()
-    
-    With IssueGrids
-        .Header = GridView.Horizontal
-        .Columns.Count = 3
-        .Columns[1].Title = ("Title")
-        .Columns[2].Title = ("Label")
-    End With
-    
-End
+' Private Sub initializeGrids()
+'     
+'     With IssueGrids
+'         .Header = GridView.Horizontal
+'         .Columns.Count = 3
+'         .Columns[1].Title = ("Title")
+'         .Columns[2].Title = ("Label")
+'     End With
+'     
+' End
 
-Private Sub adjustColumnWidth(argText As String, argColumn As Integer)
-    
-    With IssueGrids
-        If .Font.TextWidth(argText) + 16 > IssueGrids[.Rows.Max, argColumn].W Then 
-            .Columns[argColumn].W = .Font.TextWidth(argText) + 16
-        Endif
-    End With
-    
-End
+' Private Sub adjustColumnWidth(argText As String, argColumn As Integer)
+'     
+'     With IssueGrids
+'         If .Font.TextWidth(argText) + 16 > IssueGrids[.Rows.Max, argColumn].W Then 
+'             .Columns[argColumn].W = .Font.TextWidth(argText) + 16
+'         Endif
+'     End With
+'     
+' End
 
-Private Sub setLabels(argIssue As NagatoIssue)
-    
-    Dim yukiCount As Integer
-    
-    With IssueGrids
-        If argIssue.Labels.Count > .Columns.Count - 2 Then .Columns.Count = argIssue.Labels.Count + 2
-        For yukiCount = 0 To argIssue.Labels.Count - 1
-            .[.Rows.Max, yukiCount + 2].Text = argIssue.Labels[yukiCount]["name"]
-            .[.Rows.Max, yukiCount + 2].Background = Val("&H0000" & argIssue.Labels[yukiCount]["color"])
-            .[.Rows.Max, yukiCount + 2].Font.Bold = True
-            .[.Rows.Max, yukiCount + 2].Foreground = Color.White
-            .[.Rows.Max, yukiCount + 2].Alignment = Align.Center
-            adjustColumnWidth(argIssue.Labels[yukiCount]["name"], yukiCount + 2)
-        Next
-    End With
-    
-End
+' Private Sub setLabels(argIssue As NagatoIssue)
+'     
+'     Dim yukiCount As Integer
+'     
+'     With IssueGrids
+'         If argIssue.Labels.Count > .Columns.Count - 2 Then .Columns.Count = argIssue.Labels.Count + 2
+'         For yukiCount = 0 To argIssue.Labels.Count - 1
+'             .[.Rows.Max, yukiCount + 2].Text = argIssue.Labels[yukiCount]["name"]
+'             .[.Rows.Max, yukiCount + 2].Background = Val("&H0000" & argIssue.Labels[yukiCount]["color"])
+'             .[.Rows.Max, yukiCount + 2].Font.Bold = True
+'             .[.Rows.Max, yukiCount + 2].Foreground = Color.White
+'             .[.Rows.Max, yukiCount + 2].Alignment = Align.Center
+'             adjustColumnWidth(argIssue.Labels[yukiCount]["name"], yukiCount + 2)
+'         Next
+'     End With
+'     
+' End
+
+' Private Sub setIssues()
+'     
+'     Dim yukiIssue As NagatoIssue
+'     
+'     TabStrip1.Current.Text = NagatoGitHubRepositories.GetRepository(0).Name
+'     
+'     For Each yukiIssue In NagatoGitHubRepositories.GetRepository(0).Issues
+'         With IssueGrids
+'             Inc .Rows.Count
+'             .[.Rows.Max, 0].Text = yukiIssue.Number
+'             .[.Rows.Max, 1].Text = yukiIssue.Title
+'             adjustColumnWidth(yukiIssue.Title, 1)
+'             If yukiIssue.Labels.Count > 0 Then setLabels(yukiIssue)
+'         End With
+'     Next
+'     
+' End
 
 Private Sub setIssues()
     
-    Dim yukiIssue As NagatoIssue
+    Dim yukiIndex As Integer
+    Dim yukiGrids As NagatoIssueGrids
     
-    For Each yukiIssue In NagatoGitHubRepositories.GetRepository(0).Issues
-        With IssueGrids
-            Inc .Rows.Count
-            .[.Rows.Max, 0].Text = yukiIssue.Number
-            .[.Rows.Max, 1].Text = yukiIssue.Title
-            adjustColumnWidth(yukiIssue.Title, 1)
-            If yukiIssue.Labels.Count > 0 Then setLabels(yukiIssue)
-        End With
+    For yukiIndex = 0 To NagatoGitHubRepositories.Count - 1
+        Inc TabStrip1.Count
+        TabStrip1.Index = TabStrip1.Count - 1
+        yukiGrids = New NagatoIssueGrids(TabStrip1, yukiIndex)
     Next
+    
+End
+
+Private Sub setRepositories()
+    
+    Dim yukiRepositoryGrids As NagatoRepositoryGrids
+    
+    yukiRepositoryGrids = New NagatoRepositoryGrids(TabStrip1)
     
 End
 
@@ -59,10 +82,8 @@ Public Sub Form_Open()
     
     Me.Center()
     
-    If NagatoGitHubRepositories.Count > 0 Then
-        initializeGrids()
-        setIssues()
-    End If
+    setRepositories()
+    If NagatoGitHubRepositories.Count > 0 Then setIssues()
     
 End
 

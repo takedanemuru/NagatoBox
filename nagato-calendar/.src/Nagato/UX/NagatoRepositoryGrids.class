@@ -1,0 +1,35 @@
+' Gambas class file
+
+Private $grids As GridView
+
+Private Sub initializeGrids()
+    
+    With $grids
+        .Header = GridView.Horizontal
+        .Columns.Count = 3
+        .Columns[0].W = 32
+        .Columns[1].Title = ("Repository")
+        .Columns[2].Title = ("Issues")
+    End With
+    
+End
+
+Private Sub setData()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To NagatoGitHubRepositories.Count - 1
+        Inc $grids.Rows.Count
+        $grids[$grids.Rows.Max, 1].Text = NagatoGitHubRepositories.GetRepository(yukiIndex).Name
+        $grids[$grids.Rows.Max, 2].Text = NagatoGitHubRepositories.GetRepository(yukiIndex).IssueCount
+    Next
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $grids = New GridView(argTabStrip)
+    initializeGrids()
+    setData()
+    
+End

@@ -49,3 +49,9 @@ Public Sub Asakura_Timer()
     End With
     
 End
+
+Public Sub NagatoMenu_Click()
+    
+    Shell "nagato-calendar"
+    
+End

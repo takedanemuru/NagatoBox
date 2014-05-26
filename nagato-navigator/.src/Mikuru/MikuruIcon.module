@@ -7,3 +7,16 @@ Public Function Get(argName As String, Optional argSize As Integer = 2 * MikuruU
     Return yukiImage.Picture
     
 End
+
+Public Sub GetNetworkDeviceIcon(argIndex As Integer) As Picture
+    
+    Select Case NagatoNetworkManager.GetDeviceTypeReadable(argIndex)
+        Case "Wireless"
+            Return Me.Get("wireless-router")
+        Case "Wired"
+            Return Me.Get("hard-drive-network")
+        Default
+            Return Me.Get("question")
+    End Select
+    
+End

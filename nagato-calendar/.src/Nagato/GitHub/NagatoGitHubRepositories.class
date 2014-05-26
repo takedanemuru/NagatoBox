@@ -24,8 +24,10 @@ Public Sub Refresh()
     yukiResult = NagatoDBGitHub.GetAllResult()
     
     For Each yukiResult
-        yukiRepository = New NagatoGitHubRepository As "GitHubRepo"
-        yukiRepository.Set(yukiResult[NagatoDBGitHub.ColumnUserName], yukiResult[NagatoDBGitHub.ColumnRepository])
+        With NagatoDBGitHub
+            yukiRepository = New NagatoGitHubRepository As "GitHubRepo"
+            yukiRepository.Set(yukiResult[.ColumnUserName], yukiResult[.ColumnRepository])
+        End With
     Next
     
 End

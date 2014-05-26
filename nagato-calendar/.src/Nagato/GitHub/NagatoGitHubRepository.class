@@ -3,11 +3,13 @@
 Property Read Ready As Boolean
 Property Read IssueCount As Integer
 Property Read Issues As NagatoIssue[]
+Property Read Name As String
 
 Public Const ApiIsuueOpen As String = "curl -i https://api.github.com/repos/&1/&2/issues?status=open"
 
 Private $data As New NagatoIssue[]
 Private $ready As Boolean
+Private $name As String
 
 Event ApiError
 Event ApiReady(argGitHubRepository As NagatoGitHubRepository)
@@ -18,7 +20,7 @@ Private Sub parsingIssueData(argData As String)
     Dim yukiIssue As NagatoIssue
     
     If argData = "" Then 
-        Message.Error("YUKI.N > I couldn't get GitHub data.")
+        'Message.Error("YUKI.N > I couldn't get GitHub data.")
         Raise ApiError
         Return
     End If
@@ -54,6 +56,8 @@ Public Sub Set(argUserName As String, argRepoName As String)
     Dim yukiOutput As String
     Dim yukiData As String
     
+    $name = argRepoName
+    
     Shell Subst$(ApiIsuueOpen, argUserName, argRepoName) To yukiOutput
     
     yukiData = sanitize(yukiOutput)
@@ -77,5 +81,11 @@ End
 Private Function Ready_Read() As Boolean
 
     Return $ready
+
+End
+
+Private Function Name_Read() As String
+
+    Return $name
 
 End

@@ -2,10 +2,13 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
+    NagatoArgs.Parsing()
+    
+    If Not NagatoArgs.BackgroundMode Then HaruhiMain.Show()
     
     'NagatoGitHubApi.Set("takedanemuru", "NagatoBox")
     'NagatoGitHubApi.Set("fooooooooooooooooo", "baaaaaaaaaaaaaaaaaaaaaaar")
     NagatoGitHubRepositories.Refresh()
+    NagatoDBus.Register()
     
 End

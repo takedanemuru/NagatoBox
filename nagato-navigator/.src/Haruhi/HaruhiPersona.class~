@@ -26,7 +26,9 @@ End
 
 Public Sub Form_Open()
     
-    $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
+    '$persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
+    '$persona = Picture.Load("Pictures/Personas/rainy.png")
+    $persona = Picture.Load("Pictures/Personas/laptop.png")
     Me.Picture = $persona
     
     Me.H = $persona.H

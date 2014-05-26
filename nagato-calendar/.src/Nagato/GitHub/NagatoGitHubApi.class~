@@ -16,7 +16,10 @@ Private Sub parsingIssueData(argData As String)
     Dim yukiCollection As Collection
     Dim yukiIssue As NagatoIssue
     
-    If argData = "" Then Message.Error("YUKI.N > I couldn't get GitHub data.")
+    If argData = "" Then 
+        Message.Error("YUKI.N > I couldn't get GitHub data.")
+        Return
+    End If
     
     For Each yukiCollection In JSON.Decode(argData)
         yukiIssue = New NagatoIssue(yukiCollection)
@@ -51,8 +54,6 @@ End
 
 Public Sub Set(argUserName As String, argRepoName As String)
     
-    Dim yukiUserName As String = "takedanemuru"
-    Dim yukiRepoName As String = "NagatoBox"
     Dim yukiOutput As String
     Dim yukiData As String
     

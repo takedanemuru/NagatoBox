@@ -1,0 +1,67 @@
+' Gambas class file
+
+Private $grids As GridView
+
+Private Sub initializeGrids()
+    
+    With $grids
+        .Header = GridView.Horizontal
+        .Columns.Count = 3
+        .Columns[1].Title = ("Title")
+        .Columns[2].Title = ("Label")
+    End With
+    
+End
+
+Private Sub adjustColumnWidth(argText As String, argColumn As Integer)
+    
+    With $grids
+        If .Font.TextWidth(argText) + 16 > .[.Rows.Max, argColumn].W Then 
+            .Columns[argColumn].W = .Font.TextWidth(argText) + 16
+        Endif
+    End With
+    
+End
+
+Private Sub setLabels(argIssue As NagatoIssue)
+    
+    Dim yukiCount As Integer
+    
+    With $grids
+        If argIssue.Labels.Count > .Columns.Count - 2 Then .Columns.Count = argIssue.Labels.Count + 2
+        For yukiCount = 0 To argIssue.Labels.Count - 1
+            .[.Rows.Max, yukiCount + 2].Text = argIssue.Labels[yukiCount]["name"]
+            .[.Rows.Max, yukiCount + 2].Background = Val("&H0000" & argIssue.Labels[yukiCount]["color"])
+            .[.Rows.Max, yukiCount + 2].Font.Bold = True
+            .[.Rows.Max, yukiCount + 2].Foreground = Color.White
+            .[.Rows.Max, yukiCount + 2].Alignment = Align.Center
+            adjustColumnWidth(argIssue.Labels[yukiCount]["name"], yukiCount + 2)
+        Next
+    End With
+    
+End
+
+Private Sub setIssues(argRepositoryIndex As Integer)
+    
+    Dim yukiIssue As NagatoIssue
+    
+    For Each yukiIssue In NagatoGitHubRepositories.GetRepository(argRepositoryIndex).Issues
+        With $grids
+            Inc .Rows.Count
+            .[.Rows.Max, 0].Text = yukiIssue.Number
+            .[.Rows.Max, 1].Text = yukiIssue.Title
+            adjustColumnWidth(yukiIssue.Title, 1)
+            If yukiIssue.Labels.Count > 0 Then setLabels(yukiIssue)
+        End With
+    Next
+    
+End
+
+Public Sub _new(argTabstrip As TabStrip, argRepositoryIndex As Integer)
+    
+    argTabstrip.Text = NagatoGitHubRepositories.GetRepository(argRepositoryIndex).Name
+    $grids = New GridView(argTabstrip) As "IssueGrids"
+    initializeGrids()
+    setIssues(argRepositoryIndex)
+    
+End

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Static
+
+Property Read BackgroundMode As Boolean
+
+Private $backgroundMode As Boolean = False
+
+Public Sub Parsing()
+    
+    Args.Begin(("Usage: nagato-calendar"))
+        $backgroundMode = Args.Has("d", "--background", "launch as background mode")
+    Args.End()
+    
+End
+
+Private Function BackgroundMode_Read() As Boolean
+
+    Return $backgroundMode
+
+End

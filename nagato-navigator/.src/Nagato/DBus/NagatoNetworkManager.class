@@ -12,10 +12,30 @@ Private $proxy As DBusProxy
 
 Public Function GetSpeed(argDeviceIndex As Integer) As Float
     
+    If argDeviceIndex > Me.DeviceCount - 1 Then Return 0
+    
     Return $proxy.GetDeviceSpeed(argDeviceIndex)
     
 Catch
     Return 0
+    
+End
+
+Public Function GetDeviceTypeReadable(argDeviceIndex As Integer) As String
+    
+    Return $proxy.GetDeviceTypeReadable(argDeviceIndex)
+    
+Catch
+    Return ""
+    
+End
+
+Public Function GetDeviceAddress(argDeviceIndex As Integer) As String
+    
+    Return $proxy.GetDeviceAddress(argDeviceIndex)
+    
+Catch
+    Return ""
     
 End
 

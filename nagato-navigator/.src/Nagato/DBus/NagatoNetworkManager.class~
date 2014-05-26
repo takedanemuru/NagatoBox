@@ -12,10 +12,21 @@ Private $proxy As DBusProxy
 
 Public Function GetSpeed(argDeviceIndex As Integer) As Float
     
+    If argDeviceIndex > Me.DeviceCount - 1 Then Return 0
+    
     Return $proxy.GetDeviceSpeed(argDeviceIndex)
     
 Catch
     Return 0
+    
+End
+
+Public Function GetDeviceTypeReadable(argDeviceIndex As Integer) As String
+    
+    Return $proxy.GetDeviceTypeReadable(argDeviceIndex)
+    
+Catch
+    Return ""
     
 End
 
@@ -27,13 +38,15 @@ Public Sub Activate()
     
 End
 
-Public Sub _new()
+Private Sub initializeProxy()
     
-    Try $proxy = DBus[Service][ObjectPath, Interface]
+    $proxy = DBus[Service][ObjectPath, Interface]
     
 End
 
 Private Function DeviceCount_Read() As Integer
+
+    If Not Object.IsValid($proxy) Then initializeProxy()
 
     Return $proxy.DeviceCount
 

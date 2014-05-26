@@ -8,6 +8,12 @@ Private $repositories As New NagatoGitHubRepository[]
 
 Event Raedy
 
+Public Sub GetRepository(argIndex As Integer) As NagatoGitHubRepository
+    
+    Return $repositories[argIndex]
+    
+End
+
 Public Sub Refresh()
     
     Dim yukiResult As Result

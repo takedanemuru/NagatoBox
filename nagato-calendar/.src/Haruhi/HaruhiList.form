@@ -2,17 +2,14 @@
 
 { Form Form
   MoveScaled(0,0,114.2857,85.7143)
+  Icon = Picture["pictures/icons/button-check.png"]
   Arrangement = Arrange.Vertical
   { TabStrip1 TabStrip
     MoveScaled(2,1,65,43)
     Expand = True
     Arrangement = Arrange.Fill
     Index = 0
-    Text = ("Issue")
-    Picture = Picture["pictures/icons/button-check.png"]
-    { IssueGrids GridView
-      MoveScaled(1,1,62,36)
-    }
+    Text = ("Repository")
     Index = 0
   }
 }

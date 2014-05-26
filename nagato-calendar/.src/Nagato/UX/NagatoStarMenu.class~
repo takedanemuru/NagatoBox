@@ -32,7 +32,7 @@ Public Sub _new(argName As String)
     
     initializeRootMenu(argName)
     addMenu(("Set Today's Task"), Me.MenuSetTodaysTask, "button-check")
-    addMenu(("Add GitHub Repository", Me.MenuAddRepository)
+    addMenu(("Add GitHub Repository"), Me.MenuAddRepository)
     addMenu("Open schedules", Me.MenuShowList, "book-open-bookmark")
         addMenu("", Me.MenuNone)
     addMenu("About", Me.MenuAbout, "star")
