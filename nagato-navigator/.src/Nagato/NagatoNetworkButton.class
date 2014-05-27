@@ -12,7 +12,7 @@ Private Sub initializeButton(argContainer As Container)
     $button = New MenuButton(argContainer) As "NetworkButton"
     
     With $button
-        .Picture = MikuruIcon.GetNetworkDeviceIcon($deviceIndex)
+        .Picture = MikuruIcon.Get("question")
         .Border = False
         .Foreground = NagatoSettings.ForegroundColor
         .AutoResize = True
@@ -37,8 +37,6 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    Debug NagatoNetworkManager.DeviceCount
-    
     initializeButton(argContainer)
     addRootMenu()
     $observer = New Observer(NagatoTimer) As "Asakura"
@@ -52,8 +50,11 @@ Private Sub setButtonText()
     
     If $button.Text <> yukiText Then
         $button.Text = yukiText
-        '$button.Picture = MikuruIcon.GetNetworkDeviceIcon($deviceIndex)
-    Endif
+        $button.Picture = MikuruIcon.GetNetworkDeviceIcon($deviceIndex)
+    End If
+    
+Catch
+    Return
     
 End
 
@@ -62,11 +63,12 @@ Public Sub Asakura_Timer()
     $button.Visible = NagatoSettings.ShowNetworkButton
     
     If Not $button.Visible Then Return
+    NagatoNetworkManager.Activate()
+    If Not NagatoNetworkManager.Activated Then Return
     If NagatoNetworkManager.DeviceCount = 0 Then Return
     
     Debug NagatoNetworkManager.DeviceCount
     
-    '$button.Picture = MikuruIcon.GetNetworkDeviceIcon($deviceIndex)
     setButtonText()
 
 End
@@ -74,6 +76,8 @@ End
 Public Sub RootMenu_Show()
     
     Dim yukiMenu As NagatoNetworkDevicesMenu
+    
+    If Not NagatoNetworkManager.Activated Then Return
     
     $rootMenu.Children.Clear()
     yukiMenu = New NagatoNetworkDevicesMenu($rootMenu) As "NetworkDevicesMenu"

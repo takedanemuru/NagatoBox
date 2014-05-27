@@ -18,23 +18,31 @@ Private Sub addButton(argContainer As Container)
     
 End
 
-Private Sub addLabel(argContainer As Container)
+' Private Sub addLabel(argContainer As Container)
+'     
+'     $label = New Label(argContainer) As "NagatoMenu"
+'     
+'     With $label
+'         .AutoResize = False
+'         .Text = "please wait..."
+'         .Alignment = Align.Left
+'         .Foreground = Color.White
+'     End With
+'     
+' End
+
+Private Sub addMenu()
     
-    $label = New Label(argContainer) As "NagatoMenu"
-    
-    With $label
-        .AutoResize = False
-        .Text = "please wait..."
-        .Alignment = Align.Left
-        .Foreground = Color.White
-    End With
+    Dim yukiMenu As NagatoDynamicMenu
+     
+     yukiMenu = New NagatoDynamicMenu($button)
     
 End
 
 Public Sub _new(argContainer As Container)
     
     addButton(argContainer)
-    'addLabel(argContainer)
+    addMenu()
     
     $observer = New Observer(NagatoTimer) As "Asakura"
     

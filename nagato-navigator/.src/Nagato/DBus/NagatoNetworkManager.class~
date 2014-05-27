@@ -2,6 +2,7 @@
 
 Create Static
 
+Property Read Activated As Boolean
 Property Read DeviceCount As Integer
 
 Private Const Service As String = "org.gambas.nagato.network.manager"
@@ -30,10 +31,19 @@ Catch
     
 End
 
+Public Function GetDeviceAddress(argDeviceIndex As Integer) As String
+    
+    Return $proxy.GetDeviceAddress(argDeviceIndex)
+    
+Catch
+    Return ""
+    
+End
+
 Public Sub Activate()
     
     If Not DBus.Session.Applications.Exist(Service) Then
-        Shell "nagato-network-manager --non-gui"
+        Shell "nagato-network-manager -n" Wait
     Endif
     
 End
@@ -52,5 +62,11 @@ Private Function DeviceCount_Read() As Integer
 
 Catch
     Return 0
+
+End
+
+Private Function Activated_Read() As Boolean
+
+    Return DBus.Session.Applications.Exist(Service)
 
 End

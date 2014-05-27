@@ -11,9 +11,10 @@ End
 Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
+'        NagatoNetworkManager.Activate()
+        NagatoCalendarConnection.Ensure()
         ensureNagatoTaskmanagerActivation()
         NagatoPowerManager.Activate()
-        NagatoNetworkManager.Activate()
         NagatoRss.Refresh()
         NagatoDBus.Register()
         HaruhiMain.Show()

@@ -8,22 +8,18 @@ Private Sub ensureNagatoTaskmanagerActivation()
     
 End
 
-' Private Sub ensureNagatoNetworkManagerActivation()
-'     
-'     If Not DBus.Session.Applications.Exist("org.gambas.nagato.network.manager") Then
-'         Shell "nagato-network-manager --non-gui"
-'     Endif
-'     
-' End
-
 Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
+        Debug NagatoNetworkManager.Activated
+        NagatoNetworkManager.Activate()
+        NagatoCalendarConnection.Ensure()
         ensureNagatoTaskmanagerActivation()
         NagatoPowerManager.Activate()
-        NagatoNetworkManager.Activate()
         NagatoRss.Refresh()
         NagatoDBus.Register()
+        Debug NagatoNetworkManager.Activated
+        Debug NagatoNetworkManager.DeviceCount
         HaruhiMain.Show()
     Else
         Message.Info(("YUKI.N > nagato-navigator has been activated."), ("OK"))

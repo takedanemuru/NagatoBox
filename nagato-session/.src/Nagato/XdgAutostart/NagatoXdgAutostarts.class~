@@ -2,9 +2,6 @@
 
 Create Static
 
-Property Read GlobalAutosartDirectory As String
-Property Read UserAutostartDirectory As String
-
 Private $userAutoStarts As NagatoAutoStarts
 Private $globalAutoStarts As NagatoAutoStarts
 
@@ -19,20 +16,8 @@ End
 
 Public Sub Execute()
     
-    $userAutoStarts = New NagatoAutoStarts(Me.UserAutostartDirectory)
-    $globalAutoStarts = New NagatoAutoStarts(Me.GlobalAutosartDirectory)
+    $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
+    $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
     execAll()
-
-End
-
-Private Function GlobalAutosartDirectory_Read() As String
-
-    Return "/etc/xdg/autostart"
-
-End
-
-Private Function UserAutostartDirectory_Read() As String
-
-    Return User.Home &/ ".config/autostart"
 
 End
