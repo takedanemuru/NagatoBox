@@ -3,6 +3,8 @@
 Public Sub Main()
     
     HaruhiMain.Show()
-    HaruhiMain.Request(134, 62)
+    HaruhiMain.Request(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
+    
+    HaruhiAbout.Show()
     
 End

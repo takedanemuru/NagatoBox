@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $weatherDrawingArea As NagatoWeatherDrawingArea
+Private $starMenu As NagatoStarMenu
 
 Private Sub initializeDrawingArea()
 
@@ -19,14 +20,59 @@ Public Sub Request(argLatitude As Float, argLongitude As Float)
     
 End
 
-Public Sub Form_Open()
+Public Sub _new()
 
     initializeDrawingArea()
-
+    $starMenu = New NagatoStarMenu(StarButton)
+    
 End
 
 Public Sub Asakura_Finished()
     
     $weatherDrawingArea.Refresh()
+    
+End
+
+Public Sub Form_Open()
+
+    NagatoSettings.LoadFormSettings(Me)
+
+    Me.Title = Subst$(("Weather Information for &1"), NagatoSettings.UserLocationName)
+
+End
+
+Public Sub Form_Close()
+
+    NagatoSettings.SaveFormSettings(Me)
+
+End
+
+Public Sub Form_Resize()
+    
+    Debug "resize"
+    
+    With MainDrawingArea
+        .H = Me.H
+        .W = Me.W
+        .X = 0
+        .Y = 0
+    End With
+    
+    With StarButton
+        .X = Me.W - (.W + 8)
+        .Y = 8
+    End With
+    
+End
+
+Public Sub Form_Enter()
+    
+    'StarButton.Visible = True
+    
+End
+
+Public Sub Form_Leave()
+    
+    'StarButton.Visible = False
     
 End

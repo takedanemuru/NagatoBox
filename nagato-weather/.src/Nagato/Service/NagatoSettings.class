@@ -1,0 +1,111 @@
+' Gambas class file
+
+Create Static
+
+Property UserLatitude As Float
+Property UserLongitude As Float
+Property UserLocationName As String
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    argForm.X = $settings["form/x", argForm.X]
+    argForm.Y = $settings["form/y", argForm.Y]
+    argForm.Height = $settings["form/height", argForm.Height]
+    argForm.Width = $settings["form/width", argForm.Width]
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    $settings["form/x"] = argForm.X
+    $settings["form/y"] = argForm.Y
+    $settings["form/height"] = argForm.Height
+    $settings["form/width"] = argForm.Width
+    
+End
+
+Public Sub LoadGridsSettings(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            .Width = $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
+        End With
+    Next
+    
+End
+
+Public Sub SaveGridsSettings(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount)] = .Width
+        End With
+    Next
+    
+    $settings.Save()
+    
+End
+
+Private Function UserLatitude_Read() As Float
+
+    Dim yukiLatitude As String = $settings["geo/latitude", ""]
+
+    If yukiLatitude = "" Then
+        Return 34.773632
+    Else
+        Return CFloat(NagatoCipher.Decryption(yukiLatitude))
+    Endif
+
+
+End
+
+Private Sub UserLatitude_Write(Value As Float)
+
+    $settings["geo/latitude"] = NagatoCipher.Encryption(Value)
+    $settings.Save()
+
+End
+
+Private Function UserLongitude_Read() As Float
+
+    Dim yukiLongitude As String = $settings["geo/longitude", ""]
+
+    If yukiLongitude = "" Then
+        Return 135.3166017
+    Else
+        Return CFloat(NagatoCipher.Decryption(yukiLongitude))
+    Endif
+
+End
+
+Private Sub UserLongitude_Write(Value As Float)
+
+    $settings["geo/longitude"] = NagatoCipher.Encryption(Value)
+    $settings.Save()
+
+End
+
+Private Function UserLocationName_Read() As String
+
+    Dim yukiVisibleName As String = $settings["geo/visible-name", ""]
+
+    If yukiVisibleName = "" Then
+        Return "Nishinomiya-City Japan"
+    Else
+        Return NagatoCipher.Decryption(yukiVisibleName)
+    Endif
+
+End
+
+Private Sub UserLocationName_Write(Value As String)
+
+    $settings["geo/visible-name"] = NagatoCipher.Encryption(Value)
+    $settings.Save()
+
+End

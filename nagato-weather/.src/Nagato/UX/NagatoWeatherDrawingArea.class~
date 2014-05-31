@@ -10,9 +10,6 @@ Private $longitude As Float
 
 Private Function getWeatherIcon() As Image
     
-    Debug $currentWeather.IconId
-    Debug $longitude
-    
     If MikuruTime.IsDay($longitude) Then
         Return NagatoWeatherIcon.GetIconImageDay($currentWeather.IconId).Stretch(96, 96)
     Else
@@ -74,18 +71,15 @@ Public Sub Asakura_Draw()
     
     Dim yukiBackground As Integer
     
+    Debug "draw"
+    
      If NagatoWeatherCache.IsReady
         $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
-        Debug $currentWeather.IconId
         yukiBackground = NagatoWeatherCondition.GetColor($currentWeather.IconId, MikuruTime.IsDay($longitude))
         setWeatherInfomation(yukiBackground)
     Else
         setPleaseWait(Color.DarkBlue)
     End If
-    
-'Catch
-    ' Debug Error.Text
-    ' Return
     
 End
 

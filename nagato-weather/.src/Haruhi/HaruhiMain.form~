@@ -2,9 +2,14 @@
 
 { Form Form
   MoveScaled(0,0,64,64)
-  Arrangement = Arrange.Fill
+  Icon = Picture["Pictures/icons/umbrella.png"]
   { MainDrawingArea DrawingArea
     MoveScaled(22,10,24,24)
     Background = &H007FFF&
+  }
+  { StarButton MenuButton
+    MoveScaled(57,3,4,4)
+    Picture = Picture["Pictures/icons/star(1).png"]
+    Arrow = False
   }
 }

@@ -1,0 +1,106 @@
+' Gambas class file
+
+Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
+
+Private $buffer As String
+Private $cache As New Collection
+Private $httpClient As New HttpClient As "HttpClient"
+Private $xml As New XmlDocument
+
+Private Sub parseBuffer()
+    
+    Dim yukiNode As XmlNode
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    Debug $buffer
+    
+    $xml.FromString($buffer)
+    
+    For Each yukiNode In $xml.GetElementsByTagName("searchresults")[0].AllChildNodes
+        With yukiNode
+            If .Attributes["display_name"] = "" Then Continue
+            yukiGeoElement = New NagatoGeoElement(.Attributes["display_name"], .Attributes["lat"], .Attributes["lon"])
+            If Not ListView1.Exist(.Attributes["display_name"]) Then
+                ListView1.Add(.Attributes["display_name"], .Attributes["display_name"])
+                $cache.Add(yukiGeoElement, .Attributes["display_name"])
+            End If
+        End With
+    Next
+    
+End
+
+Private Sub startDownloading(argLocation As String)
+    
+     $buffer = ""
+    
+    With $httpClient
+        .URL = Subst$(NominatimApi, Quote$(argLocation))
+        .Async = True
+        .Timeout = 20
+    End With
+    
+    Debug "go for it, yuki."
+    
+    $httpClient.Get()
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    $buffer &= Read #Last, Lof(Last)
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    parseBuffer()
+    
+End
+
+Public Sub form_Open()
+    
+    Dim yukiText As String = ("<b><tt>Location Name:</tt></b> &1<br><b><tt>Latitude:</tt></b> &2<br><b><tt>Longitude:</tt></b> &3")
+    
+    With NagatoSettings
+        yukiText = Subst$(yukiText, .UserLocationName, .UserLatitude, .UserLongitude)
+    End With
+    
+    LocationLabel.Text = yukiText
+    LocationLabel.Height = LocationLabel.Font.RichTextHeight(yukiText) + 16
+    
+End
+
+Public Sub FindButtonBox_Click()
+    
+    With FindButtonBox
+        If .Text <> "" And If IsAscii(.Text) Then
+            ListView1.Clear()
+            $cache.Clear()
+            startDownloading(Replace$(.Text, " ", "+"))
+        End If
+    End With
+    
+End
+
+Public Sub ListView1_Activate()
+    
+    Dim yukiGeoElement As NagatoGeoElement = $cache[ListView1.Key]
+    
+    With NagatoSettings
+        .UserLocationName = yukiGeoElement.VisibleName
+        .UserLatitude = yukiGeoElement.Latitude
+        .UserLongitude = yukiGeoElement.Longitude
+    End With
+    
+    Me.Close(MikuruDialog.ResponseApply)
+    
+Catch
+    Return
+    
+End
+
+Public Sub FindButtonBox_Activate()
+
+    FindButtonBox_Click()
+
+End
