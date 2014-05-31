@@ -1,26 +1,32 @@
 ' Gambas class file
 
-Private $observer As Observer
-Private $headerBar As NagatoHeaderBar
+Private $weatherDrawingArea As NagatoWeatherDrawingArea
+
+Private Sub initializeDrawingArea()
+
+    $weatherDrawingArea = New NagatoWeatherDrawingArea(MainDrawingArea)
+    
+End
+
+Public Sub Request(argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiObserver As Observer
+    
+    yukiObserver = New Observer(NagatoWeatherCache) As "Asakura"
+    
+    NagatoWeatherCache.Activate(argLatitude, argLongitude)
+    $weatherDrawingArea.Longitude = argLongitude
+    
+End
 
 Public Sub _new()
 
-    $observer = New Observer(NagatoWeatherCache) As "Asakura"
-    
-    NagatoWeatherCache.Activate()
+    initializeDrawingArea()
 
 End
 
-Public Sub Form_Open()
-
-    Me.Center() ' to be removed
-
-    $headerBar = New NagatoHeaderBar(HeaderBar)
-
-End
-
-Public Sub Asakura_Ready()
+Public Sub Asakura_Finished()
     
-    Debug NagatoWeatherCache.GetWeatherElementMostRecent().Cloudiness
+    $weatherDrawingArea.Refresh()
     
 End

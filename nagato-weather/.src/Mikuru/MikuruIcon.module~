@@ -1,28 +1,8 @@
 ' Gambas module file
 
-Public Function Get(argName As String, Optional argIconSize As Integer) As Picture
+Public Function Get(argIconName As String, Optional argIconSize As Integer = 16) As Picture
     
-    Dim yukiImage As Image = Image.Load(Subst$("pictures/mono_icons/&1.png", argName))
-    Dim yukiSize As Integer = IIf(argIconSize, argIconSize, 16)
-    
-    Return yukiImage.Stretch(yukiSize, yukiSize).Picture
+    Return image.Load(Subst$("Pictures/icons/&1.png", argIconName)).Stretch(argIconSize, argIconSize).Picture
     
 End
 
-Public Function GetDesktopEntryIcon(argPath As String, Optional argSize As Integer = 16) As Picture
-    
-    Dim yukiDesktopFile As New DesktopFile(argPath)
-    Dim yukiIcon As Image
-    
-    If Exist(yukiDesktopFile.Icon) Then
-        yukiIcon = Image.Load(yukiDesktopFile.Icon)
-        If argSize > Max(yukiIcon.H, yukiIcon.W) Then
-            Return yukiIcon.Picture
-        Else
-            Return yukiIcon.Stretch(argSize, argSize).Picture
-        End If
-    Else
-        Return yukiDesktopFile.GetIcon(argSize).Picture
-    End If
-    
-End

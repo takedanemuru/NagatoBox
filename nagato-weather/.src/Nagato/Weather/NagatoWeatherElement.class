@@ -39,17 +39,6 @@ Public Sub SetEssentialData(argXmlElements As XmlElement[])
     $lowCloud = argXmlElements[7].Attributes["percent"]
     $mediumCloud = argXmlElements[8].Attributes["percent"]
     $highCloud = argXmlElements[9].Attributes["percent"]
-
-    'Debug $temperature
-    ' Debug $windDirection 
-    ' Debug $windSpeed 
-    ' Debug $humidity 
-    ' Debug $pressure 
-    ' Debug $cloudiness 
-    ' Debug $fog 
-    ' Debug $lowCloud 
-    ' Debug $mediumCloud 
-    ' Debug $highCloud 
     
 End
 
@@ -59,9 +48,6 @@ Public Sub SetAdditionalData(argXmlElements As XmlElement[])
     
     $precipitation = argXmlElements[0].Attributes["value"]
     $iconId = argXmlElements[1].Attributes["number"]
-    
-    ' Debug $precipitation
-    ' Debug $iconId
     
 End
 

@@ -1,18 +1,10 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,71,41)
-  Background = &H9FCFFF&
-  Border = False
-  Arrangement = Arrange.Vertical
-  { HeaderBar HBox
-    MoveScaled(21,2,25,5)
-  }
-  { Separator1 Separator
-    MoveScaled(11,10,28,2)
-  }
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Fill
   { MainDrawingArea DrawingArea
-    MoveScaled(7,14,24,24)
-    Expand = True
+    MoveScaled(22,10,24,24)
+    Background = &H007FFF&
   }
 }

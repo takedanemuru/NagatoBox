@@ -27,6 +27,25 @@ Public Function GetRepositoryIssues(argIndex As Integer) As String[]
     
 End
 
+Public Function GetRepositoryIssuesWithNumber(argIndex As Integer) As String[]
+    
+    Dim yukiIssue As NagatoIssue
+    Dim yukiIssueNames As New String[]
+    
+    For Each yukiIssue In NagatoGitHubRepositories.GetRepository(argIndex).Issues
+        yukiIssueNames.Add(Subst$("(#&1) &2", yukiIssue.Number, yukiIssue.Title)
+    Next
+    
+    Return yukiIssueNames
+    
+End
+
+Public Sub Refresh()
+    
+    NagatoGitHubRepositories.Refresh()
+    
+End
+
 Private Function Ready_Read() As String
 
     Return "YUKI.N >  Can you see this ?"

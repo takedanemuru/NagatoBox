@@ -2,8 +2,7 @@
 
 Public Sub Main()
     
-    NagatoWeatherCache.Activate()
-    
     HaruhiMain.Show()
+    HaruhiMain.Request(134, 62)
     
 End

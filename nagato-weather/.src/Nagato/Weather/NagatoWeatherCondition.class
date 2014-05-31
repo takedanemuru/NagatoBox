@@ -167,9 +167,11 @@ Private Function getColorNight(argIndex As Integer) As Integer
     
 End
 
-Public Sub GetColor(argIndex As Integer) As Integer
+Public Sub GetColor(argIndex As Integer, Optional argIsDay As Boolean = Null) As Integer
     
-    If Hour(Now()) >= 6 And If 18 > Hour(Now()) Then
+    If argIsDay <> Null Then
+        Return IIf(argIsDay, getColorDay(argIndex), getColorNight(argIndex))
+    Else If Hour(Now()) >= 6 And If 18 > Hour(Now()) Then
         Return getColorDay(argIndex)
     Else
         Return getColorNight(argIndex)

@@ -1,5 +1,16 @@
 ' Gambas module file
 
+Property Read PathsCollection As Collection 'key as source, value as target
+Property Read Mode As Integer
+
+Private Enum ModeNone, ModeCopy, ModeCut, ModeTrash
+Private Enum ClipNone, ClipCopy, ClipCut, ClipPaste
+
+Private $pathsCollection As New Collection
+Private $mode As Integer = ModeNone
+Private $clipData As String = ""
+Private $clipMode As Integer = ClipNone
+
 Public Sub CopyUriList(argTargetDirectory As String, argUriList As String)
     
     Dim yukiPath As String
@@ -11,40 +22,119 @@ Public Sub CopyUriList(argTargetDirectory As String, argUriList As String)
     
 End
 
+Private Sub setProperties(argMode As Integer, argPaths As Collection)
+    
+    $mode = argMode
+    $pathsCollection = argPaths.Copy()
+    
+End
+
 Public Sub MoveTo(argPaths As String[])
     
     Dim yukiPath As String
+    Dim yukiTargetPath As String
+    Dim yukiCollection As New Collection
     
     Dialog.Title = ("Move To ...")
     
     If Not Dialog.SelectDirectory() Then
         For Each yukiPath In argPaths
-            Try Move yukiPath To MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+            yukiTargetPath = MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+            Try Move yukiPath To yukiTargetPath
+            yukiCollection.Add(yukiTargetPath, yukiPath)
         Next
     Endif
     
+Finally
+        
 End
 
 Public Sub CopyTo(argPaths As String[])
     
     Dim yukiPath As String
+    Dim yukiTargetPath As String
+    Dim yukiCollection As New Collection
     
     Dialog.Title = ("Move To ...")
     
     If Not Dialog.SelectDirectory() Then
         For Each yukiPath In argPaths
-            Try Copy yukiPath To MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+            yukiTargetPath = MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+            Try Copy yukiPath To yukiTargetPath
+            yukiCollection.Add(yukiTargetPath, yukiPath)
         Next
     Endif
     
+Finally
+    If Not Error Then setProperties(ModeCopy, yukiCollection)
+
 End
 
 Public Sub Remove(argPaths As String[])
     
     Dim yukiPath As String
+    Dim yukiCollection As New Collection
     
     For Each yukiPath In argPaths
         MikuruFile.TrashFile(yukiPath)
+        yukiCollection.Add("", yukiPath)
     Next
     
+Finally
+    If Not Error Then setProperties(ModeTrash, yukiCollection)
+
+End
+
+Public Sub CopyToClipBoard(argPaths As String[])
+    
+    Dim yukiData As String = NagatoDrag2.GetUriList(argPaths)
+    
+    $clipData = yukiData
+    $clipMode = ClipCopy
+    Clipboard.Copy(yukiData, "text/uri-list")
+    
+End
+
+Public Sub CutToClipBoard(argPaths As String[])
+    
+    Dim yukiData As String = NagatoDrag2.GetUriList(argPaths)
+    
+    $clipData = yukiData
+    $clipMode = ClipCut
+    Clipboard.Copy(yukiData, "text/uri-list")
+    
+End
+
+Public Function Paste() As Boolean
+    
+    Dim yukiData As String
+    
+    Clipboard.Type <> Clipboard.Text Then Return False
+    Clipboard.Format <> "text/uri-list" Then Return False
+    yukiData = Clipboard.Paste()
+    $clipData = yukiData
+
+    Return True
+    
+Catch
+    Return False
+    
+End
+
+Public Function Undo() As Boolean
+    
+    Return False
+    
+End
+
+Private Function Mode_Read() As Integer
+
+    Return $mode
+
+End
+
+Private Function PathsCollection_Read() As Collection
+
+    Return $pathsCollection
+
 End

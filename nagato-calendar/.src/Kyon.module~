@@ -2,11 +2,16 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
+    NagatoArgs.Parsing()
     
     'NagatoGitHubApi.Set("takedanemuru", "NagatoBox")
     'NagatoGitHubApi.Set("fooooooooooooooooo", "baaaaaaaaaaaaaaaaaaaaaaar")
-    NagatoGitHubRepositories.Refresh()
-    NagatoDBus.Register()
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.calendar") Then
+        NagatoGitHubRepositories.Refresh()
+        NagatoDBus.Register()
+    End If
+    
+    If Not NagatoArgs.BackgroundMode Then HaruhiMain.Show()
     
 End
