@@ -4,6 +4,7 @@ Inherits NagatoMenuPipe
 
 Public _$rootMenu As Menu
 Public _$path As String
+Public _$window As Window
 
 Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton, argUniqueName As String)
     
@@ -30,7 +31,7 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Pi
         .Tag = argTag
         If argIcon Then .Picture = argIcon
         If argShortcut Then .Shortcut = argShortcut
-        .Window = HaruhiMain.Window
+        .Window = Me._$window
     End With
     
 End
@@ -46,7 +47,7 @@ Private Sub refreshChildMenus()
     With NagatoMenuPipe
         Me._AddMenu(("New tab"), .ViewNewTab,, "Ctrl+T")
         Me._AddMenu(("Show hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
-        Me._AddMenu(("New &folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"))
+        Me._AddMenu(("New &folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
             Me._AddMenu("", 0) ' Spacer
         Me._AddMenu(("&About"), .AppAbout, MikuruIcon.Get("star"))
         Me._AddMenu(("&Quit"), .AppQuit, MikuruIcon.Get("button-power"))
@@ -56,6 +57,7 @@ End
 
 Public Sub _new(argForm As Form, argButton As MenuButton, argUniqueName As String, Optional argPath As String)
     
+    Me._$window = argForm.Window
     If argPath Then Me._$path = argPath
     initializeRootMenu(argForm, argButton, argUniqueName)
     initializeDummyMenu()

@@ -31,7 +31,7 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Pi
         .Tag = argTag
         If argIcon Then .Picture = argIcon
         If argShortcut Then .Shortcut = argShortcut
-        .Window = Me._$window
+       ' .Window = Me._$window
     End With
     
 End

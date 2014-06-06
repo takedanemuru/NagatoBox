@@ -4,6 +4,14 @@ Inherits NagatoGtkBookmarksHandler
 
 Public Sub Asakura_Activate()
     
-    HaruhiMain.SetNewDirectory($listView.Key)
+    Debug Me._$listView.Key
+    
+    Select Case Me._$listView.Key
+        Case "NagatoTrashBinKey"
+            Debug "I came here."
+            HaruhiMain.SetNewTrashBin()
+        Default
+            HaruhiMain.SetNewDirectory(Me._$listView.Key)
+    End Select
     
 End

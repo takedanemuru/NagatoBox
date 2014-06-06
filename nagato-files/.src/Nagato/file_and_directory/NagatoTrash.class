@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Property Read PathFiles As String
+
+Private Function PathFiles_Read() As String
+
+    Return User.Home &/ ".local/share/Trash/files"
+
+End

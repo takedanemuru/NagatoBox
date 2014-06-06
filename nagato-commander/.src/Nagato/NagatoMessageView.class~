@@ -1,0 +1,17 @@
+' Gambas class file
+
+Private $textLabel As TextLabel
+
+Public Sub Set(argMessage As String)
+    
+    If Not NagatoSettings.HasHistory Then Return
+    
+    $textLabel.Text = "YUKI.N > " & argMessage
+    
+End
+
+Public Sub _new(argTextLabel As TextLabel)
+    
+    $textLabel = argTextLabel
+    
+End

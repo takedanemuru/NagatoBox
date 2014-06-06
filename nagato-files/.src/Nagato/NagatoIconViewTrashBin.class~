@@ -1,0 +1,70 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $selection As New NagatoSelection
+Private $iconView As IconView
+
+Private Sub initializeIconView(argTabStrip As TabStrip)
+    
+    $iconView = New IconView(argTabStrip) As "TrashBinIconView"
+    
+    With $iconView
+        .Expand = True
+        .ScrollBar = Scroll.Horizontal
+        .Orientation = Arrange.Horizontal
+        .Picture = Picture.Load("pictures/yukichan_31.jpg")
+    End With
+    
+End
+
+Private Sub setIcons(argType As Integer)
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    For Each yukiPath In Dir(NagatoTrash.PathFiles, "*", argType).Sort(gb.IgnoreCase)
+        yukiFullPath = NagatoTrash.PathFiles &/ yukiPath
+        $iconView.Add(yukiFullPath, yukiPath, MikuruTiles.Get(yukiFullPath, $selection.Exist(yukiFullPath)))
+    Next
+    
+End
+
+Private Sub ensureVisible(argPath As String)
+    
+    If Not $iconView.Exist(argPath) Then Return
+    
+    $iconView[argPath].EnsureVisible()
+    
+End
+
+Public Sub Refresh(Optional argLastSelected As String)
+    
+    $iconView.Clear()
+    
+    setIcons(gb.Directory)
+    setIcons(gb.File)
+    NagatoDBThumbnailer.CleanUp(NagatoTrash.PathFiles)
+    
+    If argLastSelected Then ensureVisible(argLastSelected)
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    initializeIconView(argTabStrip)
+    Me.Refresh()
+    
+End
+
+Public Sub TrashBinIconView_Click()
+    
+    Dim yukiLastKey As String = Last.Key
+    
+    Debug yukiLastKey
+    
+    $selection.Toggle(yukiLastKey)
+    
+    $iconView[yukiLastKey].Picture = MikuruTiles.Get(yukiLastKey, $selection.Exist(yukiLastKey))
+    
+End

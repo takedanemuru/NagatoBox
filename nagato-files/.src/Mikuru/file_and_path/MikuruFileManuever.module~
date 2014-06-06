@@ -4,7 +4,7 @@ Property Read PathsCollection As Collection 'key as source, value as target
 Property Read Mode As Integer
 
 Private Enum ModeNone, ModeCopy, ModeCut, ModeTrash
-Private Enum ClipNone, ClipCopy, ClipPaste
+Private Enum ClipNone, ClipCopy, ClipCut, ClipPaste
 
 Private $pathsCollection As New Collection
 Private $mode As Integer = ModeNone
@@ -87,18 +87,36 @@ End
 
 Public Sub CopyToClipBoard(argPaths As String[])
     
+    Dim yukiData As String = NagatoDrag2.GetUriList(argPaths)
     
+    $clipData = yukiData
+    $clipMode = ClipCopy
+    Clipboard.Copy(yukiData, "text/uri-list")
     
 End
 
 Public Sub CutToClipBoard(argPaths As String[])
     
+    Dim yukiData As String = NagatoDrag2.GetUriList(argPaths)
     
+    $clipData = yukiData
+    $clipMode = ClipCut
+    Clipboard.Copy(yukiData, "text/uri-list")
     
 End
 
 Public Function Paste() As Boolean
     
+    Dim yukiData As String
+    
+    Clipboard.Type <> Clipboard.Text Then Return False
+    Clipboard.Format <> "text/uri-list" Then Return False
+    yukiData = Clipboard.Paste()
+    $clipData = yukiData
+
+    Return True
+    
+Catch
     Return False
     
 End

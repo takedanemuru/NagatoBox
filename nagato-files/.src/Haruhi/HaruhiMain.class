@@ -17,6 +17,12 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
+Public Sub SetNewTrashBin()
+    
+    $mainPane.SetNewTrashBin()
+    
+End
+
 Public Sub SetSearch(argRecursive As Boolean)
     
     $leftPane.SetSearch(argRecursive)

@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $panelContainer As NagatoPanelContainer
+
+Public Sub _new(argContainer As Container)
+    
+    $panelContainer = New NagatoPanelContainer(argContainer)
+    
+End

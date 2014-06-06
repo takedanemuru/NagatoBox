@@ -1,0 +1,39 @@
+' Gambas class file
+
+Property Read IsWaiting As Boolean
+
+Private $textArea As TextEdit
+Private $output As String
+
+Public Sub PushOutput(argOutput As String)
+    
+    $output &= argOutput
+    
+End
+
+Public Sub Update(argStream As String)
+    
+    $output &= argStream
+    
+    $textArea.RichText = NagatoText.GetRichText($output)
+    $textArea.ScrollY = 1000000 ' as positive infinite
+    
+End
+
+Public Sub Clear()
+    
+    $textArea.Clear()
+    
+End
+
+Public Sub _new(argTextArea As TextEdit)
+    
+    $textArea = argTextArea
+    
+End
+
+Private Function IsWaiting_Read() As Boolean
+
+    Return $textArea.Text Ends "$ "
+
+End

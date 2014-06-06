@@ -1,0 +1,46 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Private Enum MenuNone, MenuHistory, MenuAbout, MenuQuit
+
+Private Sub initializeRootMenu(argMenuButton As MenuButton)
+    
+    $rootMenu = New Menu(HaruhiMain)
+    $rootMenu.Name = "StarMenu"
+    argMenuButton.Menu = "StarMenu"
+    
+End
+
+Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton)
+    
+    initializeRootMenu(argMenuButton)
+    addMenu(("History"), MenuHistory)
+        addMenu("", MenuNone)
+    addMenu(("About"), MenuAbout, "star")
+    addMenu(("Quit"), MenuQuit, "button-cross")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case MenuAbout
+            HaruhiAbout.ShowDialog()
+        Case MenuQuit
+            HaruhiMain.QuitApplication()
+    End Select
+    
+End

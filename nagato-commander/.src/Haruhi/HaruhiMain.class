@@ -1,0 +1,89 @@
+' Gambas class file
+
+Private $messageView As NagatoMessageView
+Private $consoleView As NagatoConsoleView
+Private $starButton As NagatoStarButton
+Private $process As Process
+
+Private Sub updateConsole(argStream As String)
+    
+    $consoleView.Update(argStream)
+    CommandTextArea.Password = Not $consoleView.IsWaiting
+    If $consoleView.IsWaiting Then CommandTextArea.Text = ""
+    
+End
+
+Private Sub initializeProcess()
+    
+    $process = Exec ["bash", "--noediting"] For Input Output As "Process"
+    
+End
+
+Public Sub QuitApplication()
+    
+    If $consoleView.IsWaiting Then
+        Me.Close()
+    Else
+        Message.Warning("Process is not finished.", ("Cancel"))
+    Endif
+    
+End
+
+Public Sub Form_Open()
+    
+    initializeProcess()
+    $messageView = New NagatoMessageView(MessageTextLabel)
+    $starButton = New NagatoStarButton(StarButton)
+    $consoleView = New NagatoConsoleView(ConsoleTextArea) As "ConsoleView"
+    CommandTextArea.SetFocus()
+    NagatoSettings.LoadFormSettings(Me)
+    Application.MainWindow = Me
+    
+End
+
+Public Sub Form_Close()
+    
+    Try $process.Kill()
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub Process_Read()
+
+    Dim yukiStream As String
+
+    While Not Eof($process)
+        Read #$process, yukiStream, -256
+        updateConsole(yukiStream)
+        $messageView.SetGoingOnMessage()
+    Wend
+
+    CommandTextArea.Clear()
+
+    If $consoleView.IsWaiting Then $messageView.SetDoneMessage()
+
+End
+
+Public Sub Process_Error(argInput As String)
+    
+    $consoleView.PushOutput(argInput)
+    updateConsole()
+  
+End
+
+Public Sub CommandTextArea_Activate()
+  
+    Dim yukiCommand As String = CommandTextArea.Text & gb.NewLine
+    
+    If $consoleView.IsWaiting Then
+        NagatoSettings.PushHistory(CommandTextArea.Text)
+        $consoleView.PushOutput(yukiCommand)
+    Else
+        $consoleView.PushOutput(gb.NewLine)
+    End If
+    
+    $consoleView.Clear()
+    
+    Print #$process, yukiCommand;
+  
+End

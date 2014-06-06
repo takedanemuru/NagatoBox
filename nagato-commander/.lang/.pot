@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .project:1 Kyon.form:16
+#: .project:1 HaruhiMain.form:18
 msgid "nagato-commander"
 msgstr ""
 
@@ -18,14 +18,38 @@ msgstr ""
 msgid "a terminal emulator"
 msgstr ""
 
-#: Kyon.form:40
+#: HaruhiAbout.form:11
+msgid "About nagato-commander"
+msgstr ""
+
+#: HaruhiAbout.form:31
+msgid "TextLabel1"
+msgstr ""
+
+#: HaruhiAbout.form:37
+msgid "License"
+msgstr ""
+
+#: HaruhiMain.form:42
 msgid "YUKI.N > ......Command ?"
 msgstr ""
 
-#: Kyon.class:55
+#: HaruhiMain.class:27
+msgid "Cancel"
+msgstr ""
+
+#: NagatoMessageView.class:17
+msgid "command <h2>&1</h2> has been done."
+msgstr ""
+
+#: NagatoMessageView.class:25
 msgid "command <h2>&1</h2> is now going on."
 msgstr ""
 
-#: Kyon.class:59
-msgid "command <h2>&1</h2> has been done."
+#: NagatoStarMenu.class:32
+msgid "About"
+msgstr ""
+
+#: NagatoStarMenu.class:33
+msgid "Quit"
 msgstr ""

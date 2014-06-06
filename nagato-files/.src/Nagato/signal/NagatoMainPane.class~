@@ -2,7 +2,7 @@
 
 Inherits NagatoSignal
 
-Private $filers As New NagatoFiler[]
+Private $filersHandler As New NagatoFilersHandler As "FilersHandler"
 Private $tabStripHandler As NagatoTabStripHandler
 Private $observer As Observer
 
@@ -11,12 +11,8 @@ Event AppQuit
 
 Private Sub addTab(Optional argPath As String = User.Home)
     
-    Dim yukiFiler As NagatoFiler
-    
     $tabStripHandler.AddNewTab()
-    
-    yukiFiler = New NagatoFiler($tabStripHandler.TabStrip, argPath) As "Filer"
-    $filers.Add(yukiFiler)
+    $filersHandler.AddFiler($tabStripHandler.TabStrip, argPath)
     
 End
 
@@ -28,22 +24,34 @@ End
 
 Public Sub SetNewDirectory(argDirectory As String)
     
-    $filers[$tabStripHandler.Index].SetNewDirectory(argDirectory)
+    $filersHandler.SetNewDirectory($tabStripHandler.Index, argDirectory)
+    
+End
+
+Public Sub SetNewTrashBin()
+    
+    $tabStripHandler.AddNewTab()
+    $filersHandler.AddTrashBin($tabStripHandler.TabStrip)
+    $tabStripHandler.SetTabTextAndPicture(("TrashBin"), MikuruIcon.
     
 End
 
 Public Sub SetInitialPath(argPath As String)
     
-    Dim yukiFiler As New NagatoFiler($tabStripHandler.TabStrip, argPath) As "Filer"
-    
-    $filers.Add(yukiFiler)
+    $filersHandler.SetInitialPath($tabStripHandler.TabStrip, argPath)
     $tabStripHandler.InitializeTabStrip()
     
 End
 
 Public Sub SearchQuery(argQuery As String, argRecursive As Boolean)
     
-    $filers[$tabStripHandler.Index].SetSeachResult(argQuery, argRecursive)
+    $filersHandler.SearchQuery($tabStripHandler.Index, argQuery, argRecursive)
+    
+End
+
+Public Sub Refresh()
+    
+    $filersHandler.Refresh($tabStripHandler.Index)
     
 End
 
@@ -58,24 +66,24 @@ Public Sub Asakura_Close(argIndex As Integer)
 
     If $tabStripHandler.Count > 1 Then 
         $tabStripHandler.Delete(argIndex)
-        $filers.Remove(argIndex)
+        $filersHandler.Remove(argIndex)
     End If
 
 End
 
-Public Sub Filer_ShowProperty(argPath As String)
+Public Sub FilersHandler_ShowProperty(argPath As String)
     
     Raise ShowProperty(argPath)
     
 End
 
-Public Sub Filer_NewTab(argPath As String)
+Public Sub FilersHandler_AddTab(argPath As String)
     
     addTab(argPath)
     
 End
 
-Public Sub Filer_AppQuit()
+Public Sub FilersHandler_AppQuit()
     
     Raise AppQuit
     

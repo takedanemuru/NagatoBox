@@ -1,0 +1,48 @@
+' Gambas module file
+
+Private Enum ClipNone, ClipCopy, ClipCut, ClipPaste
+
+Private $clipData As String = ""
+Private $clipMode As Integer = ClipNone
+
+Public Sub CopyToClipBoard(argPaths As String[])
+    
+    Dim yukiData As String = NagatoDrag2.GetUriList(argPaths)
+    
+    $clipData = yukiData
+    $clipMode = ClipCopy
+    Clipboard.Copy(yukiData, "text/uri-list")
+    
+End
+
+Public Sub CutToClipBoard(argPaths As String[])
+    
+    Dim yukiData As String = NagatoDrag2.GetUriList(argPaths)
+    
+    $clipData = yukiData
+    $clipMode = ClipCut
+    Clipboard.Copy(yukiData, "text/uri-list")
+    
+End
+
+Public Function Paste() As Boolean
+    
+    Dim yukiData As String
+    
+    If Clipboard.Type <> Clipboard.Text Then Return False
+    If Clipboard.Format <> "text/uri-list" Then Return False
+    yukiData = Clipboard.Paste()
+    $clipData = yukiData
+
+    Return True
+    
+Catch
+    Return False
+    
+End
+
+Public Function Undo() As Boolean
+    
+    Return False
+    
+End
