@@ -125,6 +125,8 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
              Case .TagRemove
                  NagatoDBSymbol.RemovePaths($iconView.Selection)
                  $iconView.Refresh($log.Current)
+             Case .PathCopyToClipboard
+                 Clipboard.Copy(argArgument)
         End Select
     End With
     

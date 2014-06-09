@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoTrashPanelWidget
+
+Private $button As ToggleButton
+Private $observer As Observer
+
+Public Sub _Initialize()
+    
+    $button = New ToggleButton(Me._$container) As "Widget"
+    
+    With $button
+        .Picture = MikuruIcon.Get("documents")
+        .Value = NagatoSettings.MultipleSelection
+        .AutoResize = True
+        .Expand = False
+        .Border = False
+    End With
+    
+    $observer = New Observer(NagatoSettings) As "Asakura"
+    
+End
+
+Public Sub Asakura_MultipleSelectionChanged()
+    
+    Object.Lock($button)
+        $button.Value = NagatoSettings.MultipleSelection
+    Object.Unlock($button)
+    
+End
+
+Public Sub Widget_Click()
+    
+    NagatoSettings.MultipleSelection = $button.Value
+    
+End
+

@@ -1,3 +1,27 @@
 ' Gambas class file
 
-INHERITS NagatoMenuPipe
+Inherits NagatoSignal
+
+Private $selection As NagatoSelection
+Private $panelContainer As NagatoPanelContainer
+Private $selectionButton As NagatoWidgetSelectionButton
+Private $spacer As NagatoWidgetSpacer
+Private $restoreButton As NagatoWidgetMenuButtonRestore
+Private $deleteButton As NagatoWidgetMenuButtonDelete
+
+Private Sub addWidgets()
+    
+    $selectionButton = New NagatoWidgetSelectionButton($panelContainer.HBox)
+    $spacer = New NagatoWidgetSpacer($panelContainer.HBox) 
+    $restoreButton = New NagatoWidgetMenuButtonRestore($panelContainer.HBox) As "TFEI"
+    $deleteButton = New NagatoWidgetMenuButtonDelete($panelContainer.HBox) As "TFEI"
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $selection = New NagatoSelection
+    $panelContainer = New NagatoPanelContainer(argContainer)
+    addWidgets()
+    
+End

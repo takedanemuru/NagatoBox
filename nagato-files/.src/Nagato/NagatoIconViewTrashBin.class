@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoSignal
 
 Private $selection As New NagatoSelection
 Private $iconView As IconView
@@ -50,6 +50,26 @@ Public Sub Refresh(Optional argLastSelected As String)
     
 End
 
+Public Sub Delete()
+    
+    If $selection.Count = 0 Then Return
+    
+    Debug $selection.Paths.Count
+    
+    NagatoTrash.Delete($selection.Paths)
+    
+End
+
+Public Sub Restore()
+    
+    If $selection.Count = 0 Then Return
+    
+    Debug $selection.Paths.Count
+    
+    NagatoTrash.Restore($selection.Paths)
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     initializeIconView(argTabStrip)
@@ -63,5 +83,7 @@ Public Sub TrashBinIconView_MouseDown()
     
     $selection.Toggle(yukiLastKey)
     $iconView[yukiLastKey].Picture = MikuruTiles.Get(yukiLastKey, $selection.Exist(yukiLastKey))
+    
+    Debug $selection.Count
     
 End

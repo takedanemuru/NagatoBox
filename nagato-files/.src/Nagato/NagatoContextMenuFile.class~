@@ -96,6 +96,8 @@ End
 
 Public Sub UnarchiveMenu_Click()
     
-    Shell Subst$("patool extract &1", Me._$path)
+    'Shell Subst$("patool extract &1", Me._$path)
+    
+    Shell Subst$("nagato-extractor &1", Me._$path)
     
 End

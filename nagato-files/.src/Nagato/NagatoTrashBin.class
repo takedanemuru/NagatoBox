@@ -1,13 +1,25 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoSignal
 
 Private $menuPanel As NagatoMenuPanelTrashBin
 Private $iconView As NagatoIconViewTrashBin
+Private $directoryObserver As NagatoDirectoryObserver
+
+Private Sub initializeDirectoryObserver()
+    
+    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
+    
+    With $directoryObserver
+        .Directory = NagatoTrash.PathFiles
+        .IntervalSecond = 1
+    End With
+    
+End
 
 Public Sub SetNewDirectory(argDirectory As String)
     
-    
+    'ignore
     
 End
 
@@ -25,7 +37,38 @@ End
 
 Public Sub _new(argTabStrip As TabStrip)
     
-    $menuPanel = New NagatoMenuPanelTrashBin(argTabStrip)
-    $iconView = New NagatoIconViewTrashBin(argTabStrip)
+    $menuPanel = New NagatoMenuPanelTrashBin(argTabStrip) As "MenuPanel"
+    $iconView = New NagatoIconViewTrashBin(argTabStrip) As "IconViewTrashBin"
+    
+    initializeDirectoryObserver()
+    
+End
+
+Public Sub MenuPanel_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Debug argSignal
+    
+    Select Case argSignal
+        Case MikuruSignal.TrashDelete
+            $iconView.Delete()
+        Case MikuruSignal.TrashRestore
+            $iconView.Restore()
+    End Select
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argPath As String)
+    
+    Debug argPath
+    
+    $iconView.Refresh()
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argPath As String)
+    
+    Debug argPath
+    
+    $iconView.Refresh()
     
 End

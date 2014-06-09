@@ -79,7 +79,7 @@ Public Sub IconView_MenuEvent(argEvent As Integer)
         Case NagatoMenuPipe.ViewShowHidden
             NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
             refresh($menuBar.Path)
-        Case .DirCreate
+        Case NagatoMenuPipe.DirCreate
             HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
             HaruhiNewDirectory.ShowDialog()
         Case NagatoMenuPipe.MoveBack
@@ -125,6 +125,8 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
              Case .TagRemove
                  NagatoDBSymbol.RemovePaths($iconView.Selection)
                  $iconView.Refresh($log.Current)
+             Case .PathCopyToClipboard
+                 Debug argArgument
         End Select
     End With
     
