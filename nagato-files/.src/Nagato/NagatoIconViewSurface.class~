@@ -36,12 +36,12 @@ Private Sub refreshIconView(argDirectory As String, argSelection As String[], ar
     
 End
 
-Private Sub setSearchResult(argPaths As String[], argDirectory As Boolean)
+Private Sub setIcons(argPaths As String[], argSelection As String[], argOnlyDirectory As Boolean)
     
     Dim yukiPath As String
     
-    For Each yukiPath In argPaths
-        If IsDir(yukiPath) = argDirectory Then 
+    For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
+        If IsDir(yukiPath) = argOnlyDirectory Then 
             Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
         End If
     Next
@@ -62,12 +62,12 @@ End
 
 Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[])
     
-    Dim yukiPath As String
+    'Dim yukiPath As String
     
     Me._$iconView.Clear()
     
-    setSearchResult(argPaths.Sort(gb.IgnoreCase + gb.Natural), True)
-    setSearchResult(argPaths.Sort(gb.IgnoreCase + gb.Natural), False)
+    setIcons(argPaths, argSelection, True)
+    setIcons(argPaths, argSelection, False)
     
     ' For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
     '     If IsDir(yukiPath) Then 

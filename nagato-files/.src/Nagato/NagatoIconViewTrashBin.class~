@@ -60,6 +60,16 @@ Public Sub Delete()
     
 End
 
+Public Sub Restore()
+    
+    If $selection.Count = 0 Then Return
+    
+    Debug $selection.Paths.Count
+    
+    NagatoTrash.Restore($selection.Paths)
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     initializeIconView(argTabStrip)
