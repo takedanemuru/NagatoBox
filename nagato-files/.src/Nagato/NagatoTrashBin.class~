@@ -19,7 +19,7 @@ End
 
 Public Sub SetNewDirectory(argDirectory As String)
     
-    'ignore
+    HaruhiMain.AddNewDirectory(argDirectory)
     
 End
 
@@ -53,11 +53,19 @@ Public Sub MenuPanel_Signal(argSignal As Integer, argValues As Variant[])
             $iconView.Delete()
         Case MikuruSignal.TrashRestore
             $iconView.Restore()
+        Case MikuruSignal.TrashEmpty ' As Unselect All
+            $iconView.UnselectAll()
     End Select
     
 End
 
-Public Sub DirectoryObserver_Delete(argPath As String)
+Public Sub IconViewTrashBin_Selected(argCount As Integer)
+    
+    $menuPanel.SetLabel(argCount)
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argPath As String)
     
     Debug argPath
     
@@ -65,7 +73,7 @@ Public Sub DirectoryObserver_Delete(argPath As String)
     
 End
 
-Public Sub DirectoryObserver_MOdefied(argPath As String)
+Public Sub DirectoryObserver_Modefied(argPath As String)
     
     Debug argPath
     

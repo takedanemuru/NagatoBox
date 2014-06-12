@@ -40,6 +40,15 @@ Public Sub SetProperty(argPath As String)
 
 End
 
+Public Sub SetTrashProperty(argTrashName As String)
+    
+    If Exist(argTrashName) Then
+        $currentPath = argTrashName
+        $drawingArea.Refresh()
+    Endif
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
@@ -51,30 +60,6 @@ Public Sub _new(argContainer As Container)
     
 End
 
-' Private Function drawPath(argY As Integer) As Integer
-'     
-'     Dim yukiRect As New Rect(16, argY, IconSize + 32, $drawingArea.Font.RichTextHeight(File.Name($currentPath)))
-'     
-'     Paint.Brush = Paint.Color(Color.White)
-'     Paint.RichText(File.Name($currentPath), yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
-'     Paint.Fill()
-'     
-'     Return argY + yukiRect.H + 16
-'     
-' End
-' 
-' Private Function drawRichText(argY As Integer, argText As String) As Integer
-'     
-'     Dim yukiRect As New Rect(16, argY, IconSize + 32, $drawingArea.Font.RichTextHeight(argText))
-'     
-'     Paint.Brush = Paint.Color(Color.White)
-'     Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
-'     Paint.Fill()
-'     
-'     Return argY + yukiRect.H + 16
-'     
-' End
-
 Public Sub DrawingArea_Draw()
     
     Dim yukiY As Integer
@@ -82,8 +67,6 @@ Public Sub DrawingArea_Draw()
     Paint.Begin($drawingArea)
         yukiY = $iconPainter.Paint($currentPath)
         yukiY = $pathPainter.Paint(yukiY, $currentPath)
-        ' yukiY = drawPath(yukiY)
-        ' yukiY = drawRichText(yukiY, DesktopMime.FromFile($currentPath).Type)
         $propertyPainter.Paint(yukiY, $currentPath)
     Paint.End()
     

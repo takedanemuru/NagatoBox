@@ -6,7 +6,7 @@ Private $list As ComboBox
 
 Public Sub _Initialize()
     
-    $list = New ComboBox($container) As "WhatList"
+    $list = New ComboBox(Me._$container) As "WhatList"
     
     With $list
         .ReadOnly = True

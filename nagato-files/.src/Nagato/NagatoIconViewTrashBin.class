@@ -5,6 +5,8 @@ Inherits NagatoSignal
 Private $selection As New NagatoSelection
 Private $iconView As IconView
 
+Event Selected(argCount As Integer)
+
 Private Sub initializeIconView(argTabStrip As TabStrip)
     
     $iconView = New IconView(argTabStrip) As "TrashBinIconView"
@@ -70,6 +72,13 @@ Public Sub Restore()
     
 End
 
+Public Sub UnselectAll()
+    
+    $selection.ClearAll()
+    Me.Refresh()
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     initializeIconView(argTabStrip)
@@ -81,9 +90,13 @@ Public Sub TrashBinIconView_MouseDown()
     
     Dim yukiLastKey As String = Last.Key
     
-    $selection.Toggle(yukiLastKey)
-    $iconView[yukiLastKey].Picture = MikuruTiles.Get(yukiLastKey, $selection.Exist(yukiLastKey))
-    
-    Debug $selection.Count
+    If $iconView.FindAt(Mouse.X, Mouse.Y) Then ' NOTE: Returns True when NOT found.
+        $iconView.Current.Selected = False
+    Else
+        $selection.Toggle(yukiLastKey)
+        $iconView[yukiLastKey].Picture = MikuruTiles.Get(yukiLastKey, $selection.Exist(yukiLastKey))
+        HaruhiMain.SetTrashProperty(yukiLastKey)
+        Raise Selected($selection.Count)
+    End If
     
 End

@@ -1,0 +1,19 @@
+' Gambas class file
+
+Create Static
+
+Public Enum Directory, FileToRead, FileToIgnore
+
+Public Sub GetType(argPath As String) As Integer
+    
+    If IsDir(argPath) Then
+        Return Me.Directory
+    Else If argPath Like "*~" Then ' to ignore back-up files
+        Return Me.FileToIgnore
+    Else If argPath Like "*.class" Or If argPath Like "*.module" Then
+        Return Me.FileToRead
+    Else
+        Return Me.FileToIgnore
+    Endif
+    
+End

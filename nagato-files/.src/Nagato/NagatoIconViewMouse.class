@@ -76,7 +76,11 @@ Public Sub Asakura_MouseDown()
     
     If Me._$iconView.Key = "" Then Return
     
-    Raise MouseDown(Me._$iconView.Key)
+    If Me._$iconView.FindAt(Mouse.X, Mouse.Y) Then
+        Me._$iconView.Current.Selected = False
+    Else
+        Raise MouseDown(Me._$iconView.Key)
+    End If
     
 End
 

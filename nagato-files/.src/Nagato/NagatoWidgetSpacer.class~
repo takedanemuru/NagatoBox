@@ -1,3 +1,15 @@
 ' Gambas class file
 
-INHERITS NagatoTrashPanelWidget
+Inherits NagatoTrashPanelWidget
+
+Private $panel As Panel
+
+Public Sub _Initialize()
+    
+    $panel = New Panel(Me._$container)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End

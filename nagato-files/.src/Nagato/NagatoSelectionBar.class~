@@ -78,7 +78,7 @@ Public Sub ActionButton_Click()
         Case ButtonMoveTo
             MikuruFileManuever.MoveTo($selection.Paths)
         Case ButtonDelete
-            
+            MikuruFile.TrashFiles($selection.Paths)
     End Select
     
 End

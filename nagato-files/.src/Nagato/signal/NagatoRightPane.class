@@ -8,6 +8,7 @@ Private $currentPath As String
 Private $iconPainter As NagatoPainterIcon
 Private $pathPainter As NagatoPainterPath
 Private $propertyPainter As NagatoPainterProperty
+Private $isTrash As Boolean = False
 
 Private Sub initializeContainer(argContainer As Container)
     
@@ -34,10 +35,21 @@ End
 Public Sub SetProperty(argPath As String)
     
     If Exist(argPath) Then
+        $isTrash = False
         $currentPath = argPath
         $drawingArea.Refresh()
     End If
 
+End
+
+Public Sub SetTrashProperty(argTrashName As String)
+    
+    If Exist(argTrashName) Then
+        $isTrash = True
+        $currentPath = argTrashName
+        $drawingArea.Refresh()
+    Endif
+    
 End
 
 Public Sub _new(argContainer As Container)
@@ -58,7 +70,7 @@ Public Sub DrawingArea_Draw()
     Paint.Begin($drawingArea)
         yukiY = $iconPainter.Paint($currentPath)
         yukiY = $pathPainter.Paint(yukiY, $currentPath)
-        $propertyPainter.Paint(yukiY, $currentPath)
+        $propertyPainter.Paint(yukiY, $currentPath, $isTrash)
     Paint.End()
     
 Catch

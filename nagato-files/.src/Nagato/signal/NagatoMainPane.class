@@ -28,6 +28,12 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
+Public Sub AddNewDirectory(argDirectory As String)
+    
+    addTab(argDirectory)
+    
+End
+
 Public Sub SetNewTrashBin()
     
     $tabStripHandler.AddNewTab()

@@ -1,0 +1,16 @@
+' Gambas class file
+
+Public Sub _call(argDirectory As String, argFileName As String) As Collection
+    
+    Dim yukiJointPath As String = argDirectory &/ argFileName
+    Dim yukiRowData As New Collection
+    
+    yukiRowData[MikuruColumn.KeyType] = NagatoCounter.GetType(argDirectory, argFileName)
+    yukiRowData[MikuruColumn.KeyName] = File.Name(yukiJointPath)
+    yukiRowData[MikuruColumn.KeyLines] = MikuruReader.ReadLine(yukiJointPath)
+    yukiRowData[MikuruColumn.KeyLinesWithoutVoid] = MikuruReader.ReadLineWithoutVoid(yukiJointPath)
+    
+    Return yukiRowData
+    
+End
+

@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoTrashPanelWidget
+
+Private $label As TextLabel
+
+Public Sub _Initialize()
+    
+    $label = New TextLabel(Me._$container) 
+    
+    With $label
+        .Expand = True
+        .Alignment = Align.Center
+    End With
+    
+End
+
+Public Sub _call(argCount As Integer)
+    
+    If argCount = 1 Then
+        $label.Text = "<b>1</b> file is selected"
+    Else
+        $label.Text = Subst$("<b>&1</b> files are selected.")
+    End If
+    
+End

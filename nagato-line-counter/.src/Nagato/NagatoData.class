@@ -1,0 +1,80 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read GridData As Variant[]
+
+Private $pathCollection As New Collection
+Private $targetPath As String
+Private $dataGrid As New NagatoDataGrid
+Private $dataRow As New NagatoDataRow
+
+Private Sub setRowData(argDirectory As String, argFileName As String)
+    
+    Dim yukiJointPath As String = argDirectory &/ argFileName
+    
+    $pathCollection.Add(yukiJointPath, File.Name(yukiJointPath))
+    $dataGrid.AddToGridData($dataRow(argDirectory, argFileName))
+    
+End
+
+Private Sub readFile(argDirectory As String, argFileName As String)
+    
+    Select Case NagatoFileType.GetType(argDirectory &/ argFileName)
+        Case NagatoFileType.Directory
+            countLine(argDirectory &/ argFileName)
+        Case NagatoFileType.FileToRead
+            setRowData(argDirectory, argFileName)
+        Default
+            ' ignore
+    End Select
+    
+End
+
+Private Sub countLine(argDirectory As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory)
+        readFile(argDirectory, yukiPath)
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    $pathCollection.Clear()
+    $dataGrid.Clear()
+    countLine($targetPath)
+    
+End
+
+Public Sub Clear(argPath As String)
+    
+     $targetPath = argPath
+     $dataGrid.Reset()
+    
+End
+
+Public Sub SetTargetIndex(argIndex As Integer)
+    
+    $dataGrid.SetTargetIndex(argIndex)
+    
+End
+
+Public Function GetPath(argKey As String) As String
+    
+    Return $pathCollection[argKey]
+    
+End
+
+Private Function GridData_Read() As Variant[]
+
+    Return $dataGrid.Data
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $dataGrid.Count
+
+End

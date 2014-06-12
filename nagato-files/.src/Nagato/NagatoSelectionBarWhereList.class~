@@ -14,7 +14,7 @@ Public Sub _Initialize()
         .ReadOnly = True
         .List = ["ClipBoard", "Home", "Dialog"]
         .W = 160
-        For Each yukiPath In NagatoXdgUserDirs.AllXdgUserDirs
+        For Each yukiPath In NagatoXdg.UserDirs.All
             .Add(File.Name(yukiPath))
         Next
     End With

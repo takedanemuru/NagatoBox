@@ -1,0 +1,37 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,92.8571,68)
+  Icon = Picture["picture/nagato_with_book.jpg"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(1,2,47,65)
+    Expand = True
+    { HBox1 HBox
+      MoveScaled(1,1,44,21.4286)
+      { PictureBox1 PictureBox
+        MoveScaled(1,2,18.5714,21.4286)
+        Picture = Picture["picture/nagato_with_book.jpg"]
+        Stretch = True
+      }
+      { TextLabel1 TextLabel
+        MoveScaled(20,3,24,18)
+        Font = Font["+1"]
+        Background = &HFFFFFF&
+        Expand = True
+        Text = ("YUKI.N > Click to select project directory.")
+        Alignment = Align.Left
+      }
+    }
+    { MainGridView GridView
+      MoveScaled(1,24,43,34)
+      Expand = True
+      ScrollBar = Scroll.Vertical
+    }
+    { OpenButton Button
+      MoveScaled(29,60,16,4)
+      Text = ("Open")
+      Picture = Picture["icon:/small/open"]
+    }
+  }
+}

@@ -44,6 +44,19 @@ Private Sub addNextButton()
     
 End
 
+Private Sub addFitButton()
+    
+    Dim yukiButton As New ToggleButton($container) As "FitButton"
+    
+    With yukiButton
+        .Text = ("Fit")
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("button-check")
+        .Value = NagatoSettings.Fit
+    End With
+    
+End
+
 Private Sub addGearButton()
     
     Dim yukiMenu As NagatoButtonMenu
@@ -132,10 +145,11 @@ Private Sub setWidgets()
     With MikuruMenuEvent
         addButton(MikuruIcon.Get("button-add"), .ZoomIn, ("Zoom-in"))
         addButton(MikuruIcon.Get("button-remove"), .ZoomOut, ("Zoom-out"))
-        addButton(MikuruIcon.Get("button-check"), .ZoomFit, ("Fit width"))
+        'addButton(MikuruIcon.Get("button-check"), .ZoomFit, ("Fit width"))
         addButton(MikuruIcon.Get("button-rotate-ccw"), .ZoomNormal, ("Revert to normal zoom"))
     End With
     
+    addFitButton()
     addSpacer()
     addSearchBox()
     addGearButton()
@@ -166,6 +180,13 @@ End
 Public Sub PageSpinBox_Change()
     
     Raise NewPage($pageSpinBox.Value)
+    
+End
+
+Public Sub FitButton_Click()
+    
+    NagatoSettings.Fit = Last.Value
+    Raise MenuEvent(MikuruMenuEvent.ZoomNormal)
     
 End
 

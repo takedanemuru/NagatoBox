@@ -27,4 +27,6 @@ Public Sub Button1_Click()
         HaruhiPdfView.SetDocument(Dialog.Path)
     Endif
 
+    Me.Close()
+
 End

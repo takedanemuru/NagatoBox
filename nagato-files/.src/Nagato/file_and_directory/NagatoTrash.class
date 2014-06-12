@@ -70,6 +70,12 @@ Public Sub Restore(argPaths As String[])
     
 End
 
+Public Function GetPreviousPath(argPath As String) As String
+    
+    Return getPathToRestore(argPath)
+    
+End
+
 Private Function PathFiles_Read() As String
 
     Return User.Home &/ ".local/share/Trash/files"

@@ -1,0 +1,91 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read Data As Variant[]
+
+Private $sort As New NagatoSort
+Private $targetColumn As Integer 
+Private $gridData As New Variant[]
+
+Private Function ensureFirstRow(argRowData As Collection) As Boolean
+    
+    If $gridData.Count = 0 Or If $targetColumn = -1 Then
+       $gridData.Add(argRowData)
+       Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Function getGridData(argCount As Integer) As Variant
+    
+    Return $gridData[argCount][MikuruColumn[$targetColumn]]
+    
+End
+
+Private Function getRowData(argRowData As Collection) As Variant
+    
+    Return argRowData[MikuruColumn[$targetColumn]]
+    
+End
+
+Private Function setRowData(argRowData As Collection) As Boolean
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $gridData.Max
+        If $sort.IsLesser(getGridData(yukiCount), getRowData(argRowData)) Then
+            $gridData.Add(argRowData, yukiCount)
+            Return True
+        Endif
+    Next
+    
+    Return False
+    
+End
+
+Public Sub AddToGridData(argRowData As Collection)
+    
+    If ensureFirstRow(argRowData) Then Return
+    
+    If setRowData(argRowData) Then Return
+    
+    $gridData.Add(argRowData)
+    
+End
+
+Public Sub Clear()
+    
+    $gridData.Clear()
+    
+End
+
+Public Sub Reset()
+    
+    $targetColumn = -1
+    $sort.Ascend = True
+    
+End
+
+Public Sub SetTargetIndex(argIndex As Integer)
+    
+    If argIndex = $targetColumn Then
+        $sort.Ascend = Not $sort.Ascend
+    Else
+        $targetColumn = argIndex
+    Endif
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $gridData.Count
+
+End
+
+Private Function Data_Read() As Variant[]
+
+    Return $gridData
+
+End

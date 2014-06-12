@@ -1,3 +1,18 @@
 ' Gambas class file
 
-INHERITS NagatoSelectionBarWidget
+Inherits NagatoSelectionBarWidget
+
+Private $execButton As MenuButton
+
+Public Sub _Initialize()
+    
+    $execButton = New MenuButton(Me._$container) As "Button"
+    
+    With $execButton
+        .Text = ("Execute")
+        .AutoResize = True
+        .Border = True
+        .Arrow = False
+    End With
+    
+End

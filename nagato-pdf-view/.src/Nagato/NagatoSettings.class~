@@ -2,7 +2,11 @@
 
 Create Static
 
+Property LastDirectory As String
+Property Fit As Boolean
+
 Private $settings As New Settings
+Private $fit As Boolean = False
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -26,4 +30,29 @@ Public Sub SaveFormSettings(argForm As Form)
     
     $settings.Save()
     
+End
+
+Private Function LastDirectory_Read() As String
+
+    Return $settings["directory/last", User.Home]
+
+End
+
+Private Sub LastDirectory_Write(Value As String)
+
+    $settings["directory/last"] = Value
+    $settings.Save()
+
+End
+
+Private Function Fit_Read() As Boolean
+
+    Return $fit
+
+End
+
+Private Sub Fit_Write(Value As Boolean)
+
+    $fit = Value
+
 End

@@ -25,8 +25,14 @@ End
 
 Private Sub showCurrentPage()
     
+    Dim yukiImage As Image
+    
     setWindowTitle()
-    PdfView.Image = $pdfDocument[$currentPage].GetImage()
+    yukiImage = $pdfDocument[$currentPage].Image
+    With yukiImage
+        PdfView.Image = .Stretch(.W * $pdfDocument.Zoom, .H * $pdfDocument.Zoom)
+    End With
+    If NagatoSettings.Fit Then PdfView.ZoomFit()
     $menuBar.SetButtonProperty($currentPage, $pdfDocument.Count)
     
 End
@@ -75,8 +81,7 @@ End
 
 Private Sub zoomFit()
     
-    $pdfDocument.Zoom = 1
-    $pdfDocument.Zoom = (PdfView.ClientWidth / $pdfDocument[$currentPage].Image.Width)
+    NagatoSettings.Fit = Not NagatoSettings.Fit
     showCurrentPage()
 
 End
@@ -104,6 +109,8 @@ Public Sub SetDocument(argPath As String)
     
     $pdfPath = argPath
     $pdfDocument.Open(argPath)
+    Debug $pdfDocument.Info.Layout
+    $pdfDocument.Info.Mode = PdfPageMode.FullScreen
     $currentPage = 1
     showCurrentPage()
     

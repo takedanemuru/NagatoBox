@@ -4,17 +4,23 @@ Inherits NagatoSignal
 
 Private $selection As NagatoSelection
 Private $panelContainer As NagatoPanelContainer
-Private $selectionButton As NagatoWidgetSelectionButton
-Private $spacer As NagatoWidgetSpacer
+Private $emptyButton As NagatoWidgetButtonUnselect
+Private $label As NagatoWidgetLabel
 Private $restoreButton As NagatoWidgetMenuButtonRestore
 Private $deleteButton As NagatoWidgetMenuButtonDelete
 
 Private Sub addWidgets()
     
-    $selectionButton = New NagatoWidgetSelectionButton($panelContainer.HBox)
-    $spacer = New NagatoWidgetSpacer($panelContainer.HBox) 
+    $emptyButton = New NagatoWidgetButtonUnselect($panelContainer.HBox) As "TFEI"
+    $label = New NagatoWidgetLabel($panelContainer.HBox)
     $restoreButton = New NagatoWidgetMenuButtonRestore($panelContainer.HBox) As "TFEI"
     $deleteButton = New NagatoWidgetMenuButtonDelete($panelContainer.HBox) As "TFEI"
+    
+End
+
+Public Sub SetLabel(argCount As Integer)
+    
+    $label(argCount)
     
 End
 

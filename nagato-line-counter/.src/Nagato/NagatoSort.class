@@ -1,0 +1,27 @@
+' Gambas class file
+
+Property Ascend As Boolean
+
+Private $ascend As Boolean = True
+
+Public Function IsLesser(argGridData As Variant, argRowData As Variant) As Boolean
+    
+    If $ascend Then
+        Return (argGridData > argRowData)
+    Else
+        Return (argRowData > argGridData)
+    Endif
+    
+End
+
+Private Function Ascend_Read() As Boolean
+
+    Return $ascend
+
+End
+
+Private Sub Ascend_Write(Value As Boolean)
+
+    $ascend = Value
+
+End

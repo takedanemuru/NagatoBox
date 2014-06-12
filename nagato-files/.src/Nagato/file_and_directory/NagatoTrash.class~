@@ -65,6 +65,7 @@ Public Sub Restore(argPaths As String[])
         If Not Exist(yukiPath) Then Continue
         yukiPathToRestore = getPathToRestore(yukiPath)
         Try Copy yukiPath To yukiPathToRestore
+        If Not Error Then Me.Delete([yukiPath])
     Next
     
 End

@@ -17,9 +17,15 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
+Public Sub AddNewDirectory(argDirectory As String)
+    
+    $mainPane.AddNewDirectory(argDirectory)
+    
+End
+
 Public Sub SetNewTrashBin()
     
-    
+    $mainPane.SetNewTrashBin()
     
 End
 

@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private $label As NagatoLabel
+Private $grids As NagatoGridView
+Private $data As New NagatoData
+
+Private Sub sortGrids()
+    
+    NagatoCounter.Clear()
+    $grids.Clear()
+    $data.Refresh()
+    $grids.Fill($data.GridData)
+    $grids.SetSumRow()
+    $label.SetText()
+    
+End
+
+Public Sub Form_Open()
+    
+    $label = New NagatoLabel(MessageLabel)
+    $grids = New NagatoGridView(MainGridView)
+    Application.MainWindow = Me
+    NagatoSettings.LoadFormSettings(Me)
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub OpenButton_Click()
+
+    Dialog.Title = ("Select Directory")
+    Dialog.Path = NagatoSettings.LastDirectory
+    Dialog.ShowHidden = True
+    
+    If Not Dialog.SelectDirectory() Then
+        $data.Clear(Dialog.Path)
+        sortGrids()
+        NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
+    Endif
+
+End
+
+Public Sub MainGridView_Activate()
+    
+    Dim yukiRow As Integer = MainGridView.RowAt(Mouse.Y)
+    
+    If yukiRow <> MainGridView.Rows.Max Then
+        HaruhiCodeViewer.Show()
+        HaruhiCodeViewer.SetCode($data.GetPath(MainGridView[yukiRow, 1].Text))
+    End If
+    
+End
+
+Public Sub MainGridView_ColumnClick(argIndex As Integer)
+    
+    If $data.Count > 0 Then
+        $data.SetTargetIndex(argIndex)
+        sortGrids()
+    End If
+    
+End

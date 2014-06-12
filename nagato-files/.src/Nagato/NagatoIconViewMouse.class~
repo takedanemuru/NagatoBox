@@ -3,7 +3,6 @@
 Inherits NagatoIconViewHandler
 
 Event MouseDrag
-'Event DirectoryClicked(argPath As String)
 Event MouseDown(argPath As String)
 
 Private Sub dropFile(argPath As String)
@@ -76,6 +75,8 @@ End
 Public Sub Asakura_MouseDown()
     
     If Me._$iconView.Key = "" Then Return
+    
+    Debug Me._$iconView.FindAt(Mouse.X, Mouse.Y)
     
     Raise MouseDown(Me._$iconView.Key)
     

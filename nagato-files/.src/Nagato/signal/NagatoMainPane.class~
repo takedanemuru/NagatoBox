@@ -32,7 +32,7 @@ Public Sub SetNewTrashBin()
     
     $tabStripHandler.AddNewTab()
     $filersHandler.AddTrashBin($tabStripHandler.TabStrip)
-    $tabStripHandler.SetTabTextAndPicture(("TrashBin"), MikuruIcon.
+    $tabStripHandler.SetTabTextAndPicture(("TrashBin"), MikuruIcon.Get("bin"))
     
 End
 
