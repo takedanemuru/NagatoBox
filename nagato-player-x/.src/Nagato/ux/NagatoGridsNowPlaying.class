@@ -18,7 +18,7 @@ End
 
 Private Sub setPlayingIcon(argRowIndex As Integer)
     
-    If argRowIndex <> NagatoQueue.CurrentPosition Then
+    If argRowIndex <> NagatoQueue.Path.CurrentPosition Then
         Return 
     Else 
         Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.GetFromPath("Pictures/button-play.png")
@@ -30,6 +30,8 @@ Private Sub refreshData()
     
     Dim yukiResult As Result
     Dim yukiRowIndex As Integer
+    
+    If Not Object.IsValid(Me._$grids) Then Return
     
     Me._ClearGrids()
     
@@ -47,6 +49,9 @@ Private Sub refreshData()
         Me._SetGridData(yukiRowIndex, ColumnPath, NagatoQueue.Paths[yukiRowIndex])
         If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
     Next
+    
+Catch
+    Return
     
 End
 

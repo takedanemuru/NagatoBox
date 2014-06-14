@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private Enum MenuNone = 1000, MenuAscent = 1001, MenuDescent = 1002
+
+Private $rootMenu As Menu
+Private $observer As Observer
+
+Private Sub setDummyParentMenu(argRootMenu As Menu)
+    
+    Dim yukiDummy As New Menu(argRootMenu) As "DummyParent"
+    
+    yukiDummy.Text = "dummy"
+    
+End
+
+Private Sub addMenu(argText As String, argTag As Integer, argChecked As Boolean)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argChecked Then .Picture = MikuruIcon.Get("button-check")
+    End With
+    
+End
+
+Private Sub initializeMenu()
+    
+    With MikuruSort
+        addMenu(("By Name"), .ByName, NagatoSettings.SortBy = .ByName)
+        addMenu(("By Size"), .BySize, NagatoSettings.SortBy = .BySize)
+        addMenu(("By Last Modefied"), .ByLastModefied, NagatoSettings.SortBy = .ByLastModefied)
+        addMenu(("By Extension"), .ByExt, NagatoSettings.SortBy = .ByExt)
+        addMenu(("By User"), .ByUser, NagatoSettings.SortBy = .ByUser)
+            addMenu("", MenuNone, False)
+        addMenu(("Ascent"), MenuAscent, NagatoSettings.SortAscent)
+        addMenu(("Descent"), MenuDescent, Not NagatoSettings.SortAscent)
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    $rootMenu = argRootMenu
+    $observer = New Observer(argRootMenu) As "Asakura"
+    setDummyParentMenu(argRootMenu)
+    
+End
+
+Public Sub Asakura_Show()
+    
+    $rootMenu.Children.Clear()
+    initializeMenu()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case MenuAscent
+            NagatoSettings.SortAscent = True
+        Case MenuDescent
+            NagatoSettings.SortAscent = False
+        Default
+            NagatoSettings.SortBy = Last.Tag
+    End Select
+    
+    HaruhiMain.RefreshAll()
+    
+End

@@ -31,8 +31,21 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Pi
         .Tag = argTag
         If argIcon Then .Picture = argIcon
         If argShortcut Then .Shortcut = argShortcut
-       ' .Window = Me._$window
     End With
+    
+End
+
+Private Sub addSortMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiSortMenu As NagatoSortMenu
+    
+    With yukiMenu
+        .Picture = MikuruIcon.Get("chart-bar-down")
+        .Text = ("Sort")
+    End With
+    
+    yukiSortMenu = New NagatoSortMenu(yukiMenu)
     
 End
 
@@ -48,6 +61,8 @@ Private Sub refreshChildMenus()
         Me._AddMenu(("New tab"), .ViewNewTab,, "Ctrl+T")
         Me._AddMenu(("Show hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
         Me._AddMenu(("New &folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
+            Me._AddMenu("", 0) ' Spacer
+        addSortMenu()
             Me._AddMenu("", 0) ' Spacer
         Me._AddMenu(("&About"), .AppAbout, MikuruIcon.Get("star"))
         Me._AddMenu(("&Quit"), .AppQuit, MikuruIcon.Get("button-power"))

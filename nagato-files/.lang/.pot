@@ -40,7 +40,7 @@ msgstr ""
 
 #: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
 #: HaruhiTagging.form:22 MikuruFile.module:47 NagatoDBTag.class:20
-#: NagatoDynamicMenu.class:80
+#: NagatoDynamicMenu.class:95
 msgid "Cancel"
 msgstr ""
 
@@ -213,31 +213,35 @@ msgstr ""
 msgid "This tag color has been used."
 msgstr ""
 
-#: NagatoDynamicMenu.class:48
+#: NagatoDynamicMenu.class:45
+msgid "Sort"
+msgstr ""
+
+#: NagatoDynamicMenu.class:61
 msgid "New tab"
 msgstr ""
 
-#: NagatoDynamicMenu.class:49
+#: NagatoDynamicMenu.class:62
 msgid "Show hidden"
 msgstr ""
 
-#: NagatoDynamicMenu.class:50
+#: NagatoDynamicMenu.class:63
 msgid "New &folder"
 msgstr ""
 
-#: NagatoDynamicMenu.class:52
+#: NagatoDynamicMenu.class:67
 msgid "&About"
 msgstr ""
 
-#: NagatoDynamicMenu.class:53
+#: NagatoDynamicMenu.class:68
 msgid "&Quit"
 msgstr ""
 
-#: NagatoDynamicMenu.class:80
+#: NagatoDynamicMenu.class:95
 msgid "Are you sure to close nagato-files ?"
 msgstr ""
 
-#: NagatoDynamicMenu.class:80
+#: NagatoDynamicMenu.class:95
 msgid "Close"
 msgstr ""
 
@@ -271,6 +275,34 @@ msgstr ""
 
 #: NagatoMenuPanelSelectionButton.class:16
 msgid "Multiple selection"
+msgstr ""
+
+#: NagatoSortMenu.class:33
+msgid "By Name"
+msgstr ""
+
+#: NagatoSortMenu.class:34
+msgid "By Size"
+msgstr ""
+
+#: NagatoSortMenu.class:35
+msgid "By Last Modefied"
+msgstr ""
+
+#: NagatoSortMenu.class:36
+msgid "By Extension"
+msgstr ""
+
+#: NagatoSortMenu.class:37
+msgid "By User"
+msgstr ""
+
+#: NagatoSortMenu.class:39
+msgid "Ascent"
+msgstr ""
+
+#: NagatoSortMenu.class:40
+msgid "Descent"
 msgstr ""
 
 #: NagatoWidgetButtonUnselect.class:12

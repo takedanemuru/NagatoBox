@@ -32,12 +32,13 @@ End
 
 Private Sub paintProgressBarNormal()
     
-    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.VolumeButton, NagatoQueue.SoftwareVolume)
+    Dim yukiBarRectangle As Rect 
     
+    yukiBarRectangle = Me._GetBarRectangle(MikuruUx.VolumeButton, NagatoQueue.Player.SoftwareVolume)
     Me._PaintClipRectangle(MikuruUx.VolumeButton, 2 * MikuruUx.Grid)
     Me._PaintRectangle(MikuruUx.VolumeButton, MikuruColor.WidgetLight) 'frame
     Me._PaintRectangle(yukiBarRectangle, MikuruColor.Widget, 2 * MikuruUx.Grid) 'bar
-    Me._PaintRichText(MikuruUx.VolumeButton, Subst$("<b>VOL : &1%</b>", CInt(NagatoQueue.SoftwareVolume * 100)))
+    Me._PaintRichText(MikuruUx.VolumeButton, Subst$("<b>VOL : &1%</b>", CInt(NagatoQueue.Player.SoftwareVolume * 100)))
     Paint.Restore() 'restore clip rectangle
     
 End

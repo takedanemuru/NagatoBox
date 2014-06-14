@@ -11,11 +11,16 @@ End
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
     
     Dim yukiPath As String
-    Dim yukiFullPath As String
+    ' Dim yukiFullPath As String
+    ' Dim yukiPaths As String[] = Dir(argDirectory, getPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
     
-    For Each yukiPath In Dir(argDirectory, getPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
-        yukiFullPath = argDirectory &/ yukiPath
-        Me._$iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, argSelection.Exist(yukiFullPath)))
+    ' For Each yukiPath In yukiPaths
+    '     yukiFullPath = argDirectory &/ yukiPath
+    '     Me._$iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, argSelection.Exist(yukiFullPath)))
+    ' Next
+
+    For Each yukiPath In MikuruSort(argDirectory, argType)
+        Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
     Next
     
 End

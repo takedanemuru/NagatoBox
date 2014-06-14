@@ -1,0 +1,15 @@
+' Gambas class file
+
+Create Static
+
+Public Sub _call(argDirectory As String, argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    Debug argDirectory
+    
+    For Each yukiPath In argPaths
+        Debug argDirectory &/ yukiPath
+    Next
+    
+End

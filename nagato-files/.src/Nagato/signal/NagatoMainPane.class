@@ -61,6 +61,16 @@ Public Sub Refresh()
     
 End
 
+Public Sub RefreshAll()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $tabStripHandler.Count - 1
+        $filersHandler.Refresh(yukiIndex)
+    Next
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     $tabStripHandler = New NagatoTabStripHandler(argTabStrip)

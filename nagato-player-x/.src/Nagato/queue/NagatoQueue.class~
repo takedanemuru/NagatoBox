@@ -2,9 +2,6 @@
 
 Create Static
 
-Property Read CurrentPath As String
-Property Read CurrentPathUndecoded As String
-Property Read CurrentPosition As Integer
 Property Read Paths As String[]
 Property Read Count As Integer
 
@@ -12,10 +9,8 @@ Property Title As String
 Property Album As String
 Property Artist As String
 
-Property Read State As Integer
-Property Read ProgressRate As Float
-Property Read ProgressText As String
-Property SoftwareVolume As Float
+Property Read Path As NagatoMusicPaths
+Property Read Player As NagatoPlayer
 
 Private $observer As Observer
 Private $player As New NagatoPlayer As "Player"
@@ -186,18 +181,6 @@ Private Function Paths_Read() As String[]
 
 End
 
-Private Function CurrentPath_Read() As String
-
-    Return MikuruPath.GetUrl($musicPaths.CurrentPath)
-
-End
-
-Private Function CurrentPathUndecoded_Read() As String
-
-    Return $musicPaths.CurrentPath
-
-End
-
 Private Function Title_Read() As String
     
     If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPath)
@@ -242,38 +225,14 @@ Private Function Count_Read() As Integer
 
 End
 
-Private Function CurrentPosition_Read() As Integer
+Private Function Player_Read() As NagatoPlayer
 
-    Return $musicPaths.CurrentPosition
-    
-End
-
-Private Function State_Read() As Integer
-
-    Return $player.State
+    Return $player
 
 End
 
-Private Function ProgressText_Read() As String
+Private Function Path_Read() As NagatoMusicPaths
 
-    Return $player.ProgressText
-    
-End
-
-Private Function ProgressRate_Read() As Float
-
-    Return $player.ProgressRate
-
-End
-
-Private Function SoftwareVolume_Read() As Float
-
-    Return $player.SoftwareVolume
-
-End
-
-Private Sub SoftwareVolume_Write(Value As Float)
-
-    $player.SoftwareVolume = Value
+    Return $musicPaths
 
 End

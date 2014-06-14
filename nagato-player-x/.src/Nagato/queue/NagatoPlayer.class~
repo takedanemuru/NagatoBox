@@ -9,15 +9,19 @@ Private $player As New MediaPlayer As "Player"
 
 Event MusicEnd
 
+Private Function getDuration(Optional argRate As Float = 0) As String
+    
+    Return MikuruFloatToTime($player.Duration * argRate)
+    
+End
+
 Public Function GetProgressTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
 
     Dim yukiResult As String
     
     If argRate > 1 Then argRate = 1
     
-    With MikuruTextConvert
-        yukiResult = Subst$("&1 / &2", .FloatToTimeFormat($player.Duration * argRate), .FloatToTimeFormat($player.Duration))
-    End With
+    yukiResult = Subst$("&1 / &2", getDuration(argRate), getDuration())
     
     Return yukiResult
 
@@ -51,7 +55,7 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        Try $player.URL = NagatoQueue.CurrentPath
+        Try $player.URL = NagatoQueue.Path.CurrentPath
     End If
     
     If argPosition Then $player.Position = argPosition

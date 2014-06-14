@@ -41,6 +41,12 @@ Public Sub SetTrashProperty(argTrashName As String)
     
 End
 
+Public Sub RefreshAll()
+    
+    $mainPane.RefreshAll()
+    
+End
+
 Public Sub Form_Open()
     
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"

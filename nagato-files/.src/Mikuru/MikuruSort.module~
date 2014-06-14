@@ -1,0 +1,94 @@
+' Gambas module file
+
+Public Enum ByName, BySize, ByLastModefied, ByExt, ByUser
+
+Private $sortedPaths As New String[]
+
+Private Function getPattern() As String
+    
+    Return IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
+    
+End
+
+Private Function isLesser(argOrderBy As Integer, argObject As String, argSubject As String) As Boolean
+    
+    Dim yukiResult As Boolean
+    
+    Select Case argOrderBy
+        Case ByName
+            yukiResult = False
+        Case BySize
+            yukiResult = Not (Stat(argSubject).Size > Stat(argObject).Size)
+        Case ByLastModefied
+            yukiResult = Not (Stat(argSubject).LastModified > Stat(argObject).LastModified)
+        Case ByExt
+            yukiResult = (File.Ext(argSubject) > File.Ext(argObject))
+        Case ByUser
+            yukiResult = (Stat(argSubject).User > Stat(argObject).User)
+    End Select
+    
+    'Return IIf(NagatoSettings.SortAscent, yukiResult, Not (yukiResult))
+    Return yukiResult
+    
+End
+
+Private Sub orderBy(argPath As String)
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $sortedPaths.Max
+        If isLesser(NagatoSettings.SortBy, argPath, $sortedPaths[yukiIndex]) Then
+            $sortedPaths.Add(argPath, yukiIndex)
+            Return
+        Endif
+    Next
+    
+    $sortedPaths.Push(argPath)
+    
+End
+
+Private Function ensureFirstItem(argFullPath As String) As Boolean
+    
+    If $sortedPaths.Count = 0 Then
+        $sortedPaths.Add(argFullPath)
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Sub sortAll(argDirectory As String, argPath As String)
+    
+    Dim yukiFullPath As String = argDirectory &/ argPath
+    
+    If Not Exist(yukiFullPath) Then Return
+    If ensureFirstItem(yukiFullPath) Then Return
+    
+    orderBy(yukiFullPath)
+    
+End
+
+Private Function getPaths(argDirectory As String, argType As Integer) As String[]
+    
+    Return Dir(argDirectory, getPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
+    
+End
+
+Public Sub _call(argDirectory As String, argType As Integer) As String[]
+    
+    Dim yukiPath As String
+    
+    $sortedPaths.Clear()
+    
+    For Each yukiPath In getPaths(argDirectory, argType)
+        sortAll(argDirectory, yukiPath)
+    Next
+    
+    If Not NagatoSettings.SortAscent
+        Return $sortedPaths
+    Else
+        Return $sortedPaths.Reverse()
+    End If
+    
+End
