@@ -16,7 +16,6 @@ Property Read ShowIn As Boolean
 Property Read IsSettingsApplication As Boolean
 Property Read IsMediaApplication As Boolean
 Property Read Valide As Boolean
-Property Read Exec As String
 
 Private $locale As String
 Private $language As String
@@ -316,14 +315,5 @@ End
 Private Function Valide_Read() As Boolean
 
     Return $valide
-
-End
-
-Private Function Exec_Read() As String
-
-    Return $desktopFile.Exec
-
-Catch
-    Return ""
 
 End

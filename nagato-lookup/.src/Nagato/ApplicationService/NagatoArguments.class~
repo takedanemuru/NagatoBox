@@ -1,0 +1,28 @@
+' Gambas class file
+
+Create Static
+
+Property Read PipeMenu As Boolean
+Property Read Category As String
+
+Private $category As String = ""
+
+Public Sub Parsing()
+    
+    Args.Begin("Usage")
+        $category = Args.Get("p", "pipe-menu", "pipe menu", "category")
+    Args.End()
+    
+End
+
+Private Function PipeMenu_Read() As Boolean
+
+    Return $category <> ""
+
+End
+
+Private Function Category_Read() As String
+
+    Return $category
+
+End

@@ -11,7 +11,16 @@ End
 
 Public Sub Main()
     
-    If IsUnique() Then
+        'for testing only
+        ' NagatoMenuCache3.Activate()
+        ' NagatoPipeMenu.Get("Medias")
+
+    NagatoArguments.Parsing()
+    
+    If NagatoArguments.PipeMenu Then
+        NagatoMenuCache3.Activate()
+        NagatoPipeMenu.Get(NagatoArguments.Category)
+    Else If IsUnique() Then
         NagatoMenuCache3.Activate()
         HaruhiMain.Show()
     End If
