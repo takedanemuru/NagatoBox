@@ -66,39 +66,27 @@ Public Sub SetIconViewWithSearchQuery(argQuery As String)
     
 End
 
-' Public Sub ApplicationsIconView_Activate()
-' 
-'     MikuruApplications.Launch(ApplicationsIconView.Key)
-' 
-' End
-' 
-' Public Sub ApplicationsIconView_Menu()
-'     
-'     Dim yukiMenu As NagatoContextMenu
-'     
-'     If ApplicationsIconView.Key Then
-'         yukiMenu = New NagatoContextMenu(Me, ApplicationsIconView.Key)
-'         yukiMenu.PopUp()
-'     Endif
-'     
-' End
-
 Public Sub Form_Open()
 
     Me.Center()
+    
     If Not Object.IsValid($iconViewHandler) Then
         $iconViewHandler = New NagatoIconViewHandler(ApplicationsIconView)
     End If
 
 End
 
-' Public Sub ApplicationsIconView_Arrange()
-' 
-'     Dim yukiImage As Image = Image.Load("pictures/welcome_to_SOS.jpg")
-'     Dim yukiRate As Float = ApplicationsIconView.H / yukiImage.H
-' 
-'     With yukiImage
-'         ApplicationsIconView.Picture = .Stretch(.W * yukiRate, .H * yukiRate).Picture
-'     End With
-' 
-' End
+Public Sub ApplicationsIconView_Click()
+
+    Dim yukiDesktopFile As New NagatoDesktopFile(Last.Key)
+    Dim yukiProperty As String
+    
+    yukiProperty = Subst$("<b>Name:</b> &1<br>", yukiDesktopFile.Name)
+    yukiProperty &= Subst$("<b>GenericName:</b> &1<br>", yukiDesktopFile.GenericName)
+    yukiProperty &= Subst$("<b>Exec:</b> &1<br>", yukiDesktopFile.Exec)
+    yukiProperty &= "<b>Description:</b> " & yukiDesktopFile.Comment
+
+    PropertyLabel.H = PropertyLabel.Font.RichTextHeight(yukiProperty, PropertyLabel.W)
+    PropertyLabel.Text = yukiProperty
+
+End

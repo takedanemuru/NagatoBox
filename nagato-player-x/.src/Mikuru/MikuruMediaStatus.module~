@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Sub _call(argPaths As String[])
+    
+    Dim yukiMediaPlayer As New MediaPlayer 
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoSettingsMusic.LoadPaths()
+        Debug Media.URL(yukiPath)
+        yukiMediaPlayer.URL = Media.URL(yukiPath)
+        yukiMediaPlayer.Play()
+        Debug yukiMediaPlayer.Duration
+        yukiMediaPlayer.Stop()
+    Next
+    
+End

@@ -1,0 +1,28 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.3
+Title=yuki
+Startup=Kyon
+Icon=Pictures/question-balloon.png
+Version=0.1.0
+Component=gb.image
+Component=gb.qt4
+Component=gb.dbus
+Component=gb.desktop
+Component=gb.settings
+Description="command line interface for humanoid interface"
+Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=Integrated Data Thought Entity
+Address=takeda.nemuru@gmail.com
+Url=takedanemuru.github.oi
+License=S.O.S. License
+PackageName=yuki-0.1.0
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"admin"

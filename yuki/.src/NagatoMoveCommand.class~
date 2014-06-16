@@ -1,0 +1,59 @@
+' Gambas class file
+
+Property Read Index As Integer
+
+Public Enum InputNone, InputHere, InputOpen, InputMove, InputUp
+
+Private $index As Integer
+
+Private Function isValidIndex(argMax As Integer, argInput As String) As Boolean
+    
+    Dim yukiIndex As Integer
+    
+    If Not IsNumber(argInput) Then Return False
+    
+    yukiIndex = CInteger(argInput)
+    
+    If argMax >= yukiIndex Then
+        $index = yukiIndex
+        Return True
+    Else
+        Return False
+    Endif
+
+End
+
+Public Function Select(argMax As Integer) As Integer 'returns enum
+    
+    Dim yukiInput As String
+    
+    $index = -1
+    
+    Print "YUKI.N > Where do you want to go ?"
+    
+    Line Input yukiInput
+    
+    If yukiInput = "here" Then Return Me.InputHere
+    If yukiInput = "up" Then Return Me.InputUp
+    If isValidIndex(argMax, yukiInput) Then Return Me.InputMove
+    
+    Return Me.InputNone
+    
+End
+
+Public Sub Open(argPath As String)
+    
+    Dim yukiDesktopFiles As DesktopFile[] = DesktopFile.FromMime(DesktopMime.FromFile(argPath).Type)
+    Dim yukiDesktopFile As DesktopFile
+    
+    For Each yukiDesktopFile In yukiDesktopFiles
+        Debug yukiDesktopFile.Name
+    Next
+    
+End
+
+Private Function Index_Read() As Integer
+
+    Return $index
+
+End

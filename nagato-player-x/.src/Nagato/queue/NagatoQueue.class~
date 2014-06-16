@@ -75,6 +75,8 @@ End
 
 Public Sub Activate(Optional argPaths As String[] = [""])
     
+    MikuruMediaStatus(argPaths)
+    
     $musicPaths.EnsurePaths(argPaths)
     $observer = New Observer(Me) As "Asakura"
     
@@ -183,7 +185,7 @@ End
 
 Private Function Title_Read() As String
     
-    If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPath)
+    If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPathUndecoded)
     
     Return $tags.Title
     

@@ -1,0 +1,66 @@
+' Gambas class file
+
+Create Static
+
+Private $currentDirectory As String = User.Home
+Private $paths As New String[]
+
+Private Sub moveTo(argPath As String)
+    
+    If IsDir(argPath) Then
+        $currentDirectory = argPath
+        Me.Show()
+    Else
+        If MikuruOpenWith.Reset(argPath) Then 
+            MikuruOpenWith.Select(argPath)
+        Endif
+    End If
+    
+End
+
+Private Sub commandWaiting(argDirectory As String)
+    
+    MikuruUserInput("YUKI.N > Where do you want to go ?")
+    
+    If MikuruUserInput.Has("here") Then
+         NagatoGuake.AddTab($currentDirectory)
+    Else If MikuruUserInput.Has("up") Then
+         $currentDirectory = File.Dir($currentDirectory)
+         Me.Show()
+    Else If MikuruUserInput.IsValidIndex($paths.Count) Then
+        moveTo(argDirectory &/ $paths[MikuruUserInput.Index])
+    End If
+    
+End
+
+Private Sub setPaths(argHeader As String, argType As Integer, ByRef refIndex As Integer)
+    
+    Dim yukiPath As String
+    
+    Print argHeader
+    
+    For Each yukiPath In Dir($currentDirectory, "[^.]*", argType).Sort(gb.Natural + gb.IgnoreCase)
+        Print Subst$("&1 : &2", refIndex, yukiPath)
+        $paths.Add(yukiPath)
+        Inc refIndex
+    Next
+    
+End
+
+Private Sub showState()
+    
+    Dim yukiIndex As Integer
+
+    Print Subst$("YUKI.N > now you are in &1", $currentDirectory)
+    setPaths("[Directories]", gb.Directory, ByRef yukiIndex)
+    setPaths("[Files]", gb.File, ByRef yukiIndex)
+    
+End
+
+Public Sub Show()
+    
+    $paths.Clear()
+    showState()
+    commandWaiting($currentDirectory)
+    
+End

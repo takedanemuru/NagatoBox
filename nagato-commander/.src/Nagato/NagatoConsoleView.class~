@@ -13,19 +13,10 @@ End
 
 Public Sub Update(argStream As String)
     
-    Dim yukiLinesToShow As String
+    $output &= argStream
     
-    If $output <> "" And If String.InStr(argStream, gb.NewLine) = 0 Then
-        Debug "ignore: " & argStream
-        yukiLinesToShow = $output & argStream
-    Else
-        Debug "add : " & argStream
-        $output &= argStream
-        yukiLinesToShow = $output
-    End If
-    
-    $textArea.RichText = NagatoText.GetRichText(yukiLinesToShow)
-    $textArea.ScrollY = 1000000 ' as positive infinite
+    $textArea.RichText = NagatoText.GetRichText($output)
+    $textArea.ScrollY = +Inf ' as positive infinite
     
 End
 

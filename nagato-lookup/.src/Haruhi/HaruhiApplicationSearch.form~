@@ -1,0 +1,21 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,68.5714)
+  Text = ("Application Finder")
+  Icon = Picture["icons/search.png"]
+  Picture = Picture["icons/search.png"]
+  Arrangement = Arrange.Vertical
+  { ApplicationsIconView IconView
+    MoveScaled(0,0,62,53)
+    Expand = True
+    Border = False
+  }
+  { PropertyLabel TextLabel
+    MoveScaled(9,55,41,0)
+    Background = &H8BA0DF&
+    Foreground = &HFFFFFF&
+    Text = ("    Not Selected")
+    Alignment = Align.Left
+  }
+}

@@ -75,3 +75,18 @@ Public Sub Form_Open()
     End If
 
 End
+
+Public Sub ApplicationsIconView_Click()
+
+    Dim yukiDesktopFile As New NagatoDesktopFile(Last.Key)
+    Dim yukiProperty As String
+    
+    yukiProperty = Subst$("<b>Name:</b> &1<br>", yukiDesktopFile.Name)
+    yukiProperty &= Subst$("<b>Generic Name:</b> &1<br>", yukiDesktopFile.GenericName)
+    yukiProperty &= Subst$("<b>Exec:</b> &1<br>", yukiDesktopFile.Exec)
+    yukiProperty &= "<b>Description:</b> " & yukiDesktopFile.Comment
+
+    PropertyLabel.H = PropertyLabel.Font.RichTextHeight(yukiProperty, PropertyLabel.W)
+    PropertyLabel.Text = yukiProperty
+
+End

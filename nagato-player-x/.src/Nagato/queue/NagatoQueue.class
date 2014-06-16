@@ -75,6 +75,9 @@ End
 
 Public Sub Activate(Optional argPaths As String[] = [""])
     
+    'Testing only
+    'MikuruMediaStatus(argPaths)
+    
     $musicPaths.EnsurePaths(argPaths)
     $observer = New Observer(Me) As "Asakura"
     

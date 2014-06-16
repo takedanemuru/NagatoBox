@@ -51,7 +51,7 @@ End
 Public Sub Process_Read()
 
     Dim yukiStream As String
-
+    
     While Not Eof($process)
         Read #$process, yukiStream, -256
         updateConsole(yukiStream)

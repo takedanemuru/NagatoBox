@@ -51,12 +51,15 @@ End
 Public Sub Process_Read()
 
     Dim yukiStream As String
-
+    
     While Not Eof($process)
         Read #$process, yukiStream, -256
+        Debug InStr(yukiStream, "\t") > 0
         updateConsole(yukiStream)
         $messageView.SetGoingOnMessage()
     Wend
+
+    CommandTextArea.Clear()
 
     If $consoleView.IsWaiting Then $messageView.SetDoneMessage()
 
@@ -77,7 +80,6 @@ Public Sub CommandTextArea_Activate()
         NagatoSettings.PushHistory(CommandTextArea.Text)
         $consoleView.PushOutput(yukiCommand)
     Else
-        CommandTextArea.Clear()
         $consoleView.PushOutput(gb.NewLine)
     End If
     

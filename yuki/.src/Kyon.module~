@@ -1,0 +1,46 @@
+' Gambas module file
+
+Private $currentDirectory As String = User.Home
+
+Private Sub CommandWaiting(argDirectory As String, argPaths As String[])
+    
+    Dim yukiInput As String
+    Dim yukiIndex As Integer
+    Dim yukiPath As String
+    
+    Print "YUKI.N > Where do you want to go ?"
+    
+    Line Input yukiInput
+    
+    yukiIndex = CInt(yukiInput)
+    
+    If IsNumber(yukiInput) And If argPaths.Max >= yukiIndex Then
+        yukiPath = argDirectory &/ argPaths[yukiIndex]
+        If IsDir(yukiPath) Then
+            NagatoGuake.AddTab(yukiPath)
+        Else
+            
+        End If
+    Endif
+    
+End
+
+Public Sub Main()
+
+    Dim yukiPath As String
+    Dim yukiIndex As Integer
+    Dim yukiPaths As New String[]
+    
+    Shell "cd ~/"
+    
+    Print Subst$("YUKI.N > now you are in &1", $currentDirectory)
+    
+    For Each yukiPath In Dir($currentDirectory, "[^.]*")
+        Print Subst$("&1 : &2", yukiIndex, yukiPath)
+        yukiPaths.Add(yukiPath)
+        Inc yukiIndex
+    Next
+
+    CommandWaiting($currentDirectory, yukiPaths)
+
+End

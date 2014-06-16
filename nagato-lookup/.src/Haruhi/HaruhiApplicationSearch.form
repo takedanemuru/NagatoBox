@@ -5,9 +5,18 @@
   Text = ("Application Finder")
   Icon = Picture["icons/search.png"]
   Picture = Picture["icons/search.png"]
-  Arrangement = Arrange.Fill
+  Arrangement = Arrange.Vertical
   { ApplicationsIconView IconView
-    MoveScaled(0,0,62,56)
+    MoveScaled(0,0,62,53)
     Expand = True
+    Border = False
+  }
+  { PropertyLabel TextLabel
+    MoveScaled(9,55,41,0)
+    Font = Font["+1"]
+    Background = &H8BA0DF&
+    Foreground = &HFFFFFF&
+    Text = ("    Not Selected")
+    Alignment = Align.Left
   }
 }

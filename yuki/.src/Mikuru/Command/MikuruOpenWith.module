@@ -1,0 +1,72 @@
+' Gambas module file
+
+Property Read DesktopFiles As DesktopFile[]
+
+Private $desktopFiles As New DesktopFile[]
+
+Private Function getApplicationNames(argPath As String) As String[]
+    
+    Dim yukiMimeType As String = DesktopMime.FromFile(argPath).Type
+    
+    Return MikuruConfFlie.GetItems(MikuruApplications.GlobalMimeList, yukiMimeType).Sort(gb.Natural)
+    
+End
+
+Private Function setDesktopFiles(argPath As String) As String[]
+    
+    Dim yukiName As String
+    Dim yukiPath As String
+    Dim yukiDesktopFile As DesktopFile
+    
+    For Each yukiName In getApplicationNames(argPath)
+        yukiPath = MikuruApplications.GlobalApplicationDirectory &/ yukiName
+        If Not Exist(yukiPath) Then Continue
+        yukiDesktopFile = New DesktopFile(yukiPath)
+        $desktopFiles.Add(yukiDesktopFile)
+    Next
+    
+End
+
+Private Sub showApplicationList()
+    
+    Dim yukiDesktopFile As DesktopFile
+    Dim yukiIndex As Integer = 0
+    
+    For Each yukiDesktopFile In $desktopFiles
+        Print Subst$("&1 : &2", yukiIndex, yukiDesktopFile.Name)
+        Inc yukiIndex
+    Next
+    
+End
+
+Private Sub waitSelection(argPath As String)
+    
+    If Not MikuruUserInput("YUKI.N > Select application to open...") Then Return
+    If Not MikuruUserInput.IsValidIndex($desktopFiles.Max) Then Return
+    
+    $desktopFiles[MikuruUserInput.Index].Run(argPath)
+    
+End
+
+Public Sub Reset(argPath As String) As Boolean
+    
+    $desktopFiles.Clear()
+    
+    setDesktopFiles(argPath)
+    
+    Return $desktopFiles.Count > 0
+    
+End
+
+Public Sub Select(argPath As String)
+    
+    showApplicationList()
+    waitSelection(argPath)
+    
+End
+
+Private Function DesktopFiles_Read() As DesktopFile[]
+
+    Return $desktopFiles
+
+End

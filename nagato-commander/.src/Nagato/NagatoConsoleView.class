@@ -16,7 +16,7 @@ Public Sub Update(argStream As String)
     $output &= argStream
     
     $textArea.RichText = NagatoText.GetRichText($output)
-    $textArea.ScrollY = 1000000 ' as positive infinite
+    $textArea.ScrollY = +Inf 
     
 End
 
