@@ -1,0 +1,47 @@
+' Gambas class file
+
+Create Static
+
+Private $observer As Observer
+
+Private Sub catchCommand()
+    
+    MikuruUserInput(("YUKI.N > Can you see this ?")) 
+
+    If MikuruUserInput.Include(["move", "file", "files"]) Then
+        NagatoMove.Show(User.Home)
+    Else
+        NagatoMisc.Show()
+    End If
+
+End
+
+Private Sub catchApplicationArgument()
+    
+    If NagatoArguments.File Then
+        NagatoMove.Show()
+    Else
+        catchCommand()
+    Endif
+    
+End
+
+Private Sub endlessEight()
+    
+    Dim yukiCount As Integer 
+    
+    Do 
+        Inc yukiCount
+        If yukiCount = 1 Then catchApplicationArgument()
+        If yukiCount > 1 Then catchCommand()
+    Loop Until yukiCount > 8
+    
+End
+
+Public Sub Show()
+    
+    $observer = New Observer(NagatoRss) As "Asakura"
+    
+    endlessEight()
+    
+End

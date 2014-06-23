@@ -32,8 +32,6 @@ Private Sub showApplicationList()
     Dim yukiDesktopFile As DesktopFile
     Dim yukiIndex As Integer = 0
     
-    Print "YUKI.N > Select application to open..."
-    
     For Each yukiDesktopFile In $desktopFiles
         Print Subst$("&1 : &2", yukiIndex, yukiDesktopFile.Name)
         Inc yukiIndex
@@ -41,21 +39,14 @@ Private Sub showApplicationList()
     
 End
 
-Private Sub waitSelection(argPath As String)
+Private Sub catchCommand(argPath As String)
     
-    ' Dim yukiInput As String
-    ' Dim yukiIndex As Integer
-    ' 
-    ' Line Input yukiInput
-    
-    If Not MikuruUserInput("") Then Return
+    If Not MikuruUserInput("YUKI.N > Select application to open...") Then Return
     If Not MikuruUserInput.IsValidIndex($desktopFiles.Max) Then Return
     
-    ' If Not IsNumber(yukiInput) Then Return
-    ' yukiIndex = CInteger(yukiInput)
-    ' If yukiIndex > $desktopFiles.Max Then Return
-    
     $desktopFiles[MikuruUserInput.Index].Run(argPath)
+    
+    MikuruDialog.Show("YUKI.N > Press any key to continue.")
     
 End
 
@@ -72,7 +63,7 @@ End
 Public Sub Select(argPath As String)
     
     showApplicationList()
-    waitSelection(argPath)
+    catchCommand(argPath)
     
 End
 

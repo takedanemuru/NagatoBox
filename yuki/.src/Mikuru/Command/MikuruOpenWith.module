@@ -37,14 +37,18 @@ Private Sub showApplicationList()
         Inc yukiIndex
     Next
     
+    If yukiIndex = 0 Then MikuruDialog.Show("YUKI.N > I couldn't find any application. Press any key to continue.")
+    
 End
 
-Private Sub waitSelection(argPath As String)
+Private Sub catchCommand(argPath As String)
     
     If Not MikuruUserInput("YUKI.N > Select application to open...") Then Return
     If Not MikuruUserInput.IsValidIndex($desktopFiles.Max) Then Return
     
     $desktopFiles[MikuruUserInput.Index].Run(argPath)
+    
+    MikuruDialog.Show("YUKI.N > Press any key to continue.")
     
 End
 
@@ -61,7 +65,7 @@ End
 Public Sub Select(argPath As String)
     
     showApplicationList()
-    waitSelection(argPath)
+    catchCommand(argPath)
     
 End
 

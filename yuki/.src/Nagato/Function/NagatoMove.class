@@ -3,64 +3,93 @@
 Create Static
 
 Private $currentDirectory As String = User.Home
-Private $paths As New String[]
+Private $paths As New NagatoPaths
 
 Private Sub moveTo(argPath As String)
     
     If IsDir(argPath) Then
         $currentDirectory = argPath
-        Me.Show()
+    Else If MikuruOpenWith.Reset(argPath) Then 
+        MikuruOpenWith.Select(argPath)
+    End If
+    
+End
+
+Private Sub moveToUserInputPath()
+    
+    Dim yukiPath As String = MikuruUserInput.GetFirstArgument(["move", "to"])
+    
+    If Exist(yukiPath) Then
+        moveTo(yukiPath)
     Else
-        If MikuruOpenWith.Reset(argPath) Then 
-            MikuruOpenWith.Select(argPath)
-        Endif
-    End If
+        MikuruDialog.Show("YUKI.N > I couldn't find the path. Press any key to continue")
+    Endif
     
 End
 
-Private Sub commandWaiting(argDirectory As String)
+Private Sub catchWhereToMove()
     
-    MikuruUserInput("YUKI.N > Where do you want to go ?")
-    
-    If MikuruUserInput.Has("here") Then
-         NagatoGuake.AddTab($currentDirectory)
-    Else If MikuruUserInput.Has("up") Then
-         $currentDirectory = File.Dir($currentDirectory)
-         Me.Show()
-    Else If MikuruUserInput.IsValidIndex($paths.Count) Then
-        moveTo(argDirectory &/ $paths[MikuruUserInput.Index])
-    End If
-    
-End
-
-Private Sub setPaths(argHeader As String, argType As Integer, ByRef refIndex As Integer)
-    
-    Dim yukiPath As String
-    
-    Print argHeader
-    
-    For Each yukiPath In Dir($currentDirectory, "[^.]*", argType).Sort(gb.Natural + gb.IgnoreCase)
-        Print Subst$("&1 : &2", refIndex, yukiPath)
-        $paths.Add(yukiPath)
-        Inc refIndex
-    Next
+    With MikuruUserInput
+        If .CompleteMatch(["move", "root"]) Then
+            moveTo("/")
+        Else If .CompleteMatch(["move", "home"]) Then
+            moveTo(User.Home)
+        Else If .CompleteMatch(["move", "data"]) Then
+            moveTo(Desktop.DataDir)
+        Else If .CompleteMatch(["move", "config"]) Then 
+            moveTo(Desktop.ConfigDir)
+        Else
+            moveToUserInputPath()
+        End If
+    End With
     
 End
 
-Private Sub showState()
+Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when Break
     
-    Dim yukiIndex As Integer
-
-    Print Subst$("YUKI.N > now you are in &1", $currentDirectory)
-    setPaths("[Directories]", gb.Directory, ByRef yukiIndex)
-    setPaths("[Files]", gb.File, ByRef yukiIndex)
+    $paths.ClearFilter()
+    
+    MikuruUserInput(Subst$("YUKI.N > We are in &1, Where do you want to go ?", $currentDirectory))
+    
+    With MikuruUserInput
+        If .Include(["here", "term", "terminal"]) Or If .CompleteMatch(["open", "terminal"]) Then
+             NagatoGuake.AddTab($currentDirectory)
+        Else If .Has("up") Then
+            If $currentDirectory <> "/" Then $currentDirectory = File.Dir($currentDirectory)
+        Else If .Include(["break", "back", "escape", "esc"]) Then
+            Return True
+        Else If .CompleteMatch(["show", "hidden"]) Then
+            $paths.ShowHidden = True
+        Else If .CompleteMatch(["hide", "hidden"]) Then
+            $paths.ShowHidden = False
+        Else If .CompleteMatch(["show", "property"]) And If .IsValidIndex($paths.Max) Then
+            MikuruFileProperty.Show($currentDirectory &/ $paths[.Index])
+        Else If .Has("move") Then
+            catchWhereToMove()
+        Else If .Include(["filter", "match", "matches"]) And If .Count > 1 Then
+            $paths.SetFilter(MikuruUserInput.All)
+        Else If .IsValidIndex($paths.Max) Then
+            moveTo(argDirectory &/ $paths[.Index])
+        End If
+    End With
+    
+    Return False
     
 End
 
-Public Sub Show()
+Private Sub endlessEight()
     
-    $paths.Clear()
-    showState()
-    commandWaiting($currentDirectory)
+    Do
+        $paths.Set($currentDirectory)
+        If catchCommand($currentDirectory) Then Break
+    Loop
     
+End
+
+Public Sub Show(Optional argDirectory As String)
+    
+    If argDirectory Then $currentDirectory = argDirectory
+
+    endlessEight()
+        
 End

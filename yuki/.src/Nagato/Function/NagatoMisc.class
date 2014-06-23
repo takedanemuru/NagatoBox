@@ -1,0 +1,15 @@
+' Gambas class file
+
+Create Static
+
+Public Sub Show()
+    
+    If MikuruUserInput.Has("speak") Then
+        Print "YUKI.N > What ?"
+    Else If MikuruUserInput.CompleteMatch(["what", "time"]) Then
+        Print Format$(Now(), ("hh:nn:ss"))
+    Else If MikuruUserInput.CompleteMatch(["love", "you"]) Then
+        Print "YUKI.N > No way."
+    End If
+    
+End

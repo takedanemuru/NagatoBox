@@ -1,0 +1,47 @@
+' Gambas class file
+
+Create Static
+
+Private $wikipedia As String[] = ["what", "whats", "wiki", "wikipedia"]
+
+Private Sub getQuery() As String
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In MikuruUserInput.All
+        If $wikipedia.Exist(yukiQuery) Then Continue
+        Print Subst$("YUKI.N > going to show about &1", yukiQuery)
+        Return yukiQuery
+    Next
+    
+    Return ""
+    
+End
+
+Private Sub showWikipedia()
+    
+    Dim yukiOutput As String
+    
+    If MikuruUserInput.Include(["ja", "japanese", "Japanese"]) Then
+        Exec ["wikipedia2text", "-l", "ja", getQuery()] To yukiOutput
+    Else
+        Exec ["wikipedia2text", getQuery()] To yukiOutput
+    End If
+    
+    Print yukiOutput
+    
+End
+
+Public Sub Show()
+    
+    If MikuruUserInput.Has("speak") Then
+        Print "YUKI.N > What ?"
+    Else If MikuruUserInput.CompleteMatch(["what", "time"]) Then
+        Print Format$(Now(), ("hh:nn:ss"))
+    Else If MikuruUserInput.CompleteMatch(["love", "you"]) Then
+        Print "YUKI.N > No way."
+    Else If MikuruUserInput.Include($wikipedia) And If MikuruUserInput.Count > 1 Then
+        showWikipedia()
+    End If
+    
+End

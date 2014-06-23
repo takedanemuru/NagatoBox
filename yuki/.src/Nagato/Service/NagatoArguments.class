@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Static
+
+Property Read File As Boolean
+
+Private $options As New String[]
+
+Public Sub Parse()
+    
+    Args.Begin()
+    
+    $options = Args.End()
+    
+End
+
+Private Function File_Read() As Boolean
+
+    If $options.Count = 0 Then Return False
+
+    Return $options[0] = "file"
+
+End

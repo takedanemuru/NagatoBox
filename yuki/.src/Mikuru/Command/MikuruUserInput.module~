@@ -2,6 +2,7 @@
 
 Property Read Count As Integer
 Property Read Index As Integer
+Property Read All As String[]
 
 Private $inputs As New String[]
 Private $index As Integer 
@@ -23,11 +24,23 @@ Private Function catchUserInput() As String
     
 End
 
-Public Sub _call() As Boolean
+Private Sub checkQuit()
+    
+    If $inputs.Exist("q") Or If $inputs.Exist("quit") Or If $inputs.Exist("bye") Then
+        Print "YUKI.N > sleeping beauty"
+        Wait 3
+        Quit 0
+    Endif
+    
+End
+
+Public Sub _call(argMessage As String) As Boolean
+    
+    Print argMessage
     
     resetVariables()
-    
     $inputs = Split(catchUserInput(), " ", "", True)
+    checkQuit()
     
     Return $inputs.Count > 0
     
@@ -36,6 +49,18 @@ End
 Public Function Has(argValue As String) As Boolean
     
     Return $inputs.Exist(argValue)
+    
+End
+
+Public Function Include(argValues As String[]) As Boolean
+    
+    Dim yukiValue As String
+    
+    For Each yukiValue In argValues
+        If $inputs.Exist(yukiValue) Then Return True
+    Next
+    
+    Return False
     
 End
 
@@ -53,14 +78,32 @@ Public Function IsValidIndex(argMax As Integer) As Boolean
     
 End
 
+Public Function CompleteMatch(argQueries As String[]) As Boolean
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In argQueries
+        If Not $inputs.Exist(Replace$(yukiQuery, "/", "")) Then Return False
+    Next
+    
+    Return True
+    
+End
+
 Private Function Count_Read() As Integer
 
-    Return $inputs.Count > 0
+    Return $inputs.Count 
 
 End
 
 Private Function Index_Read() As Integer
 
     Return $index
+
+End
+
+Private Function All_Read() As String[]
+
+    Return $inputs
 
 End
