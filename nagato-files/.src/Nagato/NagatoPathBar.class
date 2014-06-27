@@ -17,6 +17,19 @@ Private Sub initializeButtonBox(argContainer As Container)
     
 End
 
+Private Sub isAccessable(argPath As String) As Boolean
+    
+    If Not Exist($pathBar.Text) Then Return False
+    
+    If Not Access($pathBar.Text) Then
+        Message.Warning(("YUKI.N > Access forbidden."))
+        Return False
+    End If
+    
+    Return True
+    
+End
+
 Public Sub SetPath(argPath As String)
     
     If Not Exist(argPath) Then Return
@@ -35,7 +48,7 @@ End
 
 Public Sub PathBar_Activate()
     
-    If Not Exist($pathBar.Text) Then Return
+    If Not isAccessable($pathBar.Text) Then Return
     
     Raise MenuEventWithArg(NagatoMenuPipe.PathNew, $pathBar.Text)
     

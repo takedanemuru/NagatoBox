@@ -39,14 +39,15 @@ Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) A
     
 End
 
-Public Function GetApplicationTile(argPath As String, Optional argSize As Integer = TileSize) As Picture
+Public Function GetApplicationTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
     
+    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Color.Green) + 16777216 * 192)
     Dim yukiBaseImage As New Image(argSize, argSize, Color.Red + 16777216 * 192) 
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, IconSize)
     Dim yukiText As String = yukiDesktopFile.Name
     
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText, False)
+    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText, argSelected)
     
 End
 

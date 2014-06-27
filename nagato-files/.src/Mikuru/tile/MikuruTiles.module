@@ -6,7 +6,7 @@ Private Sub getFileIconPicture(argPath As String, argSelected As Boolean) As Pic
         Case MikuruMimeType.TypeImage
             Return MikuruImageThumbnail.Get(argPath, argSelected)
         Case MikuruMimeType.TypeApplication
-            Return MikuruTile.GetApplicationTile(argPath)
+            Return MikuruTile.GetApplicationTile(argPath, argSelected)
         Default
             Return MikuruTile.GetFileTile(argPath, argSelected)
     End Select

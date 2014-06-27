@@ -58,18 +58,18 @@ Private Sub addFileOpenWithMenu()
     
 End
 
-Private Sub addCreateMenu()
-    
-    Dim yukiMenu As New Menu(Me._$rootMenu)
-    Dim yukiSubMenu As NagatoCreateMenu
-    
-    With yukiMenu
-        .Text = ("Create")
-    End With
-    
-    yukiSubMenu = New NagatoCreateMenu(yukiMenu) As "Menu"
-    
-End
+' Private Sub addCreateMenu()
+'     
+'     Dim yukiMenu As New Menu(Me._$rootMenu)
+'     Dim yukiSubMenu As NagatoCreateMenu
+'     
+'     With yukiMenu
+'         .Text = ("Create")
+'     End With
+'     
+'     yukiSubMenu = New NagatoCreateMenu(yukiMenu) As "Menu"
+'     
+' End
 
 Public Sub _AddChildMenus()
     
@@ -77,7 +77,7 @@ Public Sub _AddChildMenus()
         addFileOpenMenu()
             Me._AddContextMenu("", 0) ' As Spacer
         addFileOpenWithMenu()
-        addCreateMenu()
+        ' addCreateMenu()
         Me._AddContextMenu(("Copy file path"), .PathCopyToClipboard, MikuruIcon.Get("clipboard"))
             Me._AddContextMenu("", 0) ' As Spacer
         Me._AddContextMenu(("Rename"), .FileRename)

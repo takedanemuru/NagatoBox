@@ -41,6 +41,7 @@ Private Sub addSortMenu()
     Dim yukiSortMenu As NagatoSortMenu
     
     With yukiMenu
+        .Picture = MikuruIcon.Get("chart-bar-down")
         .Text = ("Sort")
     End With
     
@@ -59,6 +60,7 @@ Private Sub refreshChildMenus()
     With NagatoMenuPipe
         Me._AddMenu(("New tab"), .ViewNewTab,, "Ctrl+T")
         Me._AddMenu(("Show hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
+            Me._AddMenu("", 0) ' Spacer
         Me._AddMenu(("New &folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
             Me._AddMenu("", 0) ' Spacer
         addSortMenu()

@@ -61,7 +61,7 @@ Public Function GetDirectoryTile(argPath As String, argSelected As Boolean, Opti
     Dim yukiTile As Picture = getTilePicture(yukiBaseImage, yukiIcon, yukiText, argSelected)
     Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
     
-    If yukiSymbol <> "" And If Not NagatoXdg.UserDirs.(argPath) Then
+    If yukiSymbol <> "" And If Not NagatoXdg.IsUserDir(argPath) Then
         Return getSymbolizedTile(yukiTile, yukiSymbol)
     Else
         Return yukiTile

@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuPipe
 
+Property Read Path As String
+
 Private $pathBar As ButtonBox
 
 Private Sub initializeButtonBox(argContainer As Container)
@@ -12,6 +14,19 @@ Private Sub initializeButtonBox(argContainer As Container)
         .Expand = True
         .Picture = MikuruIcon.Get("button-rotate-ccw")
     End With
+    
+End
+
+Private Sub isAccessable(argPath As String) As Boolean
+    
+    If Not Exist($pathBar.Text) Then Return False
+    
+    If Not Access($pathBar.Text) Then
+        Message.Warning("YUKI.N > Access forbidden.")
+        Return False
+    End If
+    
+    Return True
     
 End
 
@@ -33,7 +48,7 @@ End
 
 Public Sub PathBar_Activate()
     
-    If Not Exist($pathBar.Text) Then Return
+    If Not isAccessable($pathBar.Text) Then Return
     
     Raise MenuEventWithArg(NagatoMenuPipe.PathNew, $pathBar.Text)
     
@@ -43,4 +58,10 @@ Public Sub PathBar_Click()
     
     PathBar_Activate()
     
+End
+
+Private Function Path_Read() As String
+
+    Return $pathBar.Text
+
 End

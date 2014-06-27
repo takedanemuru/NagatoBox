@@ -23,6 +23,8 @@ End
 
 Public Sub MenuItem_Click()
     
+    Debug Last.Tag
+    
     Raise MenuEvent(Last.Tag)
     
 End

@@ -29,7 +29,7 @@ End
 Public Sub _new(argContainer As TabStrip)
     
     $container = New NagatoPanelContainer(argContainer)
-    addButton("Cancel", ButtonCancel)
+    addButton("Unselect All", ButtonCancel)
     $label = New NagatoSelectionBarLabel($container.HBox)
     addButton("Move To...", ButtonMoveTo)
     addButton("Copy To...", ButtonCopyTo)
@@ -85,7 +85,7 @@ End
 
 Public Sub Selection_Changed()
     
-    $container.Visible = IIf(NagatoSettings.MultipleSelection, ($selection.Count > 0), False)
+    '$container.Visible = IIf(NagatoSettings.MultipleSelection, ($selection.Count > 0), False)
     $label.SetText($selection.Count)
     
 End

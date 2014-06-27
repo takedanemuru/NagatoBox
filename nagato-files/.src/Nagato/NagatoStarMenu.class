@@ -58,9 +58,10 @@ End
 Private Sub refreshChildMenus()
     
     With NagatoMenuPipe
-        Me._AddMenu(("New tab"), .ViewNewTab,, "Ctrl+T")
-        Me._AddMenu(("Show hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
-        Me._AddMenu(("New &folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
+        Me._AddMenu(("New Tab"), .ViewNewTab,, "Ctrl+T")
+        Me._AddMenu(("Show Hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
+            Me._AddMenu("", 0) ' Spacer
+        Me._AddMenu(("New &Folder"), NagatoMenuPipe.DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
             Me._AddMenu("", 0) ' Spacer
         addSortMenu()
             Me._AddMenu("", 0) ' Spacer

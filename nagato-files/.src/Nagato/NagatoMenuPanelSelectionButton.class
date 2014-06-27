@@ -10,7 +10,7 @@ Public Sub _Initialize()
     $selectionButton = New ToggleButton(Me._$container) As "SelectionButton"
     
     With $selectionButton
-        .Picture = MikuruIcon.Get("documents")
+        .Picture = MikuruIcon.Get("pin")
         .AutoResize = True
         .Border = False
         .Tooltip = ("Multiple selection")

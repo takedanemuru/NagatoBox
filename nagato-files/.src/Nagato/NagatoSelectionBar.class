@@ -85,7 +85,8 @@ End
 
 Public Sub Selection_Changed()
     
-    $container.Visible = IIf(NagatoSettings.MultipleSelection, ($selection.Count > 0), False)
+    '$container.Visible = IIf(NagatoSettings.MultipleSelection, ($selection.Count > 0), False)
+    $container.Visible = ($selection.Count <> 0)
     $label.SetText($selection.Count)
     
 End

@@ -2,6 +2,8 @@
 
 Public Enum ByName, BySize, ByLastModefied, ByExt, ByUser
 
+Property Read Paths As String[]
+
 Private $sortedPaths As New String[]
 
 Private Function getPattern() As String
@@ -75,20 +77,32 @@ Private Function getPaths(argDirectory As String, argType As Integer) As String[
     
 End
 
+Private Function getResult() As String[]
+    
+    If NagatoSettings.SortAscent Then
+        Return $sortedPaths
+    Else
+        Return $sortedPaths.Reverse()
+    Endif
+    
+End
+
 Public Sub _call(argDirectory As String, argType As Integer) As String[]
     
     Dim yukiPath As String
-    
+
     $sortedPaths.Clear()
     
     For Each yukiPath In getPaths(argDirectory, argType)
         sortAll(argDirectory, yukiPath)
     Next
     
-    If NagatoSettings.SortAscent
-        Return $sortedPaths
-    Else
-        Return $sortedPaths.Reverse()
-    End If
+    Return getResult()
     
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $sortedPaths
+
 End

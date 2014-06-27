@@ -4,7 +4,7 @@ Inherits NagatoMenuPanelWidget
 
 Public Sub _Initialize()
     
-    Dim yukiButton As New MenuButton($container.HBox)
+    Dim yukiButton As New MenuButton(Me._$container)
     Dim yukiMenu As NagatoDynamicMenu
     
     With yukiButton

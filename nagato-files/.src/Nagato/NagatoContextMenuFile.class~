@@ -77,7 +77,7 @@ Public Sub _AddChildMenus()
         addFileOpenMenu()
             Me._AddContextMenu("", 0) ' As Spacer
         addFileOpenWithMenu()
-        addCreateMenu()
+        ' addCreateMenu()
         Me._AddContextMenu(("Copy file path"), .PathCopyToClipboard, MikuruIcon.Get("clipboard"))
             Me._AddContextMenu("", 0) ' As Spacer
         Me._AddContextMenu(("Rename"), .FileRename)
@@ -95,8 +95,6 @@ Public Sub OpenFileMenu_Click()
 End
 
 Public Sub UnarchiveMenu_Click()
-    
-    'Shell Subst$("patool extract &1", Me._$path)
     
     Shell Subst$("nagato-extractor &1", Me._$path)
     
