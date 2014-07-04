@@ -16,9 +16,8 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
 
     If yukiPaths.Count = 0 Then Return
 
-    Debug yukiPaths.Count
-
     For Each yukiPath In yukiPaths
+        Debug yukiPath
         If Not Access(yukiPath, gb.Read) Then Continue
         Debug yukiPath
         Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))

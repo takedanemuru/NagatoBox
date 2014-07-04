@@ -13,6 +13,7 @@ Private $proxy As DBusProxy
 
 Public Function GetSpeed(argDeviceIndex As Integer) As Float
     
+    If Not Object.IsValid($proxy) Then Return 0
     If argDeviceIndex > Me.DeviceCount - 1 Then Return 0
     
     Return $proxy.GetDeviceSpeed(argDeviceIndex)
@@ -43,22 +44,27 @@ End
 Public Sub Activate()
     
     If Not DBus.Session.Applications.Exist(Service) Then
-        Shell "nagato-network-manager -n" Wait
+        Shell "nagato-network-manager -n"
     Endif
     
 End
 
 Private Sub initializeProxy()
     
-    $proxy = DBus[Service][ObjectPath, Interface]
+    $proxy = DBus["Session://" & Service][ObjectPath, Interface]
     
 End
 
 Private Function DeviceCount_Read() As Integer
 
-    If Not Object.IsValid($proxy) Then initializeProxy()
-
-    Return $proxy.DeviceCount
+    If Not DBus.Session.Applications.Exist(Service) Then
+        Return 0
+    Else If Not Object.IsValid($proxy) Then 
+        initializeProxy()
+        Return 0
+    Else
+        Return $proxy.DeviceCount
+    End If
 
 Catch
     Return 0

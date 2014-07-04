@@ -26,10 +26,10 @@ Public Sub Main()
     parsingApplicationArguments()
     
     If $stickyMode Then
-        Debug "sticky"
+        'Debug "sticky"
         MikuruStickies.ShowAll()
     Else If NagatoDBus.IsUnique() Then
-        Debug "unique"
+        'Debug "unique"
         NagatoDBus.Register()
         HaruhiMain.OpenWithPath($startUpPath)
         HaruhiMain.InitializeRecentIconView()

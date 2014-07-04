@@ -10,16 +10,16 @@ End
 
 Public Sub Main()
     
+    Debug NagatoFcitxManager.HasService
+    Debug NagatoFcitxManager.Activated
+    
     If NagatoDBus.IsUnique() Then
-        Debug NagatoNetworkManager.Activated
-        NagatoNetworkManager.Activate()
+'        NagatoNetworkManager.Activate()
         NagatoCalendarConnection.Ensure()
         ensureNagatoTaskmanagerActivation()
         NagatoPowerManager.Activate()
         NagatoRss.Refresh()
         NagatoDBus.Register()
-        Debug NagatoNetworkManager.Activated
-        Debug NagatoNetworkManager.DeviceCount
         HaruhiMain.Show()
     Else
         Message.Info(("YUKI.N > nagato-navigator has been activated."), ("OK"))

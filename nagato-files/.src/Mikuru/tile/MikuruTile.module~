@@ -6,6 +6,7 @@ Private Const IconSize As Integer = 64
 Private Const Margin As Integer = 8
 
 Private $selectedLabelPainter As New NagatoPainterSelectedLabel
+Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
 
 Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argText As String, argSelected As Boolean) As Picture
     
@@ -27,6 +28,26 @@ Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argTe
     
 End
 
+Private Function getTilePictureReadOnly(argBaseImage As Image, argIcon As Picture, argText As String, argColor As Integer) As Picture
+    
+    Dim yukiHeight As Integer
+    
+    With Paint
+        .Begin(argBaseImage)
+        .Brush = .Color(Color.White)
+        .Font.Bold = True
+        yukiHeight = .Font.RichTextHeight(argText, TextWidth)
+        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin)
+        .RichText(argText, Margin, TileSize - yukiHeight - Margin, TextWidth, yukiHeight, Align.Center)
+        .Fill()
+        $readOnlyLabelPainter.Paint(argColor)
+        .End()
+    End With
+    
+    Return argBaseImage.Picture
+    
+End
+
 Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
     
     Dim yukiImage As Image = argPicture.Image
@@ -39,49 +60,75 @@ Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) A
     
 End
 
-Public Function GetApplicationTile(argPath As String, Optional argSize As Integer = TileSize) As Picture
+Private Function getBaseImage(argSize As Integer, argBaseColor As Integer, argSelected As Boolean) As Image
     
-    Dim yukiBaseImage As New Image(argSize, argSize, Color.Red + 16777216 * 192) 
+    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, argBaseColor) + 16777216 * 192)
+    Dim yukiBaseImage As New Image(argSize, argSize, yukiColor) 
+    
+    Return yukiBaseImage
+    
+End
+
+Private Function getFolderDescription(argPath As String) As String
+    
+    Dim yukiFolders As String = Subst$("folder:&1", Dir(argPath, "*", gb.Directory).Count)
+    Dim yukiFiles As String = Subst$("file:&1", Dir(argPath, "*", gb.File).Count)
+    Dim yukiText As String = File.Name(argPath) & "<br>" & yukiFolders & " " & yukiFiles
+    
+    Return yukiText
+    
+End
+
+Private Function getTile(argTile As Picture, argPath As String) As Picture
+    
+    Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
+    
+    If yukiSymbol <> "" Then
+        Return getSymbolizedTile(argTile, yukiSymbol)
+    Else
+        Return argTile
+    Endif
+    
+End
+
+Public Function GetApplicationTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
+    
+    Dim yukiBaseImage As Image = getBaseImage(argSize, Color.Violet, argSelected)
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, IconSize)
-    Dim yukiText As String = yukiDesktopFile.Name
     
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiText, False)
+    Return getTilePicture(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, argSelected)
     
 End
 
 Public Function GetDirectoryTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
     
-    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Color.Blue) + 16777216 * 192)
-    Dim yukiBaseImage As New Image(argSize, argSize, yukiColor) 
+    Dim yukiBaseImage As Image = getBaseImage(argSize, Color.Blue, argSelected)
     Dim yukiIcon As Picture = MikuruIcon.GetDirectory(argPath, IconSize)
-    Dim yukiFolders As String = Subst$("folder:&1", Dir(argPath, "*", gb.Directory).Count)
-    Dim yukiFiles As String = Subst$("file:&1", Dir(argPath, "*", gb.File).Count)
-    Dim yukiText As String = File.Name(argPath) & "<br>" & yukiFolders & " " & yukiFiles
-    Dim yukiTile As Picture = getTilePicture(yukiBaseImage, yukiIcon, yukiText, argSelected)
-    Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
+    Dim yukiTile As Picture 
     
-    If yukiSymbol <> "" And If Not NagatoXdg.IsUserDir(argPath) Then
-        Return getSymbolizedTile(yukiTile, yukiSymbol)
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        yukiTile = getTilePictureReadOnly(yukiBaseImage, yukiIcon, getFolderDescription(argPath), Color.Blue)
     Else
-        Return yukiTile
+        yukiTile = getTilePicture(yukiBaseImage, yukiIcon, getFolderDescription(argPath), argSelected)
     Endif
+    
+    Return getTile(yukiTile, argPath)
     
 End
 
 Public Function GetFileTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
     
-    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Color.Magenta) + 16777216 * 192)
-    Dim yukiBaseImage As New Image(argSize, argSize, yukiColor) 
+    Dim yukiBaseImage As Image = getBaseImage(argSize, Color.Magenta, argSelected)
     Dim yukiIcon As Picture = Desktop.GetFileIcon(argPath, IconSize)
-    Dim yukiText As String = File.Name(argPath)
-    Dim yukiTile As Picture = getTilePicture(yukiBaseImage, yukiIcon, yukiText, argSelected)
-    Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
+    Dim yukiTile As Picture 
     
-    If yukiSymbol <> "" Then
-        Return getSymbolizedTile(yukiTile, yukiSymbol)
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        yukiTile = getTilePictureReadOnly(yukiBaseImage, yukiIcon, File.Name(argPath), Color.Magenta)
     Else
-        Return yukiTile
+        yukiTile = getTilePicture(yukiBaseImage, yukiIcon, File.Name(argPath), argSelected)
     Endif
+    
+    Return getTile(yukiTile, argPath)
     
 End

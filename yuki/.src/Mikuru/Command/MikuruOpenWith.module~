@@ -37,6 +37,8 @@ Private Sub showApplicationList()
         Inc yukiIndex
     Next
     
+    If yukiIndex = 0 Then MikuruDialog.Show("YUKI.N > I couldn't find any application. Press any key to continue.")
+    
 End
 
 Private Sub catchCommand(argPath As String)

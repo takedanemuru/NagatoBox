@@ -21,7 +21,7 @@ End
 
 Private Sub initializeProxy()
     
-    $proxy = DBus[Service][ObjectPath, Interface]
+    $proxy = DBus["Session://" & Service][ObjectPath, Interface]
     
 End
 

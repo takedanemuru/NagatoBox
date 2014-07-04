@@ -40,7 +40,7 @@ msgstr ""
 
 #: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
 #: HaruhiTagging.form:22 MikuruFile.module:47 NagatoDBTag.class:20
-#: NagatoDynamicMenu.class:96 NagatoStarMenu.class:96
+#: NagatoStarMenu.class:96
 msgid "Cancel"
 msgstr ""
 
@@ -129,11 +129,11 @@ msgstr ""
 msgid "Move To ..."
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:8
+#: NagatoContextMenuDirectory.class:8 NagatoContextMenuGtkBookmarks.class:9
 msgid "Open"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:9
+#: NagatoContextMenuDirectory.class:9 NagatoContextMenuGtkBookmarks.class:13
 msgid "Open in new tab"
 msgstr ""
 
@@ -167,6 +167,10 @@ msgstr ""
 
 #: NagatoContextMenuFile.class:81
 msgid "Copy file path"
+msgstr ""
+
+#: NagatoContextMenuGtkBookmarks.class:18
+msgid "Remove"
 msgstr ""
 
 #: NagatoContextMenuTreeView.class:9
@@ -211,38 +215,6 @@ msgstr ""
 
 #: NagatoDBTag.class:56
 msgid "This tag color has been used."
-msgstr ""
-
-#: NagatoDynamicMenu.class:45 NagatoStarMenu.class:45
-msgid "Sort"
-msgstr ""
-
-#: NagatoDynamicMenu.class:61 NagatoStarMenu.class:61
-msgid "New Tab"
-msgstr ""
-
-#: NagatoDynamicMenu.class:62 NagatoStarMenu.class:62
-msgid "Show Hidden"
-msgstr ""
-
-#: NagatoDynamicMenu.class:64 NagatoStarMenu.class:64
-msgid "New &Folder"
-msgstr ""
-
-#: NagatoDynamicMenu.class:68 NagatoStarMenu.class:68
-msgid "&About"
-msgstr ""
-
-#: NagatoDynamicMenu.class:69 NagatoStarMenu.class:69
-msgid "&Quit"
-msgstr ""
-
-#: NagatoDynamicMenu.class:96 NagatoStarMenu.class:96
-msgid "Are you sure to close nagato-files ?"
-msgstr ""
-
-#: NagatoDynamicMenu.class:96 NagatoStarMenu.class:96
-msgid "Close"
 msgstr ""
 
 #: NagatoFileSearchCheckBox.class:16
@@ -307,6 +279,38 @@ msgstr ""
 
 #: NagatoSortMenu.class:40
 msgid "Descent"
+msgstr ""
+
+#: NagatoStarMenu.class:45
+msgid "Sort"
+msgstr ""
+
+#: NagatoStarMenu.class:61
+msgid "New Tab"
+msgstr ""
+
+#: NagatoStarMenu.class:62
+msgid "Show Hidden"
+msgstr ""
+
+#: NagatoStarMenu.class:64
+msgid "New &Folder"
+msgstr ""
+
+#: NagatoStarMenu.class:68
+msgid "&About"
+msgstr ""
+
+#: NagatoStarMenu.class:69
+msgid "&Quit"
+msgstr ""
+
+#: NagatoStarMenu.class:96
+msgid "Are you sure to close nagato-files ?"
+msgstr ""
+
+#: NagatoStarMenu.class:96
+msgid "Close"
 msgstr ""
 
 #: NagatoWidgetButtonUnselect.class:12

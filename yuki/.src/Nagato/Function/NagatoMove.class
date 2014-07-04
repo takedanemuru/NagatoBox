@@ -5,7 +5,19 @@ Create Static
 Private $currentDirectory As String = User.Home
 Private $paths As New NagatoPaths
 
+Private Function isAccessable(argPath As String) As Boolean
+    
+    If Access(argPath, gb.Read) Then Return True
+    
+    MikuruDialog.Show("YUKI.N > Access forbidden. Press [ENTER] to continue.")
+    
+    Return False
+    
+End
+
 Private Sub moveTo(argPath As String)
+    
+    If Not isAccessable(argPath) Then Return
     
     If IsDir(argPath) Then
         $currentDirectory = argPath
@@ -22,8 +34,18 @@ Private Sub moveToUserInputPath()
     If Exist(yukiPath) Then
         moveTo(yukiPath)
     Else
-        MikuruDialog.Show("YUKI.N > I couldn't find the path. Press any key to continue")
+        MikuruDialog.Show("YUKI.N > I couldn't find the path. Press [ENTER] to continue")
     Endif
+    
+End
+
+Private Sub makeDirectory()
+    
+    If Not MikuruUserInput("YUKI.N > Input directory name.") Then Return
+    
+    MikuruDirectory.New($currentDirectory, MikuruUserInput.All)
+    
+    MikuruDialog.Show("YUKI.N > New directory created. Press [ENTER] to continue.")
     
 End
 
@@ -68,6 +90,8 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
             catchWhereToMove()
         Else If .Include(["filter", "match", "matches"]) And If .Count > 1 Then
             $paths.SetFilter(MikuruUserInput.All)
+        Else If .CompleteMatch(["make", "dir"]) Or If .CompleteMatch(["make", "directory"]) Then
+            makeDirectory()
         Else If .IsValidIndex($paths.Max) Then
             moveTo(argDirectory &/ $paths[.Index])
         End If

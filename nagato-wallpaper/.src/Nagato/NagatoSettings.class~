@@ -10,6 +10,23 @@ Property LastCalendarPosition As Integer
 
 Private $settings As New Settings
 
+Private Function getPerDesktopKey(argKey As String) As String
+    
+    Return argKey & "_" & MikuruHidden.DesktopType
+    
+End
+
+Public Sub Refresh(argWallpaperMode As Integer, argCalendarMode As Integer)
+    
+    With Me
+        .LastPath = NagatoPreview.Path
+        .LastColor = NagatoPreview.Color
+        .LastMode = argWallpaperMode
+        .LastCalendarPosition = argCalendarMode
+    End With
+    
+End
+
 Public Sub PushToRecentPaths(argPath As String)
     
     Dim yukiPaths As String[] = $settings["background/recent", [""]]
@@ -25,39 +42,39 @@ End
 
 Private Function LastPath_Read() As String
 
-    Return $settings["background/last_path", ""]
+    Return $settings[getPerDesktopKey("background/last_path"), ""]
 
 End
 
 Private Sub LastPath_Write(Value As String)
 
-    $settings["background/last_path"] = Value
+    $settings[getPerDesktopKey("background/last_path")] = Value
     $settings.Save()
 
 End
 
 Private Function LastColor_Read() As Integer
 
-    Return $settings["background/last_color", Color.White]
+    Return $settings[getPerDesktopKey("background/last_color"), Color.White]
 
 End
 
 Private Sub LastColor_Write(Value As Integer)
 
-    $settings["background/last_color"] = Value
+    $settings[getPerDesktopKey("background/last_color")] = Value
     $settings.Save()
 
 End
 
 Private Function LastMode_Read() As Integer
 
-    Return $settings["background/last_mode", MikuruRenderMode.Center]
+    Return $settings[getPerDesktopKey("background/last_mode"), MikuruRenderMode.Center]
 
 End
 
 Private Sub LastMode_Write(Value As Integer)
 
-    $settings["background/last_mode"] = Value
+    $settings[getPerDesktopKey("background/last_mode")] = Value
     $settings.Save()
 
 End

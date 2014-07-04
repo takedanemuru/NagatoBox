@@ -6,6 +6,7 @@ Private Const Margin As Integer = 8
 Private $icon As Image
 Private $pathLabelPainter As New NagatoPainterPathLabel
 Private $selectedLabelPainter As New NagatoPainterSelectedLabel
+Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
 
 Private Function getIcon(argPath As String) As Image
     
@@ -46,6 +47,7 @@ Public Function Get(argPath As String, argSelected As Boolean) As Picture
         .DrawImage($icon, (ThumbnailSize - $icon.W) / 2, (ThumbnailSize - $icon.H) / 2)
         $pathLabelPainter.PaintLabel(argPath, argSelected)
         If argSelected Then $selectedLabelPainter.Paint()
+        If Not argSelected And If Not Access(argPath, gb.Write) Then $readOnlyLabelPainter.Paint(Color.Blue)
         If yukiSymbol <> "" Then Paint.DrawImage(MikuruIcon.Get(yukiSymbol, 32).Image, 8, 8)
         .End()
     End With

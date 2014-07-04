@@ -62,14 +62,12 @@ Public Sub Asakura_Timer()
     
     $button.Visible = NagatoSettings.ShowNetworkButton
     
-    Debug NagatoNetworkManager.Activated
-    
     If Not $button.Visible Then Return
     NagatoNetworkManager.Activate()
     If Not NagatoNetworkManager.Activated Then Return
     If NagatoNetworkManager.DeviceCount = 0 Then Return
     
-    Debug NagatoNetworkManager.DeviceCount
+    'Debug NagatoNetworkManager.DeviceCount
     
     setButtonText()
 

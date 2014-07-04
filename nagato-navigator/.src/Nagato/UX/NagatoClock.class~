@@ -18,19 +18,6 @@ Private Sub addButton(argContainer As Container)
     
 End
 
-' Private Sub addLabel(argContainer As Container)
-'     
-'     $label = New Label(argContainer) As "NagatoMenu"
-'     
-'     With $label
-'         .AutoResize = False
-'         .Text = "please wait..."
-'         .Alignment = Align.Left
-'         .Foreground = Color.White
-'     End With
-'     
-' End
-
 Private Sub addMenu()
     
     Dim yukiMenu As NagatoDynamicMenu
@@ -49,6 +36,8 @@ Public Sub _new(argContainer As Container)
 End
 
 Public Sub Asakura_Timer()
+    
+    Debug NagatoFcitxManager.CurrentIM
     
     With $button
         .Text = Format$(Now(), NagatoSettings.ClockFormat)

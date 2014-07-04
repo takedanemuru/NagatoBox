@@ -31,7 +31,7 @@ Public Sub Asakura_Timer()
     $powerButton.Visible = NagatoSettings.ShowPowerButon
     
     If $powerButton.Visible Then
-        Debug NagatoPowerManager.HasBattery
+        'Debug NagatoPowerManager.HasBattery
         $powerButton.Text = NagatoPowerManager.TotalBatteryPercentage & "%"
     End If
     

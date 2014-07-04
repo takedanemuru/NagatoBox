@@ -29,8 +29,8 @@ Private Sub paintLine(argColor As Integer, argHistory As Float[])
     Paint.Brush = Paint.Color(argColor)
     Paint.LineJoin = Paint.LineJoinRound
     Paint.LineWidth = 1
-        For yukiCount = 1 To argHistory.Max - 1
-            yukiX = $drawingArea.W - (yukiCount * 4)
+        For yukiCount = 0 To argHistory.Max - 2
+            yukiX = $drawingArea.W - (yukiCount * 2)
             Paint.MoveTo(yukiX, 100 - argHistory[argHistory.Max - yukiCount] * 100 + 10)
             Paint.LineTo(yukiX - 4, 100 - argHistory[argHistory.Max - yukiCount - 1] * 100 + 10)
         Next

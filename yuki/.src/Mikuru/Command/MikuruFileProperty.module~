@@ -12,6 +12,7 @@ Public Sub Show(argPath As String)
     Print Subst$("Mime: &1", DesktopMime.FromFile(argPath).Type)
     Print Subst$("Size: &1", Format$(yukiStat.Size, "###,###,###,###,##0 byte"))
     Print Subst$("Last Accessed: &1", Format$(yukiStat.LastAccess, ("yyyy/mm/dd hh:nn:ss")))
+    Print Subst$("Permission: &1", yukiStat.Auth)
     
     MikuruDialog.Show("YUKI.N > Press any key to continue.")
     

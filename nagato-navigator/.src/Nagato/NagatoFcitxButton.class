@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $button As MenuButton
+Private $observer As Observer
+
+Private Sub initializeButton(argContainer As Container)
+    
+    $button = New MenuButton(argContainer) As "FcitxButton"
+    
+    With $button
+        .Picture = MikuruIcon.Get("keyboard")
+        .Border = False
+        .Foreground = NagatoSettings.ForegroundColor
+        .AutoResize = True
+        .Arrow = False
+        .Visible = NagatoFcitxManager.HasService
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButton(argContainer)
+    $observer = New Observer(NagatoTimer) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    If Not NagatoFcitxManager.HasService Then Return
+    If Not NagatoFcitxManager.Activated Then Return
+    
+    '$powerButton.Visible = NagatoSettings.ShowPowerButon
+    
+    If $button.Visible Then
+        $button.Text = NagatoFcitxManager.CurrentIM
+    End If
+    
+End
+

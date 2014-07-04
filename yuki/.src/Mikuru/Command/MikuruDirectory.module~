@@ -1,0 +1,33 @@
+' Gambas module file
+
+Private Sub getJointName(argNewDirectory As String[]) As String
+    
+    Dim yukiCount As Integer
+    Dim yukiNewName As String = ""
+    
+    For yukiCount = 0 To argNewDirectory.Max
+        yukiNewName &= argNewDirectory[yukiCount]
+        If yukiCount = argNewDirectory.Max Then Break
+        yukiNewName &= "_"
+    Next
+    
+    Return yukiNewName
+    
+End
+
+Public Function New(argParentDirectory As String, argNewDirectory As String[]) As String
+    
+    Dim yukiJointName As String = (argParentDirectory &/ getJointName(argNewDirectory))
+    Dim yukiCount As Integer = 0
+    
+    If Not Exist(yukiJointName) Then Mkdir yukiJointName
+    
+    Do
+        Inc yukiCount
+        If Not Exist(Subst$("&1(&2)", yukiJointName, yukiCount)) Then 
+            Mkdir Subst$("&1(&2)", yukiJointName, yukiCount)
+            Break
+        End If
+    Loop
+    
+End

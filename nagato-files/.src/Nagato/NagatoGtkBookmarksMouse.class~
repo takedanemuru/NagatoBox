@@ -74,3 +74,23 @@ Public Sub Asakura_Drop()
     End If
     
 End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuGtkBookmarks(HaruhiMain, Me._$listView.Key) As "ContextMenu"
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub ContextMenu_MenuEventWithArg(argEvent As Integer, argArg As Variant)
+    
+    Dim yukiValues As New Variant[]
+    
+    Debug "comes"
+    
+    yukiValues.Add(argArg)
+    
+    Raise Signal(argEvent, yukiValues)
+    
+End

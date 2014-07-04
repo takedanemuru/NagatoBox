@@ -1,2 +1,12 @@
 ' Gambas module file
 
+Public Sub Show(argMessage As String)
+    
+    Dim yukiInput As String
+    
+    Print argMessage
+    
+    Line Input yukiInput
+    
+End
+

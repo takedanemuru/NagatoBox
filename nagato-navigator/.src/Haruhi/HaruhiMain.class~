@@ -5,6 +5,7 @@ Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
 Private $networkButton As NagatoNetworkButton
 Private $powerButton As NagatoPowerButton
+Private $fcitxButton As NagatoFcitxButton
 Private $pager As NagatoPager
 Private $clock As NagatoClock
 Private $observer As Observer
@@ -40,6 +41,7 @@ Public Sub Form_Open()
     $contentBar = New NagatoContentBar($drawingArea) As "contentBar"
     $networkButton = New NagatoNetworkButton(HBox1) As "NetworkButton"
     $powerButton = New NagatoPowerButton(HBox1) As "PowerButton"
+    $fcitxButton = New NagatoFcitxButton(HBox1) As "FcitxButton"
     $pager = New NagatoPager(HBox1) As "Pager"
     $clock = New NagatoClock(HBox1) As "Clock"
     $observer = New Observer(NagatoTimer) As "Asakura"

@@ -1,0 +1,18 @@
+' Gambas module file
+
+Public Function Get(argPath As String) As Picture
+    
+    Dim yukiBaseImage As New Image(192, 192, Color.Lighter(Color.Blue))
+    Dim yukiText As String = String.Left(File.Load(argPath), 256)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText(yukiText, 16, 16, 160, 160, Align.TopLeft)
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiBaseImage.Picture
+    
+End
+

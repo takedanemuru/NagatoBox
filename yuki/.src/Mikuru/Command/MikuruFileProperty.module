@@ -14,7 +14,7 @@ Public Sub Show(argPath As String)
     Print Subst$("Last Accessed: &1", Format$(yukiStat.LastAccess, ("yyyy/mm/dd hh:nn:ss")))
     Print Subst$("Permission: &1", yukiStat.Auth)
     
-    MikuruDialog.Show("YUKI.N > Press any key to continue.")
+    MikuruDialog.Show("YUKI.N > Press [ENTER] to continue.")
     
 End
 

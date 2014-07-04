@@ -37,7 +37,7 @@ Private Sub showApplicationList()
         Inc yukiIndex
     Next
     
-    If yukiIndex = 0 Then MikuruDialog.Show("YUKI.N > I couldn't find any application. Press any key to continue.")
+    If yukiIndex = 0 Then MikuruDialog.Show("YUKI.N > I couldn't find any application. Press [ENTER] to continue.")
     
 End
 
@@ -48,7 +48,7 @@ Private Sub catchCommand(argPath As String)
     
     $desktopFiles[MikuruUserInput.Index].Run(argPath)
     
-    MikuruDialog.Show("YUKI.N > Press any key to continue.")
+    MikuruDialog.Show("YUKI.N > Press [ENTER] to continue.")
     
 End
 

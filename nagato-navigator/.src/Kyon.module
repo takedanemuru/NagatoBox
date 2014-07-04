@@ -10,6 +10,11 @@ End
 
 Public Sub Main()
     
+    Debug NagatoFcitxManager.HasService
+    Debug NagatoFcitxManager.Activated
+    
+    NagatoFcitxManager.Activate()
+    
     If NagatoDBus.IsUnique() Then
 '        NagatoNetworkManager.Activate()
         NagatoCalendarConnection.Ensure()

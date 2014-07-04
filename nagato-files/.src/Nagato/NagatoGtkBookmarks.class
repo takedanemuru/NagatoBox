@@ -18,15 +18,28 @@ Public Sub _new(argContainer As Container)
     $surfaceHandler.AddBookmarkItems()
     Me._$mainContent = $initializer.ListView
     $actionHandler = New NagatoGtkBookmarksAction($initializer.ListView)
-    $mouseHandler = New NagatoGtkBookmarksMouse($initializer.ListView)
+    $mouseHandler = New NagatoGtkBookmarksMouse($initializer.ListView) As "MouseHandler"
     $observer = New NagatoGtkBookmarksObserver As "BookmarksObserver"
     
 End
 
 Public Sub BookmarksObserver_Change()
     
-    Debug "reload all"
-    
     $surfaceHandler.Refresh()
+    
+End
+
+Public Sub MouseHandler_Signal(argEvent As Integer, argValues As Variant[])
+    
+    If argValues[0] = "NagatoTrashBinKey" Then 
+        HaruhiMain.SetNewTrashBin()
+        Return
+    End If
+    
+    With NagatoContextMenuGtkBookmarks
+        If argEvent = .ContextOpen Then HaruhiMain.SetNewDirectory(argValues[0])
+        If argEvent = .ContextOpenInNewTab Then HaruhiMain.AddNewDirectory(argValues[0])
+        If argEvent = .ContextDelete Then Debug "delete" & argValues[0] ' TODO
+    End With
     
 End
