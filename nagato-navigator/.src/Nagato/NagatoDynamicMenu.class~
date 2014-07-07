@@ -30,7 +30,8 @@ Private Sub addIssueMenu(argParentMenu As Menu, argIssues As String[])
     
     For Each yukiIssue In argIssues
         yukiMenu = New Menu(argParentMenu)
-        yukiMenu.Text = yukiIssue
+        yukiIssue = Replace(yukiIssue, "&", "and")
+        yukiMenu.Text = MikuruCollapsedText.Get(yukiIssue, HaruhiMain.Font, Int(Screen.W / 2))
         If yukiCount >= 30 Then Break
         Inc yukiCount
     Next
@@ -80,6 +81,8 @@ Public Sub _new(argMenuButton As MenuButton)
 End
 
 Public Sub RootMenu_Show()
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.calendar") Then Return
     
     $rootMenu.Children.Clear()
     refreshChildMenus()

@@ -6,6 +6,8 @@ Public Sub Main()
     
     MikuruHidden.Ensure()
     
+    Debug MikuruHidden.PathOriginalImage
+    
     If yukiArguments.SetLast Then
         NagatoWallpaper.SetLast()
     Else

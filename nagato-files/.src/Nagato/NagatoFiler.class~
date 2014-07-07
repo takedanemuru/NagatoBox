@@ -57,7 +57,7 @@ Public Sub SetRefresh()
     
 End
 
-Public Sub _new(argContainer As TabStrip, argDirectory As String)
+Public Sub _new(argContainer As Container, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuBar"
@@ -126,7 +126,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                  NagatoDBSymbol.RemovePaths($iconView.Selection)
                  $iconView.Refresh($log.Current)
              Case .PathCopyToClipboard
-                 Debug argArgument
+                 Clipboard.Copy(argArgument)
         End Select
     End With
     

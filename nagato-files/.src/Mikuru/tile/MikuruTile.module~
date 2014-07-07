@@ -17,7 +17,7 @@ Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argTe
         .Brush = .Color(Color.White)
         .Font.Bold = True
         yukiHeight = .Font.RichTextHeight(argText, TextWidth)
-        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin)
+        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin + (64 - argIcon.H) / 2)
         .RichText(argText, Margin, TileSize - yukiHeight - Margin, TextWidth, yukiHeight, Align.Center)
         .Fill()
         If argSelected Then $selectedLabelPainter.Paint()
@@ -97,7 +97,11 @@ Public Function GetApplicationTile(argPath As String, argSelected As Boolean, Op
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, IconSize)
     
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, argSelected)
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        Return getTilePictureReadOnly(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, Color.Violet)
+    Else
+        Return getTilePicture(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, argSelected)
+    Endif
     
 End
 

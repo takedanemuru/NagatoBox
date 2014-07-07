@@ -42,8 +42,6 @@ Private Sub refreshMenu()
     
     With NagatoSettings
         Me._AddMenu(("Show Nagato"), MenuNagato, IIf(.ShowNagato, MikuruIcon.Get("button-check"), Null))
-        Me._AddMenu(("Show Network Button"), MenuNetwork, IIf(.ShowNetworkButton, MikuruIcon.Get("button-check"), Null))
-        Me._AddMenu(("Show Power Button"), MenuPower, IIf(.ShowPowerButon, MikuruIcon.Get("button-check"), Null))
             Me._AddMenu((""), 0)
         Me._AddMenu(("Form color"), MenuBackground, MikuruColorChip.Get(.BackgroundColor))
         Me._AddMenu(("Font color"), MenuForeground, MikuruColorChip.Get(.ForegroundColor))

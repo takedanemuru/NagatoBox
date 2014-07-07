@@ -1,0 +1,70 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $iconView As IconView
+Private $timer As New Timer As "DesktopTimer"
+
+Private Sub initializeIconView(argContainer As Container)
+    
+    $iconView = New IconView(argContainer)
+    
+    With $iconView
+        .Expand = True
+        Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
+        If Error Then .Picture = Picture.Load("pictures/about.png")
+        .Orientation = Arrange.Vertical
+        .Border = False
+    End With
+    
+End
+
+Private Sub addClock()
+    
+    $iconView.Add("clock", "")
+    
+End
+
+Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
+    
+    Dim yukiPath As String
+
+    For Each yukiPath In MikuruSort(argDirectory, argType)
+        If Not Access(yukiPath, gb.Read) Then Continue
+        $iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+    Next
+    
+End
+
+Private Sub addIcons()
+    
+    setIcon(Desktop.Path, [""], gb.Directory)
+    setIcon(Desktop.Path, [""], gb.File)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeIconView(argContainer)
+    
+    $timer.Enabled = True
+    addClock()
+    addIcons()
+    
+End
+
+Public Sub DesktopTimer_Timer()
+    
+    Dim yukiImage As New Image(128, 128, Color.Orange + 16777216 * 192)
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 16
+        Paint.Font.Bold = True
+        Paint.RichText(Format$(Now(), ("hh:nn:ss")), 0, 0, 128, 128, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    $iconView["clock"].Picture = yukiImage.Picture
+    
+End

@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private Const Type As String = "_NET_WM_WINDOW_TYPE"
+Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
+
+Private Sub setForm()
+    
+    With Me
+        .X = 0
+        .Y = 0
+        .W = Screen.W
+        .H = Screen.H
+    End With
+    
+End
+
+Private Sub setIconView()
+    
+    
+End
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    setForm()
+    setIconView()
+    Me.Picture = Picture.Load("pictures/about.png")
+
+    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
+
+End

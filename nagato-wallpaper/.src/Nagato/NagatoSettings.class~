@@ -20,6 +20,7 @@ Public Sub Refresh(argWallpaperMode As Integer, argCalendarMode As Integer)
     
     With Me
         .LastPath = NagatoPreview.Path
+        '.LastPath = MikuruHidden.PathModefiedImage
         .LastColor = NagatoPreview.Color
         .LastMode = argWallpaperMode
         .LastCalendarPosition = argCalendarMode
@@ -42,7 +43,7 @@ End
 
 Private Function LastPath_Read() As String
 
-    Return $settings[getPerDesktopKey("background/last_path"), ""]
+    Return $settings[getPerDesktopKey("background/last_path"), MikuruHidden.PathOriginalImage]
 
 End
 

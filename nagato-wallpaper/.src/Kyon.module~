@@ -1,56 +1,16 @@
 ' Gambas module file
 
-' Property Read HiddenPath As String
-' Property Read HiddenPathOriginalImage As String
-' Property Read HiddenPathModefiedImage As String
-
-Private $arguments As New NagatoArguments
-
-' Private Sub saveImage(argPath As String)
-'     
-'     Dim yukiImage As Image = Image.Load("Pictures/default.jpg")
-'     
-'     yukiImage.Save(argPath, 100)
-'     
-' End
-' 
-' Private Sub ensureHiddenDirectory()
-'     
-'     If Not Exist(Me.HiddenPath) Then Mkdir Me.HiddenPath
-'     If Not Exist(Me.HiddenPath &/ "original.png") Then saveImage(Me.HiddenPath &/ "original.png")
-'     If Not Exist(Me.HiddenPath &/ "modefied.png") Then saveImage(Me.HiddenPath &/ "modefied.png")
-'     
-' End
-
 Public Sub Main()
     
-    'ensureHiddenDirectory()
+    Dim yukiArguments As New NagatoArguments
+    
     MikuruHidden.Ensure()
     
-    If $arguments.SetLast Then
+    If yukiArguments.SetLast Then
         NagatoWallpaper.SetLast()
     Else
         HaruhiEdit.Show()
-        If $arguments.Options.Count > 0 Then HaruhiEdit.SetPath($arguments.Options[0])
+        If yukiArguments.Options.Count > 0 Then HaruhiEdit.SetPath(yukiArguments.Options[0])
     End If
     
 End
-
-' Private Function HiddenPath_Read() As String
-' 
-'     Return User.Home &/ ".nagato-wallpaper"
-' 
-' End
-' 
-' Private Function HiddenPathOriginalImage_Read() As String
-' 
-'     Return Me.HiddenPath &/ "original.png"
-' 
-' End
-' 
-' 
-' Private Function HiddenPathModefiedImage_Read() As String
-' 
-'     Return Me.HiddenPath &/ "modefied.png"
-' 
-' End

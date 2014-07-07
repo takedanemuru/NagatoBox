@@ -19,7 +19,8 @@ End
 Public Sub Refresh(argWallpaperMode As Integer, argCalendarMode As Integer)
     
     With Me
-        .LastPath = NagatoPreview.Path
+        '.LastPath = NagatoPreview.Path
+        .LastPath = MikuruHidden.PathOriginalImage
         .LastColor = NagatoPreview.Color
         .LastMode = argWallpaperMode
         .LastCalendarPosition = argCalendarMode

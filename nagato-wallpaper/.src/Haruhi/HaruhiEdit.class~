@@ -53,6 +53,8 @@ End
 
 Public Sub PreviewDrawingArea_Draw()
     
+    Debug NagatoPreview.Path
+    
     If NagatoPreview.Path = "" Then Return
     If Not Exist(NagatoPreview.Path) Then Return
     
@@ -96,8 +98,6 @@ Private Function PreviewDA_Read() As DrawingArea
 End
 
 Public Sub CalendarComboBox_Click()
-
-    Debug CalendarComboBox.Index
 
     NagatoPreview.CalendarPosition = CalendarComboBox.Index
 

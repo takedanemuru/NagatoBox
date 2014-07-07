@@ -10,14 +10,10 @@ End
 
 Public Sub Main()
     
-    Debug NagatoFcitxManager.HasService
-    Debug NagatoFcitxManager.Activated
-    
     If NagatoDBus.IsUnique() Then
-'        NagatoNetworkManager.Activate()
         NagatoCalendarConnection.Ensure()
         ensureNagatoTaskmanagerActivation()
-        NagatoPowerManager.Activate()
+        'NagatoPowerManager.Activate()
         NagatoRss.Refresh()
         NagatoDBus.Register()
         HaruhiMain.Show()

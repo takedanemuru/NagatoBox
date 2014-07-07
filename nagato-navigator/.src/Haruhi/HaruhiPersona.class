@@ -2,6 +2,26 @@
 
 Private $persona As Picture
 
+Private Sub setPersona()
+    
+    $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
+    '$persona = Picture.Load("Pictures/Personas/rainy.png")
+    '$persona = Picture.Load("Pictures/Personas/laptop2.png")
+    Me.Picture = $persona
+    
+End
+
+Private Sub setPosition()
+    
+    With Me
+        .H = $persona.H
+        .W = $persona.W
+        .Y = Screen.H - $persona.H
+        .X = 100
+    End With
+    
+End
+
 Public Sub EnsureVisible()
     
     Dim yukiWindow As New DesktopWindow(Me.Id)
@@ -26,15 +46,8 @@ End
 
 Public Sub Form_Open()
     
-    $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
-    '$persona = Picture.Load("Pictures/Personas/rainy.png")
-    '$persona = Picture.Load("Pictures/Personas/laptop.png")
-    Me.Picture = $persona
-    
-    Me.H = $persona.H
-    Me.W = $persona.W
-    Me.Y = Screen.H - $persona.H
-    Me.X = 100
+    setPersona()
+    setPosition()
     
 End
 
@@ -44,4 +57,10 @@ Public Sub Form_DblClick()
     
     Me.Close()
     
+End
+
+Public Sub Form_Move()
+
+    Me.Y = Screen.H - $persona.H
+
 End

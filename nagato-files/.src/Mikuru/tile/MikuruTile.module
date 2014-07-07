@@ -17,7 +17,7 @@ Private Function getTilePicture(argBaseImage As Image, argIcon As Picture, argTe
         .Brush = .Color(Color.White)
         .Font.Bold = True
         yukiHeight = .Font.RichTextHeight(argText, TextWidth)
-        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin)
+        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin + (64 - argIcon.H) / 2)
         .RichText(argText, Margin, TileSize - yukiHeight - Margin, TextWidth, yukiHeight, Align.Center)
         .Fill()
         If argSelected Then $selectedLabelPainter.Paint()
@@ -37,7 +37,7 @@ Private Function getTilePictureReadOnly(argBaseImage As Image, argIcon As Pictur
         .Brush = .Color(Color.White)
         .Font.Bold = True
         yukiHeight = .Font.RichTextHeight(argText, TextWidth)
-        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin)
+        .DrawPicture(argIcon, (TileSize - argIcon.W) / 2, Margin + (64 - argIcon.H) / 2)
         .RichText(argText, Margin, TileSize - yukiHeight - Margin, TextWidth, yukiHeight, Align.Center)
         .Fill()
         $readOnlyLabelPainter.Paint(argColor)
