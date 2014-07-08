@@ -1,0 +1,38 @@
+' Gambas class file
+
+Property Read Key As String
+
+Private Const IconSize As Integer = 128
+Private Const FontSize As Integer = 16
+
+Private $iconView As IconView
+Private $timer As New Timer As "DesktopTimer"
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $iconView.Add(Me.Key, "")
+    $timer.Enabled = True
+    
+End
+
+Public Sub DesktopTimer_Timer()
+    
+    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = FontSize
+        Paint.RichText(Format$(Now(), ("hh:nn:ss")), 0, 0, IconSize, IconSize, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    $iconView[Me.Key].Picture = yukiImage.Picture 
+    
+End
+
+Private Function Key_Read() As String
+
+    Return "clock"
+
+End

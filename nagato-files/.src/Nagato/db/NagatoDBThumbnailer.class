@@ -77,6 +77,16 @@ Public Sub CleanUp(argDir As String)
     
 End
 
+Public Sub ForceCleanUp(argDir As String)
+    
+    Dim yukiResult As Result = Me._$connection.Edit(TableThumbnail, "directory = &1", argDir)
+    
+    For Each yukiResult
+        yukiResult.Delete()
+    Next
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()

@@ -43,6 +43,8 @@ End
 
 Public Sub SetTag(argPath As String)
     
+    Debug argPath
+    
     setTitle(argPath)
     setArtist(argPath)
     setAlbum(argPath)

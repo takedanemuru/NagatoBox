@@ -1,0 +1,91 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $iconView As IconView
+Private $clock As NagatoDesktopClock
+Private $observer As NagatoDirectoryObserver
+Private $selection As NagatoSelection
+
+Private Sub initializeIconView(argContainer As Container)
+    
+    $iconView = New IconView(argContainer) As "DesktopIconView"
+    
+    With $iconView
+        .Expand = True
+        Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
+        If Error Then .Picture = Picture.Load("pictures/about.png")
+        .Orientation = Arrange.LeftRight
+        .Border = False
+    End With
+    
+End
+
+Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
+    
+    Dim yukiPath As String
+
+    For Each yukiPath In MikuruSort(argDirectory, argType)
+        If Not Access(yukiPath, gb.Read) Then Continue
+        $iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+    Next
+    
+End
+
+Private Sub addIcons()
+    
+    setIcon(Desktop.Path, [""], gb.Directory)
+    setIcon(Desktop.Path, [""], gb.File)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeIconView(argContainer)
+    
+    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+    $observer.Directory = Desktop.Path
+    $observer.IntervalSecond = 1
+    
+    $selection = New NagatoSelection
+    $clock = New NagatoDesktopClock($iconView)
+    
+    addIcons()
+    
+End
+
+Public Sub DesktopIconView_MouseDown()
+    
+     If $iconView.Key = "" Then Return
+    
+    If $iconView.FindAt(Mouse.X, Mouse.Y) Then
+        $iconView.Current.Selected = False
+    Else
+        With $iconView
+            Debug .Key
+            If .Key = "clock" Then Return
+            $selection.Push(.Key, Mouse.Left)
+            .[.Key].Picture = MikuruTiles.Get(.Key, $selection.Paths.Exist(.Key))
+        End With
+    End If
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argFileName As String)
+    
+    Try $iconView.Remove(Desktop.Path &/ argFileName)
+    
+    If Not Error Then $iconView.Refresh()
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    Dim yukiPath As String = Desktop.Path &/ argFileName
+    
+    If Not $iconView.Exist(yukiPath) Then
+        $iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, False))
+        $iconView.Refresh()
+    Endif
+    
+End

@@ -1,25 +1,8 @@
 ' Gambas module file
 
-Private $path As String
-Private $paths As String[] = [""]
-
-Private Function isUnique() As Boolean
-    
-    Return Not DBus.Session.Applications.Exist("org.gambas.nagato.player.x")
-    
-End
-
-Private Sub parsingArgument()
-    
-    Args.Begin(("Usage"))
-        $path = Args.Get("p", "play", "play music", "path to play")
-    $paths = Args.End()
-    
-End
-
 Private Sub activateMusicQueue()
     
-    Dim yukiPaths As String[] = MikuruPath.Sanitize($paths.Add($path, 0))
+    Dim yukiPaths As String[] = NagatoArguments.Paths
     
     If yukiPaths.Count > 0 Then
         NagatoQueue.Activate(yukiPaths)
@@ -36,11 +19,12 @@ End
 
 Public Sub Main()
     
-    If isUnique() Then
-        parsingArgument()
+    If NagatoDBus.IsUnique() Then
+        NagatoArguments.Parsing()
         activateMusicQueue() 'and show HaruhiPlayer 
     Else
-        Message.Warning(("nagato-player-x has been activated"), ("OK"))
+        'Message.Warning(("nagato-player-x has been activated"), ("OK"))
+        NagatoDBus.Proxy.MoveToCurrentDesktop()
     End If
     
 End

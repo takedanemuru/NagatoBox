@@ -22,7 +22,7 @@ Event Changed
 Private Sub changePath()
     
     $tags.SetTag($musicPaths.CurrentPath)
-    HaruhiPlayList.MoveTo(Me.CurrentPath)
+    HaruhiPlayList.MoveTo($musicPaths.CurrentPath)
     
 End
 
@@ -75,7 +75,8 @@ End
 
 Public Sub Activate(Optional argPaths As String[] = [""])
     
-    MikuruMediaStatus(argPaths)
+    'Testing only
+    'MikuruMediaStatus(argPaths)
     
     $musicPaths.EnsurePaths(argPaths)
     $observer = New Observer(Me) As "Asakura"
@@ -185,7 +186,10 @@ End
 
 Private Function Title_Read() As String
     
-    If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPathUndecoded)
+    If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPath)
+    
+    ' Debug $musicPaths.CurrentPath
+    ' Debug $musicPaths.CurrentPathUndecoded
     
     Return $tags.Title
     

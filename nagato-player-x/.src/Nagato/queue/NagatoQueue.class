@@ -21,8 +21,8 @@ Event Changed
 
 Private Sub changePath()
     
-    $tags.SetTag($musicPaths.CurrentPath)
-    HaruhiPlayList.MoveTo(Me.CurrentPath)
+    $tags.SetTag($musicPaths.CurrentPathUndecoded)
+    HaruhiPlayList.MoveTo($musicPaths.CurrentPath)
     
 End
 
@@ -187,6 +187,9 @@ End
 Private Function Title_Read() As String
     
     If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPathUndecoded)
+    
+    ' Debug $musicPaths.CurrentPath
+    ' Debug $musicPaths.CurrentPathUndecoded
     
     Return $tags.Title
     

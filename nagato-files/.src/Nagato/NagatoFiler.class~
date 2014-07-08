@@ -57,7 +57,7 @@ Public Sub SetRefresh()
     
 End
 
-Public Sub _new(argContainer As Container, argDirectory As String)
+Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuBar"
@@ -68,8 +68,6 @@ Public Sub _new(argContainer As Container, argDirectory As String)
 End
 
 Public Sub IconView_MenuEvent(argEvent As Integer)
-    
-    Debug argEvent
     
     Select Case argEvent
         Case NagatoMenuPipe.CreateArchive
@@ -149,6 +147,11 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                 refresh($menuBar.Path)
             Case .ViewNewTab
                 Raise NewTab(User.Home)
+            Case .ViewForceReload
+                Debug "force reload"
+                Debug $log.Current
+                NagatoDBThumbnailer.ForceCleanUp($log.Current)
+                refresh($log.Current)
             Case .DirCreate
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
                 HaruhiNewDirectory.ShowDialog()

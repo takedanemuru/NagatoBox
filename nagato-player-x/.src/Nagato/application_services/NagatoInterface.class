@@ -73,6 +73,20 @@ Public Function PlayPathInQueue(argPath As String) As Boolean
     
 End
 
+Public Function MoveToCurrentDesktop() As Boolean
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    yukiDesktopWindow = New DesktopWindow(HaruhiPlayer.Id)
+    yukiDesktopWindow.Desktop = Desktop.Current
+    
+    Return True
+    
+Catch
+    Return False
+    
+End
+
 Private Function Ready_Read() As String
 
     Return "Can you see this ?"
@@ -87,7 +101,7 @@ End
 
 Private Function ProgressInText_Read() As String
 
-    Return NagatoQueue.ProgressText
+    Return NagatoQueue.Player.ProgressText
 
 End
 

@@ -3,14 +3,6 @@
 Private $path As String
 Private $paths As String[] = [""]
 
-Private Function isUnique() As Boolean
-    
-    Debug DBus.Session.Applications.Exist("org.gambas.nagato.player.x")
-    
-    Return Not DBus.Session.Applications.Exist("org.gambas.nagato.player.x")
-    
-End
-
 Private Sub parsingArgument()
     
     Args.Begin(("Usage"))
@@ -38,11 +30,12 @@ End
 
 Public Sub Main()
     
-    If isUnique() Then
+    If NagatoDBus.IsUnique() Then
         parsingArgument()
         activateMusicQueue() 'and show HaruhiPlayer 
     Else
-        Message.Warning(("nagato-player-x has been activated"), ("OK"))
+        'Message.Warning(("nagato-player-x has been activated"), ("OK"))
+        NagatoDBus.Proxy.MoveToCurrentDesktop()
     End If
     
 End

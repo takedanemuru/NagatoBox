@@ -69,8 +69,6 @@ End
 
 Public Sub IconView_MenuEvent(argEvent As Integer)
     
-    Debug argEvent
-    
     Select Case argEvent
         Case NagatoMenuPipe.CreateArchive
             MikuruCreate.Archive($iconView.Selection)
@@ -146,9 +144,12 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                 If $log.Current <> "/" Then move(File.Dir($log.Current))
             Case .ViewShowHidden
                 NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
-                refresh($menuBar.Path)
+                refresh($log.Current)
             Case .ViewNewTab
                 Raise NewTab(User.Home)
+            Case .ViewForceReload
+                NagatoDBThumbnailer.ForceCleanUp($log.Current)
+                refresh($log.Current)
             Case .DirCreate
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
                 HaruhiNewDirectory.ShowDialog()

@@ -4,15 +4,18 @@ Inherits NagatoMenuPipe
 
 Private $iconView As IconView
 Private $timer As New Timer As "DesktopTimer"
+Private $observer As NagatoDirectoryObserver
+Private $selection As NagatoSelection
 
 Private Sub initializeIconView(argContainer As Container)
     
-    $iconView = New IconView(argContainer)
+    $iconView = New IconView(argContainer) As "DesktopIconView"
     
     With $iconView
         .Expand = True
-        .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
-        .Orientation = Arrange.Vertical
+        Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
+        If Error Then .Picture = Picture.Load("pictures/about.png")
+        .Orientation = Arrange.LeftRight
         .Border = False
     End With
     
@@ -47,6 +50,13 @@ Public Sub _new(argContainer As Container)
     initializeIconView(argContainer)
     
     $timer.Enabled = True
+    
+    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+    $observer.Directory = Desktop.Path
+    $observer.IntervalSecond = 1
+    
+    $selection = New NagatoSelection
+    
     addClock()
     addIcons()
     
@@ -54,16 +64,48 @@ End
 
 Public Sub DesktopTimer_Timer()
     
-    Dim yukiImage As New Image(128, 128, Color.Orange + 16777216 * 192)
+    Dim yukiImage As New Image(128, 128, Color.Orange + 16777216 * 128)
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Size = 16
-        Paint.Font.Bold = True
         Paint.RichText(Format$(Now(), ("hh:nn:ss")), 0, 0, 128, 128, Align.Center)
         Paint.Fill()
     Paint.End()
     
     $iconView["clock"].Picture = yukiImage.Picture
+    
+End
+
+Public Sub DesktopIconView_MouseDown()
+    
+     If $iconView.Key = "" Then Return
+    
+    If $iconView.FindAt(Mouse.X, Mouse.Y) Then
+        $iconView.Current.Selected = False
+    Else
+        With $iconView
+            Debug .Key
+            If .Key = "clock" Then Return
+            $selection.Push(.Key, Mouse.Left)
+            .[.Key].Picture = MikuruTiles.Get(.Key, $selection.Paths.Exist(.Key))
+        End With
+    End If
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argFileName As String)
+    
+    Try $iconView.Remove(Desktop.Path &/ argFileName)
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    Dim yukiPath As String = Desktop.Path &/ argFileName
+    
+    If Not $iconView.Exist(yukiPath) Then
+        $iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, False))
+    Endif
     
 End
