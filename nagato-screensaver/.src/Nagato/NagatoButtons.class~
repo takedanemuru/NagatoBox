@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Event Response(argTag As Integer)
+
+Private Sub addButton(argText As String, argTag As Integer, Optional argPicture As Picture)
+    
+    Dim yukiButton As New Button(Me._$hBox) As "Button"
+    
+    With yukiButton
+        .Text = argText
+        If argPicture Then .Picture = argPicture
+        .Tag = argTag
+        .AutoResize = True
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._InitializeHBox(argContainer)
+        
+        MikuruWidget.AddSpacer(Me._$hBox)
+    addButton(("Cancel"), MikuruResponse.Cancel)
+    addButton(("Apply"), MikuruResponse.Apply, Stock["medium/apply"])
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise Response(Last.Tag)
+    
+End

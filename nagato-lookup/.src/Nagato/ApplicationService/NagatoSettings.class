@@ -6,6 +6,7 @@ Property Read RecentApplications As String[]
 Property FormColor As Integer
 Property FontColor As Integer
 Property Directory As String
+Property OnlyActiveWindow As Boolean
 
 Private Const StoreMax As Integer = 30
 
@@ -85,6 +86,19 @@ End
 Private Sub Directory_Write(Value As String)
 
     $settings["screenshot/directory"] = Value
+    $settings.Save()
+
+End
+
+Private Function OnlyActiveWindow_Read() As Boolean
+
+    Return $settings["screenshot/only_active", False]
+
+End
+
+Private Sub OnlyActiveWindow_Write(Value As Boolean)
+
+    $settings["screenshot/only_active"] = Value
     $settings.Save()
 
 End

@@ -1,0 +1,74 @@
+' Gambas module file
+
+Property Read Rectangle As Rect
+Property Read Relative As Point
+
+Private $rectangle As Rect
+Private $relative As Point
+
+Private Sub setRectanglePosition(argData As Integer)
+    
+    If Not $rectangle.X Then 
+        $rectangle.X = argData
+    Else
+        $rectangle.Y = argData
+    Endif
+    
+End
+
+Private Sub setRelativePosition(argData As Integer)
+    
+    If Not $relative.X Then 
+        $relative.X = argData
+    Else
+        $relative.Y = argData
+    Endif
+    
+End
+
+Private Sub setRectangleHeight(argData As Integer)
+    
+    $rectangle.H = argData
+    
+End
+
+Private Sub setRectangleWidth(argData As String)
+    
+    If Not $rectangle.W Then $rectangle.W = argData
+    
+End
+
+Public Sub Set()
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    
+    $rectangle = New Rect
+    $relative = New Point
+    
+    yukiStream = Shell Subst$("xwininfo -id &1", Desktop.ActiveWindow) For Input
+
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine Like "*absolute*" Then setRectanglePosition(CInt(Split(yukiLine, " ", "", True)[3]))
+        If yukiLine Like "*relative*" Then setRelativePosition(CInt(Split(yukiLine, " ", "", True)[3]))
+        If yukiLine Like "*height:*" Then setRectangleHeight(CInt(Split(yukiLine, " ", "", True)[1]))
+        If yukiLine Like "*width:*" Then setRectangleWidth(CInt(Split(yukiLine, " ", "", True)[1]))
+        If $rectangle.H Then Break
+    Wend
+    
+    Close #yukiStream
+    
+End
+
+Private Function Rectangle_Read() As Rect
+
+    Return $rectangle
+
+End
+
+Private Function Relative_Read() As Point
+
+    Return $relative
+
+End

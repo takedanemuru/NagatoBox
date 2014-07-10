@@ -54,7 +54,6 @@ Public Sub Process_Read()
     
     While Not Eof($process)
         Read #$process, yukiStream, -256
-        Debug InStr(yukiStream, "\t") > 0
         updateConsole(yukiStream)
         $messageView.SetGoingOnMessage()
     Wend
@@ -87,4 +86,10 @@ Public Sub CommandTextArea_Activate()
     
     Print #$process, yukiCommand;
   
+End
+
+Public Sub Form_Hide()
+
+    Me.H -= ConsoleTextArea.H
+
 End

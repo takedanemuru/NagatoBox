@@ -3,7 +3,7 @@
 { Form Form
   MoveScaled(38.4286,16.1429,99,63)
   Font = Font["+1"]
-  Foreground = &HCDCDF3&
+  Foreground = &H9797F3&
   Text = ("nagato-commander")
   Icon = Picture["commander.jpg"]
   Arrangement = Arrange.Fill
@@ -44,14 +44,21 @@
     { Panel1 Panel
       MoveScaled(3,25,79,1)
     }
-    { ConsoleTextArea TextEdit
-      MoveScaled(1,26,86,29)
-      Font = Font["+2"]
-      Foreground = &HFF007F&
+    { ConsoleExpander Expander
+      MoveScaled(19,31,65,24)
+      Foreground = &HFFFFFF&
       Expand = True
-      ReadOnly = True
-      Wrap = True
-      ScrollBar = Scroll.None
+      Arrangement = Arrange.Fill
+      Text = ("Console")
+      { ConsoleTextArea TextEdit
+        MoveScaled(0,0,86,29)
+        Font = Font["+2"]
+        Foreground = &HFF007F&
+        Expand = True
+        ReadOnly = True
+        Wrap = True
+        ScrollBar = Scroll.None
+      }
     }
   }
 }

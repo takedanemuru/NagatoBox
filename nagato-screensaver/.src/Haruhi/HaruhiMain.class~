@@ -1,0 +1,39 @@
+' Gambas class file
+
+Private $labelScreensaver As NagatoValueLabel
+Private $labelStandBy As NagatoValueLabel
+Private $labelSuspend As NagatoValueLabel
+Private $labelOff As NagatoValueLabel
+Private $buttons As NagatoButtons
+
+Public Sub Form_Open()
+    
+    Dim yukiData As Integer[]
+    
+    Application.MainWindow = Me
+    Me.Center()
+    
+    yukiData = MikuruXset.Get()
+    
+    $labelScreensaver = New NagatoValueLabel(Me, ("Screensaver"), 300)
+        MikuruWidget.AddSeparator(Me)
+    $labelStandBy = New NagatoValueLabel(Me, ("Standby"), yukiData[0])
+    $labelSuspend = New NagatoValueLabel(Me, ("Suspend"), yukiData[1])
+    $labelOff = New NagatoValueLabel(Me, ("Off"), yukiData[2])
+        MikuruWidget.AddSpacer(Me)
+        MikuruWidget.AddSeparator(Me)
+    $buttons = New NagatoButtons(Me) As "Buttons"
+    
+End
+
+Public Sub Buttons_Response(argTag As Integer)
+    
+    Select Case argTag
+        Case MikuruResponse.Cancel
+            Me.Close()
+        Case MikuruResponse.Apply
+            MikuruXset.Set([$labelStandBy.Value, $labelSuspend.Value, $labelOff.Value])
+            Me.Close()
+    End Select
+    
+End

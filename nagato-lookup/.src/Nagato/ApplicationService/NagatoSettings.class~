@@ -1,0 +1,90 @@
+' Gambas class file
+
+Create Static
+
+Property Read RecentApplications As String[]
+Property FormColor As Integer
+Property FontColor As Integer
+Property Directory As String
+
+Private Const StoreMax As Integer = 30
+
+Private $settings As New Settings
+Private $recentApplications As String[]
+
+Private Sub loadRecentApps() As String[]
+    
+    Return $settings["apps/recent", Null]
+    
+End
+
+Private Sub saveRecentApps(argAppPaths As String[])
+    
+    $settings["apps/recent"] = argAppPaths
+    $settings.Save()
+    
+End
+
+Public Sub PushApplicationPath(argPath As String)
+    
+    If $recentApplications Then
+        Try $recentApplications.Remove($recentApplications.Find(argPath))
+        $recentApplications.Add(argPath, 0)
+        If $recentApplications.Count > StoreMax Then $recentApplications.Resize(StoreMax)
+    Else
+        $recentApplications = [argPath]
+    End If
+    SaveRecentApps($recentApplications)
+    
+End
+
+Public Sub _new()
+    
+    $recentApplications = LoadRecentApps()
+    
+End
+
+Private Function RecentApplications_Read() As String[]
+
+    Return $recentApplications
+
+End
+
+Private Function FormColor_Read() As Integer
+
+    Return $settings["color/form", Color.DarkBlue]
+
+End
+
+Private Sub FormColor_Write(Value As Integer)
+
+    $settings["color/form"] = Value
+    $settings.Save()
+
+End
+
+Private Function FontColor_Read() As Integer
+
+    Return $settings["color/font", Color.White]
+    
+End
+
+Private Sub FontColor_Write(Value As Integer)
+
+    $settings["color/font"] = Value
+    $settings.Save()
+
+End
+
+Private Function Directory_Read() As String
+
+    Return $settings["screenshot/directory", User.Home]
+
+End
+
+Private Sub Directory_Write(Value As String)
+
+    $settings["screenshot/directory"] = Value
+    $settings.Save()
+
+End

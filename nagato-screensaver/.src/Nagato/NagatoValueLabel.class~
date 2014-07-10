@@ -1,0 +1,60 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read Value As Integer
+Property Read Changed As Boolean
+
+Private $changed As Boolean = False
+Private $label As Label
+Private $spinBox As SpinBox
+
+Private Sub initializeLabel(argTitle As String)
+    
+    $label = New Label(Me._$hBox)
+    
+    With $label
+        .Text = argTitle
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeSpinBox(argValue As Integer)
+    
+    $spinBox = New SpinBox(Me._$hBox) As "SpinBox"
+    
+    With $spinBox
+        .MaxValue = 36000
+        .MinValue = 0
+        .Width = 64
+        .Value = argValue
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container, argTitle As String, argValue As Integer)
+    
+    Me._InitializeHBox(argContainer)
+    initializeLabel(argTitle)
+    initializeSpinBox(argValue)
+    
+End
+
+Public Sub SpinBox_Change()
+    
+    $changed = True
+    
+End
+
+Private Function Value_Read() As Integer
+
+    Return $spinBox.Value
+
+End
+
+Private Function Changed_Read() As Boolean
+
+    Return $changed
+
+End

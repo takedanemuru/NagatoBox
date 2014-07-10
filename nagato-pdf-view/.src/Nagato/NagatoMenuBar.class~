@@ -40,7 +40,6 @@ Private Sub addNextButton()
         .Tag = MikuruMenuEvent.PageNext
         .Width = $container.Height
         .Tooltip = ("Next page")
-        .Background = Color.Pink
     End With
     
 End
@@ -178,7 +177,9 @@ Public Sub _new(argContainer As Container)
     
 End
 
-Public Sub PageSpinBox_Change()
+Public Sub PageSpinBox_KeyPress()
+    
+    If Key.Code <> 16777221 Then Return
     
     Raise NewPage($pageSpinBox.Value)
     

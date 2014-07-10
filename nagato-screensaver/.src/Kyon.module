@@ -2,6 +2,16 @@
 
 Public Sub Main()
     
-    NagatoScreen.Show()
+    MikuruArgs.Parsing()
+    
+    If MikuruArgs.Disable Then
+        Try Exec ["xautolock", "-disable"]
+    Else If MikuruArgs.Enable Then
+        Try Exec ["xautolock", "-enable"]
+    Else If MikuruArgs.Show Then
+        NagatoScreen.Show()
+    Else 'no options 
+        HaruhiMain.Show()
+    End If
     
 End

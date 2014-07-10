@@ -6,7 +6,7 @@ Private $count As Integer
 
 Private Sub initializeParentMenu(argRootMenu As Menu)
     
-    $parentMenu = New Menu(argRootMenu) 
+    $parentMenu = New Menu(argRootMenu) As "ParentMenu"
     
     With $parentMenu
         .Text = ("Screenshot")
@@ -26,10 +26,36 @@ Private Sub addMenu(argText As String, argDelay As Integer)
     
 End
 
+Private Sub addDummyMenu()
+    
+    Dim yukiDummyMenu As New Menu($parentMenu) As "DummyMenu"
+    
+    yukiDummyMenu.Text = "dummy"
+    
+End
+
+Private Sub addIsOnlyActiveMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "IsOnlyActiveMenu"
+    
+    yukiMenu.Text = ("Only active window")
+    yukiMenu.Picture = IIf(NagatoSettings.OnlyActiveWindow, MikuruIcons.Get("button-check"), Null)
+    
+End
+
 Public Sub _new(argRootMenu As Menu)
     
     initializeParentMenu(argRootMenu)
+    addDummyMenu()
     
+End
+
+Public Sub ParentMenu_Show()
+    
+    $parentMenu.Children.Clear()
+    
+    addIsOnlyActiveMenu()
+        MikuruMenuSeparator.Set($parentMenu)
     addMenu("Now", 0)
         MikuruMenuSeparator.Set($parentMenu)
     addMenu("5 seconds later", 5)
@@ -42,11 +68,17 @@ End
 Public Sub ScreenshotMenu_Click()
     
     If Last.Tag = 0 Then
-        HaruhiSave.Call(False)
+        HaruhiSave.Call()
     Else
         $count = Last.Tag 
         $timer.Start()
     End If
+    
+End
+
+Public Sub IsOnlyActiveMenu_Click()
+    
+    NagatoSettings.OnlyActiveWindow = Not NagatoSettings.OnlyActiveWindow
     
 End
 
@@ -55,7 +87,7 @@ Public Sub Timer_Timer()
     Dec $count
     
     If $count = 0 Then
-        HaruhiSave.Call(False)
+        HaruhiSave.Call()
         $timer.Stop
     Endif
     

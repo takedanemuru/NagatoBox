@@ -1,20 +1,7 @@
 ' Gambas class file
 
-'Private Const MaxSize As Integer = 200
-
-'Private $screenshot As Picture
 Private $shutterSound As New NagatoSoundEffect
 Private $screenshooter As New NagatoScreenshot As "ScreenShooter"
-
-' Private Function getPreview() As Picture
-'     
-'     Dim yukiRate As Float = Min(MaxSize / $screenshot.H, MaxSize / $screenshot.W)
-'     
-'     With $screenshot
-'         Return .Image.Stretch(.W * yukiRate, .H * yukiRate).Picture
-'     End With
-'     
-' End
 
 Private Sub initializePreview()
     
@@ -93,7 +80,7 @@ End
 
 Public Sub SaveButton_Click()
 
-    $screenshooter.Picture.Save(getPath())
+    $screenshooter.Save(getPath())
     If CheckBox1.Value Then NagatoSettings.Directory = DirectoryButtonBox.Text 
     Me.Close()
 

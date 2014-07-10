@@ -1,0 +1,19 @@
+' Gambas module file
+
+Public Sub AddSeparator(argContainer As Container)
+    
+    Dim yukiSeparator As Separator
+    
+    yukiSeparator = New Separator(argContainer)
+    
+End
+
+Public Sub AddSpacer(argContainer As Container)
+    
+    Dim yukiPanel As New Panel(argContainer)
+    
+    With yukiPanel
+        .Expand = True
+    End With
+    
+End

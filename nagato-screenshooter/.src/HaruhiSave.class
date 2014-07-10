@@ -6,17 +6,13 @@ Private $screenshot As Picture
 
 Private Sub initializeScreenshot(argOnlyActive As Boolean)
     
-    Dim yukiWindow As DesktopWindow
-    
     If argOnlyActive Then
-        yukiWindow = New DesktopWindow(Desktop.ActiveWindow)
-        $screenshot = Desktop.Screenshot(yukiWindow.X, yukiWindow.Y, yukiWindow.W, yukiWindow.H)
+        With MikuruActiveWindow.Rectangle
+            $screenshot = Desktop.Screenshot(.X, .Y, .W, .H)
+        End With
     Else
         $screenshot = Desktop.Screenshot()
     End If
-    
-Catch
-    $screenshot = Desktop.Screenshot()
     
 End
 
@@ -81,9 +77,23 @@ Private Sub playSound()
     
 End
 
+Private Sub hasActiveWindow(argOnlyActive As Boolean) As Boolean
+    
+    If Not argOnlyActive Then Return True
+    If Desktop.ActiveWindow > 0 Then Return True
+    
+    Message.Warning("YUKI.N > I couldn't find active window...")
+    
+    Return False
+    
+End
+
 Public Sub Call(argOnlyActive As Boolean)
     
+    If Not hasActiveWindow(argOnlyActive) Then Return
+    
     playSound()
+    MikuruActiveWindow.Set()
     initializeScreenshot(argOnlyActive)
     Me.Center()
     Me.Show()
