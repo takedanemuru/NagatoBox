@@ -15,19 +15,29 @@ Private Sub getJointName(argNewDirectory As String[]) As String
     
 End
 
-Public Function New(argParentDirectory As String, argNewDirectory As String[]) As String
+Private Function makeDirectory(argNewDirectory As String) As Boolean
+    
+    If Exist(argNewDirectory) Then
+        Return False
+    Else
+        Mkdir argNewDirectory
+        Return True
+    End If
+    
+End
+
+Public Sub New(argParentDirectory As String, argNewDirectory As String[]) 
     
     Dim yukiJointName As String = (argParentDirectory &/ getJointName(argNewDirectory))
     Dim yukiCount As Integer = 0
     
-    If Not Exist(yukiJointName) Then Mkdir yukiJointName
+    Debug "?"
+    
+    If makeDirectory(yukiJointName) Then Return
     
     Do
         Inc yukiCount
-        If Not Exist(Subst$("&1(&2)", yukiJointName, yukiCount)) Then 
-            Mkdir Subst$("&1(&2)", yukiJointName, yukiCount)
-            Break
-        End If
+        If makeDirectory(Subst$("&1(&2)", yukiJointName, yukiCount)) Then Break
     Loop
     
 End
