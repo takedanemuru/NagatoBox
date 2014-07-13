@@ -2,6 +2,10 @@
 
 a software suite for openbox3.
 
+##Important Notice
+
+Only watch this git from a distance in a well-lit room.
+
 ##Dependency
 
 Gambas3 3.5.2 or later varsion
