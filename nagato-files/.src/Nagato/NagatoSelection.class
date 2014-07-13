@@ -69,6 +69,17 @@ Public Sub Push(argPath As String, argLeftClick As Boolean)
     
 End
 
+Public Sub SetPaths(argPaths As String[])
+    
+    $paths.Clear()
+    $paths = argPaths.Copy()
+    
+    If Not argPaths.Exist($lastPath) Then
+        $lastPath = IIf($paths.Count > 0, argPaths[0], "")
+    Endif
+    
+End
+
 Public Sub RemovePath(argPath As String)
     
     Try $paths.Remove($paths.Find(argPath))

@@ -150,6 +150,8 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             Case .ViewForceReload
                 NagatoDBThumbnailer.ForceCleanUp($log.Current)
                 refresh($log.Current)
+            Case .ViewSelectAll, .ViewUnselectAll, .ViewInvertSelection
+                $iconView.SelectItems(argEvent)
             Case .DirCreate
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
                 HaruhiNewDirectory.ShowDialog()

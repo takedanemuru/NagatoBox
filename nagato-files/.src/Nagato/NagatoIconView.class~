@@ -43,6 +43,23 @@ Public Sub HasKey(argDirectory As String, argPath As String) As Boolean
     
 End
 
+Public Sub SelectItems(argTag As Integer)
+    
+    Select Case argTag
+        Case NagatoMenuPipe.ViewSelectAll
+            If Not NagatoSettings.MultipleSelection Then Return
+            $selectionBar.SetPaths(MikuruDirectory.GetAll($currentDirectory))
+            $iconView.Refresh($currentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
+        Case NagatoMenuPipe.ViewUnselectAll
+            Me.Refresh($currentDirectory)
+        Case NagatoMenuPipe.ViewInvertSelection
+            If Not NagatoSettings.MultipleSelection Then Return
+            $selectionBar.SetPaths(MikuruDirectory.GetInverted($currentDirectory, $selectionBar.Paths))
+            $iconView.Refresh($currentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
+    End Select
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     Dim yukiIconViewInitializer As New NagatoIconViewInitializer(argContainer)
@@ -78,7 +95,7 @@ End
 
 Public Sub Menu_MouseDown(argPath As String)
     
-     $selectionBar.Push(argPath, Mouse.Left)
+    $selectionBar.Push(argPath, Mouse.Left)
     If Not NagatoSettings.MultipleSelection Then clearSelection()
     $iconView.ResetIcon(argPath, $selectionBar.Exist(argPath))
     
@@ -106,6 +123,7 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
         Case Key["t"]
             Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
         Case Key["n"]
+            Debug "new dir"
             Raise MenuEvent(NagatoMenuPipe.DirCreate)
         Case Key["f"]
             HaruhiMain.SetSearch(False)

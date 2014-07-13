@@ -5,6 +5,8 @@ Public Function GetParents(argDirectory As String) As String[]
     Dim yukiDirectory As String = argDirectory
     Dim yukiResult As New String[]
     
+    yukiResult.Add(argDirectory)
+    
     Do
         yukiDirectory = File.Dir(yukiDirectory)
         If yukiDirectory = "/" Then Break
@@ -13,5 +15,35 @@ Public Function GetParents(argDirectory As String) As String[]
     Loop
     
     Return yukiResult
+    
+End
+
+Public Sub GetAll(argCurrentDirectory As String) As String[]
+    
+    Dim yukiPattern As String = IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
+    Dim yukiAll As New String[]
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argCurrentDirectory, yukiPattern)
+        yukiAll.Add(argCurrentDirectory &/ yukiPath)
+    Next
+    
+    Return yukiAll
+    
+End
+
+Public Sub GetInverted(argDirectory As String, argSelected As String[]) As String[]
+    
+    Dim yukiInverted As String[] = Me.GetAll(argDirectory)
+    Dim yukiPath As String
+    
+    MikuruArrayTest(yukiInverted)
+    MikuruArrayTest(argSelected)
+    
+    For Each yukiPath In argSelected
+        Try yukiInverted.Remove(yukiInverted.Find(yukiPath))
+    Next
+    
+    Return yukiInverted
     
 End

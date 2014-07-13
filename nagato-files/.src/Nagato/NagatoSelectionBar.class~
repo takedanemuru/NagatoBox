@@ -6,7 +6,7 @@ Property Read Count As Integer
 Property Read Paths As String[]
 Property Read LastSelected As String
 
-Private Enum ButtonCancel, ButtonArchive, ButtonMoveTo, ButtonCopyTo, ButtonDelete
+Private Enum ButtonAll, ButtonInvert, ButtonArchive, ButtonMoveTo, ButtonCopyTo, ButtonDelete
 
 Private $container As NagatoPanelContainer
 Private $selection As New NagatoSelection As "Selection"
@@ -29,12 +29,11 @@ End
 Public Sub _new(argContainer As TabStrip)
     
     $container = New NagatoPanelContainer(argContainer)
-    addButton("Unselect All", ButtonCancel)
+    addButton("Unselect All", ButtonAll)
     $label = New NagatoSelectionBarLabel($container.HBox)
     addButton("Move To...", ButtonMoveTo)
     addButton("Copy To...", ButtonCopyTo)
     addButton("Remove", ButtonDelete)
-    
     
 End
 
@@ -68,10 +67,16 @@ Public Sub Push(argPath As String, argLeftClick As Boolean)
     
 End
 
+Public Sub SetPaths(argPaths As String[])
+    
+    $selection.SetPaths(argPaths)
+    
+End
+
 Public Sub ActionButton_Click()
     
     Select Case Last.Tag
-        Case ButtonCancel
+        Case ButtonAll
             Raise Cancel
         Case ButtonCopyTo
             MikuruFileManuever.CopyTo($selection.Paths)
@@ -85,9 +90,13 @@ End
 
 Public Sub Selection_Changed()
     
-    '$container.Visible = IIf(NagatoSettings.MultipleSelection, ($selection.Count > 0), False)
-    $label.SetText($selection.Count)
+    $container.Visible = ($selection.Count <> 0)
     
+    If $selection.Count = 0 Then
+        $label.SetText(0)
+    Else 
+        $label.SetText(IIf(NagatoSettings.MultipleSelection, $selection.Count, 1))
+    Endif
 End
 
 Private Function Count_Read() As Integer

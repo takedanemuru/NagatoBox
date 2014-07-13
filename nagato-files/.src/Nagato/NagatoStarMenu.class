@@ -66,6 +66,10 @@ Private Sub refreshChildMenus()
             Me._AddMenu("", 0) ' Spacer
         addSortMenu()
             Me._AddMenu("", 0) ' Spacer
+        Me._AddMenu(("Select all"), .ViewSelectAll)
+        Me._AddMenu(("Unselect all"), .ViewUnselectAll)
+        Me._AddMenu(("Invert selection"), .ViewInvertSelection)
+            Me._AddMenu("", 0) ' Spacer
         Me._AddMenu(("&About"), .AppAbout, MikuruIcon.Get("star"))
         Me._AddMenu(("&Quit"), .AppQuit, MikuruIcon.Get("button-power"))
     End With

@@ -1,11 +1,11 @@
 ' Gambas class file
 
+Private Const Type As String = "_NET_WM_WINDOW_TYPE"
+Private Const TypeDock As String = "_NET_WM_WINDOW_TYPE_DOCK"
+
 Private $button As NagatoStarButton
 Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
-' Private $networkButton As NagatoNetworkButton
-' Private $powerButton As NagatoPowerButton
-' Private $fcitxButton As NagatoFcitxButton
 Private $pager As NagatoPager
 Private $clock As NagatoClock
 Private $observer As Observer
@@ -27,6 +27,8 @@ Private Sub setForm()
     Me.Y = Screen.H - Me.H
     Me.X = 0
     Me.W = Screen.W
+    
+    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDock) Wait
     
 End
 

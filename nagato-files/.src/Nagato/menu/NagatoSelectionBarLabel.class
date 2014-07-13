@@ -6,7 +6,14 @@ Private $textLabel As TextLabel
 
 Private Function getLabelTemplate(argCount As Integer) As String
     
-    Return IIf(argCount = 1, "<b>1</b> item is selected", "<b>&1</b> items are selected")
+    Select Case argCount
+        Case 0
+            Return "No items selected"
+        Case 1
+            Return "<b>1</b> item selected"
+        Default
+            Return "<b>&1</b> items selected"
+    End Select
     
 End
 
