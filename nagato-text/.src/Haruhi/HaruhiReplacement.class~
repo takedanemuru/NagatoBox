@@ -1,0 +1,15 @@
+' Gambas class file
+
+Event Signal(argTag As String, argValues As Variant[])
+
+Public Sub ActionButtons_Click()
+
+    If Last.Tag = "Replace" Or If Last.Tag = "ReplaceAll" Then
+        If FindBox.Text = "" Or If ReplacementBox.Text = "" Then Return
+    Else
+        If FindBox.Text = "" Then Return
+    End If
+
+    Raise Signal(Last.Tag, [FindBox.Text, ReplacementBox.Text])
+
+End

@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Function GetReplacementCount(argSource As String, argTarget As String) As Integer
+    
+    Dim yukiPosition As Integer
+    Dim yukiCount As Integer
+    
+    Do
+        yukiPosition = String.InStr(argSource, argTarget, yukiPosition, gb.IgnoreCase)
+        If yukiPosition = 0 Then Break
+        Inc yukiCount
+    Loop
+    
+    Return yukiCount
+    
+End

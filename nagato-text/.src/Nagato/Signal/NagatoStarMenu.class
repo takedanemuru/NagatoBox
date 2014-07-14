@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuSignal
 
+Private Enum MenuNone, MenuReplace, MenuAbout, MenuQuit
+
 Private $button As MenuButton
 Private $rootMenu As Menu
 
@@ -28,8 +30,10 @@ End
 
 Private Sub setSubMenu()
     
-    addMenuItem(("About nagato-text"), 0, "star")
-    addMenuItem(("Quit"), 1, "button-power")
+    addMenuItem(("Replace"), MenuReplace, "button-synchronize")
+        addMenuItem((""), MenuNone, "button-power")
+    addMenuItem(("About nagato-text"), MenuAbout, "star")
+    addMenuItem(("Quit"), MenuQuit, "button-power")
     
 End
 
@@ -44,9 +48,11 @@ End
 Public Sub MenuItem_Click()
     
     Select Case Last.Tag
-        Case 0
+        Case MenuReplace
+            HaruhiReplacement.Show()
+        Case MenuAbout
             HaruhiAbout.ShowDialog()
-        Case 1
+        Case MenuQuit
             HaruhiMain.Close()
     End Select
     

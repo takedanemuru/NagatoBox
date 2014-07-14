@@ -15,7 +15,7 @@ Private Function getCurrentPositionInUTF8(argQuery As String) As Integer ' read 
 
     'retry searching form beginning of the text when String.Instr couldn't find any matching.
     $textArea.pos = 1
-    If yukiPosition = 0 Then yukiPosition = String.InStr($textArea.Text, argQuery, 1, gb.IgnoreCase)
+    If yukiPosition = 0 Then yukiPosition = String.InStr($textArea.Text, argQuery, 0, gb.IgnoreCase)
     
     Return yukiPosition - 1
     
@@ -28,6 +28,20 @@ Public Sub SearchText(argText As String)
     If yukiStartPosition = -1 Then Return
     
     $textArea.Select(yukiStartPosition, String.Len(argText))
+    
+End
+
+Public Sub ReplaceAll(argTarget As String, argReplacement As String)
+    
+    Dim yukiCount As Integer = MikuruText.GetReplacementCount($textArea.Text, argTarget)
+    
+    If yukiCount = 0 Then
+        Message.Error(("Query not found"))
+    Else
+        If 2 = Message.Question(Subst$(("&1 found, replace them all ?"), yukiCount), ("Cancel"), ("Replace All")) Then
+            $textArea.Text = Replace$($textArea.Text, argTarget, argReplacement, gb.IgnoreCase)
+        Endif
+    Endif
     
 End
 

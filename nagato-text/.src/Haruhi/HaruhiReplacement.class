@@ -1,2 +1,11 @@
 ' Gambas class file
 
+Event Signal(argTag As String, argValues As Variant[])
+
+Public Sub ActionButtons_Click()
+
+    If FindBox.Text = "" Then Return
+
+    Raise Signal(Last.Tag, [FindBox.Text, ReplacementBox.Text])
+
+End

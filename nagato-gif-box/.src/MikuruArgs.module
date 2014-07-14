@@ -1,0 +1,25 @@
+' Gambas module file
+
+Property Read Path As String
+
+Private $paths As New String[]
+
+Public Sub Parsing()
+    
+    Args.Begin()
+    
+    $paths = Args.End()
+    
+End
+
+Private Function Path_Read() As String
+
+    Dim yukiPath As String
+
+    For Each yukiPath In $paths
+        If Exist(yukiPath) Then Return yukiPath
+    Next
+
+    Return ""
+
+End

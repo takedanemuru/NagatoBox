@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    MikuruArgs.Parsing()
+    
+    HaruhiMain.Show()
+    
+    If MikuruArgs.Path = "" Then
+        
+    Else
+        
+    Endif
+    
+End

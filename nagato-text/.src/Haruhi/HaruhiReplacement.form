@@ -1,27 +1,39 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,79,36)
+  MoveScaled(0,0,73,27)
+  Resizable = False
   { FindBox TextBox
-    MoveScaled(19,6,24,4)
+    MoveScaled(12,3,32,4)
   }
   { ReplacementBox TextBox
-    MoveScaled(19,13,24,4)
+    MoveScaled(12,9,32,4)
   }
-  { PrevButton Button
-    MoveScaled(54,6,23,4)
+  { PrevButton Button ActionButtons
+    Name = "PrevButton"
+    MoveScaled(48,3,23,4)
+    Tag = "Previous"
     Text = ("Previous")
   }
-  { NextButton Button
-    MoveScaled(54,12,23,4)
+  { NextButton Button ActionButtons
+    Name = "NextButton"
+    MoveScaled(48,8,23,4)
+    Tag = "Next"
     Text = ("Next")
   }
-  { ReplaceButton Button
-    MoveScaled(54,20,23,4)
+  { ReplaceButton Button ActionButtons
+    Name = "ReplaceButton"
+    MoveScaled(48,15,23,4)
+    Tag = "Replace"
     Text = ("Replace")
   }
-  { ReplaceAllButton Button
-    MoveScaled(54,26,23,4)
+  { ReplaceAllButton Button ActionButtons
+    Name = "ReplaceAllButton"
+    MoveScaled(48,20,23,4)
+    Tag = "ReplaceAll"
     Text = ("Replace All")
+  }
+  { Separator1 Separator
+    MoveScaled(45,1,1,25)
   }
 }

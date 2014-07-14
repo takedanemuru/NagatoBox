@@ -1,0 +1,54 @@
+' Gambas class file
+
+Private Sub fitWindow(argPath As String)
+    
+    Dim yukiPicture As Picture = Picture.Load(argPath)
+    
+    Me.H = yukiPicture.H
+    Me.W = yukiPicture.W
+    
+End
+
+Private Sub setDialogProperty()
+    
+    With Dialog
+        .Title = ("Select gif file")
+        .Path = User.Home
+        .Filter = ["*gif", "gif file"]
+    End With
+    
+End
+
+Public Sub OpenDialog()
+    
+    setDialogProperty()
+    
+    If Not Dialog.OpenFile(False) Then
+        fitWindow(Dialog.Path)
+        MainMovieBox.Path = Dialog.Path
+        MainMovieBox.Playing = True
+    Else
+        Me.Close()
+    Endif
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    fitWindow(argPath)
+    MainMovieBox.Path = argPath
+    MainMovieBox.Playing = True
+    
+End
+
+Public Sub _new()
+    
+    Application.MainWindow = Me
+    
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+
+End

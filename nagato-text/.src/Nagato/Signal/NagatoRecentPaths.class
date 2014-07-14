@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuSignal
+
+Private $iconView As IconView
+
+Public Sub Refresh(argPath As String)
+    
+    Dim yukiPath As String
+    
+    If Exist(argPath) Then NagatoSettings.PushRecentPath(argPath)
+    
+    $iconView.Clear()
+    
+    For Each yukiPath In NagatoSettings.RecentPaths
+        If Not $iconView.Exist(yukiPath) Then
+            $iconView.Add(yukiPath, File.Name(yukiPath), MikuruTextTile.Get(yukiPath))
+        End If
+    Next
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    
+End

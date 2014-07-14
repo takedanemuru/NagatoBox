@@ -1,0 +1,82 @@
+' Gambas class file
+
+Private $observer As Observer
+Private $tabStrip As NagatoTabStrip
+Private $recentPaths As NagatoRecentPaths
+
+Private Sub activateMe()
+    
+    Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    
+    yukiDesktopWindow.Desktop = Desktop.Current
+    yukiDesktopWindow.Activate()
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    activateMe()
+    $tabStrip.NewTab(argPath)
+    
+End
+
+Public Sub OpenWithPath(Optional argPath As String = "")
+    
+    $tabStrip.NewTab(argPath)
+    
+    Object.Lock(Me)
+        Me.Show()
+        NagatoSettings.LoadFormSettings(Me)
+    Object.Unlock(Me)
+    
+End
+
+Public Sub InitializeRecentIconView()
+    
+    $recentPaths.Refresh("")
+    
+End
+
+Public Sub _new()
+    
+    Application.MainWindow = Me
+    $observer = New Observer(HaruhiReplacement) As "Asakura"
+    $tabStrip = New NagatoTabStrip(MainTabs) As "MainTabStrip"
+    $recentPaths = New NagatoRecentPaths(RecentFilesIconView) As "RecentPaths"
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    NagatoDBus.Unregister()
+    
+End
+
+Public Sub RecentFilesIconView_Activate()
+
+    OpenWithPath(RecentFilesIconView.Key)
+
+End
+
+Public Sub MainTabStrip_Signal(argTag As Integer, argValues As Variant[])
+    
+    $recentPaths.Refresh(argValues[0])
+    
+End
+
+Public Sub Asakura_Signal(argTag As String, argValues As Variant[])
+    
+    With MikuruSignal
+        Select Case argTag
+            Case "Replace"
+                Debug argValues[0]
+                Debug argValues[1]
+            Case "ReplaceAll"
+                Debug argValues[0]
+                Debug argValues[1]
+                $tabStrip.Search("ReplaceAll", argValues)
+        End Select
+    End With
+    
+End
