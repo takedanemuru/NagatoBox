@@ -52,7 +52,16 @@ End
 
 Public Sub Search(argTag As String, argValues As Variant[])
     
-    Debug argTag
+    Select Case argTag
+        Case "Next"
+            $textArea.SearchText(argValues[0])
+        Case "Previous"
+            $textArea.SearchTextBack(argValues[0])
+        Case "Replace"
+            $textArea.ReplaceOne(argValues[0], argValues[1])
+        Case "ReplaceAll"
+            $textArea.ReplaceAll(argValues[0], argValues[1])
+    End Select
     
 End
 

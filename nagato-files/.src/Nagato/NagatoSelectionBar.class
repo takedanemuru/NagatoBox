@@ -80,8 +80,10 @@ Public Sub ActionButton_Click()
         Case ButtonAll
             Raise Cancel
         Case ButtonCopyTo
+            MikuruArrayTest($selection.Paths)
             MikuruFileManuever.CopyTo($selection.Paths)
         Case ButtonMoveTo
+            MikuruArrayTest($selection.Paths)
             MikuruFileManuever.MoveTo($selection.Paths)
         Case ButtonDelete
             MikuruFile.TrashFiles($selection.Paths)

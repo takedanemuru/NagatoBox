@@ -63,6 +63,9 @@ End
 
 Public Sub Asakura_Activate()
     
+    If Me._$iconView.Key = "NOTFOUND" Then Return
+    If Me._$iconView.Key = "" Then Return
+    
     If IsDir(Me._$iconView.Key) Then
         'Raise DirectoryClicked(Me._$iconView.Key)
         Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, Me._$iconView.Key)
@@ -74,6 +77,7 @@ End
 
 Public Sub Asakura_MouseDown()
     
+    If Me._$iconView.Key = "NOTFOUND" Then Return
     If Me._$iconView.Key = "" Then Return
     
     If Me._$iconView.FindAt(Mouse.X, Mouse.Y) Then
@@ -89,6 +93,8 @@ Public Sub Asakura_Menu()
     Dim yukiPath As String = Me._$iconView.Key
     Dim yukiContextMenu As Object
     
+    If Me._$iconView.Key = "NOTFOUND" Then Return
+
     If yukiPath = "" Then
         Debug "IconViewContextMenu"
     Else If IsDir(yukiPath) Then

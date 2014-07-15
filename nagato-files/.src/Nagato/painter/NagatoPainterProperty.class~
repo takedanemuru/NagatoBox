@@ -63,17 +63,32 @@ Private Function drawImageProperties(argTopOffset As Integer) As Integer
     
 End
 
+Private Function drawPageCount(argTopOffset As Integer, argPath As String) 
+    
+    Dim yukiTemplate As String = "<br>Page:<br>"
+    Dim yukiDocument As New PdfDocument(argPath)
+    Dim yukiRect As New Rect(16, argTopOffset, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
+    
+    With yukiRect
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.RichText(yukiTemplate, .X, .Y, .W, .H, Align.Left)
+        Paint.RichText(yukiDocument.Count, .X, .Y, .W, .H Align.Right)
+        Paint.Fill()
+    End With
+    
+End
+
 Private Function drawTrashProperty(argTopOffset As Integer) As Integer
     
     Dim yukiTemplate As String = "<br><u>Path To Restore:</u><br>"
     Dim yukiRect As New Rect(16, argTopOffset, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
     
     With yukiRect
-    Paint.Brush = Paint.Color(Color.White)
-        Paint.RichText(yukiTemplate, .X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.RichText(yukiTemplate, .X, .Y, .W, .H, Align.Center)
         'Paint.RichText(yukiProperties, .X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Right)
         Paint.RichText(NagatoTrash.GetPreviousPath($currentPath), .X, .H + .Y, .W,, Align.Center)
-    Paint.Fill()
+        Paint.Fill()
     End With
     
     Return yukiRect.Y + yukiRect.H
@@ -82,7 +97,7 @@ End
 
 Public Sub Paint(argY As Integer, argPath As String, argIsTrash As Boolean)
     
-    Dim yukiIsImage As Boolean = DesktopMime.FromFile(argPath).Type Begins "image"
+    Dim yukiMimeType As String = DesktopMime.FromFile(argPath).Type
     Dim yukiTopOffset As Integer
     
     $currentPath = argPath
@@ -90,7 +105,8 @@ Public Sub Paint(argY As Integer, argPath As String, argIsTrash As Boolean)
     drawHeader(argY)
     yukiTopOffset = drawProperty(argY)
     
-    If yukiIsImage Then yukiTopOffset = drawImageProperties(yukiTopOffset)
+    If yukiMimeType Begins "image" Then yukiTopOffset = drawImageProperties(yukiTopOffset)
+    If yukiMimeType = "application/pdf" Then drawPageCount(yukiTopOffset, argPath)
     If argIsTrash Then drawTrashProperty(yukiTopOffset)
     
 End

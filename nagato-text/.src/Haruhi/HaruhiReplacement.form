@@ -1,39 +1,49 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,73,27)
+  MoveScaled(0,0,74,61)
+  Icon = Picture["Pictures/nagato_icons/button-synchronize.png"]
+  Picture = Picture["Pictures/Dounidemo.jpg"]
   Resizable = False
   { FindBox TextBox
-    MoveScaled(12,3,32,4)
+    MoveScaled(39,2,32,4)
   }
   { ReplacementBox TextBox
-    MoveScaled(12,9,32,4)
+    MoveScaled(39,8,32,4)
   }
-  { PrevButton Button ActionButtons
+  { PrevButton Button SearchButtons
     Name = "PrevButton"
-    MoveScaled(48,3,23,4)
+    MoveScaled(1,56,17,4)
     Tag = "Previous"
     Text = ("Previous")
   }
-  { NextButton Button ActionButtons
+  { NextButton Button SearchButtons
     Name = "NextButton"
-    MoveScaled(48,8,23,4)
+    MoveScaled(19,56,17,4)
     Tag = "Next"
     Text = ("Next")
   }
-  { ReplaceButton Button ActionButtons
+  { ReplaceButton Button SearchButtons
     Name = "ReplaceButton"
-    MoveScaled(48,15,23,4)
+    MoveScaled(38,56,17,4)
     Tag = "Replace"
     Text = ("Replace")
   }
-  { ReplaceAllButton Button ActionButtons
+  { ReplaceAllButton Button SearchButtons
     Name = "ReplaceAllButton"
-    MoveScaled(48,20,23,4)
+    MoveScaled(56,56,17,4)
     Tag = "ReplaceAll"
     Text = ("Replace All")
   }
   { Separator1 Separator
-    MoveScaled(45,1,1,25)
+    MoveScaled(2,14,69,3)
+  }
+  { Label1 Label
+    MoveScaled(22,2,15,4)
+    Text = ("Find :")
+  }
+  { Label2 Label
+    MoveScaled(22,8,15,4)
+    Text = ("Replace :")
   }
 }

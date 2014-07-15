@@ -40,9 +40,9 @@ End
 Public Sub _new()
     
     Application.MainWindow = Me
-    $observer = New Observer(HaruhiReplacement) As "Asakura"
     $tabStrip = New NagatoTabStrip(MainTabs) As "MainTabStrip"
     $recentPaths = New NagatoRecentPaths(RecentFilesIconView) As "RecentPaths"
+    $observer = New Observer(HaruhiReplacement) As "Asakura"
     
 End
 
@@ -65,7 +65,9 @@ Public Sub MainTabStrip_Signal(argTag As Integer, argValues As Variant[])
     
 End
 
-Public Sub Asakura_Signal(argTag As String, argValues As Variant[])
+Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
+    
+    Debug argTag
     
     $tabStrip.Search(argTag, argValues)
     

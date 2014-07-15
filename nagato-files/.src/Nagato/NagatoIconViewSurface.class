@@ -30,6 +30,7 @@ Private Sub refreshIconView(argDirectory As String, argSelection As String[], ar
     Me._$iconView.Clear()
     setIcon(argDirectory, argSelection, gb.Directory)
     setIcon(argDirectory, argSelection, gb.File)
+    If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     NagatoDBThumbnailer.CleanUp(argDirectory)
     ensureVisible(argLastSelected)
     

@@ -21,6 +21,24 @@ Private Function getCurrentPositionInUTF8(argQuery As String) As Integer ' read 
     
 End
 
+Private Function getCurrentPositionInUTF8Back(argQuery As String) As Integer ' read comment about return value.
+    
+    ' this function should return -1 when there's no matching word.
+    
+    Dim yukiSearchStartFrom As Integer = String.Len(Left$($textArea.Text, $textArea.Pos)) - String.Len(argQuery)
+    Dim yukiPosition As Integer = yukiSearchStartFrom 
+    
+    Do
+        If String.Mid($textArea.Text, yukiPosition) Begins argQuery Then Return yukiPosition
+        Dec yukiPosition
+        If yukiPosition = yukiSearchStartFrom Then Return -1
+        If 0 >= yukiPosition Then yukiPosition = String.Len($textArea.Text)
+    Loop
+    
+    Return yukiPosition 
+    
+End
+
 Public Sub SearchText(argText As String)
     
     Dim yukiStartPosition As Integer = getCurrentPositionInUTF8(argText)
@@ -28,6 +46,33 @@ Public Sub SearchText(argText As String)
     If yukiStartPosition = -1 Then Return
     
     $textArea.Select(yukiStartPosition, String.Len(argText))
+    
+End
+
+Public Sub SearchTextBack(argText As String)
+    
+    Dim yukiStartPosition As Integer = getCurrentPositionInUTF8Back(argText)
+    
+    Debug yukiStartPosition
+    
+    If yukiStartPosition = -1 Then Return
+    
+    $textArea.Select(yukiStartPosition - 1, String.Len(argText))
+    
+End
+
+Public Sub ReplaceOne(argQuery As String, argReplacement As String)
+    
+    If MikuruText.GetReplacementCount($textArea.Text, argQuery) = 0 Then
+        Message.Error(("Query not found"))
+        Return
+    Endif
+    
+    If $textArea.Selection.Text = argQuery Then
+        $textArea.Selection.Text = argReplacement
+    Else
+        Me.SearchText(argQuery)
+    Endif
     
 End
 

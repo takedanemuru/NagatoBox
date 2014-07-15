@@ -14,7 +14,7 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
 
     For Each yukiPath In MikuruSort(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
-        Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(File.Name(yukiPath))))
+        Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
     Next
     
 End
@@ -25,11 +25,31 @@ Private Sub ensureVisible(argPath As String)
     
 End
 
+Private Sub getNotFoundTile() As Picture
+    
+    Dim yukiImage As New Image(128, 128, Color.DarkGreen + 16777216 * 128)
+    Dim yukiMessage As String = ("File and Directory not found")
+    Dim yukiHeight As Integer
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.DrawPicture(MikuruIcon.Get("exclamation", 48), 40, 16)
+        Paint.Font.Bold = True
+        yukiHeight = Paint.Font.RichTextHeight(yukiMessage, 112)
+        Paint.RichText(yukiMessage, 0, 128 - yukiHeight - 8, 128, yukiHeight + 8, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
+
 Private Sub refreshIconView(argDirectory As String, argSelection As String[], argLastSelected As String)
     
     Me._$iconView.Clear()
     setIcon(argDirectory, argSelection, gb.Directory)
     setIcon(argDirectory, argSelection, gb.File)
+    If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", getNotFoundTile())
     NagatoDBThumbnailer.CleanUp(argDirectory)
     ensureVisible(argLastSelected)
     
