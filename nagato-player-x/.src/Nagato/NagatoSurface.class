@@ -37,7 +37,7 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
             NagatoQueue.Player.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
         End With
     Else If MikuruUx.InfoBox.Contains(argMouseX, argMouseY) Then
-        HaruhiTagEdit.SetPath(NagatoQueue.Path.CurrentPathUndecoded)
+        HaruhiTagEdit.SetPath(NagatoQueue.GetCurrentPath(True))
         HaruhiTagEdit.ShowDialog()
     Else If MikuruUx.ProgressBar.Contains(argMouseX, argMouseY) Then
         With MikuruUx.ProgressBar

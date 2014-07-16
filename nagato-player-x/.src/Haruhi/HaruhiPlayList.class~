@@ -7,6 +7,8 @@ Private $libraryTab As NagatoTabLibrary
 
 Public Sub MoveTo(argUrl As String)
     
+    Debug argUrl
+    
     $nowPlayingTab.MoveTo(argUrl)
     
 End
@@ -24,7 +26,7 @@ End
 
 Public Sub Form_Close()
     
-    NagatoSettingsMusic.SavePaths(NagatoQueue.Paths)
+    NagatoQueue.SavePaths()
     NagatoSettingsForm.Save(Me)
     
 End

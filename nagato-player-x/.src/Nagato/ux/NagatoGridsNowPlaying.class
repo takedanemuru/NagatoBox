@@ -2,7 +2,7 @@
 
 Inherits NagatoGrids
 
-Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnPath
+Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum
 
 Private $observer As Observer
 
@@ -11,42 +11,35 @@ Private Sub setPlayMark(argRow As Integer)
     Dim yukiRow As Integer
     
     For yukiRow = 0 To Me._$grids.Rows.Max
-        Me._$grids[yukiRow, 0].Picture = IIf(yukiRow = argRow, MikuruIcon.GetFromPath("Pictures/button-play.png"), Null)
+        Me._$grids[yukiRow, 0].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
     Next
     
 End
 
 Private Sub setPlayingIcon(argRowIndex As Integer)
     
-    If argRowIndex <> NagatoQueue.Path.CurrentPosition Then
+    If argRowIndex <> NagatoQueue.CurrentIndex Then
         Return 
     Else 
-        Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.GetFromPath("Pictures/button-play.png")
+        Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
     End If
     
 End
 
 Private Sub refreshData()
     
-    Dim yukiResult As Result
     Dim yukiRowIndex As Integer
     
     If Not Object.IsValid(Me._$grids) Then Return
     
     Me._ClearGrids()
     
-    For yukiRowIndex = 0 To NagatoQueue.Paths.Max
+    For yukiRowIndex = 0 To NagatoQueue.Count - 1
         Inc Me._$grids.Rows.Count
         setPlayingIcon(yukiRowIndex)
-        yukiResult = NagatoDBMedia.GetMusicResultByPath(NagatoQueue.Paths[yukiRowIndex])
-        Try Me._SetGridData(yukiRowIndex, ColumnTitle, yukiResult[NagatoDBMedia.ColumnTitle])
-        If Me._$grids[yukiRowIndex, ColumnTitle].Text = "" Then 
-            Me._$grids[yukiRowIndex, ColumnTitle].Text = File.BaseName(NagatoQueue.Paths[yukiRowIndex])
-        End If
-        Me._AdjustColumnWidth(ColumnTitle, yukiRowIndex)
-        Try Me._SetGridData(yukiRowIndex, ColumnArtist, yukiResult[NagatoDBMedia.ColumnArtist])
-        Try Me._SetGridData(yukiRowIndex, ColumnAlbum, yukiResult[NagatoDBMedia.ColumnAlbum])
-        Me._SetGridData(yukiRowIndex, ColumnPath, NagatoQueue.Paths[yukiRowIndex])
+        Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, NagatoQueue[yukiRowIndex].Title)
+        Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, NagatoQueue[yukiRowIndex].Artist)
+        Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, NagatoQueue[yukiRowIndex].Album)
         If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
     Next
     
@@ -63,7 +56,6 @@ Public Sub _InitializeGrids() 'override
         .Columns[ColumnTitle].Text = "Title"
         .Columns[ColumnArtist].Text = "Artist"
         .Columns[ColumnAlbum].Text = "Album"
-        .Columns[ColumnPath].Text = "Path/URL"
     End With
     
     $observer = New Observer(Me._$grids) As "Asakura"
@@ -87,7 +79,7 @@ Public Sub MoveTo(argUrl As String)
     Me._ClearIcon(ColumnIcon)
     
     For yukiRow = 0 To Me._$grids.Rows.Max
-        If Media.URL(Me._$grids[yukiRow, ColumnPath].Text) = argUrl Then
+        If NagatoQueue[yukiRow].Path = argUrl Then
             Me._$grids[yukiRow, 0].EnsureVisible()
             setPlayingIcon(yukiRow)
         Endif
@@ -107,27 +99,12 @@ Public Sub Refresh()
     
 End
 
-Public Function GetPaths() As String[]
-    
-    Dim yukiPaths As New String[]
-    Dim yukiRow As Integer
-    
-    For yukiRow = 0 To Me._$grids.Rows.Max
-        If Exist(Me._$grids[yukiRow, ColumnPath].Text) Then
-            yukiPaths.Add(Me._$grids[yukiRow, ColumnPath].Text)
-        Endif
-    Next
-    
-    Return yukiPaths
-    
-End
-
 Public Sub ContextMenu_Delete()
     
     Dim yukiRow As Integer
     
     For Each yukiRow In Me._$grids.Rows.Selection
-        NagatoQueue.DeleteMusic(Me._$grids[yukiRow, ColumnPath].Text)
+        NagatoQueue.DeleteMusic(NagatoQueue[yukiRow].Path)
     Next
     
 End
@@ -135,9 +112,8 @@ End
 Public Sub Asakura_Activate()
     
     Object.Lock($observer)
-        NagatoQueue.SetPathAndPlay(NagatoQueue.Paths[Me._$grids.Row])
+        NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
         Me.SetMark(Me._$grids.Row)
     Object.Unlock($observer)
     
 End
-' 

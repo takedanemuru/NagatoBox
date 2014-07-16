@@ -55,7 +55,7 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        Try $player.URL = NagatoQueue.Path.CurrentPath
+        Try $player.URL = NagatoQueue.GetCurrentPath(False)
     End If
     
     If argPosition Then $player.Position = argPosition

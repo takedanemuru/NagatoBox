@@ -1,0 +1,60 @@
+' Gambas class file
+
+Property Read Path As String
+Property Artist As String
+Property Album As String
+Property Title As String
+
+Private $path As String
+Private $tags As New NagatoTags
+
+Public Sub _new(argPath As String)
+    
+    $path = argPath
+    $tags.SetTag(argPath)
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Function Artist_Read() As String
+
+    Return $tags.Artist
+
+End
+
+Private Function Album_Read() As String
+
+    Return $tags.Album
+
+End
+
+Private Function Title_Read() As String
+
+    If $tags.Title = "" Then Return File.BaseName($path)
+    
+    Return $tags.Title
+
+End
+
+Private Sub Title_Write(Value As String)
+
+    $tags.Title = Value
+
+End
+
+Private Sub Album_Write(Value As String)
+
+    $tags.Album = Value
+
+End
+
+Private Sub Artist_Write(Value As String)
+
+    $tags.Artist = Value
+
+End

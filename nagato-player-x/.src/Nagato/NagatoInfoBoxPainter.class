@@ -10,7 +10,7 @@ Private Function getInfoText() As String
     If NagatoQueue.Count = 0 Then
         Return Subst$("<b>YUKI.N > Can you see this ?</b>")
     Else
-        Return Subst$("<b>&1</b>", NagatoQueue.Title)
+        Return Subst$("<b>&1</b>", NagatoQueue[NagatoQueue.CurrentIndex].Title)
     Endif
     
 End
@@ -27,9 +27,9 @@ Public Sub Draw()
     Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
     
     If $messageDuration > 0 Then
-        Me._PaintRichText(MikuruUx.InfoBox, $message)
+        Me._PaintRichText(MikuruUx.InfoBoxInternal, $message)
     Else
-        Me._PaintRichText(MikuruUx.InfoBox, getInfoText())
+        Me._PaintRichText(MikuruUx.InfoBoxInternal, getInfoText())
     End If
     
     Dec $messageDuration

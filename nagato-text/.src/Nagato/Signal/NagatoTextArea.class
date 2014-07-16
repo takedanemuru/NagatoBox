@@ -29,13 +29,11 @@ Private Function getCurrentPositionInUTF8Back(argQuery As String) As Integer ' r
     Dim yukiPosition As Integer = yukiSearchStartFrom 
     
     Do
-        If String.Mid($textArea.Text, yukiPosition) Begins argQuery Then Return yukiPosition
+        If String.Mid($textArea.Text, yukiPosition) Begins argQuery Then Return yukiPosition - 1
         Dec yukiPosition
         If yukiPosition = yukiSearchStartFrom Then Return -1
         If 0 >= yukiPosition Then yukiPosition = String.Len($textArea.Text)
     Loop
-    
-    Return yukiPosition 
     
 End
 
@@ -53,11 +51,9 @@ Public Sub SearchTextBack(argText As String)
     
     Dim yukiStartPosition As Integer = getCurrentPositionInUTF8Back(argText)
     
-    Debug yukiStartPosition
-    
     If yukiStartPosition = -1 Then Return
     
-    $textArea.Select(yukiStartPosition - 1, String.Len(argText))
+    $textArea.Select(yukiStartPosition, String.Len(argText))
     
 End
 

@@ -1,0 +1,215 @@
+' Gambas class file
+
+Property Read CurrentPath As String
+Property Read CurrentPosition As Integer
+Property Read Paths As String[]
+Property Read Count As Integer
+
+Private $musicElements As New NagatoMusicElement[]
+Private $position As New NagatoMusicPosition As "MusicPosition"
+
+Event Moved
+Event Changed
+
+Private Function findIndex(argPath As String) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $musicElements.Max
+        If $musicElements[yukiCount].Path = argPath Then Return yukiCount
+    Next
+    
+    Return -1
+    
+End
+
+Public Function SetPath(argPath As String) As Boolean
+    
+    If findIndex(argPath) = -1 Then  'Array.Find()  shall retun -1 when argument is not found
+        Return False
+    Else
+        $position.Current = findIndex(argPath)
+        Raise Moved
+        Return True
+    End If
+    
+End
+
+Public Sub AddMusics(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiCount As Integer = 0
+    Dim yukiElement As NagatoMusicElement
+    
+    For Each yukiPath In MikuruPath.Sanitize(argPaths)
+        yukiElement = New NagatoMusicElement(yukiPath)
+        $musicElements.Add(yukiElement)
+        Inc yukiCount
+    Next
+    
+    If MikuruMessage.SetNewMusic(yukiCount) Then Raise Changed
+    
+End
+
+Public Sub AddDirectory(argPath As String)
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In RDir(argPath)
+        yukiPaths.Add(argPath &/ yukiPath)
+    Next
+    
+    If yukiPaths.Count > 0 Then Me.AddMusics(yukiPaths)
+    
+End
+
+Public Sub InsertMusic(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiElement As NagatoMusicElement
+    
+    For Each yukiPath In argPaths
+        yukiElement = New NagatoMusicElement(yukiPath)
+        $musicElements.Add(yukiElement)
+    Next
+    
+    $position.Current = 0
+    
+    Raise Changed
+    
+End
+
+Public Sub DeleteMusic(argPath As String)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = $musicElements.Max DownTo 0
+        If $musicElements[yukiCount].Path <> argPath Then Continue
+        $musicElements.Remove(yukiCount)
+        Raise Changed
+    Next
+    
+End
+
+Public Sub ClearAll()
+    
+    $position.Current = 0
+    $musicElements.Clear()
+    HaruhiPlayer.SetMessage(("Playlist is cleared."), 5)
+
+    Raise Changed
+    
+End
+
+Public Sub Next()
+    
+    $position.Next($musicElements.Count)
+    
+End
+
+Public Sub Back()
+    
+    $position.Back($musicElements.Count)
+    
+End
+
+Public Sub MoveToPath(argPath As String)
+    
+    If findIndex(argPath) = -1 Then Return
+    
+    $position.Current = findIndex(argPath)
+    
+    Raise Moved
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $musicElements.Count
+
+End
+
+Public Sub _new(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiMusicElement As NagatoMusicElement
+    
+    For Each yukiPath In MikuruPath.Sanitize(argPaths.Insert(NagatoSettingsMusic.LoadPaths()))
+        NagatoDBMedia.EnsureLibrary(yukiPath)
+        yukiMusicElement = New NagatoMusicElement(yukiPath)
+        $musicElements.Add(yukiMusicElement)
+    Next
+    
+    If $musicElements.Count > 0 Then Raise Changed
+    
+End
+
+Public Function GetElement(argIndex As Integer) As NagatoMusicElement
+    
+    Return $musicElements[argIndex]
+    
+End
+
+Public Function GetTag(argTag As String) As String
+    
+    Select Case argTag
+        Case "Title"
+            Return $musicElements[$position.Current].Title
+        Case "Artist"
+            Return $musicElements[$position.Current].Artist
+        Case "Album"
+            Return $musicElements[$position.Current].Album
+    End Select
+    
+Catch
+    Return ""
+    
+End
+
+Public Sub SetTag(argTag As String, argValue As String) 
+    
+    Select Case argTag
+        Case "Title"
+            $musicElements[$position.Current].Title = argValue
+        Case "Artist"
+            $musicElements[$position.Current].Artist = argValue
+        Case "Album"
+            $musicElements[$position.Current].Album = argValue
+    End Select
+    
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return MikuruPath.GetUrl($musicElements[$position.Current].Path)
+
+Catch
+    Return ""
+
+End
+
+Private Function CurrentPosition_Read() As Integer
+
+    Return $position.Current
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Dim yukiPaths As New String[]
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $musicElements.Max
+        yukiPaths.Add($musicElements[yukiCount].Path)
+    Next
+
+    Return yukiPaths
+
+End
+
+Public Sub MusicPosition_Moved()
+    
+    Raise Moved
+    
+End

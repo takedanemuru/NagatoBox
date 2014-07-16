@@ -2,52 +2,42 @@
 
 Create Static
 
-Property Read Paths As String[]
 Property Read Count As Integer
-
-Property Title As String
-Property Album As String
-Property Artist As String
-
-Property Read Path As NagatoMusicPaths
+Property Read Paths As String[]
+Property Read CurrentIndex As Integer
 Property Read Player As NagatoPlayer
 
-Private $observer As Observer
 Private $player As New NagatoPlayer As "Player"
-Private $tags As New NagatoTags
-Private $musicPaths As New NagatoMusicPaths As "MusicPaths"
+Private $musicList As NagatoMusicList 
 
-Event Changed 
-
-Private Sub changePath()
-    
-    $tags.SetTag($musicPaths.CurrentPathUndecoded)
-    HaruhiPlayList.MoveTo($musicPaths.CurrentPath)
-    
-End
+Event Moved
+Event Changed
 
 Public Function SetPath(argPath As String) As Boolean
     
-    Return $musicPaths.SetPath(argPath)
+    Return $musicList.SetPath(argPath)
     
 End
 
 Public Sub AddMusics(argPaths As String[])
     
-    $musicPaths.AddMusics(argPaths)
+    $musicList.AddMusics(argPaths)
+    NagatoSettingsMusic.SavePaths($musicList.Paths)
+    
+    Raise Changed
     
 End
 
 Public Sub AddDirectory(argPath As String)
     
-    $musicPaths.AddDirectory(argPath)
+    $musicList.AddDirectory(argPath)
     
 End
 
 Public Sub InsertMusic(argPaths As String[])
     
     $player.Stop()
-        $musicPaths.InsertMusic(argPaths)
+        $musicList.InsertMusic(argPaths)
     $player.Play()
     
 End
@@ -55,31 +45,39 @@ End
 Public Sub DeleteMusic(argPath As String)
     
     $player.Stop()
-        $musicPaths.DeleteMusic(argPath)
-    If $musicPaths.Count > 0 Then $player.Play()
+        $musicList.DeleteMusic(argPath)
+    If $musicList.Count > 0 Then $player.Play()
     
 End
 
 Public Sub ClearAll()
     
     $player.Stop()
-    $musicPaths.ClearAll()
+    $musicList.ClearAll()
+    
+End
+
+Public Sub SavePaths()
+    
+    NagatoSettingsMusic.SavePaths($musicList.Paths)
     
 End
 
 Public Sub RefreshTag()
     
-    $tags.SetTag($musicPaths.CurrentPath)
+    Debug "force refresh current tag"
     
 End
 
 Public Sub Activate(Optional argPaths As String[] = [""])
     
-    'Testing only
-    'MikuruMediaStatus(argPaths)
+    $musicList = New NagatoMusicList(argPaths) As "MusicList"
     
-    $musicPaths.EnsurePaths(argPaths)
-    $observer = New Observer(Me) As "Asakura"
+End
+
+Public Sub _get(argIndex As Integer) As NagatoMusicElement
+    
+    Return $musicList.GetElement(argIndex)
     
 End
 
@@ -106,7 +104,7 @@ Public Sub Next()
     
     If Me.Count = 0 Then Return
     
-    If $player.State = 4 Then $musicPaths.Next()
+    If $player.State = 4 Then $musicList.Next()
       
     Try $player.Play(0)
     
@@ -120,7 +118,7 @@ Public Sub Back()
         If $player.ProgressRate > 0.05 Then
             $player.SetPosition(0)
         Else 
-            $musicPaths.Back()
+            $musicList.Back()
             $player.Play(0)
         End If
     Else
@@ -129,11 +127,10 @@ Public Sub Back()
     
 End
 
-
 Public Sub SetPathAndPlay(argPath As String)
     
     $player.SetUrlAndPlay(argPath)
-    changePath()
+    Raise Moved
     
 End
 
@@ -159,75 +156,26 @@ Public Sub Player_MusicEnd()
     
 End
 
-Public Sub Asakura_Changed()
+Public Sub MusicList_Moved()
     
-    $tags.SetTag($musicPaths.CurrentPath)
-    NagatoSettingsMusic.SavePaths($musicPaths.Paths)
-    
-End
-
-Public Sub MusicPaths_Moved()
-    
-    changePath()
+    Raise Moved
     
 End
 
-Public Sub MusicPaths_Changed()
+Public Sub MusicList_Changed()
+    
+    NagatoSettingsMusic.SavePaths($musicList.Paths)
     
     Raise Changed
     
 End
 
-Private Function Paths_Read() As String[]
-
-    Return $musicPaths.Paths
-
-End
-
-Private Function Title_Read() As String
-    
-    If $tags.Title = "" Then $tags.SetTag($musicPaths.CurrentPathUndecoded)
-    
-    ' Debug $musicPaths.CurrentPath
-    ' Debug $musicPaths.CurrentPathUndecoded
-    
-    Return $tags.Title
-    
-End
-
-Private Sub Title_Write(Value As String)
-
-    $tags.Title = Value
-
-End
-
-Private Function Album_Read() As String
-
-    Return $tags.Album
-
-End
-
-Private Sub Album_Write(Value As String)
-
-    $tags.Album = Value
-
-End
-
-Private Function Artist_Read() As String
-
-    Return $tags.Artist
-
-End
-
-Private Sub Artist_Write(Value As String)
-
-    $tags.Artist = Value
-
-End
-
 Private Function Count_Read() As Integer
 
-    Return $musicPaths.Count
+    Return $musicList.Count
+
+Catch
+    Return 0
 
 End
 
@@ -237,8 +185,20 @@ Private Function Player_Read() As NagatoPlayer
 
 End
 
-Private Function Path_Read() As NagatoMusicPaths
+Public Function GetCurrentPath(argUndecoded As Boolean) As String
+    
+    Return $musicList.CurrentPath
+    
+End
 
-    Return $musicPaths
+Private Function CurrentIndex_Read() As Integer
+
+    Return $musicList.CurrentPosition
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $musicList.Paths
 
 End
