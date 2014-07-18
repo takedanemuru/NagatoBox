@@ -132,8 +132,6 @@ End
 
 Public Sub Asakura_ColumnClick(argIndex As Integer)
     
-    Debug argIndex
-    
     Select Case argIndex
         Case 1 To 3
             $targetColumn = argIndex

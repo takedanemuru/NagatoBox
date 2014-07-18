@@ -4,8 +4,6 @@ Inherits NagatoGrids
 
 Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum
 
-Private $observer As Observer
-
 Private Sub setPlayMark(argRow As Integer)
     
     Dim yukiRow As Integer
@@ -28,9 +26,7 @@ End
 
 Private Sub refreshData()
     
-    Dim yukiResult As Result
     Dim yukiRowIndex As Integer
-    Dim yukiIndex As Integer
     
     If Not Object.IsValid(Me._$grids) Then Return
     
@@ -59,8 +55,6 @@ Public Sub _InitializeGrids() 'override
         .Columns[ColumnArtist].Text = "Artist"
         .Columns[ColumnAlbum].Text = "Album"
     End With
-    
-    $observer = New Observer(Me._$grids) As "Asakura"
     
     refreshData()
     
@@ -111,11 +105,22 @@ Public Sub ContextMenu_Delete()
     
 End
 
-Public Sub Asakura_Activate()
+Public Sub _Activate() 'override
     
-    Object.Lock($observer)
-        NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
-        Me.SetMark(Me._$grids.Row)
-    Object.Unlock($observer)
+   NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
+   Me.SetMark(Me._$grids.Row)
+    
+End
+
+Public Sub _ColumnClick(argIndex As Integer) 'override
+    
+    Me._$sortAscend = Not Me._$sortAscend
+    
+    Debug argIndex
+    Debug Me._$sortAscend
+    
+    If argIndex = 0 Then Return
+    
+    NagatoQueue.Sort(argIndex, Me._$sortAscend)
     
 End

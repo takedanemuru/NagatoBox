@@ -4,7 +4,6 @@ Inherits NagatoSignal
 
 Public _$grids As GridView
 Public _$observer As Observer
-Public _$sortAscend As Boolean
 
 Public Function _GetSelectionText(argColumnIndex As Integer) As String[]
     
@@ -84,7 +83,7 @@ End
 
 Public Sub _ColumnClick(argIndex As Integer)
     
-    
+    Debug argIndex
     
 End
 

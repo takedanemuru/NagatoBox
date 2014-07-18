@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Public Sub GetSortAscend(argGridsName As String) As Boolean
+    
+    Return Me._$settings[Subst$("Grids_&1/sort_ascend", argGridsName), True]
+    
+End
+
+Public Sub SetSortAscend(argGridsName As String, argValue As String) As Boolean
+    
+    Me._$settings[Subst$("Grids_&1/sort_ascend", argGridsName)] = argValue
+    
+End
+

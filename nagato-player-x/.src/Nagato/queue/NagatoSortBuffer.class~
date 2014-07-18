@@ -1,0 +1,82 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read Elements As NagatoMusicElement[]
+Property Read Current As Integer
+
+Private $sortedElements As New NagatoMusicElement[]
+Private $type As Integer
+Private $ascend As Boolean
+Private $currenPath As String
+
+Public Function getData(argElement As NagatoMusicElement) As String
+    
+    Select Case $type
+        Case 1
+            Return argElement.Title
+        Case 2
+            Return argElement.Artist
+        Case 3
+            Return argElement.Album
+    End Select
+    
+End
+
+Private Function isLesser(argTarget As NagatoMusicElement, argTest As NagatoMusicElement) As Boolean
+    
+    If $ascend Then
+        Return (getData(argTarget) > getData(argTest))
+    Else
+        Return (getData(argTest) > getData(argTarget))
+    Endif
+    
+End
+
+Public Sub Set(argElement As NagatoMusicElement, argCurrent As Boolean)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $sortedElements.Max
+        If isLesser(argElement, $sortedElements[yukiCount])
+            $sortedElements.Add(argElement, yukiCount)
+            If argCurrent Then $currenPath = argElement.Path
+            Return
+        End If
+    Next
+    
+    $sortedElements.Add(argElement)
+    If argCurrent Then $currenPath = argElement.Path
+End
+
+Public Sub _new(argType As Integer, argAscend As Boolean)
+    
+    $type = argType
+    $ascend = argAscend
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $sortedElements.Count
+
+End
+
+Private Function Elements_Read() As NagatoMusicElement[]
+
+    Return $sortedElements
+
+End
+
+Private Function Current_Read() As Integer
+
+    Dim yukiCount As Integer
+
+    Debug $currenPath
+
+    For yukiCount = 0 To $sortedElements.Max
+        If $sortedElements[yukiCount].Path = $currenPath Then Return yukiCount
+    Next
+
+    Return 0
+
+End

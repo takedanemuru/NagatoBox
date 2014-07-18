@@ -23,7 +23,6 @@ Public Sub Main()
         NagatoArguments.Parsing()
         activateMusicQueue() 'and show HaruhiPlayer 
     Else
-        'Message.Warning(("nagato-player-x has been activated"), ("OK"))
         NagatoDBus.Proxy.MoveToCurrentDesktop()
     End If
     

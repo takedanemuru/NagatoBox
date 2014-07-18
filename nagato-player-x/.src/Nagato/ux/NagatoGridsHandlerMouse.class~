@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoGridsHandler
+
+Public Sub Asakura_ColumnClick(argIndex As Integer)
+    
+    Debug argIndex
+    
+End

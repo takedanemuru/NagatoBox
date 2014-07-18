@@ -29,7 +29,6 @@ Public Function SetPath(argPath As String) As Boolean
         Return False
     Else
         $position.Current = findIndex(argPath)
-        '$currentPosition = findIndex(argPath)
         Raise Moved
         Return True
     End If
@@ -178,6 +177,22 @@ Public Sub SetTag(argTag As String, argValue As String)
         Case "Album"
             $musicElements[$position.Current].Album = argValue
     End Select
+    
+End
+
+Public Sub Sort(argType As Integer, argSortAscend As Boolean)
+    
+    Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $musicElements.Max
+        yukiBuffer.Set($musicElements[yukiCount], (yukiCount = $position.Current))
+    Next
+    
+    $musicElements = yukiBuffer.Elements
+    $position.Current = yukiBuffer.Current
+    
+    Raise Changed
     
 End
 
