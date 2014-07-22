@@ -2,9 +2,33 @@
 
 Inherits NagatoContextMenu
 
-Public Enum ContextRefresh
+Public Enum ContextNone, ContextExecute, ContextRefresh
+
+Private Sub addExecuteMenu()
+    
+    Dim yukiMenu As NagatoMenuItemExecute
+    
+    yukiMenu = New NagatoMenuItemExecute(Me._$rootMenu, Last.Key)
+    
+    Me._AddContextMenu("", Me.ContextNone)
+    
+End
+
+Private Sub addOpenWithMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu)
+    Dim yukiOpenWithMenu As New NagatoOpenWithApplicationMenu(yukiMenu, Last.Key)
+    
+    With yukiMenu
+        .Text = ("Open with ...")
+    End With
+    
+End
 
 Public Sub _AddChildMenus()
+    
+    If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then addExecuteMenu()
+    If Not IsDir(Last.Key) Then addOpenWithMenu()
     
     Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
     

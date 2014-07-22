@@ -6,6 +6,7 @@ Private Sub fitWindow(argPath As String)
     
     Me.H = yukiPicture.H
     Me.W = yukiPicture.W
+    Me.Center()
     
 End
 

@@ -1,0 +1,48 @@
+' Gambas class file
+
+Property Read NotFound As Boolean
+Property Read DesktopFile As DesktopFile
+
+Private $notFound As Boolean = True
+Private $desktopFile As DesktopFile
+
+Private Function getDesktopFilePath(argDesktopFileName As String) As String
+    
+    Return MikuruApplications.GlobalApplicationDirectory &/ argDesktopFileName
+
+End
+
+Private Sub setDesktopFile(argFilePath As String) As Boolean
+    
+    Dim yukiDesktopFiles As String[] = MikuruApplications.GetDefaultDesktopFiles(argFilePath)
+    Dim yukiDesktopFile As DesktopFile
+    
+    If yukiDesktopFiles.Count = 0 Then Return False
+
+    Try yukiDesktopFile = New DesktopFile(getDesktopFilePath(yukiDesktopFiles[0]))
+    If Error Then Return False
+    
+    Return True
+    
+End
+
+Public Sub _new(argFilePath As String)
+    
+    If Not setDesktopFile(argFilePath) Then Return
+    
+    $notFound = False
+    $desktopFile = yukiDesktopFile
+    
+End
+
+Private Function NotFound_Read() As Boolean
+
+    Return $notFound
+
+End
+
+Private Function DesktopFile_Read() As DesktopFile
+
+    Return $desktopFile
+
+End

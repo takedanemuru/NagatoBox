@@ -4,13 +4,17 @@ Inherits NagatoContextMenu
 
 Private Sub addUnarchiveMenu()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu) As "UnarchiveMenu"
+    Dim yukiMenu As NagatoMenuItemUnarchive
     
-    With yukiMenu
-        .Text = ("Unarchive")
-        .Picture = MikuruIcon.Get("hard-drive-upload")
-        .Tag = NagatoMenuPipe.FileOpen
-    End With
+    yukiMenu = New NagatoMenuItemUnarchive(Me._$rootMenu, Last.Key)
+    
+End
+
+Private Sub addExecuteMenu()
+    
+    Dim yukiMenu As NagatoMenuItemExecute
+    
+    yukiMenu = New NagatoMenuItemExecute(Me._$rootMenu, Last.Key)
     
 End
 
@@ -26,22 +30,25 @@ Private Sub addOpenWithDefaultMenu(argDesktopFile As DesktopFile)
     
 End
 
-Private Sub addFileOpenMenu()
+Private Sub addDefault()
+   
+   Dim yukiDefaultApplication As New NagatoDefaultApplication(Me._$path)
+   
+   If yukiDefaultApplication.NotFound Then Return
+   
+   addOpenWithDefaultMenu(yukiDefaultApplication.DesktopFile)
     
-    Dim yukiDesktopFiles As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
-    Dim yukiDesktopFile As DesktopFile
+End
+
+Private Sub addFileOpenMenu()
     
     If MikuruMimeType.IsArchiveFile(Me._$path) Then
         addUnarchiveMenu()
-        Return
+    Else If DesktopMime.FromFile(Me._$path).Type = "application/x-desktop" Then
+        addExecuteMenu()
+    Else
+        addDefault()
     Endif
-    
-    If yukiDesktopFiles.Count = 0 Then Return
-
-    Try yukiDesktopFile = New DesktopFile(MikuruApplications.GlobalApplicationDirectory &/ yukiDesktopFiles[0])
-    If Error Then Return
-   
-   addOpenWithDefaultMenu(yukiDesktopFile)
     
 End
 
@@ -91,11 +98,5 @@ End
 Public Sub OpenFileMenu_Click()
     
     Raise MenuEventWithArg(NagatoMenuPipe.FileOpen, Me._$path)
-    
-End
-
-Public Sub UnarchiveMenu_Click()
-    
-    Shell Subst$("nagato-extractor &1", Me._$path)
     
 End

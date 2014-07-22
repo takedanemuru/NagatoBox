@@ -2,10 +2,23 @@
 
 Property Current As Integer
 
-Private $current As Integer
+Private $current As Integer = 0
 Private $max As Integer
+Private $randomOrder As New NagatoRandomizedOrder
 
 Event Moved
+
+Private Function checkCount(argCount As Integer) As Boolean
+    
+    If argCount = 0 Then 
+        Return False
+    Else
+        If $max <> (argCount - 1) Then $randomOrder.Refresh(argCount - 1)
+        $max = argCount - 1
+        Return True
+    End If
+    
+End
 
 Private Sub normalNext()
     
@@ -40,7 +53,7 @@ Private Sub normalBack()
     If $current = 0 Then
         $current = $max
     Else
-        Dec $curren
+        Dec $current
     Endif
     
     Raise Moved
@@ -49,9 +62,7 @@ End
 
 Public Sub Next(argCount As Integer)
     
-    If argCount = 0 Then Return
-    
-    $max = argCount - 1
+    If Not checkCount(argCount) Then Return 
     
     If NagatoSettingsMusic.Shuffle Then
         shuffleNext()
@@ -63,9 +74,7 @@ End
 
 Public Sub Back(argCount As Integer)
     
-    If argCount = 0 Then Return
-    
-    $max = argCount - 1
+    If Not checkCount(argCount) Then Return
     
     If NagatoSettingsMusic.Shuffle Then
         shuffleNext()

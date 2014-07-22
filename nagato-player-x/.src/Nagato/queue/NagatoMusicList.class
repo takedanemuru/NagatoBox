@@ -47,6 +47,8 @@ Public Sub AddMusics(argPaths As String[])
         Inc yukiCount
     Next
     
+    If yukiCount > 0 Then $position.Refresh($musicElements.Count)
+    
     If MikuruMessage.SetNewMusic(yukiCount) Then Raise Changed
     
 End
@@ -147,6 +149,8 @@ End
 
 Public Function GetElement(argIndex As Integer) As NagatoMusicElement
     
+    Debug "element index: " & argIndex
+    
     Return $musicElements[argIndex]
     
 End
@@ -186,7 +190,6 @@ Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     Dim yukiCount As Integer
     
     For yukiCount = 0 To $musicElements.Max
-        Debug (yukiCount = $position.Current)
         yukiBuffer.Set($musicElements[yukiCount], (yukiCount = $position.Current))
     Next
     

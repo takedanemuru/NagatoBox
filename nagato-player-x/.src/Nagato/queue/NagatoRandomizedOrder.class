@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private $order As New Integer[]
+
+Private Sub setNumber(argMax As Integer)
+    
+    Dim yukiNumber As Integer
+    
+    Do
+        yukiNumber = Int(Rnd(0, argMax + 1))
+        If $order.Exist(yukiNumber) Then Continue
+        $order.Add(yukiNumber)
+        Break
+    Loop
+    
+End
+
+Public Sub Refresh(argMax As Integer)
+    
+    Dim yukiCount As Integer
+    
+    $order.Clear()
+    
+    For yukiCount = 0 To argMax
+        setNumber(argMax)
+    Next
+    
+    MikuruArrayTest($order)
+    
+End
+
+Public Function _get(argIndex As Integer) As Integer
+    
+    Return $order.Find(argIndex)
+    
+End

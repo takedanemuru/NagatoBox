@@ -146,6 +146,14 @@ Public Sub StartRadio()
     
 End
 
+Public Sub Sort(argType As Integer, argSortAscend As Boolean)
+    
+    If $musicList.Count = 0 Then Return
+    
+    $musicList.Sort(argType, argSortAscend)
+    
+End
+
 Public Sub Player_MusicEnd()
     
     If NagatoSettingsMusic.Repeat Then

@@ -36,17 +36,17 @@ Public Sub Set(argElement As NagatoMusicElement, argCurrent As Boolean)
     
     Dim yukiCount As Integer
     
+    If argCurrent Then $currenPath = argElement.Path
+    
     For yukiCount = 0 To $sortedElements.Max
         If isLesser(argElement, $sortedElements[yukiCount])
             $sortedElements.Add(argElement, yukiCount)
-            If argCurrent Then $currenPath = argElement.Path
             Return
         End If
     Next
     
     $sortedElements.Add(argElement)
-    If argCurrent Then $currenPath = argElement.Path
-    
+
 End
 
 Public Sub _new(argType As Integer, argAscend As Boolean)
@@ -71,8 +71,6 @@ End
 Private Function Current_Read() As Integer
 
     Dim yukiCount As Integer
-
-    Debug $currenPath
 
     For yukiCount = 0 To $sortedElements.Max
         If $sortedElements[yukiCount].Path = $currenPath Then Return yukiCount

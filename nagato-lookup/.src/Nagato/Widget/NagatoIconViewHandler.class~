@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Private Const NotFoundKey As String = "NotFound"
+
 Private $iconView As IconView
 Private $observer As Observer
 
@@ -12,6 +14,8 @@ End
 
 Public Sub Asakura_Activate()
 
+    $iconView.Key = NotFoundKey Then Return
+
     MikuruApplications.Launch($iconView.Key)
 
 End
@@ -20,8 +24,10 @@ Public Sub Asakura_Menu()
     
     Dim yukiMenu As NagatoContextMenu
     
+    If $iconView.Key = NotFoundKey Then Return
+    
     If $iconView.Key Then
-        yukiMenu = New NagatoContextMenu(Me, $iconView.Key)
+        yukiMenu = New NagatoContextMenu(HaruhiApplicationSearch, $iconView.Key)
         yukiMenu.PopUp()
     Endif
     

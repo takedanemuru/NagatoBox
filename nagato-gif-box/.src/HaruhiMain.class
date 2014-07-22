@@ -4,9 +4,11 @@ Private Sub fitWindow(argPath As String)
     
     Dim yukiPicture As Picture = Picture.Load(argPath)
     
-    Me.H = yukiPicture.H
-    Me.W = yukiPicture.W
-    Me.Center()
+    With Me
+        .H = yukiPicture.H
+        .W = yukiPicture.W
+        .Center()
+    End With
     
 End
 

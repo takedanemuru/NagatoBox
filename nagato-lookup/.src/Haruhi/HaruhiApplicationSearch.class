@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private Const IconSize As Integer = 64
+Private Const NotFoundKey As String = "NotFound"
 
 Private $iconViewHandler As NagatoIconViewHandler
 
@@ -23,14 +24,21 @@ Private Sub ensureVisible()
     
 End
 
+Private Sub setNotFound()
+    
+    ApplicationsIconView.Add(NotFoundKey, "Not found", MikuruIcons.Get("exclamation", IconSize))
+    
+End
+
 Private Sub showResult()
     
     If ApplicationsIconView.Count > 0 Then
         ensureVisible()
-         Me.Show()
     Else
-        Message.Error(("YUKI.N > Sorry, but I coundn't find any application."), ("OK"))
+        setNotFound()
     End If
+
+    Me.Show()
     
 End
 
@@ -78,8 +86,12 @@ End
 
 Public Sub ApplicationsIconView_Click()
 
-    Dim yukiDesktopFile As New NagatoDesktopFile(Last.Key)
+    Dim yukiDesktopFile As NagatoDesktopFile
     Dim yukiProperty As String
+    
+    If Last.Key = NotFoundKey Then Return
+    
+    yukiDesktopFile = New NagatoDesktopFile(Last.Key)
     
     yukiProperty = Subst$("<b>Name:</b> &1<br>", yukiDesktopFile.Name)
     yukiProperty &= Subst$("<b>Generic Name:</b> &1<br>", yukiDesktopFile.GenericName)

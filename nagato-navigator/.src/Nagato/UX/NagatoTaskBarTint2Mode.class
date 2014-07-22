@@ -69,13 +69,31 @@ Catch
     
 End
 
+Private Sub paintPerDesktopTasks(argWidthDesktop As Integer, argTasks As DesktopWindow[], argX As Integer)
+        
+    Dim yukiWidthWindow As Integer = argWidthDesktop / argTasks.Count
+    Dim yukiWindow As DesktopWindow
+    Dim yukiX As Integer = argX
+
+    For Each yukiWindow In argTasks
+        paintTask(yukiWindow, yukiWidthWindow, ByRef yukiX)
+    Next
+    
+End
+
+Public Sub paintSelectedDesktop(argX As Integer, argWidth As Integer)
+    
+    Paint.Brush = Paint.Color(Color.Pink)
+    Paint.Rectangle(argX, 0, argWidth, Me._$drawingArea.H)
+    Paint.Fill()
+    
+End
+
 Public Sub Paint()
     
     Dim yukiWidthDesktop As Integer = Me._$drawingArea.W / Desktop.Count
-    Dim yukiWidthWindow As Integer
     Dim yukiDesktop As Integer
     Dim yukiX As Integer
-    Dim yukiWindow As DesktopWindow
     Dim yukiTasks As DesktopWindow[]
     
     If $tasks.Count = 0 Then Return
@@ -84,11 +102,11 @@ Public Sub Paint()
         For yukiDesktop = 0 To Desktop.Count - 1
             yukiTasks = $tasks.GetWindowsInDesktop(yukiDesktop)
             yukiX = yukiWidthDesktop * yukiDesktop
-            If yukiTasks.Count = 0 Then Continue 
-            yukiWidthWindow = yukiWidthDesktop / yukiTasks.Count
-            For Each yukiWindow In yukiTasks
-                paintTask(yukiWindow, yukiWidthWindow, ByRef yukiX)
-            Next
+            If yukiTasks.Count = 0 Then
+                If yukiDesktop = Desktop.Current Then paintSelectedDesktop(yukiX, yukiWidthDesktop)
+            Else
+                paintPerDesktopTasks(yukiWidthDesktop, yukiTasks, yukiX)
+            End If
         Next
     Paint.End()
     

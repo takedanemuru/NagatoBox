@@ -121,7 +121,7 @@ msgid ""
 msgstr ""
 
 #: MikuruFile.module:47 NagatoContextMenuDirectory.class:14
-#: NagatoContextMenuFile.class:84 NagatoWidgetMenuButtonDelete.class:12
+#: NagatoContextMenuFile.class:91 NagatoWidgetMenuButtonDelete.class:12
 msgid "Delete"
 msgstr ""
 
@@ -145,31 +145,27 @@ msgstr ""
 msgid "Copy path"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:13 NagatoContextMenuFile.class:83
+#: NagatoContextMenuDirectory.class:13 NagatoContextMenuFile.class:90
 msgid "Rename"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:85
+#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:92
 msgid "Tagging"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:86
+#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:93
 msgid "Remove Tag"
 msgstr ""
 
-#: NagatoContextMenuFile.class:10
-msgid "Unarchive"
-msgstr ""
-
-#: NagatoContextMenuFile.class:22
+#: NagatoContextMenuFile.class:26
 msgid "Open with &1"
 msgstr ""
 
-#: NagatoContextMenuFile.class:54
+#: NagatoContextMenuFile.class:61 NagatoContextMenuTreeView.class:23
 msgid "Open with ..."
 msgstr ""
 
-#: NagatoContextMenuFile.class:81
+#: NagatoContextMenuFile.class:88
 msgid "Copy file path"
 msgstr ""
 
@@ -177,7 +173,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: NagatoContextMenuTreeView.class:9
+#: NagatoContextMenuTreeView.class:33
 msgid "Refresh"
 msgstr ""
 
@@ -251,6 +247,14 @@ msgstr ""
 
 #: NagatoMainPane.class:41
 msgid "TrashBin"
+msgstr ""
+
+#: NagatoMenuItemExecute.class:10
+msgid "Execute"
+msgstr ""
+
+#: NagatoMenuItemUnarchive.class:10
+msgid "Unarchive"
 msgstr ""
 
 #: NagatoMenuPanelSelectionButton.class:16

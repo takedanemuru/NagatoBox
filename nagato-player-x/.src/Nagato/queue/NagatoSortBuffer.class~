@@ -46,6 +46,7 @@ Public Sub Set(argElement As NagatoMusicElement, argCurrent As Boolean)
     
     $sortedElements.Add(argElement)
     If argCurrent Then $currenPath = argElement.Path
+    
 End
 
 Public Sub _new(argType As Integer, argAscend As Boolean)
