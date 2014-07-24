@@ -8,7 +8,6 @@ Property Read State As Integer
 Private $player As New MediaPlayer As "Player"
 
 Event MusicEnd
-Event State
 
 Private Function getDuration(Optional argRate As Float = 0) As String
     
@@ -91,12 +90,6 @@ End
 Public Sub Player_End()
     
     Raise MusicEnd
-    
-End
-
-Public Sub Player_State()
-    
-    Raise State
     
 End
 

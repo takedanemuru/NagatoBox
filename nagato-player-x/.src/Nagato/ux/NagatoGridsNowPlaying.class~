@@ -4,6 +4,8 @@ Inherits NagatoGrids
 
 Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum
 
+Private $obserber As Observer
+
 Private Sub setPlayMark(argRow As Integer)
     
     Dim yukiRow As Integer
@@ -18,8 +20,10 @@ Private Sub setPlayingIcon(argRowIndex As Integer)
     
     If argRowIndex <> NagatoQueue.CurrentIndex Then
         Return 
-    Else 
+    Else If NagatoQueue.State = Media.Playing Then
         Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
+    Else
+        Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
     End If
     
 End
@@ -57,6 +61,8 @@ Public Sub _InitializeGrids() 'override
     End With
     
     refreshData()
+    
+    $obserber = New Observer(NagatoQueue) As "Asakura"
     
 End
 
@@ -116,11 +122,20 @@ Public Sub _ColumnClick(argIndex As Integer) 'override
     
     Me._$sortAscend = Not Me._$sortAscend
     
-    Debug argIndex
-    Debug Me._$sortAscend
-    
     If argIndex = 0 Then Return
     
     NagatoQueue.Sort(argIndex, Me._$sortAscend)
+    
+End
+
+Public Sub Asakura_State()
+    
+    Dim yukiRowIndex As Integer
+    
+    Debug NagatoQueue.State
+    
+    For yukiRowIndex = 0 To NagatoQueue.Count - 1
+        setPlayingIcon(yukiRowIndex)
+    Next
     
 End

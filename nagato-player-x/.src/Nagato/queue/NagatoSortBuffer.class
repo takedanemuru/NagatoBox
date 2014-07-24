@@ -3,6 +3,7 @@
 Property Read Count As Integer
 Property Read Elements As NagatoMusicElement[]
 Property Read Current As Integer
+Property Read PreviousPath As String
 
 Private $sortedElements As New NagatoMusicElement[]
 Private $type As Integer
@@ -77,5 +78,11 @@ Private Function Current_Read() As Integer
     Next
 
     Return 0
+
+End
+
+Private Function PreviousPath_Read() As String
+
+    Return $currenPath
 
 End

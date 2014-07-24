@@ -19,6 +19,16 @@ Public Sub _new()
     
 End
 
+Public Sub EnsureVisible()
+    
+    Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    
+    Me.Show()
+    
+    yukiDesktopWindow.Desktop = Desktop.Current
+    
+End
+
 Public Sub Form_Close()
     
     NagatoQueue.SavePaths()

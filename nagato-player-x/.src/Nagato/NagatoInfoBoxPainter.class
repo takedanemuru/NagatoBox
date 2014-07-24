@@ -10,7 +10,7 @@ Private Function getInfoText() As String
     If NagatoQueue.Count = 0 Then
         Return Subst$("<b>YUKI.N > Can you see this ?</b>")
     Else
-        Return Subst$("<b>&1</b>", NagatoQueue[NagatoQueue.CurrentIndex].Title)
+        Return Subst$("<b>&1</b>", NagatoQueue.Title)
     Endif
     
 End

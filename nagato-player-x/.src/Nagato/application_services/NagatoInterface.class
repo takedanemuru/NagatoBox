@@ -95,7 +95,7 @@ End
 
 Private Function Title_Read() As String
 
-    Return NagatoQueue[NagatoQueue.CurrentIndex].Title
+    Return NagatoQueue.Title
 
 End
 
@@ -107,13 +107,13 @@ End
 
 Private Function Artist_Read() As String
 
-    Return NagatoQueue[NagatoQueue.CurrentIndex].Artist
+    Return NagatoQueue.Artist
 
 End
 
 Private Function Album_Read() As String
 
-    Return NagatoQueue[NagatoQueue.CurrentIndex].Album
+    Return NagatoQueue.Album
 
 End
 

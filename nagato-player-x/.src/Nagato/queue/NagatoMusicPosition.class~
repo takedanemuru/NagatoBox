@@ -2,9 +2,8 @@
 
 Property Current As Integer
 
-Private $current As Integer = 0
-Private $max As Integer
 Private $randomOrder As New NagatoRandomizedOrder
+Private $index As New NagatoMusicPositionIndex
 
 Event Moved
 
@@ -13,85 +12,73 @@ Private Function checkCount(argCount As Integer) As Boolean
     If argCount = 0 Then 
         Return False
     Else
-        If $max <> (argCount - 1) Then $randomOrder.Refresh(argCount - 1)
-        $max = argCount - 1
+        If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
         Return True
     End If
     
 End
 
-Private Sub normalNext()
-    
-    If $current = $max Then
-        $current = 0
-    Else
-        Inc $current
-    Endif
-    
-    Raise Moved
-    
-End
-
-Private Sub shuffleNext()
-    
-    Dim yukiIndex As Integer
-    
-    Do
-        yukiIndex = Rnd(0, $max + 1)
-        If yukiIndex <> $current Then
-            $current = yukiIndex
-            Break
-        End If
-    Loop
-    
-    Raise Moved
-    
-End
-
-Private Sub normalBack()
-    
-    If $current = 0 Then
-        $current = $max
-    Else
-        Dec $current
-    Endif
-    
-    Raise Moved
-    
-End
-
 Public Sub Next(argCount As Integer)
     
-    If Not checkCount(argCount) Then Return 
-    
-    If NagatoSettingsMusic.Shuffle Then
-        shuffleNext()
-    Else
-        normalNext()
+    If checkCount(argCount) Then 
+        $index.Next()
+        If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Next()
+        Raise Moved
     End If
     
 End
 
 Public Sub Back(argCount As Integer)
     
-    If Not checkCount(argCount) Then Return
-    
-    If NagatoSettingsMusic.Shuffle Then
-        shuffleNext()
-    Else 
-        normalBack()
+    If checkCount(argCount) Then
+        $index.Back()
+        If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Back()
+        Raise Moved
     End If
+    
+End
+
+Public Sub Refresh(argCount As Integer)  
+    
+    checkCount(argCount)
+    
+End
+
+Public Sub ResetOnSort(argIndex As Integer, argCount As Integer)
+    
+    $randomOrder.RefreshOnSort(argIndex, argCount - 1)
+    $index.Current = argIndex
+    
+End
+
+Public Sub ResetOnDelete(argDeleteIndex As Integer)
+    
+    $index.Reset($index.Max - 1)
+    $index.Current = 0
+    
+End
+
+Public Sub ResetOnAdd(argCount As Integer)
+    
+    $index.Reset($index.Max + argCount)
+    $index.Current = 0
+    
+End
+
+Public Sub SetPositionOnShuffle(argIndex As Integer)
+    
+    $index.Current = $randomOrder.FindIndex(argIndex)
     
 End
 
 Private Function Current_Read() As Integer
 
-    Return $current
+    Return $index.Current
 
 End
 
 Private Sub Current_Write(Value As Integer)
 
-    $current = Value
+    $index.Current = Value
 
 End

@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Property Read Count As Integer
+
 Private $order As New Integer[]
 
 Private Sub setNumber(argMax As Integer)
@@ -8,6 +10,20 @@ Private Sub setNumber(argMax As Integer)
     
     Do
         yukiNumber = Int(Rnd(0, argMax + 1))
+        If $order.Exist(yukiNumber) Then Continue
+        $order.Add(yukiNumber)
+        Break
+    Loop
+    
+End
+
+Private Sub setNumberBlocked(argMax As Integer, argBlocked As Integer)
+    
+    Dim yukiNumber As Integer
+    
+    Do
+        yukiNumber = Int(Rnd(0, argMax + 1))
+        If argBlocked = yukiNumber Then Continue
         If $order.Exist(yukiNumber) Then Continue
         $order.Add(yukiNumber)
         Break
@@ -25,12 +41,35 @@ Public Sub Refresh(argMax As Integer)
         setNumber(argMax)
     Next
     
-    MikuruArrayTest($order)
+End
+
+Public Sub RefreshOnSort(argFixedIndex As Integer, argMax As Integer)
+    
+    Dim yukiCount As Integer
+    
+    $order.Clear()
+    
+    For yukiCount = 0 To argMax
+        If yukiCount = argFixedIndex Then $order.Add(argFixedIndex)
+        If yukiCount <> argFixedIndex Then setNumberBlocked(argMax, argFixedIndex)
+    Next
     
 End
 
-Public Function GetIndex(argIndex As Integer) As Integer
+Public Function FindIndex(argIndex As Integer) As Integer
     
     Return $order.Find(argIndex)
     
+End
+
+Public Function _get(argIndex As Integer) As Integer
+    
+    Return $order.Find(argIndex)
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $order.Count
+
 End

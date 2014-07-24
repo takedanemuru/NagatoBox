@@ -19,6 +19,8 @@ End
 
 Public Sub Main()
     
+    MikuruMediaStatus()
+    
     If NagatoDBus.IsUnique() Then
         NagatoArguments.Parsing()
         activateMusicQueue() 'and show HaruhiPlayer 

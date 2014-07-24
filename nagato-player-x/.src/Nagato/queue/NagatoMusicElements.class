@@ -1,0 +1,116 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private $musicElements As New NagatoMusicElement[]
+
+Public Function FindIndex(argPath As String) As Integer
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $musicElements.Max
+        If $musicElements[yukiCount].Path = argPath Then Return yukiCount
+    Next
+    
+    Return -1
+    
+End
+
+Public Function AddMusics(argPaths As String[]) As Integer
+    
+    Dim yukiPath As String
+    Dim yukiCount As Integer = 0
+    Dim yukiElement As NagatoMusicElement
+    
+    For Each yukiPath In MikuruPath.Sanitize(argPaths)
+        yukiElement = New NagatoMusicElement(yukiPath)
+        $musicElements.Add(yukiElement)
+        Inc yukiCount
+    Next
+    
+    Return yukiCount
+    
+End 
+
+Public Function DeleteMusic(argPath As String) As Boolean
+
+    Dim yukiCount As Integer
+    
+    For yukiCount = $musicElements.Max DownTo 0
+        If $musicElements[yukiCount].Path <> argPath Then Continue
+        $musicElements.Remove(yukiCount)
+        Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub Clear()
+    
+    $musicElements.Clear()
+    
+End
+
+Public Sub Initialize(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiMusicElement As NagatoMusicElement
+    
+    For Each yukiPath In MikuruPath.Sanitize(argPaths.Insert(NagatoSettingsMusic.LoadPaths()))
+        NagatoDBMedia.EnsureLibrary(yukiPath)
+        yukiMusicElement = New NagatoMusicElement(yukiPath)
+        $musicElements.Add(yukiMusicElement)
+    Next
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoMusicElement
+    
+    Return $musicElements[argIndex]
+    
+End
+
+Public Function GetTag(argTag As String, argIndex As Integer) As String
+    
+    Select Case argTag
+        Case "Title"
+            Return $musicElements[argIndex].Title
+        Case "Artist"
+            Return $musicElements[argIndex].Artist
+        Case "Album"
+            Return $musicElements[argIndex].Album
+    End Select
+    
+Catch
+    Return ""
+    
+End
+
+Public Sub SetTag(argTag As String, argIndex As Integer, argValue As String) 
+    
+    Select Case argTag
+        Case "Title"
+            $musicElements[argIndex].Title = argValue
+        Case "Artist"
+            $musicElements[argIndex].Artist = argValue
+        Case "Album"
+            $musicElements[argIndex].Album = argValue
+    End Select
+    
+Catch
+    Return
+    
+End
+
+Public Sub Set(argMusicElements As NagatoMusicElement[])
+    
+    $musicElements = argMusicElements
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $musicElements.Count
+
+End

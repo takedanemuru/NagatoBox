@@ -27,9 +27,9 @@ Public Sub Draw()
     Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
     
     If $messageDuration > 0 Then
-        Me._PaintRichText(MikuruUx.InfoBox, $message)
+        Me._PaintRichText(MikuruUx.InfoBoxInternal, $message)
     Else
-        Me._PaintRichText(MikuruUx.InfoBox, getInfoText())
+        Me._PaintRichText(MikuruUx.InfoBoxInternal, getInfoText())
     End If
     
     Dec $messageDuration

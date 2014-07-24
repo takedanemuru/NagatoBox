@@ -31,7 +31,7 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
     Else If MikuruUx.RepeatButton.Contains(argMouseX, argMouseY) Then
         NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
     Else If MikuruUx.PlaylistButton.Contains(argMouseX, argMouseY) Then
-        HaruhiPlayList.EnsureVisible()
+        HaruhiPlayList.Show()
     Else If MikuruUx.VolumeButton.Contains(argMouseX, argMouseY) Then
         With MikuruUx.VolumeButton
             NagatoQueue.Player.SoftwareVolume = ((argMouseX - .X) / (.W - .X))

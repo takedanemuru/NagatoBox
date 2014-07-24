@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Private $player As New MediaPlayer
+Private Sub $player As New MediaPlayer
 
 Public Sub _call()
 'Public Sub _call(argPaths As String[])

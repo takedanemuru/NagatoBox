@@ -1,0 +1,76 @@
+' Gambas class file
+
+Property Current As Integer
+Property Read Count As Integer
+Property Read Max As Integer
+
+Private $max As Integer
+Private $current As Integer
+
+Public Function Reset(argMax As Integer) As Boolean
+    
+    If argMax = $max Then
+        Return False
+    Else
+        $max = argMax
+        Return True
+    End If
+    
+End
+
+Public Sub Next()
+    
+    If $current = $max Then
+        $current = 0
+    Else
+        Inc $current
+    Endif
+    
+End
+
+Public Sub Back()
+    
+    If $current = 0 Then
+        $current = $max
+    Else
+        Dec $current
+    Endif
+    
+End
+
+
+Public Sub Delete(argDeleteIndex As Integer)
+    
+    If argDeleteIndex = $current Then
+        $current = 0
+    Else If argDeleteIndex > $current Then
+        Dec $current
+    Endif
+    
+    Dec $max
+    
+End
+
+Private Function Current_Read() As Integer
+
+    Return $current
+
+End
+
+Private Sub Current_Write(Value As Integer)
+
+    $current = Value
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $max + 1
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $max
+
+End

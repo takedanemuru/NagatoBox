@@ -7,6 +7,10 @@ Property Read Paths As String[]
 Property Read CurrentIndex As Integer
 Property Read Player As NagatoPlayer
 
+Property Read Title As String
+Property Read Artist As String
+Property Read Album As String
+
 Private $player As New NagatoPlayer As "Player"
 Private $musicList As NagatoMusicList 
 
@@ -31,14 +35,6 @@ End
 Public Sub AddDirectory(argPath As String)
     
     $musicList.AddDirectory(argPath)
-    
-End
-
-Public Sub InsertMusic(argPaths As String[])
-    
-    $player.Stop()
-        $musicList.InsertMusic(argPaths)
-    $player.Play()
     
 End
 
@@ -104,9 +100,13 @@ Public Sub Next()
     
     If Me.Count = 0 Then Return
     
-    If $player.State = 4 Then $musicList.Next()
+    $musicList.Next()
       
-    Try $player.Play(0)
+    If $player.State = Media.Playing Then
+        Try $player.Play(0)
+    Else
+        $player.ResetUrl()
+    End If
     
 End
 
@@ -114,15 +114,14 @@ Public Sub Back()
     
     If Me.Count = 0 Then Return
     
-    If $player.State = 4 Then
-        If $player.ProgressRate > 0.05 Then
-            $player.SetPosition(0)
-        Else 
-            $musicList.Back()
-            $player.Play(0)
-        End If
-    Else
+    If $player.State = Media.Playing And If $player.ProgressRate > 0.05 Then
+        $player.SetPosition(0)
+    Else If $player.State = Media.Playing Then
+        $musicList.Back()
         $player.Play(0)
+    Else
+        $musicList.Back()
+        $player.ResetUrl()
     End If
     
 End
@@ -208,5 +207,23 @@ End
 Private Function Paths_Read() As String[]
 
     Return $musicList.Paths
+
+End
+
+Private Function Title_Read() As String
+
+    Return IIf($musicList.Count > 0, $musicList.GetTag("Title"), "")
+
+End
+
+Private Function Artist_Read() As String
+
+    Return IIf($musicList.Count > 0, $musicList.GetTag("Artist"), "")
+
+End
+
+Private Function Album_Read() As String
+
+    Return IIf($musicList.Count > 0, $musicList.GetTag("Album"), "")
 
 End
