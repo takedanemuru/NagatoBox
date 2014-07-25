@@ -1,16 +1,19 @@
 ' Gambas module file
 
+Property Read Start As Boolean
 Property Read Disable As Boolean
 Property Read Enable As Boolean
 Property Read Show As Boolean
 
 Private $disable As Boolean
 Private $enable As Boolean
-Private $show As Boolean
+Private $show As Boolean = False
+Private $start As Boolean
 
 Public Sub Parsing()
     
     Args.Begin()
+        $start = Args.Has("i", "idle", "start idling nagato-screensaver")
         $disable = Args.Has("d", "disable")
         $enable = Args.Has("e", "enable")
         $show = Args.Has("s", "show")
@@ -33,5 +36,11 @@ End
 Private Function Show_Read() As Boolean
 
     Return $show
+
+End
+
+Private Function Start_Read() As Boolean
+
+    Return $start
 
 End

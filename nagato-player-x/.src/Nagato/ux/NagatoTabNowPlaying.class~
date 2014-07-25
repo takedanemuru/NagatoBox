@@ -46,11 +46,3 @@ Public Sub Asakura_Changed()
     $grids.Refresh()
     
 End
-
-Public Sub Asakura_State()
-    
-    If Not Object.IsValid($grids) Then Return
-    
-    $grids.RefreshPlaymark()
-    
-End

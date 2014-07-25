@@ -6,23 +6,24 @@ Private $labelSuspend As NagatoValueLabel
 Private $labelOff As NagatoValueLabel
 Private $buttons As NagatoButtons
 
-Public Sub Form_Open()
-    
-    Dim yukiData As Integer[]
-    
-    Application.MainWindow = Me
-    Me.Center()
-    
-    yukiData = MikuruXset.Get()
+Private Sub initializeWidgets(argData As Integer[])
     
     $labelScreensaver = New NagatoValueLabel(Me, ("Screensaver"), 300)
         MikuruWidget.AddSeparator(Me)
-    $labelStandBy = New NagatoValueLabel(Me, ("Standby"), yukiData[0])
-    $labelSuspend = New NagatoValueLabel(Me, ("Suspend"), yukiData[1])
-    $labelOff = New NagatoValueLabel(Me, ("Off"), yukiData[2])
+    $labelStandBy = New NagatoValueLabel(Me, ("Standby"), argData[0])
+    $labelSuspend = New NagatoValueLabel(Me, ("Suspend"), argData[1])
+    $labelOff = New NagatoValueLabel(Me, ("Off"), argData[2])
         MikuruWidget.AddSpacer(Me)
         MikuruWidget.AddSeparator(Me)
-    $buttons = New NagatoButtons(Me) As "Buttons"
+    $buttons = New NagatoButtons(Me) As "Buttons"    
+    
+End
+
+Public Sub Form_Open()
+    
+    Application.MainWindow = Me
+    Me.Center()
+    initializeWidgets(MikuruXset.Get())
     
 End
 

@@ -4,7 +4,9 @@ Public Sub Main()
     
     MikuruArgs.Parsing()
     
-    If MikuruArgs.Disable Then
+    If MikuruArgs.Start Then
+        Try Exec ["xautolock", "-time", NagatoSettings.ScreenSaverIdleMinute, "-locker", "nagato-screensaver --show"]
+    Else If MikuruArgs.Disable Then
         Try Exec ["xautolock", "-disable"]
     Else If MikuruArgs.Enable Then
         Try Exec ["xautolock", "-enable"]
