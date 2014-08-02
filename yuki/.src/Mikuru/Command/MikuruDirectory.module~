@@ -26,12 +26,10 @@ Private Function makeDirectory(argNewDirectory As String) As Boolean
     
 End
 
-Public Sub New(argParentDirectory As String, argNewDirectory As String[]) 
+Private Sub makeDirectories(argParentDirectory As String, argNewDirectory As String[]) 
     
     Dim yukiJointName As String = (argParentDirectory &/ getJointName(argNewDirectory))
     Dim yukiCount As Integer = 0
-    
-    Debug "?"
     
     If makeDirectory(yukiJointName) Then Return
     
@@ -39,5 +37,15 @@ Public Sub New(argParentDirectory As String, argNewDirectory As String[])
         Inc yukiCount
         If makeDirectory(Subst$("&1(&2)", yukiJointName, yukiCount)) Then Break
     Loop
+    
+End
+
+Public Sub Make(argParentDirectory As String, argNewDirectory As String[])
+    
+    If Not MikuruUserInput("YUKI.N > Input directory name.") Then Return
+    
+    makeDirectories(argParentDirectory, argNewDirectory)
+    
+    MikuruDialog.Show("YUKI.N > New directory created. Press [ENTER] to continue.")
     
 End

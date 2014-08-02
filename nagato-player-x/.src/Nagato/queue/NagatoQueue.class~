@@ -5,7 +5,9 @@ Create Static
 Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
+Property Read CurrentPath As String
 Property Read Player As NagatoPlayer
+Property Read State As Integer
 
 Property Read Title As String
 Property Read Artist As String
@@ -16,6 +18,7 @@ Private $musicList As NagatoMusicList
 
 Event Moved
 Event Changed
+Event State
 
 Public Function SetPath(argPath As String) As Boolean
     
@@ -38,10 +41,10 @@ Public Sub AddDirectory(argPath As String)
     
 End
 
-Public Sub DeleteMusic(argPath As String)
+Public Sub DeleteIndexes(argIndexes As Integer[])
     
     $player.Stop()
-        $musicList.DeleteMusic(argPath)
+        $musicList.DeleteIndexes(argIndexes)
     If $musicList.Count > 0 Then $player.Play()
     
 End
@@ -119,7 +122,7 @@ Public Sub Back()
     Else If $player.State = Media.Playing Then
         $musicList.Back()
         $player.Play(0)
-    Else
+    Else ' when $player is stopped/paused
         $musicList.Back()
         $player.ResetUrl()
     End If
@@ -163,6 +166,12 @@ Public Sub Player_MusicEnd()
     
 End
 
+Public Sub Player_State()
+    
+    Raise State
+    
+End
+
 Public Sub MusicList_Moved()
     
     Raise Moved
@@ -192,12 +201,6 @@ Private Function Player_Read() As NagatoPlayer
 
 End
 
-Public Function GetCurrentPath(argUndecoded As Boolean) As String
-    
-    Return $musicList.CurrentPath
-    
-End
-
 Private Function CurrentIndex_Read() As Integer
 
     Return $musicList.CurrentPosition
@@ -225,5 +228,17 @@ End
 Private Function Album_Read() As String
 
     Return IIf($musicList.Count > 0, $musicList.GetTag("Album"), "")
+
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $musicList.CurrentPath
 
 End

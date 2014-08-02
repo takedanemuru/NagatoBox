@@ -1,0 +1,37 @@
+' Gambas module file
+
+Private Function getNumbers(argInputs As String[]) As Integer[]
+    
+     Dim yukiNumbers As New Integer[]
+    Dim yukiValue As Variant
+    
+    For Each yukiValue In argInputs
+        If Not IsNumber(yukiValue) Then Continue
+        yukiNumbers.Add(CInteger(yukiValue))
+    Next
+    
+    Return yukiNumbers.Sort(gb.Ascent)
+    
+End
+
+Public Sub _call(argInputs As String[]) As Integer[]
+    
+    Return getNumbers(argInputs)
+    
+End
+
+Public Function GetMax(argInputs As String[]) As Integer
+
+    Dim yukiNumbers As Integer[] = getNumbers(argInputs)
+
+    Return yukiNumbers[yukiNumbers.Max]
+
+End
+
+Public Function GetMin(argInputs As String[]) As Integer
+
+    Dim yukiNumbers As Integer[] = getNumbers(argInputs)
+
+    Return yukiNumbers[0]
+
+End

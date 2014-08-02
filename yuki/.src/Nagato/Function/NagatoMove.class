@@ -2,68 +2,15 @@
 
 Create Static
 
-Private $currentDirectory As String = User.Home
 Private $paths As New NagatoPaths
-
-Private Function isAccessable(argPath As String) As Boolean
-    
-    If Access(argPath, gb.Read) Then Return True
-    
-    MikuruDialog.Show("YUKI.N > Access forbidden. Press [ENTER] to continue.")
-    
-    Return False
-    
-End
-
-Private Sub moveTo(argPath As String)
-    
-    If Not isAccessable(argPath) Then Return
-    
-    If IsDir(argPath) Then
-        $currentDirectory = argPath
-    Else If MikuruOpenWith.Reset(argPath) Then 
-        MikuruOpenWith.Select(argPath)
-    End If
-    
-End
-
-Private Sub moveToUserInputPath()
-    
-    Dim yukiPath As String = MikuruUserInput.GetFirstArgument(["move", "to"])
-    
-    If Exist(yukiPath) Then
-        moveTo(yukiPath)
-    Else
-        MikuruDialog.Show("YUKI.N > I couldn't find the path. Press [ENTER] to continue")
-    Endif
-    
-End
 
 Private Sub makeDirectory()
     
     If Not MikuruUserInput("YUKI.N > Input directory name.") Then Return
     
-    MikuruDirectory.New($currentDirectory, MikuruUserInput.All)
+    MikuruDirectory.New($paths.CurrentDirectory, MikuruUserInput.All)
     
     MikuruDialog.Show("YUKI.N > New directory created. Press [ENTER] to continue.")
-    
-End
-
-Private Sub catchWhereToMove()
-    
-    With MikuruUserInput
-        If .CompleteMatch(["move", "root"]) Then
-            moveTo("/")
-        Else If .CompleteMatch(["move", "home"]) Then
-            moveTo(User.Home)
-        Else If .CompleteMatch(["move", "data"]) Then
-            moveTo(Desktop.DataDir)
-        Else If .CompleteMatch(["move", "config"]) Then 
-            moveTo(Desktop.ConfigDir)
-        Else
-            moveToUserInputPath()
-        End If
-    End With
     
 End
 
@@ -71,13 +18,13 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
     
     $paths.ClearFilter()
     
-    MikuruUserInput(Subst$("YUKI.N > We are in &1, Where do you want to go ?", $currentDirectory))
+    MikuruUserInput(Subst$("YUKI.N > We are in &1, Where do you want to go ?", $paths.CurrentDirectory))
     
     With MikuruUserInput
         If .Include(["here", "term", "terminal"]) Or If .CompleteMatch(["open", "terminal"]) Then
-             NagatoGuake.AddTab($currentDirectory)
+            NagatoGuake.AddTab($paths.CurrentDirectory)
         Else If .Has("up") Then
-            If $currentDirectory <> "/" Then $currentDirectory = File.Dir($currentDirectory)
+            $paths.Up()
         Else If .Include(["break", "back", "escape", "esc"]) Then
             Return True
         Else If .CompleteMatch(["show", "hidden"]) Then
@@ -85,15 +32,17 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
         Else If .CompleteMatch(["hide", "hidden"]) Then
             $paths.ShowHidden = False
         Else If .CompleteMatch(["show", "property"]) And If .IsValidIndex($paths.Max) Then
-            MikuruFileProperty.Show($currentDirectory &/ $paths[.Index])
+            MikuruFileProperty.Show($paths.CurrentDirectory &/ $paths[.Index])
         Else If .Has("move") Then
-            catchWhereToMove()
-        Else If .Include(["filter", "match", "matches"]) And If .Count > 1 Then
+            $paths.MoveTo()
+        Else If .Include(["filter", "match", "matches", "find"]) And If .Count >= 2 Then
             $paths.SetFilter(MikuruUserInput.All)
-        Else If .CompleteMatch(["make", "dir"]) Or If .CompleteMatch(["make", "directory"]) Then
+        Else If .CompleteMatch(["make", "dir"]) Or If .CompleteMatch(["make", "directory"]) Or If .Has("mkdir") Then
             makeDirectory()
+        Else If .Include(["remove", "delete", "trash"]) Then
+            MikuruDelete($paths.CurrentDirectory, $paths.All)
         Else If .IsValidIndex($paths.Max) Then
-            moveTo(argDirectory &/ $paths[.Index])
+            $paths.Open(argDirectory &/ $paths[.Index])
         End If
     End With
     
@@ -104,15 +53,15 @@ End
 Private Sub endlessEight()
     
     Do
-        $paths.Set($currentDirectory)
-        If catchCommand($currentDirectory) Then Break
+        $paths.Set($paths.CurrentDirectory)
+        If catchCommand($paths.CurrentDirectory) Then Break
     Loop
     
 End
 
-Public Sub Show(Optional argDirectory As String)
+Public Sub Show(Optional argDirectory As String = User.Home)
     
-    If argDirectory Then $currentDirectory = argDirectory
+    $paths.CurrentDirectory = argDirectory
 
     endlessEight()
         

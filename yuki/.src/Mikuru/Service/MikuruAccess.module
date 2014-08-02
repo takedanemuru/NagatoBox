@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Function IsWritable(argPath As String, argShowDialog As Boolean) As Boolean ' requires full path
+    
+    If Access(argPath, gb.Write) Then Return True
+    
+    If argShowDialog Then MikuruDialog.Show("YUKI.N > Access forbidden. Press [ENTER] to continue.")
+    
+    Return False
+    
+End
+
+Public Function IsReadable(argPath As String, argShowDialog As Boolean) As Boolean
+    
+    If Access(argPath, gb.Read) Then Return True
+    
+    If argShowDialog Then MikuruDialog.Show("YUKI.N > Access forbidden. Press [ENTER] to continue.")
+    
+    Return False
+    
+End

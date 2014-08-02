@@ -32,17 +32,19 @@ Public Function AddMusics(argPaths As String[]) As Integer
     
 End 
 
-Public Function DeleteMusic(argPath As String) As Boolean
-
-    Dim yukiCount As Integer
+Public Function DeleteIndexes(argIndexes As Integer[]) As Boolean
     
-    For yukiCount = $musicElements.Max DownTo 0
-        If $musicElements[yukiCount].Path <> argPath Then Continue
-        $musicElements.Remove(yukiCount)
-        Return True
+    Dim yukiIndexes As Integer[] = argIndexes.Sort(gb.Descent)
+    Dim yukiIndex As Integer
+    Dim yukiFlag As Boolean = False
+    
+    For Each yukiIndex In yukiIndexes
+        If yukiIndex > $musicElements.Max Then Continue
+        $musicElements.Remove(yukiIndex)
+        yukiFlag = True
     Next
     
-    Return False
+    Return True
     
 End
 
@@ -66,9 +68,6 @@ Public Sub Initialize(argPaths As String[])
 End
 
 Public Sub _get(argIndex As Integer) As NagatoMusicElement
-    
-    Debug argIndex
-    Debug $musicElements.Max
     
     Return $musicElements[argIndex]
     

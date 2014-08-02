@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.3
+# Compiled with Gambas 3.5.4
 Title=yuki
 Startup=Kyon
 Icon=Pictures/question-balloon.png
-Version=0.7.1
+Version=0.8.0
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -23,11 +23,11 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@gmail.com
 Url=takedanemuru.github.oi
 License=S.O.S. License
-PackageName=yuki-0.7.1
+PackageName=yuki-0.8.0
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
-Menus=ubuntu:"Applications/System/Administration"
-Categories=ubuntu:"Nagato;System"
+Menus=ubuntu:"Applications/Shells"
+Categories=ubuntu:"ConsoleOnly"
 Groups=ubuntu:"admin"
-ExtraDependencies=ubuntu:"guake\t\t"
+ExtraDependencies=ubuntu:"guake\t\t\ntrash-cli\t\t"

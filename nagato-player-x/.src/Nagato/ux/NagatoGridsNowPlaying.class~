@@ -4,27 +4,29 @@ Inherits NagatoGrids
 
 Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum
 
-Private Sub setPlayMark(argRow As Integer)
-    
-    Dim yukiRow As Integer
-    
-    For yukiRow = 0 To Me._$grids.Rows.Max
-        Me._$grids[yukiRow, 0].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
-    Next
-    
-End
+Private $playMark As NagatoGridsPlayMark
 
-Private Sub setPlayingIcon(argRowIndex As Integer)
-    
-    If argRowIndex <> NagatoQueue.CurrentIndex Then
-        Return 
-    Else If NagatoQueue.State = Media.Playing Then
-        Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
-    Else
-        Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
-    End If
-    
-End
+' ' Private Sub setPlayMark(argRow As Integer)
+' '     
+' '     Dim yukiRow As Integer
+' '     
+' '     For yukiRow = 0 To Me._$grids.Rows.Max
+' '         Me._$grids[yukiRow, ColumnIcon].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
+' '     Next
+' '     
+' ' End
+' ' 
+' ' Private Sub $playMark.Set(argRowIndex As Integer)
+' '     
+' '     If argRowIndex <> NagatoQueue.CurrentIndex Then
+' '         Return 
+' '     Else If NagatoQueue.State = Media.Playing Then
+' '         Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
+' '     Else
+' '         Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
+' '     End If
+' '     
+' ' End
 
 Private Sub refreshData()
     
@@ -36,7 +38,7 @@ Private Sub refreshData()
     
     For yukiRowIndex = 0 To NagatoQueue.Count - 1
         Inc Me._$grids.Rows.Count
-        setPlayingIcon(yukiRowIndex)
+        $playMark.Set(yukiRowIndex)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, NagatoQueue[yukiRowIndex].Title)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, NagatoQueue[yukiRowIndex].Artist)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, NagatoQueue[yukiRowIndex].Album)
@@ -58,6 +60,8 @@ Public Sub _InitializeGrids() 'override
         .Columns[ColumnAlbum].Text = "Album"
     End With
     
+    $playMark = New NagatoGridsPlayMark(Me._$grids)
+    
     refreshData()
     
 End
@@ -78,8 +82,8 @@ Public Sub MoveTo(argUrl As String)
     
     For yukiRow = 0 To Me._$grids.Rows.Max
         If NagatoQueue[yukiRow].Path = argUrl Then
-            Me._$grids[yukiRow, 0].EnsureVisible()
-            setPlayingIcon(yukiRow)
+            Me._$grids[yukiRow, ColumnIcon].EnsureVisible()
+            $playMark.Set(yukiRow)
         Endif
     Next
     
@@ -87,7 +91,7 @@ End
 
 Public Sub SetMark(argRow As Integer)
     
-    setPlayMark(argRow)
+    $playMark.Refresh(argRow)
     
 End
 
@@ -98,12 +102,8 @@ Public Sub Refresh()
 End
 
 Public Sub ContextMenu_Delete()
-    
-    Dim yukiRow As Integer
-    
-    For Each yukiRow In Me._$grids.Rows.Selection
-        NagatoQueue.DeleteMusic(NagatoQueue[yukiRow].Path)
-    Next
+   
+   NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
     
 End
 
@@ -128,8 +128,10 @@ Public Sub RefreshPlaymark()
     
     Dim yukiRowIndex As Integer
     
+    If Not Object.IsValid(Me._$grids) Then Return
+    
     For yukiRowIndex = 0 To Me._$grids.Rows.Max
-        setPlayingIcon(yukiRowIndex)
+        $playMark.Set(yukiRowIndex)
     Next
     
 End

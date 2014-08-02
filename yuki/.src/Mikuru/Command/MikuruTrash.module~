@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub _call(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        Try Shell Subst$("trash-put &1", Quote$(yukiPath)) Wait
+    Next
+    
+End

@@ -1,0 +1,100 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read Max As Integer
+Property ShowHidden As Boolean
+Property Read All As String[]
+Property CurrentDirectory As String
+
+Private $moveTo As New NagatoPathsMoveTo As "MoveTo"
+Private $data As New NagatoPathsData
+
+Public Sub Set(argDirectory As String)
+    
+    $data.Set(argDirectory)
+    
+End
+
+Public Sub SetFilter(argFilters As String[])
+    
+    $data.SetFilter(argFilters)
+    
+End
+
+Public Sub ClearFilter()
+    
+    $data.ClearFilter()
+    
+End
+
+Public Sub MoveTo()
+    
+    $moveTo()
+    
+End
+
+Public Sub Up()
+    
+    $data.Up()
+    
+End
+
+Public Sub Open(argPath As String)
+    
+    $moveTo.Open(argPath)
+    
+End
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Return $data[argIndex]
+    
+End
+
+Public Sub MoveTo_DirectoryMoved(argDirectory As String)
+    
+    $data.CurrentDirectory = argDirectory
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $data.Count
+
+End
+
+Private Function ShowHidden_Read() As Boolean
+
+    Return $data.ShowHidden
+
+End
+
+Private Sub ShowHidden_Write(Value As Boolean)
+
+    $data.ShowHidden = Value
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $data.Max
+
+End
+
+Private Function All_Read() As String[]
+
+    Return $data.All
+
+End
+
+Private Function CurrentDirectory_Read() As String
+
+    Return $data.CurrentDirectory
+
+End
+
+Private Sub CurrentDirectory_Write(Value As String)
+
+    $data.CurrentDirectory = Value
+
+End

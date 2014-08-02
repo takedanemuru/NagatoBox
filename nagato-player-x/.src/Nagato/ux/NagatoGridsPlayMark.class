@@ -1,0 +1,33 @@
+' Gambas class file
+
+Private Const ColumnIcon As Integer = 0
+
+Private $grids As GridView
+
+Public Sub Refresh(argRow As Integer)
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To $grids.Rows.Max
+        $grids[yukiRow, ColumnIcon].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
+    Next
+    
+End
+
+Public Sub Set(argRowIndex As Integer)
+    
+    If argRowIndex <> NagatoQueue.CurrentIndex Then
+        Return 
+    Else If NagatoQueue.State = Media.Playing Then
+        $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
+    Else
+        $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
+    End If
+    
+End
+
+Public Sub _new(argGrids As GridView)
+    
+    $grids = argGrids
+    
+End

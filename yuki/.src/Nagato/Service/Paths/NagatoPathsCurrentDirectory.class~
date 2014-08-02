@@ -1,0 +1,31 @@
+' Gambas class file
+
+Property Path As String
+
+Private $path As String
+
+Public Function GetPaths(argPattern As String, argType As Integer) As String[]
+    
+    Return Dir($currentDirectory, argPattern, argType).Sort(gb.Natural + gb.IgnoreCase)
+    
+End
+
+Public Sub Up()
+    
+    If $path <> "/" Then $path = File.Dir($path)
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+    
+End
+
+Private Sub Path_Write(Value As String)
+
+    If Not Exist(Value) Then Return
+    
+    $path = Value
+
+End

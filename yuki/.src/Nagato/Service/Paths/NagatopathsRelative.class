@@ -1,0 +1,39 @@
+' Gambas class file
+
+Property Read All As String[]
+Property Read Count As Integer
+
+Private $paths As New String[]
+
+Public Function Add(argPath As String) As Boolean
+    
+    $paths.Add(argPath)
+    Print Subst$("&1 : &2", $paths.Max, argPath)
+    
+    Return True
+    
+End
+
+Public Sub Clear() 
+    
+    $paths.Clear()
+    
+End
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Return $paths[argIndex]
+    
+End
+
+Private Function All_Read() As String[]
+
+    Return $paths
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+End

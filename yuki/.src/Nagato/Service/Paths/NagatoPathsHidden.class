@@ -1,0 +1,24 @@
+' Gambas class file
+
+Property Show As Boolean
+Property Read Pattern As String
+
+Private $showHidden As Boolean = False
+
+Private Function Show_Read() As Boolean
+
+    Return $showHidden
+
+End
+
+Private Sub Show_Write(Value As Boolean)
+
+    $showHidden = Value
+
+End
+
+Private Function Pattern_Read() As String
+
+    Return IIf($showHidden, "*", "[^.]*")
+
+End

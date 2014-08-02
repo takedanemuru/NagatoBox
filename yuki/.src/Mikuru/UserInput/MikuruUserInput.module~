@@ -1,0 +1,82 @@
+' Gambas module file
+
+Property Read Count As Integer
+Property Read Index As Integer
+Property Read Numbers As Integer[]
+Property Read All As String[]
+
+Private $inputs As New String[]
+Private $index As Integer 
+
+Public Sub _call(argMessage As String) As Boolean
+    
+    Print argMessage
+    
+    $index = +Inf
+    $inputs.Clear()
+    $inputs = MikuruUserInputCatch()
+    
+    Return ($inputs.Count > 0)
+    
+End
+
+Public Function Has(argValue As String) As Boolean
+    
+    Return $inputs.Exist(argValue)
+    
+End
+
+Public Function Include(argValues As String[]) As Boolean
+    
+    Return MikuruUserInputOptions.Include($inputs, argValues)
+    
+End
+
+Public Function IsValidIndex(argMax As Integer) As Boolean
+    
+    Dim yukiValue As Integer
+    
+    For Each yukiValue In MikuruUserInputNumbers($inputs)
+        $index = yukiValue
+        Return (argMax >= yukiValue)
+    Next
+    
+    Return False
+    
+End
+
+Public Function CompleteMatch(argQueries As String[]) As Boolean
+    
+    Return MikuruUserInputOptions.CompleteMatch($inputs, argQueries)
+    
+End
+
+Public Function GetFirstArgument(argOptions As String[]) As String 
+    
+    Return MikuruUserInputOptions.GetFirstArguments($inputs, argOptions)
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $inputs.Count 
+
+End
+
+Private Function Index_Read() As Integer
+
+    Return $index
+
+End
+
+Private Function All_Read() As String[]
+
+    Return $inputs
+
+End
+
+Private Function Numbers_Read() As Integer[]
+
+    Return MikuruUserInputNumbers($inputs)
+    
+End

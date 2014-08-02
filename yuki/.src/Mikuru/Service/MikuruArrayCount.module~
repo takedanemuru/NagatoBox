@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Sub _call(...) As Integer
+    
+    Dim yukiArray As Integer[]
+    Dim yukiCount As Integer
+    
+    For Each yukiArray In Param.All
+        yukiCount += yukiArray.Count
+    Next
+    
+    Return yukiCount
+    
+End

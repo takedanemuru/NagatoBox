@@ -1,0 +1,98 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property ShowHidden As Boolean
+Property Read All As String[]
+Property CurrentDirectory As String
+
+Private $paths As New String[]
+Private $currentDirectory As New NagatoPathsCurrentDirectory
+Private $filter As New NagatoPathsFilter
+Private $showHidden As New NagatoPathsHidden
+
+Private Sub setPaths(argHeader As String, argType As Integer)
+    
+    Dim yukiPath As String
+    Dim yukiFlag As Boolean = False
+    
+    Print argHeader
+    
+    For Each yukiPath In $currentDirectory.GetPaths($showHidden.Pattern, argType)
+        If $filter.Count > 0 And If Not $filter.Matches(yukiPath) Then Continue
+        $paths.Add(yukiPath)
+        Print Subst$("&1 : &2", $paths.Max, yukiPath)
+        yukiFlag = True
+    Next
+    
+    If Not yukiFlag Then Print "  NOTHING"
+    
+End
+
+Public Sub Set(argDirectory As String)
+    
+    $currentDirectory.Path = argDirectory
+    $paths.Clear()
+    setPaths("[Directories]", gb.Directory)
+    setPaths("[Files]", gb.File)
+    
+End
+
+Public Sub SetFilter(argFilters As String[])
+    
+    $filter.Set(argFilters)
+    
+End
+
+Public Sub ClearFilter()
+    
+    $filter.Clear()
+    
+End
+
+Public Sub Up()
+    
+    $currentDirectory.Up()
+    
+End
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Return $paths[argIndex]
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+End
+
+Private Function ShowHidden_Read() As Boolean
+
+    Return $showHidden.Show
+
+End
+
+Private Sub ShowHidden_Write(Value As Boolean)
+
+    $showHidden.Show = Value
+
+End
+
+Private Function All_Read() As String[]
+
+    Return $paths
+
+End
+
+Private Function CurrentDirectory_Read() As String
+
+    Return $currentDirectory.Path
+
+End
+
+Private Sub CurrentDirectory_Write(Value As String)
+
+    $currentDirectory.Path = Value
+
+End

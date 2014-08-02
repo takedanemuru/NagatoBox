@@ -2,33 +2,12 @@
 
 Create Static
 
-Private $wikipedia As String[] = ["what", "whats", "wiki", "wikipedia"]
-
-Private Sub getQuery() As String
+Private Sub weatherTest()
     
-    Dim yukiQuery As String
+    Dim yukiDownloader As New NagatoDownloader As "WeatherTest"
+    Dim yukiApi As String = NagatoWeatherApi.Get(0, 0, 5)
     
-    For Each yukiQuery In MikuruUserInput.All
-        If $wikipedia.Exist(yukiQuery) Then Continue
-        Print Subst$("YUKI.N > going to show about &1", yukiQuery)
-        Return yukiQuery
-    Next
-    
-    Return ""
-    
-End
-
-Private Sub showWikipedia()
-    
-    Dim yukiOutput As String
-    
-    If MikuruUserInput.Include(["ja", "japanese", "Japanese"]) Then
-        Exec ["wikipedia2text", "-l", "ja", getQuery()] To yukiOutput
-    Else
-        Exec ["wikipedia2text", getQuery()] To yukiOutput
-    End If
-    
-    Print yukiOutput
+    yukiDownloader.Download(yukiApi)
     
 End
 
@@ -36,12 +15,18 @@ Public Sub Show()
     
     If MikuruUserInput.Has("speak") Then
         Print "YUKI.N > What ?"
+    Else If MikuruUserInput.Has("weather") Then
+        weatherTest()
     Else If MikuruUserInput.CompleteMatch(["what", "time"]) Then
         Print Format$(Now(), ("hh:nn:ss"))
     Else If MikuruUserInput.CompleteMatch(["love", "you"]) Then
         Print "YUKI.N > No way."
-    Else If MikuruUserInput.Include($wikipedia) And If MikuruUserInput.Count > 1 Then
-        showWikipedia()
     End If
+    
+End
+
+Public Sub WeatherTest_Finished(argData As String)
+    
+    Debug argData
     
 End

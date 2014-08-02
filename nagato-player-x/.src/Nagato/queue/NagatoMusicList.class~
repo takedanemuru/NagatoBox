@@ -13,8 +13,6 @@ Event Changed
 
 Public Function SetPath(argPath As String) As Boolean
     
-    Debug $musicElements.FindIndex(argPath)
-    
     If $musicElements.FindIndex(argPath) = -1 Then  'Array.Find()  shall retun -1 when argument is not found
         Return False
     Else
@@ -49,13 +47,9 @@ Public Sub AddDirectory(argPath As String)
     
 End
 
-Public Sub DeleteMusic(argPath As String)
+Public Sub DeleteIndexes(argIndexes As Integer[])
     
-    Dim yukiDeleteIndex As Integer = $musicElements.FindIndex(argPath)
-    
-    If 0 > yukiDeleteIndex Then Return
-    
-    If $musicElements.DeleteMusic(argPath) Then Raise Changed
+    If $musicElements.DeleteIndexes(argIndexes) Then Raise Changed
     $position.Refresh($musicElements.Count)
     
 End
@@ -129,7 +123,6 @@ End
 
 Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
-    Dim yukiPath As String = $musicElements[$position.Current].Path
     Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
     Dim yukiCount As Integer
     

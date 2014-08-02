@@ -22,7 +22,7 @@ Public Function GetProgressTextByRate(argRate As Float) As String ' argRate MUST
     
     If argRate > 1 Then argRate = 1
     
-    yukiResult = Subst$("&1 / &2", getDuration(argRate), getDuration())
+    yukiResult = Subst$("&1 / &2", getDuration(argRate), getDuration(1))
     
     Return yukiResult
 
@@ -56,7 +56,7 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        Try $player.URL = NagatoQueue.GetCurrentPath(False)
+        Try $player.URL = NagatoQueue.CurrentPath
     End If
     
     If argPosition Then $player.Position = argPosition
@@ -71,7 +71,7 @@ End
 Public Sub ResetUrl()
     
     Try $player.Stop()
-    $player.URL = NagatoQueue.GetCurrentPath(False)
+    $player.URL = NagatoQueue.CurrentPath
     $player.Position = 0
     
 End

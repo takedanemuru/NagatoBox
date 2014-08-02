@@ -5,6 +5,7 @@ Create Static
 Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
+Property Read CurrentPath As String
 Property Read Player As NagatoPlayer
 Property Read State As Integer
 
@@ -40,11 +41,10 @@ Public Sub AddDirectory(argPath As String)
     
 End
 
-Public Sub DeleteMusic(argPath As String)
+Public Sub DeleteIndexes(argIndexes As Integer[])
     
     $player.Stop()
-        $musicList.DeleteMusic(argPath)
-    If $musicList.Count > 0 Then $player.Play()
+    If $musicList.DeleteIndexes(argIndexes) Then $player.Play()
     
 End
 
@@ -200,12 +200,6 @@ Private Function Player_Read() As NagatoPlayer
 
 End
 
-Public Function GetCurrentPath(argUndecoded As Boolean) As String
-    
-    Return $musicList.CurrentPath
-    
-End
-
 Private Function CurrentIndex_Read() As Integer
 
     Return $musicList.CurrentPosition
@@ -239,5 +233,11 @@ End
 Private Function State_Read() As Integer
 
     Return $player.State
+
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $musicList.CurrentPath
 
 End

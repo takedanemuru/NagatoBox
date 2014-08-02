@@ -1,0 +1,52 @@
+' Gambas class file
+
+Event DirectoryMoved(argDirectory As String)
+
+Private Sub moveTo(argPath As String)
+    
+    If Not MikuruAccess.IsReadable(argPath, True) Then Return
+    
+    If IsDir(argPath) Then
+        '$paths.CurrentDirectory = argPath
+        Raise DirectoryMoved(argPath)
+    Else If MikuruOpenWith.Reset(argPath) Then 
+        MikuruOpenWith.Select(argPath)
+    End If
+    
+End
+
+Private Sub moveToUserInputPath()
+    
+    Dim yukiPath As String = MikuruUserInput.GetFirstArgument(["move", "to"])
+    
+    If Exist(yukiPath) Then
+        moveTo(yukiPath)
+    Else
+        MikuruDialog.Show("YUKI.N > I couldn't find the path. Press [ENTER] to continue")
+    Endif
+    
+End
+
+Public Sub Open(argPath As String)
+    
+    moveTo(argPath)
+    
+End
+
+Public Sub _call()
+    
+    With MikuruUserInput
+        If .CompleteMatch(["move", "root"]) Then
+            moveTo("/")
+        Else If .CompleteMatch(["move", "home"]) Then
+            moveTo(User.Home)
+        Else If .CompleteMatch(["move", "data"]) Then
+            moveTo(Desktop.DataDir)
+        Else If .CompleteMatch(["move", "config"]) Then 
+            moveTo(Desktop.ConfigDir)
+        Else
+            moveToUserInputPath()
+        End If
+    End With
+    
+End

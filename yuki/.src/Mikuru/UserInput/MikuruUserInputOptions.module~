@@ -1,0 +1,41 @@
+' Gambas module file
+
+Public Function GetFirstArguments(argInputs As String[], argOptions As String[]) As String
+    
+    Dim yukiOption As String
+    Dim yukiInputs As String[] = argInputs
+    
+    For Each yukiOption In argOptions
+        If Not yukiInputs.Exist(yukiOption) Then Continue
+        yukiInputs.Remove(yukiInputs.Find(yukiOption))
+    Next
+    
+    If yukiInputs.Count = 0 Then Return [""]
+    
+    Return yukiInputs[0]
+    
+End
+
+Public Function Include(argInputs As String[], argOptions As String[]) As Boolean
+    
+    Dim yukiValue As String
+    
+    For Each yukiValue In argOptions
+        If argInputs.Exist(yukiValue) Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Function CompleteMatch(argInputs As String[], argQueries As String[]) As Boolean
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In argQueries
+        If Not argInputs.Exist(Replace$(yukiQuery, "/", "")) Then Return False
+    Next
+    
+    Return True
+    
+End

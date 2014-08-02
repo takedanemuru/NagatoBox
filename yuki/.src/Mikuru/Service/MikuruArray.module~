@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Sub _call(...) As Integer
+    
+    Dim yukiIndex As Integer
+    Dim yukiResult As Integer
+    
+    For yukiIndex = 0 To Param.Max
+        yukiResult += Param[yukiIndex].Count
+    Next
+    
+    Return yukiResult
+    
+End

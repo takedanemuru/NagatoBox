@@ -1,0 +1,32 @@
+' Gambas module file
+
+Private $inputs As New String[]
+
+Private Function catchUserInput() As String
+    
+    Dim yukiInput As String
+    
+    Line Input yukiInput
+    
+    Return yukiInput
+    
+End
+
+Private Sub checkQuit()
+    
+    If $inputs.Exist("q") Or If $inputs.Exist("quit") Or If $inputs.Exist("bye") Then
+        Print "YUKI.N > sleeping beauty"
+        Wait 3
+        Quit 0
+    Endif
+    
+End
+
+Public Sub _call() As String[]
+    
+    $inputs = Split(catchUserInput(), " ", "", True)
+    checkQuit()
+    
+    Return $inputs
+    
+End
