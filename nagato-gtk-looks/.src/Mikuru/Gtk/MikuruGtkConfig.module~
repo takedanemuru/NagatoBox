@@ -1,0 +1,18 @@
+' Gambas module file
+
+Property Read ThemeName As String
+
+Private Const KeyGtkThemeName As String = "gtk-theme-name"
+
+Private $confgGtk2 As New NagatoConfigFile(NagatoSettings.PathGtk2)
+Private $confgGtk3 As New NagatoConfigFile(NagatoSettings.PathGtk3)
+
+Private Function ThemeName_Read() As String
+
+    If $confgGtk2[KeyGtkThemeName] <> $confgGtk3[KeyGtkThemeName] Then
+        Return ""
+    Else
+        Return $confgGtk3[KeyGtkThemeName]
+    Endif
+
+End

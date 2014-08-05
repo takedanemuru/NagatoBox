@@ -26,6 +26,26 @@ Private Sub setProperties(argMode As Integer, argPaths As Collection)
     
 End
 
+Private Sub copyDir(argTargetDirectory As String, argSourceDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiTargetPath As String
+    Dim yukiSourcePath As String
+    
+    Mkdir argTargetDirectory
+    
+    For Each yukiPath In Dir(argSourceDirectory)
+        yukiTargetPath = argTargetDirectory &/ yukiPath
+        yukiSourcePath = argSourceDirectory &/ yukiPath
+        If IsDir(yukiSourcePath) Then
+            copyDir(yukiTargetPath, yukiSourcePath)
+        Else
+            Copy yukiSourcePath To yukiTargetPath
+        Endif
+    Next
+    
+End
+
 Public Sub MoveTo(argPaths As String[])
     
     Dim yukiPath As String
@@ -52,15 +72,19 @@ Public Sub CopyTo(argPaths As String[])
     Dim yukiTargetPath As String
     Dim yukiCollection As New Collection
     
-    Dialog.Title = ("Move To ...")
+    Dialog.Title = ("Copy To ...")
     
-    If Not Dialog.SelectDirectory() Then
-        For Each yukiPath In argPaths
-            yukiTargetPath = MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+    If Dialog.SelectDirectory() Then Return
+
+    For Each yukiPath In argPaths
+        yukiTargetPath = MikuruPath.GetSafePathName(Dialog.Path &/ File.Name(yukiPath))
+        If Not IsDir(yukiPath) Then
             Try Copy yukiPath To yukiTargetPath
-            yukiCollection.Add(yukiTargetPath, yukiPath)
-        Next
-    Endif
+        Else
+            copyDir(yukiTargetPath, yukiPath)
+        End If
+        yukiCollection.Add(yukiTargetPath, yukiPath)
+    Next
     
 Finally
     If Not Error Then setProperties(ModeCopy, yukiCollection)

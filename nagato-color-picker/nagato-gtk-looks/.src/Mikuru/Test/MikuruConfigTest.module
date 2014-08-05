@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Sub _call()
+    
+    Dim yukiConfgGtk2 As NagatoConfigFile
+    Dim yukiConfgGtk3 As NagatoConfigFile
+    Dim yukiConfgGtkTest As NagatoConfigFile
+    
+    yukiConfgGtk2 = New NagatoConfigFile(NagatoSettings.PathGtk2)
+    yukiConfgGtk3 = New NagatoConfigFile(NagatoSettings.PathGtk3)
+    yukiConfgGtkTest = New NagatoConfigFile(User.Home &/ "gtkrc-2.0test")
+
+    Debug yukiConfgGtkTest["gtk-theme-name"]
+
+    yukiConfgGtkTest["gtk-theme-name"] = "NumixWhite3.8"
+    
+    Debug yukiConfgGtkTest["gtk-theme-name"]
+    Debug yukiConfgGtk3["gtk-theme-name"] = yukiConfgGtk2["gtk-theme-name"]
+    
+End
+

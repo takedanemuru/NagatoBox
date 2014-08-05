@@ -1,0 +1,26 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Icon = Picture["pictures/icons/color-palette.png"]
+  { ThemesComboBox ComboBox
+    MoveScaled(17,10,24,4)
+    ReadOnly = True
+    Text = ("ComboBox1")
+  }
+  { FontsComboBox ComboBox
+    MoveScaled(17,17,24,4)
+    ReadOnly = True
+    Text = ("ComboBox1")
+  }
+  { IconComboBox ComboBox
+    MoveScaled(17,24,24,4)
+    ReadOnly = True
+    Text = ("ComboBox1")
+  }
+  { CursorComboBox ComboBox
+    MoveScaled(17,31,24,4)
+    ReadOnly = True
+    Text = ("ComboBox2")
+  }
+}
