@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoEffectProperties
+
+Property Read Values As Variant[]
+
+Private Const SliderHeight As Integer = 32
+
+Private Enum TagX, TagY, TagWidth, TagHeight
+
+Private $rectangle As New Rect
+
+Private Sub initializeRectangle()
+    
+    With $rectangle
+        .X = 0
+        .Y = 0
+        .W = HaruhiImageView.BeforeImage.W
+        .H = HaruhiImageView.BeforeImage.H
+    End With
+    
+End
+
+Private Sub addSliderBox(argTag As Integer, argMax As Integer, argValue As Integer)
+    
+    Dim yukiSliderBox As New SliderBox(Me._$container) As "SliderBox"
+    
+    With yukiSliderBox
+        .Tag = argTag
+        .MaxValue = argMax
+        .MinValue = 0
+        .Value = argValue
+        .Step = 1
+        .H = SliderHeight
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Try Me._$container.Children.Clear()
+    
+    initializeRectangle()
+    
+    Me._AddLabel(("X"))
+    addSliderBox(TagX, $rectangle.W, 0)
+    Me._AddLabel(("Y"))
+    addSliderBox(TagY, $rectangle.H, 0)
+    Me._AddLabel(("Width"))
+    addSliderBox(TagWidth, $rectangle.W, $rectangle.W)
+    Me._AddLabel(("Height"))
+    addSliderBox(TagHeight, $rectangle.H, $rectangle.H)
+    
+End
+
+Public Sub SliderBox_Change()
+    
+    Select Case Last.Tag
+        Case TagX
+            $rectangle.X = Last.Value
+        Case TagY
+            $rectangle.Y = Last.Value
+        Case TagHeight
+            $rectangle.H = Last.Value
+        Case TagWidth
+            $rectangle.W = Last.Value
+    End Select
+    
+End
+
+Private Function Values_Read() As Variant[]
+
+    Dim yukiValues As New Variant[]
+    
+    With yukiValues
+        .Add($rectangle.X)
+        .Add($rectangle.Y)
+        .Add($rectangle.W)
+        .Add($rectangle.H)
+    End With
+
+    Return yukiValues
+
+End

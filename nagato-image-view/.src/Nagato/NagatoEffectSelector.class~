@@ -14,7 +14,7 @@ Public Sub _new(argContainer As Container)
     With $comboBox
         .ReadOnly = True
         .H = 32
-        .List = [("OilPaint"), ("Charcoal"), ("Resize"), ("Colors")]
+        .List = [("OilPaint"), ("Charcoal"), ("Resize"), ("Balance"), ("Trimming")]
     End With
     
     $effect = MikuruEffect.OilPaint
@@ -30,6 +30,10 @@ Public Sub ComboBox_Click()
             $effect = MikuruEffect.Charcoal
         Case 2
             $effect = MikuruEffect.Resize
+        Case 3
+            $effect = MikuruEffect.Balance
+        Case 4
+            $effect = MikuruEffect.Trimming
     End Select
     
     Raise MenuEvent(MikuruEffect.Changed)

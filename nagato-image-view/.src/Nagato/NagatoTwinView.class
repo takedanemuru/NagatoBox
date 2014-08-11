@@ -90,16 +90,20 @@ Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
     
     $after.Image = $before.Image
     
+    $after.Visible = True
+    
     reserveZoom()
     Select Case argEffect
         Case MikuruEffect.OilPaint
-            $after.Image = $before.Image.OilPaint(argValues[0])
+            $after.Image = $after.Image.OilPaint(argValues[0])
         Case MikuruEffect.Charcoal
-            $after.Image = $before.Image.Gray()
+            $after.Image = $after.Image.Desaturate()
         Case MikuruEffect.Resize
-            $after.Image = $before.Image.Stretch(argValues[1], argValues[0])
+            $after.Image = $after.Image.Stretch(argValues[1], argValues[0])
         Case MikuruEffect.Balance
             setBalance(argValues)
+        Case MikuruEffect.Trimming
+            $after.Image = $after.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
     End Select
     restoreZoom()
     
