@@ -1,0 +1,46 @@
+' Gambas class file
+
+Property Read Elements As XmlElement[]
+
+Private $xmlDocument As New XmlDocument
+Private $buffer As String
+Private $httpClient As New HttpClient As "HttpClient"
+
+Event Finished
+
+Public Sub Activate(argLatitude As Float, argLongtude As Float)
+    
+    $buffer = ""
+    
+    With $httpClient
+        .Async = True
+        .URL = NagatoWeatherApi.Get(argLatitude, argLongtude, 5)
+        .Timeout = 30
+        .Get()
+    End With
+    
+Catch 
+    Return 'to avoid changing property during downloading.
+    
+End
+
+Public Sub HttpClient_Read()
+     
+    $buffer &= Read #Last, Lof(Last)
+     
+End
+
+Public Sub HttpClient_Finished()
+    
+    $httpClient.Close()
+    $xmlDocument.FromString($buffer)
+    
+    Raise Finished
+    
+End
+
+Private Function Elements_Read() As XmlElement[]
+
+    Return $xmlDocument.GetElementsByTagName("time")
+
+End

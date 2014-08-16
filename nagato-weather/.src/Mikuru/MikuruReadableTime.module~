@@ -1,0 +1,12 @@
+' Gambas module file
+
+Public Sub _get(argTime As String) As String
+    
+    Dim yukiResult As String
+    
+    yukiResult = Replace$(argTime, "T", " ")
+    yukiResult = Replace$(yukiResult, "Z", "")
+    
+    Return yukiResult
+    
+End

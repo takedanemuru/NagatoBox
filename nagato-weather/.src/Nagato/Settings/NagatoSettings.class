@@ -1,0 +1,65 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property UserLatitude As Float
+Property UserLongitude As Float
+Property UserLocationName As String
+
+Private Function UserLatitude_Read() As Float
+
+    Dim yukiLatitude As String = Me._$settings["geo/latitude", ""]
+
+    If yukiLatitude = "" Then
+        Return 34.773632
+    Else
+        Return CFloat(NagatoCipher.Decryption(yukiLatitude))
+    Endif
+
+
+End
+
+Private Sub UserLatitude_Write(Value As Float)
+
+    Me._$settings["geo/latitude"] = NagatoCipher.Encryption(Value)
+    Me._$settings.Save()
+
+End
+
+Private Function UserLongitude_Read() As Float
+
+    Dim yukiLongitude As String = Me._$settings["geo/longitude", ""]
+
+    If yukiLongitude = "" Then
+        Return 135.3166017
+    Else
+        Return CFloat(NagatoCipher.Decryption(yukiLongitude))
+    Endif
+
+End
+
+Private Sub UserLongitude_Write(Value As Float)
+
+    Me._$settings["geo/longitude"] = NagatoCipher.Encryption(Value)
+    Me._$settings.Save()
+
+End
+
+Private Function UserLocationName_Read() As String
+
+    Dim yukiVisibleName As String = Me._$settings["geo/visible-name", ""]
+
+    If yukiVisibleName = "" Then
+        Return "Nishinomiya-City Japan"
+    Else
+        Return NagatoCipher.Decryption(yukiVisibleName)
+    Endif
+
+End
+
+Private Sub UserLocationName_Write(Value As String)
+
+    Me._$settings["geo/visible-name"] = NagatoCipher.Encryption(Value)
+    Me._$settings.Save()
+
+End

@@ -1,0 +1,12 @@
+' Gambas module file
+
+Public Sub _call(argDay As Boolean, argWeatherId As Integer, argSize As Integer) As Picture
+    
+    Dim yukiImage As Image 
+    
+    yukiImage = IIf(argDay, MikuruWeatherIconDay[argWeatherId], MikuruWeatherIconNight[argWeatherId])
+    
+    Return yukiImage.Stretch(argSize, argSize)
+    
+End
+

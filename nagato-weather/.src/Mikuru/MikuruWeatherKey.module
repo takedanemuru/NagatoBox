@@ -1,0 +1,5 @@
+' Gambas module file
+
+Public Enum Temperature = 0, WindDirection = 1, WindSpeed = 2, Humidity = 3, Pressure = 4
+Public Enum Cloudiness = 5, Fog = 6, LowCloud = 7, MediumCloud = 8, HighCloud = 9
+Public Enum Precipitation = 10, IconId = 11, HasIcon = 12

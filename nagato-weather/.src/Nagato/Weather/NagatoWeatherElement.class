@@ -1,19 +1,5 @@
 ' Gambas class file
 
-Property Read Temperature As Float
-Property Read WindDirection As String
-Property Read WindSpeed As Float
-Property Read Humidity As Float
-Property Read Pressure As Float
-Property Read Cloudiness As Float
-Property Read Fog As Float
-Property Read LowCloud As Float
-Property Read MediumCloud As Float
-Property Read HighCloud As Float
-Property Read Precipitation As Float 'mm
-Property Read IconId As Integer
-Property Read HasIcon As Boolean
-
 Private $temperature As Float
 Private $windDirection As String
 Private $windSpeed As Float
@@ -51,84 +37,37 @@ Public Sub SetAdditionalData(argXmlElements As XmlElement[])
     
 End
 
-Private Function Temperature_Read() As Float
-
-    Return $temperature
-
-End
-
-Private Function WindDirection_Read() As String
-
-    Return $windDirection
-
-End
-
-Private Function WindSpeed_Read() As Float
-
-    Return $windSpeed
-
-End
-
-Private Function Humidity_Read() As Float
-
-    Return $humidity
-
-End
-
-Private Function Pressure_Read() As Float
-
-    Return $pressure
-
-End
-
-Private Function Cloudiness_Read() As Float
-
-    Return $cloudiness
-
-End
-
-Private Function Fog_Read() As Float
-
-    Return $fog
-
-End
-
-Private Function LowCloud_Read() As Float
-
-    Return $lowCloud
-
-End
-
-Private Function MediumCloud_Read() As Float
-
-    Return $mediumCloud
-
-End
-
-Private Function HighCloud_Read() As Float
-
-    Return $highCloud
-
-End
-
-Private Function Precipitation_Read() As Float
-
-    Return $precipitation
-
-End
-
-Private Function IconId_Read() As Integer
-
-    Return $iconId
-
-End
-
-Private Function HasIcon_Read() As Boolean
-
-    If $iconId = 0 Then
-        Return False
-    Else
-        Return True
-    Endif
-
+Public Sub _get(argKey As Integer) As Variant
+    
+    With MikuruWeatherKey
+        Select Case argKey
+            Case .Cloudiness
+                Return $cloudiness
+            Case .Fog
+                Return $fog
+            Case .HasIcon
+                Return IIf($iconId = 0, False, True)
+            Case .HighCloud
+                Return $highCloud
+            Case .Humidity
+                Return $humidity
+            Case .IconId
+                Return $iconId
+            Case .LowCloud
+                Return $lowCloud
+            Case .MediumCloud
+                Return $mediumCloud
+            Case .Precipitation
+                Return $precipitation
+            Case .Pressure
+                Return $pressure
+            Case .Temperature
+                Return $temperature
+            Case .WindDirection
+                Return $windDirection
+            Case .WindSpeed
+                Return $windSpeed
+        End Select
+    End With
+    
 End

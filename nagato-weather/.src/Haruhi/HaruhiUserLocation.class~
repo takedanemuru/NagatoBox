@@ -35,11 +35,8 @@ Private Sub startDownloading(argLocation As String)
         .URL = Subst$(NominatimApi, Quote$(argLocation))
         .Async = True
         .Timeout = 20
+        .Get()
     End With
-    
-    Debug "go for it, yuki."
-    
-    $httpClient.Get()
     
 End
 
@@ -71,13 +68,19 @@ End
 Public Sub FindButtonBox_Click()
     
     With FindButtonBox
-        If .Text <> "" And If IsAscii(.Text) Then
+        If .Text <> "" Then 'And If IsAscii(.Text) Then
             ListView1.Clear()
             $cache.Clear()
             startDownloading(Replace$(.Text, " ", "+"))
         End If
     End With
     
+End
+
+Public Sub FindButtonBox_Activate()
+
+    FindButtonBox_Click()
+
 End
 
 Public Sub ListView1_Activate()
@@ -95,10 +98,4 @@ Public Sub ListView1_Activate()
 Catch
     Return
     
-End
-
-Public Sub FindButtonBox_Activate()
-
-    FindButtonBox_Click()
-
 End

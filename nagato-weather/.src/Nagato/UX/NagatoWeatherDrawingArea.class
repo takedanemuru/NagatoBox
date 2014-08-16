@@ -2,19 +2,19 @@
 
 Property Longitude As Float
 
+Private Const IconSize As Integer = 96
+
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $currentWeather As NagatoWeatherElement
 Private $textPainter As NagatoWeatherPainterText
 Private $longitude As Float
 
+Event BackgroundColor(argColor As Integer)
+
 Private Function getWeatherIcon() As Image
     
-    If MikuruTime.IsDay($longitude) Then
-        Return NagatoWeatherIcon.GetIconImageDay($currentWeather.IconId).Stretch(96, 96)
-    Else
-        Return NagatoWeatherIcon.GetIconImageNight($currentWeather.IconId).Stretch(96, 96)
-    End If
+    Return MikuruWeatherIcon(MikuruTime.IsDay($longitude), $currentWeather[MikuruWeatherKey.IconId], IconSize)
     
 End
 
@@ -25,7 +25,7 @@ Private Sub setWeatherInfomation(argBackground As Integer)
     Paint.Begin($drawingArea)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.DrawImage(getWeatherIcon(), ($drawingArea.W - 96) / 2, 16)
+        Paint.DrawImage(getWeatherIcon(), ($drawingArea.W - IconSize) / 2, 16)
         $textPainter.Draw($currentWeather)
     Paint.End()
     
@@ -42,7 +42,7 @@ Private Sub setPleaseWait(argBackground As Integer)
     Paint.Begin($drawingArea)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.DrawImage(MikuruIcon.Get("question", 48).Image, 40, 8)
+        Paint.DrawImage(MikuruIcon.Get("question", 48).Image, ($drawingArea.W - 48) / 2, 16)
         Paint.DrawRichText("Please wait...", 0, 0, $drawingArea.W, $drawingArea.H, Align.Center)
     Paint.End()
     
@@ -73,9 +73,11 @@ Public Sub Asakura_Draw()
     
      If NagatoWeatherCache.IsReady
         $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
-        yukiBackground = NagatoWeatherCondition.GetColor($currentWeather.IconId, MikuruTime.IsDay($longitude))
+        yukiBackground = MikuruWeatherColor($currentWeather[MikuruWeatherKey.IconId], MikuruTime.IsDay($longitude))
+        Raise BackgroundColor(yukiBackground)
         setWeatherInfomation(yukiBackground)
     Else
+        Raise BackgroundColor(Color.DarkBlue)
         setPleaseWait(Color.DarkBlue)
     End If
     

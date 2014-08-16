@@ -3,6 +3,7 @@
 Property Read Name As String
 Property Read Pattern As String
 Property Read Copyright As String
+Property Read NominatimApi As String
 
 Private Function Name_Read() As String
 
@@ -19,5 +20,11 @@ End
 Private Function Copyright_Read() As String
 
     Return "© OpenStreetMap contributors"
+
+End
+
+Private Function NominatimApi_Read() As String
+
+    Return "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
 
 End

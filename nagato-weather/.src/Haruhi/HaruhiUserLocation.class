@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
-
 Private $buffer As String
 Private $cache As New Collection
 Private $httpClient As New HttpClient As "HttpClient"
@@ -11,8 +9,6 @@ Private Sub parseBuffer()
     
     Dim yukiNode As XmlNode
     Dim yukiGeoElement As NagatoGeoElement
-    
-    Debug $buffer
     
     $xml.FromString($buffer)
     
@@ -34,14 +30,11 @@ Private Sub startDownloading(argLocation As String)
      $buffer = ""
     
     With $httpClient
-        .URL = Subst$(NominatimApi, Quote$(argLocation))
+        .URL = Subst$(MikuruOpenStreetMap.NominatimApi, Quote$(argLocation))
         .Async = True
         .Timeout = 20
+        .Get()
     End With
-    
-    Debug "go for it, yuki."
-    
-    $httpClient.Get()
     
 End
 
@@ -73,13 +66,18 @@ End
 Public Sub FindButtonBox_Click()
     
     With FindButtonBox
-        If .Text <> "" And If IsAscii(.Text) Then
-            ListView1.Clear()
-            $cache.Clear()
-            startDownloading(Replace$(.Text, " ", "+"))
-        End If
+        If .Text = "" Then Return
+        ListView1.Clear()
+        $cache.Clear()
+        startDownloading(Replace$(.Text, " ", "+"))
     End With
     
+End
+
+Public Sub FindButtonBox_Activate()
+
+    FindButtonBox_Click()
+
 End
 
 Public Sub ListView1_Activate()
@@ -97,10 +95,4 @@ Public Sub ListView1_Activate()
 Catch
     Return
     
-End
-
-Public Sub FindButtonBox_Activate()
-
-    FindButtonBox_Click()
-
 End

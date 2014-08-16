@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoGridsHandler
+
+Private Sub getIcon(argCount As Integer, argElement As NagatoWeatherElement) As Picture
+    
+    Return MikuruWeatherIcon((argCount >= 6 And 18 > argCount), argElement[MikuruWeatherKey.IconId], 64).Picture
+    
+End
+
+Private Sub setGridColor(argCount As Integer)
+    
+    If 6 > argCount Or If argCount >= 18 Then
+         Me._SetBackgroundColor(MikuruBackgroundColor.Night)
+    Else
+        Me._SetBackgroundColor(MikuruBackgroundColor.Day)
+    End If
+    
+End
+
+Public Sub SetData(argDate As String)
+    
+    Dim yukiCount As Integer
+    Dim yukiTime As String
+    Dim yukiElement As NagatoWeatherElement
+    
+    For yukiCount = 0 To 21
+        yukiTime = Subst$("&1T&2:00:00Z", argDate, Format$(yukiCount, "0#"))
+        If NagatoWeatherCache.HasElement(yukiTime) Then
+            With Me._$grids
+                Inc .Rows.Count
+                yukiElement = NagatoWeatherCache.GetElement(yukiTime)
+                setGridColor(yukiCount)
+                .[.Rows.Max, 0].Picture = getIcon(yukiCount, yukiElement)
+                .[.Rows.Max, 1].Text = MikuruReadableTime(yukiTime)
+                .[.Rows.Max, 2].Text = Subst$("&1°C", yukiElement[MikuruWeatherKey.Temperature])
+                .[.Rows.Max, 2].Alignment = Align.Right
+                .[.Rows.Max, 3].Text = Subst$("&1mm", yukiElement[MikuruWeatherKey.Precipitation])
+                .[.Rows.Max, 3].Alignment = Align.Right
+            End With
+        Endif
+    Next
+    
+End
+
+Public Sub _InitializeGridView() ' override
+    
+    With Me._$grids
+        .Grid = False
+        .Header = GridView.Horizontal
+        .Columns.Count = 4
+        Me._SetColumnWidth(64, 256, 128, 128)
+        Me._SetColumnTitles("Condition", "Time", "Temperature", "Precipitation")
+        .Rows.Height = 64
+    End With
+    
+    NagatoSettingsGrids.Load(Me._$grids)
+    
+End

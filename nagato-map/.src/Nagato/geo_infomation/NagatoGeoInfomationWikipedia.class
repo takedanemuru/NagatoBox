@@ -5,8 +5,6 @@ Create Static
 Property Read GeoInfomations As NagatoGeoInfomationElement[]
 Property Read Ready As Boolean
 
-' Private Const Api As String = "http://api.wikilocation.org/articles?lat=&1&lng=&2&limit=100&radius=10000&format=xml&locale=en"
-
 Private $geoInfomations As New NagatoGeoInfomationElement[]
 Private $buffer As String
 Private $ready As Boolean = False

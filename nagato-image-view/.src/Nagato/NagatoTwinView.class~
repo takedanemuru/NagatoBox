@@ -102,6 +102,8 @@ Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
             $after.Image = $after.Image.Stretch(argValues[1], argValues[0])
         Case MikuruEffect.Balance
             setBalance(argValues)
+        Case MikuruEffect.Trimming
+            $after.Image = $after.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
     End Select
     restoreZoom()
     

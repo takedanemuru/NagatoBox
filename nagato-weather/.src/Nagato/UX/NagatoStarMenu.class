@@ -20,7 +20,7 @@ Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName A
     With yukiMenu
         .Text = argText
         .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+        If argIconName Then .Picture = MikuruIcon[argIconName]
     End With
     
 End
@@ -28,11 +28,11 @@ End
 Public Sub _new(argMenuButton As MenuButton)
     
     initializeRootMenu(argMenuButton)
-    addMenu(("Set User Location"), MenuSetLocation)
-    addMenu(("Show Forecast"), MenuShowForecast)
+    addMenu(("Set User Location"), MenuSetLocation, "user")
+    addMenu(("Forecast"), MenuShowForecast, "umbrella")
         addMenu("", MenuNone)
-    addMenu(("About"), MenuAbout)
-    addMenu(("Quit"), MenuQuit)
+    addMenu(("About"), MenuAbout, "star")
+    addMenu(("Quit"), MenuQuit, "button-cross")
     
 End
 
@@ -40,7 +40,9 @@ Public Sub MenuItem_Click()
     
     Select Case Last.Tag
         Case MenuSetLocation
-            HaruhiUserLocation.ShowDialog()
+            If HaruhiUserLocation.ShowDialog() = MikuruDialog.ResponseApply Then
+                NagatoWeatherCache.Activate(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
+            Endif
         Case MenuShowForecast
             HaruhiWeatherForecast.Show()
         Case MenuAbout

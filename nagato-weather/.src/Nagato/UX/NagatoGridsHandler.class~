@@ -1,0 +1,40 @@
+' Gambas class file
+
+Create Private
+
+Public _$grids As GridView
+
+Public Sub _SetBackgroundColor(argColor As Integer)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To Me._$grids.Columns.Max
+        With Me._$grids[Me._$grids.Rows.Max, yukiCount]
+            .Background = argColor
+        End With
+    Next
+    
+End
+
+Public Sub _SetColumnWidth(...)
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Param.Max
+        Me._$grids.Columns.Width = Param[yukiIndex]
+    Next
+    
+End
+
+Public Sub _InitializeGridView()
+    
+    ' virtual, MUST be overridden.
+    
+End
+
+Public Sub _new(argGrids As GridView)
+    
+    Me._$grids = argGrids
+    Me._InitializeGridView()
+    
+End

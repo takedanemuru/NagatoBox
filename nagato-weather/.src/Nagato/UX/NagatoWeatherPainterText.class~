@@ -27,13 +27,13 @@ Private Function getHeaders() As String
     
     Dim yukiReturn As String = "<h2> </h2><br>"
     
-    yukiReturn &= "Temp.:<br>"
-    yukiReturn &= "Wind(S):<br>"
-    yukiReturn &= "Wind(D):<br>"
-    yukiReturn &= "Hum.:<br>"
-    yukiReturn &= "Cloud:<br>"
-    yukiReturn &= "Press.:<br>"
-    yukiReturn &= "Prec.:<br>"
+    yukiReturn &= "Temperature:<br>"
+    yukiReturn &= "Wind Speed:<br>"
+    yukiReturn &= "Wind Direction:<br>"
+    yukiReturn &= "Hummidity:<br>"
+    yukiReturn &= "Cloudiness:<br>"
+    yukiReturn &= "Pressure:<br>"
+    yukiReturn &= "Precipitation:<br>"
     
     Return yukiReturn
     
@@ -44,13 +44,13 @@ Private Function getStatus() As String
     Dim yukiReturn As String = "<h2> </h2><br>"
     
     With $currentWeather
-        yukiReturn &= Subst$("&1°C<br>", .Temperature)
-        yukiReturn &= Subst$("&1m<br>", .WindSpeed)
-        yukiReturn &= Subst$("&1<br>", .WindDirection)
-        yukiReturn &= Subst$("&1%<br>", .Humidity)
-        yukiReturn &= Subst$("&1%<br>", .Cloudiness)
-        yukiReturn &= Subst$("&1HPa<br>", .Pressure)
-        yukiReturn &= Subst$("&1mm<br>", .Precipitation)
+        yukiReturn &= Subst$("&1°C<br>", .[MikuruWeatherKey.Temperature])
+        yukiReturn &= Subst$("&1m<br>", .[MikuruWeatherKey.WindSpeed])
+        yukiReturn &= Subst$("&1<br>", .[MikuruWeatherKey.WindDirection])
+        yukiReturn &= Subst$("&1%<br>", .[MikuruWeatherKey.Humidity])
+        yukiReturn &= Subst$("&1%<br>", .[MikuruWeatherKey.Cloudiness])
+        yukiReturn &= Subst$("&1HPa<br>", .[MikuruWeatherKey.Pressure])
+        yukiReturn &= Subst$("&1mm<br>", .[MikuruWeatherKey.Precipitation])
     End With
     
     Return yukiReturn

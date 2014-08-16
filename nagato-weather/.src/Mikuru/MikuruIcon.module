@@ -2,7 +2,11 @@
 
 Public Function Get(argIconName As String, Optional argIconSize As Integer = 16) As Picture
     
-    Debug argIconName
+    Return image.Load(Subst$("Pictures/icons/&1.png", argIconName)).Stretch(argIconSize, argIconSize).Picture
+    
+End
+
+Public Sub _get(argIconName As String, Optional argIconSize As Integer = 16) As Picture
     
     Return image.Load(Subst$("Pictures/icons/&1.png", argIconName)).Stretch(argIconSize, argIconSize).Picture
     

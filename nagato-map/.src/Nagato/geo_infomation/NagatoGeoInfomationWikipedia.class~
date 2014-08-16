@@ -44,6 +44,8 @@ Private Sub parsingXml()
     
     Dim yukiXmlDocument As New XmlDocument
     
+    Debug $buffer
+    
     yukiXmlDocument.FromString($buffer)
     parsingArticles(yukiXmlDocument.GetElementsByTagName("article"))
     
