@@ -45,6 +45,10 @@ Private Sub parsingXml()
     yukiXmlDocument.FromString($buffer)
     parsingArticles(yukiXmlDocument.GetElementsByTagName("article"))
     
+Catch
+    Message.Error(("YUKI.N > Couldn't connect to WikiLocation Service."))
+    Return
+    
 End
 
 Private Sub startDownloading(argUrl As String)
@@ -65,7 +69,6 @@ End
 
 Public Sub Get(argLatitude As Float, argLongitude As Float)
     
-    'startDownloading(Subst$(Api, argLatitude, argLongitude))
     startDownloading(NagatoWikipediaApi.Get(argLatitude, argLongitude))
     
 End

@@ -8,8 +8,10 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
-    'If NagatoArguments.DesktopIcons Then
-        HaruhiDesktop.Show()
+    HaruhiDesktop.Show()
+    
+    ' If NagatoArguments.DesktopIcons Then
+    '     HaruhiDesktop.Show()
     ' Else
     '     HaruhiMain.Show()
     ' End If

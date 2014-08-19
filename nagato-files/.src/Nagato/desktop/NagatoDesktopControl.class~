@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read Key As String
+
+Private Const IconSize As Integer = 128
+Private Const FontSize As Integer = 16
+
+Private $iconView As IconView
+
+Public Sub initializeIcon()
+    
+    Dim yukiImage As New Image(IconSize, IconSize, Color.Blue + 16777216 * 128)
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = FontSize
+        Paint.RichText("Control", 0, 0, IconSize, IconSize, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    $iconView[Me.Key].Picture = yukiImage.Picture 
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $iconView.Add(Me.Key, "")
+    initializeIcon()
+    
+End
+
+Private Function Key_Read() As String
+
+    Return "NagatoDektopControl"
+
+End

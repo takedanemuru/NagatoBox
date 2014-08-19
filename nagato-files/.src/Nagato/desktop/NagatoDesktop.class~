@@ -1,9 +1,8 @@
 ' Gambas class file
 
-Inherits NagatoSignal
-
 Private $iconView As IconView
 Private $clock As NagatoDesktopClock
+Private $control As NagatoDesktopControl
 Private $observer As NagatoDirectoryObserver
 Private $selection As NagatoSelection
 
@@ -49,8 +48,8 @@ Public Sub _new(argContainer As Container)
     
     $selection = New NagatoSelection
     $clock = New NagatoDesktopClock($iconView)
-    
     addIcons()
+    $control = New NagatoDesktopControl($iconView) As "DesktopControl"
     
 End
 
@@ -62,7 +61,6 @@ Public Sub DesktopIconView_MouseDown()
         $iconView.Current.Selected = False
     Else
         With $iconView
-            Debug .Key
             If .Key = "clock" Then Return
             $selection.Push(.Key, Mouse.Left)
             .[.Key].Picture = MikuruTiles.Get(.Key, $selection.Paths.Exist(.Key))

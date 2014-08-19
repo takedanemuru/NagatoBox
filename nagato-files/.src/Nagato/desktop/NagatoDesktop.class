@@ -47,7 +47,6 @@ Public Sub _new(argContainer As Container)
     
     $selection = New NagatoSelection
     $clock = New NagatoDesktopClock($iconView)
-    
     addIcons()
     
 End

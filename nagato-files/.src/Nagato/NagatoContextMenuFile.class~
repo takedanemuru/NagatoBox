@@ -31,14 +31,6 @@ Private Sub addOpenWithDefaultMenu(argDesktopFile As DesktopFile)
 End
 
 Private Sub addDefault()
-    
-    ' Dim yukiDesktopFiles As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
-    ' Dim yukiDesktopFile As DesktopFile
-    ' 
-    ' If yukiDesktopFiles.Count = 0 Then Return
-    ' 
-    ' Try yukiDesktopFile = New DesktopFile(MikuruApplications.GlobalApplicationDirectory &/ yukiDesktopFiles[0])
-    ' If Error Then Return
    
    Dim yukiDefaultApplication As New NagatoDefaultApplication(Me._$path)
    
@@ -63,7 +55,7 @@ End
 Private Sub addFileOpenWithMenu()
     
     Dim yukiMenu As New Menu(Me._$rootMenu)
-    Dim yukiOpenWithMenu As NagatoOpenWithApplicationMenu
+    Dim yukiSelectApplicationMenu As NagatoSelectApplicationMenu
     
     With yukiMenu
         .Text = ("Open with ...")

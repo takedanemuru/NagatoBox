@@ -2,6 +2,9 @@
 
 Property Read Key As String
 
+Private Const IconSize As Integer = 128
+Private Const FontSize As Integer = 16
+
 Private $iconView As IconView
 Private $timer As New Timer As "DesktopTimer"
 
@@ -15,16 +18,16 @@ End
 
 Public Sub DesktopTimer_Timer()
     
-    Dim yukiImage As New Image(128, 128, Color.Orange + 16777216 * 128)
+    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
-        Paint.Font.Size = 16
-        Paint.RichText(Format$(Now(), ("hh:nn:ss")), 0, 0, 128, 128, Align.Center)
+        Paint.Font.Size = FontSize
+        Paint.RichText(Format$(Now(), ("hh:nn:ss")), 0, 0, IconSize, IconSize, Align.Center)
         Paint.Fill()
     Paint.End()
     
-    $iconView["clock"].Picture = yukiImage.Picture 
+    $iconView[Me.Key].Picture = yukiImage.Picture 
     
 End
 

@@ -2,6 +2,26 @@
 
 Inherits NagatoSubMenu
 
+Private Sub addSelectApplicationMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "SelectApplicationMenu"
+    
+    With yukiMenu
+        .Text = ("Select application")
+    End With
+    
+End
+
+Private Sub addDummyMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) 
+    
+    With yukiMenu
+        .Text = ""
+    End With
+    
+End
+
 Private Sub addIndivisualOpenWithMenu(argDesktopFileName As String)
     
     Dim yukiMenu As Menu
@@ -40,8 +60,13 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
     
     Dim yukiAdditionalDesktopFile As String
     Dim yukiChecker As New String[]
+    Dim yukiMimeTypes As String[] = getDesktopFilesWithMimeType()
     
-    For Each yukiAdditionalDesktopFile In getDesktopFilesWithMimeType()
+    addSelectApplicationMenu()
+    
+    If yukiMimeTypes.Count > 0 Then addDummyMenu()
+    
+    For Each yukiAdditionalDesktopFile In yukiMimeTypes
         If Not yukiChecker.Exist(yukiAdditionalDesktopFile) Then
             addIndivisualOpenWithMenu(yukiAdditionalDesktopFile)
             yukiChecker.Add(yukiAdditionalDesktopFile)
@@ -59,5 +84,11 @@ Public Sub OpenWithMenu_Click()
     Dim yukiDesktopFile As New DesktopFile(Last.Tag)
     
     yukiDesktopFile.Run(Me._$path)
+    
+End
+
+Public Sub SelectApplicationMenu_Click()
+    
+    HaruhiSelectApplication.ShowAllApplications(Me._$path)
     
 End

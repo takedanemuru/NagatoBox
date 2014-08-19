@@ -14,6 +14,9 @@ Event BackgroundColor(argColor As Integer)
 
 Private Function getWeatherIcon() As Image
     
+    Debug $longitude
+    Debug MikuruTime.IsDay($longitude)
+    
     Return MikuruWeatherIcon(MikuruTime.IsDay($longitude), $currentWeather[MikuruWeatherKey.IconId], IconSize)
     
 End
@@ -29,9 +32,9 @@ Private Sub setWeatherInfomation(argBackground As Integer)
         $textPainter.Draw($currentWeather)
     Paint.End()
     
-' Catch
-'     Debug Error.Text
-'     Return
+Catch
+    Debug Error.Text
+    Return
     
 End
 

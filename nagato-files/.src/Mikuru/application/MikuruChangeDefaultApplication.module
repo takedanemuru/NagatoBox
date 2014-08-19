@@ -1,0 +1,22 @@
+' Gambas module file
+
+Private $desktopFile As DesktopFile
+Private $path As String
+
+Private Function isConfirmed() As Boolean
+    
+    Dim yukiTemplate As String = File.Load("text/TemplateChangeDefault")
+    Dim yukiMessage As String = Subst$(yukiTemplate, $desktopFile.Name, DesktopMime.FromFile($path).Type)
+    
+    Return Choose(Message.Question(yukiMessage, ("Cancel"), ("OK")))
+    
+End
+
+Public Sub _call(argDesktopFile As DesktopFile, argFilePath As String)
+    
+    $desktopFile = argDesktopFile
+    $path = argFilePath
+    
+    Debug isConfirmed()
+    
+End

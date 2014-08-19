@@ -24,6 +24,8 @@ Public Function IsDay(argLongitude As Float) As Boolean
     
     Dim yukiCurrentTime As Float = getUTCHour() + getUTCMinute() + (argLongitude / 15)
     
+    yukiCurrentTime = CInt(yukiCurrentTime) Mod 24 + getUTCMinute()
+    
     If 18 > yukiCurrentTime And If yukiCurrentTime >= 6 Then
         Return True
     Else

@@ -1,0 +1,80 @@
+' Gambas class file
+
+Property Read Ready As Boolean
+Property Read Buffer As String
+
+Private Const Api As String = "http://api.wikilocation.org/articles?lat=&1&lng=&2&limit=&3&radius=&4&format=xml&locale=en"
+
+Private $buffer As String
+Private $ready As Boolean = False
+
+Event Finished
+Event Error
+
+Private Function getUrl(argLatitude As Float, argLongitude As Float) As String
+    
+    Return Subst$(Api, argLatitude, argLongitude, NagatoSettings.WikipediaLimit, NagatoSettings.WikipediaRadius)
+    
+End
+
+Private Sub parsingXml()
+    
+    Dim yukiXmlDocument As New XmlDocument
+    
+    yukiXmlDocument.FromString($buffer)
+    parsingArticles(yukiXmlDocument.GetElementsByTagName("article"))
+    
+Catch
+    Debug Error.Text
+    Raise Error
+    
+End
+
+Public Sub Get(argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    $ready = False
+    $buffer = ""
+    
+    With yukiHttpClient
+        .URL = getUrl(argLatitude, argLongitude)
+        .Async = True
+        .Timeout = 30
+        .Get()
+    End With
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    Dim yukiBuffer As String
+
+    yukiBuffer = Read #Last, Lof(Last)
+    $buffer &= yukiBuffer
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    parsingXml()
+    
+End
+
+Public Sub HttpClient_Error()
+    
+    Raise Error
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function Buffer_Read() As String
+
+    Return $buffer
+
+End

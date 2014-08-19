@@ -39,8 +39,9 @@ msgid "As normal user"
 msgstr ""
 
 #: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
-#: HaruhiTagging.form:22 MikuruFile.module:47 NagatoDBTag.class:20
-#: NagatoStarMenu.class:101
+#: HaruhiSelectApplication.class:13 HaruhiTagging.form:22
+#: MikuruChangeDefaultApplication.module:11 MikuruFile.module:47
+#: NagatoDBTag.class:20 NagatoStarMenu.class:101
 msgid "Cancel"
 msgstr ""
 
@@ -66,7 +67,9 @@ msgstr ""
 msgid "YUKI.N > Same name directory or file has been existed"
 msgstr ""
 
-#: HaruhiNewDirectory.class:37 HaruhiRename.class:50 NagatoDBTag.class:54
+#: HaruhiNewDirectory.class:37 HaruhiRename.class:50
+#: HaruhiSelectApplication.class:13 MikuruChangeDefaultApplication.module:11
+#: NagatoDBTag.class:54
 msgid "OK"
 msgstr ""
 
@@ -96,6 +99,10 @@ msgstr ""
 
 #: HaruhiRename.class:74
 msgid "Select directory"
+msgstr ""
+
+#: HaruhiSelectApplication.class:10
+msgid "YUKI.N > We are going to open <b>&1</b> with <b>&2</b>..."
 msgstr ""
 
 #: HaruhiTagging.form:13
@@ -263,6 +270,10 @@ msgstr ""
 
 #: NagatoMenuPanelSelectionButton.class:16
 msgid "Multiple selection"
+msgstr ""
+
+#: NagatoOpenWithApplicationMenu.class:10
+msgid "Select application"
 msgstr ""
 
 #: NagatoPathBar.class:25

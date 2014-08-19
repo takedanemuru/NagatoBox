@@ -1,0 +1,64 @@
+' Gambas class file
+
+Private Const ApplicationsDirectory As String = "/usr/share/applications"
+
+Private $defaultApplication As NagatoDefaultApplication
+Private $path As String
+
+Private Function isConfirmed(argDesktopFileName As String) As Boolean
+    
+    Dim yukiTemplate As String = ("YUKI.N > We are going to open <b>&1</b> with <b>&2</b>...")
+    Dim yukiMessage As String = Subst$(yukiTemplate, File.Name($path), argDesktopFileName)
+    
+    Return Choose(Message.Question(yukiMessage, ("Cancel"), ("OK")), False, True)
+    
+End
+
+Private Function isDefaultApplication(argPath As String) As Boolean ' argPath is path to DesktopFile
+    
+    If Not $defaultApplication.NotFound Then Return False
+    
+    Return $defaultApplication.DesktopFile.Path = argPath
+    
+End
+
+Private Sub setIcons()
+    
+    Dim yukiPath As String
+    Dim yukiDesktopFile As DesktopFile
+    Dim yukiIcon As Picture
+    
+    For Each yukiPath In Dir(ApplicationsDirectory).Sort(gb.IgnoreCase)
+        Try yukiDesktopFile = New DesktopFile(ApplicationsDirectory &/ yukiPath)
+        If Error Then Continue
+        If yukiDesktopFile.Name = "" Then Continue
+        yukiIcon = MikuruIcon.GetDesktopEntryIcon(ApplicationsDirectory &/ yukiPath)
+        ApplicationsListView.Add(yukiDesktopFile.Path, yukiDesktopFile.Name, yukiIcon)
+    Next
+    
+End
+
+Public Sub ShowAllApplications(argPath As String)
+    
+    $path = argPath
+    $defaultApplication = New NagatoDefaultApplication(argPath)
+    setIcons()
+    Me.Show()
+    Me.Center()
+    
+End
+
+
+Public Sub ApplicationsListView_Click()
+
+    Dim yukiDesktopFile As New DesktopFile(Last.Key)
+    
+    If Not isConfirmed(yukiDesktopFile.Name) Then Return
+    
+    yukiDesktopFile.Run($path)
+
+    If Not isDefaultApplication(yukiDesktopFile.Path) Then MikuruChangeDefaultApplication(yukiDesktopFile, $path)
+
+    Me.Close()
+
+End

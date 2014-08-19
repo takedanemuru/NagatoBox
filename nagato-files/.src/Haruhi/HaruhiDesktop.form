@@ -1,7 +1,8 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,64,64)
+  MoveScaled(0,0,96,64)
+  Tracking = True
   Border = False
-  Arrangement = Arrange.Fill
+  Arrangement = Arrange.Horizontal
 }

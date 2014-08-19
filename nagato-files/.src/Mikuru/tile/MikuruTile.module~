@@ -105,6 +105,16 @@ Public Function GetApplicationTile(argPath As String, argSelected As Boolean, Op
     
 End
 
+Public Function GetApplicationTileDialog(argPath As String, Optional argSize As Integer = TileSize) As Picture
+    
+    Dim yukiBaseImage As Image = getBaseImage(argSize, Color.Violet, False)
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+    Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, IconSize)
+    
+    Return getTilePicture(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, False)
+    
+End
+
 Public Function GetDirectoryTile(argPath As String, argSelected As Boolean, Optional argSize As Integer = TileSize) As Picture
     
     Dim yukiBaseImage As Image = getBaseImage(argSize, Color.Blue, argSelected)
@@ -134,5 +144,24 @@ Public Function GetFileTile(argPath As String, argSelected As Boolean, Optional 
     Endif
     
     Return getTile(yukiTile, argPath)
+    
+End
+
+Public Function GetNotFoundTile() As Picture
+    
+    Dim yukiImage As New Image(TileSize, TileSize, Color.DarkGreen + 16777216 * 128)
+    Dim yukiMessage As String = ("File and Directory not found")
+    Dim yukiHeight As Integer
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.DrawPicture(MikuruIcon.Get("exclamation", 48), 40, 16)
+        Paint.Font.Bold = True
+        yukiHeight = Paint.Font.RichTextHeight(yukiMessage, TextWidth)
+        Paint.RichText(yukiMessage, 0, TileSize - yukiHeight - Margin, TileSize, yukiHeight + Margin, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiImage.Picture
     
 End
