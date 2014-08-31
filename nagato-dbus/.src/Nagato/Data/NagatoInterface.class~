@@ -1,0 +1,38 @@
+' Gambas class file
+
+Private $interface As String
+Private $xml As XmlElement
+
+Private Sub setTreeView(argParent As String, argName As String)
+    
+    If Not HaruhiMain.TreeView1.Exist(argParent) Then
+        HaruhiMain.TreeView1.Add($interface, argName)
+    Else
+        HaruhiMain.TreeView1.Add($interface, argName,, argParent)
+    End If
+    
+End
+
+Private Sub setChildElements(argTag As String, argClass As String)
+    
+    Dim yukiElement As XmlElement
+    
+    For Each yukiElement In $xml.GetChildrenByTagName(argTag)
+        Object.New(argClass, [$interface, yukiElement])
+    Next
+    
+End
+
+Public Sub _new(argParent As String, argName As String, argXml As XmlElement)
+    
+    $interface = argParent & "_" & argName
+    
+    setTreeView(argParent, argName)
+    
+    $xml = argXml
+    
+    setChildElements("method", "NagatoMethod")
+    setChildElements("signal", "NagatoSignal")
+    setChildElements("property", NagatoProperty.ClassName)
+    
+End

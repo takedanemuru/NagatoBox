@@ -1,0 +1,20 @@
+' Gambas module file
+
+Public Sub _call(argText As String, argFont As Font, argLength As Integer) As String
+    
+    Dim yukiCount As Integer
+    Dim yukiText As String
+    Dim yukiExtent As String 
+    
+    If argLength >= argFont.TextWidth(argText) Then Return argText
+    
+    yukiExtent = IIf(File.Ext(argText) = "", "", File.Ext(argText))
+    
+    Do
+        Inc yukiCount
+        If String.Len(argText) = yukiCount Then Return ""
+        yukiText = String.Left(argText, String.Len(argText) - yukiCount) & "..."
+        If argLength >= argFont.TextWidth(yukiText) Then Return yukiText & yukiExtent
+    Loop
+    
+End

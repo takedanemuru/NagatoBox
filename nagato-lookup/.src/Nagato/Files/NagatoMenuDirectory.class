@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private $menu As Menu
+
+Private Sub setChildMenu(argClassName As String, argFilter As Integer)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(Me._$path, "[^.]*", argFilter).Sort(gb.IgnoreCase + gb.Natural)
+        Object.New(argClassName, [$menu, Me._$path &/ yukiPath])
+    Next
+    
+End
+
+Public Sub setNotFound()
+    
+    Dim yukiMenu As New Menu($menu) 
+    
+    With yukiMenu
+        .Text = "files not found"
+        .Picture = MikuruIcons("question")
+    End With
+    
+End
+
+Public Sub _SetMenu() 'override
+    
+    $menu = New Menu(Me._$parentMenu) As "DirectoryMenu"
+    
+    With $menu
+        .Text = MikuruCollapsedText(File.Name(Me._$path), HaruhiMain.Font, 240)
+        .Picture = MikuruIcons("folder")
+    End With
+    
+    MikuruMenuDummy($menu)
+    
+End
+ 
+ Public Sub DirectoryMenu_Show()
+    
+    $menu.Children.Clear()
+    
+    setChildMenu("NagatoMenuDirectory", gb.Directory)
+    setChildMenu("NagatoMenuFile", gb.File)
+    
+    If $menu.Children.Count = 0 Then setNotFound()
+    
+End

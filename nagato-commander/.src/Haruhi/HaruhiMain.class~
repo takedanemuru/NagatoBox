@@ -52,6 +52,8 @@ Public Sub Process_Read()
 
     Dim yukiStream As String
     
+    Debug $process.ReadLine()
+    
     While Not Eof($process)
         Read #$process, yukiStream, -256
         updateConsole(yukiStream)
@@ -86,10 +88,4 @@ Public Sub CommandTextArea_Activate()
     
     Print #$process, yukiCommand;
   
-End
-
-Public Sub Form_Hide()
-
-    Me.H -= ConsoleTextArea.H
-
 End

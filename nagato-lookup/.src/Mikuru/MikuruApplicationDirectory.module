@@ -1,6 +1,7 @@
 ' Gambas module file
 
 Property Read Global As String
+Property Read GlobalMimeList As String
 Property Read KDE4 As String
 Property Read Local As String
 
@@ -19,5 +20,11 @@ End
 Private Function Local_Read() As String
 
     Return User.Home &/ ".local/share/applications/"
+
+End
+
+Private Function GlobalMimeList_Read() As String
+
+    Return "/usr/share/applications/mimeinfo.cache"
 
 End

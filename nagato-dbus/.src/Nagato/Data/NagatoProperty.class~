@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoData
+
 Public Sub _new(argParentKey As String, argElement As XmlElement)
     
     Dim yukiName As String = argElement.Attributes["name"]

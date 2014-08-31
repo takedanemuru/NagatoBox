@@ -27,30 +27,10 @@ Public Sub DBusList_Click()
     Dim yukiNode As NagatoNode
     
     Me.TreeView1.Clear()
-    MikuruGDBus.Mode = IIf(Last.Tag = 0, MikuruGDBus.ModeSession, MikuruGDBus.ModeSystem)
+    MikuruGDBus.Mode = Last.Tag
     yukiNode = New NagatoNode(Last.Key, "", "/")
 
 End
-
-' Public Sub SessionList_Click()
-' 
-'     Dim yukiNode As NagatoNode
-'     
-'     Me.TreeView1.Clear()
-'     MikuruGDBus.Mode = MikuruGDBus.ModeSession
-'     yukiNode = New NagatoNode(SessionList.Key, "", "/")
-' 
-' End
-' 
-' Public Sub SystemList_Click()
-' 
-'     Dim yukiNode As NagatoNode
-'     
-'     Me.TreeView1.Clear()
-'     MikuruGDBus.Mode = MikuruGDBus.ModeSystem
-'     yukiNode = New NagatoNode(SystemList.Key, "", "/")
-' 
-' End
 
 Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
     

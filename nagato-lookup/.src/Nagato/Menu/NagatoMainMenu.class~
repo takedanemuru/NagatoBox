@@ -77,6 +77,6 @@ End
 
 Public Sub LogoutMenu_Click()
     
-    Shell "nagato-power-manager -l"
+    Shell "nagato-session -l"
     
 End

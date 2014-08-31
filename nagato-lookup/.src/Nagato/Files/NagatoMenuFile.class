@@ -1,0 +1,89 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Private $menu As Menu
+
+Private Function getDesktopFilesWithMimeType() As String[]
+    
+    Dim yukiMimeType As String = DesktopMime.FromFile(Me._$path).Type
+    Dim yukiReturn As String[]
+    
+    Debug yukiMimeType
+    
+    yukiReturn = MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, yukiMimeType).Sort(gb.Natural)
+    
+    Return yukiReturn
+    
+End
+
+Private Sub addIndivisualOpenWithMenu(argDesktopFileName As String)
+    
+    Dim yukiMenu As Menu
+    Dim yukiPath As String = "/usr/share/applications/" & argDesktopFileName
+    Dim yukiDesktopFile As DesktopFile
+
+    If Not Exist(yukiPath) Then Return
+    
+    yukiDesktopFile = New DesktopFile(yukiPath)
+
+    yukiMenu = New Menu($menu) As "OpenWithMenu"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.GetDesktopEntryIcon(yukiDesktopFile.Path, 24)
+        .Text = yukiDesktopFile.Name
+        .Tag = yukiDesktopFile.Path
+    End With
+
+Catch
+    Return
+    
+End
+
+Private Sub addExecuteMenus()
+    
+    Dim yukiAdditionalDesktopFile As String
+    Dim yukiChecker As New String[]
+    Dim yukiMimeTypes As String[] = getDesktopFilesWithMimeType()
+    
+    For Each yukiAdditionalDesktopFile In yukiMimeTypes
+        If Not yukiChecker.Exist(yukiAdditionalDesktopFile) Then
+            addIndivisualOpenWithMenu(yukiAdditionalDesktopFile)
+            yukiChecker.Add(yukiAdditionalDesktopFile)
+        End If
+    Next
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Public Sub _SetMenu() 'override
+    
+    $menu = New Menu(Me._$parentMenu) As "FileMenu"
+    
+    With $menu
+        .Text = MikuruCollapsedText(File.Name(Me._$path), HaruhiMain.Font, 240)
+        .Picture = Desktop.GetFileIcon(Me._$path, 24)
+    End With
+    
+    MikuruMenuDummy($menu)
+    
+End
+ 
+Public Sub FileMenu_Show()
+    
+    $menu.Children.Clear()
+    
+    addExecuteMenus()
+    
+End
+
+Public Sub OpenWithMenu_Click()
+    
+    Dim yukiDesktopFile As New DesktopFile(Last.Tag)
+    
+    Try yukiDesktopFile.Run(Me._$path)
+    
+End
