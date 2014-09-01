@@ -1,0 +1,82 @@
+' Gambas class file
+
+Property Read Ready As Boolean
+Property Read Elements As NagatoWikipediaGeoDataElement[]
+
+Private Const Api As String = "https://&1.wikipedia.org/w/api.php?action=query&format=xml&list=geosearch&gslimit=100&gsradius=10000&gscoord=&2|&3"
+
+Private $ready As Boolean = False
+Private $buffer As String = ""
+Private $lang As String
+Private $xmlDocument As New XmlDocument
+Private $elements As New NagatoWikipediaGeoDataElement[]
+
+Event Finished
+Event Error
+
+Private Sub parsingXml()
+    
+    Dim yukiElement As XmlElement
+    
+    For Each yukiElement In $xmlDocument.GetElementsByTagName("gs")
+        $elements.Add(Object.New("NagatoWikipediaGeoDataElement", [$lang, yukiElement]))
+    Next
+    
+End
+
+Public Sub Start(argLang As String, argLatitude As Float, argLongitude As Float) As String
+    
+    Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    $lang = argLang
+    $ready = False
+    $buffer = ""
+    $elements.Clear()
+    
+    With yukiHttpClient
+        .URL = Subst$(Api, argLang, argLatitude, argLongitude)
+        .Async = True
+        .Timeout = 30
+        .Get()
+    End With
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    Dim yukiBuffer As String
+
+    yukiBuffer = Read #Last, Lof(Last)
+    $buffer &= yukiBuffer
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    $xmlDocument.FromString($buffer)
+     
+    parsingXml()
+    
+    $ready = True
+    
+    Raise Finished
+    
+End
+
+Public Sub HttpClient_Error()
+    
+    Raise Error
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function Elements_Read() As NagatoWikipediaGeoDataElement[]
+
+    Return $elements
+
+End

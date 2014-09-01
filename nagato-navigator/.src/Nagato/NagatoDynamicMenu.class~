@@ -30,7 +30,8 @@ Private Sub addIssueMenu(argParentMenu As Menu, argIssues As String[])
     
     For Each yukiIssue In argIssues
         yukiMenu = New Menu(argParentMenu)
-        yukiIssue = Replace(yukiIssue, "&", "and")
+        yukiIssue = Replace(yukiIssue, "&", " and ")
+        Debug yukiIssue
         yukiMenu.Text = MikuruCollapsedText.Get(yukiIssue, HaruhiMain.Font, Int(Screen.W / 2))
         If yukiCount >= 30 Then Break
         Inc yukiCount

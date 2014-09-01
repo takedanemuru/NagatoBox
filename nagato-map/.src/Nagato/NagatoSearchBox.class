@@ -5,7 +5,6 @@ Inherits NagatoMenuPipe
 Private $tabStrip As TabStrip
 Private $searchBox As ButtonBox
 
-
 Event NewData(argData As Collection)
 
 Private Sub initializeSearchBox()

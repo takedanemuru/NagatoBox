@@ -1,0 +1,62 @@
+' Gambas class file
+
+Property Read Title As String
+Property Read PageId As Integer
+Property Read Latitude As Float
+Property Read Longitude As Float
+Property Read Distance As Float
+Property Read Url As String
+
+Private $title As String
+Private $pageId As Integer
+Private $latitude As Float
+Private $longitude As Float
+Private $distance As Float
+Private $lang As String
+
+Public Sub _new(argLang As String, argXmlElement As XmlElement)
+    
+    $lang = argLang
+    $title = argXmlElement.Attributes["title"]
+    $pageId = CInteger(argXmlElement.Attributes["pageid"])
+    $latitude = CFloat(argXmlElement.Attributes["lat"])
+    $longitude = CFloat(argXmlElement.Attributes["lon"])
+    $distance = CFloat(argXmlElement.Attributes["dist"])
+    
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Function PageId_Read() As Integer
+
+    Return $pageId
+
+End
+
+Private Function Latitude_Read() As Float
+
+    Return $latitude
+
+End
+
+Private Function Longitude_Read() As Float
+
+    Return $longitude
+
+End
+
+Private Function Distance_Read() As Float
+
+    Return $distance
+
+End
+
+Private Function Url_Read() As String
+
+    Return Subst$("http://&1.m.wikipedia.org/wiki?curid=&2", $lang, $pageId)
+
+End

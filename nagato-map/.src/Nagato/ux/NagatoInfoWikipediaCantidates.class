@@ -1,8 +1,8 @@
 ' Gambas class file
 
 Private $tabstrip As TabStrip
-Private $wikipediaUrls As New String[]
 Private $wikipediaGrid As GridView
+Private $wikipediaGeoData As New NagatoWikipediaGeoData As "WikipediaGeoData"
 
 Event NewArticle(argUrl As String)
 
@@ -10,14 +10,11 @@ Private Sub initializeWikipediaListGrid()
     
     $tabStrip.Index = 1
     
-    $wikipediaGrid = New GridView($tabStrip) As "CantidatesGrid"
+    $wikipediaGrid = New GridView($tabStrip) As "CandidatesGrid"
     
     With $wikipediaGrid
-        .Header = GridView.Horizontal
-        .Columns.Count = 3
-        .Columns[0].Text = ("Name")
-        .Columns[1].Text = ("Latitude")
-        .Columns[2].Text = ("Longitude")
+        .Header = GridView.None
+        .Columns.Count = 1
         .Rows.Count = 1
         .Expand = True
         .Mode = Select.Single
@@ -25,25 +22,20 @@ Private Sub initializeWikipediaListGrid()
     
 End
 
-Private Sub setWikipediaArticleList(argGeoInfomations As NagatoGeoInfomationElement[])
+Private Sub setWikipediaArticles()
     
-    Dim yukiInfomationElement As NagatoGeoInfomationElement
+    Dim yukiElement As NagatoWikipediaGeoDataElement
     
     $wikipediaGrid.Clear()
     $wikipediaGrid.Rows.Count = 1
-    $wikipediaGrid.Columns[0].Width = 200
     
-    $wikipediaUrls.Clear()
-    
-    For Each yukiInfomationElement In argGeoInfomations
+    For Each yukiElement In $wikipediaGeoData.Elements
         With $wikipediaGrid
-            $wikipediaGrid[.Rows.Max, 0].Text = yukiInfomationElement.Title
-            $wikipediaGrid[.Rows.Max, 0].Alignment = Align.Left
-            $wikipediaGrid[.Rows.Max, 1].Text = yukiInfomationElement.Latitude
-            $wikipediaGrid[.Rows.Max, 1].Alignment = Align.Right
-            $wikipediaGrid[.Rows.Max, 2].Text = yukiInfomationElement.Longitude
-            $wikipediaGrid[.Rows.Max, 2].Alignment = Align.Right
-            $wikipediaUrls.Add(yukiInfomationElement.MobileUrl)
+            .[.Rows.Max, 0].Text = yukiElement.Title
+            .[.Rows.Max, 0].Alignment = Align.Left
+            If Odd(.Rows.Max) Then 
+                $wikipediaGrid[.Rows.Max, 0].Background = Color.Merge(Color.White, Color.Violet, 0.1)
+            End If
             Inc .Rows.Count
         End With
     Next
@@ -54,11 +46,7 @@ End
 
 Public Sub Request(argLatitude As Float, argLongitude As Float)
     
-    Dim yukiObserver As Observer
-    
-    yukiObserver = New Observer(NagatoGeoInfomationWikipedia) As "Asakura"
-    
-    NagatoGeoInfomationWikipedia.Get(argLatitude, argLongitude)
+    $wikipediaGeoData.Start("ja", argLatitude, argLongitude)
     
 End
 
@@ -69,22 +57,20 @@ Public Sub _new(argTabstrip As TabStrip)
     
 End
 
-Public Sub Asakura_Finished(argGeoInfomations As NagatoGeoInfomationElement[])
+Public Sub WikipediaGeoData_Finished()
     
-    setWikipediaArticleList(argGeoInfomations)
+    setWikipediaArticles()
     
 End
 
-Public Sub CantidatesGrid_Activate()
+Public Sub CandidatesGrid_Activate()
     
-    Dim yukiLatitude As Float
-    Dim yukiLongitude As Float
+    Dim yukiElement As NagatoWikipediaGeoDataElement 
     
     If $wikipediaGrid[$wikipediaGrid.Row, 0].Text <> "" Then
-        Raise NewArticle($wikipediaUrls[$wikipediaGrid.Row])
-        yukiLatitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 1].Text)
-        yukiLongitude = CFloat($wikipediaGrid[$wikipediaGrid.Row, 2].Text)
-        HaruhiMain.SetMarker(yukiLatitude, yukiLongitude)
+        yukiElement = $wikipediaGeoData.Elements[$wikipediaGrid.Row]
+        Raise NewArticle(yukiElement.Url)
+        HaruhiMain.SetMarker(yukiElement.Latitude, yukiElement.Longitude)
     End If
     
 End
