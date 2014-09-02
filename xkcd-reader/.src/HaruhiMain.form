@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Arrangement = Arrange.Vertical
+  AutoResize = True
+  { Panel1 Panel
+    MoveScaled(10,4,33,4)
+    Visible = False
+    Background = &HA7B5DF&
+  }
+  { MainImageView ImageView
+    MoveScaled(6,14,36,36)
+    Border = False
+  }
+}

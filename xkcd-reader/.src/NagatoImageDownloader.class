@@ -1,0 +1,44 @@
+' Gambas class file
+
+Property Read Image As Image
+
+Private $buffer As String
+Private $image As Image
+
+Event Finished
+
+Public Sub _new(argUrl As String)
+    
+    Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    With yukiHttpClient
+        .Async = True
+        .Timeout = 30
+        .URL = argUrl
+        .Get()
+    End With
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    $buffer &= Read #Last, Lof(Last)
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    Dim yukiTempPath As String = Temp$()
+    
+    File.Save(yukiTempPath, $buffer)
+    $image = Image.Load(yukiTempPath)
+    
+    Raise Finished()
+    
+End
+
+Private Function Image_Read() As Image
+
+    Return $image
+
+End
