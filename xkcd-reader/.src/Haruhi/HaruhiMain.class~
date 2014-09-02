@@ -1,0 +1,39 @@
+' Gambas class file
+
+Private $api As New NagatoXkcdApi As "Api"
+
+Private Sub setImageView()
+    
+    With MainImageView
+        .Image = $api.Image
+        .Tooltip = $api.Alt
+        .W = $api.Image.W
+        .H = $api.Image.H
+    End With
+    
+End
+
+Private Sub setForm()
+    
+    With Me
+        .Title = Subst$("(#&1)  &2", $api.Number, $api.SafeTitle)
+        .Center()
+    End With
+    
+End
+
+Public Sub Form_Open()
+
+    Me.Center()
+
+    '$api.GetCurrent()
+    $api.GetSelect(900)
+
+End
+
+Public Sub Api_Finished()
+    
+    setImageView()
+    setForm()
+    
+End

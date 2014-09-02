@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoDownloader
+
+Property Read Image As Image
+
+Private $image As Image
+
+Public Sub _SetData() ' override
+    
+    ' Dim yukiTempPath As String = Temp$()
+    ' 
+    ' File.Save(yukiTempPath, Me._$buffer)
+    ' $image = Image.Load(yukiTempPath)
+    
+    $image = MikuruBlob.ToImage(Me._$buffer)
+    
+End
+
+Private Function Image_Read() As Image
+
+    Return $image
+
+End

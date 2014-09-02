@@ -1,15 +1,20 @@
 ' Gambas class file
 
-Property Read Image As Image
-
-Private $buffer As String
-Private $image As Image
+Public _$buffer As String
 
 Event Finished
 
-Public Sub _new(argUrl As String)
+Public Sub _SetData() ' virtual, should be overridden.
+    
+    
+    
+End
+
+Public Sub Get(argUrl As String)
     
     Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    Me._$buffer = ""
     
     With yukiHttpClient
         .Async = True
@@ -22,23 +27,14 @@ End
 
 Public Sub HttpClient_Read()
     
-    $buffer &= Read #Last, Lof(Last)
+    Me._$buffer &= Read #Last, Lof(Last)
     
 End
 
 Public Sub HttpClient_Finished()
     
-    Dim yukiTempPath As String = Temp$()
-    
-    File.Save(yukiTempPath, $buffer)
-    $image = Image.Load(yukiTempPath)
+    Me._SetData()
     
     Raise Finished()
     
-End
-
-Private Function Image_Read() As Image
-
-    Return $image
-
 End

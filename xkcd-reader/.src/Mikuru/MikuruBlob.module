@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Function ToImage(argStringBuffer As String) As Image
+    
+    Dim yukiTempPath As String = Temp$()
+    
+    File.Save(yukiTempPath, argStringBuffer)
+    
+    Return Image.Load(yukiTempPath)
+    
+End
