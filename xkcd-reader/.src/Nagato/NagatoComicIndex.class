@@ -1,0 +1,23 @@
+' Gambas class file
+
+Property Read Max As Integer
+
+Private $max As Integer = 0
+
+Public Sub Reset(argIndex As Integer) 
+    
+    If argIndex > $max Then $max = argIndex
+    
+End
+
+Public Function GetRandom() As Integer
+    
+    Return Floor(Rnd(0, $max + 1))
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $max
+
+End

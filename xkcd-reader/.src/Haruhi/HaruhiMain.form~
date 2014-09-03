@@ -2,10 +2,12 @@
 
 { Form Form
   MoveScaled(0,0,50,50)
+  Icon = Picture["Pictures/xkcd_hat_guy.gif"]
   Arrangement = Arrange.Vertical
   AutoResize = True
   { Panel1 Panel
     MoveScaled(10,4,33,4)
+    Visible = False
     Background = &HA7B5DF&
   }
   { MainImageView ImageView

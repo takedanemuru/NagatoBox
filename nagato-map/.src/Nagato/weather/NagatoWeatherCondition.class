@@ -57,124 +57,14 @@ Public Function GetText(argIndex As Integer) As String
     
 End
 
-Private Function getColorDay(argIndex As Integer) As Integer
-    
-    Select Case argIndex
-        Case 1 'Clear
-            Return Color.Orange
-        Case 2  'Fair
-            Return Color.Orange
-        Case 3  'Partly cloudy
-            Return Color.Orange
-        Case 4  'Cloudy
-            Return Color.Gray
-        Case 5  'Rain Showers
-            Return Color.Blue
-        Case 6  'Rain Showers with Thunder
-            Return Color.Blue
-        Case 7  'Sleet Showers
-            Return Color.Blue
-        Case 8  'Snow Showers
-            Return Color.Lighter(Color.Gray)
-        Case 9  'Rain
-            Return Color.Blue
-        Case 10 'Heavy Rain
-            Return Color.Blue
-        Case 11 'Rain and Thunder
-            Return Color.Blue
-        Case 12 'Sleet
-            Return Color.Lighter(Color.Gray)
-        Case 13 'Snow
-            Return Color.Lighter(Color.Gray)
-        Case 14 'Snow with Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 15 'Fog
-            Return Color.Gray
-        Case 16 'Clear / Winter Darkness
-            Return Color.Black
-        Case 17 'Partly Cloudy / Winter Darkness
-            Return Color.Gray
-        Case 18 'Rain Showers / Winter Darkness
-            Return Color.Gray
-        Case 19 'Snow Showers / Winter Darkness
-            Return Color.Lighter(Color.Gray)
-        Case 20 'Sleet Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 21 'Snow Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 22 'Rain Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 23 'Sleet Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Default 'Unknown
-            Return Color.DarkBlue
-    End Select
-    
-End
-
-Private Function getColorNight(argIndex As Integer) As Integer
-    
-    Select Case argIndex
-        Case 1 'Clear
-            Return Color.Lighter(Color.Gray)
-        Case 2  'Fair
-            Return Color.Lighter(Color.Gray)
-        Case 3  'Partly cloudy
-            Return Color.Lighter(Color.Gray)
-        Case 4  'Cloudy
-            Return Color.Gray
-        Case 5  'Rain Showers
-            Return Color.DarkBlue
-        Case 6  'Rain Showers with Thunder
-            Return Color.DarkBlue
-        Case 7  'Sleet Showers
-            Return Color.Lighter(Color.Gray)
-        Case 8  'Snow Showers
-            Return Color.Lighter(Color.Gray)
-        Case 9  'Rain
-            Return Color.DarkBlue
-        Case 10 'Heavy Rain
-            Return Color.DarkBlue
-        Case 11 'Rain and Thunder
-            Return Color.DarkBlue
-        Case 12 'Sleet
-            Return Color.Lighter(Color.Gray)
-        Case 13 'Snow
-            Return Color.Lighter(Color.Gray)
-        Case 14 'Snow with Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 15 'Fog
-            Return Color.Lighter(Color.Gray)
-        Case 16 'Clear / Winter Darkness
-            Return Color.Lighter(Color.Gray)
-        Case 17 'Partly Cloudy / Winter Darkness
-            Return Color.Gray
-        Case 18 'Rain Showers / Winter Darkness
-            Return Color.DarkBlue
-        Case 19 'Snow Showers / Winter Darkness
-            Return Color.Lighter(Color.Gray)
-        Case 20 'Sleet Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 21 'Snow Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Case 22 'Rain Showers and Thunder
-            Return Color.DarkBlue
-        Case 23 'Sleet Showers and Thunder
-            Return Color.Lighter(Color.Gray)
-        Default 'Unknown
-            Return Color.Black
-    End Select
-    
-End
-
 Public Sub GetColor(argIndex As Integer, Optional argIsDay As Boolean = Null) As Integer
     
     If argIsDay <> Null Then
-        Return IIf(argIsDay, getColorDay(argIndex), getColorNight(argIndex))
+        Return IIf(argIsDay, MikuruWeatherColorDay(argIndex), MikuruWeatherColorNight(argIndex))
     Else If Hour(Now()) >= 6 And If 18 > Hour(Now()) Then
-        Return getColorDay(argIndex)
+        Return MikuruWeatherColorDay(argIndex)
     Else
-        Return getColorNight(argIndex)
+        Return MikuruWeatherColorNight(argIndex)
     Endif
     
 End

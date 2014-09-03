@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $api As New NagatoXkcdApi As "Api"
+Private $index As New NagatoComicIndex
 
 Private Sub setImageView()
     
@@ -18,22 +19,28 @@ Private Sub setForm()
     With Me
         .Title = Subst$("(#&1)  &2", $api.Number, $api.SafeTitle)
         .Center()
+        .Show()
     End With
     
 End
 
-Public Sub Form_Open()
-
-    Me.Center()
+Public Sub Start()
 
     $api.GetCurrent()
-    '$api.GetSelect(900)
 
 End
 
 Public Sub Api_Finished()
     
+    $index.Reset($api.Number)
+    
     setImageView()
     setForm()
     
+End
+
+Public Sub MainImageView_DblClick()
+
+    $api.GetSelect($index.GetRandom())
+
 End

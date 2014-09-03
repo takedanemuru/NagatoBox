@@ -57,6 +57,6 @@ End
 
 Private Function Alt_Read() As String
 
-    Return $xkcdDownloader.Collection["alt"]
+    Return Replace$($xkcdDownloader.Collection["alt"], ".", ".\n")
 
 End
