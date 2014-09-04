@@ -18,7 +18,10 @@ Private Function isDefaultApplication(argPath As String) As Boolean ' argPath is
     
     If Not $defaultApplication.NotFound Then Return False
     
-    Return $defaultApplication.DesktopFile.Path = argPath
+    Return ($defaultApplication.DesktopFile.Path = argPath)
+    
+Catch
+    Return False
     
 End
 

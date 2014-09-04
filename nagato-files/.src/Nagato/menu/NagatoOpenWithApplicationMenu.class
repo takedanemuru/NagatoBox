@@ -83,6 +83,8 @@ Public Sub OpenWithMenu_Click()
     
     Dim yukiDesktopFile As New DesktopFile(Last.Tag)
     
+    MikuruChangeDefaultApplication(yukiDesktopFile, Me._$path)
+
     yukiDesktopFile.Run(Me._$path)
     
 End

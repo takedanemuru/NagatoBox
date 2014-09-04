@@ -85,10 +85,12 @@ Public Sub OpenWithMenu_Click()
     
     yukiDesktopFile.Run(Me._$path)
     
+    MikuruChangeDefaultApplication(yukiDesktopFile, Me._$path)
+    
 End
 
 Public Sub SelectApplicationMenu_Click()
     
-    HaruhiSelectApplication(Me._$path)
+    HaruhiSelectApplication.ShowAllApplications(Me._$path)
     
 End

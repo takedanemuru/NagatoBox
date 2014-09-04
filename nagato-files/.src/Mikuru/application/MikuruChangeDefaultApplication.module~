@@ -1,2 +1,37 @@
 ' Gambas module file
 
+Private $desktopFile As DesktopFile
+Private $path As String
+Private $config As NagatoConfigFile2
+
+Private Function isConfirmed() As Boolean
+    
+    Dim yukiTemplate As String = File.Load("text/TemplateChangeDefault")
+    Dim yukiMessage As String = Subst$(yukiTemplate, $desktopFile.Name, DesktopMime.FromFile($path).Type)
+    Dim yukiResponse As Integer = Message.Question(yukiMessage, ("Cancel"), ("OK")) 
+    
+    Return (yukiResponse = 2)
+    
+End
+
+Private Sub resetDefaultApplication()
+    
+    Dim yukiKey As String = DesktopMime.FromFile($path).Type
+    Dim yukiValue As String = File.Name($desktopFile.Path)
+    
+    $config.Replace("Default Applications", yukiKey, yukiValue)
+    
+End
+
+Public Sub _call(argDesktopFile As DesktopFile, argFilePath As String)
+    
+    If Not Object.IsValid($config) Then 
+        $config = New NagatoConfigFile2(Desktop.DataDir &/ "applications/mimeapps.list")
+    End If
+    
+    $desktopFile = argDesktopFile
+    $path = argFilePath
+    
+    If isConfirmed() Then resetDefaultApplication()
+    
+End

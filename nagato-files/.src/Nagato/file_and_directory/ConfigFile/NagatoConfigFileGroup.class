@@ -1,0 +1,67 @@
+' Gambas class file
+
+Property Read Name As String
+Property Read Count As Integer
+Property Read Text As String
+
+Private $name As String
+Private $lines As New NagatoConfigFileLine[]
+
+Public Sub AddLine(argLine As String)
+    
+    Dim yukiLine As New NagatoConfigFileLine(argLine)
+    
+    If yukiLine.Count > 0 Then $lines.Add(yukiLine)
+    
+End
+
+Public Sub Replace(argKey As String, argValue As String)
+    
+     Dim yukiLine As NagatoConfigFileLine
+    
+    For Each yukiLine In $lines
+        If yukiLine.Key = argKey Then 
+            yukiLine.Replace(argValue)
+            Return
+        Endif
+    Next
+    
+    Me.AddLine(Subst$("&1=&2"), argKey, argValue)
+    
+End
+
+Public Sub _new(argGroupName As String)
+    
+    $name = MikuruRemoveCharactors(argGroupName, "[", "]")
+    
+End
+
+Private Function Name_Read() As String
+
+    Return $name
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $lines.Count
+
+End
+
+Private Function Text_Read() As String
+
+    Dim yukiText As String = Subst$("[&1]\n", Me.Name)
+    Dim yukiLine As NagatoConfigFileLine
+
+    Debug $lines.Count
+
+    For Each yukiLine In $lines
+        yukiText &= yukiLine.Text
+        yukiText &= "\n"
+    Next
+
+    yukiText &= "\n"
+
+    Return yukiText
+
+End

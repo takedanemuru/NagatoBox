@@ -1,19 +1,27 @@
 ' Gambas module file
 
+Private Sub test()
+    
+    Dim yukiConfigFile2 As NagatoConfigFile2
+    
+    yukiConfigFile2 = New NagatoConfigFile2(Desktop.DataDir &/ "applications/mimeapps.list")
+    
+End
+
 Public Sub Main()
     
     Debug NagatoDBSymbol.Ready ' this call activate NagatoDBSymbol, so do not delete.
+    
+    test()
     
     Application.Theme = "Numix-Circle"
     
     NagatoArguments.Parsing()
     
-    HaruhiDesktop.Show()
-    
-    ' If NagatoArguments.DesktopIcons Then
-    '     HaruhiDesktop.Show()
-    ' Else
-    '     HaruhiMain.Show()
-    ' End If
+    If NagatoArguments.DesktopIcons Then
+        HaruhiDesktop.Show()
+    Else
+        HaruhiMain.Show()
+    End If
 
 End

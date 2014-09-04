@@ -16,23 +16,28 @@ End
 
 Private Function isDefaultApplication(argPath As String) As Boolean ' argPath is path to DesktopFile
     
+    Debug $defaultApplication.DesktopFile.Path
+    Debug argPath
+    
     If Not $defaultApplication.NotFound Then Return False
     
-    Return $defaultApplication.DesktopFile.Path = argPath
+    Return True
+    
+    'Return $defaultApplication.DesktopFile.Path = argPath
     
 End
 
-Private Sub setIcons()
+Private Sub setIcons(argDirectory As String)
     
     Dim yukiPath As String
     Dim yukiDesktopFile As DesktopFile
     Dim yukiIcon As Picture
     
-    For Each yukiPath In Dir(ApplicationsDirectory).Sort(gb.IgnoreCase)
-        Try yukiDesktopFile = New DesktopFile(ApplicationsDirectory &/ yukiPath)
+    For Each yukiPath In Dir(argDirectory).Sort(gb.IgnoreCase)
+        Try yukiDesktopFile = New DesktopFile(argDirectory &/ yukiPath)
         If Error Then Continue
         If yukiDesktopFile.Name = "" Then Continue
-        yukiIcon = MikuruIcon.GetDesktopEntryIcon(ApplicationsDirectory &/ yukiPath)
+        yukiIcon = MikuruIcon.GetDesktopEntryIcon(argDirectory &/ yukiPath)
         ApplicationsListView.Add(yukiDesktopFile.Path, yukiDesktopFile.Name, yukiIcon)
     Next
     
@@ -42,7 +47,7 @@ Public Sub ShowAllApplications(argPath As String)
     
     $path = argPath
     $defaultApplication = New NagatoDefaultApplication(argPath)
-    setIcons()
+    setIcons(ApplicationsDirectory)
     Me.Show()
     Me.Center()
     
