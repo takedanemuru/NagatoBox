@@ -6,11 +6,9 @@ Property Read Collection As Collection
 
 Private $collection As Collection
 
-Public Sub HttpClient_Finished()
+Public Sub _SetData() ' override
     
     $collection = JSON.Decode(Me._$buffer)
-    
-    Raise Finished
     
 End
 

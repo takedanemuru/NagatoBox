@@ -3,6 +3,7 @@
 Inherits NagatoTreeViewHandler
 
 Event Move(argDirectory As String)
+Event RequestRefresh()
 
 Private Sub moveFiles()
     
@@ -56,11 +57,11 @@ End
 
 Public Sub ContextMenu_MenuEventWithArg(argEvent As Integer, argPath As Variant)
     
-    Debug argEvent
+    Debug "refresh required"
     
     Select Case argEvent
         Case NagatoContextMenuTreeView.ContextRefresh
-            Debug "refresh all"
+            Raise RequestRefresh
     End Select
     
 End

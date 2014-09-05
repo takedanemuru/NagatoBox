@@ -25,11 +25,67 @@ Private Sub addOpenWithMenu()
     
 End
 
+Private Sub addRenameMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RenameMenu"
+    
+    With yukiMenu
+        .Text = ("Rename")
+    End With
+    
+End
+
+Private Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "DeleteMenu"
+    
+    With yukiMenu
+        .Text = ("Delete")
+        .Picture = MikuruIcon("bin")
+    End With
+    
+End
+
+Private Function rename(argPath As String) As Boolean
+    
+    If IsDir(argPath) Then
+        HaruhiRename.SetPath(argPath)
+        Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+    Else
+        Return NagatoFilerDialogs.Rename(argPath)
+    Endif
+    
+End
+
 Public Sub _AddChildMenus()
     
-    If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then addExecuteMenu()
-    If Not IsDir(Last.Key) Then addOpenWithMenu()
+    If Not Exist(Last.Key) Then
+        Me._AddContextMenu(("File or Directory is Missing"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
+    Else
+        If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then addExecuteMenu()
+        If Not IsDir(Last.Key) Then addOpenWithMenu()
+        
+        addRenameMenu()
+        addDeleteMenu()
+        Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
+    End If
     
-    Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
+End
+
+Public Sub RenameMenu_Click()
+    
+    If rename(Me._$path) Then Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
+    
+End
+
+Public Sub DeleteMenu_Click()
+    
+    If IsDir(Me._$path) Then
+        MikuruFile.TrashDirectory(Me._$path)
+    Else
+        MikuruFile.TrashFile(Me._$path)
+    Endif
+    
+    Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
     
 End

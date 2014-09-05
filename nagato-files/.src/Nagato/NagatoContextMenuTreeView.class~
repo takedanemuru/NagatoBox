@@ -6,13 +6,11 @@ Public Enum ContextNone, ContextExecute, ContextRefresh
 
 Private Sub addExecuteMenu()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu) As "ExecuteMenu"
+    Dim yukiMenu As NagatoMenuItemExecute
     
-    With yukiMenu
-        .Text = ("Execute")
-        .Picture = MikuruIcon.Get("gear")
-        .Tag = Last.Key
-    End With
+    yukiMenu = New NagatoMenuItemExecute(Me._$rootMenu, Last.Key)
+    
+    Me._AddContextMenu("", Me.ContextNone)
     
 End
 
@@ -27,25 +25,68 @@ Private Sub addOpenWithMenu()
     
 End
 
+Private Sub addRenameMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "RenameMenu"
+    
+    With yukiMenu
+        .Text = ("Rename")
+    End With
+    
+End
+
+Private Sub addDeleteMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "DeleteMenu"
+    
+    With yukiMenu
+        .Text = ("Delete")
+        .Picture = MikuruIcon("bin")
+    End With
+    
+End
+
+Private Function rename(argPath As String) As Boolean
+    
+    If IsDir(argPath) Then
+        HaruhiRename.SetPath(argPath)
+        Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+    Else
+        Return NagatoFilerDialogs.Rename(argPath)
+    Endif
+    
+End
+
 Public Sub _AddChildMenus()
     
-    
-    
-    If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then
-        addExecuteMenu()
-        Me._AddContextMenu("", Me.ContextNone)
+    If Not Exist(Last.Key) Then
+        ' pass
+    Else
+        If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then addExecuteMenu()
+        If Not IsDir(Last.Key) Then addOpenWithMenu()
+        
+        addRenameMenu()
+        addDeleteMenu()
     End If
-    
-    If Not IsDir(Last.Key) Then addOpenWithMenu()
     
     Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
     
 End
 
-Public Sub ExecuteMenu_Click()
+Public Sub RenameMenu_Click()
     
-    Dim yukiDesktop As New DesktopFile(Last.Tag)
+    If rename(Me._$path) Then Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
     
-    yukiDesktop.Run("")
+End
+
+Public Sub DeleteMenu_Click()
+    
+    If IsDir(Me._$path) Then
+        MikuruFile.TrashDirectory(Me._$path)
+    Else
+        MikuruFile.TrashFile(Me._$path)
+    Endif
+    
+    Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
     
 End

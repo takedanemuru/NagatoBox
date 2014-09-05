@@ -27,16 +27,20 @@ End
 Public Sub Start()
 
     $api.GetCurrent()
-    '$api.GetSelect(901)
 
 End
 
 Public Sub Api_Finished()
     
     $index.Reset($api.Number)
-    Debug $index.Max
     
     setImageView()
     setForm()
     
+End
+
+Public Sub MainImageView_DblClick()
+
+    $api.GetSelect($index.GetRandom())
+
 End

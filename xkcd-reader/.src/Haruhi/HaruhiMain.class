@@ -39,7 +39,7 @@ Public Sub Api_Finished()
     
 End
 
-Public Sub MainImageView_DblClick()
+Public Sub MainImageView_MouseDown()
 
     $api.GetSelect($index.GetRandom())
 

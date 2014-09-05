@@ -2,7 +2,10 @@
 
 Inherits NagatoDownloader
 
-Property Read Collection As Collection
+Property Read ImageUrl As String
+Property Read Number As Integer
+Property Read SafeTitle As String
+Property Read AlternativeTitle As String
 
 Private $collection As Collection
 
@@ -12,8 +15,26 @@ Public Sub _SetData() ' override
     
 End
 
-Private Function Collection_Read() As Collection
+Private Function ImageUrl_Read() As String
 
-    Return $collection
+    Return $collection["img"]
+
+End
+
+Private Function Number_Read() As Integer
+
+    Return $collection["num"]
+
+End
+
+Private Function SafeTitle_Read() As String
+
+    Return $collection["safe_title"]
+
+End
+
+Private Function AlternativeTitle_Read() As String
+
+    Return Replace$($collection["alt"], ".", ".\n")
 
 End
