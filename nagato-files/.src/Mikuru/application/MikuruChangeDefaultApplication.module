@@ -8,7 +8,7 @@ Private Function isConfirmed() As Boolean
     
     Dim yukiTemplate As String = File.Load("text/TemplateChangeDefault")
     Dim yukiMessage As String = Subst$(yukiTemplate, $desktopFile.Name, DesktopMime.FromFile($path).Type)
-    Dim yukiResponse As Integer = Message.Question(yukiMessage, ("Cancel"), ("OK")) 
+    Dim yukiResponse As Integer = Message.Question(yukiMessage, ("Keep Current Setting"), ("Change")) 
     
     Return (yukiResponse = 2)
     

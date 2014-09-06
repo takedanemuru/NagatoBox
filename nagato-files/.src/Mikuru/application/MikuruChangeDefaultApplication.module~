@@ -23,12 +23,17 @@ Private Sub resetDefaultApplication()
     
 End
 
-Public Sub _call(argDesktopFile As DesktopFile, argFilePath As String)
+Private Sub ensureConfigFile()
     
     If Not Object.IsValid($config) Then 
         $config = New NagatoConfigFile2(Desktop.DataDir &/ "applications/mimeapps.list")
     End If
     
+End
+
+Public Sub _call(argDesktopFile As DesktopFile, argFilePath As String)
+    
+    ensureConfigFile()
     $desktopFile = argDesktopFile
     $path = argFilePath
     

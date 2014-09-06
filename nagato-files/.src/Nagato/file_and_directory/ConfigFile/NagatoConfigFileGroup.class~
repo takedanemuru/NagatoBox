@@ -21,7 +21,7 @@ Public Sub Replace(argKey As String, argValue As String)
     
     For Each yukiLine In $lines
         If yukiLine.Key = argKey Then 
-            yukiLine.Replace([argValue])
+            yukiLine.Replace(argValue)
             Return
         Endif
     Next
