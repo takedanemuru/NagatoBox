@@ -4,6 +4,7 @@ Inherits NagatoMenuPipe
 
 Private $mapView As MapView
 Private $mapArrow As New NagatoMapArrow
+Private $marker As New NagatoMapMarker
 Private $observer As Observer
 
 Event NewPoint(argLatitude As Float, argLongitude As Float)
@@ -47,7 +48,8 @@ End
 
 Public Sub SetMarker(argLatitude As Float, argLongitude As Float)
     
-    $mapArrow.SetArrow(argLatitude, argLongitude)
+    '$mapArrow.SetArrow(argLatitude, argLongitude)
+    $marker.SetArrow(argLatitude, argLongitude)
     
     With $mapView.Map
         .Center.Lat = argLatitude
@@ -79,7 +81,9 @@ End
 
 Public Sub Asakura_Draw()
     
-    If $mapArrow.Visible Then $mapArrow.Draw($mapView)
+    'If $mapArrow.Visible Then $mapArrow.Draw($mapView)
+    
+    $marker.Draw($mapView)
     
     Raise NewPoint($mapView.Map.Center.Lat, $mapView.Map.Center.Lon)
     

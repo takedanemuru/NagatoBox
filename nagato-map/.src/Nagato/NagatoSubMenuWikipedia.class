@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $parentMenu As Menu
+
+Private Sub initializeParentMenu(argRootMenu As Menu)
+    
+    $parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With $parentMenu
+        .Text = ("Wikipedia")
+    End With
+    
+End
+
+Private Sub addSpacer()
+    
+    Dim yukiMenu As New Menu($parentMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+
+Private Sub addRefreshMenu()
+    
+    Dim yukiMenu As New Menu($parentMenu) As "RefreshMenu"
+    
+    With yukiMenu
+        .Picture = MikuruIcon.Get("button-rotate-cw")
+        .Text = ("Refresh")
+    End With
+    
+End
+
+Private Sub addLanguageMenus()
+    
+    Dim yukiMenu As Menu
+    Dim yukiCollection As Collection = NagatoSettings.WikipediaLanguages
+    Dim yukiValue As String
+    
+    For Each yukiValue In yukiCollection
+        yukiMenu = New Menu($parentMenu) As "LanguageMenu"
+        yukiMenu.Text = yukiValue
+        yukiMenu.Tag = yukiCollection.Key
+        If NagatoSettings.WikipediaLanguageKey = yukiCollection.Key Then 
+            yukiMenu.Picture = MikuruIcon.Get("button-check")
+        Endif
+    Next
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    initializeParentMenu(argRootMenu)
+    addSpacer()
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    $parentMenu.Children.Clear()
+    addRefreshMenu()
+    addSpacer()
+    addLanguageMenus()
+    
+End
+
+Public Sub LanguageMenu_Click()
+    
+    NagatoSettings.WikipediaLanguageKey = Last.Tag
+    
+End

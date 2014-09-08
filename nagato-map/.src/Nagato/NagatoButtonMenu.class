@@ -29,7 +29,8 @@ Private Sub addMenus()
     
     With NagatoMenuPipe
         addMenuItem(("Search"), .MenuSearch, MikuruIcon.Get("search"))
-        addMenuItem(("Information"), .MenuInformation, MikuruIcon.Get("information-balloon"))
+        Object.New("NagatoSubMenuWikipedia", [$rootMenu])
+        'addMenuItem(("Information"), .MenuInformation, MikuruIcon.Get("information-balloon"))
         addMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
             addMenuItem((""), 0) ' as a separator
         addMenuItem(("About"), .MenuAbout, MikuruIcon.Get("star"))

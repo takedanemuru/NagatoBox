@@ -1,10 +1,7 @@
 ' Gambas class file
 
 Private $tabstrip As TabStrip
-Private $wikipediaUrls As New String[]
-Private $positions As New PointF[]
 Private $wikipediaGrid As GridView
-
 Private $wikipediaGeoData As New NagatoWikipediaGeoData As "WikipediaGeoData"
 
 Event NewArticle(argUrl As String)
@@ -13,7 +10,7 @@ Private Sub initializeWikipediaListGrid()
     
     $tabStrip.Index = 1
     
-    $wikipediaGrid = New GridView($tabStrip) As "CantidatesGrid"
+    $wikipediaGrid = New GridView($tabStrip) As "CandidatesGrid"
     
     With $wikipediaGrid
         .Header = GridView.None
@@ -32,15 +29,10 @@ Private Sub setWikipediaArticles()
     $wikipediaGrid.Clear()
     $wikipediaGrid.Rows.Count = 1
     
-    $positions.Clear()
-    $wikipediaUrls.Clear()
-    
     For Each yukiElement In $wikipediaGeoData.Elements
         With $wikipediaGrid
             .[.Rows.Max, 0].Text = yukiElement.Title
             .[.Rows.Max, 0].Alignment = Align.Left
-            $wikipediaUrls.Add(yukiElement.Url)
-            $positions.Add(Object.New("PointF", [yukiElement.Latitude, yukiElement.Longitude]))
             If Odd(.Rows.Max) Then 
                 $wikipediaGrid[.Rows.Max, 0].Background = Color.Merge(Color.White, Color.Violet, 0.1)
             End If
@@ -71,13 +63,12 @@ Public Sub WikipediaGeoData_Finished()
     
 End
 
-Public Sub CantidatesGrid_Activate()
+Public Sub CandidatesGrid_Activate()
     
-    Dim yukiElement As NagatoWikipediaGeoDataElement = $wikipediaGeoData.Elements[$wikipediaGrid.Row]
+    Dim yukiElement As NagatoWikipediaGeoDataElement 
     
     If $wikipediaGrid[$wikipediaGrid.Row, 0].Text <> "" Then
-        ' Raise NewArticle($wikipediaUrls[$wikipediaGrid.Row])
-        ' HaruhiMain.SetMarker($positions[$wikipediaGrid.Row].X, $positions[$wikipediaGrid.Row].Y)
+        yukiElement = $wikipediaGeoData.Elements[$wikipediaGrid.Row]
         Raise NewArticle(yukiElement.Url)
         HaruhiMain.SetMarker(yukiElement.Latitude, yukiElement.Longitude)
     End If

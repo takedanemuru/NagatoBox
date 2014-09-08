@@ -9,10 +9,10 @@ Private $downloader As New NagatoDownloaderWikipediaGeoData As "Downloader"
 Event Finished
 Event Error
 
-Public Sub Start(argLang As String, argLatitude As Float, argLongitude As Float) As String
+Public Sub Start(argLatitude As Float, argLongitude As Float) As String
     
-    $downloader.Lang = argLang
-    $downloader.Get(Subst$(Api, argLang, argLatitude, argLongitude))
+    $downloader.Lang = NagatoSettings.WikipediaLanguageKey
+    $downloader.Get(Subst$(Api, NagatoSettings.WikipediaLanguageKey, argLatitude, argLongitude))
     
 End
 

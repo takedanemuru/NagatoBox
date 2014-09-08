@@ -6,6 +6,7 @@ Property WikipediaRadius As Integer
 Property WikipediaLimit As Integer
 
 Private $settings As New Settings
+Private $languages As Collection = ["en": ("English"), "ja": ("Japanese")]
 
 Event WikipediaApiChanged
 
@@ -29,7 +30,7 @@ End
 
 Private Function WikipediaRadius_Read() As Integer
 
-    Return $settings["wikipedia/radius", 1000000]
+    Return $settings["wikipedia/radius", 100000]
 
 End
 

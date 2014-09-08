@@ -46,7 +46,7 @@ End
 
 Public Sub Request(argLatitude As Float, argLongitude As Float)
     
-    $wikipediaGeoData.Start("ja", argLatitude, argLongitude)
+    $wikipediaGeoData.Start(argLatitude, argLongitude)
     
 End
 

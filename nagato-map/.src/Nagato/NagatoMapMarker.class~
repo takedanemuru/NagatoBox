@@ -1,0 +1,66 @@
+' Gambas class file
+
+Property Read Visible As Boolean
+
+Private $innerRadius As Float = 10
+Private $radius As Float = 30
+Private $origin As PointF
+Private $center As PointF
+Private $onCircle As PointF
+Private $currentMapPoint As MapPoint
+Private $visible As Boolean = False
+
+Private Sub resetProperties(argOriginX As Float, argOriginY As Float)
+    
+    $origin = New PointF(argOriginX, argOriginY)
+    $onCircle = New PointF($radius * (4 / 5), $radius * (3 / 5) - 0.5)
+    $center = New PointF($origin.X, $origin.Y - ($radius ^ 2 / $onCircle.Y))
+    
+End
+
+Private Function getInfomationPixelPoint(argMapView As MapView) As Point
+    
+    Dim yukiMapPoint As New MapPoint($currentMapPoint.Lat, $currentMapPoint.Lon)
+    Dim yukiPixelPoint As Point = Geo.MapPointToPixel(yukiMapPoint, argMapView.Map.Zoom)
+    Dim yukiResult As New Point
+    
+    yukiResult.X = yukiPixelPoint.X - argMapView.Map.PixelBox.X 
+    yukiResult.Y = yukiPixelPoint.Y - argMapView.Map.PixelBox.Y 
+    
+    Return yukiResult
+    
+End
+
+Public Sub SetArrow(argLatitude As Float, argLongitude As Float)
+    
+    $visible = True
+    $currentMapPoint = New MapPoint(argLatitude, argLongitude)
+    
+End
+
+Public Sub Draw(argMapView As MapView)
+
+    Dim yukiPoint As Point = getInfomationPixelPoint(argMapView)
+    
+    resetProperties(yukiPoint.X, yukiPoint.Y)
+
+    Paint.Begin(Draw.Device)
+        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
+        Paint.FillRule = Paint.FillRuleEvenOdd
+        Paint.Arc($center.X, $center.Y, $innerRadius)
+        Paint.Arc($center.X, $center.Y, $radius, Rad(145), Rad(250))
+        Paint.Fill()
+        Paint.MoveTo($center.X - $onCircle.X, $center.Y + $onCircle.Y)
+        Paint.LineTo($center.X + $onCircle.X, $center.Y + $onCircle.Y)
+        Paint.LineTo($origin.X, $origin.Y)
+        Paint.MoveTo($center.X - $onCircle.X, $center.Y + $onCircle.Y)
+        Paint.Fill()
+    Paint.End()
+
+End
+
+Private Function Visible_Read() As Boolean
+
+    Return $visible
+
+End
