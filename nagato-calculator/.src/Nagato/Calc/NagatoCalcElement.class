@@ -1,11 +1,10 @@
 ' Gambas class file
 
+Property Read Text As String
 Property Read HasNumber As Boolean
 Property Read IsNegative As Boolean
 Property Read FunctionType As Integer
-Property Read Header As String
 Property Read FloatingPoint As Integer
-Property Read TotalLength As Integer
 Property Read Number As Float 
 Property Lock As Boolean
 
@@ -18,6 +17,34 @@ Private $lock As Boolean = False
 
 Event Change
 Event DivisionByZero
+
+Private Function getSign(argElement As NagatoCalcElement) As String
+        
+        If argElement.IsNegative And If Str$(argElement.Number) Not Begins "-" Then
+                Return "-"
+        Else
+                Return ""
+        Endif
+        
+End
+
+Private Function getTotalLength() As Integer
+
+        Dim yukiHeaderLength As Integer = Len(MikuruFunctionType.GetFunctionName($functionType))
+        Dim yukiNumberLength As Integer = NagatoNumber.GetValidLength(NagatoNumber.GetStringConversion(Me)) 
+
+        Return yukiHeaderLength + yukiNumberLength
+
+End
+
+Private Function getSpace() As String
+        
+        Return String$(NagatoSettings.LCDLength - getTotalLength(), " ")
+        
+Catch
+        Return ""
+        
+End
 
 Private Sub getDivision(argNumber As Float) As Float
         
@@ -51,10 +78,6 @@ Public Sub PushNumber(argNumber As Integer)
         Endif
         
         If $isNegative And If $number > 0 Then $number *= -1
-        
-        Debug "number: " & $number
-        Debug "floating point: " & $floatingPoint
-        Debug "length: " & String.Len($number)
         
         Raise Change
         
@@ -125,24 +148,9 @@ Private Function IsNegative_Read() As Boolean
 
 End
 
-Private Function Header_Read() As String
-
-        Return MikuruFunctionType.GetFunctionName($functionType) & ":"
-
-End
-
 Private Function FloatingPoint_Read() As Integer
 
         Return $floatingPoint
-
-End
-
-Private Function TotalLength_Read() As Integer
-
-        Dim yukiHeaderLength As Integer = Len(MikuruFunctionType.GetFunctionName($functionType))
-        Dim yukiNumberLength As Integer = NagatoNumber.GetValidLength(NagatoNumber.GetStringConversion(Me)) 
-
-        Return yukiHeaderLength + yukiNumberLength
 
 End
 
@@ -161,5 +169,16 @@ End
 Private Function FunctionType_Read() As Integer
 
         Return $functionType
+
+End
+
+Private Function Text_Read() As String
+
+    Dim yukiSign As String = getSign(Me)
+    Dim yukiHeader As String = MikuruFunctionType.GetFunctionName($functionType) & ":"
+    Dim yukiSpace As String = getSpace()
+    Dim yukiNumber As String = NagatoNumber.GetStringConversion(Me)
+    
+    Return yukiHeader & yukiSpace & yukiSign & yukiNumber
 
 End

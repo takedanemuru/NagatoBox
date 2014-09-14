@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoMenuBar
+
+Private Enum ButtonNull, ButtonPlay
+
+Public Sub _AddStarMenu() 'override
+    
+    Dim yukiMenu As New NagatoNowPlayingMenu As "StarMenu"
+     
+    Me._$starButton.Menu = yukiMenu.Name
+    
+End
+
+Public Sub _Initialize() 'override
+    
+    Me._AddButton(, "button-rew", ("Back"))
+    Me._AddButton(ButtonPlay, "button-play", ("Play"))
+    Me._AddButton(0, "button-pause", ("Pause"))
+    Me._AddButton(0, "button-ff", ("Forward"))
+        Me._AddSeparator()
+    Me._AddButton(0, "arrow-down", ("Down"))
+    Me._AddButton(0, "arrow-up", ("Up"))
+    Me._AddButton(0, "music", ("Add Music"))
+    Me._AddButton(0, "folder", ("Add Folder"))
+    Me._AddButton(0, "bin", ("Clear"))
+        Me._AddPanel()
+    Me._AddStarButton()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Debug Last.Tag
+    
+    Select Case Last.Tag
+        Case ButtonPlay
+            NagatoQueue.Play()
+    End Select
+    
+End

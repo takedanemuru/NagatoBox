@@ -2,6 +2,8 @@
 
 Create Static
 
+Property Read LCDLength As Integer
+
 Private $settings As New Settings
 
 Public Sub LoadFormPosition(argForm As Form)
@@ -16,4 +18,10 @@ Public Sub SaveFormPosition(argForm As Form)
         $settings[Subst$("&1/x", argForm.Name)] = argForm.X
         $settings[Subst$("&1/y", argForm.Name)] = argForm.Y
         
+End
+
+Private Function LCDLength_Read() As Integer
+
+    Return 26
+
 End

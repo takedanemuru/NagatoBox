@@ -10,7 +10,7 @@ Public Sub _new()
 
     NagatoSettingsForm.Load(Me)
     
-    $nowPlayingTab = New NagatoTabNowPlaying(StarButtonNowPlaying, NowPlayingGrid) As "NowPlayingTab"
+    $nowPlayingTab = New NagatoTabNowPlaying(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
     $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
     $albumsTab = New NagatoTabAlbums(AlbumsStarButton, AlbumsIconView) As "AlbumsTab"
     $libraryTab = New NagatoTabLibrary(LibraryStarButton, LibraryGrids) As "LibraryTab"

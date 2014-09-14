@@ -1,0 +1,134 @@
+' Gambas class file
+
+Private $messageLcd As NagatoLcdInterface
+Private $resultLcd As NagatoLcdInterface
+Private $bufferLcd As NagatoLcdInterface
+Private $greeter As NagatoGreeter
+Private $calc As NagatoCalc 
+Private $formHandler As NagatoFormHandler
+
+Public Sub _new()
+    
+    $formHandler = New NagatoFormHandler(Me) As "FormHandler"
+    
+End
+
+Public Sub Form_Open()
+
+    $calc = New NagatoCalc As "Calc"
+    $messageLcd = New NagatoLcdInterface(ResultLCD2)
+    $resultLcd = New NagatoLcdInterface(ResultLCD)
+    $bufferLcd = New NagatoLcdInterface(BufferLCD)
+    BackButton.Text = String.Chr$(8594) 'back arrow
+    $greeter = New NagatoGreeter($bufferLcd)
+    
+End
+
+Public Sub Form_Close()
+        
+    NagatoSettings.SaveFormPosition(Me)
+        
+End
+
+Public Sub NumberButton_Click()
+        
+    $calc.SendNumber(Last.Tag)
+        
+End
+
+Public Sub DotButton_Click()
+    
+    $calc.SendDot()
+        
+End
+
+Public Sub ReverseButton_Click()
+
+    $calc.SwitchSign()
+
+End
+
+Public Sub EnterButton_Click()
+
+    $calc.SendEnter()
+
+End
+
+Public Sub FunctionButton_Click()
+
+    $calc.SendFunction(Last.Tag)
+
+End
+
+Public Sub UndoButton_Click()
+
+    $calc.Undo()
+
+End
+
+Public Sub Calc_BufferChanged()
+        
+        $greeter.Stop()
+        $bufferLcd.ShowBufferState2($calc.Text)
+        
+Catch
+        ' to avoid null greeter object.
+        Return
+        
+End
+
+Public Sub Calc_DivisionByZero()
+        
+        ResultLCD2.Visible = True
+        $messageLcd.ShowMessage("error division by zero")
+        
+End
+
+Public Sub ClearButton_Click()
+
+        ResultLCD2.Visible = False
+        $calc.ClearAll()
+        $resultLcd.ShowMessage("clear all")
+
+End
+
+Public Sub BackButton_Click()
+
+    $calc.Back()
+
+End
+
+Public Sub Form_KeyPress()
+        
+        Select Case Key.Code
+                Case Key.Esc
+                        ClearButton_Click()
+                Case Key.Return
+                        EnterButton_Click()
+                Case Key.BackSpace
+                        UndoButton_Click()
+                Case Key.Delete
+                        BackButton_Click()
+                Case Asc(".")
+                        DotButton_Click()
+                Case Asc("/")
+                        $calc.SendFunction(MikuruFunctionType.Devide)
+                Case Asc("-")
+                        $calc.SendFunction(MikuruFunctionType.Minus)
+                Case Asc("*")
+                        $calc.SendFunction(MikuruFunctionType.Multi)
+                Case Asc("+")
+                        $calc.SendFunction(MikuruFunctionType.Plus)
+                Case Asc("^")
+                        $calc.SendFunction(MikuruFunctionType.Power)
+                Case Asc("0"), Asc("1"), Asc("2"), Asc("3"), Asc("4"), Asc("5"), Asc("6"), Asc("7"), Asc("8"), Asc("9")
+                        $calc.SendNumber(CInt(Key.Text))
+        End Select
+        
+End
+
+Public Sub Calc_ResultChanged()
+    
+    $resultLcd.ShowResultState($calc.Result)
+    
+End

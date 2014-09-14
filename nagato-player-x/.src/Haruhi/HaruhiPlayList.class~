@@ -19,9 +19,11 @@ Public Sub _new()
     
 End
 
-Public Sub Form_Show()
+Public Sub EnsureVisible()
     
     Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    
+    Me.Show()
     
     yukiDesktopWindow.Desktop = Desktop.Current
     

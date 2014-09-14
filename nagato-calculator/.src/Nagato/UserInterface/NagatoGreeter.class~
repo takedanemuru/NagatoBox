@@ -40,7 +40,7 @@ Private Function getAdjustedTextForDot(argText As String) As String
                 If yukiPosition = 0 Then Break
                 Inc yukiPosition
                 Inc $addtion
-                yukiResult = Mid$($message, $position, $lcdLabel.Length + $addtion)
+                yukiResult = Mid$($message, $position, NagatoSettings.LCDLength + $addtion)
         Loop
         
         Return yukiResult
@@ -51,8 +51,8 @@ Private Function getSpaceAddedTextForEnd(argText As String) As String
         
         Dim yukiMessage As String = argText
         
-        If $lcdLabel.Length + $addtion > $messageLength - $position Then
-                yukiMessage &= String$(($lcdLabel.Length + $addtion) - ($messageLength - $position + 1), " ")
+        If NagatoSettings.LCDLength + $addtion > $messageLength - $position Then
+                yukiMessage &= String$(NagatoSettings.LCDLength + $addtion) - ($messageLength - $position + 1), " ")
         Endif
         
         Return yukiMessage
@@ -63,7 +63,7 @@ Private Sub getMessage() As String
         
         Dim yukiResult As String
         
-        yukiResult = getAdjustedTextForDot(Mid$($message, $position, $lcdLabel.Length))
+        yukiResult = getAdjustedTextForDot(Mid$($message, $position, NagatoSettings.LCDLength))
         yukiResult = getSpaceAddedTextForEnd(yukiResult)
         
         Return yukiResult
@@ -79,7 +79,7 @@ End
 Public Sub _new(argLcdLabel As NagatoLcdInterface)
         
         $lcdLabel = argLcdLabel
-        $message = String$($lcdLabel.Length, " ") & File.Load("text/GreeterMessage")
+        $message = String$(NagatoSettings.LCDLength, " ") & File.Load("text/GreeterMessage")
         $messageLength = Len($message)
         initializeTimer()
         

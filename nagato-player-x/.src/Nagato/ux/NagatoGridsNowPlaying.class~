@@ -6,28 +6,6 @@ Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum
 
 Private $playMark As NagatoGridsPlayMark
 
-' ' Private Sub setPlayMark(argRow As Integer)
-' '     
-' '     Dim yukiRow As Integer
-' '     
-' '     For yukiRow = 0 To Me._$grids.Rows.Max
-' '         Me._$grids[yukiRow, ColumnIcon].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
-' '     Next
-' '     
-' ' End
-' ' 
-' ' Private Sub $playMark.Set(argRowIndex As Integer)
-' '     
-' '     If argRowIndex <> NagatoQueue.CurrentIndex Then
-' '         Return 
-' '     Else If NagatoQueue.State = Media.Playing Then
-' '         Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
-' '     Else
-' '         Me._$grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
-' '     End If
-' '     
-' ' End
-
 Private Sub refreshData()
     
     Dim yukiRowIndex As Integer
@@ -71,6 +49,20 @@ Public Sub _ContextMenu() ' override
     Dim yukiMenu As New NagatoContectMenuCurrent As "ContextMenu"
     
     yukiMenu.PopUp()
+    
+End
+
+Public Sub _MouseDrag() 'override
+    
+    Debug "MouseDrag"
+    
+End
+
+Public Sub _DragMove() 'override
+    
+    Debug "ready?"
+    
+    Debug "DragMove"
     
 End
 
@@ -133,5 +125,11 @@ Public Sub RefreshPlaymark()
     For yukiRowIndex = 0 To Me._$grids.Rows.Max
         $playMark.Set(yukiRowIndex)
     Next
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    Debug "MouseDown"
     
 End

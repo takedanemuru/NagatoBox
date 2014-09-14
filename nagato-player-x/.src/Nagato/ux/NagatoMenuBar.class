@@ -1,0 +1,84 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public _$container As Container
+Public _$starButton As MenuButton
+
+Public Sub _AddPanel()
+    
+    Dim yukiPanel As New Panel(Me._$container)
+    
+    yukiPanel.Expand = True
+    
+End
+
+Public Sub _AddSeparator()
+    
+    Dim yukiSeparator As New Separator(Me._$container)
+    
+    Debug yukiSeparator.Background
+    
+End
+
+Public Sub _AddButton(argTag As Integer, Optional argIconName As String, Optional argText As String)
+    
+    Dim yukiButton As New MenuButton(Me._$container) As "MenuButton"
+    
+    With yukiButton
+        .Tag = argTag
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+        If argText Then .Tooltip = argText
+        .Foreground = Color.DarkCyan
+    End With
+    
+End
+
+Public Sub _AddStarMenu() 
+    
+    'virtual
+    
+End
+
+Public Sub _AddStarButton()
+    
+    Me._$starButton = New MenuButton(Me._$container) As "StarButton"
+    
+    With Me._$starButton
+        .W = Me._$container.H
+        .Picture = MikuruIcon.Get("star")
+        .Arrow = False
+        .Border = False
+    End With
+    
+    Me._AddStarMenu()
+    
+End
+
+Public Sub _Initialize()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Me._Initialize()
+    
+End
+
+Public Sub MenuButton_Enter()
+    
+    Swap Last.Text, Last.Tooltip
+    
+End
+
+Public Sub MenuButton_Leave()
+    
+    Swap Last.Tooltip, Last.Text
+    
+End

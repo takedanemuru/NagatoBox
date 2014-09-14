@@ -1,0 +1,5 @@
+' Gambas module file
+
+Public Enum None
+Public Enum QueuePlay = 1001, QueuePause = 1002, QueueNext = 1003, QueueBack = 1004
+

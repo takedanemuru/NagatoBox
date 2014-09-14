@@ -2,18 +2,11 @@
 
 Inherits NagatoSignal
 
+Private $menuBar As NagatoMenuBarNowPlaying
 Private $grids As NagatoGridsNowPlaying
 Private $queueObserver As Observer
 
 Event NewPlaylist
-
-Private Sub initializeStarMenu(argButton As MenuButton)
-    
-    Dim yukiMenu As New NagatoNowPlayingMenu As "StarMenu"
-    
-    argButton.Menu = yukiMenu.Name
-    
-End
 
 Public Sub MoveTo(argUrl As String)
     
@@ -21,9 +14,9 @@ Public Sub MoveTo(argUrl As String)
     
 End
 
-Public Sub _new(argButton As MenuButton, argGrids As GridView)
+Public Sub _new(argContainer As Container, argGrids As GridView)
     
-    initializeStarMenu(argButton)
+    $menuBar = New NagatoMenuBarNowPlaying(argContainer)
     $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
     $queueObserver = New Observer(NagatoQueue) As "Asakura"
     

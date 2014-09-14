@@ -1,0 +1,56 @@
+' Gambas class file
+
+Private $form As Form
+Private $observer As Observer
+
+Event KeyPressNumber(argNumber As Integer)
+Event KeyPressFunction(argFunctionType As Integer)
+Event KeyPressSpecial(argType As Integer)
+
+Public Sub _new(argForm As Form)
+    
+    $form = argForm
+    $observer = New Observer(argForm) As "Asakura"
+    
+End
+
+Public Sub Asakura_Open()
+    
+    NagatoSettings.LoadFormPosition($form)
+    
+End
+
+Public Sub Asakura_Close()
+    
+    NagatoSettings.SaveFormPosition($form)
+    
+End
+
+Public Sub Asakura_KeyPress()
+        
+    Select Case Key.Code
+        Case Key.Esc
+            Raise KeyPressSpecial(MikuruSpecialKeyType.Escape)
+        Case Key.Return
+            Raise KeyPressSpecial(MikuruSpecialKeyType.Enter)
+        Case Key.BackSpace
+            Raise KeyPressSpecial(MikuruSpecialKeyType.Undo)
+        Case Key.Delete
+            Raise KeyPressSpecial(MikuruSpecialKeyType.Back)
+        Case Asc(".")
+            Raise KeyPressSpecial(MikuruSpecialKeyType.Dot)
+        Case Asc("/")
+            Raise KeyPressFunction(MikuruFunctionType.Devide)
+        Case Asc("-")
+            Raise KeyPressFunction(MikuruFunctionType.Minus)
+        Case Asc("*")
+            Raise KeyPressFunction(MikuruFunctionType.Multi)
+        Case Asc("+")
+            Raise KeyPressFunction(MikuruFunctionType.Plus)
+        Case Asc("^")
+            Raise KeyPressFunction(MikuruFunctionType.Power)
+        Case Asc("0"), Asc("1"), Asc("2"), Asc("3"), Asc("4"), Asc("5"), Asc("6"), Asc("7"), Asc("8"), Asc("9")
+            Raise KeyPressNumber(CInt(Key.Text))
+    End Select
+    
+End
