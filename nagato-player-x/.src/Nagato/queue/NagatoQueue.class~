@@ -18,6 +18,7 @@ Private $musicList As NagatoMusicList
 
 Event Moved
 Event Changed
+Event TagChanged
 Event State
 
 Public Function SetPath(argPath As String) As Boolean
@@ -44,8 +45,7 @@ End
 Public Sub DeleteIndexes(argIndexes As Integer[])
     
     $player.Stop()
-        $musicList.DeleteIndexes(argIndexes)
-    If $musicList.Count > 0 Then $player.Play()
+    If $musicList.DeleteIndexes(argIndexes) Then $player.Play()
     
 End
 
@@ -53,6 +53,18 @@ Public Sub ClearAll()
     
     $player.Stop()
     $musicList.ClearAll()
+    
+End
+
+Public Sub ListMoveUp(argIndexes As Integer[])
+    
+    
+    
+End
+
+Public Sub ListMoveDown(argIndexes As Integer[])
+    
+    
     
 End
 
@@ -64,7 +76,13 @@ End
 
 Public Sub RefreshTag()
     
-    Debug "force refresh current tag"
+    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
+    
+    $musicList.SetTag("Title", MikuruId3TagInfo.GetTitle(yukiPath))
+    $musicList.SetTag("Artist", MikuruId3TagInfo.GetArtist(yukiPath))
+    $musicList.SetTag("Album", MikuruId3TagInfo.GetAlbum(yukiPath))
+    
+    Raise TagChanged
     
 End
 

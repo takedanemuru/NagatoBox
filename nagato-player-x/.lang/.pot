@@ -18,7 +18,7 @@ msgstr ""
 msgid "a music player with gstreamer backend."
 msgstr ""
 
-#: HaruhiAbout.form:10 NagatoStarMenu.class:46
+#: HaruhiAbout.form:10 NagatoStarMenu.class:48
 msgid "About nagato-player-x"
 msgstr ""
 
@@ -85,6 +85,14 @@ msgstr ""
 
 #: HaruhiTagEdit.form:81 HaruhiTagEditBulk.form:83
 msgid "Select Picture"
+msgstr ""
+
+#: MikuruDialog.module:11
+msgid "Select music"
+msgstr ""
+
+#: MikuruDialog.module:22
+msgid "Select directory"
 msgstr ""
 
 #: NagatoArguments.class:12
@@ -156,22 +164,30 @@ msgid "Forward"
 msgstr ""
 
 #: NagatoMenuBarNowPlaying.class:20
-msgid "Down"
+msgid "Shuffle"
 msgstr ""
 
 #: NagatoMenuBarNowPlaying.class:21
-msgid "Up"
-msgstr ""
-
-#: NagatoMenuBarNowPlaying.class:22
-msgid "Add Music"
+msgid "Repeat"
 msgstr ""
 
 #: NagatoMenuBarNowPlaying.class:23
-msgid "Add Folder"
+msgid "Down"
 msgstr ""
 
 #: NagatoMenuBarNowPlaying.class:24
+msgid "Up"
+msgstr ""
+
+#: NagatoMenuBarNowPlaying.class:25
+msgid "Add Music"
+msgstr ""
+
+#: NagatoMenuBarNowPlaying.class:26
+msgid "Add Folder"
+msgstr ""
+
+#: NagatoMenuBarNowPlaying.class:27
 msgid "Clear"
 msgstr ""
 
@@ -179,27 +195,19 @@ msgstr ""
 msgid "Playlist is cleared."
 msgstr ""
 
-#: NagatoNowPlayingMenu.class:11
-msgid "Select music"
-msgstr ""
-
-#: NagatoNowPlayingMenu.class:22
-msgid "Select directory"
-msgstr ""
-
-#: NagatoNowPlayingMenu.class:44
+#: NagatoNowPlayingMenu.class:18
 msgid "Add music"
 msgstr ""
 
-#: NagatoNowPlayingMenu.class:45
+#: NagatoNowPlayingMenu.class:19
 msgid "Add directory"
 msgstr ""
 
-#: NagatoNowPlayingMenu.class:46
+#: NagatoNowPlayingMenu.class:20
 msgid "Save as playlist"
 msgstr ""
 
-#: NagatoNowPlayingMenu.class:48
+#: NagatoNowPlayingMenu.class:22
 msgid "Clear queue"
 msgstr ""
 
@@ -207,7 +215,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: NagatoStarMenu.class:57
+#: NagatoStarMenu.class:59
 msgid "Close playlist"
 msgstr ""
 

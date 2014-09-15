@@ -12,12 +12,6 @@ Private Sub initializeStarMenu(argButton As MenuButton)
     
 End
 
-Public Sub Refresh()
-    
-    $grids.Refresh()
-    
-End
-
 Public Sub _new(argButton As MenuButton, argGrids As GridView)
     
     initializeStarMenu(argButton)

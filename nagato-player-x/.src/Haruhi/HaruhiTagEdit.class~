@@ -9,6 +9,14 @@ Event TagChanged
 
 Private Sub setTags()
     
+    ' Dim yukiResult As Result = NagatoDBMedia.GetMusicResultByPath($targetPath)
+    ' 
+    ' With NagatoDBMedia
+    '     If yukiResult[.ColumnTitle] <> "" Then TitleTextBox.Text = yukiResult[.ColumnTitle]
+    '     If yukiResult[.ColumnArtist] <> "" Then ArtistTextBox.Text = yukiResult[.ColumnArtist]
+    '     If yukiResult[.ColumnAlbum] <> "" Then AlbumTextBox.Text = yukiResult[.ColumnAlbum]
+    ' End With
+    
     TitleTextBox.Text = MikuruId3TagInfo.GetTitle($targetPath)
     ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($targetPath)
     AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($targetPath)

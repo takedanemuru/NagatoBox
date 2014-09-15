@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Inherits NagatoSignal
-
 Property Read Name As String
 
 Public _$rootMenu As Menu

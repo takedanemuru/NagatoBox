@@ -34,17 +34,16 @@ End
 
 Public Function DeleteIndexes(argIndexes As Integer[]) As Boolean
     
-    Dim yukiIndexes As Integer[] = argIndexes.Sort(gb.Descent)
     Dim yukiIndex As Integer
     Dim yukiFlag As Boolean = False
     
-    For Each yukiIndex In yukiIndexes
+    For Each yukiIndex In argIndexes.Sort(gb.Descent)
         If yukiIndex > $musicElements.Max Then Continue
         $musicElements.Remove(yukiIndex)
         yukiFlag = True
     Next
     
-    Return True
+    Return yukiFlag
     
 End
 

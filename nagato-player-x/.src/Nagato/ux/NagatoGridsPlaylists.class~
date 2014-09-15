@@ -2,8 +2,6 @@
 
 Inherits NagatoGrids
 
-Property Read Selection As Integer[]
-
 Private Enum ColumnIcon, ColumnTitle, ColumnCount, ColumnSpacer
 
 Private Sub refreshData()
@@ -51,13 +49,4 @@ Public Sub Asakura_Activate()
         NagatoQueue.AddMusics(yukiPaths)
     Endif
     
-End
-
-Private Function Selection_Read() As Integer[]
-
-    Return Me._$grids.Rows.Selection
-    
-Catch
-    Return [-1]
-
 End

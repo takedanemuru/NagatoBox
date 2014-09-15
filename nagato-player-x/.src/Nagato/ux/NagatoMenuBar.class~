@@ -73,12 +73,12 @@ End
 
 Public Sub MenuButton_Enter()
     
-    Last.Text = Last.Tooltip
+    Swap Last.Text, Last.Tooltip
     
 End
 
 Public Sub MenuButton_Leave()
     
-    Last.Text = ""
+    Swap Last.Tooltip, Last.Text
     
 End

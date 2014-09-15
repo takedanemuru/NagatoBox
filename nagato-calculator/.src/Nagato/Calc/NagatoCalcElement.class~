@@ -5,7 +5,6 @@ Property Read HasNumber As Boolean
 Property Read IsNegative As Boolean
 Property Read FunctionType As Integer
 Property Read FloatingPoint As Integer
-'Property Read TotalLength As Integer
 Property Read Number As Float 
 Property Lock As Boolean
 
@@ -154,15 +153,6 @@ Private Function FloatingPoint_Read() As Integer
         Return $floatingPoint
 
 End
-
-' Private Function TotalLength_Read() As Integer
-' 
-'         Dim yukiHeaderLength As Integer = Len(MikuruFunctionType.GetFunctionName($functionType))
-'         Dim yukiNumberLength As Integer = NagatoNumber.GetValidLength(NagatoNumber.GetStringConversion(Me)) 
-' 
-'         Return yukiHeaderLength + yukiNumberLength
-' 
-' End
 
 Private Function Lock_Read() As Boolean
 

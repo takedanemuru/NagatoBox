@@ -29,7 +29,7 @@ Public Sub ShowBufferState(argElement As NagatoCalcElement)
     
 End
 
-Public Sub ShowBufferState2(argText As String$)
+Public Sub ShowBufferState2(argText As String)
     
     $lcdLabel.Text = argText
     

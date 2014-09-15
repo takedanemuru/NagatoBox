@@ -4,6 +4,8 @@ Inherits NagatoStarMenu
 
 Private Enum MenuAddMusic, MenuAddDirectory, MenuSaveAsPlaylist, MenuClear
 
+Event SavePlaylist
+
 Private Sub saveAsPlaylist()
     
     If HaruhiSaveAsPlaylist.ShowDialog() = MikuruDialog.ResponseApply Then

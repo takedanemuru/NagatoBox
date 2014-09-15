@@ -67,6 +67,19 @@ Public Sub MoveTo(argUrl As String)
     
 End
 
+Public Function GetPaths() As String[]
+    
+    Dim yukiPaths As New String[] ' Return Value
+    Dim yukiRowIndex As Integer
+    
+    For yukiRowIndex = 0 To Me._$grids.Rows.Max
+        yukiPaths.Add(NagatoQueue[yukiRowIndex].Path)
+    Next
+    
+    Return yukiPaths
+    
+End
+
 Public Sub SetMark(argRow As Integer)
     
     $playMark.Refresh(argRow)

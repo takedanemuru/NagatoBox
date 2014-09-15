@@ -47,10 +47,12 @@ Public Sub AddDirectory(argPath As String)
     
 End
 
-Public Sub DeleteIndexes(argIndexes As Integer[])
+Public Function DeleteIndexes(argIndexes As Integer[]) As Boolean
     
     If $musicElements.DeleteIndexes(argIndexes) Then Raise Changed
     $position.Refresh($musicElements.Count)
+    
+    Return ($musicElements.Count > 0)
     
 End
 
@@ -116,6 +118,9 @@ Public Function GetTag(argTag As String) As String
 End
 
 Public Sub SetTag(argTag As String, argValue As String) 
+    
+    Debug argTag
+    Debug argValue
     
     $musicElements.SetTag(argTag, $position.Current, argValue)
     

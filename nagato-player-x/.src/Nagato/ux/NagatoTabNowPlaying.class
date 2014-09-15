@@ -8,21 +8,7 @@ Private $queueObserver As Observer
 
 Event NewPlaylist
 
-Public Sub MoveTo(argUrl As String)
-    
-    $grids.MoveTo(argUrl)
-    
-End
-
-Public Sub _new(argContainer As Container, argGrids As GridView)
-    
-    $menuBar = New NagatoMenuBarNowPlaying(argContainer)
-    $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
-    $queueObserver = New Observer(NagatoQueue) As "Asakura"
-    
-End
-
-Public Sub StarMenu_SavePlaylist()
+Private Sub saveAsPlaylist()
     
     If $grids.GetPaths().Count = 0 Then Return
     
@@ -32,7 +18,32 @@ Public Sub StarMenu_SavePlaylist()
     
 End
 
+Public Sub _new(argContainer As Container, argGrids As GridView)
+    
+    $menuBar = New NagatoMenuBarNowPlaying(argContainer) As "MenuBar"
+    $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
+    $queueObserver = New Observer(NagatoQueue) As "Asakura"
+    
+End
+
+Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ListSaveAs
+            saveAsPlaylist()
+    End Select
+    
+End
+
 Public Sub Asakura_Changed()
+    
+    If Not Object.IsValid($grids) Then Return
+    
+    $grids.Refresh()
+    
+End
+
+Public Sub Asakura_Moved()
     
     If Not Object.IsValid($grids) Then Return
     
@@ -45,5 +56,11 @@ Public Sub Asakura_State()
     If Not Object.IsValid($grids) Then Return
     
     $grids.RefreshPlaymark()
+    
+End
+
+Public Sub Asakura_TagChanged()
+    
+    $grids.Refresh()
     
 End

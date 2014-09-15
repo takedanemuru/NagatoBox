@@ -2,8 +2,6 @@
 
 Inherits NagatoMenuBar
 
-Private Enum ButtonNull, ButtonPlay
-
 Public Sub _AddStarMenu() 'override
     
     Dim yukiMenu As New NagatoNowPlayingMenu As "StarMenu"
@@ -14,16 +12,19 @@ End
 
 Public Sub _Initialize() 'override
     
-    Me._AddButton(, "button-rew", ("Back"))
-    Me._AddButton(ButtonPlay, "button-play", ("Play"))
-    Me._AddButton(0, "button-pause", ("Pause"))
-    Me._AddButton(0, "button-ff", ("Forward"))
+    Me._AddButton(MikuruSignal.QueueBack, "button-rew", ("Back"))
+    Me._AddButton(MikuruSignal.QueuePlay, "button-play", ("Play"))
+    Me._AddButton(MikuruSignal.QueuePause, "button-pause", ("Pause"))
+    Me._AddButton(MikuruSignal.QueueNext, "button-ff", ("Forward"))
         Me._AddSeparator()
-    Me._AddButton(0, "arrow-down", ("Down"))
-    Me._AddButton(0, "arrow-up", ("Up"))
-    Me._AddButton(0, "music", ("Add Music"))
-    Me._AddButton(0, "folder", ("Add Folder"))
-    Me._AddButton(0, "bin", ("Clear"))
+    Me._AddButton(MikuruSignal.QueueShuffle, "button-shuffle", ("Shuffle"))
+    Me._AddButton(MikuruSignal.QueueRepeat, "button-synchronize", ("Repeat"))
+        Me._AddSeparator()
+    Me._AddButton(MikuruSignal.ListDown, "arrow-down", ("Down"))
+    Me._AddButton(MikuruSignal.ListUp, "arrow-up", ("Up"))
+    Me._AddButton(MikuruSignal.ListAddMusic, "music", ("Add Music"))
+    Me._AddButton(MikuruSignal.ListAddDirectory, "folder", ("Add Folder"))
+    Me._AddButton(MikuruSignal.ListClear, "bin", ("Clear"))
         Me._AddPanel()
     Me._AddStarButton()
     
@@ -31,11 +32,27 @@ End
 
 Public Sub MenuButton_Click()
     
-    Debug Last.Tag
-    
     Select Case Last.Tag
-        Case ButtonPlay
+        Case MikuruSignal.QueuePlay
             NagatoQueue.Play()
+        Case MikuruSignal.QueuePause
+            NagatoQueue.Pause()
+        Case MikuruSignal.QueueNext
+            NagatoQueue.Next()
+        Case MikuruSignal.QueueBack
+            NagatoQueue.Back()
+        Case MikuruSignal.QueueShuffle
+            NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
+        Case MikuruSignal.QueueRepeat
+            NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
+        Case MikuruSignal.ListDown, MikuruSignal.ListUp
+            Raise Signal(Last.Tag, [""])
+        Case MikuruSignal.ListAddMusic
+            MikuruDialog.AddMusic()
+        Case MikuruSignal.ListAddDirectory
+            MikuruDialog.AddDirectory()
+        Case MikuruSignal.ListClear
+            NagatoQueue.ClearAll()
     End Select
     
 End

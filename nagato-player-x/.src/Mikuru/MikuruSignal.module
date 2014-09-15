@@ -2,4 +2,6 @@
 
 Public Enum None
 Public Enum QueuePlay = 1001, QueuePause = 1002, QueueNext = 1003, QueueBack = 1004
-
+Public Enum QueueShuffle = 1005, QueueRepeat = 1006
+Public Enum ListAddMusic = 2001, ListAddDirectory = 2002, ListSaveAs = 2003, ListClear = 2004
+Public Enum ListUp = 2005, ListDown = 2006
