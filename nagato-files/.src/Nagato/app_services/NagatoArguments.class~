@@ -3,10 +3,12 @@
 Create Static
 
 Property Read StartupPath As String
+Property Read DesktopIcons As Boolean
 
 Private $startUpPath As String = ""
 Private $path As String
 Private $paths As New String[]
+Private $desktop As Boolean
 
 Private Sub setStartupPath(argPath As String, argPaths As String[])
     
@@ -28,7 +30,8 @@ End
 Public Sub Parsing()
     
     Args.Begin()
-        $path = Args.Get("d", "open-directory")
+        $path = Args.Get("o", "open-directory")
+        $desktop = Args.Has("d", "desktop", "desktop icons")
     $paths = Args.End()
     
     setStartupPath($path, $paths)
@@ -39,4 +42,10 @@ Private Function StartupPath_Read() As String
 
     Return $startUpPath
     
+End
+
+Private Function DesktopIcons_Read() As Boolean
+
+    Return $desktop
+
 End

@@ -11,6 +11,13 @@ Private $mouseHandler As NagatoGtkBookmarksMouse
 Private $surfaceHandler As NagatoGtkBookmarksSurface
 Private $observer As NagatoGtkBookmarksObserver 
 
+Private Sub deleteBookmark(argPath As String)
+    
+    NagatoBookmarksArray.RemovePath(argPath)
+    $surfaceHandler.Refresh()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $initializer = New NagatoGtkBookmarksInitializer(argContainer)
@@ -31,7 +38,10 @@ End
 
 Public Sub MouseHandler_Signal(argEvent As Integer, argValues As Variant[])
     
-    If argValues[0] = "NagatoTrashBinKey" Then 
+    If argEvent = NagatoContextMenuGtkBookmarks.ContextClearBin Then
+        Shell "trash-empty"
+        Return
+    Else If argValues[0] = "NagatoTrashBinKey" Then 
         HaruhiMain.SetNewTrashBin()
         Return
     End If
@@ -39,7 +49,7 @@ Public Sub MouseHandler_Signal(argEvent As Integer, argValues As Variant[])
     With NagatoContextMenuGtkBookmarks
         If argEvent = .ContextOpen Then HaruhiMain.SetNewDirectory(argValues[0])
         If argEvent = .ContextOpenInNewTab Then HaruhiMain.AddNewDirectory(argValues[0])
-        If argEvent = .ContextDelete Then Debug "delete" & argValues[0] ' TODO
+        If argEvent = .ContextDelete Then deleteBookmark(argValues[0])
     End With
     
 End

@@ -78,6 +78,8 @@ Public Sub RefreshTag()
     
     Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
     
+    Debug "refresh tag"
+    
     $musicList.SetTag("Title", MikuruId3TagInfo.GetTitle(yukiPath))
     $musicList.SetTag("Artist", MikuruId3TagInfo.GetArtist(yukiPath))
     $musicList.SetTag("Album", MikuruId3TagInfo.GetAlbum(yukiPath))
@@ -89,6 +91,8 @@ End
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) As "MusicList"
+    
+    If $musicList.Count > 0 And If NagatoSettingsMusic.Shuffle Then $musicList.Next()
     
 End
 

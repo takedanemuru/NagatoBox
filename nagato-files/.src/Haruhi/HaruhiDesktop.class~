@@ -34,7 +34,7 @@ Public Sub Form_Open()
 
 End
 
-Public Sub Form_Move()
+Public Sub Form_MouseMove()
 
     Debug Mouse.X
     Debug Screen.W

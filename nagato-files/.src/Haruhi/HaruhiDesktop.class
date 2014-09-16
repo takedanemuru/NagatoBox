@@ -36,9 +36,6 @@ End
 
 Public Sub Form_MouseMove()
 
-    Debug Mouse.X
-    Debug Screen.W
-
     If Mouse.ScreenX > Screen.W - 2 Then $charm.Toggle
 
 End

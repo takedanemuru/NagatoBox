@@ -31,7 +31,7 @@ Public Sub Parsing()
     
     Args.Begin()
         $path = Args.Get("o", "open-directory")
-        $desktop = Args.Has("d", "desktop", "desktop icons")
+        '$desktop = Args.Has("d", "desktop", "desktop icons")
     $paths = Args.End()
     
     setStartupPath($path, $paths)

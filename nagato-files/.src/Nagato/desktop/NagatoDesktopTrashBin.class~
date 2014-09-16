@@ -1,0 +1,55 @@
+' Gambas class file
+
+Property Read Key As String
+
+Private Const IconSize As Integer = 128
+Private Const FontSize As Integer = 10
+
+Private $iconView As IconView
+
+Private Function getText() As String
+    
+    Return Subst$("&1 items<br>&2", NagatoTrash.Count, NagatoTrash.Size)
+    
+End
+
+Private Sub initializeIcon()
+    
+    Dim yukiImage As Image
+    
+    yukiImage = New Image(IconSize, IconSize, Color.DarkGreen + 16777216 * 128)
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 10
+        Paint.Font.Bold = True
+        Paint.DrawPicture(Stock["64/trash"], 32, 8)
+        Paint.RichText(getText(), 0, IconSize * 0.75 - 8, IconSize, IconSize * 0.25 + 16, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    $iconView[Me.Key].Picture = yukiImage.Picture 
+    
+End
+
+Public Sub Add()
+    
+    $iconView.Add(Me.Key, "")
+    initializeIcon()
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $iconView.Add(Me.Key, "")
+    
+    initializeIcon()
+    
+End
+
+Private Function Key_Read() As String
+
+    Return "DesktopTrashBin"
+
+End

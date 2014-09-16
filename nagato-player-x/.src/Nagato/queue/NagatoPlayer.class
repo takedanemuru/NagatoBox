@@ -59,7 +59,7 @@ Public Sub Play(Optional argPosition As Float)
         Try $player.URL = NagatoQueue.CurrentPath
     End If
     
-    If argPosition Then $player.Position = argPosition
+    'If argPosition Then $player.Position = argPosition
     $player.Play()
     
 Catch

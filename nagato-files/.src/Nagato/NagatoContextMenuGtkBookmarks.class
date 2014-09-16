@@ -2,13 +2,16 @@
 
 Inherits NagatoContextMenu
 
-Public Enum ContextNone, ContextOpen, ContextOpenInNewTab, ContextDelete
+Public Enum ContextNone, ContextOpen, ContextOpenInNewTab, ContextDelete, ContextClearBin
 
 Public Sub _AddChildMenus()
     
     Me._AddContextMenu(("Open"), Me.ContextOpen)
     
-    If Me._$path = "NagatoTrashBinKey" Then Return
+    If Me._$path = "NagatoTrashBinKey" Then 
+        If NagatoTrash.Count > 0 Then Me._AddContextMenu(("Clear"), Me.ContextClearBin)
+        Return
+    End If
     
     Me._AddContextMenu(("Open in new tab"), Me.ContextOpenInNewTab, MikuruIcon.Get("toggle-expand-alt"))
     

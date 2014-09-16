@@ -4,6 +4,8 @@ Create Static
 
 Property Read PathFiles As String
 Property Read PathInfo As String
+Property Read Count As Integer
+Property Read Size As String
 
 Private $uriDecoder As New NagatoUriDecoder
 
@@ -85,5 +87,24 @@ End
 Private Function PathInfo_Read() As String
 
     Return User.Home &/ ".local/share/Trash/info"
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return Dir(Me.PathInfo).Count
+
+End
+
+Private Function Size_Read() As String
+
+    Dim yukiPath As String
+    Dim yukiSize As Integer
+    
+    For Each yukiPath In Dir(Me.PathFiles)
+        yukiSize += Stat(Me.PathFiles &/ yukiPath).Size
+    Next
+
+    Return MikuruFileSize(yukiSize)
 
 End

@@ -39,8 +39,9 @@ msgid "As normal user"
 msgstr ""
 
 #: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
-#: HaruhiSelectApplication.class:13 HaruhiTagging.form:22 MikuruFile.module:47
-#: NagatoDBTag.class:20 NagatoStarMenu.class:101
+#: HaruhiSelectApplication.class:13 HaruhiTagging.form:22
+#: MikuruDialogTrashEmpty.module:9 MikuruFile.module:47 NagatoDBTag.class:20
+#: NagatoStarMenu.class:101
 msgid "Cancel"
 msgstr ""
 
@@ -127,6 +128,14 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
+#: MikuruDialogTrashEmpty.module:5
+msgid "YUKI.N > We are going to empty trash bin..."
+msgstr ""
+
+#: MikuruDialogTrashEmpty.module:9
+msgid "Empty"
+msgstr ""
+
 #: MikuruFile.module:44
 msgid ""
 "YUKI.N > This directory contains some file. Are you sure to delete this "
@@ -155,7 +164,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:9 NagatoContextMenuGtkBookmarks.class:13
+#: NagatoContextMenuDirectory.class:9 NagatoContextMenuGtkBookmarks.class:16
 msgid "Open in new tab"
 msgstr ""
 
@@ -188,7 +197,11 @@ msgstr ""
 msgid "Copy file path"
 msgstr ""
 
-#: NagatoContextMenuGtkBookmarks.class:18
+#: NagatoContextMenuGtkBookmarks.class:12
+msgid "Clear"
+msgstr ""
+
+#: NagatoContextMenuGtkBookmarks.class:21
 msgid "Remove"
 msgstr ""
 
@@ -240,7 +253,7 @@ msgstr ""
 msgid "This tag color has been used."
 msgstr ""
 
-#: NagatoDesktopClock.class:26
+#: NagatoDesktopClock.class:27
 msgid "hh:nn:ss"
 msgstr ""
 

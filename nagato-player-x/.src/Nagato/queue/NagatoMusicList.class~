@@ -119,9 +119,6 @@ End
 
 Public Sub SetTag(argTag As String, argValue As String) 
     
-    Debug argTag
-    Debug argValue
-    
     $musicElements.SetTag(argTag, $position.Current, argValue)
     
 End

@@ -56,11 +56,17 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        Try $player.URL = NagatoQueue.GetCurrentPath(False)
+        Try $player.URL = NagatoQueue.CurrentPath
     End If
     
-    If argPosition Then $player.Position = argPosition
+    Debug "done"
+    Debug $player.URL
+    Debug MikuruUrlDecode($player.URL)
+    
+    'If argPosition Then $player.Position = argPosition
     $player.Play()
+    
+    Debug "done"
     
 Catch
     Debug Error.Text
@@ -71,7 +77,7 @@ End
 Public Sub ResetUrl()
     
     Try $player.Stop()
-    $player.URL = NagatoQueue.GetCurrentPath(False)
+    $player.URL = NagatoQueue.CurrentPath
     $player.Position = 0
     
 End

@@ -6,19 +6,20 @@ Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 16
 
 Private $iconView As IconView
-Private $timer As New Timer As "DesktopTimer"
+Private $timer As New NagatoDesktopTimer As "DesktopTimer"
 
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(Me.Key, "")
-    $timer.Enabled = True
+    $iconView.Add(Me.Key, "DesktopClock")
     
 End
 
 Public Sub DesktopTimer_Timer()
     
-    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
+    Dim yukiImage As Image
+    
+    yukiImage = New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
@@ -33,6 +34,6 @@ End
 
 Private Function Key_Read() As String
 
-    Return "clock"
+    Return "DesktopClock"
 
 End
