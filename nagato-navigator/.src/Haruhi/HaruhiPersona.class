@@ -4,9 +4,7 @@ Private $persona As Picture
 
 Private Sub setPersona()
     
-    $persona = Picture.Load("Pictures/Personas/YukiRender-1.png")
-    '$persona = Picture.Load("Pictures/Personas/rainy.png")
-    '$persona = Picture.Load("Pictures/Personas/laptop2.png")
+    $persona = Picture.Load(NagatoSettings.PersonaPath)
     Me.Picture = $persona
     
 End
@@ -19,6 +17,12 @@ Private Sub setPosition()
         .Y = Screen.H - $persona.H
         .X = 100
     End With
+    
+End
+
+Public Sub ChangePersona()
+    
+    setPersona()
     
 End
 

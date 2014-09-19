@@ -9,6 +9,7 @@ Property ShowNagato As Boolean
 Property ShowNetworkButton As Boolean
 Property ShowPowerButon As Boolean
 Property FeedLines As Collection
+Property PersonaPath As String
 
 Private $settings As New Settings
 
@@ -119,6 +120,19 @@ End
 Private Sub ShowPowerButon_Write(Value As Boolean)
 
     $settings["power_button/show"] = Value
+    $settings.Save()
+
+End
+
+Private Function PersonaPath_Read() As String
+
+    Return $settings["persona/path", "Pictures/Personas/1.png"]
+
+End
+
+Private Sub PersonaPath_Write(Value As String)
+
+    $settings["persona/path"] = Value
     $settings.Save()
 
 End

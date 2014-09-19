@@ -42,6 +42,7 @@ Private Sub refreshMenu()
     
     With NagatoSettings
         Me._AddMenu(("Show Nagato"), MenuNagato, IIf(.ShowNagato, MikuruIcon.Get("button-check"), Null))
+        Object.New("NagatoPersonaMenu", [Me._$parentMenu])
             Me._AddMenu((""), 0)
         Me._AddMenu(("Form color"), MenuBackground, MikuruColorChip.Get(.BackgroundColor))
         Me._AddMenu(("Font color"), MenuForeground, MikuruColorChip.Get(.ForegroundColor))

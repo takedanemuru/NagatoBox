@@ -78,21 +78,25 @@ End
 
 Public Sub HeightSlider_Change()
     
-    If $linkCheckbox.Value Then
-        With HaruhiImageView
+    If Not $linkCheckbox.Value Then Return
+
+    With HaruhiImageView
+        Object.Lock($widthSlider)
             $widthSlider.Value = CInt(.BeforeImage.W * ($heightSlider.Value / .BeforeImage.H))
-        End With
-    Endif
+        Object.Unlock($widthSlider)
+    End With
     
 End
 
 Public Sub WidthSlider_Change()
     
-    If $linkCheckbox.Value Then
-        With HaruhiImageView
+    If Not $linkCheckbox.Value Then Return
+
+    With HaruhiImageView
+        Object.Lock($heightSlider)
             $heightSlider.Value = CInt(.BeforeImage.H * ($widthSlider.Value / .BeforeImage.W))
-        End With
-    Endif
+        Object.Unlock($heightSlider)
+    End With
     
 End
 
