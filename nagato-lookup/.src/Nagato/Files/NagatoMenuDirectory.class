@@ -4,6 +4,17 @@ Inherits NagatoMenu
 
 Private $menu As Menu
 
+Private Sub setOpenDirectoryMenu()
+    
+    Dim yukiMenu As New Menu($menu) As "OpenDirectoryMenu"
+    
+    With yukiMenu
+        .Text = ("Open Folder")
+        .Picture = MikuruIcons("outbox")
+    End With
+    
+End
+
 Private Sub setChildMenu(argClassName As String, argFilter As Integer)
     
     Dim yukiPath As String
@@ -11,17 +22,6 @@ Private Sub setChildMenu(argClassName As String, argFilter As Integer)
     For Each yukiPath In Dir(Me._$path, "[^.]*", argFilter).Sort(gb.IgnoreCase + gb.Natural)
         Object.New(argClassName, [$menu, Me._$path &/ yukiPath])
     Next
-    
-End
-
-Public Sub setNotFound()
-    
-    Dim yukiMenu As New Menu($menu) 
-    
-    With yukiMenu
-        .Text = "files not found"
-        .Picture = MikuruIcons("question")
-    End With
     
 End
 
@@ -42,9 +42,17 @@ End
     
     $menu.Children.Clear()
     
+    setOpenDirectoryMenu()
+        MikuruMenuDummy($menu)
     setChildMenu("NagatoMenuDirectory", gb.Directory)
     setChildMenu("NagatoMenuFile", gb.File)
     
-    If $menu.Children.Count = 0 Then setNotFound()
+    If $menu.Children.Count = 2 Then MikuruMenuDummy.SetNotFound($menu)
+    
+End
+
+Public Sub OpenDirectoryMenu_Click()
+    
+    Desktop.Open(Me._$path)
     
 End

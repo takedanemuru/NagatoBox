@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub _call(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+

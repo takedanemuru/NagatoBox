@@ -1,0 +1,22 @@
+' Gambas module file
+
+Public Sub _call(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) 
+    
+    With yukiMenu
+        .Text = ""
+    End With
+    
+End
+
+Public Sub SetNotFound(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) 
+    
+    With yukiMenu
+        .Text = "files not found"
+        .Picture = MikuruIcons("question")
+    End With
+    
+End

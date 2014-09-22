@@ -1,0 +1,32 @@
+' Gambas class file
+
+Private $desktopFile As DesktopFile
+Private $path As String
+
+Private Sub initializeMenu(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "OpenWithMenu"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.GetDesktopEntryIcon($desktopFile.Path, 24)
+        .Text = $desktopFile.Name
+        .Tag = $desktopFile.Path
+    End With
+    
+End
+
+Public Sub _new(argParentMenu As Menu, argDesktopFileName As String, argPath As String)
+    
+    If Not Dir(MikuruApplicationDirectory.Global).Exist(argDesktopFileName) Then Return
+    
+    $desktopFile = New DesktopFile(MikuruApplicationDirectory &/ argDesktopFileName)
+    $path = argPath
+    initializeMenu(argParentMenu)
+    
+End
+
+Public Sub OpenWithMenu_Click()
+    
+    Try $desktopFile.Run($path)
+    
+End
