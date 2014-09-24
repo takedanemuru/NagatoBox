@@ -4,6 +4,8 @@ Create Static
 
 Property ShowHidden As Boolean
 Property MultipleSelection As Boolean
+Property SortBy As Integer
+Property SortAscent As Boolean
 
 Private $settings As New Settings
 
@@ -55,5 +57,29 @@ Private Sub MultipleSelection_Write(Value As Boolean)
         $settings["view/multiple_selection"] = Value
         Raise MultipleSelectionChanged
     End If
+
+End
+
+Private Function SortBy_Read() As Integer
+
+    Return $settings["sort/by", MikuruSort.ByName]
+
+End
+
+Private Sub SortBy_Write(Value As Integer)
+
+    $settings["sort/by"] = Value
+
+End
+
+Private Function SortAscent_Read() As Boolean
+
+    Return $settings["sort/ascent", True] 
+
+End
+
+Private Sub SortAscent_Write(Value As Boolean)
+
+    $settings["sort/ascent"] = Value
 
 End

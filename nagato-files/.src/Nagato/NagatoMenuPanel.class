@@ -16,6 +16,12 @@ Public Sub SetPath(argPath As String)
     
 End
 
+Public Sub SetUnexistPath(argPath As String)
+    
+    $pathBar.SetUnexistPath(argPath)
+    
+End
+
 Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, argForward As Boolean)
     
     $buttonSuite.SetEnable(argBack, argHome, argUp, argForward)
@@ -36,4 +42,12 @@ Private Function Path_Read() As String
 
     Return $pathBar.Path
 
+End
+
+Public Sub Menu_Changed()
+    
+    If $pathBar.DirectoryPath <> "" Then 
+        Raise MenuEventWithArgs(NagatoMenuPipe.ViewSearch, [$pathBar.DirectoryPath, $pathBar.FilePath])
+    End If
+    
 End

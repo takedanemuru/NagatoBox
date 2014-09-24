@@ -7,11 +7,7 @@ Public Enum TypeImage, TypeApplication, TypeElse
 
 Public Function GetType(argFullPath As String) As Integer
     
-    Dim yukiMimeType As String 
-    
-    Debug argFullPath
-    
-    yukiMimeType = DesktopMime.FromFile(argFullPath).Type
+    Dim yukiMimeType As String = DesktopMime.FromFile(argFullPath).Type
     
     If yukiMimeType Begins "image" Then
         Return Me.TypeImage
@@ -20,6 +16,9 @@ Public Function GetType(argFullPath As String) As Integer
     Else
         Return Me.TypeElse
     End If
+    
+Catch
+    Return Me.TypeElse
     
 End
 
@@ -34,6 +33,21 @@ Public Function IsAudioFile(argFullPath As String) As Boolean
     Return (DesktopMime.FromFile(argFullPath).Type Begins "audio")
     
 Catch
+    Return False
+    
+End
+
+Public Function IsMediaFile(argFullPath As String) As Boolean
+    
+    Dim yukiMimeType As String
+    
+    Debug argFullPath
+    
+    yukiMimeType = DesktopMime.FromFile(argFullPath).Type
+    
+    If yukiMimeType Begins "audio" Then Return True
+    If yukiMimeType Begins "video" Then Return True
+    
     Return False
     
 End

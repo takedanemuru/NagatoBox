@@ -1,4 +1,5 @@
 ' Gambas module file
 
-Public Enum LeftSearch = 1001, LeftRefresh = 1002
-Public Enum TrashRestore = 2001, TrashDelete = 2002, TrashEmpty = 2003
+Public Enum LeftSearch = 101, LeftRefresh = 102
+Public Enum TrashRestore = 201, TrashDelete = 202, TrashEmpty = 203
+Public Enum PathbarSettingsChanged = 301

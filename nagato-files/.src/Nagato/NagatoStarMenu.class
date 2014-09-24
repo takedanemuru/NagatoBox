@@ -55,12 +55,19 @@ Private Function getHiddenMenuIcon() As Picture
     
 End
 
+Private Function getAutoSearchIcon() As Picture
+    
+    Return IIf(NagatoSettings.PathbarAutomaticSearch, MikuruIcon.Get("button-check"), Null)
+    
+End
+
 Private Sub refreshChildMenus()
     
     With NagatoMenuPipe
         Me._AddMenu(("New Tab"), .ViewNewTab,, "Ctrl+T")
         Me._AddMenu(("Show Hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
         Me._AddMenu(("Force reload"), .ViewForceReload, MikuruIcon.Get("button-synchronize"))
+        Me._AddMenu(("Incremental Search"), MikuruSignal.PathbarSettingsChanged, getAutoSearchIcon())
             Me._AddMenu("", 0) ' Spacer
         Me._AddMenu(("New &Folder"), .DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
             Me._AddMenu("", 0) ' Spacer
@@ -95,6 +102,8 @@ End
 Public Sub MenuItem_Click()
     
     Select Case Last.Tag
+        Case MikuruSignal.PathbarSettingsChanged
+            NagatoSettings.PathbarAutomaticSearch = Not NagatoSettings.PathbarAutomaticSearch
         Case NagatoMenuPipe.AppAbout
             HaruhiAbout.ShowDialog
         Case NagatoMenuPipe.AppQuit

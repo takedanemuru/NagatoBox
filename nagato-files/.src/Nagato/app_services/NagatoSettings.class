@@ -6,6 +6,7 @@ Property ShowHidden As Boolean
 Property MultipleSelection As Boolean
 Property SortBy As Integer
 Property SortAscent As Boolean
+Property PathbarAutomaticSearch As Boolean
 
 Private $settings As New Settings
 
@@ -81,5 +82,19 @@ End
 Private Sub SortAscent_Write(Value As Boolean)
 
     $settings["sort/ascent"] = Value
+    $settings.Save()
+
+End
+
+Private Function PathbarAutomaticSearch_Read() As Boolean
+
+    Return $settings["pathbar/auto", False]
+
+End
+
+Private Sub PathbarAutomaticSearch_Write(Value As Boolean)
+
+    $settings["pathbar/auto"] = Value
+    $settings.Save()
 
 End

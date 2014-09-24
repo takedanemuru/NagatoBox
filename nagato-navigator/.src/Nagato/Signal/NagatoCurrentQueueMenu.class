@@ -47,6 +47,10 @@ Public Sub ParentMenu_Show()
     $proxy = DBus[ApplicationName][ObjectPath, Interface]
     refreshMenu()
     
+Catch
+    Me._$parentMenu.Children.Clear()
+    Me._AddMenu("Couldn't conect to nagato-player-x", 0)
+    
 End
 
 Public Sub QueueMenu_Click()

@@ -171,6 +171,20 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
 End
 
+Public Sub MenuBar_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    If argEvent = NagatoMenuPipe.ViewSearch Then
+        Debug argArguments[0]
+        Debug argArguments[1]
+        Object.Lock($menuBar)
+            Me.SetNewDirectory(argArguments[0])
+            Me.SetSeachResult(argArguments[1], False)
+            $menuBar.SetUnexistPath(argArguments[0] &/ argArguments[1])
+        Object.Unlock($menuBar)
+    End If
+    
+End
+
 Public Sub DirectoryObserver_MenuEventWithArg(argEvent As Integer, argFileName As Variant)
     
     Select Case argEvent

@@ -111,6 +111,12 @@ Public Function GetElement(argIndex As Integer) As NagatoMusicElement
     
 End
 
+Public Function GetTitle(argIndex As Integer) As String
+    
+    Return $musicElements.GetTag("Title", argIndex)
+    
+End
+
 Public Function GetTag(argTag As String) As String
     
     Return $musicElements.GetTag(argTag, $position.Current)

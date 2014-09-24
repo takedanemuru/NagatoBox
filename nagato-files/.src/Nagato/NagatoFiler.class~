@@ -152,12 +152,6 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                 refresh($log.Current)
             Case .ViewSelectAll, .ViewUnselectAll, .ViewInvertSelection
                 $iconView.SelectItems(argEvent)
-            ' Case .ViewSelectAll
-            '     Debug "select all"
-            ' Case .ViewUnselectAll
-            '     Debug "unselect all"
-            ' Case .ViewInvertSelection
-            '     Debug "invert selection"
             Case .DirCreate
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
                 HaruhiNewDirectory.ShowDialog()
@@ -174,6 +168,20 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
         Case NagatoMenuPipe.PathNew
             If IsDir(argArgument) Then move(argArgument)
     End Select
+    
+End
+
+Public Sub MenuBar_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    If argEvent = NagatoMenuPipe.ViewSearch Then
+        Debug argArguments[0]
+        Debug argArguments[1]
+        Object.Lock($menuBar)
+            Me.SetNewDirectory(argArguments[0])
+            Me.SetSeachResult(argArguments[1], False)
+            $menuBar.SetPath(argArguments[0] &/ argArguments[1])
+        Object.Unlock($menuBar)
+    End If
     
 End
 

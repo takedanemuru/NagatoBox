@@ -6,6 +6,7 @@ Public Enum PathHeader = 2000, PathNew = 2001, PathCopyToClipboard = 2002
 Public Enum AppHeader = 3000, AppAbout = 3001, AppQuit = 3002
 Public Enum ViewHeader = 4000, ViewShowHidden = 4001, ViewNewTab = 4002, ViewNewPane = 4003, ViewReload = 4004
 Public Enum ViewReloadItem = 4005, ViewForceReload = 4006
+Public Enum ViewSelectAll = 4007, ViewUnselectAll = 4008, ViewInvertSelection = 4009
 Public Enum FileHeader = 5000, FileOpen = 5001, FileOpenWith = 5002, FileDelete = 5003, FileRename = 5004
 Public Enum FileCopy = 5005
 Public Enum FileCreate = 5006, FileShowProperty = 5007, FileUnarchive = 5008, FileMoveToCurrentDir = 5009

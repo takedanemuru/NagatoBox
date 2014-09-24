@@ -3,11 +3,22 @@
 Private $directory As String
 Private $fileName As String
 
+Private Function isConverterRequired() As Boolean
+    
+    With MikuruMimeType
+        If Not .IsMediaFile($directory &/ $fileName) Then Return False
+        If File.Ext(NewNameTextBox.Text) = File.Ext($fileName) Then Return False 
+    End With
+    
+    Return True
+    
+End
+
 Private Sub setDirectoryButtonBox(argPath As String)
     
     With DirectoryButtonBox
         .Text = argPath
-        .Picture = IIf(argPath = NagatoXdgUserDirs.Desktop, MikuruIcon.Get("desktop"), MikuruIcon.Get("folder"))
+        .Picture = IIf(argPath = NagatoXdg.UserDirs.Desktop, MikuruIcon.Get("desktop"), MikuruIcon.Get("folder"))
     End With
     
 End
@@ -46,14 +57,16 @@ End
 
 Public Sub ApplyButton_Click()
 
-    If NewNameTextBox.Text = "" Then
-        Message.Warning(("YUKI.N > Input any name."), ("OK"))
-    Else If Exist(DirectoryButtonBox.Text &/ NewNameTextBox.Text) Then
-        Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
-    Else
-        Move $directory &/ $fileName To MikuruPath.GetSafePathName(DirectoryButtonBox.Text &/ NewNameTextBox.Text)
-        Me.Close(MikuruDialog.ResponseApply)
-    Endif
+    Debug isConverterRequired()
+
+    ' If NewNameTextBox.Text = "" Then
+    '     Message.Warning(("YUKI.N > Input any name."), ("OK"))
+    ' Else If Exist(DirectoryButtonBox.Text &/ NewNameTextBox.Text) Then
+    '     Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
+    ' Else
+    '     Move $directory &/ $fileName To MikuruPath.GetSafePathName(DirectoryButtonBox.Text &/ NewNameTextBox.Text)
+    '     Me.Close(MikuruDialog.ResponseApply)
+    ' Endif
 
 End
 

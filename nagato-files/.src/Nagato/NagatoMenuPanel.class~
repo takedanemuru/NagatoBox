@@ -6,7 +6,7 @@ Property Read Path As String
 
 Private $container As NagatoPanelContainer
 Private $selectionButton As NagatoMenuPanelSelectionButton
-Private $buttonSuit As NagatoMenuPanelButtonSuit
+Private $buttonSuite As NagatoMenuPanelButtonSuit
 Private $pathBar As NagatoPathBar
 Private $starButton As NagatoMenuPanelStarButton
 
@@ -18,7 +18,7 @@ End
 
 Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, argForward As Boolean)
     
-    $buttonSuit.SetEnable(argBack, argHome, argUp, argForward)
+    $buttonSuite.SetEnable(argBack, argHome, argUp, argForward)
     
 End
 
@@ -26,7 +26,7 @@ Public Sub _new(argContainer As Container)
     
     $container = New NagatoPanelContainer(argContainer)
     $selectionButton = New NagatoMenuPanelSelectionButton($container.HBox)
-    $buttonSuit = New NagatoMenuPanelButtonSuit($container.HBox) As "Menu"
+    $buttonSuite = New NagatoMenuPanelButtonSuit($container.HBox) As "Menu"
     $pathBar = New NagatoPathBar($container.HBox) As "Menu"
     $starButton = New NagatoMenuPanelStarButton($container.HBox) As "Menu"
     
@@ -36,4 +36,12 @@ Private Function Path_Read() As String
 
     Return $pathBar.Path
 
+End
+
+Public Sub Menu_Changed()
+    
+    If $pathBar.DirectoryPath <> "" Then 
+        Raise MenuEventWithArgs(NagatoMenuPipe.ViewSearch, [$pathBar.DirectoryPath, $pathBar.FilePath])
+    End If
+    
 End

@@ -32,6 +32,8 @@ Private Function getTilePictureReadOnly(argBaseImage As Image, argIcon As Pictur
     
     Dim yukiHeight As Integer
     
+    Debug argText
+    
     With Paint
         .Begin(argBaseImage)
         .Brush = .Color(Color.White)
@@ -102,16 +104,6 @@ Public Function GetApplicationTile(argPath As String, argSelected As Boolean, Op
     Else
         Return getTilePicture(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, argSelected)
     Endif
-    
-End
-
-Public Function GetApplicationTileDialog(argPath As String, Optional argSize As Integer = TileSize) As Picture
-    
-    Dim yukiBaseImage As Image = getBaseImage(argSize, Color.Violet, False)
-    Dim yukiDesktopFile As New DesktopFile(argPath)
-    Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, IconSize)
-    
-    Return getTilePicture(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, False)
     
 End
 

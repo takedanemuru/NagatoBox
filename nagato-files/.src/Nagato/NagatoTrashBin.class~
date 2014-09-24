@@ -55,6 +55,7 @@ Public Sub MenuPanel_Signal(argSignal As Integer, argValues As Variant[])
             $iconView.Restore()
         Case MikuruSignal.TrashEmpty ' As Unselect All
             $iconView.UnselectAll()
+            $menuPanel.SetLabel(0)
     End Select
     
 End

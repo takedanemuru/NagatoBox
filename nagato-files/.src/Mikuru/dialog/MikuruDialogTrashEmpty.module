@@ -7,7 +7,7 @@ Public Sub _call()
     yukiMessage &= Subst$("&1\n&2 items &3", Space$(8), NagatoTrash.Count, NagatoTrash.Size)
     
     If Message.Question(yukiMessage, ("Cancel"), ("Empty")) = 2 Then
-        Shell "trash-empty"
+        Shell "trash-empty" Wait
     Endif
     
 End

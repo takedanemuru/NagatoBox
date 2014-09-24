@@ -46,7 +46,7 @@ End
 
 Public Sub MenuPanel_Signal(argSignal As Integer, argValues As Variant[])
     
-    Debug argSignal
+    Object.Lock($directoryObserver)
     
     Select Case argSignal
         Case MikuruSignal.TrashDelete
@@ -58,6 +58,8 @@ Public Sub MenuPanel_Signal(argSignal As Integer, argValues As Variant[])
             $menuPanel.SetLabel(0)
     End Select
     
+    Object.Unlock($directoryObserver)
+    
 End
 
 Public Sub IconViewTrashBin_Selected(argCount As Integer)
@@ -68,15 +70,11 @@ End
 
 Public Sub DirectoryObserver_Deleted(argPath As String)
     
-    Debug argPath
-    
     $iconView.Refresh()
     
 End
 
 Public Sub DirectoryObserver_Modefied(argPath As String)
-    
-    Debug argPath
     
     $iconView.Refresh()
     

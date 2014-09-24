@@ -125,16 +125,7 @@ End
 
 Private Function Queue_Read() As Collection
 
-    Dim yukiPath As String
-    Dim yukiTitle As String
-    Dim yukiCollection As New Collection
-    
-    For Each yukiPath In NagatoQueue.Paths
-        yukiTitle = NagatoDBMedia.GetTitleFromPath(yukiPath)
-        yukiCollection.Add(yukiTitle, yukiPath)
-    Next
-
-    Return yukiCollection
+    Return NagatoQueue.Collection
 
 End
 

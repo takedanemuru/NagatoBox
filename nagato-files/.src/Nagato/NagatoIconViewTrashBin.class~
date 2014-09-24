@@ -50,13 +50,13 @@ Public Sub Refresh(Optional argLastSelected As String)
     
     If argLastSelected Then ensureVisible(argLastSelected)
     
+    If $iconView.Count = 0 Then $iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+    
 End
 
 Public Sub Delete()
     
     If $selection.Count = 0 Then Return
-    
-    Debug $selection.Paths.Count
     
     NagatoTrash.Delete($selection.Paths)
     
@@ -69,6 +69,13 @@ Public Sub Restore()
     Debug $selection.Paths.Count
     
     NagatoTrash.Restore($selection.Paths)
+    
+End
+
+Public Sub UnselectAll()
+    
+    $selection.ClearAll()
+    Me.Refresh()
     
 End
 

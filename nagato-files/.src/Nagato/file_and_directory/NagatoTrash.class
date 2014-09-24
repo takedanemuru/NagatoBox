@@ -9,6 +9,9 @@ Property Read Size As String
 
 Private $uriDecoder As New NagatoUriDecoder
 
+Event StartEmpty
+Event FinishEmpty
+
 Private Function getTrashInfoPath(argPath As String) As String
     
     Return Quote(Replace$(argPath, Me.PathFiles, Me.PathInfo) & ".trashinfo")

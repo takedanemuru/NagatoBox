@@ -3,8 +3,12 @@
 Inherits NagatoMenuPipe
 
 Property Read Path As String
+Property Read DirectoryPath As String
+Property Read FilePath As String
 
 Private $pathBar As ButtonBox
+
+Event Changed
 
 Private Sub initializeButtonBox(argContainer As Container)
     
@@ -22,7 +26,7 @@ Private Sub isAccessable(argPath As String) As Boolean
     If Not Exist($pathBar.Text) Then Return False
     
     If Not Access($pathBar.Text) Then
-        Message.Warning("YUKI.N > Access forbidden.")
+        Message.Warning(("YUKI.N > Access forbidden."))
         Return False
     End If
     
@@ -40,17 +44,29 @@ Public Sub SetPath(argPath As String)
     
 End
 
+Public Sub SetUnexistPath(argPath As String)
+    
+    Object.Lock($pathBar)
+        $pathBar.Text = argPath
+    Object.Unlock($pathBar)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeButtonBox(argContainer)
     
 End
 
+Public Sub PathBar_Change()
+    
+    If NagatoSettings.PathbarAutomaticSearch Then Raise Changed
+    
+End
+
 Public Sub PathBar_Activate()
     
-    If Not isAccessable($pathBar.Text) Then Return
-    
-    Raise MenuEventWithArg(NagatoMenuPipe.PathNew, $pathBar.Text)
+    Raise Changed
     
 End
 
@@ -63,5 +79,25 @@ End
 Private Function Path_Read() As String
 
     Return $pathBar.Text
+
+End
+
+Private Function DirectoryPath_Read() As String
+
+    Dim yukiPath As String = $pathBar.Text
+
+    If Exist(yukiPath) And If IsDir(yukiPath) Then Return yukiPath
+    If Exist(File.Dir(yukiPath)) And If IsDir(File.Dir(yukiPath)) Then Return File.Dir(yukiPath)
+
+    Return ""
+
+End
+
+Private Function FilePath_Read() As String
+
+    If Me.DirectoryPath = "" Then Return
+    If Exist($pathBar.Text) And If IsDir($pathBar.Text) Then Return ""
+
+    Return File.Name($pathBar.Text)
 
 End
