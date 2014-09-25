@@ -35,6 +35,10 @@ Public Sub AddMusics(argPaths As String[])
     
     Raise Changed
     
+Catch
+    Debug "abort add music"
+    Return
+    
 End
 
 Public Sub AddDirectory(argPath As String)
@@ -59,13 +63,13 @@ End
 
 Public Sub ListMoveUp(argIndexes As Integer[])
     
-    
+    'todo
     
 End
 
 Public Sub ListMoveDown(argIndexes As Integer[])
     
-    
+    'todo
     
 End
 

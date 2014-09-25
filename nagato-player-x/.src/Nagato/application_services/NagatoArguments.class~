@@ -1,0 +1,32 @@
+' Gambas class file
+
+Create Static
+
+Property Read Paths As String[]
+
+Private $path As String = ""
+Private $paths As String[] = [""]
+
+Public Sub Parsing()
+    
+    Dim yukiPaths As String[]
+    
+    Args.Begin(("Usage"))
+        $path = Args.Get("p", "play", "play music", "path to play")
+    yukiPaths = Args.End()
+    
+    If yukiPaths.Count > 0 Then $paths = yukiPaths.Copy()
+    If $paths.Count > 0 Then Debug $paths[0]
+    
+End
+
+Private Function Paths_Read() As String[]
+
+    Dim yukiPaths As String[] = MikuruPath.Sanitize($paths)
+
+    If $path <> "" Then Return [$path]
+    If yukiPaths.Count > 0 Then Return yukiPaths
+
+    Return Null
+    
+End

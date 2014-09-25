@@ -16,6 +16,20 @@ Private Function decodeUrl(argUrl As String) As String
     
 End
 
+Public Function IsValideMediaFilePath(argPath As String) As Boolean
+    
+    If Not Exist(argPath) Then
+        Return False
+    Else If DesktopMime.FromFile(argPath).Type Begins "audio" Then
+        Return True
+    Else If DesktopMime.FromFile(argPath).Type Begins "video" Then
+        Return True
+    Else
+        Return False
+    End If
+    
+End
+
 Public Function Sanitize(argPaths As String[]) As String[]
     
     Dim yukiPath As String

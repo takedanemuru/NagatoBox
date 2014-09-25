@@ -3,6 +3,7 @@
 Property Read Count As Integer
 
 Private $order As New Integer[]
+Private $position As Integer = 0
 
 Private Sub setNumber(argMax As Integer)
     
@@ -35,6 +36,7 @@ Public Sub Refresh(argMax As Integer)
     
     Dim yukiCount As Integer
     
+    $position = 0
     $order.Clear()
     
     For yukiCount = 0 To argMax
@@ -47,12 +49,34 @@ Public Sub RefreshOnSort(argFixedIndex As Integer, argMax As Integer)
     
     Dim yukiCount As Integer
     
+    $position = 0
     $order.Clear()
     
     For yukiCount = 0 To argMax
         If yukiCount = argFixedIndex Then $order.Add(argFixedIndex)
         If yukiCount <> argFixedIndex Then setNumberBlocked(argMax, argFixedIndex)
     Next
+    
+End
+
+Public Function Next() As Integer
+    
+    Inc $position
+    If $position > $order.Max Then $position = 0
+    
+    Debug $position
+    Debug $order.Count
+    
+    Return $order[$position]
+    
+End
+
+Public Function Back() As Integer
+    
+    Dec $position
+    If 0 > $position Then $position = $order.Max
+    
+    Return $order[$position]
     
 End
 

@@ -9,7 +9,7 @@ Event Moved
 
 Private Function checkCount(argCount As Integer) As Boolean
     
-    If argCount = 0 Then 
+    If 1 >= argCount Then 
         Return False
     Else
         If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)

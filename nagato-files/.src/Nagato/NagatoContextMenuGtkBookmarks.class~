@@ -8,8 +8,10 @@ Public Sub _AddChildMenus()
     
     Me._AddContextMenu(("Open"), Me.ContextOpen)
     
-    If Me._$path = "NagatoTrashBinKey" Then 
-        Me._AddContextMenu(("Clear"), Me.ContextClearBin)
+    If Me._$path = "NagatoTrashBinKey" Then
+         If NagatoTrash.Count > 0 Then
+            Me._AddContextMenu(("Empty"), Me.ContextClearBin, MikuruIcon.Get("bin"))
+         End If
         Return
     End If
     

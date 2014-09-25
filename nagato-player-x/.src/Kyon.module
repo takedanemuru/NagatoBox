@@ -1,29 +1,17 @@
 ' Gambas module file
 
-Private Sub activateMusicQueue()
-    
-    Dim yukiPaths As String[] = NagatoArguments.Paths
-    
-    If yukiPaths.Count > 0 Then
-        NagatoQueue.Activate(yukiPaths)
-        HaruhiPlayer.Show()
-        NagatoQueue.Play()
-        Return
-    Endif
-    
-Finally
-    NagatoQueue.Activate()
-    HaruhiPlayer.Show() 
-    
-End
-
 Public Sub Main()
     
+    NagatoArguments.Parsing()
+    
     If NagatoDBus.IsUnique() Then
-        NagatoArguments.Parsing()
-        activateMusicQueue() 'and show HaruhiPlayer 
+        NagatoQueue.Activate()
+        HaruhiPlayer.Show() 
+        If NagatoArguments.Paths <> Null Then NagatoQueue.AddMusics(NagatoArguments.Paths)
     Else
         NagatoDBus.Proxy.MoveToCurrentDesktop()
+        If NagatoArguments.Paths <> Null Then NagatoDBus.Proxy.AddMusics(NagatoArguments.Paths)
     End If
+    
     
 End

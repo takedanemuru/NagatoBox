@@ -12,7 +12,8 @@ Private Function checkCount(argCount As Integer) As Boolean
     If argCount = 0 Then 
         Return False
     Else
-        If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
+        'If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
+        $randomOrder.Refresh(argCount - 1)
         Return True
     End If
     
@@ -52,6 +53,8 @@ Public Sub ResetOnSort(argIndex As Integer, argCount As Integer)
 End
 
 Public Sub ResetOnDelete(argDeleteIndex As Integer)
+    
+    Debug argDeleteIndex
     
     $index.Reset($index.Max - 1)
     $index.Current = 0

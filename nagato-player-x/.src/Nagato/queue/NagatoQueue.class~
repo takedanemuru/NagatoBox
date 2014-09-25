@@ -8,6 +8,7 @@ Property Read CurrentIndex As Integer
 Property Read CurrentPath As String
 Property Read Player As NagatoPlayer
 Property Read State As Integer
+Property Read Collection As Collection
 
 Property Read Title As String
 Property Read Artist As String
@@ -29,10 +30,16 @@ End
 
 Public Sub AddMusics(argPaths As String[])
     
+    Debug Object.IsValid($musicList)
+    
     $musicList.AddMusics(argPaths)
     NagatoSettingsMusic.SavePaths($musicList.Paths)
     
     Raise Changed
+    
+Catch
+    Debug "abort add music"
+    Return
     
 End
 
@@ -58,13 +65,13 @@ End
 
 Public Sub ListMoveUp(argIndexes As Integer[])
     
-    
+    'todo
     
 End
 
 Public Sub ListMoveDown(argIndexes As Integer[])
     
-    
+    'todo
     
 End
 
@@ -260,5 +267,20 @@ End
 Private Function CurrentPath_Read() As String
 
     Return $musicList.CurrentPath
+
+End
+
+Private Function Collection_Read() As Collection
+
+    Dim yukiCollection As New Collection
+    Dim yukiIndex As Integer
+    
+    If $musicList.Count = 0 Then Return yukiCollection
+    
+    For yukiIndex = 0 To $musicList.Count - 1
+        yukiCollection.Add($musicList.GetTitle(yukiIndex), $musicList.Paths[yukiIndex])
+    Next
+    
+    Return yukiCollection
 
 End

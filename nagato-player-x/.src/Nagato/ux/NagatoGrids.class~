@@ -6,18 +6,6 @@ Public _$grids As GridView
 Public _$observer As Observer
 Public _$sortAscend As Boolean
 
-Public Sub _MouseDrag()
-    
-    ' virtual
-    
-End
-
-Public Sub _DragMove()
-    
-    ' virtual
-    
-End
-
 Public Function _GetSelectionText(argColumnIndex As Integer) As String[]
     
     Dim yukiRowIndex As Integer
@@ -129,17 +117,5 @@ End
 Public Sub Asakura_ColumnClick(argIndex As Integer)
     
     Me._ColumnClick(argIndex)
-    
-End
-
-Public Sub Asakura_DragMove()
-    
-    Me._DragMove()
-    
-End
-
-Public Sub Asakura_MouseDrag()
-    
-    Me._MouseDrag()
     
 End

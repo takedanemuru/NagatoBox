@@ -123,6 +123,7 @@ Public Sub RefreshPlaymark()
     
     For yukiRowIndex = 0 To Me._$grids.Rows.Max
         $playMark.Set(yukiRowIndex)
+        Me._$grids[yukiRowIndex, 0].EnsureVisible()
     Next
     
 End

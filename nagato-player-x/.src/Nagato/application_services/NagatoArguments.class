@@ -2,21 +2,31 @@
 
 Create Static
 
-Property Read Paths As String
+Property Read Paths As String[]
 
-Private $path As String
+Private $path As String = ""
 Private $paths As String[] = [""]
 
 Public Sub Parsing()
     
+    Dim yukiPaths As String[]
+    
     Args.Begin(("Usage"))
         $path = Args.Get("p", "play", "play music", "path to play")
-    $paths = Args.End()
+    yukiPaths = Args.End()
+    
+    If yukiPaths.Count > 0 Then $paths = yukiPaths.Copy()
+    If $paths.Count > 0 Then Debug $paths[0]
     
 End
 
-Private Function Paths_Read() As String
+Private Function Paths_Read() As String[]
 
-    Return MikuruPath.Sanitize($paths.Add($path, 0))
+    Dim yukiPaths As String[] = MikuruPath.Sanitize($paths)
 
+    If MikuruPath.IsValideMediaFilePath($path) Then Return [$path] 
+    If yukiPaths.Count > 0 Then Return yukiPaths
+
+    Return Null
+    
 End

@@ -4,14 +4,24 @@ Inherits NagatoContextMenu
 
 Public Enum ContextNone, ContextOpen, ContextOpenInNewTab, ContextDelete, ContextClearBin
 
+Private Sub isTrashBin() As Boolean
+    
+    If Me._$path = "NagatoTrashBinKey" Then
+         If NagatoTrash.Count > 0 Then
+            Me._AddContextMenu(("Empty"), Me.ContextClearBin, MikuruIcon.Get("bin"))
+         End If
+        Return True
+    End If
+    
+    Return False
+    
+End
+
 Public Sub _AddChildMenus()
     
     Me._AddContextMenu(("Open"), Me.ContextOpen)
     
-    If Me._$path = "NagatoTrashBinKey" Then 
-        If NagatoTrash.Count > 0 Then Me._AddContextMenu(("Clear"), Me.ContextClearBin)
-        Return
-    End If
+    If isTrashBin() Then Return
     
     Me._AddContextMenu(("Open in new tab"), Me.ContextOpenInNewTab, MikuruIcon.Get("toggle-expand-alt"))
     

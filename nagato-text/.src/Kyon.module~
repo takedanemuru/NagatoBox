@@ -19,13 +19,13 @@ Private Sub parsingApplicationArguments()
         $startUpPath = yukiOtherOptions[0]
     End If
 
+    Debug $startUpPath
+
 End
 
 Public Sub Main()
     
     parsingApplicationArguments()
-    
-    HaruhiReplacement.Show()
     
     If $stickyMode Then
         'Debug "sticky"

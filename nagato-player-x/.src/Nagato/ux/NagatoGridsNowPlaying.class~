@@ -73,8 +73,6 @@ Public Function GetPaths() As String[]
     Dim yukiRowIndex As Integer
     
     For yukiRowIndex = 0 To Me._$grids.Rows.Max
-        If Not Me._$grids.Rows.Selection.Exist(yukiRowIndex) Then Continue
-        Debug NagatoQueue[yukiRowIndex].Path
         yukiPaths.Add(NagatoQueue[yukiRowIndex].Path)
     Next
     

@@ -99,6 +99,7 @@ Public Sub _new(argPaths As String[])
     $musicElements.Initialize(argPaths)
     
     If $musicElements.Count > 0 Then 
+        Debug "i came here"
         $position.Refresh($musicElements.Count)
         Raise Changed
     End If

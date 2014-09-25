@@ -59,14 +59,8 @@ Public Sub Play(Optional argPosition As Float)
         Try $player.URL = NagatoQueue.CurrentPath
     End If
     
-    Debug "done"
-    Debug $player.URL
-    Debug MikuruUrlDecode($player.URL)
-    
     'If argPosition Then $player.Position = argPosition
     $player.Play()
-    
-    Debug "done"
     
 Catch
     Debug Error.Text

@@ -1,0 +1,26 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,45.7143,54.8571)
+  Text = ("About nagato-player-x")
+  Icon = Picture["Pictures/headphone.png"]
+  Picture = Picture["Pictures/about.jpg"]
+  SkipTaskbar = True
+  Arrangement = Arrange.Vertical
+  Padding = 16
+  { VBox1 VBox
+    MoveScaled(2,2,43,51)
+    { IconPictureBox PictureBox
+      MoveScaled(14,1,14,14)
+      Picture = Picture["Pictures/headphone.png"]
+      Alignment = Align.Center
+    }
+    { AboutTextLabel TextLabel
+      MoveScaled(3,17,36,32)
+      Foreground = &H774F9F&
+      Expand = True
+      Text = ("TextLabel1")
+      Alignment = Align.Center
+    }
+  }
+}

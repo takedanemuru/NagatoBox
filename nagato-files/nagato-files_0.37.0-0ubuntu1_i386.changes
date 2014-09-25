@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Thu, 25 Sep 2014 12:00:00 +0000
+Source: nagato-files
+Binary: nagato-files
+Architecture: source all
+Version: 0.37.0-0ubuntu1
+Distribution: unstable
+Urgency: low
+Maintainer: takedanemuru <takeda.nemuru@yandex.com>
+Changed-By: takedanemuru <takeda.nemuru@yandex.com>
+Description: 
+ nagato-files - nagato-files
+Changes: 
+ nagato-files (0.37.0-0ubuntu1) unstable; urgency=low
+ .
+   * new: media converter
+Checksums-Sha1: 
+ 5e5833d091136e8b21110b132685ed0d24f4dbc2 1513 nagato-files_0.37.0-0ubuntu1.dsc
+ e67393da3493e33504abe8134fb833cd9cb1cced 2487 nagato-files_0.37.0-0ubuntu1.diff.gz
+ 30623f02cee69ed633d7616a1ec406b1ffb9e49b 1140302 nagato-files_0.37.0-0ubuntu1_all.deb
+Checksums-Sha256: 
+ ee82aeda0bde9b6a8af2ab8e7cef20e445d6edb9949cb611563fe68b4de2a66c 1513 nagato-files_0.37.0-0ubuntu1.dsc
+ 575033795666c277e0bff6019ae281261116c98e672d7b4b5c14b90b6419426a 2487 nagato-files_0.37.0-0ubuntu1.diff.gz
+ 8917014cb25180ba07a1b04d0e2982277d20e5d3d178eea023ee607e34b923be 1140302 nagato-files_0.37.0-0ubuntu1_all.deb
+Files: 
+ b7d54254ed6b4a4abb3da95282792f71 1513 contrib/x11 optional nagato-files_0.37.0-0ubuntu1.dsc
+ 1ab88de9a22b3538ee4486926cc5ccc3 2487 contrib/x11 optional nagato-files_0.37.0-0ubuntu1.diff.gz
+ 965766a5004b93dd32b2a4a5107b4175 1140302 contrib/x11 optional nagato-files_0.37.0-0ubuntu1_all.deb
