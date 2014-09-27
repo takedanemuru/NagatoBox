@@ -14,7 +14,7 @@ Private Sub initializeIconView(argContainer As Container)
         .Expand = True
         Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
         If Error Then .Picture = Picture.Load("pictures/about.png")
-        .Orientation = Arrange.Horizontal
+        .Orientation = Arrange.Vertical
         .Border = False
     End With
     
@@ -26,7 +26,7 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
 
     For Each yukiPath In MikuruSort(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
-        $iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
     Next
     
 End
@@ -71,7 +71,7 @@ Public Sub DesktopIconView_MouseDown()
         With $iconView
             If .Key = "clock" Then Return
             $selection.Push(.Key, Mouse.Left)
-            .[.Key].Picture = MikuruTiles.Get(.Key, $selection.Paths.Exist(.Key))
+            .[.Key].Picture = MikuruTile(.Key, $selection.Paths.Exist(.Key))
         End With
     End If
     

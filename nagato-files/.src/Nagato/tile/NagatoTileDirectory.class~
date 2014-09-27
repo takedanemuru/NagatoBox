@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits NagatoTile
+
+Public _$baseColor As Integer = Color.Blue
+
+' Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
+'     
+'     Dim yukiImage As Image = argPicture.Image
+'     
+'     Paint.Begin(yukiImage)
+'         Paint.DrawImage(MikuruIcon.Get(argSymbol, 32).Image, 8, 8)
+'     Paint.End()
+'     
+'     Return yukiImage.Picture
+'     
+' End
+' 
+' Private Function setSymbol(argTile As Picture, argPath As String) As Picture
+'     
+'     Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
+'     
+'     If yukiSymbol <> "" Then
+'         Return getSymbolizedTile(argTile, yukiSymbol)
+'     Else
+'         Return argTile
+'     Endif
+'     
+' End
+' 
+Private Function getFolderDescription(argPath As String) As String
+    
+    Dim yukiFolders As String = Subst$("folder:&1", Dir(argPath, "*", gb.Directory).Count)
+    Dim yukiFiles As String = Subst$("file:&1", Dir(argPath, "*", gb.File).Count)
+    Dim yukiText As String = File.Name(argPath) & "<br>" & yukiFolders & " " & yukiFiles
+    
+    Return yukiText
+    
+End
+
+Public Sub _call(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
+    Dim yukiIcon As Picture = MikuruIcon.GetDirectory(argPath, Me.IconSize)
+    Dim yukiTile As Picture 
+    
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        yukiTile = Me._GetTileReadOnly(yukiBaseImage, yukiIcon, getFolderDescription(argPath))
+    Else
+        yukiTile = Me._GetTile(yukiBaseImage, yukiIcon, getFolderDescription(argPath), argSelected)
+    Endif
+    
+    Return Me._SetSymbol(yukiTile, argPath)
+    
+End

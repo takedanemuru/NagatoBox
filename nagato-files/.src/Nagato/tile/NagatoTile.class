@@ -1,0 +1,83 @@
+' Gambas class file
+
+Create Private
+
+Property Read BaseColor As Integer
+
+Public Const TileSize As Integer = 128
+Public Const TextWidth As Integer = 112
+Public Const IconSize As Integer = 64
+Public Const Margin As Integer = 8
+
+Public _$baseColor As Integer = Color.White
+
+Private $selectedLabelPainter As New NagatoPainterSelectedLabel
+Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
+Private $symbolSetter As New NagatoSymbolSetter
+
+Public Function _GetBaseImage(argSelected As Boolean) As Image
+    
+    Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Me.BaseColor) + 16777216 * 192)
+    Dim yukiBaseImage As New Image(Me.TileSize, Me.TileSize, yukiColor) 
+    
+    Return yukiBaseImage
+    
+End
+
+Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As String, argSelected As Boolean) As Picture
+    
+    Dim yukiHeight As Integer
+    
+    With Paint
+        .Begin(argBaseImage)
+        .Brush = .Color(Color.White)
+        .Font.Bold = True
+        yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
+        .DrawPicture(argIcon, (Me.TileSize - argIcon.W) / 2, Me.Margin + (64 - argIcon.H) / 2)
+        .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
+        .Fill()
+        If argSelected Then $selectedLabelPainter.Paint()
+        .End()
+    End With
+    
+    Return argBaseImage.Picture
+    
+End
+
+Public Function _GetTileReadOnly(argBaseImage As Image, argIcon As Picture, argText As String) As Picture
+    
+    Dim yukiHeight As Integer
+    
+    With Paint
+        .Begin(argBaseImage)
+        .Brush = .Color(Color.White)
+        .Font.Bold = True
+        yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
+        .DrawPicture(argIcon, (Me.TileSize - argIcon.W) / 2, Me.Margin + (64 - argIcon.H) / 2)
+        .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
+        .Fill()
+        $readOnlyLabelPainter.Paint(Me.BaseColor)
+        .End()
+    End With
+    
+    Return argBaseImage.Picture
+    
+End
+
+Public Sub _SetSymbol(argTile As Picture, argPath As String) As Picture
+    
+    Return $symbolSetter(argTile, argPath)
+    
+End
+
+Public Sub _call(argPath As String, argSelected As Boolean) As Picture
+    
+    ' virtual, MUST be overridden
+    
+End
+
+Private Function BaseColor_Read() As Integer
+
+    Return Me._$baseColor
+
+End

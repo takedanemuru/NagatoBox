@@ -14,7 +14,7 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
 
     For Each yukiPath In MikuruSort(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
-        Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+        Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
     Next
     
 End
@@ -43,7 +43,7 @@ Private Sub setIcons(argPaths As String[], argSelection As String[], argOnlyDire
     For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
         If IsDir(yukiPath) = argOnlyDirectory Then 
             If Not MikuruAccessible(yukiPath) Then Continue 
-            Me._$iconView.Add(yukiPath, "", MikuruTiles.Get(yukiPath, argSelection.Exist(yukiPath)))
+            Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
         End If
     Next
     
@@ -67,5 +67,7 @@ Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[
     
     setIcons(argPaths, argSelection, True)
     setIcons(argPaths, argSelection, False)
+    
+    If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     
 End

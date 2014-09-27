@@ -27,7 +27,8 @@ Private Sub setIcons(argType As Integer)
     
     For Each yukiPath In Dir(NagatoTrash.PathFiles, "*", argType).Sort(gb.IgnoreCase)
         yukiFullPath = NagatoTrash.PathFiles &/ yukiPath
-        $iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, $selection.Exist(yukiFullPath)))
+        If Not Exist(yukiFullPath) Then Continue
+        $iconView.Add(yukiFullPath, "", MikuruTile(yukiFullPath, $selection.Exist(yukiFullPath)))
     Next
     
 End

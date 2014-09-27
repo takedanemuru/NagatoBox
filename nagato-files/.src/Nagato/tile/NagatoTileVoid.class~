@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoTile
+
+Public _$baseColor As Integer = Color.DarkGreen
+
+Public Sub _call(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
+    Dim yukiIcon As Picture = MikuruIcon.Get("exclamation", Me.IconSize)
+    Dim yukiMessage As String = ("File and Directory not found")
+    
+    Return Me._GetTile(yukiBaseImage, yukiIcon, yukiMessage, argSelected)
+    
+End

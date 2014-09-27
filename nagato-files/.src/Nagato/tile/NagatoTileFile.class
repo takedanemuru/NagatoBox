@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoTile
+
+Public _$baseColor As Integer = Color.Magenta
+
+Public Sub _call(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
+    Dim yukiIcon As Picture = Desktop.GetFileIcon(argPath, Me.IconSize)
+    Dim yukiTile As Picture 
+    
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        yukiTile = Me._GetTileReadOnly(yukiBaseImage, yukiIcon, File.Name(argPath))
+    Else
+        yukiTile = Me._GetTile(yukiBaseImage, yukiIcon, File.Name(argPath), argSelected)
+    Endif
+    
+    Return Me._SetSymbol(yukiTile, argPath)
+    
+End

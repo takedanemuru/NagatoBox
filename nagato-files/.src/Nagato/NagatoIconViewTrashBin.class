@@ -28,7 +28,7 @@ Private Sub setIcons(argType As Integer)
     For Each yukiPath In Dir(NagatoTrash.PathFiles, "*", argType).Sort(gb.IgnoreCase)
         yukiFullPath = NagatoTrash.PathFiles &/ yukiPath
         If Not Exist(yukiFullPath) Then Continue
-        $iconView.Add(yukiFullPath, "", MikuruTiles.Get(yukiFullPath, $selection.Exist(yukiFullPath)))
+        $iconView.Add(yukiFullPath, "", MikuruTile(yukiFullPath, $selection.Exist(yukiFullPath)))
     Next
     
 End
@@ -95,7 +95,7 @@ Public Sub TrashBinIconView_MouseDown()
         $iconView.Current.Selected = False
     Else
         $selection.Toggle(yukiLastKey)
-        $iconView[yukiLastKey].Picture = MikuruTiles.Get(yukiLastKey, $selection.Exist(yukiLastKey))
+        $iconView[yukiLastKey].Picture = MikuruTile(yukiLastKey, $selection.Exist(yukiLastKey))
         HaruhiMain.SetTrashProperty(yukiLastKey)
         Raise Selected($selection.Count)
     End If
