@@ -1,0 +1,63 @@
+' Gambas class file
+
+Property Read Buffer As String
+
+Private $buffer As String
+Private $path As String
+
+Public Function SetPath(argPath As String) As String
+    
+    $path = argPath
+    $buffer = File.Load(argPath)
+    
+    Return $buffer
+    
+End
+
+Public Sub Open() As Boolean
+    
+    Dialog.Title = ("Open file")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return False
+    If DesktopMime.FromFile(Dialog.Path).Type Not Begins "text" Then Return False
+    
+    Try $buffer = File.Load(Dialog.Path)
+    $path = Dialog.Path
+    Return True
+    
+Catch
+    Return False
+    
+End
+
+Public Sub Save(argText As String)
+    
+    If argText = $buffer Then Return
+    
+    If $path = "" Then 
+        Me.SaveAs(argText)
+    Else
+        $buffer = argText
+        File.Save($path, argText)
+    Endif
+    
+End
+
+Public Sub SaveAs(argText As String)
+    
+    Dialog.Path = User.Home &/ "your_file.md"
+    Dialog.Title = ("Save file as ...")
+    If Dialog.SaveFile() Then Return
+    
+    $path = Dialog.Path
+    $buffer = argText
+    
+    File.Save($path, argText)
+    
+End
+
+Private Function Buffer_Read() As String
+
+    Return $buffer
+
+End

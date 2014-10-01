@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $starMenu As NagatoStarMenu 
+
+Public Sub _initialize() ' override
+    
+    Dim yukiButton As New MenuButton(Me._$parentContainer)
+    
+    $starMenu = New NagatoStarMenu As "TFEI"
+    
+    With yukiButton
+        .Text = ""
+        .Arrow = False
+        .Border = False
+        .W = Me._$parentContainer.H
+        .Picture = MikuruIcon["star"]
+        .Menu = $starMenu.Name
+    End With
+    
+End

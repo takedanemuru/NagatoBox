@@ -1,0 +1,75 @@
+' Gambas class file
+
+Private $fileHandler As New NagatoFileHandler
+Private $menuPanel As NagatoMenuPanel
+Private $sourceEditor As NagatoSourceEditor
+Private $previewer As NagatoPreviewer
+
+Private Sub fileEvent(argEvent As Integer)
+    
+    Select Case argEvent
+        Case MikuruSignal.FileOpen
+            If $fileHandler.Open() Then $sourceEditor.Text = $fileHandler.Buffer
+        Case MikuruSignal.FileSave
+            $fileHandler.Save($sourceEditor.Text)
+        Case MikuruSignal.FileSaveAs
+            $fileHandler.SaveAs($sourceEditor.Text)
+    End Select
+    
+End
+
+Private Sub appEvent(argEvent As Integer)
+    
+    Select Case argEvent
+        Case MikuruSignal.AppAbout
+            HaruhiAbout.ShowDialog()
+        Case MikuruSignal.AppQuit
+            Me.Close()
+    End Select
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $sourceEditor.Text = $fileHandler.SetPath(argPath)
+    
+End
+
+Public Sub _new()
+
+    Application.MainWindow = Me
+
+End
+
+Public Sub Form_Open()
+
+    NagatoSettings.LoadFormSettings(Me)
+
+    $menuPanel = New NagatoMenuPanel(MenuPanelContainer) As "TFEI"
+    $sourceEditor = New NagatoSourceEditor(MainContainer) As "TFEI"
+    $previewer = New NagatoPreviewer(MainContainer) ' has no user control
+
+    $sourceEditor.Text = File.Load("Test/TestMarkdownGitHub.md") ' for testing only, must be removed.
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
+    
+    Select Case argEvent
+        Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999
+            fileEvent(argEvent)
+        Case MikuruSignal.PublishPdf
+            If $sourceEditor.Text Then MikuruPublisher.ToPdf($sourceEditor.Text)
+        Case MikuruSignal.ViewPreview
+            If $sourceEditor.Text Then $previewer.Refresh($sourceEditor.Text)
+        Case MikuruSignal.AppNone To MikuruSignal.AppNone + 999
+            appEvent(argEvent)
+    End Select
+    
+End

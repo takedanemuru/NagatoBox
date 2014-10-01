@@ -1,0 +1,25 @@
+' Gambas module file
+
+Property Read AbsolutePath As String
+
+Private Const MacroAbsolutePath As String = "NAGATO_MACRO_HOME"
+
+Public Function Clean(argSourceText As String) As String
+    
+    Dim yukiFindString As String = MacroAbsolutePath & "/"
+    
+    Return Replace$(argSourceText, yukiFindString, "")
+    
+End
+
+Public Function Set(argSourceText As String) As String
+    
+    Return Replace$(argSourceText, MacroAbsolutePath, Me.AbsolutePath)
+    
+End
+
+Private Function AbsolutePath_Read() As String
+
+    Return Subst$("file://&1", User.Home)
+
+End

@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Property Text As String
+
+Private $textArea As TextArea
+
+Public Sub _Initialize()
+    
+    $textArea = New TextArea(Me._$parentContainer) As "TextArea"
+    
+    With $textArea
+        .Expand = True
+        .Foreground = Color.Violet
+    End With
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $textArea.Text
+
+End
+
+Private Sub Text_Write(Value As String)
+
+    $textArea.Text = Value
+
+End

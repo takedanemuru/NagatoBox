@@ -1,0 +1,6 @@
+' Gambas module file
+
+Public Enum None = 0
+Public Enum FileNone = 1000, FileOpen = 1001, FileSave = 1002, FileSaveAs = 1003
+Public Enum ViewNone = 2000, ViewPreview = 2001
+Public Enum PublishNone = 3000, PublishPdf = 3001

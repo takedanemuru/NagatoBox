@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoArgs.Parsing()
+    
+    HaruhiMain.Show()
+    
+    If NagatoArgs.Path <> "" Then HaruhiMain.SetPath(NagatoArgs.Path)
+    
+End

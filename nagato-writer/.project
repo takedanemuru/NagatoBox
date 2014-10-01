@@ -1,0 +1,31 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.5.4
+Title=nagato-writer
+Startup=Kyon
+Icon=Pictures/icons/quill.png
+Version=0.1.0
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.desktop
+Component=gb.settings
+Component=gb.qt4.ext
+Component=gb.qt4.webkit
+Description="a writing software for NagatoBox"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=Integrated Data Thought Entity
+Address=takeda.nemuru@yandex.com
+Url=http://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-writer-0.1.0
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Editors"
+Categories=ubuntu:"Development;Documentation;Nagato"
+Groups=ubuntu:"editors"

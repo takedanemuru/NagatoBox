@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Sub ToHtml(argSourceText As String) As String
+
+    Dim yukiTempPathSource As String = Temp$() & ".md"
+    Dim yukiTempPathTarget As String = Temp$() & ".html"
+    Dim yukiOutput As String
+
+    File.Save(yukiTempPathSource, MikuruMacro.Set(argSourceText))
+
+    Exec ["pandoc", "-o", yukiTempPathTarget, "-f", "markdown_github", yukiTempPathSource] Wait
+
+    Return File.Load(yukiTempPathTarget)
+
+End

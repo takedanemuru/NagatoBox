@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Property Read Name As String
+
+Private Const UniqueName As String = "StarMenu"
+
+Private $rootMenu As Menu
+
+Private Sub AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon[argIconName]
+    End With
+    
+End
+
+Public Sub Popup()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new()
+    
+    $rootMenu = New Menu(HaruhiMain)
+    $rootMenu.Name = UniqueName
+    
+    AddMenu("Preview", MikuruSignal.ViewPreview, "search")
+        AddMenu("", 0)
+    AddMenu("About", MikuruSignal.AppAbout, "star")
+    AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End
+
+Private Function Name_Read() As String
+
+    Return UniqueName
+
+End

@@ -1,0 +1,19 @@
+' Gambas module file
+
+Public Sub ToPdf(argSource As String)
+    
+    Dim yukiTempPathSource As String = Temp$() & ".md"
+    Dim yukiTempPathTarget As String = User.Home &/ "nagato-writer.pdf"
+    Dim yukiOutput As String
+
+    File.Save(yukiTempPathSource, MikuruMacro.Clean(argSource))
+
+    Exec ["pandoc", "-o", yukiTempPathTarget, "-f", "markdown_github", yukiTempPathSource] To yukiOutput
+
+    If yukiOutput = "" Then
+        Message.Info("YUKI.N > It's done", ("OK"))
+    Else
+        Message.Warning("YUKI.N > Some error occured", ("OK"))
+    End fi
+    
+End

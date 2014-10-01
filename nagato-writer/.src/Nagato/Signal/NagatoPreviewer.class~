@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $webview As WebView
+
+Public Sub Refresh(argHtml As String)
+    
+    $webview.HTML = argHtml
+    $webview.Refresh()
+    
+End
+
+Public Sub _Initialize()
+    
+    $webview = New WebView(Me._$parentContainer) As "WebView"
+    
+    With $webview
+        .Expand = True
+    End With
+    
+End
