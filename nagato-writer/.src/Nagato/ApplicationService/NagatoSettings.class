@@ -3,6 +3,7 @@
 Create Static
 
 Property TabSize As Integer
+Property LivePreview As Boolean
 
 Private Const DefaultTabSize As Integer = 4
 
@@ -41,6 +42,19 @@ End
 Private Sub TabSize_Write(Value As Integer)
 
     $settings["editor/tab_size"] = Value
+    $settings.Save()
+
+End
+
+Private Function LivePreview_Read() As Boolean
+
+    Return $settings["preview/live", True]
+
+End
+
+Private Sub LivePreview_Write(Value As Boolean)
+
+    $settings["preview/live"] = Value
     $settings.Save()
 
 End

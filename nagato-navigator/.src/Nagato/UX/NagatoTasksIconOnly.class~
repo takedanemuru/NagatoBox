@@ -1,0 +1,75 @@
+' Gambas class file
+
+Property Visible As Boolean
+
+Private $container As Container
+Private $tasks As New NagatoTasks
+
+Private Sub setIcon(argDesktopWindow As DesktopWindow)
+    
+    Dim yukiIcon As New MenuButton($container) As "TaskIcon"
+    
+    With yukiIcon
+        .Border = False
+        If argDesktopWindow.Icon Then .Picture = argDesktopWindow.Icon.Stretch(16, 16).Picture
+        If Not argDesktopWindow.Icon Then .Picture = MikuruIcon.Get("question-balloon")
+        .Arrow = False
+        .W = $container.H
+        .Tooltip = argDesktopWindow.Name
+        .Tag = argDesktopWindow.Id
+    End With
+    
+End
+
+Private Sub setIcons()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    For Each yukiDesktopWindow In $tasks.Get()
+        $container.W += $container.H
+        setIcon(yukiDesktopWindow)
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    If Not $container.Visible Then Return
+    If $tasks.Count = 0 Then Return
+    
+    $container.Children.Clear()
+    $container.W = 0
+    setIcons()
+    If $container.W > 0 Then $container.W += $container.H
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = New HBox(argContainer)
+    
+End
+
+Private Function Visible_Read() As Boolean
+
+    Return $container.Visible
+
+End
+
+Private Sub Visible_Write(Value As Boolean)
+
+    $container.Visible = Value
+
+End
+
+Public Sub TaskIcon_Click()
+    
+    Dim yukiDesktopWindow As New DesktopWindow(Last.Tag)
+    
+    Desktop.Current = yukiDesktopWindow.Desktop
+    yukiDesktopWindow.Activate()
+    
+Catch ' to avoid invalid x11 id
+    Return
+    
+End

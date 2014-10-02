@@ -6,6 +6,21 @@ Property Text As String
 
 Private $textArea As TextArea
 
+Private Sub keyEventWithControl()
+    
+    If Key.Shift And If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null) 
+    If Key.Code = Key["p"] Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    
+End
+
+Private Sub replaceTab()
+    
+     Stop Event
+     $textArea.Insert(Space$(NagatoSettings.TabSize))
+    
+End
+
 Public Sub _Initialize()
     
     $textArea = New TextArea(Me._$parentContainer) As "TextArea"
@@ -13,8 +28,23 @@ Public Sub _Initialize()
     With $textArea
         .Expand = True
         .Foreground = Color.Violet
+        .Wrap = True
     End With
     
+End
+
+Public Sub TextArea_Change()
+    
+    If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    
+End
+
+Public Sub TextArea_KeyPress()
+
+    If Key.Control Then keyEventWithControl()
+
+    If Key.Code = Key.Tab Then replaceTab()
+
 End
 
 Private Function Text_Read() As String

@@ -11,8 +11,8 @@ Private $settings As New Settings
 Public Sub LoadFormSettings(argForm As Form)
     
     With argForm
-        .X = $settings[Subst$("&1/x", argForm.Name), Screen.H * 0.25]
-        .Y = $settings[Subst$("&1/y", argForm.Name), Screen.W * 0.25]
+        .X = $settings[Subst$("&1/x", argForm.Name), Screen.H * 0.125]
+        .Y = $settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
         .H = $settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
         .W = $settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
     End With

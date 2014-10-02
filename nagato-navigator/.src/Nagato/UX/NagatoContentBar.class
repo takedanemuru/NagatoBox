@@ -1,56 +1,62 @@
 ' Gambas class file
 
-Public _$drawingArea As DrawingArea
-Public _$observer As Observer
+Private $observer As Observer
 Private $painter As Object
+Private $drawingArea As DrawingArea
+Private $taskIcons As NagatoTasksIconOnly
 
-Public Sub _InitializeDrawingArea(argDrawingArea As DrawingArea)
+Private Sub initializeDrawingArea(argContainer As Container)
     
-    Dim yukiObserver As Observer
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
     
-    Me._$drawingArea = argDrawingArea
-    Me._$drawingArea.Drop = True
-    
-    yukiObserver = New Observer(Me._$drawingArea) As "DrawingArea"
+    With $drawingArea
+        .Expand = True
+        .Drop = True
+    End With
     
 End
 
 Public Sub Swich(argMode As Integer)
     
-    Debug argMode
-    
     Select Case argMode
         Case NagatoModeMenu.ModeTasks
             NagatoTimer.Delay = 1000
-            $painter = New NagatoTaskBar(Me._$drawingArea)
+            $taskIcons.Visible = False
+            $painter = New NagatoTaskBar($drawingArea)
         Case NagatoModeMenu.ModeTasks2
             NagatoTimer.Delay = 1000
-            $painter = New NagatoTaskBarTint2Mode(Me._$drawingArea)
+            $taskIcons.Visible = False
+            $painter = New NagatoTaskBarTint2Mode($drawingArea)
         Case NagatoModeMenu.ModeSystem
             NagatoTimer.Delay = 1000
-            $painter = New NagatoSystemMonitor(Me._$drawingArea)
+            $taskIcons.Visible = True
+            $painter = New NagatoSystemMonitor($drawingArea)
         Case NagatoModeMenu.ModeMusic
             NagatoTimer.Delay = 1000
-            $painter = New NagatoMusic(Me._$drawingArea)
+            $taskIcons.Visible = True
+            $painter = New NagatoMusic($drawingArea)
         Case NagatoModeMenu.ModeRss
             NagatoTimer.Delay = 100
-            $painter = New NagatoRssTicker(Me._$drawingArea)
+            $taskIcons.Visible = True
+            $painter = New NagatoRssTicker($drawingArea)
     End Select
     
 End
 
-Public Sub _new(argDrawingArea As DrawingArea)
+Public Sub _new(argContainer As Container)
     
-    Me._InitializeDrawingArea(argDrawingArea)
-    Me._$observer = New Observer(NagatoTimer) As "Asakura"
-    
-    $painter = New NagatoTaskBarTint2Mode(argDrawingArea)
+    $taskIcons = New NagatoTasksIconOnly(argContainer)
+    $taskIcons.Visible = False
+    initializeDrawingArea(argContainer)
+    $observer = New Observer(NagatoTimer) As "Asakura"
+    $painter = New NagatoTaskBarTint2Mode($drawingArea)
     
 End
 
 Public Sub Asakura_Timer()
     
-    Me._$drawingArea.Refresh()
+    $taskIcons.Refresh()
+    $drawingArea.Refresh()
     
 End
 
@@ -72,7 +78,7 @@ End
 
 Public Sub DrawingArea_MouseDrag()
     
-    Me._$drawingArea.Drop = True
+    $drawingArea.Drop = True
     
     $painter.DragBegin(Mouse.X, Mouse.Y)
     

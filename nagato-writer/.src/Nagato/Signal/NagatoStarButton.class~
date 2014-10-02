@@ -2,13 +2,13 @@
 
 Inherits NagatoUxContainer
 
-Private $starMenu As NagatoStarMenu 
+Private $starMenu As NagatoStarMenu
 
 Public Sub _initialize() ' override
     
     Dim yukiButton As New MenuButton(Me._$parentContainer)
     
-    $starMenu = New NagatoStarMenu
+    $starMenu = New NagatoStarMenu As "TFEI"
     
     With yukiButton
         .Text = ""

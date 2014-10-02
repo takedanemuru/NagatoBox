@@ -6,7 +6,7 @@ Private $webview As WebView
 
 Public Sub Refresh(argSource As String)
     
-    $webview.HTML = MikuruConverter.ToHtml(argSource)
+    $webview.HTML = MikuruConverter.ToHtmlDirect(argSource)
     $webview.Refresh
     
 End
@@ -17,6 +17,7 @@ Public Sub _Initialize()
     
     With $webview
         .Expand = True
+        .NoTabFocus = True
     End With
     
 End

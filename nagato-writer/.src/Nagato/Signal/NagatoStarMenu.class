@@ -1,46 +1,33 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoPullDownMenu
 
 Property Read Name As String
 
 Private Const UniqueName As String = "StarMenu"
 
-Private $rootMenu As Menu
-
-Private Sub AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
+Private Sub initializeRootMenu(argRootObject As Object)
     
-    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
-    
-    With yukiMenu
-        .Text = argText
-        .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon[argIconName]
-    End With
+    Me._$parentMenu = New Menu(argRootObject)
+    Me._$parentMenu.Name = UniqueName
     
 End
 
-Public Sub Popup()
+Private Sub initializeChildMenus()
     
-    $rootMenu.Popup()
-    
-End
-
-Public Sub _new()
-    
-    $rootMenu = New Menu(HaruhiMain)
-    $rootMenu.Name = UniqueName
-    
-    AddMenu("Preview", MikuruSignal.ViewPreview, "search")
-        AddMenu("", 0)
-    AddMenu("About", MikuruSignal.AppAbout, "star")
-    AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
+    Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
+    Object.New("NagatoSubMenuPublish", [Me._$parentMenu, ("Publish"), "book-open-bookmark"])
+    Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
+        Me._AddMenu("", 0)
+    Me._AddMenu("About", MikuruSignal.AppAbout, "star")
+    Me._AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
     
 End
 
-Public Sub MenuItem_Click()
+Public Sub _new(argRootObject As Object)
     
-    Raise Signal(Last.Tag, Null)
+    initializeRootMenu(argRootObject)
+    initializeChildMenus()
     
 End
 

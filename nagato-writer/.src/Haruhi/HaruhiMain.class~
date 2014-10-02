@@ -12,8 +12,19 @@ Private Sub fileEvent(argEvent As Integer)
             If $fileHandler.Open() Then $sourceEditor.Text = $fileHandler.Buffer
         Case MikuruSignal.FileSave
             $fileHandler.Save($sourceEditor.Text)
+            If Not NagatoSettings.LivePreview Then $previewer.Refresh($sourceEditor.Text)
         Case MikuruSignal.FileSaveAs
             $fileHandler.SaveAs($sourceEditor.Text)
+            If Not NagatoSettings.LivePreview Then $previewer.Refresh($sourceEditor.Text)
+    End Select
+    
+End
+
+Private Sub publishEvent(argEvent As Integer)
+    
+    Select Case
+        Case MikuruSignal.PublishPdf
+            If $sourceEditor.Text Then MikuruPublisher.ToPdf($sourceEditor.Text)
     End Select
     
 End
@@ -49,7 +60,7 @@ Public Sub Form_Open()
     $sourceEditor = New NagatoSourceEditor(MainContainer) As "TFEI"
     $previewer = New NagatoPreviewer(MainContainer) ' has no user control
 
-    $sourceEditor.Text = File.Load("Test/TestMarkdownGitHub.md") ' for testing only, must be removed.
+    '$sourceEditor.Text = File.Load("Test/TestMarkdownGitHub.md") ' for testing only, must be removed.
 
 End
 
@@ -64,10 +75,10 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
     Select Case argEvent
         Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999
             fileEvent(argEvent)
-        Case MikuruSignal.PublishPdf
-            If $sourceEditor.Text Then MikuruPublisher.ToPdf($sourceEditor.Text)
+        Case MikuruSignal.PublishNone To MikuruSignal.PublishNone + 999
+            publishEvent(argEvent)
         Case MikuruSignal.ViewPreview
-            If $sourceEditor.Text Then $previewer.Refresh($sourceEditor.Text)
+            $previewer.Refresh($sourceEditor.Text)
         Case MikuruSignal.AppNone To MikuruSignal.AppNone + 999
             appEvent(argEvent)
     End Select
