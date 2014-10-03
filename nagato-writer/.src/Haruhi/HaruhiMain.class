@@ -22,7 +22,9 @@ Private Sub publishEvent(argEvent As Integer)
     
     Select Case argEvent
         Case MikuruSignal.PublishPdf
-            If $sourceEditor.Text Then MikuruPublisher.ToPdf($sourceEditor.Text)
+            If $sourceEditor.Text Then MikuruPublisher.ToPdf(MikuruConverter.ToHtmlDirect($sourceEditor.Text))
+        Case MikuruSignal.PublishHtml
+            If $sourceEditor.Text Then File.Save(User.Home &/ "test.html", MikuruConverter.ToHtmlDirect($sourceEditor.Text))
     End Select
     
 End
@@ -69,6 +71,8 @@ Public Sub Form_Close()
 End
 
 Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
+    
+    Debug argEvent
     
     Select Case argEvent
         Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999

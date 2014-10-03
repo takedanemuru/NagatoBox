@@ -5,7 +5,7 @@ Property Visible As Boolean
 Private $container As Container
 Private $tasks As New NagatoTasks
 
-Private Sub setIcon(argDesktopWindow As DesktopWindow)
+Private Function setIcon(argDesktopWindow As DesktopWindow) As Boolean
     
     Dim yukiIcon As New MenuButton($container) As "TaskIcon"
     
@@ -19,6 +19,11 @@ Private Sub setIcon(argDesktopWindow As DesktopWindow)
         .Tag = argDesktopWindow.Id
     End With
     
+    Return True
+    
+Catch
+    Return False
+    
 End
 
 Private Sub setIcons()
@@ -26,8 +31,7 @@ Private Sub setIcons()
     Dim yukiDesktopWindow As DesktopWindow
     
     For Each yukiDesktopWindow In $tasks.Get()
-        $container.W += $container.H
-        setIcon(yukiDesktopWindow)
+        If setIcon(yukiDesktopWindow) Then $container.W += $container.H
     Next
     
 End

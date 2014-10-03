@@ -2,18 +2,14 @@
 
 Public Sub ToPdf(argSource As String)
     
-    Dim yukiTempPathSource As String = Temp$() & ".md"
-    Dim yukiTempPathTarget As String = User.Home &/ "nagato-writer.pdf"
-    Dim yukiOutput As String
+    Dim yukiTempPathSource As String = Temp$() & ".html"
+    Dim yukiTempPathTarget As String = User.Home &/ "kukicha_6.pdf"
+    Dim yukiSource As String = MikuruMacro.Clean(argSource)
 
-    File.Save(yukiTempPathSource, MikuruMacro.Clean(argSource))
+    File.Save(yukiTempPathSource, yukiSource)
 
-    Exec ["pandoc", "-o", yukiTempPathTarget, "-f", "markdown_github", yukiTempPathSource] To yukiOutput
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", yukiTempPathSource, yukiTempPathTarget] Wait
 
-    If yukiOutput = "" Then
-        Message.Info("YUKI.N > It's done", ("OK"))
-    Else
-        Message.Warning("YUKI.N > Some error occured", ("OK"))
-    End If
+    Message.Info("YUKI.N > It's done", ("OK"))
     
 End

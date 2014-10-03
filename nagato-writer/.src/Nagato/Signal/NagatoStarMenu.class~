@@ -15,9 +15,12 @@ End
 
 Private Sub initializeChildMenus()
     
-    'Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
-    Object.New("NagatoSubMenuPublish", [Me._$parentMenu, ("Publish")])
-    Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
+    Dim yukiPublishMenu As NagatoSubMenuPublish
+    
+    Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
+    Object.New("NagatoSubMenuPublish", [Me._$parentMenu, ("Publish"), "book-open-bookmark"])
+    yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, "Publish") As "TFEI"
+    'Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
         Me._AddMenu("", 0)
     Me._AddMenu("About", MikuruSignal.AppAbout, "star")
     Me._AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
