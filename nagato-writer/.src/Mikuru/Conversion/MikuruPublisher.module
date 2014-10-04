@@ -1,15 +1,73 @@
 ' Gambas module file
 
+Private Function getPathToSave(argExtend As String) As String
+    
+    Dialog.Title = ("Save file")
+    Dialog.Path = User.Home &/ "your_document." & argExtend
+    
+    Return IIf(Dialog.SaveFile(), "", Dialog.Path)
+    
+End
+
 Public Sub ToPdf(argSource As String)
     
     Dim yukiTempPathSource As String = Temp$() & ".html"
-    Dim yukiTempPathTarget As String = User.Home &/ "kukicha_6.pdf"
-    Dim yukiSource As String = MikuruMacro.Clean(argSource)
+    Dim yukiPath As String = getPathToSave("pdf")
+    Dim yukiSource As String = MikuruMacro.Set(argSource)
+
+    If Not yukiPath Then Return
+
+    File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlDirect(yukiSource))
+    'File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlSmart(yukiSource))
+
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", yukiTempPathSource, yukiPath] Wait
+
+    Message.Info("YUKI.N > It's done", ("OK"))
+    
+End
+
+Public Sub ToSlidy(argSource As String)
+    
+    Dim yukiTempPathSource As String = Temp$() & ".md"
+    Dim yukiPath As String = getPathToSave("html")
+    Dim yukiSource As String = MikuruMacro.Set(argSource)
+
+    If Not yukiPath Then Return
 
     File.Save(yukiTempPathSource, yukiSource)
 
-    Exec ["wkhtmltopdf", "--encoding", "UTF-8", yukiTempPathSource, yukiTempPathTarget] Wait
+    Exec ["pandoc", "-s", "--webtex", "-t", "slidy", yukiTempPathSource, "--self-contained", "-o", yukiPath] Wait
 
+    Message.Info("YUKI.N > It's done", ("OK"))
+    
+End
+
+Public Sub ToHtml(argSource As String)
+    
+    Dim yukiPath As String = getPathToSave("html")
+    
+    If Not yukiPath Then Return
+    
+    File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource))
+    
+    Message.Info("YUKI.N > It's done", ("OK"))
+    
+End
+
+Public Sub ToPlainText(argSource As String, Optional argFormat As String = "markdown_github")
+    
+    Dim yukiTempPathSource As String = Temp$() & ".txt"
+    Dim yukiPath As String = getPathToSave("txt")
+    Dim yukiOutput As String
+    
+    If Not yukiPath Then Return
+    
+    File.Save(yukiTempPathSource, argSource)
+    
+    Exec ["pandoc", "-f", argFormat, "-t", "plain", yukiTempPathSource] To yukiOutput
+    
+    File.Save(yukiPath, yukiOutput)
+    
     Message.Info("YUKI.N > It's done", ("OK"))
     
 End

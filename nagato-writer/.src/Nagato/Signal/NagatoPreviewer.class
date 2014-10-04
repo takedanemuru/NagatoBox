@@ -6,8 +6,9 @@ Private $webview As WebView
 
 Public Sub Refresh(argSource As String)
     
-    $webview.HTML = MikuruConverter.ToHtmlDirect(argSource)
-    $webview.Refresh
+    $webview.HTML = MikuruHtmlConverter.ToHtmlDirect(argSource)
+    '$webview.HTML = MikuruHtmlConverter.ToHtmlSmart(argSource)
+    $webview.Refresh()
     
 End
 

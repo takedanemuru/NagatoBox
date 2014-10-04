@@ -22,9 +22,13 @@ Private Sub publishEvent(argEvent As Integer)
     
     Select Case argEvent
         Case MikuruSignal.PublishPdf
-            If $sourceEditor.Text Then MikuruPublisher.ToPdf(MikuruConverter.ToHtmlDirect($sourceEditor.Text))
+            If $sourceEditor.Text Then MikuruPublisher.ToPdf($sourceEditor.Text)
         Case MikuruSignal.PublishHtml
-            If $sourceEditor.Text Then File.Save(User.Home &/ "test.html", MikuruConverter.ToHtmlDirect($sourceEditor.Text))
+            If $sourceEditor.Text Then MikuruPublisher.ToHtml($sourceEditor.Text)
+        Case MikuruSignal.PublishPlainText
+            If $sourceEditor.Text Then MikuruPublisher.ToPlainText($sourceEditor.Text)
+        Case MikuruSignal.PublishSlidy
+            If $sourceEditor.Text Then MikuruPublisher.ToSlidy($sourceEditor.Text)
     End Select
     
 End

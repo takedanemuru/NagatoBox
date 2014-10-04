@@ -4,13 +4,13 @@ Property Read AbsolutePath As String
 
 Private Const MacroAbsolutePath As String = "NAGATO_MACRO_HOME"
 
-Public Function Clean(argSourceText As String) As String
-    
-    Dim yukiFindString As String = MacroAbsolutePath & "/"
-    
-    Return Replace$(argSourceText, yukiFindString, "")
-    
-End
+' Public Function Clean(argSourceText As String) As String
+'     
+'     Dim yukiFindString As String = MacroAbsolutePath & "/"
+'     
+'     Return Replace$(argSourceText, yukiFindString, "")
+'     
+' End
 
 Public Function Set(argSourceText As String) As String
     
