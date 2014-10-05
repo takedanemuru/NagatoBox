@@ -4,6 +4,7 @@ Create Static
 
 Property TabSize As Integer
 Property LivePreview As Boolean
+Property Read RecentFiles As String[]
 
 Private Const DefaultTabSize As Integer = 4
 
@@ -33,6 +34,23 @@ Public Sub SaveFormSettings(argForm As Form)
     
 End
 
+Public Sub PushRecentPath(argPath As String)
+    
+    Dim yukiRecentPaths As String[] = MikuruPaths.RemoveInvalid(Me.RecentFiles)
+    
+    If Not Exist(argPath) Then Return
+    
+    If Not yukiRecentPaths Then yukiRecentPaths = New String[]
+    
+    If yukiRecentPaths.Exist(argPath) Then yukiRecentPaths.Remove(yukiRecentPaths.Find(argPath))
+    yukiRecentPaths.Add(argPath, 0)
+    yukiRecentPaths.Resize(20)
+    
+    $settings["file/recent"] = yukiRecentPaths
+    $settings.Save()
+    
+End
+
 Private Function TabSize_Read() As Integer
 
     Return $settings["editor/tab_size", DefaultTabSize]
@@ -56,5 +74,11 @@ Private Sub LivePreview_Write(Value As Boolean)
 
     $settings["preview/live"] = Value
     $settings.Save()
+
+End
+
+Private Function RecentFiles_Read() As String[]
+
+    Return MikuruPaths.RemoveInvalid($settings["file/recent", Null])
 
 End

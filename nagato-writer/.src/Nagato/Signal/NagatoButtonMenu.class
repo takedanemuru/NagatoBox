@@ -1,0 +1,42 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoPullDownMenu
+
+Property Read Name As String
+
+Public _$uniqueName As String
+
+Public Sub _InitializeParentMenu(argRootObject As Object, argMenuName As String)
+    
+    Me._$parentMenu = New Menu(argRootObject) As "ParentMenu"
+    Me._$parentMenu.Name = argMenuName
+    
+End
+
+Public Sub _RefreshChildMenus() ' virtual
+    
+    
+    
+End
+
+Public Sub _new(argRootObject As Object, argMenuName As String)
+    
+    Me._InitializeParentMenu(argRootObject, argMenuName)
+    Me._AddMenu("", 0)
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    Me._$parentMenu.Children.Clear()
+    Me._RefreshChildMenus()
+    
+End
+
+Private Function Name_Read() As String
+
+    Return Me._$uniqueName
+
+End

@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Property Read Buffer As String
+Property Read Path As String
 
 Private $buffer As String
 Private $path As String
@@ -9,6 +10,15 @@ Public Function SetPath(argPath As String) As String
     
     $path = argPath
     $buffer = File.Load(argPath)
+    
+    Return $buffer
+    
+End
+
+Public Sub New() As String
+    
+    $buffer = ""
+    $path = ""
     
     Return $buffer
     
@@ -59,5 +69,11 @@ End
 Private Function Buffer_Read() As String
 
     Return $buffer
+
+End
+
+Private Function Path_Read() As String
+
+    Return $path
 
 End

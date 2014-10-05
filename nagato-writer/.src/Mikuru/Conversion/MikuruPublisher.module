@@ -71,3 +71,20 @@ Public Sub ToPlainText(argSource As String, Optional argFormat As String = "mark
     Message.Info("YUKI.N > It's done", ("OK"))
     
 End
+
+Public Sub _call(argSource As String, argSignal As Integer)
+    
+    If Not argSource Then Return
+    
+    Select Case argSignal
+        Case MikuruSignal.PublishHtml
+            Me.ToHtml(argSource)
+        Case MikuruSignal.PublishPdf
+            Me.ToPdf(argSource)
+        Case MikuruSignal.PublishPlainText
+            Me.ToPlainText(argSource)
+        Case MikuruSignal.PublishSlidy
+            Me.ToSlidy(argSource)
+    End Select
+    
+End

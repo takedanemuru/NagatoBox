@@ -27,11 +27,13 @@ End
 
 Public Sub _initialize() ' override
     
+    addButton("New", MikuruSignal.FileNew, "document")
+        addSeparator()
     addButton("Open", MikuruSignal.FileOpen, "folder")
     addButton("Save", MikuruSignal.FileSave, "hard-drive-download")
-    addButton("Save As", MikuruSignal.FileSaveAs)
+    addButton("Save As", MikuruSignal.FileSaveAs, "documents")
         addSeparator()
-    'addButton("Preview", MikuruSignal.ViewPreview, "search")
+    addButton("Preview", MikuruSignal.ViewPreview, "search")
     addButton("Publish PDF", MikuruSignal.PublishPdf, "book-open-bookmark")
     
 End

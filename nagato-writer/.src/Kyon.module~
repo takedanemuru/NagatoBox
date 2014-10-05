@@ -6,4 +6,6 @@ Public Sub Main()
     
     HaruhiMain.Show()
     
+    If NagatoArgs.Path <> "" Then HaruhiMain.SetPath(NagatoArgs.Path)
+    
 End

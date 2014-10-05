@@ -1,0 +1,72 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Property Text As String
+
+Private $textArea As TextArea
+
+Private Sub keyEventWithControl()
+    
+    If Key.Shift And If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null) 
+    If Key.Code = Key["p"] Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    
+End
+
+Private Sub replaceTab()
+    
+     Stop Event
+     $textArea.Insert(Space$(NagatoSettings.TabSize))
+    
+End
+
+Private Sub replaceBackspace()
+    
+    If String.Mid($textArea.Text, $textArea.Pos - 3, 4) = Space$(4) Then
+        Stop Event
+        Debug "delete 4 spaces"
+    End If
+    
+End
+
+Public Sub _initialize() ' override
+    
+    $textArea = New TextArea(Me._$parentContainer) As "TextArea"
+    
+    With $textArea
+        .Expand = True
+        .Foreground = Color.Violet
+        .Wrap = True
+        .SetFocus()
+    End With
+    
+End
+
+Public Sub TextArea_Change()
+    
+    If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    
+End
+
+Public Sub TextArea_KeyPress()
+
+    If Key.Control Then keyEventWithControl()
+    If Key.Code = Key.Tab Then replaceTab()
+    If Key.Code = Key.BackSpace Then replaceBackspace()
+
+End
+
+Private Function Text_Read() As String
+
+    Return $textArea.Text
+
+End
+
+Private Sub Text_Write(Value As String)
+
+    Object.Lock($textArea)
+        $textArea.Text = Value
+    Object.Unlock($textArea)
+    
+End

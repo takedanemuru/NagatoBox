@@ -1,0 +1,30 @@
+' Gambas class file
+
+Public Enum ResponseCancel, ResponseSave, ResponseDiscard
+
+Public Sub Form_Open()
+
+    MainDrawingArea.Refresh()
+
+End
+
+Public Sub MainDrawingArea_Draw()
+    
+    Paint.Begin(MainDrawingArea)
+        Paint.DrawImage(Image.Load("Pictures/archive.jpg").Stretch(MainDrawingArea.W, MainDrawingArea.H), 0, 0)
+        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
+        Paint.Rectangle(20, 170, 260, 110)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText("YUKI.N > <br><br>Your changes have been saved.", 20, 170, 260, 110, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub Buttons_Click()
+
+    Me.Close(Last.Tag)
+
+End

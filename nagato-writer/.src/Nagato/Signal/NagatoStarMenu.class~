@@ -1,41 +1,18 @@
 ' Gambas class file
 
-Inherits NagatoPullDownMenu
+Inherits NagatoButtonMenu
 
-Property Read Name As String
+Public Const UniqueName As String = "StarMenu"
 
-Private Const UniqueName As String = "StarMenu"
-
-Private Sub initializeRootMenu(argRootObject As Object)
-    
-    Me._$parentMenu = New Menu(argRootObject)
-    Me._$parentMenu.Name = UniqueName
-    
-End
-
-Private Sub initializeChildMenus()
+Public Sub _RefreshChildMenus() ' override
     
     Dim yukiPublishMenu As NagatoSubMenuPublish
     
     Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
-    Object.New("NagatoSubMenuPublish", [Me._$parentMenu, ("Publish"), "book-open-bookmark"])
-    yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, "Publish") As "TFEI"
-    'Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
+    yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, "Publish", "book-open-bookmark") As "TFEI"
+    Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
         Me._AddMenu("", 0)
     Me._AddMenu("About", MikuruSignal.AppAbout, "star")
     Me._AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
     
-End
-
-Public Sub _new(argRootObject As Object)
-    
-    initializeRootMenu(argRootObject)
-    initializeChildMenus()
-    
-End
-
-Private Function Name_Read() As String
-
-    Return UniqueName
-
 End

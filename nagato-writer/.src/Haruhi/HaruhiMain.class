@@ -1,37 +1,8 @@
 ' Gambas class file
 
-Private $fileHandler As New NagatoFileHandler
 Private $menuPanel As NagatoMenuPanel
 Private $sourceEditor As NagatoSourceEditor
 Private $previewer As NagatoPreviewer
-
-Private Sub fileEvent(argEvent As Integer)
-    
-    Select Case argEvent
-        Case MikuruSignal.FileOpen
-            If $fileHandler.Open() Then $sourceEditor.Text = $fileHandler.Buffer
-        Case MikuruSignal.FileSave, MikuruSignal.FileSaveAs
-            If argEvent = MikuruSignal.FileSave Then $fileHandler.Save($sourceEditor.Text)
-            If argEvent = MikuruSignal.FileSaveAs Then $fileHandler.SaveAs($sourceEditor.Text)
-            If Not NagatoSettings.LivePreview Then $previewer.Refresh($sourceEditor.Text)
-    End Select
-    
-End
-
-Private Sub publishEvent(argEvent As Integer)
-    
-    Select Case argEvent
-        Case MikuruSignal.PublishPdf
-            If $sourceEditor.Text Then MikuruPublisher.ToPdf($sourceEditor.Text)
-        Case MikuruSignal.PublishHtml
-            If $sourceEditor.Text Then MikuruPublisher.ToHtml($sourceEditor.Text)
-        Case MikuruSignal.PublishPlainText
-            If $sourceEditor.Text Then MikuruPublisher.ToPlainText($sourceEditor.Text)
-        Case MikuruSignal.PublishSlidy
-            If $sourceEditor.Text Then MikuruPublisher.ToSlidy($sourceEditor.Text)
-    End Select
-    
-End
 
 Private Sub appEvent(argEvent As Integer)
     
@@ -39,14 +10,14 @@ Private Sub appEvent(argEvent As Integer)
         Case MikuruSignal.AppAbout
             HaruhiAbout.ShowDialog()
         Case MikuruSignal.AppQuit
-            Me.Close()
+            Me.Close() ' This method calls Form_Close()
     End Select
     
 End
 
 Public Sub SetPath(argPath As String)
     
-    $sourceEditor.Text = $fileHandler.SetPath(argPath)
+    $sourceEditor.FileEvent(MikuruSignal.FileOpenPath, [argPath])
     
 End
 
@@ -64,25 +35,29 @@ Public Sub Form_Open()
     $sourceEditor = New NagatoSourceEditor(MainContainer) As "TFEI"
     $previewer = New NagatoPreviewer(MainContainer) ' has no user control
 
-    '$sourceEditor.Text = File.Load("Test/TestMarkdownGitHub.md") ' for testing only, must be removed.
-
 End
 
 Public Sub Form_Close()
     
-    NagatoSettings.SaveFormSettings(Me)
+    Select Case $sourceEditor.GetSaveStatus()
+        Case $sourceEditor.ResponseHasBeenSaved
+            NagatoSettings.SaveFormSettings(Me)
+        Case $sourceEditor.ResponseSaved
+            NagatoSettings.SaveFormSettings(Me)
+            Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
+        Case $sourceEditor.ResponseCancel
+            Stop Event
+    End Select
     
 End
 
 Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
     
-    Debug argEvent
-    
     Select Case argEvent
         Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999
-            fileEvent(argEvent)
+            $sourceEditor.FileEvent(argEvent, argArgs)
         Case MikuruSignal.PublishNone To MikuruSignal.PublishNone + 999
-            publishEvent(argEvent)
+            MikuruPublisher($sourceEditor.Text, argEvent)
         Case MikuruSignal.ViewPreview
             $previewer.Refresh($sourceEditor.Text)
         Case MikuruSignal.AppNone To MikuruSignal.AppNone + 999
