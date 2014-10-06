@@ -1,0 +1,94 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read GridData As Variant[]
+Property Read Message As String
+
+Private $targetPath As String
+Private $pathCollection As New Collection
+Private $dataGrid As New NagatoDataGrid 
+Private $counter As New NagatoCounter
+
+Private Sub setRowData(argDirectory As String, argFileName As String)
+    
+    Dim yukiJointPath As String = argDirectory &/ argFileName
+    Dim yukiType As String = $counter.GetType(argDirectory, argFileName)
+    
+    $pathCollection.Add(yukiJointPath, File.Name(yukiJointPath))
+    $dataGrid.AddToGridData(yukiType, yukiJointPath)
+    
+End
+
+Private Sub countLine(argDirectory As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory)
+        readFile(argDirectory, yukiPath)
+    Next
+    
+End
+
+Private Sub readFile(argDirectory As String, argFileName As String)
+    
+    Select Case NagatoFileType.GetType(argDirectory &/ argFileName)
+        Case NagatoFileType.Directory
+            countLine(argDirectory &/ argFileName)
+        Case NagatoFileType.FileToRead
+            setRowData(argDirectory, argFileName)
+        Default
+            ' ignore
+    End Select
+    
+End
+
+Public Sub Refresh()
+    
+    $pathCollection.Clear()
+    $dataGrid.Clear()
+    countLine($targetPath)
+    
+End
+
+Public Sub Clear(argPath As String)
+    
+     $targetPath = argPath
+     $dataGrid.Reset()
+    
+End
+
+Public Sub SetTargetIndex(argIndex As Integer)
+    
+    $dataGrid.SetTargetIndex(argIndex)
+    
+End
+
+Public Function GetPath(argKey As String) As String
+    
+    Return $pathCollection[argKey]
+    
+End
+
+Public Function GetLinesOfCode(argIgnoreVoid As Boolean) As Integer
+    
+    Return $dataGrid.GetLinesOfCode(argIgnoreVoid)
+    
+End
+
+Private Function GridData_Read() As Variant[]
+
+    Return $dataGrid.Data
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $dataGrid.Count
+
+End
+
+Private Function Message_Read() As String
+
+    Return Subst$($counter.Message, "PATH", $dataGrid.GetLinesOfCode(False))
+
+End

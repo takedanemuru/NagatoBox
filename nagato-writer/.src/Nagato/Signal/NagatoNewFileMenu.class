@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Public Sub _RefreshChildMenus() ' override
+    
+    Me._AddMenu("Markdown", MikuruSignal.FileNewMarkdownGitHub)
+    Me._AddMenu("Textile", MikuruSignal.FileNewTextile)
+    Me._AddMenu("reStructuredText", MikuruSignal.FileNewReStructuredText)
+    
+End

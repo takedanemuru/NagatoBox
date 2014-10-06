@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $label As TextLabel
+
+Public Sub SetText(argText As String)
+    
+    $label.Text = argText
+    
+End
+
+Public Sub _initialize() ' virtual
+    
+    $label = New TextLabel(Me._$parentContainer)
+    
+    With $label
+        .Background = 16444890
+        .Expand = True
+        .Text = ("YUKI.N > Open Gambas3 project directory.")
+        .Alignment = Align.Left
+        .Padding = 16
+        .Font.Size = 12
+        .Foreground = 6179679
+    End With
+    
+End

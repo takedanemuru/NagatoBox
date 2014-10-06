@@ -1,0 +1,12 @@
+' Gambas class file
+
+Private $webView As WebView
+
+Public Sub _new(argContainer As Container)
+    
+    $webView = New WebView(argContainer)
+    
+    $webView.Expand = True
+    $webView.Url = "http://www.google.com"
+    
+End

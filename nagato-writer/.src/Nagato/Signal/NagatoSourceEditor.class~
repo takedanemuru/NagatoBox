@@ -4,12 +4,12 @@ Inherits NagatoUxContainer
 
 Property Text As String
 
-Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel
+Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
 Private $fileHandler As New NagatoFileHandler
 Private $textArea As NagatoTextArea
 
-Private Function ensureSaved() As Boolean ' False means cancel to open file
+Private Function ensureSaved(Optional argCloseApp As Boolean) As Boolean ' False means cancel to open file
     
     If $textArea.Text = $fileHandler.Buffer Then Return True
     
@@ -17,10 +17,10 @@ Private Function ensureSaved() As Boolean ' False means cancel to open file
         Case HaruhiDialogClose.ResponseCancel
             Return False
         Case HaruhiDialogClose.ResponseDiscard
+            If argCloseApp Then Return False
             Return True
         Case HaruhiDialogClose.ResponseSave
             Raise Signal(MikuruSignal.FileSave, Null)
-            'fileEvent(MikuruSignal.FileSave)
             Return True
     End Select
     
@@ -43,8 +43,9 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
             $textArea.Text = $fileHandler.SetPath(argArgs[0])
         Case MikuruSignal.FileOpen
             If $fileHandler.Open() Then $textArea.Text = $fileHandler.Buffer
-        Case MikuruSignal.FileSave, MikuruSignal.FileSaveAs
+        Case MikuruSignal.FileSave
             If argEvent = MikuruSignal.FileSave Then $fileHandler.Save($textArea.Text)
+        Case MikuruSignal.FileSaveAs
             If argEvent = MikuruSignal.FileSaveAs Then $fileHandler.SaveAs($textArea.Text)
     End Select
     
@@ -57,7 +58,7 @@ Public Sub GetSaveStatus() As Integer
     
     If $textArea.Text = $fileHandler.Buffer Then Return Me.ResponseHasBeenSaved
     
-    If ensureSaved() Then
+    If ensureSaved(True) Then
         Return Me.ResponseSaved
     Else
         Return Me.ResponseCancel

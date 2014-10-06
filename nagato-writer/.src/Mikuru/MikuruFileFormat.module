@@ -1,0 +1,27 @@
+' Gambas module file
+
+Public Enum MarkdownGitHub, Textle, ReStructuredText
+
+Public Function GetName(argEnum As Integer) As String
+    
+    Dim yukiNames As String[] = ["github extended markdown", "Textile", "reStructuredText"]
+    
+    Return yukiNames[argEnum]
+    
+End
+
+Public Function GetOption(argEnum As Integer) As String
+    
+    Dim yukiOptions As String[] = ["markdown_github", "textile", "rst"]
+    
+    Return yukiOptions[argEnum]
+    
+End
+
+Public Function GetExtension(argEnum As Integer) As String
+    
+    Dim yukiExtensions As String[] = [".md", ".textile", ".rst"]
+    
+    Return yukiExtensions[argEnum]
+    
+End

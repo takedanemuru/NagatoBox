@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  SkipTaskbar = True
+  Arrangement = Arrange.Fill
+  { MainTabStrip TabStrip
+    MoveScaled(10,12,44,24)
+    Expand = True
+    Arrangement = Arrange.Fill
+    Index = 0
+    Text = ("TabStrip1")
+    Index = 0
+  }
+}

@@ -17,6 +17,8 @@ End
 
 Public Sub SetFilter(argFilters As String[])
     
+    MikuruArrayTest(argFilters)
+    
     $data.SetFilter(argFilters)
     
 End
@@ -77,7 +79,7 @@ End
 
 Private Function Max_Read() As Integer
 
-    Return $data.Max
+    Return $data.Count - 1
 
 End
 

@@ -35,12 +35,14 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
             MikuruFileProperty.Show($paths.CurrentDirectory &/ $paths[.Index])
         Else If .Has("move") Then
             $paths.MoveTo()
-        Else If .Include(["filter", "match", "matches", "find"]) And If .Count >= 2 Then
+        Else If .Include(["find", "match", "matches", "filter"]) And If .Count >= 2 Then
             $paths.SetFilter(MikuruUserInput.All)
+        Else If .HasSearchQuery() Then
+            
         Else If .CompleteMatch(["make", "dir"]) Or If .CompleteMatch(["make", "directory"]) Or If .Has("mkdir") Then
             makeDirectory()
         Else If .Include(["remove", "delete", "trash"]) Then
-            MikuruDelete($paths.All)
+            MikuruDelete($paths.CurrentDirectory, $paths.All)
         Else If .IsValidIndex($paths.Max) Then
             $paths.Open(argDirectory &/ $paths[.Index])
         End If

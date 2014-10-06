@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+$searchBox As ButtonBox
+
+Public Sub _Initialize()
+    
+    $searchBox = New ButtonBox(Me._$parentContainer) As "SearchBox"
+    
+    With $searchBox
+        .Picture = MikuruIcon["search"]
+        .w = 200
+    End With
+    
+End

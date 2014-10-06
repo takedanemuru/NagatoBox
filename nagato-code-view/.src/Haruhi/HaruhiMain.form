@@ -1,0 +1,19 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,92.8571,68)
+  Icon = Picture["picture/Icons/search.png"]
+  Arrangement = Arrange.Vertical
+  { MessageBox HBox
+    MoveScaled(0,0,44,35.7143)
+    { NagatoBox PictureBox
+      MoveScaled(1,2,23,31)
+      Picture = Picture["Pictures/looking_back.jpg"]
+      Stretch = True
+    }
+  }
+  { PanelBox HBox
+    MoveScaled(2,42,38,4)
+    Background = &H5381AF&
+  }
+}

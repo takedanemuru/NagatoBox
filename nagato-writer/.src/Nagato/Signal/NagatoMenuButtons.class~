@@ -27,7 +27,12 @@ End
 
 Public Sub _initialize() ' override
     
-    addButton("New", MikuruSignal.FileNew, "document")
+    Dim yukiNewFileButton As NagatoNewFileButton
+    Dim yukiButton As NagatoRecentFilesButton
+    
+    yukiNewFileButton = New NagatoNewFileButton(Me._$parentContainer) As "TFEI"
+    'addButton("New", MikuruSignal.FileNew, "document")
+    yukiButton = New NagatoRecentFilesButton(Me._$parentContainer) As "TFEI"
         addSeparator()
     addButton("Open", MikuruSignal.FileOpen, "folder")
     addButton("Save", MikuruSignal.FileSave, "hard-drive-download")

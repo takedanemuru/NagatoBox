@@ -1,0 +1,23 @@
+' Gambas class file
+
+Property Read Collection As Collection
+
+Private $collection As New Collection
+Private $reader As New NagatoReader
+
+Public Sub _new(argType As String, argPath As String) 
+    
+    With $collection
+        .[MikuruColumn.KeyType] = argType
+        .[MikuruColumn.KeyName] = File.Name(argPath)
+        .[MikuruColumn.KeyLines] = $reader.ReadLine(argPath)
+        .[MikuruColumn.KeyLinesWithoutVoid] = $reader.ReadLineWithoutVoid(argPath)
+    End With
+    
+End
+
+Private Function Collection_Read() As Collection
+
+    Return $collection
+
+End

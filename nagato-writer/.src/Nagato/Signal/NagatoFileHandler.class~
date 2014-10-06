@@ -11,6 +11,8 @@ Public Function SetPath(argPath As String) As String
     $path = argPath
     $buffer = File.Load(argPath)
     
+    Debug DesktopMime.FromFile(argPath).Type
+    
     Return $buffer
     
 End
@@ -49,7 +51,6 @@ Public Sub Save(argText As String)
     Else
         $buffer = argText
         File.Save($path, argText)
-        'Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
     Endif
     
 End

@@ -8,8 +8,6 @@ Public Function Matches(argQuery As String) As Boolean
     
     Dim yukiFilter As String
     
-    If $filter.Count = 0 Then Return False
-    
     For Each yukiFilter In $filter
         If argQuery Not Like Subst$("*&1*", Replace$(yukiFilter, "/", "")) Then Return False
     Next

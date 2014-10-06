@@ -1,0 +1,72 @@
+' Gambas class file
+
+Property Read Message As String
+
+Private $moduleCount As Integer = 0
+Private $formCount As Integer = 0
+Private $classCount As Integer = 0
+
+Public Function GetType(argDirectory As String, argFileName As String) As String
+    
+    Dim yukiType As String
+    
+    If argFileName Like "*.module" Then
+        Inc $moduleCount
+        Return "Module"
+    Else If Exist(argDirectory &/ File.BaseName(argFileName) & ".form") Then
+        Inc $formCount
+        Return "Form"
+    Else
+        Inc $classCount
+        Return "Class"
+    Endif
+    
+End
+
+Public Sub Clear()
+    
+    $moduleCount = 0
+    $formCount = 0
+    $classCount = 0
+    $lineCountTotal = 0
+    $lineCountWithoutVoid = 0
+    
+End
+
+Public Sub IncLineCount()
+    
+    Inc $lineCountTotal
+    
+End
+
+Public Sub IncLineCountWithoutVoid()
+    
+    Inc $lineCountWithoutVoid
+    
+End
+
+Private Function LineCount_Read() As Integer
+
+    Return $lineCountTotal
+
+End
+
+Private Function LineCountWIthoutVoid_Read() As Integer
+
+    Return $lineCountWithoutVoid
+
+End
+
+Private Function Message_Read() As String
+
+    Dim yukiMessage As String = ("YUKI.N > <b>&1</b> is made of ...<br><br>")
+    
+    yukiMessage &= $formCount & " Forms.<br>" 
+    yukiMessage &= $classCount & " Classes.<br>"
+    yukiMessage &= $moduleCount & " Modules.<br><br>"
+    'yukiMessage &= Format$($lineCountTotal, "#,###,###") & "&2 Lines of code."
+    yukiMessage &= "&2 Lines of code."
+    
+    Return yukiMessage
+
+End

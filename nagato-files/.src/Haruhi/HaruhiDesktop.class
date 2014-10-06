@@ -3,7 +3,7 @@
 Private Const Type As String = "_NET_WM_WINDOW_TYPE"
 Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 
-Private $desktop As NagatoDesktop
+Private $desktop As NagatoDesktop2
 Private $charm As NagatoCharm
 
 Private Sub setForm()
@@ -19,8 +19,8 @@ End
 
 Private Sub setIconView()
     
-    $desktop = New NagatoDesktop(Me)
-    $charm = New NagatoCharm(Me)
+    $desktop = New NagatoDesktop2(Me)
+    '$charm = New NagatoCharm(Me)
     
 End
 

@@ -19,11 +19,12 @@ End
 Public Sub Set(argFilters As String[])
     
     Dim yukiFilter As String
+    Dim yukiKeywords As String[] = ["find", "match", "matches", "filter"]
     
     $filter.Clear()
     
     For Each yukiFilter In argFilters
-        If yukiFilter = "filter" Then Continue
+        If yukiKeywords.Exist(yukiFilter) Then Continue
         $filter.Add(yukiFilter)
     Next
     

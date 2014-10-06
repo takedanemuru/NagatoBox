@@ -40,8 +40,9 @@ End
 Public Sub Form_Close()
     
     Select Case $sourceEditor.GetSaveStatus()
-        Case $sourceEditor.ResponseHasBeenSaved
+        Case $sourceEditor.ResponseHasBeenSaved, $sourceEditor.ResponseDiscard
             NagatoSettings.SaveFormSettings(Me)
+            Message.Info(("YUKI.N > I as indivisual also desire you to return... "), ("OK"))
         Case $sourceEditor.ResponseSaved
             NagatoSettings.SaveFormSettings(Me)
             Message.Info(("YUKI.N > Document successfully saved."), ("OK"))

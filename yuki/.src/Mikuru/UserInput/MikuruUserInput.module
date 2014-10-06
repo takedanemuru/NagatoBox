@@ -28,6 +28,18 @@ Public Function Has(argValue As String) As Boolean
     
 End
 
+Public Function HasSearchQuery() As Boolean
+    
+    Dim yukiInput As String
+    
+    For Each yukiInput In $inputs
+        If yukiInput Begins "/" Then Return True
+    Next
+    
+    Return False
+    
+End
+
 Public Function Include(argValues As String[]) As Boolean
     
     Return MikuruUserInputOptions.Include($inputs, argValues)

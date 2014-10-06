@@ -1,0 +1,44 @@
+' Gambas class file
+
+Private Sub setTabStrip(argPath As String)
+    
+    If MainTabStrip[0].Children.Count > 0 Then Inc MainTabStrip.Count
+    MainTabStrip.Index = MainTabStrip.Count - 1
+    MainTabStrip.Text = File.Name(argPath) 
+    
+End
+
+Private Sub setEditor(argPath As String)
+    
+    Dim yukiEditor As New Editor(MainTabStrip)
+    
+    With yukiEditor
+        .TabSize = 4
+        .Flags[Editor1.ShowLineNumbers] = True
+        .Flags[Editor1.ShowLimits] = True
+        .Text = File.Load(argPath)
+        .Highlight = Highlight.Gambas
+        .Font.Size = 12
+    End With
+    
+End
+
+Public Sub SetCode(argPath As String)
+    
+    setTabStrip(argPath)
+    setEditor(argPath)
+    Me.Title = File.Name(argPath)
+
+End
+
+Public Sub Form_Show()
+    
+    NagatoSettings.LoadFormSettings(Me)
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End

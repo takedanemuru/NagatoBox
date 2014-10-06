@@ -1,0 +1,14 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Public Sub _initialize() ' override
+    
+    Dim yukiPanel As New Panel(Me._$parentContainer)
+    
+    With yukiPanel
+        .Expand = True
+        .Background = Me._$parentContainer.Background
+    End With
+    
+End

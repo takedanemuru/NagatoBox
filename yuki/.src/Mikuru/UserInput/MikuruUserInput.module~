@@ -1,9 +1,11 @@
 ' Gambas module file
 
+Property Read All As String[]
 Property Read Count As Integer
 Property Read Index As Integer
 Property Read Numbers As Integer[]
-Property Read All As String[]
+Property Read NumbersMax As Integer
+Property Read NumbersMin As Integer
 
 Private $inputs As New String[]
 Private $index As Integer 
@@ -79,4 +81,16 @@ Private Function Numbers_Read() As Integer[]
 
     Return MikuruUserInputNumbers($inputs)
     
+End
+
+Private Function NumbersMax_Read() As Integer
+
+    Return MikuruUserInputNumbers.GetMax($inputs)
+
+End
+
+Private Function NumbersMin_Read() As Integer
+
+    Return MikuruUserInputNumbers.GetMin($inputs)
+
 End

@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Public _$uniqueName As String = "StarMenu"
+
+Public Sub _RefreshChildMenus() ' override
+    
+    Me._AddMenu("Open", MikuruSignal.FileOpen, "search")
+    'Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
+        Me._AddMenu("", 0)
+    Me._AddMenu("About", MikuruSignal.ApplicationAbout, "star")
+    Me._AddMenu("Quit", MikuruSignal.ApplicationClose, "button-power")
+    
+End

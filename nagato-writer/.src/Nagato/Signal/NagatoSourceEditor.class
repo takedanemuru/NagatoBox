@@ -4,12 +4,12 @@ Inherits NagatoUxContainer
 
 Property Text As String
 
-Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel
+Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
 Private $fileHandler As New NagatoFileHandler
 Private $textArea As NagatoTextArea
 
-Private Function ensureSaved() As Boolean ' False means cancel to open file
+Private Function ensureSaved(Optional argCloseApp As Boolean) As Boolean ' False means cancel to open file
     
     If $textArea.Text = $fileHandler.Buffer Then Return True
     
@@ -57,11 +57,15 @@ Public Sub GetSaveStatus() As Integer
     
     If $textArea.Text = $fileHandler.Buffer Then Return Me.ResponseHasBeenSaved
     
-    If ensureSaved() Then
-        Return Me.ResponseSaved
-    Else
-        Return Me.ResponseCancel
-    Endif
+    Select Case HaruhiDialogClose.ShowDialog()
+        Case HaruhiDialogClose.ResponseCancel
+            Return Me.ResponseCancel
+        Case HaruhiDialogClose.ResponseDiscard
+            Return Me.ResponseDiscard
+        Case HaruhiDialogClose.ResponseSave
+            Raise Signal(MikuruSignal.FileSave, Null)
+            Return Me.ResponseSaved
+    End Select
     
 End
 
