@@ -1,0 +1,59 @@
+' Gambas class file
+
+Private $legend As Float
+
+Private Function getScale(argZoomLevel As Integer, argLatitude As Float) As Float
+    
+    Dim yukiPerPixel As Float = 40000 * Cos(Rad(argLatitude)) / 2 ^ (argZoomLevel + 8)
+    Dim yukiLegends As Float[] = [1000, 500, 100, 50, 10, 5, 1, 0.5, 0.1, 0.05]
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To yukiLegends.Max
+        If (yukiLegends[yukiIndex] / yukiPerPixel) > 30 Then Continue
+        $legend = yukiLegends[yukiIndex]
+        Debug yukiLegends[yukiIndex] / yukiPerPixel
+        Return yukiLegends[yukiIndex] / yukiPerPixel
+    Next
+    
+    $legend = 0.01
+    Return 0.01 / yukiPerPixel
+    
+End
+
+Private Function getMaxSteps(argStepWidth As Float, argWindowWidth As Integer) As Integer
+    
+    If argStepWidth * 30 >= (argWindowWidth / 2) Then
+        Return 20
+    Else If argStepWidth * 30 >= (argWindowWidth / 2) Then
+        Return 30
+    Else
+        Return 40
+    Endif
+    
+End
+
+Public Sub Draw(argMapView As MapView)
+    
+    Dim yukiScale As Float = getScale(argMapView.Map.Zoom, argMapView.Map.Center.Lat)
+    Dim yukiMaxSteps As Integer = getMaxSteps(yukiScale, argMapView.W)
+    Dim yukiIndex As Integer
+
+    Paint.Begin(Draw.Device)
+        Paint.Brush = Paint.Color(Color.White + 16777216 * 128)
+        Paint.Rectangle(0, argMapView.H - 40, yukiScale * yukiMaxSteps + 20, 40)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(Color.White + 16777216 * 64)
+        Paint.Rectangle(10, argMapView.H - 20, yukiScale * yukiMaxSteps, 10)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
+        For yukiIndex = 0 To 9 Step 2
+            Paint.Rectangle(10 + (yukiScale * yukiIndex), argMapView.H - 20, yukiScale, 10)
+        Next
+        Paint.Rectangle(10 + yukiScale * 10, argMapView.H - 20, yukiScale * 5, 10)
+        If yukiMaxSteps >= 40 Then Paint.Rectangle(10 + yukiScale * 20, argMapView.H - 20, yukiScale * 10, 10)
+        Paint.DrawText(Subst$("&1 km", $legend * 10), 10 + yukiScale * 10, argMapView.H - 25)
+        Paint.DrawText(Subst$("&1 km", $legend * 20), 10 + yukiScale * 20, argMapView.H - 25)
+        Paint.Fill()
+    Paint.End()
+    
+End

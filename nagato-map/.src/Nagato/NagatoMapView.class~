@@ -3,8 +3,8 @@
 Inherits NagatoMenuPipe
 
 Private $mapView As MapView
-Private $mapArrow As New NagatoMapArrow
 Private $marker As New NagatoMapMarker
+Private $lineScale As New NagatoLineScale
 Private $observer As Observer
 
 Event NewPoint(argLatitude As Float, argLongitude As Float)
@@ -35,8 +35,6 @@ End
 
 Public Sub SetLocation(argLatitude As Float, argLongitude As Float, argZoom As Integer)
     
-    $mapArrow.Visible = False
-    
     With $mapView.Map
         .Center.Lat = argLatitude
         .Center.Lon = argLongitude
@@ -48,7 +46,6 @@ End
 
 Public Sub SetMarker(argLatitude As Float, argLongitude As Float)
     
-    '$mapArrow.SetArrow(argLatitude, argLongitude)
     $marker.SetArrow(argLatitude, argLongitude)
     
     With $mapView.Map
@@ -79,11 +76,21 @@ Public Sub _new(argMapView As MapView)
     
 End
 
+Private Sub drawSomethig()
+    
+    Paint.Begin(Draw.Device)
+        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
+        Paint.Rectangle(20, $mapView.H - 40, 200, 20)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
 Public Sub Asakura_Draw()
     
-    'If $mapArrow.Visible Then $mapArrow.Draw($mapView)
+    If $marker.Visible Then $marker.Draw($mapView)
     
-    $marker.Draw($mapView)
+    drawSomethig()
     
     Raise NewPoint($mapView.Map.Center.Lat, $mapView.Map.Center.Lon)
     

@@ -7,7 +7,7 @@ Private $tabStrip As TabStrip
 Private $weather As NagatoInfoWeather
 Private $bookmark As NagatoInfoBookmarks
 Private $search As NagatoInfoSearch
-Private $cantidates As NagatoInfoWikipediaCantidates
+Private $candidates As NagatoInfoWikipediacandidates
 Private $article As NagatoInfoWikipediaArticle
 
 Private Sub initializeSidePanel(argSidePanel As SidePanel)
@@ -42,7 +42,7 @@ Public Sub Activate(argSidePanel As SidePanel)
     initializeSidePanel(argSidePanel)
     initializeTabStrip()
     $weather = New NagatoInfoWeather($tabStrip)
-    $cantidates = New NagatoInfoWikipediaCantidates($tabStrip) As "Cantidates"
+    $candidates = New NagatoInfoWikipediacandidates($tabStrip) As "Candidates"
     $article = New NagatoInfoWikipediaArticle($tabStrip)
     $bookmark = New NagatoInfoBookmarks($tabStrip)
     $search = New NagatoInfoSearch($tabStrip)
@@ -61,7 +61,7 @@ End
 
 Public Sub Request(argLatitude As Float, argLongitude As Float)
     
-    $cantidates.Request(argLatitude, argLongitude)
+    $candidates.Request(argLatitude, argLongitude)
     $weather.Request(argLatitude, argLongitude)
     
 End
@@ -72,7 +72,7 @@ Public Sub AddBookmark()
     
 End
 
-Public Sub Cantidates_NewArticle(argUrl As String)
+Public Sub Candidates_NewArticle(argUrl As String)
     
     $article.Url = argUrl
     $tabStrip.Index = 1
