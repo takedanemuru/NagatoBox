@@ -2,7 +2,7 @@
 
 Public Sub Main()
     
-    Debug NagatoDBSymbol.Ready ' this call activate NagatoDBSymbol, so do not delete.
+    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." ' this call activate NagatoDBSymbol, so do not delete.
     
     Application.Theme = "Numix-Circle"
     

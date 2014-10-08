@@ -1,0 +1,57 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $gridView As GridView
+
+Private Sub setBackgroundColor(argRow As Integer)
+    
+    Dim yukiColumn As Integer
+    
+    If Odd(argRow) Then Return
+    
+    For yukiColumn = 0 To $gridView.Columns.Max
+        $gridView[argRow, yukiColumn].Background = Color.Lighter(Color.Lighter(Color.Violet))
+    Next
+    
+End
+
+Public Sub _Initialize()
+    
+    $gridView = New GridView(Me._$parentContainer)
+    
+    With $gridView
+        .Columns.Count = 3
+        .Rows.Count = 1
+        .Columns[0].Text = ("Japanese")
+        .Columns[1].Text = ("Pronunciation")
+        .Columns[2].Text = ("English")
+        .ScrollBar = Scroll.Both
+        .Expand = True
+    End With
+    
+End
+
+Public Sub SetData(argJapanese As String, argPronunciation As String, argEnglish As String)
+    
+    With $gridView
+        Inc .Rows.Count
+        .[.Rows.Max, 0].Text = argJapanese
+        .[.Rows.Max, 1].Text = argPronunciation
+        .[.Rows.Max, 2].Text = argEnglish
+        If HaruhiMain.Font.TextWidth(.[.Rows.Max, 0].Text) > .Columns[0].W Then
+            .Columns[0].W = HaruhiMain.Font.TextWidth(.[.Rows.Max, 0].Text)
+        Endif
+        setBackgroundColor(.Rows.Max)
+    End With
+    
+End
+
+Public Sub Clear()
+    
+    With $gridView
+        .Clear()
+        .Rows.Count = 0
+    End With
+    
+End

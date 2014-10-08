@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $comboBox As ComboBox
+
+Public Sub _initialize() ' virtual
+    
+    $comboBox = New ComboBox(Me._$parentContainer) As "ComboBox"
+    
+    With $comboBox
+        .List = ["General", "Computer"]
+        .W = 100
+        .ReadOnly = True
+        .Index = 0
+    End With
+    
+End

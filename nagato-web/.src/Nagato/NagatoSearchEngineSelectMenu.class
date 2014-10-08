@@ -19,7 +19,7 @@ Private Sub initializeCategoryMenus()
     
     Dim yukiMenu As Object
     
-    yukiMenu = New NagatoEngineMenuGoogle($rootMenu) As "Menu"
+    yukiMenu = New NagatoEngineMenuSearchEngines($rootMenu) As "Menu"
     yukiMenu = New NagatoEngineMenuMovie($rootMenu) As "Menu"
     yukiMenu = New NagatoEngineMenuNews($rootMenu) As "Menu"
     yukiMenu = New NagatoEngineMenuSocial($rootMenu) As "Menu"
@@ -27,6 +27,7 @@ Private Sub initializeCategoryMenus()
     yukiMenu = New NagatoEngineMenuUbuntu($rootMenu) As "Menu"
     yukiMenu = New NagatoEngineMenuTech($rootMenu) As "Menu"
     yukiMenu = New NagatoEngineMenuSourceCodes($rootMenu) As "Menu"
+    yukiMenu = New NagatoEngineMenuDictionary($rootMenu) As "Menu"
     
 End
 

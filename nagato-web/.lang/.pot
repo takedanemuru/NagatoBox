@@ -58,15 +58,23 @@ msgstr ""
 msgid "Edit bookmark"
 msgstr ""
 
-#: NagatoEngineMenuGoogle.class:9
+#: NagatoEngineMenuDictionary.class:9
+msgid "Japanese to English"
+msgstr ""
+
+#: NagatoEngineMenuDictionary.class:10
+msgid "English to Japanese"
+msgstr ""
+
+#: NagatoEngineMenuGoogle.class:9 NagatoEngineMenuSearchEngines.class:13
 msgid "Google"
 msgstr ""
 
-#: NagatoEngineMenuGoogle.class:10
+#: NagatoEngineMenuGoogle.class:10 NagatoEngineMenuSearchEngines.class:14
 msgid "Google - Japanese"
 msgstr ""
 
-#: NagatoEngineMenuGoogle.class:11
+#: NagatoEngineMenuGoogle.class:11 NagatoEngineMenuSearchEngines.class:15
 msgid "Google - Image"
 msgstr ""
 
@@ -116,6 +124,19 @@ msgstr ""
 
 #: NagatoEngineMenuNews.class:13
 msgid "Independent"
+msgstr ""
+
+#: NagatoEngineMenuSearchEngines.class:9
+#: NagatoSearchEngineSelectButton.class:16
+msgid "DuckDuckGo"
+msgstr ""
+
+#: NagatoEngineMenuSearchEngines.class:10
+msgid "Bing"
+msgstr ""
+
+#: NagatoEngineMenuSearchEngines.class:11
+msgid "Yandex"
 msgstr ""
 
 #: NagatoEngineMenuSocial.class:9
@@ -196,10 +217,6 @@ msgstr ""
 
 #: NagatoEngineMenuUbuntu.class:13
 msgid "Man Pages"
-msgstr ""
-
-#: NagatoSearchEngineSelectButton.class:16
-msgid "DuckDuckGo"
 msgstr ""
 
 #: NagatoStarMenu.class:23

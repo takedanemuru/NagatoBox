@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $searchBox As ButtonBox
+
+Public Sub _Initialize()
+    
+    $searchBox = New ButtonBox(Me._$parentContainer) As "SearchBox"
+    
+    With $searchBox
+        .Text = ""
+        .Picture = MikuruIcon.Get("search")
+        .W = 200
+    End With
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    If $searchBox.Text = "" Then Return
+    
+    Raise Signal(MikuruSignal.Query, [$searchBox.Text])
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    SearchBox_Activate()
+    
+End

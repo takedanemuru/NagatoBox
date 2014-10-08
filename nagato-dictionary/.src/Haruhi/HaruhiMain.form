@@ -4,43 +4,7 @@
   MoveScaled(0,0,81,51)
   Icon = Picture["pictures/mono_icons/book-open-bookmark.png"]
   Arrangement = Arrange.Vertical
-  { HBox1 HBox
+  { MenuPanel HBox
     MoveScaled(1,1,69,4)
-    { GeneralButton ToggleButton
-      MoveScaled(0,0,12,4)
-      AutoResize = True
-      Text = ("General")
-      Radio = True
-      Value = True
-    }
-    { CompTermButton ToggleButton
-      MoveScaled(11,0,12,4)
-      AutoResize = True
-      Text = ("Computer term")
-      Radio = True
-    }
-    { PropNounButton ToggleButton
-      MoveScaled(24,0,12,4)
-      AutoResize = True
-      Text = ("Proper noun")
-      Radio = True
-    }
-    { Panel1 Panel
-      MoveScaled(35,0,2,4)
-      Expand = True
-    }
-    { SearchButtonBox ButtonBox
-      MoveScaled(37,0,25,4)
-      Picture = Picture["pictures/mono_icons/search.png"]
-    }
-    { StarButton MenuButton
-      MoveScaled(62,0,6,4)
-      Text = ("MenuButton1")
-    }
-  }
-  { ResultGridView GridView
-    MoveScaled(2,7,76,42)
-    Expand = True
-    Header = GridView.Horizontal
   }
 }

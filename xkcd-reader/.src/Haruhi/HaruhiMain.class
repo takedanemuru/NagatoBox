@@ -18,8 +18,10 @@ Private Sub setForm()
     
     With Me
         .Title = Subst$("(#&1)  &2", $api.Number, $api.SafeTitle)
-        .Center()
-        .Show()
+        If .Closed Then .Show()
+        '.Center() ' doesn't work correctlly. why ?
+        Me.X = (Screen.W - Me.W) / 2
+        Me.Y = (Screen.H - Me.H) / 2
     End With
     
 End
@@ -39,7 +41,7 @@ Public Sub Api_Finished()
     
 End
 
-Public Sub MainImageView_MouseDown()
+Public Sub MainImageView_DblClick()
 
     $api.GetSelect($index.GetRandom())
 

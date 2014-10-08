@@ -1,0 +1,40 @@
+' Gambas class file
+
+Create Static
+
+Property Read ExactMatch As Boolean
+Property Read IgnoreCase As Boolean
+Property Read DBPath As String
+
+Private $settings As New Settings
+
+Public Sub EnsureDictionaryData()
+    
+    Dim yukiDirectory As String = User.Home &/ ".nagato-dictionary"
+    
+    If Not Exist(yukiDirectory) Then Mkdir yukiDirectory
+    If Not Exist(yukiDirectory &/ "edict.sqlit3") Then
+         Copy "dictionary_data/edict.sqlite3" To yukiDirectory &/ "edict.sqlit3"
+    End If
+    
+End
+
+Private Function ExactMatch_Read() As Boolean
+
+    Return False
+
+End
+
+Private Function IgnoreCase_Read() As Boolean
+
+    Return True
+
+End
+
+Private Function DBPath_Read() As String
+
+    Dim yukiDirectory As String = User.Home &/ ".nagato-dictionary"
+
+    Return yukiDirectory &/ "edict.sqlit3"
+
+End

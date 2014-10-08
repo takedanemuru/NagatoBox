@@ -1,25 +1,27 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.2
+# Compiled with Gambas 3.5.4
 Title=nagato-dictionary
 Startup=Kyon
 Icon=pictures/mono_icons/book-open-bookmark.png
-Version=0.1.2
+Version=0.3.0
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
+Component=gb.db
+Component=gb.db.sqlite3
 Component=gb.settings
 Component=gb.qt4.ext
 Description="English/Japanese dictionary"
-Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru<takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=ja
-Maintainer=colonel-in-cheese
-Vendor=The Alien and RadioNoise
-Address=takeda.nemuru@gmail.com
+Maintainer=takeda.nemuru
+Vendor=Integrated Data Thought Entity
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-dictionary-0.1.2
+PackageName=nagato-dictionary-0.3.0
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

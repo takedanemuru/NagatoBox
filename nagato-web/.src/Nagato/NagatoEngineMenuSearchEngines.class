@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoSearchEngineMenu
+
+Public Const _CategoryName As String = "Search Engines"
+
+Public Sub _InitializeChildMenus() ' override
+    
+    Me._AddChildMenu(("DuckDuckGo"), "!duckduckgo")
+    Me._AddChildMenu(("Bing"), "!bing")
+    Me._AddChildMenu(("Yandex"), "!yandex")
+        Me._AddChildMenu("", Null)
+    Me._AddChildMenu(("Google"), "!g")
+    If System.Language Begins "ja" Then Me._AddChildMenu(("Google - Japanese"), "!gj")
+    Me._AddChildMenu(("Google - Image"), "!gi")
+    
+End

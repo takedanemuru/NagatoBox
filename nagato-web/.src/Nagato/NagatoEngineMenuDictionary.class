@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoSearchEngineMenu
+
+Public Const _CategoryName As String = "Dictionary"
+
+Public Sub _InitializeChildMenus() ' override
+    
+    Me._AddChildMenu(("Japanese to English"), "!je")
+    Me._AddChildMenu(("English to Japanese"), "!ej")
+    
+End
