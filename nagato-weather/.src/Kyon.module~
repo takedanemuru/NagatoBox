@@ -2,9 +2,9 @@
 
 Public Sub Main()
     
+    Debug NagatoSettings.UserLatitude
+    
     HaruhiMain.Show()
     HaruhiMain.Request(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
-    
-    HaruhiAbout.Show()
     
 End

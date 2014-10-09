@@ -4,8 +4,8 @@ Public Sub Main()
     
     NagatoSettings.EnsureDictionaryData()
     
-    Debug NagatoDBCompDict.HostName
-    Debug NagatoDBGeneralDict.HostName
+    Debug "YUKI.N > Activate compdict table on " & NagatoDBCompDict.HostName
+    Debug "YUKI.N > Activate generaldict tabel on " & NagatoDBGeneralDict.HostName
     
     HaruhiMain.Show()
     

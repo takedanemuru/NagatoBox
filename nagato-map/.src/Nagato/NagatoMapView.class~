@@ -76,21 +76,11 @@ Public Sub _new(argMapView As MapView)
     
 End
 
-Private Sub drawSomethig()
-    
-    Paint.Begin(Draw.Device)
-        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
-        Paint.Rectangle(20, $mapView.H - 40, 200, 20)
-        Paint.Fill()
-    Paint.End()
-    
-End
-
 Public Sub Asakura_Draw()
     
     If $marker.Visible Then $marker.Draw($mapView)
     
-    drawSomethig()
+    $lineScale.Draw($mapView)
     
     Raise NewPoint($mapView.Map.Center.Lat, $mapView.Map.Center.Lon)
     

@@ -11,7 +11,6 @@ Private Function getScale(argZoomLevel As Integer, argLatitude As Float) As Floa
     For yukiIndex = 0 To yukiLegends.Max
         If (yukiLegends[yukiIndex] / yukiPerPixel) > 30 Then Continue
         $legend = yukiLegends[yukiIndex]
-        Debug yukiLegends[yukiIndex] / yukiPerPixel
         Return yukiLegends[yukiIndex] / yukiPerPixel
     Next
     

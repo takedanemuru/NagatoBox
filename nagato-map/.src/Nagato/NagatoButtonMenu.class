@@ -7,7 +7,7 @@ Private $rootMenu As Menu
 
 Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton)
     
-    $rootMenu = New Menu(argForm)
+    $rootMenu = New Menu(argForm) As "ParentMenu"
     $rootMenu.Name = $uniqueName
     argButton.Menu = $uniqueName
     
@@ -32,6 +32,7 @@ Private Sub addMenus()
         Object.New("NagatoSubMenuWikipedia", [$rootMenu])
         'addMenuItem(("Information"), .MenuInformation, MikuruIcon.Get("information-balloon"))
         addMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
+        addMenuItem(("Show Scale"), .MapShowScale, IIf(NagatoSettings.ShowScale, MikuruIcon.Get("button-check"), Null))
             addMenuItem((""), 0) ' as a separator
         addMenuItem(("About"), .MenuAbout, MikuruIcon.Get("star"))
         addMenuItem(("Close"), .MenuQuit, MikuruIcon.Get("button-cross"))
@@ -42,7 +43,8 @@ End
 Public Sub _new(argForm As Form, argButton As MenuButton)
     
     initializeRootMenu(argForm, argButton)
-    addMenus()
+    addMenuItem("", 0)
+    'addMenus()
     
 End
 
@@ -50,6 +52,8 @@ Public Sub MenuItem_Click()
     
     With NagatoMenuPipe
         Select Case Last.Tag
+            Case .MapShowScale
+                NagatoSettings.ShowScale = Not NagatoSettings.ShowScale
             Case .MenuAbout
                 HaruhiAbout.ShowDialog()
             Case .MenuQuit
@@ -60,5 +64,13 @@ Public Sub MenuItem_Click()
                 Raise MenuEvent(Last.Tag)
         End Select
     End With
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    $rootMenu.Children.Clear()
+    
+    addMenus()
     
 End

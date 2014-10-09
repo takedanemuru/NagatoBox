@@ -4,6 +4,9 @@ Public Sub Main()
     
     NagatoSettings.EnsureDictionaryData()
     
+    Debug NagatoDBCompDict.HostName
+    Debug NagatoDBGeneralDict.HostName
+    
     HaruhiMain.Show()
     
 End

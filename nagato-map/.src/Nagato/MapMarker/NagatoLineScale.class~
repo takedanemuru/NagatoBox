@@ -20,27 +20,37 @@ Private Function getScale(argZoomLevel As Integer, argLatitude As Float) As Floa
     
 End
 
+Private Function getMaxSteps(argStepWidth As Float, argWindowWidth As Integer) As Integer
+    
+    If argStepWidth * 30 >= (argWindowWidth / 2) Then
+        Return 20
+    Else If argStepWidth * 30 >= (argWindowWidth / 2) Then
+        Return 30
+    Else
+        Return 40
+    Endif
+    
+End
+
 Public Sub Draw(argMapView As MapView)
     
     Dim yukiScale As Float = getScale(argMapView.Map.Zoom, argMapView.Map.Center.Lat)
+    Dim yukiMaxSteps As Integer = getMaxSteps(yukiScale, argMapView.W)
     Dim yukiIndex As Integer
-    Dim yukiTotalWidth As Float
-    
-    yukiTotalWidth = IIf(yukiScale * 40 >= (argMapView.W / 2), yukiScale * 30, yukiScale * 40)
 
     Paint.Begin(Draw.Device)
         Paint.Brush = Paint.Color(Color.White + 16777216 * 128)
-        Paint.Rectangle(0, argMapView.H - 40, yukiTotalWidth + 20, 40)
+        Paint.Rectangle(0, argMapView.H - 40, yukiScale * yukiMaxSteps + 20, 40)
         Paint.Fill()
         Paint.Brush = Paint.Color(Color.White + 16777216 * 64)
-        Paint.Rectangle(10, argMapView.H - 20, yukiTotalWidth, 10)
+        Paint.Rectangle(10, argMapView.H - 20, yukiScale * yukiMaxSteps, 10)
         Paint.Fill()
         Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
         For yukiIndex = 0 To 9 Step 2
             Paint.Rectangle(10 + (yukiScale * yukiIndex), argMapView.H - 20, yukiScale, 10)
         Next
         Paint.Rectangle(10 + yukiScale * 10, argMapView.H - 20, yukiScale * 5, 10)
-        Paint.Rectangle(10 + yukiScale * 20, argMapView.H - 20, yukiScale * 10, 10)
+        If yukiMaxSteps >= 40 Then Paint.Rectangle(10 + yukiScale * 20, argMapView.H - 20, yukiScale * 10, 10)
         Paint.DrawText(Subst$("&1 km", $legend * 10), 10 + yukiScale * 10, argMapView.H - 25)
         Paint.DrawText(Subst$("&1 km", $legend * 20), 10 + yukiScale * 20, argMapView.H - 25)
         Paint.Fill()

@@ -80,7 +80,7 @@ Public Sub Asakura_Draw()
     
     If $marker.Visible Then $marker.Draw($mapView)
     
-    $lineScale.Draw($mapView)
+    If NagatoSettings.ShowScale Then $lineScale.Draw($mapView)
     
     Raise NewPoint($mapView.Map.Center.Lat, $mapView.Map.Center.Lon)
     
