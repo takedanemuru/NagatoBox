@@ -153,6 +153,8 @@ Public Sub KeyBoard_KeyPress(argKeyCode As Integer)
             If IsDir($selectionBar.LastSelected) Then Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, $selectionBar.LastSelected)
         Case Key.Esc, 16777216
             Me.Refresh($currentDirectory)
+        Case Key.Delete
+            NagatoTrash.Delete($selectionBar.Paths)
     End Select
     
 End

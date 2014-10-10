@@ -1,0 +1,24 @@
+' Gambas class file
+
+Create Static
+
+Property Read Queries As String[]
+
+Private $queries As String[]
+
+Public Sub Parsing()
+    
+    Args.Begin()
+    
+    $queries = Args.End()
+    
+End
+
+
+Private Function Queries_Read() As String[]
+
+    'Return $queries
+
+    Return ["課題"]
+
+End

@@ -49,9 +49,20 @@ Private Function getPathToRestore(argPath As String) As String
     
 End
 
+Private Sub confirm(argPaths As String[]) As Boolean
+    
+    HaruhiDialogDelete.SetMessage(argPaths)
+    If HaruhiDialogDelete.ShowDialog() = HaruhiDialogDelete.ResponseDelete Then Return True
+    
+    Return False
+    
+End
+
 Public Sub Delete(argPaths As String[])
     
     Dim yukiPath As String
+    
+    If Not confirm(argPaths) Then Return
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue

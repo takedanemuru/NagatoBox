@@ -1,0 +1,50 @@
+' Gambas class file
+
+Public Enum ResponseCancel, ResponseDelete
+
+Private $message As String
+
+Public Sub SetMessage(argPaths As String[])
+    
+    Dim yukiIndex As Integer
+    
+    $message = "YUKI.N > We are going to kill..<br><br>"
+    
+    For yukiIndex = 0 To argPaths.Max
+        $message &= Subst$("&1<br>", File.Name(argPaths[yukiIndex]))
+        If yukiIndex = 2 Then 
+            $message &= Subst$(("and other &1 more file(s)"), argPaths.Count - 3)
+            Break
+        Endif
+    Next
+    
+    MainDrawingArea.Refresh()
+    
+End
+
+Public Sub Form_Open()
+
+    
+
+End
+
+Public Sub MainDrawingArea_Draw()
+    
+    Paint.Begin(MainDrawingArea)
+        Paint.DrawImage(Image.Load("pictures/persona.jpg").Stretch(MainDrawingArea.W, MainDrawingArea.H), 0, 0)
+        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
+        Paint.Rectangle(20, 170, 260, 110)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText($message, 20, 170, 260, 110, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub Buttons_Click()
+
+    Me.Close(Last.Tag)
+
+End

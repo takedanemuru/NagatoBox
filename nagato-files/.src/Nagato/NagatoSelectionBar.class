@@ -86,7 +86,7 @@ Public Sub ActionButton_Click()
             MikuruArrayTest($selection.Paths)
             MikuruFileManuever.MoveTo($selection.Paths)
         Case ButtonDelete
-            MikuruFile.TrashFiles($selection.Paths)
+            NagatoTrash.Delete($selection.Paths)
     End Select
     
 End

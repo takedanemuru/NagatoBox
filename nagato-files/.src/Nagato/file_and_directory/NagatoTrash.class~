@@ -1,0 +1,113 @@
+' Gambas class file
+
+Create Static
+
+Property Read PathFiles As String
+Property Read PathInfo As String
+Property Read Count As Integer
+Property Read Size As String
+
+Private $uriDecoder As New NagatoUriDecoder
+
+Event StartEmpty
+Event FinishEmpty
+
+Private Function getTrashInfoPath(argPath As String) As String
+    
+    Return Quote(Replace$(argPath, Me.PathFiles, Me.PathInfo) & ".trashinfo")
+    
+End
+
+Private Function getDecodedPath(argPath As String) As String
+    
+    Return MikuruPath.GetSafePathName(URL.Decode(Replace(argPath, "Path=", "")))
+    
+End
+
+Private Function getPathToRestore(argPath As String) As String
+    
+    Dim yukiInfoPath As String = UnQuote(getTrashInfoPath(argPath))
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    Dim yukiResult As String = ""
+    
+    If Not Exist(yukiInfoPath) Then Return ""
+    
+    yukiStream = Open yukiInfoPath For Input
+
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine Begins "Path=" Then
+            yukiResult = getDecodedPath(yukiLine)
+            Debug yukiResult
+        End If
+    Wend
+    
+    Close #yukiStream
+    
+    Return yukiResult
+    
+End
+
+Public Sub Delete(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), getTrashInfoPath(yukiPath))
+        If Not Error Then Debug "done"
+    Next
+    
+End
+
+Public Sub Restore(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiPathToRestore As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        yukiPathToRestore = getPathToRestore(yukiPath)
+        Try Copy yukiPath To yukiPathToRestore
+        If Not Error Then Me.Delete([yukiPath])
+    Next
+    
+End
+
+Public Function GetPreviousPath(argPath As String) As String
+    
+    Return getPathToRestore(argPath)
+    
+End
+
+Private Function PathFiles_Read() As String
+
+    Return User.Home &/ ".local/share/Trash/files"
+
+End
+
+Private Function PathInfo_Read() As String
+
+    Return User.Home &/ ".local/share/Trash/info"
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return Dir(Me.PathInfo).Count
+
+End
+
+Private Function Size_Read() As String
+
+    Dim yukiPath As String
+    Dim yukiSize As Integer
+    
+    For Each yukiPath In Dir(Me.PathFiles)
+        yukiSize += Stat(Me.PathFiles &/ yukiPath).Size
+    Next
+
+    Return MikuruFileSize(yukiSize)
+
+End

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Static
+
+Private Sub searchEnglish(argQuery As String)
+    
+    Dim yukiResult As Result = NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQuery))
+    
+    For Each yukiResult
+        With NagatoDBGeneralDict
+            Print yukiResult[.ColumnJapanese]
+        End With
+    Next
+    
+End
+
+Private Sub searchJapanese(argQuery As String)
+    
+    Dim yukiResult As Result = NagatoDBGeneralDict.Get(Subst$("%&1%", argQuery))
+    
+    For Each yukiResult
+        With NagatoDBGeneralDict
+            Print yukiResult[.ColumnEnglish]
+        End With
+    Next
+    
+End
+
+Public Sub ShowResults(argQueries As String[])
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In argQueries
+        If IsAscii(yukiQuery) Then
+            searchEnglish(yukiQuery)
+        Else
+            searchJapanese(yukiQuery)
+        End If
+    Next
+    
+End

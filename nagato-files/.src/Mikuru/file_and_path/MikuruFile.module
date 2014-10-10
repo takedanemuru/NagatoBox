@@ -39,35 +39,6 @@ Public Sub Exec(argPath As String)
     
 End
 
-Public Sub TrashDirectory(argPath As String)
-    
-    Dim yukiMessage As String = ("YUKI.N > This directory contains some file. Are you sure to delete this directory?")
-    
-    If Dir(argPath).Count > 0 Then 
-        If Message.Warning(yukiMessage, ("Cancel"), ("Delete")) = 1 Then Return
-    End If
-    
-    Try Shell Subst$("trash &1", Quote$(argPath))
-    
-End
-
-Public Sub TrashFile(argPath As String)
-    
-    Try Shell Subst$("trash &1", Quote$(argPath))
-    
-End
-
-Public Sub TrashFiles(argPaths As String[])
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In argPaths
-        If Not Exist(yukiPath) Then Continue
-        Try Shell Subst$("trash &1", Quote$(yukiPath))
-    Next
-    
-End
-
 Public Function GetFileSizeText(argPath As String) As String
     
     Return MikuruFileSize.GetFileSizeText(argPath)

@@ -1,0 +1,60 @@
+' Gambas class file
+
+Inherits NagatoFileSearchHandler
+
+Property Value As Boolean
+
+Private $checkBox As CheckBox
+Private $radioButtonsContainer As VBox
+
+Private Sub initializeCheckBox()
+    
+    $checkBox = New CheckBox(Me._$container) As "QueryBox"
+    
+    With $checkBox
+        .Expand = False
+        .Height = Me.Height
+        .Text = ("Recursive")
+        .Value = True
+    End With
+    
+End
+
+Private Sub setRadioButtons()
+    
+    Dim yukiRadioButton As RadioButton
+    Dim yukiNames As String[] = ["include", "begins", "ends"]
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To yukiNames.Max
+        yukiRadioButton = New RadioButton($radioButtonsContainer) As "RadioButton"
+        yukiRadioButton.Text = yukiNames[yukiIndex]
+        yukiRadioButton.H = 24
+        yukiRadioButton.Expand = True
+        If yukiIndex = 0 Then yukiRadioButton.Value = True
+    Next
+    
+End
+
+Public Sub _Initialize()
+    
+    initializeCheckBox()
+    
+    $radioButtonsContainer = New VBox(Me._$container)
+    $radioButtonsContainer.AutoResize = True
+    
+    setRadioButtons()
+    
+End
+
+Private Function Value_Read() As Boolean
+
+    Return $checkBox.Value
+
+End
+
+Private Sub Value_Write(Value As Boolean)
+
+    $checkBox.Value = Value
+
+End

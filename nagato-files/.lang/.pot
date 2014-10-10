@@ -30,19 +30,38 @@ msgstr ""
 msgid "License"
 msgstr ""
 
+#: HaruhiDialogClose.form:28 HaruhiDialogDelete.form:27
+#: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
+#: HaruhiSelectApplication.class:13 HaruhiTagging.form:22
+#: MikuruDialogTrashEmpty.module:9 NagatoDBTag.class:20
+#: NagatoStarMenu.class:110
+msgid "Cancel"
+msgstr ""
+
+#: HaruhiDialogClose.form:36
+msgid "Save"
+msgstr ""
+
+#: HaruhiDialogClose.form:44
+msgid "Discard"
+msgstr ""
+
+#: HaruhiDialogDelete.form:35 NagatoContextMenuDirectory.class:14
+#: NagatoContextMenuFile.class:91 NagatoContextMenuTreeView.class:43
+#: NagatoWidgetMenuButtonDelete.class:12
+msgid "Delete"
+msgstr ""
+
+#: HaruhiDialogDelete.class:16
+msgid "and other &1 more file(s)"
+msgstr ""
+
 #: HaruhiDialogUseGksu.form:18
 msgid "As super user"
 msgstr ""
 
 #: HaruhiDialogUseGksu.form:23
 msgid "As normal user"
-msgstr ""
-
-#: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
-#: HaruhiSelectApplication.class:13 HaruhiTagging.form:22
-#: MikuruDialogTrashEmpty.module:9 MikuruFile.module:47 NagatoDBTag.class:20
-#: NagatoStarMenu.class:110
-msgid "Cancel"
 msgstr ""
 
 #: HaruhiDialogUseGksu.form:35
@@ -134,18 +153,6 @@ msgstr ""
 
 #: MikuruDialogTrashEmpty.module:9 NagatoContextMenuGtkBookmarks.class:11
 msgid "Empty"
-msgstr ""
-
-#: MikuruFile.module:44
-msgid ""
-"YUKI.N > This directory contains some file. Are you sure to delete this "
-"directory?"
-msgstr ""
-
-#: MikuruFile.module:47 NagatoContextMenuDirectory.class:14
-#: NagatoContextMenuFile.class:91 NagatoContextMenuTreeView.class:43
-#: NagatoWidgetMenuButtonDelete.class:12
-msgid "Delete"
 msgstr ""
 
 #: MikuruFileManuever.module:55
@@ -249,7 +256,7 @@ msgstr ""
 msgid "hh:nn:ss"
 msgstr ""
 
-#: NagatoFileSearchCheckBox.class:16
+#: NagatoFileSearchCheckBox.class:17
 msgid "Recursive"
 msgstr ""
 

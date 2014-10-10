@@ -1,0 +1,81 @@
+' Gambas module file
+
+Private Sub runDesktopFile(argPath As String)
+    
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+    Dim yukiCommandArray As String[] = Split(yukiDesktopFile.Exec, " ", "")
+    
+    Try Shell yukiCommandArray[0]
+    
+End
+
+Private Sub openFile(argPath As String)
+    
+    Dim yukiDesktopFile As DesktopFile
+    
+    With MikuruApplications
+            yukiDesktopFile = New DesktopFile(.GlobalApplicationDirectory & .GetDefaultDesktopFiles(argPath)[0])
+    End With
+    
+    Try yukiDesktopFile.Run(argPath)
+    
+Catch
+    Debug "I can't open..."
+    Return
+    
+End
+
+Public Sub Exec(argPath As String) 
+    
+    Dim yukiMimeType As String = DesktopMime.FromFile(argPath).Type
+    
+    If Not Exist(argPath) Then
+        Return
+    Else If yukiMimeType = "application/x-desktop" Then
+        runDesktopFile(argPath)
+    Else
+        openFile(argPath)
+    End If
+    
+End
+
+Public Sub TrashDirectory(argPath As String)
+    
+    Dim yukiMessage As String = ("YUKI.N > This directory contains some file. Are you sure to delete this directory?")
+    
+    If Dir(argPath).Count > 0 Then 
+        If Message.Warning(yukiMessage, ("Cancel"), ("Delete")) = 1 Then Return
+    End If
+    
+    Try Shell Subst$("trash &1", Quote$(argPath))
+    
+End
+
+Public Sub TrashFile(argPath As String)
+    
+    Try Shell Subst$("trash &1", Quote$(argPath))
+    
+End
+
+Public Sub TrashFiles(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        Try Shell Subst$("trash &1", Quote$(yukiPath))
+    Next
+    
+End
+
+Public Function GetFileSizeText(argPath As String) As String
+    
+    Return MikuruFileSize.GetFileSizeText(argPath)
+    
+End
+
+Public Function GetTimeDifferenceText(argDate As Date) As String
+    
+    Return MikuruFileTimeDiff.GetTimeDifferenceText(argDate)
+    
+End
