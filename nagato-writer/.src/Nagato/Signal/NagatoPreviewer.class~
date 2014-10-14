@@ -4,10 +4,10 @@ Inherits NagatoUxContainer
 
 Private $webview As WebView
 
-Public Sub Refresh(argSource As String)
+Public Sub Refresh(argSource As String, Optional argFormat As String = "markdown_github")
     
     '$webview.HTML = MikuruHtmlConverter.ToHtmlDirect(argSource)
-    $webview.HTML = MikuruHtmlConverter.ToHtmlSmart(argSource)
+    $webview.HTML = MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
     $webview.Refresh()
     
 End

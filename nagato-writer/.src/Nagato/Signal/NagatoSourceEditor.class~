@@ -3,6 +3,7 @@
 Inherits NagatoUxContainer
 
 Property Text As String
+Property Read Format As String
 
 Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
@@ -17,7 +18,6 @@ Private Function ensureSaved(Optional argCloseApp As Boolean) As Boolean ' False
         Case HaruhiDialogClose.ResponseCancel
             Return False
         Case HaruhiDialogClose.ResponseDiscard
-            If argCloseApp Then Return False
             Return True
         Case HaruhiDialogClose.ResponseSave
             Raise Signal(MikuruSignal.FileSave, Null)
@@ -37,8 +37,12 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     If argEvent > (MikuruSignal.FileNone + 100) And If Not ensureSaved() Then Return
     
     Select Case argEvent
-        Case MikuruSignal.FileNew
-            $textArea.Text = $fileHandler.New()
+        Case MikuruSignal.FileNewMarkdownGitHub
+            $textArea.Text = $fileHandler.New("markdown_github")
+        Case MikuruSignal.FileNewReStructuredText
+            $textArea.Text = $fileHandler.New("rst")
+        Case MikuruSignal.FileNewTextile
+            $textArea.Text = $fileHandler.New("textile")
         Case MikuruSignal.FileOpenPath
             $textArea.Text = $fileHandler.SetPath(argArgs[0])
         Case MikuruSignal.FileOpen
@@ -58,11 +62,15 @@ Public Sub GetSaveStatus() As Integer
     
     If $textArea.Text = $fileHandler.Buffer Then Return Me.ResponseHasBeenSaved
     
-    If ensureSaved(True) Then
-        Return Me.ResponseSaved
-    Else
-        Return Me.ResponseCancel
-    Endif
+    Select Case HaruhiDialogClose.ShowDialog()
+        Case HaruhiDialogClose.ResponseCancel
+            Return Me.ResponseCancel
+        Case HaruhiDialogClose.ResponseDiscard
+            Return Me.ResponseDiscard
+        Case HaruhiDialogClose.ResponseSave
+            Raise Signal(MikuruSignal.FileSave, Null)
+            Return Me.ResponseSaved
+    End Select
     
 End
 
@@ -75,5 +83,11 @@ End
 Private Sub Text_Write(Value As String)
 
     $textArea.Text = Value
+
+End
+
+Private Function Format_Read() As String
+
+    Return $fileHandler.Format
 
 End

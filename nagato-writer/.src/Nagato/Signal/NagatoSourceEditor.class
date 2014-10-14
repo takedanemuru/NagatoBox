@@ -3,13 +3,14 @@
 Inherits NagatoUxContainer
 
 Property Text As String
+Property Read Format As String
 
 Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
 Private $fileHandler As New NagatoFileHandler
 Private $textArea As NagatoTextArea
 
-Private Function ensureSaved(Optional argCloseApp As Boolean) As Boolean ' False means cancel to open file
+Private Function ensureSaved() As Boolean ' False means cancel to open file
     
     If $textArea.Text = $fileHandler.Buffer Then Return True
     
@@ -36,8 +37,12 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     If argEvent > (MikuruSignal.FileNone + 100) And If Not ensureSaved() Then Return
     
     Select Case argEvent
-        Case MikuruSignal.FileNew
-            $textArea.Text = $fileHandler.New()
+        Case MikuruSignal.FileNewMarkdownGitHub
+            $textArea.Text = $fileHandler.New("markdown_github")
+        Case MikuruSignal.FileNewReStructuredText
+            $textArea.Text = $fileHandler.New("rst")
+        Case MikuruSignal.FileNewTextile
+            $textArea.Text = $fileHandler.New("textile")
         Case MikuruSignal.FileOpenPath
             $textArea.Text = $fileHandler.SetPath(argArgs[0])
         Case MikuruSignal.FileOpen
@@ -78,5 +83,11 @@ End
 Private Sub Text_Write(Value As String)
 
     $textArea.Text = Value
+
+End
+
+Private Function Format_Read() As String
+
+    Return $fileHandler.Format
 
 End

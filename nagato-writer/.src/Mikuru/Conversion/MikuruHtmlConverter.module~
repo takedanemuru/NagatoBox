@@ -12,14 +12,18 @@ Private Function getHeader() As String
     
 End
 
-Public Sub ToHtmlDirect(argSourceText As String, Optional argFormat As String = "markdown_github") As String
+Public Sub ToHtmlDirect(argSourceText As String, argFormat As String) As String
 
     Dim yukiTempPathSource As String = IIf($tempPath, $tempPath, Temp$())
     Dim yukiOutput As String
 
-    File.Save(yukiTempPathSource, getHeader() & MikuruMacro.Set(argSourceText))
+    If argFormat <> "rst" Then
+        File.Save(yukiTempPathSource, getHeader() & MikuruMacro.Set(argSourceText))
+    Else
+        File.Save(yukiTempPathSource, MikuruMacro.Set(argSourceText))
+    End If
 
-    Exec ["pandoc", "-f", argFormat, "-t", "html", yukiTempPathSource] To yukiOutput
+    Exec ["pandoc", "-f", argFormat, "-t", "html5", yukiTempPathSource] To yukiOutput
 
     Return yukiOutput
 
@@ -31,11 +35,9 @@ Public Sub ToHtmlSmart(argSourceText As String, Optional argFormat As String = "
     Dim yukiTempPathTarget As String = Temp$() & ".html"
     Dim yukiOutput As String
 
-    Debug yukiTempPathTarget
-
     File.Save(yukiTempPathSource, getHeader() & MikuruMacro.Set(argSourceText))
 
-    Exec ["pandoc", "-s", "-S", "--toc", "-c", "pandoc.css", "-A", "footer.html", yukiTempPathSource, "-o", yukiTempPathTarget] Wait
+    Exec ["pandoc", "-s", "-S", "--toc", yukiTempPathSource, "-o", yukiTempPathTarget] Wait
 
     Return File.Load(yukiTempPathTarget)
 

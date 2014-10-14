@@ -5,32 +5,22 @@
   Arrangement = Arrange.Fill
   { ChooserTabs TabStrip
     MoveScaled(3,2,60,51)
-    Arrangement = Arrange.Fill
+    Arrangement = Arrange.Horizontal
     Count = 2
     Index = 0
     Text = ("Recent")
     { RecentIcons IconView
       MoveScaled(8,6,46,37)
+      Expand = True
     }
     Index = 1
     Text = ("Select")
-    { HBox1 HBox
-      MoveScaled(1,1,57,44)
-      { SidePanel1 SidePanel
-        MoveScaled(2,6,24,24)
-        Arrangement = Arrange.Fill
-        Orientation = Align.Left
-        { DirChooser1 DirChooser
-          MoveScaled(0,0,18,48)
-          Expand = True
-        }
-      }
-      { SelectIcons IconView
-        MoveScaled(23,5,32,40)
-        Background = &HF7DFFF&
-        Foreground = &HFFFFFF&
-        Expand = True
-      }
+    { DirChooser1 DirChooser
+      MoveScaled(2,4,25,36)
+    }
+    { SelectIcons IconView
+      MoveScaled(30,18,16,16)
+      Expand = True
     }
     Index = 0
   }

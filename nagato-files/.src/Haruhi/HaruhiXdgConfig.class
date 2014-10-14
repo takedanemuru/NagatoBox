@@ -1,0 +1,11 @@
+' Gambas class file
+
+Public Sub Form_Open()
+
+    Dim yukiDirectory As String
+
+    For Each yukiDirectory In NagatoXdg.UserDirs.All
+        Object.New("NagatoXdgConfigBox", [Me, yukiDirectory])
+    Next
+
+End

@@ -2,7 +2,7 @@
 
 Inherits NagatoFileSearchHandler
 
-Property Value As Boolean
+Property Read Value As Boolean
 
 Private $checkBox As CheckBox
 Private $radioButtonsContainer As VBox
@@ -31,7 +31,8 @@ Private Sub setRadioButtons()
         yukiRadioButton.Text = yukiNames[yukiIndex]
         yukiRadioButton.H = 24
         yukiRadioButton.AutoResize = True
-        If yukiIndex = 0 Then yukiRadioButton.Value = True
+        yukiRadioButton.Tag = yukiIndex
+        If yukiIndex = NagatoSettings.SearchMode Then yukiRadioButton.Value = True
     Next
     
 End
@@ -47,14 +48,14 @@ Public Sub _Initialize()
     
 End
 
+Public Sub RadioButton_Click()
+    
+    NagatoSettings.SearchMode = Last.Tag
+    
+End
+
 Private Function Value_Read() As Boolean
 
     Return $checkBox.Value
-
-End
-
-Private Sub Value_Write(Value As Boolean)
-
-    $checkBox.Value = Value
 
 End

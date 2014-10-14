@@ -87,7 +87,8 @@ msgid "YUKI.N > Same name directory or file has been existed"
 msgstr ""
 
 #: HaruhiNewDirectory.class:37 HaruhiRename.class:70
-#: HaruhiSelectApplication.class:13 NagatoDBTag.class:54
+#: HaruhiSelectApplication.class:13 MikuruFileSearch.module:33
+#: NagatoDBTag.class:54
 msgid "OK"
 msgstr ""
 
@@ -139,6 +140,10 @@ msgstr ""
 msgid "Tag Color :"
 msgstr ""
 
+#: HaruhiXdgConfig.form:7
+msgid "xdg-user-dirs configuration"
+msgstr ""
+
 #: MikuruChangeDefaultApplication.module:11
 msgid "Keep Current Setting"
 msgstr ""
@@ -161,6 +166,10 @@ msgstr ""
 
 #: MikuruFileManuever.module:75
 msgid "Copy To ..."
+msgstr ""
+
+#: MikuruFileSearch.module:33
+msgid "YUKI.N > Your query is too generic. I do not show all result."
 msgstr ""
 
 #: NagatoContextMenuDirectory.class:8 NagatoContextMenuGtkBookmarks.class:22

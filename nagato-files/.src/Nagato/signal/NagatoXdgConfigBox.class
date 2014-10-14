@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $hBox As HBox
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .Height = 48
+        .Padding = 6
+    End With
+    
+End
+
+Private Sub setLabel(argPath As String)
+    
+    Dim yukiLabel As New Label($hBox)
+    
+    With yukiLabel
+        .Expand = True
+        .Text = NagatoXdg.GetName(argPath)
+        .Font.Bold = True
+    End With
+    
+End
+
+Private Sub setButtonBox(argPath As String)
+    
+    Dim yukiButton As New ButtonBox($hBox)
+    
+    With yukiButton
+        .W = HaruhiXdgConfig.W / 2 
+        .Picture = NagatoXdg.GetIcon(argPath)
+        .Text = Replace$(argPath, User.Home, "~")
+        .ReadOnly = True
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container, argPath As String)
+    
+    initializeHBox(argContainer)
+    setLabel(argPath)
+    setButtonBox(argPath)
+    
+End

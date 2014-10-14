@@ -6,8 +6,10 @@ Public Sub Main()
     
     Application.Theme = "Numix-Circle"
     
-    NagatoArguments.Parsing()
-    HaruhiMain.Show()
+    HaruhiXdgConfig.Show()
+    
+    ' NagatoArguments.Parsing()
+    ' HaruhiMain.Show()
     
     ' If NagatoArguments.DesktopIcons Then
          'HaruhiDesktop.Show()

@@ -7,6 +7,9 @@ Property MultipleSelection As Boolean
 Property SortBy As Integer
 Property SortAscent As Boolean
 Property PathbarAutomaticSearch As Boolean
+Property SearchMode As Integer
+
+Public Enum SearchInclude, SearchBegins, SearchEnds
 
 Private $settings As New Settings
 
@@ -95,6 +98,19 @@ End
 Private Sub PathbarAutomaticSearch_Write(Value As Boolean)
 
     $settings["pathbar/auto"] = Value
+    $settings.Save()
+
+End
+
+Private Function SearchMode_Read() As Integer
+
+    Return $settings["search/mode", Me.SearchInclude]
+
+End
+
+Private Sub SearchMode_Write(Value As Integer)
+
+    $settings["search/mode"] = Value
     $settings.Save()
 
 End
