@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoSignalWidget
+
+Private Sub initializePanel()
+    
+    Dim yukiPanel As New Panel(Me._$container)
+    
+    With yukiPanel
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeSeparator()
+    
+    Dim yukiSeparator As New Separator(Me._$container)
+    
+    With yukiSeparator
+        .Expand = False
+    End With
+    
+End
+
+Public Sub _InitializeWidgets()
+    
+    initializePanel()
+    initializeSeparator()
+    
+End

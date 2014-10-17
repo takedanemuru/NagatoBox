@@ -16,9 +16,29 @@ Private Sub setForm()
     
 End
 
+Private Sub setNetWmWindowType()
+    
+    Dim yukiWindowType As String = "_NET_WM_WINDOW_TYPE"
+    Dim yukiWindowTypeDock As String = "_NET_WM_WINDOW_TYPE_DOCK"
+    
+    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 ", Me.Id, yukiWindowType, yukiWindowTypeDock) 
+    
+End
+
+Private Sub setNetWmStrut()
+    
+    Dim yukiProperty As String = "_NET_WM_STRUT"
+    Dim yukiValue As String = Subst$("0,0,0,&1", Me.H) 
+    
+    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue)
+    
+End
+
 Public Sub Form_Open()
 
     setForm()
+    setNetWmWindowType()
+    setNetWmStrut()
     NagatoTimer.Activate()
 
     Me.Background = NagatoSettings.BackgroundColor

@@ -5,19 +5,19 @@ Inherits NagatoTreeViewHandler
 Event Move(argDirectory As String)
 Event RequestRefresh()
 
-Private Sub moveFiles()
+Private Sub moveFiles(argDirectory As String)
     
     Dim yukiPath As String
     Dim yukiFlag As Boolean = False
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If Exist(yukiPath) Then 
-            Try Move yukiPath To MikuruPath.GetSafePathName(Me._$treeView.Item.Key &/ File.Name(yukiPath))
+            Try Move yukiPath To MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
             yukiFlag = True
         Endif
     Next
     
-    If yukiFlag Then Raise Move(Me._$treeView.Item.Key)
+    If yukiFlag Then Raise Move(argDirectory)
     
 End
 
@@ -25,8 +25,10 @@ Private Sub moveDroppedFiles()
     
     If Not Exist(Me._$treeView.Item.Key) Then
         Me._$treeView.Remove(Me._$treeView.Item.Key)
+    Else If IsDir(Me._$treeView.Item.Key) Then
+        moveFiles(Me._$treeView.Item.Key)
     Else
-        moveFiles()
+        moveFiles(File.Dir(Me._$treeView.Item.Key))
     End If
     
 End

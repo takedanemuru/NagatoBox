@@ -4,8 +4,10 @@ Public Sub Main()
     
     NagatoArgs.Parsing()
     
+    HaruhiReplacement.Show()
+    
     HaruhiMain.Show()
     
-    If NagatoArgs.Path <> "" Then HaruhiMain.SetPath(NagatoArgs.Path)
+    If NagatoArgs.Path Then HaruhiMain.SetPath(NagatoArgs.Path)
     
 End

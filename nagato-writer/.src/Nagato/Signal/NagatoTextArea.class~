@@ -5,32 +5,11 @@ Inherits NagatoUxContainer
 Property Text As String
 
 Private $textArea As TextArea
+Private $observer As Observer
+Private $keyboardHandler As NagatoTextAreaKeyboard
+Private $searchAndReplace As NagatoTextAreaSearchAndReplace
 
-Private Sub keyEventWithControl()
-    
-    If Key.Shift And If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
-    If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null) 
-    If Key.Code = Key["p"] Then Raise Signal(MikuruSignal.ViewPreview, Null)
-    
-End
-
-Private Sub replaceTab()
-    
-     Stop Event
-     $textArea.Insert(Space$(NagatoSettings.TabSize))
-    
-End
-
-Private Sub replaceBackspace()
-    
-    If String.Mid($textArea.Text, $textArea.Pos - 3, 4) = Space$(4) Then
-        Stop Event
-        Debug "delete 4 spaces"
-    End If
-    
-End
-
-Public Sub _initialize() ' override
+Private Sub initializeTextArea()
     
     $textArea = New TextArea(Me._$parentContainer) As "TextArea"
     
@@ -43,18 +22,41 @@ Public Sub _initialize() ' override
     
 End
 
+Public Sub _initialize() ' override
+    
+    initializeTextArea()
+    
+    $keyboardHandler = New NagatoTextAreaKeyboard($textArea) As "TFEI"
+    $searchAndReplace = New NagatoTextAreaSearchAndReplace($textArea) As "TFEI"
+    $observer = New Observer(HaruhiReplacement) As "Asakura"
+    
+End
+
+Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
+    
+    Select Case argTag
+        Case "Previous"
+            $searchAndReplace.SearchTextBack(argValues[0])
+        Case "Next"
+            $searchAndReplace.SearchText(argValues[0])
+        Case "Replace"
+            $searchAndReplace.ReplaceOne(argValues[0], argValues[1])
+        Case "ReplaceAll"
+            $searchAndReplace.ReplaceAll(argValues[0], argValues[1])
+    End Select
+    
+End
+
+Public Sub Asakura_Opened()
+    
+    HaruhiReplacement.X = $textArea.ScreenX + $textArea.W
+    
+End
+
 Public Sub TextArea_Change()
     
     If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
     
-End
-
-Public Sub TextArea_KeyPress()
-
-    If Key.Control Then keyEventWithControl()
-    If Key.Code = Key.Tab Then replaceTab()
-    If Key.Code = Key.BackSpace Then replaceBackspace()
-
 End
 
 Private Function Text_Read() As String

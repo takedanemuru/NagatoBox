@@ -7,17 +7,6 @@ Private $pager As NagatoPager
 Private $clock As NagatoClock
 Private $observer As Observer
 
-Private Sub addDrawingArea()
-    
-    $drawingArea = New DrawingArea(MainContainer) 
-    
-    With $drawingArea
-        .Expand = True
-        .Drop = True
-    End With
-    
-End
-
 Private Sub setForm()
     
     Me.H = 3 * MikuruUx.Grid
@@ -34,7 +23,6 @@ Public Sub Form_Open()
 
     Me.Background = NagatoSettings.BackgroundColor
     $button = New NagatoStarButton(MainContainer) As "StarButton"
-    'addDrawingArea()
     $contentBar = New NagatoContentBar(MainContainer) As "contentBar"
     $pager = New NagatoPager(MainContainer) As "Pager"
     $clock = New NagatoClock(MainContainer) As "Clock"

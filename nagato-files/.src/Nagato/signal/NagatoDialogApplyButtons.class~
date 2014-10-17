@@ -1,0 +1,69 @@
+' Gambas class file
+
+Inherits NagatoSignalWidget
+
+Private $hBox As HBox
+Private $panel As Panel
+Private $cancelButton As Button
+Private $applyButton As Button
+
+Private Sub initializeContainer()
+    
+    $hBox = New HBox(Me._$container)
+    
+    With $hBox
+        .H = 48
+        .Padding = 4
+    End With
+    
+End
+
+Private Sub initializeSpacer()
+    
+    $panel = New Panel($hBox)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeCancelButton()
+    
+    $cancelButton = New Button($hBox) As "Button"
+    
+    With $cancelButton
+        .Text = ("Cancel")
+        .AutoResize = True
+        .Tag = MikuruSignal.DialogCancel
+    End With
+    
+End
+
+Private Sub initializeApplyButton()
+    
+    $applyButton = New Button($hBox) As "Button"
+    
+    With $applyButton
+        .Text = ("Apply")
+        .AutoResize = True
+        .Enabled = False
+        .Tag = MikuruSignal.DialogApply
+    End With
+    
+End
+
+Public Sub _InitializeWidgets()
+    
+    initializeContainer()
+    initializeSpacer()
+    initializeCancelButton()
+    initializeApplyButton()
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

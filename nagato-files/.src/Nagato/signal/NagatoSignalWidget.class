@@ -1,0 +1,24 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoSignal
+
+Public _$container As Container
+Public _$path As String
+
+Public Sub _InitializeWidgets() 'virtual
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container, Optional argPath As String)
+    
+    Me._$container = argContainer
+    If argPath Then Me._$path = argPath
+    
+    Me._InitializeWidgets()
+    
+End
+

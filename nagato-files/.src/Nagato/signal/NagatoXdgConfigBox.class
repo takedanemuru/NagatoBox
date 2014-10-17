@@ -1,8 +1,13 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoSignalWidget
 
 Private $hBox As HBox
+Private $pathBox As ButtonBox
+Private $name As String
+Private $userSettingPath As String
+
+Event Changed
 
 Private Sub initializeHBox(argContainer As Container)
     
@@ -25,25 +30,56 @@ Private Sub setLabel(argPath As String)
         .Font.Bold = True
     End With
     
+    $name = yukiLabel.Text
+    
 End
 
 Private Sub setButtonBox(argPath As String)
     
-    Dim yukiButton As New ButtonBox($hBox)
+    $pathBox = New ButtonBox($hBox) As "ButtonBox"
     
-    With yukiButton
+    With $pathBox
         .W = HaruhiXdgConfig.W / 2 
         .Picture = NagatoXdg.GetIcon(argPath)
         .Text = Replace$(argPath, User.Home, "~")
         .ReadOnly = True
+        .Tooltip = ("Click to change")
     End With
     
 End
 
-Public Sub _new(argContainer As Container, argPath As String)
+Public Sub _InitializeWidgets()
     
-    initializeHBox(argContainer)
-    setLabel(argPath)
-    setButtonBox(argPath)
+    initializeHBox(Me._$container)
+    setLabel(Me._$path)
+    setButtonBox(Me._$path)
+    
+End
+
+Public Sub Apply()
+    
+    If Me._$path = $userSettingPath Then Return
+    
+    Exec ["xdg-user-dirs-update", "--set", $name, $userSettingPath]
+    
+End
+
+Public Sub Reset()
+    
+    $userSettingPath = Me._$path
+    
+End
+
+Public Sub ButtonBox_Click()
+    
+    Dialog.Path = User.Home
+    
+    If Dialog.SelectDirectory() Then Return
+    If Dialog.Path = Me._$path Then Return
+    
+    $pathBox.Text = Replace$(Dialog.Path, User.Home, "~")
+    $userSettingPath = Dialog.Path
+    
+    Raise Signal(MikuruSignal.DialogChanged, Null)
     
 End

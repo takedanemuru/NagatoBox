@@ -58,7 +58,7 @@ End
 
 Private Function CalendarStyle_Read() As String
 
-    Select Case $settings["calendar/order"][0]
+    Select Case $settings["calendar/order"]
         Case 0
             Return "JP"
         Case 2

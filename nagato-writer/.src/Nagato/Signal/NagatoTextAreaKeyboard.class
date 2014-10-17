@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoWidgetHandler
+
+Private Sub keyEventWithControl()
+    
+    If Key.Shift And If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null) 
+    If Key.Code = Key["p"] Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    If Key.Code = Key["r"] Or If Key.Code = Key["f"] Then HaruhiReplacement.Show() 
+    
+End
+
+Private Sub replaceTab()
+    
+     Stop Event
+     Me._$widget.Insert(Space$(NagatoSettings.TabSize))
+    
+End
+
+Private Sub replaceBackspace()
+    
+    If String.Mid(Me._$widget.Text, Me._$widget.Pos - 3, 4) = Space$(4) Then
+        Stop Event
+        Debug "delete 4 spaces"
+    End If
+    
+End
+
+Public Sub Asakura_KeyPress()
+
+    If Key.Control Then keyEventWithControl()
+    If Key.Code = Key.Tab Then replaceTab()
+    'If Key.Code = Key.BackSpace Then replaceBackspace()
+
+End

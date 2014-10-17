@@ -30,20 +30,12 @@ msgstr ""
 msgid "License"
 msgstr ""
 
-#: HaruhiDialogClose.form:28 HaruhiDialogDelete.form:27
-#: HaruhiDialogUseGksu.form:28 HaruhiNewDirectory.form:23 HaruhiRename.form:27
+#: HaruhiDialogDelete.form:27 HaruhiDialogUseGksu.form:28
+#: HaruhiNewDirectory.form:23 HaruhiRename.form:27
 #: HaruhiSelectApplication.class:13 HaruhiTagging.form:22
 #: MikuruDialogTrashEmpty.module:9 NagatoDBTag.class:20
-#: NagatoStarMenu.class:110
+#: NagatoDialogApplyButtons.class:38 NagatoStarMenu.class:110
 msgid "Cancel"
-msgstr ""
-
-#: HaruhiDialogClose.form:36
-msgid "Save"
-msgstr ""
-
-#: HaruhiDialogClose.form:44
-msgid "Discard"
 msgstr ""
 
 #: HaruhiDialogDelete.form:35 NagatoContextMenuDirectory.class:14
@@ -97,6 +89,7 @@ msgid "Rename file"
 msgstr ""
 
 #: HaruhiRename.form:22 HaruhiTagging.form:17
+#: NagatoDialogApplyButtons.class:50
 msgid "Apply"
 msgstr ""
 
@@ -403,4 +396,12 @@ msgstr ""
 
 #: NagatoWidgetSelectionButton.class:18
 msgid "Multiple Selection"
+msgstr ""
+
+#: NagatoXdgConfigBox.class:46
+msgid "Click to change"
+msgstr ""
+
+#: NagatoXdgConfigBoxes.class:29
+msgid "Changed"
 msgstr ""

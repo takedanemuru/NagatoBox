@@ -4,37 +4,35 @@ Create Static
 
 Property Read StartupPath As String
 Property Read DesktopIcons As Boolean
+Property Read XdgUserDirs As Boolean
 
 Private $startUpPath As String = ""
 Private $path As String
 Private $paths As New String[]
 Private $desktop As Boolean
+Private $xdgUserDirs As Boolean
 
-Private Sub setStartupPath(argPath As String, argPaths As String[])
+Private Sub setStartupPath(argPaths As String[])
     
     Dim yukiPath As String
     
-    If Exist(argPath) Then
-        $startUpPath = argPath
-    Else
-        For Each yukiPath In argPaths
-            If Exist(yukiPath) Then
-                $startUpPath = yukiPath
-                Break
-            Endif
-        Next
-    Endif
+    For Each yukiPath In argPaths
+        If Exist(yukiPath) Then
+            $startUpPath = yukiPath
+            Break
+        Endif
+    Next
     
 End
 
 Public Sub Parsing()
     
-    Args.Begin()
-        $path = Args.Get("o", "open-directory")
+    Args.Begin("USAGE: nagato-files OPTION PATH")
         '$desktop = Args.Has("d", "desktop", "desktop icons")
+        $xdgUserDirs = Args.Has("u", "xdg-user-dirs", "xdg-user-dirs config")
     $paths = Args.End()
     
-    setStartupPath($path, $paths)
+    setStartupPath($paths)
     
 End
 
@@ -47,5 +45,11 @@ End
 Private Function DesktopIcons_Read() As Boolean
 
     Return $desktop
+
+End
+
+Private Function XdgUserDirs_Read() As Boolean
+
+    Return $xdgUserDirs
 
 End
