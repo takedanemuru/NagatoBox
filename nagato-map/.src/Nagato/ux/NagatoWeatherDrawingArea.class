@@ -20,9 +20,11 @@ End
 
 Private Sub setWeatherInfomation(argBackground As Integer)
     
-    $drawingArea.Background = argBackground
     
     Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(argBackground)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(getWeatherIcon(), ($drawingArea.W - 96) / 2, 16)
@@ -37,9 +39,10 @@ End
 
 Private Sub setPleaseWait(argBackground As Integer)
     
-    $drawingArea.Background = argBackground
-    
     Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(argBackground)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(MikuruIcon.Get("question", 48).Image, 40, 8)

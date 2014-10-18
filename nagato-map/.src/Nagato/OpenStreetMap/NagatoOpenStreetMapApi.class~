@@ -4,41 +4,11 @@ Create Static
 
 Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
 
-' Private $buffer As String
-' Private $httpClient As New HttpClient As "HttpClient"
-
 Private $downloader As New NagatoDownloaderOpenStreetMap As "Downloader"
 
 Event Finished(argXmlDocument As XmlDocument)
 
-' Private Sub parseBuffer()
-'     
-'     Dim yukiXmlDocument As New XmlDocument
-'     
-'     yukiXmlDocument.FromString($buffer)
-'     
-'     Raise Finished(yukiXmlDocument)
-'     
-' End
-
-' Private Sub startDownloading(argQuery As String)
-'     
-'      $buffer = ""
-'     
-'     With $httpClient
-'         .URL = Subst$(NominatimApi, Quote$(argQuery))
-'         .Async = True
-'         .Timeout = 20
-'         .Get()
-'     End With
-'     
-' End
-
 Public Sub Get(argQuery As String)
-    
-    ' Dim yukiQuery As String = Replace$(argQuery, " ", "+")
-    ' 
-    ' startDownloading(yukiQuery)
     
     $downloader.Get(Subst$(NominatimApi, Quote$(Replace$(argQuery, " ", "+"))))
     
@@ -49,9 +19,12 @@ Public Sub GetElements(argXmlDocument As XmlDocument) As Collection
     Dim yukiResult As New Collection
     Dim yukiNode As XmlNode
     Dim yukiGeoElement As NagatoGeoElement
+    Dim yukiString As String = argXmlDocument.ToString(True)
     
     For Each yukiNode In argXmlDocument.GetElementsByTagName("searchresults")[0].AllChildNodes
         With yukiNode.Attributes
+            Debug .Count
+            If .["display_name"] = "0" Then Continue ' avoid bug on gambas 3.6.0
             If .["display_name"] = "" Then Continue
             yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])
             yukiResult.Add(yukiGeoElement, .["display_name"])
@@ -61,18 +34,6 @@ Public Sub GetElements(argXmlDocument As XmlDocument) As Collection
     Return yukiResult
     
 End
-
-' Public Sub HttpClient_Read()
-'     
-'     $buffer &= Read #Last, Lof(Last)
-'     
-' End
-' 
-' Public Sub HttpClient_Finished()
-'     
-'     parseBuffer()
-'     
-' End
 
 Public Sub Downloader_Finished()
     

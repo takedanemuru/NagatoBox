@@ -1,0 +1,46 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+
+Private Sub arrangeTrayIcons()
+    
+    ' Dim yukiIndex As Integer
+    ' 
+    ' For yukiIndex = 0 To X11Systray.Count - 1
+    '     With X11Systray[yukiIndex]
+    '         .IconH = Max(22, .IconH)
+    '         .Move(yukiIndex * 22, 0, 22, 22)
+    '         $drawingArea.W += 22
+    '     End With
+    ' Next
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Dim yukiIndex As Integer
+    
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    
+    With $drawingArea
+        .W = 22
+        .Background = NagatoSettings.BackgroundColor
+    End With
+    
+End
+
+Public Sub Activate()
+    
+    X11Systray.Show($drawingArea.Id)
+    
+End
+
+' Public Sub X11Systray_Arrange()
+' 
+'     Debug "arranged"
+'     ' 
+'     ' If X11Systray.Count = 0 Then Return
+'     ' 
+'     ' arrangeTrayIcons()
+'     
+' End

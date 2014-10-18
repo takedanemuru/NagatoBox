@@ -20,13 +20,15 @@ End
 
 Private Sub setWeatherInfomation(argBackground As Integer)
     
-    $drawingArea.Background = argBackground
-    
     Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(argBackground)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(getWeatherIcon(), ($drawingArea.W - IconSize) / 2, 16)
         $textPainter.Draw($currentWeather)
+        Paint.Fill()
     Paint.End()
     
 Catch
@@ -37,9 +39,10 @@ End
 
 Private Sub setPleaseWait(argBackground As Integer)
     
-    $drawingArea.Background = argBackground
-    
     Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(argBackground)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(MikuruIcon.Get("question", 48).Image, ($drawingArea.W - 48) / 2, 16)
@@ -74,7 +77,6 @@ Public Sub Asakura_Draw()
      If NagatoWeatherCache.IsReady
         $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
         yukiBackground = MikuruWeatherColor($currentWeather[MikuruWeatherKey.IconId], MikuruTime.IsDay($longitude))
-        yukiBackground = Color.Red
         Raise BackgroundColor(yukiBackground)
         setWeatherInfomation(yukiBackground)
     Else

@@ -6,9 +6,9 @@
   Border = False
   Stacking = Window.Above
   Sticky = True
-  SkipTaskbar = True
+  Opacity = 50
   Arrangement = Arrange.Fill
-  { HBox1 HBox
+  { MainContainer HBox
     MoveScaled(14,0,30,4)
     Expand = True
   }

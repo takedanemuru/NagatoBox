@@ -8,7 +8,7 @@ Only watch this git from a distance in a well-lit room.
 
 ##Dependency
 
-Gambas3 3.5.4 or later varsion
+Gambas3 3.6.0 or later varsion
 
 ##Ubuntu and its variants
 

@@ -20,13 +20,15 @@ End
 
 Private Sub setWeatherInfomation(argBackground As Integer)
     
-    $drawingArea.Background = argBackground
-    
     Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(argBackground)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(getWeatherIcon(), ($drawingArea.W - IconSize) / 2, 16)
         $textPainter.Draw($currentWeather)
+        Paint.Fill()
     Paint.End()
     
 Catch
@@ -37,18 +39,15 @@ End
 
 Private Sub setPleaseWait(argBackground As Integer)
     
-    $drawingArea.Background = argBackground
-    
     Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(argBackground)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
         Paint.DrawImage(MikuruIcon.Get("question", 48).Image, ($drawingArea.W - 48) / 2, 16)
         Paint.DrawRichText("Please wait...", 0, 0, $drawingArea.W, $drawingArea.H, Align.Center)
     Paint.End()
-    
-Catch
-    Debug Error.Text
-    Return
     
 End
 

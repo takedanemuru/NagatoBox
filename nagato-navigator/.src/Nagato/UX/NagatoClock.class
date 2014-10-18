@@ -1,19 +1,18 @@
 ' Gambas class file
 
 'Private $label As Label
-Private $button As MenuButton
+Private $button As Label
 Private $observer As Observer
 
 Private Sub addButton(argContainer As Container)
     
-    $button = New MenuButton(argContainer) As "NagatoMenu"
+    $button = New Label(argContainer) As "NagatoMenu"
     
     With $button
         .AutoResize = False
         .Text = " ClockButtonTest "
         .Border = False
-        .Foreground = Color.White
-        .Arrow = False
+        .Foreground = NagatoSettings.ForegroundColor
     End With
     
 End
@@ -29,7 +28,7 @@ End
 Public Sub _new(argContainer As Container)
     
     addButton(argContainer)
-    addMenu()
+    'addMenu()
     
     $observer = New Observer(NagatoTimer) As "Asakura"
     

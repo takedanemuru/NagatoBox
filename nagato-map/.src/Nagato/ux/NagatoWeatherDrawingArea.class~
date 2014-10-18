@@ -1,7 +1,6 @@
 ' Gambas class file
 
 Property Longitude As Float
-'Property Hidden As Boolean
 
 Private $drawingArea As DrawingArea
 Private $observer As Observer
@@ -93,15 +92,3 @@ Private Sub Longitude_Write(Value As Float)
     $longitude = Value
 
 End
-
-' Private Function Hidden_Read() As Boolean
-' 
-'     Return Not $drawingArea.Visible
-' 
-' End
-' 
-' Private Sub Hidden_Write(Value As Boolean)
-' 
-'     $drawingArea.Visible = Not Value
-' 
-' End

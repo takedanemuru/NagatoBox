@@ -1,13 +1,15 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
+# Compiled with Gambas 3.6.0
 Title=nagato-map
 Startup=Kyon
 Icon=picture/blue/compass.png
-Version=0.10.1
+Version=0.10.3
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.db
+Component=gb.desktop.x11
+Component=gb.desktop
 Component=gb.settings
 Component=gb.image.effect
 Component=gb.net
@@ -26,7 +28,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=General Public License
-PackageName=nagato-map-0.10.1
+PackageName=nagato-map-0.10.3
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

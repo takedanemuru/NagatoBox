@@ -3,30 +3,49 @@
 Private $button As NagatoStarButton
 Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
+Private $systray As NagatoSystray
 Private $pager As NagatoPager
 Private $clock As NagatoClock
-Private $observer As Observer
 
 Private Sub setForm()
     
     Me.H = 3 * MikuruUx.Grid
+    Me.W = Screen.W
     Me.Y = Screen.H - Me.H
     Me.X = 0
-    Me.W = Screen.W
+    
+End
+
+Private Sub setNetWmWindowType()
+    
+    Dim yukiWindowType As String = "_NET_WM_WINDOW_TYPE"
+    Dim yukiWindowTypeDock As String = "_NET_WM_WINDOW_TYPE_DOCK"
+    
+    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", Me.Id, yukiWindowType, yukiWindowTypeDock) 
+    
+End
+
+Private Sub setNetWmStrut()
+    
+    Dim yukiProperty As String = "_NET_WM_STRUT"
+    Dim yukiValue As String = Subst$("0,0,0,&1", Me.H) 
+    
+    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue)
     
 End
 
 Public Sub Form_Open()
 
-    setForm()
+    setNetWmStrut()
+    setNetWmWindowType()
     NagatoTimer.Activate()
 
     Me.Background = NagatoSettings.BackgroundColor
     $button = New NagatoStarButton(MainContainer) As "StarButton"
-    $contentBar = New NagatoContentBar(MainContainer) As "contentBar"
+    $contentBar = New NagatoContentBar(MainContainer) As "ContentBar"
+    '$systray = New NagatoSystray(MainContainer) As "Systray"
     $pager = New NagatoPager(MainContainer) As "Pager"
     $clock = New NagatoClock(MainContainer) As "Clock"
-    $observer = New Observer(NagatoTimer) As "Asakura"
     
 End
 
@@ -44,16 +63,16 @@ Public Sub Form_Enter()
         
 End
 
+Public Sub Form_Move()
+    
+    setForm()
+    
+End
+
 Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.ModeChanged Then
         $contentBar.Swich(argValues[0])
     Endif
-    
-End
-
-Public Sub Asakura_Timer()
-    
-    setForm()
     
 End

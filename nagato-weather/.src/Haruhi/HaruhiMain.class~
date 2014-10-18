@@ -33,6 +33,8 @@ End
 
 Public Sub Asakura_Finished()
     
+    Debug "finished"
+    
     $weatherDrawingArea.Refresh()
     resetTitleBar()
     
@@ -40,14 +42,14 @@ End
 
 Public Sub Form_Open()
 
-    NagatoSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
     resetTitleBar()
 
 End
 
 Public Sub Form_Close()
 
-    NagatoSettings.SaveFormSettings(Me)
+    NagatoSettingsForm.Save(Me)
 
 End
 
