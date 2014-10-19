@@ -4,6 +4,8 @@ Property Read Image As Image
 Property Read Number As Integer
 Property Read SafeTitle As String
 Property Read Alt As String
+Property Read H As Integer
+Property Read W As Integer
 
 Private Const ApiCurrent As String = "http://xkcd.com/info.0.json"
 Private Const ApiSelect As String = "http://xkcd.com/&1/info.0.json"
@@ -27,7 +29,7 @@ End
 
 Public Sub XkcdDownloader_Finished()
     
-    $imageDownloader.Get($xkcdDownloader.Collection["img"])
+    $imageDownloader.Get($xkcdDownloader.ImageUrl)
     
 End
 
@@ -45,18 +47,30 @@ End
 
 Private Function Number_Read() As Integer
 
-    Return $xkcdDownloader.Collection["num"]
+    Return $xkcdDownloader.Number
 
 End
 
 Private Function SafeTitle_Read() As String
 
-    Return $xkcdDownloader.Collection["safe_title"]
+    Return $xkcdDownloader.SafeTitle
 
 End
 
 Private Function Alt_Read() As String
 
-    Return Replace$($xkcdDownloader.Collection["alt"], ".", ".\n")
+    Return $xkcdDownloader.AlternativeTitle
+
+End
+
+Private Function H_Read() As Integer
+
+    Return $imageDownloader.Image.H
+
+End
+
+Private Function W_Read() As Integer
+
+    Return $imageDownloader.Image.W
 
 End

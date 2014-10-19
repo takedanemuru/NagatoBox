@@ -13,12 +13,14 @@ Private Sub parseBuffer()
     $xml.FromString($buffer)
     
     For Each yukiNode In $xml.GetElementsByTagName("searchresults")[0].AllChildNodes
-        With yukiNode
-            If .Attributes["display_name"] = "" Then Continue
-            yukiGeoElement = New NagatoGeoElement(.Attributes["display_name"], .Attributes["lat"], .Attributes["lon"])
-            If Not ListView1.Exist(.Attributes["display_name"]) Then
-                ListView1.Add(.Attributes["display_name"], .Attributes["display_name"])
-                $cache.Add(yukiGeoElement, .Attributes["display_name"])
+        With yukiNode.Attributes
+            Debug .Count
+            If .["display_name"] = "0" Then Continue ' avoid bug on gambas 3.6.0
+            If .["display_name"] = "" Then Continue
+            yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])
+            If Not ListView1.Exist(.["display_name"]) Then
+                ListView1.Add(.["display_name"], .["display_name"])
+                $cache.Add(yukiGeoElement, .["display_name"])
             End If
         End With
     Next

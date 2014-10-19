@@ -11,7 +11,7 @@ Private Function getResult(argQueryWord As String) As Result
         Case NagatoQuerySelector.TypePronunciation
             Return NagatoDBGeneralDict.GetWithPronunciation(Subst$("%&1%", argQueryWord))
         Case NagatoQuerySelector.TypeEnglish
-            Return NagatoDBGeneralDict.ColumnEnglish(Subst$("%&1%", argQueryWord))
+            Return NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQueryWord))
     End Select
     
 End

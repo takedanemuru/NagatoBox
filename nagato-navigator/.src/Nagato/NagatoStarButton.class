@@ -47,7 +47,7 @@ Private Sub addTaskMenuItem(argDesktopWindow As DesktopWindow)
     Dim yukiMenu As New Menu($rootMenu) As "TaskMenuItem"
     
     With yukiMenu
-        .Text = argDesktopWindow.Name
+        .Text = MikuruCollapsedText.Get(argDesktopWindow.Name, Application.Font, 300)
         .Tag = argDesktopWindow
         Try .Picture = argDesktopWindow.Icon.Picture
     End With

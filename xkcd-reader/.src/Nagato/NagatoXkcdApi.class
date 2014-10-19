@@ -4,6 +4,8 @@ Property Read Image As Image
 Property Read Number As Integer
 Property Read SafeTitle As String
 Property Read Alt As String
+Property Read H As Integer
+Property Read W As Integer
 
 Private Const ApiCurrent As String = "http://xkcd.com/info.0.json"
 Private Const ApiSelect As String = "http://xkcd.com/&1/info.0.json"
@@ -58,5 +60,17 @@ End
 Private Function Alt_Read() As String
 
     Return $xkcdDownloader.AlternativeTitle
+
+End
+
+Private Function H_Read() As Integer
+
+    Return $imageDownloader.H
+
+End
+
+Private Function W_Read() As Integer
+
+    Return $imageDownloader.W
 
 End

@@ -23,13 +23,15 @@ Private Sub refreshMenu()
     
     Dim yukiPath As String
     Dim yukiMenu As Menu
+    Dim yukiIndex As Integer
+    Dim yukiCollection As Collection 
     
     Me._$parentMenu.Children.Clear()
     
     For Each yukiPath In $proxy.Paths
         yukiMenu = New Menu(Me._$parentMenu) As "QueueMenu"
         yukiMenu.Tag = yukiPath
-        yukiMenu.Text = MikuruCollapsedText.Get($proxy.Queue[yukiPath], HaruhiMain.Font, 300)
+        yukiMenu.Text = MikuruCollapsedText.Get($proxy.GetTitle(yukiPath), Application.Font, 300)
         If yukiMenu.Text = $proxy.Title Then yukiMenu.Picture = MikuruIcon.Get("button-play")
         If Me._$parentMenu.Children.Count > 60 Then Break
     Next
@@ -47,9 +49,9 @@ Public Sub ParentMenu_Show()
     $proxy = DBus[ApplicationName][ObjectPath, Interface]
     refreshMenu()
     
-Catch
-    Me._$parentMenu.Children.Clear()
-    Me._AddMenu("Couldn't conect to nagato-player-x", 0)
+' Catch
+'     Me._$parentMenu.Children.Clear()
+'     Me._AddMenu("Couldn't conect to nagato-player-x", 0)
     
 End
 

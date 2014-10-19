@@ -13,5 +13,4 @@ Public Sub Main()
         If NagatoArguments.Paths <> Null Then NagatoDBus.Proxy.AddMusics(NagatoArguments.Paths)
     End If
     
-    
 End

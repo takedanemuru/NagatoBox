@@ -2,7 +2,7 @@
 
 { Form Form
   MoveScaled(0,0,92.8571,68)
-  Icon = Picture["picture/Icons/search.png"]
+  Icon = Picture["nagato-code-view.png"]
   Arrangement = Arrange.Vertical
   { MessageBox HBox
     MoveScaled(0,0,44,35.7143)
@@ -10,16 +10,6 @@
       MoveScaled(1,2,23,31)
       Picture = Picture["Pictures/looking_back.jpg"]
       Stretch = True
-    }
-    { MessageLabel TextLabel
-      MoveScaled(20,3,24,18)
-      Font = Font["+1"]
-      Background = &HFAEDDA&
-      Foreground = &H746177&
-      Expand = True
-      Padding = 16
-      Text = ("YUKI.N > Open Gambas3 project directory.")
-      Alignment = Align.Left
     }
   }
   { PanelBox HBox

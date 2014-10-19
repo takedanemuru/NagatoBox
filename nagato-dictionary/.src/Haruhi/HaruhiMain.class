@@ -6,6 +6,12 @@ Private $gridViewHandler As NagatoGridViewHandler
 Private Function getResult(argQueryWord As String) As Result
     
     Select Case $queryType
+        Case NagatoQuerySelector.TypeAuto
+            If IsAscii(argQueryWord) Then
+                Return NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQueryWord))
+            Else
+                Return NagatoDBGeneralDict.Get(Subst$("%&1%", argQueryWord))
+            Endif
         Case NagatoQuerySelector.TypeJapanese
             Return NagatoDBGeneralDict.Get(Subst$("%&1%", argQueryWord))
         Case NagatoQuerySelector.TypePronunciation

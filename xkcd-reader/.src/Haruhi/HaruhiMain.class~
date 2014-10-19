@@ -8,8 +8,8 @@ Private Sub setImageView()
     With MainImageView
         .Image = $api.Image
         .Tooltip = $api.Alt
-        .W = $api.Image.W
-        .H = $api.Image.H
+        .W = $api.W
+        .H = $api.H
     End With
     
 End
@@ -20,8 +20,8 @@ Private Sub setForm()
         .Title = Subst$("(#&1)  &2", $api.Number, $api.SafeTitle)
         If .Closed Then .Show()
         '.Center() ' doesn't work correctlly. why ?
-        Me.X = (Screen.W - Me.W) / 2
-        Me.Y = (Screen.H - Me.H) / 2
+        Me.X = (Screen.W - $api.H) Div 2
+        Me.Y = (Screen.H - $api.H) Div 2
     End With
     
 End
@@ -38,14 +38,17 @@ Public Sub Api_Finished()
     
     setImageView()
     setForm()
-    Object.Unlock(MainImageView)
     
 End
 
 Public Sub MainImageView_DblClick()
 
-    Object.Lock(MainImageView)
-
     $api.GetSelect($index.GetRandom())
 
+End
+
+Public Sub Form_Resize()
+    
+    
+    
 End

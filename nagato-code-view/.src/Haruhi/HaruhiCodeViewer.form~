@@ -4,14 +4,6 @@
   MoveScaled(0,0,64,64)
   SkipTaskbar = True
   Arrangement = Arrange.Fill
-  { Editor1 Editor
-    MoveScaled(4,45,55,14)
-    Font = Font["+1"]
-    Expand = True
-    Highlight = Highlight.Gambas
-    ReadOnly = True
-    TabSize = 4
-  }
   { MainTabStrip TabStrip
     MoveScaled(10,12,44,24)
     Expand = True

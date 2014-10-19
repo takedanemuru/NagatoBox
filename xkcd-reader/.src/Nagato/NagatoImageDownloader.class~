@@ -8,11 +8,6 @@ Private $image As Image
 
 Public Sub _SetData() ' override
     
-    ' Dim yukiTempPath As String = Temp$()
-    ' 
-    ' File.Save(yukiTempPath, Me._$buffer)
-    ' $image = Image.Load(yukiTempPath)
-    
     $image = MikuruBlob.ToImage(Me._$buffer)
     
 End

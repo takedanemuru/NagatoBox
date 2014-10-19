@@ -5,7 +5,7 @@ Public Sub Main()
     NagatoSettings.EnsureDictionaryData()
     NagatoArgs.Parsing
     
-    Debug "YUKI.N > Activate compdict table on " & NagatoDBCompDict.HostName
+    'Debug "YUKI.N > Activate compdict table on " & NagatoDBCompDict.HostName
     Debug "YUKI.N > Activate generaldict tabel on " & NagatoDBGeneralDict.HostName
     
     If NagatoArgs.Queries.Count > 0 Then 

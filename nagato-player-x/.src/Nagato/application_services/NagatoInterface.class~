@@ -14,6 +14,14 @@ Property Read Queue As Collection
 Property Read Shuffle As Boolean
 Property Read Repeat As Boolean
 
+Public Function AddMusics(argMusics As String[]) As Boolean
+    
+    NagatoQueue.AddMusics(argMusics)
+    
+    Return True
+    
+End
+
 Public Function Play() As Boolean
     
     NagatoQueue.Play()

@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
-
 Private $buffer As String
 Private $cache As New Collection
 Private $httpClient As New HttpClient As "HttpClient"
@@ -15,12 +13,14 @@ Private Sub parseBuffer()
     $xml.FromString($buffer)
     
     For Each yukiNode In $xml.GetElementsByTagName("searchresults")[0].AllChildNodes
-        With yukiNode
-            If .Attributes["display_name"] = "" Then Continue
-            yukiGeoElement = New NagatoGeoElement(.Attributes["display_name"], .Attributes["lat"], .Attributes["lon"])
-            If Not ListView1.Exist(.Attributes["display_name"]) Then
-                ListView1.Add(.Attributes["display_name"], .Attributes["display_name"])
-                $cache.Add(yukiGeoElement, .Attributes["display_name"])
+        With yukiNode.Attributes
+            Debug .Count
+            If .["display_name"] = "0" Then Continue ' avoid bug on gambas 3.6.0
+            If .["display_name"] = "" Then Continue
+            yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])
+            If Not ListView1.Exist(.["display_name"]) Then
+                ListView1.Add(.["display_name"], .["display_name"])
+                $cache.Add(yukiGeoElement, .["display_name"])
             End If
         End With
     Next
@@ -29,10 +29,12 @@ End
 
 Private Sub startDownloading(argLocation As String)
     
+    Debug argLocation
+    
      $buffer = ""
     
     With $httpClient
-        .URL = Subst$(NominatimApi, Quote$(argLocation))
+        .URL = Subst$(MikuruOpenStreetMap.NominatimApi, Quote$(argLocation))
         .Async = True
         .Timeout = 20
         .Get()
@@ -44,9 +46,13 @@ Public Sub HttpClient_Read()
     
     $buffer &= Read #Last, Lof(Last)
     
+    Debug "read line"
+    
 End
 
 Public Sub HttpClient_Finished()
+    
+    Debug $buffer
     
     parseBuffer()
     
@@ -68,11 +74,10 @@ End
 Public Sub FindButtonBox_Click()
     
     With FindButtonBox
-        If .Text <> "" Then 'And If IsAscii(.Text) Then
-            ListView1.Clear()
-            $cache.Clear()
-            startDownloading(Replace$(.Text, " ", "+"))
-        End If
+        If .Text = "" Then Return
+        ListView1.Clear()
+        $cache.Clear()
+        startDownloading(Replace$(.Text, " ", "+"))
     End With
     
 End

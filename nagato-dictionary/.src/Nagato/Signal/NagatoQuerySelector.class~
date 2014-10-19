@@ -7,7 +7,7 @@ Public Enum TypeJapanese, TypePronunciation, TypeEnglish
 Public Sub _Initialize() ' override
     
     Dim yukiRadioButton As RadioButton
-    Dim yukiQueries As String[] = ["Japanese", "Pron.", "English"]
+    Dim yukiQueries As String[] = [("Japanese"), ("Pronunciation"), ("English")]
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To yukiQueries.Max

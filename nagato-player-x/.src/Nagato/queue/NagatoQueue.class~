@@ -30,8 +30,6 @@ End
 
 Public Sub AddMusics(argPaths As String[])
     
-    Debug Object.IsValid($musicList)
-    
     $musicList.AddMusics(argPaths)
     NagatoSettingsMusic.SavePaths($musicList.Paths)
     

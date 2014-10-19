@@ -2,12 +2,12 @@
 
 Inherits NagatoUxContainer
 
-Public Enum TypeJapanese, TypePronunciation, TypeEnglish
+Public Enum TypeAuto, TypeJapanese, TypePronunciation, TypeEnglish
 
 Public Sub _Initialize() ' override
     
     Dim yukiRadioButton As RadioButton
-    Dim yukiQueries As String[] = [("Japanese"), ("Pronunciation"), ("English")]
+    Dim yukiQueries As String[] = [("Auto"), ("Japanese"), ("Pronunciation"), ("English")]
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To yukiQueries.Max
