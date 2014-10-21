@@ -1,0 +1,12 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    Dialog.Path = User.Home
+    Dialog.Title = ("Select Text File")
+    
+    If Dialog.OpenFile(False) Then Return
+    
+    NagatoConverter.Convert(Dialog.Path)
+    
+End

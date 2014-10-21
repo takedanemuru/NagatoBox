@@ -1,15 +1,16 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
+# Compiled with Gambas 3.6.0
 Title=nagato-files
 Startup=Kyon
 Icon=folder.png
-Version=0.38.1
+Version=0.40.0
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.db
 Component=gb.dbus
+Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.pdf
@@ -26,7 +27,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-files-0.38.1
+PackageName=nagato-files-0.40.0
 CreateEachDirectory=1
 MimeTypes="inode/directory"
 Packager=1

@@ -11,7 +11,7 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName A
     With yukiMenu
         .Text = argText
         .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon[argIconName]
+        If argIconName Then .Picture = NagatoIcon.Get(argIconName)
     End With
     
 End

@@ -1,0 +1,73 @@
+' Gambas class file
+
+Property Read Key As String
+Property Read Values As String
+Property Read Count As Integer
+Property Read Text As String
+
+Private $key As String
+Private $values As New String[]
+
+Private Sub setKey(argLine As String)
+    
+    $key = String.Left(argLine, String.InStr(argLine, "=") - 1)
+    
+End
+
+Private Sub setValues(argLine As String) As String
+    
+    Dim yukiLine As String = String.Right(argLine, -1 * (String.Len($key) + 1))
+    
+    $values = Split(yukiLine, ";", "", True)
+    
+End
+
+Public Sub Replace(...)
+    
+    Dim yukiIndex As Integer
+    
+    If Param.Count = 0 Then Return
+    
+    $values.Clear()
+    
+    For yukiIndex = 0 To Param.Max
+        $values.Add(Param[yukiIndex])
+    Next
+    
+End
+
+Public Sub _new(argLine As String)
+    
+    setKey(argLine)
+    setValues(argLine)
+    
+End
+
+Private Function Key_Read() As String
+
+    Return $key
+
+End
+
+Private Function Values_Read() As String
+
+    Return $values
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $values.Count
+
+End
+
+Private Function Text_Read() As String
+
+    Dim yukiText As String = Me.Key
+    
+    yukiText &= "="
+    yukiText &= $values.Join(";")
+    
+    Return yukiText
+
+End

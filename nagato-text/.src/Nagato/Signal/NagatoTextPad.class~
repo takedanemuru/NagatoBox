@@ -16,12 +16,19 @@ End
 
 Private Sub openInCurrentTab()
     
+    Dim yukiSource As String
+    
     If Not MikuruDialog.SelectTextFile() Then
         Try $textArea.Text = File.Load(MikuruDialog.TextFilePath)
         If Not Error Then
             Raise Signal(MikuruSignal.FileNewPath, [MikuruDialog.TextFilePath])
             $status.NewPath(MikuruDialog.TextFilePath)
             setTitle(File.Name(MikuruDialog.TextFilePath))
+            MikuruStringCode.Check(MikuruDialog.TextFilePath)
+            If MikuruStringCode.CharactorCode <> "UTF-8" Then
+                yukiSource = $textArea.Text
+                $textArea.Text = Conv(yukiSource, "Shift-JIS", "UTF-8")
+            Endif
         End If
     Endif
     
@@ -51,6 +58,8 @@ Public Sub SetText(argText As String)
 End
 
 Public Sub Search(argTag As String, argValues As Variant[])
+    
+    Debug argTag
     
     Select Case argTag
         Case "Next"

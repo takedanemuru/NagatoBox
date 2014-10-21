@@ -25,16 +25,19 @@ Catch
     
 End
 
-Private Sub setIcons(argDirectory As String)
+Private Sub setIcons(argDirectory As String, Optional argFilter As String)
     
     Dim yukiPath As String
     Dim yukiDesktopFile As DesktopFile
     Dim yukiIcon As Picture
     
+    ApplicationsListView.Clear()
+    
     For Each yukiPath In Dir(argDirectory).Sort(gb.IgnoreCase)
         Try yukiDesktopFile = New DesktopFile(argDirectory &/ yukiPath)
         If Error Then Continue
         If yukiDesktopFile.Name = "" Then Continue
+        If argFilter And If yukiDesktopFile.Name Not Like Subst$("*&1*", argFilter) Then Continue
         yukiIcon = MikuruIcon.GetDesktopEntryIcon(argDirectory &/ yukiPath)
         ApplicationsListView.Add(yukiDesktopFile.Path, yukiDesktopFile.Name, yukiIcon)
     Next
@@ -63,5 +66,21 @@ Public Sub ApplicationsListView_Click()
     If Not isDefaultApplication(yukiDesktopFile.Path) Then MikuruChangeDefaultApplication(yukiDesktopFile, $path)
 
     Me.Close()
+
+End
+
+Public Sub FilterButtonBox_Activate()
+
+    If FilterButtonBox.Text = "" Then
+        setIcons(ApplicationsDirectory)
+    Else
+        setIcons(ApplicationsDirectory, FilterButtonBox.Text)
+    Endif
+
+End
+
+Public Sub FilterButtonBox_Click()
+
+    FilterButtonBox_Activate()
 
 End

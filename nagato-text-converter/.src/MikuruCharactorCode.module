@@ -1,0 +1,56 @@
+' Gambas module file
+
+Property Read CharactorCode As String
+Property Read ReturnCode As String
+
+Private $charactorCode As String
+Private $returnCode As String
+
+Private Function removeCharactors(argSource As String, argToRemove As String[]) As String
+    
+    Dim yukiResult As String = argSource
+    Dim yukiToRemove As String
+    
+    For Each yukiToRemove In argToRemove
+        yukiResult = Replace$(yukiResult, yukiToRemove, "")
+    Next
+    
+    Return yukiResult
+    
+End
+
+Private Function getData(argPath As String)
+    
+    Dim yukiOutput As String
+    
+    Exec ["nkf", "--guess", argPath] To yukiOutput
+    
+    Return Split(removeCharactors(yukiOutput, ["\n", "(", ")"]), " ", "", True)
+    
+End
+
+Public Sub Check(argPath As String)
+    
+    Dim yukiData As String[] = getData(argPath)
+    
+    If yukiData.Count = 0 Then
+        $charactorCode = ""
+        $returnCode = ""
+    Else
+        $charactorCode = yukiData[0]
+        $returnCode = yukiData[1]
+    End If
+    
+End
+
+Private Function CharactorCode_Read() As String
+
+    Return $charactorCode
+
+End
+
+Private Function ReturnCode_Read() As String
+
+    Return $returnCode
+
+End

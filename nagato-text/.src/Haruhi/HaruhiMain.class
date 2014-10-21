@@ -15,6 +15,8 @@ End
 
 Public Sub SetPath(argPath As String)
     
+    MikuruStringCode.Check(argPath)
+    
     activateMe()
     $tabStrip.NewTab(argPath)
     
@@ -22,6 +24,8 @@ End
 
 Public Sub OpenWithPath(Optional argPath As String = "")
     
+    If argPath Then MikuruStringCode.Check(argPath)
+
     $tabStrip.NewTab(argPath)
     
     Object.Lock(Me)
@@ -66,8 +70,6 @@ Public Sub MainTabStrip_Signal(argTag As Integer, argValues As Variant[])
 End
 
 Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
-    
-    Debug argTag
     
     $tabStrip.Search(argTag, argValues)
     

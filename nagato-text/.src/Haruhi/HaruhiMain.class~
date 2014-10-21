@@ -15,6 +15,8 @@ End
 
 Public Sub SetPath(argPath As String)
     
+    MikuruStringCode.Check(argPath)
+    
     activateMe()
     $tabStrip.NewTab(argPath)
     
@@ -22,6 +24,8 @@ End
 
 Public Sub OpenWithPath(Optional argPath As String = "")
     
+    If argPath Then MikuruStringCode.Check(argPath)
+
     $tabStrip.NewTab(argPath)
     
     Object.Lock(Me)
@@ -40,9 +44,9 @@ End
 Public Sub _new()
     
     Application.MainWindow = Me
-    $observer = New Observer(HaruhiReplacement) As "Asakura"
     $tabStrip = New NagatoTabStrip(MainTabs) As "MainTabStrip"
     $recentPaths = New NagatoRecentPaths(RecentFilesIconView) As "RecentPaths"
+    $observer = New Observer(HaruhiReplacement) As "Asakura"
     
 End
 
@@ -61,13 +65,13 @@ End
 
 Public Sub MainTabStrip_Signal(argTag As Integer, argValues As Variant[])
     
+    MikuruStringCode.Check(argValues[0])
+    
     $recentPaths.Refresh(argValues[0])
     
 End
 
-Public Sub Asakura_Signal(argTag As String, argValues As Variant[])
-    
-    Debug argTag
+Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
     
     $tabStrip.Search(argTag, argValues)
     

@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Static
+
+Public Sub Convert(argPath As String)
+    
+    Dim yukiSource As String 
+    Dim yukiOutput As String 
+
+    MikuruCharactorCode.Check(argPath)
+
+    If MikuruCharactorCode.CharactorCode = "UTF-8" Then
+        Message.Info(("YUKI.N > This file is written in UTF-8"), ("OK"))
+    Else
+        yukiSource = File.Load(argPath)
+        yukiOutput = Conv$(yukiSource, MikuruCharactorCode.CharactorCode, "UTF-8")
+        Debug yukiOutput
+        HaruhiPreview.SetText(yukiOutput)
+        HaruhiPreview.Show()
+    End If
+    
+End
+

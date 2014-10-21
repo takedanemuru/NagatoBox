@@ -1,5 +1,10 @@
 ' Gambas module file
 
+Property Read LocalDefaultList As String
+Property Read GlobalDefaultList As String
+Property Read GlobalMimeList As String
+Property Read GlobalApplicationDirectory As String
+
 Private Const QuestionLine0 As String = ("This software is a settings applications.\n")
 Private Const QuestionLine1 As String = ("Do you want to launch this application as super user ?")
 
@@ -24,6 +29,38 @@ Private Sub execute(argPath As String, Optional argAsSuperUser As Boolean = Fals
     
     Try Shell yukiCommand
     If Not Error Then NagatoSettings.PushApplicationPath(argPath)
+    
+End
+
+Private Function getSanitizedDesktopFiles(argListPath As String, argFilePath As String) As String[]
+    
+    Dim yukiMimeType As String = DesktopMime.FromFile(argFilePath).Type
+    Dim yukiIndex As Integer
+    Dim yukiDesktopFiles As String[] = MikuruConfFlie.GetItems(argListPath, yukiMimeType)
+    
+    For yukiIndex = yukiDesktopFiles.Max DownTo 0
+        If Not Exist("/usr/share/applications" &/ yukiDesktopFiles[yukiIndex]) Then
+            yukiDesktopFiles.Remove(yukiIndex, 1)
+        Endif
+    Next
+    
+    Return yukiDesktopFiles
+    
+End
+
+Public Function GetDefaultDesktopFiles(argPath As String) As String[]
+    
+    Dim yukiDefaultLocal As String[] = getSanitizedDesktopFiles(Me.LocalDefaultList, argPath)
+    Dim yukiDefaultGlobal As String[] = getSanitizedDesktopFiles(Me.GlobalDefaultList, argPath)
+    Dim yukiNonDefaultGlobal As String[] = getSanitizedDesktopFiles(Me.GlobalMimeList, argPath)
+    
+    If yukiDefaultLocal.Count > 0 Then
+        Return yukiDefaultLocal
+    Else If yukiDefaultGlobal.Count > 0 Then
+        Return yukiDefaultGlobal
+    Else
+        Return yukiNonDefaultGlobal
+    Endif
     
 End
 
@@ -52,4 +89,28 @@ Public Sub Launch(argPath As String)
         execute(argPath)
     End If
     
+End
+
+Private Function LocalDefaultList_Read() As String
+
+    Return User.Home &/ ".local/share/applications/mimeapps.list"
+
+End
+
+Private Function GlobalDefaultList_Read() As String
+
+    Return "/usr/share/applications/defaults.list"
+
+End
+
+Private Function GlobalMimeList_Read() As String
+
+    Return "/usr/share/applications/mimeinfo.cache"
+
+End
+
+Private Function GlobalApplicationDirectory_Read() As String
+
+    Return "/usr/share/applications/"
+
 End

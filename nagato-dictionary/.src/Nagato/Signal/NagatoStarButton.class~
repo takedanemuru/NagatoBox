@@ -8,14 +8,14 @@ Public Sub _initialize() ' override
     
     Dim yukiButton As New MenuButton(Me._$parentContainer)
     
-    '$starMenu = New NagatoStarMenu(HaruhiMain, "StarMenu") As "TFEI"
+    $starMenu = New NagatoStarMenu(HaruhiMain, "StarMenu") As "TFEI"
     
     With yukiButton
         .Text = ""
         .Arrow = False
         .Border = False
         .W = Me._$parentContainer.H
-        .Picture = MikuruIcon.Get("star")
+        .Picture = NagatoIcon.Get("star")
         .Menu = "StarMenu"
     End With
     

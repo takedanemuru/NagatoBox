@@ -10,8 +10,9 @@ Public Sub _Initialize()
     
     With $searchBox
         .Text = ""
-        .Picture = MikuruIcon.Get("search")
+        .Picture = NagatoIcon.Get("search")
         .W = 200
+        .SetFocus()
     End With
     
 End

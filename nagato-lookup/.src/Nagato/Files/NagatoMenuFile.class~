@@ -12,21 +12,28 @@ Private Function getDesktopFilesWithMimeType() As String[]
     
 End
 
+Private Sub addSelectApplicationMenu()
+    
+    Dim yukiMenu As New Menu($menu) As "SelectApplicationMenu"
+    Dim yukiDummyMenu As New Menu($menu)
+    
+    With yukiMenu
+        .Picture = MikuruIcons.Get("gear")
+        .Text = ("Select application")
+    End With
+    
+End
+
 Private Sub addExecuteMenus()
     
     Dim yukiAdditionalDesktopFile As String
     Dim yukiChecker As New String[]
     
     For Each yukiAdditionalDesktopFile In getDesktopFilesWithMimeType()
-        If Not yukiChecker.Exist(yukiAdditionalDesktopFile) Then
-            Object.New("NagatoOpenWithMenu", [$menu, yukiAdditionalDesktopFile, Me._$path])
-            yukiChecker.Add(yukiAdditionalDesktopFile)
-        End If
+        If yukiChecker.Exist(yukiAdditionalDesktopFile) Then Continue
+        Object.New("NagatoOpenWithMenu", [$menu, yukiAdditionalDesktopFile, Me._$path])
+        yukiChecker.Add(yukiAdditionalDesktopFile)
     Next
-    
-' Catch
-'     Debug Error.Text
-'     Return
     
 End
 
@@ -35,7 +42,7 @@ Public Sub _SetMenu() 'override
     $menu = New Menu(Me._$parentMenu) As "FileMenu"
     
     With $menu
-        .Text = MikuruCollapsedText(File.Name(Me._$path), HaruhiMain.Font, 240)
+        .Text = MikuruCollapsedText(File.Name(Me._$path), HaruhiMain.Font, Screen.W Div 4)
         .Picture = Desktop.GetFileIcon(Me._$path, 24)
     End With
     
@@ -47,6 +54,7 @@ Public Sub FileMenu_Show()
     
     $menu.Children.Clear()
     
+    addSelectApplicationMenu()
     addExecuteMenus()
     
 End
