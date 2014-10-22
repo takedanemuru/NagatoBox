@@ -20,17 +20,23 @@ End
 
 Private Sub replaceBackspace()
     
-    If String.Mid(Me._$widget.Text, Me._$widget.Pos - 3, 4) = Space$(4) Then
+    Dim yukiPosition As Integer = (Me._$widget.Pos - NagatoSettings.TabSize + 1)
+    
+    If String.Mid(Me._$widget.Text, yukiPosition, NagatoSettings.TabSize) = Space$(NagatoSettings.TabSize) Then
         Stop Event
-        Debug "delete 4 spaces"
+        Me._$widget.Select(yukiPosition - 1, NagatoSettings.TabSize)
+        Me._$widget.Selection.Text = ""
     End If
+    
+Catch
+    Return
     
 End
 
 Public Sub Asakura_KeyPress()
 
     If Key.Control Then keyEventWithControl()
-    If Key.Code = Key.Tab Then replaceTab()
-    'If Key.Code = Key.BackSpace Then replaceBackspace()
+    If Key.Code = Key.Tab And If NagatoSettings.TabSize <> 0 Then replaceTab()
+    If Key.Code = Key.BackSpace And If NagatoSettings.TabSize <> 0 Then replaceBackspace()
 
 End

@@ -39,6 +39,9 @@ Public Sub SetData(argJapanese As String, argPronunciation As String, argEnglish
         .[.Rows.Max, 0].Text = argJapanese
         .[.Rows.Max, 1].Text = argPronunciation
         .[.Rows.Max, 2].Text = argEnglish
+        If HaruhiMain.Font.TextWidth(.[.Rows.Max, 0].Text) > .Columns[0].W Then
+            .Columns[0].W = HaruhiMain.Font.TextWidth(.[.Rows.Max, 0].Text)
+        Endif
         setBackgroundColor(.Rows.Max)
     End With
     

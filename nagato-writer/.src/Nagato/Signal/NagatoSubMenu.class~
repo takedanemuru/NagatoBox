@@ -15,18 +15,6 @@ Private Sub initializeParentMenu(argRootObject As Object, argText As String, Opt
     
 End
 
-Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
-    
-    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
-    
-    With yukiMenu
-        .Text = argText
-        .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon[argIconName]
-    End With
-    
-End
-
 Public Sub _AddChildMenus() ' virtual
     
     
@@ -38,21 +26,11 @@ Public Sub _new(argRootObject As Object, argText As String, Optional argIconName
     initializeParentMenu(argRootObject, argText, argIconName)
     Me._AddMenu("foo", MikuruSignal.None)
     
-    Debug "init"
-    
 End
 
 Public Sub ParentMenu_Show()
     
-    Debug "show"
-    
     Me._$parentMenu.Children.Clear()
     Me._AddChildMenus()
-    
-End
-
-Public Sub MenuItem_Click()
-    
-    Raise Signal(Last.Tag, Null)
     
 End

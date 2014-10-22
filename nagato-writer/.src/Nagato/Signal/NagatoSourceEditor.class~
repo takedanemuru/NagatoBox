@@ -10,7 +10,7 @@ Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 Private $fileHandler As New NagatoFileHandler
 Private $textArea As NagatoTextArea
 
-Private Function ensureSaved(Optional argCloseApp As Boolean) As Boolean ' False means cancel to open file
+Private Function ensureSaved() As Boolean ' False means cancel to open file
     
     If $textArea.Text = $fileHandler.Buffer Then Return True
     

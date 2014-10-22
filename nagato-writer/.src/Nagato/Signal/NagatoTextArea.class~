@@ -49,7 +49,8 @@ End
 
 Public Sub Asakura_Opened()
     
-    HaruhiReplacement.X = $textArea.ScreenX + $textArea.W
+    HaruhiReplacement.X = $textArea.ScreenX + $textArea.W + 64
+    HaruhiReplacement.Y = $textArea.Y + 64
     
 End
 

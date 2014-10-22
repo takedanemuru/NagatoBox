@@ -44,6 +44,7 @@ Public Sub PushRecentPath(argPath As String)
     
     If yukiRecentPaths.Exist(argPath) Then yukiRecentPaths.Remove(yukiRecentPaths.Find(argPath))
     yukiRecentPaths.Add(argPath, 0)
+    yukiRecentPaths.Resize(20)
     
     $settings["file/recent"] = yukiRecentPaths
     $settings.Save()
@@ -52,7 +53,9 @@ End
 
 Private Function TabSize_Read() As Integer
 
-    Return $settings["editor/tab_size", DefaultTabSize]
+    Return 0
+
+    'Return $settings["editor/tab_size", DefaultTabSize]
 
 End
 

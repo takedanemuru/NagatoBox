@@ -10,6 +10,7 @@ Public Sub _RefreshChildMenus() ' override
     
     Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
     yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, "Publish", "book-open-bookmark") As "TFEI"
+    Object.New("NagatoSubMenuTabKey", [Me._$parentMenu, ("Tab Key"), "navigation-right-button"])
     Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
         Me._AddMenu("", 0)
     Me._AddMenu("About", MikuruSignal.AppAbout, "star")

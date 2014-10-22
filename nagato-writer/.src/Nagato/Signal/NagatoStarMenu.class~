@@ -2,7 +2,7 @@
 
 Inherits NagatoButtonMenu
 
-Public Const UniqueName As String = "StarMenu"
+Public _$uniqueName As String = "StarMenu"
 
 Public Sub _RefreshChildMenus() ' override
     
