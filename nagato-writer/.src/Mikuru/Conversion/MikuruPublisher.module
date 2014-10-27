@@ -42,13 +42,13 @@ Public Sub ToSlidy(argSource As String)
     
 End
 
-Public Sub ToHtml(argSource As String)
+Public Sub ToHtml(argSource As String, Optional argFormat As String = "markdown_github")
     
     Dim yukiPath As String = getPathToSave("html")
     
     If Not yukiPath Then Return
     
-    File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource))
+    File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat))
     
     Message.Info("YUKI.N > It's done", ("OK"))
     

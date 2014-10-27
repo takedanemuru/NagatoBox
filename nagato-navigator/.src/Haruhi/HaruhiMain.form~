@@ -6,10 +6,15 @@
   Border = False
   Stacking = Window.Above
   Sticky = True
+  SkipTaskbar = True
   Opacity = 50
   Arrangement = Arrange.Fill
   { MainContainer HBox
     MoveScaled(14,0,30,4)
     Expand = True
+  }
+  { SystrayDrawingArea DrawingArea
+    MoveScaled(0,0,14.2857,24)
+    Background = &HFF7F00&
   }
 }

@@ -78,7 +78,6 @@ Private Sub paintPerDesktopTasks(argWidthDesktop As Integer, argTasks As Desktop
     For Each yukiWindow In argTasks
         paintTask(yukiWindow, yukiWidthWindow, ByRef yukiX)
     Next
-
     
 End
 
@@ -93,11 +92,11 @@ End
 Public Sub Paint()
     
     Dim yukiWidthDesktop As Integer = Me._$drawingArea.W / Desktop.Count
-    'Dim yukiWidthWindow As Integer
     Dim yukiDesktop As Integer
     Dim yukiX As Integer
-    'Dim yukiWindow As DesktopWindow
     Dim yukiTasks As DesktopWindow[]
+    
+    Return
     
     If $tasks.Count = 0 Then Return
     

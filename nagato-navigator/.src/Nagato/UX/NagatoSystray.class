@@ -1,46 +1,68 @@
 ' Gambas class file
 
-Private $drawingArea As DrawingArea
+Public _$drawingArea As DrawingArea
 
 Private Sub arrangeTrayIcons()
     
-    ' Dim yukiIndex As Integer
-    ' 
-    ' For yukiIndex = 0 To X11Systray.Count - 1
-    '     With X11Systray[yukiIndex]
-    '         .IconH = Max(22, .IconH)
-    '         .Move(yukiIndex * 22, 0, 22, 22)
-    '         $drawingArea.W += 22
-    '     End With
-    ' Next
+    Dim yukiIndex As Integer 
+    Dim X, Y, H As Integer
+    
+    Debug
+    X = 2
+    Y = 2
+    
+    Debug "i came here."
+    
+    Do
+    'For yukiIndex = 0 To X11Systray.Count - 1
+        Debug yukiIndex
+        Debug X11Systray.Count 
+        With X11Systray[yukiIndex]
+            Debug yukiIndex;; .IconW;; .IconH
+            If (X + .IconW) >= (Me.ClientW - 2) Then
+                X = 2
+                Y += H + 2
+                H = 0
+            Endif
+            .Move(X, Y, .IconW, .IconH)
+            H = Max(H, .IconH)
+            X += .IconW + 2
+        End With
+        Inc yukiIndex
+        If yukiIndex >= X11Systray.Count - 1 Then Break
+    Loop
+    'Next
+    
+Catch
+    Debug Error.Text
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    Dim yukiIndex As Integer
+    Me._$drawingArea = New DrawingArea(argContainer) As "DrawingArea"
     
-    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
-    
-    With $drawingArea
-        .W = 22
-        .Background = NagatoSettings.BackgroundColor
+    With Me._$drawingArea
+        .W = 100
+        '.Background = NagatoSettings.BackgroundColor
+        .Background = Color.Pink
+        .Show()
     End With
+    
+    X11Systray.Show(Me._$drawingArea.Id)
+    
+    arrangeTrayIcons()
     
 End
 
 Public Sub Activate()
     
-    X11Systray.Show($drawingArea.Id)
+    ' X11Systray.Show($drawingArea.Id)
     
 End
 
-' Public Sub X11Systray_Arrange()
-' 
-'     Debug "arranged"
-'     ' 
-'     ' If X11Systray.Count = 0 Then Return
-'     ' 
-'     ' arrangeTrayIcons()
-'     
-' End
+Public Sub X11Systray_Arrange()
+
+    'arrangeTrayIcons()
+    
+End

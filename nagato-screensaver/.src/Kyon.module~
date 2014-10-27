@@ -4,18 +4,16 @@ Public Sub Main()
     
     MikuruArgs.Parsing()
     
-    HaruhiScreenCube.Show()
-    
-    ' If MikuruArgs.Start Then
-    '     Try Exec ["xautolock", "-time", NagatoSettings.ScreenSaverIdleMinute, "-locker", "nagato-screensaver --show"]
-    ' Else If MikuruArgs.Disable Then
-    '     Try Exec ["xautolock", "-disable"]
-    ' Else If MikuruArgs.Enable Then
-    '     Try Exec ["xautolock", "-enable"]
-    ' Else If MikuruArgs.Show Then
-    '     NagatoScreen.Show()
-    ' Else 'no options 
-    '     HaruhiMain.Show()
-    ' End If
+    If MikuruArgs.Start Then
+        Try Exec ["xautolock", "-time", NagatoSettings.ScreenSaverIdleMinute, "-locker", "nagato-screen-locker"]
+    Else If MikuruArgs.Disable Then
+        Try Exec ["xautolock", "-disable"]
+    Else If MikuruArgs.Enable Then
+        Try Exec ["xautolock", "-enable"]
+    Else If MikuruArgs.Show Then
+        NagatoScreen.Show()
+    Else 'no options 
+        HaruhiMain.Show()
+    End If
     
 End

@@ -1,13 +1,14 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
+# Compiled with Gambas 3.6.0
 Title=nagato-screensaver
 Startup=Kyon
 Icon=Pictures/shield.png
-Version=0.4.2
+Version=0.4.3
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
+Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.qt4.opengl
@@ -25,7 +26,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@gmail.com
 Url=http://bloominabc.blogspot.jp/
 License=S.O.S. License
-PackageName=nagato-screensaver-0.4.1
+PackageName=nagato-screensaver-0.4.3
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

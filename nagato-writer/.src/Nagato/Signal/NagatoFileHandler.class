@@ -8,6 +8,13 @@ Private $buffer As String
 Private $path As String
 Private $format As String = "markdown_github"
 
+Private Sub changePath(argPath As String)
+    
+    $path = argPath
+    MikuruMacro.RelativePath = argPath
+    
+End
+
 Private Sub setFormat(argPath As String)
     
     Debug DesktopMime.FromFile(argPath).Type
@@ -27,7 +34,7 @@ End
 
 Public Function SetPath(argPath As String) As String
     
-    $path = argPath
+    changePath(argPath)
     $buffer = File.Load(argPath)
     setFormat(argPath)
     
@@ -53,7 +60,7 @@ Public Sub Open() As Boolean
     If DesktopMime.FromFile(Dialog.Path).Type Not Begins "text" Then Return False
     
     Try $buffer = File.Load(Dialog.Path)
-    $path = Dialog.Path
+    changePath(Dialog.Path)
     setFormat(Dialog.Path)
     Return True
     
@@ -81,7 +88,7 @@ Public Sub SaveAs(argText As String)
     Dialog.Title = ("Save file as ...")
     If Dialog.SaveFile() Then Return
     
-    $path = Dialog.Path
+    changePath(Dialog.Path)
     $buffer = argText
     
     File.Save($path, argText)

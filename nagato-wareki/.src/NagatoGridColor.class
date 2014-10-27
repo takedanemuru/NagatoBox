@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read Color As Integer
+
+Private $era As String
+Private $color As Integer
+
+Public Sub _new()
+    
+    $color = Color.White
+    
+End
+
+Private Sub changeColor()
+    
+    If $color = Color.White Then
+        $color = Color.Lighter(Color.Lighter(Color.Violet))
+    Else
+        $color = Color.White
+    Endif
+    
+End
+
+Public Sub Set(argEra As String)
+    
+    If $era <> argEra Then
+        changeColor()
+        $era = argEra
+    Endif
+    
+End
+
+Private Function Color_Read() As Integer
+
+    Return $color
+
+End

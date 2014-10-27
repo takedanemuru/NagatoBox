@@ -48,7 +48,7 @@ Public Sub ToHtml(argSource As String)
     
     If Not yukiPath Then Return
     
-    File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource))
+    File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource, "markdown_github"))
     
     Message.Info("YUKI.N > It's done", ("OK"))
     
@@ -73,6 +73,8 @@ Public Sub ToPlainText(argSource As String, Optional argFormat As String = "mark
 End
 
 Public Sub _call(argSource As String, argSignal As Integer)
+    
+    If Not argSource Then Return
     
     Select Case argSignal
         Case MikuruSignal.PublishHtml

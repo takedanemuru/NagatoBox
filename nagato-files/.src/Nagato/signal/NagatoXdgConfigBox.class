@@ -43,6 +43,7 @@ Private Sub setButtonBox(argPath As String)
         .Picture = NagatoXdg.GetIcon(argPath)
         .Text = Replace$(argPath, User.Home, "~")
         .ReadOnly = True
+        .Expand = True
         .Tooltip = ("Click to change")
     End With
     

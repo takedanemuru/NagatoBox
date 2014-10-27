@@ -5,8 +5,8 @@ Inherits NagatoEffectProperties
 Property Read Values As Variant[]
 
 Private $container As Container
-Private $heightSlider As SliderBox
-Private $widthSlider As SliderBox
+Private $heightSlider As SpinBox
+Private $widthSlider As SpinBox
 Private $linkCheckbox As CheckBox
 
 Private Sub addLabel(argText As String)
@@ -25,7 +25,7 @@ End
 
 Private Sub addHeightSliderBox()
     
-    $heightSlider = New SliderBox($container) As "HeightSlider"
+    $heightSlider = New SpinBox($container) As "HeightSlider"
     
     With $heightSlider
         .MinValue = 1
@@ -39,7 +39,7 @@ End
 
 Private Sub addWidthSliderBox()
     
-    $widthSlider = New SliderBox($container) As "WidthSlider"
+    $widthSlider = New SpinBox($container) As "WidthSlider"
     
     With $widthSlider
         .MinValue = 1
@@ -91,6 +91,8 @@ End
 Public Sub WidthSlider_Change()
     
     If Not $linkCheckbox.Value Then Return
+
+    Debug "width changed"
 
     With HaruhiImageView
         Object.Lock($heightSlider)

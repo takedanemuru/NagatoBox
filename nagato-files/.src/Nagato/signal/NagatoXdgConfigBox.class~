@@ -58,8 +58,6 @@ End
 
 Public Sub Apply()
     
-    Debug "try apply change"
-    
     If Me._$path = $userSettingPath Then Return
     
     Exec ["xdg-user-dirs-update", "--set", $name, $userSettingPath]

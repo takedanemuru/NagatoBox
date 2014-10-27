@@ -35,10 +35,11 @@ Public Function SetPath(argPath As String) As String
     
 End
 
-Public Sub New() As String
+Public Sub New(argFormat As String) As String
     
     $buffer = ""
     $path = ""
+    $format = argFormat
     
     Return $buffer
     

@@ -4,6 +4,7 @@ Create Static
 
 Property ScreenSaverIdle As Integer
 Property Read ScreenSaverIdleMinute As Integer
+Property LockerCommand As String
 
 Private $settings As New Settings
 
@@ -22,5 +23,17 @@ End
 Private Function ScreenSaverIdleMinute_Read() As Integer
 
     Return $settings["screensaver/idle", 300] Div 60
+
+End
+
+Private Function LockerCommand_Read() As String
+
+    Return $settings["screensaver/locker_command", "nagato-screen-locker"]
+
+End
+
+Private Sub LockerCommand_Write(Value As String)
+
+    $settings["screensaver/locker_command"] = Value
 
 End

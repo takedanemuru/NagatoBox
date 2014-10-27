@@ -34,6 +34,8 @@ End
 
 Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
     
+    Debug argTag
+    
     Select Case argTag
         Case "Previous"
             $searchAndReplace.SearchTextBack(argValues[0])

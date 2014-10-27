@@ -1,11 +1,11 @@
 ' Gambas class file
 
 Event SignalStringTag(argTag As String, argValues As Variant[])
-Event Open
+Event Opened
 
 Public Sub Form_Open()
 
-    Raise Open
+    Raise Opened
 
 End
 

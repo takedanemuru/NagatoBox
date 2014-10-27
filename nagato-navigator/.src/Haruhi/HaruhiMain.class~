@@ -36,8 +36,9 @@ End
 
 Public Sub Form_Open()
 
-    setNetWmStrut()
+    setForm()
     setNetWmWindowType()
+    setNetWmStrut()
     NagatoTimer.Activate()
 
     Me.Background = NagatoSettings.BackgroundColor
