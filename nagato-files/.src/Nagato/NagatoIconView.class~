@@ -154,9 +154,7 @@ Public Sub KeyBoard_KeyPress(argKeyCode As Integer)
         Case Key.Esc, 16777216
             Me.Refresh($currentDirectory)
         Case Key.Delete
-            MikuruArrayTest($selectionBar.Paths)
-            HaruhiDialogDelete.SetMessage($selectionBar.Paths)
-            HaruhiDialogDelete.ShowDialog()
+            NagatoTrash.Delete($selectionBar.Paths)
     End Select
     
 End

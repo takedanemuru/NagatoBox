@@ -1,15 +1,16 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
+# Compiled with Gambas 3.6.0
 Title=nagato-web
 Startup=Kyon
 Icon=pictures/icons/web.png
-Version=0.17.0
+Version=0.17.1
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.db
 Component=gb.dbus
+Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.pcre
@@ -25,7 +26,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S License
-PackageName=nagato-web-0.17.0
+PackageName=nagato-web-0.17.1
 CreateEachDirectory=1
 MimeTypes="text/html"
 Packager=1

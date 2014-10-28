@@ -50,6 +50,14 @@ Public Sub _new(argContainer As Container)
     
 End
 
+Public Sub DrawingArea_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuPager
+    
+    yukiMenu.PopUp()
+    
+End
+
 Public Sub DrawingArea_Draw()
     
     Dim yukiCount As Integer

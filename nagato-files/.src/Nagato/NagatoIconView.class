@@ -11,6 +11,16 @@ Private $iconViewKeyboard As NagatoIconViewKeyboard
 Private $selectionBar As NagatoSelectionBar 
 Private $currentDirectory As String
 
+Private Sub getCount() As Integer
+    
+    If NagatoSettings.ShowHidden Then
+        Return Dir($currentDirectory, "*").Count
+    Else
+        Return Dir($currentDirectory, "[^.]*").Count
+    Endif
+    
+End
+
 Public Sub SetFocus(argPath As String)
     
     $iconViewAction.SetFocus(argPath)
@@ -34,6 +44,7 @@ End
 Public Sub Delete(argPath As String)
     
     If $iconViewAction.Delete(argPath) Then $selectionBar.Remove(argPath)
+    If getCount() = 0 Then Me.Refresh($currentDirectory)
     
 End
 

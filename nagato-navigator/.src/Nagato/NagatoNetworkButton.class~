@@ -45,8 +45,11 @@ End
 
 Private Sub setButtonText()
     
-    Dim yukiSpeed As Float = NagatoNetworkManager.GetSpeed($deviceIndex)
-    Dim yukiText As String = Format$(yukiSpeed / 1000, "##0Mbps")
+    Dim yukiSpeed As Float
+    Dim yukiText As String
+    
+    yukiSpeed = NagatoNetworkManager.GetSpeed($deviceIndex)
+    yukiText = Format$(yukiSpeed / 1000, "##0Mbps")
     
     If $button.Text <> yukiText Then
         $button.Text = yukiText

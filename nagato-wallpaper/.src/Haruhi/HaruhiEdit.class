@@ -11,6 +11,16 @@ Private Sub initializeWidgets()
     
 End
 
+Private Sub setBackgroundColor()
+    
+    With Paint
+        .Brush = .Color(NagatoPreview.Color)
+        .Rectangle(0, 0, PreviewDrawingArea.W, PreviewDrawingArea.H)
+        .Fill()
+    End With
+    
+End
+
 Public Sub SetPath(argPath As String)
     
     NagatoPreview.Path = argPath
@@ -55,10 +65,9 @@ Public Sub PreviewDrawingArea_Draw()
     
     If NagatoPreview.Path = "" Then Return
     If Not Exist(NagatoPreview.Path) Then Return
-    
-    PreviewDrawingArea.Background = NagatoPreview.Color
 
     Paint.Begin(PreviewDrawingArea)
+        setBackgroundColor()
         NagatoThumbnail.Set(ModeComboBox.Index)
     Paint.End()
     

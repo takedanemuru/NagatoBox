@@ -2,14 +2,14 @@
 
 Create Static
 
-Private $observer As Observer
-
 Private Sub catchCommand()
     
     MikuruUserInput(("YUKI.N > Can you see this ?")) 
 
     If MikuruUserInput.Include(["move", "file", "files"]) Then
         NagatoMove.Show(User.Home)
+    Else If MikuruUserInput.Has("memo") Then
+        NagatoMemo.Show()
     Else
         NagatoMisc.Show()
     End If

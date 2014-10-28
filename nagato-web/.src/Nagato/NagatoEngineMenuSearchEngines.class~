@@ -11,9 +11,7 @@ Public Sub _InitializeChildMenus() ' override
     Me._AddChildMenu(("Yandex"), "!yandex")
         Me._AddChildMenu("", Null)
     Me._AddChildMenu(("Google"), "!g")
-    Me._AddChildMenu(("Google - Japanese"), "!gj")
+    If System.Language Begins "ja" Then Me._AddChildMenu(("Google - Japanese"), "!gj")
     Me._AddChildMenu(("Google - Image"), "!gi")
-    
-    Debug System.Language
     
 End
