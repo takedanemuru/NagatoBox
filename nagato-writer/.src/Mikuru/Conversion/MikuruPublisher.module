@@ -9,7 +9,7 @@ Private Function getPathToSave(argExtend As String) As String
     
 End
 
-Public Sub ToPdf(argSource As String)
+Public Sub ToPdf(argSource As String, argFormat As String)
     
     Dim yukiTempPathSource As String = Temp$() & ".html"
     Dim yukiPath As String = getPathToSave("pdf")
@@ -17,10 +17,10 @@ Public Sub ToPdf(argSource As String)
 
     If Not yukiPath Then Return
 
-    File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlDirect(yukiSource))
+    File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlDirect(yukiSource, argFormat))
     'File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlSmart(yukiSource))
 
-    Exec ["wkhtmltopdf", "--encoding", "UTF-8", yukiTempPathSource, yukiPath] Wait
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "96", yukiTempPathSource, yukiPath] Wait
 
     Message.Info("YUKI.N > It's done", ("OK"))
     
@@ -72,7 +72,7 @@ Public Sub ToPlainText(argSource As String, Optional argFormat As String = "mark
     
 End
 
-Public Sub _call(argSource As String, argSignal As Integer)
+Public Sub _call(argSource As String, argSignal As Integer, argFormat As String)
     
     If Not argSource Then Return
     
@@ -80,7 +80,7 @@ Public Sub _call(argSource As String, argSignal As Integer)
         Case MikuruSignal.PublishHtml
             Me.ToHtml(argSource)
         Case MikuruSignal.PublishPdf
-            Me.ToPdf(argSource)
+            Me.ToPdf(argSource, argFormat)
         Case MikuruSignal.PublishPlainText
             Me.ToPlainText(argSource)
         Case MikuruSignal.PublishSlidy

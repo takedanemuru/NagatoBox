@@ -6,10 +6,11 @@ Public Sub Main()
     
     Application.Theme = "Numix-Circle"
     
-    NagatoArguments.Parsing()
+    HaruhiDirectorySize.Show()
+    HaruhiDirectorySize.Calc("/home/takedanemuru")
     
-    HaruhiXdgConfig.Show()
-    
+    ' NagatoArguments.Parsing()
+    ' 
     ' If NagatoArguments.DesktopIcons Then
     '     HaruhiDesktop.Show()
     ' Else If NagatoArguments.XdgUserDirs Then

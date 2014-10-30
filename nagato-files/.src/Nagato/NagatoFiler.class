@@ -105,6 +105,8 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                 HaruhiRename.ShowDialog()
             Case .DirDelete
                 MikuruFile.TrashDirectory(argArgument)
+            ' Case .DirComputeSize
+            '     MikuruDirectorySize.Compute($log.Current)
             Case .FileOpen
                 MikuruFile.Exec(argArgument)
             Case .FileDelete

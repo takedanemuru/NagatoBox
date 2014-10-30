@@ -11,7 +11,7 @@ Public Enum FileHeader = 5000, FileOpen = 5001, FileOpenWith = 5002, FileDelete 
 Public Enum FileCopy = 5005
 Public Enum FileCreate = 5006, FileShowProperty = 5007, FileUnarchive = 5008, FileMoveToCurrentDir = 5009
 Public Enum DirHeader = 6000, DirOpen = 6001, DirOpenInNewTab = 6002, DirDelete = 6003, DirRename = 6004
-Public Enum DirCreate = 6005, DirShowProperty = 6006
+Public Enum DirCreate = 6005, DirShowProperty = 6006, DirComputeSize = 6007
 Public Enum TagHeader = 7000, TagAdd = 7001, TagRemove = 7002
 Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002
 Public Enum CreateHeader = 9000, CreateArchive = 9001, CreateClone = 9002, CreateSymblicLink = 9003

@@ -5,6 +5,12 @@ Inherits NagatoMenuPipe
 Public _$rootMenu As Menu
 Public _$path As String
 
+Public Sub _ClickAction()
+    
+    Raise MenuEventWithArg(Last.Tag, Me._$path)
+    
+End
+
 Public Sub _AddContextMenu(argText As String, argTag As Integer, Optional argIcon As Picture)
     
     Dim yukiMenu As New Menu(Me._$rootMenu) As "ContextMenu"
@@ -40,6 +46,6 @@ End
 
 Public Sub ContextMenu_Click()
     
-    Raise MenuEventWithArg(Last.Tag, Me._$path)
+    Me._ClickAction()
     
 End
