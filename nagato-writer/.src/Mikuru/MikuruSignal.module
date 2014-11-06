@@ -7,4 +7,6 @@ Public Enum FileOpen = 1201, FileOpenPath = 1210
 Public Enum ViewNone = 2000, ViewPreview = 2001
 Public Enum PublishNone = 3000, PublishPdf = 3001, PublishHtml = 3002, PublishPlainText = 3003
 Public Enum PublishSlidy = 3004
-Public Enum AppNone = 4000, AppAbout = 4001, AppQuit = 4002
+Public Enum EditNone = 4000, EditInsertNumbers = 4001, EditInsertBullets = 4002, EditInsertUrl = 4003
+Public Enum EditInsertImage = 4004
+Public Enum AppNone = 9000, AppAbout = 9001, AppQuit = 9002

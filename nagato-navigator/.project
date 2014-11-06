@@ -1,5 +1,5 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.6.0
+# Compiled with Gambas 3.6.1
 Title=nagato-navigator
 Startup=Kyon
 Icon=Pictures/icons/magic-wand.png
@@ -10,6 +10,7 @@ Component=gb.form
 Component=gb.dbus
 Component=gb.desktop.x11
 Component=gb.desktop
+Component=gb.desktop.gnome.keyring
 Component=gb.settings
 Component=gb.net
 Component=gb.net.curl
@@ -19,7 +20,7 @@ Description="Nagato Yuki tells you a fortune."
 Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
 TabSize=4
 Translate=1
-Language=ja
+Language=en
 Maintainer=takedanemuru
 Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com

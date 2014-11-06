@@ -7,9 +7,9 @@ Private Function getArchiveType() As String
     
     Select Case TypeComboBox.Index
         Case 0
-            Return ".zip"
-        Case 1
             Return ".tar"
+        Case 1
+            Return ".zip"
         Case 2
             Return ".bz2"
         Case 3
@@ -17,6 +17,8 @@ Private Function getArchiveType() As String
         Case 4
             Return ".rar"
         Case 5
+            Return ".lzh"
+        Case 6
             Return ".xz"
     End Select
     
@@ -72,6 +74,8 @@ Public Sub ApplyButton_Click()
     
     Dialog.Title = ("Set path to create")
     Dialog.Path = MikuruSafePath.Get(User.Home &/ "new_archive" & getArchiveType())
+    
+    Debug getArchiveType()
     
     If Not Dialog.SaveFile() Then 
         NagatoPatool.Create($fileStore.PathsInLine, Dialog.Path)

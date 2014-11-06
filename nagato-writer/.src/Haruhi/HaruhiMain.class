@@ -61,6 +61,8 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
             MikuruPublisher($sourceEditor.Text, argEvent, $sourceEditor.Format)
         Case MikuruSignal.ViewPreview
             $previewer.Refresh($sourceEditor.Text, $sourceEditor.Format)
+        Case MikuruSignal.EditNone To MikuruSignal.EditNone + 999
+            $sourceEditor.EditEvent(argEvent, argArgs)
         Case MikuruSignal.AppNone To MikuruSignal.AppNone + 999
             appEvent(argEvent)
     End Select

@@ -32,9 +32,35 @@ Public Sub _initialize() ' override
     
 End
 
-Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
+Public Sub InsertBullets()
     
-    Debug argTag
+    Dim yukiText As String = $textArea.Selection.Text
+    
+    $textArea.Selection.Text = ("+ " & Replace$(yukiText, "\n", "\n+ "))
+    
+End
+
+Public Sub InsertNembers()
+    
+    Dim yukiText As String = $textArea.Selection.Text
+    Dim yukiIndex As Integer = 1
+    Dim yukiPosition As Integer
+    Dim yukiReplacement As String = "1. "
+    
+    For yukiPosition = 1 To String.Len(yukiText) 
+        If String.Mid(yukiText, yukiPosition, 1) = "\n" Then
+            Inc yukiIndex
+            yukiReplacement &= Subst$("\n&1. ", yukiIndex)
+        Else
+            yukiReplacement &= String.Mid(yukiText, yukiPosition, 1)
+        Endif
+    Next
+    
+    $textArea.Selection.Text = yukiReplacement
+    
+End
+
+Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
     
     Select Case argTag
         Case "Previous"

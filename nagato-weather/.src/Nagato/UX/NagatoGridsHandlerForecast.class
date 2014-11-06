@@ -18,6 +18,19 @@ Private Sub setGridColor(argCount As Integer)
     
 End
 
+Private Sub setColumnWidth(argColumnsIndex As Integer)
+    
+    Dim yukiColumnHeaderWidth As Integer
+    Dim yukiRowValueWidth As Integer
+    
+    With Me._$grids
+        yukiColumnHeaderWidth = Application.Font.RichTextWidth(.Columns[argColumnsIndex].Text) + 16
+        yukiRowValueWidth = Application.Font.RichTextWidth(.[.Rows.Max, argColumnsIndex].Text) + 16
+        .Columns[argColumnsIndex].W = Max(yukiColumnHeaderWidth, yukiRowValueWidth)
+    End With
+    
+End
+
 Public Sub SetData(argDate As String)
     
     Dim yukiCount As Integer
@@ -33,10 +46,13 @@ Public Sub SetData(argDate As String)
                 setGridColor(yukiCount)
                 .[.Rows.Max, 0].Picture = getIcon(yukiCount, yukiElement)
                 .[.Rows.Max, 1].Text = MikuruReadableTime(yukiTime)
+                setColumnWidth(1)
                 .[.Rows.Max, 2].Text = Subst$("&1°C", yukiElement[MikuruWeatherKey.Temperature])
                 .[.Rows.Max, 2].Alignment = Align.Right
+                setColumnWidth(2)
                 .[.Rows.Max, 3].Text = Subst$("&1mm", yukiElement[MikuruWeatherKey.Precipitation])
                 .[.Rows.Max, 3].Alignment = Align.Right
+                setColumnWidth(3)
             End With
         Endif
     Next
@@ -49,9 +65,10 @@ Public Sub _InitializeGridView() ' override
         .Grid = False
         .Header = GridView.Horizontal
         .Columns.Count = 4
-        Me._SetColumnWidth(64, 256, 128, 128)
+        Me._$grids.AutoResize = True
         Me._SetColumnTitles("Condition", "Time", "Temperature", "Precipitation")
         .Rows.Height = 64
+        .ScrollBar = Scroll.Vertical
     End With
     
     NagatoSettingsGrids.Load(Me._$grids)

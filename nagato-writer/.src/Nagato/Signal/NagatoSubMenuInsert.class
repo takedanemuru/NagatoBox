@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _AddChildMenus()
+    
+    Me._AddMenu(("Bulleted List"), MikuruSignal.EditInsertBullets)
+    Me._AddMenu(("Numbered List"), MikuruSignal.EditInsertNumbers)
+    Me._AddMenu(("Image"), MikuruSignal.EditInsertImage)
+    Me._AddMenu(("URL"), MikuruSignal.EditInsertUrl)
+End

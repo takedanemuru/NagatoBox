@@ -44,7 +44,6 @@ Public Sub Form_Open()
     Me.Background = NagatoSettings.BackgroundColor
     $button = New NagatoStarButton(MainContainer) As "StarButton"
     $contentBar = New NagatoContentBar(MainContainer) As "ContentBar"
-    '$systray = New NagatoSystray(MainContainer) As "Systray"
     $pager = New NagatoPager(MainContainer) As "Pager"
     $clock = New NagatoClock(MainContainer) As "Clock"
     

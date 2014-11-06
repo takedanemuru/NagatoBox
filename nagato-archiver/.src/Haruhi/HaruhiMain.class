@@ -17,8 +17,18 @@ Private Function getArchiveType() As String
         Case 4
             Return ".rar"
         Case 5
+            Return ".lzh"
+        Case 6
             Return ".xz"
     End Select
+    
+End
+
+Private Sub checkExtension(argPath As String) As String
+    
+    Debug File.Ext(argPath)
+    
+    Return argPath
     
 End
 
@@ -74,7 +84,7 @@ Public Sub ApplyButton_Click()
     Dialog.Path = MikuruSafePath.Get(User.Home &/ "new_archive" & getArchiveType())
     
     If Not Dialog.SaveFile() Then 
-        NagatoPatool.Create($fileStore.PathsInLine, Dialog.Path)
+        NagatoPatool.Create($fileStore.PathsInLine, checkExtension(Dialog.Path))
     End If
 
 End

@@ -58,6 +58,21 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
 
 End
 
+Public Sub EditEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
+    
+    Select Case argEvent
+        Case MikuruSignal.EditInsertBullets
+            $textArea.InsertBullets()
+        Case MikuruSignal.EditInsertNumbers
+            $textArea.InsertNembers()
+        Case MikuruSignal.EditInsertImage
+            $textArea.Insert("![alt text](/path/to/img.jpg)")
+        Case MikuruSignal.EditInsertUrl
+            $textArea.Insert("[title](http://www.somewhere.com)")
+    End Select
+    
+End
+
 Public Sub GetSaveStatus() As Integer
     
     If $textArea.Text = $fileHandler.Buffer Then Return Me.ResponseHasBeenSaved

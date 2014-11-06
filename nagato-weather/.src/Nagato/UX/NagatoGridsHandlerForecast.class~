@@ -4,7 +4,7 @@ Inherits NagatoGridsHandler
 
 Private Sub getIcon(argCount As Integer, argElement As NagatoWeatherElement) As Picture
     
-    Return MikuruWeatherIcon((argCount >= 6 And 18 > argCount), argElement.IconId, 64).Picture
+    Return MikuruWeatherIcon((argCount >= 6 And 18 > argCount), argElement[MikuruWeatherKey.IconId], 64).Picture
     
 End
 
@@ -15,6 +15,19 @@ Private Sub setGridColor(argCount As Integer)
     Else
         Me._SetBackgroundColor(MikuruBackgroundColor.Day)
     End If
+    
+End
+
+Private Sub setColumnWidth(argColumnsIndex As Integer)
+    
+    Dim yukiColumnHeaderWidth As Integer
+    Dim yukiRowValueWidth As Integer
+    
+    With Me._$grids
+        yukiColumnHeaderWidth = Application.Font.RichTextWidth(.Columns[argColumnsIndex].Text) + 16
+        yukiRowValueWidth = Application.Font.RichTextWidth(.[.Rows.Max, argColumnsIndex].Text) + 16
+        .Columns[argColumnsIndex].W = Max(yukiColumnHeaderWidth, yukiRowValueWidth)
+    End With
     
 End
 
@@ -33,11 +46,12 @@ Public Sub SetData(argDate As String)
                 setGridColor(yukiCount)
                 .[.Rows.Max, 0].Picture = getIcon(yukiCount, yukiElement)
                 .[.Rows.Max, 1].Text = MikuruReadableTime(yukiTime)
-                '.[.Rows.Max, 2].Text = Subst$("&1°C", yukiElement.Temperature)
                 .[.Rows.Max, 2].Text = Subst$("&1°C", yukiElement[MikuruWeatherKey.Temperature])
                 .[.Rows.Max, 2].Alignment = Align.Right
-                .[.Rows.Max, 3].Text = Subst$("&1mm", yukiElement.Precipitation)
+                .Columns[2].W = Application.Font.RichTextWidth(.Columns[2].Text) + 16
+                .[.Rows.Max, 3].Text = Subst$("&1mm", yukiElement[MikuruWeatherKey.Precipitation])
                 .[.Rows.Max, 3].Alignment = Align.Right
+                setColumnWidth(3)
             End With
         Endif
     Next
@@ -50,9 +64,10 @@ Public Sub _InitializeGridView() ' override
         .Grid = False
         .Header = GridView.Horizontal
         .Columns.Count = 4
-        Me._SetColumnWidth(64, 256, 128, 128)
+        Me._$grids.AutoResize = True
         Me._SetColumnTitles("Condition", "Time", "Temperature", "Precipitation")
         .Rows.Height = 64
+        .ScrollBar = Scroll.Vertical
     End With
     
     NagatoSettingsGrids.Load(Me._$grids)
