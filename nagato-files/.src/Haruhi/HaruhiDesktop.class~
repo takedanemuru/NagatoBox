@@ -19,7 +19,7 @@ End
 
 Private Sub setIconView()
     
-    $desktop = New NagatoDesktop2(Me)
+    $desktop = New NagatoDesktop(Me)
     '$charm = New NagatoCharm(Me)
     
 End
@@ -31,7 +31,7 @@ Public Sub Form_Open()
     setIconView()
 
     Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
-
+    
 End
 
 Public Sub Form_MouseMove()

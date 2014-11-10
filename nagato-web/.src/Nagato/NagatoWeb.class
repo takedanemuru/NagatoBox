@@ -20,6 +20,7 @@ Private Sub addWebView(argUrl As String)
         .Url = argUrl
         .UserAgent = "NagatoWeb"
         .Tracking = True
+        .Font = Application.Font
     End With
     
 End

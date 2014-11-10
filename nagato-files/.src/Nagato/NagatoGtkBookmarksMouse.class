@@ -17,18 +17,6 @@ Private Sub addDroppedDirectory()
     
 End
 
-Private Sub trashFiles()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
-        If Exist(yukiPath) Then 
-            MikuruFile.TrashFile(yukiPath)
-        Endif
-    Next
-    
-End
-
 Private Sub moveFiles()
     
     Dim yukiPath As String
@@ -44,9 +32,9 @@ End
 Private Sub moveDroppedFiles()
     
     If Me._$listView.Item.Key = TrashBinKey Then
-        trashFiles()
+        NagatoTrash.Delete(NagatoDrag2.GetPaths(Drag.Data))
     Else If Not Exist(Me._$listView.Item.Key) Then
-         If Me._$listView.Item.Key Not Begins SeparatorKey Then Me._$listView.Remove(Me._$listView.Item.Key)
+        If Me._$listView.Item.Key Not Begins SeparatorKey Then Me._$listView.Remove(Me._$listView.Item.Key)
     Else
         moveFiles()
     End If

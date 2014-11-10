@@ -54,14 +54,9 @@ End
 
 Private Sub addFileOpenWithMenu()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu)
     Dim yukiOpenWithMenu As NagatoOpenWithApplicationMenu
     
-    With yukiMenu
-        .Text = ("Open with ...")
-    End With
-    
-    yukiOpenWithMenu = New NagatoOpenWithApplicationMenu(yukiMenu, Me._$path)
+    yukiOpenWithMenu = New NagatoOpenWithApplicationMenu(Me._$rootMenu, Me._$path)
     
 End
 

@@ -16,12 +16,9 @@ End
 
 Private Sub addOpenWithMenu()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu)
-    Dim yukiOpenWithMenu As New NagatoOpenWithApplicationMenu(yukiMenu, Last.Key)
+    Dim yukiOpenWithMenu As NagatoOpenWithApplicationMenu
     
-    With yukiMenu
-        .Text = ("Open with ...")
-    End With
+    yukiOpenWithMenu = New NagatoOpenWithApplicationMenu(Me._$rootMenu, Last.Key)
     
 End
 

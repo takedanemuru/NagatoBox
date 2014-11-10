@@ -8,6 +8,10 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
+    'for testing
+    'HaruhiDesktop.Show()
+    'HaruhiXdgConfig.ShowDialog()
+    
     If NagatoArguments.DesktopIcons Then
         HaruhiDesktop.Show()
     Else If NagatoArguments.XdgUserDirs Then

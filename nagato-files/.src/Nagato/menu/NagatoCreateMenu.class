@@ -2,27 +2,47 @@
 
 Inherits NagatoSubMenu
 
-Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+Private Sub addCreateFileMenu()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    Dim yukiMenu As Menu
+    Dim yukiPath As String
     
-    With yukiMenu 
-        .Text = argText
-        .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    For Each yukiPath In Dir(NagatoXdg.Templates, "*", gb.File)
+        yukiMenu = New Menu(Me._$rootMenu) As "CreateFileMenu"
+        yukiMenu.Text = yukiPath
+        yukiMenu.Tag = NagatoXdg.Templates &/ yukiPath
+        yukiMenu.Picture = MikuruIconMono.GetFromPath(NagatoXdg.Templates &/ yukiPath)
+    Next
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Create")
+        .Picture = MikuruIcon.Get("magic-wand")
     End With
     
 End
 
-Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
+Public Sub _InitializeMenu() ' override
     
-    addMenuItem(("Create archive"), NagatoMenuPipe.CreateArchive, "hard-drive-download")
-    addMenuItem(("Create clone"), NagatoMenuPipe.CreateClone, "documents")
+    Me._AddMenu(("New Directory"), NagatoMenuPipe.DirCreate, "folder")
+    Me._AddMenu("", 0) ' add dummy menu
+    addCreateFileMenu()
     
 End
 
 Public Sub MenuItem_Click()
     
     Raise MenuEvent(Last.Tag)
+    
+End
+
+Public Sub CreateFileMenu_Click()
+    
+   Raise MenuEventWithArg(NagatoMenuPipe.FileCreate, Last.Tag)
     
 End

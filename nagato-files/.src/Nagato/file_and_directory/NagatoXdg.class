@@ -2,6 +2,8 @@
 
 Create Static
 
+Property Read Templates As String
+
 Public Struct Directories 
     All As String[]
     Desktop As String
@@ -110,4 +112,10 @@ Public Function IsUserDir(argPath As String) As Boolean
     
     Return UserDirs.All.Exist(argPath)
     
+End
+
+Private Function Templates_Read() As String
+
+    Return UserDirs.Templetes
+
 End

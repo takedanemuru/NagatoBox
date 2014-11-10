@@ -56,6 +56,16 @@ Private Function getDesktopFilesWithMimeType() As String[]
     
 End
 
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' this method is protected/virtual. MUST be overridden
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Open with ...")
+    End With
+    
+End
+
 Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
     
     Dim yukiAdditionalDesktopFile As String

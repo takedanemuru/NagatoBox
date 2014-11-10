@@ -9,9 +9,9 @@ Public Sub Refresh()
     Dim yukiImage As Image = Image.Load("Pictures/ohana_clockface.png")
     
     Paint.Begin(yukiImage)
-    $pointsPainter.Paint()
-    $handsPainter.Paint()
-    $textPainter.Paint()
+        $pointsPainter.Paint()
+        $handsPainter.Paint()
+        $textPainter.Paint()
     Paint.End()
     
     Ohana.Picture = yukiImage.Stretch(IrohaSettings.Size, IrohaSettings.Size).Picture

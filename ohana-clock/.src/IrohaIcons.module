@@ -1,0 +1,17 @@
+' Gambas module file
+
+Public Sub _get(argName As String) As Picture
+    
+    Return Picture.Load(Subst$("Pictures/Icons/&1.png", argName))
+    
+End
+
+Public Sub GetCheckIcon(argFlag As Boolean) As Picture
+    
+    If argFlag Then
+        Return Picture.Load("Pictures/Icons/button-check.png")
+    Else
+        Return Null
+    Endif
+    
+End

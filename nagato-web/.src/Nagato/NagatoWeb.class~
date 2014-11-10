@@ -23,8 +23,6 @@ Private Sub addWebView(argUrl As String)
         .Font.Name = NagatoSettings.WebFontName
     End With
     
-    Debug $webView.Font.Name
-    
 End
 
 Public Sub Forward()

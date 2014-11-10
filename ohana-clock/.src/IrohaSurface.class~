@@ -14,6 +14,8 @@ Public Sub Refresh()
     $textPainter.Paint()
     Paint.End()
     
-    Ohana.Picture = yukiImage.Stretch(IrohaSettings.Size, IrohaSettings.Size).Picture
+    Ohana.Picture = yukiImage.Picture
+    
+    'Ohana.Picture = yukiImage.Stretch(IrohaSettings.Size, IrohaSettings.Size).Picture
     
 End

@@ -5,6 +5,7 @@ Private $clock As NagatoDesktopClock
 Private $trashBin As NagatoDesktopTrashBin 
 Private $observer As NagatoDirectoryObserver
 Private $selection As NagatoSelection
+Private $panel As Panel
 
 Private Sub initializeIconView(argContainer As Container)
     
@@ -14,9 +15,18 @@ Private Sub initializeIconView(argContainer As Container)
         .Expand = True
         Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
         If Error Then .Picture = Picture.Load("pictures/about.png")
-        .Orientation = Arrange.Vertical
+        .Orientation = Arrange.Horizontal
         .Border = False
     End With
+    
+End
+
+Private Sub initializePanel(argContainer As Container)
+    
+    $panel = New Panel(argContainer)
+    
+    $panel.Expand = False
+    $panel.H = (Screen.H - Desktop.H)
     
 End
 
@@ -49,6 +59,7 @@ End
 Public Sub _new(argContainer As Container)
     
     initializeIconView(argContainer)
+    initializePanel(argContainer)
     
     $observer = New NagatoDirectoryObserver As "DirectoryObserver"
     $observer.Directory = Desktop.Path

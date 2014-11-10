@@ -2,13 +2,33 @@
 
 Inherits NagatoGtkBookmarksHandler
 
+Private Sub setNewTrashBin()
+    
+    If Exist(NagatoTrash.PathFiles) Then
+        HaruhiMain.SetNewTrashBin()
+    Else
+        Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
+    End If
+    
+End
+
+Private Sub setNewTab()
+    
+    If Exist(Me._$listView.Key) Then
+        HaruhiMain.SetNewDirectory(Me._$listView.Key)
+    Else
+        Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
+    End If
+    
+End
+
 Public Sub Asakura_Activate()
     
     Select Case Me._$listView.Key
         Case "NagatoTrashBinKey"
-            HaruhiMain.SetNewTrashBin()
+            setNewTrashBin()
         Default
-            HaruhiMain.SetNewDirectory(Me._$listView.Key)
+            setNewTab()
     End Select
     
 End

@@ -15,6 +15,16 @@ Private $selectedLabelPainter As New NagatoPainterSelectedLabel
 Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
 Private $symbolSetter As New NagatoSymbolSetter
 
+Private Sub paintIcon(argIcon As Picture)
+    
+    If Object.IsValid(argIcon)
+        Paint.DrawPicture(argIcon, (Me.TileSize - argIcon.W) / 2, Me.Margin + (64 - argIcon.H) / 2)
+    Else
+        Paint.DrawPicture(MikuruIcon.Get("question", 36), (Me.TileSize - 36) / 2, Me.Margin + (64 - 36) / 2)
+    End If
+    
+End
+
 Public Function _GetBaseImage(argSelected As Boolean) As Image
     
     Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Me.BaseColor) + 16777216 * 192)
@@ -33,7 +43,7 @@ Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As S
         .Brush = .Color(Color.White)
         .Font.Bold = True
         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-        .DrawPicture(argIcon, (Me.TileSize - argIcon.W) / 2, Me.Margin + (64 - argIcon.H) / 2)
+        paintIcon(argIcon)
         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
         If argSelected Then $selectedLabelPainter.Paint()
@@ -53,7 +63,7 @@ Public Function _GetTileReadOnly(argBaseImage As Image, argIcon As Picture, argT
         .Brush = .Color(Color.White)
         .Font.Bold = True
         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-        .DrawPicture(argIcon, (Me.TileSize - argIcon.W) / 2, Me.Margin + (64 - argIcon.H) / 2)
+        paintIcon(argIcon)
         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
         $readOnlyLabelPainter.Paint(Me.BaseColor)

@@ -1,23 +1,12 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoSubMenu
 
 Private Enum MenuNone = 1000, MenuAscent = 1001, MenuDescent = 1002
 
-Private $rootMenu As Menu
-Private $observer As Observer
-
-Private Sub setDummyParentMenu(argRootMenu As Menu)
-    
-    Dim yukiDummy As New Menu(argRootMenu) As "DummyParent"
-    
-    yukiDummy.Text = "dummy"
-    
-End
-
 Private Sub addMenu(argText As String, argTag As Integer, argChecked As Boolean)
     
-    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
     
     With yukiMenu
         .Text = argText
@@ -27,7 +16,7 @@ Private Sub addMenu(argText As String, argTag As Integer, argChecked As Boolean)
     
 End
 
-Private Sub initializeMenu()
+Public Sub _InitializeMenu() 'override
     
     With MikuruSort
         addMenu(("By Name"), .ByName, NagatoSettings.SortBy = .ByName)
@@ -42,18 +31,16 @@ Private Sub initializeMenu()
     
 End
 
-Public Sub _new(argRootMenu As Menu)
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
     
-    $rootMenu = argRootMenu
-    $observer = New Observer(argRootMenu) As "Asakura"
-    setDummyParentMenu(argRootMenu)
+    Me._$rootMenu = New Menu(argRootMenu)
     
-End
-
-Public Sub Asakura_Show()
+    Debug "i came here."
     
-    $rootMenu.Children.Clear()
-    initializeMenu()
+    With Me._$rootMenu
+        .Text = ("Sort")
+        .Picture = MikuruIcon.Get("chart-bar-down")
+    End With
     
 End
 

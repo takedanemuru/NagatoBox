@@ -104,7 +104,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                 HaruhiRename.SetPath(argArgument, Stock["64/directory"])
                 HaruhiRename.ShowDialog()
             Case .DirDelete
-                MikuruFile.TrashDirectory(argArgument)
+                NagatoTrash.Delete([argArgument])
             Case .FileOpen
                 MikuruFile.Exec(argArgument)
             Case .FileDelete
@@ -167,6 +167,8 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     Select Case argEvent
         Case NagatoMenuPipe.PathNew
             If IsDir(argArgument) Then move(argArgument)
+        Case NagatoMenuPipe.FileCreate
+            Copy argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument))
     End Select
     
 End

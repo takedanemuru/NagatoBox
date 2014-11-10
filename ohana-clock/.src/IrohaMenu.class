@@ -28,16 +28,16 @@ End
 Public Sub _new(argParent As Form)
     
     $rootMenu = New Menu(argParent)
-    addMenuItem(("Large"), MenuSize400, IIf(IrohaSettings.Size = 400, Stock["medium/apply"], Null))
-    addMenuItem(("Medium"), MenuSize300, IIf(IrohaSettings.Size = 300, Stock["medium/apply"], Null))
-    addMenuItem(("Small"), MenuSize200, IIf(IrohaSettings.Size = 200, Stock["medium/apply"], Null))
+    addMenuItem(("Large"), MenuSize400, IrohaIcons.GetCheckIcon(IrohaSettings.Size = 400))
+    addMenuItem(("Medium"), MenuSize300, IrohaIcons.GetCheckIcon(IrohaSettings.Size = 300))
+    addMenuItem(("Small"), MenuSize200, IrohaIcons.GetCheckIcon(IrohaSettings.Size = 200))
         addMenuItem("", MenuNone)
-    addMenuItem(("Skip Taskbar"), MenuSkipTaskBar, IIf(Ohana.SkipTaskbar, Stock["medium/apply"], Null))
-    addMenuItem(("Sticky"), MenuSticky, IIf(Ohana.Sticky, Stock["medium/apply"], Null))
+    addMenuItem(("Skip Taskbar"), MenuSkipTaskBar, IrohaIcons.GetCheckIcon(Ohana.SkipTaskbar))
+    addMenuItem(("Sticky"), MenuSticky, IrohaIcons.GetCheckIcon(Ohana.Sticky))
         addMenuItem("", MenuNone)
-    addMenuItem(("About"), MenuAbout, Stock["medium/info"])
+    addMenuItem(("About"), MenuAbout, IrohaIcons["star"])
         addMenuItem("", MenuNone)
-    addMenuItem(("Close"), MenuQuit, Stock["medium/quit"])
+    addMenuItem(("Close"), MenuQuit, IrohaIcons["button-power"])
     
 End
 

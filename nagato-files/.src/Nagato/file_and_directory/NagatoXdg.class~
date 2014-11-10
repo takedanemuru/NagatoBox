@@ -81,6 +81,31 @@ Public Function GetIcon(argPath As String) As Picture
     
 End
 
+Public Function GetName(argPath As String) As String
+    
+    Select Case argPath
+        Case NagatoXdg.UserDirs.Desktop
+            Return "DESKTOP"
+        Case NagatoXdg.UserDirs.Documents
+            Return "DOCUMENTS"
+        Case NagatoXdg.UserDirs.Download
+            Return "DOWNLOAD"
+        Case NagatoXdg.UserDirs.Music
+            Return "MUSIC"
+        Case NagatoXdg.UserDirs.Pictures
+            Return "PICTURES"
+        Case NagatoXdg.UserDirs.PublicShare
+            Return "PUBLICSHARE"
+        Case NagatoXdg.UserDirs.Templetes
+            Return "TEMPLATES"
+        Case NagatoXdg.UserDirs.Videos
+            Return "VIDEOS"
+        Default
+            Return ""
+    End Select
+    
+End
+
 Public Function IsUserDir(argPath As String) As Boolean
     
     Return UserDirs.All.Exist(argPath)

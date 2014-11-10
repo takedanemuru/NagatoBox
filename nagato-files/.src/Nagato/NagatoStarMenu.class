@@ -37,15 +37,17 @@ End
 
 Private Sub addSortMenu()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu)
     Dim yukiSortMenu As NagatoSortMenu
     
-    With yukiMenu
-        .Picture = MikuruIcon.Get("chart-bar-down")
-        .Text = ("Sort")
-    End With
+    yukiSortMenu = New NagatoSortMenu(Me._$rootMenu)
     
-    yukiSortMenu = New NagatoSortMenu(yukiMenu)
+End
+
+Private Sub addCreateMenu()
+    
+    Dim yukiCreateMenu As NagatoCreateMenu
+    
+    yukiCreateMenu = New NagatoCreateMenu(Me._$rootMenu) As "Menu"
     
 End
 
@@ -69,7 +71,7 @@ Private Sub refreshChildMenus()
         Me._AddMenu(("Force reload"), .ViewForceReload, MikuruIcon.Get("button-synchronize"))
         Me._AddMenu(("Incremental Search"), MikuruSignal.PathbarSettingsChanged, getAutoSearchIcon())
             Me._AddMenu("", 0) ' Spacer
-        Me._AddMenu(("New &Folder"), .DirCreate, MikuruIcon.Get("folder"), "Ctrl+N")
+        addCreateMenu()
             Me._AddMenu("", 0) ' Spacer
         addSortMenu()
             Me._AddMenu("", 0) ' Spacer
