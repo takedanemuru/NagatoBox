@@ -19,7 +19,7 @@ End
 
 Public Sub SetNewDirectory(argDirectory As String)
     
-    HaruhiMain.AddNewDirectory(argDirectory)
+    TFEI.SetNewDirectory(argDirectory)
     
 End
 

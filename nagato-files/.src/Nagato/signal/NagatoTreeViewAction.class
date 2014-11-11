@@ -23,7 +23,7 @@ End
 Public Sub Asakura_Activate()
     
     If IsDir(Me._$treeView.Key) Then
-        HaruhiMain.SetNewDirectory(Me._$treeView.Key)
+        TFEI.SetNewDirectory(Me._$treeView.Key)
     End If
     
 End

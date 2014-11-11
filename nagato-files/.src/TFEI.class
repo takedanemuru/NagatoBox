@@ -2,4 +2,61 @@
 
 Create Static
 
+Private $observer As Observer
+
+Event Signal(argSignal As Integer, argValues As Variant[])
+
+Public Sub _new()
+    
+    $observer = New Observer(NagatoSettings) As "Asakura"
+    
+End
+
+Public Sub SetNewDirectory(argPath As String)
+    
+    Raise Signal(TFEISignal.SetNewDirectory, [argPath])
+    
+End
+
+Public Sub AddNewDirectory(argPath As String)
+    
+    Raise Signal(TFEISignal.AddNewDirectory, [argPath])
+    
+End
+
+Public Sub RefreshAll()
+    
+    Raise Signal(TFEISignal.RefreshAll, Null)
+    
+End
+
+Public Sub SetNewTrashBin()
+    
+    Raise Signal(TFEISignal.SetNewTrashBin, Null)
+    
+End
+
+Public Sub SetMainTabStrip(argText As String, argIcon As Picture)
+    
+    Raise Signal(TFEISignal.SetMainTabStrip, [argText, argIcon])
+    
+End
+
+Public Sub SetSearch(argRecursive As Boolean)
+    
+    Raise Signal(TFEISignal.SetSearch, [argRecursive])
+    
+End
+
+Public Sub SetTrashProperty(argPath As String)
+    
+    Raise Signal(TFEISignal.SetTrashProperty, [argPath])
+    
+End
+
+Public Sub Asakura_ShowHiddenChanged()
+    
+    Raise Signal(TFEISignal.ShowHiddenChanged, Null)
+    
+End
 

@@ -1,0 +1,17 @@
+' Gambas class file
+
+Private $property As FileProperties
+
+Public Sub _new()
+    
+    $property = New FileProperties(Me)
+    
+End
+
+Public Sub SetPath(argPath As String)
+
+    $property.Path = argPath
+
+    Me.Show()
+
+End

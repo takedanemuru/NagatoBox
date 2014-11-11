@@ -5,60 +5,17 @@ Private $rightPane As NagatoRightPane
 Private $mainPane As NagatoMainPane
 Private $observer As Observer
 
-Public Sub SetMainTabStrip(argTitle As String, argPicture As Picture)
-    
-    $mainPane.SetMainTabStrip(argTitle, argPicture)
-    
-End
-
-Public Sub SetNewDirectory(argDirectory As String)
-    
-    $mainPane.SetNewDirectory(argDirectory)
-    
-End
-
-Public Sub AddNewDirectory(argDirectory As String)
-    
-    $mainPane.AddNewDirectory(argDirectory)
-    
-End
-
-Public Sub SetNewTrashBin()
-    
-    $mainPane.SetNewTrashBin()
-    
-End
-
-Public Sub SetSearch(argRecursive As Boolean)
-    
-    $leftPane.SetSearch(argRecursive)
-    
-End
-
-Public Sub SetTrashProperty(argTrashName As String)
-    
-    $rightPane.SetTrashProperty(argTrashName)
-    
-End
-
-Public Sub RefreshAll()
-    
-    $mainPane.RefreshAll()
-    
-End
-
 Public Sub Form_Open()
     
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
     $mainPane = New NagatoMainPane(MainTabStrip) As "MainPane"
     $rightPane = New NagatoRightPane(RightPanel) As "RightPane"
     
+    $observer = New Observer(TFEI) As "Asakura"
     $mainPane.SetInitialPath(NagatoArguments.StartupPath)
     
     Application.MainWindow = Me
     NagatoSettings.LoadFormSettings(Me)
-    
-    $observer = New Observer(NagatoSettings) As "Asakura"
     
 End
 
@@ -66,13 +23,15 @@ Public Sub Form_Close()
     
     NagatoSettings.SaveFormSettings(Me)
     
+    Me.Children.Clear()
+    
     Quit 0
     
 End
 
 Public Sub LeftPane_Signal(argSignal As Integer, argValues As Variant[])
     
-    If argSignal = MikuruSignal.LeftSearch Then $mainPane.SearchQuery(argValues[0])
+    If argSignal = MikuruSignal.LeftSearch Then $mainPane.SearchQuery(argValues[0], argValues[1])
     If argSignal = MikuruSignal.LeftRefresh Then $mainPane.Refresh()
     
 End
@@ -89,8 +48,25 @@ Public Sub MainPane_AppQuit()
     
 End
 
-Public Sub Asakura_ShowHiddenChanged()
+Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant[])
     
-    $leftPane.RefreshTreeView()
+    Select Case argSignal
+        Case TFEISignal.AddNewDirectory
+            $mainPane.AddNewDirectory(argValues[0])
+        Case TFEISignal.SetNewTrashBin
+            $mainPane.SetNewTrashBin()
+        Case TFEISignal.SetNewDirectory
+            $mainPane.SetNewDirectory(argValues[0])
+        Case TFEISignal.RefreshAll
+            $mainPane.RefreshAll()
+        Case TFEISignal.SetMainTabStrip
+            $mainPane.SetMainTabStrip(argValues[0], argValues[1])
+        Case TFEISignal.SetSearch
+            $leftPane.SetSearch(argValues[0])
+        Case TFEISignal.SetTrashProperty
+            $rightPane.SetTrashProperty(argValues[0])
+        Case TFEISignal.ShowHiddenChanged
+            $leftPane.RefreshTreeView()
+    End Select
     
 End

@@ -19,8 +19,8 @@ Private Sub ensureObserver(argDirectory As String)
 End
 
 Private Sub move(argDirectory As String)
-    
-    HaruhiMain.SetMainTabStrip(File.BaseName(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
+   
+    TFEI.SetMainTabStrip(File.BaseName(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
     $log.Move(argDirectory)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
     refresh(argDirectory)
@@ -117,7 +117,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
              Case NagatoMenuPipe.FileCopy
                 MikuruFileManuever.CopyUriList($log.Current, argArgument)
              Case .FileShowProperty
-                 Raise ShowProperty(argArgument)
+                 ' HaruhiProperty.SetPath(argArgument)
              Case .TagAdd
                  If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
              Case .TagRemove

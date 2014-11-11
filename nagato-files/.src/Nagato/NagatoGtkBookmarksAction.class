@@ -5,7 +5,7 @@ Inherits NagatoGtkBookmarksHandler
 Private Sub setNewTrashBin()
     
     If Exist(NagatoTrash.PathFiles) Then
-        HaruhiMain.SetNewTrashBin()
+        TFEI.SetNewTrashBin()
     Else
         Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
     End If
@@ -15,7 +15,7 @@ End
 Private Sub setNewTab()
     
     If Exist(Me._$listView.Key) Then
-        HaruhiMain.SetNewDirectory(Me._$listView.Key)
+        TFEI.SetNewDirectory(Me._$listView.Key)
     Else
         Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
     End If

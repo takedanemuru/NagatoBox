@@ -95,7 +95,7 @@ Public Sub TrashBinIconView_MouseDown()
         $iconView.Current.Selected = False
     Else
         $selection.Toggle(yukiLastKey)
-        $iconView[yukiLastKey].Picture = MikuruTiles.Get(yukiLastKey, $selection.Exist(yukiLastKey))
+        $iconView[yukiLastKey].Picture = MikuruTile(yukiLastKey, $selection.Exist(yukiLastKey))
         HaruhiMain.SetTrashProperty(yukiLastKey)
         Raise Selected($selection.Count)
     End If

@@ -137,7 +137,7 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
             Debug "new dir"
             Raise MenuEvent(NagatoMenuPipe.DirCreate)
         Case Key["f"]
-            HaruhiMain.SetSearch(False)
+            TFEI.SetSearch(False)
     End Select
     
 End

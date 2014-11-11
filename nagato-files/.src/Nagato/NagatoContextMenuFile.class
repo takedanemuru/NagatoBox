@@ -79,13 +79,13 @@ Public Sub _AddChildMenus()
         addFileOpenMenu()
             Me._AddContextMenu("", 0) ' As Spacer
         addFileOpenWithMenu()
-        ' addCreateMenu()
+        'Me._AddContextMenu(("Show Property"), .FileShowProperty)
         Me._AddContextMenu(("Copy file path"), .PathCopyToClipboard, MikuruIcon.Get("clipboard"))
             Me._AddContextMenu("", 0) ' As Spacer
         Me._AddContextMenu(("Rename"), .FileRename)
         Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
         Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
-        Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("tag"))
+        Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("button-remove"))
     End With
     
 End

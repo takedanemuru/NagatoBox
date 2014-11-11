@@ -1,0 +1,6 @@
+' Gambas class file
+
+Create Static
+
+Public Enum SetNewDirectory = 0, AddNewDirectory = 1, RefreshAll = 2, SetNewTrashBin = 3
+Public Enum SetMainTabStrip = 4, SetSearch = 5, SetTrashProperty = 6, ShowHiddenChanged = 7

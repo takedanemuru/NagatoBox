@@ -35,8 +35,6 @@ Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
     
     Me._$rootMenu = New Menu(argRootMenu)
     
-    Debug "i came here."
-    
     With Me._$rootMenu
         .Text = ("Sort")
         .Picture = MikuruIcon.Get("chart-bar-down")
@@ -55,6 +53,6 @@ Public Sub MenuItem_Click()
             NagatoSettings.SortBy = Last.Tag
     End Select
     
-    HaruhiMain.RefreshAll()
+    TFEI.RefreshAll()
     
 End
