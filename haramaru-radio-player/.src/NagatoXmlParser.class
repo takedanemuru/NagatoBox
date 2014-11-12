@@ -1,0 +1,36 @@
+' Gambas class file
+
+Property Read Collection As Collection
+
+Private $xmlDocument As New XmlDocument
+Private $collection As New Collection
+
+Event Finished
+
+Private Sub refreshCollection(argItems As XmlElement[])
+    
+    Dim yukiItem As XmlElement
+    Dim yukiElements As XmlElement[]
+
+    For Each yukiItem In argItems
+        yukiElements = yukiItem.ChildElements
+        $collection.Add(yukiElements[6].Value, yukiElements[0].Value)
+    Next
+    
+End
+
+Public Sub Parse(argSource As String)
+
+    $collection.Clear()
+    $xmlDocument.FromString(argSource)
+    refreshCollection($xmlDocument.GetElementsByTagName("item"))
+    
+    Raise Finished
+    
+End
+
+Private Function Collection_Read() As Collection
+
+    Return $collection
+
+End

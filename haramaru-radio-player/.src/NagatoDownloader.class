@@ -1,0 +1,43 @@
+' Gambas class file
+
+Property Read Buffer As String
+
+Private Const HaramaruUrl As String = "http://eb-dl.pod.tv/flv/blog/radio/haramaru/haramaru_pcas.rdf"
+
+Private $httpClient As HttpClient
+Private $buffer As String
+
+Event Finished
+
+Public Sub _new()
+    
+    $buffer = ""
+    
+    $httpClient = New HttpClient As "HttpClient"
+
+    With $httpClient
+        .URL = HaramaruUrl
+        .Async = True
+        .Timeout = 30
+        .Get()
+    End With
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    $buffer &= Read #Last, Lof(Last)
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    Raise Finished
+    
+End
+ 
+Private Function Buffer_Read() As String
+
+    Return $buffer
+
+End

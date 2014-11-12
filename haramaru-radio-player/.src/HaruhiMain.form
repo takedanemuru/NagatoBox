@@ -1,0 +1,17 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,48.5714,68.5714)
+  Icon = Picture["Pictures/cover170x170.jpeg"]
+  Resizable = False
+  Arrangement = Arrange.Vertical
+  { PictureBox1 PictureBox
+    MoveScaled(6,0,70,22.8571)
+    Picture = Picture["Pictures/haramaru_logo.jpg"]
+    Stretch = True
+  }
+  { MainListView ListView
+    MoveScaled(18,42,30,17)
+    Expand = True
+  }
+}
