@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private $labelScreensaver As NagatoValueLabel
+Private $labelStandBy As NagatoValueLabel
+Private $labelSuspend As NagatoValueLabel
+Private $labelOff As NagatoValueLabel
+Private $buttons As NagatoButtons
+
+Private Sub initializeWidgets(argData As Integer[])
+    
+    $labelScreensaver = New NagatoValueLabel(Me, ("Screensaver"), NagatoSettings.ScreenSaverIdle)
+        MikuruWidget.AddSeparator(Me)
+    $labelStandBy = New NagatoValueLabel(Me, ("Standby"), argData[0])
+    $labelSuspend = New NagatoValueLabel(Me, ("Suspend"), argData[1])
+    $labelOff = New NagatoValueLabel(Me, ("Off"), argData[2])
+        MikuruWidget.AddSpacer(Me)
+        MikuruWidget.AddSeparator(Me)
+    $buttons = New NagatoButtons(Me) As "Buttons"    
+    
+End
+
+Public Sub Form_Open()
+    
+    Application.MainWindow = Me
+    Me.Center()
+    initializeWidgets(MikuruXset.Get())
+    
+End
+
+Public Sub Buttons_Response(argTag As Integer)
+    
+    Select Case argTag
+        Case MikuruResponse.Cancel
+            Me.Close()
+        Case MikuruResponse.Apply
+            NagatoSettings.ScreenSaverIdle = $labelScreensaver.Value
+            MikuruXset.Set([$labelStandBy.Value, $labelSuspend.Value, $labelOff.Value])
+            Me.Close()
+    End Select
+    
+End
