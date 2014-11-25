@@ -2,21 +2,19 @@
 
 Property Read Buffer As String
 
-Private Const HaramaruUrl As String = "http://eb-dl.pod.tv/flv/blog/radio/haramaru/haramaru_pcas.rdf"
-
 Private $httpClient As HttpClient
 Private $buffer As String
 
 Event Finished
 
-Public Sub _new()
+Public Sub _new(argUrl As String)
     
     $buffer = ""
     
     $httpClient = New HttpClient As "HttpClient"
 
     With $httpClient
-        .URL = HaramaruUrl
+        .URL = argUrl
         .Async = True
         .Timeout = 30
         .Get()

@@ -6,12 +6,8 @@
   Resizable = False
   Arrangement = Arrange.Vertical
   { PictureBox1 PictureBox
-    MoveScaled(6,0,70,22.8571)
+    MoveScaled(-1,0,50,22.8571)
     Picture = Picture["Pictures/haramaru_logo.jpg"]
     Stretch = True
-  }
-  { MainListView ListView
-    MoveScaled(18,42,30,17)
-    Expand = True
   }
 }
