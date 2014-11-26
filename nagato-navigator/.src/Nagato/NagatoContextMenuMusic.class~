@@ -10,7 +10,7 @@ Private $proxy As DBusProxy
 Private $rootMenu As Menu
 Private $queueMenu As NagatoCurrentQueueMenu
 
-Private Sub initializeMenus()
+Public Sub _InitializeMenus()
     
     $queueMenu = New NagatoCurrentQueueMenu(Me._$rootMenu)
     
@@ -23,13 +23,19 @@ Private Sub initializeMenus()
     
 End
 
-Public Sub _new()
+Public Sub _Initialize()
     
-    Me._$rootMenu = New Menu(HaruhiMain)
     $proxy = DBus[ApplicationName][ObjectPath, Interface]
-    initializeMenus()
     
 End
+
+' Public Sub _new()
+'     
+'     Me._$rootMenu = New Menu(HaruhiMain)
+'     $proxy = DBus[ApplicationName][ObjectPath, Interface]
+'     initializeMenus()
+'     
+' End
 
 Public Sub ContextMenu_Click()
     

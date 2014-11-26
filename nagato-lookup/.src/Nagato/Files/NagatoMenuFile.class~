@@ -15,7 +15,7 @@ End
 Private Sub addSelectApplicationMenu()
     
     Dim yukiMenu As New Menu($menu) As "SelectApplicationMenu"
-    Dim yukiDummyMenu As New Menu($menu)
+'    Dim yukiDummyMenu As New Menu($menu)
     
     With yukiMenu
         .Picture = MikuruIcons.Get("gear")
@@ -56,5 +56,11 @@ Public Sub FileMenu_Show()
     
     addSelectApplicationMenu()
     addExecuteMenus()
+    
+End
+
+Public Sub SelectApplicationMenu_Click()
+    
+    HaruhiSelectApplication.ShowAllApplications(Me._$path)
     
 End

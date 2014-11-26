@@ -8,6 +8,15 @@ Private $spacer As NagatoSpacer
 Private $searchBox As NagatoSearchBox
 Private $infomationButton As NagatoInfomationButton
 
+Private Sub setNetWmStrut(argHeight As Integer)
+    
+    Dim yukiProperty As String = "_NET_WM_STRUT"
+    Dim yukiValue As String = Subst$("0,0,&1,0", argHeight) 
+    
+    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue)
+    
+End
+
 Private Sub initializeForm()
     
     Me.X = 0
@@ -24,7 +33,7 @@ Public Sub SetForegroundColor(argColor As Integer)
     Dim yukiObject As Object
     
     For Each yukiObject In MainHBox.Children
-        If Object.Type(yukiObject) = "MenuButton" Then yukiObject.Foreground = argColor 
+        If Object.Type(yukiObject) = "MenuButton" Then yukiObject.Foreground = argColor
     Next
     
 End
@@ -52,6 +61,7 @@ Public Sub Form_Enter()
     
     Me.Height = HeightShow
     MainHBox.Visible = True
+    setNetWmStrut(Me.H)
     
 End
 
@@ -59,6 +69,7 @@ Public Sub Form_Leave()
     
     Me.Height = HeightHide
     MainHBox.Visible = False
+    setNetWmStrut(0)
     $searchBox.Clear()
     
 End

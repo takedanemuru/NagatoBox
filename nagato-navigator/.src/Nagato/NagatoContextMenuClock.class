@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Private Enum DesktopAdd = 2001, DesktopRemove = 2002
+
+Private Sub addIssueMenu(argParentMenu As Menu, argIssues As String[])
+    
+    Dim yukiMenu As Menu
+    Dim yukiIssue As String
+    Dim yukiCount As Integer
+    
+    For Each yukiIssue In argIssues
+        yukiMenu = New Menu(argParentMenu)
+        yukiIssue = Replace(yukiIssue, "&", " and ")
+        yukiMenu.Text = MikuruCollapsedText.Get(yukiIssue, HaruhiMain.Font, Int(Screen.W / 2))
+        If yukiCount >= 30 Then Break
+        Inc yukiCount
+    Next
+    
+End
+
+Private Sub refreshChildMenus()
+    
+    Dim yukiIndex As Integer
+    Dim yukiMenu As Menu
+    Dim yukiIssues As String[]
+    
+    ' addTodaysTaskMenu()
+    ' addSpacer()
+    
+    For yukiIndex = 0 To NagatoCalendarConnection.GetRepositoryCount() - 1
+        yukiMenu = New Menu(Me._$rootMenu)
+        yukiIssues = NagatoCalendarConnection.GetRepositoryIssues(yukiIndex)
+        yukiMenu.Text = NagatoCalendarConnection.GetRepositoryName(yukiIndex)
+        yukiMenu.Text &= Subst$(" (&1)", yukiIssues.Count)
+        If yukiIssues.Count > 0 Then addIssueMenu(yukiMenu, yukiIssues)
+    Next
+    
+End
+
+Public Sub _InitializeMenus() 'override
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.calendar") Then Return
+    
+    refreshChildMenus()
+    
+End

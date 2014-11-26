@@ -12,25 +12,14 @@ Private Sub addButton(argContainer As Container)
         .AutoResize = False
         .Text = " ClockButtonTest "
         .Border = False
-        .Foreground = Color.White
-    '    .Arrow = False
+        .Foreground = NagatoSettings.ForegroundColor
     End With
-    
-End
-
-Private Sub addMenu()
-    
-    Dim yukiMenu As NagatoDynamicMenu
-     
-     yukiMenu = New NagatoDynamicMenu($button)
     
 End
 
 Public Sub _new(argContainer As Container)
     
     addButton(argContainer)
-    'addMenu()
-    
     $observer = New Observer(NagatoTimer) As "Asakura"
     
 End
@@ -42,5 +31,13 @@ Public Sub Asakura_Timer()
         .Foreground = NagatoSettings.ForegroundColor
         If .Font.TextWidth(.Text) > .W Then .W = .Font.TextWidth(.Text)
     End With
+    
+End
+
+Public Sub NagatoMenu_Menu()
+    
+    'Dim yukiContextMenu As New NagatoContextMenuClock
+    
+    
     
 End

@@ -14,14 +14,12 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
     yukiButton = New MenuButton(Me._$container) 
     
     With yukiButton
-        .Text = (argTitle)
+        .Text = argTitle
         .AutoResize = True
         .Arrow = False
         If argIcon Then .Picture = argIcon
         .Border = False
-        .Foreground = NagatoSettings.FontColor
-        ' .Font.Bold = True
-        ' .Font.Size = 9
+        '.Foreground = NagatoSettings.FontColor
     End With
 
     yukiMenu = New NagatoApplicationsMenu(yukiButton, argCategory, argTitle)

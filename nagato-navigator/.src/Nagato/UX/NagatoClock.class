@@ -6,7 +6,7 @@ Private $observer As Observer
 
 Private Sub addButton(argContainer As Container)
     
-    $button = New Label(argContainer) As "NagatoMenu"
+    $button = New Label(argContainer) As "Label"
     
     With $button
         .AutoResize = False
@@ -17,19 +17,9 @@ Private Sub addButton(argContainer As Container)
     
 End
 
-Private Sub addMenu()
-    
-    Dim yukiMenu As NagatoDynamicMenu
-     
-     yukiMenu = New NagatoDynamicMenu($button)
-    
-End
-
 Public Sub _new(argContainer As Container)
     
     addButton(argContainer)
-    'addMenu()
-    
     $observer = New Observer(NagatoTimer) As "Asakura"
     
 End
@@ -41,5 +31,13 @@ Public Sub Asakura_Timer()
         .Foreground = NagatoSettings.ForegroundColor
         If .Font.TextWidth(.Text) > .W Then .W = .Font.TextWidth(.Text)
     End With
+    
+End
+
+Public Sub Label_Menu()
+    
+    Dim yukiContextMenu As New NagatoContextMenuClock
+    
+    yukiContextMenu.PopUp()
     
 End

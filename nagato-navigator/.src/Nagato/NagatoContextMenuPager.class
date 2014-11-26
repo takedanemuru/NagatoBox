@@ -4,17 +4,10 @@ Inherits NagatoContextMenu
 
 Private Enum DesktopAdd = 2001, DesktopRemove = 2002
 
-Private Sub initializeMenus()
+Public Sub _InitializeMenus() 'override
     
     Me._AddMenu(("Add desktop"), DesktopAdd, "toggle-expand-alt")
     If Desktop.Count > 1 Then Me._AddMenu(("Remove desktop"), DesktopRemove, "toggle-collapse-alt")
-    
-End
-
-Public Sub _new()
-    
-    Me._$rootMenu = New Menu(HaruhiMain)
-    initializeMenus()
     
 End
 

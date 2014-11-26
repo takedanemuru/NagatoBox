@@ -3,7 +3,7 @@
 Private $button As NagatoStarButton
 Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
-Private $systray As NagatoSystray
+'Private $systray As NagatoSystray
 Private $pager As NagatoPager
 Private $clock As NagatoClock
 
@@ -21,7 +21,7 @@ Private Sub setNetWmWindowType()
     Dim yukiWindowType As String = "_NET_WM_WINDOW_TYPE"
     Dim yukiWindowTypeDock As String = "_NET_WM_WINDOW_TYPE_DOCK"
     
-    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", Me.Id, yukiWindowType, yukiWindowTypeDock) 
+    Shell Subst("xprop -id &1  -f &2 32a -set &2 &3&& openbox --restart", Me.Id, yukiWindowType, yukiWindowTypeDock) Wait
     
 End
 

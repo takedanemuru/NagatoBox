@@ -12,7 +12,7 @@ Public Sub Get(argCategory As String)
     
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
         yukiLabel = File.Load("text/ActionLabel")
-        yukiXml &= Subst$(yukiLabel, yukiDesktopFile.Name, yukiDesktopFile.Exec)
+        yukiXml &= Subst$(yukiLabel, Quote$(yukiDesktopFile.Name), Quote$(yukiDesktopFile.Exec))
     Next
     
     yukiXml &= "</openbox_pipe_menu>"
