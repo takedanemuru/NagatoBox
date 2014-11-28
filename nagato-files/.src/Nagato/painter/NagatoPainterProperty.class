@@ -25,8 +25,6 @@ Private Function getPropertyText(argTemplate As String) As String
     Dim yukiLastModefy As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastModified)
     Dim yukiLastChange As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastChange)
     
-    Debug yukiStat.LastAccess
-    
     Return Subst$(argTemplate, yukiSize, yukiPermission, yukiLastAccess, yukiLastModefy, yukiLastChange)
     
 Catch

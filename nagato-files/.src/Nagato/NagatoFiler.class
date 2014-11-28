@@ -57,6 +57,12 @@ Public Sub SetRefresh()
     
 End
 
+Public Sub EnsureVisible()
+    
+    $iconView.EnsureVisible()
+    
+End
+
 Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
@@ -117,7 +123,7 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
              Case NagatoMenuPipe.FileCopy
                 MikuruFileManuever.CopyUriList($log.Current, argArgument)
              Case .FileShowProperty
-                 ' HaruhiProperty.SetPath(argArgument)
+                TFEI.SetFileProperty(argArgument)
              Case .TagAdd
                  If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
              Case .TagRemove

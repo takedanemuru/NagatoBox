@@ -29,6 +29,13 @@ Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
 End
 
+Public Sub EnsureVisible()
+    
+    Debug "ensure visible"
+    
+End
+
+
 Public Sub SetRefresh()
     
     $iconView.Refresh()

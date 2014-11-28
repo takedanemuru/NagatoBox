@@ -23,8 +23,6 @@ Public Sub Form_Close()
     
     NagatoSettings.SaveFormSettings(Me)
     
-    Me.Children.Clear()
-    
     Quit 0
     
 End
@@ -67,6 +65,16 @@ Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant[])
             $rightPane.SetTrashProperty(argValues[0])
         Case TFEISignal.ShowHiddenChanged
             $leftPane.RefreshTreeView()
+        Case TFEISignal.SetFileProperty
+            $rightPane.SetProperty(argValues[0])
     End Select
     
+End
+
+
+
+Public Sub RightPanel_Show()
+
+    Debug "shown"
+
 End

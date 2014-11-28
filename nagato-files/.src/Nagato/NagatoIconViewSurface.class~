@@ -51,7 +51,7 @@ End
 
 Public Sub ResetIcon(argPath As String, argSelected As Boolean)
     
-    Me._$iconView[argPath].Picture = MikuruTiles.Get(argPath, argSelected)
+    Me._$iconView[argPath].Picture = MikuruTile(argPath, argSelected)
     
 End
 

@@ -8,6 +8,7 @@ Private $currentPath As String
 Private $iconPainter As NagatoPainterIcon
 Private $pathPainter As NagatoPainterPath
 Private $propertyPainter As NagatoPainterProperty
+Private $switch As NagatoChmodSwitch 
 Private $isTrash As Boolean = False
 
 Private Sub initializeContainer(argContainer As Container)
@@ -38,6 +39,7 @@ Public Sub SetProperty(argPath As String)
         $isTrash = False
         $currentPath = argPath
         $drawingArea.Refresh()
+        $switch.Set(argPath)
     End If
 
 End
@@ -60,6 +62,7 @@ Public Sub _new(argContainer As Container)
     $iconPainter = New NagatoPainterIcon
     $pathPainter = New NagatoPainterPath($drawingArea)
     $propertyPainter = New NagatoPainterProperty($drawingArea)
+    $switch = New NagatoChmodSwitch(argContainer) As "Switch"
     
 End
 
@@ -76,5 +79,11 @@ Public Sub DrawingArea_Draw()
 Catch
     Debug Error.Text
     Try Paint.End()
+    
+End
+
+Public Sub Switch_Changed()
+    
+    $drawingArea.Refresh()
     
 End

@@ -71,6 +71,12 @@ Public Sub SelectItems(argTag As Integer)
     
 End
 
+Public Sub EnsureVisible()
+    
+    $iconView.Ensure($selectionBar.LastSelected)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     Dim yukiIconViewInitializer As New NagatoIconViewInitializer(argContainer)

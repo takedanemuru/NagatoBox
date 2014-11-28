@@ -71,6 +71,12 @@ Public Sub RefreshAll()
     
 End
 
+Public Sub EnsureVisible()
+    
+    $filersHandler.EnsureVisible($tabStripHandler.Index)
+    
+End
+
 Public Sub _new(argTabStrip As TabStrip)
     
     $tabStripHandler = New NagatoTabStripHandler(argTabStrip)

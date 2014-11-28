@@ -1,0 +1,34 @@
+' Gambas module file
+
+Public Sub SwitchExecutable(argPath As String)
+    
+    Dim yukiPermissionOriginal As String = Stat(argPath).Auth
+    Dim yukiPermission As String
+    
+    Select Case Mid$(Stat(argPath).Auth, 3, 1)
+        Case "-"
+            yukiPermission = "x"
+        Case "x"
+            yukiPermission = "-"
+        Case "S"
+            yukiPermission = "s"
+        Case "s"
+            yukiPermission = "S"
+    End Select
+    
+    Chmod argPath To Left(yukiPermissionOriginal, 2) & yukiPermission & Right(yukiPermissionOriginal, 6)
+    
+End
+
+Public Sub IsExecutable(argPath As String) As Boolean
+    
+    Dim yukiPermission As String = Mid$(Stat(argPath).Auth, 3, 1)
+    
+    Select Case Mid$(Stat(argPath).Auth, 3, 1)
+        Case "-", "S"
+            Return False
+        Case Else
+            Return True
+    End Select
+    
+End

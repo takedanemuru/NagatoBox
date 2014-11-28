@@ -71,3 +71,9 @@ Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[
     If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     
 End
+
+Public Sub Ensure(argPath As String)
+    
+    ensureVisible(argPath)
+    
+End

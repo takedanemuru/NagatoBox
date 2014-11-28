@@ -71,6 +71,14 @@ Public Sub SelectItems(argTag As Integer)
     
 End
 
+Public Sub EnsureVisible()
+    
+    Debug $selectionBar.LastSelected
+    
+    
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     Dim yukiIconViewInitializer As New NagatoIconViewInitializer(argContainer)
@@ -137,7 +145,7 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
             Debug "new dir"
             Raise MenuEvent(NagatoMenuPipe.DirCreate)
         Case Key["f"]
-            HaruhiMain.SetSearch(False)
+            TFEI.SetSearch(False)
     End Select
     
 End

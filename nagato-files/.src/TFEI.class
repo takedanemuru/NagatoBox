@@ -54,6 +54,12 @@ Public Sub SetTrashProperty(argPath As String)
     
 End
 
+Public Sub SetFileProperty(argPath As String)
+    
+    Raise Signal(TFEISignal.SetFileProperty, [argPath])
+    
+End
+
 Public Sub Asakura_ShowHiddenChanged()
     
     Raise Signal(TFEISignal.ShowHiddenChanged, Null)

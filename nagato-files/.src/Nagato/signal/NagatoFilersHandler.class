@@ -56,6 +56,12 @@ Public Sub Remove(argIndex As Integer)
     
 End
 
+Public Sub EnsureVisible(argIndex As Integer)
+    
+    $filers[argIndex].EnsureVisible()
+    
+End
+
 Public Sub Filer_ShowProperty(argPath As String)
     
     Raise ShowProperty(argPath)

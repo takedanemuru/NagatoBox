@@ -1,0 +1,89 @@
+' Gambas class file
+
+Inherits NagatoSignalWidget
+
+Private $hBox As HBox
+Private $label As Label
+Private $switch As SwitchButton
+Private $path As String
+
+Event Changed
+
+Private Sub initializeContainer()
+    
+    $hBox = New HBox(Me._$container)
+    
+    With $hBox
+        .H = 48
+        .Padding = 4
+        .Expand = False
+        .Visible = False
+    End With
+    
+End
+
+Private Sub initializeLabel()
+    
+    $label = New Label($hBox)
+    
+    With $label
+        .Text = ("Executable")
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeSwitch()
+    
+    $switch = New SwitchButton($hBox) As "Switch"
+    
+    With $switch
+        .Background = Color.Pink
+        .Width = 120
+    End With
+    
+End
+
+Private Sub setSwitchValueWithoutEvent(argValue As Boolean)
+    
+    Object.Lock($switch)
+        $switch.Value = argValue
+    Object.Unlock($switch)
+    
+End
+
+Public Sub _InitializeWidgets()
+    
+    initializeContainer()
+    initializeLabel()
+    initializeSwitch()
+    
+End
+
+Public Sub Set(argPath As String)
+    
+    If DesktopMime.FromFile(argPath).Type Begins "application/x-" Then
+        setSwitchValueWithoutEvent(MikuruChmod.IsExecutable(argPath))
+        $path = argPath
+        $hBox.Visible = True
+    Else
+        $hBox.Visible = False
+    Endif
+        
+End
+
+Public Sub Switch_Click()
+    
+    Dim yukiMessage As String = ("YUKI.N > Are you sure to change permission ?")
+    
+    If Not Exist($path) Then
+        Message.Warning(("YUKI.N > File has been deleted."), ("OK"))
+        Return
+    Else If Message.Warning(yukiMessage, "Cancel", "OK") = 1 Then
+        setSwitchValueWithoutEvent(Not $switch.Value)
+    Else
+        MikuruChmod.SwitchExecutable($path)
+        Raise Changed
+    Endif
+    
+End
