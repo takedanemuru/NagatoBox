@@ -2,7 +2,7 @@
 
 a software suite for openbox3.
 
-![Screenshot](image/screenshot002.png)
+![Screenshot](images/screenshot002.png)
 
 ##Important Notice
 
