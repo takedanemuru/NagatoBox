@@ -2,6 +2,8 @@
 
 a software suite for openbox3.
 
+![Screenshot](image/screenshot002.png)
+
 ##Important Notice
 
 Only watch this git from a distance in a well-lit room.
