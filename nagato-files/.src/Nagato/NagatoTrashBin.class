@@ -25,16 +25,17 @@ End
 
 Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
+    Debug "ignore";; argRecursive
     
+    $iconView.Filter(argQuery)
     
 End
 
 Public Sub EnsureVisible()
     
-    Debug "ensure visible"
+    $iconView.Ensure()
     
 End
-
 
 Public Sub SetRefresh()
     

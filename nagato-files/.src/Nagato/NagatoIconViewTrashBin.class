@@ -4,6 +4,7 @@ Inherits NagatoSignal
 
 Private $selection As New NagatoSelection
 Private $iconView As IconView
+Private $lastSelected As String
 
 Event Selected(argCount As Integer)
 
@@ -20,7 +21,7 @@ Private Sub initializeIconView(argTabStrip As TabStrip)
     
 End
 
-Private Sub setIcons(argType As Integer)
+Private Sub setIcons(argType As Integer, Optional argQuery As String)
     
     Dim yukiPath As String
     Dim yukiFullPath As String
@@ -28,6 +29,7 @@ Private Sub setIcons(argType As Integer)
     For Each yukiPath In Dir(NagatoTrash.PathFiles, "*", argType).Sort(gb.IgnoreCase)
         yukiFullPath = NagatoTrash.PathFiles &/ yukiPath
         If Not Exist(yukiFullPath) Then Continue
+        If argQuery And If (yukiPath Not Like "*" & argQuery & "*") Then Continue
         $iconView.Add(yukiFullPath, "", MikuruTile(yukiFullPath, $selection.Exist(yukiFullPath)))
     Next
     
@@ -59,15 +61,13 @@ Public Sub Delete()
     
     If $selection.Count = 0 Then Return
     
-    NagatoTrash.Delete($selection.Paths)
+    NagatoTrash.DeleteFromTrashBin($selection.Paths)
     
 End
 
 Public Sub Restore()
     
     If $selection.Count = 0 Then Return
-    
-    Debug $selection.Paths.Count
     
     NagatoTrash.Restore($selection.Paths)
     
@@ -78,6 +78,23 @@ Public Sub UnselectAll()
     $selection.ClearAll()
     Me.Refresh()
     
+End
+
+Public Sub Ensure()
+    
+    If $iconView.Exist($lastSelected) Then $iconView[$lastSelected].EnsureVisible()
+    
+End
+
+Public Sub Filter(argQuery As String)
+    
+    $iconView.Clear()
+    
+    setIcons(gb.Directory, argQuery)
+    setIcons(gb.File, argQuery)
+    
+    If $iconView.Count = 0 Then $iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+
 End
 
 Public Sub _new(argTabStrip As TabStrip)
@@ -92,8 +109,10 @@ Public Sub TrashBinIconView_MouseDown()
     Dim yukiLastKey As String = Last.Key
     
     If $iconView.FindAt(Mouse.X, Mouse.Y) Then ' NOTE: Returns True when NOT found.
-        $iconView.Current.Selected = False
+        Try $iconView.Current.Selected = False
+        $lastSelected = ""
     Else
+        $lastSelected = yukiLastKey
         $selection.Toggle(yukiLastKey)
         $iconView[yukiLastKey].Picture = MikuruTile(yukiLastKey, $selection.Exist(yukiLastKey))
         TFEI.SetTrashProperty(yukiLastKey)

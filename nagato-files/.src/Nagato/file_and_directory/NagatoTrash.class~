@@ -66,9 +66,11 @@ Public Sub Delete(argPaths As String[])
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue
-        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), getTrashInfoPath(yukiPath))
-        If Not Error Then Debug "done"
+        Try Exec ["trash", yukiPath] Wait
+        'Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), getTrashInfoPath(yukiPath))
     Next
+    
+    If Not Error Then Debug "done"
     
 End
 
