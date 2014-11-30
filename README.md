@@ -2,7 +2,7 @@
 
 a software suite for openbox3.
 
-![Screenshot](images/screenshot002.png)
+![Screenshot](readme_extra/screenshot002.png)
 
 ##Important Notice
 
@@ -10,7 +10,7 @@ Only watch this git from a distance in a well-lit room.
 
 ##Dependency
 
-Gambas3 3.6.0 or later varsion
+Gambas3 3.6.2 or later varsion
 
 ##Ubuntu and its variants
 
@@ -47,3 +47,7 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
     2. You can do whatever you want with this software, as long as you love Nagato Yuki.
     3. If you think this software worth it, you can shout love for Nagato Yuki at the heart of the universe.
 ```
+
+## To Do
+
+[TODO](readme_extra/NagatoBox_PlanetPatrol.md)
