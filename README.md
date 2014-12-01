@@ -3,7 +3,7 @@
 a software suite for openbox3.
 
 ![NAGATO_MACRO_IMAGE](./readme_extra/screenshot002.png)
-![NAGATO_MACRO_IMAGE](./readme_extra/screenshot003.png)
+![NAGATO_MACRO_IMAGE](./readme_extra/screenshot004.png)
 
 ##Important Notice
 
