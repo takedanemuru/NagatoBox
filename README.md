@@ -2,7 +2,8 @@
 
 a software suite for openbox3.
 
-![Screenshot](readme_extra/screenshot002.png)
+![NAGATO_MACRO_IMAGE](./readme_extra/screenshot002.png)
+![NAGATO_MACRO_IMAGE](./readme_extra/screenshot003.png)
 
 ##Important Notice
 
@@ -50,4 +51,4 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 ## To Do
 
-[TODO](readme_extra/NagatoBox_PlanetPatrol.md)
+[TODO](./readme_extra/NagatoBox_PlanetPatrol.md)

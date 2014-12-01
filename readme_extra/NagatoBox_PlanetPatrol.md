@@ -1,7 +1,5 @@
 # NagatoBox "PlanetPatrol"
 
-----
-
 Oct. ~ Dec. 2014
 
 ## To Do

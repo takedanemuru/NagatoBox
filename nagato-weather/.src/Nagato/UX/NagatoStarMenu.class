@@ -2,13 +2,13 @@
 
 Private $rootMenu As Menu
 
-Enum MenuNone, MenuSetLocation, MenuShowForecast, MenuAbout, MenuQuit
+Enum MenuNone, MenuSetLocation, MenuShowForecast, MenuToggleBorder, MenuAbout, MenuQuit
 
 Private Sub initializeRootMenu(argMenuButton As MenuButton)
     
     argMenuButton.Menu = "StarMenu"
     
-    $rootMenu = New Menu(HaruhiMain)
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
     $rootMenu.Name = "StarMenu"
     
 End
@@ -28,8 +28,17 @@ End
 Public Sub _new(argMenuButton As MenuButton)
     
     initializeRootMenu(argMenuButton)
+    addMenu("dummy", MenuNone)
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    $rootMenu.Children.Clear()
+    
     addMenu(("Set User Location"), MenuSetLocation, "user")
     addMenu(("Forecast"), MenuShowForecast, "umbrella")
+    addMenu(("Show Border"), MenuToggleBorder, IIf(NagatoSettingsForm.ShowBorder, "button-check", Null))
         addMenu("", MenuNone)
     addMenu(("About"), MenuAbout, "star")
     addMenu(("Quit"), MenuQuit, "button-cross")
@@ -45,6 +54,9 @@ Public Sub MenuItem_Click()
             Endif
         Case MenuShowForecast
             HaruhiWeatherForecast.Show()
+        Case MenuToggleBorder
+            NagatoSettingsForm.ShowBorder = Not NagatoSettingsForm.ShowBorder
+            HaruhiMain.Border = NagatoSettingsForm.ShowBorder
         Case MenuAbout
             HaruhiAbout.Show()
         Case MenuQuit

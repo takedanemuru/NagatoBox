@@ -33,8 +33,6 @@ End
 
 Public Sub Asakura_Finished()
     
-    Debug "finished"
-    
     $weatherDrawingArea.Refresh()
     resetTitleBar()
     
@@ -82,6 +80,17 @@ Public Sub MenuHBox_Leave()
 
 End
 
+Public Sub MainDrawingArea_MouseDrag()
+
+    If Me.Border = True Then Return
+
+    With Mouse
+        Me.X = .ScreenX - .StartX
+        Me.Y = .ScreenY - .StartY
+    End With
+
+End
+
 Public Sub MainDrawingArea_Enter()
 
     StarButton.Visible = True
@@ -91,5 +100,11 @@ End
 Public Sub MainDrawingArea_Leave()
 
     StarButton.Visible = False
+
+End
+
+Public Sub Panel1_MouseDrag()
+
+    MainDrawingArea_MouseDrag()
 
 End

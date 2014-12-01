@@ -2,6 +2,8 @@
 
 Inherits NagatoSettingsCore
 
+Property ShowBorder As Boolean
+
 Public Sub Load(argForm As Form)
     
     argForm.X = Me._$settings["form/x", argForm.X]
@@ -18,4 +20,16 @@ Public Sub Save(argForm As Form)
     Me._$settings["form/height"] = argForm.Height
     Me._$settings["form/width"] = argForm.Width
     
+End
+
+Private Function ShowBorder_Read() As Boolean
+
+    Return Me._$settings["form/border", True]
+
+End
+
+Private Sub ShowBorder_Write(Value As Boolean)
+
+    Me._$settings["form/border"] = Value
+
 End
