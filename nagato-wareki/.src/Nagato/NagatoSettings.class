@@ -1,0 +1,29 @@
+' Gambas class file
+
+Create Static
+
+Private $settings As New Settings
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = $settings["form/x", (Desktop.W - .W) / 2]
+        .Y = $settings["form/y", (Desktop.H - .H) / 2]
+        .W = $settings["form/w", .W]
+        .H = $settings["form/h", .H]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        $settings["form/x"] = .X
+        $settings["form/y"] = .Y
+        $settings["form/w"] = .W
+        $settings["form/h"] = .H
+    End With
+    
+    $settings.Save()
+    
+End

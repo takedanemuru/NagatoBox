@@ -40,6 +40,13 @@ End
 
 Public Sub Form_Open()
 
+    Application.MainWindow = Me
+
+    If Not Desktop.NetworkAvailable Then
+        Message.Warning("Network unavailable.")
+        Return
+    End If
+
     NagatoSettingsForm.Load(Me)
     Me.Border = NagatoSettingsForm.ShowBorder
     resetTitleBar()

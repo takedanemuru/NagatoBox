@@ -49,6 +49,10 @@ Public Sub _get(argIndex As Integer) As Image
             Return Image.Load("weather_icons/tstorm2.png")
         Case 23 'Sleet Showers and Thunder
             Return Image.Load("weather_icons/snow3.png")
+        Case 40 'DrizzleSun
+            Return Image.Load("weather_icons/shower1.png")
+        Case 46 'Drizzle
+            Return Image.Load("weather_icons/shower2.png")
         Default 'Unknown
             Return Image.Load("weather_icons/dunno.png")
     End Select

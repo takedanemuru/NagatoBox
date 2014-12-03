@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Property Read HasIcon As Boolean
-
 Private $temperature As Float
 Private $windDirection As String
 Private $windSpeed As Float
@@ -14,6 +12,7 @@ Private $mediumCloud As Float
 Private $highCloud As Float
 Private $precipitation As Float 'mm
 Private $iconId As Integer = 0
+Private $iconName As String
 
 Public Sub SetEssentialData(argXmlElements As XmlElement[])
     
@@ -37,16 +36,6 @@ Public Sub SetAdditionalData(argXmlElements As XmlElement[])
     $precipitation = argXmlElements[0].Attributes["value"]
     $iconId = argXmlElements[1].Attributes["number"]
     
-End
-
-Private Function HasIcon_Read() As Boolean
-
-    If $iconId = 0 Then
-        Return False
-    Else
-        Return True
-    Endif
-
 End
 
 Public Sub _get(argKey As Integer) As Variant

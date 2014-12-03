@@ -16,8 +16,9 @@ Private Sub setAdditionalData(argWeatherElement As NagatoWeatherElement, argData
         Return
     Else If Not argWeatherElement[MikuruWeatherKey.HasIcon] Then
         argWeatherElement.SetAdditionalData(argData)
-    Else
         $cache.Add(argWeatherElement, argTimeStamp)
+    Else
+        'ignore
     End If 
     
 End
@@ -27,9 +28,6 @@ Private Sub refresh()
     Dim yukiXmlElement As XmlElement
     Dim yukiWeatherElement As NagatoWeatherElement
     Dim yukiChildElements As XmlElement[]
-    
-    Debug "refresh"
-    Debug $client.Elements.Count
     
     For Each yukiXmlElement In $client.Elements
         yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
@@ -44,9 +42,6 @@ Private Sub refresh()
     $ready = True
     
     Raise Finished
-    
-Catch
-    Return
     
 End
 

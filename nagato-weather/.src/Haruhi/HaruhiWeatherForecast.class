@@ -9,7 +9,7 @@ Private Sub refresh()
     
     If Not NagatoWeatherCache.IsReady Then Return
     
-    For yukiCount = 0 To 6
+    For yukiCount = 0 To 14
         yukiDate = Format$(DateAdd(Now, gb.Day, yukiCount), "yyyy-mm-dd")
         $grids.SetData(yukiDate)
     Next

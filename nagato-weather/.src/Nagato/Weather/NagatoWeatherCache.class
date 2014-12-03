@@ -12,11 +12,10 @@ Event Finished
 
 Private Sub setAdditionalData(argWeatherElement As NagatoWeatherElement, argData As XmlElement[], argTimeStamp As String)
     
-    If Not Object.IsValid(argWeatherElement) Then
-        Return
-    Else If Not argWeatherElement[MikuruWeatherKey.HasIcon] Then
+    If Not Object.IsValid(argWeatherElement) Then Return
+
+    If Not argWeatherElement[MikuruWeatherKey.HasIcon] Then
         argWeatherElement.SetAdditionalData(argData)
-    Else
         $cache.Add(argWeatherElement, argTimeStamp)
     End If 
     
@@ -41,9 +40,6 @@ Private Sub refresh()
     $ready = True
     
     Raise Finished
-    
-Catch
-    Return
     
 End
 

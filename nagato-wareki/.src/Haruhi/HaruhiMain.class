@@ -1,0 +1,27 @@
+' Gambas class file
+
+Private $searchBox As NagatoSearchBox
+Private $starButton As NagatoStarButton
+Private $grids As NagatoGridsHandler
+
+Public Sub Form_Open()
+
+    $searchBox = New NagatoSearchBox(ToolHBox) As "SearchBox"
+    $starButton = New NagatoStarButton(ToolHBox) As "StarButton"
+    $grids = New NagatoGridsHandler(MainGrids)
+
+    NagatoSettings.LoadFormSettings(Me)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub SearchBox_Activate(argQuery As String)
+    
+    $grids.Filter(argQuery)
+    
+End

@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,45,79)
+  Arrangement = Arrange.Vertical
+  { ToolHBox HBox
+    MoveScaled(3,26,41,4)
+  }
+  { MainGrids GridView
+    MoveScaled(3,39,40,35)
+    Expand = True
+    Header = GridView.Horizontal
+  }
+}

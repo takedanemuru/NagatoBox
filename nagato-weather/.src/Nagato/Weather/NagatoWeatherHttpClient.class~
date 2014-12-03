@@ -26,11 +26,9 @@ End
 
 Public Sub HttpClient_Read()
      
-     Dim yukiLine As String = Read #Last, Lof(Last)
+     Dim yukiLines As String = Read #Last, Lof(Last)
      
-     Debug yukiLine
-     
-    $buffer &= yukiLine
+    $buffer &= yukiLines
      
 End
 
@@ -45,6 +43,8 @@ End
 
 Private Function Elements_Read() As XmlElement[]
 
-    Return $xmlDocument.GetElementsByTagName("time")
+    Dim yukiElements As XmlElement[] = $xmlDocument.GetElementsByTagName("time")
+
+    Return yukiElements
 
 End

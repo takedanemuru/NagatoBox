@@ -12,6 +12,7 @@ Private $mediumCloud As Float
 Private $highCloud As Float
 Private $precipitation As Float 'mm
 Private $iconId As Integer = 0
+Private $iconName As String
 
 Public Sub SetEssentialData(argXmlElements As XmlElement[])
     
@@ -34,6 +35,7 @@ Public Sub SetAdditionalData(argXmlElements As XmlElement[])
     
     $precipitation = argXmlElements[0].Attributes["value"]
     $iconId = argXmlElements[1].Attributes["number"]
+    $iconName = argXmlElements[1].Attributes["id"]
     
 End
 
@@ -47,6 +49,8 @@ Public Sub _get(argKey As Integer) As Variant
                 Return $fog
             Case .HasIcon
                 Return IIf($iconId = 0, False, True)
+            Case .IconName
+                Return $iconName
             Case .HighCloud
                 Return $highCloud
             Case .Humidity
