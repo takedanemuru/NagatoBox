@@ -29,6 +29,10 @@ Private Sub setItems()
     
     $xmlDocument.FromString($buffer)
     
+    Try Debug $xmlDocument.GetElementsByTagName("item").Count
+    
+    If Error Then Return
+    
     setTitle()
     
     For Each yukiItem In $xmlDocument.GetElementsByTagName("item")

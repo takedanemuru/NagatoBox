@@ -2,10 +2,6 @@
 
 Public Sub Main()
     
-    If Desktop.NetworkAvailable Then
-        HaruhiMain.Show()
-    Else
-        Message.Error(("YUKI.N > I couldn't connect to network..."), ("OK"))
-    End If
+    HaruhiMain.Show()
     
 End

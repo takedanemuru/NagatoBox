@@ -12,6 +12,7 @@ Property Read MediumCloud As Float
 Property Read HighCloud As Float
 Property Read Precipitation As Float 'mm
 Property Read IconId As Integer
+Property Read IconName As String
 Property Read HasIcon As Boolean
 
 Private $temperature As Float
@@ -26,6 +27,7 @@ Private $mediumCloud As Float
 Private $highCloud As Float
 Private $precipitation As Float 'mm
 Private $iconId As Integer = 0
+Private $iconName As String
 
 Public Sub SetEssentialData(argXmlElements As XmlElement[])
     
@@ -48,6 +50,7 @@ Public Sub SetAdditionalData(argXmlElements As XmlElement[])
     
     $precipitation = argXmlElements[0].Attributes["value"]
     $iconId = argXmlElements[1].Attributes["number"]
+    $iconName = argXmlElements[1].Attributes["id"]
     
 End
 
@@ -130,5 +133,11 @@ Private Function HasIcon_Read() As Boolean
     Else
         Return True
     Endif
+
+End
+
+Private Function IconName_Read() As String
+
+    Return $iconName
 
 End
