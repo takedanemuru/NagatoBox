@@ -59,7 +59,7 @@ Public Sub _new(argContainer As Container)
     initializeContainer(argContainer)
     initializeDrawingArea()
     
-    $iconPainter = New NagatoPainterIcon
+    $iconPainter = New NagatoPainterIcon($drawingArea)
     $pathPainter = New NagatoPainterPath($drawingArea)
     $propertyPainter = New NagatoPainterProperty($drawingArea)
     $switch = New NagatoChmodSwitch(argContainer) As "Switch"

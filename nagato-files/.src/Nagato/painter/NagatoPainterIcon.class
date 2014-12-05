@@ -1,25 +1,33 @@
 ' Gambas class file
 
-Private Const IconSize As Integer = 128
+Inherits NagatoPainter
 
-Private $currentPath As String
+Private Function getPdfIcon() As Picture
+    
+    Dim yukiDocument As New PdfDocument(Me._$currentPath)
+    Dim yukiImage As Image = yukiDocument[1].Image
+    Dim yukiRate As Float = Min(Me.IconSize / yukiImage.H, Me.IconSize / yukiImage.W)
+    
+    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
+    
+End
 
 Private Function getIcon() As Picture
     
     Dim yukiImage As Image
     Dim yukiRate As Float
     
-    If DesktopMime.FromFile($currentPath).Type Begins "image" Then
-        yukiImage = Image.Load($currentPath)
-        yukiRate = Min(IconSize / yukiImage.H, IconSize / yukiImage.W)
+    If DesktopMime.FromFile(Me._$currentPath).Type Begins "image" Then
+        yukiImage = Image.Load(Me._$currentPath)
+        yukiRate = Min(Me.IconSize / yukiImage.H, Me.IconSize / yukiImage.W)
         yukiImage = yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)
         Return yukiImage.Picture
     Else
-        Return Desktop.GetFileIcon($currentPath, IconSize / 2)
+        Return Desktop.GetFileIcon(Me._$currentPath, Me.IconSize / 2)
     Endif
     
 Catch
-    Return Stock["huge/file"]
+    Return MikuruIcon.Get("question", 32)
     
 End
 
@@ -27,10 +35,16 @@ Public Function Paint(argPath As String) As Integer
     
     Dim yukiIcon As Picture 
     
-    $currentPath = argPath
-    yukiIcon = getIcon()
-    Paint.DrawPicture(yukiIcon, 32 + ((IconSize - yukiIcon.W) / 2), 16)
+    Me._$currentPath = argPath
     
-    Return yukiIcon.H + 48
+    If DesktopMime.FromFile(argPath).Type = "application/pdf"
+        yukiIcon = getPdfIcon()
+    Else
+        yukiIcon = getIcon()
+    End If
+    
+    Paint.DrawPicture(yukiIcon, (Me._$drawingArea.W - yukiIcon.W) / 2, 16)
+    
+    Return yukiIcon.H + Me.MarginDouble
     
 End

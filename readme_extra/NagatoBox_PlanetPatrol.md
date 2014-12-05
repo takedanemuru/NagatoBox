@@ -57,6 +57,8 @@ Oct. ~ Dec. 2014
     + reduce "NagatoMenuPipe" Usage
     + ~~xdg-usr-dirs configuration~~
     + create symbolic link
+    + ~~arrange properties drawingarea when it's resized~~
+    + show trash bin properties on left pane
 12. nagato-image-view
     + study : edit by tracking
     + more effect(s)
@@ -69,6 +71,7 @@ Oct. ~ Dec. 2014
     + ~~show scale(s)~~
     + ~~show wikipedia article immedeatly~~
     + ~~update yr.no api~~
+    + ~~update weather icon ids~~
 18. nagato-navigator
     + ~~icon only task list~~
     + reload github issue from menu
@@ -100,6 +103,7 @@ Oct. ~ Dec. 2014
     + ~~fix: draw background color as expected.~~
 30. nagato-weather
     + ~~update yr.no api~~
+    + ~~update weather icon ids~~
 31. nagato-web
     + ~~more search engines (yandex, bing etc...)~~
     + recent pages

@@ -1,26 +1,12 @@
 ' Gambas class file
 
-Private Const IconSize As Integer = 128
-
-Private $drawingArea As DrawingArea
-Private $currentPath As String
-
-Private Sub drawHeader(argY As Integer)
-    
-    Dim yukiTemplate As String = "Size:<br>Permission:<br>Access:<br>Modefy:<br>Change:<br>"
-    Dim yukiRect As New Rect(16, argY + 16, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
-    
-    Paint.Brush = Paint.Color(Color.White)
-    Paint.RichText(yukiTemplate, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Left)
-    Paint.Fill()
-    
-End
+Inherits NagatoPainter
 
 Private Function getPropertyText(argTemplate As String) As String
     
-    Dim yukiStat As Stat = Stat($currentPath)
-    Dim yukiSize As String = MikuruFile.GetFileSizeText($currentPath)
-    Dim yukiPermission As String = MikuruFilePermission.GetText($currentPath)
+    Dim yukiStat As Stat = Stat(Me._$currentPath)
+    Dim yukiSize As String = MikuruFile.GetFileSizeText(Me._$currentPath)
+    Dim yukiPermission As String = MikuruFilePermission.GetText(Me._$currentPath)
     Dim yukiLastAccess As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastAccess)
     Dim yukiLastModefy As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastModified)
     Dim yukiLastChange As String = MikuruFile.GetTimeDifferenceText(yukiStat.LastChange)
@@ -32,62 +18,77 @@ Catch
     
 End
 
-Private Function drawProperty(argY As Integer) As Integer
+Private Function drawProperties(argTopOffset As Integer) As Integer
     
-    Dim yukiTemplate As String = "&1<br>&2<br>&3<br>&4<br>&5<br>"
-    Dim yukiRect As New Rect(16, argY + 16, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
+    Dim yukiTemplate As String = "Size:<br>Permission:<br>Access:<br>Modefy:<br>Change:<br>"
+    Dim yukiPropertiesTemplate As String = "&1<br>&2<br>&3<br>&4<br>&5<br>"
+    Dim yukiProperties As String = getPropertyText(yukiPropertiesTemplate)
     
-    Paint.Brush = Paint.Color(Color.White)
-    Paint.RichText(getPropertyText(yukiTemplate), yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Right)
-    Paint.Fill()
-    
-    Return yukiRect.H + yukiRect.Y
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiProperties)
     
 End
 
 Private Function drawImageProperties(argTopOffset As Integer) As Integer
     
-    Dim yukiImage As Image = Image.Load($currentPath)
+    Dim yukiImage As Image = Image.Load(Me._$currentPath)
     Dim yukiTemplate As String = "<br>Height:<br>Width:"
-    Dim yukiRect As New Rect(16, argTopOffset, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
     Dim yukiProperties As String = Subst$("<br>&1<br>&2", yukiImage.H, yukiImage.W)
     
-    Paint.Brush = Paint.Color(Color.White)
-    Paint.RichText(yukiTemplate, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Left)
-    Paint.RichText(yukiProperties, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Right)
-    Paint.Fill()
-    
-    Return yukiRect.Y + yukiRect.H
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiProperties)
     
 End
 
-Private Function drawPageCount(argTopOffset As Integer, argPath As String) 
+Private Function getCollapsedText(argTitle As String, argProperty As String) As String
+    
+    Dim yukiTitleLength As Integer = Me._$drawingArea.Font.RichTextWidth(argTitle)
+    Dim yukiLength As Integer = Me._$drawingArea.W - Me.MarginDouble - yukiTitleLength
+    
+    Return MikuruCollapsedText.Get(argProperty, Me._$drawingArea.Font, yukiLength)
+    
+End
+
+Private Sub getId3Tags() As String
+    
+    Dim yukiId3TagTemplate As String = "<br>&1<br>&2<br>&3<br>"
+    Dim yukiTitle As String = MikuruId3TagInfo.GetTitle(Me._$currentPath)
+    Dim yukiArtist As String = MikuruId3TagInfo.GetArtist(Me._$currentPath)
+    Dim yukiAlbum As String = MikuruId3TagInfo.GetAlbum(Me._$currentPath)
+    Dim yukiId3Tag As String
+    
+    yukiTitle = getCollapsedText("Title: ", yukiTitle)
+    yukiArtist = getCollapsedText("Artist: ", yukiArtist)
+    yukiAlbum = getCollapsedText("Album: ", yukiAlbum)
+    yukiId3Tag = Subst$(yukiId3TagTemplate, yukiTitle, yukiArtist, yukiAlbum)
+    
+    Return yukiId3Tag
+    
+End
+
+Private Function drawId3Tags(argTopOffset As Integer) As Integer
+    
+    Dim yukiTemplate As String = "<br>Title:<br>Artist:<br>Album:<br>"
+    Dim yukiId3Tags As String = getId3Tags()
+    
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiId3Tags)
+    
+End
+
+Private Function drawPageCount(argTopOffset As Integer, argPath As String) As Integer
     
     Dim yukiTemplate As String = "<br>Page:<br>"
     Dim yukiDocument As New PdfDocument(argPath)
-    Dim yukiRect As New Rect(16, argTopOffset, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
     
-    With yukiRect
-        Paint.Brush = Paint.Color(Color.White)
-        Paint.RichText(yukiTemplate, .X, .Y, .W, .H, Align.Left)
-        Paint.RichText(yukiDocument.Count, .X, .Y, .W, .H, Align.Right)
-        Paint.Fill()
-    End With
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiDocument.Count)
     
 End
 
 Private Function drawTrashProperty(argTopOffset As Integer) As Integer
     
-    Dim yukiTemplate As String = "<br><u>Path To Restore:</u><br>"
-    Dim yukiRect As New Rect(16, argTopOffset, IconSize + 32, $drawingArea.Font.RichTextHeight(yukiTemplate))
+    Dim yukiTemplate As String = "<br><u>Path To Restore:</u><br><br>&1<br>"
+    Dim yukiText As String = Subst$(yukiTemplate, NagatoTrash.GetPreviousPath(Me._$currentPath))
+    Dim yukiRect As Rect = Me._GetRect(argTopOffset, yukiText)
     
-    With yukiRect
-        Paint.Brush = Paint.Color(Color.White)
-        Paint.RichText(yukiTemplate, .X, .Y, .W, .H, Align.Center)
-        'Paint.RichText(yukiProperties, .X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Right)
-        Paint.RichText(NagatoTrash.GetPreviousPath($currentPath), .X, .H + .Y, .W,, Align.Center)
-        Paint.Fill()
-    End With
+    Me._DrawRichText(yukiText, yukiRect, Align.Center)
     
     Return yukiRect.Y + yukiRect.H
     
@@ -98,19 +99,13 @@ Public Sub Paint(argY As Integer, argPath As String, argIsTrash As Boolean)
     Dim yukiMimeType As String = DesktopMime.FromFile(argPath).Type
     Dim yukiTopOffset As Integer
     
-    $currentPath = argPath
+    Me._$currentPath = argPath
     
-    drawHeader(argY)
-    yukiTopOffset = drawProperty(argY)
+    yukiTopOffset = drawProperties(argY)
     
     If yukiMimeType Begins "image" Then yukiTopOffset = drawImageProperties(yukiTopOffset)
+    If yukiMimeType Begins "audio" Then yukiTopOffset = drawId3Tags(yukiTopOffset)
     If yukiMimeType = "application/pdf" Then drawPageCount(yukiTopOffset, argPath)
     If argIsTrash Then drawTrashProperty(yukiTopOffset)
-    
-End
-
-Public Sub _new(argDrawingArea As DrawingArea)
-    
-    $drawingArea = argDrawingArea
     
 End
