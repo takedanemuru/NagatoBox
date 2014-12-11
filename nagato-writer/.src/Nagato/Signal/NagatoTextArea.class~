@@ -60,6 +60,12 @@ Public Sub InsertNembers()
     
 End
 
+Public Sub Insert(argText As String)
+    
+    $textArea.Insert(argText)
+    
+End
+
 Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
     
     Select Case argTag
@@ -70,6 +76,9 @@ Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
         Case "Replace"
             $searchAndReplace.ReplaceOne(argValues[0], argValues[1])
         Case "ReplaceAll"
+            Debug "replace"
+            Debug argValues[0]
+            Debug argValues[1]
             $searchAndReplace.ReplaceAll(argValues[0], argValues[1])
     End Select
     

@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits NagatoConfig
+
+Property Read Key As String
+Property Read Value As String
+
+Private $source As String
+Private $key As String
+Private $value As String
+
+Private Sub setKeyAndValue()
+    
+    Dim yukiPosition As Integer = InStr($source, "=")
+    
+    $key = Left$($source, yukiPosition - 1)
+    $value = Right$($source, -1 * (yukiPosition))
+    
+End
+
+Public Sub _new(argLine As String, argUnquote As Boolean)
+    
+    $source = Trim$(argLine)
+    Me._$unquote = argUnquote
+    
+    If InStr($source, "=") > 0 Then setKeyAndValue()
+    
+End
+
+Private Function Key_Read() As String
+
+    Return $key
+
+End
+
+Private Function Value_Read() As String
+
+    Return $value
+
+End

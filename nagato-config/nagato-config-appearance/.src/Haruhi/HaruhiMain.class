@@ -1,0 +1,17 @@
+' Gambas class file
+
+Private $config As New NagatoConfigFacade
+Private $gridsThemes As NagatoGridsThemes
+
+Public Sub _new()
+
+    $gridsThemes = New NagatoGridsThemes(ThemesGrids) As "ThemesGrids"
+
+End
+
+Public Sub Form_Open()
+
+    $gridsThemes.SetList($config.ThemesList)
+    $gridsThemes.SetCurrentTheme($config.WidgetTheme)
+
+End

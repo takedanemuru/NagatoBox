@@ -72,6 +72,8 @@ Public Sub ReplaceAll(argTarget As String, argReplacement As String)
     
     Dim yukiCount As Integer = MikuruText.GetReplacementCount(Me._$widget.Text, argTarget)
     
+    Debug yukiCount
+    
     If yukiCount = 0 Then
         Message.Error(("Query not found"))
     Else

@@ -4,9 +4,9 @@ Public Function GetReplacementCount(argSource As String, argTarget As String) As
     
     Dim yukiPosition As Integer
     Dim yukiCount As Integer
-    
+
     Do
-        yukiPosition = String.InStr(argSource, argTarget, yukiPosition, gb.IgnoreCase)
+        yukiPosition = String.InStr(argSource, argTarget, yukiPosition, gb.IgnoreCase) 
         If yukiPosition = 0 Then Break
         Inc yukiCount
     Loop

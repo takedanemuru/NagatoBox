@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoConfig
+
+Property Read GroupName As String
+Property Read Count As Integer
+
+Private $groupName As String
+Private $lines As New NagatoConfigLine[]
+
+Public Sub SetLine(argLine As String)
+    
+    Dim yukiLine As New NagatoConfigLine(argLine, Me._$unquote)
+    
+    $lines.Add(yukiLine)
+    
+End
+
+Public Sub _get(argKey As String) As String
+    
+    Dim yukiLine As NagatoConfigLine
+    
+    For Each yukiLine In $lines
+        If yukiLine.Key = argKey Then Return UnQuote$(yukiLine.Value)
+    Next
+    
+    Return Null
+    
+End
+
+Public Sub _new(argGroupName As String, argUnquote As Boolean)
+    
+    $groupName = argGroupName
+    Me._$unquote = argUnquote
+    
+End
+
+Private Function GroupName_Read() As String
+
+    Return MikuruRemoveCharactor($groupName, "[", "]")
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $lines.Count
+
+End

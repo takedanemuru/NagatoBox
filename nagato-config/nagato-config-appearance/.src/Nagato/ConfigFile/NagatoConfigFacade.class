@@ -1,0 +1,43 @@
+' Gambas class file
+
+Property Read ThemesList As String[]
+Property Read WidgetTheme As String
+Property Read WidgetThemeMatched As Boolean
+
+Private $themes As NagatoThemes
+Private $configGtk2 As NagatoConfigFile
+Private $configGtk3 As NagatoConfigFile
+Private $configQt As NagatoConfigFile
+
+Public Sub _new()
+    
+    $themes = New NagatoThemes
+    $configGtk2 = New NagatoConfigFile("/home/takedanemuru/nagato-config-appearance/gtkrc-2.0", False)
+    $configGtk3 = New NagatoConfigFile("/home/takedanemuru/nagato-config-appearance/settings.ini", True)
+    $configQt = New NagatoConfigFile("/home/takedanemuru/nagato-config-appearance/Trolltech.conf", True)
+
+    Debug $configQt["Qt", "style"]
+    
+End
+
+Private Function ThemesList_Read() As String[]
+
+    Return $themes.List
+
+End
+
+Private Function WidgetTheme_Read() As String
+
+    If Me.WidgetThemeMatched Then
+        Return $configGtk2["", "gtk-theme-name"] 
+    Else
+        Return Null
+    Endif
+
+End
+
+Private Function WidgetThemeMatched_Read() As Boolean
+
+    Return ($configGtk2["", "gtk-theme-name"] = $configGtk3["Settings", "gtk-theme-name"])
+
+End

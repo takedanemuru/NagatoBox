@@ -1,0 +1,28 @@
+' Gambas class file
+
+Public _$grids As GridView
+
+Public Sub _InitializeGrids() ' virtual, MUST be overridden
+    
+    
+    
+End
+
+Public Sub _SetBackground()
+    
+    Dim yukiIndex As Integer
+    
+    With Me._$grids
+        For yukiIndex = 0 To .Columns.Max
+            .[.Rows.Max, yukiIndex].Background = Color.Merge(Color.Violet, Color.White, 0.9)
+        Next
+    End With
+    
+End
+
+Public Sub _new(argGrids As GridView)
+    
+    Me._$grids = argGrids
+    Me._InitializeGrids()
+    
+End

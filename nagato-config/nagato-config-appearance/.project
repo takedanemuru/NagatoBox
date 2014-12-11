@@ -1,0 +1,17 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.6.2
+Title=nagato-config-theme
+Startup=Kyon
+Icon=Pictures/Icons/equalizer.png
+Version=0.1.0
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Description="appearance configuration tool for NagatoBox"
+Authors="takeda.nemuru@yandex.com"
+TabSize=4
+Translate=1
+Language=ja
+Packager=1
