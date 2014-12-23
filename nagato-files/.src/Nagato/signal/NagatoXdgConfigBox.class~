@@ -28,6 +28,7 @@ Private Sub setLabel(argPath As String)
         .Expand = True
         .Text = NagatoXdg.GetName(argPath)
         .Font.Bold = True
+        .Foreground = Color.White
     End With
     
     $name = yukiLabel.Text
@@ -43,6 +44,7 @@ Private Sub setButtonBox(argPath As String)
         .Picture = NagatoXdg.GetIcon(argPath)
         .Text = Replace$(argPath, User.Home, "~")
         .ReadOnly = True
+        .Expand = True
         .Tooltip = ("Click to change")
     End With
     

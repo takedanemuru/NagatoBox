@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $observer As Observer
+Private $selection As NagatoSelection
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $selection = New NagatoSelection
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+     If $iconView.Key = "" Then Return
+    
+    If $iconView.FindAt(Mouse.X, Mouse.Y) Then
+        $iconView.Current.Selected = False
+    Else
+        With $iconView
+            If .Key = NagatoDesktop.SpecialKeyClock Or If .Key = NagatoDesktop.SpecialKeyTrashBin Then Return
+            $selection.Push(.Key, Mouse.Left)
+            .[.Key].Picture = MikuruTile(.Key, $selection.Paths.Exist(.Key))
+        End With
+    End If
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiPath As String = $iconView.Key
+    Dim yukiContextMenu As Object
+    
+    If yukiPath = "NOTFOUND" Then Return
+
+    If yukiPath = "" Then
+        Debug "IconViewContextMenu"
+    Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
+        Return
+    Else If yukiPath = NagatoDesktop.SpecialKeyTrashBin Then
+        Return      
+    Else 
+        yukiContextMenu = New NagatoDesktopContextMenu(HaruhiDesktop, yukiPath) As "Menu"
+        yukiContextMenu.Popup()
+    End If
+    
+End

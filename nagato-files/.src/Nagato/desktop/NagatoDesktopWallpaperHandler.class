@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $observer As NagatoDirectoryObserver
+
+Private Sub setWallpaper()
+    
+    With $iconView
+        .Expand = True
+        Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
+        If Error Then .Picture = Picture.Load("pictures/about.png")
+    End With
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    
+    setWallpaper()
+    
+    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+    $observer.Directory = User.Home &/ ".nagato-wallpaper/NagatoBox"
+    $observer.IntervalSecond = 5
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    Debug argFileName
+    
+    setWallpaper()
+    
+End

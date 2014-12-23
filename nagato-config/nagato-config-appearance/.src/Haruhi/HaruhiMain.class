@@ -1,17 +1,43 @@
 ' Gambas class file
 
-Private $config As New NagatoConfigFacade
+Private $toolbarThemes As NagatoToolbarWidgetThemes
 Private $gridsThemes As NagatoGridsThemes
+Private $applyButtons As NagatoToolbarApplyButtons
+
+Private Sub initializeGridThemes()
+    
+    $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "ThemesGrids"
+    
+    With $gridsThemes
+        .SetList(NagatoConfigFacade.ThemesList)
+        .SetCurrentTheme(NagatoConfigFacade.WidgetTheme)
+    End With
+    
+End
 
 Public Sub _new()
 
-    $gridsThemes = New NagatoGridsThemes(ThemesGrids) As "ThemesGrids"
+    MainTabStrip.Index = 0
+    $toolbarThemes = New NagatoToolbarWidgetThemes(MainTabStrip)
+    initializeGridThemes()
+    $applyButtons = New NagatoToolbarApplyButtons(Me)
 
 End
 
 Public Sub Form_Open()
 
-    $gridsThemes.SetList($config.ThemesList)
-    $gridsThemes.SetCurrentTheme($config.WidgetTheme)
+    NagatoSettings.LoadFormSettings(Me)
 
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
+Public Sub ThemesGrids_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.PropertyChanged Then $applyButtons.Activate()
+    
 End

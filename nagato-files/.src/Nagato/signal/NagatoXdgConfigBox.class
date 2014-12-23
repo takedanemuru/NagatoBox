@@ -28,6 +28,7 @@ Private Sub setLabel(argPath As String)
         .Expand = True
         .Text = NagatoXdg.GetName(argPath)
         .Font.Bold = True
+        .Foreground = Color.White
     End With
     
     $name = yukiLabel.Text

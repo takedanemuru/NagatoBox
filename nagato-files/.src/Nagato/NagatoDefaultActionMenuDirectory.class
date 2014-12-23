@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoDefaultActionMenu
+
+Public Sub _InitializeMenu(argRootMenu As Menu)
+   
+    Me._$menu = New Menu(argRootMenu) As "OpenDirectoryMenu"
+    
+    With Me._$menu
+        .Text = ("OpenDirectory")
+        .Picture = MikuruIcon.Get("folder")
+    End With
+   
+End
+
+Public Sub OpenDirectoryMenu_Click()
+    
+    Try Shell Subst$("nagato-files &1", Quote$(Me._$path))
+    
+End

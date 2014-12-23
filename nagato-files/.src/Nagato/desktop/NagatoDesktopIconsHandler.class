@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $clock As NagatoDesktopClock
+Private $trashBin As NagatoDesktopTrashBin 
+
+Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
+    
+    Dim yukiPath As String
+
+    For Each yukiPath In MikuruSort(argDirectory, argType)
+        If Not Access(yukiPath, gb.Read) Then Continue
+        $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
+    Next
+    
+End
+
+Private Sub initializeIcons()
+    
+    $clock = New NagatoDesktopClock($iconView)
+    setIcon(Desktop.Path, [""], gb.Directory)
+    setIcon(Desktop.Path, [""], gb.File)
+    $trashBin = New NagatoDesktopTrashBin($iconView)
+    
+End
+
+Public Sub Refresh()
+    
+    $iconView.Clear()
+    initializeIcons()
+    $iconView.Refresh()
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    
+    initializeIcons()
+        
+End

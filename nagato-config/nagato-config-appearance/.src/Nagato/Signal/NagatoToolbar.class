@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public Const ButtonWidth As Integer = 120
+
+Public _$HBox As HBox
+
+Public Sub _InitializeHBox(argContainer As Container)
+    
+    Me._$HBox = New HBox(argContainer)
+    
+    With Me._$HBox
+        .Visible = True
+        .Height = 32
+        .Background = Color.Merge(Color.Violet, Color.White, 0.9)
+    End With
+    
+End
+
+Public Sub _InitializeWidgets() ' virtual
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._InitializeHBox(argContainer)
+    Me._InitializeWidgets()
+    
+End

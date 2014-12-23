@@ -1,22 +1,40 @@
 ' Gambas class file
 
+Create Static
+
+Property Read Status As Integer
 Property Read ThemesList As String[]
+Property Read ThemesCount As Integer
 Property Read WidgetTheme As String
 Property Read WidgetThemeMatched As Boolean
+Property Read IsThemeUnified As Boolean
+
+Private Const ConfigDir As String = "/home/takedanemuru/nagato-config-appearance"
 
 Private $themes As NagatoThemes
 Private $configGtk2 As NagatoConfigFile
 Private $configGtk3 As NagatoConfigFile
 Private $configQt As NagatoConfigFile
 
+Private Function isThemesMatched() As Boolean
+    
+    If ($configGtk2["", "gtk-theme-name"] = $configGtk3["Settings", "gtk-theme-name"]) Then
+        If $themes.List.Exist($configGtk2["", "gtk-theme-name"]) Then
+            Return True
+        End If
+    End If
+    
+Finally
+    Return False
+    
+End
+
 Public Sub _new()
     
     $themes = New NagatoThemes
-    $configGtk2 = New NagatoConfigFile("/home/takedanemuru/nagato-config-appearance/gtkrc-2.0", False)
-    $configGtk3 = New NagatoConfigFile("/home/takedanemuru/nagato-config-appearance/settings.ini", True)
-    $configQt = New NagatoConfigFile("/home/takedanemuru/nagato-config-appearance/Trolltech.conf", True)
-
-    Debug $configQt["Qt", "style"]
+    $configGtk2 = New NagatoConfigFile(ConfigDir &/ "gtkrc-2.0", False)
+    $configGtk3 = New NagatoConfigFile(ConfigDir &/ "settings.ini", True)
+    $configQt = New NagatoConfigFile(ConfigDir &/ "Trolltech.conf", True)
     
 End
 
@@ -38,6 +56,34 @@ End
 
 Private Function WidgetThemeMatched_Read() As Boolean
 
-    Return ($configGtk2["", "gtk-theme-name"] = $configGtk3["Settings", "gtk-theme-name"])
+    Return isThemesMatched()
+
+End
+
+Private Function IsThemeUnified_Read() As Boolean
+
+    If $configQt["Qt", "style"] = "GTK+" Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Function Status_Read() As Integer
+
+    If $themes.Count = 0 Then
+        Return MikuruConfig.NotFound
+    Else If isThemesMatched Then
+        Return MikuruConfig.Matched
+    Else
+        Return MikuruConfig.NotMatched
+    Endif
+    
+End
+
+Private Function ThemesCount_Read() As Integer
+
+    Return $themes.Count
 
 End

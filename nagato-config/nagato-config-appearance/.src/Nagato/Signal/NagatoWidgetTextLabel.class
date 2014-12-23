@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $textLabel As TextLabel
+
+Public Sub _InitializeWidget(argContainer As Container) ' virtual
+    
+    $textLabel = New TextLabel(argContainer)
+    
+    With $textLabel
+        .Expand = True
+        .Text = ("Unifying GTK+/Qt theme")
+        .Alignment = Align.Left
+    End With
+    
+End

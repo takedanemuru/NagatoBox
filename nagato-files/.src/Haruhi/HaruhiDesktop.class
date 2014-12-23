@@ -4,8 +4,9 @@ Private Const Type As String = "_NET_WM_WINDOW_TYPE"
 Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 
 Private $desktop As NagatoDesktop
+Private $panel As Panel
 
-Private Sub setForm()
+Private Sub initializeForm()
     
     With Me
         .X = 0
@@ -16,24 +17,22 @@ Private Sub setForm()
     
 End
 
-Private Sub setIconView()
+Private Sub initializePanel()
     
-    $desktop = New NagatoDesktop(Me)
+    $panel = New Panel(Me)
+    
+    $panel.Expand = False
+    $panel.H = (Screen.H - Desktop.H)
     
 End
 
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    setForm()
-    setIconView()
+    initializeForm()
+    $desktop = New NagatoDesktop(Me)
+    initializePanel()
 
-    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
-    
-End
-
-Public Sub Form_MouseMove()
-
-
+    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
 
 End

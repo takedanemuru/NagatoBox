@@ -1,0 +1,17 @@
+' Gambas class file
+
+Event Signal(argSignal As Integer, argValues As Variant[])
+
+Public Sub _RaiseSignal(argSignal As Integer, argValues As Variant[])
+    
+    Raise Signal(argSignal, argValues)
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    ' intercept signal here.
+    
+    Me._RaiseSignal(argSignal, argValues)
+    
+End

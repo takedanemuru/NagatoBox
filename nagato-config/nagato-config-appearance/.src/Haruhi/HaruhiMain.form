@@ -2,41 +2,25 @@
 
 { Form Form
   MoveScaled(0,0,50,81)
+  Icon = Picture["Pictures/Icons/equalizer.png"]
   Arrangement = Arrange.Vertical
   { MainTabStrip TabStrip
     MoveScaled(4,6,42,37)
     Expand = True
-    Arrangement = Arrange.Fill
+    Arrangement = Arrange.Vertical
     Count = 4
     Index = 0
     Text = ("Widget Theme")
-    { ThemesGrids GridView
-      MoveScaled(5,3,32,25)
-    }
     Index = 1
     Text = ("Font")
     { FontChooser1 FontChooser
       MoveScaled(5,1,36,36)
+      Expand = True
     }
     Index = 2
     Text = ("Icon")
     Index = 3
     Text = ("Mouse")
     Index = 0
-  }
-  { HBox1 HBox
-    MoveScaled(-1,75,49,5)
-    { Panel1 Panel
-      MoveScaled(0,2,18,4)
-      Expand = True
-    }
-    { CancelButton Button
-      MoveScaled(20,1,12,4)
-      Text = ("Cancel")
-    }
-    { ApplyButton Button
-      MoveScaled(35,1,12,4)
-      Text = ("Apply")
-    }
   }
 }

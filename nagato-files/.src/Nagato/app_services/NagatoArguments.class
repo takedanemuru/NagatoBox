@@ -28,7 +28,7 @@ End
 Public Sub Parsing()
     
     Args.Begin("USAGE: nagato-files OPTION PATH")
-        '$desktop = Args.Has("d", "desktop", "desktop icons")
+        $desktop = Args.Has("d", "desktop", "desktop icons")
         $xdgUserDirs = Args.Has("u", "xdg-user-dirs", "xdg-user-dirs config")
     $paths = Args.End()
     

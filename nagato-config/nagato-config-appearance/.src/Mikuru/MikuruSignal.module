@@ -1,0 +1,4 @@
+' Gambas module file
+
+Public Enum PropertyChanged = 2001
+Public Enum ApplicationClose = 9001, ApplicationApply = 9002

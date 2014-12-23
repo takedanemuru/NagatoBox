@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $observer As NagatoDirectoryObserver
+
+Event RequestRefresh
+
+Private Sub initializeObserver()
+    
+    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+    $observer.Directory = Desktop.Path
+    $observer.IntervalSecond = 1
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    
+    initializeObserver()
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argFileName As String)
+    
+    Raise RequestRefresh
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    Raise RequestRefresh
+    
+End

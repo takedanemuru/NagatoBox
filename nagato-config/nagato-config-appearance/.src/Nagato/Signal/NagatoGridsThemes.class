@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Private $observer As Observer
+
+Public Sub _InitializeGrids()
+    
+    With Me._$grids
+        .Mode = Select.Single
+        .Header = GridView.Horizontal
+        .Columns.Count = 2
+        .Columns[0].W = 24
+        .Columns[1].Text = ("Theme")
+        .Expand = True
+    End With
+    
+    $observer = New Observer(Me._$grids) As "Asakura"
+    
+End
+
+Public Sub SetCurrentTheme(argThemeName As String)
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Me._$grids.Rows.Max
+        If Me._$grids[yukiIndex, 1].Text = argThemeName Then
+            Me._$grids[yukiIndex, 0].Picture = MikuruIcon["button-check"]
+        Endif
+    Next
+    
+End
+
+Public Sub SetList(argList As String[])
+    
+    Dim yukiThemeName As String
+    
+    For Each yukiThemeName In argList.Sort(gb.IgnoreCase)
+        Inc Me._$grids.Rows.Count
+        Me._$grids[Me._$grids.Rows.Max, 1].Text = yukiThemeName 
+        If Even(Me._$grids.Rows.Max) Then Me._SetBackground()
+    Next
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    Debug "Activate"
+    
+    Raise SIgnal(MikuruSignal.PropertyChanged, [Me._$grids.Row])
+    
+End

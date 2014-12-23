@@ -6,10 +6,17 @@ Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 10
 
 Private $iconView As IconView
+Private $observer As NagatoDirectoryObserver
 
 Private Function getText() As String
     
-    Return Subst$("&1 items<br>&2", NagatoTrash.Count, NagatoTrash.Size)
+    If NagatoTrash.Count = 0 Then
+        Return "Empty"
+    Else If NagatoTrash.Count = 1 Then
+        Return Subst$("1 item<br>&1", NagatoTrash.Size)
+    Else
+        Return Subst$("&1 items<br>&2", NagatoTrash.Count, NagatoTrash.Size)
+    End If
     
 End
 
@@ -28,7 +35,7 @@ Private Sub initializeIcon()
         Paint.Fill()
     Paint.End()
     
-    $iconView[Me.Key].Picture = yukiImage.Picture 
+    Try $iconView[Me.Key].Picture = yukiImage.Picture 
     
 End
 
@@ -46,10 +53,26 @@ Public Sub _new(argIconView As IconView)
     
     initializeIcon()
     
+    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+    $observer.Directory = NagatoTrash.PathFiles
+    $observer.IntervalSecond = 1
+    
 End
 
 Private Function Key_Read() As String
 
     Return "DesktopTrashBin"
 
+End
+
+Public Sub DirectoryObserver_Deleted(argFileName As String)
+    
+    initializeIcon()
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    initializeIcon()
+    
 End

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public Sub _InitializeWidget(argContainer As Container) ' virtual
+    
+    
+    
+End
+
+Public Sub SetValues(...) ' virtuial
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._InitializeWidget(argContainer)
+    
+End

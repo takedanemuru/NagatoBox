@@ -1,11 +1,13 @@
 ' Gambas class file
 
+Public Const SpecialKeyClock As String = "DesktopClock"
+Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
+
 Private $iconView As IconView
-Private $clock As NagatoDesktopClock
-Private $trashBin As NagatoDesktopTrashBin 
-Private $observer As NagatoDirectoryObserver
-Private $selection As NagatoSelection
-Private $panel As Panel
+Private $observer As NagatoDesktopObserverHandler
+Private $wallpaper As NagatoDesktopWallpaperHandler
+Private $icons As NagatoDesktopIconsHandler
+Private $mouse As NagatoDesktopMouseHandler
 
 Private Sub initializeIconView(argContainer As Container)
     
@@ -13,96 +15,26 @@ Private Sub initializeIconView(argContainer As Container)
     
     With $iconView
         .Expand = True
-        Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
-        If Error Then .Picture = Picture.Load("pictures/about.png")
         .Orientation = Arrange.Horizontal
         .Border = False
+        .Mode = Select.Single
     End With
-    
-End
-
-Private Sub initializePanel(argContainer As Container)
-    
-    $panel = New Panel(argContainer)
-    
-    $panel.Expand = False
-    $panel.H = (Screen.H - Desktop.H)
-    
-End
-
-Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
-    
-    Dim yukiPath As String
-
-    For Each yukiPath In MikuruSort(argDirectory, argType)
-        If Not Access(yukiPath, gb.Read) Then Continue
-        $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
-    Next
-    
-End
-
-Private Sub addIcons()
-    
-    setIcon(Desktop.Path, [""], gb.Directory)
-    setIcon(Desktop.Path, [""], gb.File)
-    
-End
-
-Private Sub refreshAll()
-    
-    $iconView.Remove($trashBin.Key)
-    $trashBin.Add()
-    $iconView.Refresh()
     
 End
 
 Public Sub _new(argContainer As Container)
     
     initializeIconView(argContainer)
-    initializePanel(argContainer)
     
-    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
-    $observer.Directory = Desktop.Path
-    $observer.IntervalSecond = 1
-    
-    $selection = New NagatoSelection
-    $clock = New NagatoDesktopClock($iconView)
-    addIcons()
-    $trashBin = New NagatoDesktopTrashBin($iconView)
-    
+    $wallpaper = New NagatoDesktopWallpaperHandler($iconView)
+    $icons = New NagatoDesktopIconsHandler($iconView)
+    $mouse = New NagatoDesktopMouseHandler($iconView) As "Mouse"
+    $observer = New NagatoDesktopObserverHandler($iconView) As "DesktopObserver"
+
 End
 
-Public Sub DesktopIconView_MouseDown()
+Public Sub DesktopObserver_RequestRefresh()
     
-     If $iconView.Key = "" Then Return
-    
-    If $iconView.FindAt(Mouse.X, Mouse.Y) Then
-        $iconView.Current.Selected = False
-    Else
-        With $iconView
-            If .Key = "clock" Then Return
-            $selection.Push(.Key, Mouse.Left)
-            .[.Key].Picture = MikuruTile(.Key, $selection.Paths.Exist(.Key))
-        End With
-    End If
-    
-End
-
-Public Sub DirectoryObserver_Deleted(argFileName As String)
-    
-    Try $iconView.Remove(Desktop.Path &/ argFileName)
-    
-    If Not Error Then refreshAll()
-    
-End
-
-Public Sub DirectoryObserver_Modefied(argFileName As String)
-    
-    Dim yukiPath As String = Desktop.Path &/ argFileName
-    
-    If Not $iconView.Exist(yukiPath) Then
-        $iconView.Add(yukiPath, "", MikuruTile(yukiPath, False))
-        refreshAll()
-    Endif
+    $icons.Refresh()
     
 End
