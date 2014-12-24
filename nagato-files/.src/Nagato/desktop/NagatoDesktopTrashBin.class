@@ -46,6 +46,12 @@ Public Sub Add()
     
 End
 
+Public Sub Stop()
+    
+    Object.Lock($observer)
+    
+End
+
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView

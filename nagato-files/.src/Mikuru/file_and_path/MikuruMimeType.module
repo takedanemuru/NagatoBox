@@ -30,6 +30,15 @@ Public Function GetDesktopFiles(argFullPath As String) As DesktopFile[]
     
 End
 
+Public Function IsDesktopEntry(argFullPath As String) As Boolean
+    
+    Return Me.GetType(argFullPath) = Me.TypeApplication
+    
+Catch
+    Return False
+    
+End
+
 Public Function IsAudioFile(argFullPath As String) As Boolean
     
     Return (DesktopMime.FromFile(argFullPath).Type Begins "audio")

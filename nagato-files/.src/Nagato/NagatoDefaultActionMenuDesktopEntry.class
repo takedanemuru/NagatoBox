@@ -1,26 +1,12 @@
 ' Gambas class file
 
-Inherits NagatoDefaultActionMenu
+Inherits NagatoMenuItem
 
-Private Function getCommand(argExec As String, argAsSuperUser As Boolean) As String
-    
-    Dim yukiReturn As String = IIf(argAsSuperUser, "gksu", "")
-    Dim yukiCommand As String
-    
-    For Each yukiCommand In Split(argExec, " ", "")
-        If yukiCommand Begins "%" Then Continue
-        yukiReturn &= (" " & yukiCommand)
-    Next
-        
-    Return yukiReturn
-    
-End
-
-Public Sub _InitializeMenu(argRootMenu As Menu)
+Public Sub _InitializeItem()
    
-    Me._$menu = New Menu(argRootMenu) As "DesktopEntryMenu"
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "DesktopEntryMenu"
     
-    With Me._$menu
+    With yukiMenu
         .Text = ("Execute")
         .Picture = MikuruIcon.Get("gear")
     End With
@@ -29,9 +15,6 @@ End
 
 Public Sub DesktopEntryMenu_Click()
     
-    Dim yukiDesktopFile As New DesktopFile(Me._$path)
-    Dim yukiCommand As String = getCommand(yukiDesktopFile.Exec, False)
-    
-    Try Shell yukiCommand
+    MikuruDesktopEntry.Execute(Me._$path)
     
 End

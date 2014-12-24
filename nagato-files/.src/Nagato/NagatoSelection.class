@@ -88,6 +88,19 @@ Public Sub RemovePath(argPath As String)
     
 End
 
+Public Sub Sanitize()
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In $paths
+        If Exist(yukiPath) Then yukiPaths.Add(yukiPath)
+    Next
+    
+    $paths = yukiPaths.Copy()
+    
+End
+
 Private Function Paths_Read() As String[]
 
     Return $paths

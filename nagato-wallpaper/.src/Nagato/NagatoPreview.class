@@ -29,6 +29,8 @@ End
 
 Private Function Path_Read() As String
 
+    Debug $path
+
     Return $path
 
 End

@@ -1,12 +1,12 @@
 ' Gambas class file
 
-Inherits NagatoDefaultActionMenu
+Inherits NagatoMenuItem
 
-Public Sub _InitializeMenu(argRootMenu As Menu)
+Public Sub _InitializeItem()
    
-    Me._$menu = New Menu(argRootMenu) As "OpenDirectoryMenu"
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "OpenDirectoryMenu"
     
-    With Me._$menu
+    With yukiMenu
         .Text = ("OpenDirectory")
         .Picture = MikuruIcon.Get("folder")
     End With

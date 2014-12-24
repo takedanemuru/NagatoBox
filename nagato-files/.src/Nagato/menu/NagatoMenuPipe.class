@@ -10,6 +10,7 @@ Public Enum ViewSelectAll = 4007, ViewUnselectAll = 4008, ViewInvertSelection = 
 Public Enum FileHeader = 5000, FileOpen = 5001, FileOpenWith = 5002, FileDelete = 5003, FileRename = 5004
 Public Enum FileCopy = 5005
 Public Enum FileCreate = 5006, FileShowProperty = 5007, FileUnarchive = 5008, FileMoveToCurrentDir = 5009
+Public Enum FileMoveTo = 5010, FileCopyTo = 5011
 Public Enum DirHeader = 6000, DirOpen = 6001, DirOpenInNewTab = 6002, DirDelete = 6003, DirRename = 6004
 Public Enum DirCreate = 6005, DirShowProperty = 6006, DirComputeSize = 6007
 Public Enum TagHeader = 7000, TagAdd = 7001, TagRemove = 7002

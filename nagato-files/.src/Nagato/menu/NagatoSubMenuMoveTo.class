@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoSubMenuFile
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Move To ...")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override
+    
+    Me._AddSelectDirectoryMenu()
+        Me._AddMenu("", 0) ' add dummy menu
+    Me._AddFileMenu(User.Home)
+    Me._AddXdgUserDirs()
+        Me._AddMenu("", 0) ' add dummy menu
+    Me._AddBookmarkDirectories()
+    
+End
+
+Public Sub FileMenu_Click()
+    
+    Raise MenuEventWithArg(NagatoMenuPipe.FileMoveTo, Last.Tag)
+    
+End

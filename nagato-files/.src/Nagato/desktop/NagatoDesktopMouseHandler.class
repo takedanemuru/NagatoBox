@@ -2,9 +2,25 @@
 
 Inherits NagatoDesktopHandler
 
+Property Read SelectedPaths As String[]
+
 Private $iconView As IconView
 Private $observer As Observer
 Private $selection As NagatoSelection
+
+Event RequestRefresh
+
+Public Sub ClearAll()
+    
+    $selection.ClearAll()
+    
+End
+
+Public Sub Delete(argPath As String)
+    
+    $selection.RemovePath(argPath)
+    
+End
 
 Public Sub _new(argIconView As IconView)
     
@@ -18,11 +34,12 @@ Public Sub Asakura_MouseDown()
     
      If $iconView.Key = "" Then Return
     
-    If $iconView.FindAt(Mouse.X, Mouse.Y) Then
+    If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
         $iconView.Current.Selected = False
     Else
         With $iconView
-            If .Key = NagatoDesktop.SpecialKeyClock Or If .Key = NagatoDesktop.SpecialKeyTrashBin Then Return
+            If .Key = NagatoDesktop.SpecialKeyClock Then Return
+            If .Key = NagatoDesktop.SpecialKeyTrashBin Then Return
             $selection.Push(.Key, Mouse.Left)
             .[.Key].Picture = MikuruTile(.Key, $selection.Paths.Exist(.Key))
         End With
@@ -35,17 +52,73 @@ Public Sub Asakura_Menu()
     Dim yukiPath As String = $iconView.Key
     Dim yukiContextMenu As Object
     
-    If yukiPath = "NOTFOUND" Then Return
-
-    If yukiPath = "" Then
-        Debug "IconViewContextMenu"
+    If yukiPath = "NOTFOUND" Then 
+        Return
     Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
         Return
     Else If yukiPath = NagatoDesktop.SpecialKeyTrashBin Then
-        Return      
+        Return
+    Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
+        Debug "IconViewContextMenu"
+    Else If yukiPath = "" Or If $selection.Count = 0 Then
+        Debug "IconViewContextMenu"
     Else 
-        yukiContextMenu = New NagatoDesktopContextMenu(HaruhiDesktop, yukiPath) As "Menu"
+        yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiDesktop, yukiPath) As "Menu"
         yukiContextMenu.Popup()
     End If
     
+End
+
+Public Sub Asakura_Activate()
+    
+    Dim yukiPath As String = $iconView.Key
+    
+    If Not Exist(yukiPath) Then 
+        Return
+    Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
+        $iconView.Current.Selected = False
+        Return
+    Else If IsDir(yukiPath) Then
+        Try Shell Subst$("nagato-files &1", Quote$(yukiPath))
+    Else If MikuruMimeType.IsDesktopEntry(yukiPath) Then
+        MikuruDesktopEntry.Execute(yukiPath)
+    Else ' for files
+        MikuruFile.Exec(yukiPath)
+    End If
+    
+End
+
+Public Sub Menu_MenuEventWithArg(argEvent As Integer, argValue As Variant)
+    
+    With NagatoMenuPipe
+        Select Case argEvent
+            Case .FileDelete
+                NagatoTrash.Delete($selection.Paths)
+            Case .FileCopyTo
+                If Not argValue Then
+                    MikuruFileManuever.CopyTo($selection.Paths)
+                Else
+                    MikuruFileManuever.CopyToDirectory($selection.Paths, argValue)
+                End If
+            Case .FileMoveTo
+                If Not argValue Then
+                    MikuruFileManuever.MoveTo($selection.Paths)
+                Else
+                    MikuruFileManuever.MoveToDirectory($selection.Paths, argValue)
+                End If
+            Case .TagAdd
+                NagatoFilerDialogs.Tagging($selection.Paths) 
+                Raise RequestRefresh
+            Case .TagRemove
+                NagatoDBSymbol.RemovePaths($selection.Paths)
+                Raise RequestRefresh
+        End Select
+    End With
+    
+End
+
+Private Function SelectedPaths_Read() As String[]
+
+    Return $selection.Paths
+
 End

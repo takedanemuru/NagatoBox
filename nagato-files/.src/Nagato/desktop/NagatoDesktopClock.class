@@ -8,6 +8,12 @@ Private Const FontSize As Integer = 16
 Private $iconView As IconView
 Private $timer As New NagatoDesktopTimer As "DesktopTimer"
 
+Public Sub Stop()
+    
+    Object.Lock($timer)
+    
+End
+
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView

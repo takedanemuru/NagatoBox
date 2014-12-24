@@ -5,7 +5,7 @@ Inherits NagatoDesktopHandler
 Private $iconView As IconView
 Private $observer As NagatoDirectoryObserver
 
-Event RequestRefresh
+Event Signal(argSignal As Integer, argValues As Variant)
 
 Private Sub initializeObserver()
     
@@ -25,12 +25,12 @@ End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
-    Raise RequestRefresh
+    Raise Signal(NagatoMenuPipe.ObserverDelete, argFileName)
     
 End
 
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
-    Raise RequestRefresh
+    Raise Signal(NagatoMenuPipe.ObserverModefy, argFileName)
     
 End

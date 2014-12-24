@@ -96,6 +96,11 @@ Public Sub Asakura_Menu()
 
     If yukiPath = "" Then
         Debug "IconViewContextMenu"
+    ' MUST TO DO !! 
+    ' Else 
+    '     yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiMain, yukiPath) As "Menu"
+    '     yukiContextMenu.Popup()
+    ' End If
     Else If IsDir(yukiPath) Then
         yukiContextMenu = New NagatoContextMenuDirectory(HaruhiMain, yukiPath) As "Menu"
         yukiContextMenu.Popup()

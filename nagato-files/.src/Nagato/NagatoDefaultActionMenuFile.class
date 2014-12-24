@@ -1,12 +1,12 @@
 ' Gambas class file
 
-Inherits NagatoDefaultActionMenu
+Inherits NagatoMenuItem
 
-Private Sub addOpenWithDefaultMenu(argDesktopFile As DesktopFile, argRootMenu As Menu)
+Private Sub addOpenWithDefaultMenu(argDesktopFile As DesktopFile)
     
-    Me._$menu = New Menu(argRootMenu) As "OpenFileMenu"
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "OpenFileMenu"
     
-    With Me._$menu
+    With yukiMenu
         .Text = Subst$(("Open with &1"), argDesktopFile.Name)
         .Picture = MikuruIcon.GetDesktopEntryIcon(argDesktopFile.Path)
         .Tag = NagatoMenuPipe.FileOpen
@@ -14,13 +14,13 @@ Private Sub addOpenWithDefaultMenu(argDesktopFile As DesktopFile, argRootMenu As
     
 End
 
-Public Sub _InitializeMenu(argRootMenu As Menu)
+Public Sub _InitializeItem()
    
     Dim yukiDefaultApplication As New NagatoDefaultApplication(Me._$path)
    
     If yukiDefaultApplication.NotFound Then Return
    
-    addOpenWithDefaultMenu(yukiDefaultApplication.DesktopFile, argRootMenu)
+    addOpenWithDefaultMenu(yukiDefaultApplication.DesktopFile)
    
 End
 

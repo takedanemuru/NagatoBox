@@ -8,11 +8,23 @@ Private Sub addFileOpenMenu()
     
     If IsDir(Me._$path) Then
         yukiMenu = New NagatoDefaultActionMenuDirectory(Me._$rootMenu, Me._$path)
-    Else If MikuruMimeType.GetType(Me._$path) = MikuruMimeType.TypeApplication Then
+    Else If MikuruMimeType.IsDesktopEntry(Me._$path) Then
         yukiMenu = New NagatoDefaultActionMenuDesktopEntry(Me._$rootMenu, Me._$path)
     Else
         yukiMenu = New NagatoDefaultActionMenuFile(Me._$rootMenu, Me._$path)
     End If
+    
+End
+
+Private Sub addCopyToMenu()
+    
+    Dim yukiMenu As New NagatoSubMenuCopyTo(Me._$rootMenu, Me._$path) As "Menu"
+    
+End
+
+Private Sub addMoveToMenu()
+    
+    Dim yukiMenu As New NagatoSubMenuMoveTo(Me._$rootMenu, Me._$path) As "Menu"
     
 End
 
@@ -21,10 +33,15 @@ Public Sub _AddChildMenus()
     With NagatoMenuPipe
         addFileOpenMenu()
             If Me._$rootMenu.Children.Count > 0 Then Me._AddContextMenu("", 0) ' As Spacer
-        Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])
+        If Not IsDir(Me._$path) Then 
+            Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])
+        End If
         Object.New("NagatoMenuItemRename", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemCopyFilePath", [Me._$rootMenu, Me._$path])
+        Object.New("NagatoMenuItemCreateLink", [Me._$rootMenu, Me._$path])
             Me._AddContextMenu("", 0) ' As Spacer
+        addCopyToMenu()
+        addMoveToMenu()
         Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
         Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
         Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("button-remove"))

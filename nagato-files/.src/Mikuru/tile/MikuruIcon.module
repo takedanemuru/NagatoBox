@@ -64,11 +64,7 @@ Public Function GetDirectory(argDirectory As String, Optional argSize As Integer
         Case NagatoXdg.UserDirs.Templetes
             Return getDirectoryWithSymbol("ruler", argSize)
         Default
-            If Stat(argDirectory).Link <> "" Then
-                Return getDirectoryWithSymbol("link", argSize)
-            Else
-                Return Stock[Subst$("&1/directory", argSize)]
-            End If
+            Return Stock[Subst$("&1/directory", argSize)]
     End Select
     
 End

@@ -17,27 +17,33 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
     
 End
 
-Private Sub initializeIcons()
+Private Sub initializeIcons(argSelectedPaths As String[])
     
     $clock = New NagatoDesktopClock($iconView)
-    setIcon(Desktop.Path, [""], gb.Directory)
-    setIcon(Desktop.Path, [""], gb.File)
+    setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
+    setIcon(Desktop.Path, argSelectedPaths, gb.File)
     $trashBin = New NagatoDesktopTrashBin($iconView)
     
 End
 
-Public Sub Refresh()
+Public Sub Refresh(argSelectedPaths As String[])
+    
+    $clock.Stop()
+    $trashBin.Stop()
+    
+    Object.Detach($clock)
+    Object.Detach($trashBin)
     
     $iconView.Clear()
-    initializeIcons()
+    initializeIcons(argSelectedPaths)
     $iconView.Refresh()
-    
+
 End
 
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
     
-    initializeIcons()
+    initializeIcons([""])
         
 End

@@ -1,0 +1,24 @@
+' Gambas module file
+
+Private Function getCommand(argExec As String, argAsSuperUser As Boolean) As String
+    
+    Dim yukiReturn As String = IIf(argAsSuperUser, "gksu", "")
+    Dim yukiCommand As String
+    
+    For Each yukiCommand In Split(argExec, " ", "")
+        If yukiCommand Begins "%" Then Continue
+        yukiReturn &= (" " & yukiCommand)
+    Next
+        
+    Return yukiReturn
+    
+End
+
+Public Sub Execute(argPath As String, Optional argAsSuperUser As Boolean = False)
+    
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+    Dim yukiCommand As String = getCommand(yukiDesktopFile.Exec, argAsSuperUser)
+    
+    Try Shell yukiCommand
+    
+End

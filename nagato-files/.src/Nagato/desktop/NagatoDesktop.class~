@@ -1,5 +1,8 @@
 ' Gambas class file
 
+Public Const SpecialKeyClock As String = "DesktopClock"
+Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
+
 Private $iconView As IconView
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
@@ -25,13 +28,30 @@ Public Sub _new(argContainer As Container)
     
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView)
     $icons = New NagatoDesktopIconsHandler($iconView)
-    $mouse = New NagatoDesktopMouseHandler($iconView) As "Mouse"
-    $observer = New NagatoDesktopObserverHandler($iconView) As "DesktopObserver"
+    $mouse = New NagatoDesktopMouseHandler($iconView) As "Handler"
+    $observer = New NagatoDesktopObserverHandler($iconView) As "Handler"
 
 End
 
-Public Sub DesktopObserver_RequestRefresh()
+Public Sub Handler_RequestRefresh()
     
-    $icons.Refresh()
+    Debug "request"
+    
+    $icons.Refresh($mouse.SelectedPaths)
+    
+End
+
+Public Sub Handler_Signal(argEvent As Integer, argValue As Variant)
+    
+    Debug argValue
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.ObserverDelete
+            $mouse.Delete(Desktop.Path &/ argValue)
+            $icons.Refresh($mouse.SelectedPaths)
+        Case NagatoMenuPipe.ObserverModefy
+            $mouse.ClearAll()
+            $icons.Refresh($mouse.SelectedPaths)
+    End Select
     
 End
