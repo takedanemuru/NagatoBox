@@ -30,7 +30,7 @@ Public Sub DesktopTimer_Timer()
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Size = FontSize
-        Paint.RichText(Format$(Now(), ("hh:nn:ss")), 0, 0, IconSize, IconSize, Align.Center)
+        Paint.RichText(Format$(Now(), NagatoSettings.ClockFormat), 0, 0, IconSize, IconSize, Align.Center)
         Paint.Fill()
     Paint.End()
     

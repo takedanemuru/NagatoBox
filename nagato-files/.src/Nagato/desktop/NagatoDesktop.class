@@ -18,6 +18,7 @@ Private Sub initializeIconView(argContainer As Container)
         .Orientation = Arrange.Horizontal
         .Border = False
         .Mode = Select.Single
+        .Drop = True
     End With
     
 End

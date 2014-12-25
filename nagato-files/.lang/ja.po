@@ -2,10 +2,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"POT-Creation-Date: 2014-12-25 0918 UTC\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,6 +31,25 @@ msgstr ""
 msgid "License"
 msgstr ""
 
+#: HaruhiDialogDelete.class:16
+msgid "and other &1 more file(s)"
+msgstr ""
+
+#: HaruhiDialogDelete.form:27 HaruhiDialogUseGksu.form:28
+#: HaruhiNewDirectory.form:23 HaruhiRename.form:27
+#: HaruhiSelectApplication.class:13 HaruhiTagging.form:22
+#: MikuruDialogTrashEmpty.module:9 MikuruDirectorySize.module:9
+#: NagatoDBTag.class:20 NagatoDialogApplyButtons.class:38
+#: NagatoStarMenu.class:112
+msgid "Cancel"
+msgstr ""
+
+#: HaruhiDialogDelete.form:35 NagatoContextMenuDirectory.class:20
+#: NagatoContextMenuFile.class:86 NagatoContextMenuTreeView.class:40
+#: NagatoIconviewContextMenu2.class:45 NagatoWidgetMenuButtonDelete.class:12
+msgid "Delete"
+msgstr ""
+
 #: HaruhiDialogUseGksu.form:18
 msgid "As super user"
 msgstr ""
@@ -38,32 +58,45 @@ msgstr ""
 msgid "As normal user"
 msgstr ""
 
-#: NagatoStarMenu.class:96
-msgid "Cancel"
-msgstr ""
-
 #: HaruhiDialogUseGksu.form:35
-msgid "This software is for settings.<br>\nDo you want to launch this software as a super user ?"
+msgid ""
+"This software is for settings.<br>\n"
+"Do you want to launch this software as a super user ?"
 msgstr ""
 
 #: HaruhiMain.form:25
 msgid "TabStrip1"
 msgstr ""
 
-#: HaruhiNewDirectory.form:10
-msgid "Create New Folder"
-msgstr ""
-
-#: HaruhiNewDirectory.form:18
-msgid "Create"
+#: HaruhiNewDirectory.class:37 HaruhiRename.class:70
+#: HaruhiSelectApplication.class:13 MikuruDirectorySize.module:34
+#: MikuruFileSearch.module:33 NagatoChmodSwitch.class:80 NagatoDBTag.class:54
+#: NagatoGtkBookmarksAction.class:10
+msgid "OK"
 msgstr ""
 
 #: HaruhiNewDirectory.class:37
 msgid "YUKI.N > Same name directory or file has been existed"
 msgstr ""
 
-#: HaruhiNewDirectory.class:37 HaruhiRename.class:50 NagatoDBTag.class:54
-msgid "OK"
+#: HaruhiNewDirectory.form:10
+msgid "Create New Folder"
+msgstr ""
+
+#: HaruhiNewDirectory.form:18 NagatoCreateMenu.class:24
+msgid "Create"
+msgstr ""
+
+#: HaruhiRename.class:70
+msgid "YUKI.N > Input any name."
+msgstr ""
+
+#: HaruhiRename.class:75
+msgid "YUKI.N > The file path has been existed. Please use another name."
+msgstr ""
+
+#: HaruhiRename.class:97
+msgid "Select directory"
 msgstr ""
 
 #: HaruhiRename.form:14
@@ -71,6 +104,7 @@ msgid "Rename file"
 msgstr ""
 
 #: HaruhiRename.form:22 HaruhiTagging.form:17
+#: NagatoDialogApplyButtons.class:50
 msgid "Apply"
 msgstr ""
 
@@ -82,16 +116,12 @@ msgstr ""
 msgid "ButtonBox1"
 msgstr ""
 
-#: HaruhiRename.class:50
-msgid "YUKI.N > Input any name."
+#: HaruhiSelectApplication.class:10
+msgid "YUKI.N > We are going to open <b>&1</b> with <b>&2</b>..."
 msgstr ""
 
-#: HaruhiRename.class:52
-msgid "YUKI.N > The file path has been existed. Please use another name."
-msgstr ""
-
-#: HaruhiRename.class:74
-msgid "Select directory"
+#: HaruhiSelectSymbol.form:8
+msgid "Select Tag"
 msgstr ""
 
 #: HaruhiTagging.form:13
@@ -110,23 +140,59 @@ msgstr ""
 msgid "Tag Color :"
 msgstr ""
 
-#: MikuruFile.module:44
-msgid "YUKI.N > This directory contains some file. Are you sure to delete this directory?"
+#: HaruhiXdgConfig.form:7
+msgid "xdg-user-dirs configuration"
 msgstr ""
 
-#: NagatoContextMenuFile.class:84 NagatoWidgetMenuButtonDelete.class:12
-msgid "Delete"
+#: MikuruChangeDefaultApplication.module:11
+msgid "Change"
 msgstr ""
 
-#: MikuruFileManuever.module:35
+#: MikuruChangeDefaultApplication.module:11
+msgid "Keep Current Setting"
+msgstr ""
+
+#: MikuruDialogTrashEmpty.module:5
+msgid "YUKI.N > We are going to empty trash bin..."
+msgstr ""
+
+#: MikuruDialogTrashEmpty.module:9 NagatoContextMenuGtkBookmarks.class:11
+msgid "Empty"
+msgstr ""
+
+#: MikuruDirectorySize.module:9
+msgid "Continue"
+msgstr ""
+
+#: MikuruFileManuever.module:99 NagatoSubMenuMoveTo.class:10
 msgid "Move To ..."
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:8 NagatoContextMenuGtkBookmarks.class:9
+#: MikuruFileManuever.module:107
+msgid "Copy To..."
+msgstr ""
+
+#: MikuruFileSearch.module:33
+msgid "YUKI.N > Your query is too generic. I do not show all result."
+msgstr ""
+
+#: NagatoChmodSwitch.class:30
+msgid "Executable"
+msgstr ""
+
+#: NagatoChmodSwitch.class:77
+msgid "YUKI.N > Are you sure to change permission ?"
+msgstr ""
+
+#: NagatoChmodSwitch.class:80
+msgid "YUKI.N > File has been deleted."
+msgstr ""
+
+#: NagatoContextMenuDirectory.class:8 NagatoContextMenuGtkBookmarks.class:22
 msgid "Open"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:9 NagatoContextMenuGtkBookmarks.class:13
+#: NagatoContextMenuDirectory.class:9 NagatoContextMenuGtkBookmarks.class:26
 msgid "Open in new tab"
 msgstr ""
 
@@ -134,48 +200,47 @@ msgstr ""
 msgid "Copy path"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:13 NagatoContextMenuFile.class:83
+#: NagatoContextMenuDirectory.class:13 NagatoContextMenuFile.class:85
+#: NagatoContextMenuTreeView.class:30 NagatoMenuItemRename.class:10
 msgid "Rename"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:85
+#: NagatoContextMenuDirectory.class:15
+msgid "Directory Size"
+msgstr ""
+
+#: NagatoContextMenuDirectory.class:16 NagatoContextMenuFile.class:87
+#: NagatoIconviewContextMenu2.class:46
 msgid "Tagging"
 msgstr ""
 
-#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:86
+#: NagatoContextMenuDirectory.class:17 NagatoContextMenuFile.class:88
+#: NagatoIconviewContextMenu2.class:47
 msgid "Remove Tag"
 msgstr ""
 
-#: NagatoContextMenuFile.class:10
-msgid "Unarchive"
-msgstr ""
-
-#: NagatoContextMenuFile.class:22
+#: NagatoContextMenuFile.class:26 NagatoDefaultActionMenuFile.class:10
 msgid "Open with &1"
 msgstr ""
 
-#: NagatoContextMenuFile.class:54
-msgid "Open with ..."
-msgstr ""
-
-#: NagatoContextMenuFile.class:81
+#: NagatoContextMenuFile.class:83
 msgid "Copy file path"
 msgstr ""
 
-#: NagatoContextMenuGtkBookmarks.class:18
+#: NagatoContextMenuGtkBookmarks.class:31
 msgid "Remove"
 msgstr ""
 
-#: NagatoContextMenuTreeView.class:9
+#: NagatoContextMenuTreeView.class:60
+msgid "File or Directory is Missing"
+msgstr ""
+
+#: NagatoContextMenuTreeView.class:67
 msgid "Refresh"
 msgstr ""
 
-#: NagatoCreateMenu.class:19
-msgid "Create archive"
-msgstr ""
-
-#: NagatoCreateMenu.class:20
-msgid "Create clone"
+#: NagatoCreateMenu.class:32
+msgid "New Directory"
 msgstr ""
 
 #: NagatoDBTag.class:18
@@ -210,104 +275,164 @@ msgstr ""
 msgid "This tag color has been used."
 msgstr ""
 
-#: NagatoFileSearchCheckBox.class:16
+#: NagatoDefaultActionMenuDesktopEntry.class:10 NagatoMenuItemExecute.class:10
+msgid "Execute"
+msgstr ""
+
+#: NagatoDefaultActionMenuDirectory.class:10
+msgid "OpenDirectory"
+msgstr ""
+
+#: NagatoDesktopClock.class:33 NagatoSettings.class:121
+msgid "hh:nn:ss"
+msgstr "hh：nn：ss"
+
+#: NagatoFileSearchCheckBox.class:17
 msgid "Recursive"
 msgstr ""
 
-#: NagatoFiler.class:83
+#: NagatoFiler.class:87
 msgid "New directory"
+msgstr ""
+
+#: NagatoGtkBookmarksAction.class:10
+msgid "YUKI.N > Directory is not existed."
 msgstr ""
 
 #: NagatoGtkBookmarksSurface.class:23
 msgid "Trash bin"
 msgstr ""
 
-#: NagatoIconViewDesktop.class:42
-msgid "hh:nn:ss"
-msgstr "hh：nn：ss"
-
 #: NagatoLeftPane.class:28
 msgid "Bookmarks"
-msgstr ""
-
-#: NagatoLeftPane.class:28
-msgid "Tree View"
 msgstr ""
 
 #: NagatoLeftPane.class:28
 msgid "File Search"
 msgstr ""
 
+#: NagatoLeftPane.class:28
+msgid "Tree View"
+msgstr ""
+
 #: NagatoMainPane.class:41
 msgid "TrashBin"
+msgstr ""
+
+#: NagatoMenuItemCopyFilePath.class:10
+msgid "Copy File Path"
+msgstr ""
+
+#: NagatoMenuItemCreateLink.class:10
+msgid "Create Symbolic Link"
+msgstr ""
+
+#: NagatoMenuItemUnarchive.class:10
+msgid "Unarchive"
 msgstr ""
 
 #: NagatoMenuPanelSelectionButton.class:16
 msgid "Multiple selection"
 msgstr ""
 
-#: NagatoPathBar.class:25
-msgid "YUKI.N > Access forbidden."
+#: NagatoOpenWithApplicationMenu.class:10
+msgid "Select application"
 msgstr ""
 
-#: NagatoSortMenu.class:33
+#: NagatoOpenWithApplicationMenu.class:64
+msgid "Open with ..."
+msgstr ""
+
+#: NagatoPainterPath.class:26
+msgid "Select file to show properties"
+msgstr ""
+
+#: NagatoSortMenu.class:22
 msgid "By Name"
 msgstr ""
 
-#: NagatoSortMenu.class:34
+#: NagatoSortMenu.class:23
 msgid "By Size"
 msgstr ""
 
-#: NagatoSortMenu.class:35
+#: NagatoSortMenu.class:24
 msgid "By Last Modefied"
 msgstr ""
 
-#: NagatoSortMenu.class:36
+#: NagatoSortMenu.class:25
 msgid "By Extension"
 msgstr ""
 
-#: NagatoSortMenu.class:37
+#: NagatoSortMenu.class:26
 msgid "By User"
 msgstr ""
 
-#: NagatoSortMenu.class:39
+#: NagatoSortMenu.class:28
 msgid "Ascent"
 msgstr ""
 
-#: NagatoSortMenu.class:40
+#: NagatoSortMenu.class:29
 msgid "Descent"
 msgstr ""
 
-#: NagatoStarMenu.class:45
+#: NagatoSortMenu.class:39
 msgid "Sort"
 msgstr ""
 
-#: NagatoStarMenu.class:61
+#: NagatoStarMenu.class:69
 msgid "New Tab"
 msgstr ""
 
-#: NagatoStarMenu.class:62
+#: NagatoStarMenu.class:70
 msgid "Show Hidden"
 msgstr ""
 
-#: NagatoStarMenu.class:64
-msgid "New &Folder"
+#: NagatoStarMenu.class:71
+msgid "Force reload"
 msgstr ""
 
-#: NagatoStarMenu.class:68
+#: NagatoStarMenu.class:72
+msgid "Incremental Search"
+msgstr ""
+
+#: NagatoStarMenu.class:78
+msgid "Select all"
+msgstr ""
+
+#: NagatoStarMenu.class:79
+msgid "Unselect all"
+msgstr ""
+
+#: NagatoStarMenu.class:80
+msgid "Invert selection"
+msgstr ""
+
+#: NagatoStarMenu.class:82
 msgid "&About"
 msgstr ""
 
-#: NagatoStarMenu.class:69
+#: NagatoStarMenu.class:83
 msgid "&Quit"
 msgstr ""
 
-#: NagatoStarMenu.class:96
+#: NagatoStarMenu.class:112
 msgid "Are you sure to close nagato-files ?"
 msgstr ""
 
-#: NagatoStarMenu.class:96
+#: NagatoStarMenu.class:112
 msgid "Close"
+msgstr ""
+
+#: NagatoSubMenuCopyTo.class:10
+msgid "Copy To ..."
+msgstr ""
+
+#: NagatoSubMenuFile.class:32
+msgid "Select Directory"
+msgstr ""
+
+#: NagatoTileVoid.class:11
+msgid "File and Directory not found"
 msgstr ""
 
 #: NagatoWidgetButtonUnselect.class:12
@@ -322,3 +447,10 @@ msgstr ""
 msgid "Multiple Selection"
 msgstr ""
 
+#: NagatoXdgConfigBox.class:48
+msgid "Click to change"
+msgstr ""
+
+#: NagatoXdgConfigBoxes.class:29
+msgid "Changed"
+msgstr ""

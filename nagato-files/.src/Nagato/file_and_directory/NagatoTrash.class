@@ -61,10 +61,11 @@ End
 Public Sub Delete(argPaths As String[])
     
     Dim yukiPath As String
+    Dim yukiPaths As String[] = NagatoXdg.RemoveXdgUserDirs(argPaths)
     
-    If Not confirm(argPaths) Then Return
+    If Not confirm(yukiPaths) Then Return
     
-    For Each yukiPath In argPaths
+    For Each yukiPath In yukiPaths
         If Not Exist(yukiPath) Then Continue
         Try Exec ["trash", yukiPath] Wait
     Next

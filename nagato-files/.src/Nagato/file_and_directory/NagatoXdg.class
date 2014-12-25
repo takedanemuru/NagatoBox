@@ -114,6 +114,21 @@ Public Function IsUserDir(argPath As String) As Boolean
     
 End
 
+Public Function RemoveXdgUserDirs(argPaths As String[]) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In argPaths
+        If yukiPath = User.Home Then Continue
+        If Me.IsUserDir(yukiPath) Then Continue
+        yukiPaths.Add(yukiPath)
+    Next
+    
+    Return yukiPaths
+    
+End
+
 Private Function Templates_Read() As String
 
     Return UserDirs.Templetes

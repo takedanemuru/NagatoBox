@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _ClickAction()
+    
+    HaruhiClockFormat.ShowDialog() 
+    
+End
+
+Public Sub _AddChildMenus()
+    
+        Me._AddContextMenu(("Clock Format"), 0, MikuruIcon.Get("alarm-clock"))
+        
+End

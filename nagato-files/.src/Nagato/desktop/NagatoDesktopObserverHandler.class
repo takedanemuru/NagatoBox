@@ -10,8 +10,11 @@ Event Signal(argSignal As Integer, argValues As Variant)
 Private Sub initializeObserver()
     
     $observer = New NagatoDirectoryObserver As "DirectoryObserver"
-    $observer.Directory = Desktop.Path
-    $observer.IntervalSecond = 1
+    
+    With $observer
+        .Directory = Desktop.Path
+        .IntervalSecond = 1
+    End With
     
 End
 

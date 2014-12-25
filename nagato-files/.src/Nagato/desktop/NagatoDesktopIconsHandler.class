@@ -26,15 +26,21 @@ Private Sub initializeIcons(argSelectedPaths As String[])
     
 End
 
-Public Sub Refresh(argSelectedPaths As String[])
+Private Sub clearAll()
     
     $clock.Stop()
-    $trashBin.Stop()
-    
     Object.Detach($clock)
+    
+    $trashBin.Stop()    
     Object.Detach($trashBin)
     
-    $iconView.Clear()
+    $iconView.Clear()    
+    
+End
+
+Public Sub Refresh(argSelectedPaths As String[])
+    
+    clearAll()
     initializeIcons(argSelectedPaths)
     $iconView.Refresh()
 

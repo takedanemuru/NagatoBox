@@ -22,3 +22,22 @@ Public Sub Execute(argPath As String, Optional argAsSuperUser As Boolean = False
     Try Shell yukiCommand
     
 End
+
+Public Sub ExecuteWithFile(argDesktopEntryPath As String, argFilePath As String)
+    
+    Dim yukiDesktopFileIndex As DesktopFile
+    Dim yukiDesktopFile As New DesktopFile(argDesktopEntryPath)
+    
+    For Each yukiDesktopFileIndex In DesktopMime.FromFile(argFilePath).GetApplications()
+        Debug yukiDesktopFileIndex.Name
+        ' If yukiDesktopFileIndex.Name = yukiDesktopFile.Name Then
+        '     Debug "match"
+        '     Break
+        ' Endif
+        ' Debug "NOT mached"
+    Next
+    
+    'Try yukiDesktopFile.Run(argFilePath)
+    
+End
+

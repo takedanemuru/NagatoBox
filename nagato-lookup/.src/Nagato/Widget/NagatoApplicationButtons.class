@@ -19,7 +19,7 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
         .Arrow = False
         If argIcon Then .Picture = argIcon
         .Border = False
-        '.Foreground = NagatoSettings.FontColor
+        .Foreground = NagatoSettings.FontColor
     End With
 
     yukiMenu = New NagatoApplicationsMenu(yukiButton, argCategory, argTitle)

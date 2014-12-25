@@ -10,6 +10,23 @@ Private $selection As NagatoSelection
 
 Event RequestRefresh
 
+Private Sub dropFile(argPath As String)
+    
+    Select Case MikuruDrop.GetType($iconView)
+        Case MikuruDrop.TypeVoid ' Move to current directory
+            If $iconView.Exist(argPath) Then Return
+            Try Move argPath To MikuruPath.GetSafePathName(Desktop.Path &/ File.Name(argPath))
+        Case MikuruDrop.TypeFile, MikuruDrop.TypeClock, MikuruDrop.TypeTrashBin
+            Debug "Ignore"
+        Case MikuruDrop.TypeDirectory
+            Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
+        Case MikuruDrop.TypeApplication
+            Debug "Try execute app with: " & argPath
+            MikuruDesktopEntry.ExecuteWithFile($iconView.Item.Key, argPath)
+    End Select
+    
+End
+
 Public Sub ClearAll()
     
     $selection.ClearAll()
@@ -27,6 +44,50 @@ Public Sub _new(argIconView As IconView)
     $iconView = argIconView
     $selection = New NagatoSelection
     $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_DragMove()
+    
+    Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
+    
+    $iconView.UnselectAll()
+    
+    If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) 
+        If IsDir($iconView.Item.Key) Then
+            $iconView.Item.Selected = True
+        End If
+    End If
+    
+End
+
+Public Sub Asakura_MouseDrag()
+    
+    If $selection.Count = 0 Then Return
+    
+    Drag.Icon = $iconView.Current.Picture
+    $iconView.Drag(NagatoDrag2.GetUriList($selection.Paths), MikuruMimeType.UriList)
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Dim yukiPath As String
+    
+    If Drag.Format <> MikuruMimeType.UriList Then Return 
+    
+    If $iconView.Item.Key = NagatoDesktop.SpecialKeyTrashBin Then
+        NagatoTrash.Delete(NagatoDrag2.GetPaths(Drag.Data))
+        Return
+    Endif
+    
+Finally
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        'xdg-user-dirs will be ignored. 
+        If NagatoXdg.IsUserDir(yukiPath) Then Continue
+        dropFile(yukiPath)
+    Next
     
 End
 
@@ -55,7 +116,8 @@ Public Sub Asakura_Menu()
     If yukiPath = "NOTFOUND" Then 
         Return
     Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
-        Return
+        yukiContextMenu = New NagatoContextMenuDesktopClock(HaruhiDesktop, "")
+        yukiContextMenu.Popup()
     Else If yukiPath = NagatoDesktop.SpecialKeyTrashBin Then
         Return
     Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
@@ -82,6 +144,8 @@ Public Sub Asakura_Activate()
         Try Shell Subst$("nagato-files &1", Quote$(yukiPath))
     Else If MikuruMimeType.IsDesktopEntry(yukiPath) Then
         MikuruDesktopEntry.Execute(yukiPath)
+    Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
+        ' ignore
     Else ' for files
         MikuruFile.Exec(yukiPath)
     End If

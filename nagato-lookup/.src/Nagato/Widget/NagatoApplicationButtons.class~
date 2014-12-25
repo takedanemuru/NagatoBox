@@ -14,7 +14,7 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
     yukiButton = New MenuButton(Me._$container) 
     
     With yukiButton
-        .Text = Subst$("&1", argTitle)
+        .Text = Subst$("<font>&1 color=ffffff</font>", argTitle)
         .AutoResize = True
         .Arrow = False
         If argIcon Then .Picture = argIcon
