@@ -24,7 +24,9 @@ End
 
 Private Sub addMoveToMenu()
     
-    Dim yukiMenu As New NagatoSubMenuMoveTo(Me._$rootMenu, Me._$path) As "Menu"
+    Dim yukiMenu As NagatoSubMenuMoveTo
+    
+    yukiMenu = New NagatoSubMenuMoveTo(Me._$rootMenu, Me._$path) As "Menu"
     
 End
 
@@ -33,9 +35,7 @@ Public Sub _AddChildMenus()
     With NagatoMenuPipe
         addFileOpenMenu()
             If Me._$rootMenu.Children.Count > 0 Then Me._AddContextMenu("", 0) ' As Spacer
-        If Not IsDir(Me._$path) Then 
-            Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])
-        End If
+        Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemRename", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemCopyFilePath", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemCreateLink", [Me._$rootMenu, Me._$path])

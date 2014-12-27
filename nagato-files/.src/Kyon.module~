@@ -1,23 +1,24 @@
 ' Gambas module file
 
 Public Sub Main()
-    
-    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." ' this call activate NagatoDBSymbol, so do not delete.
-    
+
+    ' this call activate NagatoDBSymbol, so do not delete.
+    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." 
+
     Application.Theme = "Numix-Circle"
     
     NagatoArguments.Parsing()
     
-    'For testing
-    HaruhiDesktop.Show()
+    'Only For Testing
+    'HaruhiDesktop.Show()
     'HaruhiXdgConfig.ShowDialog()
     
-    ' If NagatoArguments.DesktopIcons Then
-    '     HaruhiDesktop.Show()
-    ' Else If NagatoArguments.XdgUserDirs Then
-    '     HaruhiXdgConfig.Show()
-    ' Else
-    '     HaruhiMain.Show()
-    ' End If
+    If NagatoArguments.DesktopIcons Then
+        HaruhiDesktop.Show()
+    Else If NagatoArguments.XdgUserDirs Then
+        HaruhiXdgConfig.Show()
+    Else
+        HaruhiMain.Show()
+    End If
 
 End

@@ -11,9 +11,9 @@ Public Sub Form_Open()
     Me.Picture = yukiImage.Picture
     Me.Text = ("Clock format")
     $sampleDate = Now()
-    CurrentLabel.Text = Format$($sampleDate, NagatoSettings.ClockFormat)
+    CurrentLabel.Text = Format$($sampleDate, NagatoSettingsDesktop.ClockFormat)
     UserLabel.Text = ""
-    UserInputBox.Text = NagatoSettings.ClockFormat
+    UserInputBox.Text = NagatoSettingsDesktop.ClockFormat
     
     Me.Center()
     
@@ -34,7 +34,7 @@ End
 
 Public Sub ApplyButton_Click()
 
-    NagatoSettings.ClockFormat = UserInputBox.Text
+    NagatoSettingsDesktop.ClockFormat = UserInputBox.Text
 
     Me.Close(Me.ResponseApply)
 

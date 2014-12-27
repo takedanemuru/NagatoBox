@@ -1,0 +1,60 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property ClockFormat As String
+Property ShowHidden As Boolean
+Property SortBy As Integer
+Property SortAscent As Boolean
+
+Private Function ClockFormat_Read() As String
+
+    Return Me._$settings["clock/format", ("hh:nn:ss")]
+
+End
+
+Private Sub ClockFormat_Write(Value As String)
+
+    Me._$settings["clock/format"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function ShowHidden_Read() As Boolean
+
+    Return Me._$settings["desktop_view/hidden", False]
+
+End
+
+Private Sub ShowHidden_Write(Value As Boolean)
+
+    If Value <> Me._$settings["desktop_view/hidden"] Then
+        Me._$settings["desktop_view/hidden"] = Value
+    End If
+    
+End
+
+Private Function SortBy_Read() As Integer
+
+    Return Me._$settings["desktop_sort/by", MikuruSort.ByName]
+
+End
+
+Private Sub SortBy_Write(Value As Integer)
+
+    Me._$settings["desktop_sort/by"] = Value
+
+End
+
+Private Function SortAscent_Read() As Boolean
+
+    Return Me._$settings["desktop_sort/ascent", True] 
+
+End
+
+Private Sub SortAscent_Write(Value As Boolean)
+
+    Me._$settings["desktop_sort/ascent"] = Value
+    Me._$settings.Save()
+
+End

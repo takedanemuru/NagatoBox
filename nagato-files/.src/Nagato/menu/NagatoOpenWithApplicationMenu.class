@@ -45,12 +45,21 @@ Catch
     
 End
 
+Private Function getMimeType() As String
+    
+    If IsDir(Me._$path) Then
+        Return "inode/directory"
+    Else
+        Return DesktopMime.FromFile(Me._$path).Type
+    Endif
+    
+End
+
 Private Function getDesktopFilesWithMimeType() As String[]
     
-    Dim yukiMimeType As String = DesktopMime.FromFile(Me._$path).Type
     Dim yukiReturn As String[]
     
-    yukiReturn = MikuruConfFlie.GetItems(MikuruApplications.GlobalMimeList, yukiMimeType).Sort(gb.Natural)
+    yukiReturn = MikuruConfFlie.GetItems(MikuruApplications.GlobalMimeList, getMimeType()).Sort(gb.Natural)
     
     Return yukiReturn
     
@@ -71,6 +80,8 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
     Dim yukiAdditionalDesktopFile As String
     Dim yukiChecker As New String[]
     Dim yukiMimeTypes As String[] = getDesktopFilesWithMimeType()
+    Dim yukiDefaultApp As New NagatoDefaultApplication(Me._$path)
+    Dim yukiDefaultAppName As String = File.Name(yukiDefaultApp.DesktopFile.Name) & ".desktop"
     
     addSelectApplicationMenu()
     
@@ -78,6 +89,9 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
     
     For Each yukiAdditionalDesktopFile In yukiMimeTypes
         If Not yukiChecker.Exist(yukiAdditionalDesktopFile) Then
+            If Not yukiDefaultApp.NotFound Then
+                If yukiAdditionalDesktopFile = yukiDefaultAppName Then Continue
+            Endif
             addIndivisualOpenWithMenu(yukiAdditionalDesktopFile)
             yukiChecker.Add(yukiAdditionalDesktopFile)
         End If

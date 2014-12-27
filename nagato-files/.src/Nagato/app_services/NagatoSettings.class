@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoSettingsCore
 
 Property ShowHidden As Boolean
 Property MultipleSelection As Boolean
@@ -8,43 +8,40 @@ Property SortBy As Integer
 Property SortAscent As Boolean
 Property PathbarAutomaticSearch As Boolean
 Property SearchMode As Integer
-Property ClockFormat As String
 
 Public Enum SearchInclude, SearchBegins, SearchEnds
-
-Private $settings As New Settings
 
 Event ShowHiddenChanged
 Event MultipleSelectionChanged
 
 Public Sub LoadFormSettings(argForm As Form)
     
-    argForm.X = $settings["form/x", argForm.X]
-    argForm.Y = $settings["form/y", argForm.Y]
-    argForm.Height = $settings["form/height", argForm.Height]
-    argForm.Width = $settings["form/width", argForm.Width]
+    argForm.X = Me._$settings["form/x", argForm.X]
+    argForm.Y = Me._$settings["form/y", argForm.Y]
+    argForm.Height = Me._$settings["form/height", argForm.Height]
+    argForm.Width = Me._$settings["form/width", argForm.Width]
     
 End
 
 Public Sub SaveFormSettings(argForm As Form)
     
-    $settings["form/x"] = argForm.X
-    $settings["form/y"] = argForm.Y
-    $settings["form/height"] = argForm.Height
-    $settings["form/width"] = argForm.Width
+    Me._$settings["form/x"] = argForm.X
+    Me._$settings["form/y"] = argForm.Y
+    Me._$settings["form/height"] = argForm.Height
+    Me._$settings["form/width"] = argForm.Width
     
 End
 
 Private Function ShowHidden_Read() As Boolean
 
-    Return $settings["view/hidden", False]
+    Return Me._$settings["view/hidden", False]
 
 End
 
 Private Sub ShowHidden_Write(Value As Boolean)
 
-    If Value <> $settings["view/hidden"] Then
-        $settings["view/hidden"] = Value
+    If Value <> Me._$settings["view/hidden"] Then
+        Me._$settings["view/hidden"] = Value
         Raise ShowHiddenChanged
     End If
     
@@ -52,14 +49,14 @@ End
 
 Private Function MultipleSelection_Read() As Boolean
 
-    Return $settings["view/multiple_selection", False]
+    Return Me._$settings["view/multiple_selection", False]
 
 End
 
 Private Sub MultipleSelection_Write(Value As Boolean)
 
-    If Value <> $settings["view/multiple_selection"] Then
-        $settings["view/multiple_selection"] = Value
+    If Value <> Me._$settings["view/multiple_selection"] Then
+        Me._$settings["view/multiple_selection"] = Value
         Raise MultipleSelectionChanged
     End If
 
@@ -67,64 +64,51 @@ End
 
 Private Function SortBy_Read() As Integer
 
-    Return $settings["sort/by", MikuruSort.ByName]
+    Return Me._$settings["sort/by", MikuruSort.ByName]
 
 End
 
 Private Sub SortBy_Write(Value As Integer)
 
-    $settings["sort/by"] = Value
+    Me._$settings["sort/by"] = Value
 
 End
 
 Private Function SortAscent_Read() As Boolean
 
-    Return $settings["sort/ascent", True] 
+    Return Me._$settings["sort/ascent", True] 
 
 End
 
 Private Sub SortAscent_Write(Value As Boolean)
 
-    $settings["sort/ascent"] = Value
-    $settings.Save()
+    Me._$settings["sort/ascent"] = Value
+    Me._$settings.Save()
 
 End
 
 Private Function PathbarAutomaticSearch_Read() As Boolean
 
-    Return $settings["pathbar/auto", False]
+    Return Me._$settings["pathbar/auto", False]
 
 End
 
 Private Sub PathbarAutomaticSearch_Write(Value As Boolean)
 
-    $settings["pathbar/auto"] = Value
-    $settings.Save()
+    Me._$settings["pathbar/auto"] = Value
+    Me._$settings.Save()
 
 End
 
 Private Function SearchMode_Read() As Integer
 
-    Return $settings["search/mode", Me.SearchInclude]
+    Return Me._$settings["search/mode", Me.SearchInclude]
 
 End
 
 Private Sub SearchMode_Write(Value As Integer)
 
-    $settings["search/mode"] = Value
-    $settings.Save()
-
-End
-
-Private Function ClockFormat_Read() As String
-
-    Return $settings["clock/format", ("hh:nn:ss")]
-
-End
-
-Private Sub ClockFormat_Write(Value As String)
-
-    $settings["clock/format"] = Value
-    $settings.Save()
+    Me._$settings["search/mode"] = Value
+    Me._$settings.Save()
 
 End

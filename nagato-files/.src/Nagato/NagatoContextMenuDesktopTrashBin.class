@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _ClickAction()
+    
+    Try Shell "trash-empty"
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    Me._AddContextMenu(("Empty"), 0, MikuruIcon.Get("bin"))
+        
+End

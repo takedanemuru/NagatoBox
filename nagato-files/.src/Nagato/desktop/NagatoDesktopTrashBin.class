@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Property Read Key As String
+Inherits NagatoDesktopSpecialIcon
 
 Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 10
@@ -22,27 +22,29 @@ End
 
 Private Sub initializeIcon()
     
-    Dim yukiImage As Image
-    
-    yukiImage = New Image(IconSize, IconSize, Color.DarkGreen + 16777216 * 128)
+    Dim yukiImage As New Image(IconSize, IconSize, Color.DarkGreen + 16777216 * 128)
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
-        Paint.Font.Size = 10
+        Paint.Font.Size = FontSize
         Paint.Font.Bold = True
         Paint.DrawPicture(Stock["64/trash"], 32, 8)
         Paint.RichText(getText(), 0, IconSize * 0.66, IconSize, IconSize * 0.33, Align.Center)
         Paint.Fill()
     Paint.End()
     
-    Try $iconView[Me.Key].Picture = yukiImage.Picture 
+    Try $iconView[NagatoDesktop.SpecialKeyTrashBin].Picture = yukiImage.Picture 
     
 End
 
-Public Sub Add()
+Private Sub initializeObserver()
     
-    $iconView.Add(Me.Key, "")
-    initializeIcon()
+    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+
+    With $observer
+        $observer.Directory = NagatoTrash.PathFiles
+        $observer.IntervalSecond = 1
+    End With
     
 End
 
@@ -55,20 +57,11 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(Me.Key, "")
+    $iconView.Add(NagatoDesktop.SpecialKeyTrashBin, "")
     
     initializeIcon()
+    initializeObserver()
     
-    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
-    $observer.Directory = NagatoTrash.PathFiles
-    $observer.IntervalSecond = 1
-    
-End
-
-Private Function Key_Read() As String
-
-    Return "DesktopTrashBin"
-
 End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)

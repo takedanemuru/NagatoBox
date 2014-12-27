@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Private Sub dropFile(argPath As String)
+    
+    Select Case MikuruDrop.GetType($iconView)
+        Case MikuruDrop.TypeVoid ' Move to current directory
+            If $iconView.Exist(argPath) Then Return
+            Try Move argPath To MikuruPath.GetSafePathName(Desktop.Path &/ File.Name(argPath))
+        Case MikuruDrop.TypeFile, MikuruDrop.TypeClock, MikuruDrop.TypeTrashBin
+            Debug "Ignore"
+        Case MikuruDrop.TypeDirectory
+            Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
+        Case MikuruDrop.TypeApplication
+            Debug "Try execute app with: " & argPath
+            MikuruDesktopEntry.ExecuteWithFile($iconView.Item.Key, argPath)
+    End Select
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Dim yukiPath As String
+    
+    If Drag.Format <> MikuruMimeType.UriList Then Return 
+    
+    If $iconView.Item.Key = NagatoDesktop.SpecialKeyTrashBin Then
+        NagatoTrash.Delete(NagatoDrag2.GetPaths(Drag.Data))
+        Return
+    Endif
+    
+Finally
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        'xdg-user-dirs will be ignored. 
+        If NagatoXdg.IsUserDir(yukiPath) Then Continue
+        dropFile(yukiPath)
+    Next
+    
+End

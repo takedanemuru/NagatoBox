@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    Dim yukiPath As String = $iconView.Key
+    
+    If Not Exist(yukiPath) Then 
+        Return
+    Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
+        $iconView.Current.Selected = False
+        Return
+    Else If IsDir(yukiPath) Then
+        Try Shell Subst$("nagato-files &1", Quote$(yukiPath))
+    Else If MikuruMimeType.IsDesktopEntry(yukiPath) Then
+        MikuruDesktopEntry.Execute(yukiPath)
+    Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
+        ' ignore
+    Else ' for files
+        MikuruFile.Exec(yukiPath)
+    End If
+    
+End

@@ -1,12 +1,35 @@
 ' Gambas class file
 
-Property Read Key As String
+Inherits NagatoDesktopSpecialIcon
 
 Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 16
 
 Private $iconView As IconView
 Private $timer As New NagatoDesktopTimer As "DesktopTimer"
+
+Private Function getBaseImage() As Image
+    
+    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
+
+    Return yukiImage
+    
+End
+
+Public Function getIcon() As Picture
+    
+    Dim yukiImage As Image = getBaseImage()
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = FontSize
+        Paint.RichText(Format$(Now(), NagatoSettingsDesktop.ClockFormat), 0, 0, IconSize, IconSize, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
 
 Public Sub Stop()
     
@@ -17,29 +40,12 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(Me.Key, "")
+    $iconView.Add(NagatoDesktop.SpecialKeyClock, "", getIcon())
     
 End
 
 Public Sub DesktopTimer_Timer()
     
-    Dim yukiImage As Image
+    $iconView[NagatoDesktop.SpecialKeyClock].Picture = getIcon()
     
-    yukiImage = New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
-    
-    Paint.Begin(yukiImage)
-        Paint.Brush = Paint.Color(Color.White)
-        Paint.Font.Size = FontSize
-        Paint.RichText(Format$(Now(), NagatoSettings.ClockFormat), 0, 0, IconSize, IconSize, Align.Center)
-        Paint.Fill()
-    Paint.End()
-    
-    $iconView[Me.Key].Picture = yukiImage.Picture 
-    
-End
-
-Private Function Key_Read() As String
-
-    Return "DesktopClock"
-
 End

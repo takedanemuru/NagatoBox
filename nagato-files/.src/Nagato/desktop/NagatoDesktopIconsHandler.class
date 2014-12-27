@@ -6,11 +6,22 @@ Private $iconView As IconView
 Private $clock As NagatoDesktopClock
 Private $trashBin As NagatoDesktopTrashBin 
 
+' Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
+'     
+'     Dim yukiPath As String
+' 
+'     For Each yukiPath In MikuruSort(argDirectory, argType)
+'         If Not Access(yukiPath, gb.Read) Then Continue
+'         $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
+'     Next
+'     
+' End
+
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
     
     Dim yukiPath As String
 
-    For Each yukiPath In MikuruSort(argDirectory, argType)
+    For Each yukiPath In MikuruSortDesktop(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
         $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
     Next

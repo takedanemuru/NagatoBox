@@ -8,6 +8,8 @@ Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
 Private $icons As NagatoDesktopIconsHandler
 Private $mouse As NagatoDesktopMouseHandler
+Private $drop As NagatoDesktopDropHandler
+Private $activation As NagatoDesktopActivationHandler
 
 Private Sub initializeIconView(argContainer As Container)
     
@@ -30,6 +32,8 @@ Public Sub _new(argContainer As Container)
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView)
     $icons = New NagatoDesktopIconsHandler($iconView)
     $mouse = New NagatoDesktopMouseHandler($iconView) As "Handler"
+    $drop = New NagatoDesktopDropHandler($iconView)
+    $activation = New NagatoDesktopActivationHandler($iconView)
     $observer = New NagatoDesktopObserverHandler($iconView) As "Handler"
 
 End

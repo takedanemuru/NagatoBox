@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private Const UserDirectory As String = ".local/share/applications"
+Private Const SystemDirectory As String = "/usr/share/applications"
+
+Private Sub addIcons(argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiDesktopEntry As DesktopFile
+    Dim yukiIcon As Picture
+    
+    For Each yukiPath In Dir(argDirectory, "*.desktop").Sort(gb.IgnoreCase)
+        If ApplicationsIconView.Exist(yukiPath) Then Continue
+        yukiDesktopEntry = New DesktopFile(argDirectory &/ yukiPath)
+        yukiIcon = MikuruIcon.GetDesktopEntryIcon(yukiDesktopEntry.Path, 64)
+        ApplicationsIconView.Add(argDirectory &/ yukiPath, yukiDesktopEntry.name, yukiIcon)
+    Next
+    
+End
+
+Public Sub Form_Open()
+    
+    ApplicationsIconView.Clear()
+    
+    addIcons(User.Home &/ UserDirectory)
+    addIcons(SystemDirectory)
+    addIcons(SystemDirectory &/ "kde4")
+    
+End
+
+
+Public Sub ApplicationsIconView_Activate()
+
+    Try Copy Last.key To Desktop.Path &/ File.Name(Last.Key)
+
+End

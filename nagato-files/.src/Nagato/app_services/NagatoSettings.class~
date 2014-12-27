@@ -8,6 +8,7 @@ Property SortBy As Integer
 Property SortAscent As Boolean
 Property PathbarAutomaticSearch As Boolean
 Property SearchMode As Integer
+Property ClockFormat As String
 
 Public Enum SearchInclude, SearchBegins, SearchEnds
 
@@ -111,6 +112,19 @@ End
 Private Sub SearchMode_Write(Value As Integer)
 
     $settings["search/mode"] = Value
+    $settings.Save()
+
+End
+
+Private Function ClockFormat_Read() As String
+
+    Return $settings["clock/format", ("hh:nn:ss")]
+
+End
+
+Private Sub ClockFormat_Write(Value As String)
+
+    $settings["clock/format"] = Value
     $settings.Save()
 
 End
