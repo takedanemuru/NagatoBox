@@ -2,7 +2,7 @@
 
 Inherits NagatoContextMenu
 
-Private Sub addFileOpenMenu()
+Public Sub _AddFileOpenMenu()
     
     Dim yukiMenu As Object
     
@@ -16,9 +16,25 @@ Private Sub addFileOpenMenu()
     
 End
 
+Public Sub _AddShowPropertyMenu()
+    
+    Object.New("NagatoMenuItemShowProperty", [Me._$rootMenu, Me._$path])
+    
+End
+
+Private Sub addOpenAsTextMenu()
+    
+    If MikuruMimeType.GetType(Me._$path) = MikuruMimeType.TypeApplication Then
+        Object.New("NagatoOpenAsTextMenu", [Me._$rootMenu, Me._$path])
+    Endif
+    
+End
+
 Private Sub addCopyToMenu()
     
-    Dim yukiMenu As New NagatoSubMenuCopyTo(Me._$rootMenu, Me._$path) As "Menu"
+    Dim yukiMenu As NagatoSubMenuCopyTo
+    
+    yukiMenu = New NagatoSubMenuCopyTo(Me._$rootMenu, Me._$path) As "Menu"
     
 End
 
@@ -33,15 +49,18 @@ End
 Public Sub _AddChildMenus()
     
     With NagatoMenuPipe
-        addFileOpenMenu()
+        Me._AddFileOpenMenu()
             If Me._$rootMenu.Children.Count > 0 Then Me._AddContextMenu("", 0) ' As Spacer
         Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])
+        addOpenAsTextMenu()
         Object.New("NagatoMenuItemRename", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemCopyFilePath", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemCreateLink", [Me._$rootMenu, Me._$path])
+        Me._AddShowPropertyMenu()
             Me._AddContextMenu("", 0) ' As Spacer
+        Me._AddContextMenu(("Archive"), .CreateArchive, MikuruIcon.Get("hard-drive-download"))
         addCopyToMenu()
-        addMoveToMenu()
+        If Access(Me._$path, gb.Write) Then addMoveToMenu()
         Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
         Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
         Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("button-remove"))

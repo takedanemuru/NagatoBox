@@ -28,33 +28,7 @@ Public Sub Clear()
     $moduleCount = 0
     $formCount = 0
     $classCount = 0
-    $lineCountTotal = 0
-    $lineCountWithoutVoid = 0
     
-End
-
-Public Sub IncLineCount()
-    
-    Inc $lineCountTotal
-    
-End
-
-Public Sub IncLineCountWithoutVoid()
-    
-    Inc $lineCountWithoutVoid
-    
-End
-
-Private Function LineCount_Read() As Integer
-
-    Return $lineCountTotal
-
-End
-
-Private Function LineCountWIthoutVoid_Read() As Integer
-
-    Return $lineCountWithoutVoid
-
 End
 
 Private Function Message_Read() As String

@@ -60,9 +60,14 @@ Public Sub SetFileProperty(argPath As String)
     
 End
 
+Public Sub ShowFileProperty()
+    
+    Raise Signal(TFEISignal.ShowFileProperty, Null)
+    
+End
+
 Public Sub Asakura_ShowHiddenChanged()
     
     Raise Signal(TFEISignal.ShowHiddenChanged, Null)
     
 End
-

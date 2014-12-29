@@ -10,11 +10,19 @@ Private Sub dropFile(argPath As String)
     Select Case MikuruDrop.GetType($iconView)
         Case MikuruDrop.TypeVoid ' Move to current directory
             If $iconView.Exist(argPath) Then Return
-            Try Move argPath To MikuruPath.GetSafePathName(Desktop.Path &/ File.Name(argPath))
+            If Not Access(argPath, gb.Write) Then
+                MikuruFileManuever.CopyToDirectory([argPath], Desktop.Path)
+            Else
+                MikuruFileManuever.MoveToDirectory([argPath], Desktop.Path)
+            Endif
         Case MikuruDrop.TypeFile, MikuruDrop.TypeClock, MikuruDrop.TypeTrashBin
             Debug "Ignore"
         Case MikuruDrop.TypeDirectory
-            Try Move argPath To MikuruPath.GetSafePathName($iconView.Item.Key &/ File.Name(argPath))
+            If Not Access(argPath, gb.Write) Then
+                MikuruFileManuever.CopyToDirectory([argPath], $iconView.Item.Key)
+            Else
+                MikuruFileManuever.MoveToDirectory([argPath], $iconView.Item.Key)
+            Endif
         Case MikuruDrop.TypeApplication
             Debug "Try execute app with: " & argPath
             MikuruDesktopEntry.ExecuteWithFile($iconView.Item.Key, argPath)
@@ -32,6 +40,10 @@ End
 Public Sub Asakura_Drop()
     
     Dim yukiPath As String
+    
+    Debug "dropped."
+    Debug Drag.Data
+    Debug Drag.Format
     
     If Drag.Format <> MikuruMimeType.UriList Then Return 
     

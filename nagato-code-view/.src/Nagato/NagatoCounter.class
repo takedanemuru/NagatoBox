@@ -35,10 +35,9 @@ Private Function Message_Read() As String
 
     Dim yukiMessage As String = ("YUKI.N > <b>&1</b> is made of ...<br><br>")
     
-    yukiMessage &= $formCount & " Forms.<br>" 
-    yukiMessage &= $classCount & " Classes.<br>"
-    yukiMessage &= $moduleCount & " Modules.<br><br>"
-    'yukiMessage &= Format$($lineCountTotal, "#,###,###") & "&2 Lines of code."
+    yukiMessage &= Format$($formCount, "###,###,##0") & " Forms.<br>" 
+    yukiMessage &= Format$($classCount, "###,###,##0") & " Classes.<br>"
+    yukiMessage &= Format$($moduleCount, "###,###,##0") & " Modules.<br><br>"
     yukiMessage &= "&2 Lines of code."
     
     Return yukiMessage

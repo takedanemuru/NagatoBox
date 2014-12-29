@@ -73,9 +73,7 @@ End
 
 Public Sub EnsureVisible()
     
-    Debug $selectionBar.LastSelected
-    
-    
+    $iconView.Ensure($selectionBar.LastSelected)
     
 End
 

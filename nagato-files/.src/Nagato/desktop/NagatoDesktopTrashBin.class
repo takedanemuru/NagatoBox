@@ -20,6 +20,15 @@ Private Function getText() As String
     
 End
 
+Private Sub paintLabel()
+    
+    Dim yukiText As String = getText()
+    Dim yukiHeight As Integer = Application.Font.RichTextHeight(yukiText, 128 - 16)
+    
+    Paint.RichText(yukiText, 0, 128 - yukiHeight - 16, IconSize, yukiHeight + 16, Align.Center)
+    
+End
+
 Private Sub initializeIcon()
     
     Dim yukiImage As New Image(IconSize, IconSize, Color.DarkGreen + 16777216 * 128)
@@ -29,7 +38,8 @@ Private Sub initializeIcon()
         Paint.Font.Size = FontSize
         Paint.Font.Bold = True
         Paint.DrawPicture(Stock["64/trash"], 32, 8)
-        Paint.RichText(getText(), 0, IconSize * 0.66, IconSize, IconSize * 0.33, Align.Center)
+        'Paint.RichText(getText(), 0, IconSize * 0.66, IconSize, IconSize * 0.33, Align.Center)
+        paintLabel()
         Paint.Fill()
     Paint.End()
     

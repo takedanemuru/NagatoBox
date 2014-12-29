@@ -35,4 +35,12 @@ Public Sub Form_Open()
 
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
 
+    If Not Error Then NagatoDBus.Register()
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoDBus.Unregister()
+    
 End

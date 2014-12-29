@@ -15,7 +15,8 @@ End
 
 Public Sub MenuItem_Click()
     
-    HaruhiRename.SetPath(Me._$path, Desktop.GetFileIcon(Me._$path, 64))
-    HaruhiRename.ShowDialog()
+    If HaruhiRename.SetPath(Me._$path, Desktop.GetFileIcon(Me._$path, 64)) Then
+        HaruhiRename.ShowDialog()
+    End If
     
 End

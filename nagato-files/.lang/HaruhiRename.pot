@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: $(PACKAGE) $(VERSION)\n"
-"POT-Creation-Date: 2014-12-27 06:54 UTC\n"
+"POT-Creation-Date: 2014-12-29 05:58 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,19 +34,31 @@ msgstr ""
 msgid "ButtonBox1"
 msgstr ""
 
-#: HaruhiRename.class:70
-msgid "YUKI.N > Input any name."
+#: HaruhiRename.class:65
+msgid "YUKI.N > File has been removed."
 msgstr ""
 
-#: HaruhiRename.class:70
+#: HaruhiRename.class:65
 msgid "OK"
 msgstr ""
 
-#: HaruhiRename.class:75
-msgid "YUKI.N > The file path has been existed. Please use another name."
+#: HaruhiRename.class:68
+msgid "YUKI.N > You don't have permission to rename file or directory."
+msgstr ""
+
+#: HaruhiRename.class:71
+msgid "YUKI.N > You don't have permission to rename xdg-user-directories."
+msgstr ""
+
+#: HaruhiRename.class:92
+msgid "YUKI.N > Input any name."
 msgstr ""
 
 #: HaruhiRename.class:97
+msgid "YUKI.N > The file path has been existed. Please use another name."
+msgstr ""
+
+#: HaruhiRename.class:119
 msgid "Select directory"
 msgstr ""
 

@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Ready As String
+
+Public Sub Show() As Boolean
+    
+    Try HaruhiDesktop.Show()
+    
+    If Not Error Then Return True
+    
+Finally
+    Return False
+    
+End
+
+Private Function Ready_Read() As String
+
+    Return "YUKI.N >  Can you see this ?"
+
+End

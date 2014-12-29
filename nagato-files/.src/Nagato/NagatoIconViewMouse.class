@@ -21,6 +21,22 @@ Private Sub dropFile(argPath As String)
     
 End
 
+Private Sub isVoidArea(argPath As String) As Boolean
+
+    Dim yukiScrollArea As ScrollArea = Me._$iconView.Children[0]
+    Dim yukiX As Integer = (Mouse.ScreenX - Me._$iconView.ScreenX) + yukiScrollArea.ScrollX
+    Dim yukiY As Integer = (Mouse.ScreenY - Me._$iconView.ScreenY)
+    
+    If argPath = "" Then
+        Return True
+    Else If Me._$iconView.FindAt(yukiX, yukiY) Then
+        Return True
+    Else
+        Return False
+    End If
+    
+End
+
 Public Sub MouseDrag(argUriList As String)
     
     Drag.Icon = Me._$iconView.Current.Picture
@@ -76,10 +92,11 @@ End
 
 Public Sub Asakura_MouseDown()
     
-    If Me._$iconView.Key = "NOTFOUND" Then Return
-    If Me._$iconView.Key = "" Then Return
-    
-    If Me._$iconView.FindAt(Mouse.X, Mouse.Y) Then
+    If Me._$iconView.Key = "NOTFOUND" Then 
+        Return
+    Else If Me._$iconView.Key = "" Then
+        Return
+    Else If Me._$iconView.FindAt(Mouse.X, Mouse.Y) Then
         Me._$iconView.Current.Selected = False
     Else
         Raise MouseDown(Me._$iconView.Key)
@@ -92,21 +109,25 @@ Public Sub Asakura_Menu()
     Dim yukiPath As String = Me._$iconView.Key
     Dim yukiContextMenu As Object
     
-    If Me._$iconView.Key = "NOTFOUND" Then Return
-
-    If yukiPath = "" Then
-        Debug "IconViewContextMenu"
-    ' MUST TO DO !! 
-    ' Else 
-    '     yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiMain, yukiPath) As "Menu"
-    '     yukiContextMenu.Popup()
-    ' End If
-    Else If IsDir(yukiPath) Then
-        yukiContextMenu = New NagatoContextMenuDirectory(HaruhiMain, yukiPath) As "Menu"
+    If yukiPath = "NOTFOUND" Then
+        Return
+    Else If isVoidArea(yukiPath) Then
+        Debug "Popup: IconViewContextMenu2VoidArea"
+        ' THIS IS DUMMY FOR TESTING, MUST BE REMOVED !!!
+        ' DO NOT POPUP CONTEXTMENU HERE. RAISE SIGNAL
+        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiMain, "")
         yukiContextMenu.Popup()
+    ' MUST TO DO !! 
     Else 
-        yukiContextMenu = New NagatoContextMenuFile(HaruhiMain, yukiPath) As "Menu"
+        yukiContextMenu = New NagatoIconViewContextMenu2Filer(HaruhiMain, yukiPath) As "Menu"
         yukiContextMenu.Popup()
     End If
+    ' Else If IsDir(yukiPath) Then
+    '     yukiContextMenu = New NagatoContextMenuDirectory(HaruhiMain, yukiPath) As "Menu"
+    '     yukiContextMenu.Popup()
+    ' Else 
+    '     yukiContextMenu = New NagatoContextMenuFile(HaruhiMain, yukiPath) As "Menu"
+    '     yukiContextMenu.Popup()
+    ' End If
     
 End

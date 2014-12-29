@@ -1,0 +1,92 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addCopyDirectoryMenu(argDirectory As String, argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "CopyDirectoryMenu"
+    
+    With yukiMenu
+        .Text = ("Copy Whole Directory")
+        .Picture = MikuruIcon.Get("folder")
+        .Tag = argDirectory
+    End With
+    
+End
+
+Private Sub addSpacer(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu)
+    
+    yukiMenu.Text = ""
+    
+End
+
+Private Sub addSubDirectory(argDirectory As String, argParentMenu As Menu)
+    
+    addCopyDirectoryMenu(argDirectory, argParentMenu)
+        addSpacer(argParentMenu)
+    addDirectory(argDirectory, argParentMenu)
+        addSpacer(argParentMenu)
+    addCreateFileMenu(argDirectory, argParentMenu)
+    
+End
+
+Private Sub addDirectory(argDirectory As String, argParentMenu As Menu)
+    
+    Dim yukiPath As String
+    Dim yukiMenu As Menu
+    
+    For Each yukiPath In Dir(argDirectory, "*", gb.Directory).Sort()
+        yukiMenu = New Menu(argParentMenu)
+        yukiMenu.Text = yukiPath
+        yukiMenu.Picture = MikuruIcon.Get("folder")
+        addSubDirectory(argDirectory &/ yukiPath, yukiMenu)
+    Next
+    
+End
+
+Private Sub addCreateFileMenu(argDirectory As String, argParentMenu As Menu)
+    
+    Dim yukiMenu As Menu
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory, "*", gb.File).Sort(gb.IgnoreCase)
+        yukiMenu = New Menu(argParentMenu) As "CreateFileMenu"
+        yukiMenu.Text = yukiPath
+        yukiMenu.Tag = argDirectory &/ yukiPath
+        yukiMenu.Picture = MikuruIconMono.GetFromPath(argDirectory &/ yukiPath)
+    Next
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Create From Template")
+        .Picture = MikuruIcon.Get("magic-wand")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override
+    
+    addDirectory(NagatoXdg.Templates, Me._$rootMenu)
+        addSpacer(Me._$rootMenu)
+    addCreateFileMenu(NagatoXdg.Templates, Me._$rootMenu)
+    
+End
+
+Public Sub CopyDirectoryMenu_Click()
+    
+    MikuruFileManuever.CopyToDirectory([Last.Tag], Me._$path)
+    
+End
+
+Public Sub CreateFileMenu_Click()
+    
+   Try Copy Last.Tag To MikuruPath.GetSafePathName(Me._$path &/ File.Name(Last.Tag))
+    
+End

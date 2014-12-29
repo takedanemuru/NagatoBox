@@ -1,17 +1,66 @@
 ' Gambas class file
 
-Private $property As FileProperties
+Private $drawingArea As DrawingArea
+Private $currentPath As String
+Private $iconPainter As NagatoPainterIcon
+Private $pathPainter As NagatoPainterPath
+Private $propertyPainter As NagatoPainterProperty
+Private $isTrash As Boolean = False
 
-Public Sub _new()
+Private Sub initializeDrawingArea()
     
-    $property = New FileProperties(Me)
+    $drawingArea = New DrawingArea(Me) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = True
+        .Background = Color.Orange
+        .Font.Bold = True
+    End With
     
 End
 
-Public Sub SetPath(argPath As String)
+Public Sub SetProperty(argPath As String)
+    
+    If Exist(argPath) Then
+        $isTrash = False
+        $currentPath = argPath
+        $drawingArea.Refresh()
+    End If
 
-    $property.Path = argPath
+End
 
-    Me.Show()
+Public Sub SetTrashProperty(argTrashName As String)
+    
+    If Exist(argTrashName) Then
+        $isTrash = True
+        $currentPath = argTrashName
+        $drawingArea.Refresh()
+    Endif
+    
+End
 
+Public Sub _new()
+    
+    initializeDrawingArea()
+    
+    $iconPainter = New NagatoPainterIcon($drawingArea)
+    $pathPainter = New NagatoPainterPath($drawingArea)
+    $propertyPainter = New NagatoPainterProperty($drawingArea)
+
+End
+
+Public Sub DrawingArea_Draw()
+    
+    Dim yukiY As Integer
+    
+    Paint.Begin($drawingArea)
+        yukiY = $iconPainter.Paint($currentPath)
+        yukiY = $pathPainter.Paint(yukiY, $currentPath)
+        $propertyPainter.Paint(yukiY, $currentPath, $isTrash)
+    Paint.End()
+    
+Catch
+    Debug Error.Text
+    Try Paint.End()
+    
 End

@@ -90,6 +90,8 @@ End
 
 Private Function Message_Read() As String
 
-    Return Subst$($counter.Message, File.Name($targetPath), $dataGrid.GetLinesOfCode(False))
+    Dim yukiLinesOfCode As String = Format$($dataGrid.GetLinesOfCode(False), "###,###,##0")
+
+    Return Subst$($counter.Message, File.Name($targetPath), yukiLinesOfCode)
 
 End

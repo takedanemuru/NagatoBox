@@ -6,8 +6,11 @@ Inherits NagatoMenuPipe
 
 Public Function Rename(argArgument As Variant) As Boolean
     
-    HaruhiRename.SetPath(argArgument, Desktop.GetFileIcon(argArgument, 64))
-    Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+    If HaruhiRename.SetPath(argArgument, Desktop.GetFileIcon(argArgument, 64)) Then
+        Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+    End If
+    
+    Return False
     
 End
 

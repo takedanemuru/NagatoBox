@@ -67,6 +67,8 @@ Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant[])
             $leftPane.RefreshTreeView()
         Case TFEISignal.SetFileProperty
             $rightPane.SetProperty(argValues[0])
+        Case TFEISignal.ShowFileProperty
+            RightPanel.Hidden = False
     End Select
     
 End

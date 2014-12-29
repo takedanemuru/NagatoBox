@@ -32,18 +32,9 @@ Private Sub setDirectoryButtonBox(argPath As String)
     
 End
 
-Public Sub SetPath(argPath As String, Optional argIcon As Picture)
+Private Sub setNewNameTextLabel(argPath As String)
     
     Dim yukiExt As String = File.Ext(argPath)
-    
-    If Not Exist(argPath) Then Return
-    
-    $directory = File.Dir(argPath)
-    $fileName = File.Name(argPath)
-    
-    setDirectoryButtonBox($directory)
-    
-    CurrentNameTextLabel.Text = $fileName
     
     With NewNameTextBox
         .Text = $fileName
@@ -54,7 +45,38 @@ Public Sub SetPath(argPath As String, Optional argIcon As Picture)
         End If
     End With
     
+End
+
+Private Sub reset(argPath As String, Optional argIcon As Picture)
+    
+    $directory = File.Dir(argPath)
+    $fileName = File.Name(argPath)
+    setDirectoryButtonBox($directory)
+    CurrentNameTextLabel.Text = $fileName
+    setNewNameTextLabel(argPath)
+    
     If argIcon Then IconPictureBox.Picture = argIcon
+    
+End
+
+Public Function SetPath(argPath As String, Optional argIcon As Picture) As Boolean
+    
+    If Not Exist(argPath) Then
+        Message.Error(("YUKI.N > File has been removed."), ("OK"))
+        Return False
+    Else If Not Access(argPath, gb.Write) Then
+        Message.Error(("YUKI.N > You don't have permission to rename file or directory."), ("OK"))
+        Return False
+    Else If NagatoXdg.IsUserDir(argPath) Or If argPath = User.Home Then 
+        Message.Error(("YUKI.N > You don't have permission to rename xdg-user-directories."), ("OK"))
+        Return False
+    Else If argIcon Then
+        reset(argPath, argIcon)
+        Return True
+    Else
+        reset(argPath)
+        Return True
+    End If
     
 End
 

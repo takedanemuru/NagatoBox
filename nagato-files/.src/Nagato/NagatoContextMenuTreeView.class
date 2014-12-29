@@ -46,11 +46,14 @@ End
 Private Function rename(argPath As String) As Boolean
     
     If IsDir(argPath) Then
-        HaruhiRename.SetPath(argPath)
-        Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+        If HaruhiRename.SetPath(argPath) Then
+            Return HaruhiRename.ShowDialog() = MikuruDialog.ResponseApply
+        End If
     Else
         Return NagatoFilerDialogs.Rename(argPath)
     Endif
+    
+    Return False
     
 End
 

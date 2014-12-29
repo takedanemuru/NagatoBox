@@ -81,8 +81,7 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
     Dim yukiChecker As New String[]
     Dim yukiMimeTypes As String[] = getDesktopFilesWithMimeType()
     Dim yukiDefaultApp As New NagatoDefaultApplication(Me._$path)
-    Dim yukiDefaultAppName As String = File.Name(yukiDefaultApp.DesktopFile.Name) & ".desktop"
-    
+        
     addSelectApplicationMenu()
     
     If yukiMimeTypes.Count > 0 Then addDummyMenu()
@@ -90,7 +89,7 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
     For Each yukiAdditionalDesktopFile In yukiMimeTypes
         If Not yukiChecker.Exist(yukiAdditionalDesktopFile) Then
             If Not yukiDefaultApp.NotFound Then
-                If yukiAdditionalDesktopFile = yukiDefaultAppName Then Continue
+                If yukiAdditionalDesktopFile = yukiDefaultApp.Name Then Continue
             Endif
             addIndivisualOpenWithMenu(yukiAdditionalDesktopFile)
             yukiChecker.Add(yukiAdditionalDesktopFile)
@@ -110,6 +109,9 @@ Public Sub OpenWithMenu_Click()
     MikuruChangeDefaultApplication(yukiDesktopFile, Me._$path)
 
     yukiDesktopFile.Run(Me._$path)
+    
+Catch
+    Message.Error(("YUKI.N > Some error occured."), ("OK"))
     
 End
 

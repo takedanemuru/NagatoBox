@@ -103,6 +103,8 @@ Public Sub Menu_MenuEventWithArg(argEvent As Integer, argValue As Variant)
     
     With NagatoMenuPipe
         Select Case argEvent
+            Case .CreateArchive
+                Shell "nagato-archiver " & $selection.Paths.Join(" ")
             Case .FileDelete
                 NagatoTrash.Delete($selection.Paths)
             Case .FileCopyTo

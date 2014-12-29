@@ -116,7 +116,7 @@ Public Sub Menu_MouseDown(argPath As String)
     If Not NagatoSettings.MultipleSelection Then clearSelection()
     $iconView.ResetIcon(argPath, $selectionBar.Exist(argPath))
     
-    Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    TFEI.SetFileProperty($selectionBar.LastSelected)
     
 End
 

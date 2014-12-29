@@ -76,10 +76,6 @@ End
 Public Sub IconView_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
-        Case NagatoMenuPipe.CreateArchive
-            MikuruCreate.Archive($iconView.Selection)
-        Case NagatoMenuPipe.CreateClone
-            MikuruCreate.Clone($log.Current, $iconView.Selection)
         Case NagatoMenuPipe.ViewShowHidden
             NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
             refresh($menuBar.Path)
@@ -106,31 +102,27 @@ Public Sub IconView_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                 move(argArgument)
             Case .DirOpenInNewTab
                 Raise NewTab(argArgument)
-            Case .DirRename
-                HaruhiRename.SetPath(argArgument, Stock["64/directory"])
-                HaruhiRename.ShowDialog()
-            Case .DirDelete
-                NagatoTrash.Delete([argArgument])
-            Case .FileOpen
-                MikuruFile.Exec(argArgument)
             Case .FileDelete
-                NagatoTrash.Delete([argArgument])
-            Case .FileRename
-                If NagatoFilerDialogs.Rename(argArgument) Then $iconView.SetFocus(argArgument)
-            Case .FileMoveToCurrentDir
-                If $log.Current = File.Dir(argArgument) Then Return
-                Try Move argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument)) 
-             Case NagatoMenuPipe.FileCopy
-                MikuruFileManuever.CopyUriList($log.Current, argArgument)
-             Case .FileShowProperty
-                TFEI.SetFileProperty(argArgument)
+                NagatoTrash.Delete($iconView.Selection)
+            Case .CreateArchive
+                MikuruCreate.Archive($iconView.Selection)
+            Case .FileMoveTo
+                If argArgument Then
+                    MikuruFileManuever.MoveToDirectory($iconView.Selection, argArgument)
+                Else
+                    MikuruFileManuever.MoveTo($iconView.Selection)
+                Endif
+            Case .FileCopyTo
+                If argArgument Then
+                    MikuruFileManuever.CopyToDirectory($iconView.Selection, argArgument)
+                Else
+                    MikuruFileManuever.CopyTo($iconView.Selection)
+                Endif
              Case .TagAdd
                  If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
              Case .TagRemove
                  NagatoDBSymbol.RemovePaths($iconView.Selection)
                  $iconView.Refresh($log.Current)
-             Case .PathCopyToClipboard
-                 Clipboard.Copy(argArgument)
         End Select
     End With
     

@@ -6,7 +6,7 @@ Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 Private $desktop As NagatoDesktop
 Private $panel As Panel
 
-Private Sub setForm()
+Private Sub initializeForm()
     
     With Me
         .X = 0
@@ -29,10 +29,12 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    setForm()
-    initializePanel()
+    initializeForm()
     $desktop = New NagatoDesktop(Me)
+    initializePanel()
 
-    Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
+    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
+
+    If Not Error Then NagatoDBus.Register()
 
 End
