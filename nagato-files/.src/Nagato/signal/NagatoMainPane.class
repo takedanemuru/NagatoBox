@@ -6,9 +6,6 @@ Private $filersHandler As New NagatoFilersHandler As "FilersHandler"
 Private $tabStripHandler As NagatoTabStripHandler
 Private $observer As Observer
 
-Event ShowProperty(argPath As String)
-Event AppQuit
-
 Private Sub addTab(Optional argPath As String = User.Home)
     
     $tabStripHandler.AddNewTab()
@@ -93,20 +90,8 @@ Public Sub Asakura_Close(argIndex As Integer)
 
 End
 
-Public Sub FilersHandler_ShowProperty(argPath As String)
-    
-    Raise ShowProperty(argPath)
-    
-End
-
-Public Sub FilersHandler_AddTab(argPath As String)
-    
-    addTab(argPath)
-    
-End
-
-Public Sub FilersHandler_AppQuit()
-    
-    Raise AppQuit
-    
-End
+' Public Sub FilersHandler_AddTab(argPath As String)
+'     
+'     addTab(argPath)
+'     
+' End

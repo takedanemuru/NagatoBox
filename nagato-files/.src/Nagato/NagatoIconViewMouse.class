@@ -69,6 +69,8 @@ Public Sub Asakura_Drop()
     
     If Drag.Format <> MikuruMimeType.UriList Then Return 
     
+    Debug Drag.Data
+    
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         'xdg-user-dirs will be ignored. 
         If NagatoXdg.IsUserDir(yukiPath) Then Continue
@@ -122,12 +124,5 @@ Public Sub Asakura_Menu()
         yukiContextMenu = New NagatoIconViewContextMenu2Filer(HaruhiMain, yukiPath) As "Menu"
         yukiContextMenu.Popup()
     End If
-    ' Else If IsDir(yukiPath) Then
-    '     yukiContextMenu = New NagatoContextMenuDirectory(HaruhiMain, yukiPath) As "Menu"
-    '     yukiContextMenu.Popup()
-    ' Else 
-    '     yukiContextMenu = New NagatoContextMenuFile(HaruhiMain, yukiPath) As "Menu"
-    '     yukiContextMenu.Popup()
-    ' End If
     
 End

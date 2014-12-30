@@ -14,14 +14,6 @@ Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton, argUniq
     
 End
 
-Private Sub initializeDummyMenu()
-    
-    Dim yukiDummyMenu As New Menu(Me._$rootMenu)
-    
-    yukiDummyMenu.Text = ""
-    
-End
-
 Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture, Optional argShortcut As String)  
     
     Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
@@ -51,25 +43,13 @@ Private Sub addCreateMenu()
     
 End
 
-Private Function getHiddenMenuIcon() As Picture
-    
-    Return IIf(NagatoSettings.ShowHidden, MikuruIcon.Get("button-check"), Null)
-    
-End
-
-Private Function getAutoSearchIcon() As Picture
-    
-    Return IIf(NagatoSettings.PathbarAutomaticSearch, MikuruIcon.Get("button-check"), Null)
-    
-End
-
 Private Sub refreshChildMenus()
     
     With NagatoMenuPipe
-        Me._AddMenu(("New Tab"), .ViewNewTab,, "Ctrl+T")
-        Me._AddMenu(("Show Hidden"), .ViewShowHidden, getHiddenMenuIcon(), "Ctrl+H")
+        Me._AddMenu(("New Tab"), .ViewNewTab)
+        Object.New("NagatoMenuItemShowHidden", [Me._$rootMenu, Me._$path])
         Me._AddMenu(("Force reload"), .ViewForceReload, MikuruIcon.Get("button-synchronize"))
-        Me._AddMenu(("Incremental Search"), MikuruSignal.PathbarSettingsChanged, getAutoSearchIcon())
+        Object.New("NagatoMenuItemPathbarAutoSearch", [Me._$rootMenu, Me._$path])
             Me._AddMenu("", 0) ' Spacer
         addCreateMenu()
             Me._AddMenu("", 0) ' Spacer
@@ -79,8 +59,8 @@ Private Sub refreshChildMenus()
         Me._AddMenu(("Unselect all"), .ViewUnselectAll)
         Me._AddMenu(("Invert selection"), .ViewInvertSelection)
             Me._AddMenu("", 0) ' Spacer
-        Me._AddMenu(("&About"), .AppAbout, MikuruIcon.Get("star"))
-        Me._AddMenu(("&Quit"), .AppQuit, MikuruIcon.Get("button-power"))
+        Object.New("NagatoMenuItemAbout", [Me._$rootMenu, Me._$path])
+        Object.New("NagatoMenuItemAppQuit", [Me._$rootMenu, Me._$path])
     End With
     
 End
@@ -90,7 +70,7 @@ Public Sub _new(argForm As Form, argButton As MenuButton, argUniqueName As Strin
     Me._$window = argForm.Window
     If argPath Then Me._$path = argPath
     initializeRootMenu(argForm, argButton, argUniqueName)
-    initializeDummyMenu()
+    Me._AddMenu("", 0) ' as dummy menu
     
 End
 
@@ -103,15 +83,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    Select Case Last.Tag
-        Case MikuruSignal.PathbarSettingsChanged
-            NagatoSettings.PathbarAutomaticSearch = Not NagatoSettings.PathbarAutomaticSearch
-        Case NagatoMenuPipe.AppAbout
-            HaruhiAbout.ShowDialog
-        Case NagatoMenuPipe.AppQuit
-            If Message.Question(("Are you sure to close nagato-files ?"), ("Cancel"), ("Close")) = 2 Then Raise MenuEvent(Last.Tag)
-        Default
-            Raise MenuEvent(Last.Tag)
-    End Select
+    Raise MenuEvent(Last.Tag)
     
 End

@@ -3,13 +3,8 @@
 Inherits NagatoSignal
 
 Private $container As Container
-Private $drawingArea As DrawingArea
-Private $currentPath As String
-Private $iconPainter As NagatoPainterIcon
-Private $pathPainter As NagatoPainterPath
-Private $propertyPainter As NagatoPainterProperty
-Private $switch As NagatoChmodSwitch 
-Private $isTrash As Boolean = False
+Private $switch As NagatoChmodSwitch
+Private $propertyPainter As NagatoPropertyPainterFacade
 
 Private Sub initializeContainer(argContainer As Container)
     
@@ -21,24 +16,10 @@ Private Sub initializeContainer(argContainer As Container)
     
 End
 
-Private Sub initializeDrawingArea()
-    
-    $drawingArea = New DrawingArea($container) As "DrawingArea"
-    
-    With $drawingArea
-        .Expand = True
-        .Background = Color.Pink
-        .Font.Bold = True
-    End With
-    
-End
-
 Public Sub SetProperty(argPath As String)
     
     If Exist(argPath) Then
-        $isTrash = False
-        $currentPath = argPath
-        $drawingArea.Refresh()
+        $propertyPainter.SetProperty(argPath)
         $switch.Set(argPath)
     End If
 
@@ -47,9 +28,7 @@ End
 Public Sub SetTrashProperty(argTrashName As String)
     
     If Exist(argTrashName) Then
-        $isTrash = True
-        $currentPath = argTrashName
-        $drawingArea.Refresh()
+        $propertyPainter.SetTrashProperty(argTrashName)
     Endif
     
 End
@@ -57,33 +36,13 @@ End
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
-    initializeDrawingArea()
-    
-    $iconPainter = New NagatoPainterIcon($drawingArea)
-    $pathPainter = New NagatoPainterPath($drawingArea)
-    $propertyPainter = New NagatoPainterProperty($drawingArea)
-    $switch = New NagatoChmodSwitch(argContainer) As "Switch"
-    
-End
-
-Public Sub DrawingArea_Draw()
-    
-    Dim yukiY As Integer
-    
-    Paint.Begin($drawingArea)
-        yukiY = $iconPainter.Paint($currentPath)
-        yukiY = $pathPainter.Paint(yukiY, $currentPath)
-        $propertyPainter.Paint(yukiY, $currentPath, $isTrash)
-    Paint.End()
-    
-Catch
-    Debug Error.Text
-    Try Paint.End()
+    $propertyPainter = New NagatoPropertyPainterFacade($container, Color.Pink)
+    $switch = New NagatoChmodSwitch($container) As "Switch"
     
 End
 
 Public Sub Switch_Changed()
     
-    $drawingArea.Refresh()
+    $propertyPainter.Refresh()
     
 End

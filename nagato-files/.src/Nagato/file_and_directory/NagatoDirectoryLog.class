@@ -14,14 +14,29 @@ Private Sub IsForward(argPath As String) As Boolean
     If $log.Max = -1 Then
         Return False
     Else If $level <> $log.Max Then
-        If $log[$level + 1] = argPath Then
-            Return True
-        Else
-            Return False
-        Endif
+        Return IIf($log[$level + 1] = argPath, True, False)
     Else
         Return False
     Endif
+    
+End
+
+Public Function GetMoveTo(argEvent As Integer) As String
+    
+    With NagatoMenuPipe
+        Select Case argEvent
+            Case .MoveBack
+                If Me.HasBack Then Return (Me.Back)
+            Case .MoveForward
+                If Me.HasForward Then Return (Me.Forward)
+            Case .MoveHome
+                If Me.Current <> User.Home Then Return (User.Home)
+            Case .MoveUp
+                If Me.Current <> "/" Then Return (File.Dir(Me.Current))
+        End Select
+    End With
+    
+    Return ""
     
 End
 
@@ -51,21 +66,13 @@ End
 
 Private Function HasBack_Read() As Boolean
 
-    If $level = 0 Then 
-        Return False
-    Else
-        Return True
-    Endif
+    Return IIf($level = 0, False, True)
 
 End
 
 Private Function HasForward_Read() As Boolean
 
-    If $log.Max = $level Then
-        Return False
-    Else
-        Return True
-    Endif
+    Return IIf($log.Max = $level, False, True)
 
 End
 

@@ -2,8 +2,6 @@
 
 Public Enum ByName, BySize, ByLastModefied, ByExt, ByUser
 
-Property Read Paths As String[]
-
 Private $sortedPaths As New String[]
 
 Private Function getPattern() As String
@@ -29,7 +27,6 @@ Private Function isLesser(argOrderBy As Integer, argObject As String, argSubject
             yukiResult = (Stat(argSubject).User > Stat(argObject).User)
     End Select
     
-    'Return IIf(NagatoSettings.SortAscent, yukiResult, Not (yukiResult))
     Return yukiResult
     
 End
@@ -99,10 +96,4 @@ Public Sub _call(argDirectory As String, argType As Integer) As String[]
     
     Return getResult()
     
-End
-
-Private Function Paths_Read() As String[]
-
-    Return $sortedPaths
-
 End

@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Private Function getAutoSearchIcon() As Picture
+    
+    Return IIf(NagatoSettings.PathbarAutomaticSearch, MikuruIcon.Get("button-check"), Null)
+    
+End
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("Incremental Search")
+        .Picture = getAutoSearchIcon()
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettings.PathbarAutomaticSearch = Not NagatoSettings.PathbarAutomaticSearch
+    
+End

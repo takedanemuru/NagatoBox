@@ -4,10 +4,6 @@ Inherits NagatoSignal
 
 Private $filers As New Variant[]
 
-Event ShowProperty(argPath As String)
-Event AddTab(argPath As String)
-Event AppQuit
-
 Public Sub AddFiler(argTabStrip As TabStrip, argPath As String)
     
     Dim yukiFiler As New NagatoFiler(argTabStrip, argPath) As "Filer"
@@ -59,23 +55,5 @@ End
 Public Sub EnsureVisible(argIndex As Integer)
     
     $filers[argIndex].EnsureVisible()
-    
-End
-
-Public Sub Filer_ShowProperty(argPath As String)
-    
-    Raise ShowProperty(argPath)
-    
-End
-
-Public Sub Filer_NewTab(argPath As String)
-    
-    Raise AddTab(argPath)
-    
-End
-
-Public Sub Filer_AppQuit()
-    
-    Raise AppQuit
     
 End

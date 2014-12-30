@@ -34,18 +34,6 @@ Public Sub LeftPane_Signal(argSignal As Integer, argValues As Variant[])
     
 End
 
-Public Sub MainPane_ShowProperty(argPath As String)
-    
-    $rightPane.SetProperty(argPath)
-    
-End
-
-Public Sub MainPane_AppQuit()
-    
-    Me.Close()
-    
-End
-
 Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
@@ -64,6 +52,7 @@ Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant[])
         Case TFEISignal.SetTrashProperty
             $rightPane.SetTrashProperty(argValues[0])
         Case TFEISignal.ShowHiddenChanged
+            $mainPane.RefreshAll()
             $leftPane.RefreshTreeView()
         Case TFEISignal.SetFileProperty
             $rightPane.SetProperty(argValues[0])
