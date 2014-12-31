@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoSubPainter
+
+Public Function Draw(argTopOffset As Integer, argPath As String) As Integer
+    
+    Dim yukiTemplate As String = "<br>Page:<br>"
+    Dim yukiDocument As New PdfDocument(argPath)
+    
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiDocument.Count)
+    
+End

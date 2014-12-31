@@ -1,65 +1,19 @@
 ' Gambas class file
 
-Private $directory As String
-Private $fileName As String
-
-Private Function isConverterRequired() As Boolean
-    
-    With MikuruMimeType
-        If Not .IsMediaFile($directory &/ $fileName) Then Return False
-        If File.Ext(NewNameTextBox.Text) = File.Ext($fileName) Then Return False 
-    End With
-    
-    Return True
-    
-End
-
-Public Sub convertFile()
-    
-    Dim yukiOriginal As String = $directory &/ $fileName
-    Dim yukiTarget As String = DirectoryButtonBox.Text &/ NewNameTextBox.Text
-    
-    Exec ["avconv", "-i", yukiOriginal, yukiTarget]
-    
-End
-
-Private Sub setDirectoryButtonBox(argPath As String)
-    
-    With DirectoryButtonBox
-        .Text = argPath
-        .Picture = IIf(argPath = NagatoXdg.UserDirs.Desktop, MikuruIcon.Get("desktop"), MikuruIcon.Get("folder"))
-    End With
-    
-End
-
-Private Sub setNewNameTextLabel(argPath As String)
-    
-    Dim yukiExt As String = File.Ext(argPath)
-    
-    With NewNameTextBox
-        .Text = $fileName
-        If yukiExt = "" Then
-            .Select()
-        Else
-            .Select(0, String.Len(.Text) - String.Len(File.Ext(argPath)) - 1)
-        End If
-    End With
-    
-End
+Private $sourcePath As NagatoSourcePath
+Private $targetPath As NagatoTargetPathWigets
 
 Private Sub reset(argPath As String, Optional argIcon As Picture)
     
-    $directory = File.Dir(argPath)
-    $fileName = File.Name(argPath)
-    setDirectoryButtonBox($directory)
-    CurrentNameTextLabel.Text = $fileName
-    setNewNameTextLabel(argPath)
+    $sourcePath = New NagatoSourcePath(argPath)
+    $targetPath.SetPath(argPath)
+    CurrentNameTextLabel.Text = $sourcePath.Name
     
     If argIcon Then IconPictureBox.Picture = argIcon
     
 End
 
-Public Function SetPath(argPath As String, Optional argIcon As Picture) As Boolean
+Public Function SetPath(argPath As String, Optional argIcon As Picture = Null) As Boolean
     
     If Not Exist(argPath) Then
         Message.Error(("YUKI.N > File has been removed."), ("OK"))
@@ -70,13 +24,16 @@ Public Function SetPath(argPath As String, Optional argIcon As Picture) As Boole
     Else If NagatoXdg.IsUserDir(argPath) Or If argPath = User.Home Then 
         Message.Error(("YUKI.N > You don't have permission to rename xdg-user-directories."), ("OK"))
         Return False
-    Else If argIcon Then
+    Else
         reset(argPath, argIcon)
         Return True
-    Else
-        reset(argPath)
-        Return True
     End If
+    
+End
+
+Public Sub _new()
+    
+    $targetPath = New NagatoTargetPathWigets(DirectoryButtonBox, NewNameTextBox)
     
 End
 
@@ -90,13 +47,13 @@ Public Sub ApplyButton_Click()
 
     If NewNameTextBox.Text = "" Then
         Message.Warning(("YUKI.N > Input any name."), ("OK"))
-    Else If isConverterRequired() Then
-        convertFile()
+    Else If MikuruMedia.ConversionRequired($sourcePath.FullPath, $targetPath.FullPath) Then
+        MikuruMedia.ConvertFile($sourcePath.FullPath, $targetPath.FullPath)
         Me.Close(MikuruDialog.ResponseCancel)
-    Else If Exist(DirectoryButtonBox.Text &/ NewNameTextBox.Text) Then
+    Else If Exist($targetPath.FullPath) Then
         Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
     Else
-        Move $directory &/ $fileName To MikuruPath.GetSafePathName(DirectoryButtonBox.Text &/ NewNameTextBox.Text)
+        Move $sourcePath.FullPath To MikuruPath.GetSafePathName($targetPath.FullPath)
         Me.Close(MikuruDialog.ResponseApply)
     Endif
 
@@ -116,11 +73,6 @@ End
 
 Public Sub DirectoryButtonBox_Click()
 
-    Dialog.Title = ("Select directory")
-    Dialog.Path = File.Dir($directory)
-    
-    If Not Dialog.SelectDirectory() Then
-        setDirectoryButtonBox(Dialog.Path)
-    Endif
+    $targetPath.ChangeDirectory($sourcePath.Directory)
 
 End

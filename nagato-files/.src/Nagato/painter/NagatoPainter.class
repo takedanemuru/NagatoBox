@@ -39,8 +39,15 @@ Public Function _DrawProperties(argY As Integer, argTemplate As String, argPrope
     
 End
 
+Public Sub _InitializeSubPainters() ' SHOULD be overridden
+    
+    
+    
+End
+
 Public Sub _new(argDrawingArea As DrawingArea)
     
     Me._$drawingArea = argDrawingArea
+    Me._InitializeSubPainters()
     
 End

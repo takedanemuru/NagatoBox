@@ -1,0 +1,38 @@
+' Gambas class file
+
+Property Read Directory As String
+Property Read Extension As String
+Property Read Name As String
+Property Read FullPath As String
+
+Private $fullPath As String
+
+Public Sub _new(argFullPath As String)
+    
+    $fullPath = argFullPath
+    
+End
+
+Private Function Directory_Read() As String
+
+    Return File.Dir($fullPath)
+
+End
+
+Private Function FullPath_Read() As String
+
+    Return $fullPath
+
+End
+
+Private Function Extension_Read() As String
+
+    Return File.Ext($fullPath)
+
+End
+
+Private Function Name_Read() As String
+
+    Return File.Name($fullPath)
+
+End

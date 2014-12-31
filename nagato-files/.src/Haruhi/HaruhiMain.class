@@ -15,13 +15,13 @@ Public Sub Form_Open()
     $mainPane.SetInitialPath(NagatoArguments.StartupPath)
     
     Application.MainWindow = Me
-    NagatoSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
     
 End
 
 Public Sub Form_Close()
     
-    NagatoSettings.SaveFormSettings(Me)
+    NagatoSettingsForm.Save(Me)
     
     Quit 0
     

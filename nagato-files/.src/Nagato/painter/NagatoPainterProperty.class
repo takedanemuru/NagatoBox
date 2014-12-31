@@ -2,6 +2,11 @@
 
 Inherits NagatoPainter
 
+Private $imageSizes As NagatoSubPainterImageSizes
+Private $pdfPages As NagatoSubPainterPdfPages
+Private $id3Tags As NagatoSubPainterId3Tags
+Private $trashInfo As NagatoSubPainterTrashInfo
+
 Private Function getPropertyText(argTemplate As String) As String
     
     Dim yukiStat As Stat = Stat(Me._$currentPath)
@@ -28,69 +33,12 @@ Private Function drawProperties(argTopOffset As Integer) As Integer
     
 End
 
-Private Function drawImageProperties(argTopOffset As Integer) As Integer
+Public Sub _InitializeSubPainters() ' override
     
-    Dim yukiImage As Image = Image.Load(Me._$currentPath)
-    Dim yukiTemplate As String = "<br>Height:<br>Width:"
-    Dim yukiProperties As String = Subst$("<br>&1<br>&2", yukiImage.H, yukiImage.W)
-    
-    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiProperties)
-    
-End
-
-Private Function getCollapsedText(argTitle As String, argProperty As String) As String
-    
-    Dim yukiTitleLength As Integer = Me._$drawingArea.Font.RichTextWidth(argTitle)
-    Dim yukiLength As Integer = Me._$drawingArea.W - Me.MarginDouble - yukiTitleLength
-    
-    Return MikuruCollapsedText.Get(argProperty, Me._$drawingArea.Font, yukiLength)
-    
-End
-
-Private Sub getId3Tags() As String
-    
-    Dim yukiId3TagTemplate As String = "<br>&1<br>&2<br>&3<br>"
-    Dim yukiTitle As String = MikuruId3TagInfo.GetTitle(Me._$currentPath)
-    Dim yukiArtist As String = MikuruId3TagInfo.GetArtist(Me._$currentPath)
-    Dim yukiAlbum As String = MikuruId3TagInfo.GetAlbum(Me._$currentPath)
-    Dim yukiId3Tag As String
-    
-    yukiTitle = getCollapsedText("Title: ", yukiTitle)
-    yukiArtist = getCollapsedText("Artist: ", yukiArtist)
-    yukiAlbum = getCollapsedText("Album: ", yukiAlbum)
-    yukiId3Tag = Subst$(yukiId3TagTemplate, yukiTitle, yukiArtist, yukiAlbum)
-    
-    Return yukiId3Tag
-    
-End
-
-Private Function drawId3Tags(argTopOffset As Integer) As Integer
-    
-    Dim yukiTemplate As String = "<br>Title:<br>Artist:<br>Album:<br>"
-    Dim yukiId3Tags As String = getId3Tags()
-    
-    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiId3Tags)
-    
-End
-
-Private Function drawPageCount(argTopOffset As Integer, argPath As String) As Integer
-    
-    Dim yukiTemplate As String = "<br>Page:<br>"
-    Dim yukiDocument As New PdfDocument(argPath)
-    
-    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiDocument.Count)
-    
-End
-
-Private Function drawTrashProperty(argTopOffset As Integer) As Integer
-    
-    Dim yukiTemplate As String = "<br><u>Path To Restore:</u><br><br>&1<br>"
-    Dim yukiText As String = Subst$(yukiTemplate, NagatoTrash.GetPreviousPath(Me._$currentPath))
-    Dim yukiRect As Rect = Me._GetRect(argTopOffset, yukiText)
-    
-    Me._DrawRichText(yukiText, yukiRect, Align.Center)
-    
-    Return yukiRect.Y + yukiRect.H
+    $imageSizes = New NagatoSubPainterImageSizes(Me._$drawingArea)
+    $id3Tags = New NagatoSubPainterId3Tags(Me._$drawingArea)
+    $pdfPages = New NagatoSubPainterPdfPages(Me._$drawingArea)
+    $trashInfo = New NagatoSubPainterTrashInfo(Me._$drawingArea)
     
 End
 
@@ -103,9 +51,9 @@ Public Sub Paint(argY As Integer, argPath As String, argIsTrash As Boolean)
     
     yukiTopOffset = drawProperties(argY)
     
-    If yukiMimeType Begins "image" Then yukiTopOffset = drawImageProperties(yukiTopOffset)
-    If yukiMimeType Begins "audio" Then yukiTopOffset = drawId3Tags(yukiTopOffset)
-    If yukiMimeType = "application/pdf" Then drawPageCount(yukiTopOffset, argPath)
-    If argIsTrash Then drawTrashProperty(yukiTopOffset)
+    If yukiMimeType Begins "image" Then yukiTopOffset = $imageSizes.Draw(yukiTopOffset, Me._$currentPath)
+    If yukiMimeType Begins "audio" Then yukiTopOffset = $id3Tags.Draw(yukiTopOffset, Me._$currentPath)
+    If yukiMimeType = "application/pdf" Then $pdfPages.Draw(yukiTopOffset, Me._$currentPath)
+    If argIsTrash Then $trashInfo.Draw(yukiTopOffset, Me._$currentPath)
     
 End

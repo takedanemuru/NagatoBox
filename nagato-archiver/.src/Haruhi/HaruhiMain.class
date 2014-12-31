@@ -83,6 +83,8 @@ Public Sub ApplyButton_Click()
     Dialog.Title = ("Set path to create")
     Dialog.Path = MikuruSafePath.Get(User.Home &/ "new_archive" & getArchiveType())
     
+    Debug Dialog.Path
+    
     If Not Dialog.SaveFile() Then 
         NagatoPatool.Create($fileStore.PathsInLine, checkExtension(Dialog.Path))
     End If

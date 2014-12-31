@@ -12,7 +12,15 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
     
     Dim yukiPath As String
 
-    For Each yukiPath In MikuruSort(argDirectory, argType)
+    Debug "incoming"
+
+    Debug NagatoSortFiler.Get(argDirectory, argType).Count
+    Debug MikuruArrayTest(NagatoSortFiler.Get(argDirectory, argType))
+
+    Debug "not stalled"
+
+    'For Each yukiPath In MikuruSort(argDirectory, argType)
+    For Each yukiPath In NagatoSortFiler.Get(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
         Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
     Next
@@ -69,5 +77,11 @@ Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[
     setIcons(argPaths, argSelection, False)
     
     If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+    
+End
+
+Public Sub Ensure(argPath As String)
+    
+    ensureVisible(argPath)
     
 End

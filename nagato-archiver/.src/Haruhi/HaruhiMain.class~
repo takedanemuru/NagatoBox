@@ -24,6 +24,14 @@ Private Function getArchiveType() As String
     
 End
 
+Private Sub checkExtension(argPath As String) As String
+    
+    Debug File.Ext(argPath)
+    
+    Return argPath
+    
+End
+
 Public Sub SetPaths(argPaths As String[])
     
     $fileStore.SetPaths(argPaths)
@@ -75,10 +83,8 @@ Public Sub ApplyButton_Click()
     Dialog.Title = ("Set path to create")
     Dialog.Path = MikuruSafePath.Get(User.Home &/ "new_archive" & getArchiveType())
     
-    Debug getArchiveType()
-    
     If Not Dialog.SaveFile() Then 
-        NagatoPatool.Create($fileStore.PathsInLine, Dialog.Path)
+        NagatoPatool.Create($fileStore.PathsInLine, checkExtension(Dialog.Path))
     End If
 
 End

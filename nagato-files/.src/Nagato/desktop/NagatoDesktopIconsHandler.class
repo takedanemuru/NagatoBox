@@ -21,7 +21,8 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
     
     Dim yukiPath As String
 
-    For Each yukiPath In MikuruSortDesktop(argDirectory, argType)
+    'For Each yukiPath In MikuruSortDesktop(argDirectory, argType)
+    For Each yukiPath In NagatoSortDesktop.Get(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
         $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
     Next

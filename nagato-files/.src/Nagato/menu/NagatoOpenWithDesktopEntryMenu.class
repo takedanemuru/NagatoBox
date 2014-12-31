@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $parentMenu As Menu
+Private $path As String
+Private $desktopEntryName As String
+
+Private Sub initializeItem()
+    
+    Dim yukiMenu As Menu
+    Dim yukiPath As String = "/usr/share/applications/" & $desktopEntryName
+    Dim yukiDesktopFile As DesktopFile
+
+    If Not Exist(yukiPath) Then Return
+    
+    yukiDesktopFile = New DesktopFile(yukiPath)
+
+    yukiMenu = New Menu($parentMenu) As "OpenWithMenu"
+    
+    With yukiMenu
+        .Picture = MikuruIcon.GetDesktopEntryIcon(yukiDesktopFile.Path, 32)
+        .Text = yukiDesktopFile.Name
+        .Tag = yukiDesktopFile
+    End With
+
+Catch
+    Return
+    
+End
+
+Public Sub _new(argParentMenu As Menu, argPath As String, argDesktopEntryName As String)
+    
+    $parentMenu = argParentMenu
+    $path = argPath
+    $desktopEntryName = argDesktopEntryName
+    initializeItem()
+    
+End
+
+Public Sub OpenWithMenu_Click()
+    
+    Dim yukiDesktopFile As DesktopFile = Last.Tag
+    
+    MikuruChangeDefaultApplication(yukiDesktopFile, $path)
+
+    yukiDesktopFile.Run($path)
+    
+Catch
+    Message.Error(("YUKI.N > Some error occured."), ("OK"))
+    
+End

@@ -14,24 +14,6 @@ Public Enum SearchInclude, SearchBegins, SearchEnds
 Event ShowHiddenChanged
 Event MultipleSelectionChanged
 
-Public Sub LoadFormSettings(argForm As Form)
-    
-    argForm.X = Me._$settings["form/x", argForm.X]
-    argForm.Y = Me._$settings["form/y", argForm.Y]
-    argForm.Height = Me._$settings["form/height", argForm.Height]
-    argForm.Width = Me._$settings["form/width", argForm.Width]
-    
-End
-
-Public Sub SaveFormSettings(argForm As Form)
-    
-    Me._$settings["form/x"] = argForm.X
-    Me._$settings["form/y"] = argForm.Y
-    Me._$settings["form/height"] = argForm.Height
-    Me._$settings["form/width"] = argForm.Width
-    
-End
-
 Private Function ShowHidden_Read() As Boolean
 
     Return Me._$settings["view/hidden", False]
