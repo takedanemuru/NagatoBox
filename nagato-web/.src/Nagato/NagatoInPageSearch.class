@@ -42,6 +42,7 @@ End
 
 Public Sub SetFocus()
     
+    $searchBox.Text = ""
     $searchBox.SetFocus()
     
 End

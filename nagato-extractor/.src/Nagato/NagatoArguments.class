@@ -10,8 +10,6 @@ Private $outDir As String = ""
 
 Public Sub Parsing()
     
-    Dim yukiOption As Boolean
-    
     Args.Begin("nagato-extractor usage")
         $outDir = Args.Get("o", "--outdir", "set output directory", "PATH")
     $arguments = Args.End()

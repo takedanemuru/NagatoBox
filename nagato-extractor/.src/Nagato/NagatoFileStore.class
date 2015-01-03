@@ -25,6 +25,7 @@ Private Function isAcceptable(argPath As String) As Boolean
     If yukiType = "application/x-lha" Then Return True
     If yukiType = "application/x-lha-compressed" Then Return True
     If yukiType = "application/x-rar-compressed" Then Return True
+    If yukiType = "application/x-rar" Then Return True
     If yukiType = "application/x-tar" Then Return True
     If yukiType = "application/x-zip-compressed" Then Return True
     If yukiType = "application/x-zx" Then Return True

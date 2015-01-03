@@ -90,8 +90,6 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                 .SetTitle($webs.ActiveTabTitle)
                 .SetList(NagatoDBWeb.CategoryNames)
                 If .ShowDialog() = 1 Then
-                    Debug .UserTitle
-                    Debug .Category
                     NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
                 Endif
             End With
@@ -201,6 +199,7 @@ Public Sub InPageSearch_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
         Case NagatoMenuPipe.InPageSearchClose
+            $inPageSearch.Clear()
             InPageSearchHBox.Visible = False
     End Select
     

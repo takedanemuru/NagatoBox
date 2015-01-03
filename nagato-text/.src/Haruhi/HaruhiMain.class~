@@ -65,8 +65,6 @@ End
 
 Public Sub MainTabStrip_Signal(argTag As Integer, argValues As Variant[])
     
-    MikuruStringCode.Check(argValues[0])
-    
     $recentPaths.Refresh(argValues[0])
     
 End

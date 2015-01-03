@@ -46,6 +46,12 @@ Public Sub SetFocus()
     
 End
 
+Public Sub Clear()
+    
+    Debug "clear"
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = argContainer
