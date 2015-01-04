@@ -6,6 +6,12 @@ Property Directory As String
 
 Private $directoryObserver As NagatoDirectoryObserver
 
+Public Sub SetDirectory(argDirectory As String)
+    
+    $directoryObserver.Directory = argDirectory
+    
+End
+
 Public Sub _new(argDirectory As String)
     
     $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"

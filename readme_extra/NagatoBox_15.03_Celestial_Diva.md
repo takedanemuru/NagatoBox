@@ -10,6 +10,7 @@
     + new : settings menu for desktop
     + new : icon settings for application
     + new : background settings for application
+    + ~~fix : NagatoDirectoryObserver does not change DirectoryPath property~~
 
 2. nagato-navigator
 
