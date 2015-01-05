@@ -62,7 +62,7 @@ End
 
 Public Sub DrawingArea_Draw()
     
-    $painter.Paint()
+    Try $painter.Paint()
     
 End
 

@@ -7,6 +7,7 @@ Private $drawingArea As DrawingArea
 Private $tabs As NagatoTabs
 Private $painter As NagatoTabPainter
 Private $message As New NagatoMessage As "Message"
+Private $lock As Boolean = False
 
 Private Sub drawMessage()
     
@@ -51,14 +52,14 @@ End
 
 Public Sub Refresh()
     
-    $drawingArea.Refresh()
+    Try $drawingArea.Refresh()
     
 End
 
 Public Sub SetText(argText As String)
     
     $message.SetText(argText)
-    $drawingArea.Refresh()
+    Try $drawingArea.Refresh()
     
 End
 
@@ -79,6 +80,10 @@ End
 
 Public Sub Asakura_Draw()
     
+    If $lock Then Return
+    
+    $lock = True
+    
     Paint.Begin($drawingArea)
         Paint.DrawImage(Image.Load("pictures/default_persona.png"), 0, -88)
         drawMessage()
@@ -86,6 +91,8 @@ Public Sub Asakura_Draw()
         drawTabs()
         drawPlusButton()
     Paint.End()
+    
+    $lock = False
     
 End
 

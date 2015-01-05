@@ -4,6 +4,10 @@
 
     + initial release
 
+1. nagato-config-screen
+
+    + initial release
+
 1. nagato-files
 
     + new : "open with file manager" menu for desktop directory. 
@@ -14,7 +18,7 @@
 
 2. nagato-navigator
 
-    + fix : avoid to open invalide xml document in activation sequence.
+    + ~~fix : avoid to open invalide xml document in activation sequence.~~
 
 3. nagato-text
 
@@ -23,6 +27,7 @@
 3. nagato-web
 
     + ~~fix : clear text search box when it's closed.~~
+    + ~~fix : crash by confirict on persona drawing area.~~
 
 4. nagato-writer
 

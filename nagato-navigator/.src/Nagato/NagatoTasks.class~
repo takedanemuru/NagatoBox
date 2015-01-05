@@ -51,6 +51,8 @@ Public Function GetWindowsInDesktop(argDesktop As Integer) As DesktopWindow[]
     
     Dim yukiWindows As New DesktopWindow[]
     
+    Debug "GET IN " & argDesktop
+    
     Desktop.Windows.Refresh()
     
     yukiWindows = pushWindow(yukiWindows, argDesktop)

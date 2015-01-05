@@ -3,6 +3,7 @@
 Property Read Items As NagatoRssItem[]
 Property Read Title As String
 
+Private $rssDocument As New NagatoRssDocument
 Private $xmlDocument As New XmlDocument
 Private $items As New NagatoRssItem[]
 Private $buffer As String
@@ -28,10 +29,6 @@ Private Sub setItems()
     Dim yukiRssItem As NagatoRssItem
     
     $xmlDocument.FromString($buffer)
-    
-    Try Debug $xmlDocument.GetElementsByTagName("item").Count
-    
-    If Error Then Return
     
     setTitle()
     
@@ -78,7 +75,11 @@ End
 
 Public Sub HttpClient_Finished()
     
-    setItems()
+    If $rssDocument.Make($buffer) Then 
+        setItems()
+    Else
+        Raise Error
+    End If
     
 End
 

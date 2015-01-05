@@ -1,11 +1,13 @@
 ' Gambas class file
 
+Private Const Margin As Integer = 2
+
 Private $button As NagatoStarButton
 Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
-'Private $systray As NagatoSystray
 Private $pager As NagatoPager
 Private $clock As NagatoClock
+Private $systrayDrawingArea As DrawingArea
 
 Private Sub setForm()
     
@@ -34,6 +36,17 @@ Private Sub setNetWmStrut()
     
 End
 
+Private Sub setSystray()
+    
+    $systrayDrawingArea = New DrawingArea(Me)
+    
+    With $systrayDrawingArea
+        .W = 200
+        .Background = Color.Red
+    End With
+    
+End
+
 Public Sub Form_Open()
 
     setForm()
@@ -42,11 +55,13 @@ Public Sub Form_Open()
     NagatoTimer.Activate()
 
     Me.Background = NagatoSettings.BackgroundColor
-    $button = New NagatoStarButton(MainContainer) As "StarButton"
-    $contentBar = New NagatoContentBar(MainContainer) As "ContentBar"
-    '$systray = New NagatoSystray(MainContainer) As "Systray"
-    $pager = New NagatoPager(MainContainer) As "Pager"
-    $clock = New NagatoClock(MainContainer) As "Clock"
+    $button = New NagatoStarButton(Me) As "StarButton"
+    $contentBar = New NagatoContentBar(Me) As "ContentBar"
+    'setSystray()
+    $pager = New NagatoPager(Me) As "Pager"
+    $clock = New NagatoClock(Me) As "Clock"
+    
+    'X11Systray.Show($systrayDrawingArea.Id)
     
 End
 
@@ -76,4 +91,30 @@ Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
         $contentBar.Swich(argValues[0])
     Endif
     
+End
+
+Public Sub ArrangeTray() ' X11systray cannot call private sub.
+
+    Dim yukiIndex As Integer
+    Dim yukiX As Integer = Margin
+    
+    For yukiIndex = 0 To X11Systray.Count - 1
+        With X11Systray[yukiIndex]
+            .Move(yukiX, Margin, .IconW, .IconH)
+            yukiX += .IconW + Margin
+        End With
+    Next
+  
+End
+
+Public Sub Form_Resize()
+  
+    Me.ArrangeTray()
+
+End
+
+Static Public Sub X11Systray_Arrange()
+
+    Me.ArrangeTray()
+  
 End

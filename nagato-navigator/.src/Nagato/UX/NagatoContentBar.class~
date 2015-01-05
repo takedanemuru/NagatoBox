@@ -29,12 +29,15 @@ Public Sub Swich(argMode As Integer)
             $painter = New NagatoTaskBarTint2Mode($drawingArea)
         Case NagatoModeMenu.ModeSystem
             NagatoTimer.Delay = 1000
+            $taskIcons.Visible = True
             $painter = New NagatoSystemMonitor($drawingArea)
         Case NagatoModeMenu.ModeMusic
             NagatoTimer.Delay = 1000
+            $taskIcons.Visible = True
             $painter = New NagatoMusic($drawingArea)
         Case NagatoModeMenu.ModeRss
             NagatoTimer.Delay = 100
+            $taskIcons.Visible = True
             $painter = New NagatoRssTicker($drawingArea)
     End Select
     
@@ -52,14 +55,14 @@ End
 
 Public Sub Asakura_Timer()
     
-    $taskIcons.Refresh()
+    '$taskIcons.Refresh()
     $drawingArea.Refresh()
     
 End
 
 Public Sub DrawingArea_Draw()
     
-    $painter.Paint()
+    Try $painter.Paint()
     
 End
 

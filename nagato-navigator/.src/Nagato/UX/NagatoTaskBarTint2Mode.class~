@@ -96,12 +96,12 @@ Public Sub Paint()
     Dim yukiX As Integer
     Dim yukiTasks As DesktopWindow[]
     
-    Return
-    
     If $tasks.Count = 0 Then Return
     
     Paint.Begin(Me._$drawingArea)
         For yukiDesktop = 0 To Desktop.Count - 1
+            Debug "DESKTOP WINDOWS INDEX " & yukiDesktop
+
             yukiTasks = $tasks.GetWindowsInDesktop(yukiDesktop)
             yukiX = yukiWidthDesktop * yukiDesktop
             If yukiTasks.Count = 0 Then
