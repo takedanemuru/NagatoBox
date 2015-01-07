@@ -16,6 +16,12 @@ Private Function decodeUrl(argUrl As String) As String
     
 End
 
+Public Function UrlToPath(argUrl As String) As String
+    
+    Return decodeUrl(argUrl)
+    
+End
+
 Public Function IsValideMediaFilePath(argPath As String) As Boolean
     
     If Not Exist(argPath) Then

@@ -18,9 +18,10 @@ Public Sub _InitializeGridView()
         .Columns[0].Text = ("Process ID")
         .Columns[1].Text = ("Status")
         .Columns[2].Text = ("Process Name")
-        .Columns[3].Text = ("CPU Usage")
-        .Columns[4].Text = ("Memory Usage(RSS)")
-        .Columns[5].Text = ("Memory Usage(Virtual)")
+        .Columns[3].Text = ("CPU")
+        .Columns[4].Text = ("Memory (RSS)")
+        .Columns[5].Text = ("Memory (Virtual)")
+        .ScrollBar = Scroll.Both
     End With
     
     NagatoSettings.LoadGridsSettings(Me._$gridView)

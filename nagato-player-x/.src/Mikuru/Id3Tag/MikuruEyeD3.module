@@ -1,0 +1,49 @@
+' Gambas module file
+
+Property Read WorkingDirectory As String
+
+Private Sub ensureDirectory()
+    
+    Dim yukiPath As String
+    
+    If Not Exist(Me.WorkingDirectory) Then Mkdir Me.WorkingDirectory
+    
+    For Each yukiPath In Dir(Me.WorkingDirectory)
+        Kill Me.WorkingDirectory &/ yukiPath
+    Next
+    
+End
+
+Public Function GetPicture(argPath As String, argSize As Integer) As Picture
+    
+    Dim yukiImage As Image
+    
+    ensureDirectory()
+    
+    Try Shell Subst$("eyeD3 -i &1 &2", Me.WorkingDirectory, Quote$(argPath)) Wait
+    
+    If Dir(Me.WorkingDirectory).Count > 0 Then
+        yukiImage = Image.Load(Me.WorkingDirectory &/ Dir(Me.WorkingDirectory)[0])
+        Return yukiImage.Stretch(argSize, argSize).Picture
+    Else
+        Return Null
+    Endif
+    
+Catch
+    Return Null
+    
+End
+
+Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
+    
+    Dim yukiCommand As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
+    
+    Shell Subst$(yukiCommand, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
+    
+End
+
+Private Function WorkingDirectory_Read() As String
+
+    Return User.Home &/ ".nagatobox-eyeD3-working-directory"
+
+End

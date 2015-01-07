@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoIconViewHandler
+
+Event MouseDrag
+
+Public Sub MouseDrag(argUriList As String)
+    
+    Drag.Icon = Me._$iconView.Current.Picture
+    Me._$iconView.Drag(argUriList, MikuruMimeType.UriList)
+    
+End
+
+Public Sub Asakura_MouseDrag()
+    
+    Raise MouseDrag
+    
+End
+
+Public Sub Asakura_DragMove()
+    
+    Dim yukiScrollArea As ScrollArea = Me._$iconView.Children[0]
+    
+    If Not Me._$iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir(Me._$iconView.Item.Key) Then
+        Me._$iconView.UnselectAll()
+        Me._$iconView.Item.Selected = True
+    Else
+        Me._$iconView.UnselectAll()
+    End If
+    
+End

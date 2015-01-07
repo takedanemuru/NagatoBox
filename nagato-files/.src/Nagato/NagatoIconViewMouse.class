@@ -2,7 +2,6 @@
 
 Inherits NagatoIconViewHandler
 
-Event MouseDrag
 Event MouseDown(argPath As String)
 
 Private Sub dropFile(argPath As String)
@@ -37,39 +36,11 @@ Private Sub isVoidArea(argPath As String) As Boolean
     
 End
 
-Public Sub MouseDrag(argUriList As String)
-    
-    Drag.Icon = Me._$iconView.Current.Picture
-    Me._$iconView.Drag(argUriList, MikuruMimeType.UriList)
-    
-End
-
-Public Sub Asakura_MouseDrag()
-    
-    Raise MouseDrag
-    
-End
-
-Public Sub Asakura_DragMove()
-    
-    Dim yukiScrollArea As ScrollArea = Me._$iconView.Children[0]
-    
-    If Not Me._$iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) And If IsDir(Me._$iconView.Item.Key) Then
-        Me._$iconView.UnselectAll()
-        Me._$iconView.Item.Selected = True
-    Else
-        Me._$iconView.UnselectAll()
-    End If
-    
-End
-
 Public Sub Asakura_Drop()
     
     Dim yukiPath As String
     
     If Drag.Format <> MikuruMimeType.UriList Then Return 
-    
-    Debug Drag.Data
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         'xdg-user-dirs will be ignored. 
@@ -114,12 +85,7 @@ Public Sub Asakura_Menu()
     If yukiPath = "NOTFOUND" Then
         Return
     Else If isVoidArea(yukiPath) Then
-        Debug "Popup: IconViewContextMenu2VoidArea"
-        ' THIS IS DUMMY FOR TESTING, MUST BE REMOVED !!!
-        ' DO NOT POPUP CONTEXTMENU HERE. RAISE SIGNAL
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiMain, "")
-        yukiContextMenu.Popup()
-    ' MUST TO DO !! 
+        Raise MenuEvent(NagatoMenuPipe.ViewContextMenu)
     Else 
         yukiContextMenu = New NagatoIconViewContextMenu2Filer(HaruhiMain, yukiPath) As "Menu"
         yukiContextMenu.Popup()

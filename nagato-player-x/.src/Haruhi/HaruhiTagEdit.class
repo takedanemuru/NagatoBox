@@ -17,12 +17,10 @@ End
 
 Private Sub setPicture()
     
-    If ArtistTextBox.Text = "" Then Return
-    If AlbumTextBox.Text = "" Then Return
+    Dim yukiPicture As Picture = MikuruEyeD3.GetPicture($targetPath, AlbumArtPictureBox.H)
     
-    If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
-        AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
-        $albumartUnloaded = False
+    If yukiPicture Then
+        AlbumArtPictureBox.Picture = yukiPicture
     Endif
     
 End
@@ -43,12 +41,7 @@ End
 
 Private Sub setNewPicture()
     
-    'If Not $pictureSelected And If Not $edited Then Return
-    If ArtistTextBox.Text = "" Then Return
-    If AlbumTextBox.Text = "" Then Return
-    If $albumartUnloaded Then Return
-    
-    NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
+    ' TO DO
     
 End
 
@@ -102,6 +95,8 @@ Public Sub AlbumArtPictureBox_MouseDown()
 End
 
 Public Sub Asakura_Select(argFullPath As String)
+    
+    MikuruEyeD3.SetPicture($targetPath, argFullPath)
     
     AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(14 * MikuruUX.Grid, 14 * MikuruUX.Grid).Picture
     $albumartUnloaded = False

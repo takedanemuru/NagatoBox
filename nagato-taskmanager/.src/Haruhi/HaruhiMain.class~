@@ -8,8 +8,6 @@ Private $systemGraph As NagatoSystemGraph
 Private $systemLabel As NagatoSystemLabel
 Private $systemGrids As NagatoSystemGrids
 
-Private $refreshLock As Boolean = False
-
 Public Sub Form_Open()
     
     Application.MainWindow = Me
@@ -38,7 +36,7 @@ Public Sub Timer_Timer()
     
     $systemGraph.Refresh()
     $systemLabel.Refresh()
-    If Not $refreshLock Then $systemGrids.Refresh()
+    $systemGrids.Refresh()
     
 End
 
@@ -80,21 +78,5 @@ Private Function IsSelected_Read() As Boolean
     Else
         Return True
     Endif
-
-End
-
-Public Sub SystemMonitorGrid_Enter()
-
-    Debug "lock"
-
-    $refreshLock = True
-
-End
-
-Public Sub SystemMonitorGrid_Leave()
-
-    Debug "unlock"
-
-    $refreshLock = False
 
 End

@@ -6,6 +6,8 @@ Private Sub addCopyDirectoryMenu(argDirectory As String, argParentMenu As Menu)
     
     Dim yukiMenu As New Menu(argParentMenu) As "CopyDirectoryMenu"
     
+    Debug argDirectory
+    
     With yukiMenu
         .Text = ("Copy Whole Directory")
         .Picture = MikuruIcon.Get("folder")
@@ -14,20 +16,12 @@ Private Sub addCopyDirectoryMenu(argDirectory As String, argParentMenu As Menu)
     
 End
 
-Private Sub addSpacer(argParentMenu As Menu)
-    
-    Dim yukiMenu As New Menu(argParentMenu)
-    
-    yukiMenu.Text = ""
-    
-End
-
 Private Sub addSubDirectory(argDirectory As String, argParentMenu As Menu)
     
     addCopyDirectoryMenu(argDirectory, argParentMenu)
-        addSpacer(argParentMenu)
+        Object.New("NagatoMenuItemDummy", [argParentMenu, ""])
     addDirectory(argDirectory, argParentMenu)
-        addSpacer(argParentMenu)
+        Object.New("NagatoMenuItemDummy", [argParentMenu, ""])
     addCreateFileMenu(argDirectory, argParentMenu)
     
 End
@@ -73,9 +67,11 @@ End
 
 Public Sub _InitializeMenu() ' override
     
-    addDirectory(NagatoXdg.Templates, Me._$rootMenu)
-        addSpacer(Me._$rootMenu)
-    addCreateFileMenu(NagatoXdg.Templates, Me._$rootMenu)
+    addDirectory(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
+        Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+    addCreateFileMenu(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
+        Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemCreateEmptyText", [Me._$rootMenu, Me._$path])
     
 End
 

@@ -22,7 +22,7 @@ Public Function IsValideMediaFilePath(argPath As String) As Boolean
         Return False
     Else If DesktopMime.FromFile(argPath).Type Begins "audio" Then
         Return True
-    Else If DesktopMime.FromFile(yukiPath).Type Begins "video" Then
+    Else If DesktopMime.FromFile(argPath).Type Begins "video" Then
         Return True
     Else
         Return False

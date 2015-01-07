@@ -61,7 +61,7 @@ Public Function GetDirectory(argDirectory As String, Optional argSize As Integer
             Return getDirectoryWithSymbol("video", argSize)
         Case NagatoXdg.UserDirs.PublicShare
             Return getDirectoryWithSymbol("users", argSize)
-        Case NagatoXdg.UserDirs.Templetes
+        Case NagatoXdg.UserDirs.Templates
             Return getDirectoryWithSymbol("ruler", argSize)
         Default
             Return Stock[Subst$("&1/directory", argSize)]
@@ -88,7 +88,7 @@ Public Function GetDirectoryMono(argDirectory As String, Optional argSize As Int
             Return Me.Get("users", argSize)
         Case NagatoXdg.UserDirs.Videos
             Return Me.Get("video", argSize)
-        Case NagatoXdg.UserDirs.Templetes
+        Case NagatoXdg.UserDirs.Templates
             Return Me.Get("documents", argSize)
         Default
             Return Me.Get("folder", argSize)

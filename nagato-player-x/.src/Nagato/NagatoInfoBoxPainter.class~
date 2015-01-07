@@ -10,8 +10,30 @@ Private Function getInfoText() As String
     If NagatoQueue.Count = 0 Then
         Return Subst$("<b>YUKI.N > Can you see this ?</b>")
     Else
-        Return Subst$("<b>&1</b>", NagatoQueue[NagatoQueue.CurrentIndex].Title)
+        Return Subst$("<b>&1</b>", NagatoQueue.Title)
     Endif
+    
+End
+
+Private Sub drawMessage(argRect As Rect)
+    
+     If $messageDuration > 0 Then
+        Me._PaintRichText(argRect, $message)
+    Else
+        Me._PaintRichText(argRect, getInfoText())
+    End If
+    
+End
+
+Private Sub drawCoverArt()
+    
+    Dim yukiCoverArt As Picture = NagatoQueue.CoverArt
+    
+    Debug MikuruUx.InfoBox.H
+    
+    With MikuruUx.InfoBox
+        Draw.Picture(yukiCoverArt, .X + 8, .Y - 16)
+    End With
     
 End
 
@@ -24,13 +46,17 @@ End
 
 Public Sub Draw()
     
+    Dim yukiRect As Rect = MikuruUx.InfoBoxInternal
+    
     Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
     
-    If $messageDuration > 0 Then
-        Me._PaintRichText(MikuruUx.InfoBoxInternal, $message)
-    Else
-        Me._PaintRichText(MikuruUx.InfoBoxInternal, getInfoText())
-    End If
+    If NagatoQueue.CoverArt Then
+        drawCoverArt()
+        yukiRect.X += NagatoQueue.CoverArt.W
+        yukiRect.W -= NagatoQueue.CoverArt.W
+    Endif
+
+    drawMessage(yukiRect)
     
     Dec $messageDuration
     

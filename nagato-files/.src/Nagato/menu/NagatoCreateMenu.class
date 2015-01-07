@@ -7,11 +7,11 @@ Private Sub addCreateFileMenu()
     Dim yukiMenu As Menu
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(NagatoXdg.Templates, "*", gb.File)
+    For Each yukiPath In Dir(NagatoXdg.UserDirs.Templates, "*", gb.File)
         yukiMenu = New Menu(Me._$rootMenu) As "CreateFileMenu"
         yukiMenu.Text = yukiPath
-        yukiMenu.Tag = NagatoXdg.Templates &/ yukiPath
-        yukiMenu.Picture = MikuruIconMono.GetFromPath(NagatoXdg.Templates &/ yukiPath)
+        yukiMenu.Tag = NagatoXdg.UserDirs.Templates &/ yukiPath
+        yukiMenu.Picture = MikuruIconMono.GetFromPath(NagatoXdg.UserDirs.Templates &/ yukiPath)
     Next
     
 End

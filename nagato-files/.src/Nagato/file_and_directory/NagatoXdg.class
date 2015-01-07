@@ -2,8 +2,6 @@
 
 Create Static
 
-Property Read Templates As String
-
 Public Struct Directories 
     All As String[]
     Desktop As String
@@ -12,7 +10,7 @@ Public Struct Directories
     Music As String
     Pictures As String
     PublicShare As String
-    Templetes As String
+    Templates As String
     Videos As String
 End Struct
 
@@ -37,7 +35,7 @@ Private Sub initializeDirData()
         .Music = getDir("MUSIC")
         .Pictures = getDir("PICTURES")
         .PublicShare = getDir("PUBLICSHARE")
-        .Templetes = getDir("TEMPLATES")
+        .Templates = getDir("TEMPLATES")
         .Videos = getDir("VIDEOS")
     End With
     
@@ -46,7 +44,7 @@ End
 Public Sub initializeDirArray()
     
     With UserDirs
-        .All = [.Desktop, .Documents, .Download, .Music, .Pictures, .PublicShare, .Templetes, .Videos]
+        .All = [.Desktop, .Documents, .Download, .Music, .Pictures, .PublicShare, .Templates, .Videos]
     End With
     
 End
@@ -60,51 +58,13 @@ End
 
 Public Function GetIcon(argPath As String) As Picture
     
-    Select Case argPath
-        Case NagatoXdg.UserDirs.Desktop
-            Return MikuruIcon("desktop")
-        Case NagatoXdg.UserDirs.Documents
-            Return MikuruIcon("document-edit")
-        Case NagatoXdg.UserDirs.Download
-            Return MikuruIcon("hard-drive-download")
-        Case NagatoXdg.UserDirs.Music
-            Return MikuruIcon("music")
-        Case NagatoXdg.UserDirs.Pictures
-            Return MikuruIcon("image")
-        Case NagatoXdg.UserDirs.PublicShare
-            Return MikuruIcon("users")
-        Case NagatoXdg.UserDirs.Templetes
-            Return MikuruIcon("ruler")
-        Case NagatoXdg.UserDirs.Videos
-            Return MikuruIcon("video")
-        Default
-            Return Null
-    End Select
+    Return MikuruXdgUserDirsIcons[argPath]
     
 End
 
 Public Function GetName(argPath As String) As String
     
-    Select Case argPath
-        Case NagatoXdg.UserDirs.Desktop
-            Return "DESKTOP"
-        Case NagatoXdg.UserDirs.Documents
-            Return "DOCUMENTS"
-        Case NagatoXdg.UserDirs.Download
-            Return "DOWNLOAD"
-        Case NagatoXdg.UserDirs.Music
-            Return "MUSIC"
-        Case NagatoXdg.UserDirs.Pictures
-            Return "PICTURES"
-        Case NagatoXdg.UserDirs.PublicShare
-            Return "PUBLICSHARE"
-        Case NagatoXdg.UserDirs.Templetes
-            Return "TEMPLATES"
-        Case NagatoXdg.UserDirs.Videos
-            Return "VIDEOS"
-        Default
-            Return ""
-    End Select
+    Return MikuruXdgUserDirsNames[argPath]
     
 End
 
@@ -127,10 +87,4 @@ Public Function RemoveXdgUserDirs(argPaths As String[]) As String[]
     
     Return yukiPaths
     
-End
-
-Private Function Templates_Read() As String
-
-    Return UserDirs.Templetes
-
 End

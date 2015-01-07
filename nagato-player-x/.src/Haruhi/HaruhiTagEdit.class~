@@ -9,14 +9,6 @@ Event TagChanged
 
 Private Sub setTags()
     
-    ' Dim yukiResult As Result = NagatoDBMedia.GetMusicResultByPath($targetPath)
-    ' 
-    ' With NagatoDBMedia
-    '     If yukiResult[.ColumnTitle] <> "" Then TitleTextBox.Text = yukiResult[.ColumnTitle]
-    '     If yukiResult[.ColumnArtist] <> "" Then ArtistTextBox.Text = yukiResult[.ColumnArtist]
-    '     If yukiResult[.ColumnAlbum] <> "" Then AlbumTextBox.Text = yukiResult[.ColumnAlbum]
-    ' End With
-    
     TitleTextBox.Text = MikuruId3TagInfo.GetTitle($targetPath)
     ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($targetPath)
     AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($targetPath)
@@ -25,13 +17,19 @@ End
 
 Private Sub setPicture()
     
-    If ArtistTextBox.Text = "" Then Return
-    If AlbumTextBox.Text = "" Then Return
+    Dim yukiPicture As Picture = MikuruEyeD3.GetPicture($targetPath, AlbumArtPictureBox.H)
     
-    If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
-        AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
-        $albumartUnloaded = False
+    If yukiPicture Then
+        AlbumArtPictureBox.Picture = yukiPicture
     Endif
+    
+    ' If ArtistTextBox.Text = "" Then Return
+    ' If AlbumTextBox.Text = "" Then Return
+    ' 
+    ' If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
+    '     AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
+    '     $albumartUnloaded = False
+    ' Endif
     
 End
 
@@ -52,11 +50,11 @@ End
 Private Sub setNewPicture()
     
     'If Not $pictureSelected And If Not $edited Then Return
-    If ArtistTextBox.Text = "" Then Return
-    If AlbumTextBox.Text = "" Then Return
-    If $albumartUnloaded Then Return
-    
-    NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
+    ' If ArtistTextBox.Text = "" Then Return
+    ' If AlbumTextBox.Text = "" Then Return
+    ' If $albumartUnloaded Then Return
+    ' 
+    ' NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
     
 End
 
@@ -110,6 +108,11 @@ Public Sub AlbumArtPictureBox_MouseDown()
 End
 
 Public Sub Asakura_Select(argFullPath As String)
+    
+    Debug $targetPath
+    Debug argFullPath
+    
+    Shell Subst$("eyeD3 --add-image=&1:FRONT_COVER &2", Quote$(argFullPath), Quote$($targetPath)) Wait
     
     AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(14 * MikuruUX.Grid, 14 * MikuruUX.Grid).Picture
     $albumartUnloaded = False

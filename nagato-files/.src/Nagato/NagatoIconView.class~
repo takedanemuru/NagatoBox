@@ -7,6 +7,7 @@ Property Read Selection As String[]
 Private $iconViewAction As NagatoIconViewAction
 Private $iconView As NagatoIconViewSurface
 Private $iconViewMouse As NagatoIconViewMouse
+Private $iconViewDrag As NagatoIconViewDrag
 Private $iconViewKeyboard As NagatoIconViewKeyboard
 Private $selectionBar As NagatoSelectionBar 
 Private $currentDirectory As String
@@ -84,8 +85,23 @@ Public Sub _new(argContainer As Container)
     $iconViewAction = New NagatoIconViewAction(yukiIconViewInitializer.IconView) As "Menu"
     $iconView = New NagatoIconViewSurface(yukiIconViewInitializer.IconView) As "Menu"
     $iconViewMouse = New NagatoIconViewMouse(yukiIconViewInitializer.IconView) As "Menu"
+    $iconViewDrag = New NagatoIconViewDrag(yukiIconViewInitializer.IconView) As "Menu"
     $iconViewKeyboard = New NagatoIconViewKeyboard(yukiIconViewInitializer.IconView) As "Keyboard"
     $selectionBar = New NagatoSelectionBar(argContainer) As "SelectionBar"
+    
+End
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    Dim yukiMenu As Object
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.ViewContextMenu
+            yukiMenu = New NagatoContextMenuIconViewFiler(HaruhiMain, $currentDirectory)
+            yukiMenu.PopUp()
+        Default
+            Raise MenuEvent(argEvent)
+    End Select
     
 End
 
@@ -93,7 +109,7 @@ Public Sub Menu_MouseDrag()
     
     If $selectionBar.Count = 0 Then Return
     
-    $iconViewMouse.MouseDrag(NagatoDrag2.GetUriList($selectionBar.Paths))
+    $iconViewDrag.MouseDrag(NagatoDrag2.GetUriList($selectionBar.Paths))
     ' 
 End
 
@@ -116,7 +132,7 @@ Public Sub Menu_MouseDown(argPath As String)
     If Not NagatoSettings.MultipleSelection Then clearSelection()
     $iconView.ResetIcon(argPath, $selectionBar.Exist(argPath))
     
-    Raise MenuEventWithArg(NagatoMenuPipe.FileShowProperty, $selectionBar.LastSelected)
+    TFEI.SetFileProperty($selectionBar.LastSelected)
     
 End
 

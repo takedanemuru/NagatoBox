@@ -10,12 +10,14 @@ Property Read Player As NagatoPlayer
 Property Read State As Integer
 Property Read Collection As Collection
 
+Property Read CoverArt As Picture
 Property Read Title As String
 Property Read Artist As String
 Property Read Album As String
 
 Private $player As New NagatoPlayer As "Player"
 Private $musicList As NagatoMusicList 
+Private $coverArt As Picture
 
 Event Moved
 Event Changed
@@ -199,6 +201,10 @@ End
 
 Public Sub MusicList_Moved()
     
+    Dim yukiPath As String = MikuruPath.UrlToPath(NagatoQueue.CurrentPath)
+    
+    $coverArt = MikuruEyeD3.GetPicture(yukiPath, 96)
+    
     Raise Moved
     
 End
@@ -280,5 +286,11 @@ Private Function Collection_Read() As Collection
     Next
     
     Return yukiCollection
+
+End
+
+Private Function CoverArt_Read() As Picture
+
+    Return $coverArt
 
 End
