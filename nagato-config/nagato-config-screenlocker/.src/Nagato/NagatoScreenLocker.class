@@ -1,4 +1,6 @@
-' Gambas module file
+' Gambas class file
+
+Create Static
 
 Private $image As Image
 
@@ -44,13 +46,14 @@ Private Sub initializeImage()
     
     $image = Desktop.Screenshot().Image
     $image = $image.Blur(1)
+    $image = $image.Blur(1)
     
 End
 
 Private Sub paintShade()
     
     With Paint
-        .Brush = .Color(getShadeColor() + 16777216 * 128)
+        .Brush = .Color(getShadeColor() + 16777216 * 64)
         .Rectangle(0, 0, Screen.W, Screen.H)
         .Fill()
     End With
@@ -88,7 +91,7 @@ Private Sub paintScreen()
     
 End
 
-Public Sub Main()
+Public Sub Show()
     
     initializeImage()
     paintScreen()

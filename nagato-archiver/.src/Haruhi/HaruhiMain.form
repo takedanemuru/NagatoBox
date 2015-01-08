@@ -28,7 +28,7 @@
     { TypeComboBox ComboBox
       MoveScaled(18,1,15,4)
       ReadOnly = True
-      List = [("tar"), ("zip"), ("bzip2"), ("gzip"), ("rar"), ("lzh"), ("xz")]
+      List = [("tar"), ("zip"), ("bzip2"), ("gzip"), ("rar"), ("lzh"), ("xz"), ("tar.gz"), ("tar.xz")]
       Text = ("ComboBox1")
     }
     { ApplyButton Button

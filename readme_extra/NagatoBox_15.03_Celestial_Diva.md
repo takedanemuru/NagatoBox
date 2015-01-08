@@ -1,12 +1,20 @@
 ##NagatoBox 15.03 *Celestial Diva*
 
+1. nagato-archiver
+
+    + ~~new : handle tar.gz and tar.xz directly~~
+
 1. nagato-config-appearance
 
     + initial release
 
-1. nagato-config-screen
+1. nagato-config-screenlocker
 
-    + initial release
+    + ~~initial release~~
+
+1. nagato-extractor
+
+    + ~~new : handle tar.gz and tar.xz directly~~
 
 1. nagato-files
 
@@ -19,6 +27,10 @@
 2. nagato-navigator
 
     + ~~fix : avoid to open invalide xml document in activation sequence.~~
+
+2. nagato-player-x
+
+    + rewrite : ~~coverart functionality and its design~~
 
 3. nagato-text
 

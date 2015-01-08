@@ -16,7 +16,7 @@ Public Sub Parsing()
         $start = Args.Has("i", "idle", "start idling nagato-screensaver")
         $disable = Args.Has("d", "disable")
         $enable = Args.Has("e", "enable")
-        $show = Args.Has("s", "show")
+        $show = Args.Has("l", "lock")
     Args.End()
     
 End

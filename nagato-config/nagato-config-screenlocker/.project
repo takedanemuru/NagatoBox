@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.6.0
-Title=nagato-screensaver
+# Compiled with Gambas 3.6.2
+Title=nagato-config-screenlocker
 Startup=Kyon
 Icon=Pictures/shield.png
-Version=0.4.3
+Version=0.5.1
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -26,11 +26,11 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@gmail.com
 Url=http://bloominabc.blogspot.jp/
 License=S.O.S. License
-PackageName=nagato-screensaver-0.4.3
+PackageName=nagato-config-screenlocker-0.5.1
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Screen/Saving"
 Categories=ubuntu:"Nagato;System"
 Groups=ubuntu:"x11"
-ExtraDependencies=ubuntu:"xautolock\t\t"
+ExtraDependencies=ubuntu:"xautolock\t\t\ni3lock\t\t"

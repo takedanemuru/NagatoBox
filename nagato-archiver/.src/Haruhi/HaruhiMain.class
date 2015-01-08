@@ -20,6 +20,10 @@ Private Function getArchiveType() As String
             Return ".lzh"
         Case 6
             Return ".xz"
+        Case 7
+            Return ".tar.gz"
+        Case 8
+            Return ".tar.xz"
     End Select
     
 End
