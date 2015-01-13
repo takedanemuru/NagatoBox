@@ -30,7 +30,9 @@ End
 
 Public Sub CreateButton_Click()
 
-    If Not Exist($parentDirectory &/ DirectoryNameBox.Text) Then
+    If Not Exist($parentDirectory) Then
+        Message.Error(("YUKI.N > This directory has been deleted."), ("OK"))
+    Else If Not Exist($parentDirectory &/ DirectoryNameBox.Text) Then
         Mkdir $parentDirectory &/ DirectoryNameBox.Text
         Me.Close(Me.ResponsCreate)
     Else

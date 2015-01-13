@@ -24,7 +24,7 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    Me._$grids = New GridView(argContainer)
+    Me._$grids = New GridView(argContainer) As "Grids"
     Me._InitializeGrids()
     
 End

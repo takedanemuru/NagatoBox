@@ -14,14 +14,16 @@ Public Sub Refresh(argRow As Integer)
     
 End
 
-Public Sub Set(argRowIndex As Integer)
+Public Function Set(argRowIndex As Integer) As Boolean
     
     If argRowIndex <> NagatoQueue.CurrentIndex Then
-        Return 
+        Return False
     Else If NagatoQueue.State = Media.Playing Then
         $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
+        Return True
     Else
         $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
+        Return True
     End If
     
 End

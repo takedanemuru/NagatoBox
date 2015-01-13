@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoTile
+
+Public _$baseColor As Integer = Color.DarkGreen
+
+Public Sub _call(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
+    Dim yukiIcon As Picture = MikuruIcon.Get("exclamation", 32)
+    Dim yukiMessage As String = ("This Directory Has Been Deleted.")
+    
+    Return Me._GetTile(yukiBaseImage, yukiIcon, yukiMessage, argSelected)
+    
+End

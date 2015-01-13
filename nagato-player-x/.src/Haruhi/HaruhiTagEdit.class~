@@ -2,8 +2,10 @@
 
 Private $edited As Boolean
 Private $albumartUnloaded As Boolean = True
+Private $albumartPath As String
 Private $targetPath As String
 Private $observer As Observer
+
 
 Event TagChanged
 
@@ -23,14 +25,6 @@ Private Sub setPicture()
         AlbumArtPictureBox.Picture = yukiPicture
     Endif
     
-    ' If ArtistTextBox.Text = "" Then Return
-    ' If AlbumTextBox.Text = "" Then Return
-    ' 
-    ' If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
-    '     AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
-    '     $albumartUnloaded = False
-    ' Endif
-    
 End
 
 Private Sub setNewTag()
@@ -49,12 +43,7 @@ End
 
 Private Sub setNewPicture()
     
-    'If Not $pictureSelected And If Not $edited Then Return
-    ' If ArtistTextBox.Text = "" Then Return
-    ' If AlbumTextBox.Text = "" Then Return
-    ' If $albumartUnloaded Then Return
-    ' 
-    ' NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
+    ' TO DO
     
 End
 
@@ -88,6 +77,10 @@ Public Sub ApplyButton_Click()
     
     Me.Close(MikuruDialog.ResponseApply)
     
+    If Not $albumartUnloaded Then MikuruEyeD3.SetPicture($targetPath, $albumartPath)
+    
+    Debug $albumartPath
+    
     Raise TagChanged
     
 End
@@ -109,15 +102,13 @@ End
 
 Public Sub Asakura_Select(argFullPath As String)
     
-    Debug $targetPath
-    Debug argFullPath
-    
-    Shell Subst$("eyeD3 --add-image=&1:FRONT_COVER &2", Quote$(argFullPath), Quote$($targetPath)) Wait
-    
+    $albumartPath = argFullPath
+    'MikuruEyeD3.SetPicture($targetPath, argFullPath)
     AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(14 * MikuruUX.Grid, 14 * MikuruUX.Grid).Picture
     $albumartUnloaded = False
     
 Catch
+    Debug Error.Text
     Return
     
 End

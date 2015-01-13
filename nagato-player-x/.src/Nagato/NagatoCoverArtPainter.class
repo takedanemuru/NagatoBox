@@ -4,7 +4,6 @@ Inherits NagatoWidgetPainter
 
 Public Sub Draw()
     
-
     If Not NagatoQueue.CoverArt Then Return
     
     Draw.Picture(NagatoQueue.CoverArt, 100, 100)

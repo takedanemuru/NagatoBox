@@ -14,6 +14,8 @@ Property Read EditTagButton As Rect
 Property Read InfoBox As Rect
 Property Read InfoBoxInternal As Rect
 Property Read ProgressBar As Rect
+Property Read CoverArt As Rect
+Property Read CoverArtSize As Integer
 
 Private Function Grid_Read() As Integer
 
@@ -124,5 +126,19 @@ Private Function InfoBoxInternal_Read() As Rect
     Dim yukiRectangle As New Rect(2 * Me.Grid, 37 * Me.Grid, 32 * Me.Grid, 9 * Me.Grid)
     
     Return yukiRectangle
+
+End
+
+Private Function CoverArt_Read() As Rect
+
+    Dim yukiRectangle As New Rect(2 * Me.Grid, 34 * Me.Grid, Me.CoverArtSize, Me.CoverArtSize)
+    
+    Return yukiRectangle
+
+End
+
+Private Function CoverArtSize_Read() As Integer
+
+    Return 12 * Me.Grid
 
 End

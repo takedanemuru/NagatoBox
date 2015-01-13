@@ -37,6 +37,12 @@ Public Sub DirectoryObserver_Deleted(argFileName As String)
     
 End
 
+Public Sub DirectoryObserver_Lost()
+    
+    Raise MenuEventWithArg(NagatoMenuPipe.ObserverLost, "")
+    
+End
+
 Private Function Directory_Read() As String
 
     Return $directoryObserver.Directory

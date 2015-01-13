@@ -14,7 +14,7 @@ Public Enum FileMoveTo = 5010, FileCopyTo = 5011
 Public Enum DirHeader = 6000, DirOpen = 6001, DirOpenInNewTab = 6002, DirDelete = 6003, DirRename = 6004
 Public Enum DirCreate = 6005, DirShowProperty = 6006, DirComputeSize = 6007
 Public Enum TagHeader = 7000, TagAdd = 7001, TagRemove = 7002
-Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002
+Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002, ObserverLost = 8003
 Public Enum CreateHeader = 9000, CreateArchive = 9001, CreateClone = 9002, CreateSymblicLink = 9003
 
 Event MenuEvent(argEvent As Integer)

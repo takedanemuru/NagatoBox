@@ -30,7 +30,7 @@
 
 2. nagato-player-x
 
-    + rewrite : ~~coverart functionality and its design~~
+    + ~~rewrite : coverart functionality and its design~~
 
 3. nagato-text
 

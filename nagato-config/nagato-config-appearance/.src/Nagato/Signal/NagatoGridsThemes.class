@@ -2,8 +2,6 @@
 
 Inherits NagatoGrids
 
-Private $observer As Observer
-
 Public Sub _InitializeGrids()
     
     With Me._$grids
@@ -14,8 +12,6 @@ Public Sub _InitializeGrids()
         .Columns[1].Text = ("Theme")
         .Expand = True
     End With
-    
-    $observer = New Observer(Me._$grids) As "Asakura"
     
 End
 
@@ -43,9 +39,7 @@ Public Sub SetList(argList As String[])
     
 End
 
-Public Sub Asakura_Activate()
-    
-    Debug "Activate"
+Public Sub Grids_Activate()
     
     Raise SIgnal(MikuruSignal.PropertyChanged, [Me._$grids.Row])
     

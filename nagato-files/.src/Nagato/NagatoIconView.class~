@@ -156,7 +156,6 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
         Case Key["t"]
             Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
         Case Key["n"]
-            Debug "new dir"
             Raise MenuEvent(NagatoMenuPipe.DirCreate)
         Case Key["f"]
             TFEI.SetSearch(False)

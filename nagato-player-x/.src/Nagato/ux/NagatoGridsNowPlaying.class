@@ -101,7 +101,6 @@ End
 Public Sub _Activate() 'override
     
    NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
-   Me.SetMark(Me._$grids.Row)
     
 End
 
@@ -122,14 +121,9 @@ Public Sub RefreshPlaymark()
     If Not Object.IsValid(Me._$grids) Then Return
     
     For yukiRowIndex = 0 To Me._$grids.Rows.Max
-        $playMark.Set(yukiRowIndex)
-        Me._$grids[yukiRowIndex, 0].EnsureVisible()
+        If $playMark.Set(yukiRowIndex) Then
+            Me._$grids[yukiRowIndex, 0].EnsureVisible()
+        End If
     Next
-    
-End
-
-Public Sub Asakura_MouseDown()
-    
-    Debug "MouseDown"
     
 End

@@ -55,6 +55,7 @@ Private Sub fileEventHandler(argEvent As Integer, argArgument As Variant)
                     MikuruFileManuever.CopyTo($iconView.Selection)
                 Endif
             Case .FileCreate
+                If Not Exist($log.Current) Then Return
                 Copy argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument))
         End Select
     End With
@@ -171,6 +172,8 @@ Public Sub DirectoryObserver_MenuEventWithArg(argEvent As Integer, argFileName A
             If Not $iconView.HasKey($log.Current, argFileName) Then refresh($log.Current)
         Case NagatoMenuPipe.ObserverDelete
             $iconView.Delete($log.Current &/ argFileName)
+        Case NagatoMenuPipe.ObserverLost
+            $iconView.ShowLostDirectory()
     End Select
     
 End

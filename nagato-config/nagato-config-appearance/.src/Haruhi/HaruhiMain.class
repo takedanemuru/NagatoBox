@@ -4,6 +4,8 @@ Private $toolbarThemes As NagatoToolbarWidgetThemes
 Private $gridsThemes As NagatoGridsThemes
 Private $applyButtons As NagatoToolbarApplyButtons
 
+Private $icons As NagatoIconSettingsHandler
+
 Private Sub initializeGridThemes()
     
     $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "ThemesGrids"
@@ -21,6 +23,8 @@ Public Sub _new()
     $toolbarThemes = New NagatoToolbarWidgetThemes(MainTabStrip)
     initializeGridThemes()
     $applyButtons = New NagatoToolbarApplyButtons(Me)
+
+    $icons = New NagatoIconSettingsHandler(MainTabStrip) As "Icons"
 
 End
 

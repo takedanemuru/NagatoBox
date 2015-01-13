@@ -7,8 +7,6 @@ Private $voidTile As New NagatoTileVoid
 
 Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     
-    Debug "link";; Stat(argPath).Link
-    
     With MikuruMimeType
         Select Case .GetType(argPath)
             Case .TypeDirectory

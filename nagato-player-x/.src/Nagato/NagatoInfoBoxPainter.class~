@@ -27,12 +27,10 @@ End
 
 Private Sub drawCoverArt()
     
-    Dim yukiCoverArt As Picture = NagatoQueue.CoverArt
-    
-    Debug MikuruUx.InfoBox.H
-    
-    With MikuruUx.InfoBox
-        Draw.Picture(yukiCoverArt, .X + 8, .Y - 16)
+    With MikuruUx.CoverArt
+        Me._PaintClipRectangle(MikuruUx.CoverArt, 1 * MikuruUx.Grid)
+        Draw.Picture(NagatoQueue.CoverArt, .X, .Y)
+        Paint.Fill(False)
     End With
     
 End
@@ -52,8 +50,8 @@ Public Sub Draw()
     
     If NagatoQueue.CoverArt Then
         drawCoverArt()
-        yukiRect.X += NagatoQueue.CoverArt.W
-        yukiRect.W -= NagatoQueue.CoverArt.W
+        yukiRect.X += (MikuruUx.CoverArtSize + MikuruUx.Grid)
+        yukiRect.W -= (MikuruUx.CoverArtSize + MikuruUx.Grid)
     Endif
 
     drawMessage(yukiRect)

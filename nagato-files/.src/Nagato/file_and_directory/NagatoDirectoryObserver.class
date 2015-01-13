@@ -10,6 +10,7 @@ Private $previousPaths As String[]
 
 Event Deleted(argFileName As String)
 Event Modefied(argFileName As String)
+Event Lost
 
 Private Sub checkDeletedPath(argCurrentPaths As String[])
     
@@ -48,13 +49,17 @@ End
 
 Public Sub Timer_Timer()
     
-    Dim yukiCurrentPaths As String[] = Dir($directory)
+    Dim yukiCurrentPaths As String[] 
     
-    checkDeletedPath(yukiCurrentPaths)
-    checkModefiedPath(yukiCurrentPaths)
-    
-    $lastObserved = Now
-    $previousPaths = yukiCurrentPaths
+    If Not Exist($directory) Then
+        Raise Lost
+    Else
+        yukiCurrentPaths = Dir($directory)
+        checkDeletedPath(yukiCurrentPaths)
+        checkModefiedPath(yukiCurrentPaths)
+        $lastObserved = Now
+        $previousPaths = yukiCurrentPaths
+    Endif
     
 End
 

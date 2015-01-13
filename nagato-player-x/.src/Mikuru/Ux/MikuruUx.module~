@@ -119,7 +119,6 @@ Private Function Padding_Read() As Integer
 
 End
 
-
 Private Function InfoBoxInternal_Read() As Rect
 
     Dim yukiRectangle As New Rect(2 * Me.Grid, 37 * Me.Grid, 32 * Me.Grid, 9 * Me.Grid)
