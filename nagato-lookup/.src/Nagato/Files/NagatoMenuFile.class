@@ -54,6 +54,7 @@ Public Sub FileMenu_Show()
     $menu.Children.Clear()
     
     addSelectApplicationMenu()
+        MikuruMenuDummy($menu)
     addExecuteMenus()
     
 End

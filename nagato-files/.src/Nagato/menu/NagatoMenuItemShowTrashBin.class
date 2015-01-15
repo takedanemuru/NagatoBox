@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Private Function getIcon() As Picture
+    
+    Return IIf(NagatoSettingsDesktop.ShowTrashBin, MikuruIcon.Get("button-check"), Null)
+    
+End
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("Show TrashBin")
+        .Picture = getIcon()
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsDesktop.ShowTrashBin = Not NagatoSettingsDesktop.ShowTrashBin
+    
+End

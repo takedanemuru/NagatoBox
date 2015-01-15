@@ -46,6 +46,6 @@ End
 
 Public Sub DesktopTimer_Timer()
     
-    Try $iconView[NagatoDesktop.SpecialKeyClock].Picture = getIcon()
+    $iconView[NagatoDesktop.SpecialKeyClock].Picture = getIcon()
     
 End

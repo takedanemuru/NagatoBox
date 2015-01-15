@@ -3,15 +3,16 @@
 Inherits NagatoDesktopHandler
 
 Private $iconView As IconView
-Private $observer As NagatoDirectoryObserver
+Private $directoryObserver As NagatoDirectoryObserver
+Private $settingsObserver As Observer
 
 Event Signal(argSignal As Integer, argValues As Variant)
 
 Private Sub initializeObserver()
     
-    $observer = New NagatoDirectoryObserver As "DirectoryObserver"
+    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
     
-    With $observer
+    With $directoryObserver
         .Directory = Desktop.Path
         .IntervalSecond = 1
     End With
@@ -21,6 +22,7 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
+    $settingsObserver = New Observer(NagatoSettingsDesktop) As "SettingsObserver"
     
     initializeObserver()
     
@@ -35,5 +37,11 @@ End
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
     Raise Signal(NagatoMenuPipe.ObserverModefy, argFileName)
+    
+End
+
+Public Sub SettingsObserver_Changed()
+    
+    Raise Signal(NagatoMenuPipe.ViewForceReload, "")
     
 End

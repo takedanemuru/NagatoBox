@@ -2,17 +2,53 @@
 
 Inherits NagatoSubMenu
 
-Private Sub addCreateFileMenu()
+Private Sub addFiles(argParentMenu As Menu, argDirectory As String)
     
     Dim yukiMenu As Menu
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(NagatoXdg.UserDirs.Templates, "*", gb.File)
-        yukiMenu = New Menu(Me._$rootMenu) As "CreateFileMenu"
+    For Each yukiPath In Dir(argDirectory, "*", gb.File).Sort(gb.IgnoreCase)
+        yukiMenu = New Menu(argParentMenu) As "CreateFileMenu"
         yukiMenu.Text = yukiPath
-        yukiMenu.Tag = NagatoXdg.UserDirs.Templates &/ yukiPath
-        yukiMenu.Picture = MikuruIconMono.GetFromPath(NagatoXdg.UserDirs.Templates &/ yukiPath)
+        yukiMenu.Tag = argDirectory &/ yukiPath
+        yukiMenu.Picture = MikuruIconMono.GetFromPath(argDirectory &/ yukiPath)
     Next
+    
+End
+
+Private Sub addCopyWholeDirectoryMenu(argParentMenu As Menu, argDirectory As String)
+    
+    Dim yukiMenu As Menu
+    
+    If argDirectory = NagatoXdg.UserDirs.Templates Then Return
+    
+    yukiMenu = New Menu(argParentMenu) As "CopyWholeDirectoryMenu"
+    
+    With yukiMenu
+        .Text = ("Copy Whole Directory")
+        .Picture = MikuruIcon.Get("folder")
+        .Tag = argDirectory
+    End With
+    
+    Object.New("NagatoMenuItemDummy", [argParentMenu, ""])
+    
+End
+
+Private Sub addDirectories(argParentMenu As Menu, argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiMenu As Menu
+    
+    'addCopyWholeDirectoryMenu(argParentMenu, argDirectory)
+    
+    For Each yukiPath In Dir(argDirectory, "*", gb.Directory).Sort(gb.IgnoreCase)
+        yukiMenu = New Menu(argParentMenu)
+        yukiMenu.Text = yukiPath
+        yukiMenu.Picture = MikuruIcon.Get("folder")
+        addDirectories(yukiMenu, argDirectory &/ yukiPath)
+    Next
+
+    addFiles(argParentMenu, argDirectory)
     
 End
 
@@ -30,8 +66,9 @@ End
 Public Sub _InitializeMenu() ' override
     
     Me._AddMenu(("New Directory"), NagatoMenuPipe.DirCreate, "folder")
-    Me._AddMenu("", 0) ' add dummy menu
-    addCreateFileMenu()
+    Me._AddMenu(("New Text File"), NagatoMenuPipe.CreateBlankText, "document")
+        Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+    addDirectories(Me._$rootMenu, NagatoXdg.UserDirs.Templates)
     
 End
 
@@ -41,8 +78,16 @@ Public Sub MenuItem_Click()
     
 End
 
+Public Sub CopyWholeDirectoryMenu_Click()
+    
+    Debug Last.Tag
+    
+    'Raise MenuEventWithArg(NagatoMenuPipe.CreateCopyWholeDirectory, Last.Tag)
+    
+End
+
 Public Sub CreateFileMenu_Click()
     
-   Raise MenuEventWithArg(NagatoMenuPipe.FileCreate, Last.Tag)
+    Raise MenuEventWithArg(NagatoMenuPipe.FileCreate, Last.Tag)
     
 End

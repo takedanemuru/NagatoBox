@@ -80,6 +80,7 @@ Public Sub CopyToDirectory(argPaths As String[], argDirectory As String)
     Dim yukiCollection As New Collection
     
     For Each yukiPath In argPaths
+        Debug yukiPath
         yukiTargetPath = MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
         If Not IsDir(yukiPath) Then
             Try Copy yukiPath To yukiTargetPath

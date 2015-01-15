@@ -18,6 +18,14 @@ Private Sub addFromTemplateMenu()
     
 End
 
+Private Sub addConfigMenu()
+    
+    Dim yukiMenu As NagatoSubMenuDesktopConfig
+    
+    yukiMenu = New NagatoSubMenuDesktopConfig(Me._$rootMenu, Desktop.Path)
+    
+End
+
 Public Sub _AddChildMenus()
     
     With NagatoMenuPipe
@@ -26,6 +34,8 @@ Public Sub _AddChildMenus()
         Object.New("NagatoMenuItemCreateDirectory", [Me._$rootMenu, Desktop.Path &/ ("New Directory")])
         addFromTemplateMenu()
         addSortMenu()
+            Me._AddContextMenu("", 0)
+        addConfigMenu()
             Me._AddContextMenu("", 0)
         Object.New("NagatoMenuItemAbout", [Me._$rootMenu, ""])
         Object.New("NagatoMenuItemQuitDesktop", [Me._$rootMenu, ""])

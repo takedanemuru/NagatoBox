@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoSubMenuFile
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' this method is protected/virtual. MUST be overridden
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Icons")
+        .Picture = MikuruIcon.Get("information-balloon")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
+    
+    Object.New("NagatoMenuItemShowClock", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemShowTrashBin", [Me._$rootMenu, ""])
+    
+End

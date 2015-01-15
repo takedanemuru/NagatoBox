@@ -17,8 +17,6 @@ End
 
 Private Sub setFormat(argPath As String)
     
-    Debug DesktopMime.FromFile(argPath).Type
-    
     $format = "markdown_github"
     
     Select Case DesktopMime.FromFile(argPath).Type

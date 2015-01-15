@@ -40,8 +40,6 @@ End
 
 Public Sub Handler_RequestRefresh()
     
-    Debug "request refresh"
-    
     $icons.Refresh($mouse.SelectedPaths)
     
 End

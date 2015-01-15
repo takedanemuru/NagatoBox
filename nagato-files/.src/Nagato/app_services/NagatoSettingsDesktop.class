@@ -6,6 +6,10 @@ Property ClockFormat As String
 Property ShowHidden As Boolean
 Property SortBy As Integer
 Property SortAscent As Boolean
+Property ShowClock As Boolean
+Property ShowTrashBin As Boolean
+
+Event Changed
 
 Private Function ClockFormat_Read() As String
 
@@ -30,6 +34,8 @@ Private Sub ShowHidden_Write(Value As Boolean)
 
     If Value <> Me._$settings["desktop_view/hidden"] Then
         Me._$settings["desktop_view/hidden"] = Value
+        Me._$settings.Save()
+        Raise Changed
     End If
     
 End
@@ -56,5 +62,37 @@ Private Sub SortAscent_Write(Value As Boolean)
 
     Me._$settings["desktop_sort/ascent"] = Value
     Me._$settings.Save()
+
+End
+
+Private Function ShowClock_Read() As Boolean
+    
+    Return Me._$settings["desktop_view/show_clock", True]
+    
+End
+
+Private Sub ShowClock_Write(Value As Boolean)
+
+    If Value <> Me._$settings["desktop_view/show_clock"] Then
+        Me._$settings["desktop_view/show_clock"] = Value
+        Me._$settings.Save()
+        Raise Changed
+    End If
+
+End
+
+Private Function ShowTrashBin_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_trash_bin", True]
+
+End
+
+Private Sub ShowTrashBin_Write(Value As Boolean)
+
+    If Value <> Me._$settings["desktop_view/show_trash_bin"]
+        Me._$settings["desktop_view/show_trash_bin"] = Value
+        Me._$settings.Save()
+        Raise Changed
+    End If
 
 End

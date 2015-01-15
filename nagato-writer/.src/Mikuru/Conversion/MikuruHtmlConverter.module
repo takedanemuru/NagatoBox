@@ -16,15 +16,20 @@ Public Sub ToHtmlDirect(argSourceText As String, argFormat As String) As String
 
     Dim yukiTempPathSource As String = IIf($tempPath, $tempPath, Temp$())
     Dim yukiOutput As String
-
+    Dim yukiCss As String = User.Home &/ ".nagato-writer/github.css"
+    Dim yukiTest As String = User.Home &/ ".nagato-writer/temp.html"
+    
+    If Exist(yukiTest) Then Kill yukiTest
+    
     If argFormat <> "rst" Then
         File.Save(yukiTempPathSource, getHeader() & MikuruMacro.Set(argSourceText))
     Else
         File.Save(yukiTempPathSource, MikuruMacro.Set(argSourceText))
     End If
 
-    Exec ["pandoc", "-f", argFormat, "-t", "html5", yukiTempPathSource] To yukiOutput
-
+    Exec ["pandoc", "-f", argFormat, "-t", "html", yukiTempPathSource] To yukiOutput
+    Exec ["pandoc", "-f", argFormat, "-t", "html", "-c", yukiCss, yukiTempPathSource, "-o", yukiTest] Wait
+    
     Return yukiOutput
 
 End

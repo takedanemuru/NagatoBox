@@ -53,9 +53,7 @@ End
 
 Private Function TabSize_Read() As Integer
 
-    Return 0
-
-    'Return $settings["editor/tab_size", DefaultTabSize]
+    Return $settings["editor/tab_size", DefaultTabSize]
 
 End
 

@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Enum CssStandard, CssGitHub
+
+Public Sub _AddChildMenus()
+    
+    Me._AddMenu("Standard", CssStandard, IIf(Not NagatoSettings.UseCss, "button-check", Null))
+    Me._AddMenu("GitHub Style", CssGitHub, IIf(NagatoSettings.UseCss, "button-check", Null))
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case CssStandard
+            NagatoSettings.UseCss = False
+        Case CssGitHub
+            NagatoSettings.UseCss = True
+    End Select
+    
+End

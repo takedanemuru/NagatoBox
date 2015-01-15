@@ -19,7 +19,7 @@
 1. nagato-files
 
     + new : "open with file manager" menu for desktop directory. 
-    + new : settings menu for desktop
+    + ~~new : settings menu for desktop~~
     + new : icon settings for application
     + new : background settings for application
     + ~~fix : NagatoDirectoryObserver does not change DirectoryPath property~~
@@ -43,5 +43,7 @@
 
 4. nagato-writer
 
-    + new : help pane
+    + new : syntax help pane
+    + new : ~~github style css~~
+    + new : dzslides conversion
 

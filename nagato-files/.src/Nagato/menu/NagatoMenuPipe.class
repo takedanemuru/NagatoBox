@@ -16,6 +16,7 @@ Public Enum DirCreate = 6005, DirShowProperty = 6006, DirComputeSize = 6007
 Public Enum TagHeader = 7000, TagAdd = 7001, TagRemove = 7002
 Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002, ObserverLost = 8003
 Public Enum CreateHeader = 9000, CreateArchive = 9001, CreateClone = 9002, CreateSymblicLink = 9003
+Public Enum CreateBlankText = 9004, CreateCopyWholeDirectory = 9005
 
 Event MenuEvent(argEvent As Integer)
 Event MenuEventWithArg(argEvent As Integer, argArgument As Variant)

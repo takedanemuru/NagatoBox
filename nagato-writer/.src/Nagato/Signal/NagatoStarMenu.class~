@@ -13,7 +13,8 @@ Public Sub _RefreshChildMenus() ' override
     yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, "Publish", "book-open-bookmark") As "TFEI"
     Object.New("NagatoSubMenuTabKey", [Me._$parentMenu, ("Tab Key"), "navigation-right-button"])
     Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
-    yukiInsertMenu = New NagatoSubMenuInsert(Me._$parentMenu, "Insert") As "TFEI"
+    yukiInsertMenu = New NagatoSubMenuInsert(Me._$parentMenu, "Insert", "toggle-expand-alt") As "TFEI"
+    Object.New("NagatoSubMenuCss", [Me._$parentMenu, ("CSS"), "ruler")
         Me._AddMenu("", 0)
     Me._AddMenu("About", MikuruSignal.AppAbout, "star")
     Me._AddMenu("Quit", MikuruSignal.AppQuit, "button-power")

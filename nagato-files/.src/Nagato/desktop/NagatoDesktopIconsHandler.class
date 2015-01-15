@@ -6,22 +6,10 @@ Private $iconView As IconView
 Private $clock As NagatoDesktopClock
 Private $trashBin As NagatoDesktopTrashBin 
 
-' Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
-'     
-'     Dim yukiPath As String
-' 
-'     For Each yukiPath In MikuruSort(argDirectory, argType)
-'         If Not Access(yukiPath, gb.Read) Then Continue
-'         $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
-'     Next
-'     
-' End
-
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
     
     Dim yukiPath As String
 
-    'For Each yukiPath In MikuruSortDesktop(argDirectory, argType)
     For Each yukiPath In NagatoSortDesktop.Get(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
         $iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
@@ -31,21 +19,32 @@ End
 
 Private Sub initializeIcons(argSelectedPaths As String[])
     
-    $clock = New NagatoDesktopClock($iconView)
+    If NagatoSettingsDesktop.ShowClock Then 
+        $clock = New NagatoDesktopClock($iconView)
+    End If
+    
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)
-    $trashBin = New NagatoDesktopTrashBin($iconView)
+    
+    If NagatoSettingsDesktop.ShowTrashBin Then
+        $trashBin = New NagatoDesktopTrashBin($iconView)
+    End If
+    
+End
+
+Private Sub detachObject(argObject As Object)
+    
+    If Object.IsValid(argObject) Then
+        argObject.Stop()
+        Object.Detach(argObject)
+    End If
     
 End
 
 Private Sub clearAll()
     
-    $clock.Stop()
-    Object.Detach($clock)
-    
-    $trashBin.Stop()    
-    Object.Detach($trashBin)
-    
+    detachObject($clock)
+    detachObject($trashBin)
     $iconView.Clear()    
     
 End

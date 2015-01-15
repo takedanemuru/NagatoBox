@@ -6,8 +6,6 @@ Private Sub addCopyDirectoryMenu(argDirectory As String, argParentMenu As Menu)
     
     Dim yukiMenu As New Menu(argParentMenu) As "CopyDirectoryMenu"
     
-    Debug argDirectory
-    
     With yukiMenu
         .Text = ("Copy Whole Directory")
         .Picture = MikuruIcon.Get("folder")
@@ -76,7 +74,7 @@ Public Sub _InitializeMenu() ' override
 End
 
 Public Sub CopyDirectoryMenu_Click()
-    
+        
     MikuruFileManuever.CopyToDirectory([Last.Tag], Me._$path)
     
 End

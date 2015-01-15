@@ -127,6 +127,8 @@ Public Sub MenuItem_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                  $iconView.Refresh($log.Current)
              Case .PathNew
                 If IsDir(argArgument) Then move(argArgument)
+             Case .CreateCopyWholeDirectory
+                 MikuruFileManuever.CopyToDirectory([argArgument], $log.Current)
         End Select
     End With
     
@@ -146,8 +148,12 @@ Public Sub MenuItem_MenuEvent(argEvent As Integer)
             Case .ViewSelectAll, .ViewUnselectAll, .ViewInvertSelection
                 $iconView.SelectItems(argEvent)
             Case .DirCreate
+                If Not Exist($log.Current) Then Return
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
                 HaruhiNewDirectory.ShowDialog()
+            Case .CreateBlankText
+                If Not Exist($log.Current) Then Return
+                File.Save(MikuruPath.GetSafePathName($log.Current &/ ("blank.text")), "")
         End Select
     End With
     
