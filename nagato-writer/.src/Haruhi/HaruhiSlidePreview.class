@@ -1,0 +1,35 @@
+' Gambas class file
+
+Private $htmlPath As String
+
+Private Sub convert(argText As String)
+    
+    Dim yukiTempPath As String = Temp$()
+    Dim yukiDirectory As String = User.Home
+    
+    $htmlPath = yukiDirectory &/ "nagato_slider_working_file.html" 
+    If Exist($htmlPath) Then Kill $htmlPath
+    
+    File.Save(yukiTempPath, argText)
+    
+    'Exec ["pandoc", "-t", "dzslides", "-s", yukiTempPath, "-o", $htmlPath] Wait
+    Exec ["pandoc", "-t", "revealjs", "-V", "theme:default", "-s", yukiTempPath, "-o", $htmlPath] Wait
+    
+End
+
+Public Sub Set(argText As String)
+    
+    convert(argText)
+    
+    WebSettings[WebSettings.JavascriptEnabled] = True
+    
+    SlideWebView.Url = Media.URL($htmlPath)
+    
+End
+
+
+Public Sub SlideWebView_KeyPress()
+
+    If Key.Code = Key.Esc Then Me.Close()
+
+End

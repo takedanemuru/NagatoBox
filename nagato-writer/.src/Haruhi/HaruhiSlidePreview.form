@@ -1,0 +1,10 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  FullScreen = True
+  Arrangement = Arrange.Fill
+  { SlideWebView WebView
+    MoveScaled(15,27,33,27)
+  }
+}

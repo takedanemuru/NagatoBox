@@ -10,7 +10,7 @@ Public Sub Refresh(argSource As String, argFormat As String)
         $webview.HTML = MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
     Else
         MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-        $webview.Url = Media.URL(User.Home &/ ".nagato-writer/temp.html")
+        $webview.Url = Media.URL(MikuruHtmlConverter.TempFile)
     End If
     
     $webview.Refresh()

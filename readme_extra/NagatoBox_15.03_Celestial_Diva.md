@@ -44,6 +44,5 @@
 4. nagato-writer
 
     + new : syntax help pane
-    + new : ~~github style css~~
-    + new : dzslides conversion
-
+    + ~~new : github style css~~
+    + ~~new : dzslides conversion~~ (TESTING)

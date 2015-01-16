@@ -1,8 +1,24 @@
 ' Gambas module file
 
+Private Sub ensureCssData()
+    
+    Dim yukiDirectory As String = User.Home &/ ".nagato-writer"
+    Dim yukiImagesDirectory As String = yukiDirectory &/ "images"
+    
+    If Not Exist(yukiDirectory) Then Mkdir yukiDirectory
+    
+    Try Mkdir yukiImagesDirectory
+    Try Copy "Css/github.css" To yukiDirectory &/ "github.css"
+    Try Copy "Css/dirty-shade.png" To yukiImagesDirectory &/ "dirty-shade.png" 
+    Try Copy "Css/para.png" To yukiImagesDirectory &/ "para.png"
+    
+End
+
 Public Sub Main()
     
     NagatoArgs.Parsing()
+    
+    ensureCssData()
     
     HaruhiMain.Show()
     

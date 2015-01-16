@@ -8,6 +8,7 @@ Public Sub _AddChildMenus()
     Me._AddMenu(("HTML"), MikuruSignal.PublishHtml)
     Me._AddMenu(("Plain Text"), MikuruSignal.PublishPlainText)
         Me._AddMenu("", MikuruSignal.None)
-    Me._AddMenu(("Slidy (Slide Show)"), MikuruSignal.PublishSlidy)
+    'Me._AddMenu(("Slidy (Slide Show)"), MikuruSignal.PublishSlidy)
+    Me._AddMenu(("dzslides (Preview)"), MikuruSignal.PublishDzslidePreview)
     
 End
