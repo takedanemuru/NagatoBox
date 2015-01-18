@@ -2,6 +2,12 @@
 
 Inherits NagatoSort
 
+Public Function _GetPattern() As String
+    
+    Return IIf(NagatoSettingsDesktop.ShowHidden, "*", "[^.]*")
+    
+End
+
 Public Function _IsLesser(argObject As String, argSubject As String) As Boolean
     
     Dim yukiResult As Boolean

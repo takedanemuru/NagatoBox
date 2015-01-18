@@ -4,12 +4,18 @@ Inherits NagatoContextMenu
 
 Public Sub _ClickAction()
     
-    Try Shell "trash-empty"
+    Select Case Last.Tag
+        Case 0
+            Try Shell "nagato-files -t"
+        Case 1
+            Try Shell "trash-empty"
+    End Select
     
 End
 
 Public Sub _AddChildMenus()
     
-    Me._AddContextMenu(("Empty"), 0, MikuruIcon.Get("bin"))
+    Me._AddContextMenu(("Open"), 0, MikuruIcon.Get("folder"))
+    Me._AddContextMenu(("Empty"), 1, MikuruIcon.Get("bin"))
         
 End

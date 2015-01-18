@@ -29,14 +29,17 @@ End
 Public Sub _AddChildMenus()
     
     With NagatoMenuPipe
+        Object.New("NagatoMenuItemOpenDesktop", [Me._$rootMenu, ""])
+            Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
         Object.New("NagatoMenuItemChangeWallpaper", [Me._$rootMenu, ""])
-        Object.New("NagatoMenuItemCreateLauncher", [Me._$rootMenu, ""])
-        Object.New("NagatoMenuItemCreateDirectory", [Me._$rootMenu, Desktop.Path &/ ("New Directory")])
         addFromTemplateMenu()
         addSortMenu()
-            Me._AddContextMenu("", 0)
         addConfigMenu()
-            Me._AddContextMenu("", 0)
+            Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemCreateLauncher", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemCreateDirectory", [Me._$rootMenu, Desktop.Path &/ ("New Directory")])
+        Object.New("NagatoMenuItemCreateEmptyText", [Me._$rootMenu, Desktop.Path])
+            Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
         Object.New("NagatoMenuItemAbout", [Me._$rootMenu, ""])
         Object.New("NagatoMenuItemQuitDesktop", [Me._$rootMenu, ""])
     End With

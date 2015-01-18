@@ -18,7 +18,8 @@ Public Sub ToHtmlDirect(argSourceText As String, argFormat As String) As String
 
     Dim yukiTempPathSource As String = IIf($tempPath, $tempPath, Temp$())
     Dim yukiOutput As String
-    Dim yukiCss As String = User.Home &/ ".nagato-writer/github.css"
+    'Dim yukiCss As String = User.Home &/ ".nagato-writer/github.css"
+    Dim yukiCss As String = User.Home &/ ".nagato-writer/testing.css"
     
     If Exist(Me.TempFile) Then Kill Me.TempFile
     

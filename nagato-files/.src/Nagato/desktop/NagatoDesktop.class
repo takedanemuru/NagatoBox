@@ -51,6 +51,7 @@ Public Sub Handler_Signal(argEvent As Integer, argValue As Variant)
             $mouse.Delete(Desktop.Path &/ argValue)
             $icons.Refresh($mouse.SelectedPaths)
         Case NagatoMenuPipe.ObserverModefy, NagatoMenuPipe.ViewForceReload
+            Debug "force reload"
             $mouse.ClearAll()
             $icons.Refresh($mouse.SelectedPaths)
     End Select

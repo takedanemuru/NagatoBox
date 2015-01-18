@@ -27,6 +27,9 @@ Public Sub Main()
         activateDesktop()
     Else If NagatoArguments.XdgUserDirs Then
         HaruhiXdgConfig.Show()
+    Else If NagatoArguments.OpenTrashBin Then
+        HaruhiMain.Show()
+        TFEI.SetNewTrashBin()
     Else
         HaruhiMain.Show()
     End If

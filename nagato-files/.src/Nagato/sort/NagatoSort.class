@@ -4,6 +4,12 @@ Create Static
 
 Public _$sortedPaths As New String[]
 
+Public Function _GetPattern() As String ' Virtual
+    
+    Return ""
+    
+End
+
 Private Function getPattern() As String
     
     Return IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
@@ -55,7 +61,7 @@ End
 
 Private Function getPaths(argDirectory As String, argType As Integer) As String[]
     
-    Return Dir(argDirectory, getPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
+    Return Dir(argDirectory, Me._GetPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
     
 End
 

@@ -68,8 +68,6 @@ Public Sub _InitializeMenu() ' override
     addDirectory(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
         Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
     addCreateFileMenu(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
-        Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
-    Object.New("NagatoMenuItemCreateEmptyText", [Me._$rootMenu, Me._$path])
     
 End
 

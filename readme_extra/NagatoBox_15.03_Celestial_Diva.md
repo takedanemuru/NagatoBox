@@ -1,4 +1,6 @@
-##NagatoBox 15.03 *Celestial Diva*
+##NagatoBox 15.03 _Celestial Diva_
+
+### Applications
 
 1. nagato-archiver
 
@@ -18,7 +20,7 @@
 
 1. nagato-files
 
-    + new : "open with file manager" menu for desktop directory. 
+    + ~~new : "open with file manager" menu for desktop directory.~~
     + ~~new : settings menu for desktop~~
     + new : icon settings for application
     + new : background settings for application

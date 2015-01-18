@@ -132,7 +132,7 @@ Private Function Size_Read() As String
     
     For Each yukiPath In Dir(Me.PathFiles)
         If Not Exist(Me.PathFiles &/ yukiPath) Then Continue
-        yukiSize += Stat(Me.PathFiles &/ yukiPath).Size
+        Try yukiSize += Stat(Me.PathFiles &/ yukiPath).Size
     Next
 
     Return MikuruFileSize(yukiSize)

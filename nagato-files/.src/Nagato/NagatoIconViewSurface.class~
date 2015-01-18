@@ -84,4 +84,7 @@ Public Sub ShowLostDirectory()
     Me._$iconView.Clear()
     Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetLostDirectoryTile())
     
+Catch
+    Debug Error.Text
+    
 End

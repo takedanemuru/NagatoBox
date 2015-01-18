@@ -12,8 +12,8 @@ Private Sub convert(argText As String)
     
     File.Save(yukiTempPath, argText)
     
-    'Exec ["pandoc", "-t", "dzslides", "-s", yukiTempPath, "-o", $htmlPath] Wait
-    Exec ["pandoc", "-t", "revealjs", "-V", "theme:default", "-s", yukiTempPath, "-o", $htmlPath] Wait
+    Exec ["pandoc", "-t", "dzslides", "-s", yukiTempPath, "-o", $htmlPath] Wait
+    'Exec ["pandoc", "-t", "revealjs", "-V", "theme:default", "-s", yukiTempPath, "-o", $htmlPath] Wait
     
 End
 
