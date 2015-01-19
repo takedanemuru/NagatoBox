@@ -5,6 +5,8 @@ Create Static
 Property TabSize As Integer
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
+Property UseCss As Boolean
+Property PreviewCss As Integer
 
 Private Const DefaultTabSize As Integer = 4
 
@@ -80,5 +82,31 @@ End
 Private Function RecentFiles_Read() As String[]
 
     Return MikuruPaths.RemoveInvalid($settings["file/recent", Null])
+
+End
+
+Private Function UseCss_Read() As Boolean
+
+    Return $settings["preview/use_css", False] 
+
+End
+
+Private Sub UseCss_Write(Value As Boolean)
+
+    $settings["preview/use_css"] = Value
+    $settings.Save()
+
+End
+
+Private Function PreviewCss_Read() As Integer
+
+    Return $settings["preview/css", NagatoCss.StyleLight] 
+
+End
+
+Private Sub PreviewCss_Write(Value As Integer)
+
+    $settings["preview/css"] = Value
+    $settings.Save()
 
 End

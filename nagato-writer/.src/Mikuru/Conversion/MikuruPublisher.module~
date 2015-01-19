@@ -11,32 +11,14 @@ End
 
 Public Sub ToPdf(argSource As String, argFormat As String)
     
-    Dim yukiTempPathSource As String = Temp$() & ".html"
+    'Dim yukiTempPathSource As String = Temp$() & ".html"
     Dim yukiPath As String = getPathToSave("pdf")
-    Dim yukiSource As String = MikuruMacro.Set(argSource)
+    ' Dim yukiSource As String = MikuruMacro.Set(argSource)
+    ' Dim yukiHeader As String = User.Home &/ ".nagato-writer/header.html"
 
     If Not yukiPath Then Return
 
-    File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlDirect(yukiSource, argFormat))
-    'File.Save(yukiTempPathSource, MikuruHtmlConverter.ToHtmlSmart(yukiSource))
-
-    Exec ["wkhtmltopdf", "--encoding", "UTF-8", yukiTempPathSource, yukiPath] Wait
-
-    Message.Info("YUKI.N > It's done", ("OK"))
-    
-End
-
-Public Sub ToSlidy(argSource As String)
-    
-    Dim yukiTempPathSource As String = Temp$() & ".md"
-    Dim yukiPath As String = getPathToSave("html")
-    Dim yukiSource As String = MikuruMacro.Set(argSource)
-
-    If Not yukiPath Then Return
-
-    File.Save(yukiTempPathSource, yukiSource)
-
-    Exec ["pandoc", "-s", "--webtex", "-t", "slidy", yukiTempPathSource, "--self-contained", "-o", yukiPath] Wait
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "300", MikuruHtmlConverter.TempFile, yukiPath] Wait
 
     Message.Info("YUKI.N > It's done", ("OK"))
     
@@ -45,10 +27,12 @@ End
 Public Sub ToHtml(argSource As String, Optional argFormat As String = "markdown_github")
     
     Dim yukiPath As String = getPathToSave("html")
+    ' 
+    ' If Not yukiPath Then Return
+    ' 
+    ' File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat))
     
-    If Not yukiPath Then Return
-    
-    File.Save(yukiPath, MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat))
+    Copy MikuruHtmlConverter.TempFile To yukiPath
     
     Message.Info("YUKI.N > It's done", ("OK"))
     
@@ -83,8 +67,6 @@ Public Sub _call(argSource As String, argSignal As Integer, argFormat As String)
             Me.ToPdf(argSource, argFormat)
         Case MikuruSignal.PublishPlainText
             Me.ToPlainText(argSource)
-        Case MikuruSignal.PublishSlidy
-            Me.ToSlidy(argSource)
     End Select
     
 End

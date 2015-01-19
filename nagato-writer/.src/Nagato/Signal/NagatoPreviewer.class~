@@ -3,15 +3,12 @@
 Inherits NagatoUxContainer
 
 Private $webview As WebView
+Private $observer As Observer
 
 Public Sub Refresh(argSource As String, argFormat As String)
     
-    If Not NagatoSettings.UseCss Then
-        $webview.HTML = MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-    Else
-        MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-        $webview.Url = Media.URL(User.Home &/ ".nagato-writer/temp.html")
-    End If
+    MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
+    $webview.Url = Media.URL(MikuruHtmlConverter.TempFile)
     
     $webview.Refresh()
     
@@ -25,5 +22,15 @@ Public Sub _Initialize()
         .Expand = True
         .NoTabFocus = True
     End With
+    
+    $observer = New Observer(NagatoSettings) As "Asakura"
+    
+End
+
+Public Sub Asakura_RequestReload()
+    
+    Debug "reload"
+    
+    $webview.Refresh()
     
 End

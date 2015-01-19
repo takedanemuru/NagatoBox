@@ -1,0 +1,19 @@
+' Gambas class file
+
+Create Static
+
+Public Enum StyleGitHub, StyleLight, StyleDark
+
+Public Function Get() As String
+    
+    Select Case NagatoSettings.PreviewCss
+        Case Me.StyleGitHub
+            Return User.Home &/ ".nagato-writer/github.css"
+        Case Me.StyleLight
+            Return User.Home &/ ".nagato-writer/light_theme.css"
+        Case Me.StyleDark
+            Return User.Home &/ ".nagato-writer/dark_theme.css"
+    End Select
+    
+End
+

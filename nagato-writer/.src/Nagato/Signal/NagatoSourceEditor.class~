@@ -9,6 +9,7 @@ Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
 Private $fileHandler As New NagatoFileHandler
 Private $textArea As NagatoTextArea
+Private $observer As Observer
 
 Private Function ensureSaved() As Boolean ' False means cancel to open file
     
@@ -29,7 +30,8 @@ End
 Public Sub _Initialize()
     
     $textArea = New NagatoTextArea(Me._$parentContainer) As "TFEI"
-    
+    $observer = New Observer(NagatoSettings) As "Asakura"
+
 End
 
 Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
@@ -66,7 +68,7 @@ Public Sub EditEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
         Case MikuruSignal.EditInsertNumbers
             $textArea.InsertNembers()
         Case MikuruSignal.EditInsertImage
-            $textArea.Insert("![alt text](/path/to/img.jpg")
+            $textArea.Insert("![alt text](/path/to/img.jpg)")
         Case MikuruSignal.EditInsertUrl
             $textArea.Insert("[title](http://www.somewhere.com)")
     End Select
@@ -86,6 +88,12 @@ Public Sub GetSaveStatus() As Integer
             Raise Signal(MikuruSignal.FileSave, Null)
             Return Me.ResponseSaved
     End Select
+    
+End
+
+Public Sub Asakura_RequestReload()
+    
+    Raise Signal(MikuruSignal.FileSave, Null)
     
 End
 

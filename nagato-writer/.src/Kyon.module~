@@ -8,7 +8,7 @@ Private Sub ensureCssData()
     If Not Exist(yukiDirectory) Then Mkdir yukiDirectory
     
     Try Mkdir yukiImagesDirectory
-    Try Copy "Css/github.css" To yukiDirectory &/ github.css
+    Try Copy "Css/github.css" To yukiDirectory &/ "github.css"
     Try Copy "Css/dirty-shade.png" To yukiImagesDirectory &/ "dirty-shade.png" 
     Try Copy "Css/para.png" To yukiImagesDirectory &/ "para.png"
     

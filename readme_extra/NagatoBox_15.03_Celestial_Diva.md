@@ -47,4 +47,7 @@
 
     + new : syntax help pane
     + ~~new : github style css~~
-    + ~~new : dzslides conversion~~ (TESTING)
+    + ~~new : dzslides conversion~~ 
+    + ~~new : use css for slideshow~~
+    + ~~new : include more css files~~
+

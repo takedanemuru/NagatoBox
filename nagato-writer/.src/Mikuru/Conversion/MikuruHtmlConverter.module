@@ -3,54 +3,26 @@
 Property Read TempFile As String
 
 Private $tempPath As String
+Private $workingPath As String
 
-Private Function getHeader() As String
-    
-    Dim yukiHttpEquiv As String = Quote$("Content-Type")
-    Dim yukiContent As String = Quote$("text/html; charset=UTF-8")
-    Dim yukiHeader As String = "<head><meta http-equiv=&1 content=&2></head>"
-    
-    Return Subst$(yukiHeader, yukiHttpEquiv, yukiContent)
-    
-End
+Public Sub ToHtmlDirect(argSourceText As String, argFormat As String)
 
-Public Sub ToHtmlDirect(argSourceText As String, argFormat As String) As String
-
-    Dim yukiTempPathSource As String = IIf($tempPath, $tempPath, Temp$())
+    Dim yukiTempPath As String = IIf($tempPath, $tempPath, Temp$())
     Dim yukiOutput As String
-    'Dim yukiCss As String = User.Home &/ ".nagato-writer/github.css"
-    Dim yukiCss As String = User.Home &/ ".nagato-writer/testing.css"
+    
+    If Exist($workingPath) Then Kill $workingPath
+    $workingPath = Temp$() & ".html"
     
     If Exist(Me.TempFile) Then Kill Me.TempFile
     
-    If argFormat <> "rst" Then
-        File.Save(yukiTempPathSource, getHeader() & MikuruMacro.Set(argSourceText))
-    Else
-        File.Save(yukiTempPathSource, MikuruMacro.Set(argSourceText))
-    End If
-
-    Exec ["pandoc", "-f", argFormat, "-t", "html5", yukiTempPathSource] To yukiOutput
-    Exec ["pandoc", "-f", argFormat, "-t", "html5", "-c", yukiCss, yukiTempPathSource, "-o", Me.TempFile] Wait
+    File.Save(yukiTempPath, MikuruMacro.Set(argSourceText))
     
-    Return yukiOutput
-
-End
-
-Public Sub ToHtmlSmart(argSourceText As String) As String
-
-    Dim yukiTempPathSource As String = IIf($tempPath, $tempPath, Temp$())
-    Dim yukiTempPathTarget As String = Temp$() & ".html"
-
-    File.Save(yukiTempPathSource, getHeader() & MikuruMacro.Set(argSourceText))
-
-    Exec ["pandoc", "-s", "-S", "--toc", yukiTempPathSource, "-o", yukiTempPathTarget] Wait
-
-    Return File.Load(yukiTempPathTarget)
-
+    Exec ["pandoc", "-f", argFormat, "-t", "html5", "-c", NagatoCss.Get(), yukiTempPath, "-o", $workingPath] Wait
+    
 End
 
 Private Function TempFile_Read() As String
 
-    Return User.Home &/ ".nagato-writer/temp.html"
+    Return $workingPath
 
 End

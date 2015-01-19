@@ -5,11 +5,13 @@ Create Static
 Property TabSize As Integer
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
-Property UseCss As Boolean
+Property PreviewCss As Integer
 
 Private Const DefaultTabSize As Integer = 4
 
 Private $settings As New Settings
+
+Event RequestReload
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -84,15 +86,18 @@ Private Function RecentFiles_Read() As String[]
 
 End
 
-Private Function UseCss_Read() As Boolean
+Private Function PreviewCss_Read() As Integer
 
-    Return $settings["preview/use_css", False] 
+    Return $settings["preview/css", NagatoCss.StyleLight] 
 
 End
 
-Private Sub UseCss_Write(Value As Boolean)
+Private Sub PreviewCss_Write(Value As Integer)
 
-    $settings["preview/use_css"] = Value
-    $settings.Save()
+    If $settings["preview/css"] <> Value Then
+        $settings["preview/css"] = Value
+        $settings.Save()
+        Raise RequestReload
+    End If
 
 End

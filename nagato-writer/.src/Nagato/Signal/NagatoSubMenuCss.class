@@ -2,22 +2,28 @@
 
 Inherits NagatoSubMenu
 
-Private Enum CssStandard, CssGitHub
+Private Function getIconName(argTag As Integer) As Variant
+    
+    If argTag = NagatoSettings.PreviewCss Then
+        Return "button-check"
+    Else
+        Return Null
+    Endif
+    
+End
 
 Public Sub _AddChildMenus()
     
-    Me._AddMenu("Standard", CssStandard, IIf(Not NagatoSettings.UseCss, "button-check", Null))
-    Me._AddMenu("GitHub Style", CssGitHub, IIf(NagatoSettings.UseCss, "button-check", Null))
+    With NagatoCss
+        Me._AddMenu("GitHub Style", .StyleGitHub, getIconName(.StyleGitHub))
+        Me._AddMenu("Light Theme", .StyleLight, getIconName(.StyleLight))
+        Me._AddMenu("Dark Theme", .StyleDark, getIconName(.StyleDark))
+    End With
     
 End
 
 Public Sub MenuItem_Click()
     
-    Select Case Last.Tag
-        Case CssStandard
-            NagatoSettings.UseCss = False
-        Case CssGitHub
-            NagatoSettings.UseCss = True
-    End Select
+    NagatoSettings.PreviewCss = Last.Tag
     
 End

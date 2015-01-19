@@ -1,18 +1,18 @@
-#NagatoBox
+# NagatoBox
 
 a software suite for openbox3.
 
 ![NAGATO_MACRO_IMAGE](./readme_extra/screenshot_001.png)
 
-##Important Notice
+## Important Notice
 
 Only watch this git from a distance in a well-lit room.
 
-##Dependency
+## Dependency
 
 Gambas3 3.6.3 or later varsion
 
-##Ubuntu and its variants
+## Ubuntu and its variants
 
 Use PPA instead of official repo.
 
@@ -22,7 +22,7 @@ Use PPA instead of official repo.
     $ sudo apt-get install gambas3 
 ``` 
 
-##License
+## License
 
 all softwares in this repository are licensed under **S.O.S.Licese.**
 

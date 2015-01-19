@@ -6,12 +6,8 @@ Private $webview As WebView
 
 Public Sub Refresh(argSource As String, argFormat As String)
     
-    If Not NagatoSettings.UseCss Then
-        $webview.HTML = MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-    Else
-        MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-        $webview.Url = Media.URL(MikuruHtmlConverter.TempFile)
-    End If
+    MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
+    $webview.Url = Media.URL(MikuruHtmlConverter.TempFile)
     
     $webview.Refresh()
     
