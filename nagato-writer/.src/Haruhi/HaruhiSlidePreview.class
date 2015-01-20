@@ -4,12 +4,11 @@ Private $htmlPath As String
 
 Private Sub convert()
     
-    Dim yukiCss As String = User.Home &/ "/.nagato-writer/nagato_slide.css"
-    Dim yukiIncludeCss As String = Subst$("--include-after-body=&1", yukiCss)
+    Dim yukiIncludeCss As String = Subst$("--include-after-body=&1", NagatoCss.GetSlideCss())
     
     If Exist($htmlPath) Then Kill $htmlPath
     $htmlPath = Temp$() & ".html" 
-    Exec ["pandoc", "-t", "dzslides", yukiIncludeCss, "-s", MikuruHtmlConverter.TempFile, "-o", $htmlPath] Wait
+    Exec ["pandoc", "-t", "dzslides", yukiIncludeCss, "--slide-level", NagatoSettingsSlide.SectionLevel, "-s", MikuruHtmlConverter.TempFile, "-o", $htmlPath] Wait
     
 End
 

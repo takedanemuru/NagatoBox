@@ -31,6 +31,18 @@ Public Sub ToHtml(argSource As String, Optional argFormat As String = "markdown_
     
 End
 
+Public Sub ToOdt(argSource As String)
+    
+    Dim yukiPath As String = getPathToSave("odt")
+
+    If Not yukiPath Then Return
+
+    Exec ["pandoc", MikuruHtmlConverter.TempFile, "-o", yukiPath] Wait
+
+    Message.Info("YUKI.N > It's done", ("OK"))
+    
+End
+
 Public Sub ToPlainText(argSource As String, Optional argFormat As String = "markdown_github")
     
     Dim yukiTempPathSource As String = Temp$() & ".txt"
@@ -60,6 +72,8 @@ Public Sub _call(argSource As String, argSignal As Integer, argFormat As String)
             Me.ToPdf(argSource, argFormat)
         Case MikuruSignal.PublishPlainText
             Me.ToPlainText(argSource)
+        Case MikuruSignal.PublishOdt
+            Me.ToOdt(argSource)
     End Select
     
 End

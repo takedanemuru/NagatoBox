@@ -1,53 +1,55 @@
-##NagatoBox 15.03 _Celestial Diva_
+# NagatoBox 15.03 _Celestial Diva_
 
-### Applications
+## Applications
 
-1. nagato-archiver
+### nagato-archiver
 
-    + ~~new : handle tar.gz and tar.xz directly~~
++ ~~new : handle tar.gz and tar.xz directly~~
 
-1. nagato-config-appearance
+### nagato-config-appearance
 
-    + initial release
++ initial release
 
-1. nagato-config-screenlocker
+### nagato-config-screenlocker
 
-    + ~~initial release~~
++ ~~initial release~~
 
-1. nagato-extractor
+### nagato-extractor
 
-    + ~~new : handle tar.gz and tar.xz directly~~
++ ~~new : handle tar.gz and tar.xz directly~~
 
-1. nagato-files
+### nagato-files
 
-    + ~~new : "open with file manager" menu for desktop directory.~~
-    + ~~new : settings menu for desktop~~
-    + new : icon settings for application
-    + new : background settings for application
-    + ~~fix : NagatoDirectoryObserver does not change DirectoryPath property~~
++ ~~new : "open with file manager" menu for desktop directory.~~
++ ~~new : settings menu for desktop~~
++ new : icon settings for application
++ new : background settings for application
++ ~~fix : NagatoDirectoryObserver does not change DirectoryPath property~~
 
-2. nagato-navigator
+### nagato-navigator
 
-    + ~~fix : avoid to open invalide xml document in activation sequence.~~
++ ~~fix : avoid to open invalide xml document in activation sequence.~~
 
-2. nagato-player-x
+### nagato-player-x
 
-    + ~~rewrite : coverart functionality and its design~~
++ ~~rewrite : coverart functionality and its design~~
 
-3. nagato-text
+### nagato-text
 
-    + ~~fix : crash when open unexist file from commandline.~~
++ ~~fix : crash when open unexist file from commandline.~~
 
-3. nagato-web
+### nagato-web
 
-    + ~~fix : clear text search box when it's closed.~~
-    + ~~fix : crash by confirict on persona drawing area.~~
++ ~~fix : clear text search box when it's closed.~~
++ ~~fix : crash by confirict on persona drawing area.~~
 
-4. nagato-writer
+### nagato-writer
 
-    + new : syntax help pane
-    + ~~new : github style css~~
-    + ~~new : dzslides conversion~~ 
-    + ~~new : use css for slideshow~~
-    + ~~new : include more css files~~
++ new : syntax help pane
++ ~~new : github style css~~
++ ~~new : dzslides conversion~~ 
++ ~~new : use css for slideshow~~
++ ~~new : include more css files~~
++ ~~drop : support for RestructuredText and Textile~~
++ ~~new : odt export~~ (TESTING)
 

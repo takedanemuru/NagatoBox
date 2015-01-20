@@ -29,7 +29,7 @@ Public Sub _initialize() ' override
     
     Dim yukiObject As Object
     
-    yukiObject = New NagatoNewFileButton(Me._$parentContainer) As "NewButton"
+    yukiObject = New NagatoNewFileButton(Me._$parentContainer) As "TFEI"
     yukiObject = New NagatoRecentFilesButton(Me._$parentContainer) As "TFEI"
         addSeparator()
     addButton("Open", MikuruSignal.FileOpen, "folder")
@@ -44,11 +44,5 @@ End
 Public Sub MenuButton_Click()
     
     Raise Signal(Last.Tag, Null)
-    
-End
-
-Public Sub NewButton_Click()
-    
-    Debug Last.Tag
     
 End

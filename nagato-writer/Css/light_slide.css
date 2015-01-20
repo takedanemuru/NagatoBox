@@ -1,3 +1,7 @@
+<style>
+html {background-color:white;
+}
+
 body {
   font-family: Helvetica, arial, sans-serif;
   font-size: 14px;
@@ -5,6 +9,7 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: white;
+  color: #9953DF;
   padding: 30px; }
 
 body > *:first-child {
@@ -59,20 +64,23 @@ h6 tt, h6 code {
 h1 {
   font-size: 28px;
   border-bottom: 1px solid #cccccc;
-  color: black; }
+  color: #AF5FFF; }
 
 h2 {
   font-size: 24px;
   border-bottom: 1px solid #cccccc;
-  color: black; }
+  color: #AF5FFF; }
 
 h3 {
+  color: #AF5FFF;
   font-size: 18px; }
 
 h4 {
+  color: #AF5FFF;
   font-size: 16px; }
 
 h5 {
+  color: #AF5FFF;
   font-size: 14px; }
 
 h6 {
@@ -83,10 +91,8 @@ p, blockquote, ul, ol, dl, li, table, pre {
   margin: 15px 0; }
 
 hr {
-  background: transparent url("images/dirty-shade.png") repeat-x 0 0;
-  border: 0 none;
-  color: #cccccc;
-  height: 4px;
+  color: #AF5FFF;
+  border-bottom: 4px solid #DFDFDF;
   padding: 0; }
 
 body > h2:first-child {
@@ -113,7 +119,9 @@ li p.first {
   display: inline-block; }
 
 ul, ol {
-  padding-left: 30px; }
+  margin: 0 0 0 1em;
+  padding-left: 30px; 
+  }
 
 ul :first-child, ol :first-child {
   margin-top: 0; }
@@ -146,7 +154,7 @@ dl {
 blockquote {
   border-left: 4px solid #dddddd;
   padding: 0 15px;
-  color: #777777; }
+  color: #AF5FFF;}
   blockquote > :first-child {
     margin-top: 0; }
   blockquote > :last-child {
@@ -154,25 +162,35 @@ blockquote {
 
 table {
   border-collapse: collapse;
+  width: 100%;
   padding: 0; }
   table tr {
     border-top: 1px solid #cccccc;
     background-color: white;
     margin: 0;
     padding: 0; }
+
     table tr:nth-child(2n) {
-      background-color: #f8f8f8; }
-    table tr th {
+      background-color: #f8f8f8; 
+    }
+    
+  table tr th {
       font-weight: bold;
+      background-color: #AF5FFF;
+      color: white;
       border: 1px solid #cccccc;
       text-align: left;
       margin: 0;
-      padding: 6px 13px; }
+      padding: 6px 13px;
+      }
+    
     table tr td {
       border: 1px solid #cccccc;
       text-align: left;
       margin: 0;
-      padding: 6px 13px; }
+      padding: 6px 13px; 
+    }
+    
     table tr th :first-child, table tr td :first-child {
       margin-top: 0; }
     table tr th :last-child, table tr td :last-child {
@@ -277,3 +295,4 @@ pre {
   pre code, pre tt {
     background-color: transparent;
     border: none; }
+</style>

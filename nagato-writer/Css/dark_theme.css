@@ -1,3 +1,7 @@
+html {
+  background-color:#2A333C;
+}
+
 body {
   font-family: Helvetica, arial, sans-serif;
   font-size: 14px;
@@ -59,6 +63,7 @@ h6 tt, h6 code {
 
 h1 {
   font-size: 28px;
+  border-bottom: 1px solid #cccccc;
   color: #E36B23; }
 
 h2 {

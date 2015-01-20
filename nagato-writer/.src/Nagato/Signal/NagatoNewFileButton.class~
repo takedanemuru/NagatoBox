@@ -1,3 +1,22 @@
 ' Gambas class file
 
-INHERITS NagatoUxContainer
+Inherits NagatoUxContainer
+
+Private $newFileMenu As NagatoNewFileMenu
+
+Public Sub _initialize() ' override
+    
+    Dim yukiButton As New Button(Me._$parentContainer)
+    
+    '$newFileMenu = New NagatoNewFileMenu(HaruhiMain, "NewFileMenu") As "TFEI"
+    
+    With yukiButton
+        .Text = ""
+        .Border = False
+        .AutoResize = True
+        .Picture = MikuruIcon["document"]
+        .Text = ("New")
+        '.Menu = "NewFileMenu"
+    End With
+    
+End
