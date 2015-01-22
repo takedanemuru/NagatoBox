@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("Change Background")
+        .Picture = MikuruIcon.Get("equalizer")
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Dialog.Title = ("Select Image")
+    Dialog.Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files"]
+    
+    If Not Dialog.OpenFile(False) Then
+        NagatoSettingsAppearance.Background = Dialog.Path
+    Endif
+    
+End

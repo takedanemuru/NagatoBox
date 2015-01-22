@@ -43,6 +43,14 @@ Private Sub addCreateMenu()
     
 End
 
+Private Sub addSettingsMenu()
+    
+    Dim yukiMenu As NagatoSubMenuSettings
+    
+    yukiMenu = New NagatoSubMenuSettings(Me._$rootMenu)
+    
+End
+
 Private Sub refreshChildMenus()
     
     With NagatoMenuPipe
@@ -58,6 +66,8 @@ Private Sub refreshChildMenus()
         Me._AddMenu(("Select all"), .ViewSelectAll)
         Me._AddMenu(("Unselect all"), .ViewUnselectAll)
         Me._AddMenu(("Invert selection"), .ViewInvertSelection)
+            Me._AddMenu("", 0) ' Spacer
+        addSettingsMenu()
             Me._AddMenu("", 0) ' Spacer
         Object.New("NagatoMenuItemAbout", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemAppQuit", [Me._$rootMenu, Me._$path])

@@ -8,6 +8,8 @@ Property Read ThemesCount As Integer
 Property Read WidgetTheme As String
 Property Read WidgetThemeMatched As Boolean
 Property Read IsThemeUnified As Boolean
+Property Read IconTheme As String
+Property Read CursorTheme As String
 
 Private Const ConfigDir As String = "/home/takedanemuru/nagato-config-appearance"
 
@@ -85,5 +87,17 @@ End
 Private Function ThemesCount_Read() As Integer
 
     Return $themes.Count
+
+End
+
+Private Function IconTheme_Read() As String
+
+    Return $configGtk2["", "gtk-icon-theme-name"] 
+
+End
+
+Private Function CursorTheme_Read() As String
+
+    Return $configGtk2["", "gtk-cursor-theme-name"] 
 
 End

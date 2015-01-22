@@ -2,19 +2,43 @@
 
 Inherits NagatoGrids
 
+Private Function hasThemeIndex(argPath As String) As Boolean
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argPath, "*", gb.File)
+        If yukiPath = "index.theme" Then Return True
+        If yukiPath = "theme.cache" Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Private Function hasData(argPath As String) As Boolean
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argPath, "*", gb.Directory)
+        If yukiPath <> "cursors" Then Return True
+    Next
+    
+    Return False
+    
+End
+
 Private Sub setData()
     
     Dim yukiIconsDirectory As String = "/usr/share/icons"
     Dim yukiPath As String
     
-    Debug Application.Theme
-    
-    For Each yukiPath In Dir(yukiIconsDirectory, "[^0-9]*", gb.Directory).Sort(gb.IgnoreCase)
-        If Not Dir(yukiIconsDirectory &/ yukiPath).Exist("icon-theme.cache") Then Continue
+    For Each yukiPath In Dir(yukiIconsDirectory, "*", gb.Directory).Sort(gb.IgnoreCase)
+        If Not hasThemeIndex(yukiIconsDirectory &/ yukiPath) Then Continue
+        If Not hasData(yukiIconsDirectory &/ yukiPath) Then Continue
         Inc Me._$grids.Rows.Count
         Me._$grids[Me._$grids.Rows.Max, 1].Text = yukiPath
         If Even(Me._$grids.Rows.Max) Then Me._SetBackground()
-        If yukiPath = Application.Theme Then
+        If yukiPath = NagatoConfigFacade.IconTheme Then
             Me._$grids[Me._$grids.Rows.Max, 0].Picture = MikuruIcon["button-check"]
         End If
     Next
@@ -23,15 +47,7 @@ End
 
 Public Sub _InitializeGrids()
     
-    With Me._$grids
-        .Header = GridView.Horizontal
-        .Expand = True
-        .Columns.Count = 2
-        .Columns[0].W = 32
-        .Columns[1].Text = ("Icon Theme")
-        .Mode = Select.Single
-    End With
-    
+    Me._SetGridsFrame(("Icon Theme"))
     setData()
     
 End

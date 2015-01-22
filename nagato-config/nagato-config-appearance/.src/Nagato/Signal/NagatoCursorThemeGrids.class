@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Private Function hasData(argPath As String) As Boolean
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argPath, "*", gb.Directory)
+        If yukiPath = "cursors" Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Private Sub setCheckMark(argName As String)
+    
+    If argName = NagatoConfigFacade.CursorTheme Then
+        With Me._$grids
+            .[.Rows.Max, Me.ColumnCheck].Picture = MikuruIcon["button-check"]
+        End With
+    End If
+    
+End
+
+Private Sub setData()
+    
+    Dim yukiIconsDirectory As String = "/usr/share/icons"
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(yukiIconsDirectory, "*", gb.Directory).Sort(gb.IgnoreCase)
+        If Not hasData(yukiIconsDirectory &/ yukiPath) Then Continue
+        Inc Me._$grids.Rows.Count
+        Me._$grids[Me._$grids.Rows.Max, Me.ColumnTheme].Text = yukiPath
+        If Even(Me._$grids.Rows.Max) Then Me._SetBackground()
+        setCheckMark(yukiPath)
+    Next
+    
+End
+
+Public Sub _InitializeGrids()
+    
+    Me._SetGridsFrame("Cursor Theme")
+    setData()
+    
+End
+
+Public Sub Grids_Activate()
+    
+    Raise Signal(MikuruSignal.PropertyChanged, [Me._$grids[Me._$grids.Row, 1].Text])
+    
+End

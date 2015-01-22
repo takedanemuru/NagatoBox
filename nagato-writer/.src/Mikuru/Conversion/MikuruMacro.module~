@@ -5,7 +5,7 @@ Property RelativePath As String
 
 Private Const MacroAbsolutePath As String = "NAGATO_MACRO_HOME"
 Private Const MacroRelativePath As String = "NAGATO_MACRO_DIR"
-Private Const MacroGitHubImages As String = "![NAGATO_MACRO_IMAGE](./"
+Private Const MacroImageLink As String = "![NAGATO_MACRO_IMAGE](./"
 
 Private $relativePath As String
 
@@ -23,7 +23,7 @@ Public Function Set(argSourceText As String) As String
     
     yukiText = Replace$(yukiText, MacroRelativePath, Me.RelativePath)
     yukiText = Replace$(yukiText, MacroAbsolutePath, Me.AbsolutePath)
-    yukiText = Replace$(yukiText, MacroGitHubImages, Subst$("![NAGATO_MACRO_IMAGE](&1/", Me.RelativePath))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", Me.RelativePath))
     
     Return yukiText
     

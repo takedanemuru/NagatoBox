@@ -1,0 +1,57 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $tabStrip As TabStrip
+Private $iconView As IconView
+Private $grids As NagatoCursorThemeGrids
+
+Private Sub setIcons()
+    
+    Dim yukiItemName As String
+    Dim yukiIcon As Picture
+    
+    $iconView.Clear()
+    
+    For Each yukiItemName In Stock.Icons
+        yukiIcon = Stock[Subst$("&1/&2", "huge", yukiItemName)]
+        $iconView.Add(yukiItemName, "", yukiIcon)
+    Next
+
+    $iconView.Refresh()
+
+End
+
+Private Sub initializeIconView()
+    
+    $iconView = New IconView($tabStrip)
+    
+    With $iconView
+        .Expand = False
+        .Background = Color.White
+        .H = $tabStrip.ClientW
+    End With
+    
+    setIcons()
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $tabStrip = argTabStrip
+    $tabStrip.Index = 3
+    'initializeIconView()
+    
+    $grids = New NagatoCursorThemeGrids($tabStrip) As "Grids"
+    
+    $tabStrip.Index = 0
+    
+End
+
+Public Sub Grids_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Application.Theme = argValues[0]
+    
+    'setIcons()
+    
+End

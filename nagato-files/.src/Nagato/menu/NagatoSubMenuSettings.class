@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Settings")
+        .Picture = MikuruIcon.Get("equalizer")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override
+    
+    Dim yukiMenu As NagatoSubMenuSelectIconTheme
+    
+    Object.New("NagatoMenuItemSelectBackground", [Me._$rootMenu, ""])
+    yukiMenu = New NagatoSubMenuSelectIconTheme(Me._$rootMenu, "")
+    
+End

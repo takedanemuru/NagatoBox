@@ -40,7 +40,7 @@ Public Sub _new(argTabStrip As TabStrip)
     
     $tabStrip = argTabStrip
     $tabStrip.Index = 2
-    initializeIconView()
+    'initializeIconView()
     
     $grids = New NagatoIconThemeGrids($tabStrip) As "Grids"
     
@@ -50,8 +50,10 @@ End
 
 Public Sub Grids_Signal(argSignal As Integer, argValues As Variant[])
     
+    Debug argValues[0]
+    
     Application.Theme = argValues[0]
     
-    setIcons()
+    'setIcons()
     
 End

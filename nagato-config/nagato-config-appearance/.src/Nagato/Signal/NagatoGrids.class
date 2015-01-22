@@ -2,7 +2,22 @@
 
 Inherits NagatoSignal
 
+Public Enum ColumnCheck, ColumnTheme
+
 Public _$grids As GridView
+
+Public Sub _SetGridsFrame(argTitle As String)
+    
+    With Me._$grids
+        .Header = GridView.Horizontal
+        .Expand = True
+        .Columns.Count = 2
+        .Columns[Me.ColumnCheck].W = 32
+        .Columns[Me.ColumnTheme].Text = (argTitle)
+        .Mode = Select.Single
+    End With
+    
+End
 
 Public Sub _InitializeGrids() ' virtual, MUST be overridden
     

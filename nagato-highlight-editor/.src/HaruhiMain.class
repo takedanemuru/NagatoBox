@@ -1,0 +1,31 @@
+' Gambas class file
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    Dim yukiFile As String = File.Load("nagato_slide.css")
+
+    Application.MainWindow = Me
+
+    MainEditor.Highlight = Highlight.CSS
+    MainEditor.TabSize = 4
+    MainEditor.Text = yukiFile
+    MainEditor.Font.Size = 15
+    MainEditor.Font.Name = "Times New Roman"
+    MainEditor.Flags[MainEditor.ShowLineNumbers] = True
+    MainEditor.Flags[MainEditor.ShowModifiedLines] = True
+    
+    With MainEditor.Styles
+        .[Highlight.Background].Color = Color.Merge(Color.Blue, Color.Black, 0.2)
+        .[Highlight.Number].Foreground = Color.Red
+        .[Highlight.Keyword].Foreground = Color.Orange
+        .[Highlight.Normal].Foreground = Color.White
+        .[Highlight.String].Foreground = Color.White
+        .[Highlight.Symbol].Foreground = Color.Cyan
+        .[Highlight.CSS].Color = Color.Yellow
+    End With
+    
+End

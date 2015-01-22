@@ -22,8 +22,8 @@
 
 + ~~new : "open with file manager" menu for desktop directory.~~
 + ~~new : settings menu for desktop~~
-+ new : icon settings for application
-+ new : background settings for application
++ ~~new : icon settings for application~~
++ ~~new : background settings for application~~
 + ~~fix : NagatoDirectoryObserver does not change DirectoryPath property~~
 
 ### nagato-navigator

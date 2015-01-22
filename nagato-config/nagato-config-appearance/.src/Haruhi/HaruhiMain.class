@@ -5,6 +5,7 @@ Private $gridsThemes As NagatoGridsThemes
 Private $applyButtons As NagatoToolbarApplyButtons
 
 Private $icons As NagatoIconSettingsHandler
+Private $cursors As NagatoCursorSettingsHandler
 
 Private Sub initializeGridThemes()
     
@@ -25,6 +26,7 @@ Public Sub _new()
     $applyButtons = New NagatoToolbarApplyButtons(Me)
 
     $icons = New NagatoIconSettingsHandler(MainTabStrip) As "Icons"
+    $cursors = New NagatoCursorSettingsHandler(MainTabStrip) As "Cursors"
 
 End
 
