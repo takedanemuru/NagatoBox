@@ -21,3 +21,9 @@ Public Sub Activate()
     $button.Enabled = True
     
 End
+
+Public Sub Button_Click()
+    
+    NagatoConfigFacade.Set()
+    
+End

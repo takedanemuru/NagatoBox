@@ -34,6 +34,12 @@ End
 
 Public Sub Grids_Activate()
     
+    Dim yukiSelected As String = Me._$grids[Me._$grids.Row, Me.ColumnTheme].Text
+    
+    If yukiSelected = NagatoConfigFacade.WidgetTheme Then Return
+    
+    NagatoInterimStatus.WidgetTheme = yukiSelected
+    
     Raise SIgnal(MikuruSignal.PropertyChanged, [Me._$grids.Row])
     
 End

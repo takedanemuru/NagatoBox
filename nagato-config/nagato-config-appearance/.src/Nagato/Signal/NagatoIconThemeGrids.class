@@ -54,6 +54,8 @@ End
 
 Public Sub Grids_Activate()
     
+    NagatoInterimStatus.IconTheme = Me._$grids[Me._$grids.Row, 1].Text
+    
     Raise Signal(MikuruSignal.PropertyChanged, [Me._$grids[Me._$grids.Row, 1].Text])
     
 End

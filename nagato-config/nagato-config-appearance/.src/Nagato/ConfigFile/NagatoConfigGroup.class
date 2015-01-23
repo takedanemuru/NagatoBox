@@ -4,6 +4,7 @@ Inherits NagatoConfig
 
 Property Read GroupName As String
 Property Read Count As Integer
+Property Read Text As String
 
 Private $groupName As String
 Private $lines As New NagatoConfigLine[]
@@ -28,6 +29,17 @@ Public Sub _get(argKey As String) As String
     
 End
 
+Public Sub _put(argValue As String, argKey As String)
+    
+    Dim yukiLine As NagatoConfigLine
+    
+    For Each yukiLine In $lines
+        If yukiLine.Key <> argKey Then Continue
+        yukiLine.SetValue(argValue)
+    Next
+    
+End
+
 Public Sub _new(argGroupName As String, argUnquote As Boolean)
     
     $groupName = argGroupName
@@ -44,5 +56,20 @@ End
 Private Function Count_Read() As Integer
 
     Return $lines.Count
+
+End
+
+Private Function Text_Read() As String
+
+    Dim yukiText As String
+    Dim yukiLine As NagatoConfigLine
+    
+    If $groupName Then yukiText = ($groupName & "\n")
+     
+     For Each yukiLine In $lines
+         yukiText &= (yukiLine.Text & "\n")
+     Next
+
+    Return yukiText
 
 End

@@ -3,12 +3,11 @@
 Inherits NagatoUxContainer
 
 Private $webview As WebView
-Private $observer As Observer
 
-Public Sub Refresh(argSource As String, argFormat As String)
+Public Sub Refresh(argSource As String)
     
-    MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-    $webview.Url = Media.URL(MikuruHtmlConverter.TempFile)
+    MikuruHtmlConverter.ToHtmlDirect(argSource)
+    $webview.Url = MikuruHtmlConverter.TempFileUrl
     
     $webview.Refresh()
     
@@ -18,19 +17,11 @@ Public Sub _Initialize()
     
     $webview = New WebView(Me._$parentContainer) As "WebView"
     
+    WebSettings[WebSettings.PluginsEnabled] = True
+    
     With $webview
         .Expand = True
         .NoTabFocus = True
     End With
-    
-    $observer = New Observer(NagatoSettings) As "Asakura"
-    
-End
-
-Public Sub Asakura_RequestReload()
-    
-    Debug "reload"
-    
-    $webview.Refresh()
     
 End

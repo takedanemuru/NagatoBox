@@ -45,7 +45,7 @@ Public Sub PushRecentPath(argPath As String)
     
     If yukiRecentPaths.Exist(argPath) Then yukiRecentPaths.Remove(yukiRecentPaths.Find(argPath))
     yukiRecentPaths.Add(argPath, 0)
-    yukiRecentPaths.Resize(20)
+    yukiRecentPaths.Resize(30)
     
     Me._$settings["file/recent"] = yukiRecentPaths
     Me._$settings.Save()

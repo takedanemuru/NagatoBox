@@ -1,28 +1,92 @@
 ' Gambas module file
 
 Property Read TempFile As String
+Property Read TempFileUrl As String
+Property Read Source As String
+Property Read TempFileRelative As String
 
-Private $tempPath As String
 Private $workingPath As String
+Private $workingPathRelative As String
+Private $sourceText As String
 
-Public Sub ToHtmlDirect(argSourceText As String, argFormat As String)
-
-    Dim yukiTempPath As String = IIf($tempPath, $tempPath, Temp$())
-    Dim yukiOutput As String
+Private Sub resetWorkingPath()
     
-    If Exist($workingPath) Then Kill $workingPath
+    If Exist($workingPath) Then Kill $workingPath ' kill OLD $workingPath
     $workingPath = Temp$() & ".html"
-    
     If Exist(Me.TempFile) Then Kill Me.TempFile
     
-    File.Save(yukiTempPath, MikuruMacro.Set(argSourceText))
+End
+
+Private Sub resetWorkingPathRelative()
     
-    Exec ["pandoc", "-f", argFormat, "-t", "html5", "-c", NagatoCss.Get(), yukiTempPath, "-o", $workingPath] Wait
+    If Exist($workingPathRelative) Then Kill $workingPathRelative ' kill OLD $workingPath
+    $workingPathRelative = Temp$() & ".html"
+    If Exist($workingPathRelative) Then Kill $workingPathRelative
+    
+End
+
+Private Sub convert(argSourcePath As String, argTargetPath As String)
+    
+    Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
+    
+    Exec ["pandoc", "-f", "markdown_github", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    
+End
+
+Private Sub setWorkingFile(argSourceText As String)
+    
+    Dim yukiTempPath As String = Temp$()
+    
+    resetWorkingPath()
+    $sourceText = argSourceText
+    
+    File.Save(yukiTempPath, MikuruMacro.Set(argSourceText))
+    convert(yukiTempPath, $workingPath)
+    
+End
+
+Private Sub setWorkingFileRelative(argSourceText As String)
+    
+    Dim yukiTempPath As String = Temp$()
+    
+    resetWorkingPathRelative()
+    $sourceText = argSourceText
+    
+    File.Save(yukiTempPath, MikuruMacro.ConvertToRelative(argSourceText))
+    convert(yukiTempPath, $workingPathRelative)
+    
+    
+End
+
+Public Sub ToHtmlDirect(argSourceText As String)
+
+    setWorkingFile(argSourceText)
+    'setWorkingFileRelative(argSourceText)
     
 End
 
 Private Function TempFile_Read() As String
 
     Return $workingPath
+
+End
+
+Private Function TempFileUrl_Read() As String
+
+    Return Media.URL($workingPath)
+
+End
+
+Private Function Source_Read() As String
+
+    Return $sourceText
+
+End
+
+Private Function TempFileRelative_Read() As String
+
+    setWorkingFileRelative($sourceText)
+
+    Return $workingPathRelative
 
 End

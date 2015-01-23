@@ -8,7 +8,7 @@
 
 ### nagato-config-appearance
 
-+ initial release
++ ~~initial release~~
 
 ### nagato-config-screenlocker
 
@@ -52,4 +52,4 @@
 + ~~new : include more css files~~
 + ~~drop : support for RestructuredText and Textile~~
 + ~~new : odt export~~ (TESTING)
-
++ ~~new : epub3 export~~(TESTING)

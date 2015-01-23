@@ -1,0 +1,61 @@
+' Gambas class file
+
+Create Static
+
+Property WidgetTheme As String
+Property FontName As String
+Property IconTheme As String
+Property CursorTheme As String
+
+Private $widgetTheme As String
+Private $fontName As String
+Private $iconTheme As String
+Private $cursorTheme As String
+
+Private Function WidgetTheme_Read() As String
+
+    Return $widgetTheme
+
+End
+
+Private Sub WidgetTheme_Write(Value As String)
+
+    $widgetTheme = Value
+
+End
+
+Private Function FontName_Read() As String
+
+    Return $fontName
+
+End
+
+Private Sub FontName_Write(Value As String)
+
+    $fontName = Value
+
+End
+
+Private Function IconTheme_Read() As String
+
+    Return $iconTheme
+
+End
+
+Private Sub IconTheme_Write(Value As String)
+
+    $iconTheme = Value
+
+End
+
+Private Function CursorTheme_Read() As String
+
+    Return $cursorTheme
+
+End
+
+Private Sub CursorTheme_Write(Value As String)
+
+    $cursorTheme = Value
+
+End

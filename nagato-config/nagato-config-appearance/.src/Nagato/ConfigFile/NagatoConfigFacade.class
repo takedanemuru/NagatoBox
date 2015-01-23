@@ -31,12 +31,28 @@ Finally
     
 End
 
+Public Sub Set()
+    
+    If NagatoInterimStatus.WidgetTheme Then
+        $configGtk2["", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
+        $configGtk3["Settings", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
+        $configQt["Qt", "style"] = "GTK+"
+    Endif
+    
+    If NagatoInterimStatus.IconTheme Then
+        $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+        $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+    Endif
+    
+    
+End
+
 Public Sub _new()
     
     $themes = New NagatoThemes
-    $configGtk2 = New NagatoConfigFile(ConfigDir &/ "gtkrc-2.0", False)
-    $configGtk3 = New NagatoConfigFile(ConfigDir &/ "settings.ini", True)
-    $configQt = New NagatoConfigFile(ConfigDir &/ "Trolltech.conf", True)
+    $configGtk2 = New NagatoConfigFile(User.Home &/ ".gtkrc-2.0", False)
+    $configGtk3 = New NagatoConfigFile(Desktop.ConfigDir &/ "gtk-3.0" &/ "settings.ini", True)
+    $configQt = New NagatoConfigFile(Desktop.ConfigDir &/ "Trolltech.conf", True)
     
 End
 

@@ -9,21 +9,25 @@ Private Const MacroImageLink As String = "![NAGATO_MACRO_IMAGE](./"
 
 Private $relativePath As String
 
-' Public Function Clean(argSourceText As String) As String
-'     
-'     Dim yukiFindString As String = MacroAbsolutePath & "/"
-'     
-'     Return Replace$(argSourceText, yukiFindString, "")
-'     
-' End
-
 Public Function Set(argSourceText As String) As String
     
     Dim yukiText As String = argSourceText
     
     yukiText = Replace$(yukiText, MacroRelativePath, Me.RelativePath)
     yukiText = Replace$(yukiText, MacroAbsolutePath, Me.AbsolutePath)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", Me.RelativePath))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", Me.RelativePath))
+    
+    Return yukiText
+    
+End
+
+Public Function ConvertToRelative(argSourceText As String) As String
+    
+    Dim yukiText As String = argSourceText
+    
+    yukiText = Replace$(yukiText, MacroRelativePath, User.Home)
+    yukiText = Replace$(yukiText, MacroAbsolutePath, File.Dir($relativePath))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", File.Dir($relativePath)))
     
     Return yukiText
     

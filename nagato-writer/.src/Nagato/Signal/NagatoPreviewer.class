@@ -4,10 +4,10 @@ Inherits NagatoUxContainer
 
 Private $webview As WebView
 
-Public Sub Refresh(argSource As String, argFormat As String)
+Public Sub Refresh(argSource As String)
     
-    MikuruHtmlConverter.ToHtmlDirect(argSource, argFormat)
-    $webview.Url = Media.URL(MikuruHtmlConverter.TempFile)
+    MikuruHtmlConverter.ToHtmlDirect(argSource)
+    $webview.Url = MikuruHtmlConverter.TempFileUrl
     
     $webview.Refresh()
     

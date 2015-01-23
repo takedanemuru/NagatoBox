@@ -15,7 +15,19 @@ Public Function Set(argSourceText As String) As String
     
     yukiText = Replace$(yukiText, MacroRelativePath, Me.RelativePath)
     yukiText = Replace$(yukiText, MacroAbsolutePath, Me.AbsolutePath)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", Me.RelativePath))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", Me.RelativePath))
+    
+    Return yukiText
+    
+End
+
+Public Function ConvertToRelative(argSourceText As String) As String
+    
+    Dim yukiText As String = argSourceText
+    
+    yukiText = Replace$(yukiText, MacroRelativePath, File.Dir($relativePath))
+    yukiText = Replace$(yukiText, MacroAbsolutePath, User.Home)
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", File.Dir($relativePath)))
     
     Return yukiText
     
