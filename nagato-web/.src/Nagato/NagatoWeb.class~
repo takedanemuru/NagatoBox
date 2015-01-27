@@ -20,7 +20,7 @@ Private Sub addWebView(argUrl As String)
         .Url = argUrl
         .UserAgent = "NagatoWeb"
         .Tracking = True
-        .Font.Name = NagatoSettings.WebFontName
+        .Font = Application.Font
     End With
     
 End
@@ -119,11 +119,11 @@ Public Sub WebView_KeyPress()
     
 End
 
-Public Sub WebView_Download(argDownload As WebDownload)
-    
-    Raise MenuEventWithArg(NagatoMenuPipe.WebDownload, argDownload)
-    
-End
+' Public Sub WebView_Download(argDownload As WebDownload)
+'     
+'     Raise MenuEventWithArg(NagatoMenuPipe.WebDownload, argDownload)
+'     
+' End
 
 Public Sub WebView_Progress()
     

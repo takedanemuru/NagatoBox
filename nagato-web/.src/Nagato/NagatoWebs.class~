@@ -12,7 +12,7 @@ Private $webs As New Collection
 Private $webOrder As New Integer[]
 Private $webActiveIndex As Integer = 0
 
-Private Function getNextTabOrder(argTabIndex) As Integer
+Private Function getNextTabOrder(argTabIndex As Integer) As Integer
     
     If $webOrder.Count = 1 Then
         Return -1
@@ -32,6 +32,8 @@ Public Sub AddWeb(argUrl As String)
     
     Dim yukiUniqueIndex As Integer = MikuruUniqueIndex.Get()
     Dim yukiWeb As New NagatoWeb($container, argUrl, yukiUniqueIndex) As "Menu"
+
+    Debug argUrl
 
     $webs.Add(yukiWeb, yukiUniqueIndex)
     $webOrder.Add(yukiUniqueIndex)

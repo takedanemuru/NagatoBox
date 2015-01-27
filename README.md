@@ -51,46 +51,47 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 ## Package List
 
-No.	|Name			|Description
-:-----:	|-----			|-----
-1	|nagato-archiver		|archiving tool
-2	|nagato-calculator		|calculator
-3	|nagato-calendar		|calendar
-4	|nagato-code-view		|code viewer for Gambas3
-5	|nagato-color-picker		|color picking tool
-6	|nagato-commander		|command executer
-7	|nagato-config-screenlocker	|screenlocker and its congfig tool
-8	|nagato-dbus-finder		|dbus explorer
-9	|nagato-dictionary		|English/Japanese dictionary
-10	|nagato-extractor		|archived file extraction tool
-11	|nagato-font-view		|font viewer
-12	|nagato-gif-box		|gif animation viewer
-13	|nagato-image-view		|image viewer
-14	|nagato-keycode-checker	|keycode checker
-15	|nagato-lookup		|application finder
-16	|nagato-map		|map viewer
-17	|nagato-movie		|video viewer
-18	|nagato-navigator		|Nagato Yuki tells you a fortune
-19	|nagato-network-manager	|network manager
-20	|nagato-openbox-logout	|logout manager for pure openbox3
-21	|nagato-pdf-view		|pdf viewer
-22	|nagato-player-x		|gstreamer based music player
-23	|nagato-power-manager	|power manager
-24	|nagato-screenshooter		|screenshot taking tool
-25	|nagato-session		|session and autostart manager
-26	|nagato-stockicon-list		|show stock icons for Gambas3
-27	|nagato-taskmanager		|taskmanager
-28	|nagato-text		|simple text pad
-19	|nagato-text-converter		|charactor-code conversion tool
-30	|nagato-wareki		|wareki comparison
-31	|nagato-wallpaper		|wallpaper config tool
-32	|nagato-weather		|weather forecast
-33	|nagato-web		|web browser
-34	|nagato-writer		|markdown editor
-35	|nekomimi-clock		|clock
-36	|haramaru-radio-player		|downloader/player for "haramaru radio"
-37	|ohana clock		|Bonbori-Matsuri is waiting you.
-38	|yuki			|interface for humanoid interface
+|Name			|Description
+|-----			|-----
+|nagato-archiver		|archiving tool
+|nagato-calculator		|calculator
+|nagato-calendar		|calendar
+|nagato-code-view		|code viewer for Gambas3
+|nagato-color-picker		|color picking tool
+|nagato-commander		|command executer
+|nagato-config-appearance	|look and feel config tool
+|nagato-config-screenlocker	|screenlocker and its congfig tool
+|nagato-dbus-finder		|dbus explorer
+|nagato-dictionary		|English/Japanese dictionary
+|nagato-extractor		|archived file extraction tool
+|nagato-font-view		|font viewer
+|nagato-gif-box		|gif animation viewer
+|nagato-image-view		|image viewer
+|nagato-keycode-checker	|keycode checker
+|nagato-lookup		|application finder
+|nagato-map		|map viewer
+|nagato-movie		|video viewer
+|nagato-navigator		|Nagato Yuki tells you a fortune
+|nagato-network-manager	|network manager
+|nagato-openbox-logout	|logout manager for pure openbox3
+|nagato-pdf-view		|pdf viewer
+|nagato-player-x		|gstreamer based music player
+|nagato-power-manager	|power manager
+|nagato-screenshooter		|screenshot taking tool
+|nagato-session		|session and autostart manager
+|nagato-stockicon-list		|show stock icons for Gambas3
+|nagato-taskmanager		|taskmanager
+|nagato-text		|simple text pad
+|nagato-text-converter		|charactor-code conversion tool
+|nagato-wareki		|wareki comparison
+|nagato-wallpaper		|wallpaper config tool
+|nagato-weather		|weather forecast
+|nagato-web		|web browser
+|[nagato-writer](./readme_extra/nagato-writer)		|markdown editor
+|nekomimi-clock		|clock
+|haramaru-radio-player		|downloader/player for "haramaru radio"
+|ohana clock		|Bonbori-Matsuri is waiting you.
+|yuki			|interface for humanoid interface
 
 ## To Do
 

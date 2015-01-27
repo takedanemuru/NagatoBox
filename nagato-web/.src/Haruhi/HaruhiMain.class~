@@ -143,7 +143,8 @@ Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
             insertWeb($webs.ActiveIndex + 1, argArgument) ' insert new web tab next to active tab
             $webs.ShowActiveTab()
         Case NagatoMenuPipe.WebDownload
-            $downloadBar.SetWebDownload(argArgument)
+            Debug argArgument.Url
+            '$downloadBar.SetWebDownload(argArgument)
     End Select
     
 End
@@ -199,7 +200,6 @@ Public Sub InPageSearch_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
         Case NagatoMenuPipe.InPageSearchClose
-            $inPageSearch.Clear()
             InPageSearchHBox.Visible = False
     End Select
     

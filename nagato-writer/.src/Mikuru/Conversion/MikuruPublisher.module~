@@ -9,66 +9,56 @@ Private Function getPathToSave(argExtend As String) As String
     
 End
 
+Private Sub showMessage(argTarget As String)
+    
+        Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
+    
+End
+
 Private Sub toPdf()
     
-    Dim yukiPath As String = getPathToSave("pdf")
+    Dim yukiTarget As String = getPathToSave("pdf")
+    Dim yukiSource As String = MikuruHtmlConverter.TempFile
+    
+    If Not yukiTarget Then Return
 
-    If Not yukiPath Then Return
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "300", yukiSource, yukiTarget] Wait
 
-    'Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "300", MikuruHtmlConverter.TempFile, yukiPath] Wait
-    Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "300", MikuruHtmlConverter.TempFile, yukiPath] Wait
-
-    Message.Info("YUKI.N > It's done", ("OK"))
+    showMessage(yukiTarget)
     
 End
 
 Private Sub toHtml()
     
-    Dim yukiPath As String = getPathToSave("html")
+    Dim yukiTarget As String = getPathToSave("html")
     
-    Copy MikuruHtmlConverter.TempFile To yukiPath
+    Copy MikuruHtmlConverter.TempFile To yukiTarget
     
-    Message.Info("YUKI.N > It's done", ("OK"))
+    showMessage(yukiTarget)
     
 End
 
 Private Sub toOdt()
     
-    Dim yukiPath As String = getPathToSave("odt")
+    Dim yukiTarget As String = getPathToSave("odt")
+    Dim yukiSource As String = MikuruHtmlConverter.TempFileRelative
 
-    If Not yukiPath Then Return
+    If Not yukiTarget Then Return
 
-    Exec ["pandoc", MikuruHtmlConverter.TempFile, "-o", yukiPath] Wait
+    Exec ["pandoc", yukiSource, "-o", yukiTarget] Wait
 
-    Message.Info("YUKI.N > It's done", ("OK"))
+    showMessage(yukiTarget)
     
 End
 
 Private Sub toEpub()
     
-    Dim yukiPath As String = getPathToSave("epub")
+    Dim yukiTarget As String = getPathToSave("epub")
+    Dim yukiSource As String = MikuruHtmlConverter.TempFileRelative
     
-    If Not yukiPath Then Return
+    If Not yukiTarget Then Return
 
-    Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", MikuruHtmlConverter.TempFileRelative, "-o", yukiPath] Wait
-    
-    Message.Info("YUKI.N > It's done", ("OK"))
-    
-End
-
-Private Sub toPlainText()
-    
-    Dim yukiTempPathSource As String = Temp$() & ".txt"
-    Dim yukiPath As String = getPathToSave("txt")
-    Dim yukiOutput As String
-    
-    If Not yukiPath Then Return
-    
-    File.Save(yukiTempPathSource, MikuruHtmlConverter.Source)
-    
-    Exec ["pandoc", "-f", "markdown_github", "-t", "plain", yukiTempPathSource] To yukiOutput
-    
-    File.Save(yukiPath, yukiOutput)
+    Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
     
     Message.Info("YUKI.N > It's done", ("OK"))
     
@@ -83,8 +73,6 @@ Public Sub _call(argSignal As Integer)
             toHtml()
         Case MikuruSignal.PublishPdf
             toPdf()
-        Case MikuruSignal.PublishPlainText
-            toPlainText()
         Case MikuruSignal.PublishOdt
             toOdt()
         Case MikuruSignal.PublishEpub3

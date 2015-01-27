@@ -6,6 +6,7 @@ Public Sub _AddChildMenus()
     
     Me._AddMenu(("Bulleted List"), MikuruSignal.EditInsertBullets)
     Me._AddMenu(("Numbered List"), MikuruSignal.EditInsertNumbers)
-    Me._AddMenu(("Image"), MikuruSignal.EditInsertImage)
+    Me._AddMenu(("Image Path (Absolute)"), MikuruSignal.EditInsertImage)
+    Me._AddMenu(("Image Path (Relative)"), MikuruSignal.EditInsertImageRelative)
     Me._AddMenu(("URL"), MikuruSignal.EditInsertUrl)
 End

@@ -13,7 +13,7 @@ Public Sub Main()
     If NagatoDBus.IsUnique() Then
         NagatoCalendarConnection.Ensure()
         ensureNagatoTaskmanagerActivation()
-        'NagatoRss.Refresh()
+        NagatoRss.Refresh()
         NagatoDBus.Register()
         HaruhiMain.Show()
     Else

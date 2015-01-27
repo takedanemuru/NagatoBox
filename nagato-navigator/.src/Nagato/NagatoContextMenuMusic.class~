@@ -29,14 +29,6 @@ Public Sub _Initialize()
     
 End
 
-' Public Sub _new()
-'     
-'     Me._$rootMenu = New Menu(HaruhiMain)
-'     $proxy = DBus[ApplicationName][ObjectPath, Interface]
-'     initializeMenus()
-'     
-' End
-
 Public Sub ContextMenu_Click()
     
     Dim yukiPlayer As DBusProxy = DBus[ApplicationName][ObjectPath, Interface]

@@ -29,19 +29,27 @@ End
 
 Public Sub SetWebDownload(argWebDownload As WebDownload)
     
-    Dim yukiDownload As NagatoWebDownload
+    ' Dim yukiDownload As NagatoWebDownload
+    ' 
+    ' argWebDownload.Path = Temp$("download_" & File.Name(argWebDownload.Url))
+    ' 
+    ' Dialog.Title = ("Download")
+    ' Dialog.Path = MikuruSafePath.Get(NagatoSettings.DownloadDirectory &/ File.Name(argWebDownload.Url))
+    ' 
+    ' If Not Dialog.SaveFile() Then
+    '     yukiDownload = New NagatoWebDownload($downloadsHBox, argWebDownload, Dialog.Path) As "Download"
+    '     $container.Visible = True
+    ' Else
+    '     argWebDownload.Cancel()
+    ' Endif
     
-    argWebDownload.Path = Temp$("download_" & File.Name(argWebDownload.Url))
+    Debug argWebDownload.Url
     
-    Dialog.Title = ("Download")
-    Dialog.Path = MikuruSafePath.Get(NagatoSettings.DownloadDirectory &/ File.Name(argWebDownload.Url))
+    Exec ["wget", argWebDownload.Url] Wait
     
-    If Not Dialog.SaveFile() Then
-        yukiDownload = New NagatoWebDownload($downloadsHBox, argWebDownload, Dialog.Path) As "Download"
-        $container.Visible = True
-    Else
-        argWebDownload.Cancel()
-    Endif
+    Try WebDownloads.Remove(WebDownloads.Find(argWebDownload))
+    
+    Debug WebDownloads.Count
     
 End
 

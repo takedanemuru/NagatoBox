@@ -7,7 +7,7 @@ Private Const ObjectPath As String = "/org/nagato/player/x"
 Private Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
 
 Private $proxy As DBusProxy
-Private $rootMenu As Menu
+'Private $rootMenu As Menu
 Private $queueMenu As NagatoCurrentQueueMenu
 
 Public Sub _InitializeMenus()

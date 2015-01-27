@@ -57,7 +57,7 @@ End
 
 Public Sub DrawTitle(argTitle As String, argRectangle As Rect, Optional argCollapse As Boolean = True)
     
-    Dim yukiTitle As String = MikuruUxTabText.GetCollapsedTitle(argTitle, argRectangle)
+    Dim yukiTitle As String 
     
     Paint.Brush = Paint.Color(Color.White)
     With argRectangle

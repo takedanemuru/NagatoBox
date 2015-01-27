@@ -1,0 +1,19 @@
+' Gambas module file
+
+Property Path As String
+
+Public Enum ResponseCancel, ResponseApply
+
+Private $path As String
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Sub Path_Write(Value As String)
+
+    $path = Value
+
+End

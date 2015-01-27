@@ -1,9 +1,9 @@
 ' Gambas module file
 
-Property Read AbsolutePath As String
+Property Read HomePath As String
 Property RelativePath As String
 
-Private Const MacroAbsolutePath As String = "NAGATO_MACRO_HOME"
+Private Const MacroHome As String = "NAGATO_MACRO_HOME"
 Private Const MacroRelativePath As String = "NAGATO_MACRO_DIR"
 Private Const MacroImageLink As String = "![NAGATO_MACRO_IMAGE](./"
 
@@ -14,7 +14,7 @@ Public Function Set(argSourceText As String) As String
     Dim yukiText As String = argSourceText
     
     yukiText = Replace$(yukiText, MacroRelativePath, Me.RelativePath)
-    yukiText = Replace$(yukiText, MacroAbsolutePath, Me.AbsolutePath)
+    yukiText = Replace$(yukiText, MacroHome, Me.HomePath)
     yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", Me.RelativePath))
     
     Return yukiText
@@ -25,15 +25,15 @@ Public Function ConvertToRelative(argSourceText As String) As String
     
     Dim yukiText As String = argSourceText
     
-    yukiText = Replace$(yukiText, MacroRelativePath, User.Home)
-    yukiText = Replace$(yukiText, MacroAbsolutePath, File.Dir($relativePath))
+    yukiText = Replace$(yukiText, MacroRelativePath, File.Dir($relativePath))
+    yukiText = Replace$(yukiText, MacroHome, User.Home)
     yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", File.Dir($relativePath)))
     
     Return yukiText
     
 End
 
-Private Function AbsolutePath_Read() As String
+Private Function HomePath_Read() As String
 
     Return Subst$("file://&1", User.Home)
 

@@ -9,6 +9,5 @@ Public Sub _InitializeChildMenus() ' override
     Me._AddChildMenu(("GitHub"), "!github")
     Me._AddChildMenu(("Gist"), "!gist")
     Me._AddChildMenu(("Gitorious"), "!gitrious")
-    Me._AddChildMenu(("Ohloh"), "!ohloh")
 
 End

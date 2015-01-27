@@ -27,6 +27,19 @@ Private Function ensureSaved() As Boolean ' False means cancel to open file
     
 End
 
+Private Sub insertImagePathRelative()
+    
+    Dim yukiPath As String
+    
+    With MikuruImageSelect
+        HaruhiSelectImage.Directory = IIf($fileHandler.Path, File.Dir($fileHandler.Path), User.Home)
+        If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
+        yukiPath = Replace$(.Path, File.Dir($fileHandler.Path), ".")
+        $textArea.Insert(Subst$("![NAGATO_MACRO_IMAGE](&1)", yukiPath))
+    End With
+
+End
+
 Public Sub _Initialize()
     
     $textArea = New NagatoTextArea(Me._$parentContainer) As "TFEI"
@@ -62,13 +75,21 @@ End
 
 Public Sub EditEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     
+    If argArgs Then Debug argArgs.Count
+    
     Select Case argEvent
         Case MikuruSignal.EditInsertBullets
             $textArea.InsertBullets()
         Case MikuruSignal.EditInsertNumbers
             $textArea.InsertNembers()
         Case MikuruSignal.EditInsertImage
-            $textArea.Insert("![alt text](/path/to/img.jpg)")
+            With MikuruImageSelect
+                HaruhiSelectImage.Directory = IIf($fileHandler.Path, File.Dir($fileHandler.Path), User.Home)
+                If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
+                $textArea.Insert(Subst$("![image: &2](&1)", .Path, File.BaseName(.Path)))
+            End With
+        Case MikuruSignal.EditInsertImageRelative
+            insertImagePathRelative()
         Case MikuruSignal.EditInsertUrl
             $textArea.Insert("[title](http://www.somewhere.com)")
     End Select
