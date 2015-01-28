@@ -11,6 +11,7 @@ Private $iconViewDrag As NagatoIconViewDrag
 Private $iconViewKeyboard As NagatoIconViewKeyboard
 Private $selectionBar As NagatoSelectionBar 
 Private $currentDirectory As String
+Private $observer As Observer
 
 Private Sub getCount() As Integer
     
@@ -37,6 +38,8 @@ Public Sub Refresh(argDirectory As String)
 End
 
 Public Sub RefreshWithSearchQuery(argPaths As String[])
+    
+    MikuruArrayTest(argPaths)
     
     $iconView.RefreshWithSearchResult(argPaths, $selectionBar.Paths)
     
@@ -78,6 +81,12 @@ Public Sub EnsureVisible()
     
 End
 
+Public Sub ShowLostDirectory()
+    
+    $iconView.ShowLostDirectory()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     Dim yukiIconViewInitializer As New NagatoIconViewInitializer(argContainer)
@@ -88,7 +97,8 @@ Public Sub _new(argContainer As Container)
     $iconViewDrag = New NagatoIconViewDrag(yukiIconViewInitializer.IconView) As "Menu"
     $iconViewKeyboard = New NagatoIconViewKeyboard(yukiIconViewInitializer.IconView) As "Keyboard"
     $selectionBar = New NagatoSelectionBar(argContainer) As "SelectionBar"
-    
+    $observer = New Observer(NagatoClipBoard) As "Asakura"    
+
 End
 
 Public Sub Menu_MenuEvent(argEvent As Integer)
@@ -140,19 +150,20 @@ Public Sub Keyboard_KeyPressWithControl(argKeyCode As Integer)
     
     Select Case argKeyCode
         Case Key["x"]
-            Debug "cut"
             If $selectionBar.Paths.Count = 0 Then Return
-            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/uri-list")
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/nagato-selection-cut")
         Case Key["c"]
             If $selectionBar.Paths.Count = 0 Then Return
             Clipboard.Copy(NagatoDrag2.GetUriListCopy($selectionBar.Paths), "text/uri-list")
         Case Key["v"]
-            Debug Clipboard.Format
-            If Clipboard.Format <> "text/uri-list" Then Return
-            Debug NagatoDrag2.GetPaths(Clipboard.Paste("text/uri-list")).Count
-            MikuruFileManuever.CopyUriList($currentDirectory, Clipboard.Paste("text/uri-list"))
+            If Clipboard.Format = "text/uri-list" Then 
+                MikuruFileManuever.CopyUriList($currentDirectory, Clipboard.Paste("text/uri-list"))
+            Else If Clipboard.Format = "text/nagato-selection-cut" Then
+                MikuruFileManuever.CutUriList($currentDirectory, Clipboard.Paste("text/nagato-selection-cut"))
+            End If
         Case Key["h"]
-            Raise MenuEvent(NagatoMenuPipe.ViewShowHidden)
+            NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+            TFEI.RefreshAll()
         Case Key["t"]
             Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $currentDirectory)
         Case Key["n"]
@@ -201,4 +212,10 @@ Private Function Selection_Read() As String[]
 
     Return $selectionBar.Paths
 
+End
+
+Public Sub Asakura_Changed()
+    
+    $iconView.Refresh($currentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
+    
 End

@@ -9,19 +9,21 @@ Private $workingPath As String
 Private $workingPathRelative As String
 Private $sourceText As String
 
-Private Sub resetWorkingPath()
-    
-    If Exist($workingPath) Then Kill $workingPath ' kill OLD $workingPath
-    $workingPath = Temp$() & ".html"
-    If Exist(Me.TempFile) Then Kill Me.TempFile
-    
-End
+Private $workinPathHandler As New NagatoWorkingFile
 
+' Private Sub resetWorkingPath()
+'     
+'     If Exist($workingPath) Then Kill $workingPath ' kill OLD $workingPath
+'     $workingPath = Temp$() & ".html"
+'     If Exist(Me.TempFile) Then Kill Me.TempFile
+'     
+' End
+' 
 Private Sub resetWorkingPathRelative()
     
     If Exist($workingPathRelative) Then Kill $workingPathRelative ' kill OLD $workingPath
     $workingPathRelative = Temp$() & ".html"
-    If Exist(Me.TempFileRelative) Then Kill Me.TempFileRelative
+    If Exist($workingPathRelative) Then Kill $workingPathRelative
     
 End
 
@@ -33,47 +35,52 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     
 End
 
-Private Sub setWorkingFile(argSourceText As String)
-    
-    Dim yukiTempPath As String = Temp$()
-    
-    resetWorkingPath()
-    $sourceText = argSourceText
-    
-    File.Save(yukiTempPath, MikuruMacro.Set(argSourceText))
-    convert(yukiTempPath, $workingPath)
-    
-End
+' Private Sub setWorkingFile(argSourceText As String)
+'     
+'     Dim yukiSourcePath As String = Temp$()
+'     
+'     $sourceText = argSourceText
+' 
+'     resetWorkingPath()
+'     File.Save(yukiSourcePath, MikuruMacro.Set(argSourceText))
+'     convert(yukiSourcePath, $workingPath)
+'     
+' End
 
 Private Sub setWorkingFileRelative(argSourceText As String)
     
     Dim yukiTempPath As String = Temp$()
     
-    resetWorkingPathRelative()
     $sourceText = argSourceText
-    
+
+    resetWorkingPathRelative()    
     File.Save(yukiTempPath, MikuruMacro.ConvertToRelative(argSourceText))
     convert(yukiTempPath, $workingPathRelative)
-    
     
 End
 
 Public Sub ToHtmlDirect(argSourceText As String)
 
-    setWorkingFile(argSourceText)
-    'setWorkingFileRelative(argSourceText)
+    $sourceText = argSourceText
+    $workinPathHandler.Set(argSourceText)
+
+    'setWorkingFile(argSourceText)
     
 End
 
 Private Function TempFile_Read() As String
 
-    Return $workingPath
+    'Return $workingPath
+    
+    Return $workinPathHandler.WorkingPath
 
 End
 
 Private Function TempFileUrl_Read() As String
 
-    Return Media.URL($workingPath)
+    'Return Media.URL($workingPath)
+
+    Return $workinPathHandler.WorkingUrl
 
 End
 

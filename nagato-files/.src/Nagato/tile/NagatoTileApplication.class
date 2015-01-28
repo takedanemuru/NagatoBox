@@ -4,18 +4,29 @@ Inherits NagatoTile
 
 Public _$baseColor As Integer = Color.Violet
 
+Private Function getMode(argPath As String, argSelected As Boolean) As Integer
+    
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        Return NagatoTile.ModeSelected
+    Else If NagatoClipBoard.PathsCut.Exist(argPath)
+        Return NagatoTile.ModeCut
+    Else If NagatoClipBoard.PathCopy.Exist(argPath) Then
+        Return NagatoTile.ModeCopied
+    Else If argSelected Then
+        Return NagatoTile.ModeSelected
+    Else
+        Return NagatoTile.ModeNull
+    Endif
+    
+End
+
 Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     
     Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, Me.IconSize)
-    Dim yukiTile As Picture
-    
-    If Not Access(argPath, gb.Write) And If Not argSelected Then
-        yukiTile = Me._GetTileReadOnly(yukiBaseImage, yukiIcon, yukiDesktopFile.Name)
-    Else
-        yukiTile = Me._GetTile(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, argSelected)
-    Endif
+    Dim yukiMode As Integer = getMode(argPath, argSelected)
+    Dim yukiTile As Picture = Me._GetTile2(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, yukiMode)
     
     Return Me._SetSymbol(yukiTile, argPath)
     

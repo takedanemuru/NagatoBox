@@ -15,13 +15,15 @@ Public Sub Main()
     ' this call activate NagatoDBSymbol, so do not delete.
     If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." 
 
-    Application.Theme = "Numix-Circle"
+    Application.Theme = NagatoSettingsAppearance.IconTheme
     
     NagatoArguments.Parsing()
     
     'Only For Testing
     'activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
+    
+    'NagatoClipBoard.Activate()
     
     If NagatoArguments.DesktopIcons Then
         activateDesktop()

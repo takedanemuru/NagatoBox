@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private Const ThumbnailSize As Integer = 128
+
+Public Sub Paint()
+    
+    paint.Brush = paint.Color(Color.Blue)
+        Paint.Rectangle(0, 0, ThumbnailSize, 24)
+    paint.Fill()
+        Paint.DrawPicture(MikuruIcon.Get("scissors"), 4, 4)
+    paint.Brush = paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText("CUT", 24, 0, ThumbnailSize - 48, 24, Align.Center)
+    Paint.Fill()
+        Paint.LineWidth = 2
+        Paint.MoveTo(0, 24)
+        Paint.LineTo(ThumbnailSize, 24)
+    Paint.Stroke()
+    
+End

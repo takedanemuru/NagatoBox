@@ -23,6 +23,8 @@ Public Sub Main()
     'activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
     
+    NagatoClipBoard.Activate()
+    
     If NagatoArguments.DesktopIcons Then
         activateDesktop()
     Else If NagatoArguments.XdgUserDirs Then

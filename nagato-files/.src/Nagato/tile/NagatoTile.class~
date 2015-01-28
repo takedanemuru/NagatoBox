@@ -9,10 +9,14 @@ Public Const TextWidth As Integer = 112
 Public Const IconSize As Integer = 64
 Public Const Margin As Integer = 8
 
+Public Enum ModeReadOnly, ModeCut, ModeCopied, ModeSelected, ModeNull
+
 Public _$baseColor As Integer = Color.White
 
 Private $selectedLabelPainter As New NagatoPainterSelectedLabel
 Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
+Private $cutLabelPainter As New NagatoPainterCutLabel
+Private $copiedLabelPainter As New NagatoPainterCopiedlabel
 Private $symbolSetter As New NagatoSymbolSetter
 
 Private Sub paintIcon(argIcon As Picture)
@@ -34,7 +38,7 @@ Public Function _GetBaseImage(argSelected As Boolean) As Image
     
 End
 
-Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As String, argSelected As Boolean) As Picture
+Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As String, argMode As Integer) As Picture
     
     Dim yukiHeight As Integer
     
@@ -46,7 +50,18 @@ Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As S
         paintIcon(argIcon)
         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
-        If argSelected Then $selectedLabelPainter.Paint()
+        Select Case argMode
+            Case ModeReadOnly
+                $readOnlyLabelPainter.Paint()
+            Case ModeCut
+                $cutLabelPainter.Paint()
+            Case ModeCopied
+                $copiedLabelPainter.Paint()
+            Case ModeSelected
+                $selectedLabelPainter.Paint()
+            Case ModeNull
+                ' ignore
+        End Select
         .End()
     End With
     
@@ -54,27 +69,45 @@ Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As S
     
 End
 
-Public Function _GetTileReadOnly(argBaseImage As Image, argIcon As Picture, argText As String) As Picture
-    
-    Dim yukiHeight As Integer
-    
-    Debug argText
-    
-    With Paint
-        .Begin(argBaseImage)
-        .Brush = .Color(Color.White)
-        .Font.Bold = True
-        yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-        paintIcon(argIcon)
-        .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
-        .Fill()
-        $readOnlyLabelPainter.Paint(Me.BaseColor)
-        .End()
-    End With
-    
-    Return argBaseImage.Picture
-    
-End
+' Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As String, argSelected As Boolean) As Picture
+'     
+'     Dim yukiHeight As Integer
+'     
+'     With Paint
+'         .Begin(argBaseImage)
+'         .Brush = .Color(Color.White)
+'         .Font.Bold = True
+'         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
+'         paintIcon(argIcon)
+'         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
+'         .Fill()
+'         If argSelected Then $selectedLabelPainter.Paint()
+'         .End()
+'     End With
+'     
+'     Return argBaseImage.Picture
+'     
+' End
+' 
+' Public Function _GetTileReadOnly(argBaseImage As Image, argIcon As Picture, argText As String) As Picture
+'     
+'     Dim yukiHeight As Integer
+'     
+'     With Paint
+'         .Begin(argBaseImage)
+'         .Brush = .Color(Color.White)
+'         .Font.Bold = True
+'         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
+'         paintIcon(argIcon)
+'         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
+'         .Fill()
+'         $readOnlyLabelPainter.Paint(Me.BaseColor)
+'         .End()
+'     End With
+'     
+'     Return argBaseImage.Picture
+'     
+' End
 
 Public Sub _SetSymbol(argTile As Picture, argPath As String) As Picture
     

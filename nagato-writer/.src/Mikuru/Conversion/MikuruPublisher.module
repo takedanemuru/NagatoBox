@@ -60,6 +60,7 @@ Private Sub toEpub()
     If Not yukiTarget Then Return
 
     Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    'Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", User.Home &/ "example.md", "-o", yukiTarget] Wait
     
     showMessage(yukiTarget)
     

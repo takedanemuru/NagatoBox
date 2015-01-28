@@ -45,6 +45,7 @@ End
 
 Public Sub ClearAll()
     
+    Clipboard.Clear()
     $selection.ClearAll()
     
 End
