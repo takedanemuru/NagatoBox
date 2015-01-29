@@ -5,82 +5,54 @@ Property Read TempFileUrl As String
 Property Read Source As String
 Property Read TempFileRelative As String
 
-Private $workingPath As String
 Private $workingPathRelative As String
 Private $sourceText As String
 
-Private $workinPathHandler As New NagatoWorkingFile
+Private $workinPathAbsolute As New NagatoWorkingFile
+Private $workinPathRelativeHandler As New NagatoWorkingFileRelative
 
-' Private Sub resetWorkingPath()
+' Private Sub resetWorkingPathRelative()
 '     
-'     If Exist($workingPath) Then Kill $workingPath ' kill OLD $workingPath
-'     $workingPath = Temp$() & ".html"
-'     If Exist(Me.TempFile) Then Kill Me.TempFile
+'     If Exist($workingPathRelative) Then Kill $workingPathRelative ' kill OLD $workingPath
+'     $workingPathRelative = Temp$() & ".html"
+'     If Exist($workingPathRelative) Then Kill $workingPathRelative
 '     
 ' End
 ' 
-Private Sub resetWorkingPathRelative()
-    
-    If Exist($workingPathRelative) Then Kill $workingPathRelative ' kill OLD $workingPath
-    $workingPathRelative = Temp$() & ".html"
-    If Exist($workingPathRelative) Then Kill $workingPathRelative
-    
-End
-
-Private Sub convert(argSourcePath As String, argTargetPath As String)
-    
-    Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
-    
-    Exec ["pandoc", "-f", "markdown_github", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
-    
-End
-
-' Private Sub setWorkingFile(argSourceText As String)
+' Private Sub convert(argSourcePath As String, argTargetPath As String)
 '     
-'     Dim yukiSourcePath As String = Temp$()
+'     Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
 '     
-'     $sourceText = argSourceText
-' 
-'     resetWorkingPath()
-'     File.Save(yukiSourcePath, MikuruMacro.Set(argSourceText))
-'     convert(yukiSourcePath, $workingPath)
+'     Exec ["pandoc", "-f", "markdown_github", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
 '     
 ' End
-
-Private Sub setWorkingFileRelative(argSourceText As String)
-    
-    Dim yukiTempPath As String = Temp$()
-    
-    $sourceText = argSourceText
-
-    resetWorkingPathRelative()    
-    File.Save(yukiTempPath, MikuruMacro.ConvertToRelative(argSourceText))
-    convert(yukiTempPath, $workingPathRelative)
-    
-End
+' 
+' Private Sub setWorkingFileRelative(argSourceText As String)
+'     
+'     Dim yukiTempPath As String = Temp$()
+'     
+'     resetWorkingPathRelative()    
+'     File.Save(yukiTempPath, MikuruMacro.ConvertToRelative(argSourceText))
+'     convert(yukiTempPath, $workingPathRelative)
+'     
+' End
 
 Public Sub ToHtmlDirect(argSourceText As String)
 
     $sourceText = argSourceText
-    $workinPathHandler.Set(argSourceText)
+    $workinPathAbsolute.Set(argSourceText)
 
-    'setWorkingFile(argSourceText)
-    
 End
 
 Private Function TempFile_Read() As String
 
-    'Return $workingPath
-    
-    Return $workinPathHandler.WorkingPath
+    Return $workinPathAbsolute.WorkingPath
 
 End
 
 Private Function TempFileUrl_Read() As String
 
-    'Return Media.URL($workingPath)
-
-    Return $workinPathHandler.WorkingUrl
+    Return $workinPathAbsolute.WorkingUrl
 
 End
 
@@ -92,8 +64,9 @@ End
 
 Private Function TempFileRelative_Read() As String
 
-    setWorkingFileRelative($sourceText)
+    'setWorkingFileRelative($sourceText)
+    $workinPathRelativeHandler.Set($sourceText)
 
-    Return $workingPathRelative
+    Return $workinPathRelativeHandler.WorkingPath
 
 End

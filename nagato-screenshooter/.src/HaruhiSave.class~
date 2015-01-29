@@ -6,19 +6,13 @@ Private $screenshot As Picture
 
 Private Sub initializeScreenshot(argOnlyActive As Boolean)
     
-    Dim yukiWindow As DesktopWindow
-    
     If argOnlyActive Then
-        'yukiWindow = New DesktopWindow(Desktop.ActiveWindow)
         With MikuruActiveWindow.Rectangle
             $screenshot = Desktop.Screenshot(.X, .Y, .W, .H)
         End With
     Else
         $screenshot = Desktop.Screenshot()
     End If
-    
-Catch
-    $screenshot = Desktop.Screenshot()
     
 End
 

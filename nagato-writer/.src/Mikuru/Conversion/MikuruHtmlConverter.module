@@ -5,37 +5,9 @@ Property Read TempFileUrl As String
 Property Read Source As String
 Property Read TempFileRelative As String
 
-Private $workingPathRelative As String
 Private $sourceText As String
-
 Private $workinPathAbsolute As New NagatoWorkingFile
-Private $workinPathRelativeHandler As New NagatoWorkingFileRelative
-
-' Private Sub resetWorkingPathRelative()
-'     
-'     If Exist($workingPathRelative) Then Kill $workingPathRelative ' kill OLD $workingPath
-'     $workingPathRelative = Temp$() & ".html"
-'     If Exist($workingPathRelative) Then Kill $workingPathRelative
-'     
-' End
-' 
-' Private Sub convert(argSourcePath As String, argTargetPath As String)
-'     
-'     Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
-'     
-'     Exec ["pandoc", "-f", "markdown_github", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
-'     
-' End
-' 
-' Private Sub setWorkingFileRelative(argSourceText As String)
-'     
-'     Dim yukiTempPath As String = Temp$()
-'     
-'     resetWorkingPathRelative()    
-'     File.Save(yukiTempPath, MikuruMacro.ConvertToRelative(argSourceText))
-'     convert(yukiTempPath, $workingPathRelative)
-'     
-' End
+Private $workinPathRelative As New NagatoWorkingFileRelative
 
 Public Sub ToHtmlDirect(argSourceText As String)
 
@@ -64,9 +36,8 @@ End
 
 Private Function TempFileRelative_Read() As String
 
-    'setWorkingFileRelative($sourceText)
-    $workinPathRelativeHandler.Set($sourceText)
+    $workinPathRelative.Set($sourceText)
 
-    Return $workinPathRelativeHandler.WorkingPath
+    Return $workinPathRelative.WorkingPath
 
 End

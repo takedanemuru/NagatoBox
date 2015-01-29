@@ -7,6 +7,7 @@ Private $iconView As IconView
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
 Private $icons As NagatoDesktopIconsHandler
+Private $keyboard As NagatoDesktopKeyboardHandler
 Private $mouse As NagatoDesktopMouseHandler
 Private $drop As NagatoDesktopDropHandler
 Private $activation As NagatoDesktopActivationHandler
@@ -32,6 +33,7 @@ Public Sub _new(argContainer As Container)
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView)
     $icons = New NagatoDesktopIconsHandler($iconView)
     $mouse = New NagatoDesktopMouseHandler($iconView) As "Handler"
+    $keyboard = New NagatoDesktopKeyboardHandler($iconView) As "Handler"
     $drop = New NagatoDesktopDropHandler($iconView)
     $activation = New NagatoDesktopActivationHandler($iconView)
     $observer = New NagatoDesktopObserverHandler($iconView) As "Handler"
@@ -51,9 +53,43 @@ Public Sub Handler_Signal(argEvent As Integer, argValue As Variant)
             $mouse.Delete(Desktop.Path &/ argValue)
             $icons.Refresh($mouse.SelectedPaths)
         Case NagatoMenuPipe.ObserverModefy, NagatoMenuPipe.ViewForceReload
-            Debug "force reload"
             $mouse.ClearAll()
             $icons.Refresh($mouse.SelectedPaths)
+    End Select
+    
+End
+
+Public Sub Handler_KeyPressWithControl(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key["x"]
+            If $mouse.SelectedPaths.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($mouse.SelectedPaths), "text/nagato-selection-cut")
+        Case Key["c"]
+            If $mouse.SelectedPaths.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($mouse.SelectedPaths), "text/uri-list")
+        Case Key["v"]
+            If Clipboard.Format = "text/uri-list" Then 
+                MikuruFileManuever.CopyUriList(Desktop.Path, Clipboard.Paste("text/uri-list"))
+            Else If Clipboard.Format = "text/nagato-selection-cut" Then
+                MikuruFileManuever.CutUriList(Desktop.Path, Clipboard.Paste("text/nagato-selection-cut"))
+            End If
+    End Select
+    
+End
+
+Public Sub Handler_KeyPress(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key.Enter, 16777220
+            Debug "enter"
+        Case Key.Esc, 16777216
+            Debug "escape"
+            Clipboard.Clear()
+            $mouse.ClearAll()
+        Case Key.Delete
+            Debug "delete"
+            NagatoTrash.Delete($mouse.SelectedPaths)
     End Select
     
 End

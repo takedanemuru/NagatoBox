@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoDesktopHandler
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Event KeyPress(argKeyCode As Integer)
+Event KeyPressWithAlt(argKeyCode As Integer)
+Event KeyPressWithControl(argKeyCode As Integer)
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $observer = New Observer($iconView) As "Asakura"
+    
+End
+
+Public Sub Asakura_KeyPress()
+    
+    If Key.Control Then
+        Raise KeyPressWithControl(Key.Code)
+    Else If Key.Alt Then
+        Raise KeyPressWithAlt(Key.Code)
+    Else
+        Raise KeyPress(Key.Code)
+    End If
+
+End

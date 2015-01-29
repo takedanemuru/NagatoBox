@@ -4,6 +4,7 @@ Inherits NagatoDesktopHandler
 
 Private $iconView As IconView
 Private $directoryObserver As NagatoDirectoryObserver
+Private $clipboardObserver As Observer
 Private $settingsObserver As Observer
 
 Event Signal(argSignal As Integer, argValues As Variant)
@@ -23,6 +24,7 @@ Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
     $settingsObserver = New Observer(NagatoSettingsDesktop) As "SettingsObserver"
+    $clipboardObserver = New Observer(NagatoClipBoard) As "ClipboardObserver"
     
     initializeObserver()
     
@@ -41,6 +43,12 @@ Public Sub DirectoryObserver_Modefied(argFileName As String)
 End
 
 Public Sub SettingsObserver_Changed()
+    
+    Raise Signal(NagatoMenuPipe.ViewForceReload, "")
+    
+End
+
+Public Sub ClipboardObserver_Changed()
     
     Raise Signal(NagatoMenuPipe.ViewForceReload, "")
     
