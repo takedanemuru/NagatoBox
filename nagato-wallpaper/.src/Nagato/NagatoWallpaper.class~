@@ -2,36 +2,17 @@
 
 Create Static
 
-Private Sub setModefiedImage(argRenderMode As Integer, argBackground As Integer)
-    
-    Dim yukiRendarer As Object
-    
-    Select argRenderMode
-        Case MikuruRenderMode.Center
-            yukiRendarer = New NagatoWallPaperCenter
-        Case MikuruRenderMode.Tile
-            yukiRendarer = New NagatoWallpaperTileCenter
-        Case MikuruRenderMode.Full
-            yukiRendarer = New NagatoWallpaperFull
-        Case MikuruRenderMode.Fit
-            yukiRendarer = New NagatoWallpaperFit
-        Case MikuruRenderMode.Fill
-            yukiRendarer = New NagatoWallpaperFill
-    End Select
-    
-    yukiRendarer.Set(MikuruOriginalImage.Image)
-    
-End
-
 Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer)
     
     If argPath = "" Then Return
     If Not Exist(argPath) Then Return
     
-    MikuruOriginalImage.SetPath(argPath)
-    setModefiedImage(argRenderMode, argBackground)
+    ' MikuruOriginalImage.SetPath(argPath)
+    ' MikuruModefiedImage.Set(argRenderMode)
     
-    Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    Debug NagatoDBus.isNagatoDesktopActivated()
+    
+    'Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     
 End
 

@@ -5,7 +5,7 @@ Public Sub Initialize()
     With WebSettings
         .[.PluginsEnabled] = True
         .[.JavascriptEnabled] = True
-        .[.JavascriptCanOpenWindows] = True
+        .[.JavascriptCanOpenWindows] = False
     End With
     
 End

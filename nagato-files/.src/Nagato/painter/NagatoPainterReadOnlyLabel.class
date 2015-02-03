@@ -2,9 +2,9 @@
 
 Private Const ThumbnailSize As Integer = 128
 
-Public Sub Paint(argColor As Integer)
+Public Sub Paint()
     
-    paint.Brush = paint.Color(argColor + 16777216 * 128)
+    paint.Brush = paint.Color(Color.Blue + 16777216 * 128)
         Paint.Rectangle(0, 0, ThumbnailSize, 24)
     paint.Fill()
         Paint.DrawPicture(MikuruIcon.Get("exclamation"), 4, 4)
@@ -12,7 +12,7 @@ Public Sub Paint(argColor As Integer)
         Paint.Font.Bold = True
         Paint.RichText("READ ONLY", 24, 0, ThumbnailSize - 48, 24, Align.Center)
     Paint.Fill()
-    Paint.Brush = Paint.Color(argColor)
+    Paint.Brush = Paint.Color(Color.Blue)
         Paint.LineWidth = 1
         Paint.MoveTo(0, 24)
         Paint.LineTo(ThumbnailSize, 24)

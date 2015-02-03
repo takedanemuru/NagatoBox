@@ -33,6 +33,7 @@
 ### nagato-player-x
 
 + ~~rewrite : coverart functionality and its design~~
++ new : move items on playlist
 
 ### nagato-text
 
@@ -53,3 +54,5 @@
 + ~~drop : support for RestructuredText and Textile~~
 + ~~new : odt export~~ (TESTING)
 + ~~new : epub3 export~~(TESTING)
++ new : edit and insert metadeta to epub
+

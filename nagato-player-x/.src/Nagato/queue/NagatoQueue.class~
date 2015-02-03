@@ -203,7 +203,7 @@ Public Sub MusicList_Moved()
     
     Dim yukiPath As String = MikuruPath.UrlToPath(NagatoQueue.CurrentPath)
     
-    $coverArt = MikuruEyeD3.GetPicture(yukiPath, 128)
+    $coverArt = MikuruEyeD3.GetPicture(yukiPath, 96)
     
     Raise Moved
     

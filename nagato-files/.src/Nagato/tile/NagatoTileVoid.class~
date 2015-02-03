@@ -10,6 +10,6 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     Dim yukiIcon As Picture = MikuruIcon.Get("exclamation", 32)
     Dim yukiMessage As String = ("File and Directory not found")
     
-    Return Me._GetTile(yukiBaseImage, yukiIcon, yukiMessage, argSelected)
+    Return Me._GetTile2(yukiBaseImage, yukiIcon, yukiMessage, NagatoTile.ModeNull)
     
 End

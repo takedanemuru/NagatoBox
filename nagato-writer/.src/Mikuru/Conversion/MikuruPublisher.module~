@@ -57,15 +57,20 @@ Private Sub toEpub()
     Dim yukiTarget As String = getPathToSave("epub")
     Dim yukiSource As String = MikuruHtmlConverter.TempFileRelative
     Dim yukiCover As String = "--epub-cover-image=" & User.Home &/ "headphones_x.png"
+    Dim yukiMetadataPath As String = Temp$()
+    Dim yukiMetadata As String
 
     If Not yukiTarget Then Return
 
-    HaruhiEpubMetadata.ShowDialog()
+    File.Save(yukiMetadataPath, File.Load("Templates/metadata.xml"))
+    yukiMetadata = Subst$("--epub-metadata=&1", yukiMetadataPath)
 
-    'Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
-    Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
-    
-    showMessage(yukiTarget)
+    'HaruhiEpubMetadata.ShowDialog()
+
+    Exec ["pandoc", "-t", "epub3", yukiCover, yukiMetadata, "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    ' Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    ' 
+    ' showMessage(yukiTarget)
     
 End
 

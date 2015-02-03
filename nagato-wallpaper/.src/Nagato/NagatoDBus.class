@@ -1,0 +1,22 @@
+' Gambas class file
+
+Create Static
+
+Private $interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
+
+Private Function checkActivation() As Boolean
+    
+    Return DBus["org.gambas.nagato.files"]["/org/nagato/files", $interface].Ready
+    
+Catch
+    Return False
+    
+End
+
+Public Function isNagatoDesktopActivated() As Boolean
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato.files") Then Return False
+    
+    Return checkActivation()
+    
+End

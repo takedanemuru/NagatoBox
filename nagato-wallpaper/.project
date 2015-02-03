@@ -1,21 +1,22 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.6.1
+# Compiled with Gambas 3.6.2
 Title=nagato-wallpaper
 Startup=Kyon
 Icon=Pictures/image.png
-Version=0.9.4
+Version=0.10.0
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.db
+Component=gb.dbus
 Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.qt4.ext
 Component=gb.web
 Description="a simple gui for hsetroot."
-Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru<takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=ja
@@ -25,8 +26,9 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.LICENSE
-PackageName=nagato-wallpaper-0.9.4
+PackageName=nagato-wallpaper-0.10.0
 PackageVersion=3
+CreateEachDirectory=1
 MimeTypes="image/jpeg","image/jpg","image/png"
 Packager=1
 Systems=ubuntu

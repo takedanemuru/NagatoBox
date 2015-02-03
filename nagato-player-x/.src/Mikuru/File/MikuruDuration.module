@@ -1,0 +1,18 @@
+' Gambas module file
+
+Private $player As MediaPlayer
+
+Public Sub GetDuration(argPath As String) As Float
+    
+    $player = New MediaPlayer
+    
+    $player.URL = Media.URL(argPath)
+    $player.Pause()
+    Return $player.Duration
+    
+Catch
+    Return ""
+    
+End
+
+

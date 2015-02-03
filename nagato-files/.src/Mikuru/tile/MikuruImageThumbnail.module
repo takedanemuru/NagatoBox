@@ -40,7 +40,7 @@ End
 Private Sub paintHeaderLabel(argPath As String, argSelected As Boolean)
     
         If Not argSelected And If Not Access(argPath, gb.Write) Then 
-            $readOnlyLabelPainter.Paint(Color.Blue)
+            $readOnlyLabelPainter.Paint()
         Else If NagatoClipBoard.PathsCut.Exist(argPath) Then
             $cutLabelPainter.Paint()
         Else If NagatoClipBoard.PathCopy.Exist(argPath) Then

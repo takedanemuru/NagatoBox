@@ -2,13 +2,14 @@
 
 Inherits NagatoGrids
 
-Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum
+Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
 
 Private Sub refreshData()
     
     Dim yukiRowIndex As Integer
+    Dim yukiElement As NagatoMusicElement
     
     If Not Object.IsValid(Me._$grids) Then Return
     
@@ -17,9 +18,11 @@ Private Sub refreshData()
     For yukiRowIndex = 0 To NagatoQueue.Count - 1
         Inc Me._$grids.Rows.Count
         $playMark.Set(yukiRowIndex)
-        Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, NagatoQueue[yukiRowIndex].Title)
-        Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, NagatoQueue[yukiRowIndex].Artist)
-        Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, NagatoQueue[yukiRowIndex].Album)
+        yukiElement = NagatoQueue[yukiRowIndex]
+        Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, yukiElement.Title)
+        Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, yukiElement.Artist)
+        Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, yukiElement.Album)
+        Me._SetGridDataLeft(Me._$grids.Rows.Max, ColumnTime, MikuruFloatToTime(yukiElement.Duration))
         If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
     Next
     
@@ -36,6 +39,7 @@ Public Sub _InitializeGrids() 'override
         .Columns[ColumnTitle].Text = "Title"
         .Columns[ColumnArtist].Text = "Artist"
         .Columns[ColumnAlbum].Text = "Album"
+        .Columns[ColumnTime].Text = "Duration"
     End With
     
     $playMark = New NagatoGridsPlayMark(Me._$grids)
@@ -101,7 +105,6 @@ End
 Public Sub _Activate() 'override
     
    NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
-   'Me.SetMark(Me._$grids.Row)
     
 End
 
@@ -122,14 +125,9 @@ Public Sub RefreshPlaymark()
     If Not Object.IsValid(Me._$grids) Then Return
     
     For yukiRowIndex = 0 To Me._$grids.Rows.Max
-        $playMark.Set(yukiRowIndex)
-        Me._$grids[yukiRowIndex, 0].EnsureVisible()
+        If $playMark.Set(yukiRowIndex) Then
+            Me._$grids[yukiRowIndex, 0].EnsureVisible()
+        End If
     Next
-    
-End
-
-Public Sub Asakura_MouseDown()
-    
-    Debug "MouseDown"
     
 End

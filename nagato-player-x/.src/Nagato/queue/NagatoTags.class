@@ -3,10 +3,12 @@
 Property Title As String
 Property Artist As String
 Property Album As String
+Property Read Duration As Float
 
 Private $title As String = ""
 Private $artist As String = ""
 Private $album As String = ""
+Private $duration As Float
 
 Private Sub setTitle(argPath As String)
     
@@ -46,6 +48,7 @@ Public Sub SetTag(argPath As String)
     setTitle(argPath)
     setArtist(argPath)
     setAlbum(argPath)
+    $duration = MikuruDuration.GetDuration(argPath)
     
 End
 
@@ -67,6 +70,13 @@ Private Function Artist_Read() As String
 
 End
 
+Public Sub TagParser_MediaTagList(argTagList As String[])
+    
+    MikuruArrayTest(argTagList)
+    
+End
+
+
 Private Sub Artist_Write(Value As String)
 
    $artist = Value 
@@ -82,5 +92,11 @@ End
 Private Sub Album_Write(Value As String)
 
     $album = Value
+
+End
+
+Private Function Duration_Read() As Float
+
+    Return $duration
 
 End

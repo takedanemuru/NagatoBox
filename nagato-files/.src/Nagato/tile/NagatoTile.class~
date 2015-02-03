@@ -19,6 +19,23 @@ Private $cutLabelPainter As New NagatoPainterCutLabel
 Private $copiedLabelPainter As New NagatoPainterCopiedlabel
 Private $symbolSetter As New NagatoSymbolSetter
 
+Private Sub paintHeaderLabel(argMode As Integer)
+    
+    Select Case argMode
+        Case ModeReadOnly
+            $readOnlyLabelPainter.Paint()
+        Case ModeCut
+            $cutLabelPainter.Paint()
+        Case ModeCopied
+            $copiedLabelPainter.Paint()
+        Case ModeSelected
+            $selectedLabelPainter.Paint()
+        Case ModeNull
+            ' ignore
+    End Select
+    
+End
+
 Private Sub paintIcon(argIcon As Picture)
     
     If Object.IsValid(argIcon)
@@ -50,64 +67,13 @@ Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As 
         paintIcon(argIcon)
         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
-        Select Case argMode
-            Case ModeReadOnly
-                $readOnlyLabelPainter.Paint()
-            Case ModeCut
-                $cutLabelPainter.Paint()
-            Case ModeCopied
-                $copiedLabelPainter.Paint()
-            Case ModeSelected
-                $selectedLabelPainter.Paint()
-            Case ModeNull
-                ' ignore
-        End Select
+        paintHeaderLabel(argMode)
         .End()
     End With
     
     Return argBaseImage.Picture
     
 End
-
-' Public Function _GetTile(argBaseImage As Image, argIcon As Picture, argText As String, argSelected As Boolean) As Picture
-'     
-'     Dim yukiHeight As Integer
-'     
-'     With Paint
-'         .Begin(argBaseImage)
-'         .Brush = .Color(Color.White)
-'         .Font.Bold = True
-'         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-'         paintIcon(argIcon)
-'         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
-'         .Fill()
-'         If argSelected Then $selectedLabelPainter.Paint()
-'         .End()
-'     End With
-'     
-'     Return argBaseImage.Picture
-'     
-' End
-' 
-' Public Function _GetTileReadOnly(argBaseImage As Image, argIcon As Picture, argText As String) As Picture
-'     
-'     Dim yukiHeight As Integer
-'     
-'     With Paint
-'         .Begin(argBaseImage)
-'         .Brush = .Color(Color.White)
-'         .Font.Bold = True
-'         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-'         paintIcon(argIcon)
-'         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
-'         .Fill()
-'         $readOnlyLabelPainter.Paint(Me.BaseColor)
-'         .End()
-'     End With
-'     
-'     Return argBaseImage.Picture
-'     
-' End
 
 Public Sub _SetSymbol(argTile As Picture, argPath As String) As Picture
     

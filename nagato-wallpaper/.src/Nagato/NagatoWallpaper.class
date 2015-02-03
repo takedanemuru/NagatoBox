@@ -10,7 +10,9 @@ Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Int
     MikuruOriginalImage.SetPath(argPath)
     MikuruModefiedImage.Set(argRenderMode)
     
-    Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    If Not NagatoDBus.isNagatoDesktopActivated() Then
+        Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    End If
     
 End
 

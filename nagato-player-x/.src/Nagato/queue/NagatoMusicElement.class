@@ -4,6 +4,7 @@ Property Read Path As String
 Property Artist As String
 Property Album As String
 Property Title As String
+Property Read Duration As Float
 
 Private $path As String
 Private $tags As New NagatoTags
@@ -56,5 +57,11 @@ End
 Private Sub Artist_Write(Value As String)
 
     $tags.Artist = Value
+
+End
+
+Private Function Duration_Read() As Float
+
+    Return $tags.Duration
 
 End

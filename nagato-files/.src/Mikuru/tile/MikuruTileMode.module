@@ -1,0 +1,20 @@
+' Gambas module file
+
+Public Enum ModeReadOnly, ModeCut, ModeCopied, ModeSelected, ModeNull
+
+Public Sub _call(argPath As String, argSelected As Boolean) As Integer
+    
+    If Not Access(argPath, gb.Write) And If Not argSelected Then
+        Return Me.ModeReadOnly
+    Else If NagatoClipBoard.PathsCut.Exist(argPath)
+        Return Me.ModeCut
+    Else If NagatoClipBoard.PathCopy.Exist(argPath) Then
+        Return Me.ModeCopied
+    Else If argSelected Then
+        Return Me.ModeSelected
+    Else
+        Return Me.ModeNull
+    Endif
+    
+End
+

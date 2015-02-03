@@ -99,6 +99,8 @@ Public Sub SetTag(argTag As String, argIndex As Integer, argValue As String)
             $musicElements[argIndex].Album = argValue
     End Select
     
+    Debug argValue
+    
 Catch
     Return
     

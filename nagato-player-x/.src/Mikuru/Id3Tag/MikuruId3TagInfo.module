@@ -3,6 +3,7 @@
 Private Const TitleHeader As String = "=== TIT2 (Title/songname/content description): "
 Private Const ArtistHeader As String = "=== TPE1 (Lead performer(s)/Soloist(s)): "
 Private Const AlbumHeader As String = "=== TALB (Album/Movie/Show title): "
+Private Const BitrateHeader As String = "Bitrate: "
 
 Private Function getId3v2Tag(argFullPath As String, argHeader As String) As String
     
