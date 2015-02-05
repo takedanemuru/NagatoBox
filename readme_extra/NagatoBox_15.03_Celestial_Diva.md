@@ -33,7 +33,8 @@
 ### nagato-player-x
 
 + ~~rewrite : coverart functionality and its design~~
-+ new : move items on playlist
++ ~~new : move items on playlist (by menu button)~~
++ new : move items on playlist (by drag and drop)
 
 ### nagato-text
 

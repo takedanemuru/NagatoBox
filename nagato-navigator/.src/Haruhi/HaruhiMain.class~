@@ -3,7 +3,6 @@
 Private Const Margin As Integer = 2
 
 Private $button As NagatoStarButton
-Private $drawingArea As DrawingArea
 Private $contentBar As NagatoContentBar
 Private $pager As NagatoPager
 Private $clock As NagatoClock
@@ -57,11 +56,11 @@ Public Sub Form_Open()
     Me.Background = NagatoSettings.BackgroundColor
     $button = New NagatoStarButton(Me) As "StarButton"
     $contentBar = New NagatoContentBar(Me) As "ContentBar"
-    'setSystray()
+    setSystray()
     $pager = New NagatoPager(Me) As "Pager"
     $clock = New NagatoClock(Me) As "Clock"
     
-    'X11Systray.Show($systrayDrawingArea.Id)
+    X11Systray.Show($systrayDrawingArea.Id)
     
 End
 

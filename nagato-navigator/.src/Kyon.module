@@ -11,7 +11,7 @@ End
 Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
-        NagatoCalendarConnection.Ensure()
+        'NagatoCalendarConnection.Ensure()
         ensureNagatoTaskmanagerActivation()
         If Desktop.NetworkAvailable Then NagatoRss.Refresh()
         NagatoDBus.Register()

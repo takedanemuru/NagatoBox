@@ -34,6 +34,7 @@ Public Sub EnsureVisible()
     yukiWindow.Desktop = Desktop.Current
     
     HaruhiBalloon.NewFortune()
+    HaruhiBalloon.X = Me.X
     
 End
 
@@ -45,6 +46,7 @@ Public Sub SetText(argText As String)
     yukiWindow.Desktop = Desktop.Current
     
     HaruhiBalloon.SetText(argText)
+    HaruhiBalloon.X = Me.X
     
 End
 
@@ -53,11 +55,14 @@ Public Sub Form_Open()
     setPersona()
     setPosition()
     
+    Me.X = NagatoSettings.PersonaX
+    
 End
 
 Public Sub Form_DblClick()
     
     HaruhiBalloon.Close()
+    NagatoSettings.PersonaX = Me.X
     
     Me.Close()
     
@@ -67,4 +72,15 @@ Public Sub Form_Move()
 
     Me.Y = Screen.H - $persona.H
 
+End
+
+Public Sub Form_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Left
+            Me.X -= 16
+        Case Key.Right
+            Me.X += 16
+    End Select
+    
 End

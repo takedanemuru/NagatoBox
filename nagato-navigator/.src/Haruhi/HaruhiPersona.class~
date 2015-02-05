@@ -20,6 +20,12 @@ Private Sub setPosition()
     
 End
 
+Public Sub ChangePersona()
+    
+    setPersona()
+    
+End
+
 Public Sub EnsureVisible()
     
     Dim yukiWindow As New DesktopWindow(Me.Id)
@@ -28,6 +34,7 @@ Public Sub EnsureVisible()
     yukiWindow.Desktop = Desktop.Current
     
     HaruhiBalloon.NewFortune()
+    HaruhiBalloon.X = Me.X
     
 End
 
@@ -39,6 +46,7 @@ Public Sub SetText(argText As String)
     yukiWindow.Desktop = Desktop.Current
     
     HaruhiBalloon.SetText(argText)
+    HaruhiBalloon.X = Me.X
     
 End
 
@@ -61,4 +69,15 @@ Public Sub Form_Move()
 
     Me.Y = Screen.H - $persona.H
 
+End
+
+Public Sub Form_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Left
+            Me.X -= 16
+        Case Key.Right
+            Me.X += 16
+    End Select
+    
 End

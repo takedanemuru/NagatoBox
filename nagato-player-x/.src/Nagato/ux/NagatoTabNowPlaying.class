@@ -31,6 +31,10 @@ Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
     Select Case argSignal
         Case MikuruSignal.ListSaveAs
             saveAsPlaylist()
+        Case MikuruSignal.ListUp
+            NagatoQueue.ListMoveUp($grids.Selection)
+        Case MikuruSignal.ListDown
+            NagatoQueue.ListMoveDown($grids.Selection)
     End Select
     
 End
@@ -48,6 +52,15 @@ Public Sub Asakura_Moved()
     If Not Object.IsValid($grids) Then Return
     
     $grids.Refresh()
+    
+End
+
+Public Sub Asakura_SelectionMoved(argSelection As Integer[])
+    
+    If Not Object.IsValid($grids) Then Return
+    
+    $grids.Refresh()
+    $grids.RefreshSelection(argSelection)
     
 End
 

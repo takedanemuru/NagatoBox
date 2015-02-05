@@ -23,6 +23,7 @@ Event Moved
 Event Changed
 Event TagChanged
 Event State
+Event SelectionMoved(argIndexes As Integer[])
 
 Public Function SetPath(argPath As String) As Boolean
     
@@ -65,14 +66,18 @@ End
 
 Public Sub ListMoveUp(argIndexes As Integer[])
     
-    'todo
+    If argIndexes.Count = 0 Then Return
+    
+    $musicList.MoveUp(argIndexes)
     
 End
 
 Public Sub ListMoveDown(argIndexes As Integer[])
     
-    'todo
-    
+    If argIndexes.Count = 0 Then Return
+
+    $musicList.MoveDown(argIndexes)
+
 End
 
 Public Sub SavePaths()
@@ -117,6 +122,8 @@ Public Sub Play()
     
     If Me.Count = 0 Then Return
     If $player.State <> Media.Playing Then $player.Play()
+    
+    Raise SelectionMoved([$musicList.CurrentPosition])
     
 End
 
@@ -214,6 +221,12 @@ Public Sub MusicList_Changed()
     NagatoSettingsMusic.SavePaths($musicList.Paths)
     
     Raise Changed
+    
+End
+
+Public Sub MusicLIst_SelectionMoved(argSelection As Integer[])
+    
+    Raise SelectionMoved(argSelection)
     
 End
 

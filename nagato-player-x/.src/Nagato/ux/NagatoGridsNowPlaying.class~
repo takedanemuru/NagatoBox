@@ -2,6 +2,8 @@
 
 Inherits NagatoGrids
 
+Property Read Selection As Integer[]
+
 Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
@@ -22,7 +24,7 @@ Private Sub refreshData()
         Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, yukiElement.Title)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, yukiElement.Artist)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, yukiElement.Album)
-        Me._SetGridDataLeft(Me._$grids.Rows.Max, ColumnTime, MikuruFloatToTime(yukiElement.Duration))
+        Me._SetGridDataRight(Me._$grids.Rows.Max, ColumnTime, MikuruFloatToTime(yukiElement.Duration))
         If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
     Next
     
@@ -130,4 +132,10 @@ Public Sub RefreshPlaymark()
         End If
     Next
     
+End
+
+Private Function Selection_Read() As Integer[]
+
+    Return Me._$grids.Rows.Selection
+
 End

@@ -2,6 +2,8 @@
 
 Inherits NagatoGrids
 
+Property Read Selection As Integer[]
+
 Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
@@ -96,6 +98,16 @@ Public Sub Refresh()
     
 End
 
+Public Sub RefreshSelection(argIndexes As Integer[])
+    
+    Dim yukiIndex As Integer
+    
+    For Each yukiIndex In argIndexes
+        Try Me._$grids.Rows[yukiIndex].Selected = True
+    Next
+    
+End
+
 Public Sub ContextMenu_Delete()
    
    NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
@@ -130,4 +142,10 @@ Public Sub RefreshPlaymark()
         End If
     Next
     
+End
+
+Private Function Selection_Read() As Integer[]
+
+    Return Me._$grids.Rows.Selection
+
 End

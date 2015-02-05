@@ -10,6 +10,7 @@ Property ShowNetworkButton As Boolean
 Property ShowPowerButon As Boolean
 Property FeedLines As Collection
 Property PersonaPath As String
+Property PersonaX As Integer
 
 Private $settings As New Settings
 
@@ -133,6 +134,19 @@ End
 Private Sub PersonaPath_Write(Value As String)
 
     $settings["persona/path"] = Value
+    $settings.Save()
+
+End
+
+Private Function PersonaX_Read() As Integer
+
+    Return $settings["persona/x", HaruhiPersona.X]
+
+End
+
+Private Sub PersonaX_Write(Value As Integer)
+
+    $settings["persona/x"] = Value
     $settings.Save()
 
 End

@@ -6,7 +6,7 @@ Private $observer As Observer
 
 Private Sub addButton(argContainer As Container)
     
-    $button = New Label(argContainer) As "NagatoMenu"
+    $button = New Label(argContainer) As "Label"
     
     With $button
         .AutoResize = False
@@ -34,10 +34,10 @@ Public Sub Asakura_Timer()
     
 End
 
-Public Sub NagatoMenu_Menu()
+Public Sub Label_Menu()
     
-    'Dim yukiContextMenu As New NagatoContextMenuClock
+    Dim yukiContextMenu As New NagatoContextMenuClock
     
-    
+    yukiContextMenu.PopUp()
     
 End
