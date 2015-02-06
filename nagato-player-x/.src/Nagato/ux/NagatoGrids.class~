@@ -60,6 +60,19 @@ Public Sub _SetGridData(argRow As Integer, argColumn As Integer, argData As Stri
     
 End
 
+Public Sub _SetGridDataRight(argRow As Integer, argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
+    
+    Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
+    
+    Me._$grids[argRow, argColumn].Text = argData
+    Me._$grids[argRow, argColumn].Alignment = Align.Right
+    
+    If argExpand And If yukiWidth > Me._$grids.Columns[argColumn].W Then
+        Me._$grids.Columns[argColumn].W = yukiWidth
+    Endif
+    
+End
+
 Public Sub _AdjustColumnWidth(argColumn As Integer, argRow As Integer)
     
     With Me._$grids
@@ -119,5 +132,25 @@ End
 Public Sub Asakura_ColumnClick(argIndex As Integer)
     
     Me._ColumnClick(argIndex)
+    
+End
+
+Public Sub Asakura_DragMove()
+    
+    Debug "dragmove"
+    
+End
+
+Public Sub Asakura_MouseDrag()
+    
+    Drag.Icon = MikuruIcon.Get("arrow-right")
+    Me._$grids.Drag("dummy", "text/nagato-music-items")
+    
+End
+
+Public Sub Asakura_Drag()
+    
+    Drag.Icon = MikuruIcon.Get("arrow-right")
+    Me._$grids.Drag("dummy", "text/nagato-music-items")
     
 End

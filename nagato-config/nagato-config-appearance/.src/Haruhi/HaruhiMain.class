@@ -9,7 +9,7 @@ Private $cursors As NagatoCursorSettingsHandler
 
 Private Sub initializeGridThemes()
     
-    $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "ThemesGrids"
+    $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "Themes"
     
     With $gridsThemes
         .SetList(NagatoConfigFacade.ThemesList)
@@ -25,8 +25,8 @@ Public Sub _new()
     initializeGridThemes()
     $applyButtons = New NagatoToolbarApplyButtons(Me)
 
-    $icons = New NagatoIconSettingsHandler(MainTabStrip) As "Icons"
-    $cursors = New NagatoCursorSettingsHandler(MainTabStrip) As "Cursors"
+    $icons = New NagatoIconSettingsHandler(MainTabStrip) As "Themes"
+    $cursors = New NagatoCursorSettingsHandler(MainTabStrip) As "Themes"
 
 End
 
@@ -42,7 +42,7 @@ Public Sub Form_Close()
     
 End
 
-Public Sub ThemesGrids_Signal(argSignal As Integer, argValues As Variant[])
+Public Sub Themes_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.PropertyChanged Then $applyButtons.Activate()
     

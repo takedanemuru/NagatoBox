@@ -32,6 +32,22 @@ Public Sub SetList(argList As String[])
     
 End
 
+Private Sub setStarButton()
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        If Me._$grids[yukiRow, 1].Text = NagatoConfigFacade.WidgetTheme Then
+            Me._$grids[yukiRow, 0].Picture = MikuruIcon["button-check"]
+        Else If yukiRow = Me._$grids.Row Then
+            Me._$grids[yukiRow, 0].Picture = MikuruIcon["auction"]
+        Else
+            Me._$grids[yukiRow, 0].Picture = Null
+        Endif
+    Next
+    
+End
+
 Public Sub Grids_Activate()
     
     Dim yukiSelected As String = Me._$grids[Me._$grids.Row, Me.ColumnTheme].Text
@@ -40,6 +56,8 @@ Public Sub Grids_Activate()
     
     NagatoInterimStatus.WidgetTheme = yukiSelected
     
-    Raise SIgnal(MikuruSignal.PropertyChanged, [Me._$grids.Row])
+    setStarButton()
+    
+    Raise Signal(MikuruSignal.PropertyChanged, [Me._$grids.Row])
     
 End

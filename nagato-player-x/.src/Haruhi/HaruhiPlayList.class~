@@ -4,7 +4,6 @@ Private $nowPlayingTab As NagatoTabNowPlaying
 Private $playlistsTab As NagatoTabPlaylists
 Private $albumsTab As NagatoTabAlbums
 Private $libraryTab As NagatoTabLibrary
-Private $observer As Observer
 
 Public Sub _new()
 
@@ -14,8 +13,6 @@ Public Sub _new()
     $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
     $albumsTab = New NagatoTabAlbums(AlbumsStarButton, AlbumsIconView) As "AlbumsTab"
     $libraryTab = New NagatoTabLibrary(LibraryStarButton, LibraryGrids) As "LibraryTab"
-    
-    $observer = New Observer(NagatoQueue) As "Asakura"
     
 End
 
@@ -33,5 +30,11 @@ Public Sub Form_Close()
     
     NagatoQueue.SavePaths()
     NagatoSettingsForm.Save(Me)
+    
+End
+
+Public Sub NowPlayingTab_NewPlayList()
+    
+    $playlistsTab.Refresh()
     
 End

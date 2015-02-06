@@ -39,6 +39,22 @@ Private Sub setData()
     
 End
 
+Private Sub setStarButton()
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        If Me._$grids[yukiRow, 1].Text = NagatoConfigFacade.CursorTheme Then
+            Me._$grids[yukiRow, 0].Picture = MikuruIcon["button-check"]
+        Else If yukiRow = Me._$grids.Row Then
+            Me._$grids[yukiRow, 0].Picture = MikuruIcon["auction"]
+        Else
+            Me._$grids[yukiRow, 0].Picture = Null
+        Endif
+    Next
+    
+End
+
 Public Sub _InitializeGrids()
     
     Me._SetGridsFrame("Cursor Theme")
@@ -47,6 +63,10 @@ Public Sub _InitializeGrids()
 End
 
 Public Sub Grids_Activate()
+    
+    setStarButton()
+    
+    NagatoInterimStatus.CursorTheme = Me._$grids[Me._$grids.Row, 0].Text
     
     Raise Signal(MikuruSignal.PropertyChanged, [Me._$grids[Me._$grids.Row, 1].Text])
     

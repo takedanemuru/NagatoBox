@@ -22,38 +22,13 @@ Private Sub setIcons()
 
 End
 
-Private Sub initializeIconView()
-    
-    $iconView = New IconView($tabStrip)
-    
-    With $iconView
-        .Expand = False
-        .Background = Color.White
-        .H = $tabStrip.ClientW
-    End With
-    
-    setIcons()
-    
-End
-
 Public Sub _new(argTabStrip As TabStrip)
     
     $tabStrip = argTabStrip
     $tabStrip.Index = 2
-    'initializeIconView()
     
-    $grids = New NagatoIconThemeGrids($tabStrip) As "Grids"
+    $grids = New NagatoIconThemeGrids($tabStrip) As "TFEI"
     
     $tabStrip.Index = 0
-    
-End
-
-Public Sub Grids_Signal(argSignal As Integer, argValues As Variant[])
-    
-    Debug argValues[0]
-    
-    Application.Theme = argValues[0]
-    
-    'setIcons()
     
 End

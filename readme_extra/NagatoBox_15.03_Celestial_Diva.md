@@ -34,7 +34,9 @@
 
 + ~~rewrite : coverart functionality and its design~~
 + ~~new : move items on playlist (by menu button)~~
-+ new : move items on playlist (by drag and drop)
++ ~~new : move items on playlist (by drag and drop)~~
+    + GridView_DragMove() doesn't work with GridView.Mode = Selection.Multi (?)
+    + write MultipleSelectionStoreClass that work with GridView.Mode = Selection.Single
 
 ### nagato-text
 

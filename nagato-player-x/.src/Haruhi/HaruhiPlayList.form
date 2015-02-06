@@ -20,6 +20,7 @@
     }
     { NowPlayingGrid GridView
       MoveScaled(0,5,77,31)
+      Tracking = True
       Drop = True
       Expand = True
       Mode = Select.Multiple
