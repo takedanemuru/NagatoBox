@@ -11,7 +11,7 @@ Private $nagatoSelectionCut As String
 Private $gnomeSelectionCut As String
 Private $kdeSelectionCut As String
 
-Event Changed()
+Event Changed
 
 Private Function getDirectories(argPaths As String[]) As String[]
     

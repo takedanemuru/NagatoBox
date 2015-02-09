@@ -48,6 +48,8 @@ End
 
 Public Sub Handler_Signal(argEvent As Integer, argValue As Variant)
     
+    Debug argEvent
+    
     Select Case argEvent
         Case NagatoMenuPipe.ObserverDelete
             $mouse.Delete(Desktop.Path &/ argValue)
@@ -87,6 +89,7 @@ Public Sub Handler_KeyPress(argKeyCode As Integer)
             Debug "escape"
             Clipboard.Clear()
             $mouse.ClearAll()
+            $icons.Refresh($mouse.SelectedPaths)
         Case Key.Delete
             Debug "delete"
             NagatoTrash.Delete($mouse.SelectedPaths)
