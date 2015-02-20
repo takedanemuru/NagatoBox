@@ -23,7 +23,7 @@ Public Sub GetElements(argXmlDocument As XmlDocument) As Collection
     
     For Each yukiNode In argXmlDocument.GetElementsByTagName("searchresults")[0].AllChildNodes
         With yukiNode.Attributes
-            Debug .Count
+            Debug yukiNode.Children.Count ' DO NOT DELETE THIS LINE, to avoid bug.
             If .["display_name"] = "0" Then Continue ' avoid bug on gambas 3.6.0
             If .["display_name"] = "" Then Continue
             yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])

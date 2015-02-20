@@ -26,6 +26,10 @@
 + ~~new : background settings for application~~
 + ~~fix : NagatoDirectoryObserver does not change DirectoryPath property~~
 
+### nagato-map
+
++ ~~new : export map as png~
+
 ### nagato-navigator
 
 + ~~fix : avoid to open invalide xml document in activation sequence.~~

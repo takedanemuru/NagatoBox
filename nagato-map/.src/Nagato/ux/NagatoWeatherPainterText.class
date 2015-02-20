@@ -17,7 +17,6 @@ End
 
 Private Function getTitle() As String
     
-    'Dim yukiCondition As String = Upper$(NagatoWeatherCondition.GetText($currentWeather.IconId))
     Dim yukiCondition As String = $currentWeather.IconName
     
     Return Subst$("<h2>&1</h2>&2", yukiCondition, String$(8, "<br>"))

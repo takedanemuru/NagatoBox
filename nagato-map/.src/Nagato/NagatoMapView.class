@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuPipe
 
+Property Read Screenshot As Picture
+
 Private $mapView As MapView
 Private $marker As New NagatoMapMarker
 Private $lineScale As New NagatoLineScale
@@ -84,4 +86,12 @@ Public Sub Asakura_Draw()
     
     Raise NewPoint($mapView.Map.Center.Lat, $mapView.Map.Center.Lon)
     
+End
+
+Private Function Screenshot_Read() As Picture
+
+    With $mapView
+        Return Desktop.Screenshot(.ScreenX, .ScreenY, .W, .H)
+    End With    
+
 End

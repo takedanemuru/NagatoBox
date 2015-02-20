@@ -5,6 +5,19 @@ Public Enum OpenStreetMap, GoogleMap
 Private $menuBar As NagatoMenuBar
 Private $mapView As NagatoMapView
 
+Private Sub getScreenshot()
+    
+    Dim yukiScreenshot As Picture = $mapView.Screenshot
+    
+    Dialog.Title = ("Save Picture")
+    Dialog.Path = User.Home &/ "your_map.png"
+    
+    If Not Dialog.SaveFile() Then
+        yukiScreenshot.Save(Dialog.Path)
+    Endif
+    
+End
+
 Public Sub SetLocation(argLatitude As Float, argLongitude As Float, argZoom As Integer)
     
     $mapView.SetLocation(argLatitude, argLongitude, argZoom)
@@ -55,6 +68,9 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             If HaruhiAddBookmark.ShowDialog() = HaruhiAddBookmark.Added Then
                 NagatoLeftPanel.AddBookmark()
             Endif
+        Case NagatoMenuPipe.MapExport
+            Wait 0.5
+            getScreenshot()
     End Select
     
 End

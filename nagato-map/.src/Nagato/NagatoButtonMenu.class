@@ -30,9 +30,9 @@ Private Sub addMenus()
     With NagatoMenuPipe
         addMenuItem(("Search"), .MenuSearch, MikuruIcon.Get("search"))
         Object.New("NagatoSubMenuWikipedia", [$rootMenu])
-        'addMenuItem(("Information"), .MenuInformation, MikuruIcon.Get("information-balloon"))
         addMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
         addMenuItem(("Show Scale"), .MapShowScale, IIf(NagatoSettings.ShowScale, MikuruIcon.Get("button-check"), Null))
+        addMenuItem(("Export"), .MapExport, MikuruIcon.Get("hard-drive-download"))
             addMenuItem((""), 0) ' as a separator
         addMenuItem(("About"), .MenuAbout, MikuruIcon.Get("star"))
         addMenuItem(("Close"), .MenuQuit, MikuruIcon.Get("button-cross"))
