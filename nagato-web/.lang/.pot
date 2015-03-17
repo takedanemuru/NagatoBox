@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  #project.pot (nagato-web 3.6.2)  #-#-#-#-#\n"
 "Project-Id-Version: nagato-web 3.6.2\n"
-"POT-Creation-Date: 2015-01-30 2312 UTC\n"
+"POT-Creation-Date: 2015-03-17 0822 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "#-#-#-#-#  Kyon.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
 "Project-Id-Version: $(PACKAGE) $(VERSION)\n"
-"POT-Creation-Date: 2015-01-30 23:12 UTC\n"
+"POT-Creation-Date: 2015-03-17 06:27 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -117,7 +117,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "#-#-#-#-#  NagatoBookmarkTreeView.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
 "Project-Id-Version: $(PACKAGE) $(VERSION)\n"
-"POT-Creation-Date: 2015-01-30 23:12 UTC\n"
+"POT-Creation-Date: 2015-03-17 08:21 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  NagatoContextMenu.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-03-17 05:15 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  NagatoContextMenuBookmark.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-03-17 06:27 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  NagatoContextMenuBookmarkCategory.pot ($(PACKAGE) $(VERSION))  #-"
+"#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-03-17 06:27 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -129,7 +148,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "#-#-#-#-#  NagatoDBWeb.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
 "Project-Id-Version: $(PACKAGE) $(VERSION)\n"
-"POT-Creation-Date: 2015-01-30 23:12 UTC\n"
+"POT-Creation-Date: 2015-03-17 08:21 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -437,6 +456,28 @@ msgstr ""
 
 #: NagatoBookmarkMenu.class:34
 msgid "Edit bookmark"
+msgstr ""
+
+#: NagatoContextMenuBookmark.class:9
+msgid "Open"
+msgstr ""
+
+#: NagatoContextMenuBookmark.class:10
+msgid "Edit"
+msgstr ""
+
+#: NagatoContextMenuBookmark.class:11
+#: NagatoContextMenuBookmarkCategory.class:10
+msgid "Delete"
+msgstr ""
+
+#: NagatoContextMenuBookmark.class:13
+#: NagatoContextMenuBookmarkCategory.class:12
+msgid "Reload"
+msgstr ""
+
+#: NagatoContextMenuBookmarkCategory.class:9
+msgid "Rename"
 msgstr ""
 
 #: NagatoEngineMenuDictionary.class:9

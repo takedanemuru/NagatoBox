@@ -19,18 +19,18 @@ Public Sub Main()
     
     Dim yukiUrl As String = getSartupUrl()
     
-    If NagatoDBus.IsUnique() Then
+    'If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
-    Else ' has been activated
-        With NagatoDBus
-             If yukiUrl = "" Then
-                 NagatoDBus.Proxy.Show()
-            Else
-                NagatoDBus.Proxy.SetUrl(yukiUrl)
-             Endif
-        End With
-    End If
+    ' Else ' has been activated
+    '     With NagatoDBus
+    '          If yukiUrl = "" Then
+    '              NagatoDBus.Proxy.Show()
+    '         Else
+    '             NagatoDBus.Proxy.SetUrl(yukiUrl)
+    '          Endif
+    '     End With
+    ' End If
     
 End

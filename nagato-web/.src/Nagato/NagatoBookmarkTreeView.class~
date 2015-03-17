@@ -23,6 +23,7 @@ Private Sub setBookmark(argCategory As String)
     
     For Each yukiResult
         With NagatoDBWeb
+            If $treeView.Exist(yukiResult[.ColumnUrl]) Then Continue
             $treeView.Add(yukiResult[.ColumnUrl], yukiResult[.ColumnUserDefinedPageName],, argCategory)
         End With
     Next
@@ -34,7 +35,6 @@ Private Sub setCategory()
     Dim yukiCategory As String
     
     For Each yukiCategory In NagatoDBWeb.CategoryNames
-        'If Not NagatoDBWeb.HasBookmarkInCategory(yukiCategory) Then Continue
         $treeView.Add(yukiCategory, yukiCategory, MikuruIcon.Get("folder"))
         setBookmark(yukiCategory)
     Next
@@ -47,14 +47,29 @@ Private Sub setTrashBin()
     
 End
 
+Private Sub reload()
+    
+    $treeView.Clear()
+    
+    setCategory()
+    setTrashBin()
+    
+End
+
+Private Sub removeBookmark(argUrl As String)
+    
+    Try $treeView.Remove(argUrl)
+    If Not Error Then NagatoDBWeb.DeleteBookmark(argUrl)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $treeView = New TreeView(argContainer) As "TreeView"
     $treeView.Foreground = Color.DarkCyan
     $treeView.Drop = True
     
-    setCategory()
-    setTrashBin()
+    reload()
     
 End
 
@@ -62,7 +77,7 @@ Public Sub TreeView_Activate()
     
     Debug $treeView.Key
     
-    If $treeView.Key Begins "http://" Then Raise MenuEventWithArg(NagatoMenuPipe.WebNew, $treeView.Key) 
+    If $treeView.Key Begins "http" Then Raise MenuEventWithArg(NagatoMenuPipe.WebNew, $treeView.Key) 
     
 End
 
@@ -94,8 +109,7 @@ Public Sub TreeView_Drop()
     If Not isWebPage(Drag.Data) Then Return
     
     If $treeView.Item.Key = "NagatoTrashBin" Then
-        Try $treeView.Remove(Drag.Data)
-        If Not Error Then NagatoDBWeb.DeleteBookmark(Drag.Data)
+        removeBookmark(Drag.Data)
     Else
         yukiCategory = IIf(isWebPage($treeView.Item.Key), $treeView.Item.ParentKey, $treeView.Item.Key)
         Try $treeView.Remove(Drag.Data)
@@ -103,5 +117,52 @@ Public Sub TreeView_Drop()
         If Not Error Then NagatoDBWeb.ChangeBookmarkCategory(Drag.Data, yukiCategory)
         $title = ""
     End If
+    
+End
+
+Public Sub TreeView_Menu()
+    
+    Dim yukiMenu As Object
+    Dim yukiCategory As String
+    Dim yukiKey As String = $treeView.Key
+    
+    If isWebPage(yukiKey) Then
+        yukiCategory = $treeView[yukiKey].ParentKey
+        yukiMenu = New NagatoContextMenuBookmark(HaruhiMain, yukiCategory, yukiKey) As "ContextMenuBookmark"
+    Else
+        yukiMenu = New NagatoContextMenuBookmarkCategory(HaruhiMain, yukiKey) As "ContextMenuBookmarkCategory"
+    Endif
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub ContextMenuBookmark_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case NagatoContextMenuBookmark.ContextDelete
+            removeBookmark(argValues[1])
+        Case NagatoContextMenuBookmark.ContextEdit
+            
+        Case NagatoContextMenuBookmark.ContextReload
+            reload()
+        Case NagatoContextMenuBookmark.ContextOpen
+            Raise MenuEventWithArg(NagatoMenuPipe.WebNew, argValues[1])
+    End Select
+    
+End
+
+Public Sub ContextMenuBookmarkCategory_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case NagatoContextMenuBookmark.ContextDelete
+            Debug argValues[0]
+            NagatoDBWeb.DeleteCategory(argValues[0])
+            reload()
+        Case NagatoContextMenuBookmark.ContextRename
+            
+        Case NagatoContextMenuBookmark.ContextReload
+            reload()
+    End Select
     
 End
