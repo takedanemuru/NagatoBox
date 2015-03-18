@@ -9,7 +9,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     NagatoSettings.LoadFormSettings(Me)
 
-    $label = New NagatoLabel(MessageLabel)
+    $label = New NagatoLabel(MessageBox)
     $menuPanel = New NagatoMenuPanel(PanelBox) As "TFEI"
     $grids = New NagatoGridView(Me) As "TFEI"
     
@@ -29,7 +29,8 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
         Case MikuruSignal.ViewRefresh
             $label.SetText(argArgs[0])
         Case MikuruSignal.ViewFilter
-            $grids.Filter(argArgs[0])
+            Debug argArgs[0]
+            '$grids.Filter(argArgs[0])
         Case MikuruSignal.ViewShowCodeView
             HaruhiCodeViewer.Show()
             HaruhiCodeViewer.SetCode(argArgs[0])

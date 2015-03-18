@@ -2,16 +2,14 @@
 
 Inherits NagatoUxContainer
 
-' Private $buttons As NagatoMenuButtons
 Private $spacer As NagatoPanelSpacer
 Private $searchBox As NagatoSearchBox
 Private $starButton As NagatoStarButton
 
 Public Sub _initialize() ' override
     
-    ' $buttons = New NagatoMenuButtons(Me._$parentContainer) As "TFEI"
     $spacer = New NagatoPanelSpacer(Me._$parentContainer)
-    $searchBox = New NagatoSearchBox(Me._$parentContainer) As "TFEI"
+    '$searchBox = New NagatoSearchBox(Me._$parentContainer) As "TFEI"
     $starButton = New NagatoStarButton(Me._$parentContainer) As "TFEI"
     
 End

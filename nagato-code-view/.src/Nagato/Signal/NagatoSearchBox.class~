@@ -2,7 +2,7 @@
 
 Inherits NagatoUxContainer
 
-$searchBox As ButtonBox
+Private $searchBox As ButtonBox
 
 Public Sub _Initialize()
     
@@ -10,7 +10,21 @@ Public Sub _Initialize()
     
     With $searchBox
         .Picture = MikuruIcon["search"]
-        .w = 200
+        .W = 200
+        .NoTabFocus = True
+        .NoTabFocus = True
     End With
+    
+End
+
+Public Sub SearchBox_Activate()
+    
+    Raise Signal(MikuruSignal.ViewFilter, [$searchBox.Text])
+    
+End
+
+Public Sub SearchBox_Click()
+    
+    SearchBox_Activate()
     
 End

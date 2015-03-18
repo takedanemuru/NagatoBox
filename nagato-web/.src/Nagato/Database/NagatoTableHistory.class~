@@ -1,14 +1,14 @@
 ' Gambas class file
 
-Private $connection As Connection
+Inherits NagatoTable
 
-Private Sub checkAndCreateHistoryTable()
+Public Sub _EnsureTable()
     
     Dim yukiTable As Table
     
     With NagatoDBWeb
-        If Not $connection.Tables.Exist(.TableHistory) Then
-            yukiTable = $connection.Tables.Add(.TableHistory)
+        If Not Me._$connection.Tables.Exist(.TableHistory) Then
+            yukiTable = Me._$connection.Tables.Add(.TableHistory)
             yukiTable.Fields.Add(.ColumnId, db.Serial)
             yukiTable.Fields.Add(.ColumnUrl, db.String)
             yukiTable.Fields.Add(.ColumnPageName, db.String)
@@ -19,11 +19,3 @@ Private Sub checkAndCreateHistoryTable()
     End With
 
 End
-
-Public Sub _new(argConnection As Connection)
-    
-    $connection = argConnection
-    checkAndCreateHistoryTable()
-    
-End
-

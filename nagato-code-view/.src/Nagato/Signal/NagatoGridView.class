@@ -32,7 +32,15 @@ End
 
 Public Sub Filter(argQuery As String)
     
-    Debug argQuery
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To $grids.Rows.Max
+        If $grids[yukiRow, 1].Text Not Like Subst$("*&1*", argQuery) Then
+            $grids.Rows[yukiRow].H = 0
+        Else
+            $grids.Rows[yukiRow].H = 21
+        Endif
+    Next
     
 End
 
