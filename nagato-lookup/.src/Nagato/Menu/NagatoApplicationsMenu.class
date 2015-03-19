@@ -6,10 +6,13 @@ Private $rootMenu As Menu
 Private Sub sortByName(argCategory As String, ByRef refNames As String[], ByRef refCollection As Collection)
     
     Dim yukiDesktopFile As Variant
+    Dim yukiName As String
     
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
-        refNames.Add(yukiDesktopFile.Name)
-        refCollection.Add(yukiDesktopFile, yukiDesktopFile.Name)
+        yukiName = yukiDesktopFile.Name
+        If yukiName = "" Then yukiName = File.BaseName(yukiDesktopFile.Path)
+        refNames.Add(yukiName)
+        refCollection.Add(yukiDesktopFile, yukiName)
     Next
     
     refNames.Sort(gb.IgnoreCase)

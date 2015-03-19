@@ -24,13 +24,11 @@ Public Sub Main()
         HaruhiMain.Show()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
     ' Else ' has been activated
-    '     With NagatoDBus
-    '          If yukiUrl = "" Then
-    '              NagatoDBus.Proxy.Show()
-    '         Else
-    '             NagatoDBus.Proxy.SetUrl(yukiUrl)
-    '          Endif
-    '     End With
+    '     If yukiUrl = "" Then
+    '         NagatoDBus.Proxy.Show()
+    '     Else
+    '         NagatoDBus.Proxy.SetUrl(yukiUrl)
+    '     Endif
     ' End If
     
 End

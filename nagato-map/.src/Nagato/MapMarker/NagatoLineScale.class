@@ -50,9 +50,9 @@ Public Sub Draw(argMapView As MapView)
         Next
         Paint.Rectangle(10 + yukiScale * 10, argMapView.H - 20, yukiScale * 5, 10)
         If yukiMaxSteps >= 40 Then Paint.Rectangle(10 + yukiScale * 20, argMapView.H - 20, yukiScale * 10, 10)
+        Paint.Fill()
         Paint.DrawText(Subst$("&1 km", $legend * 10), 10 + yukiScale * 10, argMapView.H - 25)
         Paint.DrawText(Subst$("&1 km", $legend * 20), 10 + yukiScale * 20, argMapView.H - 25)
-        Paint.Fill()
     Paint.End()
     
 End

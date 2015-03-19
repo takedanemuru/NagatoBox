@@ -33,8 +33,6 @@ Public Sub AddWeb(argUrl As String)
     Dim yukiUniqueIndex As Integer = MikuruUniqueIndex.Get()
     Dim yukiWeb As New NagatoWeb($container, argUrl, yukiUniqueIndex) As "Menu"
 
-    Debug argUrl
-
     $webs.Add(yukiWeb, yukiUniqueIndex)
     $webOrder.Add(yukiUniqueIndex)
     

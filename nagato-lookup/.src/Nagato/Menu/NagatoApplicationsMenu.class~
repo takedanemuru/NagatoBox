@@ -8,6 +8,7 @@ Private Sub sortByName(argCategory As String, ByRef refNames As String[], ByRef 
     Dim yukiDesktopFile As Variant
     
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
+        If yukiDesktopFile.Name = "" Then Continue
         refNames.Add(yukiDesktopFile.Name)
         refCollection.Add(yukiDesktopFile, yukiDesktopFile.Name)
     Next
@@ -85,7 +86,5 @@ Public Sub RootMenu_Show()
     
     $rootMenu.Children.Clear()
     initializeMenus(Last.Tag)
-    
-    $rootMenu.Popup(, 16)
     
 End

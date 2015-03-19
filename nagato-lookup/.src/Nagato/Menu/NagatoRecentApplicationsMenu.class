@@ -13,7 +13,7 @@ Private Sub initializeMenus()
         If Not Exist(yukiPath) Then Continue
         yukiDesktopFile = New NagatoDesktopFile(yukiPath) 
         yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
-        yukiMenu.Text = yukiDesktopFile.Name
+        yukiMenu.Text = IIf(yukiDesktopFile.Name = "", File.BaseName(yukiPath), yukiDesktopFile.Name)
         yukiMenu.Tag = yukiPath
         yukiMenu.Picture = yukiDesktopFile.GetIcon(16)
     Next

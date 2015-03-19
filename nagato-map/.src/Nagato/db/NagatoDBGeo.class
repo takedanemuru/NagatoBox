@@ -17,6 +17,8 @@ Private Sub ensureGeoTable()
     
     Dim yukiTable As Table
     
+    Try Me._$connection.Open()
+    
     If Not Me._$connection.Tables.Exist(TableGeo) Then
         yukiTable = Me._$connection.Tables.Add(TableGeo)
         yukiTable.Fields.Add(ColumnId, db.Serial)

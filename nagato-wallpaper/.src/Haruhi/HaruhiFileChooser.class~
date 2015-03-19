@@ -14,12 +14,18 @@ Private Sub initializeRecentIcons()
     
 End
 
-Private Sub showDirectory()
+Private Sub showDirectory(argDirectory As String)
     
-    With MainFileChooser
-        .Filter = ["*.png;*.jpg;*.jpeg", "Picture File"]
-'        .FileView.IconSize = 128
-    End With
+    Dim yukiPath As String
+    
+    SelectIcons.Clear()
+    
+    For Each yukiPath In Dir(argDirectory, "*", gb.File)
+        If Not Exist(argDirectory &/ yukiPath) Then Continue
+        If DesktopMime.FromFile(argDirectory &/ yukiPath).Type Not Begins "image" Then Continue
+        If Not MikuruThumbnailer.IsLoadable(argDirectory &/ yukiPath) Then Continue
+        SelectIcons.Add(argDirectory &/ yukiPath, yukiPath, MikuruThumbnailer.Get(argDirectory &/ yukiPath))
+    Next
     
 End
 
@@ -28,8 +34,19 @@ Public Sub Form_Open()
     Me.Center()
     
     initializeRecentIcons()
-    showDirectory()
+    'showDirectory(User.Home)
     
+    FileChooser1.Filter = ["*.png;*.jpg;*.jpeg", "Picture Files"]
+    FileChooser1.ShowPreview = True
+    FileChooser1.FileView.IconSize = 128
+    
+End
+
+
+Public Sub DirChooser1_Change()
+
+    'showDirectory(DirChooser1.DirView.Current)
+
 End
 
 Public Sub RecentIcons_Activate()
@@ -40,8 +57,10 @@ Public Sub RecentIcons_Activate()
     
 End
 
-Public Sub MainFileChooser_Activate()
+Public Sub FileChooser1_Activate()
 
-    Debug MainFileChooser.SelectedPath
+    MikuruDialog.Path = FileChooser1.SelectedPath
+    
+    Me.Close(MikuruDialog.ResponseSelected)
 
 End

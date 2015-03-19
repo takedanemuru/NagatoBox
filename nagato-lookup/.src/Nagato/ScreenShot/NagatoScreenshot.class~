@@ -21,16 +21,22 @@ End
 
 Private Function getScreenshot() As Picture
     
+    ' Dim yukiActiveWindow As New DesktopWindow(Desktop.ActiveWindow)
+    ' 
+    ' Debug yukiActiveWindow.H
+    ' 
+    ' Return yukiActiveWindow.GetScreenshot(True)
+    
     Dim yukiRect As New Rect
     Dim yukiPicture As Picture
-    
+    ' 
     With MikuruActiveWindow
         yukiRect.X = .Rectangle.X
         yukiRect.Y = .Rectangle.Y - .Relative.Y
         yukiRect.H = .Rectangle.H + .Relative.Y
         yukiRect.W = .Rectangle.W + 2 * .Relative.X
     End With
-    
+    ' 
     yukiPicture = Desktop.Screenshot(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
     
     Return yukiPicture
@@ -40,7 +46,6 @@ End
 Public Sub Get() 
     
     If NagatoSettings.OnlyActiveWindow Then
-        Debug "get active only !!"
         If Not hasActiveWindow() Then Return
         MikuruActiveWindow.Set()
         With MikuruActiveWindow

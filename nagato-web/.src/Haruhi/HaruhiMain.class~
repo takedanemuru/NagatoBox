@@ -134,8 +134,6 @@ End
 Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebLoaded
-            $menubar.SetUrl(argArgument)
         Case NagatoMenuPipe.WebNew
             addWeb(argArgument)
             $webs.ShowLastTab()
@@ -143,17 +141,21 @@ Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
             insertWeb($webs.ActiveIndex + 1, argArgument) ' insert new web tab next to active tab
             $webs.ShowActiveTab()
         Case NagatoMenuPipe.WebDownload
-            Debug argArgument.Url
-            '$downloadBar.SetWebDownload(argArgument)
+            $downloadBar.SetWebDownload(argArgument)
     End Select
     
 End
 
-Public Sub Webs_MenuEventWithArgs(argEvent As Integer, argArgument As Variant[])
+Public Sub Webs_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
     
-    If argEvent = NagatoMenuPipe.WebProgress Then
-        $persona.SetText(Subst$("&1:&2%", argArgument[1], argArgument[2] * 100))
-    Endif
+    Select Case argEvent
+        Case NagatoMenuPipe.WebLoaded
+            $menubar.SetUrl(argArguments[0])
+            NagatoDBWeb.PushHistory(argArguments[0], argArguments[1])
+            'Me.Title = argArgument[1]
+        Case NagatoMenuPipe.WebProgress
+            $persona.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
+    End Select
     
 End
 

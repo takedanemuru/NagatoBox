@@ -6,16 +6,36 @@ Public Sub _EnsureTable()
     
     Dim yukiTable As Table
     
+    Try Me._$connection.Open()
+    
     With NagatoDBWeb
-        If Not Me._$connection.Tables.Exist(.TableHistory) Then
+        If Not Me._$connection.Tables.Exist(.TableCategory) Then
             yukiTable = Me._$connection.Tables.Add(.TableHistory)
             yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnTimeStamp, db.Date)
             yukiTable.Fields.Add(.ColumnUrl, db.String)
             yukiTable.Fields.Add(.ColumnPageName, db.String)
-            yukiTable.Fields.Add(.ColumnLastAccessed, db.Date)
             yukiTable.PrimaryKey = [.ColumnId]
             yukiTable.Update()
         Endif
     End With
 
+End
+
+Public Sub PushHistory(argUrl As String, argTitle As String)
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(NagatoDBWeb.TableHistory)
+        yukiResult[NagatoDBWeb.ColumnTimeStamp] = Now()
+        yukiResult[NagatoDBWeb.ColumnUrl] = argUrl
+        yukiResult[NagatoDBWeb.ColumnPageName] = argTitle
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
 End

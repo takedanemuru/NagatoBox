@@ -16,10 +16,14 @@ Public Const TableBookmark As String = "table_bookmark"
 Public Const ColumnUserDefinedPageName As String = "user_defined_page_name"
 Public Const ColumnCategoryId As String = "category_id"
 
+Public Const TableHistory As String = "table_history_2"
+Public Const ColumnTimeStamp As String = "time_stamp"
+
 Public _$uniqueName As String = "Web"
 
 Private $tableBookmark As NagatoTableBookmark
 Private $tableCategory As NagatoTableCategory
+Private $tableHistory As NagatoTableHistory
 
 Public Function HasBookmarkInCategory(argCategoryName As String) As Boolean
     
@@ -89,12 +93,19 @@ Catch
     
 End
 
+Public Sub PushHistory(argUrl As String, argTitle As String)
+    
+    $tableHistory.PushHistory(argUrl, argTitle)
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()
 
     $tableCategory = New NagatoTableCategory(Me._$connection)
     $tableBookmark = New NagatoTableBookmark(Me._$connection)
+    '$tableHistory = New NagatoTableHistory(Me._$connection)
 
 End
 

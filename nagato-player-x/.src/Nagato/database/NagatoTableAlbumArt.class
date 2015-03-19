@@ -6,6 +6,8 @@ Public Sub _EnsureTable() ' override
     
     Dim yukiTable As Table
     
+    Try Me._$connection.Open()
+    
     With NagatoDBMedia
         If Not Me._$connection.Tables.Exist(.TableAlbumArt) Then
             yukiTable = Me._$connection.Tables.Add(.TableAlbumArt)
