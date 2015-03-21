@@ -1,0 +1,26 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+
+    Dim yukiImage As Image = Image.Load("pictures/yukichan_29.jpg")
+
+    Me.Picture = yukiImage.Stretch(Me.Width, Me.Height).Picture
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(1)
+
+End
+
+Public Sub AddButton_Click()
+
+    If CategoryComboBox.Text = "" Then Return
+
+    NagatoDBWeb.AddNewCategory(CategoryComboBox.Text)
+
+    Me.Close(0)
+
+End

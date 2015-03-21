@@ -76,7 +76,6 @@ Public Sub TagParser_MediaTagList(argTagList As String[])
     
 End
 
-
 Private Sub Artist_Write(Value As String)
 
    $artist = Value 

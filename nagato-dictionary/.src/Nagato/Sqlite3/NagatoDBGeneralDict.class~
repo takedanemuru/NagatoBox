@@ -4,7 +4,7 @@ Inherits NagatoDB
 
 Create Static
 
-Public Const TableCompDict As String = "GeneralDict"
+Public Const TableGeneralDict As String = "GeneralDict"
 Public Const ColumnId As String = "id"
 Public Const ColumnJapanese As String = "japanese"
 Public Const ColumnPronunciation As String = "pronunciation"
@@ -16,8 +16,8 @@ Private Sub checkAndCreateTable()
     
     Dim yukiTable As Table
     
-    If Not Me._$connection.Tables.Exist(TableCompDict) Then
-        yukiTable = Me._$connection.Tables.Add(TableCompDict)
+    If Not Me._$connection.Tables.Exist(TableGeneralDict) Then
+        yukiTable = Me._$connection.Tables.Add(TableGeneralDict)
         yukiTable.Fields.Add(ColumnId, db.Serial)
         yukiTable.Fields.Add(ColumnJapanese, db.String)
         yukiTable.Fields.Add(ColumnPronunciation, db.String)
@@ -30,7 +30,7 @@ End
 
 Public Function Count() As Integer
     
-    Dim yukiResult As Result = Me._$connection.Find(TableCompDict)
+    Dim yukiResult As Result = Me._$connection.Find(TableGeneralDict)
     
     Return yukiResult.Count
     
@@ -62,29 +62,31 @@ End
 
  Public Function GetAll() As Result
     
-    Dim yukiResult As Result = Me._$connection.Find(TableCompDict)
+    Dim yukiResult As Result = Me._$connection.Find(TableGeneralDict)
     
     Return yukiResult
     
 End
  
-Public Sub Push(argJapanese As String, argPronunciation As String, argEnglish As String)
-    
-    Dim yukiResult As Result
-    
-    Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(TableCompDict)
-        yukiResult[ColumnJapanese] = argJapanese
-        yukiResult[ColumnPronunciation] = argPronunciation
-        yukiResult[ColumnEnglish] = argEnglish
-        yukiResult.Update()
-    Me._$connection.Commit()
-    
-Catch
-    Debug Error.Text
-    Me._$connection.Rollback()
-    
-End
+' For maintainance only
+ 
+' Public Sub Push(argJapanese As String, argPronunciation As String, argEnglish As String)
+'     
+'     Dim yukiResult As Result
+'     
+'     Me._$connection.Begin()
+'         yukiResult = Me._$connection.Create(TableGeneralDict)
+'         yukiResult[ColumnJapanese] = argJapanese
+'         yukiResult[ColumnPronunciation] = argPronunciation
+'         yukiResult[ColumnEnglish] = argEnglish
+'         yukiResult.Update()
+'     Me._$connection.Commit()
+'     
+' Catch
+'     Debug Error.Text
+'     Me._$connection.Rollback()
+'     
+' End
 
 Public Sub _new()
     

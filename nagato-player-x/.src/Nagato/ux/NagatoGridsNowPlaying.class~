@@ -21,6 +21,7 @@ Private Sub refreshData()
         Inc Me._$grids.Rows.Count
         $playMark.Set(yukiRowIndex)
         yukiElement = NagatoQueue[yukiRowIndex]
+        Debug yukiElement.Duration
         Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, yukiElement.Title)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, yukiElement.Artist)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, yukiElement.Album)

@@ -2,11 +2,7 @@
 
 Create Static
 
-Property Done As Boolean
-
 Public Enum None, Choir, Ubuntu, Welcumz, UserDefined
-
-Private $done As Boolean = False
 
 Public Sub PlayDefault()
     
@@ -14,7 +10,6 @@ Public Sub PlayDefault()
     
     Select Case NagatoSettings.LoginSoundMode
         Case Me.None
-            Me.Done = True
             Return
         Case Me.Choir
             yukiSound = New Sound("sounds/choir.wav")
@@ -25,20 +20,6 @@ Public Sub PlayDefault()
     End Select
     
     yukiSound.Play()
-    Me.Done = True
-    
-End
-
-Private Function Done_Read() As Boolean
-
-    Return $done
 
 End
 
-Private Sub Done_Write(Value As Boolean)
-
-    $done = Value
-    
-    If $done And If NagatoXdgAutostarts.Done Then Quit 0
-
-End

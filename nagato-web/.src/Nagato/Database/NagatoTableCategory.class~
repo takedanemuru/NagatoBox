@@ -6,6 +6,8 @@ Public Sub _EnsureTable()
     
     Dim yukiTable As Table
     
+    Try Me._$connection.Open()
+    
     With NagatoDBWeb
         If Not Me._$connection.Tables.Exist(.TableCategory) Then
             yukiTable = Me._$connection.Tables.Add(.TableCategory)

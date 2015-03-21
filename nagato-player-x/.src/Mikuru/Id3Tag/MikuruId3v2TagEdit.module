@@ -5,8 +5,6 @@ Public Sub NewTitle(argFullPath As String, argNewTitle As String)
     Dim yukiPath As String = Replace$(URL.Decode(argFullPath), "file://", "")
     Dim yukiCommand As String = Subst$("id3tag -2 --song &1 &2", Quote$(argNewTitle), Quote$(yukiPath))
     
-    Debug argNewTitle
-    
     Shell yukiCommand Wait
     
 End

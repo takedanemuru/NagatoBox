@@ -15,16 +15,16 @@ Private Sub initializeRootMenu(argButton As MenuButton)
     
 End
 
-Private Sub addFontMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "FontMenu"
-    
-    With yukiMenu
-        .Text = ("Select WebView Font")
-        .Picture = MikuruIcon.Get("web")
-    End With
-    
-End
+' Private Sub addFontMenu()
+'     
+'     Dim yukiMenu As New Menu($rootMenu) As "FontMenu"
+'     
+'     With yukiMenu
+'         .Text = ("Select WebView Font")
+'         .Picture = MikuruIcon.Get("web")
+'     End With
+'     
+' End
 
 Private Sub addAboutMenu()
     

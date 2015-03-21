@@ -16,6 +16,8 @@ Private Sub checkAndCreateTable()
     
     Dim yukiTable As Table
     
+    Try Me._$connection.Open()
+    
     If Not Me._$connection.Tables.Exist(TableGeneralDict) Then
         yukiTable = Me._$connection.Tables.Add(TableGeneralDict)
         yukiTable.Fields.Add(ColumnId, db.Serial)

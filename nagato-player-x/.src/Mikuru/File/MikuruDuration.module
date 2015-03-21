@@ -1,17 +1,15 @@
 ' Gambas module file
 
-Private $player As MediaPlayer
-
 Public Sub GetDuration(argPath As String) As Float
     
-    $player = New MediaPlayer
+    Dim yukiOutput As String
     
-    $player.URL = Media.URL(argPath)
-    $player.Pause()
-    Return $player.Duration
+    Shell Subst$("mp3info -p %S &1", Quote$(argPath)) To yukiOutput
+    
+    Return CFloat(yukiOutput)
     
 Catch
-    Return ""
+    Return 0
     
 End
 

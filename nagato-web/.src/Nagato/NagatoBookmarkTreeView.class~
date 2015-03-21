@@ -155,13 +155,15 @@ End
 Public Sub ContextMenuBookmarkCategory_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
-        Case NagatoContextMenuBookmark.ContextDelete
-            Debug argValues[0]
+        Case NagatoContextMenuBookmarkCategory.ContextNewCategory
+            HaruhiNewCategory.ShowDialog()
+            reload()
+        Case NagatoContextMenuBookmarkCategory.ContextDelete
             NagatoDBWeb.DeleteCategory(argValues[0])
             reload()
-        Case NagatoContextMenuBookmark.ContextRename
+        Case NagatoContextMenuBookmarkCategory.ContextRename
             
-        Case NagatoContextMenuBookmark.ContextReload
+        Case NagatoContextMenuBookmarkCategory.ContextReload
             reload()
     End Select
     
