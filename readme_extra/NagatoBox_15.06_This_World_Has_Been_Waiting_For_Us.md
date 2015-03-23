@@ -21,7 +21,7 @@
 
 ## nagato-session
 
-+ port to sdl2
++ ~~port to sdl2.sound~~
 
 ## nagato-web
 

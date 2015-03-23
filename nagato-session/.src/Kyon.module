@@ -11,9 +11,10 @@ Public Sub Main()
     Else If NagatoArguments.Logout Then
         HaruhiDialog.Show()
     Else
+        Debug "show"
         HaruhiMain.Show()
     End If
-    ' 
+     
     NagatoLoginSound.PlayDefault()
     
 End
