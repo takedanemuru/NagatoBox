@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoWidgetHandler
+
+Private Sub keyEventWithControl()
+    
+    If Key.Shift And If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null) 
+    If Key.Code = Key["p"] Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    If Key.Code = Key["r"] Or If Key.Code = Key["f"] Then HaruhiReplacement.Show() 
+    
+End
+
+Private Sub replaceTab()
+    
+     Stop Event
+     Me._$widget.Insert(Space$(NagatoSettings.TabSize))
+    
+End
+
+Private Sub replaceBackspace()
+    
+    Dim yukiPosition As Integer = (Me._$widget.Pos - NagatoSettings.TabSize + 1)
+    
+    If String.Mid(Me._$widget.Text, yukiPosition, NagatoSettings.TabSize) = Space$(NagatoSettings.TabSize) Then
+        Stop Event
+        Me._$widget.Select(yukiPosition - 1, NagatoSettings.TabSize)
+        Me._$widget.Selection.Text = ""
+    End If
+    
+Catch
+    Return
+    
+End
+
+Public Sub Asakura_KeyPress()
+
+    If Key.Control Then keyEventWithControl()
+    If Key.Code = Key.Tab And If NagatoSettings.TabSize <> 0 Then replaceTab()
+    If Key.Code = Key.BackSpace And If NagatoSettings.TabSize <> 0 Then replaceBackspace()
+
+End

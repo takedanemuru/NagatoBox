@@ -1,0 +1,87 @@
+' Gambas module file
+
+Private Function getPathToSave(argExtend As String) As String
+    
+    Dialog.Title = ("Save file")
+    Dialog.Path = User.Home &/ "your_document." & argExtend
+    
+    Return IIf(Dialog.SaveFile(), "", Dialog.Path)
+    
+End
+
+Private Sub showMessage(argTarget As String)
+    
+        Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
+    
+End
+
+Private Sub toPdf()
+    
+    Dim yukiTarget As String = getPathToSave("pdf")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
+    
+    If Not yukiTarget Then Return
+
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "300", yukiSource, yukiTarget] Wait
+
+    showMessage(yukiTarget)
+    
+End
+
+Private Sub toHtml()
+    
+    Dim yukiTarget As String = getPathToSave("html")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
+    
+    Copy yukiSource To yukiTarget
+    
+    showMessage(yukiTarget)
+    
+End
+
+Private Sub toOdt()
+    
+    Dim yukiTarget As String = getPathToSave("odt")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
+
+    If Not yukiTarget Then Return
+
+    Exec ["pandoc", yukiSource, "-o", yukiTarget] Wait
+
+    showMessage(yukiTarget)
+    
+End
+
+Private Sub toEpub()
+    
+    Dim yukiTarget As String = getPathToSave("epub")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
+    Dim yukiCover As String = "--epub-cover-image=" & User.Home &/ "headphones_x.png"
+    
+    If Not yukiTarget Then Return
+
+    HaruhiEpubMetadata.ShowDialog()
+
+    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    ' Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    ' 
+    ' showMessage(yukiTarget)
+    
+End
+
+Public Sub _call(argSignal As Integer)
+    
+    If Not MikuruHtmlConverter.Source Then Return
+    
+    Select Case argSignal
+        Case MikuruSignal.PublishHtml
+            toHtml()
+        Case MikuruSignal.PublishPdf
+            toPdf()
+        Case MikuruSignal.PublishOdt
+            toOdt()
+        Case MikuruSignal.PublishEpub3
+            toEpub()
+    End Select
+    
+End

@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Public _$uniqueName As String = "StarMenu"
+
+Public Sub _RefreshChildMenus() ' override
+    
+    Dim yukiPublishMenu As NagatoSubMenuPublish
+    Dim yukiInsertMenu As NagatoSubMenuInsert
+    Dim yukiSlideMenu As NagatoSubMenuSlide
+    
+    Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
+    yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, ("Export"), "book-open-bookmark") As "TFEI"
+    Object.New("NagatoSubMenuTabKey", [Me._$parentMenu, ("Tab Key"), "navigation-right-button"])
+    Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
+    yukiInsertMenu = New NagatoSubMenuInsert(Me._$parentMenu, ("Insert"), "toggle-expand-alt") As "TFEI"
+    Object.New("NagatoSubMenuCss", [Me._$parentMenu, ("CSS"), "ruler"])
+    yukiSlideMenu = New NagatoSubMenuSlide(Me._$parentMenu, ("Slide Show"), "presentation") As "TFEI"
+        Me._AddMenu("", 0)
+    Me._AddMenu("About", MikuruSignal.AppAbout, "star")
+    Me._AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
+    
+End

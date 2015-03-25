@@ -1,0 +1,112 @@
+' Gambas class file
+
+Property Read Buffer As String
+Property Read Path As String
+Property Read Format As String
+
+Private $buffer As String
+Private $path As String
+Private $format As String = "markdown_github"
+
+Private Sub changePath(argPath As String)
+    
+    $path = argPath
+    MikuruMacro.RelativePath = argPath
+    
+End
+
+Private Sub setFormat(argPath As String)
+    
+    $format = "markdown_github"
+    
+    Select Case DesktopMime.FromFile(argPath).Type
+        Case "text/x-markdown"
+            $format = "markdown_github"
+        Case "text/x-rst"
+            $format = "rst"
+        Case "text/plain"
+            If File.Ext(argPath) = "textile" Then $format = "textile"
+    End Select
+    
+End
+
+Public Function SetPath(argPath As String) As String
+    
+    changePath(argPath)
+    $buffer = File.Load(argPath)
+    setFormat(argPath)
+    
+    Return $buffer
+    
+End
+
+Public Sub New(argFormat As String) As String
+    
+    $buffer = ""
+    $path = ""
+    $format = argFormat
+    
+    Return $buffer
+    
+End
+
+Public Sub Open() As Boolean
+    
+    Dialog.Title = ("Open file")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return False
+    If DesktopMime.FromFile(Dialog.Path).Type Not Begins "text" Then Return False
+    
+    Try $buffer = File.Load(Dialog.Path)
+    changePath(Dialog.Path)
+    setFormat(Dialog.Path)
+    Return True
+    
+Catch
+    Return False
+    
+End
+
+Public Sub Save(argText As String)
+    
+    If argText = $buffer Then Return
+    
+    If $path = "" Then 
+        Me.SaveAs(argText)
+    Else
+        $buffer = argText
+        File.Save($path, argText)
+    Endif
+    
+End
+
+Public Sub SaveAs(argText As String)
+    
+    Dialog.Path = Subst$("&1/your_file.&2", User.Home, MikuruExtensions[$format])
+    Dialog.Title = ("Save file as ...")
+    If Dialog.SaveFile() Then Return
+    
+    changePath(Dialog.Path)
+    $buffer = argText
+    
+    File.Save($path, argText)
+    
+End
+
+Private Function Buffer_Read() As String
+
+    Return $buffer
+
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Function Format_Read() As String
+
+    Return $format
+
+End

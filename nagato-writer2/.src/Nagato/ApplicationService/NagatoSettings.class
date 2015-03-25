@@ -1,0 +1,101 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property TabSize As Integer
+Property LivePreview As Boolean
+Property Read RecentFiles As String[]
+Property PreviewCss As Integer
+
+Private Const DefaultTabSize As Integer = 4
+
+Event RequestReload
+
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = Me._$settings[Subst$("&1/x", argForm.Name), Screen.H * 0.125]
+        .Y = Me._$settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
+        .H = Me._$settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
+        .W = Me._$settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
+    End With
+    
+End
+
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        Me._$settings[Subst$("&1/x", argForm.Name)] = .X
+        Me._$settings[Subst$("&1/y", argForm.Name)] = .Y
+        Me._$settings[Subst$("&1/h", argForm.Name)] = .H
+        Me._$settings[Subst$("&1/w", argForm.Name)] = .W
+    End With
+    
+    Me._$settings.Save()
+    
+End
+
+Public Sub PushRecentPath(argPath As String)
+    
+    Dim yukiRecentPaths As String[] = MikuruPaths.RemoveInvalid(Me.RecentFiles)
+    
+    If Not Exist(argPath) Then Return
+    
+    If Not yukiRecentPaths Then yukiRecentPaths = New String[]
+    
+    If yukiRecentPaths.Exist(argPath) Then yukiRecentPaths.Remove(yukiRecentPaths.Find(argPath))
+    yukiRecentPaths.Add(argPath, 0)
+    yukiRecentPaths.Resize(30)
+    
+    Me._$settings["file/recent"] = yukiRecentPaths
+    Me._$settings.Save()
+    
+End
+
+Private Function TabSize_Read() As Integer
+
+    Return Me._$settings["editor/tab_size", DefaultTabSize]
+
+End
+
+Private Sub TabSize_Write(Value As Integer)
+
+    Me._$settings["editor/tab_size"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function LivePreview_Read() As Boolean
+
+    Return Me._$settings["preview/live", True]
+
+End
+
+Private Sub LivePreview_Write(Value As Boolean)
+
+    Me._$settings["preview/live"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function RecentFiles_Read() As String[]
+
+    Return MikuruPaths.RemoveInvalid(Me._$settings["file/recent", Null])
+
+End
+
+Private Function PreviewCss_Read() As Integer
+
+    Return Me._$settings["preview/css", NagatoCss.StyleLight] 
+
+End
+
+Private Sub PreviewCss_Write(Value As Integer)
+
+    If Me._$settings["preview/css"] <> Value Then
+        Me._$settings["preview/css"] = Value
+        Me._$settings.Save()
+        Raise RequestReload
+    End If
+
+End

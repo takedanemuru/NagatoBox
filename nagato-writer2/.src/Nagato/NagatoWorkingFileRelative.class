@@ -1,0 +1,46 @@
+' Gambas class file
+
+' Gambas class file
+
+Property Read WorkingPath As String
+Property Read WorkingUrl As String
+
+Private $workingPath As String
+
+Private Sub resetWorkingPath()
+    
+    If Exist($workingPath) Then Kill $workingPath ' kill OLD $workingPath
+    $workingPath = Temp$() & ".html"
+    If Exist(Me.WorkingPath) Then Kill Me.WorkingPath ' kill NEW $workingPath if possible
+    
+End
+
+Private Sub convert(argSourcePath As String, argTargetPath As String)
+    
+    Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
+    
+    Exec ["pandoc", "-f", "markdown_github", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    
+End
+
+Public Sub Set(argSourceText As String)
+    
+    Dim yukiSourcePath As String = Temp$()
+    
+    resetWorkingPath()
+    File.Save(yukiSourcePath, MikuruMacro.ConvertToRelative(argSourceText))
+    convert(yukiSourcePath, $workingPath)
+    
+End
+
+Private Function WorkingPath_Read() As String
+
+    Return $workingPath
+
+End
+
+Private Function WorkingUrl_Read() As String
+
+    Return "file://" & Url$($workingPath)
+
+End

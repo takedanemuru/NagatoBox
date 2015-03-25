@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Function getIcon(argTheme As Integer) As Variant
+    
+    If argTheme = NagatoSettingsSlide.Theme Then
+        Return "button-check"
+    Else
+        Return Null
+    Endif
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    With NagatoSettingsSlide
+        Me._AddMenu(("Light"), .ThemeLight, getIcon(.ThemeLight))
+        Me._AddMenu(("Dark"), .ThemeDark, getIcon(.ThemeDark))
+    End With
+
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsSlide.Theme = Last.Tag
+    
+End
