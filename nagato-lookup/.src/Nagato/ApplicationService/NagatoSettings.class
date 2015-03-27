@@ -21,6 +21,10 @@ End
 
 Private Sub saveRecentApps(argAppPaths As String[])
     
+    ' paticipate to force shutdown
+    $settings["apps/recent"] = Null
+    $settings.Save()
+    
     $settings["apps/recent"] = argAppPaths
     $settings.Save()
     
@@ -35,13 +39,14 @@ Public Sub PushApplicationPath(argPath As String)
     Else
         $recentApplications = [argPath]
     End If
-    SaveRecentApps($recentApplications)
+    
+    saveRecentApps($recentApplications)
     
 End
 
 Public Sub _new()
     
-    $recentApplications = LoadRecentApps()
+    $recentApplications = loadRecentApps()
     
 End
 

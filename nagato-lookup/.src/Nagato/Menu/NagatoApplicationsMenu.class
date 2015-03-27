@@ -30,7 +30,7 @@ Private Sub setEachApplicationMenu(argDesktopFile As NagatoDesktopFile)
     With yukiMenu
         .Text = argDesktopFile.Name
         .Tag = argDesktopFile.Path
-        .Picture = argDesktopFile.GetIcon(16)
+        .Picture = argDesktopFile.GetIcon(64)
     End With
     
 End

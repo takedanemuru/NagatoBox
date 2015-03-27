@@ -1,16 +1,7 @@
 ' Gambas class file
 
-Private $shutterSound As Sound
-
 Public Sub Play()
     
-    $shutterSound.Play()
+    Sound.Load("sounds/camera-snap.wav").Play()
     
 End
-
-Public Sub _new()
-    
-    $shutterSound = New Sound("sounds/camera-snap.wav") 
-    
-End
-

@@ -19,6 +19,7 @@ Private Sub setEditor(argPath As String)
         .Text = File.Load(argPath)
         .Highlight = Highlight.Gambas
         .Font.Size = 12
+        .Expand = True
     End With
     
 End

@@ -15,7 +15,7 @@ Private Sub initializeMenus()
         yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
         yukiMenu.Text = IIf(yukiDesktopFile.Name = "", File.BaseName(yukiPath), yukiDesktopFile.Name)
         yukiMenu.Tag = yukiPath
-        yukiMenu.Picture = yukiDesktopFile.GetIcon(16)
+        yukiMenu.Picture = yukiDesktopFile.GetIcon(64)
     Next
     
 End

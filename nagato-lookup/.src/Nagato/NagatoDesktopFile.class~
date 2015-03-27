@@ -16,6 +16,7 @@ Property Read ShowIn As Boolean
 Property Read IsSettingsApplication As Boolean
 Property Read IsMediaApplication As Boolean
 Property Read Valide As Boolean
+Property Read Exec As String
 
 Private $locale As String
 Private $language As String
@@ -162,7 +163,9 @@ Public Function GetIcon(argSize As Integer) As Picture
     Else If $desktopFile.Icon Begins "/" And If File.Ext($desktopFile.Icon) = "svg" 
         Return Image.Load($desktopFile.Icon).Stretch(argSize, argSize).Picture
     Else
-        Return $desktopFile.GetIcon(argSize).Picture
+        Debug Stock[Subst$("&1/program", argSize)] = $desktopFile.GetIcon(argSize).Picture
+        If $desktopFile.Icon <> "" Then Return $desktopFile.GetIcon(32).Picture
+        Return MikuruIcons.Get("toggle-right-alt")
     Endif
     
 Catch
@@ -315,5 +318,14 @@ End
 Private Function Valide_Read() As Boolean
 
     Return $valide
+
+End
+
+Private Function Exec_Read() As String
+
+    Return $desktopFile.Exec
+
+Catch
+    Return ""
 
 End

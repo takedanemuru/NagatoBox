@@ -12,13 +12,17 @@ Private Sub setEditor(argPath As String)
     
     Dim yukiEditor As New Editor(MainTabStrip)
     
+    Debug argPath
+    Debug 
+    
     With yukiEditor
         .TabSize = 4
-        .Flags[Editor1.ShowLineNumbers] = True
-        .Flags[Editor1.ShowLimits] = True
+        .Flags[Editor.ShowLineNumbers] = True
+        .Flags[Editor.ShowLimits] = True
         .Text = File.Load(argPath)
         .Highlight = Highlight.Gambas
         .Font.Size = 12
+        .Expand = True
     End With
     
 End
