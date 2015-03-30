@@ -42,10 +42,16 @@ End
 
 Private Sub kill()
     
-    If $systemGrids.LastSelected = "" Then Return
+    Dim yukiMessage As String
     
-    If Message.Warning(Subst$(("Are you sure to kill &1 ?"), $systemGrids.LastSelected), ("Cancel"), ("OK")) = 2 Then
-        Try Shell Subst$("kill &1", $systemGrids.LastSelected)
+    If $systemGrids.LastSelectedId = "" Then Return
+    
+    With $systemGrids
+        yukiMessage = Subst$(("Are you sure to kill &1(Process ID: &2) ?"), .LastSelectedName, .LastSelectedId)
+    End With
+    
+    If Message.Warning((yukiMessage), ("Cancel"), ("OK")) = 2 Then
+        Try Shell Subst$("kill &1", $systemGrids.LastSelectedId)
     Endif
     
 End
@@ -57,6 +63,8 @@ Public Sub SystemGrids_Kill()
 End
  
 Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Debug argValues.Count
     
     Select Case argSignal
         Case NagatoStarMenu.MenuUnselect
@@ -73,7 +81,7 @@ End
 
 Private Function IsSelected_Read() As Boolean
 
-    If $systemGrids.LastSelected = "" Then 
+    If $systemGrids.LastSelectedId = "" Then 
         Return False
     Else
         Return True

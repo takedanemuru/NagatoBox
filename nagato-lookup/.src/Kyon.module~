@@ -10,12 +10,10 @@ Private Function IsUnique() As Boolean
 End
 
 Public Sub Main()
-    
-        'for testing only
-        ' NagatoMenuCache3.Activate()
-        ' NagatoPipeMenu.Get("Medias")
 
     NagatoArguments.Parsing()
+    
+    Debug Desktop.Type
     
     If NagatoArguments.PipeMenu Then
         NagatoMenuCache3.Activate()

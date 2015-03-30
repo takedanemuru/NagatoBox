@@ -163,7 +163,7 @@ Public Function GetIcon(argSize As Integer) As Picture
     Else If $desktopFile.Icon Begins "/" And If File.Ext($desktopFile.Icon) = "svg" 
         Return Image.Load($desktopFile.Icon).Stretch(argSize, argSize).Picture
     Else
-        If $desktopFile.Icon <> "" Then Return $desktopFile.GetIcon(argSize).Picture
+        If $desktopFile.Icon <> "" Then Return $desktopFile.GetIcon(16).Picture
         Return MikuruIcons.Get("toggle-right-alt")
     Endif
     

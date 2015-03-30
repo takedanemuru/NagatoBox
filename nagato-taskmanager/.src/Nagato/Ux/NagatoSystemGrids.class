@@ -2,9 +2,11 @@
 
 Inherits NagatoGrids
 
-Property Read LastSelected As String
+Property Read LastSelectedId As String
+Property Read LastSelectedName As String
 
-Private $lastSelected As String = ""
+Private $lastSelectedId As String = ""
+Private $lastSelectedName As String = ""
 Private $lock As Boolean = False
 
 Event Kill
@@ -39,7 +41,7 @@ Private Sub setRowData(argRowData As Collection)
         Me._SetText(4, MikuruUnitConversion.PageToMiB(CStr(argRowData["rss"])), True)
         Me._SetText(5, MikuruUnitConversion.KiloByteToMiB(CStr(argRowData["virtual"])), True)
         If Odd(.Rows.Max) Then Me._SetBackGroundColor()
-        If .[.Rows.Max, 0].Text = $lastSelected Then .Select(.Rows.Max, 1)
+        If .[.Rows.Max, 0].Text = $lastSelectedId Then .Select(.Rows.Max, 1)
     End With
     
 End
@@ -85,7 +87,7 @@ End
 
 Public Sub Unselect()
     
-    $lastSelected = ""
+    $lastSelectedId = ""
     
 End
 
@@ -100,7 +102,8 @@ End
 Public Sub Asakura_MouseDown()
     
     If Me._$gridView.RowAt(Mouse.Y) = -1 Then Return
-    $lastSelected = Me._$gridView[Me._$gridView.Row, 0].Text
+    $lastSelectedId = Me._$gridView[Me._$gridView.Row, 0].Text
+    $lastSelectedName = Me._$gridView[Me._$gridView.Row, 2].Text
     
     If Mouse.Right Then popUpKillMenu()
 
@@ -132,8 +135,14 @@ Public Sub KillMenu_Click()
     
 End
 
-Private Function LastSelected_Read() As String
+Private Function LastSelectedId_Read() As String
 
-    Return $lastSelected
+    Return $lastSelectedId
+
+End
+
+Private Function LastSelectedName_Read() As String
+
+    Return $lastSelectedName
 
 End

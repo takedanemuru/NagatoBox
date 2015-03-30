@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.6.2
+# Compiled with Gambas 3.7.0
 Title=nagato-taskmanager
 Startup=Kyon
 Icon=Icons/oscilloscope.png
-Version=0.7.3
+Version=0.7.4
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -13,7 +13,7 @@ Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Description="a task manager for NagatoBox with non-gui mode."
-Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=en
@@ -22,7 +22,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@gmail.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-taskmanager-0.7.3
+PackageName=nagato-taskmanager-0.7.4
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
