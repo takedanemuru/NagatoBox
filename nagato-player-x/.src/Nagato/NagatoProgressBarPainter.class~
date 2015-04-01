@@ -22,7 +22,6 @@ Private Sub paintProgressBarOnMouse()
     Me._PaintClipRectangle(MikuruUx.ProgressBar, 2 * MikuruUx.Grid)
     Me._PaintRectangle(MikuruUx.ProgressBar, MikuruColor.WidgetOnMouseLight) 'frame
     Me._PaintRectangle(yukiBarRectangle, MikuruColor.WidgetOnMouse, 2 * MikuruUx.Grid) 'bar
-    Debug yukiRate
     Me._PaintRichText(MikuruUx.ProgressBar, Subst$("<b>&1</b>", NagatoQueue.GetProgressTextByRate(yukiRate)))
     Paint.Restore() 'restore clip rectangle
     

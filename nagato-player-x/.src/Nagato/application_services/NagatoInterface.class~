@@ -95,6 +95,12 @@ Catch
     
 End
 
+Public Function GetTitle(argPath As String) As String
+    
+    Return NagatoQueue.Collection[argPath]
+    
+End
+
 Private Function Ready_Read() As String
 
     Return "Can you see this ?"

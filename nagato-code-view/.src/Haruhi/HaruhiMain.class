@@ -28,6 +28,8 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
             $grids.Open()
         Case MikuruSignal.ViewRefresh
             $label.SetText(argArgs[0])
+        Case MikuruSignal.ViewReload
+            $grids.Reload()
         Case MikuruSignal.ViewFilter
             $grids.Filter(argArgs[0])
         Case MikuruSignal.ViewShowCodeView

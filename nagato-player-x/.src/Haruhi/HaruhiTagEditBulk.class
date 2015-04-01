@@ -62,7 +62,7 @@ Private Sub setNewTag()
             If TitleTextBox.Text <> "" Then .NewTitle(yukiPath, TitleTextBox.Text)
             If ArtistTextBox.Text <> "" Then .NewArtist(yukiPath, ArtistTextBox.Text)
             If AlbumTextBox.Text <> "" Then .NewAlbum(yukiPath, AlbumTextBox.Text)
-            NagatoDBMedia.SetLibrary(yukiPath, TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
+            'NagatoDBMedia.SetLibrary(yukiPath, TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
         End With
     Next
     

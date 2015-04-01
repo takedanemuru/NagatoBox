@@ -43,12 +43,29 @@ Catch
     
 End
 
+Private Sub setTagFromDatabase(argPath As String)
+    
+    Dim yukiResult As Result = NagatoDBMedia.GetMusicResultByPath(argPath)
+    
+    With NagatoDBMedia
+        $title = yukiResult[.ColumnTitle]
+        $artist = yukiResult[.ColumnArtist]
+        $album = yukiResult[.ColumnAlbum]
+        $duration = yukiResult[.ColumnDuration]
+    End With
+    
+End
+
 Public Sub SetTag(argPath As String)
     
-    setTitle(argPath)
-    setArtist(argPath)
-    setAlbum(argPath)
-    $duration = MikuruDuration.GetDuration(argPath)
+    If NagatoDBMedia.HasLibrary(argPath) Then
+        setTagFromDatabase(argPath)
+    Else
+        setTitle(argPath)
+        setArtist(argPath)
+        setAlbum(argPath)
+        $duration = MikuruDuration.GetDuration(argPath)
+    End If
     
 End
 

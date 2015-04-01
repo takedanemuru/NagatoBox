@@ -9,6 +9,7 @@ Public Const ColumnId As String = "id"
 Public Const ColumnArtist As String = "artist"
 Public Const ColumnAlbum As String = "album"
 Public Const ColumnPicture As String = "picture"
+Public Const ColumnDuration As String = "duration"
 
 Public Const TableLibrary As String = "library"
 Public Const ColumnPath As String = "path"
@@ -133,47 +134,42 @@ End
 
 Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
-    Dim yukiResult As Result
-    
-    If Me._$connection.Find(TableLibrary, "path = &1", argPath).Count > 0 Then Return
-    
-    Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(TableLibrary)
-        yukiResult[ColumnTitle] = MikuruId3TagInfo.GetTitle(argPath)
-        yukiResult[ColumnArtist] = MikuruId3TagInfo.GetArtist(argPath)
-        yukiResult[ColumnAlbum] = MikuruId3TagInfo.GetAlbum(argPath)
-        yukiResult[ColumnPath] = argPath
-        yukiResult.Update()
-    Me._$connection.Commit()
-    
-Catch
-    Debug Error.Text
-    Me._$connection.Rollback()
+    $tableLibrary.EnsureLibrary(argPath)
     
 End
 
-Public Sub SetLibrary(argPath As String, Optional argTitle As String, Optional argArtist As String, Optional argAlbum As String)
-    
-    Dim yukiResult As Result 
-    Dim yukiTitle As String = IIf(argTitle, argTitle, File.BaseName(argPath))
-    
-    Me._$connection.Begin()
-        yukiResult = Me._$connection.Edit(TableLibrary, "path = &1", argPath)
-        yukiResult[ColumnTitle] = yukiTitle
-        If argArtist Then yukiResult[ColumnArtist] = argArtist
-        If argAlbum Then yukiResult[ColumnAlbum] = argAlbum
-        yukiResult.Update()
-    Me._$connection.Commit()
-    
-Catch
-    Debug Error.Text
-    Me._$connection.Rollback()
-    
-End
+' Public Sub SetLibrary(argPath As String, Optional argTitle As String, Optional argArtist As String, Optional argAlbum As String)
+'     
+'     Dim yukiResult As Result 
+'     Dim yukiTitle As String = IIf(argTitle, argTitle, File.BaseName(argPath))
+'     
+'     Me._$connection.Begin()
+'         yukiResult = Me._$connection.Edit(TableLibrary, "path = &1", argPath)
+'         yukiResult[ColumnTitle] = yukiTitle
+'         If argArtist Then yukiResult[ColumnArtist] = argArtist
+'         If argAlbum Then yukiResult[ColumnAlbum] = argAlbum
+'         yukiResult.Update()
+'     Me._$connection.Commit()
+'     
+' Catch
+'     Debug Error.Text
+'     Me._$connection.Rollback()
+'     
+' End
 
 Public Sub AddLibrary(argPath As String, argTitle As String, argArtist As String, argAlbum As String)
     
     $tableLibrary.Add(argPath, argTitle, argArtist, argAlbum)
+    
+End
+
+Public Function HasLibrary(argPath As String) As Boolean
+    
+    If Me._$connection.Find(TableLibrary, "path = &1", argPath).Count > 0 Then
+        Return True
+    Else
+        Return False
+    Endif
     
 End
 
@@ -235,6 +231,7 @@ End
 Public Sub _new()
     
     Me._SetConnection()
+    
     $tableAlbumArt = New NagatoTableAlbumArt(Me._$connection)
     $tableLibrary = New NagatoTableLibrary(Me._$connection)
     $tablePlaylistNames = New NagatoTablePlaylistNames(Me._$connection)

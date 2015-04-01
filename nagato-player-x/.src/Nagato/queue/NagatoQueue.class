@@ -6,7 +6,6 @@ Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
 Property Read CurrentPath As String
-Property Read Player As NagatoPlayer
 Property Read State As Integer
 Property Read Collection As Collection
 
@@ -14,6 +13,10 @@ Property Read CoverArt As Picture
 Property Read Title As String
 Property Read Artist As String
 Property Read Album As String
+
+Property Read ProgressRate As Float
+Property Read ProgressText As String
+Property Read SoftwareVolume As Float
 
 Private $player As New NagatoPlayer As "Player"
 Private $musicList As NagatoMusicList 
@@ -204,9 +207,20 @@ Public Sub Player_State()
     
 End
 
+Public Sub Player_FetchTags(argTags As Variant[])
+    
+    With argTags
+        Debug .[0]
+        Debug .[1]
+        Debug .[2]
+        Debug .[3]
+    End With
+    
+End
+
 Public Sub MusicList_Moved()
     
-    Dim yukiPath As String = MikuruPath.UrlToPath(NagatoQueue.CurrentPath)
+    Dim yukiPath As String = MikuruPath.UrlToPath(Me.CurrentPath)
     
     $coverArt = MikuruEyeD3.GetPicture(yukiPath, 96)
     
@@ -222,7 +236,7 @@ Public Sub MusicList_Changed()
     
 End
 
-Public Sub MusicLIst_SelectionMoved(argSelection As Integer[])
+Public Sub MusicList_SelectionMoved(argSelection As Integer[])
     
     Raise SelectionMoved(argSelection)
     
@@ -234,12 +248,6 @@ Private Function Count_Read() As Integer
 
 Catch
     Return 0
-
-End
-
-Private Function Player_Read() As NagatoPlayer
-
-    Return $player
 
 End
 
@@ -303,5 +311,23 @@ End
 Private Function CoverArt_Read() As Picture
 
     Return $coverArt
+
+End
+
+Private Function ProgressRate_Read() As Float
+
+    Return $player.ProgressRate
+
+End
+
+Private Function ProgressText_Read() As String
+
+    Return $player.ProgressText
+
+End
+
+Private Function SoftwareVolume_Read() As Float
+
+    Return $player.SoftwareVolume
 
 End

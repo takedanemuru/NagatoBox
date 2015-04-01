@@ -29,8 +29,6 @@ Public Function GetTitle(argFullPath As String) As String
     
     If yukiTitle = "" Then
         Return File.BaseName(argFullPath)
-    Else If DesktopMime.FromFile(argFullPath).Type = "audio/x-scpls" Then
-        Return "radio"
     Else
         Return getId3v2Tag(argFullPath, TitleHeader)
     End If
@@ -41,8 +39,6 @@ Public Function GetArtist(argFullPath As String) As String
     
     If Not Exist(argFullPath) Then
         Return ""
-    Else If DesktopMime.FromFile(argFullPath).Type = "audio/x-scpls" Then
-        Return "radio"
     Else
         Return getId3v2Tag(argFullPath, ArtistHeader)
     End If
@@ -53,8 +49,6 @@ Public Function GetAlbum(argFullPath As String) As String
     
     If Not Exist(argFullPath) Then
         Return ""
-    Else If DesktopMime.FromFile(argFullPath).Type = "audio/x-scpls" Then
-        Return "radio"
     Else
         Return getId3v2Tag(argFullPath, AlbumHeader)
     End If

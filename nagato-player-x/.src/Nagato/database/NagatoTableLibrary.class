@@ -16,6 +16,7 @@ Public Sub _EnsureTable() 'override
             yukiTable.Fields.Add(.ColumnPath, gb.String)
             yukiTable.Fields.Add(.ColumnPlayTimes, gb.Integer)
             yukiTable.Fields.Add(.ColumnStars, gb.Integer)
+            yukiTable.Fields.Add(.ColumnDuration, gb.Float)
             yukiTable.PrimaryKey = [.ColumnId]
             yukiTable.Update()
         Endif
@@ -37,6 +38,28 @@ Public Sub Add(argPath As String, argTitle As String, argArtist As String, argAl
             yukiResult.Update()
         Me._$connection.Commit()
     End With
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
+Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
+    
+    Dim yukiResult As Result
+    
+    If Me._$connection.Find(NagatoDBMedia.TableLibrary, "path = &1", argPath).Count > 0 Then Return
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(NagatoDBMedia.TableLibrary)
+        yukiResult[NagatoDBMedia.ColumnTitle] = MikuruId3TagInfo.GetTitle(argPath)
+        yukiResult[NagatoDBMedia.ColumnArtist] = MikuruId3TagInfo.GetArtist(argPath)
+        yukiResult[NagatoDBMedia.ColumnAlbum] = MikuruId3TagInfo.GetAlbum(argPath)
+        yukiResult[NagatoDBMedia.ColumnDuration] = MikuruDuration.GetDuration(argPath)
+        yukiResult[NagatoDBMedia.ColumnPath] = argPath
+        yukiResult.Update()
+    Me._$connection.Commit()
     
 Catch
     Debug Error.Text

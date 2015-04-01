@@ -6,9 +6,9 @@ Public Function CheckState(argIndex As Integer) As Boolean
     
     Select Case argIndex
         Case Me.Play
-            Return NagatoQueue.Player.State = Media.Playing
+            Return NagatoQueue.State = Media.Playing
         Case Me.Pause
-            Return NagatoQueue.Player.State = Media.Paused
+            Return NagatoQueue.State = Media.Paused
         Case Me.Shuffle
             Return NagatoSettingsMusic.Shuffle
         Case Me.Repeats

@@ -16,15 +16,23 @@ Public Function FindIndex(argPath As String) As Integer
     
 End
 
+Private Sub addElement(argPath As String)
+    
+    Dim yukiElement As NagatoMusicElement
+    
+    NagatoDBMedia.EnsureLibrary(argPath)
+    yukiElement = New NagatoMusicElement(argPath)
+    $musicElements.Add(yukiElement)
+    
+End
+
 Public Function AddMusics(argPaths As String[]) As Integer
     
     Dim yukiPath As String
     Dim yukiCount As Integer = 0
-    Dim yukiElement As NagatoMusicElement
     
     For Each yukiPath In MikuruPath.Sanitize(argPaths)
-        yukiElement = New NagatoMusicElement(yukiPath)
-        $musicElements.Add(yukiElement)
+        addElement(yukiPath)
         Inc yukiCount
     Next
     
@@ -56,12 +64,13 @@ End
 Public Sub Initialize(argPaths As String[])
     
     Dim yukiPath As String
-    Dim yukiMusicElement As NagatoMusicElement
+    'Dim yukiMusicElement As NagatoMusicElement
     
     For Each yukiPath In MikuruPath.Sanitize(argPaths.Insert(NagatoSettingsMusic.LoadPaths()))
-        NagatoDBMedia.EnsureLibrary(yukiPath)
-        yukiMusicElement = New NagatoMusicElement(yukiPath)
-        $musicElements.Add(yukiMusicElement)
+        addElement(yukiPath)
+        ' NagatoDBMedia.EnsureLibrary(yukiPath)
+        ' yukiMusicElement = New NagatoMusicElement(yukiPath)
+        ' $musicElements.Add(yukiMusicElement)
     Next
     
 End
@@ -98,8 +107,6 @@ Public Sub SetTag(argTag As String, argIndex As Integer, argValue As String)
         Case "Album"
             $musicElements[argIndex].Album = argValue
     End Select
-    
-    Debug argValue
     
 Catch
     Return

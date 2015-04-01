@@ -29,12 +29,12 @@ End
 
 Private Sub paintProgressBarNormal()
     
-    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, NagatoQueue.Player.ProgressRate)
+    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, NagatoQueue.ProgressRate)
     
     Me._PaintClipRectangle(MikuruUx.ProgressBar, 2 * MikuruUx.Grid)
     Me._PaintRectangle(MikuruUx.ProgressBar, MikuruColor.WidgetLight) 'frame
     Me._PaintRectangle(yukiBarRectangle, MikuruColor.Widget, 2 * MikuruUx.Grid) 'bar
-    Me._PaintRichText(MikuruUx.ProgressBar, Subst$("<b>&1</b>", NagatoQueue.Player.ProgressText))
+    Me._PaintRichText(MikuruUx.ProgressBar, Subst$("<b>&1</b>", NagatoQueue.ProgressText))
     Paint.Restore() 'restore clip rectangle
     
 End

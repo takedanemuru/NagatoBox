@@ -19,13 +19,14 @@ Public Sub Form_Open()
     MainEditor.Flags[MainEditor.ShowModifiedLines] = True
     
     With MainEditor.Styles
-        .[Highlight.Background].Color = Color.Merge(Color.Blue, Color.Black, 0.2)
+        .[Highlight.Background].Color = 16247
         .[Highlight.Number].Foreground = Color.Red
-        .[Highlight.Keyword].Foreground = Color.Orange
+        .[Highlight.Keyword].Foreground = 14114815
         .[Highlight.Normal].Foreground = Color.White
         .[Highlight.String].Foreground = Color.White
-        .[Highlight.Symbol].Foreground = Color.Cyan
+        .[Highlight.Symbol].Foreground = Color.White
         .[Highlight.CSS].Color = Color.Yellow
+        .[Highlight.Function].Foreground = Color.Cyan
     End With
     
 End

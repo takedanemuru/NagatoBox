@@ -44,6 +44,14 @@ Public Sub Filter(argQuery As String)
     
 End
 
+Public Sub Reload()
+    
+    If NagatoSettings.LastDirectory = "" Then Return
+    
+    sortGrids()
+    
+End
+
 Public Sub _initialize() ' override
     
     $grids = New GridView(Me._$parentContainer) As "Grids"

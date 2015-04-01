@@ -6,9 +6,11 @@ Property SoftwareVolume As Float
 Property Read State As Integer
 
 Private $player As New MediaPlayer As "Player"
+Private $lastFetched As Date
 
 Event MusicEnd
 Event State
+Event FetchTags(argTags As Variant[])
 
 Private Function getDuration(Optional argRate As Float = 0) As String
     
@@ -97,6 +99,27 @@ End
 Public Sub Player_State()
     
     Raise State
+    
+End
+
+Public Sub Player_Tag(argTagList As MediaTagList)
+    
+    Dim yukiTags As New Variant[]
+    
+    If ($lastFetched = Null) Or If DateDiff($lastFetched, Now(), gb.Second) > 2 Then 
+        ' Debug argTagList["title"]
+        ' Debug argTagList["artist"]
+        ' Debug argTagList["album"]
+        ' Debug $player.Duration
+
+        yukiTags.Add(argTagList["title"])
+        yukiTags.Add(argTagList["artist"])
+        yukiTags.Add(argTagList["album"])
+        yukiTags.Add($player.Duration)
+        Raise FetchTags(yukiTags)
+        
+        $lastFetched = Now()
+    End If
     
 End
 
