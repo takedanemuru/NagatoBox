@@ -209,12 +209,15 @@ End
 
 Public Sub Player_FetchTags(argTags As Variant[])
     
-    With argTags
-        Debug .[0]
-        Debug .[1]
-        Debug .[2]
-        Debug .[3]
-    End With
+    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
+    
+    If Not NagatoDBMedia.FetchTags(yukiPath, argTags) Then Return
+    
+    $musicList.SetTag("Title", argTags[0])
+    $musicList.SetTag("Artist", argTags[1])
+    $musicList.SetTag("Album", argTags[2])
+    
+    Raise TagChanged
     
 End
 

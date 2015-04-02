@@ -9,7 +9,8 @@ Private $playlistName As String
 Public Sub AddMusic()
     
     Dialog.Title = ("Select music")
-    Dialog.Path = NagatoSettingsMusic.DialogLastPath
+    'Dialog.Path = NagatoSettingsMusic.DialogLastPath
+    Dialog.Path = Desktop.GetDirectory("MUSIC")
     
     If Not Dialog.OpenFile(True) Then
         NagatoQueue.AddMusics(Dialog.Paths)

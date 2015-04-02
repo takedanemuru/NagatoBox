@@ -138,6 +138,17 @@ Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
 End
 
+Public Sub FetchTags(argPath As String, argTags As Variant[]) As Boolean ' return true when something changed
+    
+    If Me.HasLibrary(argPath) Then
+        Return $tableLibrary.FetchTags(argPath, argTags)
+    Else
+        $tableLibrary.AddTags(argPath, argTags)
+        Return True
+    Endif
+    
+End
+
 ' Public Sub SetLibrary(argPath As String, Optional argTitle As String, Optional argArtist As String, Optional argAlbum As String)
 '     
 '     Dim yukiResult As Result 

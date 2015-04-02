@@ -45,6 +45,65 @@ Catch
     
 End
 
+Public Sub AddTags(argPath As String, argTags As Variant[])
+    
+    Dim yukiResult As Result
+    
+    With NagatoDBMedia
+        Me._$connection.Begin()
+            yukiResult = Me._$connection.Create(.TableLibrary)
+            yukiResult[.ColumnPath] = argPath
+            yukiResult[.ColumnTitle] = argTags[0]
+            yukiResult[.ColumnArtist] = argTags[1]
+            yukiResult[.ColumnAlbum] = argTags[2]
+            yukiResult[.ColumnDuration] = argTags[3]
+            yukiResult.Update()
+        Me._$connection.Commit()
+    End With
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
+Public Function FetchTags(argPath As String, argTags As Variant[]) As Boolean 'return true when something changed
+    
+    Dim yukiResult As Result
+    Dim yukiFlag As Boolean = False
+    
+    With NagatoDBMedia
+        Me._$connection.Begin()
+            yukiResult = Me._$connection.Edit(.TableLibrary, "path = &1", argPath)
+            If yukiResult[.ColumnTitle] <> argTags[0] Then 
+                yukiResult[.ColumnTitle] = argTags[0]
+                yukiFlag = True
+            End If
+            If yukiResult[.ColumnArtist] <> argTags[1] Then
+                yukiResult[.ColumnArtist] = argTags[1]
+                yukiFlag = True
+            End If
+            If yukiResult[.ColumnAlbum] <> argTags[2] Then 
+                yukiResult[.ColumnAlbum] = argTags[2]
+                yukiFlag = True
+            End If
+            If yukiResult[.ColumnDuration] <> argTags[3] Then
+                yukiResult[.ColumnDuration] = argTags[3]
+                yukiFlag = True
+            End If
+            yukiResult.Update()
+        Me._$connection.Commit()
+    End With
+    
+    Return yukiFlag
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    Return False
+    
+End
+
 Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
     Dim yukiResult As Result

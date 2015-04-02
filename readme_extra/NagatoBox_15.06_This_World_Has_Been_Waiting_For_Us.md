@@ -29,7 +29,8 @@
     + ~~startup initialization~~
     + ~~addition~~
     + edit
-    + playing fetch
+    + ~~playing fetch~~
++ bulk tagging
 
 ## nagato-session
 

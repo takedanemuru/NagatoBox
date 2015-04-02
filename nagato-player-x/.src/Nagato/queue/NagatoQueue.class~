@@ -207,6 +207,20 @@ Public Sub Player_State()
     
 End
 
+Public Sub Player_FetchTags(argTags As Variant[])
+    
+    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
+    
+    NagatoDBMedia.FetchTags(yukiPath, argTags)
+    
+    $musicList.SetTag("Title", MikuruId3TagInfo.GetTitle(yukiPath))
+    $musicList.SetTag("Artist", MikuruId3TagInfo.GetArtist(yukiPath))
+    $musicList.SetTag("Album", MikuruId3TagInfo.GetAlbum(yukiPath))
+    
+    Raise TagChanged
+    
+End
+
 Public Sub MusicList_Moved()
     
     Dim yukiPath As String = MikuruPath.UrlToPath(Me.CurrentPath)

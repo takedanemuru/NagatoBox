@@ -6,6 +6,26 @@ Public Enum ResponseCancel = 1001, ResponseApply = 1002
 
 Private $playlistName As String
 
+Public Sub AddMusic()
+    
+    Dialog.Title = ("Select music")
+    Dialog.Path = NagatoSettingsMusic.DialogLastPath
+    
+    If Not Dialog.OpenFile(True) Then
+        NagatoQueue.AddMusics(Dialog.Paths)
+    Endif
+    
+End
+
+Public Sub AddDirectory()
+    
+    Dialog.Title = ("Select directory")
+    Dialog.Path = User.Home
+    
+    If Not Dialog.SelectDirectory() Then NagatoQueue.AddDirectory(Dialog.Path)
+    
+End
+
 Private Function PlaylistName_Read() As String
 
     Return $playlistName
