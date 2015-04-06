@@ -6,6 +6,7 @@ Property RelativePath As String
 Private Const MacroHome As String = "NAGATO_MACRO_HOME"
 Private Const MacroRelativePath As String = "NAGATO_MACRO_DIR"
 Private Const MacroImageLink As String = "![NAGATO_MACRO_IMAGE](./"
+Private Const MacroJekyllNow As String = "![_config.yml]({{ site.baseurl }}"
 
 Private $relativePath As String
 
@@ -16,6 +17,10 @@ Public Function Set(argSourceText As String) As String
     yukiText = Replace$(yukiText, MacroRelativePath, Me.RelativePath)
     yukiText = Replace$(yukiText, MacroHome, Me.HomePath)
     yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", Me.RelativePath))
+    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![img](&1/", File.Dir(Me.RelativePath)))
+    
+    Debug Me.HomePath
+    Debug Me.RelativePath
     
     Return yukiText
     
@@ -27,7 +32,7 @@ Public Function ConvertToRelative(argSourceText As String) As String
     
     yukiText = Replace$(yukiText, MacroRelativePath, File.Dir($relativePath))
     yukiText = Replace$(yukiText, MacroHome, User.Home)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![NAGATO_MACRO_IMAGE](&1/", File.Dir($relativePath)))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", File.Dir($relativePath)))
     
     Return yukiText
     

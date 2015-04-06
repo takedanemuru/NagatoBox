@@ -17,7 +17,7 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     
     Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
     
-    Exec ["pandoc", "-f", "markdown_github", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    Exec ["pandoc", "-f", NagatoSettings.Syntax, "-s", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
     
 End
 
@@ -39,6 +39,6 @@ End
 
 Private Function WorkingUrl_Read() As String
 
-    Return Media.URL($workingPath)
+    Return "file://" & Url$($workingPath)
 
 End

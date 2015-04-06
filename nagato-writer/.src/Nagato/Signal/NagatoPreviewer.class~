@@ -7,7 +7,7 @@ Private $webview As WebView
 Public Sub Refresh(argSource As String)
     
     MikuruHtmlConverter.ToHtmlDirect(argSource)
-    $webview.Url = MikuruHtmlConverter.TempFileUrl
+    $webview.Url = Media.URL(MikuruHtmlConverter.WorkingFileAbsolute)
     
     $webview.Refresh()
     
@@ -16,8 +16,6 @@ End
 Public Sub _Initialize()
     
     $webview = New WebView(Me._$parentContainer) As "WebView"
-    
-    WebSettings[WebSettings.PluginsEnabled] = True
     
     With $webview
         .Expand = True

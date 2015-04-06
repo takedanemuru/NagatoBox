@@ -1,12 +1,11 @@
 ' Gambas module file
 
-Property Read TempFile As String
-Property Read TempFileUrl As String
 Property Read Source As String
-Property Read TempFileRelative As String
+Property Read WorkingFileRelative As String
+Property Read WorkingFileAbsolute As String
 
 Private $sourceText As String
-Private $workinPathAbsolute As New NagatoWorkingFile
+Private $workinPathAbsolute As New NagatoWorkingFileAbsolute
 Private $workinPathRelative As New NagatoWorkingFileRelative
 
 Public Sub ToHtmlDirect(argSourceText As String)
@@ -16,28 +15,22 @@ Public Sub ToHtmlDirect(argSourceText As String)
 
 End
 
-Private Function TempFile_Read() As String
-
-    Return $workinPathAbsolute.WorkingPath
-
-End
-
-Private Function TempFileUrl_Read() As String
-
-    Return $workinPathAbsolute.WorkingUrl
-
-End
-
 Private Function Source_Read() As String
 
     Return $sourceText
 
 End
 
-Private Function TempFileRelative_Read() As String
+Private Function WorkingFileRelative_Read() As String
 
     $workinPathRelative.Set($sourceText)
 
     Return $workinPathRelative.WorkingPath
+
+End
+
+Private Function WorkingFileAbsolute_Read() As String
+
+    Return $workinPathAbsolute.WorkingPath
 
 End

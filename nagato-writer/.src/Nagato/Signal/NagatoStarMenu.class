@@ -15,6 +15,7 @@ Public Sub _RefreshChildMenus() ' override
     Object.New("NagatoSubMenuTabKey", [Me._$parentMenu, ("Tab Key"), "navigation-right-button"])
     Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
     yukiInsertMenu = New NagatoSubMenuInsert(Me._$parentMenu, ("Insert"), "toggle-expand-alt") As "TFEI"
+    Object.New("NagatoSubMenuSyntax", [Me._$parentMenu, ("Syntax"), "quill"])
     Object.New("NagatoSubMenuCss", [Me._$parentMenu, ("CSS"), "ruler"])
     yukiSlideMenu = New NagatoSubMenuSlide(Me._$parentMenu, ("Slide Show"), "presentation") As "TFEI"
         Me._AddMenu("", 0)

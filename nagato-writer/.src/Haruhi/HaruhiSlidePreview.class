@@ -2,15 +2,25 @@
 
 Private $htmlPath As String
 
-Private Sub convert()
-    
-    Dim yukiCss As String = Subst$("--include-after-body=&1", NagatoCss.GetSlideCss())
-    Dim yukiLevel As Integer = NagatoSettingsSlide.SectionLevel
-    Dim yukiSourcePath As String = MikuruHtmlConverter.TempFile
+Private Sub resetHtmlPath()
     
     If Exist($htmlPath) Then Kill $htmlPath
     $htmlPath = Temp$() & ".html" 
-    Exec ["pandoc", "-t", "dzslides", yukiCss, "--slide-level", yukiLevel, "-s", yukiSourcePath, "-o", $htmlPath] Wait
+    
+End
+
+Private Function getCommand() As String[]
+    
+    Dim yukiCommand As String[] = ["pandoc", "-t"]
+    
+    With yukiCommand
+        .Insert(["dzslides", Subst$("--include-after-body=&1", NagatoCss.GetSlideCss())])
+        .Insert(["--slide-level", NagatoSettingsSlide.SectionLevel])
+        .Insert(["-s", MikuruHtmlConverter.WorkingFileAbsolute])
+        .Insert(["-o", $htmlPath])
+    End With
+
+    Return yukiCommand    
     
 End
 
@@ -18,11 +28,11 @@ Public Sub Set(argText As String)
     
     If argText = "" Then Return
     
-    convert()
+    resetHtmlPath()
+    Exec getCommand() Wait
     
     WebSettings[WebSettings.JavascriptEnabled] = True
-    
-    SlideWebView.Url = Media.URL($htmlPath)
+    SlideWebView.Url = "file://" & Url$($htmlPath)
     
 End
 

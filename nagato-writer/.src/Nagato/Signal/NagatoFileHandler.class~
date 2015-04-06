@@ -6,7 +6,6 @@ Property Read Format As String
 
 Private $buffer As String
 Private $path As String
-Private $format As String = "markdown_github"
 
 Private Sub changePath(argPath As String)
     
@@ -15,38 +14,19 @@ Private Sub changePath(argPath As String)
     
 End
 
-Private Sub setFormat(argPath As String)
-    
-    Debug DesktopMime.FromFile(argPath).Type
-    
-    $format = "markdown_github"
-    
-    Select Case DesktopMime.FromFile(argPath).Type
-        Case "text/x-markdown"
-            $format = "markdown_github"
-        Case "text/x-rst"
-            $format = "rst"
-        Case "text/plain"
-            If File.Ext(argPath) = "textile" Then $format = "textile"
-    End Select
-    
-End
-
 Public Function SetPath(argPath As String) As String
     
     changePath(argPath)
     $buffer = File.Load(argPath)
-    setFormat(argPath)
-    
+
     Return $buffer
     
 End
 
-Public Sub New(argFormat As String) As String
+Public Sub New() As String
     
     $buffer = ""
     $path = ""
-    $format = argFormat
     
     Return $buffer
     
@@ -61,7 +41,6 @@ Public Sub Open() As Boolean
     
     Try $buffer = File.Load(Dialog.Path)
     changePath(Dialog.Path)
-    setFormat(Dialog.Path)
     Return True
     
 Catch
@@ -84,7 +63,7 @@ End
 
 Public Sub SaveAs(argText As String)
     
-    Dialog.Path = Subst$("&1/your_file.&2", User.Home, MikuruExtensions[$format])
+    Dialog.Path = Subst$("&1/your_file.md", User.Home)
     Dialog.Title = ("Save file as ...")
     If Dialog.SaveFile() Then Return
     
@@ -104,11 +83,5 @@ End
 Private Function Path_Read() As String
 
     Return $path
-
-End
-
-Private Function Format_Read() As String
-
-    Return $format
 
 End

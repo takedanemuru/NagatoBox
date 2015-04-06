@@ -42,5 +42,5 @@
 
 ## nagato-writer
 
-+ ~~patch for jelyllnow~~
++ ~~patch for jekyllnow~~
 + ~~parse metadata collectly~~

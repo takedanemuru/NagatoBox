@@ -3,7 +3,6 @@
 Inherits NagatoUxContainer
 
 Property Text As String
-Property Read Format As String
 
 Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
@@ -53,11 +52,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     
     Select Case argEvent
         Case MikuruSignal.FileNewMarkdownGitHub
-            $textArea.Text = $fileHandler.New("markdown_github")
-        Case MikuruSignal.FileNewReStructuredText
-            $textArea.Text = $fileHandler.New("rst")
-        Case MikuruSignal.FileNewTextile
-            $textArea.Text = $fileHandler.New("textile")
+            $textArea.Text = $fileHandler.New()
         Case MikuruSignal.FileOpenPath
             $textArea.Text = $fileHandler.SetPath(argArgs[0])
         Case MikuruSignal.FileOpen
@@ -74,6 +69,8 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
 End
 
 Public Sub EditEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
+    
+    If argArgs Then Debug argArgs.Count
     
     Select Case argEvent
         Case MikuruSignal.EditInsertBullets
@@ -125,11 +122,5 @@ End
 Private Sub Text_Write(Value As String)
 
     $textArea.Text = Value
-
-End
-
-Private Function Format_Read() As String
-
-    Return $fileHandler.Format
 
 End

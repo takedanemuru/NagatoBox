@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Enum SyntaxPandoc, SyntaxStrict, SyntaxPhpExtra, SyntaxGitHub
+Private $syntax As String[] = ["markdown", "markdown_strict", "markdown_phpextra", "markdown_github"]
+
+Private Function getIconName(argTag As Integer) As Variant
+    
+    Return IIf($syntax[argTag] = NagatoSettings.Syntax, "button-check", Null)
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    Me._AddMenu("Pandoc's Extended", SyntaxPandoc, getIconName(SyntaxPandoc))
+    Me._AddMenu("Original Unextended", SyntaxStrict, getIconName(SyntaxStrict))
+    Me._AddMenu("PHP Markdown Extra", SyntaxPhpExtra, getIconName(SyntaxPhpExtra))
+    Me._AddMenu("GitHub Extended", SyntaxGitHub, getIconName(SyntaxGitHub))
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettings.Syntax = $syntax[Last.Tag]
+    
+End
