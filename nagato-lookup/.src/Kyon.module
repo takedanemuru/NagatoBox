@@ -13,6 +13,8 @@ Public Sub Main()
 
     NagatoArguments.Parsing()
     
+    Application.Theme = "Numix-Circle"
+    
     If NagatoArguments.PipeMenu Then
         NagatoMenuCache3.Activate()
         NagatoPipeMenu.Get(NagatoArguments.Category)

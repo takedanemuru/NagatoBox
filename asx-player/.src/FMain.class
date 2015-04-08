@@ -1,0 +1,22 @@
+' Gambas class file
+
+Private $source As String
+Private $xml As XmlDocument
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+    Dim yukiXmlElements As XmlElement[]
+    Dim yukiPath As String
+
+    $xml = New XmlDocument("/home/takedanemuru/150408l.asx")
+    yukiXmlElements = $xml.GetElementsByTagName("REF")
+
+    yukiPath = yukiXmlElements[0].Attributes["HREF"]
+
+    If yukiPath Begins "mms://" Then Exec ["mplayer", yukiPath]
+
+End

@@ -27,8 +27,13 @@ Private Sub execute(argPath As String, Optional argAsSuperUser As Boolean = Fals
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiCommand As String = getCommand(yukiDesktopFile.Exec, argAsSuperUser)
     
+    Debug yukiDesktopFile.Name
+    Debug yukiDesktopFile.Exec
+    
     Try Shell yukiCommand
     If Not Error Then NagatoSettings.PushApplicationPath(argPath)
+    
+    Debug Error.Text
     
 End
 
@@ -36,7 +41,7 @@ Private Function getSanitizedDesktopFiles(argListPath As String, argFilePath As 
     
     Dim yukiMimeType As String = DesktopMime.FromFile(argFilePath).Type
     Dim yukiIndex As Integer
-    Dim yukiDesktopFiles As String[] = MikuruConfFlie.GetItems(argListPath, yukiMimeType)
+    Dim yukiDesktopFiles As String[] = MikuruConfFlie(argListPath, yukiMimeType)
     
     For yukiIndex = yukiDesktopFiles.Max DownTo 0
         If Not Exist("/usr/share/applications" &/ yukiDesktopFiles[yukiIndex]) Then
@@ -86,8 +91,11 @@ Public Sub Launch(argPath As String)
     If yukiDesktopFile.IsSettingsApplication Then
         CallMessage(argPath)
     Else
+        Debug "go for it !!"
         execute(argPath)
     End If
+    
+    Debug "done ?"
     
 End
 

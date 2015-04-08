@@ -13,7 +13,7 @@ Public Sub Main()
 
     NagatoArguments.Parsing()
     
-    Debug Desktop.Type
+    Application.Theme = "Numix"
     
     If NagatoArguments.PipeMenu Then
         NagatoMenuCache3.Activate()
