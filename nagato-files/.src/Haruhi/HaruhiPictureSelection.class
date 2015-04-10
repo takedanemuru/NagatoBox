@@ -1,0 +1,20 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+
+    With PictureChooser
+        .Filter = ["*.png;*.jpg;*.jpeg", "Picture Files"]
+        .ShowPreview = True
+        .FileView.IconSize = 128
+    End With
+
+End
+
+Public Sub PictureChooser_Activate()
+    
+    NagatoSettingsAppearance.Background = PictureChooser.SelectedPath
+    
+    Me.Close()
+    
+End

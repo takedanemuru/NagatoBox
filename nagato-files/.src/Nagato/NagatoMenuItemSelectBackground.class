@@ -8,7 +8,7 @@ Public Sub _InitializeItem() 'override
     
     With yukiMenu
         .Text = ("Change Background")
-        .Picture = MikuruIcon.Get("equalizer")
+        .Picture = MikuruIcon.Get("image")
         .Tag = Me._$path
     End With
     
@@ -16,11 +16,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    Dialog.Title = ("Select Image")
-    Dialog.Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files"]
-    
-    If Not Dialog.OpenFile(False) Then
-        NagatoSettingsAppearance.Background = Dialog.Path
-    Endif
+    HaruhiPictureSelection.ShowDialog()
     
 End

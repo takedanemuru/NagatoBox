@@ -1,0 +1,8 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    MikuruArgs.Parsing()
+    HaruhiMain.Show()
+    
+End
