@@ -1,0 +1,8 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoSounds.Ensure()
+    HaruhiMain.Show()
+    
+End

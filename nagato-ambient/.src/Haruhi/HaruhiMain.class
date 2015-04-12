@@ -1,0 +1,34 @@
+' Gambas class file
+
+Private $player As New NagatoPlayer
+
+Private Sub setIcon()
+    
+    PictureBox1.Picture = $player.Icon
+    PictureBox1.Tooltip = $player.Name
+    
+    Me.Title = "nagato-ambient: " & $player.Name
+    Me.Icon = $player.Icon
+    
+End
+
+Public Sub Form_Open()
+
+    $player.Play()
+    setIcon()
+
+End
+
+Public Sub NextButton_Click()
+
+    $player.Next()
+    setIcon()
+
+End
+
+Public Sub BackButton_Click()
+
+    $player.Back()
+    setIcon()
+
+End

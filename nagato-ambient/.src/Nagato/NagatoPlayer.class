@@ -1,0 +1,95 @@
+' Gambas class file
+
+Property Read Icon As Picture
+Property Read Name As String
+
+Private Const IconsDirectory As String = "icons"
+
+Private $player As New MediaPlayer As "Player"
+Private $soundPaths As String[]
+Private $currentIndex As Integer
+
+Private Sub ramdomizeIndex()
+    
+    $currentIndex = Rand(0, $soundPaths.Max)
+    
+End
+
+Private Sub forwardIndex()
+    
+    Inc $currentIndex
+    
+    If $currentIndex > $soundPaths.Max Then $currentIndex = 0
+    
+End
+
+Private Sub backIndex()
+    
+    Dec $currentIndex
+    
+    If 0 > $currentIndex Then $currentIndex = $soundPaths.Max
+    
+End
+
+Private Function getUrl() As String
+    
+    Return Media.URL(NagatoSounds.SoundsDirectory &/ $soundPaths[$currentIndex])
+    
+End
+
+Private Sub playCurrent()
+    
+    Try $player.Stop()
+    $player.URL = getUrl()
+    $player.Play()
+    
+End
+
+Public Sub Play()
+    
+    ramdomizeIndex()
+    playCurrent()
+    
+    $player.Audio.SoftwareVolume = True
+    
+End
+
+Public Sub Next()
+    
+    forwardIndex()
+    playCurrent()
+    
+End
+
+Public Sub Back()
+    
+    backIndex()
+    playCurrent()
+    
+End
+
+Public Sub _new()
+    
+    $soundPaths = Dir(NagatoSounds.SoundsDirectory)
+    
+End
+
+Public Sub Player_End()
+    
+    Try $player.Stop()
+    $player.Position = 0
+    $player.Play()
+    
+End
+
+Private Function Icon_Read() As Picture
+
+    Return Picture.Load(IconsDirectory &/ Me.Name & ".png")
+
+End
+
+Private Function Name_Read() As String
+
+    Return File.BaseName($soundPaths[$currentIndex]) 
+
+End

@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  Background = &HCF9FFF&
+  { BackButton ToolButton
+    MoveScaled(4,43,15,4)
+    NoTabFocus = True
+    Text = ("Back")
+    Border = True
+  }
+  { NextButton ToolButton
+    MoveScaled(31,43,15,4)
+    NoTabFocus = True
+    Text = ("Next")
+    Border = True
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(17,10,16,16)
+    Alignment = Align.Center
+  }
+}
