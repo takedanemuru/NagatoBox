@@ -1,9 +1,6 @@
 ' Gambas class file
 
-Property Read Icon As Picture
 Property Read Name As String
-
-Private Const IconsDirectory As String = "icons"
 
 Private $player As New MediaPlayer As "Player"
 Private $soundPaths As String[]
@@ -68,6 +65,12 @@ Public Sub Back()
     
 End
 
+Public Sub Kill()
+    
+    $player.Stop()
+    
+End
+
 Public Sub _new()
     
     $soundPaths = Dir(NagatoSounds.SoundsDirectory)
@@ -80,12 +83,6 @@ Public Sub Player_End()
     $player.Position = 0
     $player.Play()
     
-End
-
-Private Function Icon_Read() As Picture
-
-    Return Picture.Load(IconsDirectory &/ Me.Name & ".png")
-
 End
 
 Private Function Name_Read() As String

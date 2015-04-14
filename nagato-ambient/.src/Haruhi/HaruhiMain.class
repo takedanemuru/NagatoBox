@@ -4,15 +4,14 @@ Private $player As New NagatoPlayer
 
 Private Sub setIcon()
     
-    PictureBox1.Picture = $player.Icon
-    PictureBox1.Tooltip = $player.Name
-    
     Me.Title = "nagato-ambient: " & $player.Name
-    Me.Icon = $player.Icon
     
 End
 
 Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    Me.Center()
 
     $player.Play()
     setIcon()
@@ -30,5 +29,11 @@ Public Sub BackButton_Click()
 
     $player.Back()
     setIcon()
+
+End
+
+Public Sub Form_Close()
+
+    $player.Kill()
 
 End

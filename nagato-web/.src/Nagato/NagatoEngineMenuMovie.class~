@@ -7,6 +7,7 @@ Public Const _CategoryName As String = "Movie"
 Public Sub _InitializeChildMenus() ' override
     
     Me._AddChildMenu(("Youtube"), "!yt")
-    Me._AddChildMenu(("NicoNicoDoga"), "!nico")
+    Me._AddChildMenu(("NicoNico Doga"), "!nico")
+    Me._AddChildMenu(("DailyMotion"), "!dailymotion")
     
 End

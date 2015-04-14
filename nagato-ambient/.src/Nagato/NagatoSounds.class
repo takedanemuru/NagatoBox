@@ -16,9 +16,10 @@ Private Sub ensureSoundData()
     
     Dim yukiPath As String
     
-    For Each yukiPath In Dir("/usr/share/nagato-ambient/sounds")
+    For Each yukiPath In Dir("sounds")
         If Exist(Me.SoundsDirectory &/ yukiPath) Then Continue
-        Try Copy ("/usr/share/nagato-ambient/sounds" &/ yukiPath) To (Me.SoundsDirectory &/ yukiPath)
+        If File.Ext("sounds" &/ yukiPath) = "txt" Then Continue
+        Copy ("sounds" &/ yukiPath) To (Me.SoundsDirectory &/ yukiPath)
     Next
     
 End

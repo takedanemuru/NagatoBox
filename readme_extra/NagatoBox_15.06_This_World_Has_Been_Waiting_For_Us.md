@@ -4,6 +4,16 @@
 + Port To Gambas3 3.7
 + upload to gambas.org if possible
 
+## nagato-asx-player
+
++ rename
++ finish coding.
+
+## nagato-ambient
+
++ ~~reduce package size.~~
+    + ~~use small sound files instead of anoises'~~
+
 ## nagato-code-view
 
 + ~~new: reload menu~~
@@ -11,6 +21,11 @@
 ## nagato-dictionary
 
 + ~~open connection to DB explicitly (3.7)~~
+
+## nagato-files
+
++ sound preview
++ ~~graphical dialog with preview icons for "change background menu"~~
 
 ## nagato-lookup
 
@@ -39,8 +54,10 @@
 ## nagato-web
 
 + ~~"New Directory" ContextMenu for LeftPane~~
++ ~~add dailymotion search~~
 
 ## nagato-writer
 
 + ~~patch for jekyllnow~~
 + ~~parse metadata collectly~~
++ parse relative path more collectly

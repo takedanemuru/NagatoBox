@@ -8,5 +8,6 @@ Public Sub _InitializeChildMenus() ' override
     
     Me._AddChildMenu(("Youtube"), "!yt")
     Me._AddChildMenu(("NicoNico Doga"), "!nico")
+    Me._AddChildMenu(("dailymotion"), "!dailymotion")
     
 End

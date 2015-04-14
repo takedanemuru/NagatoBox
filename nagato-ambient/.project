@@ -2,7 +2,8 @@
 # Compiled with Gambas 3.7.0
 Title=nagato-ambient
 Startup=Kyon
-Version=0.2.0
+Icon=icons/weather-rain.png
+Version=0.4.0
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -19,11 +20,10 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex
 Url=takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-ambient-0.2.0
+PackageName=nagato-ambient-0.4.0
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Sound"
 Categories=ubuntu:"Audio;Music;Nagato"
 Groups=ubuntu:"sound"
-ExtraFiles=ubuntu:"sounds\t/usr/share/nagato-ambient"

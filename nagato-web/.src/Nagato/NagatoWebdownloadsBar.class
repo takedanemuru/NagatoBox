@@ -2,7 +2,6 @@
 
 Private $container As Container
 Private $downloadsHBox As HBox
-Private $timer As New Timer As "Timer"
 
 Private Sub initializeDownloadsHBox()
     

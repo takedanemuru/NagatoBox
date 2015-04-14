@@ -1,22 +1,29 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,50,50)
-  Background = &HCF9FFF&
-  { BackButton ToolButton
-    MoveScaled(4,43,15,4)
-    NoTabFocus = True
-    Text = ("Back")
-    Border = True
+  MoveScaled(0,0,34,40)
+  Background = &H1FFFC7&
+  Icon = Picture["icons/weather-rain.png"]
+  Arrangement = Arrange.Vertical
+  { Panel1 Panel
+    MoveScaled(2,10,36,18)
+    Expand = True
   }
-  { NextButton ToolButton
-    MoveScaled(31,43,15,4)
-    NoTabFocus = True
-    Text = ("Next")
-    Border = True
-  }
-  { PictureBox1 PictureBox
-    MoveScaled(17,10,16,16)
-    Alignment = Align.Center
+  { HBox1 HBox
+    MoveScaled(0,36,33,4)
+    { BackButton ToolButton
+      MoveScaled(0,0,15,4)
+      NoTabFocus = True
+      Expand = True
+      Text = ("Back")
+      Border = True
+    }
+    { NextButton ToolButton
+      MoveScaled(18,0,15,4)
+      NoTabFocus = True
+      Expand = True
+      Text = ("Next")
+      Border = True
+    }
   }
 }

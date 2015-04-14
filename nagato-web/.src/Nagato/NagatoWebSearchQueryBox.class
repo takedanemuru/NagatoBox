@@ -4,7 +4,6 @@ Inherits NagatoSearchEngines
 
 Property Read FixedWidth As Integer
 
-Private $container As Container
 Private $queryBox As ButtonBox
 Private $api As New NagatoDuckDuckGo
 
