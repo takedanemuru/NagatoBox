@@ -6,8 +6,8 @@
 
 ## nagato-asx-player
 
-+ rename
-+ finish coding.
++ ~~rename~~
++ ~~finish coding.~~
 
 ## nagato-ambient
 
@@ -61,3 +61,4 @@
 + ~~patch for jekyllnow~~
 + ~~parse metadata collectly~~
 + parse relative path more collectly
++ redesign menubar

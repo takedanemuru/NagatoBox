@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,49,14)
+  Icon = Picture["icons/button-play.png"]
+  Arrangement = Arrange.Fill
+  { TextLabel1 TextLabel
+    MoveScaled(3,5,41,6)
+    Font = Font["Bold"]
+    Background = &HCF9FFF&
+    Foreground = &HFFFFFF&
+    Alignment = Align.Center
+  }
+}

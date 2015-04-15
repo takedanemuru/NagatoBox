@@ -1,0 +1,81 @@
+' Gambas class file
+
+Private $xml As XmlDocument
+Private $stream As Process
+
+Private Function getPathWithDialog() As String
+    
+    Dialog.Path = User.Home
+    Dialog.Filter = ["*.asx", "asx file"]
+    
+    If Dialog.OpenFile(False) Then Return ""
+    
+    Return Dialog.Path
+    
+End
+
+Private Function getXmlPath() As String
+    
+    If MikuruArgs.Paths.Count > 0 Then
+        Return MikuruArgs.Paths[0]
+    Else
+        Return getPathWithDialog()
+    Endif
+    
+End
+
+Private Function setXmlDocument() As Boolean
+    
+    Dim yukiFilePath As String = getXmlPath()
+    
+    If yukiFilePath = "" Then
+        Return False
+    Else
+        $xml = New XmlDocument(yukiFilePath)
+        Return True
+    End If
+    
+End
+
+Private Function getStreamPath() As String
+    
+    Dim yukiXmlElements As XmlElement[]
+    
+    yukiXmlElements = $xml.GetElementsByTagName("REF")
+
+    Return yukiXmlElements[0].Attributes["HREF"]
+    
+Catch
+    Return ""
+    
+End
+
+Private Function play(argStreamPath As String) 
+
+    If argStreamPath Not Begins "mms://" Then
+        TextLabel1.Text = ("YUKI.N > Some error caused.")
+    Else
+        $stream = Exec ["mplayer", argStreamPath]
+        TextLabel1.Text = Subst$(("now playing: &1"), argStreamPath)
+    End If
+
+End
+
+Public Sub Form_Show()
+
+    If Not setXmlDocument() Then
+        Me.Close()
+    Else
+        NagatoSettings.LoadFormSettings(Me)
+        play(getStreamPath())
+    End If
+
+End
+
+Public Sub Form_Close()
+
+    Try $stream.Kill()
+
+    NagatoSettings.SaveFormSettings(Me)
+
+End

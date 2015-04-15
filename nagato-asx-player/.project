@@ -1,0 +1,32 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.7.0
+Title=nagato-asx-player
+Startup=Kyon
+Icon=icons/button-play.png
+Version=0.1.2
+Component=gb.args
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Component=gb.xml
+Description="asx file player"
+Authors="takeda.nemuru<takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=Integrated Data Thought Entity
+Address=takeda.nemuru@yandex
+Url=takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-asx-player-0.1.2
+CreateEachDirectory=1
+MimeTypes="audio/x-ms-asx"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Sound"
+Categories=ubuntu:"Audio;Nagato"
+Groups=ubuntu:"sound"
+ExtraDependencies=ubuntu:"mplayer\t\t"
