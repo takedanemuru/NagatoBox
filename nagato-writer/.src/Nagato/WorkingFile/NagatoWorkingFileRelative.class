@@ -17,9 +17,9 @@ End
 
 Private Sub convert(argSourcePath As String, argTargetPath As String)
     
-    Dim yukiCss As String = Subst$("--css=&1", NagatoCss.Get())
+    Dim yukiCss As String = Subst$("--css=&1", NagatoValueListCssPreview.Current)
     
-    Exec ["pandoc", "-f", NagatoSettings.Syntax, "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    Exec ["pandoc", "-f", NagatoSettingsView.Syntax, "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
     
 End
 

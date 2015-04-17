@@ -6,7 +6,6 @@ Property TabSize As Integer
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
 Property PreviewCss As Integer
-Property Syntax As String
 
 Private Const DefaultTabSize As Integer = 4
 
@@ -64,6 +63,8 @@ Private Sub TabSize_Write(Value As Integer)
     Me._$settings["editor/tab_size"] = Value
     Me._$settings.Save()
 
+    Raise RequestReload
+
 End
 
 Private Function LivePreview_Read() As Boolean
@@ -98,18 +99,5 @@ Private Sub PreviewCss_Write(Value As Integer)
         Me._$settings.Save()
         Raise RequestReload
     End If
-
-End
-
-Private Function Syntax_Read() As String
-
-    Return Me._$settings["markdown/syntax", "markdown_github"]
-
-End
-
-Private Sub Syntax_Write(Value As String)
-
-    Me._$settings["markdown/syntax"] = Value
-    Me._$settings.Save()
 
 End

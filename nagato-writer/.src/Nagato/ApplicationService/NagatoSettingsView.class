@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property SyntaxIndex As Integer
+Property Read Syntax As String
+Property CssIndex As Integer
+
+Event RequestReload
+
+Private Function Syntax_Read() As String
+
+    Return NagatoValueListSyntax.Values[Me.SyntaxIndex]
+
+End
+
+Private Function SyntaxIndex_Read() As Integer
+
+    Return Me._$settings["markdown/syntax_index", NagatoValueListSyntax.GitHub]
+
+End
+
+Private Sub SyntaxIndex_Write(Value As Integer)
+
+    If Me._$settings["markdown/syntax_index"] <> Value Then
+        Me._$settings["markdown/syntax_index"] = Value
+        Me._$settings.Save()
+        Raise RequestReload
+    End If
+
+End
+
+Private Function CssIndex_Read() As Integer
+
+    Return Me._$settings["preview/css", NagatoValueListCssPreview.StyleLight] 
+
+End
+
+Private Sub CssIndex_Write(Value As Integer)
+
+    If Me._$settings["preview/css"] <> Value Then
+        Me._$settings["preview/css"] = Value
+        Me._$settings.Save()
+        Raise RequestReload
+    End If
+
+End

@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Public Const Title As String = ""
+
+Public _$comboBox As ComboBox
+Public _$observer As Observer
+
+Private $label As Label
+
+Private Sub addLabel()
+    
+    $label = New Label(Me._$parentContainer)
+    
+    With $label
+        .Text = Me.Title
+        .AutoResize = True
+    End With
+    
+End
+
+Public Sub _AddComboBox() ' virtual MUST be overridden
+    
+    
+    
+End
+
+Public Sub _OnClick() ' virtual SHOULD be overridden
+    
+    
+    
+End
+
+Public Sub _initialize() ' override
+    
+    addLabel()
+    Me._AddComboBox()
+    Me._$observer = New Observer(NagatoSettingsView) As "Asakura"
+    
+End
+
+Public Sub MenuComboBox_Click()
+    
+    Object.Lock(Me._$observer)
+        Me._OnClick()
+    Object.Unlock(Me._$observer)
+    
+End

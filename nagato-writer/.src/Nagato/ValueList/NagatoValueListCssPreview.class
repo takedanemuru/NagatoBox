@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoValueListCss
+
+Public _$count As Integer = 3
+Public _$values As Variant[] 
+Public _$names As String[] = [("GitHub Style"), ("Light Theme"), ("Dark Theme")]
+
+Private $themes As String[] = ["github.css", "light_theme.css", "dark_theme.css"]
+
+Private Sub ensureFile(argDirectory As String, argFile As String)
+    
+    Dim yukiSourcePath As String = Subst$("Css/&1", argFile)
+    Dim yukiTargetPath As String = argDirectory &/ argFile
+    
+    If Not Exist(yukiTargetPath) Then 
+        Copy yukiSourcePath To yukiTargetPath
+    Endif
+    
+    Me._$values.Add(yukiTargetPath)
+    
+End
+
+Private Sub ensureThemes()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $themes.Max
+        ensureFile(Me.Directory, $themes[yukiIndex])
+    Next
+    
+End
+
+Public Function _GetCurrent() As String
+    
+    Return Me._$values[NagatoSettingsView.CssIndex]
+    
+End
+
+Public Sub EnsureCssData()
+    
+    Me._$values = New Variant[]
+    
+    Me._EnsureDirectory(Me.Directory)
+    Me._EnsureDirectory(Me.ImageDirectory)
+    
+    ensureThemes()
+    
+    Try Copy "Css/dirty-shade.png" To Me.ImageDirectory &/ "dirty-shade.png" 
+    Try Copy "Css/para.png" To Me.ImageDirectory &/ "para.png"
+    
+End

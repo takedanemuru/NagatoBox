@@ -37,7 +37,8 @@ Public Sub _initialize() ' override
     addButton("Save As", MikuruSignal.FileSaveAs, "documents")
         addSeparator()
     addButton("Preview", MikuruSignal.ViewPreview, "search")
-    addButton("Publish PDF", MikuruSignal.PublishPdf, "book-open-bookmark")
+    'addButton("Publish PDF", MikuruSignal.PublishPdf, "book-open-bookmark")
+    Object.New("NagatoComboBoxMenuSyntax", [Me._$parentContainer])
     
 End
 

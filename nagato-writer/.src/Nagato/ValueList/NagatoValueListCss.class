@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoValueList
+
+Property Read Directory As String
+Property Read ImageDirectory As String
+Property Read Current As String
+
+Public Enum StyleGitHub, StyleLight, StyleDark
+
+Public Function _GetCurrent() As String ' virtual.
+    
+    Return ""
+    
+End
+
+Public Sub _EnsureDirectory(argDirectory As String)
+    
+    If Not Exist(argDirectory) Then Mkdir argDirectory
+    
+End
+
+Private Function Directory_Read() As String
+
+    Return User.Home &/ ".nagato-writer"
+
+End
+
+Private Function ImageDirectory_Read() As String
+
+    Return Me.Directory &/ "images"
+
+End
+
+Private Function Current_Read() As String
+
+    Return Me._GetCurrent()
+
+End

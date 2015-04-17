@@ -4,26 +4,25 @@ Inherits NagatoSubMenu
 
 Private Function getIconName(argTag As Integer) As Variant
     
-    If argTag = NagatoSettings.PreviewCss Then
-        Return "button-check"
-    Else
-        Return Null
-    Endif
+    Debug argTag
+    Debug NagatoSettingsView.CssIndex
+    
+    Return IIf(argTag = NagatoSettingsView.CssIndex, "button-check", Null)
     
 End
 
 Public Sub _AddChildMenus()
     
-    With NagatoCss
+    With NagatoValueListCssPreview
         Me._AddMenu("GitHub Style", .StyleGitHub, getIconName(.StyleGitHub))
-        Me._AddMenu("Light Theme", .StyleLight, getIconName(.StyleLight))
         Me._AddMenu("Dark Theme", .StyleDark, getIconName(.StyleDark))
+        Me._AddMenu("Light Theme", .StyleLight, getIconName(.StyleLight))
     End With
     
 End
 
 Public Sub MenuItem_Click()
     
-    NagatoSettings.PreviewCss = Last.Tag
+    NagatoSettingsView.CssIndex = Last.Tag
     
 End

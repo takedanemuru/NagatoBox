@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoComboBoxMenu
+
+Public Const Title As String = ("Syntax: ")
+
+Public Sub _AddComboBox()
+    
+    Me._$comboBox = New ComboBox(Me._$parentContainer) As "MenuComboBox"
+    
+    With Me._$comboBox
+        .ReadOnly = True
+        .List = NagatoValueListSyntax.Names
+        .Index = NagatoSettingsView.SyntaxIndex
+        .Width = NagatoValueListSyntax.NamesMaxWidth 
+    End With
+    
+End
+
+Public Sub _OnClick()
+    
+    NagatoSettingsView.SyntaxIndex = Me._$comboBox.Index
+    
+End
+
+Public Sub Asakura_RequestReload()
+    
+    Me._$comboBox.Index = NagatoSettingsView.SyntaxIndex
+    
+End

@@ -29,7 +29,7 @@ Public Sub _initialize() ' override
     
     Dim yukiObject As Object
     
-    addButton("New", MikuruSignal.FileNewMarkdownGitHub, "document")
+    addButton("New", MikuruSignal.FileNewMarkdown, "document")
     yukiObject = New NagatoRecentFilesButton(Me._$parentContainer) As "TFEI"
         addSeparator()
     addButton("Open", MikuruSignal.FileOpen, "folder")
@@ -38,6 +38,7 @@ Public Sub _initialize() ' override
         addSeparator()
     addButton("Preview", MikuruSignal.ViewPreview, "search")
     addButton("Publish PDF", MikuruSignal.PublishPdf, "book-open-bookmark")
+    Object.New("NagatoComboBoxMenuSyntax", [Me._$parentContainer])
     
 End
 

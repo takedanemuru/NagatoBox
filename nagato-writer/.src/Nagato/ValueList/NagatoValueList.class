@@ -1,0 +1,50 @@
+' Gambas class file
+
+Create Static
+
+Property Read Values As Variant[]
+Property Read Names As String[]
+Property Read Count As Integer
+Property Read Max As Integer
+Property Read NamesMaxWidth As Integer
+
+Public _$count As Integer = 0
+Public _$values As Variant[]
+Public _$names As String[]
+
+Private Function Values_Read() As Variant[]
+
+    Return Me._$values
+
+End
+
+Private Function Names_Read() As String[]
+
+    Return Me._$names
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return Me._$count
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return Me._$count - 1
+
+End
+
+Private Function NamesMaxWidth_Read() As Integer
+
+    Dim yukiWidth As Integer
+    Dim yukiName As String
+    
+    For Each yukiName In Me._$names
+        yukiWidth = Max(yukiWidth, Application.Font.RichTextWidth(yukiName))
+    Next
+
+    Return yukiWidth + 24
+
+End

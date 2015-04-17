@@ -5,6 +5,7 @@ Public Sub Main()
     NagatoArgs.Parsing()
     
     NagatoCss.EnsureCssData()
+    NagatoValueListCssPreview.EnsureCssData()
     
     HaruhiMain.Show()
     
