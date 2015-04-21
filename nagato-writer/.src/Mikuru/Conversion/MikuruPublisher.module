@@ -62,10 +62,10 @@ Private Sub toEpub()
 
     HaruhiEpubMetadata.ShowDialog()
 
-    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoValueListCssPreview.Current, "-S", yukiSource, "-o", yukiTarget] Wait
     ' Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
     ' 
-    ' showMessage(yukiTarget)
+    showMessage(yukiTarget)
     
 End
 

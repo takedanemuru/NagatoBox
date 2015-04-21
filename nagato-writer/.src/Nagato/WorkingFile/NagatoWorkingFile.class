@@ -1,0 +1,26 @@
+' Gambas class file
+
+Property Read WorkingPath As String
+Property Read WorkingUrl As String
+
+Public _$workingPath As String
+
+Public Sub _ResetWorkingPath()
+    
+    If Exist(Me._$workingPath) Then Kill Me._$workingPath ' kill OLD me._$workingPath
+    Me._$workingPath = Temp$() & ".html"
+    If Exist(Me.WorkingPath) Then Kill Me.WorkingPath ' kill NEW me._$workingPath if possible
+    
+End
+
+Private Function WorkingPath_Read() As String
+
+    Return Me._$workingPath
+
+End
+
+Private Function WorkingUrl_Read() As String
+
+    Return "file://" & Url$(Me._$workingPath)
+
+End

@@ -24,7 +24,7 @@
 
 ## nagato-files
 
-+ sound preview
++ ~~sound preview~~
 + ~~graphical dialog with preview icons for "change background menu"~~
 
 ## nagato-lookup

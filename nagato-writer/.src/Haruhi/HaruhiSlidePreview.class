@@ -14,7 +14,7 @@ Private Function getCommand() As String[]
     Dim yukiCommand As String[] = ["pandoc", "-t"]
     
     With yukiCommand
-        .Insert(["dzslides", Subst$("--include-after-body=&1", NagatoCss.GetSlideCss())])
+        .Insert(["dzslides", Subst$("--include-after-body=&1", NagatoValueListCssSlide.Current)])
         .Insert(["--slide-level", NagatoSettingsSlide.SectionLevel])
         .Insert(["-s", MikuruHtmlConverter.WorkingFileAbsolute])
         .Insert(["-o", $htmlPath])

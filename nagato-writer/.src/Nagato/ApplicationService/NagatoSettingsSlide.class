@@ -3,14 +3,11 @@
 Inherits NagatoSettingsCore
 
 Property Theme As Integer
-Property Read ThemeName As String
 Property SectionLevel As Integer
-
-Public Enum ThemeDark, ThemeLight
 
 Private Function Theme_Read() As Integer
 
-    Return Me._$settings["slide/theme", Me.ThemeLight]
+    Return Me._$settings["slide/theme", NagatoValueListCss.StyleLight]
 
 End
 
@@ -18,17 +15,6 @@ Private Sub Theme_Write(Value As Integer)
 
     Me._$settings["slide/theme"] = Value
     Me._$settings.Save()
-
-End
-
-Private Function ThemeName_Read() As String
-
-    Select Me.Theme
-        Case Me.ThemeDark
-            Return "Dark Theme"
-        Case Me.ThemeLight
-            Return "Light Theme"
-    End Select
 
 End
 

@@ -4,9 +4,6 @@ Inherits NagatoSubMenu
 
 Private Function getIconName(argTag As Integer) As Variant
     
-    Debug argTag
-    Debug NagatoSettingsView.CssIndex
-    
     Return IIf(argTag = NagatoSettingsView.CssIndex, "button-check", Null)
     
 End

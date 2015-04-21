@@ -4,19 +4,18 @@ Inherits NagatoSubMenu
 
 Private Function getIcon(argTheme As Integer) As Variant
     
-    If argTheme = NagatoSettingsSlide.Theme Then
-        Return "button-check"
-    Else
-        Return Null
-    Endif
+    Return IIf(argTheme = NagatoSettingsSlide.Theme, "button-check", Null)
     
 End
 
 Public Sub _AddChildMenus()
     
-    With NagatoSettingsSlide
-        Me._AddMenu(("Light"), .ThemeLight, getIcon(.ThemeLight))
-        Me._AddMenu(("Dark"), .ThemeDark, getIcon(.ThemeDark))
+    Dim yukiIndex As Integer
+    
+    With NagatoValueListCssSlide
+        For yukiIndex = 0 To .Max
+            Me._AddMenu(.Names[yukiIndex], yukiIndex, getIcon(yukiIndex))
+        Next
     End With
 
 End

@@ -4,9 +4,8 @@ Public Sub Main()
     
     NagatoArgs.Parsing()
     
-    NagatoCss.EnsureCssData()
-    NagatoValueListCssPreview.EnsureCssData()
-    
+    NagatoValueListCss.EnsureCssData()
+
     HaruhiMain.Show()
     
     If NagatoArgs.Path Then HaruhiMain.SetPath(NagatoArgs.Path)

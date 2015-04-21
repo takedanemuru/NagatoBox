@@ -4,6 +4,7 @@ Inherits NagatoSignal
 
 Private $container As Container
 Private $switch As NagatoChmodSwitch
+Private $audioPreview As NagatoAudioPreview
 Private $propertyPainter As NagatoPropertyPainterFacade
 
 Private Sub initializeContainer(argContainer As Container)
@@ -21,6 +22,7 @@ Public Sub SetProperty(argPath As String)
     If Exist(argPath) Then
         $propertyPainter.SetProperty(argPath)
         $switch.Set(argPath)
+        $audioPreview.Set(argPath)
     End If
 
 End
@@ -38,6 +40,7 @@ Public Sub _new(argContainer As Container)
     initializeContainer(argContainer)
     $propertyPainter = New NagatoPropertyPainterFacade($container, Color.Pink)
     $switch = New NagatoChmodSwitch($container) As "Switch"
+    $audioPreview = New NagatoAudioPreview($container) As "AudioPreview"
     
 End
 

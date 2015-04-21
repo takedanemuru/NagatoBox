@@ -8,15 +8,53 @@ Property Read Current As String
 
 Public Enum StyleGitHub, StyleLight, StyleDark
 
+Public _$themes As String[]
+
+Private Sub ensureFile(argDirectory As String, argFile As String)
+    
+    Dim yukiSourcePath As String = Subst$("Css/&1", argFile)
+    Dim yukiTargetPath As String = argDirectory &/ argFile
+    
+    If Not Exist(yukiTargetPath) Then 
+        Copy yukiSourcePath To yukiTargetPath
+    Endif
+    
+    Me._$values.Add(yukiTargetPath)
+    
+End
+
+Public Sub _EnsureThemes()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Me._$themes.Max
+        ensureFile(Me.Directory, Me._$themes[yukiIndex])
+    Next
+    
+End
+
 Public Function _GetCurrent() As String ' virtual.
     
     Return ""
     
 End
 
-Public Sub _EnsureDirectory(argDirectory As String)
+Private Sub ensureDirectory(argDirectory As String)
     
     If Not Exist(argDirectory) Then Mkdir argDirectory
+    
+End
+
+Public Sub EnsureCssData()
+    
+    ensureDirectory(Me.Directory)
+    ensureDirectory(Me.ImageDirectory)
+    
+    Try Copy "Css/dirty-shade.png" To Me.ImageDirectory &/ "dirty-shade.png" 
+    Try Copy "Css/para.png" To Me.ImageDirectory &/ "para.png"
+    
+    NagatoValueListCssPreview.EnsureCssData()
+    NagatoValueListCssSlide.EnsureCssData()
     
 End
 

@@ -18,7 +18,7 @@ End
 Private Sub toPdf()
     
     Dim yukiTarget As String = getPathToSave("pdf")
-    Dim yukiSource As String = MikuruHtmlConverter.TempFile
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
     
     If Not yukiTarget Then Return
 
@@ -31,7 +31,7 @@ End
 Private Sub toHtml()
     
     Dim yukiTarget As String = getPathToSave("html")
-    Dim yukiSource As String = MikuruHtmlConverter.TempFile
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
     
     Copy yukiSource To yukiTarget
     
@@ -42,7 +42,7 @@ End
 Private Sub toOdt()
     
     Dim yukiTarget As String = getPathToSave("odt")
-    Dim yukiSource As String = MikuruHtmlConverter.TempFileRelative
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
 
     If Not yukiTarget Then Return
 
@@ -55,14 +55,14 @@ End
 Private Sub toEpub()
     
     Dim yukiTarget As String = getPathToSave("epub")
-    Dim yukiSource As String = MikuruHtmlConverter.TempFileRelative
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
     Dim yukiCover As String = "--epub-cover-image=" & User.Home &/ "headphones_x.png"
     
     If Not yukiTarget Then Return
 
     HaruhiEpubMetadata.ShowDialog()
 
-    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
+    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoValueListCssPreview.Current, "-S", yukiSource, "-o", yukiTarget] Wait
     ' Exec ["pandoc", "-t", "epub3", "-c", NagatoCss.Get(), "-S", yukiSource, "-o", yukiTarget] Wait
     ' 
     ' showMessage(yukiTarget)

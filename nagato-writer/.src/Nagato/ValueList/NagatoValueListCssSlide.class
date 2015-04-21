@@ -6,7 +6,7 @@ Public _$count As Integer = 3
 Public _$values As Variant[] 
 Public _$names As String[] = [("GitHub Style"), ("Light Theme"), ("Dark Theme")]
 
-Public _$themes As String[] = ["github.css", "light_theme.css", "dark_theme.css"]
+Public _$themes As String[] = ["github_slide.css", "light_slide.css", "nagato_slide.css"]
 
 Public Sub EnsureCssData()
     
@@ -17,6 +17,6 @@ End
 
 Public Function _GetCurrent() As String
     
-    Return Me._$values[NagatoSettingsView.CssIndex]
+    Return Me._$values[NagatoSettingsSlide.Theme]
     
 End
