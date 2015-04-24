@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoValueList
+
+Public Enum SizeTab, Size2, Size4, Size8
+
+Public _$count As Integer = 4
+Public _$values As Variant[] = [0, 2, 4, 8]
+Public _$names As String[] = [("Tab"), ("2"), ("4"), ("8")]

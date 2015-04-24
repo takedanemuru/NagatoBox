@@ -42,7 +42,7 @@ End
 Public Sub _Initialize()
     
     $textArea = New NagatoTextArea(Me._$parentContainer) As "TFEI"
-    $observer = New Observer(NagatoSettings) As "Asakura"
+    $observer = New Observer(NagatoSettingsView) As "Asakura"
 
 End
 

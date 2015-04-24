@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Add(argParent As Container)
+    
+    Dim yukiSeparator As Separator
+    
+    yukiSeparator = New Separator(argParent)
+    
+End

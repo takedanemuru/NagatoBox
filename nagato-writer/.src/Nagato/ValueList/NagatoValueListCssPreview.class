@@ -11,7 +11,7 @@ Public _$themes As String[] = ["github.css", "light_theme.css", "dark_theme.css"
 Public Sub EnsureCssData()
     
     Me._$values = New Variant[]
-    Me._EnsureThemes()
+    Me._EnsureThemes(NagatoValueListCssPreview.Max)
     
 End
 

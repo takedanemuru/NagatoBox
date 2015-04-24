@@ -5,6 +5,8 @@ Inherits NagatoSettingsCore
 Property SyntaxIndex As Integer
 Property Read Syntax As String
 Property CssIndex As Integer
+Property Read TabSize As Integer
+Property TabSizeIndex As Integer
 
 Event RequestReload
 
@@ -43,5 +45,27 @@ Private Sub CssIndex_Write(Value As Integer)
         Me._$settings.Save()
         Raise RequestReload
     End If
+
+End
+
+Private Function TabSizeIndex_Read() As Integer
+
+    Return Me._$settings["editor/tab_size_index", NagatoValueListTabSize.Size4]
+
+End
+
+Private Sub TabSizeIndex_Write(Value As Integer)
+
+    If Me._$settings["editor/tab_size_index"] <> Value Then
+        Me._$settings["editor/tab_size_index"] = Value
+        Me._$settings.Save()
+        Raise RequestReload
+    End If
+
+End
+
+Private Function TabSize_Read() As Integer
+
+    Return NagatoValueListTabSize.Values[Me.TabSizeIndex]
 
 End

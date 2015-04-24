@@ -14,17 +14,17 @@ End
 Private Sub replaceTab()
     
      Stop Event
-     Me._$widget.Insert(Space$(NagatoSettings.TabSize))
+     Me._$widget.Insert(Space$(NagatoSettingsView.TabSize))
     
 End
 
 Private Sub replaceBackspace()
     
-    Dim yukiPosition As Integer = (Me._$widget.Pos - NagatoSettings.TabSize + 1)
+    Dim yukiPosition As Integer = (Me._$widget.Pos - NagatoSettingsView.TabSize + 1)
     
-    If String.Mid(Me._$widget.Text, yukiPosition, NagatoSettings.TabSize) = Space$(NagatoSettings.TabSize) Then
+    If String.Mid(Me._$widget.Text, yukiPosition, NagatoSettingsView.TabSize) = Space$(NagatoSettingsView.TabSize) Then
         Stop Event
-        Me._$widget.Select(yukiPosition - 1, NagatoSettings.TabSize)
+        Me._$widget.Select(yukiPosition - 1, NagatoSettingsView.TabSize)
         Me._$widget.Selection.Text = ""
     End If
     
@@ -36,7 +36,7 @@ End
 Public Sub Asakura_KeyPress()
 
     If Key.Control Then keyEventWithControl()
-    If Key.Code = Key.Tab And If NagatoSettings.TabSize <> 0 Then replaceTab()
-    If Key.Code = Key.BackSpace And If NagatoSettings.TabSize <> 0 Then replaceBackspace()
+    If Key.Code = Key.Tab And If NagatoSettingsView.TabSize <> 0 Then replaceTab()
+    If Key.Code = Key.BackSpace And If NagatoSettingsView.TabSize <> 0 Then replaceBackspace()
 
 End

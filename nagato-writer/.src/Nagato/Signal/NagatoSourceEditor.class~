@@ -51,7 +51,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     If argEvent > (MikuruSignal.FileNone + 100) And If Not ensureSaved() Then Return
     
     Select Case argEvent
-        Case MikuruSignal.FileNewMarkdownGitHub
+        Case MikuruSignal.FileNewMarkdown
             $textArea.Text = $fileHandler.New()
         Case MikuruSignal.FileOpenPath
             $textArea.Text = $fileHandler.SetPath(argArgs[0])

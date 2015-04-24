@@ -11,7 +11,7 @@ Public _$themes As String[] = ["github_slide.css", "light_slide.css", "nagato_sl
 Public Sub EnsureCssData()
     
     Me._$values = New Variant[]
-    Me._EnsureThemes()
+    Me._EnsureThemes(NagatoValueListCssSlide.Max)
     
 End
 

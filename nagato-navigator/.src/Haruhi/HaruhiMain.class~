@@ -60,6 +60,8 @@ Public Sub Form_Open()
     $pager = New NagatoPager(Me) As "Pager"
     $clock = New NagatoClock(Me) As "Clock"
     
+    Debug X11Systray.Count
+    
     X11Systray.Show($systrayDrawingArea.Id)
     
 End

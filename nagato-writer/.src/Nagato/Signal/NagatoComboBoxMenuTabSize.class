@@ -2,7 +2,7 @@
 
 Inherits NagatoComboBoxMenu
 
-Public Const Title As String = (" Syntax: ")
+Public Const Title As String = (" Tab Size: ")
 
 Public Sub _AddComboBox()
     
@@ -10,21 +10,21 @@ Public Sub _AddComboBox()
     
     With Me._$comboBox
         .ReadOnly = True
-        .List = NagatoValueListSyntax.Names
-        .Index = NagatoSettingsView.SyntaxIndex
-        .Width = NagatoValueListSyntax.NamesMaxWidth 
+        .List = NagatoValueListTabSize.Names
+        .Index = NagatoSettingsView.TabSizeIndex
+        .Width = NagatoValueListTabSize.NamesMaxWidth 
     End With
     
 End
 
 Public Sub _OnClick()
     
-    NagatoSettingsView.SyntaxIndex = Me._$comboBox.Index
+    NagatoSettingsView.TabSizeIndex = Me._$comboBox.Index
     
 End
 
 Public Sub Asakura_RequestReload()
     
-    Me._$comboBox.Index = NagatoSettingsView.SyntaxIndex
+    Me._$comboBox.Index = NagatoSettingsView.TabSizeIndex
     
 End

@@ -17,28 +17,20 @@ Private Sub addButton(argText As String, argTag As Integer, Optional argIconName
     
 End
 
-Private Sub addSeparator()
-    
-    Dim yukiSeparator As Separator
-    
-    yukiSeparator = New Separator(Me._$parentContainer)
-    
-End
-
 Public Sub _initialize() ' override
     
     Dim yukiObject As Object
     
     addButton("New", MikuruSignal.FileNewMarkdown, "document")
     yukiObject = New NagatoRecentFilesButton(Me._$parentContainer) As "TFEI"
-        addSeparator()
+        MikuruSeparator.Add(Me._$parentContainer)
     addButton("Open", MikuruSignal.FileOpen, "folder")
     addButton("Save", MikuruSignal.FileSave, "hard-drive-download")
     addButton("Save As", MikuruSignal.FileSaveAs, "documents")
-        addSeparator()
-    addButton("Preview", MikuruSignal.ViewPreview, "search")
-    'addButton("Publish PDF", MikuruSignal.PublishPdf, "book-open-bookmark")
+        MikuruSeparator.Add(Me._$parentContainer)
     Object.New("NagatoComboBoxMenuSyntax", [Me._$parentContainer])
+    Object.New("NagatoComboBoxMenuTabSize", [Me._$parentContainer])
+    Object.New("NagatoComboBoxMenuCss", [Me._$parentContainer])
     
 End
 

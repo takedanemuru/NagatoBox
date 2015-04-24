@@ -23,11 +23,11 @@ Private Sub ensureFile(argDirectory As String, argFile As String)
     
 End
 
-Public Sub _EnsureThemes()
+Public Sub _EnsureThemes(argMax As Integer)
     
     Dim yukiIndex As Integer
     
-    For yukiIndex = 0 To Me._$themes.Max
+    For yukiIndex = 0 To argMax
         ensureFile(Me.Directory, Me._$themes[yukiIndex])
     Next
     

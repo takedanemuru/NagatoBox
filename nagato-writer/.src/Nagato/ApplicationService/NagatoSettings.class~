@@ -5,7 +5,6 @@ Inherits NagatoSettingsCore
 Property TabSize As Integer
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
-Property PreviewCss As Integer
 
 Private Const DefaultTabSize As Integer = 4
 
@@ -83,21 +82,5 @@ End
 Private Function RecentFiles_Read() As String[]
 
     Return MikuruPaths.RemoveInvalid(Me._$settings["file/recent", Null])
-
-End
-
-Private Function PreviewCss_Read() As Integer
-
-    Return Me._$settings["preview/css", NagatoCss.StyleLight] 
-
-End
-
-Private Sub PreviewCss_Write(Value As Integer)
-
-    If Me._$settings["preview/css"] <> Value Then
-        Me._$settings["preview/css"] = Value
-        Me._$settings.Save()
-        Raise RequestReload
-    End If
 
 End
