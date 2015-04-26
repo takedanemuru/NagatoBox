@@ -87,12 +87,31 @@ Public Function FetchTags(argPath As String, argTags As Variant[]) As Boolean 'r
                 yukiResult[.ColumnAlbum] = argTags[2]
                 yukiFlag = True
             End If
-            If yukiResult[.ColumnDuration] <> argTags[3] Then
-                yukiResult[.ColumnDuration] = argTags[3]
-                yukiFlag = True
-            End If
             yukiResult.Update()
         Me._$connection.Commit()
+    End With
+    
+    Return yukiFlag
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    Return False
+    
+End
+
+Public Function FetchDuration(argPath As String, argDuration As Float) As Boolean
+    
+    Dim yukiResult As Result
+    Dim yukiFlag As Boolean = False
+    
+    With NagatoDBMedia
+        Me._$connection.Begin()
+            yukiResult = Me._$connection.Edit(.TableLibrary, "path = &1", argPath)
+            yukiResult[.ColumnDuration] = argDuration
+            yukiResult.Update()
+        Me._$connection.Commit()
+        yukiFlag = True
     End With
     
     Return yukiFlag

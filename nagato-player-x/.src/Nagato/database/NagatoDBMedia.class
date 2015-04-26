@@ -149,6 +149,16 @@ Public Sub FetchTags(argPath As String, argTags As Variant[]) As Boolean ' retur
     
 End
 
+Public Function FetchDuration(argPath As String, argDuration As Float) As Boolean
+    
+    If Me.HasLibrary(argPath) Then
+        Return $tableLibrary.FetchDuration(argPath, argDuration)
+    End If
+    
+    Return False
+    
+End
+
 ' Public Sub SetLibrary(argPath As String, Optional argTitle As String, Optional argArtist As String, Optional argAlbum As String)
 '     
 '     Dim yukiResult As Result 

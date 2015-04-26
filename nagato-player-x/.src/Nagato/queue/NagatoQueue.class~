@@ -16,7 +16,7 @@ Property Read Album As String
 
 Property Read ProgressRate As Float
 Property Read ProgressText As String
-Property Read SoftwareVolume As Float
+Property SoftwareVolume As Float
 
 Private $player As New NagatoPlayer As "Player"
 Private $musicList As NagatoMusicList 
@@ -177,12 +177,6 @@ Public Sub SetProgress(argProgress As Float) ' argFloat must be between 0 to 1
     
 End
 
-Public Sub StartRadio()
-    
-    Try $player.Stop()
-    
-End
-
 Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
     If $musicList.Count = 0 Then Return
@@ -207,15 +201,21 @@ Public Sub Player_State()
     
 End
 
+Public Sub Player_FetchDuration(argDuration As Float)
+    
+    NagatoDBMedia.FetchDuration(MikuruUrlDecode(Me.CurrentPath), argDuration)
+    
+End
+
 Public Sub Player_FetchTags(argTags As Variant[])
     
     Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
     
-    NagatoDBMedia.FetchTags(yukiPath, argTags)
+    If Not NagatoDBMedia.FetchTags(yukiPath, argTags) Then Return
     
-    $musicList.SetTag("Title", MikuruId3TagInfo.GetTitle(yukiPath))
-    $musicList.SetTag("Artist", MikuruId3TagInfo.GetArtist(yukiPath))
-    $musicList.SetTag("Album", MikuruId3TagInfo.GetAlbum(yukiPath))
+    $musicList.SetTag("Title", argTags[0])
+    $musicList.SetTag("Artist", argTags[1])
+    $musicList.SetTag("Album", argTags[2])
     
     Raise TagChanged
     
@@ -332,5 +332,11 @@ End
 Private Function SoftwareVolume_Read() As Float
 
     Return $player.SoftwareVolume
+
+End
+
+Private Sub SoftwareVolume_Write(Value As Float)
+
+    $player.SoftwareVolume = Value
 
 End

@@ -1,0 +1,15 @@
+' Gambas class file
+
+Private $lastDuration As Float
+
+Public Sub _call(argDuration As Float) As Boolean
+    
+    If argDuration = 0 Then Return False
+    
+    If Round(argDuration, -2) = $lastDuration Then Return False
+    
+    $lastDuration = Round(argDuration, -2)
+    
+    Return True
+    
+End

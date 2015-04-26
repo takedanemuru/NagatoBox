@@ -7,10 +7,12 @@ Property Read State As Integer
 
 Private $player As New MediaPlayer As "Player"
 Private $lastFetched As Date
+Private $durationFetcher As New NagatoDurationFetcher
 
 Event MusicEnd
 Event State
 Event FetchTags(argTags As Variant[])
+Event FetchDuration(argDuration As Float)
 
 Private Function getDuration(Optional argRate As Float = 0) As String
     
@@ -61,7 +63,6 @@ Public Sub Play(Optional argPosition As Float)
         Try $player.URL = NagatoQueue.CurrentPath
     End If
     
-    'If argPosition Then $player.Position = argPosition
     $player.Play()
     
 Catch
@@ -107,23 +108,20 @@ Public Sub Player_Tag(argTagList As MediaTagList)
     Dim yukiTags As New Variant[]
     
     If ($lastFetched = Null) Or If DateDiff($lastFetched, Now(), gb.Second) > 2 Then 
-        ' Debug argTagList["title"]
-        ' Debug argTagList["artist"]
-        ' Debug argTagList["album"]
-        ' Debug $player.Duration
-
         yukiTags.Add(argTagList["title"])
         yukiTags.Add(argTagList["artist"])
         yukiTags.Add(argTagList["album"])
-        yukiTags.Add($player.Duration)
         Raise FetchTags(yukiTags)
-        
         $lastFetched = Now()
     End If
     
 End
 
 Private Function ProgressRate_Read() As Float
+
+    Debug $durationFetcher($player.Duration)
+
+    'If $durationFetcher($player.Duration) Then Raise FetchDuration($player.Duration)
 
     Return ($player.Position / $player.Duration)
 
