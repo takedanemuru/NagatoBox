@@ -29,6 +29,30 @@ Public Sub ShiftToNormalMode()
     
 End
 
+Public Sub Add(argPaths As String[])
+    
+    Dim yukiPath As String 
+    
+    For Each yukiPath In argPaths
+        Me.ShiftToNormalMode()
+        $iconView.Add(yukiPath, File.Name(yukiPath), Desktop.GetFileIcon(yukiPath, IconSize))
+    Next
+    
+End
+
+Public Sub Remove(argPaths As String[])
+    
+    Dim yukiPath As String 
+    
+    For Each yukiPath In argPaths
+        Me.ShiftToNormalMode()
+        Try $iconView.Remove(yukiPath)
+    Next
+    
+    If $iconView.Count = 0 Then Me.SetEmptyView()
+    
+End
+
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView

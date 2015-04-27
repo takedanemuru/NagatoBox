@@ -3,6 +3,11 @@
 + until june 30
 + Port To Gambas3 3.7.1
 + upload to gambas.org if possible
++ more reliable iconing (Application theme) system is needed.
+
+## nagato-archiver
+
++ ~~now can archive/extract tar.bz2 (application/x-bzip-compressed-tar)~~
 
 ## nagato-asx-player
 
@@ -21,6 +26,10 @@
 ## nagato-dictionary
 
 + ~~open connection to DB explicitly (3.7)~~
+
+## nagato-extractor
+
++ ~~now can archive/extract tar.bz2 (application/x-bzip-compressed-tar)~~
 
 ## nagato-files
 

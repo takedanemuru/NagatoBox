@@ -2,6 +2,8 @@
 
 Public Sub Main()
     
+    Application.Theme = "Numix-Circle"
+    
     NagatoArguments.Parsing()
     HaruhiMain.Show()
     

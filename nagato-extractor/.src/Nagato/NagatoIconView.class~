@@ -15,7 +15,7 @@ Private Sub initializeIconView()
     
      With $iconView
         .Clear()
-        .Foreground = Color.Violet
+        .Foreground = Color.Orange
         .Font.Size = FontSize
         .Picture = Picture.Load("Pictures/yukichan_29.jpg")
     End With
@@ -36,13 +36,15 @@ Public Sub SetFileIcons()
     initializeIconView()
     
     For Each yukiPath In NagatoFileStore.Paths
-        Me.ShiftToNormalMode()
+        shiftToNormalMode()
         $iconView.Add(yukiPath, File.Name(yukiPath), Desktop.GetFileIcon(yukiPath, IconSize))
     Next
-    
+
+    $iconView.Refresh()
+
 End
 
-Public Sub ShiftToNormalMode()
+Private Sub shiftToNormalMode()
     
     If Me.IsEmpty Then $iconView.Clear()
     $iconView.Font.Size = HaruhiMain.Font.Size
@@ -52,11 +54,16 @@ End
 Public Sub Add(argPaths As String[])
     
     Dim yukiPath As String 
+    Dim yukiDesktopMime As DesktopMime
     
     For Each yukiPath In argPaths
-        Me.ShiftToNormalMode()
+        shiftToNormalMode()
+        Debug yukiPath
+        yukiDesktopMime = DesktopMime.FromFile(yukiPath)
         $iconView.Add(yukiPath, File.Name(yukiPath), Desktop.GetFileIcon(yukiPath, IconSize))
     Next
+    
+    Dialog.OpenFile()
     
 End
 
@@ -65,7 +72,7 @@ Public Sub Remove(argPaths As String[])
     Dim yukiPath As String 
     
     For Each yukiPath In argPaths
-        Me.ShiftToNormalMode()
+        shiftToNormalMode()
         Try $iconView.Remove(yukiPath)
     Next
     

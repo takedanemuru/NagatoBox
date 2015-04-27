@@ -3,28 +3,12 @@
 Private $fileStore As NagatoFileStore
 Private $iconView As NagatoIconView
 
-Private Function getArchiveType() As String
+Private Sub initializeTypeComboBox()
     
-    Select Case TypeComboBox.Index
-        Case 0
-            Return ".tar"
-        Case 1
-            Return ".zip"
-        Case 2
-            Return ".bz2"
-        Case 3
-            Return ".gz"
-        Case 4
-            Return ".rar"
-        Case 5
-            Return ".lzh"
-        Case 6
-            Return ".xz"
-        Case 7
-            Return ".tar.gz"
-        Case 8
-            Return ".tar.xz"
-    End Select
+    With TypeComboBox
+        .List = MikuruArchiveType.List
+        .ReadOnly = True
+    End With
     
 End
 
@@ -43,6 +27,8 @@ Public Sub SetPaths(argPaths As String[])
 End
 
 Public Sub _new()
+
+    initializeTypeComboBox()
 
     $iconView = New NagatoIconView(FilesIconView) As "IconView"
     $fileStore = New NagatoFileStore As "FileStore"
@@ -85,9 +71,7 @@ Public Sub ApplyButton_Click()
     If $iconView.IsEmpty Then Return 
     
     Dialog.Title = ("Set path to create")
-    Dialog.Path = MikuruSafePath.Get(User.Home &/ "new_archive" & getArchiveType())
-    
-    Debug Dialog.Path
+    Dialog.Path = MikuruSafePath.Get(User.Home &/ ("new_archive") & MikuruArchiveType[TypeComboBox.Index])
     
     If Not Dialog.SaveFile() Then 
         NagatoPatool.Create($fileStore.PathsInLine, checkExtension(Dialog.Path))

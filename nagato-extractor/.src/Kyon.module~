@@ -1,9 +1,8 @@
 ' Gambas module file
 
-Private $arguments As New String[]
-Private $type As String
-
 Public Sub Main()
+    
+    Application.Theme = "numix-circle"
     
     NagatoArguments.Parsing()
     HaruhiMain.Show()

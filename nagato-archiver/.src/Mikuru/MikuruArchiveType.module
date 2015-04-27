@@ -1,0 +1,17 @@
+' Gambas module file
+
+Property Read List As String[]
+
+Private $list As String[] = [".tar", ".zip", ".bz2", ".gz", ".rar", ".lzh", ".xz", ".tar.gz", ".tar.xz", ".tar.bz2"]
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Return $list[argIndex]
+    
+End
+
+Private Function List_Read() As String[]
+
+    Return $list
+
+End
