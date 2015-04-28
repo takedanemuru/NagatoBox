@@ -22,7 +22,7 @@ End
 
 Public Sub IsExecutable(argPath As String) As Boolean
     
-    Dim yukiPermission As String = Mid$(Stat(argPath).Auth, 3, 1)
+    'Dim yukiPermission As String = Mid$(Stat(argPath).Auth, 3, 1)
     
     Select Case Mid$(Stat(argPath).Auth, 3, 1)
         Case "-", "S"

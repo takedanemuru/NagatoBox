@@ -16,11 +16,16 @@ Public Sub _call(argTile As Picture, argPath As String) As Picture
     
     Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
     
-    If yukiSymbol <> "" Then
+    If Stat(argPath).Link Then
+        Return getSymbolizedTile(argTile, "link")
+    Else If yukiSymbol <> "" Then
         Return getSymbolizedTile(argTile, yukiSymbol)
     Else
         Return argTile
     Endif
+    
+Catch
+    Debug argPath
     
 End
 

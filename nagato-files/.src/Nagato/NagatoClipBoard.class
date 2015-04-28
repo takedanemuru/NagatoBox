@@ -8,8 +8,6 @@ Property Read PathCopy As String[]
 Private $timer As New Timer As "Timer"
 Private $textUri As String
 Private $nagatoSelectionCut As String
-Private $gnomeSelectionCut As String
-Private $kdeSelectionCut As String
 
 Event Changed
 

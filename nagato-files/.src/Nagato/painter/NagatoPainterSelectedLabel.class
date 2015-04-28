@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoLabelPainter
+
 Private Const ThumbnailSize As Integer = 128
 
 Public Sub Paint()

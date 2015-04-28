@@ -12,7 +12,6 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
     
     Dim yukiPath As String
 
-    'For Each yukiPath In MikuruSort(argDirectory, argType)
     For Each yukiPath In NagatoSortFiler.Get(argDirectory, argType)
         If Not Access(yukiPath, gb.Read) Then Continue
         Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
@@ -33,7 +32,8 @@ Private Sub refreshIconView(argDirectory As String, argSelection As String[], ar
     setIcon(argDirectory, argSelection, gb.File)
     If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     NagatoDBThumbnailer.CleanUp(argDirectory)
-    ensureVisible(argLastSelected)
+    ensureVisible(IIf(MikuruLastRenamed.Path, MikuruLastRenamed.Path, argLastSelected))
+    MikuruLastRenamed.Clear()
     
 End
 

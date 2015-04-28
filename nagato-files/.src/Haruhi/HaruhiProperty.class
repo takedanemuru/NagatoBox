@@ -12,6 +12,8 @@ Public Sub SetTrashProperty(argTrashName As String)
     
     ' ignore
     
+    Debug argTrashName
+    
 End
 
 Public Sub _new()

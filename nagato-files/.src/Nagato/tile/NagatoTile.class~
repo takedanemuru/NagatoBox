@@ -9,32 +9,9 @@ Public Const TextWidth As Integer = 112
 Public Const IconSize As Integer = 64
 Public Const Margin As Integer = 8
 
-Public Enum ModeReadOnly, ModeCut, ModeCopied, ModeSelected, ModeNull
-
 Public _$baseColor As Integer = Color.White
 
-Private $selectedLabelPainter As New NagatoPainterSelectedLabel
-Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
-Private $cutLabelPainter As New NagatoPainterCutLabel
-Private $copiedLabelPainter As New NagatoPainterCopiedlabel
 Private $symbolSetter As New NagatoSymbolSetter
-
-Private Sub paintHeaderLabel(argMode As Integer)
-    
-    Select Case argMode
-        Case ModeReadOnly
-            $readOnlyLabelPainter.Paint()
-        Case ModeCut
-            $cutLabelPainter.Paint()
-        Case ModeCopied
-            $copiedLabelPainter.Paint()
-        Case ModeSelected
-            $selectedLabelPainter.Paint()
-        Case ModeNull
-            ' ignore
-    End Select
-    
-End
 
 Private Sub paintIcon(argIcon As Picture)
     
@@ -64,7 +41,7 @@ Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As 
         .Brush = .Color(Color.White)
         .Font.Bold = True
         yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-        paintIcon(argIcon)
+        NagatoLabelPainterFacade.Paint(argMode)
         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
         paintHeaderLabel(argMode)

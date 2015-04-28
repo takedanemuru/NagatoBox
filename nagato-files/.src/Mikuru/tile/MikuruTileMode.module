@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public Enum ModeReadOnly, ModeCut, ModeCopied, ModeSelected, ModeNull
+Public Enum ModeReadOnly, ModeCut, ModeCopied, ModeSelected, ModeRenamed, ModeNull
 
 Public Sub _call(argPath As String, argSelected As Boolean) As Integer
     
@@ -12,6 +12,8 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Integer
         Return Me.ModeCopied
     Else If argSelected Then
         Return Me.ModeSelected
+    Else If argPath = MikuruLastRenamed.Path Then
+        Return Me.ModeRenamed
     Else
         Return Me.ModeNull
     Endif

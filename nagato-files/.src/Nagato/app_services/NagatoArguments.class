@@ -8,7 +8,7 @@ Property Read XdgUserDirs As Boolean
 Property Read OpenTrashBin As Boolean
 
 Private $startUpPath As String = ""
-Private $path As String
+'Private $path As String
 Private $paths As New String[]
 Private $desktop As Boolean
 Private $xdgUserDirs As Boolean

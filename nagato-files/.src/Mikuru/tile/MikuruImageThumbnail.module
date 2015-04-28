@@ -5,10 +5,6 @@ Private Const Margin As Integer = 8
 
 Private $icon As Image
 Private $pathLabelPainter As New NagatoPainterPathLabel
-Private $selectedLabelPainter As New NagatoPainterSelectedLabel
-Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
-Private $cutLabelPainter As New NagatoPainterCutLabel
-Private $copiedLabelPainter As New NagatoPainterCopiedlabel
 
 Private Function getIcon(argPath As String) As Image
     
@@ -37,20 +33,6 @@ Private Sub setIcon(argPath As String)
     
 End
 
-Private Sub paintHeaderLabel(argPath As String, argSelected As Boolean)
-    
-        If Not argSelected And If Not Access(argPath, gb.Write) Then 
-            $readOnlyLabelPainter.Paint()
-        Else If NagatoClipBoard.PathsCut.Exist(argPath) Then
-            $cutLabelPainter.Paint()
-        Else If NagatoClipBoard.PathCopy.Exist(argPath) Then
-            $copiedLabelPainter.Paint()
-        Else If argSelected Then 
-            $selectedLabelPainter.Paint()
-        End If
-    
-End
-
 Public Function Get(argPath As String, argSelected As Boolean) As Picture
     
     Dim yukiBaseImage As Image = New Image(ThumbnailSize, ThumbnailSize, Color.Transparent)
@@ -62,7 +44,7 @@ Public Function Get(argPath As String, argSelected As Boolean) As Picture
         .Begin(yukiBaseImage)
         .DrawImage($icon, (ThumbnailSize - $icon.W) / 2, (ThumbnailSize - $icon.H) / 2)
         $pathLabelPainter.PaintLabel(argPath, argSelected)
-        paintHeaderLabel(argPath, argSelected)
+        NagatoLabelPainterFacade(MikuruTileMode(argPath, argSelected))
         If yukiSymbol <> "" Then Paint.DrawImage(MikuruIcon.Get(yukiSymbol, 32).Image, 8, 8)
         .End()
     End With

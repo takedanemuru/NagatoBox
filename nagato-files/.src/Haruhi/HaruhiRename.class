@@ -45,6 +45,8 @@ End
 
 Public Sub ApplyButton_Click()
 
+    Dim yukiTargetPath As String 
+
     If NewNameTextBox.Text = "" Then
         Message.Warning(("YUKI.N > Input any name."), ("OK"))
     Else If MikuruMedia.ConversionRequired($sourcePath.FullPath, $targetPath.FullPath) Then
@@ -53,7 +55,9 @@ Public Sub ApplyButton_Click()
     Else If Exist($targetPath.FullPath) Then
         Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
     Else
-        Move $sourcePath.FullPath To MikuruPath.GetSafePathName($targetPath.FullPath)
+        yukiTargetPath = MikuruPath.GetSafePathName($targetPath.FullPath)
+        Move $sourcePath.FullPath To yukiTargetPath
+        MikuruLastRenamed.Path = yukiTargetPath
         Me.Close(MikuruDialog.ResponseApply)
     Endif
 

@@ -34,6 +34,7 @@
 ## nagato-files
 
 + ~~sound preview~~
+    + interface redesign
 + ~~graphical dialog with preview icons for "change background menu"~~
 
 ## nagato-lookup
@@ -54,6 +55,8 @@
     + ~~addition~~
     + edit
     + ~~playing fetch~~
+    + ~~duration fetch~~
+        + automatic reload
 + bulk tagging
 
 ## nagato-session
