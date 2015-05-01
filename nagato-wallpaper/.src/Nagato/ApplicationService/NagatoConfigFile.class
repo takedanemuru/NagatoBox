@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoConfig
+
+Private $path As String
+Private $groups As New NagatoConfigGroup[]
+
+Private Sub setGroups()
+    
+    Dim yukiGroup As New NagatoConfigGroup("", Me._$unquote)
+    Dim yukiLine As String
+    
+    For Each yukiLine In Split(File.Load($path), "\n", "", True)
+        If yukiLine Like "\\[*\\]" Then 
+            If yukiGroup.Count > 0 Then $groups.Add(yukiGroup)
+            yukiGroup = New NagatoConfigGroup(yukiLine, Me._$unquote)
+        Else
+            yukiGroup.SetLine(yukiLine)
+        End If
+    Next
+    
+    If yukiGroup.Count > 0 Then $groups.Add(yukiGroup)
+    
+End
+
+Private Function getAll() As String
+    
+    Dim yukiGroup As NagatoConfigGroup
+    Dim yukiText As String 
+    
+    For Each yukiGroup In $groups
+        yukiText &= (yukiGroup.Text & "\n")
+    Next
+    
+    Return yukiText
+    
+End
+
+Public Sub _get(argGroup As String, argKey As String) As String
+    
+    Dim yukiGroup As NagatoConfigGroup
+    
+    For Each yukiGroup In $groups
+        If yukiGroup.GroupName = argGroup Then 
+            Return yukiGroup[argKey]
+        End If
+    Next
+    
+    Return Null
+    
+End
+
+Public Sub _put(argValue As String, argGroup As String, argKey As String)
+    
+    Dim yukiGroup As NagatoConfigGroup
+    Dim yukiFlag As Boolean = False
+    
+    For Each yukiGroup In $groups
+        If yukiGroup.GroupName = argGroup Then
+            yukiGroup[argKey] = argValue
+            yukiFlag = True
+        Endif
+    Next
+    
+    If yukiFlag Then File.Save($path, getAll())
+    
+End
+
+Public Sub _new(argPath As String, argUnquote As Boolean)
+    
+    $path = argPath
+     Me._$unquote = argUnquote
+    
+    setGroups()
+    
+End

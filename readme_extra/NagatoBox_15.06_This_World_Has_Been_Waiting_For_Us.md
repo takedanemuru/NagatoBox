@@ -36,6 +36,7 @@
 + ~~sound preview~~
     + interface redesign
 + ~~graphical dialog with preview icons for "change background menu"~~
++ calendar tile for desktop ?
 
 ## nagato-lookup
 

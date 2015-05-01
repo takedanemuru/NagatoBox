@@ -1,0 +1,117 @@
+' Gambas class file
+
+Create Static
+
+Property Read Status As Integer
+Property Read ThemesList As String[]
+Property Read ThemesCount As Integer
+Property Read WidgetTheme As String
+Property Read WidgetThemeMatched As Boolean
+Property Read IsThemeUnified As Boolean
+Property Read IconTheme As String
+Property Read CursorTheme As String
+
+Private $themes As NagatoThemes
+Private $configGtk2 As NagatoConfigFile
+Private $configGtk3 As NagatoConfigFile
+Private $configQt As NagatoConfigFile
+
+Private Function isThemesMatched() As Boolean
+    
+    If ($configGtk2["", "gtk-theme-name"] = $configGtk3["Settings", "gtk-theme-name"]) Then
+        If $themes.List.Exist($configGtk2["", "gtk-theme-name"]) Then
+            Return True
+        End If
+    End If
+    
+Finally
+    Return False
+    
+End
+
+Public Sub Set()
+    
+    ' If NagatoInterimStatus.WidgetTheme Then
+    '     $configGtk2["", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
+    '     $configGtk3["Settings", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
+    '     $configQt["Qt", "style"] = "GTK+"
+    ' Endif
+    
+    If NagatoInterimStatus.IconTheme Then
+        $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+        $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+    Endif
+    
+    
+End
+
+Public Sub _new()
+    
+    $themes = New NagatoThemes
+    $configGtk2 = New NagatoConfigFile(User.Home &/ ".gtkrc-2.0", False)
+    $configGtk3 = New NagatoConfigFile(Desktop.ConfigDir &/ "gtk-3.0" &/ "settings.ini", True)
+    $configQt = New NagatoConfigFile(Desktop.ConfigDir &/ "Trolltech.conf", True)
+    
+End
+
+Private Function ThemesList_Read() As String[]
+
+    Return $themes.List
+
+End
+
+Private Function WidgetTheme_Read() As String
+
+    If Me.WidgetThemeMatched Then
+        Return $configGtk2["", "gtk-theme-name"] 
+    Else
+        Return Null
+    Endif
+
+End
+
+Private Function WidgetThemeMatched_Read() As Boolean
+
+    Return isThemesMatched()
+
+End
+
+Private Function IsThemeUnified_Read() As Boolean
+
+    If $configQt["Qt", "style"] = "GTK+" Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Private Function Status_Read() As Integer
+
+    If $themes.Count = 0 Then
+        Return MikuruConfig.NotFound
+    Else If isThemesMatched Then
+        Return MikuruConfig.Matched
+    Else
+        Return MikuruConfig.NotMatched
+    Endif
+    
+End
+
+Private Function ThemesCount_Read() As Integer
+
+    Return $themes.Count
+
+End
+
+Private Function IconTheme_Read() As String
+
+    Return $configGtk2["", "gtk-icon-theme-name"] 
+
+End
+
+Private Function CursorTheme_Read() As String
+
+    Return $configGtk2["", "gtk-cursor-theme-name"] 
+
+End

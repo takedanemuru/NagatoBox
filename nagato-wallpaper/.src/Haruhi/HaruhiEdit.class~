@@ -1,23 +1,15 @@
 ' Gambas class file
 
-Property Read PreviewDA As DrawingArea
+Property Read Mode As Integer
+
+Private $drawingArea As NagatoPreviewDrawingArea
 
 Private Sub initializeWidgets()
     
-    ColorButton.Color = NagatoPreview.Color
-    PreviewDrawingArea.Height = Screen.Height * NagatoPreview.Ratio
+    $drawingArea = New NagatoPreviewDrawingArea(PreviewDrawingArea)
+        
+    BackgroundColorButton.Color = NagatoPreview.Color
     ModeComboBox.Index = NagatoSettings.LastMode
-    CalendarComboBox.Index = NagatoSettings.LastCalendarPosition
-    
-End
-
-Private Sub setBackgroundColor()
-    
-    With Paint
-        .Brush = .Color(NagatoPreview.Color)
-        .Rectangle(0, 0, PreviewDA.W, PreviewDA.H)
-        .Fill()
-    End With
     
 End
 
@@ -44,7 +36,7 @@ Public Sub ApplyButton_Click()
         Return
     Else
         NagatoWallpaper.Set(NagatoPreview.Path, NagatoPreview.Color, ModeComboBox.Index)
-        NagatoSettings.Refresh(ModeComboBox.Index, CalendarComboBox.Index)
+        NagatoSettings.Refresh(ModeComboBox.Index)
     End If
 
     Message.Info("YUKI.N > It 's done.", ("OK"))
@@ -61,23 +53,11 @@ Public Sub SelectButton_Click()
 
 End
 
-Public Sub PreviewDrawingArea_Draw()
-    
-    If NagatoPreview.Path = "" Then Return
-    If Not Exist(NagatoPreview.Path) Then Return
+Public Sub BackgroundColorButton_Change()
 
-    Paint.Begin(PreviewDrawingArea)
-        setBackgroundColor()
-        NagatoThumbnail.Set(ModeComboBox.Index)
-    Paint.End()
-    
-End
-
-Public Sub ColorButton_Change()
-
-    ColorButton.Foreground = ColorButton.Color
-    PreviewDrawingArea.Background = ColorButton.Color
-    NagatoPreview.Color = ColorButton.Color
+    BackgroundColorButton.Foreground = BackgroundColorButton.Color
+    PreviewDrawingArea.Background = BackgroundColorButton.Color
+    NagatoPreview.Color = BackgroundColorButton.Color
 
 End
 
@@ -87,25 +67,24 @@ Public Sub ModeComboBox_Click()
 
 End
 
-Public Sub PreviewDrawingArea_Drop()
-
-    ' PreviewDrawingArea can accept only "text/uri-list"
-
-    If Drag.Type = Drag.Text And If MikuruDrag.CanAccept(Drag.Data) Then
-        NagatoPreview.Path = MikuruDrag.GetDragPath(Drag.Data)
-        PreviewDrawingArea.Refresh()
-    End If
-
+Public Sub _unknown(...) As Variant
+    
+    If Not Object.IsValid($drawingArea) Then initializeWidgets()
+    
+    Return $drawingArea.GetProperty(Param.Name)
+    
 End
 
-Private Function PreviewDA_Read() As DrawingArea
-
-    Return PreviewDrawingArea
-
+Public Sub _property(...) As Boolean
+    
+    ' has no unnamed method
+    
+    Return True
+    
 End
 
-Public Sub CalendarComboBox_Click()
+Private Function Mode_Read() As Integer
 
-    NagatoPreview.CalendarPosition = CalendarComboBox.Index
+    Return ModeComboBox.Index
 
 End

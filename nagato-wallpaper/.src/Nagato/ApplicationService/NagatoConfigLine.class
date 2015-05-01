@@ -1,0 +1,63 @@
+' Gambas class file
+
+Inherits NagatoConfig
+
+Property Read Key As String
+Property Read Value As String
+Property Read Text As String
+
+Private $source As String
+Private $key As String
+Private $value As String
+Private $quote As Boolean = False
+
+Private Sub setKeyAndValue()
+    
+    Dim yukiPosition As Integer = InStr($source, "=")
+    
+    $key = Left$($source, yukiPosition - 1)
+    $value = Right$($source, -1 * (yukiPosition))
+
+    ' Chr$(34) means double quote
+    If $value Begins Chr$(34) And If $value Ends Chr$(34) Then
+        $quote = True
+    End If
+    
+End
+
+Public Sub SetValue(argValue As String)
+    
+    $value = IIf($quote, Quote$(argValue), argValue)
+    
+End
+
+Public Sub _new(argLine As String, argUnquote As Boolean)
+    
+    $source = Trim$(argLine)
+    Me._$unquote = argUnquote
+    
+    setKeyAndValue()
+    
+End
+
+Private Function Key_Read() As String
+
+    Return $key
+
+End
+
+Private Function Value_Read() As String
+
+    Return $value
+
+End
+
+Private Function Text_Read() As String
+
+    If $value = "" Then
+        Return $key
+    Else
+        Return Subst$("&1=&2", $key, $value)
+    End If
+
+End

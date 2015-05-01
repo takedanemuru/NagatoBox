@@ -1,0 +1,13 @@
+' Gambas class file
+
+Create Private
+
+Property Read Unquote As Boolean
+
+Public _$unquote As Boolean
+ 
+Private Function Unquote_Read() As Boolean
+
+    Return Me._$unquote
+
+End

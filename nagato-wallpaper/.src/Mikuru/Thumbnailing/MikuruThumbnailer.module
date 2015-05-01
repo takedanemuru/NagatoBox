@@ -31,7 +31,9 @@ End
 
 Public Function IsLoadable(argPath As String) As Boolean
     
-    Dim yukiImage As Image = Image.Load(argPath)
+    Dim yukiImage As Image 
+    
+    yukiImage = Image.Load(argPath)
     
     Return True
     

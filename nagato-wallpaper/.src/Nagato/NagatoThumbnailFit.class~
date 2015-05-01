@@ -2,10 +2,16 @@
 
 Inherits NagatoThumbnail
 
+Private Function getFillRateMax(argImage As Image) As Float
+    
+    Return Max(Screen.H / argImage.H, Screen.W / argImage.W) * NagatoPreview.Ratio
+    
+End
+
 Private Function getThumbnailForFitMode() As Image
     
     Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
-    Dim yukiRate As Float = Me._GetFillRateMax(yukiImage)
+    Dim yukiRate As Float = getFillRateMax(yukiImage)
     
     Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
     

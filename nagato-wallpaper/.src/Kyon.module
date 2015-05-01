@@ -6,11 +6,10 @@ Public Sub Main()
     
     MikuruHidden.Ensure()
     
-    Debug MikuruHidden.PathOriginalImage
-    
     If yukiArguments.SetLast Then
         NagatoWallpaper.SetLast()
     Else
+        MikuruTheme.Set()
         HaruhiEdit.Show()
         If yukiArguments.Options.Count > 0 Then HaruhiEdit.SetPath(yukiArguments.Options[0])
     End If

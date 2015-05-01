@@ -7,12 +7,14 @@ Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Int
     If argPath = "" Then Return
     If Not Exist(argPath) Then Return
     
-    ' MikuruOriginalImage.SetPath(argPath)
-    ' MikuruModefiedImage.Set(argRenderMode)
+    Debug argBackground
     
-    Debug NagatoDBus.isNagatoDesktopActivated()
+    MikuruOriginalImage.SetPath(argPath)
+    MikuruModefiedImage.Set(argRenderMode)
     
-    'Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    If Not NagatoDBus.isNagatoDesktopActivated() Then
+        Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    End If
     
 End
 
@@ -20,7 +22,6 @@ Public Sub SetLast()
     
     With NagatoSettings
         If Exist(MikuruHidden.PathOriginalImage) Then
-            NagatoPreview.CalendarPosition = .LastCalendarPosition
             Me.Set(MikuruHidden.PathOriginalImage, .LastColor, .LastMode)
         Endif
     End With

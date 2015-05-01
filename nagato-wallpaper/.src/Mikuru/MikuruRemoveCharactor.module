@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Function _call(argSource As String, ...) As String
+    
+    Dim yukiValue As String = argSource
+    Dim yukiCharactor As String
+    
+    For Each yukiCharactor In Param
+        yukiValue = Replace$(yukiValue, yukiCharactor, "")
+    Next
+    
+    Return yukiValue
+    
+End
+

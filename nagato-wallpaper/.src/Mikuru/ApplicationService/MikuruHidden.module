@@ -24,15 +24,11 @@ Private Sub setDesktopType()
     yukiDesktopType = Replace$(yukiDesktopType, "XDG_SESSION_DESKTOP=", "")
     $desktopType = Replace$(yukiDesktopType, "\n", "")
     
-    Debug $desktopType
-    
 End
 
 Public Sub Ensure()
     
     setDesktopType()
-    
-    $desktopType = "TESTING_2"
     
     If Not Exist(Me.Path) Then Mkdir Me.Path
     If Not Exist(Me.PathOriginalImage) Then saveImage(Me.PathOriginalImage)

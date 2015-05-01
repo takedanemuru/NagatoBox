@@ -1,0 +1,63 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+
+Private Sub setBackgroundColor()
+    
+    With Paint
+        .Brush = .Color(NagatoPreview.Color)
+        .Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        .Fill()
+    End With
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $drawingArea.H = Screen.Height * ($drawingArea.W / Screen.Width)
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+End
+
+Public Sub GetProperty(argPropertyName As String) As Variant
+    
+    With $drawingArea
+        Select Case argPropertyName
+            Case "PreviewBackground"
+                Return .Background
+            Case "PreviewH"
+                Return .H
+            Case "PreviewW"
+                Return .W
+            Case "PreviewRatio"
+                Return .W / Screen.Width
+            Default
+                Return Null
+        End Select
+    End With
+    
+End
+
+Public Sub Asakura_Drop()
+
+    ' PreviewDrawingArea can accept only "text/uri-list"
+
+    If Drag.Type = Drag.Text And If MikuruDrag.CanAccept(Drag.Data) Then
+        NagatoPreview.Path = MikuruDrag.GetDragPath(Drag.Data)
+        $drawingArea.Refresh()
+    End If
+
+End
+
+Public Sub Asakura_Draw()
+    
+    If Not NagatoPreview.IsValid Then Return
+    
+    Paint.Begin($drawingArea)
+        setBackgroundColor()
+        NagatoThumbnail.Set(HaruhiEdit.Mode)
+    Paint.End()
+    
+End

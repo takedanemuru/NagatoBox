@@ -1,23 +1,11 @@
 ' Gambas class file
 
-Private $modefiedImage As Image
+Create Private
 
-Private Sub setCalendar(argImage As Image)
-    
-    Select Case NagatoPreview.CalendarPosition
-        Case 0
-            ' ignore
-        Case 1, 2
-            NagatoCalendarHorizontal.Paint(argImage, NagatoSettings.LastCalendarPosition)
-        Case 3, 4, 5, 6
-            NagatoCalendarBox.Paint(argImage, NagatoSettings.LastCalendarPosition)
-    End Select
-    
-End
+Private $modefiedImage As Image
 
 Public Sub _SaveModefiedImage(argImage As Image)
     
-    setCalendar(argImage)
     $modefiedImage = argImage
     $modefiedImage.Save(MikuruHidden.PathModefiedImage)
     
@@ -26,5 +14,8 @@ End
 Public Sub Set(argImage As Image)
     
     ' virtual
+    
+    Debug argImage.H
+    Debug argImage.W
     
 End

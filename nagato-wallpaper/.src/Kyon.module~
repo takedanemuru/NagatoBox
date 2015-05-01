@@ -4,6 +4,9 @@ Public Sub Main()
     
     Dim yukiArguments As New NagatoArguments
     
+    Debug HaruhiEdit.GoForIt
+    
+    MikuruTheme.Set()
     MikuruHidden.Ensure()
     
     If yukiArguments.SetLast Then

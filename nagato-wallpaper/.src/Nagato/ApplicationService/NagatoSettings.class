@@ -6,7 +6,6 @@ Property LastPath As String
 Property Read RecentPath As String[]
 Property LastColor As Integer
 Property LastMode As Integer
-Property LastCalendarPosition As Integer
 
 Private $settings As New Settings
 
@@ -16,14 +15,12 @@ Private Function getPerDesktopKey(argKey As String) As String
     
 End
 
-Public Sub Refresh(argWallpaperMode As Integer, argCalendarMode As Integer)
+Public Sub Refresh(argWallpaperMode As Integer)
     
     With Me
-        '.LastPath = NagatoPreview.Path
         .LastPath = MikuruHidden.PathOriginalImage
         .LastColor = NagatoPreview.Color
         .LastMode = argWallpaperMode
-        .LastCalendarPosition = argCalendarMode
     End With
     
 End
@@ -85,18 +82,5 @@ Private Function RecentPath_Read() As String[]
     Dim yukiPaths As String[] = $settings["background/recent", [""]]
 
     Return yukiPaths
-
-End
-
-Private Function LastCalendarPosition_Read() As Integer
-
-    Return $settings["calendar/last_position", MikuruCalendar.None]
-
-End
-
-Private Sub LastCalendarPosition_Write(Value As Integer)
-
-    $settings["calendar/last_position"] = Value
-    $settings.Save()
 
 End

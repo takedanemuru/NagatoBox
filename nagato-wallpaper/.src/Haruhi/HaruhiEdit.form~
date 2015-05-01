@@ -31,10 +31,4 @@
     List = [("Center"), ("Tile"), ("Fill"), ("Fit"), ("Full")]
     Text = ("ComboBox1")
   }
-  { CalendarComboBox ComboBox
-    MoveScaled(29,39,16,4)
-    ToolTip = ("Calendar")
-    ReadOnly = True
-    List = [("None"), ("Top"), ("Bottom"), ("Top Left"), ("Top Right"), ("Bottom Left"), ("Bottom Right")]
-  }
 }

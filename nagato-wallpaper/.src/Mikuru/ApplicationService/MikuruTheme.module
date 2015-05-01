@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Set()
+    
+    If Not Application.Theme Then
+        Application.Theme = NagatoConfigFacade.IconTheme
+    Endif
+    
+End
