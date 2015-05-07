@@ -3,7 +3,7 @@
 Property Read UriList As String
 Property Read Plain As String
 
-Public Enum TypeDirectory, TypeImage, TypeApplication, TypeElse
+Public Enum TypeDirectory, TypeImage, TypeApplication, TypePdf, TypeElse
 
 Public Function GetType(argFullPath As String) As Integer
     
@@ -15,6 +15,8 @@ Public Function GetType(argFullPath As String) As Integer
         Return Me.TypeImage
     Else If yukiMimeType = "application/x-desktop" Then
         Return Me.TypeApplication
+    Else If yukiMimeType = "application/pdf" Then
+        Return Me.TypePdf
     Else
         Return Me.TypeElse
     End If

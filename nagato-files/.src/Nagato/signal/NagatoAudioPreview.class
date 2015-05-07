@@ -2,61 +2,55 @@
 
 Inherits NagatoSignalWidget
 
-Private $hBox As HBox
-Private $button As Button
-Private $player As New MediaPlayer
+Private $player As MediaPlayer 
 Private $path As String
-
-Private Sub initializeContainer()
-    
-    $hBox = New HBox(Me._$container)
-    
-    With $hBox
-        .H = 36
-        .Expand = False
-        .Visible = False
-    End With
-    
-End
-
-Private Sub initializeButton()
-    
-    $button = New Button($hBox) As "Button"
-    
-    With $button
-        .Text = "testing"
-        .Expand = True
-    End With
-    
-End
+Private $timer As New Timer As "Timer"
+Private $widgets As NagatoAudioPreviewWidgets
 
 Public Sub Set(argPath As String)
     
+    $timer.Enabled = False
     Try $player.Stop()
-
-    $button.Text = ("Play")
-    $button.Picture = MikuruIcon.Get("button-play")
 
     If DesktopMime.FromFile(argPath).Type Begins "audio" Then
         $path = argPath
-        $hBox.Visible = True
+        $widgets.NewPath(True)
     Else
-        $hBox.Visible = False
+        $widgets.NewPath(False)
     Endif
         
 End
 
 Public Sub _InitializeWidgets()
     
-    initializeContainer()
-    initializeButton()
+    $player = New MediaPlayer As "MediaPreview"
+    $widgets = New NagatoAudioPreviewWidgets(Me._$container) As "Widgets"
     
 End
 
-Public Sub Button_Click()
+Public Sub Widgets_Toggle()
     
-    Try $player.Stop()
-    $player.URL = Media.URL($path)
-    $player.Play
+    If $player.State <> Media.Playing Then
+        If $player.URL <> Media.URL($path) Then $player.URL = Media.URL($path)
+        Try $player.Play()
+        $timer.Enabled = True
+        $widgets.SetButtonPause()
+    Else
+        $player.URL = Media.URL($path)
+        Try $player.Pause()
+        $timer.Enabled = False
+        $widgets.SetButtonPause()
+    End If
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Dim yukiRate As Float = $player.Position / $player.Duration
+    
+    $widgets.SetProgressBarValue(yukiRate)
+    
+Catch
+    $widgets.SetProgressBarValue(0)
     
 End

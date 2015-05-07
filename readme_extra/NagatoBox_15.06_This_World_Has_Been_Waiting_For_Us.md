@@ -34,9 +34,10 @@
 ## nagato-files
 
 + ~~sound preview~~
-    + interface redesign
+    + ~~interface redesign~~
 + ~~graphical dialog with preview icons for "change background menu"~~
 + calendar tile for desktop ?
++ ~~new : thumbnail for pdf~~
 
 ## nagato-lookup
 

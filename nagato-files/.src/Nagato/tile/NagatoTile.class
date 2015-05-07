@@ -46,7 +46,6 @@ Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As 
         .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
         NagatoLabelPainterFacade.Paint(argMode)
-        'paintHeaderLabel(argMode)
         .End()
     End With
     

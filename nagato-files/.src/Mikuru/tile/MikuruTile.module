@@ -13,7 +13,9 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
             Case .TypeDirectory
                 Return $directoryTile(argPath, argSelected)
             Case .TypeImage
-                Return MikuruImageThumbnail.Get(argPath, argSelected)
+                Return NagatoThumbnailImage.Get(argPath, argSelected)
+            Case .TypePdf
+                Return NagatoThumbnailPdf.Get(argPath, argSelected)
             Case .TypeApplication
                 Return $applicationTile(argPath, argSelected)
             Default

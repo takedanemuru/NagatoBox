@@ -1,0 +1,84 @@
+' Gambas class file
+
+Inherits NagatoSignalWidget
+
+Private $hBox As HBox
+Private $button As Button
+Private $progressBar As ProgressBar
+
+Event Toggle
+
+Private Sub initializeContainer()
+    
+    $hBox = New HBox(Me._$container)
+    
+    With $hBox
+        .H = 36
+        .Expand = False
+        .Visible = False
+    End With
+    
+End
+
+Private Sub initializeButton()
+    
+    $button = New Button($hBox) As "Button"
+    
+    With $button
+        .Expand = False
+        .AutoResize = True
+    End With
+    
+End
+
+Private Sub initializeProgressBar()
+    
+    $progressBar = New ProgressBar($hBox)
+    
+    With $progressBar
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _InitializeWidgets() 'override
+    
+    initializeContainer()
+    initializeButton()
+    initializeProgressBar()
+    
+End
+
+Public Sub NewPath(argVisible As Boolean)
+    
+    $progressBar.Value = 0
+    Me.SetButtonPlay()
+    $hBox.Visible = argVisible
+    
+End
+
+Public Sub SetButtonPlay()
+    
+    $button.Text = ("Play")
+    $button.Picture = MikuruIcon.Get("button-play")
+    
+End
+
+Public Sub SetButtonPause()
+    
+    $button.Text = ("Pause")
+    $button.Picture = MikuruIcon.Get("button-pause")
+
+End
+
+Public Sub SetProgressBarValue(argValue As Float)
+    
+    $progressBar.Value = argValue
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise Toggle
+    
+End

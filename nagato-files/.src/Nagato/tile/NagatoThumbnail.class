@@ -1,0 +1,87 @@
+' Gambas class file
+
+Create Static
+
+Public Const ThumbnailSize As Integer = 128
+Public Const Margin As Integer = 8
+
+Private Const SymbolSize As Integer = 32
+
+Public _$icon As Image
+Private $pathLabelPainter As New NagatoPainterPathLabel
+
+Private Sub setSymbol(argPath As String)
+    
+    Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
+    
+    If yukiSymbol <> "" Then
+        Paint.DrawImage(MikuruIcon.Get(yukiSymbol, SymbolSize).Image, Me.Margin, Me.Margin)
+    End If
+    
+End
+
+Private Sub getBaseImage() As Image
+    
+    Dim yukiImage As Image = New Image(Me.ThumbnailSize, Me.ThumbnailSize, Color.Transparent)
+    
+    Return yukiImage
+    
+End
+
+Private Function getIcon(argPath As String) As Image
+    
+    Dim yukiIcon As Image
+    Dim yukiRate As Float
+    
+    yukiIcon = Me._GetIconImage(argPath)
+    yukiRate = Me.ThumbnailSize / Min(yukiIcon.Height, yukiIcon.Width)
+    
+    Return yukiIcon.Stretch(yukiIcon.W * yukiRate, yukiIcon.H * yukiRate)
+    
+End
+
+Private Sub setIcon(argPath As String) 
+    
+    If NagatoDBThumbnailer.HasThumbnail(argPath, Me.ThumbnailSize) Then
+        Me._$icon = NagatoDBThumbnailer.Get(argPath, Me.ThumbnailSize).Image
+    Else
+        Me._$icon = getIcon(argPath)
+        NagatoDBThumbnailer.Push(argPath, Me.ThumbnailSize, Me._$icon.Picture)
+    End If
+    
+End
+
+Private Sub drawThumbnail(argPath As String)
+    
+    setIcon(argPath)
+    Paint.DrawImage(Me._$icon, (Me.ThumbnailSize - Me._$icon.W) / 2, (Me.ThumbnailSize - Me._$icon.H) / 2)    
+    
+End
+
+Public Function _GetIconImage(argPath As String) As Image 'virtual interface
+    
+    
+    
+End
+
+Public Function _GetLabelColor() As Integer 'virtual interface
+    
+    Return Color.Blue
+    
+End
+
+Public Function Get(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiBaseImage As Image = getBaseImage()
+    
+    Paint.Begin(yukiBaseImage)
+        drawThumbnail(argPath)
+        $pathLabelPainter.PaintLabel(argPath, argSelected, Me._GetLabelColor())
+        NagatoLabelPainterFacade(MikuruTileMode(argPath, argSelected))
+        setSymbol(argPath)
+    Paint.End()
+    
+    Return yukiBaseImage.Picture
+    
+End
+

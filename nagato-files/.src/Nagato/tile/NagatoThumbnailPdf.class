@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoThumbnail
+
+Public Function _GetIconImage(argPath As String) As Image
+    
+    Dim yukiDocument As New PdfDocument(argPath)
+    Dim yukiImage As Image = yukiDocument[1].Image
+    
+    Return yukiImage
+    
+Catch
+    yukiImage = New Image(Me.ThumbnailSize, Me.ThumbnailSize, Me._GetLabelColor())
+    Return yukiImage
+
+End
+
+Public Function _GetLabelColor() As Integer 'override
+    
+    Return Color.Orange
+    
+End

@@ -35,7 +35,8 @@ End
 
 Private Sub drawMaskArea(argColor As Integer)
     
-    Dim yukiOpacity As Integer = 192
+    'Dim yukiOpacity As Integer = 192
+    Dim yukiOpacity As Integer = 128
     
     Paint.Brush = Paint.Color(argColor + 16777216 * yukiOpacity)
     Paint.Rectangle(0, ThumbnailSize - ($textArea.H + 2 * Margin), ThumbnailSize, $textArea.H + 2 * Margin)
@@ -54,14 +55,16 @@ Private Sub drawText()
     
 End
 
-Public Sub PaintLabel(argPath As String, argSelected As Boolean)
+Public Sub PaintLabel(argPath As String, argSelected As Boolean, Optional argColor As Integer)
+    
+    Dim yukiColor As Integer = IIf(argColor, argColor, Color.Blue)
     
     With Paint
         .Font.Bold = True
         $text = getText(argPath) 
         $textHeight = .Font.RichTextHeight($text, TextWidth)
         setTextRect()
-        drawMaskArea(IIf(argSelected, Color.Red, Color.Blue))
+        drawMaskArea(IIf(argSelected, Color.Red, yukiColor))
         drawText()
     End With
     
