@@ -25,7 +25,6 @@ Private $coverArt As Picture
 Event Moved
 Event Changed
 Event TagChanged
-Event State
 Event SelectionMoved(argIndexes As Integer[])
 
 Public Function SetPath(argPath As String) As Boolean
@@ -57,6 +56,21 @@ Public Sub DeleteIndexes(argIndexes As Integer[])
     
     $player.Stop()
     If $musicList.DeleteIndexes(argIndexes) Then $player.Play()
+    
+End
+
+Public Sub EditIndexes(argIndexes As Integer[])
+    
+    If argIndexes.Count = 0 Then
+        Return
+    Else If argIndexes.Count = 1 Then
+        HaruhiTagEdit.SetPath($musicList.GetElement(argIndexes[0]).Path)
+        HaruhiTagEdit.Show()
+    Else
+        MikuruArrayTest($musicList.GetPathsFromIndexes(argIndexes))
+        ' HaruhiTagEditBulk.StartEdit($musicList.GetPathsFromIndexes(argIndexes))
+        ' HaruhiTagEditBulk.Show()
+    Endif
     
 End
 
@@ -195,15 +209,17 @@ Public Sub Player_MusicEnd()
     
 End
 
-Public Sub Player_State()
+Public Sub Player_State(argState As Integer)
     
-    Raise State
+    Raise State(argState)
     
 End
 
 Public Sub Player_FetchDuration(argDuration As Float)
     
-    NagatoDBMedia.FetchDuration(MikuruUrlDecode(Me.CurrentPath), argDuration)
+    If NagatoDBMedia.FetchDuration(MikuruUrlDecode(Me.CurrentPath), argDuration) Then
+        Raise TagChanged
+    Endif
     
 End
 

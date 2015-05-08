@@ -55,13 +55,22 @@ Public Sub Asakura_Moved()
     
 End
 
-Public Sub Asakura_State()
+Public Sub Asakura_SelectionMoved(argSelection As Integer[])
     
     If Not Object.IsValid($grids) Then Return
     
-    $grids.RefreshPlaymark()
+    $grids.Refresh()
+    $grids.RefreshSelection(argSelection)
     
 End
+
+' Public Sub Asakura_State(argState As Integer)
+'     
+'     If Not Object.IsValid($grids) Then Return
+'     
+'     $grids.RefreshPlaymark(argState)
+'     
+' End
 
 Public Sub Asakura_TagChanged()
     

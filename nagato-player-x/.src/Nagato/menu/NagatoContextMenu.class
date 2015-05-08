@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoSignal
+
 Public _$rootMenu As Menu
 
 Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
@@ -11,5 +13,11 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName A
         .Tag = argTag
         If argIconName Then .Picture = MikuruIcon.Get(argIconName)
     End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(Last.Tag, Null)
     
 End

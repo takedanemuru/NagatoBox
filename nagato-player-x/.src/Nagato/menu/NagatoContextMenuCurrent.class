@@ -13,11 +13,8 @@ End
 
 Public Sub _InitializeChildMenus()
     
-    Dim yukiDeleteMenu As New Menu(Me._$rootMenu) As "DeleteMenu"
-    
-    With yukiDeleteMenu
-        .Text = ("Delete")
-    End With
+    Me._AddMenu(("Delete"), MikuruSignal.ListDelete, "bin")
+    Me._AddMenu(("Edit Tag"), MikuruSignal.ListEdit, "tag")
     
 End
 
@@ -31,11 +28,5 @@ Public Sub _new()
     
     Me._InitializeRootMenu()
     Me._InitializeChildMenus()
-    
-End
-
-Public Sub DeleteMenu_Click()
-    
-    Raise Delete
     
 End

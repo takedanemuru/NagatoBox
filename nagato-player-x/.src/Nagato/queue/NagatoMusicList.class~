@@ -149,13 +149,15 @@ Public Sub MoveDown(argSelection As Integer[])
         If yukiCount = $position.Current Then yukiNewCurrentPosition = yukiCount
     Next
     
-   For Each yukiIndex In argSelection.Reverse()
+   For Each yukiIndex In argSelection
        yukiBuffer.Add($musicElements[yukiIndex], yukiInsertPosition)
        If yukiIndex = $position.Current Then
-            yukiNewCurrentPosition = yukiIndex
+            yukiNewCurrentPosition = yukiInsertPosition
        Else If yukiNewCurrentPosition > yukiInsertPosition Then 
            Inc yukiNewCurrentPosition
        End If
+       yukiNewSelection.Add(yukiInsertPosition)
+       Inc yukiInsertPosition
    Next
     
     $musicElements.Set(yukiBuffer)

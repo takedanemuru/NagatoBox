@@ -2,6 +2,7 @@
 
 Inherits NagatoTile
 
+'Public _$baseColor As Integer = Color.Blue
 Public _$baseColor As Integer = Color.Blue
 
 Private Function getFolderDescription(argPath As String) As String
@@ -19,7 +20,7 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
     Dim yukiIcon As Picture = MikuruIcon.GetDirectory(argPath, Me.IconSize)
     Dim yukiDescription As String = getFolderDescription(argPath)
-    Dim yukiMode As Integer = MikuruTileMode.(argPath, argSelected)
+    Dim yukiMode As Integer = MikuruTileMode(argPath, argSelected)
     Dim yukiTile As Picture = Me._GetTile2(yukiBaseImage, yukiIcon, yukiDescription, yukiMode)
     
     Return Me._SetSymbol(yukiTile, argPath)

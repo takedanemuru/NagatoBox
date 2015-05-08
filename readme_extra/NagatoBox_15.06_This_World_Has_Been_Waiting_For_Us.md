@@ -25,7 +25,7 @@
 
 ## nagato-dictionary
 
-+ ~~open connection to DB explicitly (3.7)~~
++ ~~open connection to DB explicitly (for 3.7)~~
 
 ## nagato-extractor
 
@@ -38,6 +38,7 @@
 + ~~graphical dialog with preview icons for "change background menu"~~
 + calendar tile for desktop ?
 + ~~new : thumbnail for pdf~~
++ new interface for media conversion
 
 ## nagato-lookup
 

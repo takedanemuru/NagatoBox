@@ -9,11 +9,6 @@
     Background = &HB79FFF&
     ToolTip = ("Click to select picture")
   }
-  { TitleTextBox TextBox TextBox
-    Name = "TitleTextBox"
-    MoveScaled(38,2,35,4)
-    Visible = False
-  }
   { ArtistTextBox TextBox TextBox
     Name = "ArtistTextBox"
     MoveScaled(38,8,35,4)
@@ -21,13 +16,6 @@
   { AlbumTextBox TextBox TextBox
     Name = "AlbumTextBox"
     MoveScaled(38,14,35,4)
-  }
-  { TitleTextLabel TextLabel
-    MoveScaled(19,2,18,4)
-    Visible = False
-    Font = Font["Bold"]
-    Text = ("Title:")
-    Alignment = Align.Left
   }
   { TextLabel2 TextLabel
     MoveScaled(19,8,18,4)

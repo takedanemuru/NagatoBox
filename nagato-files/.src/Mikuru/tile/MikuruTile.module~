@@ -13,10 +13,11 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
             Case .TypeDirectory
                 Return $directoryTile(argPath, argSelected)
             Case .TypeImage
-                Return NagatoThumbnailImage(argPath, argSelected)
+                Return NagatoThumbnailImage.Get(argPath, argSelected)
             Case .TypePdf
-                Return NagatoThumbnailPdf(argPath, argSelected)
+                Return NagatoThumbnailPdf.Get(argPath, argSelected)
             Case .TypeApplication
+                Debug argPath
                 Return $applicationTile(argPath, argSelected)
             Default
                 Return $fileTile(argPath, argSelected)

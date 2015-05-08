@@ -150,7 +150,12 @@ End
 
 Public Sub Asakura_Drag()
     
-    Drag.Icon = MikuruIcon.Get("arrow-right")
-    Me._$grids.Drag("dummy", "text/nagato-music-items")
+    
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Debug "DROPPED"
     
 End

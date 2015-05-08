@@ -10,7 +10,6 @@ Private $lastFetched As Date
 Private $durationFetcher As New NagatoDurationFetcher
 
 Event MusicEnd
-Event State
 Event FetchTags(argTags As Variant[])
 Event FetchDuration(argDuration As Float)
 
@@ -99,7 +98,7 @@ End
 
 Public Sub Player_State()
     
-    Raise State
+    Raise State($player.State)
     
 End
 
@@ -119,9 +118,7 @@ End
 
 Private Function ProgressRate_Read() As Float
 
-    Debug $durationFetcher($player.Duration)
-
-    'If $durationFetcher($player.Duration) Then Raise FetchDuration($player.Duration)
+    If $durationFetcher($player.Duration) Then Raise FetchDuration($player.Duration)
 
     Return ($player.Position / $player.Duration)
 

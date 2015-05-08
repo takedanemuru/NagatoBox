@@ -10,7 +10,6 @@ Private $lastFetched As Date
 Private $durationFetcher As New NagatoDurationFetcher
 
 Event MusicEnd
-Event State
 Event FetchTags(argTags As Variant[])
 Event FetchDuration(argDuration As Float)
 
@@ -94,12 +93,6 @@ End
 Public Sub Player_End()
     
     Raise MusicEnd
-    
-End
-
-Public Sub Player_State()
-    
-    Raise State
     
 End
 

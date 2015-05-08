@@ -12,6 +12,20 @@ Event Moved
 Event Changed
 Event SelectionMoved(argSelection As Integer[])
 
+Public Function GetPathsFromIndexes(argIndexes As Integer[]) As String[]
+    
+    Dim yukiResult As New String[]
+    Dim yukiIndex As Integer
+    
+    For Each yukiIndex In argIndexes
+        If yukiIndex >= $musicElements.Count Then Continue
+        yukiResult.Add($musicElements[yukiIndex].Path)
+    Next
+    
+    Return yukiResult
+    
+End
+
 Public Function SetPath(argPath As String) As Boolean
     
     If $musicElements.FindIndex(argPath) = -1 Then  'Array.Find()  shall retun -1 when argument is not found

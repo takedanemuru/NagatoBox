@@ -23,6 +23,15 @@ Private Sub paintIcon(argIcon As Picture)
     
 End
 
+Private Sub paintFileName(argText As String)
+    
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, Me.TextWidth)
+    Dim yukiY As Integer = Me.TileSize - yukiHeight - Me.Margin
+    
+    Paint.RichText(argText, Me.Margin, yukiY, Me.TextWidth, yukiHeight, Align.Center)
+    
+End
+
 Public Function _GetBaseImage(argSelected As Boolean) As Image
     
     Dim yukiColor As Integer = (IIf(argSelected, Color.Red, Me.BaseColor) + 16777216 * 192)
@@ -34,19 +43,18 @@ End
 
 Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As String, argMode As Integer) As Picture
     
-    Dim yukiHeight As Integer
+'    Dim yukiHeight As Integer
     
     With Paint
         .Begin(argBaseImage)
         .Brush = .Color(Color.White)
         .Font.Bold = True
-        yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
-        NagatoLabelPainterFacade.Paint(argMode)
+        'yukiHeight = .Font.RichTextHeight(argText, Me.TextWidth)
         paintIcon(argIcon)
-        .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
+        paintFileName(argText)
+        ' .RichText(argText, Me.Margin, Me.TileSize - yukiHeight - Me.Margin, Me.TextWidth, yukiHeight, Align.Center)
         .Fill()
         NagatoLabelPainterFacade.Paint(argMode)
-        'paintHeaderLabel(argMode)
         .End()
     End With
     

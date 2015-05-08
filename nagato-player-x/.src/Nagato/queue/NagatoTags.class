@@ -58,14 +58,12 @@ End
 
 Public Sub SetTag(argPath As String)
     
-    If NagatoDBMedia.HasLibrary(argPath) Then
-        setTagFromDatabase(argPath)
-    Else
-        setTitle(argPath)
-        setArtist(argPath)
-        setAlbum(argPath)
-        $duration = MikuruDuration.GetDuration(argPath)
-    End If
+    If NagatoDBMedia.HasLibrary(argPath) Then setTagFromDatabase(argPath)
+        
+    If $title = "" Then setTitle(argPath)
+    If $artist = "" Then setArtist(argPath)
+    If $album = "" Then setAlbum(argPath)
+    If $duration = 0 Then $duration = MikuruDuration.GetDuration(argPath)
     
 End
 

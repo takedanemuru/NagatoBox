@@ -12,6 +12,7 @@ Private Sub refreshData()
     
     Dim yukiRowIndex As Integer
     Dim yukiElement As NagatoMusicElement
+    Dim yukiCurrentRow As Integer
     
     If Not Object.IsValid(Me._$grids) Then Return
     
@@ -19,7 +20,7 @@ Private Sub refreshData()
     
     For yukiRowIndex = 0 To NagatoQueue.Count - 1
         Inc Me._$grids.Rows.Count
-        $playMark.Set(yukiRowIndex)
+        If $playMark.Set(yukiRowIndex) Then yukiCurrentRow = yukiRowIndex
         yukiElement = NagatoQueue[yukiRowIndex]
         Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, yukiElement.Title)
         Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, yukiElement.Artist)
@@ -27,6 +28,8 @@ Private Sub refreshData()
         Me._SetGridDataRight(Me._$grids.Rows.Max, ColumnTime, MikuruFloatToTime(yukiElement.Duration))
         If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
     Next
+    
+    If yukiCurrentRow > 0 Then Me._$grids[yukiCurrentRow, 0].EnsureVisible()
     
 Catch
     Return
@@ -52,7 +55,7 @@ End
 
 Public Sub _ContextMenu() ' override
     
-    Dim yukiMenu As New NagatoContectMenuCurrent As "ContextMenu"
+    Dim yukiMenu As New NagatoContextMenuCurrent As "ContextMenu"
     
     yukiMenu.PopUp()
     
@@ -108,9 +111,16 @@ Public Sub RefreshSelection(argIndexes As Integer[])
     
 End
 
-Public Sub ContextMenu_Delete()
+Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
+    
+   If Me._$grids.Rows.Selection.Count = 0 Then Return
    
-   NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
+    Select Case argSignal
+        Case MikuruSignal.ListDelete
+            NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
+        Case MikuruSignal.ListEdit
+            NagatoQueue.EditIndexes(Me._$grids.Rows.Selection)
+    End Select
     
 End
 
@@ -127,20 +137,6 @@ Public Sub _ColumnClick(argIndex As Integer) 'override
     If argIndex = 0 Then Return
     
     NagatoQueue.Sort(argIndex, Me._$sortAscend)
-    
-End
-
-Public Sub RefreshPlaymark()
-    
-    Dim yukiRowIndex As Integer
-    
-    If Not Object.IsValid(Me._$grids) Then Return
-    
-    For yukiRowIndex = 0 To Me._$grids.Rows.Max
-        If $playMark.Set(yukiRowIndex) Then
-            Me._$grids[yukiRowIndex, 0].EnsureVisible()
-        End If
-    Next
     
 End
 
