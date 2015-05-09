@@ -3,6 +3,7 @@
 Private $edited As Boolean
 Private $albumartUnloaded As Boolean = True
 Private $observer As Observer
+Private $albumartPath As String
 
 Private $paths As String[]
 
@@ -11,9 +12,9 @@ Private Sub initializeWidgets()
     AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($paths[0])
     ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($paths[0])
     
-    If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
-        AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
-    End If
+    ' If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
+    '     AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
+    ' End If
     
 End
 
@@ -34,7 +35,9 @@ Private Sub setNewTag()
         With MikuruId3v2TagEdit
             If ArtistTextBox.Text <> "" Then .NewArtist(yukiPath, ArtistTextBox.Text)
             If AlbumTextBox.Text <> "" Then .NewAlbum(yukiPath, AlbumTextBox.Text)
+            If Not $albumartUnloaded Then MikuruEyeD3.SetPicture(yukiPath, $albumartPath)
             'NagatoDBMedia.SetLibrary(yukiPath, TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
+            Debug yukiPath
         End With
     Next
     
@@ -42,11 +45,11 @@ End
 
 Private Sub setNewPicture()
     
-    ' If AlbumTextBox.Text = "" Then Return
-    ' If ArtistTextBox.Text = "" Then Return
-    ' If $albumartUnloaded Then Return
-    ' 
-    ' NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
+    If AlbumTextBox.Text = "" Then Return
+    If ArtistTextBox.Text = "" Then Return
+    If $albumartUnloaded Then Return
+    
+    NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
     
 End
 
@@ -73,10 +76,10 @@ End
 
 Public Sub ApplyButton_Click()
     
-    ' setNewTag()
-    ' setNewPicture()
-    ' 
-    ' Me.Close(MikuruDialog.ResponseApply)
+    setNewTag()
+    setNewPicture()
+    
+    Me.Close(MikuruDialog.ResponseApply)
     
 End
 
@@ -104,6 +107,7 @@ Public Sub Asakura_Select(argFullPath As String)
     
     AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(yukiSize, yukiSize).Picture
     $albumartUnloaded = False
+    $albumartPath = argFullPath
     
 Catch
     Return

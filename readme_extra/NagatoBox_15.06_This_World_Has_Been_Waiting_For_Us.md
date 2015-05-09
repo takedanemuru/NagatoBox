@@ -56,11 +56,11 @@
 + improve library database
     + ~~startup initialization~~
     + ~~addition~~
-    + edit
+    + ~~edit~~
     + ~~playing fetch~~
     + ~~duration fetch~~
         + automatic reload
-+ bulk tagging
++ ~~bulk tagging~~
 
 ## nagato-session
 

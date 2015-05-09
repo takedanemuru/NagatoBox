@@ -79,8 +79,6 @@ Public Sub ApplyButton_Click()
     
     If Not $albumartUnloaded Then MikuruEyeD3.SetPicture($targetPath, $albumartPath)
     
-    Debug $albumartPath
-    
     Raise TagChanged
     
 End

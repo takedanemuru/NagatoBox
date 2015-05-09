@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $pictureSelector As NagatoPictureSelector
+Private $pictureSelector As FileChooser
 
 Event Select(argFullPath As String)
 
@@ -8,13 +8,27 @@ Public Sub Form_Open()
 
     Me.Center()
 
-    $pictureSelector = New NagatoPictureSelector(Me) As "PictureSelector"
+    $pictureSelector = New FileChooser(Me) As "PictureSelector"
+
+    With $pictureSelector
+        .Expand = True
+        .ShowPreview = True
+        .FileView.IconSize = 128
+        .Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture files"]
+    End With
 
 End
 
 Public Sub PictureSelector_Select(argFullPath As String)
     
     Raise Select(argFullPath)
+    Me.Close(1)
+    
+End
+
+Public Sub PictureSelector_Activate()
+    
+    Raise Select($pictureSelector.SelectedPath)
     Me.Close(1)
     
 End

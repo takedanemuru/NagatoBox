@@ -41,12 +41,6 @@ Private Sub setNewTag()
     
 End
 
-Private Sub setNewPicture()
-    
-    ' TO DO
-    
-End
-
 Public Sub SetPath(argPath As String)
     
     $edited = False
@@ -73,7 +67,6 @@ Public Sub ApplyButton_Click()
     If $targetPath = "" Then Return
 
     setNewTag()
-    setNewPicture()
     
     Me.Close(MikuruDialog.ResponseApply)
     
@@ -101,7 +94,6 @@ End
 Public Sub Asakura_Select(argFullPath As String)
     
     $albumartPath = argFullPath
-    'MikuruEyeD3.SetPicture($targetPath, argFullPath)
     AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(14 * MikuruUX.Grid, 14 * MikuruUX.Grid).Picture
     $albumartUnloaded = False
     

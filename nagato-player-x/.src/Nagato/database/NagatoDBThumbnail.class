@@ -17,6 +17,8 @@ Private Sub checkAndCreateThumbnailTable()
     
     Dim yukiTable As Table
     
+    If Not Me._$connection.Opened Then Me._$connection.Open()
+    
     If Not Me._$connection.Tables.Exist(TableThumbnail) Then
         yukiTable = Me._$connection.Tables.Add(TableThumbnail)
         yukiTable.Fields.Add(ColumnId, db.Serial)
