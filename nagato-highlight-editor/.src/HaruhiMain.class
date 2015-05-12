@@ -6,11 +6,11 @@ End
 
 Public Sub Form_Open()
 
-    Dim yukiFile As String = File.Load("nagato_slide.css")
+    Dim yukiFile As String = File.Load("SampleText")
 
     Application.MainWindow = Me
 
-    MainEditor.Highlight = Highlight.CSS
+    MainEditor.Highlight = Highlight.Gambas
     MainEditor.TabSize = 4
     MainEditor.Text = yukiFile
     MainEditor.Font.Size = 15

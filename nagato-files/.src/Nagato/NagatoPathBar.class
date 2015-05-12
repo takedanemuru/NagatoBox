@@ -7,6 +7,7 @@ Property Read DirectoryPath As String
 Property Read FilePath As String
 
 Private $pathBar As ButtonBox
+Private $fileCompletion As FileCompletion
 
 Event Changed
 
@@ -19,22 +20,28 @@ Private Sub initializeButtonBox(argContainer As Container)
         .Picture = MikuruIcon.Get("button-rotate-ccw")
     End With
     
+    $fileCompletion = New FileCompletion($pathBar.Editor) As "PathBarCompletion"
+    
 End
 
 Public Sub SetPath(argPath As String)
     
     If Not Exist(argPath) Then Return
     
-    Object.Lock($pathBar)
-        $pathBar.Text = argPath
-    Object.Unlock($pathBar)
+    Object.Lock($fileCompletion)
+        Object.Lock($pathBar)
+            $pathBar.Text = argPath
+        Object.Unlock($pathBar)
+    Object.Unlock($fileCompletion)
     
 End
 
 Public Sub SetUnexistPath(argPath As String)
     
     Object.Lock($pathBar)
-        $pathBar.Text = argPath
+        Object.Lock($pathBar)
+            $pathBar.Text = argPath
+        Object.Unlock($pathBar)
     Object.Unlock($pathBar)
     
 End
@@ -42,12 +49,6 @@ End
 Public Sub _new(argContainer As Container)
     
     initializeButtonBox(argContainer)
-    
-End
-
-Public Sub PathBar_Change()
-    
-    If NagatoSettings.PathbarAutomaticSearch Then Raise Changed
     
 End
 
@@ -60,6 +61,12 @@ End
 Public Sub PathBar_Click()
     
     PathBar_Activate()
+    
+End
+
+Public Sub PathBar_Change()
+    
+    $fileCompletion.Open()
     
 End
 

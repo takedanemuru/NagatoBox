@@ -57,7 +57,6 @@ Private Sub refreshChildMenus()
         Me._AddMenu(("New Tab"), .ViewNewTab)
         Object.New("NagatoMenuItemShowHidden", [Me._$rootMenu, Me._$path])
         Me._AddMenu(("Force reload"), .ViewForceReload, MikuruIcon.Get("button-synchronize"))
-        Object.New("NagatoMenuItemPathbarAutoSearch", [Me._$rootMenu, Me._$path])
             Me._AddMenu("", 0) ' Spacer
         addCreateMenu()
             Me._AddMenu("", 0) ' Spacer
