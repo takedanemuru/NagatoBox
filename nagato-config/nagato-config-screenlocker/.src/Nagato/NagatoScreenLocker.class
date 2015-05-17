@@ -45,8 +45,8 @@ End
 Private Sub initializeImage()
     
     $image = Desktop.Screenshot().Image
-    $image = $image.Blur(1)
-    $image = $image.Blur(1)
+    $image = $image.Blur(5)
+    '$image = $image.Blur(1)
     
 End
 
@@ -75,7 +75,8 @@ End
 
 Private Sub paintNagato()
     
-    Dim yukiPicture As Picture = Picture.Load("Pictures/render_yuki.png")
+    Dim yukiPicture As Picture = Picture.Load("Pictures/nagato_yuki_render_3_by_abrufun-d6ufyvo.png")
+    'Dim yukiPicture As Picture = Picture.Load("Pictures/__yuki_nagato___by_tokito_ishida-d5zz3ft.png")
     
     Paint.DrawPicture(yukiPicture, 0, Max(0, Screen.H - yukiPicture.H))
     
