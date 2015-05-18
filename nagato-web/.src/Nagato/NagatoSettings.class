@@ -5,6 +5,8 @@ Create Static
 Property HomePage As String
 Property DownloadDirectory As String
 Property WebFontName As String
+Property PersonaPath As String
+Property PersonaY As Integer
 
 Private $settings As New Settings
 
@@ -62,5 +64,33 @@ Private Sub WebFontName_Write(Value As String)
 
     $settings["web/font"] = Value
     $settings.Save()
+
+End
+
+Private Function PersonaPath_Read() As String
+
+    Return $settings["persona/path", "pictures/default_persona.png"]
+    
+End
+
+Private Sub PersonaPath_Write(Value As String)
+
+    $settings["persona/path"] = Value
+    $settings.Save()
+
+End
+
+Private Function PersonaY_Read() As Integer
+
+    Return $settings["persona/y", 0]
+
+End
+
+Private Sub PersonaY_Write(Value As Integer)
+
+    $settings["persona/y"] = Value
+    $settings.Save()
+
+    If Not Error Then MikuruPersona.Reset()
 
 End

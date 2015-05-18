@@ -83,8 +83,6 @@ End
 Public Sub WebView_Load()
     
     If $webView.Progress = 1 Then
-        Debug $webView.Url
-        Debug $webView.Title
         Raise MenuEventWithArgs(NagatoMenuPipe.WebLoaded, [$webView.Url, $webView.Title])
     End If
     

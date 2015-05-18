@@ -93,6 +93,8 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                     NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
                 Endif
             End With
+        Case NagatoMenuPipe.ViewEditBookmark
+            LeftPanel.Hidden = False
     End Select
     
 End
@@ -151,8 +153,6 @@ Public Sub Webs_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[]
     Select Case argEvent
         Case NagatoMenuPipe.WebLoaded
             $menubar.SetUrl(argArguments[0])
-            'NagatoDBWeb.PushHistory(argArguments[0], argArguments[1])
-            'Me.Title = argArgument[1]
         Case NagatoMenuPipe.WebProgress
             $persona.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
     End Select
@@ -187,8 +187,6 @@ Public Sub Persona_MenuEventWithArgs(argEvent As Integer, argArguments As Varian
     
     Select Case argEvent
         Case NagatoMenuPipe.PersonaReorder
-            Debug argArguments[0]
-            Debug argArguments[1]
             If argArguments[0] = argArguments[1] Then Return
             $webs.Reorder(argArguments[0], argArguments[1])
     End Select

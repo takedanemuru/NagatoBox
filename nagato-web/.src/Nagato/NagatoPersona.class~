@@ -7,6 +7,7 @@ Private $drawingArea As DrawingArea
 Private $tabs As NagatoTabs
 Private $painter As NagatoTabPainter
 Private $message As New NagatoMessage As "Message"
+Private $lock As Boolean = False
 
 Private Sub drawMessage()
     
@@ -51,14 +52,14 @@ End
 
 Public Sub Refresh()
     
-    $drawingArea.Refresh()
+    Try $drawingArea.Refresh()
     
 End
 
 Public Sub SetText(argText As String)
     
     $message.SetText(argText)
-    $drawingArea.Refresh()
+    Try $drawingArea.Refresh()
     
 End
 
@@ -79,13 +80,19 @@ End
 
 Public Sub Asakura_Draw()
     
+    If $lock Then Return
+    
+    $lock = True
+    
     Paint.Begin($drawingArea)
-        Paint.DrawImage(Image.Load("pictures/default_persona.png"), 0, -88)
+        Paint.DrawImage(MikuruPersonaImage(), 0, NagatoSettings.PersonaY)
         drawMessage()
         $tabs.Refresh()
         drawTabs()
         drawPlusButton()
     Paint.End()
+    
+    $lock = False
     
 End
 
@@ -126,6 +133,27 @@ Public Sub Asakura_MouseDrag()
         Drag.Icon = Stock["large/down"]
         $drawingArea.Drag(CStr(Mouse.StartX), "text/nagato-web")
     Endif
+    
+End
+
+Public Sub Asakura_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Up
+            NagatoSettings.PersonaY = NagatoSettings.PersonaY + Mouse.Delta * 16
+            $drawingArea.Refresh()
+        Case Key.Down
+            NagatoSettings.PersonaY = NagatoSettings.PersonaY - Mouse.Delta * 16
+            $drawingArea.Refresh()
+    End Select
+    
+End
+
+Public Sub Asakura_MouseWheel()
+    
+    NagatoSettings.PersonaY = NagatoSettings.PersonaY + Mouse.Delta * 8
+    
+    $drawingArea.Refresh()
     
 End
 

@@ -45,7 +45,7 @@ Private Sub addBookmarkItems(argPrentMenu As Menu, argCategory As String)
     For Each yukiResult
         If yukiResult[NagatoDBWeb.ColumnUserDefinedPageName] = "" Then Continue
         yukiMenu = New Menu(argPrentMenu) As "BookmarkItemMenu"
-        yukiMenu.Text = MikuruText.GetCollapsedText(yukiResult[NagatoDBWeb.ColumnPageName], 360)
+        yukiMenu.Text = MikuruText.GetCollapsedText(yukiResult[NagatoDBWeb.ColumnUserDefinedPageName], 360)
         yukiMenu.Tag = yukiResult[NagatoDBWeb.ColumnUrl]
     Next
     

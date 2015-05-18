@@ -6,6 +6,8 @@ Private Const MenuName As String = "StarMenu"
 
 Private $rootMenu As Menu
 
+Private Enum MenuNone, MenuChangePersona, MenuAbout, MenuQuit
+
 Private Sub initializeRootMenu(argButton As MenuButton)
     
     $rootMenu = New Menu(HaruhiMain)  
@@ -15,44 +17,24 @@ Private Sub initializeRootMenu(argButton As MenuButton)
     
 End
 
-Private Sub addFontMenu()
+Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName As String)
     
-    Dim yukiMenu As New Menu($rootMenu) As "FontMenu"
-    
-    With yukiMenu
-        .Text = ("Select WebView Font")
-        .Picture = MikuruIcon.Get("web")
-    End With
-    
-End
-
-Private Sub addAboutMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "AboutMenu"
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
     
     With yukiMenu
-        .Text = ("About nagato-web")
-        .Picture = MikuruIcon.Get("star")
-    End With
-    
-End
-
-Private Sub addQuitMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "QuitMenu"
-    
-    With yukiMenu
-        .Text = ("Quit")
-        .Picture = MikuruIcon.Get("button-cross")
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
     End With
     
 End
 
 Private Sub initializeCategoryMenus()
     
-    'addFontMenu()
-    addAboutMenu()
-    addQuitMenu()
+    addMenu(("Change Persona"), MenuChangePersona, "image")
+        addMenu("", MenuNone)
+    addMenu(("About"), MenuAbout, "information-balloon")
+    addMenu(("Quit"), MenuQuit, "button-power")
     
 End
 
@@ -63,22 +45,15 @@ Public Sub _new(argButton As MenuButton)
     
 End
 
-Public Sub FontMenu_Click()
+Public Sub MenuItem_Click()
     
-    If Not Dialog.SelectFont() Then
-        NagatoSettings.WebFontName = Dialog.Font.Name
-    Endif
-    
-End
-
-Public Sub AboutMenu_Click()
-    
-    HaruhiAbout.ShowDialog()
-    
-End
-
-Public Sub QuitMenu_Click()
-    
-    If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then HaruhiMain.Close()
+    Select Case Last.Tag
+        Case MenuChangePersona
+            
+        Case MenuAbout
+            HaruhiAbout.ShowDialog()
+        Case MenuQuit
+            If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then HaruhiMain.Close()
+    End Select
     
 End

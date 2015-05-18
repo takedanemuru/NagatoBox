@@ -28,7 +28,7 @@ End
 
 Private Sub addEditBookmarkMenu()
     
-    Dim yukiMenu As New Menu($rootMenu) As "EditBookmarkMenu"
+    Dim yukiMenu As New Menu($rootMenu) As "BookmarkEditMenu"
     
     With yukiMenu
         .Text = ("Edit bookmark")
@@ -85,6 +85,12 @@ End
 Public Sub BookmarkCurrentPageMenu_Click()
     
     Raise MenuEvent(NagatoMenuPipe.UrlAddBookmark)
+    
+End
+
+Public Sub BookmarkEditMenu_Click()
+    
+    Raise MenuEvent(NagatoMenuPipe.ViewEditBookmark)
     
 End
 
