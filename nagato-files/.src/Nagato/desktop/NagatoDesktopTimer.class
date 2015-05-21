@@ -1,10 +1,18 @@
 ' Gambas class file
 
+Create Static
+
 Private $timer As Timer
 
 Event Timer
 
-Public Sub _new()
+Public Sub Stop()
+    
+    $timer.Stop()
+    
+End
+
+Public Sub Start()
     
     $timer = New Timer As "Timer"
     

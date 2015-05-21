@@ -1,0 +1,30 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+
+Public Sub _new(argContainer As Container, argExpand As Boolean)
+    
+    $drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
+    
+    With $drawingArea
+        .Expand = argExpand
+        .Background = Color.Orange
+        .Width = 16
+    End With
+    
+    X11Systray.Show($drawingArea.Handle)
+    
+End
+
+Public Sub ClockDrawingArea_Draw()
+
+    
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    
+    
+End

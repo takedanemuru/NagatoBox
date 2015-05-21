@@ -5,6 +5,21 @@
 + upload to gambas.org if possible
 + more reliable iconing (Application theme) system is needed.
 
+### ride on the dead coaster
+
++ integrate panel functionality to nagato-files -d and **drop nagato-navigator**
+    + fortune (popup starmenu only)
+    + arrange systray icons more correctly
+    + sort tasks by id
+    + new settings class for panel
+    + starmenu for panel
+    + dialog for clock format
+    + context menu for pager
+    + context menu for tasks
+
++ integrate theming functionalities to nagato-session
+    + dbus channel
+
 ## nagato-archiver
 
 + ~~now can archive/extract tar.bz2 (application/x-bzip-compressed-tar)~~
@@ -39,6 +54,7 @@
 + calendar tile for desktop ?
 + ~~new : thumbnail for pdf~~
 + new interface for media conversion
++ ~~new : file path completion~~
 
 ## nagato-lookup
 
@@ -65,11 +81,13 @@
 ## nagato-session
 
 + ~~port to sdl2.sound~~
++ new : DBus channel for GTK+/Qt theme 
 
 ## nagato-web
 
 + ~~"New Directory" ContextMenu for LeftPane~~
 + ~~add dailymotion search~~
++ ~~new : persona theme selection~~
 
 ## nagato-writer
 

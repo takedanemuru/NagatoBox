@@ -5,6 +5,16 @@ Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 
 Private $desktop As NagatoDesktop
 Private $panel As Panel
+Private $panel2 As HBox
+
+Private Sub setNetWmStrut()
+    
+    Dim yukiProperty As String = "_NET_WM_STRUT"
+    Dim yukiValue As String = Subst$("0,0,0,&1", 24) 
+    
+    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue) Wait
+    
+End
 
 Private Sub initializeForm()
     
@@ -26,15 +36,40 @@ Private Sub initializePanel()
     
 End
 
+Private Sub initializePanel2()
+    
+    Dim yukiPanel As NagatoPanel
+    
+    $panel2 = New HBox(Me)
+    
+    With $panel2
+        .Expand = False
+        .H = 24
+    End With
+    
+    yukiPanel = New NagatoPanel($panel2) As "Panel"
+    
+End
+
 Public Sub Form_Open()
+
+    NagatoDesktopTimer.Start()
 
     Application.MainWindow = Me
     initializeForm()
     $desktop = New NagatoDesktop(Me)
-    initializePanel()
+    'initializePanel()
+    initializePanel2()
 
+    setNetWmStrut()
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
 
     If Not Error Then NagatoDBus.Register()
 
+End
+
+Public Sub Form_Close()
+    
+    NagatoDBus.Unregister()
+    
 End

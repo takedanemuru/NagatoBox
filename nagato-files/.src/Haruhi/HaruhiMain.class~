@@ -5,6 +5,15 @@ Private $rightPane As NagatoRightPane
 Private $mainPane As NagatoMainPane
 Private $observer As Observer
 
+Private Sub setNetWmStrut()
+    
+    Dim yukiProperty As String = "_NET_WM_STRUT"
+    Dim yukiValue As String = Subst$("0,0,0,&1", Me.H) 
+    
+    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue)
+    
+End
+
 Public Sub Form_Open()
     
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
@@ -15,13 +24,13 @@ Public Sub Form_Open()
     $mainPane.SetInitialPath(NagatoArguments.StartupPath)
     
     Application.MainWindow = Me
-    NagatoSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
     
 End
 
 Public Sub Form_Close()
     
-    NagatoSettings.SaveFormSettings(Me)
+    NagatoSettingsForm.Save(Me)
     
     Quit 0
     

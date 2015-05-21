@@ -6,7 +6,7 @@ Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 16
 
 Private $iconView As IconView
-Private $timer As New NagatoDesktopTimer As "DesktopTimer"
+Private $observer As Observer
 
 Private Function getBaseImage() As Image
     
@@ -33,7 +33,7 @@ End
 
 Public Sub Stop()
     
-    Object.Lock($timer)
+    Try NagatoDesktopTimer.Stop()
     
 End
 
@@ -42,9 +42,11 @@ Public Sub _new(argIconView As IconView)
     $iconView = argIconView
     $iconView.Add(NagatoDesktop.SpecialKeyClock, "", getIcon())
     
+    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    
 End
 
-Public Sub DesktopTimer_Timer()
+Public Sub Asakura_Timer()
     
     If Not $iconView.Exist(NagatoDesktop.SpecialKeyClock) Then Return
     
