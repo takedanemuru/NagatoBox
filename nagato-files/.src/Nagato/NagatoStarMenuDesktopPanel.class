@@ -1,0 +1,57 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public _$rootMenu As Menu
+
+Public Enum MenuPersona
+
+Private Sub initializeRootMenu(argButton As MenuButton)
+    
+    Me._$rootMenu = New Menu(HaruhiDesktop) As "RootMenu"
+    Me._$rootMenu.Name = "DesktopPanelStarMenu"
+    argButton.Menu = "DesktopPanelStarMenu"
+    
+End
+
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture, Optional argShortcut As String)  
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+        If argShortcut Then .Shortcut = argShortcut
+    End With
+    
+End
+
+Private Sub refreshChildMenus()
+    
+    Me._AddMenu(("YUKI.N > ..."), MenuPersona, MikuruIcon.Get("question-balloon"))
+    
+End
+
+Public Sub _new(argButton As MenuButton)
+    
+    initializeRootMenu(argButton)
+    Me._AddMenu("", 0) ' as dummy menu
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    Me._$rootMenu.Children.Clear()
+    refreshChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case MenuPersona
+            HaruhiPersona.EnsureVisible()
+    End Select
+    
+End

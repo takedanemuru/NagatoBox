@@ -8,11 +8,11 @@
 ### ride on the dead coaster
 
 + integrate panel functionality to nagato-files -d and **drop nagato-navigator**
-    + fortune (popup starmenu only)
+    + ~~fortune (popup starmenu only)~~
     + arrange systray icons more correctly
-    + sort tasks by id
-    + new settings class for panel
-    + starmenu for panel
+    + ~~sort tasks by id~~
+    + ~~new settings class for panel~~
+    + ~~starmenu for panel~~
     + dialog for clock format
     + context menu for pager
     + context menu for tasks

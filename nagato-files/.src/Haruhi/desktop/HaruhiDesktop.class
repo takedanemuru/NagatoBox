@@ -3,14 +3,21 @@
 Private Const Type As String = "_NET_WM_WINDOW_TYPE"
 Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 
+Private Const Margin As Integer = 2
+
 Private $desktop As NagatoDesktop
-Private $panel As Panel
-Private $panel2 As HBox
+
+Private $container As HBox
+Private $starButton As NagatoMenuDesktopPanelButton
+Private $tasks As NagatoPanelTasks
+Private $systray As NagatoPanelSystray
+Private $pager As NagatoPanelPager
+Private $clock As NagatoPanelClock
 
 Private Sub setNetWmStrut()
     
     Dim yukiProperty As String = "_NET_WM_STRUT"
-    Dim yukiValue As String = Subst$("0,0,0,&1", 24) 
+    Dim yukiValue As String = Subst$("0,0,0,&1", NagatoSettingsPanel.Height) 
     
     Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue) Wait
     
@@ -29,16 +36,23 @@ End
 
 Private Sub initializePanel2()
     
-    Dim yukiPanel As NagatoPanel
+    $container = New HBox(Me)
     
-    $panel2 = New HBox(Me)
-    
-    With $panel2
+    With $container
         .Expand = False
-        .H = 24
+        .H = NagatoSettingsPanel.Height
+        .Background = NagatoSettingsPanel.Bacground
     End With
     
-    yukiPanel = New NagatoPanel($panel2) As "Panel"
+End
+
+Private Sub setPanelItems()
+    
+    $starButton = New NagatoMenuDesktopPanelButton($container)
+    $tasks = New NagatoPanelTasks($container, True)
+    '$systray = New NagatoPanelSystray($container, False)
+    $pager = New NagatoPanelPager($container, False)
+    $clock = New NagatoPanelClock($container, False)
     
 End
 
@@ -50,7 +64,7 @@ Public Sub Form_Open()
     initializeForm()
     $desktop = New NagatoDesktop(Me)
     initializePanel2()
-
+    setPanelItems()
     setNetWmStrut()
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
 

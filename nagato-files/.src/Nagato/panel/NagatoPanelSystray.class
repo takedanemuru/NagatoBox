@@ -3,6 +3,20 @@
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 
+Public Sub ArrangeTray() ' X11systray cannot call private sub.
+
+    Dim yukiIndex As Integer
+    Dim yukiX As Integer = 2
+    
+    For yukiIndex = 0 To X11Systray.Count - 1
+        With X11Systray[yukiIndex]
+            .Move(yukiX, 4)
+            yukiX += 22
+        End With
+    Next
+  
+End
+
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
     $drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
@@ -10,21 +24,25 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
     With $drawingArea
         .Expand = argExpand
         .Background = Color.Orange
-        .Width = 16
+        .Width = 64
     End With
     
     X11Systray.Show($drawingArea.Handle)
     
-End
-
-Public Sub ClockDrawingArea_Draw()
-
+    Me.ArrangeTray()
     
+    '$observer = New Observer(NagatoDesktopTimer) As "Asakura"
     
 End
 
 Public Sub Asakura_Timer()
     
+    'Me.ArrangeTray()
     
-    
+End
+
+Static Public Sub X11Systray_Arrange()
+
+    Me.ArrangeTray()
+  
 End

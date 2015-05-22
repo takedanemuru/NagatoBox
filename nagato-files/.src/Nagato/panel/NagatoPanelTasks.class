@@ -10,7 +10,7 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
     
     With $drawingArea
         .Expand = argExpand
-        .Background = Color.Orange
+        .Background = NagatoSettingsPanel.Bacground
         .Width = 200
     End With
     

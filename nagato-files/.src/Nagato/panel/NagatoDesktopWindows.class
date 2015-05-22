@@ -6,17 +6,49 @@ Property Read Max As Integer
 Private $totalWidth As Integer
 Private $windows As New DesktopWindow[]
 
-Private Sub reset()
+Private Function getWindowIdPerDesktop(argDesktop As Integer) As Integer[]
     
+    Dim yukiResult As New Integer[]
     Dim yukiDesktopWindow As DesktopWindow
-    
-    $windows.Clear()
     
     For Each yukiDesktopWindow In Desktop.Windows
         If yukiDesktopWindow.SkipTaskbar Then Continue
-        If yukiDesktopWindow.Id = HaruhiDesktop.Id Then Continue
-        $windows.Add(yukiDesktopWindow)
+        If yukiDesktopWindow.Desktop <> argDesktop Then Continue
+        yukiResult.Add(yukiDesktopWindow.Id)
     Next
+    
+    Return yukiResult.Sort()
+    
+End
+
+Private Function pushWindow(argWindows As DesktopWindow[], argDesktop As Integer) As DesktopWindow[]
+    
+    Dim yukiWindowId As Integer
+    Dim yukiWindow As DesktopWindow
+
+    For Each yukiWindowId In getWindowIdPerDesktop(argDesktop)
+        yukiWindow = New DesktopWindow(yukiWindowId)
+        If yukiWindow.SkipTaskbar Then Continue
+        argWindows.Add(yukiWindow)
+    Next
+    
+    Return argWindows
+    
+End
+
+Private Sub reset()
+    
+    Dim yukiDesktopIndex As Integer
+    Dim yukiWindows As New DesktopWindow[]
+    
+    $windows.Clear()
+    Desktop.Windows.Refresh()
+    
+    For yukiDesktopIndex = 0 To Desktop.Count - 1
+        yukiWindows = pushWindow(yukiWindows, yukiDesktopIndex)
+    Next
+    
+    $windows = yukiWindows.Copy()
     
 End
 

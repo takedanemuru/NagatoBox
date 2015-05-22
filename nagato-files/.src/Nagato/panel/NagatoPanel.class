@@ -12,7 +12,7 @@ Public Sub _new(argContainer As Container)
     $container = argContainer
     
     $tasks = New NagatoPanelTasks($container, True)
-    $systray = New NagatoPanelSystray($container, False)
+    '$systray = New NagatoPanelSystray($container, False)
     $pager = New NagatoPanelPager($container, False)
     $clock = New NagatoPanelClock($container, False)
     

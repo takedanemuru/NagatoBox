@@ -32,7 +32,7 @@ End
 
 Public Sub Asakura_Timer()
     
-    $text = Format$(Now(), NagatoSettingsDesktop.ClockFormat)
+    $text = Format$(Now(), NagatoSettingsPanel.ClockFormat)
     $drawingArea.W = Max(HaruhiMain.Font.RichTextWidth($text) + 32, $drawingArea.W)
     
     $drawingArea.Refresh()

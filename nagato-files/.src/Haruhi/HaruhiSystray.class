@@ -1,0 +1,52 @@
+' Gambas class file
+
+Private Const Margin As Integer = 2
+
+Private $drawingArea As NagatoDrawingArea
+
+Public Sub _new()
+    
+    $drawingArea = New NagatoDrawingArea(Me)
+    
+End
+
+Public Sub Form_Open()
+
+    'X11Systray.Show(dwgSystemTray.Handle)
+    
+    X11Systray.Show($drawingArea.Handle)
+    
+End
+
+Public Sub ArrangeTray() ' X11systray cannot call private sub.
+
+    Dim yukiIndex As Integer
+    Dim yukiX As Integer = Margin
+    
+    Debug "arrange it !!"
+    
+    For yukiIndex = 0 To X11Systray.Count - 1
+        With X11Systray[yukiIndex]
+            .Move(yukiX, Margin, .IconW, .IconH)
+            yukiX += .IconW + Margin
+            Debug yukiX
+        End With
+    Next
+  
+End
+
+Public Sub Form_Resize()
+  
+    Debug "resize"
+  
+    Me.ArrangeTray()
+
+End
+
+Static Public Sub X11Systray_Arrange()
+
+    Debug "arrange"
+
+    Me.ArrangeTray()
+  
+End
