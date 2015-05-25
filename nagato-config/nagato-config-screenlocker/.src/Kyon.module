@@ -4,7 +4,7 @@ Public Sub Main()
     
     MikuruArgs.Parsing()
     
-    If MikuruArgs.Start Then
+    If MikuruArgs.StartIdle Then
         With NagatoSettings
             Try Exec ["xautolock", "-time", .ScreenSaverIdleMinute, "-locker", Quote$(.LockerCommand)]
         End With
@@ -12,7 +12,7 @@ Public Sub Main()
         Try Exec ["xautolock", "-disable"]
     Else If MikuruArgs.Enable Then
         Try Exec ["xautolock", "-enable"]
-    Else If MikuruArgs.Show Then
+    Else If MikuruArgs.LockNow Then
         NagatoScreenLocker.Show()
     Else 'no options 
         HaruhiMain.Show()

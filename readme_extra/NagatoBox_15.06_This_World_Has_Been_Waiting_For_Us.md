@@ -18,7 +18,7 @@
     + context menu for tasks
 
 + integrate theming functionalities to nagato-session
-    + dbus channel
+    + ~~dbus channel~~
 
 ## nagato-archiver
 
@@ -37,6 +37,12 @@
 ## nagato-code-view
 
 + ~~new: reload menu~~
++ new : recent files menu
+
+## nagato-config-screenlocker
+
++ ~~new : desktop entry file for "lock now" and "start idle"~~
++ ~~fix : fix e-mail address.~~
 
 ## nagato-dictionary
 
@@ -81,7 +87,7 @@
 ## nagato-session
 
 + ~~port to sdl2.sound~~
-+ new : DBus channel for GTK+/Qt theme 
++ ~~new : DBus channel for GTK+/Qt theme~~
 
 ## nagato-web
 

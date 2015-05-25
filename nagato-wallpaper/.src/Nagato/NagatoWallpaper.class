@@ -22,10 +22,4 @@ Public Sub SetLast()
         Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     End If
     
-    ' With NagatoSettings
-    '     If Exist(MikuruHidden.PathOriginalImage) Then
-    '         Me.Set(MikuruHidden.PathOriginalImage, .LastColor, .LastMode)
-    '     Endif
-    ' End With
-    
 End

@@ -12,8 +12,7 @@ End
 Public Sub Main()
 
     NagatoArguments.Parsing()
-    
-    Application.Theme = "Numix-Circle"
+    MikuruTheme.Set()
     
     If NagatoArguments.PipeMenu Then
         NagatoMenuCache3.Activate()

@@ -29,21 +29,14 @@ Finally
     
 End
 
-Public Sub Set()
-    
-    ' If NagatoInterimStatus.WidgetTheme Then
-    '     $configGtk2["", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
-    '     $configGtk3["Settings", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
-    '     $configQt["Qt", "style"] = "GTK+"
-    ' Endif
-    
-    If NagatoInterimStatus.IconTheme Then
-        $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
-        $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
-    Endif
-    
-    
-End
+' Public Sub Set()
+'     
+'     If NagatoInterimStatus.IconTheme Then
+'         $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+'         $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+'     Endif
+'     
+' End
 
 Public Sub _new()
     

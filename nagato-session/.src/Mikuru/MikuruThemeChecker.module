@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Function Check(argPath As String) As Boolean
+    
+    If Not Exist(argPath &/ "gtk-2.0") Then Return False
+    If Not Exist(argPath &/ "gtk-3.0") Then Return False
+    
+    Return True
+    
+End
+

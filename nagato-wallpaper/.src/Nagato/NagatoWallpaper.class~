@@ -7,8 +7,6 @@ Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Int
     If argPath = "" Then Return
     If Not Exist(argPath) Then Return
     
-    Debug argBackground
-    
     MikuruOriginalImage.SetPath(argPath)
     MikuruModefiedImage.Set(argRenderMode)
     
@@ -20,10 +18,14 @@ End
 
 Public Sub SetLast()
     
-    With NagatoSettings
-        If Exist(MikuruHidden.PathOriginalImage) Then
-            Me.Set(MikuruHidden.PathOriginalImage, .LastColor, .LastMode)
-        Endif
-    End With
+    If Not NagatoDBus.isNagatoDesktopActivated() Then
+        Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    End If
+    
+    ' With NagatoSettings
+    '     If Exist(MikuruHidden.PathOriginalImage) Then
+    '         Me.Set(MikuruHidden.PathOriginalImage, .LastColor, .LastMode)
+    '     Endif
+    ' End With
     
 End

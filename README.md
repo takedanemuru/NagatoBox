@@ -90,7 +90,7 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 |[nagato-writer](./readme_extra/nagato-writer)		|markdown editor
 |nekomimi-clock		|clock
 |haramaru-radio-player		|downloader/player for "haramaru radio"
-|ohana clock		|Bonbori-Matsuri is waiting you.
+|ohana clock		|Bonbori-Matsuri is waiting for you.
 |yuki			|interface for humanoid interface
 
 ## To Do

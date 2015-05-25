@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Ready As String
+Property Read IconTheme As String
+
+Public Sub Test() As Boolean
+    
+    Return True
+    
+    ' Try HaruhiDesktop.Show()
+    ' 
+    ' If Not Error Then Return True
+    
+Finally
+    Return False
+    
+End
+
+Private Function Ready_Read() As String
+
+    Return "YUKI.N >  Can you see this ?"
+
+End
+
+Private Function IconTheme_Read() As String
+
+    Return NagatoConfigFacade.IconTheme
+
+Catch
+    Debug Error.Text
+    Return "UNKNOWN"
+
+End

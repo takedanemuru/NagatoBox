@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-screenlock-now
+Comment=lock screen now
+Exec=/usr/bin/nagato-config-screenlocker -l
+Icon=/usr/share/pixmaps/nagato-config-screenlocker.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Nagato;System;Utility;
