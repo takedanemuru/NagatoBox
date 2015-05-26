@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $windows As New NagatoDesktopWindows
+Private $observer As Observer
+Private $systemMonitor As New NagatoSystemMonitorAccess
+
+Public Sub _new(argContainer As Container, argExpand As Boolean)
+    
+    $drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
+    
+    With $drawingArea
+        .Expand = argExpand
+        .Background = NagatoSettingsPanel.Bacground
+        .Width = 200
+    End With
+    
+    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    
+    $systemMonitor.Activate()
+    
+End
+
+Public Sub ClockDrawingArea_Draw()
+
+    Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Text($systemMonitor.GetText(), 0, 0, $drawingArea.W, $drawingArea.H, Align.Left)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub ClockDrawingArea_MouseDown()
+    
+    
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    If Not DBus.Session.Applications.Exist("org.gambas.dataovermind.systemmonitor") Then Return
+    
+    $drawingArea.Refresh()
+    
+End

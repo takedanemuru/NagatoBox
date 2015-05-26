@@ -1,0 +1,26 @@
+' Gambas class file
+
+Property Read History As Float[]
+
+Private $length As Integer
+Private $history As Float[]
+
+Public Sub Push(argData As Float)
+    
+    $history.Add(argData)
+    If $history.Count > $length Then $history.Remove(0)
+    
+End
+
+Public Sub _new()
+    
+    $length = 1000
+    $history = New Float[]
+    
+End
+
+Private Function History_Read() As Float[]
+
+    Return $history
+
+End

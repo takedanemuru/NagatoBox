@@ -1,0 +1,96 @@
+' Gambas class file
+
+Property Read Items As NagatoRssItem[]
+Property Read Title As String
+
+Private $rssDocument As New NagatoRssDocument
+Private $xmlDocument As New XmlDocument
+Private $items As New NagatoRssItem[]
+Private $buffer As String
+Private $title As String = ""
+
+Event Finished(argRssFeed As NagatoRssFeed2)
+Event Error
+
+Private Sub setTitle()
+    
+    Dim yukiElements As XmlElement[] = $xmlDocument.GetElementsByTagName("title")
+    
+     If yukiElements.Count > 0 Then
+         'Debug yukiElements[0].ChildNodes[0].Value
+         Try $title = yukiElements[0].ChildNodes[0].Value
+     Endif
+    
+End
+
+Private Sub setItems()
+    
+    Dim yukiItem As XmlElement
+    Dim yukiRssItem As NagatoRssItem
+    
+    $xmlDocument.FromString($buffer)
+    
+    setTitle()
+    
+    For Each yukiItem In $xmlDocument.GetElementsByTagName("item")
+        yukiRssItem = New NagatoRssItem(yukiItem)
+        If yukiRssItem.Valid Then $items.Add(yukiRssItem)
+    Next
+    
+    Raise Finished(Me)
+    
+Catch
+    Raise Error
+    
+End
+
+Public Sub _new(argUrl As String)
+    
+    Dim yukiHttpClient As New HttpClient As "HttpClient"
+    
+    With yukiHttpClient
+        .URL = argUrl
+        .Async = True
+        .Timeout = 60
+        .Get()
+    End With
+    
+End
+
+Public Sub HttpClient_Read()
+    
+    Dim yukiBuffer As String
+    
+    yukiBuffer = Read #Last, Lof(Last)
+    
+    $buffer &= yukiBuffer
+    
+End
+
+Public Sub HttpClient_Error()
+    
+    Raise Error
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    If $rssDocument.Make($buffer) Then 
+        setItems()
+    Else
+        Raise Error
+    End If
+    
+End
+
+Private Function Items_Read() As NagatoRssItem[]
+
+    Return $items
+
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End

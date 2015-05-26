@@ -15,7 +15,8 @@ Public Sub Main()
     ' this call activate NagatoDBSymbol, so do not delete.
     If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." 
 
-    Application.Theme = NagatoSettingsAppearance.IconTheme
+    'Application.Theme = NagatoSettingsAppearance.IconTheme
+    MikuruTheme.Set()
     
     NagatoArguments.Parsing()
     

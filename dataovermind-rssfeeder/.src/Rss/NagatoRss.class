@@ -1,0 +1,73 @@
+' Gambas class file
+
+Create Static
+
+Property Read Feeds As NagatoRssFeed2[]
+Property Read Count As Integer
+
+Private $feeds As New NagatoRssFeed2[]
+Private $count As Integer
+
+Event Ready 
+
+Private Sub setFeeds()
+    
+    Dim yukiLine As String
+    Dim yukiFeed As NagatoRssFeed2
+    
+    Try $feeds.Clear()
+    
+    For Each yukiLine In NagatoSettings.FeedLines
+        yukiFeed = New NagatoRssFeed2(yukiLine) As "RssFeed"
+    Next
+    
+End
+
+Private Sub checkFeedCount()
+    
+    Inc $count
+    If $count = NagatoSettings.FeedLines.Count Then Raise Ready
+    
+End
+
+Public Sub Refresh()
+    
+    setFeeds()
+    
+End
+
+Public Sub _get(argFeedIndex As Integer) As NagatoRssFeed2
+    
+    Return $feeds[argFeedIndex]
+    
+End
+
+Public Sub RssFeed_Finished(argFeed As NagatoRssFeed2)
+    
+    'Debug argFeed.Items.Count
+    
+    If argFeed.Items.Count > 0 Then 
+        Try $feeds.Add(argFeed)
+    End If
+    
+    checkFeedCount()
+    
+End
+
+Public Sub RssFeed_Error()
+    
+    checkFeedCount()
+    
+End
+
+Private Function Feeds_Read() As NagatoRssFeed2[]
+
+    Return $feeds
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $feeds.Count
+
+End

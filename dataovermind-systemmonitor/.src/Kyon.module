@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub Main()
+
+    If NagatoDBus.Activated() Then Return
+
+    NagatoDBus.Register()
+
+    NagatoSystemObserver.Refresh()
+
+End

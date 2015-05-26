@@ -1,0 +1,40 @@
+' Gambas class file
+
+Create Static
+
+Property FeedLines As Collection
+
+Private $settings As New Settings
+
+Public Sub AddFeed(argTitle As String, argUrl As String)
+    
+    Dim yukiCollection As Collection = Me.FeedLines.Copy()
+    
+    If yukiCollection.Exist(argTitle) Then Return
+    
+    yukiCollection.Add(argUrl, argTitle)
+    Me.FeedLines = yukiCollection
+    
+End
+
+Public Sub RemoveFeed(argTitle As String)
+    
+    Dim yukiCollection As Collection = Me.FeedLines.Copy()
+    
+    yukiCollection.Remove(argTitle)
+    Me.FeedLines = yukiCollection
+    
+End
+
+Private Function FeedLines_Read() As Collection
+
+    Return $settings["rss/feed_lines", NagatoRssFeedLines.GetDefault()]
+
+End
+
+Private Sub FeedLines_Write(Value As Collection)
+
+    $settings["rss/feed_lines"] = Value
+    $settings.Save()
+
+End

@@ -1,0 +1,25 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.7.1
+Title=tfei-sysmon
+Startup=Kyon
+Icon=pictures/information-balloon.png
+Version=0.0.1
+Component=gb.dbus
+Component=gb.settings
+Description="tfei for system monitoring"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=Integrated Data Thought Entity
+Address=takeda.nemuru@yandex
+Url=takedanemuru.github.io
+License=S.O.S. License
+PackageName=dataovermind-systemmonitor-0.0.1
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"System"
+Groups=ubuntu:"admin"

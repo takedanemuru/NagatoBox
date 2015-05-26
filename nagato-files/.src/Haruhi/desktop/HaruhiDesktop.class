@@ -9,6 +9,7 @@ Private $desktop As NagatoDesktop
 
 Private $container As HBox
 Private $starButton As NagatoMenuDesktopPanelButton
+Private $main As Object
 Private $tasks As NagatoPanelTasks
 Private $systray As NagatoPanelSystray
 Private $pager As NagatoPanelPager
@@ -49,7 +50,8 @@ End
 Private Sub setPanelItems()
     
     $starButton = New NagatoMenuDesktopPanelButton($container)
-    $tasks = New NagatoPanelTasks($container, True)
+    '$tasks = New NagatoPanelTasks($container, True)
+    $main = New NagatoPanelSystemMonitor($container, True)
     '$systray = New NagatoPanelSystray($container, False)
     $pager = New NagatoPanelPager($container, False)
     $clock = New NagatoPanelClock($container, False)

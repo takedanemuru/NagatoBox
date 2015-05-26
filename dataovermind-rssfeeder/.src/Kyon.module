@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Main()
+
+    NagatoRss.Refresh()
+
+    NagatoDBus.Register()
+
+End

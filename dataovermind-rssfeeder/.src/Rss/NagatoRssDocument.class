@@ -1,0 +1,24 @@
+' Gambas class file
+
+Property Read Document As XmlDocument
+
+Private $xmlDocument As XmlDocument
+
+Public Function Make(argData As String) As Boolean
+    
+    $xmlDocument = New XmlDocument
+    
+    Try $xmlDocument.FromString(argData)
+    
+    If Not Error Then Return True
+    
+Catch
+    Return False
+    
+End
+
+Private Function Document_Read() As XmlDocument
+
+    Return $xmlDocument
+
+End
