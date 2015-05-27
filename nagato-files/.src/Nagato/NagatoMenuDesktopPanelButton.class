@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuPanelWidget
 
+Event ChangeMode(argMode As Integer)
+
 Public Sub _Initialize()
     
     Dim yukiButton As New MenuButton(Me._$container)
@@ -14,6 +16,12 @@ Public Sub _Initialize()
         .Border = False
     End With
     
-    yukiMenu = New NagatoStarMenuDesktopPanel(yukiButton)
+    yukiMenu = New NagatoStarMenuDesktopPanel(yukiButton) As "MenuItem"
+    
+End
+
+Public Sub MenuItem_ChangeMode(argIndex As Integer)
+    
+    Raise ChangeMode(argIndex)
     
 End

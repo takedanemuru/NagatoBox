@@ -1,0 +1,24 @@
+' Gambas class file
+
+Private Const ServiceName As String = "org.gambas.nagato.player.x"
+Private Const ObjectPath As String = "/org/nagato/player/x"
+Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatointerface"
+
+Private $player As DBusProxy
+
+Public Function GetText() As String
+    
+    Dim yukiText As String = "YUKI.N > now playing... "
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
+        yukiText &= ($player.Title & Space$(4))
+        yukiText &= ($player.Artist & Space$(4))
+        yukiText &= ($player.Album & Space$(4))
+        yukiText &= ($player.ProgressInText)
+        Return yukiText
+    Else
+        Return "YUKI.N > nagato-player-x is not activated"
+    End If
+    
+End

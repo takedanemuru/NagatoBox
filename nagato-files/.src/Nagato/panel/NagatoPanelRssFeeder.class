@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoDesktopPanelContent
+
+Private $rssFeeder As NagatoDBusAccessRssFeeder
+Private $text As String
+Private $count As Integer
+Private $timer As Timer 
+Private $cursor As String = "_"
+
+Private Function getText() As String
+    
+    Dim yukiText As String
+    
+    If $text = "" Then $text = $rssFeeder.GetDescription()
+    
+    Inc $count
+    
+    yukiText = String.Left($text, $count) & $cursor
+    
+    If $count > String.Len($text) Then $cursor = IIf(Odd(CInt($count / 2)), "", "_")
+    
+    If $count > String.Len($text) + 10 Then
+        $cursor = "_"
+        $text = ""
+        $count = 0
+        $rssFeeder.Next()
+    Endif
+    
+    Return yukiText
+    
+End
+
+Public Sub _new(argContainer As Container, argExpand As Boolean)
+    
+    $rssFeeder = New NagatoDBusAccessRssFeeder
+    
+    Me._Initialize(argContainer, argExpand)
+    
+    $timer = New Timer As "RssTimer"
+    $timer.Delay = 100
+    $timer.Enabled = True
+    
+End
+
+Public Sub ClockDrawingArea_Draw()
+
+    Paint.Begin(Me._$drawingArea)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Text(getText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub ClockDrawingArea_MouseDown()
+    
+    
+    
+End
+
+Public Sub RssTimer_Timer()
+    
+    If Not Me.Visible Then Return
+    
+    $rssFeeder.Activate()
+    
+    Me._$drawingArea.Refresh()
+    
+End

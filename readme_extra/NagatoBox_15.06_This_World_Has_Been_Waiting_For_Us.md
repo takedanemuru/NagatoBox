@@ -13,8 +13,8 @@
     + ~~sort tasks by id~~
     + ~~new settings class for panel~~
     + ~~starmenu for panel~~
-    + dialog for clock format
-    + context menu for pager
+    + ~~dialog for clock format~~
+    + ~~context menu for pager~~
     + context menu for tasks
 
 + integrate theming functionalities to nagato-session

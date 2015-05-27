@@ -4,9 +4,11 @@ Create Static
 
 Property Read Feeds As NagatoRssFeed2[]
 Property Read Count As Integer
+Property Read Ready As Boolean
 
 Private $feeds As New NagatoRssFeed2[]
 Private $count As Integer
+Private $ready As Boolean = False
 
 Event Ready 
 
@@ -26,7 +28,10 @@ End
 Private Sub checkFeedCount()
     
     Inc $count
-    If $count = NagatoSettings.FeedLines.Count Then Raise Ready
+    If $count = NagatoSettings.FeedLines.Count Then
+        Raise Ready
+        $ready = True
+    End If
     
 End
 
@@ -69,5 +74,11 @@ End
 Private Function Count_Read() As Integer
 
     Return $feeds.Count
+
+End
+
+Private Function Ready_Read() As Boolean
+
+    
 
 End

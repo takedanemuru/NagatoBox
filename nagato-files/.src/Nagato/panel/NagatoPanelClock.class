@@ -30,6 +30,14 @@ Public Sub ClockDrawingArea_Draw()
     
 End
 
+Public Sub ClockDrawingArea_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuPanelClock(HaruhiDesktop, "")
+    
+    yukiMenu.Popup()
+    
+End
+
 Public Sub Asakura_Timer()
     
     $text = Format$(Now(), NagatoSettingsPanel.ClockFormat)

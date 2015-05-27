@@ -6,6 +6,7 @@ Create Static
 
 Property Read Ready As String
 Property Read FeedCount As Integer
+Property Read FeedReady As Boolean
 
 Public Sub Stop() As Boolean
     
@@ -53,5 +54,11 @@ End
 Private Function FeedCount_Read() As Integer
 
     Return NagatoRss.Count
+
+End
+
+Private Function FeedReady_Read() As Boolean
+
+    Return NagatoRss.Ready
 
 End

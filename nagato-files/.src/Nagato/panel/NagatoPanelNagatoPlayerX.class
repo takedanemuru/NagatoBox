@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoDesktopPanelContent
+
+Private $access As NagatoDBusAccessNagatoPlayerX
+
+Public Sub _Refresh()
+    
+    Me._$drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container, argExpand As Boolean)
+    
+    $access = New NagatoDBusAccessNagatoPlayerX
+    
+    Me._Initialize(argContainer, argExpand)
+    
+End
+
+Public Sub ClockDrawingArea_Draw()
+
+    Paint.Begin(Me._$drawingArea)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Text($access.GetText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
+        Paint.Fill()
+    Paint.End()
+    
+End
+
+Public Sub ClockDrawingArea_MouseDown()
+    
+    
+    
+End

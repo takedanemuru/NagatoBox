@@ -1,0 +1,17 @@
+' Gambas class file
+
+Public Enum ModeTasks, ModeTaskManager, ModeRss, ModePlayer
+
+Private $objectB As Object
+Private $object As Object
+
+Public Sub ChangeMode(argMode As Integer)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $objectB = New NagatoPanelTasks(argContainer, True)
+    $object = New NagatoPanelSystemMonitor(argContainer, True)
+    
+End

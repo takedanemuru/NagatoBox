@@ -4,6 +4,7 @@ Inherits NagatoContextMenu
 
 Public Sub _ClickAction()
     
+    HaruhiClockFormat.SetTarget(HaruhiClockFormat.TargetDesktop)
     HaruhiClockFormat.ShowDialog() 
     
 End

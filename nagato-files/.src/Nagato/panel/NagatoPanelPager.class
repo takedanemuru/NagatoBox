@@ -36,7 +36,17 @@ End
 
 Public Sub ClockDrawingArea_MouseDown()
     
+    If Mouse.Right Then Return
+    
     Desktop.Current = Mouse.X Div 22
+    
+End
+
+Public Sub ClockDrawingArea_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuPanelPager(HaruhiDesktop, "")
+    
+    yukiMenu.Popup()
     
 End
 

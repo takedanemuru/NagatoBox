@@ -6,6 +6,8 @@ Public _$rootMenu As Menu
 
 Public Enum MenuPersona
 
+Event ChangeMode(argMode As Integer)
+
 Private Sub initializeRootMenu(argButton As MenuButton)
     
     Me._$rootMenu = New Menu(HaruhiDesktop) As "RootMenu"
@@ -30,6 +32,13 @@ End
 Private Sub refreshChildMenus()
     
     Me._AddMenu(("YUKI.N > ..."), MenuPersona, MikuruIcon.Get("question-balloon"))
+        Me._AddMenu("", 0)
+    With NagatoDesktopPanelContainer
+        Me._AddMenu(("Tasks"), .ModeTasks, MikuruIcon.Get("question-balloon"))
+        Me._AddMenu(("System Monitor"), .ModeTaskManager, MikuruIcon.Get("question-balloon"))
+        Me._AddMenu(("RSS"), .ModeRss, MikuruIcon.Get("question-balloon"))
+        Me._AddMenu(("Music"), .ModePlayer, MikuruIcon.Get("question-balloon"))
+    End With
     
 End
 
@@ -52,6 +61,8 @@ Public Sub MenuItem_Click()
     Select Case Last.Tag
         Case MenuPersona
             HaruhiPersona.EnsureVisible()
+        Default
+            Raise ChangeMode(Last.Tag)
     End Select
     
 End

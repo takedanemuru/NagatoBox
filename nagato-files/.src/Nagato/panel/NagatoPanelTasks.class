@@ -1,20 +1,22 @@
 ' Gambas class file
 
-Private $drawingArea As DrawingArea
-Private $windows As New NagatoDesktopWindows
-Private $observer As Observer
+Inherits NagatoDesktopPanelContent
+
+Private $windows As NagatoDesktopWindows
+
+Public Sub _Refresh()
+    
+    $windows.Refresh(Me._$drawingArea.W)
+    
+    Me._$drawingArea.Refresh()
+    
+End
 
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
-    $drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
+    $windows = New NagatoDesktopWindows
     
-    With $drawingArea
-        .Expand = argExpand
-        .Background = NagatoSettingsPanel.Bacground
-        .Width = 200
-    End With
-    
-    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    Me._Initialize(argContainer, argExpand)
     
 End
 
@@ -23,13 +25,13 @@ Public Sub ClockDrawingArea_Draw()
     Dim yukiCount As Integer
     Dim yukiText As String
 
-    Paint.Begin($drawingArea)
+    Paint.Begin(Me._$drawingArea)
         Paint.Font.Bold = True
         For yukiCount = 0 To $windows.Max
             Paint.Brush = Paint.Color(Color.White)
             yukiText = MikuruCollapsedText.Get($windows[yukiCount].Name, Paint.Font, $windows.Width - 32)
             Try Paint.DrawImage($windows[yukiCount].Icon.Stretch(16, 16), $windows.Width * yukiCount, 4)
-            Paint.RichText(yukiText, $windows.Width * yukiCount + 24, 0, $windows.Width, $drawingArea.H, Align.Left)
+            Paint.RichText(yukiText, $windows.Width * yukiCount + 24, 0, $windows.Width, Me._$drawingArea.H, Align.Left)
             Paint.Fill()
         Next
     Paint.End()
@@ -42,13 +44,5 @@ Public Sub ClockDrawingArea_MouseDown()
     
     Try Desktop.Current = $windows[yukiIndex].Desktop
     Try $windows[yukiIndex].Activate()
-    
-End
-
-Public Sub Asakura_Timer()
-    
-    $windows.Refresh($drawingArea.W)
-    
-    $drawingArea.Refresh()
     
 End

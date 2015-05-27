@@ -24,11 +24,6 @@ Public Sub Start()
 End
 
 Public Sub Timer_Timer()
-    
-    If $timer.Delay = 10 Then
-        If 20 > CFloat(Format$(Now(), "u")) Then $timer.Delay = 1000
-        Return 
-    Endif
      
      Raise Timer
     
