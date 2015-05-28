@@ -14,7 +14,8 @@ Public Sub _Initialize(argContainer As Container, argExpand As Boolean)
     With Me._$drawingArea
         .Expand = argExpand
         .Background = NagatoSettingsPanel.Bacground
-        .Width = 200
+        If Not argExpand Then .Width = 200
+        If argExpand Then .Visible = False
     End With
     
     Me._$observer = New Observer(NagatoDesktopTimer) As "Asakura"

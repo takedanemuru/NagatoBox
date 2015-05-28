@@ -13,7 +13,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     NagatoSettings.LoadFormSettings(Me)
     
-    NagatoDBus.Register()
+    'NagatoDBus.Register()
     NagatoSystemObserver.Refresh()
     
     $systemGrids = New NagatoSystemGrids(SystemMonitorGrid) As "SystemGrids"
@@ -27,7 +27,7 @@ End
 
 Public Sub Form_Close()
     
-    NagatoDBus.Unregster()
+    'NagatoDBus.Unregster()
     NagatoSettings.SaveFormSettings(Me)
     
 End
@@ -63,6 +63,8 @@ Public Sub SystemGrids_Kill()
 End
  
 Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Debug argValues.Count
     
     Select Case argSignal
         Case NagatoStarMenu.MenuUnselect

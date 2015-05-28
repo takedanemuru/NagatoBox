@@ -1,17 +1,28 @@
 ' Gambas class file
 
-Public Enum ModeTasks, ModeTaskManager, ModeRss, ModePlayer
+Public Enum ModeNone, ModeTasks, ModeTaskManager, ModeRss, ModePlayer
 
-Private $objectB As Object
-Private $object As Object
+Private $tasks As NagatoPanelTasks
+Private $systemMonitor As NagatoPanelSystemMonitor
+Private $rssFeeder As NagatoPanelRssFeeder
+Private $player As NagatoPanelNagatoPlayerX
 
 Public Sub ChangeMode(argMode As Integer)
+    
+    $tasks.Visible = (argMode = ModeTasks)
+    $systemMonitor.Visible = (argMode = ModeTaskManager)
+    $rssFeeder.Visible = (argMode = ModeRss)
+    $player.Visible = (argMode = ModePlayer)
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    $objectB = New NagatoPanelTasks(argContainer, True)
-    $object = New NagatoPanelSystemMonitor(argContainer, True)
+    $tasks = New NagatoPanelTasks(argContainer, True)
+    $systemMonitor = New NagatoPanelSystemMonitor(argContainer, True)
+    $rssFeeder = New NagatoPanelRssFeeder(argContainer, True)
+    $player = New NagatoPanelNagatoPlayerX(argContainer, True)
+    
+    $tasks.Visible = True
     
 End

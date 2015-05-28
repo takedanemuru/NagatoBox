@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Main()
+
+    NagatoMenuCache3.Activate()
+
+    NagatoDBus.Register()
+
+End

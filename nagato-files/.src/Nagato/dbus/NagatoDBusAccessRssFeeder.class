@@ -1,14 +1,25 @@
 ' Gambas class file
 
 Property Read Activated As Boolean
+Property Read TitleLength As Integer
 
 Private Const ServiceName As String = "org.gambas.dataovermind.rssfeeder"
 Private Const ObjectPath As String = "/org/dataovermind/rssfeeder"
 Private Const InterfaceName As String = "org.gambas.dataovermind.rssfeeder.tfei"
 
 Private $proxy As DBusProxy
+Private $feedTitle As String
 Private $feedIndex As Integer = 0
 Private $itemIndex As Integer = 0
+
+Private Sub ensureTitle()
+    
+    If $feedTitle = "" Then $feedTitle = $proxy.GetFeedTitle($feedIndex) & " : "
+    
+Catch
+    Return
+    
+End
 
 Private Sub increaseFeedIndex()
     
@@ -17,6 +28,8 @@ Private Sub increaseFeedIndex()
     Inc $feedIndex
     
     If $proxy.FeedCount = $feedIndex Then $feedIndex = 0
+    
+    $proxy.GetFeedTitle($feedIndex)
     
 End
 
@@ -32,7 +45,9 @@ Public Function GetDescription() As String
     
     Dim yukiItem As String[] = $proxy.GetFeedItem($feedIndex, $itemIndex)
     
-    Return yukiItem[0]
+    ensureTitle()
+    
+    Return $feedTitle & yukiItem[0]
    
 Catch
     Debug Error.Text
@@ -55,5 +70,11 @@ Private Function Activated_Read() As Boolean
     If Not Object.IsValid($proxy) Then Return False 
 
     Return True
+
+End
+
+Private Function TitleLength_Read() As Integer
+
+    Return String.Len($feedTitle)
 
 End

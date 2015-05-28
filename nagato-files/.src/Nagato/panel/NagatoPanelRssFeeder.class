@@ -3,43 +3,50 @@
 Inherits NagatoDesktopPanelContent
 
 Private $rssFeeder As NagatoDBusAccessRssFeeder
+Private $cursorCount As NagatoRssText
 Private $text As String
-Private $count As Integer
 Private $timer As Timer 
-Private $cursor As String = "_"
+
+Private Sub setNewText()
+    
+    $text = $rssFeeder.GetDescription()
+    $cursorCount.NewText($text, $rssFeeder.TitleLength)
+    
+End
+
+Private Sub setFeedNext()
+    
+    $rssFeeder.Next()
+    setNewText()
+    
+End
 
 Private Function getText() As String
     
-    Dim yukiText As String
+    If $text = "" Then setNewText()
+    If $cursorCount.SetCountNext() Then setFeedNext()
+
+    Return $cursorCount.Text
     
-    If $text = "" Then $text = $rssFeeder.GetDescription()
+End
+
+Private Sub initializeRssTimer()
     
-    Inc $count
+    $timer = New Timer As "RssTimer"
     
-    yukiText = String.Left($text, $count) & $cursor
-    
-    If $count > String.Len($text) Then $cursor = IIf(Odd(CInt($count / 2)), "", "_")
-    
-    If $count > String.Len($text) + 10 Then
-        $cursor = "_"
-        $text = ""
-        $count = 0
-        $rssFeeder.Next()
-    Endif
-    
-    Return yukiText
+    With $timer
+        .Delay = 100
+        .Enabled = True
+    End With
     
 End
 
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
+    $cursorCount = New NagatoRssText
     $rssFeeder = New NagatoDBusAccessRssFeeder
-    
     Me._Initialize(argContainer, argExpand)
-    
-    $timer = New Timer As "RssTimer"
-    $timer.Delay = 100
-    $timer.Enabled = True
+    initializeRssTimer()
     
 End
 
@@ -51,12 +58,6 @@ Public Sub ClockDrawingArea_Draw()
         Paint.Text(getText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
         Paint.Fill()
     Paint.End()
-    
-End
-
-Public Sub ClockDrawingArea_MouseDown()
-    
-    
     
 End
 

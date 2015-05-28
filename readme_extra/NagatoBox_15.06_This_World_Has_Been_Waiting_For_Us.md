@@ -5,7 +5,7 @@
 + upload to gambas.org if possible
 + more reliable iconing (Application theme) system is needed.
 
-### ride on the dead coaster
+## ride on the dead coaster
 
 + integrate panel functionality to nagato-files -d and **drop nagato-navigator**
     + ~~fortune (popup starmenu only)~~
@@ -19,6 +19,12 @@
 
 + integrate theming functionalities to nagato-session
     + ~~dbus channel~~
+
+## dataovermind(s)
+
++ ~~new : dataovermind-systemmonitor~~
++ ~~new : dataovermind-rssfeeder~~
++ new : dataovermind-menucache ?
 
 ## nagato-archiver
 

@@ -13,7 +13,6 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     NagatoSettings.LoadFormSettings(Me)
     
-    NagatoDBus.Register()
     NagatoSystemObserver.Refresh()
     
     $systemGrids = New NagatoSystemGrids(SystemMonitorGrid) As "SystemGrids"
@@ -27,7 +26,6 @@ End
 
 Public Sub Form_Close()
     
-    NagatoDBus.Unregster()
     NagatoSettings.SaveFormSettings(Me)
     
 End
