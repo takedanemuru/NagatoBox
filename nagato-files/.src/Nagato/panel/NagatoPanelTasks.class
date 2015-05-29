@@ -4,6 +4,49 @@ Inherits NagatoDesktopPanelContent
 
 Private $windows As NagatoDesktopWindows
 
+Private Function getText(argDesktopWindow As DesktopWindow) As String
+    
+    Return MikuruCollapsedText.Get(argDesktopWindow.Name, Paint.Font, $windows.Width - 32)
+    
+End
+
+Private Function getTextRect(argCount As Integer) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = $windows.Width * argCount + 24
+        .Y = 0
+        .W = $windows.Width
+        .H = Me._$drawingArea.H
+    End With
+    
+    Return yukiRect
+    
+End
+
+Private Sub paintText(argCount As Integer)
+    
+    Dim yukiRect As Rect = getTextRect(argCount)
+    
+    With yukiRect
+        Paint.RichText(getText($windows[argCount]), .X, .Y, .W, .H, Align.Left)
+    End With
+    
+End
+
+Private Sub paintIcon(argCount As Integer)
+    
+    Dim yukiDesktopWindow As DesktopWindow = $windows[argCount]
+    
+    If yukiDesktopWindow.Icon Then
+        Paint.DrawImage(yukiDesktopWindow.Icon.Stretch(16, 16), $windows.Width * argCount, 4)
+    Else
+        Paint.DrawPicture(MikuruIcon.Get("question-balloon"), $windows.Width * argCount, 4)
+    End If
+    
+End
+
 Public Sub _Refresh()
     
     $windows.Refresh(Me._$drawingArea.W)
@@ -23,15 +66,13 @@ End
 Public Sub ClockDrawingArea_Draw()
 
     Dim yukiCount As Integer
-    Dim yukiText As String
 
     Paint.Begin(Me._$drawingArea)
         Paint.Font.Bold = True
         For yukiCount = 0 To $windows.Max
             Paint.Brush = Paint.Color(Color.White)
-            yukiText = MikuruCollapsedText.Get($windows[yukiCount].Name, Paint.Font, $windows.Width - 32)
-            Try Paint.DrawImage($windows[yukiCount].Icon.Stretch(16, 16), $windows.Width * yukiCount, 4)
-            Paint.RichText(yukiText, $windows.Width * yukiCount + 24, 0, $windows.Width, Me._$drawingArea.H, Align.Left)
+            paintIcon(yukiCount)
+            paintText(yukiCount)
             Paint.Fill()
         Next
     Paint.End()

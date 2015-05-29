@@ -2,6 +2,7 @@
 
 Public Enum ModeNone, ModeTasks, ModeTaskManager, ModeRss, ModePlayer
 
+Private $miniTask As NagatoPanelMiniTask
 Private $tasks As NagatoPanelTasks
 Private $systemMonitor As NagatoPanelSystemMonitor
 Private $rssFeeder As NagatoPanelRssFeeder
@@ -9,20 +10,22 @@ Private $player As NagatoPanelNagatoPlayerX
 
 Public Sub ChangeMode(argMode As Integer)
     
-    $tasks.Visible = (argMode = ModeTasks)
-    $systemMonitor.Visible = (argMode = ModeTaskManager)
-    $rssFeeder.Visible = (argMode = ModeRss)
-    $player.Visible = (argMode = ModePlayer)
+    $miniTask.Visible = Not (argMode = Me.ModeTasks)
+    $tasks.Visible = (argMode = Me.ModeTasks)
+    $systemMonitor.Visible = (argMode = Me.ModeTaskManager)
+    $rssFeeder.Visible = (argMode = Me.ModeRss)
+    $player.Visible = (argMode = Me.ModePlayer)
     
 End
 
 Public Sub _new(argContainer As Container)
     
+    $miniTask = New NagatoPanelMiniTask(argContainer)
     $tasks = New NagatoPanelTasks(argContainer, True)
     $systemMonitor = New NagatoPanelSystemMonitor(argContainer, True)
     $rssFeeder = New NagatoPanelRssFeeder(argContainer, True)
     $player = New NagatoPanelNagatoPlayerX(argContainer, True)
     
-    $tasks.Visible = True
+    Me.ChangeMode(Me.ModeTasks)
     
 End

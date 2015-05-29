@@ -1,0 +1,90 @@
+' Gambas class file
+
+Property Visible As Boolean
+
+Private $container As HBox
+Private $observer As Observer
+
+Private Function setIcon(argDesktopWindow As DesktopWindow) As Boolean
+    
+    Dim yukiIcon As New MenuButton($container) As "TaskIcon"
+    
+    With yukiIcon
+        .Border = False
+        If argDesktopWindow.Icon Then .Picture = argDesktopWindow.Icon.Stretch(16, 16).Picture
+        If Not argDesktopWindow.Icon Then .Picture = MikuruIcon.Get("question-balloon")
+        .Arrow = False
+        .W = $container.H
+        .Tooltip = argDesktopWindow.Name
+        .Tag = argDesktopWindow.Id
+    End With
+    
+    Return True
+    
+Catch
+    Return False
+    
+End
+
+Private Sub refresh()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    Dim yukiWidth As Integer = $container.H
+    
+    $container.Children.Clear()
+    
+    For Each yukiDesktopWindow In Desktop.Windows
+        If yukiDesktopWindow.SkipTaskbar Then Continue
+        If setIcon(yukiDesktopWindow) Then yukiWidth += $container.H
+    Next
+    
+    If yukiWidth <> $container.W Then $container.W = yukiWidth
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    
+    $container = New HBox(argContainer)
+    $container.Visible = False
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    If Not $container.Visible Then Return
+    
+    Desktop.Windows.Refresh()
+    refresh()
+    
+Catch
+    Return
+    
+End
+
+Public Sub TaskIcon_Click()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    yukiDesktopWindow = New DesktopWindow(Last.Tag)
+    
+    Desktop.Current = yukiDesktopWindow.Desktop
+    yukiDesktopWindow.Activate()
+    
+Catch
+    Return 
+    
+End
+
+Private Function Visible_Read() As Boolean
+
+    Return $container.Visible
+
+End
+
+Private Sub Visible_Write(Value As Boolean)
+
+    $container.Visible = Value
+
+End
