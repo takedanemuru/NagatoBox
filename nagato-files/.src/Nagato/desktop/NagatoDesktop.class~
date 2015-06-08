@@ -88,7 +88,8 @@ Public Sub Handler_KeyPress(argKeyCode As Integer)
         Case Key.Esc, 16777216
             Debug "escape"
             Clipboard.Clear()
-            '$mouse.ClearAll()
+            $mouse.ClearAll()
+            $icons.Refresh($mouse.SelectedPaths)
         Case Key.Delete
             Debug "delete"
             NagatoTrash.Delete($mouse.SelectedPaths)

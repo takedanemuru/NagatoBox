@@ -1,5 +1,8 @@
 ' Gambas class file
 
+Property Read All As NagatoAutostartFile[]
+Property Read Hiddens As String[]
+
 Private $desktopFiles As New NagatoAutostartFile[]
 
 Private Sub setDesktopFiles(argDirectory As String)
@@ -47,4 +50,23 @@ Public Sub _new(argDirectory As String)
     
     setDesktopFiles(argDirectory)
     
+End
+
+Private Function All_Read() As NagatoAutostartFile[]
+
+    Return $desktopFiles
+
+End
+
+Private Function Hiddens_Read() As String[]
+
+    Dim yukiHiddens As New String[]
+    Dim yukiAutostartFile As NagatoAutostartFile
+    
+    For Each yukiAutostartFile In $desktopFiles
+        If Not yukiAutostartFile.Required Then yukiHiddens.Add(yukiAutostartFile.Name)
+    Next
+
+    Return yukiHiddens
+
 End

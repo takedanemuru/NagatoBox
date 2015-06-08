@@ -1,17 +1,29 @@
 ' Gambas class file
 
-Public Enum ModeNone, ModeTasks, ModeTaskManager, ModeRss, ModePlayer
+Public Enum ModeNone, ModeTasks, ModeTasksTypeB, ModeTaskManager, ModeRss, ModePlayer
 
 Private $miniTask As NagatoPanelMiniTask
-Private $tasks As NagatoPanelTasks
+Private $tasksTypeA As NagatoPanelTasksTypeA
+Private $tasksTypeB As NagatoPanelTasksTypeB
 Private $systemMonitor As NagatoPanelSystemMonitor
 Private $rssFeeder As NagatoPanelRssFeeder
 Private $player As NagatoPanelNagatoPlayerX
 
+Private Function getMiniTaskVisible(argMode As Integer) As Boolean
+    
+    If argMode = Me.ModeTasks Or If argMode = Me.ModeTasksTypeB Then
+        Return False
+    Else
+        Return True
+    Endif
+    
+End
+
 Public Sub ChangeMode(argMode As Integer)
     
-    $miniTask.Visible = Not (argMode = Me.ModeTasks)
-    $tasks.Visible = (argMode = Me.ModeTasks)
+    $miniTask.Visible = getMiniTaskVisible(argMode)
+    $tasksTypeA.Visible = (argMode = Me.ModeTasks)
+    $tasksTypeB.Visible = (argMode = Me.ModeTasksTypeB)
     $systemMonitor.Visible = (argMode = Me.ModeTaskManager)
     $rssFeeder.Visible = (argMode = Me.ModeRss)
     $player.Visible = (argMode = Me.ModePlayer)
@@ -21,7 +33,8 @@ End
 Public Sub _new(argContainer As Container)
     
     $miniTask = New NagatoPanelMiniTask(argContainer)
-    $tasks = New NagatoPanelTasks(argContainer, True)
+    $tasksTypeA = New NagatoPanelTasksTypeA(argContainer, True)
+    $tasksTypeB = New NagatoPanelTasksTypeB(argContainer, True)
     $systemMonitor = New NagatoPanelSystemMonitor(argContainer, True)
     $rssFeeder = New NagatoPanelRssFeeder(argContainer, True)
     $player = New NagatoPanelNagatoPlayerX(argContainer, True)

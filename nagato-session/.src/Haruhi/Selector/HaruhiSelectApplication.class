@@ -1,0 +1,34 @@
+' Gambas class file
+
+Private Const ApplicationsDirectory As String = "/usr/share/applications"
+
+Private Sub addIcon(argFullPath As String)
+    
+    Dim yukiDesktopFile As New DesktopFile(argFullPath)
+    
+    With yukiDesktopFile
+        ApplicationsIconView.Add(.Path, .Name, yukiDesktopFile.GetIcon(64).Picture)
+    End With
+    
+End
+
+Private Sub initializeIconView()
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    For Each yukiPath In RDir(ApplicationsDirectory).Sort()
+        yukiFullPath = ApplicationsDirectory &/ yukiPath
+        If IsDir(yukiFullPath) Then Continue
+        If File.Ext(yukiFullPath) <> "desktop" Then Continue
+        addIcon(yukiFullPath)
+    Next
+    
+End
+
+Public Sub Form_Show()
+    
+    initializeIconView()
+    
+End
+

@@ -14,9 +14,10 @@ Private $hiddenByUser As New String[]
 Private Sub initializeGrid(argGrid As GridView)
     
     $grid = argGrid
+    $grid.Clear()
     
     With $grid
-        .Rows.Count = 1
+        .Rows.Count = 0
         .Columns.Count = 7
         .Columns[0].Width = Me.padding
         .Columns[1].Text = ("Application")
@@ -109,6 +110,7 @@ Private Sub setOtherProperties(argFullPath As String)
     Wend
     
     If Not yukiShow Then setBackgroundColor(Color.Orange, MikuruIcon.Get("construction"))
+    
     If $overriddens.Exist($grid[$grid.Rows.Max, 1].Text) Then 
         setBackgroundColor(Color.Red, MikuruIcon.Get("exclamation"))
     End If
@@ -122,9 +124,9 @@ Private Sub initializeData(argDir As String)
     Dim yukiPath As String
     
     For Each yukiPath In Dir(argDir).Sort()
+        Inc $grid.Rows.Count
         setApplicationName(File.BaseName(yukiPath))
         setOtherProperties(argDir &/ yukiPath)
-        Inc $grid.Rows.Count
     Next
     
 End

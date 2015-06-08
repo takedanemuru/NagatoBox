@@ -16,8 +16,17 @@ End
 
 Public Sub Execute()
     
-    $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
-    $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
+    Me.Initialize()
+    
+    ' $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
+    ' $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
     execAll()
 
+End
+
+Public Sub Initialize()
+    
+    $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
+    $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
+    
 End

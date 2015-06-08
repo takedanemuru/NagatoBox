@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public Const Margin As Integer = 32
+
+Public _$grids As GridView
+
+Public Sub _AdjustColumnWidth(argText As String, argColumnIndex As Integer)
+    
+    With Me._$grids
+        If .Font.TextWidth(argText) + Me.Margin > .Columns[argColumnIndex].Width Then
+            .Columns[argColumnIndex].Width = .Font.TextWidth(argText) + Me.Margin
+        Endif
+    End With
+    
+End
+
+Public Sub _SetBackgroundColor(argColor As Integer)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To Me._$grids.Columns.Max
+        With Me._$grids[Me._$grids.Rows.Max, yukiCount]
+            .Background = argColor
+            .Foreground = Color.White
+        End With
+    Next
+    
+End
+
+Public Sub _SetProperty(argIndex As Integer, argProperty As String, Optional argIconName As String)
+    
+    Me._$grids[Me._$grids.Rows.Max, argIndex].Text = argProperty
+    If argIconName Then Me._$grids[Me._$grids.Rows.Max, argIndex].Picture = MikuruIcon.Get(argIconName)
+    
+End

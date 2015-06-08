@@ -1,0 +1,42 @@
+' Gambas class file
+
+Private $autostartTabGlobal As NagatoTabHandlerGlobalAutostarts
+Private $autostartTabUser As NagatoTabHandlerUserAutostarts
+Private $autoStartFilesObserver As NagatoAutostartFilesObserver
+
+Private Sub initializeTabStrip()
+    
+    MainTabStrip.Index = 1
+    MainTabStrip.Text = Subst$(("User Specific Autostarts for &1"), User.Name)
+    
+End
+
+Public Sub _new()
+    
+    MikuruAutostartDirectory.Ensure()
+    MainTabStrip.Index = 0
+    $autostartTabGlobal = New NagatoTabHandlerGlobalAutostarts(MainTabStrip)
+    MainTabStrip.Index = 1
+    $autostartTabUser = New NagatoTabHandlerUserAutostarts(MainTabStrip)
+    NagatoTabLoginSound.Activate()
+    
+    $autoStartFilesObserver = New NagatoAutostartFilesObserver As "Asakura"
+    
+End
+
+Public Sub Form_Open()
+    
+    Application.MainWindow = Me
+    MikuruTheme.Set()
+    NagatoSettings.LoadFormSettings(Me)
+    initializeTabStrip()
+    
+End
+
+Public Sub Form_Close()
+    
+    $autostartTabGlobal.SaveSettings()
+    $autostartTabUser.SaveSettings()
+    NagatoSettings.SaveFormSettings(Me)
+    
+End

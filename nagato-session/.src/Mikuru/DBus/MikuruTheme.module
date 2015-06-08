@@ -1,0 +1,17 @@
+' Gambas module file
+
+Private Const ServiceName As String = "org.gambas.nagato.session"
+Private Const ObjectPath As String = "/org/nagato/session"
+Private Const InterfaceName As String = "org.gambas.nagato.session.nagatointerface"
+
+Public Sub Set() As String
+    
+    Dim yukiProxy As DBusProxy
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        yukiProxy = DBus[ServiceName][ObjectPath, InterfaceName]
+        Application.Theme = yukiProxy.IconTheme
+    Endif
+    
+End
+

@@ -1,0 +1,87 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Property Read MenuName As String
+
+Public _$rootMenu As Menu
+Public _$menuName As String 
+
+Private Sub addHelpMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "HelpMenu"
+    
+    With yukiMenu
+        .Text = ("Help")
+        .Picture = MikuruIcon.Get("question-balloon")
+    End With
+    
+End
+
+Private Sub addAboutMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "AboutMenu"
+    
+    With yukiMenu
+        .Text = ("About nagato-session")
+        .Picture = MikuruIcon.Get("star")
+    End With
+    
+End
+
+Private Sub addQuitMenu()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "QuitMenu"
+    
+    With yukiMenu
+        .Text = ("Quit")
+        .Picture = MikuruIcon.Get("button-power")
+    End With
+    
+End
+
+Private Sub initializeRootMenu(argRootMenuName As String)
+    
+    Me._$rootMenu = New Menu(HaruhiMain)
+    Me._$rootMenu.Name = argRootMenuName
+    Me._$menuName = argRootMenuName
+    
+End
+
+Public Sub _AddAdditionalMenu() 'this method is virtual, SHOULD be overridden.
+    
+    'this method is virtual, SHOULD be overridden.
+    
+End
+
+Public Sub _new(argRootMenuName As String)
+    
+    initializeRootMenu(argRootMenuName)
+    Me._AddAdditionalMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addHelpMenu()
+    addAboutMenu()
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    addQuitMenu()
+    
+End
+
+Public Sub AboutMenu_Click()
+    
+    HaruhiAbout.ShowDialog()
+    
+End
+
+Public Sub QuitMenu_Click()
+    
+    If HaruhiDialogQuitApplication.ShowDialog() = MikuruDialog.ResponseQuit Then
+        HaruhiMain.Close()
+    Endif
+    
+End
+
+Private Function MenuName_Read() As String
+
+    Return Me._$menuName
+
+End

@@ -4,12 +4,17 @@ Property Read Name As String
 Property Read Exec As String
 Property Read TryExec As String
 Property Read Required As Boolean
+Property Read Hide As Boolean
+Property Read OnlyShowInByText As String
+Property Read NotShowInByText As String
 
 Private $name As String
 Private $exec As String
 Private $tryExec As String
 Private $onlyShowIn As Boolean = False
+Private $onlyShowInByText As String
 Private $notShowIn As Boolean = False
+Private $notShowInByText As String
 Private $hide As Boolean = False
 
 Private Sub getProperty(argLine As String, argTargetSession As String) As Boolean
@@ -32,7 +37,9 @@ Private Sub setProperties(argPath As String)
         If yukiLine Begins "Exec" Then $exec = Replace$(yukiLine, "Exec=", "")
         If yukiLine Begins "TryExec" Then $tryExec = Replace$(yukiLine, "TryExec=", "")
         If yukiLine Begins "NotShowIn" Then $notShowIn = getProperty(Replace$(yukiLine, "NotShowIn=", ""), "NagatoBox")
+        If yukiLine Begins "NotShowIn" Then $notShowInByText = Replace$(yukiLine, "NotShowIn=", "")
         If yukiLine Begins "OnlyShowIn" Then $onlyShowIn = Not getProperty(Replace$(yukiLine, "OnlyShowIn=", ""), "NagatoBox")
+        If yukiLine Begins "OnlyShowIn" Then $onlyShowInByText = Replace$(yukiLine, "OnlyShowIn=", "")
         If yukiLine Begins "Hidden" Then $hide = (Replace$(yukiLine, "Hidden=", "") Like "true")
     Wend
     
@@ -72,5 +79,23 @@ End
 Private Function TryExec_Read() As String
 
     Return $tryExec
+
+End
+
+Private Function Hide_Read() As Boolean
+
+    Return $hide
+
+End
+
+Private Function OnlyShowInByText_Read() As String
+
+    Return $onlyShowInByText
+
+End
+
+Private Function NotShowInByText_Read() As String
+
+    Return $notShowInByText
 
 End

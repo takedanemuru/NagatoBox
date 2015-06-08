@@ -1,0 +1,10 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Fill
+  { !ApplicationsIconView IconView
+    MoveScaled(4,5,46,40)
+    #Public = True
+  }
+}

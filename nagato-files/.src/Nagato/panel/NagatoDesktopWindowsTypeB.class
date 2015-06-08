@@ -1,0 +1,86 @@
+' Gambas class file
+
+Inherits NagatoDesktopWindows
+
+Property Read WidthPerDesktop As Integer
+
+Private $totalWidth As Integer
+Private $desktops As New Collection
+
+Private Sub reset()
+    
+    Dim yukiDesktopIndex As Integer
+    
+    Desktop.Windows.Refresh()
+    
+    For yukiDesktopIndex = 0 To Desktop.Count - 1
+        $desktops.Add(Me._PushWindow(yukiDesktopIndex), yukiDesktopIndex)
+    Next
+    
+End
+
+Private Sub activateWindow(argX As Integer)
+    
+    Dim yukiDesktopIndex As Integer = CInt(argX / Me.WidthPerDesktop)
+    Dim yukiWindowIndex As Integer
+    
+    With Me
+        yukiWindowIndex = CInt(argX Mod .WidthPerDesktop) Div .GetTaskWidth(yukiDesktopIndex)
+        .GetDesktopWindow(yukiDesktopIndex, yukiWindowIndex).Activate()
+    End With
+    
+End
+
+Public Sub Refresh(argTotalWidth As Integer)
+    
+    $totalWidth = argTotalWidth
+    Desktop.Windows.Refresh()
+    $desktops.Clear()
+    
+    reset()
+    
+End
+
+Public Function GetDesktopWindow(argDesktopIndex As Integer, argWindowIndex As Integer) As DesktopWindow
+    
+    Return $desktops[argDesktopIndex][argWindowIndex]
+    
+End
+
+Public Function GetWindowsCountPerDesktop(argDesktopIndex As Integer) As Integer
+    
+    Return $desktops[argDesktopIndex].Count
+   
+Catch
+    Return 0
+    
+End
+
+Public Function GetTaskWidth(argDesktopIndex As Integer) As Integer
+    
+    Dim yukiWindowsCount As Integer = $desktops[argDesktopIndex].Count
+    
+    If yukiWIndowsCount = 0 Then Return Me.WidthPerDesktop
+    
+    Return CInt(Me.WidthPerDesktop / yukiWindowsCount)
+    
+Catch
+    Return Me.WidthPerDesktop
+    
+End
+
+Public Sub ActivateWindowByMouseX(argX As Integer)
+    
+    Dim yukiDesktopIndex As Integer = CInt(argX / Me.WidthPerDesktop)
+    
+    Desktop.Current = yukiDesktopIndex
+
+    If Me.GetWindowsCountPerDesktop(yukiDesktopIndex) > 0 Then ActivateWindow(argX)
+    
+End
+
+Private Function WidthPerDesktop_Read() As Integer
+
+    Return CInt($totalWidth / Desktop.Count)
+
+End

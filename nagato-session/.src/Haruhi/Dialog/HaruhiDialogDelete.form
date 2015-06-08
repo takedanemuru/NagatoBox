@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,42.8571,42.8571)
+  Resizable = False
+  { DeleteButton Button
+    MoveScaled(27,37,14,4)
+    Text = ("Delete")
+  }
+  { CancelButton Button
+    MoveScaled(12,37,14,4)
+    Text = ("Cancel")
+  }
+}

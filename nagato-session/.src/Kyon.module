@@ -9,8 +9,9 @@ Public Sub Main()
         NagatoXdgAutostarts.Execute()
         NagatoDBus.Register()
     Else If NagatoArguments.Logout Then
-        HaruhiDialog.Show()
+        HaruhiLogout.Show()
     Else
+        NagatoXdgAutostarts.Initialize()
         HaruhiMain.Show()
     End If
     

@@ -1,0 +1,14 @@
+' Gambas class file
+
+Private $observerGlobal As NagatoDirectoryObserver
+Private $observerUser As NagatoDirectoryObserver
+
+Public Sub _new()
+    
+    $observerGlobal = New NagatoDirectoryObserver As "Asakura"
+    $observerUser = New NagatoDirectoryObserver As "Asakura"
+    
+    $observerGlobal.Directory = MikuruAutostartDirectory.Global
+    $observerUser.Directory = MikuruAutostartDirectory.User
+    
+End

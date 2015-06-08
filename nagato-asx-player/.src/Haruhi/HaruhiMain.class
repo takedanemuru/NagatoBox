@@ -61,7 +61,7 @@ Private Function play(argStreamPath As String)
 
 End
 
-Public Sub Form_Show()
+Public Sub Form_Open()
 
     If Not setXmlDocument() Then
         Me.Close()

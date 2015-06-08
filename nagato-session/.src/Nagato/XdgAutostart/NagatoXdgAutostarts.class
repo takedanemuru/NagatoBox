@@ -2,6 +2,9 @@
 
 Create Static
 
+Property Read GlobalAutoStarts As NagatoAutostarts
+Property Read UserAutoStarts As NagatoAutostarts
+
 Private $userAutoStarts As NagatoAutoStarts
 Private $globalAutoStarts As NagatoAutoStarts
 
@@ -16,8 +19,29 @@ End
 
 Public Sub Execute()
     
+    Me.Initialize()
+    
+    ' $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
+    ' $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
+    execAll()
+
+End
+
+Public Sub Initialize()
+    
     $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
     $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
-    execAll()
+    
+End
+
+Private Function GlobalAutoStarts_Read() As NagatoAutostarts
+
+    Return $globalAutoStarts
+
+End
+
+Private Function UserAutoStarts_Read() As NagatoAutostarts
+
+    Return $userAutoStarts
 
 End

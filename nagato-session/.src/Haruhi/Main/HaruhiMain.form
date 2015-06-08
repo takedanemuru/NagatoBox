@@ -1,0 +1,54 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,84,61)
+  Text = ("nagato-session edit")
+  Icon = Picture["pictures/mono_icon/gear.png"]
+  Arrangement = Arrange.Fill
+  { MainTabStrip TabStrip
+    MoveScaled(2,3,81,53)
+    Expand = True
+    Arrangement = Arrange.Vertical
+    Count = 3
+    Index = 0
+    Text = ("System-Wide Autostarts")
+    Picture = Picture["pictures/mono_icon/computer.png"]
+    Index = 1
+    Text = ("User Defined Autostart")
+    Picture = Picture["pictures/mono_icon/user.png"]
+    Index = 2
+    Text = ("Login Sound")
+    Picture = Picture["pictures/mono_icon/music.png"]
+    { HBox5 HBox
+      MoveScaled(0,0,70,5)
+      { LoginSoundTypeLabel TextLabel
+        MoveScaled(8,1,24,4)
+        Expand = True
+        Text = ("Login Sound")
+        Alignment = Align.Left
+      }
+      { !TypeSelectComboBox ComboBox
+        MoveScaled(33,1,35,4)
+        #Public = True
+        ReadOnly = True
+        List = [("None"), ("Choir"), ("Ubuntu"), ("Welcomz"), ("User Defied")]
+        Text = ("ComboBox1")
+      }
+    }
+    { HBox6 HBox
+      MoveScaled(0,8,70,5)
+      { LoginSoundTypeLabel2 TextLabel
+        MoveScaled(8,1,24,4)
+        Expand = True
+        Text = ("Select File")
+        Alignment = Align.Left
+      }
+      { !FileSelectBox ButtonBox
+        MoveScaled(33,1,35,4)
+        #Public = True
+        Picture = Picture["pictures/mono_icon/folder.png"]
+      }
+    }
+    Index = 0
+  }
+}

@@ -48,8 +48,6 @@ End
 
 Public Sub Handler_Signal(argEvent As Integer, argValue As Variant)
     
-    Debug argEvent
-    
     Select Case argEvent
         Case NagatoMenuPipe.ObserverDelete
             $mouse.Delete(Desktop.Path &/ argValue)

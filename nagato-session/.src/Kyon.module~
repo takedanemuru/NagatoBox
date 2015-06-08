@@ -2,18 +2,17 @@
 
 Public Sub Main()
     
-    ' NagatoArguments.Parsing()
-    ' 
-    ' If NagatoArguments.Autostart Then
-    '     NagatoLoginSound.PlayDefault()
-    '     NagatoXdgAutostarts.Execute()
-    '     NagatoDBus.Register()
-    ' Else If NagatoArguments.Logout Then
-    '     HaruhiDialog.Show()
-    ' Else
-    '     HaruhiMain.Show()
-    ' End If
+    NagatoArguments.Parsing()
     
-    NagatoDBus.Register()
+    If NagatoArguments.Autostart Then
+        NagatoLoginSound.PlayDefault()
+        NagatoXdgAutostarts.Execute()
+        NagatoDBus.Register()
+    Else If NagatoArguments.Logout Then
+        HaruhiDialog.Show()
+    Else
+        NagatoXdgAutostarts.Initialize()
+        HaruhiMain.Show()
+    End If
     
 End

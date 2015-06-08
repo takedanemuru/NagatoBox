@@ -31,7 +31,6 @@ Private Function IconTheme_Read() As String
     Return NagatoConfigFacade.IconTheme
 
 Catch
-    Debug Error.Text
-    Return "UNKNOWN"
+    Return ""
 
 End

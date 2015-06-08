@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public Const PanelHeight As Integer = 32
+
+Public _$container As HBox
+
+Public Sub _AddMenuButton(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiButton As New MenuButton(Me._$container) As "MenuItem"
+    
+    With yukiButton
+        .AutoResize = True
+        .Arrow = False
+        .Text = argText
+        .Tag = argTag
+        .Border = False
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Public Sub _Initialize()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = New HBox(argContainer)
+    Me._$container.H = PanelHeight
+    
+    Me._Initialize()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Debug Last.Tag
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

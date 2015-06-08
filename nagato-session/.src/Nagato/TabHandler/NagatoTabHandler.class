@@ -1,0 +1,32 @@
+' Gambas class file
+
+Create Private
+
+Public _$container As Container
+
+Public Sub _InitializePanel()
+    
+    
+    
+End
+
+Public Sub _InitializeGridView()
+    
+    
+    
+End
+
+Public Sub _Initialize()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Me._InitializePanel()
+    Me._InitializeGridView()
+    Me._Initialize()
+    
+End

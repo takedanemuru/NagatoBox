@@ -94,6 +94,9 @@
 
 + ~~port to sdl2.sound~~
 + ~~new : DBus channel for GTK+/Qt theme~~
++ ~~remove editor tab~~
++ ~~remove icon view(all applications) tab~~
++ show desktop entry file type (blocker, nomal, etc...) on gridview.
 
 ## nagato-web
 

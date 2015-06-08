@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoMenuPanel
+
+Private $panel As Panel
+Private $menuButton As MenuButton
+
+Private Sub addPanel()
+    
+    $panel = New Panel(Me._$container)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End
+
+Private Sub addStarButton()
+    
+    Dim yukiMenu As New NagatoStarMenuGlobalAutostarts("StarMenuGlobalAutostarts") As "TFEI"
+    
+    $menuButton = New MenuButton(Me._$container)
+    
+    With $menuButton
+        .Picture = MikuruIcon.Get("star")
+        .Arrow = False
+        .AutoResize = True
+        .Border = False
+        .Menu = "StarMenuGlobalAutostarts"
+    End With
+    
+End
+
+Public Sub _Initialize() ' override
+    
+    addPanel()
+    addStarButton()
+    
+End
