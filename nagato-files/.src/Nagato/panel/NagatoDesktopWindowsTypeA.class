@@ -33,6 +33,14 @@ Public Sub Refresh(argTotalWidth As Integer)
     
 End
 
+Public Function GetDesktopWindowByMouseX(argMouseX As Integer) As DesktopWindow
+    
+    Dim yukiWindowIndex As Integer = argMouseX Div CInt($totalWidth / $windows.Count)
+    
+    Return $windows[yukiWindowIndex]
+    
+End
+
 Public Sub _get(argIndex As Integer) As DesktopWindow
     
     Return $windows[argIndex]

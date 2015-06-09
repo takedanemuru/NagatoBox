@@ -23,6 +23,25 @@ Public Sub _AddContextMenu(argText As String, argTag As Integer, Optional argIco
     
 End
 
+Public Sub _AddContextMenu2(argText As String, argTag As Integer, argIcon As String, argEnable As Boolean)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ContextMenu"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        .Picture = MikuruIcon.Get(argIcon)
+        .Enabled = argEnable
+    End With
+    
+End
+
+Public Sub _SetOptionalVariant(argVariant As Variant)
+    
+    
+    
+End
+
 Public Sub _AddChildMenus()
     
     'virtual
@@ -35,10 +54,11 @@ Public Sub Popup()
     
 End
 
-Public Sub _new(argForm As Form, argPath As String)
+Public Sub _new(argForm As Form, argPath As String, Optional argOptionalVariant As Variant)
     
     Me._$rootMenu = New Menu(argForm)
     Me._$path = argPath
+    If argOptionalVariant Then Me._SetOptionalVariant(argOptionalVariant)
     
     Me._AddChildMenus()
     

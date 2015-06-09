@@ -2,7 +2,20 @@
 
 Inherits NagatoDesktopPanelContent
 
+Private $buttons As NagatoPanelButtonsNagatoPlayerX
 Private $access As NagatoDBusAccessNagatoPlayerX
+
+Public Sub _Close()
+    
+    $buttons.Visible = False
+    
+End
+
+Public Sub _Show()
+    
+    $buttons.Visible = True
+    
+End
 
 Public Sub _Refresh()
     
@@ -15,6 +28,9 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
     $access = New NagatoDBusAccessNagatoPlayerX
     
     Me._Initialize(argContainer, argExpand)
+    
+    $buttons = New NagatoPanelButtonsNagatoPlayerX(argContainer) As "Buttons"
+    $buttons.Visible = False
     
 End
 
@@ -32,5 +48,11 @@ End
 Public Sub ClockDrawingArea_MouseDown()
     
     
+    
+End
+
+Public Sub Buttons_MenuAction(argAction As Integer)
+    
+    $access.Action(argAction)
     
 End

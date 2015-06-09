@@ -1,17 +1,27 @@
 ' Gambas class file
 
+Property Read Enabled As Boolean
+
+Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack
+
 Private Const ServiceName As String = "org.gambas.nagato.player.x"
 Private Const ObjectPath As String = "/org/nagato/player/x"
 Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatointerface"
 
 Private $player As DBusProxy
 
+Private Sub ensureProxy()
+    
+    If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
+    
+End
+
 Public Function GetText() As String
     
-    Dim yukiText As String = "YUKI.N > now playing... "
+    Dim yukiText As String 
     
     If DBus.Session.Applications.Exist(ServiceName) Then
-        If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
+        ensureProxy()
         yukiText &= ($player.Title & Space$(4))
         yukiText &= ($player.Artist & Space$(4))
         yukiText &= ($player.Album & Space$(4))
@@ -21,4 +31,28 @@ Public Function GetText() As String
         Return "YUKI.N > nagato-player-x is not activated"
     End If
     
+End
+
+
+Public Sub Action(argAction As Integer)
+    
+    ensureProxy()
+    
+    Select Case argAction
+        Case ActionPlay
+            $player.Play()
+        Case ActionPause
+            $player.Pause()
+        Case ActionNext
+            $player.Next()
+        Case ActionBack
+            $player.Back()
+    End Select
+    
+End
+
+Private Function Enabled_Read() As Boolean
+
+    Return DBus.Session.Applications.Exist(ServiceName)
+
 End

@@ -28,6 +28,18 @@ Public Sub _Refresh() ' virtual interface
     
 End
 
+Public Sub _Close()
+    
+    
+    
+End
+
+Public Sub _Show()
+    
+    
+    
+End
+
 Public Sub Asakura_Timer()
     
     If Not Me._$drawingArea.Visible Then Return
@@ -44,6 +56,10 @@ End
 
 Private Sub Visible_Write(Value As Boolean)
 
-    Me._$drawingArea.Visible = Value
+    If Me._$drawingArea.Visible <> Value Then
+        Me._$drawingArea.Visible = Value
+        If Not Value Then Me._Close()
+        If Value Then Me._Show()
+    End If
 
 End

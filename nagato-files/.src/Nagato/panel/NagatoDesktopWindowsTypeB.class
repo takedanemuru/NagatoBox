@@ -19,18 +19,6 @@ Private Sub reset()
     
 End
 
-Private Sub activateWindow(argX As Integer)
-    
-    Dim yukiDesktopIndex As Integer = CInt(argX / Me.WidthPerDesktop)
-    Dim yukiWindowIndex As Integer
-    
-    With Me
-        yukiWindowIndex = CInt(argX Mod .WidthPerDesktop) Div .GetTaskWidth(yukiDesktopIndex)
-        .GetDesktopWindow(yukiDesktopIndex, yukiWindowIndex).Activate()
-    End With
-    
-End
-
 Public Sub Refresh(argTotalWidth As Integer)
     
     $totalWidth = argTotalWidth
@@ -69,13 +57,33 @@ Catch
     
 End
 
-Public Sub ActivateWindowByMouseX(argX As Integer)
+Public Function HasWindowByMouseX(argX As Integer, argMove As Boolean) As Boolean
     
     Dim yukiDesktopIndex As Integer = CInt(argX / Me.WidthPerDesktop)
     
-    Desktop.Current = yukiDesktopIndex
+    If argMove Then Desktop.Current = yukiDesktopIndex
+    
+    Return IIf(Me.GetWindowsCountPerDesktop(yukiDesktopIndex) > 0, True, False)
+    
+End
 
-    If Me.GetWindowsCountPerDesktop(yukiDesktopIndex) > 0 Then ActivateWindow(argX)
+Public Function GetDesktopWindowByMouseX(argX As Integer) As DesktopWindow
+    
+    Dim yukiDesktopIndex As Integer = CInt(argX / Me.WidthPerDesktop)
+    Dim yukiWindowIndex As Integer
+    
+    yukiWindowIndex = CInt(argX Mod Me.WidthPerDesktop) Div Me.GetTaskWidth(yukiDesktopIndex)
+    
+    Return Me.GetDesktopWindow(yukiDesktopIndex, yukiWindowIndex)
+    
+Catch
+    Return Null
+    
+End
+
+Public Sub ActivateWindowByMouseX(argX As Integer)
+    
+    If Me.HasWindowByMouseX(argX, True) Then Try Me.GetDesktopWindowByMouseX(argX).Activate()
     
 End
 
