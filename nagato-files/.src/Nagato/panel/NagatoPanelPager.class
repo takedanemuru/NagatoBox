@@ -13,7 +13,7 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
         .Width = 200
     End With
     
-    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
     
 End
 
@@ -51,7 +51,10 @@ End
 Public Sub Asakura_Timer()
     
     $drawingArea.W = 22 * Desktop.Count + 4
-    
     $drawingArea.Refresh()
+    
+Catch
+    Debug Error.Text
+    Return
     
 End

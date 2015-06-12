@@ -38,7 +38,7 @@ End
 
 Public Sub MenuItem_Click()
     
-    Debug Last.Tag
+    'Debug Last.Tag
     
     Raise Signal(Last.Tag, Null)
     

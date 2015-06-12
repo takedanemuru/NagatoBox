@@ -18,7 +18,7 @@ Public Sub _Initialize(argContainer As Container, argExpand As Boolean)
         If argExpand Then .Visible = False
     End With
     
-    Me._$observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    Me._$observer = New Observer(HaruhiDesktop) As "Asakura"
     
 End
 
@@ -45,6 +45,10 @@ Public Sub Asakura_Timer()
     If Not Me._$drawingArea.Visible Then Return
     
     Me._Refresh()
+    
+Catch
+    Debug Error.Text
+    Return
     
 End
 

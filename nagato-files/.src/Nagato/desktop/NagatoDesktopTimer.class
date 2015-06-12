@@ -2,6 +2,8 @@
 
 Create Static
 
+Property Enabled As Boolean
+
 Private $timer As Timer
 
 Event Timer
@@ -27,4 +29,16 @@ Public Sub Timer_Timer()
      
      Raise Timer
     
+End
+
+Private Function Enabled_Read() As Boolean
+
+    Return $timer.Enabled
+
+End
+
+Private Sub Enabled_Write(Value As Boolean)
+
+    $timer.Enabled = Value
+
 End

@@ -59,6 +59,7 @@ Public Sub Asakura_Timer()
     refresh()
     
 Catch
+    Debug Error.Text
     Return
     
 End

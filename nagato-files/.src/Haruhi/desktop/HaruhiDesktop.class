@@ -14,6 +14,10 @@ Private $systray As NagatoPanelSystray
 Private $pager As NagatoPanelPager
 Private $clock As NagatoPanelClock
 
+Private $timer As New Timer As "DesktopTimer"
+
+Event Timer
+
 Private Sub setNetWmStrut()
     
     Dim yukiProperty As String = "_NET_WM_STRUT"
@@ -70,6 +74,8 @@ Public Sub Form_Open()
 
     If Not Error Then NagatoDBus.Register()
 
+    $timer.Enabled = True
+
 End
 
 Public Sub Form_Close()
@@ -82,5 +88,13 @@ End
 Public Sub StarMenu_ChangeMode(argMode As Integer)
     
     $main.ChangeMode(argMode)
+    
+End
+
+Public Sub DesktopTimer_Timer()
+    
+    'Debug Now()
+    
+    Raise Timer
     
 End

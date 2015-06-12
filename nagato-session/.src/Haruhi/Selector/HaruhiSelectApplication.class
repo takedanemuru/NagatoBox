@@ -2,12 +2,22 @@
 
 Private Const ApplicationsDirectory As String = "/usr/share/applications"
 
+Private Sub getIconPicture(argDesktopFile As DesktopFile, argSize As Integer) As Picture
+    
+    If argDesktopFile.Icon Begins "/" Then
+        Return Image.Load(argDesktopFile.Icon).Stretch(argSize, argSize).Picture
+    Else
+        Return argDesktopFile.GetIcon(argSize).Picture
+    Endif
+    
+End
+
 Private Sub addIcon(argFullPath As String)
     
     Dim yukiDesktopFile As New DesktopFile(argFullPath)
     
     With yukiDesktopFile
-        ApplicationsIconView.Add(.Path, .Name, yukiDesktopFile.GetIcon(64).Picture)
+        ApplicationsIconView.Add(.Path, .Name, getIconPicture(yukiDesktopFile, 48))
     End With
     
 End
@@ -18,6 +28,7 @@ Private Sub initializeIconView()
     Dim yukiFullPath As String
     
     For Each yukiPath In RDir(ApplicationsDirectory).Sort()
+        If yukiPath Begins "screensavers" Then Continue
         yukiFullPath = ApplicationsDirectory &/ yukiPath
         If IsDir(yukiFullPath) Then Continue
         If File.Ext(yukiFullPath) <> "desktop" Then Continue

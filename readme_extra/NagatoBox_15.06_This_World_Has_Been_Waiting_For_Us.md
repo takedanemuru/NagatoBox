@@ -15,7 +15,7 @@
     + ~~starmenu for panel~~
     + ~~dialog for clock format~~
     + ~~context menu for pager~~
-    + context menu for tasks
+    + ~~context menu for tasks(TypeA/B)~~
 
 + integrate theming functionalities to nagato-session
     + ~~dbus channel~~
@@ -67,6 +67,8 @@
 + ~~new : thumbnail for pdf~~
 + new interface for media conversion
 + ~~new : file path completion~~
++ ~~fix : avoid freeze when desktop files are moved.~~
+    + ~~NagatoDesktopTimer causes critical freeze but why ?~~
 
 ## nagato-lookup
 
@@ -96,7 +98,7 @@
 + ~~new : DBus channel for GTK+/Qt theme~~
 + ~~remove editor tab~~
 + ~~remove icon view(all applications) tab~~
-+ show desktop entry file type (blocker, nomal, etc...) on gridview.
++ ~~show desktop entry file type (blocker, nomal, etc...) on gridview.~~
 
 ## nagato-web
 
