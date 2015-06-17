@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoSelectApplicationWidget
+
+Public Enum ResponseCancel, ResponseApply
+
+Private $hBox As HBox
+Private $panel As Panel
+
+Private Sub initializeHBox()
+    
+    $hBox = New HBox(Me._$container)
+    
+    With $hBox
+        .H = 32
+    End With
+    
+End
+
+Private Sub initializePanel()
+    
+    $panel = New Panel($hBox)
+
+    $panel.Expand = True
+    
+End
+
+Private Sub initializeButton(argText As String, argTag As Integer)
+    
+    Dim yukiButton As New Button($hBox) As "ResponseButton"
+    
+    With yukiButton
+        .Text = argText
+        .AutoResize = True
+        .Tag = argTag
+    End With
+    
+End
+
+Public Sub _Initialize() ' virtual
+    
+    initializeHBox()
+    initializePanel()
+    initializeButton(("Cancel"), ResponseCancel)
+    initializeButton(("Apply"), ResponseApply)
+    
+End
+
+Public Sub ResponseButton_Click()
+    
+    Debug Last.Tag
+    
+End

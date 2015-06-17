@@ -33,7 +33,7 @@ End
 
 Public Sub Stop()
     
-    Try NagatoDesktopTimer.Stop()
+    'Try NagatoDesktopTimer.Stop()
     
 End
 
@@ -42,7 +42,7 @@ Public Sub _new(argIconView As IconView)
     $iconView = argIconView
     $iconView.Add(NagatoDesktop.SpecialKeyClock, "", getIcon())
     
-    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
     
 End
 

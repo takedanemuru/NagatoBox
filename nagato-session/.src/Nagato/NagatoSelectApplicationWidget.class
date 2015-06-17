@@ -1,0 +1,17 @@
+' Gambas class file
+
+Public _$container As Container
+
+Public Sub _Initialize() ' virtual
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    
+    Me._Initialize()
+    
+End

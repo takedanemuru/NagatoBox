@@ -62,8 +62,6 @@ End
 
 Public Sub Form_Open()
 
-    NagatoDesktopTimer.Start()
-
     Application.MainWindow = Me
     initializeForm()
     $desktop = New NagatoDesktop(Me)
@@ -81,7 +79,6 @@ End
 Public Sub Form_Close()
     
     NagatoDBus.Unregister()
-    Try NagatoDesktopTimer.Stop()
     
 End
 
@@ -92,8 +89,6 @@ Public Sub StarMenu_ChangeMode(argMode As Integer)
 End
 
 Public Sub DesktopTimer_Timer()
-    
-    'Debug Now()
     
     Raise Timer
     

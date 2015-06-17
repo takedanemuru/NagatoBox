@@ -24,46 +24,30 @@ Public Sub activateWindow(argX As Integer)
     
 End
 
-Private Function getText(argDesktopWindow As DesktopWindow) As String
-    
-    Return MikuruCollapsedText.Get(argDesktopWindow.Name, Paint.Font, $windows.Width - 32)
-    
-End
-
-Private Function getTextRect(argCount As Integer) As Rect
+Private Function getTaskRect(argWindowIndex As Integer) As Rect
     
     Dim yukiRect As New Rect
     
     With yukiRect
-        .X = $windows.Width * argCount + 24
+        .X = $windows.Width * argWindowIndex
         .Y = 0
-        .W = $windows.Width
         .H = Me._$drawingArea.H
+        .W = $windows.Width
     End With
     
     Return yukiRect
     
 End
 
-Private Sub paintText(argCount As Integer)
+Private Sub paintTask(argWindowIndex As Integer)
     
-    Dim yukiRect As Rect = getTextRect(argCount)
-    
-    With yukiRect
-        Paint.RichText(getText($windows[argCount]), .X, .Y, .W, .H, Align.Left)
-    End With
-    
-End
+    Dim yukiRect As Rect = getTaskRect(argWindowIndex)
+    Dim yukiDesktopWindow As DesktopWindow = $windows[argWindowIndex]
 
-Private Sub paintIcon(argCount As Integer)
-    
-    Dim yukiDesktopWindow As DesktopWindow = $windows[argCount]
-    
-    If yukiDesktopWindow.Icon Then
-        Paint.DrawImage(yukiDesktopWindow.Icon.Stretch(16, 16), $windows.Width * argCount, 4)
-    Else
-        Paint.DrawPicture(MikuruIcon.Get("question-balloon"), $windows.Width * argCount, 4)
-    End If
+    Paint.Brush = Paint.Color(Color.White)
+    Me._PaintIcon(yukiDesktopWindow, yukiRect)
+    Me._PaintText(yukiDesktopWindow, yukiRect)
+    Paint.Fill()
     
 End
 
@@ -85,15 +69,12 @@ End
 
 Public Sub ClockDrawingArea_Draw()
 
-    Dim yukiCount As Integer
+    Dim yukiIndex As Integer
 
     Paint.Begin(Me._$drawingArea)
         Paint.Font.Bold = True
-        For yukiCount = 0 To $windows.Max
-            Paint.Brush = Paint.Color(Color.White)
-            paintIcon(yukiCount)
-            paintText(yukiCount)
-            Paint.Fill()
+        For yukiIndex = 0 To $windows.Max
+            paintTask(yukiIndex)
         Next
     Paint.End()
     

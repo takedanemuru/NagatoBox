@@ -1,45 +1,17 @@
 ' Gambas class file
 
-Private Const ApplicationsDirectory As String = "/usr/share/applications"
+Private $iconView As NagatoSelectApplicationIconView
+Private $applyButtons As NagatoSelectApplicationApplyButtons
 
-Private Sub getIconPicture(argDesktopFile As DesktopFile, argSize As Integer) As Picture
+Public Sub _new()
     
-    If argDesktopFile.Icon Begins "/" Then
-        Return Image.Load(argDesktopFile.Icon).Stretch(argSize, argSize).Picture
-    Else
-        Return argDesktopFile.GetIcon(argSize).Picture
-    Endif
-    
-End
-
-Private Sub addIcon(argFullPath As String)
-    
-    Dim yukiDesktopFile As New DesktopFile(argFullPath)
-    
-    With yukiDesktopFile
-        ApplicationsIconView.Add(.Path, .Name, getIconPicture(yukiDesktopFile, 48))
-    End With
-    
-End
-
-Private Sub initializeIconView()
-    
-    Dim yukiPath As String
-    Dim yukiFullPath As String
-    
-    For Each yukiPath In RDir(ApplicationsDirectory).Sort()
-        If yukiPath Begins "screensavers" Then Continue
-        yukiFullPath = ApplicationsDirectory &/ yukiPath
-        If IsDir(yukiFullPath) Then Continue
-        If File.Ext(yukiFullPath) <> "desktop" Then Continue
-        addIcon(yukiFullPath)
-    Next
+    $iconView = New NagatoSelectApplicationIconView(Me)
+    $applyButtons = New NagatoSelectApplicationApplyButtons(Me)
     
 End
 
 Public Sub Form_Show()
     
-    initializeIconView()
+    
     
 End
-

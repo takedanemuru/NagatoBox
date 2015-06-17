@@ -31,18 +31,18 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
     
     Me.ArrangeTray()
     
-    '$observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    '$observer = New Observer(HaruhiDesktop) As "Asakura"
     
 End
 
-Public Sub Asakura_Timer()
-    
-    'Me.ArrangeTray()
-    
-End
+' Public Sub Asakura_Timer()
+'     
+'     Me.ArrangeTray()
+'     
+' End
 
-Static Public Sub X11Systray_Arrange()
-
-    Me.ArrangeTray()
-  
-End
+' Static Public Sub X11Systray_Arrange()
+' 
+'     Me.ArrangeTray()
+'   
+' End

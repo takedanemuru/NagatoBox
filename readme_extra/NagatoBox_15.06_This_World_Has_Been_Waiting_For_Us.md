@@ -69,6 +69,7 @@
 + ~~new : file path completion~~
 + ~~fix : avoid freeze when desktop files are moved.~~
     + ~~NagatoDesktopTimer causes critical freeze but why ?~~
++ ~~new (nagato-files -d) : playlist for player panel~~
 
 ## nagato-lookup
 

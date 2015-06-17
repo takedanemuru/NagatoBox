@@ -5,6 +5,14 @@ Inherits NagatoDesktopPanelContent
 Private $buttons As NagatoPanelButtonsNagatoPlayerX
 Private $access As NagatoDBusAccessNagatoPlayerX
 
+Private Sub showContextMenu()
+    
+    Dim yukiMenu As New NagatoContextMenuPanelNagatoPlayerX(HaruhiDesktop, "") As "ContextMenu"
+    
+    yukiMenu.Popup()
+    
+End
+
 Public Sub _Close()
     
     $buttons.Visible = False
@@ -47,7 +55,17 @@ End
 
 Public Sub ClockDrawingArea_MouseDown()
     
+    If Not $access.Enabled Then Return
     
+    If Mouse.Right Then showContextMenu()
+    
+End
+
+Public Sub ContextMenu_MenuEventWithArg(argTag As Integer, argValue As Variant)
+    
+    If argValue Then Return
+    
+    $access.Action(argTag)
     
 End
 

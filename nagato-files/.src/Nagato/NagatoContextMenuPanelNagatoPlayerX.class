@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _AddChildMenus()
+    
+    With NagatoDBusAccessNagatoPlayerX
+        Object.New("NagatoSubMenuPanelNagatoPlayerXQueue", [Me._$rootMenu])
+        Me._AddContextMenu(("Add Music(s)"), .ActionAddMusics, MikuruIcon.Get("button-add"))
+            Me._AddContextMenu("", .ActionNone)
+        Me._AddContextMenu(("Play"), .ActionPlay, MikuruIcon("button-play"))
+        Me._AddContextMenu(("Pause"), .ActionPause, MikuruIcon("button-pause"))
+        Me._AddContextMenu(("Back"), .ActionBack, MikuruIcon("button-rew"))
+        Me._AddContextMenu(("Next"), .ActionNext, MikuruIcon("button-ff"))
+    End With
+    
+End

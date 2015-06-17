@@ -44,7 +44,7 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $observer = New Observer(NagatoDesktopTimer) As "Asakura"
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
     
     $container = New HBox(argContainer)
     $container.Visible = False

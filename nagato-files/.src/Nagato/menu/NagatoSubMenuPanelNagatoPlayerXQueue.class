@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Const ApplicationName As String = "org.gambas.nagato.player.x"
+Private Const ObjectPath As String = "/org/nagato/player/x"
+Private Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
+
+Private $proxy As DBusProxy
+
+Private Sub initializeProxy()
+    
+    $proxy = DBus[ApplicationName][ObjectPath, Interface]
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With Me._$rootMenu
+        .Text = ("Queue")
+        .Picture = MikuruIcon.Get("music")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
+    
+    Dim yukiPath As String
+    Dim yukiMenu As Menu
+    
+    initializeProxy()
+    
+    For Each yukiPath In $proxy.Paths
+        yukiMenu = New Menu(Me._$rootMenu) As "QueueMenu"
+        yukiMenu.Tag = yukiPath
+        yukiMenu.Text = MikuruCollapsedText.Get($proxy.GetTitle(yukiPath), Application.Font, 300)
+        If yukiMenu.Text = $proxy.Title Then yukiMenu.Picture = MikuruIcon.Get("button-play")
+        If Me._$rootMenu.Children.Count > 60 Then Break
+    Next
+    
+End
+
+Public Sub QueueMenu_Click()
+    
+    $proxy.PlayPathInQueue(Last.Tag)
+    
+End

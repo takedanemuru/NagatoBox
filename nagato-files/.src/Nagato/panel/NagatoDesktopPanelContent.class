@@ -56,6 +56,9 @@ Private Function Visible_Read() As Boolean
 
     Return Me._$drawingArea.Visible
 
+Catch
+    Return False
+    
 End
 
 Private Sub Visible_Write(Value As Boolean)

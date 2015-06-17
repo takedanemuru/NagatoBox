@@ -2,7 +2,7 @@
 
 Property Read Enabled As Boolean
 
-Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack
+Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack, ActionAddMusics
 
 Private Const ServiceName As String = "org.gambas.nagato.player.x"
 Private Const ObjectPath As String = "/org/nagato/player/x"
@@ -13,6 +13,15 @@ Private $player As DBusProxy
 Private Sub ensureProxy()
     
     If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
+    
+End
+
+Private Sub addMusics()
+    
+    Dialog.Path = Desktop.GetDirectory("MUSIC")
+    If Dialog.OpenFile(True) Then Return
+    
+    $player.AddMusics(Dialog.Paths)
     
 End
 
@@ -47,6 +56,8 @@ Public Sub Action(argAction As Integer)
             $player.Next()
         Case ActionBack
             $player.Back()
+        Case ActionAddMusics
+            addMusics()
     End Select
     
 End
