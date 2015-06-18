@@ -26,6 +26,20 @@ Public Function GetFileSizeText(argPath As String) As String
     
 End
 
+Public Function GetDirectorySize(argDirectory As String) As Integer
+    
+    Dim yukiPath As String
+    Dim yukiSize As Integer
+    
+    For Each yukiPath In Dir(argDirectory)
+        If Not Exist(argDirectory &/ yukiPath) Then Continue
+        Try yukiSize += Stat(argDirectory &/ yukiPath).Size
+    Next
+    
+    Return yukiSize
+    
+End
+
 Public Sub _call(argSize As Integer) As String
     
     Return getText(argSize)

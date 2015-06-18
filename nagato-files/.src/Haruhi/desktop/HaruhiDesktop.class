@@ -18,7 +18,7 @@ Private $timer As New Timer As "DesktopTimer"
 
 Event Timer
 
-Private Sub setNetWmStrut()
+Private Sub reservePanelHeightOnScreen() 
     
     Dim yukiProperty As String = "_NET_WM_STRUT"
     Dim yukiValue As String = Subst$("0,0,0,&1", NagatoSettingsPanel.Height) 
@@ -67,7 +67,7 @@ Public Sub Form_Open()
     $desktop = New NagatoDesktop(Me)
     initializePanel2()
     setPanelItems()
-    setNetWmStrut()
+    reservePanelHeightOnScreen()
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
 
     If Not Error Then NagatoDBus.Register()

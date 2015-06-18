@@ -48,3 +48,13 @@ Public Sub GetInverted(argDirectory As String, argSelected As String[]) As Strin
     Return yukiInverted
     
 End
+
+Public Sub GetCountNonRecursive(argDirectory As String, argIncludeHidden As Boolean) As Integer
+    
+    If argIncludeHidden Then
+        Return Dir(argDirectory, "*").Count
+    Else
+        Return Dir(argDirectory, "[^.]*").Count
+    Endif
+    
+End

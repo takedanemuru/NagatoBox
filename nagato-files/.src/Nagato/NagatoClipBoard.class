@@ -11,18 +11,18 @@ Private $nagatoSelectionCut As String
 
 Event Changed
 
-Private Function getDirectories(argPaths As String[]) As String[]
-    
-    Dim yukiDirectories As New String[]
-    Dim yukiPath As String
-    
-    For Each yukiPath In argPaths
-        If Exist(yukiPath) Then yukiDirectories.Add(File.Dir(yukiPath))
-    Next
-    
-    Return yukiDirectories
-    
-End
+' Private Function getDirectories(argPaths As String[]) As String[]
+'     
+'     Dim yukiDirectories As New String[]
+'     Dim yukiPath As String
+'     
+'     For Each yukiPath In argPaths
+'         If Exist(yukiPath) Then yukiDirectories.Add(File.Dir(yukiPath))
+'     Next
+'     
+'     Return yukiDirectories
+'     
+' End
 
 Public Sub Activate()
     

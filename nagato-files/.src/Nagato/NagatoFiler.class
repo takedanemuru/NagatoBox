@@ -5,7 +5,7 @@ Fast
 Inherits NagatoMenuPipe
 
 Private $menuBar As NagatoMenuPanel
-Private $iconView As NagatoIconView
+Private $iconView As NagatoIconViewFile
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoFilerDirectoryObserver
 
@@ -102,7 +102,7 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuItem"
-    $iconView = New NagatoIconView(argContainer) As "MenuItem"
+    $iconView = New NagatoIconViewFile(argContainer) As "MenuItem"
     
     move(IIf(argDirectory = "", User.Home, argDirectory))
     

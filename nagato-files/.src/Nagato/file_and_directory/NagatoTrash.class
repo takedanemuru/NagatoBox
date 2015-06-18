@@ -7,47 +7,7 @@ Property Read PathInfo As String
 Property Read Count As Integer
 Property Read Size As String
 
-Private $uriDecoder As New NagatoUriDecoder
-
-Event StartEmpty
-Event FinishEmpty
-
-Private Function getTrashInfoPath(argPath As String) As String
-    
-    Return Quote(Replace$(argPath, Me.PathFiles, Me.PathInfo) & ".trashinfo")
-    
-End
-
-Private Function getDecodedPath(argPath As String) As String
-    
-    Return MikuruPath.GetSafePathName(URL.Decode(Replace(argPath, "Path=", "")))
-    
-End
-
-Private Function getPathToRestore(argPath As String) As String
-    
-    Dim yukiInfoPath As String = UnQuote(getTrashInfoPath(argPath))
-    Dim yukiStream As Stream
-    Dim yukiLine As String
-    Dim yukiResult As String = ""
-    
-    If Not Exist(yukiInfoPath) Then Return ""
-    
-    yukiStream = Open yukiInfoPath For Input
-
-    While Not Eof(yukiStream)
-        Line Input #yukiStream, yukiLine
-        If yukiLine Begins "Path=" Then
-            yukiResult = getDecodedPath(yukiLine)
-            Debug yukiResult
-        End If
-    Wend
-    
-    Close #yukiStream
-    
-    Return yukiResult
-    
-End
+Private $path As New NagatoTrashPath
 
 Private Sub confirm(argPaths As String[]) As Boolean
     
@@ -70,8 +30,6 @@ Public Sub Delete(argPaths As String[])
         Try Exec ["trash", yukiPath] Wait
     Next
     
-    If Not Error Then Debug "done"
-    
 End
 
 Public Sub DeleteFromTrashBin(argPaths As String[])
@@ -82,7 +40,7 @@ Public Sub DeleteFromTrashBin(argPaths As String[])
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue
-        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), getTrashInfoPath(yukiPath))
+        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), $path.GetTrashInfoPath(yukiPath))
     Next
     
 End
@@ -94,7 +52,7 @@ Public Sub Restore(argPaths As String[])
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue
-        yukiPathToRestore = getPathToRestore(yukiPath)
+        yukiPathToRestore = $path.GetPathToRestore(yukiPath)
         Try Copy yukiPath To yukiPathToRestore
         If Not Error Then Me.Delete([yukiPath])
     Next
@@ -103,38 +61,32 @@ End
 
 Public Function GetPreviousPath(argPath As String) As String
     
-    Return getPathToRestore(argPath)
+    Return $path.GetPathToRestore(argPath)
     
 End
 
 Private Function PathFiles_Read() As String
 
-    Return User.Home &/ ".local/share/Trash/files"
+    Return $path.Files
 
 End
 
 Private Function PathInfo_Read() As String
 
-    Return User.Home &/ ".local/share/Trash/info"
+    Return $path.Info
 
 End
 
 Private Function Count_Read() As Integer
 
-    Return Dir(Me.PathInfo).Count
+    Return Dir($path.Info).Count
 
 End
 
 Private Function Size_Read() As String
 
-    Dim yukiPath As String
-    Dim yukiSize As Integer
+    Dim yukiSize As Integer = MikuruFileSize.GetDirectorySize($path.Files)
     
-    For Each yukiPath In Dir(Me.PathFiles)
-        If Not Exist(Me.PathFiles &/ yukiPath) Then Continue
-        Try yukiSize += Stat(Me.PathFiles &/ yukiPath).Size
-    Next
-
     Return MikuruFileSize(yukiSize)
 
 End

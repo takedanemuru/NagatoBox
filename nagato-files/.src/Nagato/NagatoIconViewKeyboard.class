@@ -6,12 +6,28 @@ Event KeyPress(argKeyCode As Integer)
 Event KeyPressWithAlt(argKeyCode As Integer)
 Event KeyPressWithControl(argKeyCode As Integer)
 
+Private Sub pressKeyWithAlt(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key["h"]
+            Raise MenuEvent(NagatoMenuPipe.MoveHome)
+        Case Key["u"]
+            Raise MenuEvent(NagatoMenuPipe.MoveUp)
+        Case Key["b"]
+            Raise MenuEvent(NagatoMenuPipe.MoveBack)
+        Case Key["f"]
+            Raise MenuEvent(NagatoMenuPipe.MoveForward)
+    End Select
+    
+End
+
 Public Sub Asakura_KeyPress()
     
     If Key.Control Then
         Raise KeyPressWithControl(Key.Code)
     Else If Key.Alt Then
-        Raise KeyPressWithAlt(Key.Code)
+        pressKeyWithAlt(Key.Code)
+        'Raise KeyPressWithAlt(Key.Code)
     Else
         Raise KeyPress(Key.Code)
     End If

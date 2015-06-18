@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public Enum ButtonAll, ButtonInvert, ButtonArchive, ButtonMoveTo, ButtonCopyTo, ButtonDelete
+
+Private $container As NagatoPanelContainer
+Private $label As NagatoSelectionBarLabel
+
+Event ButtonAction(argAction As Integer)
+
+Private Sub addButton(argText As String, argTag As Integer)
+    
+    Dim yukiButton As New Button($container.HBox) As "ActionButton"
+    
+    With yukiButton
+        .Text = argText
+        .Tag = argTag
+        .AutoResize = True
+    End With
+    
+End
+
+Public Sub SetCount(argCount As Integer)
+    
+    $container.Visible = (argCount <> 0)
+    
+    If argCount = 0 Then
+        $label.SetText(0)
+    Else 
+        $label.SetText(IIf(NagatoSettings.MultipleSelection, argCount, 1))
+    Endif
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = New NagatoPanelContainer(argContainer)
+    addButton("Unselect All", Me.ButtonAll)
+    $label = New NagatoSelectionBarLabel($container.HBox)
+    addButton("Move To...", Me.ButtonMoveTo)
+    addButton("Copy To...", Me.ButtonCopyTo)
+    addButton("Remove", Me.ButtonDelete)
+    
+End
+
+Public Sub ActionButton_Click()
+    
+    Raise ButtonAction(Last.Tag)
+    
+End

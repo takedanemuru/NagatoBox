@@ -1,0 +1,144 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Selection As String[]
+
+Private $view As NagatoIconViewFileFacadeView
+Private $iconViewMouse As NagatoIconViewMouse
+Private $iconViewDrag As NagatoIconViewDrag
+Private $iconViewKeyboard As NagatoIconViewKeyboard
+
+Public Sub SetFocus(argPath As String)
+    
+    $view.SetFocus(argPath)
+    
+End
+
+Public Sub Refresh(argDirectory As String)
+    
+    $view.Refresh(argDirectory)
+    
+End
+
+Public Sub RefreshWithSearchQuery(argPaths As String[])
+    
+    $view.RefreshWithSearchQuery(argPaths)
+    
+End
+
+Public Sub Delete(argPath As String)
+    
+    $view.Delete(argPath)
+    
+End
+
+Public Sub HasKey(argDirectory As String, argPath As String) As Boolean
+    
+    Return $view.HasKey(argDirectory &/ argPath)
+    
+End
+
+Public Sub SelectItems(argTag As Integer)
+    
+    Select Case argTag
+        Case NagatoMenuPipe.ViewSelectAll
+            $view.SelectAll()
+        Case NagatoMenuPipe.ViewUnselectAll
+            $view.UnselectAll()
+        Case NagatoMenuPipe.ViewInvertSelection
+            $view.InvertSelection()
+    End Select
+    
+End
+
+Public Sub EnsureVisible()
+    
+    $view.EnsureVisibleLastSelected()
+    
+End
+
+Public Sub ShowLostDirectory()
+    
+    $view.ShowLostDirectory()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Dim yukiIconViewInitializer As New NagatoIconViewInitializer(argContainer)
+    
+    $view = New NagatoIconViewFileFacadeView(argContainer, yukiIconViewInitializer.IconView) As "Menu"
+    $iconViewMouse = New NagatoIconViewMouse(yukiIconViewInitializer.IconView) As "Menu"
+    $iconViewDrag = New NagatoIconViewDrag(yukiIconViewInitializer.IconView) As "Menu"
+    $iconViewKeyboard = New NagatoIconViewKeyboard(yukiIconViewInitializer.IconView) As "Menu"
+
+End
+
+Public Sub Menu_MenuEvent(argEvent As Integer)
+    
+    Select Case argEvent
+        Case NagatoMenuPipe.ViewContextMenu
+            $view.PopUpContextMenu()
+        Default
+            Raise MenuEvent(argEvent)
+    End Select
+    
+End
+
+Public Sub Menu_MouseDrag()
+    
+    If $view.Selection.Count > 0 Then 
+        $iconViewDrag.MouseDrag(NagatoDrag2.GetUriList($view.Selection))
+    End If
+    
+End
+
+Public Sub Menu_MouseDown(argPath As String)
+    
+    $view.MouseDown(argPath, Mouse.Left)
+    
+End
+
+Public Sub Menu_KeyPressWithControl(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key["x"]
+            If $view.Selection.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($view.Selection), "text/nagato-selection-cut")
+        Case Key["c"]
+            If $view.Selection.Count = 0 Then Return
+            Clipboard.Copy(NagatoDrag2.GetUriListCopy($view.Selection), "text/uri-list")
+        Case Key["v"]
+            $view.PasteFromClipBoard()
+        Case Key["h"]
+            NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+            TFEI.RefreshAll()
+        Case Key["t"]
+            $view.NewTab()
+        Case Key["n"]
+            Raise MenuEvent(NagatoMenuPipe.DirCreate)
+        Case Key["f"]
+            TFEI.SetSearch(False)
+    End Select
+    
+End
+
+Public Sub Menu_KeyPress(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key.Enter, 16777220
+            $view.Enter()
+        Case Key.Esc, 16777216
+            $view.UnselectAll()
+        Case Key.Delete
+            NagatoTrash.Delete($view.Selection)
+    End Select
+    
+End
+
+Private Function Selection_Read() As String[]
+
+    Return $view.Selection
+
+End

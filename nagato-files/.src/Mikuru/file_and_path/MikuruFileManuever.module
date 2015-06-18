@@ -1,13 +1,5 @@
 ' Gambas module file
 
-Property Read PathsCollection As Collection 'key as source, value as target
-Property Read Mode As Integer
-
-Private Enum ModeNone, ModeCopy, ModeCut, ModeTrash
-
-Private $pathsCollection As New Collection
-Private $mode As Integer = ModeNone
-
 Public Sub CutUriList(argTargetDirectory As String, argUriList As String)
     
     Dim yukiPath As String
@@ -28,16 +20,8 @@ Public Sub CopyUriList(argTargetDirectory As String, argUriList As String)
     Dim yukiPath As String
     
     For Each yukiPath In NagatoDrag2.GetPaths(argUriList)
-        Debug yukiPath
         Try Copy yukiPath To MikuruPath.GetSafePathName(argTargetDirectory &/ File.Name(yukiPath))
     Next
-    
-End
-
-Private Sub setProperties(argMode As Integer, argPaths As Collection)
-    
-    $mode = argMode
-    $pathsCollection = argPaths.Copy()
     
 End
 
@@ -66,11 +50,7 @@ Private Function getTargetDirectory(argTitle As String, argPath As String) As St
     Dialog.Title = argTitle
     Dialog.Path = File.Dir(argPath)
     
-    If Dialog.SelectDirectory() Then
-        Return ""
-    Else
-        Return Dialog.Path
-    Endif
+    Return IIf(Dialog.SelectDirectory(), "", Dialog.Path)
     
 End
 
@@ -78,12 +58,10 @@ Public Sub MoveToDirectory(argPaths As String[], argDirectory As String)
     
     Dim yukiPath As String
     Dim yukiTargetPath As String
-    Dim yukiCollection As New Collection
     
     For Each yukiPath In argPaths
         yukiTargetPath = MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
         Try Move yukiPath To yukiTargetPath
-        yukiCollection.Add(yukiTargetPath, yukiPath)
     Next
     
 End
@@ -92,21 +70,15 @@ Public Sub CopyToDirectory(argPaths As String[], argDirectory As String)
     
     Dim yukiPath As String
     Dim yukiTargetPath As String
-    Dim yukiCollection As New Collection
     
     For Each yukiPath In argPaths
-        Debug yukiPath
         yukiTargetPath = MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
         If Not IsDir(yukiPath) Then
             Try Copy yukiPath To yukiTargetPath
         Else
             copyDir(yukiTargetPath, yukiPath)
         End If
-        yukiCollection.Add(yukiTargetPath, yukiPath)
     Next
-    
-Finally
-    If Not Error Then setProperties(ModeCopy, yukiCollection)
     
 End
 
@@ -123,32 +95,5 @@ Public Sub CopyTo(argPaths As String[])
     Dim yukiDirectory As String = getTargetDirectory(("Copy To..."), argPaths[0])
     
     If yukiDirectory Then Me.CopyToDirectory(argPaths, yukiDirectory)
-
-End
-
-Public Sub Remove(argPaths As String[])
-    
-    Dim yukiPath As String
-    Dim yukiCollection As New Collection
-    
-    For Each yukiPath In argPaths
-        MikuruFile.TrashFile(yukiPath)
-        yukiCollection.Add("", yukiPath)
-    Next
-    
-Finally
-    If Not Error Then setProperties(ModeTrash, yukiCollection)
-
-End
-
-Private Function PathsCollection_Read() As Collection
-
-    Return $pathsCollection
-
-End
-
-Private Function Mode_Read() As Integer
-
-    Return $mode
 
 End

@@ -7,10 +7,7 @@ Property Read PathInfo As String
 Property Read Count As Integer
 Property Read Size As String
 
-Private $uriDecoder As New NagatoUriDecoder
-
-Event StartEmpty
-Event FinishEmpty
+Private $path As New NagatoTrashPath
 
 Private Function getTrashInfoPath(argPath As String) As String
     
@@ -70,8 +67,6 @@ Public Sub Delete(argPaths As String[])
         Try Exec ["trash", yukiPath] Wait
     Next
     
-    If Not Error Then Debug "done"
-    
 End
 
 Public Sub DeleteFromTrashBin(argPaths As String[])
@@ -109,32 +104,26 @@ End
 
 Private Function PathFiles_Read() As String
 
-    Return User.Home &/ ".local/share/Trash/files"
+    Return $path.Files
 
 End
 
 Private Function PathInfo_Read() As String
 
-    Return User.Home &/ ".local/share/Trash/info"
+    Return $path.Info
 
 End
 
 Private Function Count_Read() As Integer
 
-    Return Dir(Me.PathInfo).Count
+    Return Dir($path.Info).Count
 
 End
 
 Private Function Size_Read() As String
 
-    Dim yukiPath As String
-    Dim yukiSize As Integer
+    Dim yukiSize As Integer = MikuruFileSize.GetDirectorySize($path.Files)
     
-    For Each yukiPath In Dir(Me.PathFiles)
-        If Not Exist(Me.PathFiles &/ yukiPath) Then Continue
-        Try yukiSize += Stat(Me.PathFiles &/ yukiPath).Size
-    Next
-
     Return MikuruFileSize(yukiSize)
 
 End

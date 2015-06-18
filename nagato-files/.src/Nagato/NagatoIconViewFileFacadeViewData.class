@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoIconViewFileFacade
+
+Property Read CurrentDirectory As String
+Property Read Query As String[]
+
+Private $currentDirectory As String
+Private $query As New String[]
+
+Public Sub NewDirectory(argDirectory As String)
+    
+    $query.Clear()
+    $currentDirectory = argDirectory
+    
+End
+
+Public Sub NewQuery(argQuery As String[])
+    
+    $query = argQuery.Copy()
+    
+End
+
+Private Function CurrentDirectory_Read() As String
+
+    Return $currentDirectory
+
+End
+
+Private Function Query_Read() As String[]
+
+    Return $query
+
+End
