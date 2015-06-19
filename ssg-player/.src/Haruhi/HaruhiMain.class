@@ -1,0 +1,56 @@
+' Gambas class file
+
+Private $downloader As NagatoDownloader
+Private $xmlParser As New NagatoXmlParser As "XmlParser"
+Private $stream As Process
+Private $grids As NagatoGridsHandler
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    NagatoSettings.LoadFormSettings(Me)
+    $grids = New NagatoGridsHandler(Me) As "MainGridView"
+    $downloader = New NagatoDownloader(MikuruUrl.SingerSongGamer) As "Downloader"
+
+End
+
+Public Sub Form_Close()
+    
+    Try $stream.Kill()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+    Quit 0
+    
+End
+
+Public Sub Downloader_Finished()
+    
+    $xmlParser.Parse($downloader.Buffer)
+    
+End
+
+Public Sub XmlParser_Finished()
+    
+    $grids.Set($xmlParser.Collection)
+    
+End
+
+Public Sub MainGridView_Play(argTitle As String)
+    
+    Try $stream.Kill()
+
+    $stream = Exec ["mplayer", $xmlParser.Collection[argTitle]] 
+    Me.Title = Subst$(("now plaing : &1"), argTitle)
+    
+End
+
+Public Sub MainGridView_Download(argTitle As String)
+    
+    Dialog.Path = Subst$(User.Home &/ "&1.mp3", argTitle)
+    Dialog.Title = ("Download")
+    If Dialog.SaveFile() Then Return
+    
+    Try Exec ["wget", "-O", Dialog.Path, $xmlParser.Collection[argTitle]] 
+    
+End

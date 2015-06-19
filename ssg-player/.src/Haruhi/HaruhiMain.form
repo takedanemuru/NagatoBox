@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,48.5714,68.5714)
+  Icon = Picture["Pictures/cover170x170.jpeg"]
+  Resizable = False
+  Arrangement = Arrange.Vertical
+  { PictureBox1 PictureBox
+    MoveScaled(-1,0,50,22.8571)
+    Picture = Picture["Pictures/ssg.jpg"]
+    Stretch = True
+  }
+}

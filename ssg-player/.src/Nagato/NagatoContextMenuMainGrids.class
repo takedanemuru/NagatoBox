@@ -1,0 +1,40 @@
+' Gambas class file
+
+Public Enum MenuPlay, MenuDownload
+
+Private $rootMenu As Menu
+
+Event Click(argTag As Integer)
+
+Private Sub addMenu(argTag As Integer, argTitle As String, Optional argIcon As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Tag = argTag
+        .Text = argTitle
+        If argIcon Then .Picture = MikuruIcon[argIcon, 16]
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $rootMenu = New Menu(argContainer)
+    
+    addMenu(Me.MenuPlay, ("Play"), "button-play")
+    addMenu(Me.MenuDownload, ("Download"), "hard-drive-download")
+    
+End
+
+Public Sub PopUp()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Click(Last.Tag)
+    
+End
