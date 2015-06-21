@@ -1,0 +1,30 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Text = ("About: xkcd-reader")
+  SkipTaskbar = True
+  Arrangement = Arrange.Vertical
+  Padding = 24
+  { PictureBox1 PictureBox
+    MoveScaled(23,2,14,12)
+    Picture = Picture["Pictures/xkcd_hat_guy.gif"]
+    Alignment = Align.Center
+  }
+  { AboutTextLabel TextLabel
+    MoveScaled(4,19,57,26)
+    Expand = True
+    Alignment = Align.Center
+  }
+  { HBox1 HBox
+    MoveScaled(7,56,55,5)
+    { Panel1 Panel
+      MoveScaled(0,0,29,4)
+      Expand = True
+    }
+    { OkayButton Button
+      MoveScaled(38,0,16,4)
+      Text = ("OK")
+    }
+  }
+}

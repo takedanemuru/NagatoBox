@@ -1,0 +1,22 @@
+' Gambas class file
+
+Public Sub SetProperties(argMaxEpisode As Integer, argCurrentEpisode As Integer)
+    
+    With EpisodeSpinBox
+        .MaxValue = argMaxEpisode
+        .Value = argCurrentEpisode
+    End With
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(0)
+
+End
+
+Public Sub SelectButton_Click()
+    
+    Me.Close(EpisodeSpinBox.Value)
+    
+End

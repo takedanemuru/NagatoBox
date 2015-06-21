@@ -2,7 +2,11 @@
 
 Public Sub Main()
     
-    HaruhiMain.Start()
+    If Desktop.NetworkAvailable Then
+        HaruhiMain.Start()
+    Else
+        Message.Warning(("Network not available."), ("OK"))
+    End If
     
 End
 

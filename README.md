@@ -71,7 +71,7 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 |nagato-lookup		|application finder
 |nagato-map		|map viewer
 |nagato-movie		|video viewer
-|nagato-navigator		|Nagato Yuki tells you a fortune
+|nagato-navigator		|Deprecated, merged into nagato-files (-d)
 |nagato-network-manager	|network manager
 |nagato-openbox-logout	|logout manager for pure openbox3
 |nagato-pdf-view		|pdf viewer

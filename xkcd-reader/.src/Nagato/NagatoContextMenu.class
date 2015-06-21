@@ -1,0 +1,43 @@
+' Gambas class file
+
+Public Enum MenuNone, MenuSelectEpisode, MenuRandomEpisode, MenuAbout, MenuQuit
+
+Private $rootMenu As Menu
+
+Event Signal(argSignal As Integer)
+
+Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon[argIconName]
+    End With
+    
+End
+
+Public Sub PopUp()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new(argForm As Form)
+    
+    $rootMenu = New Menu(argForm)
+    
+    addMenuItem(("Random Episode"), Me.MenuRandomEpisode, "button-shuffle")
+    addMenuItem(("Select Episode"), Me.MenuSelectEpisode, "button-check")
+        addMenuItem("", Me.MenuNone)
+    addMenuItem(("About"), Me.MenuAbout, "question")
+    addMenuItem(("Quit"), Me.MenuQuit, "button-power")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    If Last.Tag <> Me.MenuNone Then Raise Signal(Last.Tag)
+    
+End

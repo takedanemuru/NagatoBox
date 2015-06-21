@@ -1,9 +1,9 @@
 # NagatoBox 15.06 "This World Has Been Waiting For Us"
 
 + until june 30
-+ Port To Gambas3 3.7.1
-+ upload to gambas.org if possible
-+ more reliable iconing (Application theme) system is needed.
++ ~~Port To Gambas3 3.7.1~~
++ ~~upload to gambas.org if possible~~
++ ~~more reliable iconing (Application theme) system is needed.~~
 
 ## ride on the dead coaster
 

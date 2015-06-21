@@ -1,12 +1,14 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
+# Compiled with Gambas 3.7.1
 Title=xkcd-reader
 Startup=Kyon
 Icon=Pictures/xkcd_hat_guy.gif
-Version=0.1.0
+Version=0.2.1
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
+Component=gb.desktop.x11
+Component=gb.desktop
 Component=gb.settings
 Component=gb.image.effect
 Component=gb.net
@@ -20,13 +22,17 @@ Translate=1
 Language=ja
 Maintainer=takedanemuru
 Vendor=Integrated Data Thought Entity
-Address=takeda.nemuru@gmail.com
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io
 License=S.O.S. License
-PackageName=xkcd-reader-0.1.0
+PackageName=xkcd-reader-0.2.0
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Graphics"
 Categories=ubuntu:"Graphics"
 Groups=ubuntu:"x11"
+Tags=Network,Graphics
+GambasVersion=3.6
+WebSite=https://github.com/takedanemuru
+CreateMenu=1

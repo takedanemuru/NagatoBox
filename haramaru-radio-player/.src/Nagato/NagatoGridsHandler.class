@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Private Enum ColumnIcon, ColumnTitle
+
 Private $grids As GridView
 
 Event Play(argTitle As String)
@@ -12,8 +14,8 @@ Private Sub initializeGrids()
         .ScrollBar = Scroll.Vertical
         .Header = GridView.Horizontal
         .Columns.Count = 2
-        .Columns[0].W = 24
-        .Columns[1].Title = ("Title")
+        .Columns[ColumnIcon].W = .Rows.H
+        .Columns[ColumnTitle].Title = ("Title")
         .Grid = False
         .Mode = Select.Single
     End With
@@ -25,7 +27,7 @@ Private Sub setIcon()
     Dim yukiRow As Integer
     
     For yukiRow = 0 To $grids.Rows.Max
-        $grids[yukiRow, 0].Picture = IIf(yukiRow = $grids.Row, MikuruIcon["button-play", 16], Null)
+        $grids[yukiRow, ColumnIcon].Picture = IIf(yukiRow = $grids.Row, MikuruIcon["button-play", 16], Null)
     Next
     
 End
@@ -46,7 +48,7 @@ Public Sub Set(argCollection As Collection)
     
     For Each yukiTitle In argCollection
         Inc $grids.Rows.Count
-        $grids[$grids.Rows.Max, 1].Text = argCollection.Key
+        $grids[$grids.Rows.Max, ColumnTitle].Text = argCollection.Key
         If Odd($grids.Rows.Max) Then setBackgroundColor()
     Next
     
@@ -64,7 +66,7 @@ Public Sub GridView_DblClick()
     
     setIcon()
     
-    Raise Play($grids[$grids.Row, 1].Text)
+    Raise Play($grids[$grids.Row, ColumnTitle].Text)
     
 End
 
@@ -81,9 +83,9 @@ Public Sub ContextMenu_Click(argTag As Integer)
     Select Case argTag
         Case NagatoContextMenuMainGrids.MenuPlay
             setIcon()
-            Raise Play($grids[$grids.Row, 1].Text)
+            Raise Play($grids[$grids.Row, ColumnTitle].Text)
         Case NagatoContextMenuMainGrids.MenuDownload
-            Raise Download($grids[$grids.Row, 1].Text)
+            Raise Download($grids[$grids.Row, ColumnTitle].Text)
     End Select
     
 End

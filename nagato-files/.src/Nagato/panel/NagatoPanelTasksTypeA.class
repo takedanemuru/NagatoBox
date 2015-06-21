@@ -44,6 +44,7 @@ Private Sub paintTask(argWindowIndex As Integer)
     Dim yukiRect As Rect = getTaskRect(argWindowIndex)
     Dim yukiDesktopWindow As DesktopWindow = $windows[argWindowIndex]
 
+    'If yukiDesktopWindow.Id = Desktop.ActiveWindow Then Me._PaintRectangle(yukiRect)
     Paint.Brush = Paint.Color(Color.White)
     Me._PaintIcon(yukiDesktopWindow, yukiRect)
     Me._PaintText(yukiDesktopWindow, yukiRect)
