@@ -2,44 +2,34 @@
 
 Inherits NagatoGrids
 
-Private Enum ColumnType, ColumnName, ColumnExec, ColumnTryExec, ColumnNotShowIn, ColumnOnlyShowIn, ColumnHidden
-
 Private $overriddens As New String[]
+Private $headerTitles As New NagatoGridsHeadersAutostarts
 
 Private Sub initializeGrid(argGrid As GridView)
     
     Me._$grids = argGrid
-    Me._$grids.Clear()
-    
-    With Me._$grids
-        .Header = GridView.Horizontal
-        .Expand = True
-        .Rows.Count = 0
-        .Columns.Count = 6
-        .Columns[ColumnType].Text = ("Type")
-        .Columns[ColumnName].Text = ("Application")
-        .Columns[ColumnExec].Text = ("Exec")
-        .Columns[ColumnTryExec].Text = ("Try Exec")
-        .Columns[ColumnNotShowIn].Text = ("Not Show In")
-        .Columns[ColumnOnlyShowIn].Text = ("Only Show In")
-    End With
-    
-    NagatoSettings.LoadGridsSettings(Me._$grids)
-    
+    Me._ClearGrids()
+    Me._SetGridsColumns($headerTitles.Titles)
+    Me._SetGridsProperties()
+        
 End
 
 Private Sub setApplicationName(argBaseName As String)
     
-    Me._AdjustColumnWidth(argBaseName, ColumnName)
-    Me._$grids[Me._$grids.Rows.Max, ColumnName].Text = argBaseName
+    With NagatoGridsHeadersAutostarts
+        Me._AdjustColumnWidth(argBaseName, .ColumnName)
+        Me._$grids[Me._$grids.Rows.Max, .ColumnName].Text = argBaseName
+    End With
     
 End
 
 Private Sub setType(argType As String, argColor As Integer, argIconName As String)
     
-    Me._SetProperty(ColumnType, argType, argIconName)
-    Me._SetBackgroundColor(argColor)
-    Me._AdjustColumnWidth(argType, ColumnType)
+    With NagatoGridsHeadersAutostarts
+        Me._SetProperty(.ColumnType, argType, argIconName)
+        Me._SetBackgroundColor(argColor)
+        Me._AdjustColumnWidth(argType, .ColumnType)
+    End With
     
 End
 
@@ -60,15 +50,17 @@ Private Sub setData(argData As NagatoAutostarts)
     Dim yukiAutostartFile As NagatoAutostartFile
     
     For Each yukiAutostartFile In argData.All
-        Inc Me._$grids.Rows.Count
-        setApplicationName(yukiAutostartFile.Name)
-        Me._SetProperty(ColumnOnlyShowIn, yukiAutostartFile.OnlyShowInByText)
-        Me._SetProperty(ColumnNotShowIn, yukiAutostartFile.NotShowInByText)
-        If Not yukiAutostartFile.Hide Then
-            Me._SetProperty(ColumnExec, yukiAutostartFile.Exec)
-            Me._SetProperty(ColumnTryExec, yukiAutostartFile.TryExec)
-        End If
-        setTypeColumn(yukiAutostartFile)
+        With NagatoGridsHeadersAutostarts
+            Inc Me._$grids.Rows.Count
+            setApplicationName(yukiAutostartFile.Name)
+            Me._SetProperty(.ColumnOnlyShowIn, yukiAutostartFile.OnlyShowInByText)
+            Me._SetProperty(.ColumnNotShowIn, yukiAutostartFile.NotShowInByText)
+            If Not yukiAutostartFile.Hide Then
+                Me._SetProperty(.ColumnExec, yukiAutostartFile.Exec)
+                Me._SetProperty(.ColumnTryExec, yukiAutostartFile.TryExec)
+            End If
+            setTypeColumn(yukiAutostartFile)
+        End With
     Next
 End
 

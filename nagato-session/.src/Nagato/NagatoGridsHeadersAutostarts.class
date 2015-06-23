@@ -1,0 +1,28 @@
+' Gambas class file
+
+Property Read Titles As String[]
+
+Public Enum ColumnType, ColumnName, ColumnExec, ColumnTryExec, ColumnNotShowIn, ColumnOnlyShowIn, ColumnHidden
+
+Private $headerTitles As String[]
+
+Public Sub _new()
+    
+    $headerTitles = New String[6]
+    
+    With $headerTitles
+        .Add(("Type"), ColumnType)
+        .Add(("Desktop Entry File"), ColumnName)
+        .Add(("Exec"), ColumnExec)
+        .Add(("Try Exec"), ColumnTryExec)
+        .Add(("Not Show In"), ColumnNotShowIn)
+        .Add(("Only Show In"), ColumnOnlyShowIn)
+    End With
+    
+End
+
+Private Function Titles_Read() As String[]
+
+    Return $headerTitles
+
+End

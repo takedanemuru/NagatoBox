@@ -6,11 +6,12 @@ Private $gridView As GridView
 Private $gridviewHandler As NagatoGridsAutostarts
 Private $panel As NagatoMenuPanelGlobalAutoStarts
 
-Private Sub showDetail(argRow As Integer)
+Private Function getTargetPath() As String
     
-    ' If argRow <> $gridView.Rows.Max Then
-    '     NagatoEditorHandler.SetText(MikuruDesktopEntryFile.Get(argRow, $gridView), True)
-    ' End If
+    Dim yukiName As String = $gridView[$gridView.Row, NagatoGridsHeadersAutostarts.ColumnName].Text
+    Dim yukiPath As String = MikuruAutostartDirectory.User &/ yukiName
+
+    Return yukiPath
     
 End
 
@@ -40,28 +41,14 @@ End
 
 Public Sub Asakura_Activate()
     
-    showDetail($gridView.RowAt(Mouse.Y))
+    'showDetail($gridView.RowAt(Mouse.Y))
     
 End
 
-Public Sub Menu_Show()
+Public Sub TFEI_Menu()
     
-    If $gridView.Rows.Selection.Count = 0 Then 
-        Return
-    Else
-        showDetail($gridView.Rows.Selection[0])
-    End If
-    
-End
-
-Public Sub Menu_Block()
-    
-    Dim yukiPath As String
-    
-    If $gridView.Row = -1 Then Return
-    
-    yukiPath = MikuruAutostartDirectory.User &/ $gridView[$gridView.Row, 1].Text & ".desktop"
-    
-    If Not Exist(yukiPath) Then MikuruBlocker.Create($gridView[$gridView.Row, 1].Text)
+    If $gridView.Row = -1 Then Return '$gridView.Row should return -1 when any row is selected.
+        
+    Debug getTargetPath()
     
 End
