@@ -1,0 +1,79 @@
+' Gambas class file
+
+Inherits NagatoTable
+
+Private $overriddens As New String[]
+Private $headerTitles As New NagatoTableHeadersAutostarts
+Private $autostartFiles As New NagatoAutostartFile[]
+
+Private Sub initializeGrid(argGrid As TableView)
+    
+    Me._$table = argGrid
+    Me._ClearGrids()
+    Me._SetGridsColumns($headerTitles.Titles)
+    Me._SetGridsProperties()
+        
+End
+
+Private Sub setType(argType As String, argColor As Integer, argIconName As String)
+    
+    With NagatoTableHeadersAutostarts
+        Me._SetProperty(.ColumnType, argType, argIconName)
+        Me._SetBackgroundColor(argColor)
+        Me._AdjustColumnWidth(argType, .ColumnType)
+    End With
+    
+End
+
+Private Sub setTypeColumn(argAutostartFile As NagatoAutostartFile)
+    
+    If argAutostartFile.Hide Then
+        setType(("HIDDEN"), Color.Orange, "traffic-cone")
+    Else If Not argAutostartFile.Required Then 
+        setType(("NOT SHOW"), Color.Gray, "exclamation")
+    Else If $overriddens.Exist(argAutostartFile.Name) Then 
+        setType(("OVERRIDDEN"), Color.Blue, "construction")
+    End If
+    
+End
+
+Private Sub setProperties(argAutostartFile As NagatoAutostartFile)
+    
+    With NagatoTableHeadersAutostarts
+        setTypeColumn(argAutostartFile)
+        Me._SetProperty(.ColumnName, argAutostartFile.Name)
+        Me._SetProperty(.ColumnOnlyShowIn, argAutostartFile.OnlyShowInByText)
+        Me._SetProperty(.ColumnNotShowIn, argAutostartFile.NotShowInByText)
+        If Not argAutostartFile.Hide Then
+            Me._SetProperty(.ColumnExec, argAutostartFile.Exec)
+            Me._SetProperty(.ColumnTryExec, argAutostartFile.TryExec)
+        End If
+    End With
+    
+End
+
+Private Sub setData(argData As NagatoAutostarts)
+    
+    Dim yukiAutostartFile As NagatoAutostartFile
+    
+    For Each yukiAutostartFile In argData.All
+        Inc Me._$table.Rows.Count
+        $autostartFiles.Add(yukiAutostartFile)
+        setProperties(yukiAutostartFile)
+    Next
+End
+
+Public Sub _new(argGridView As GridView, argAutostarts As NagatoAutostarts, Optional argOverriddens As String[])
+    
+    If argOverriddens Then $overriddens = argOverriddens.Copy()
+    
+    initializeGrid(argGridView)
+    setData(argAutostarts)
+    
+End
+
+Public Sub Refresh()
+    
+    'refresh?
+    
+End

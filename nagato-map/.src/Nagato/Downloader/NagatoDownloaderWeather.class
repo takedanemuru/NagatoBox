@@ -29,15 +29,18 @@ Private Sub refresh()
     
     For Each yukiXmlElement In $xmlDocument.GetElementsByTagName("time")
         yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
-        If yukiChildElements.Count > 2 Then
+        If yukiChildElements.Count > 4 Then
             yukiWeatherElement = New NagatoWeatherElement
             yukiWeatherElement.SetEssentialData(yukiChildElements)
+            '$cache.Add(yukiWeatherElement, yukiXmlElement.Attributes["to"])
         Else
             setAdditionalData(yukiWeatherElement, yukiChildElements, yukiXmlElement.Attributes["to"])
         Endif
     Next
     
 Catch
+    Debug "error"
+    Debug Error.Text
     Raise Error
     Return
     

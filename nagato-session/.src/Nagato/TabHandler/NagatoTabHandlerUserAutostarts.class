@@ -3,27 +3,8 @@
 Inherits NagatoTabHandler
 
 Private $panel As NagatoMenuPanelUserAutostarts
-Private $gridView As GridView 
-Private $gridviewHandler As NagatoGridsAutostarts
-
-Private Sub showDetail(argRowIndex As Integer)
-    
-    ' If argRowIndex <> $gridView.Rows.Max Then
-    '     'HaruhiMain.RefreshTabStrip($gridView[argRowIndex, 1].Text, Stock["small/pen"])
-    '     'NagatoEditorHandler.SetText(MikuruDesktopEntryFile.Get(argRowIndex, $gridView), False)
-    ' End If
-    
-End
-
-Private Sub delete(argRowIndex As Integer)
-    
-    Dim yukiPath As String = MikuruAutostartDirectory.User &/ $gridView[argRowIndex, 1].Text & ".desktop"
-    
-    If Not Exist(yukiPath) Then Return
-    
-    Kill yukiPath
-    
-End
+Private $tableView As TableView
+Private $tableViewHandler As NagatoTableAutostarts
 
 Public Sub _InitializePanel()
     
@@ -33,39 +14,21 @@ End
 
 Public Sub _InitializeGridView()
     
-    $gridView = New GridView(Me._$container) As "TFEI"
-    $gridviewHandler = New NagatoGridsAutostarts($gridView, NagatoXdgAutostarts.UserAutoStarts)
-    NagatoSettings.LoadGridsSettings($gridView)
+    $tableView = New TableView(Me._$container) As "TFEI"
+    $tableViewHandler = New NagatoTableAutostarts($tableView, NagatoXdgAutostarts.UserAutoStarts)
+    NagatoSettings.LoadGridsSettings($tableView)
     
 End
 
 Public Sub SaveSettings()
     
-    NagatoSettings.SaveGridsSettings($gridView)
+    NagatoSettings.SaveGridsSettings($tableView)
     
 End
 
 Public Sub Asakura_Activate()
     
-    ShowDetail($gridView.RowAt(Mouse.Y))
-    
-End
-
-Public Sub Menu_Edit()
-    
-    If $gridView.Rows.Selection.Count = 0 Then Return
-    
-    showDetail($gridView.Rows.Selection[0])
-    
-End
-
-Public Sub Menu_Delete()
-    
-    If $gridView.Rows.Selection.Count = 0 Then Return
-    
-    If HaruhiDialogDelete.ShowDialog() = MikuruDialog.ResponseDelete Then
-        delete($gridView.Rows.Selection[0])
-    Endif
+    ' ShowDetail($tableView.RowAt(Mouse.Y))
     
 End
 
@@ -78,6 +41,17 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             
         Case MikuruSignal.AutostartsDelete
             
+    End Select
+    
+End
+
+Public Sub TFEI_Click()
+    
+    Select Case $tableView.Column
+        Case NagatoTableHeadersAutostarts.ColumnExec
+            $tableView.Edit()
+        Case NagatoTableHeadersAutostarts.ColumnTryExec
+            $tableView.Edit()
     End Select
     
 End

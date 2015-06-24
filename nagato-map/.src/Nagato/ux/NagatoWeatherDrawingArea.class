@@ -82,6 +82,9 @@ Public Sub Asakura_Draw()
         setPleaseWait(Color.DarkBlue)
     End If
     
+Catch
+    Debug Error.Text
+    
 End
 
 Private Function Longitude_Read() As Float

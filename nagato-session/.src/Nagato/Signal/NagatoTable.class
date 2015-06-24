@@ -4,20 +4,21 @@ Inherits NagatoSignal
 
 Public Const Margin As Integer = 32
 
-Public _$grids As GridView
+Public _$table As TableView
 
 Private Sub initializeHeader(argHeaderCount As Integer)
     
-    With Me._$grids
+    With Me._$table
         .Header = GridView.Horizontal
         .Columns.Count = argHeaderCount
+        .NoKeyboard = True
     End With
     
 End
 
 Public Sub _ClearGrids()
     
-    With Me._$grids
+    With Me._$table
         .Clear()
         .Rows.Count = 0
     End With
@@ -31,25 +32,25 @@ Public Sub _SetGridsColumns(argTitles As String[])
     initializeHeader(argTitles.Count)
 
     For yukiTitleIndex = 0 To argTitles.Max
-        Me._$grids.Columns[yukiTitleIndex].Text = argTitles[yukiTitleIndex]
+        Me._$table.Columns[yukiTitleIndex].Text = argTitles[yukiTitleIndex]
     Next
     
 End
 
 Public Sub _SetGridsProperties()
     
-    With Me._$grids
+    With Me._$table
         .Expand = True
         .Mode = Select.Single
     End With
     
-    NagatoSettings.LoadGridsSettings(Me._$grids)
+    NagatoSettings.LoadGridsSettings(Me._$table)
     
 End
 
 Public Sub _AdjustColumnWidth(argText As String, argColumnIndex As Integer)
     
-    With Me._$grids
+    With Me._$table
         If .Font.TextWidth(argText) + Me.Margin > .Columns[argColumnIndex].Width Then
             .Columns[argColumnIndex].Width = .Font.TextWidth(argText) + Me.Margin
         Endif
@@ -61,8 +62,8 @@ Public Sub _SetBackgroundColor(argColor As Integer)
     
     Dim yukiCount As Integer
     
-    For yukiCount = 0 To Me._$grids.Columns.Max
-        With Me._$grids[Me._$grids.Rows.Max, yukiCount]
+    For yukiCount = 0 To Me._$table.Columns.Max
+        With Me._$table[Me._$table.Rows.Max, yukiCount]
             .Background = argColor
             .Foreground = Color.White
         End With
@@ -72,7 +73,7 @@ End
 
 Public Sub _SetProperty(argIndex As Integer, argProperty As String, Optional argIconName As String)
     
-    With Me._$grids[Me._$grids.Rows.Max, argIndex] 
+    With Me._$table[Me._$table.Rows.Max, argIndex] 
         .Text = argProperty
         If argIconName Then .Picture = MikuruIcon.Get(argIconName)
     End With

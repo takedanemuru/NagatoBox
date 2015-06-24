@@ -9,9 +9,6 @@ Property Read Arguments As Collection
 Public Sub AddTile(argMapView As MapView)
     
     With Me
-        Debug .Name
-        Debug .Pattern
-        Debug .Cache
         argMapView.Map.AddTile(.Name, .Pattern, .Arguments, .Cache).SubDomains = .SubDomains
     End With
     
@@ -43,7 +40,6 @@ End
 
 Private Function Arguments_Read() As Collection
 
-    'Return ["version": "121"]
-    Return ["version": "310"]
+    Return ["version": "162"]
 
 End

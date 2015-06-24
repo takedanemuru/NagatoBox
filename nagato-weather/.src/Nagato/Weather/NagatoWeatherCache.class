@@ -29,7 +29,7 @@ Private Sub refresh()
     
     For Each yukiXmlElement In $client.Elements
         yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
-        If yukiChildElements.Count > 2 Then
+        If yukiChildElements.Count > 4 Then
             yukiWeatherElement = New NagatoWeatherElement
             yukiWeatherElement.SetEssentialData(yukiChildElements)
         Else

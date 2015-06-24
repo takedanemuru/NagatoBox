@@ -78,7 +78,7 @@
 
 ## nagato-map
 
-+ update google map api version.
++ ~~update google map api version. (upgrade to v.162)~~
 
 ## nagato-player-x
 

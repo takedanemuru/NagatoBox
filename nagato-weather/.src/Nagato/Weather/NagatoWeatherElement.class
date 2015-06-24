@@ -34,8 +34,8 @@ Public Sub SetAdditionalData(argXmlElements As XmlElement[])
     If $iconId <> 0 Then Return
     
     $precipitation = argXmlElements[0].Attributes["value"]
-    $iconId = argXmlElements[1].Attributes["number"]
-    $iconName = argXmlElements[1].Attributes["id"]
+    $iconId = argXmlElements[argXmlElements.Max].Attributes["number"]
+    $iconName = argXmlElements[argXmlElements.Max].Attributes["id"]
     
 End
 

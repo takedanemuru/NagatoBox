@@ -17,6 +17,10 @@ End
 
 Public Function GetWeatherElementMostRecent() As NagatoWeatherElement
     
+    Debug "get most recent"
+    Debug MikuruTimeStamp.GetRecent()
+    Debug $downloader.Cache.Count
+    
     Return $downloader.Cache[MikuruTimeStamp.GetRecent()]
     
 End
