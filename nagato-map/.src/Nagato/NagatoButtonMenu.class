@@ -27,9 +27,11 @@ End
 
 Private Sub addMenus()
     
+    Dim yukiMenu As NagatoSubMenuWikipedia
+    
     With NagatoMenuPipe
         addMenuItem(("Search"), .MenuSearch, MikuruIcon.Get("search"))
-        Object.New("NagatoSubMenuWikipedia", [$rootMenu])
+        yukiMenu = New NagatoSubMenuWikipedia($rootMenu) As "Menu"
         addMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
         addMenuItem(("Show Scale"), .MapShowScale, IIf(NagatoSettings.ShowScale, MikuruIcon.Get("button-check"), Null))
         addMenuItem(("Export"), .MapExport, MikuruIcon.Get("hard-drive-download"))

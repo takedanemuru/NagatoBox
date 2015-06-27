@@ -61,7 +61,7 @@ End
 Public Sub MenuBar_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
-        Case NagatoMenuPipe.MenuInformation
+        Case NagatoMenuPipe.MenuInformation, NagatoMenuPipe.MenuRefreshWikipediaArticles
             NagatoLeftPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
         Case NagatoMenuPipe.MenuBookmark
             HaruhiAddBookmark.SetLocation(MapView.Map.Center.Lat, MapView.Map.Center.Lon)

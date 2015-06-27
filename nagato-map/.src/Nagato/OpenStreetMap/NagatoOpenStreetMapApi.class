@@ -19,7 +19,6 @@ Public Sub GetElements(argXmlDocument As XmlDocument) As Collection
     Dim yukiResult As New Collection
     Dim yukiNode As XmlNode
     Dim yukiGeoElement As NagatoGeoElement
-    ' Dim yukiString As String = argXmlDocument.ToString(True)
     
     For Each yukiNode In argXmlDocument.GetElementsByTagName("searchresults")[0].AllChildNodes
         With yukiNode.Attributes

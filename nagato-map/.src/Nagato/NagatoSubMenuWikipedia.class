@@ -68,6 +68,15 @@ End
 
 Public Sub LanguageMenu_Click()
     
+    If NagatoSettings.WikipediaLanguageKey = Last.Tag Then Return
+
     NagatoSettings.WikipediaLanguageKey = Last.Tag
+    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
+    
+End
+
+Public Sub RefreshMenu_Click()
+    
+    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End
