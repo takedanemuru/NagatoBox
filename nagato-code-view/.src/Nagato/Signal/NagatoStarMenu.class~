@@ -7,8 +7,8 @@ Public _$uniqueName As String = "StarMenu"
 Public Sub _RefreshChildMenus() ' override
     
     Me._AddMenu("Open", MikuruSignal.FileOpen, "search")
-    Me._AddMenu("Reload", MikuruSignal.ViewRefresh, "button-rotate-cw")
-    'Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
+    Me._AddMenu("Reload", MikuruSignal.ViewReload, "button-rotate-cw")
+    Object.New("NagatoSubMenuRecentDirectories", [Me._$parentMenu, ("RecentProjects")])
         Me._AddMenu("", 0)
     Me._AddMenu("About", MikuruSignal.ApplicationAbout, "star")
     Me._AddMenu("Quit", MikuruSignal.ApplicationClose, "button-power")

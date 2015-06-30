@@ -1,0 +1,68 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Private Sub getProjectIcon(argDirectory As String) As Picture
+    
+    Dim yukiTargetPath As String = argDirectory &/ File.Name(argDirectory) & ".png"
+    
+    If Exist(yukiTargetPath) Then Return Picture.Load(yukiTargetPath)
+    
+Finally
+    Return Null
+    
+End
+
+Private Sub setNull()
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu)
+    
+    With yukiMenu
+        .Text = ("Not Found")
+    End With
+    
+End
+
+Private Sub setRecents()
+    
+    Dim yukiDirectory As String
+    Dim yukiMenu As Menu
+    
+    For Each yukiDirectory In NagatoSettings.RecentDirectories
+        yukiMenu = New Menu(Me._$parentMenu) As "RecentDirectoryMenu"
+        With yukiMenu
+            .Text = File.Name(yukiDirectory)
+            .Tag = yukiDirectory
+            .Picture = getProjectIcon(yukiDirectory)
+        End With
+    Next
+    
+End
+
+Public Sub _InitializeParentMenu(argRootObject As Object, argMenuName As String) ' override
+    
+    Me._$parentMenu = New Menu(argRootObject) As "ParentMenu"
+    
+    With Me._$parentMenu
+        .Name = argMenuName
+        .Text = ("Recent Selected")
+        .Picture = MikuruIcon["clock"]
+    End With
+    
+End
+
+Public Sub _RefreshChildMenus() ' override
+    
+    If NagatoSettings.RecentDirectories = Null Then
+        setNull()
+    Else
+        setRecents()
+    Endif
+    
+End
+
+Public Sub RecentDirectoryMenu_Click()
+    
+    Raise Signal(MikuruSignal.FileOpenRecent, [Last.Tag])
+    
+End

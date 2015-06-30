@@ -3,5 +3,6 @@
 Public Enum None = 0
 Public Enum FileNone = 1000, FileOpen = 1001
 Public Enum ViewNone = 2000, ViewRefresh = 2001, ViewFilter = 2002, ViewShowCodeView = 2003
+Public Enum ViewReload = 2004
 Public Enum DataNone = 3000, DataIncLineCount = 3001, DataIncLineCountWithoutVoid = 3002
 Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationClose = 9002

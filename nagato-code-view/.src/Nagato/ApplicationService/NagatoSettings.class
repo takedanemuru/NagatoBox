@@ -3,8 +3,33 @@
 Create Static
 
 Property LastDirectory As String
+Property Read RecentDirectories As String[]
 
 Private $settings As New Settings
+
+Private Function isValidDirectory(argDirectory As String) As Boolean
+    
+    If Not Exist(argDirectory) Then Return False
+    If Not IsDir(argDirectory) Then Return False 
+    If Not Dir(argDirectory).Exist(".project") Then Return False
+    
+    Return True
+    
+End
+
+Private Sub overwriteRecentDirectories(argDirectory As String)
+    
+    Dim yukiRecents As String[] = Me.RecentDirectories.Copy()
+    Dim yukiTargetIndex As Integer = yukiRecents.Find(argDirectory) ' .Find(value) returns -1 if value not found.
+    
+    If yukiTargetIndex > -1 Then yukiRecents.Remove(yukiTargetIndex)
+    yukiRecents.Add(argDirectory, 0)
+    yukiRecents.Resize(20)
+    
+    $settings["directory/recent"] = yukiRecents.Copy()
+    $settings.Save()
+    
+End
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -30,6 +55,21 @@ Public Sub SaveFormSettings(argForm As Form)
     
 End
 
+Public Sub PushDirectory(argDirectory As String)
+    
+    If Not isValidDirectory(argDirectory) Then Return
+    
+    NagatoSettings.LastDirectory = File.Dir(argDirectory)
+    
+    If Me.RecentDirectories = Null Then 
+        $settings["directory/recent"] = [argDirectory].Copy()
+        $settings.Save()
+    Else
+        overwriteRecentDirectories(argDirectory)
+    Endif
+    
+End
+
 Private Function LastDirectory_Read() As String
 
     Return $settings["directory/last", User.Home]
@@ -40,5 +80,23 @@ Private Sub LastDirectory_Write(Value As String)
 
     $settings["directory/last"] = Value
     $settings.Save()
+
+End
+
+Private Function RecentDirectories_Read() As String[]
+
+    Dim yukiRecents As New String[] 
+    Dim yukiPath As String
+    
+    For Each yukiPath In $settings["directory/recent", Null]
+        If isValidDirectory(yukiPath) Then yukiRecents.Add(yukiPath)
+    Next
+
+    $settings["directory/recent"] = yukiRecents.Copy()
+    
+    Return yukiRecents
+
+Catch
+    Return Null
 
 End

@@ -15,18 +15,38 @@ Private Sub sortGrids()
     
 End
 
-Public Sub Open()
+Private Sub openDirectory(argDirectory As String)
+    
+    $data.Clear(argDirectory)
+    sortGrids()
+    Raise Signal(MikuruSignal.ViewRefresh, [Subst$($data.Message, File.Name(argDirectory))])
+    NagatoSettings.PushDirectory(argDirectory)
+    
+End
+
+Private Function getTargetDirectory() As String
     
     Dialog.Title = ("Select Directory")
     Dialog.Path = NagatoSettings.LastDirectory
     Dialog.ShowHidden = True
     
-    If Not Dialog.SelectDirectory() Then
-        $data.Clear(Dialog.Path)
-        sortGrids()
-        Raise Signal(MikuruSignal.ViewRefresh, [Subst$($data.Message, File.Name(Dialog.Path))])
-        NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
+    If Dialog.SelectDirectory() Then
+        Return ""
+    Else If Not Dir(Dialog.Path).Exist(".project") Then
+        Message.Warning(("YUKI.N > .project file not found."), ("OK"))
+        Return ""
+    Else
+        Return Dialog.Path
     Endif
+    
+End
+
+Public Sub Open(Optional argDirectory As String = "")
+    
+    Dim yukiTargetDirectory As String = argDirectory
+    
+    If yukiTargetDirectory = "" Then yukiTargetDirectory = getTargetDirectory()
+    If Exist(yukiTargetDirectory) Then openDirectory(yukiTargetDirectory)
     
 End
 

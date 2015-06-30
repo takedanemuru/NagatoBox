@@ -43,7 +43,7 @@
 ## nagato-code-view
 
 + ~~new: reload menu~~
-+ new : recent files menu
++ ~~new : recent files menu~~
 
 ## nagato-config-screenlocker
 
