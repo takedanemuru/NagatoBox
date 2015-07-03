@@ -69,8 +69,6 @@ End
 
 Public Sub _unknown(...) As Variant
     
-    If Not Object.IsValid($drawingArea) Then initializeWidgets()
-    
     Return $drawingArea.GetProperty(Param.Name)
     
 End

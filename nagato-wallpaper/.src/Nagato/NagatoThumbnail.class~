@@ -17,6 +17,10 @@ Static Public Sub Set(argMode As Integer)
             yukiThumbnail = New NagatoThumbnailFit
         Case MikuruRenderMode.Center
             yukiThumbnail = New NagatoThumbnailCenter
+        Case MikuruRenderMode.TopLeft
+            yukiThumbnail = New NagatoThumbnailTopLeft
+        Case MikuruRenderMode.TopCenter
+            yukiThumbnail = New NagatoThumbnailTopCenter
     End Select
     
     yukiThumbnail.Paint()
@@ -27,9 +31,9 @@ Public Function _GetOriginPoint(argImage As Image) As PointF
     
     Dim yukiPoint As New PointF
 
-    With HaruhiEdit.PreviewDA
-        yukiPoint.X = IIf(argImage.W = .W, 0, (.W - argImage.W) / 2)
-        yukiPoint.Y = IIf(argImage.H = .W, 0, (.H - argImage.H) / 2)
+    With HaruhiEdit
+        yukiPoint.X = IIf(argImage.W = .PreviewW, 0, (.PreviewW - argImage.W) / 2)
+        yukiPoint.Y = IIf(argImage.H = .PreviewH, 0, (.PreviewH - argImage.H) / 2)
     End With
     
     Return yukiPoint

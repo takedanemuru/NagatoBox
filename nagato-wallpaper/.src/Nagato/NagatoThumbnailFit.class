@@ -15,6 +15,10 @@ Private Function getThumbnailForFitMode() As Image
     
     Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)
     
+Catch
+    yukiImage = New Image(Screen.W, Screen.H, Color.White)
+    Return yukiImage
+    
 End
 
 Public Sub Paint()

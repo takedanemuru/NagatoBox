@@ -9,6 +9,20 @@ Property LastMode As Integer
 
 Private $settings As New Settings
 
+Private Sub overwriteRecentPaths(argPath As String)
+    
+    Dim yukiRecents As String[] = Me.RecentPath.Copy()
+    Dim yukiTargetIndex As Integer = yukiRecents.Find(argPath) ' .Find(value) returns -1 if value not found.
+    
+    If yukiTargetIndex > -1 Then yukiRecents.Remove(yukiTargetIndex)
+    yukiRecents.Add(argPath, 0)
+    yukiRecents.Resize(30)
+    
+    $settings["background/recent"] = yukiRecents.Copy()
+    $settings.Save()
+    
+End
+
 Private Function getPerDesktopKey(argKey As String) As String
     
     Return argKey & "_" & MikuruHidden.DesktopType
@@ -27,14 +41,7 @@ End
 
 Public Sub PushToRecentPaths(argPath As String)
     
-    Dim yukiPaths As String[] = $settings["background/recent", [""]]
-    
-    Try yukiPaths.Remove(yukiPaths.Find(argPath), 1)
-    yukiPaths.Add(argPath, 0)
-    yukiPaths.Resize(20)
-    
-    $settings["background/recent"] = yukiPaths
-    $settings.Save()
+    overwriteRecentPaths(argPath)
     
 End
 
@@ -79,8 +86,6 @@ End
 
 Private Function RecentPath_Read() As String[]
 
-    Dim yukiPaths As String[] = $settings["background/recent", [""]]
-
-    Return yukiPaths
+    Return $settings["background/recent", [""]]
 
 End

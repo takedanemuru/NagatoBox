@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Sub _call(argArray As String[])
+    
+    Dim yukiPath As String
+    
+    Debug "count: " & argArray.Count
+    
+    For Each yukiPath In argArray
+        Debug yukiPath
+    Next
+    
+End
+

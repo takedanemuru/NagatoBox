@@ -4,7 +4,7 @@ Inherits NagatoThumbnail
 
 Private Function getFillRateMax(argImage As Image) As Float
     
-    Return Max(Screen.H / argImage.H, Screen.W / argImage.W) * NagatoPreview.Ratio
+    Return Max(Screen.H / argImage.H, Screen.W / argImage.W) * HaruhiEdit.PreviewRatio
     
 End
 

@@ -20,15 +20,15 @@
     Text = ("Apply")
     Picture = Picture["icon:/small/ok"]
   }
-  { ColorButton ColorButton
-    MoveScaled(22,39,6,4)
+  { BackgroundColorButton ColorButton
+    MoveScaled(25,39,6,4)
     ToolTip = ("Background Color")
   }
   { ModeComboBox ComboBox
-    MoveScaled(7,39,14,4)
+    MoveScaled(7,39,17,4)
     ToolTip = ("Fill Type")
     ReadOnly = True
-    List = [("Center"), ("Tile"), ("Fill"), ("Fit"), ("Full")]
+    List = [("Center"), ("Tile"), ("Fill"), ("Fit"), ("Full"), ("Top Left"), ("Top Center"), ("Top Right")]
     Text = ("ComboBox1")
   }
 }

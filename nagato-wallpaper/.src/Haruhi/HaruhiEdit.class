@@ -58,6 +58,7 @@ Public Sub BackgroundColorButton_Change()
     BackgroundColorButton.Foreground = BackgroundColorButton.Color
     PreviewDrawingArea.Background = BackgroundColorButton.Color
     NagatoPreview.Color = BackgroundColorButton.Color
+    PreviewDrawingArea.Refresh()
 
 End
 

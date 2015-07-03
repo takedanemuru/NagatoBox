@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoWallpaperRendarer
+
+Public Sub Set(argImage As Image)
+    
+    Dim yukiImage As Image = New Image(Screen.W, Screen.H, HaruhiEdit.PreviewBackground)
+    
+    Paint.Begin(yukiImage)
+        Paint.DrawImage(argImage, (Screen.W - argImage.W), 0)
+    Paint.End()
+    
+    Me._SaveModefiedImage(yukiImage)
+    
+End
