@@ -4,7 +4,13 @@ Private $persona As Picture
 
 Private Sub setPersona()
     
-    $persona = Picture.Load("pictures/1.png")
+    Select Case Month(Now)
+        Case 1, 2, 3, 10, 11, 12
+            $persona = Picture.Load("pictures/nagato_1.png")
+        Case Else
+            $persona = Picture.Load("pictures/nagato_2.png")
+    End Select
+    
     Me.Picture = $persona
     
 End
@@ -70,7 +76,7 @@ End
 
 Public Sub Form_Move()
 
-    Me.Y = Screen.H - $persona.H
+    Me.Y = Max(Screen.H - $persona.H, Screen.H * 0.3)
 
 End
 

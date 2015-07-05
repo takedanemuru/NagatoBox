@@ -60,6 +60,12 @@ Private Sub setPanelItems()
     
 End
 
+Public Sub RealodDesktopWallpaper()
+    
+    $desktop.ReloadDesktopWallpaper()
+    
+End
+
 Public Sub Form_Open()
 
     Application.MainWindow = Me

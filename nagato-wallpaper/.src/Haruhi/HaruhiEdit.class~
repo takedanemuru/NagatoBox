@@ -58,6 +58,7 @@ Public Sub BackgroundColorButton_Change()
     BackgroundColorButton.Foreground = BackgroundColorButton.Color
     PreviewDrawingArea.Background = BackgroundColorButton.Color
     NagatoPreview.Color = BackgroundColorButton.Color
+    PreviewDrawingArea.Refresh()
 
 End
 
@@ -84,5 +85,11 @@ End
 Private Function Mode_Read() As Integer
 
     Return ModeComboBox.Index
+
+End
+
+Public Sub AboutButton_Click()
+
+    
 
 End

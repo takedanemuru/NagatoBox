@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public Enum Center, Tile, Full, Fit, Fill, TopLeft, TopCenter, TopRight
+Public Enum Center, Tile, Full, Fit, Fill, TopLeft, TopCenter, TopRight, Left, Right, BottomLeft, BottomCenter, BottomRight
 
 Public Function getCommandLineOption(argMode As Integer) As String
     

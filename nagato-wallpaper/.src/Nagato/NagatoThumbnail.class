@@ -23,6 +23,16 @@ Static Public Sub Set(argMode As Integer)
             yukiThumbnail = New NagatoThumbnailTopCenter
         Case MikuruRenderMode.TopRight
             yukiThumbnail = New NagatoThumbnailTopRight
+        Case MikuruRenderMode.Left
+            yukiThumbnail = New NagatoThumbnailLeft
+        Case MikuruRenderMode.Right
+            yukiThumbnail = New NagatoThumbnailRight
+        Case MikuruRenderMode.BottomLeft
+            yukiThumbnail = New NagatoThumbnailBottomLeft
+        Case MikuruRenderMode.BottomCenter
+            yukiThumbnail = New NagatoThumbnailBottomCenter
+        Case MikuruRenderMode.BottomRight
+            yukiThumbnail = New NagatoThumbnailBottomRight
     End Select
     
     yukiThumbnail.Paint()

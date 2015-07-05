@@ -17,6 +17,14 @@ Finally
     
 End
 
+Public Sub ReloadDesktopWallpaper() As Boolean
+    
+    HaruhiDesktop.RealodDesktopWallpaper()
+    
+    Return True
+    
+End
+
 Private Function Ready_Read() As String
 
     Return "YUKI.N >  Can you see this ?"

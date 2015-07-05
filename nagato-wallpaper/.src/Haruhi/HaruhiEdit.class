@@ -87,3 +87,9 @@ Private Function Mode_Read() As Integer
     Return ModeComboBox.Index
 
 End
+
+Public Sub AboutButton_Click()
+
+    HaruhiAbout.ShowDialog()
+
+End

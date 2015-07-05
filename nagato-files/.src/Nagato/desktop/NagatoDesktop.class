@@ -40,6 +40,12 @@ Public Sub _new(argContainer As Container)
 
 End
 
+Public Sub ReloadDesktopWallpaper()
+    
+    $wallpaper.ReloadDesktopWallpaper()
+    
+End
+
 Public Sub Handler_RequestRefresh()
     
     $icons.Refresh($mouse.SelectedPaths)

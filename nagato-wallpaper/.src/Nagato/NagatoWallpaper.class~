@@ -2,17 +2,43 @@
 
 Create Static
 
+Private Function isValidPath(argPath) As Boolean
+    
+    If argPath = "" Then Return False
+    If Not Exist(argPath) Then Return False
+    
+    Return True
+    
+End
+
+Private Sub reloadNagatoDesktopWallpaper()
+    
+    Dim yukiService As String = "Session://org.gambas.nagato.files"
+    Dim yukiObjectPath As String = "/org/nagato/files"
+    Dim yukiInterface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
+    
+    Try DBus[yukiService][yukiObjectPath, yukiInterface].ReloadDesktopWallpaper()
+    
+End
+
+Private Sub reloadWallpaper()
+    
+    If Not NagatoDBus.isNagatoDesktopActivated() Then
+        Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
+    Else
+        reloadNagatoDesktopWallpaper()
+    End If
+    
+End
+
 Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer)
     
-    If argPath = "" Then Return
-    If Not Exist(argPath) Then Return
+    If Not isValidPath(argPath) Then Return
     
     MikuruOriginalImage.SetPath(argPath)
     MikuruModefiedImage.Set(argRenderMode)
     
-    If Not NagatoDBus.isNagatoDesktopActivated() Then
-        Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
-    End If
+    reloadWallpaper()
     
 End
 
@@ -21,11 +47,5 @@ Public Sub SetLast()
     If Not NagatoDBus.isNagatoDesktopActivated() Then
         Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     End If
-    
-    ' With NagatoSettings
-    '     If Exist(MikuruHidden.PathOriginalImage) Then
-    '         Me.Set(MikuruHidden.PathOriginalImage, .LastColor, .LastMode)
-    '     Endif
-    ' End With
     
 End

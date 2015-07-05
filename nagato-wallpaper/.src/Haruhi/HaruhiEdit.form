@@ -5,8 +5,9 @@
   Icon = Picture["Pictures/image.png"]
   Resizable = False
   { SelectButton Button
-    MoveScaled(1,39,5,4)
+    MoveScaled(1,39,12,4)
     ToolTip = ("Open File")
+    Text = ("Select")
     Picture = Picture["icon:/small/open"]
   }
   { PreviewDrawingArea DrawingArea
@@ -21,14 +22,19 @@
     Picture = Picture["icon:/small/ok"]
   }
   { BackgroundColorButton ColorButton
-    MoveScaled(26,39,6,4)
+    MoveScaled(33,39,6,4)
     ToolTip = ("Background Color")
   }
   { ModeComboBox ComboBox
-    MoveScaled(7,39,18,4)
+    MoveScaled(14,39,18,4)
     ToolTip = ("Fill Type")
     ReadOnly = True
-    List = [("Center"), ("Tile"), ("Fill"), ("Fit"), ("Full"), ("Top Left"), ("Top Center"), ("Top Right")]
+    List = [("Center"), ("Tile"), ("Fill"), ("Fit"), ("Full"), ("Top Left"), ("Top Center"), ("Top Right"), ("Left"), ("Right"), ("BottomLeft"), ("BottomCenter"), ("BottomRight")]
     Text = ("ComboBox1")
+  }
+  { AboutButton Button
+    MoveScaled(40,39,5,4)
+    ToolTip = ("About This App")
+    Picture = Picture["icon:/medium/question"]
   }
 }
