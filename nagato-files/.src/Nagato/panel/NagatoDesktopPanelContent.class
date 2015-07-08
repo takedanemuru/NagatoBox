@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoPanelContentCore
+
 Create Private
 
 Property Visible As Boolean
@@ -13,8 +15,8 @@ Public Sub _Initialize(argContainer As Container, argExpand As Boolean)
     
     With Me._$drawingArea
         .Expand = argExpand
-        .Background = NagatoSettingsPanel.Bacground
-        If Not argExpand Then .Width = 200
+        .Background = NagatoSettingsPanel.Background
+        If Not argExpand Then .Width = 100
         If argExpand Then .Visible = False
     End With
     
@@ -40,7 +42,7 @@ Public Sub _Show()
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub _RefreshAll()
     
     If Not Me._$drawingArea.Visible Then Return
     
@@ -49,6 +51,20 @@ Public Sub Asakura_Timer()
 Catch
     Debug Error.Text
     Return
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    Me._RefreshAll()
+    
+End
+
+Public Sub ForceReload()
+    
+    Me._$drawingArea.Background = NagatoSettingsPanel.Background
+    
+    Me._RefreshAll()
     
 End
 

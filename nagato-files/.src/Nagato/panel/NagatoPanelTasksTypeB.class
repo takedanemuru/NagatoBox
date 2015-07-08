@@ -51,8 +51,7 @@ Private Sub paintTask(argDesktopIndex As Integer, argWindowIndex As Integer, arg
     Dim yukiDesktopWindow As DesktopWindow = $windows.GetDesktopWindow(argDesktopIndex, argWindowIndex)
     Dim yukiRect As Rect = getTaskRect(argDesktopIndex, argWindowIndex, argTaskWidth)
 
-    'If yukiDesktopWindow.Id = Desktop.ActiveWindow Then Me._PaintRectangle(yukiRect)
-    Paint.Brush = Paint.Color(Color.White)
+    Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
     Me._PaintIcon(yukiDesktopWindow, yukiRect)
     Me._PaintText(yukiDesktopWindow, yukiRect)
     Paint.Fill()

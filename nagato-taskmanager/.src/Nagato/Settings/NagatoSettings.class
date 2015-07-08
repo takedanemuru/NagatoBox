@@ -26,11 +26,13 @@ Public Sub LoadGridsSettings(argGrids As GridView)
     
     Dim yukiCount As Integer
     
-    For yukiCount = 0 To argGrids.Columns.Max
+    For yukiCount = 0 To argGrids.Columns.Max - 1
         With argGrids.Columns[yukiCount]
             .Width = $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
         End With
     Next
+    
+    argGrids.Columns[argGrids.Columns.Max].W = 8
     
 End
 
@@ -38,7 +40,7 @@ Public Sub SaveGridsSettings(argGrids As GridView)
     
     Dim yukiCount As Integer
     
-    For yukiCount = 0 To argGrids.Columns.Max
+    For yukiCount = 0 To argGrids.Columns.Max - 1
         With argGrids.Columns[yukiCount]
             $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount)] = .Width
         End With

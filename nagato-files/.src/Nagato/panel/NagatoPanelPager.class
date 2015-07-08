@@ -1,16 +1,40 @@
 ' Gambas class file
 
+Inherits NagatoPanelContentCore
+
+Private Const BoxSize As Integer = 22
+
 Private $drawingArea As DrawingArea
-Private $watcher As DesktopWatcher
+Private $watcher As New NagatoDesktopWatcher As "DesktopWatcher"
+Private $painter As New NagatoPagerPainter
+
+Private Function getPagerWidth() As Integer
+    
+    Return BoxSize * Desktop.Count + 4
+    
+End
+
+Private Sub popUpContextMenu()
+    
+    Dim yukiMenu As New NagatoContextMenuPanelPager(HaruhiDesktop, "")
+    
+    yukiMenu.Popup()
+    
+End
 
 Private Sub refreshAll()
     
-    $drawingArea.W = 22 * Desktop.Count + 4
+    If Not Object.IsValid($drawingArea) Then Return
+    
+    $drawingArea.W = getPagerWidth()
     $drawingArea.Refresh()
     
-Catch
-    Debug Error.Text
-    Return
+End
+
+Public Sub ForceReload()
+    
+    $drawingArea.Background = NagatoSettingsPanel.Background
+    refreshAll()
     
 End
 
@@ -20,52 +44,28 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
     
     With $drawingArea
         .Expand = argExpand
-        .Background = Color.Orange
-        .Width = 200
+        .Background = NagatoSettingsPanel.Background
+        .Width = getPagerWidth()
     End With
-    
-    $watcher = New DesktopWatcher(True) As "DesktopWatcher"
     
 End
 
 Public Sub ClockDrawingArea_Draw()
 
-    Dim yukiCount As Integer
-
     Paint.Begin($drawingArea)
-        For yukiCount = 0 To Desktop.Count - 1
-            Paint.Brush = Paint.Color(IIf(Desktop.Current = yukiCount, Color.Yellow, Color.White))
-            Paint.Rectangle(22 * yukiCount + 2, 2, 20, 20)
-            Paint.Fill()
-            Paint.Brush = Paint.Color(Color.Orange)
-            Paint.Text(yukiCount + 1, 22 * yukiCount + 2, 2, 20, 20, Align.Center)
-            Paint.Fill()
-        Next
+        $painter.Paint()
     Paint.End()
     
 End
 
 Public Sub ClockDrawingArea_MouseDown()
     
-    Dim yukiMenu As NagatoContextMenuPanelPager
-    
-    If Mouse.Left Then
-        Desktop.Current = (Mouse.X Div 22)
-        $drawingArea.Refresh()
-    Else If Mouse.Right Then
-        yukiMenu = New NagatoContextMenuPanelPager(HaruhiDesktop, "")
-        yukiMenu.Popup()
-    End If
+    If Mouse.Left Then Desktop.Current = (Mouse.X Div BoxSize)
+    If Mouse.Right Then popUpContextMenu()
     
 End
 
-Public Sub DesktopWatcher_Change()
-    
-    refreshAll()
-    
-End
-
-Public Sub DesktopWatcher_Count()
+Public Sub DesktopWatcher_Changed()
     
     refreshAll()
     

@@ -16,6 +16,14 @@ Private Sub initializeRootMenu(argButton As MenuButton)
     
 End
 
+Private Sub addConfigSubMenu()
+    
+    Dim yukiSubMenu As NagatoSubMenuDesktopPanelConfig
+    
+    yukiSubMenu = New NagatoSubMenuDesktopPanelConfig(Me._$rootMenu) As "Menu"
+    
+End
+
 Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture, Optional argShortcut As String)  
     
     Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
@@ -33,8 +41,10 @@ Private Sub refreshChildMenus()
     
     Me._AddMenu(("YUKI.N > ..."), MenuPersona, MikuruIcon.Get("question-balloon"))
         Me._AddMenu("", 0)
+    addConfigSubMenu()
+        Me._AddMenu("", 0)
     With NagatoDesktopPanelContainer
-        Me._AddMenu(("Tasks (TypeA)"), .ModeTasks, MikuruIcon.Get("gear"))
+        Me._AddMenu(("Tasks (TypeA)"), .ModeTasksTypeA, MikuruIcon.Get("gear"))
         Me._AddMenu(("Tasks (TypeB)"), .ModeTasksTypeB, MikuruIcon.Get("gears"))
         Me._AddMenu(("System Monitor"), .ModeTaskManager, MikuruIcon.Get("oscilloscope"))
         Me._AddMenu(("RSS"), .ModeRss, MikuruIcon.Get("feed"))

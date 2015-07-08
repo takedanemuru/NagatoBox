@@ -4,7 +4,9 @@ Inherits NagatoSettingsCore
 
 Property ClockFormat As String
 Property Height As Integer
-Property Bacground As Integer
+Property Background As Integer
+Property Foreground As Integer
+Property Highlight As Integer
 
 Private Function ClockFormat_Read() As String
 
@@ -32,15 +34,41 @@ Private Sub Height_Write(Value As Integer)
 
 End
 
-Private Function Bacground_Read() As Integer
+Private Function Background_Read() As Integer
 
-    Return Me._$settings["panel/background", Color.Orange]
+    Return Me._$settings["panel/background", Color.White]
 
 End
 
-Private Sub Bacground_Write(Value As Integer)
+Private Sub Background_Write(Value As Integer)
 
     Me._$settings["panel/background"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Foreground_Read() As Integer
+
+    Return Me._$settings["panel/foreground", Color.Violet]
+
+End
+
+Private Sub Foreground_Write(Value As Integer)
+
+    Me._$settings["panel/foreground"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Highlight_Read() As Integer
+
+    Return Me._$settings["panel/highlight", Color.Red]
+
+End
+
+Private Sub Highlight_Write(Value As Integer)
+
+    Me._$settings["panel/highlight"] = Value
     Me._$settings.Save()
 
 End

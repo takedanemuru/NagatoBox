@@ -21,3 +21,29 @@ Public Sub SaveFormSettings(argForm As Form)
     $settings["form/width"] = argForm.Width
     
 End
+
+Public Sub LoadGridsSettings(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            .Width = $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
+        End With
+    Next
+    
+End
+
+Public Sub SaveGridsSettings(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount)] = .Width
+        End With
+    Next
+    
+    $settings.Save()
+    
+End

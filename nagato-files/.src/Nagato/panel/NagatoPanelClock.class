@@ -1,30 +1,21 @@
 ' Gambas class file
 
-Private $drawingArea As DrawingArea
-Private $observer As Observer
+Inherits NagatoDesktopPanelContent
 
 Private $text As String
 
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
-    $drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
-    
-    With $drawingArea
-        .Expand = argExpand
-        .Background = Color.Orange
-        .Width = 16
-    End With
-    
-    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    Me._Initialize(argContainer, argExpand)
     
 End
 
 Public Sub ClockDrawingArea_Draw()
 
-    Paint.Begin($drawingArea)
-        Paint.Brush = Paint.Color(Color.White)
+    Paint.Begin(Me._$drawingArea)
+        Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
         Paint.Font.Bold = True
-        Paint.RichText($text, 0, 0, $drawingArea.W, $drawingArea.H, Align.Center)
+        Paint.RichText($text, 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Center)
         Paint.Fill()
     Paint.End()
     
@@ -38,15 +29,11 @@ Public Sub ClockDrawingArea_Menu()
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub _Refresh()
     
     $text = Format$(Now(), NagatoSettingsPanel.ClockFormat)
-    $drawingArea.W = Max(HaruhiMain.Font.RichTextWidth($text) + 32, $drawingArea.W)
+    Me._$drawingArea.W = Max(Me._$drawingArea.W, HaruhiMain.Font.RichTextWidth($text) + 16)
     
-    $drawingArea.Refresh()
-    
-Catch
-    Debug Error.Text
-    Return
+    Me._$drawingArea.Refresh()
     
 End

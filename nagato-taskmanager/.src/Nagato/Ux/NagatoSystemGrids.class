@@ -16,7 +16,7 @@ Public Sub _InitializeGridView()
     Me._$gridView.Rows.Count = 0
     
     With Me._$gridView
-        .Columns.Count = 6
+        .Columns.Count = 7 ' .Column[6] is blank column
         .Columns[0].Text = ("Process ID")
         .Columns[1].Text = ("Status")
         .Columns[2].Text = ("Process Name")
@@ -49,11 +49,11 @@ End
 Private Sub setGridView()
     
     Dim yukiGridData As Variant[] = MikuruGrids.GetData()
-    Dim yukiCount As Integer
+    Dim yukiIndex As Integer
     
     Me._Clear()
-        For yukiCount = 0 To yukiGridData.Max
-            setRowData(yukiGridData[yukiCount])
+        For yukiIndex = 0 To yukiGridData.Max
+            setRowData(yukiGridData[yukiIndex])
         Next
     Me._Restore()
     

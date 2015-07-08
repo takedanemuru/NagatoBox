@@ -16,7 +16,7 @@ Public Sub _InitializeGridView()
     Me._$gridView.Rows.Count = 0
     
     With Me._$gridView
-        .Columns.Count = 6
+        .Columns.Count = 7 ' .Column[6] is blank column
         .Columns[0].Text = ("Process ID")
         .Columns[1].Text = ("Status")
         .Columns[2].Text = ("Process Name")
@@ -103,7 +103,7 @@ Public Sub Asakura_MouseDown()
     
     If Me._$gridView.RowAt(Mouse.Y) = -1 Then Return
     $lastSelectedId = Me._$gridView[Me._$gridView.Row, 0].Text
-    $lastSelectedName = "x"
+    $lastSelectedName = Me._$gridView[Me._$gridView.Row, 2].Text
     
     If Mouse.Right Then popUpKillMenu()
 

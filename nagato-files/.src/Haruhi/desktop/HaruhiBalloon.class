@@ -9,7 +9,7 @@ Private Function getBalloonImage(argHeight As Integer, argWidth As Integer) As I
     
     Paint.Begin(yukiBaseImage)
         With MikuruUx
-            Paint.Brush = Paint.Color(NagatoSettingsPanel.Bacground)
+            Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
             Paint.Rectangle(0, 0, yukiBaseImage.W, argHeight + 2 * MikuruUx.Grid, 2 * MikuruUx.Grid)
             Paint.Polygon([4 * .Grid, yukiBaseLine, 6 * .Grid, yukiBaseLine, 8 * .Grid, yukiBaseImage.H, 4 * .Grid, yukiBaseLine])
             Paint.Fill()

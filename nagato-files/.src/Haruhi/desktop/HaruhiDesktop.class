@@ -6,26 +6,10 @@ Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 Private Const Margin As Integer = 2
 
 Private $desktop As NagatoDesktop
-
-Private $container As HBox
-Private $starButton As NagatoMenuDesktopPanelButton
-Private $main As NagatoDesktopPanelContainer
-Private $systray As NagatoPanelSystray
-Private $pager As NagatoPanelPager
-Private $clock As NagatoPanelClock
-
+Private $panel As NagatoDesktopPanel
 Private $timer As New Timer As "DesktopTimer"
 
 Event Timer
-
-Private Sub reservePanelHeightOnScreen() 
-    
-    Dim yukiProperty As String = "_NET_WM_STRUT"
-    Dim yukiValue As String = Subst$("0,0,0,&1", NagatoSettingsPanel.Height) 
-    
-    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue) Wait
-    
-End
 
 Private Sub initializeForm()
     
@@ -35,28 +19,6 @@ Private Sub initializeForm()
         .W = Screen.W
         .H = Screen.H
     End With
-    
-End
-
-Private Sub initializePanel2()
-    
-    $container = New HBox(Me)
-    
-    With $container
-        .Expand = False
-        .H = NagatoSettingsPanel.Height
-        .Background = NagatoSettingsPanel.Bacground
-    End With
-    
-End
-
-Private Sub setPanelItems()
-    
-    $starButton = New NagatoMenuDesktopPanelButton($container) As "StarMenu"
-    $main = New NagatoDesktopPanelContainer($container)
-    '$systray = New NagatoPanelSystray($container, False)
-    $pager = New NagatoPanelPager($container, False)
-    $clock = New NagatoPanelClock($container, False)
     
 End
 
@@ -71,9 +33,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     initializeForm()
     $desktop = New NagatoDesktop(Me)
-    initializePanel2()
-    setPanelItems()
-    reservePanelHeightOnScreen()
+    $panel = New NagatoDesktopPanel(Me)
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
 
     If Not Error Then NagatoDBus.Register()
@@ -84,13 +44,8 @@ End
 
 Public Sub Form_Close()
     
+    $timer.Enabled = False
     NagatoDBus.Unregister()
-    
-End
-
-Public Sub StarMenu_ChangeMode(argMode As Integer)
-    
-    $main.ChangeMode(argMode)
     
 End
 

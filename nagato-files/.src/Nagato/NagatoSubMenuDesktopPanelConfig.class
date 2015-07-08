@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Enum MenuBackground, MenuForeground, MenuHighlight
+
+Private Sub addMenu(argText As String, argTag As Integer, argColor As Integer)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        .Picture = MikuruColorChip.Get(argColor)
+    End With
+    
+End
+
+Private Sub changeSettings(argTag As Integer)
+    
+    Select Case argTag
+        Case MenuBackground
+            NagatoSettingsPanel.Background = MikuruDialogColor.LastSelected
+        Case MenuForeground
+            NagatoSettingsPanel.Foreground = MikuruDialogColor.LastSelected
+        Case MenuHighlight
+            NagatoSettingsPanel.Highlight = MikuruDialogColor.LastSelected
+    End Select
+    
+End
+
+Public Sub _InitializeMenu() 'override
+    
+    addMenu(("Background Color"), MenuBackground, NagatoSettingsPanel.Background)
+    addMenu(("Foreground Color"), MenuForeground, NagatoSettingsPanel.Foreground)
+    addMenu(("Highlight Color"), MenuHighlight, NagatoSettingsPanel.Highlight)
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Config")
+        .Picture = MikuruIcon.Get("equalizer")
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Dim yukiLastTag As Integer = Last.Tag
+    
+    HaruhiColorChooser.SetProperty(yukiLastTag)
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        changeSettings(yukiLastTag)
+        Raise MenuEvent(NagatoMenuPipe.ViewPanelColorChanged)
+    End If
+    
+End

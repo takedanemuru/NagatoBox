@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private Function getRectangleBackgroundColor(argCount As Integer) As Integer
+    
+    If Desktop.Current = argCount Then Return NagatoSettingsPanel.Highlight
+    
+    Return NagatoSettingsPanel.Foreground
+    
+End
+
+Private Sub paintRectangle(argIndex As Integer)
+    
+    Paint.Brush = Paint.Color(getRectangleBackgroundColor(argIndex))
+    Paint.Rectangle(22 * argIndex + 2, 2, 20, 20)
+    Paint.Fill()
+    
+End
+
+Private Sub paintText(argIndex As Integer)
+    
+    Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
+    Paint.Text(argIndex + 1, 22 * argIndex + 2, 2, 20, 20, Align.Center)
+    Paint.Fill()
+    
+End
+
+Public Sub Paint()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Desktop.Count - 1
+        paintRectangle(yukiIndex)
+        paintText(yukiIndex)
+    Next
+    
+End
