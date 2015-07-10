@@ -1,0 +1,62 @@
+' Gambas class file
+
+Property Read Id As String
+Property Read Status As String
+Property Read Name As String
+Property Read Cpu As String
+Property Read Rss As String
+Property Read Virtual As String
+
+Private $id As String
+Private $status As String
+Private $name As String
+Private $cpu As String
+Private $rss As String
+Private $vitual As String
+
+Public Sub _new(argRowData As Collection)
+    
+    $id = CStr(argRowData["id"])
+    $status = argRowData["status"]
+    $name = argRowData["name"]
+    $cpu = MikuruUnitConversion.UsageToString(argRowData["cpu"])
+    $rss = MikuruUnitConversion.PageToMiB(CStr(argRowData["rss"]))
+    $vitual = MikuruUnitConversion.KiloByteToMiB(CStr(argRowData["virtual"]))
+    
+End
+
+Private Function Id_Read() As String
+
+    Return $id
+
+End
+
+Private Function Status_Read() As String
+
+    Return $status
+
+End
+
+Private Function Cpu_Read() As String
+
+    Return $cpu
+
+End
+
+Private Function Rss_Read() As String
+
+    Return $rss
+
+End
+
+Private Function Virtual_Read() As String
+
+    Return $vitual
+
+End
+
+Private Function Name_Read() As String
+
+    Return $name
+
+End

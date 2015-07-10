@@ -1,41 +1,29 @@
 ' Gambas class file
 
-Inherits NagatoSignal
-
-Public Enum MenuNone, MenuUnselect, MenuKill, MenuAbout, MenuQuit
-
-Private $rootMenu As Menu
+Inherits NagatoMenu
 
 Private Sub initializeRootMenu(argButton As MenuButton)
     
-    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    Me._$rootMenu = New Menu(HaruhiMain) As "RootMenu"
     
-    $rootMenu.Name = "RootMenu"
-    argButton.Menu = $rootMenu.Name
+    Me._$rootMenu.Name = "RootMenu"
+    argButton.Menu = Me._$rootMenu.Name
     
 End
 
-Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIcon As String)
+Private Sub addProcessMenu()
     
-    Dim yukiMenu As New Menu($rootMenu) As "ChildMenu"
-    
-    With yukiMenu
-        .Text = argText
-        .Tag = argTag
-        If argIcon Then .Picture = MikuruIcon.Get(argIcon)
-    End With
+    Me._AddMenu(("Unselect"), MikuruSignal.ProcessUnselect)
+    Me._AddMenu(("Kill selected process"), MikuruSignal.ProcessKill, "exclamation")
+    Me._AddMenu((""), MikuruSignal.None)
     
 End
 
 Private Sub initializeChildMenus()
 
-    If HaruhiMain.IsSelected Then
-        addMenuItem(("Unselect"), MenuUnselect)
-        addMenuItem(("Kill selected process"), MenuKill, "exclamation")
-            addMenuItem((""), MenuNone)
-    End If
-    addMenuItem(("About nagato-taskmanager"), MenuAbout, "star")
-    addMenuItem(("Quit"), MenuQuit, "button-power")
+    If HaruhiMain.IsSelected Then addProcessMenu()
+    Me._AddMenu(("About nagato-taskmanager"), MikuruSignal.ApplicationAbout, "star")
+    Me._AddMenu(("Quit"), MikuruSignal.ApplicationQuit, "button-power")
     
 End
 
@@ -48,14 +36,7 @@ End
 
 Public Sub RootMenu_Show()
     
-    $rootMenu.Children.Clear()
-    
+    Me._$rootMenu.Children.Clear()
     initializeChildMenus()
-    
-End
-
-Public Sub ChildMenu_Click()
-    
-    Raise Signal(Last.Tag, [""])
     
 End

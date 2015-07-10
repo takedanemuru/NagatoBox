@@ -1,0 +1,44 @@
+' Gambas class file
+
+Private $cpuUsages As New Collection
+Private $cpuTimeDifference As Integer
+Private $cpuTimeTotal As Integer
+
+Private Function getCpuUsage(argTotalUsage As Integer, argData As String[]) As Float
+    
+    Dim yukiBuffer As Integer = CInt(argTotalUsage) - CInt($cpuUsages[argData[0]])
+    
+    $cpuUsages[argData[0]] = argTotalUsage
+    
+    If yukiBuffer = 0 Then Return 0
+    If $cpuTimeDifference = 0 Then Return 0
+    
+    Return yukiBuffer / $cpuTimeDifference
+    
+End
+
+Public Sub SetCpuTimes()
+    
+    Dim yukiCurrentTotal As Integer = MikuruCpuStatus()
+    
+    If $cpuTimeTotal = 0 Then
+        $cpuTimeTotal = yukiCurrentTotal
+        $cpuTimeDifference = 0
+    Else
+        $cpuTimeDifference = yukiCurrentTotal - $cpuTimeTotal
+        $cpuTimeTotal = yukiCurrentTotal
+    Endif
+    
+End
+
+Public Function CpuUsageInFloat(argData As String[]) As Float
+    
+    Dim yukiTotalUsage As Integer = CInt(argData[13]) + CInt(argData[14])
+    
+    If yukiTotalUsage = 0 Then Return 0
+    If $cpuUsages.Exist(argData[0]) Then Return getCpuUsage(yukiTotalUsage, argData)
+        
+    $cpuUsages[argData[0]] = yukiTotalUsage
+    Return 0
+    
+End

@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoMenu
+
+Public Sub _new(argForm As Form)
+    
+    Me._$rootMenu = New Menu(argForm)
+    Me._AddMenu(("Kill"), MikuruSignal.ProcessKill, "exclamation")
+    
+End

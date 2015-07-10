@@ -11,8 +11,6 @@ Private Function getText() As String
     yukiText &= Format$(NagatoSystemObserver.SwapUsage, " Swap: ##0.00%,   ")
     yukiText &= Format$(NagatoSystemObserver.ProcessCount, " Processes: ###0")
     
-    Debug yukiText
-    
     Return yukiText
     
 End

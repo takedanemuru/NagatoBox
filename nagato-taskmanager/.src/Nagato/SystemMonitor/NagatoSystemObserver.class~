@@ -2,132 +2,86 @@
 
 Create Static
 
+Property Activated As Boolean
 Property Read CpuUsage As Float
 Property Read MemoryUsage As Float
 Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
-Property Read Activated As Boolean
-Property Read SystemLoad As Float
 Property Read CpuHistory As Float[]
 Property Read MemoryHistory As Float[]
 Property Read SwapHistory As Float[]
 
-Private Const SystemSnapShotInterval As Integer = 1000 ' milliseconds
+Private $timer As New NagatoSystemObserverTimer As "Timer"
+Private $cpu As New NagatoObserverCpu
+Private $memory As New NagatoObserverMemory
+Private $swap As New NagatoObserverSwap
+Private $process As New NagatoObserverProcess
 
-Private $timer As Timer
-Private $observationStep As Integer
-
-Private $cpuUsage As Float
-Private $memoryUsage As Float
-Private $swapUsage As Float
-Private $processCount As Integer
-
-Private $cpuHistory As New NagatoHistory
-Private $memoryHistory As New NagatoHistory
-Private $swapHistory As New NagatoHistory
-Private $processesHistory As New NagatoHistory
-
-Event Finished
-
-Private Sub setProperty()
+Public Sub Timer_PreparationStep()
     
-    $cpuUsage = NagatoCpuObserver.getCpuRate()
-    $memoryUsage = NagatoMemoryObserver.GetMemoryRate()
-    $swapUsage = NagatoSwapObserver.GetSwapPercentage()
-    $processCount = NagatoProcessObserver.GetProcessCount()
-
-    $cpuHistory.Push($cpuUsage)
-    $memoryHistory.Push($memoryUsage)
-    $swapHistory.Push($swapUsage)
-    $processesHistory.Push($processCount)
-
-End
-
-Public Sub Refresh()
-    
-    $timer.Start()
+    $cpu.SetPrevData()
     
 End
 
-Public Sub Stop()
+Public Sub Timer_Step()
     
-    $timer.Stop()
-    
-End
-
-Public Sub _new()
-    
-    $timer = New Timer As "Timer"
-    $timer.Delay = SystemSnapShotInterval
-    $timer.Start()
-    
-End
-
-Public Sub Timer_Timer()
-    
-    Select Case $observationStep
-        Case 0
-            NagatoCpuObserver.setPrevData()
-            Inc $observationStep
-        Case 1
-            NagatoCpuObserver.setCurrentData()
-            NagatoMemoryObserver.SetVariables()
-            setProperty()
-            Raise Finished
-    End Select
+    $cpu.Refresh()
+    $memory.Refresh()
+    $swap.Refresh()
+    $process.Refresh()
     
 End
 
 Private Function CpuUsage_Read() As Float
 
-    Return $cpuUsage
+    Return $cpu.Current
 
 End
 
 Private Function MemoryUsage_Read() As Float
 
-    Return $memoryUsage
+    Return $memory.Current
 
 End
 
 Private Function SwapUsage_Read() As Float
 
-    Return $swapUsage
+    Return $swap.Current
+
+End
+
+Private Sub Activated_Write(Value As Boolean)
+
+    $timer.Activated = Value
 
 End
 
 Private Function Activated_Read() As Boolean
 
-    Return $timer.Enabled
+    Return $timer.Activated
 
 End
 
 Private Function ProcessCount_Read() As Integer
 
-    Return $processCount
-
-End
-
-Private Function SystemLoad_Read() As Float
-
-    Return Max($cpuUsage, $memoryUsage)
+    Return $process.Current
 
 End
 
 Private Function CpuHistory_Read() As Float[]
 
-    Return $cpuHistory.History
+    Return $cpu.History
 
 End
 
 Private Function MemoryHistory_Read() As Float[]
 
-    Return $memoryHistory.History
+    Return $memory.History
 
 End
 
 Private Function SwapHistory_Read() As Float[]
 
-    Return $swapHistory.History
+    Return $swap.History
 
 End

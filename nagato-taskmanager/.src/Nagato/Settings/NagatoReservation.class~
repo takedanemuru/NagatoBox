@@ -1,1 +1,40 @@
 ' Gambas class file
+
+Create Static
+
+Property Read Has As Boolean
+Property Read Applications As String[]
+
+Private $applications As New String[]
+
+Public Sub SignIn(argApplicationName As String)
+    
+    If Not $applications.Exist(argApplicationName) Then
+        $applications.Add(argApplicationName)
+    Endif
+    
+End
+
+Public Sub SignOut(argApplicationName As String)
+    
+    If $applications.Exist(argApplicationName) Then
+        $applications.Remove($applications.Find(argApplicationName))
+    Endif
+    
+End
+
+Private Function Applications_Read() As String[]
+
+    Return $applications
+
+End
+
+Private Function Has_Read() As Boolean
+
+    If $applications.Count = 0 Then
+        Return False
+    Else
+        Return True
+    Endif
+
+End

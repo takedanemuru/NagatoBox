@@ -1,0 +1,5 @@
+' Gambas module file
+
+Public Enum None = 0
+Public Enum SystemNone = 4000, ProcessKill = 4001, ProcessUnselect = 4002
+Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationQuit = 9002

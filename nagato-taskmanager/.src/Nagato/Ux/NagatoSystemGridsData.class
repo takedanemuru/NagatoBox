@@ -1,0 +1,63 @@
+' Gambas class file
+
+Property Read Max As Integer
+
+Private $data As Variant[]
+Private $processStatus As New NagatoProcessStatus
+Private $sort As New NagatoSort
+
+Private Sub setGridData(argRowData As Collection, ByRef refGridData As Variant[])
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To refGridData.Max
+        If $sort.Compare(refGridData[yukiCount], argRowData) Then
+            refGridData.Add(argRowData, yukiCount)
+            Return
+        Endif
+    Next
+    
+    refGridData.Add(argRowData)
+    
+End
+
+Private Function getData() As Variant[]
+    
+    Dim yukiDirectory As String
+    Dim yukiGridData As New Variant[]
+    
+    For Each yukiDirectory In Dir("/proc", "*[0-9]", gb.Directory)
+        If Not Exist("/proc" &/ yukiDirectory &/ "stat") Then Continue
+        setGridData($processStatus[yukiDirectory], ByRef yukiGridData)
+    Next
+    
+    Return yukiGridData.Copy()
+    
+End
+
+Public Sub Refresh() 
+    
+    $processStatus.SetCpuTimes()
+    $data = getData()
+    
+End
+
+Public Sub SwitchSort(argColumnIndex As Integer)
+    
+    $sort.SwitchSort(argColumnIndex)
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoProcessData
+    
+    Dim yukiProcessData As New NagatoProcessData($data[argIndex])
+    
+    Return yukiProcessData
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $data.Max
+
+End

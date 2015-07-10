@@ -1,6 +1,22 @@
-' Gambas module file
+' Gambas class file
 
+Private $cpuTimes As New NagatoCpuTime
 Private $headers As String[] = ["id", "status", "name", "cpu", "rss", "virtual"]
+
+Private Function getStatusArray(argDirectory As String) As String[]
+    
+    Dim yukiSourcePath As String = Subst$("/proc/&1/stat", File.Name(argDirectory))
+    Dim yukiSourceText As String = File.Load(yukiSourcePath)
+    
+    Return Split(yukiSourceText, " ", "")
+    
+End
+
+Private Function convertNullBytesToSpace(argString As String) As String
+    
+    Return Replace$(argString, "\0", " ") 'convert null bytes ("\0") to space (" ")
+    
+End
 
 Private Function getProcName(argDirectory As String, argStatus As String[], argCpuStatus As Float) As String
     
@@ -8,7 +24,7 @@ Private Function getProcName(argDirectory As String, argStatus As String[], argC
     
     If argCpuStatus > 0 Or If CFloat(argStatus[22]) > 0 Then 
         yukiName = File.Load(Subst$("/proc/&1/cmdline", File.Name(argDirectory)))
-        yukiName = Replace$(yukiName, "\0", " ") 'convert null bytes ("\0") to space (" ")
+        yukiName = convertNullBytesToSpace(yukiName)
     End If
 
     If yukiName = "" Then yukiName = argStatus[1]
@@ -17,10 +33,16 @@ Private Function getProcName(argDirectory As String, argStatus As String[], argC
     
 End
 
+Public Sub SetCpuTimes()
+    
+    $cpuTimes.SetCpuTimes()
+    
+End
+
 Public Sub _get(argDirectory As String) As Collection
     
-    Dim yukiStatus As String[] = Split(File.Load(Subst$("/proc/&1/stat", File.Name(argDirectory))), " ", "")
-    Dim yukiCpuStatus As Float = MikuruUnitConversion.CpuUsageInFloat(yukiStatus)
+    Dim yukiStatus As String[] = getStatusArray(argDirectory)
+    Dim yukiCpuStatus As Float = $cpuTimes.CpuUsageInFloat(yukiStatus)
     Dim yukiName As String = getProcName(argDirectory, yukiStatus, yukiCpuStatus)
     Dim yukiResult As New Collection
     
@@ -34,5 +56,3 @@ Public Sub _get(argDirectory As String) As Collection
     Return yukiResult
     
 End
-
-

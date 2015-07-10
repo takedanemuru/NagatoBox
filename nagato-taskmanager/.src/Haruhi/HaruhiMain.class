@@ -6,19 +6,23 @@ Private $timer As New Timer As "Timer"
 Private $starButton As NagatoStarButton
 Private $systemGraph As NagatoSystemGraph
 Private $systemLabel As NagatoSystemLabel
-Private $systemGrids As NagatoSystemGrids
+Private $systemGrids As NagatoGridsProcess
+
+Private Sub initializeUserInterface()
+    
+    $systemGrids = New NagatoGridsProcess(SystemMonitorGrid) As "UserInterface"
+    $starButton = New NagatoStarButton(HBox1) As "UserInterface"
+    $systemGraph = New NagatoSystemGraph(GraphArea)
+    $systemLabel = New NagatoSystemLabel(SystemLabel)
+    
+End
 
 Public Sub Form_Open()
     
     Application.MainWindow = Me
     NagatoSettings.LoadFormSettings(Me)
-    
-    NagatoSystemObserver.Refresh()
-    
-    $systemGrids = New NagatoSystemGrids(SystemMonitorGrid) As "SystemGrids"
-    $starButton = New NagatoStarButton(HBox1) As "StarButton"
-    $systemGraph = New NagatoSystemGraph(GraphArea)
-    $systemLabel = New NagatoSystemLabel(SystemLabel)
+    NagatoObserverFacade.Activated = True
+    initializeUserInterface()
     
     $timer.Start()
     
@@ -26,6 +30,7 @@ End
 
 Public Sub Form_Close()
     
+    NagatoObserverFacade.Activated = False
     NagatoSettings.SaveFormSettings(Me)
     
 End
@@ -38,40 +43,16 @@ Public Sub Timer_Timer()
     
 End
 
-Private Sub kill()
-    
-    Dim yukiMessage As String
-    
-    If $systemGrids.LastSelectedId = "" Then Return
-    
-    With $systemGrids
-        yukiMessage = Subst$(("Are you sure to kill &1(Process ID: &2) ?"), .LastSelectedName, .LastSelectedId)
-    End With
-    
-    If Message.Warning((yukiMessage), ("Cancel"), ("OK")) = 2 Then
-        Try Shell Subst$("kill &1", $systemGrids.LastSelectedId)
-    Endif
-    
-End
-
-Public Sub SystemGrids_Kill()
-    
-    kill()
-    
-End
- 
-Public Sub StarButton_Signal(argSignal As Integer, argValues As Variant[])
-    
-    Debug argValues.Count
+Public Sub UserInterface_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case NagatoStarMenu.MenuUnselect
+        Case MikuruSignal.ProcessUnselect
             $systemGrids.Unselect()
-        Case NagatoStarMenu.MenuKill
-            kill()
-        Case NagatoStarMenu.MenuAbout
+        Case MikuruSignal.ProcessKill
+            MikuruKillProcess($systemGrids.LastSelectedId, $systemGrids.LastSelectedName)
+        Case MikuruSignal.ApplicationAbout
             HaruhiAbout.ShowDialog()
-        Case NagatoStarMenu.MenuQuit
+        Case MikuruSignal.ApplicationQuit
             Me.Close()
     End Select
     

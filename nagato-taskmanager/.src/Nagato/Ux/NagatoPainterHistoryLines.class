@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Private Const StepPerSecond As Integer = 4
+
+Private Function getY(argUsage As Float) As Integer
+    
+    Dim yukiUsageInInteger As Integer = (argUsage * 100)
+    
+    Return Me.GraphHeight - yukiUsageInInteger + Me.BottomMargin
+    
+End
+
+Private Sub paintStep(argHistory As Float[], argIndex As Integer)
+
+    Dim yukiX As Integer = Me._$drawingArea.W - (argIndex * StepPerSecond)
+
+    Paint.MoveTo(yukiX, getY(argHistory[argHistory.Max - argIndex]))
+    Paint.LineTo(yukiX - StepPerSecond, getY(argHistory[argHistory.Max - argIndex - 1]))
+    
+End
+
+Private Sub paintLine(argColor As Integer, argHistory As Float[])
+    
+    Dim yukiIndex As Integer
+    
+    Me._SetLineProperties(argColor, 1)
+        For yukiIndex = 0 To argHistory.Max - 2
+            paintStep(argHistory, yukiIndex)
+        Next
+    Paint.Stroke()
+    
+End
+
+Public Sub Paint()
+
+    If 3 > NagatoObserverFacade.CpuHistory.Count Then Return
+    
+    paintLine(Color.Red, NagatoObserverFacade.CpuHistory)
+    paintLine(Color.Blue, NagatoObserverFacade.MemoryHistory)
+    paintLine(Color.Green, NagatoObserverFacade.SwapHistory)
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    Me._$drawingArea = argDrawingArea
+    
+End

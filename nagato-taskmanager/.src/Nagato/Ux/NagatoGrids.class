@@ -1,13 +1,26 @@
 ' Gambas class file
 
-Public _$gridView As GridView
-Public _$observer As Observer
+Create Private
+
+Inherits NagatoGridViewHandler
 
 Private $scrollY As Integer
 
-Public Sub _InitializeGridView() 'virtual
+Public Sub _InitializeGridView() ' virtual interface
     
+   
     
+End
+
+Public Sub _InitializeColumnTitles(argTitles As String[])
+    
+    Dim yukiIndex As Integer
+    
+    Me._$gridView.Columns.Count = argTitles.Count
+    
+    For yukiIndex = 0 To argTitles.Max
+        Me._$gridView.Columns[yukiIndex].Text = argTitles[yukiIndex]
+    Next
     
 End
 
@@ -16,9 +29,7 @@ Public Function _GetRowPosition(argText As String, argColumnIndex As Integer) As
     Dim yukiCount As Integer
     
     For yukiCount = 0 To Me._$gridView.Rows.Max
-        If String.Comp(Me._$gridView[yukiCount, argColumnIndex].Text, argText) Then
-            Return yukiCount
-        Endif
+        If String.Comp(Me._$gridView[yukiCount, argColumnIndex].Text, argText) Then Return yukiCount
     Next
     
     Return -1
@@ -62,8 +73,7 @@ End
 
 Public Sub _new(argGridView As GridView)
     
-    Me._$gridView = argGridView
-    Me._$observer = New Observer(Me._$gridView) As "Asakura"
+    Me._Initialize(argGridView)
     Me._InitializeGridView()
     
 End

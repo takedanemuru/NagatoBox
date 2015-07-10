@@ -1,0 +1,29 @@
+' Gambas module file
+
+Private $id As Integer
+Private $name As String
+
+Private Function getKillMessage() As String
+    
+    Return Subst$(("Are you sure to kill &1(Process ID: &2) ?"), $name, $id)
+    
+End
+
+Private Sub killProcess()
+    
+    If Message.Warning(getKillMessage(), ("Cancel"), ("OK")) = 2 Then
+        Try Shell Subst$("kill &1", $id)
+    Endif
+    
+End
+
+Public Sub _call(argId As Integer, argName As String)
+    
+    If argName = "" Then Return
+    
+    $id = argId
+    $name = argName
+    
+    killProcess()
+    
+End

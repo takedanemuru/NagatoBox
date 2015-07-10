@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Private
+
+Public Const StepPerSecond As Integer = 4
+Public Const GraphHeight As Integer = 100
+Public Const BottomMargin As Integer = 10
+
+Public _$drawingArea As DrawingArea
+
+Public Sub _SetLineProperties(argColor As Integer, argWidth As Float)
+    
+    Paint.Brush = Paint.Color(argColor)
+    Paint.LineJoin = Paint.LineJoinRound
+    Paint.LineWidth = argWidth
+    
+End
+
+Public Sub Paint() ' virtual interface
+    
+    
+    
+End

@@ -18,10 +18,12 @@
 
 ## nagato-taskmanager (version 42.1.2)
 
++ ~~new : to ease resize grid.~~
 + upload (10-11 july)
 
 ## nagato-wallpaper
 
 + ~~new render modes(topLeft,TopCenter,TopRight,Left,Right...and more)~~
 + ~~new :about dialog~~
++ new : move to nagato icons
 

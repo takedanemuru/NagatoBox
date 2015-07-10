@@ -1,0 +1,87 @@
+' Gambas class file
+
+Create Static
+
+Property Activated As Boolean
+Property Read CpuUsage As Float
+Property Read MemoryUsage As Float
+Property Read SwapUsage As Float
+Property Read ProcessCount As Integer
+Property Read CpuHistory As Float[]
+Property Read MemoryHistory As Float[]
+Property Read SwapHistory As Float[]
+
+Private $timer As New NagatoObserverTimer As "Timer"
+Private $cpu As New NagatoObserverCpu
+Private $memory As New NagatoObserverMemory
+Private $swap As New NagatoObserverSwap
+Private $process As New NagatoObserverProcess
+
+Public Sub Timer_PreparationStep()
+    
+    $cpu.SetPrevData()
+    
+End
+
+Public Sub Timer_Step()
+    
+    $cpu.Refresh()
+    $memory.Refresh()
+    $swap.Refresh()
+    $process.Refresh()
+    
+End
+
+Private Function CpuUsage_Read() As Float
+
+    Return $cpu.Current
+
+End
+
+Private Function MemoryUsage_Read() As Float
+
+    Return $memory.Current
+
+End
+
+Private Function SwapUsage_Read() As Float
+
+    Return $swap.Current
+
+End
+
+Private Sub Activated_Write(Value As Boolean)
+
+    $timer.Activated = Value
+
+End
+
+Private Function Activated_Read() As Boolean
+
+    Return $timer.Activated
+
+End
+
+Private Function ProcessCount_Read() As Integer
+
+    Return $process.Current
+
+End
+
+Private Function CpuHistory_Read() As Float[]
+
+    Return $cpu.History
+
+End
+
+Private Function MemoryHistory_Read() As Float[]
+
+    Return $memory.History
+
+End
+
+Private Function SwapHistory_Read() As Float[]
+
+    Return $swap.History
+
+End

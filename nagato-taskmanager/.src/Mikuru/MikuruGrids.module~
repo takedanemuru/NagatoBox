@@ -14,39 +14,6 @@ Private Function isLesser(argGridData As Variant, argRowData As Variant) As Bool
     
 End
 
-' Private Function getProcName(argDirectory As String, argStatus As String[], argCpuStatus As Float) As String
-'     
-'     Dim yukiName As String = ""
-'     
-'     If argCpuStatus > 0 Or If CFloat(argStatus[22]) > 0 Then 
-'         yukiName = File.Load(Subst$("/proc/&1/cmdline", File.Name(argDirectory)))
-'         yukiName = Replace$(yukiName, "\0", " ") 'convert null bytes ("\0") to space (" ")
-'     End If
-' 
-'     If yukiName = "" Then yukiName = argStatus[1]
-'     
-'     Return yukiName
-'     
-' End
-
-' Private Function getRowData(argDirectory As String) As Collection
-'     
-'     Dim yukiStatus As String[] = Split(File.Load(Subst$("/proc/&1/stat", File.Name(argDirectory))), " ", "")
-'     Dim yukiCpuStatus As Float = MikuruUnitConversion.CpuUsageInFloat(yukiStatus)
-'     Dim yukiName As String = getProcName(argDirectory, yukiStatus, yukiCpuStatus)
-'     Dim yukiResult As New Collection
-'     
-'     yukiResult.Add(CInt(File.Name(argDirectory)), $headers[0])
-'     yukiResult.Add(yukiStatus[2], $headers[1])
-'     yukiResult.Add(yukiName, $headers[2])
-'     yukiResult.Add(yukiCpuStatus, $headers[3])
-'     yukiResult.Add(CFloat(yukiStatus[23]), $headers[4])
-'     yukiResult.Add(CFloat(yukiStatus[22]), $headers[5])
-'     
-'     Return yukiResult
-'     
-' End
-
 Private Sub setGridData(argRowData As Collection, ByRef refGridData As Variant[])
     
     Dim yukiCount As Integer
@@ -69,7 +36,6 @@ Public Function GetData() As Variant[]
     
     For Each yukiDirectory In Dir("/proc", "*[0-9]", gb.Directory)
         If Not Exist("/proc" &/ yukiDirectory &/ "stat") Then Continue
-        'setGridData(getRowData(yukiDirectory), ByRef yukiGridData)
         setGridData(MikuruProcStatus[yukiDirectory], ByRef yukiGridData)
     Next
     

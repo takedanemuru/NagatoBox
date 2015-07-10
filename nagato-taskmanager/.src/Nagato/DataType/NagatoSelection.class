@@ -1,0 +1,33 @@
+' Gambas class file
+
+Property Read Id As String
+Property Read Name As String
+
+Private $id As String
+Private $name As String
+
+Public Sub Set(argId As String, argName As String)
+    
+    $id = argId
+    $name = argName
+    
+End
+
+Public Sub Clear()
+    
+    $id = ""
+    $name = ""
+    
+End
+
+Private Function Id_Read() As String
+
+    Return $id 
+
+End
+
+Private Function Name_Read() As String
+
+    Return $name
+
+End
