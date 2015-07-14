@@ -1,96 +1,32 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoSettingsCore
 
 Property HomePage As String
 Property DownloadDirectory As String
-Property WebFontName As String
-Property PersonaPath As String
-Property PersonaY As Integer
-
-Private $settings As New Settings
-
-Public Sub LoadFormSettings(argForm As Form)
-    
-    argForm.X = $settings["form/x", argForm.X]
-    argForm.Y = $settings["form/y", argForm.Y]
-    argForm.Height = $settings["form/height", argForm.Height]
-    argForm.Width = $settings["form/width", argForm.Width]
-    
-End
-
-Public Sub SaveFormSettings(argForm As Form)
-    
-    $settings["form/x"] = argForm.X
-    $settings["form/y"] = argForm.Y
-    $settings["form/height"] = argForm.Height
-    $settings["form/width"] = argForm.Width
-    
-End
 
 Private Function HomePage_Read() As String
 
-    Return $settings["web/homepage", "http://duckduckgo.com"]
+    Return Me._$settings["web/homepage", "http://duckduckgo.com"]
 
 End
 
 Private Sub HomePage_Write(Value As String)
 
-    $settings["web/homepage"] = Value
-    $settings.Save()
+    Me._$settings["web/homepage"] = Value
+    Me._$settings.Save()
 
 End
 
 Private Function DownloadDirectory_Read() As String
 
-    Return $settings["web/download_directory", NagatoXdgUserDirs.Download]
+    Return Me._$settings["web/download_directory", Desktop.GetDirectory("DOWNLOAD")]
 
 End
 
 Private Sub DownloadDirectory_Write(Value As String)
 
-    $settings["web/download_directory"] = Value
-    $settings.Save()
-
-End
-
-Private Function WebFontName_Read() As String
-
-    Return $settings["web/font", HaruhiMain.Font.Name]
-
-End
-
-Private Sub WebFontName_Write(Value As String)
-
-    $settings["web/font"] = Value
-    $settings.Save()
-
-End
-
-Private Function PersonaPath_Read() As String
-
-    Return $settings["persona/path", "pictures/default_persona.png"]
-    
-End
-
-Private Sub PersonaPath_Write(Value As String)
-
-    $settings["persona/path"] = Value
-    $settings.Save()
-
-End
-
-Private Function PersonaY_Read() As Integer
-
-    Return $settings["persona/y", 0]
-
-End
-
-Private Sub PersonaY_Write(Value As Integer)
-
-    $settings["persona/y"] = Value
-    $settings.Save()
-
-    If Not Error Then MikuruPersona.Reset()
+    Me._$settings["web/download_directory"] = Value
+    Me._$settings.Save()
 
 End

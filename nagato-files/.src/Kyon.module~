@@ -33,6 +33,7 @@ Public Sub Main()
         HaruhiMain.Show()
         TFEI.SetNewTrashBin()
     Else
+        Debug MikuruAccountChecker.IsRoot()
         HaruhiMain.Show()
     End If
 

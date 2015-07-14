@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Path As String
+Property Y As Integer
+
+Private Function Path_Read() As String
+
+    Return Me._$settings["persona/path", "pictures/default_persona.png"]
+    
+End
+
+Private Sub Path_Write(Value As String)
+
+    Me._$settings["persona/path"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Y_Read() As Integer
+
+    Return Me._$settings["persona/y", 0]
+
+End
+
+Private Sub Y_Write(Value As Integer)
+
+    Me._$settings["persona/y"] = Value
+    Me._$settings.Save()
+
+    If Not Error Then MikuruPersona.Reset()
+
+End

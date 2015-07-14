@@ -6,7 +6,7 @@ Private $image As Image
 
 Private Sub resetImage() 
     
-    Dim yukiImage As Image = Image.Load(NagatoSettings.PersonaPath)
+    Dim yukiImage As Image = Image.Load(NagatoSettingsPersona.Path)
     Dim yukiRate As Float = Screen.AvailableWidth / yukiImage.W
     
     $image = yukiImage.Stretch(Screen.AvailableWidth, yukiImage.H * yukiRate)

@@ -1,0 +1,21 @@
+' Gambas module file
+
+Private Sub ensureMimeDatabase()
+    
+    If Exist(Desktop.DataDir &/ "mime") Then Return
+    If Not Exist(Desktop.DataDir) Then Mkdir Desktop.DataDir
+    
+    MikuruFileManuever.CopyToDirectory(["/usr/share/mime"], Desktop.DataDir)
+    
+End
+
+Public Sub IsRoot() As Boolean
+    
+    ensureMimeDatabase()
+    
+    If User.Home Begins "/root" Then Return True
+    If Access("/", gb.Write) Then Return True
+    
+    Return False
+    
+End

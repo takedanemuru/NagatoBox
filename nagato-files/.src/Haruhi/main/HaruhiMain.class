@@ -5,8 +5,20 @@ Private $rightPane As NagatoRightPane
 Private $mainPane As NagatoMainPane
 Private $observer As Observer
 
+Private Sub setRootLabel()
+    
+    With RootLabel
+        .Text = ("WARNING !!, you are using the ROOT account, you may harm your system.")
+        .H = 48
+        .Visible = True
+    End With
+    
+End
+
 Public Sub Form_Open()
     
+    If MikuruAccountChecker.IsRoot() Then setRootLabel()
+     
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
     $mainPane = New NagatoMainPane(MainTabStrip) As "MainPane"
     $rightPane = New NagatoRightPane(RightPanel) As "RightPane"

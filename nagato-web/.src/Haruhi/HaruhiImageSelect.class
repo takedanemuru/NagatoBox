@@ -16,7 +16,7 @@ Public Sub FileChooser1_Activate()
 
     If yukiMimeType Not Begins "image" Then Return
 
-    NagatoSettings.PersonaPath = FileChooser1.SelectedPath
+    NagatoSettingsPersona.Path = FileChooser1.SelectedPath
 
     Me.Close()
 

@@ -9,7 +9,6 @@ Public Sub _InitializeChildMenus() ' override
     Me._AddChildMenu(("Twitter"), "!tw")
     If System.Language Begins "ja" Then Me._AddChildMenu(("Twitter - Japanese"), "!tw+lang:ja")
     Me._AddChildMenu(("Tumblr"), "!tumblr")
-    Me._AddChildMenu(("Digg"), "!digg")
-    Me._AddChildMenu(("Delicious"), "!delicious")
+    Me._AddChildMenu(("Reddit"), "!reddit")
 
 End

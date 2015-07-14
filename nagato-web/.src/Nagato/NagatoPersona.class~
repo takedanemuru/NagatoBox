@@ -85,7 +85,7 @@ Public Sub Asakura_Draw()
     $lock = True
     
     Paint.Begin($drawingArea)
-        Paint.DrawImage(MikuruPersonaImage(), 0, NagatoSettings.PersonaY)
+        Paint.DrawImage(MikuruPersona.Image, 0, NagatoSettings.PersonaY)
         drawMessage()
         $tabs.Refresh()
         drawTabs()

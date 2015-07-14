@@ -7,7 +7,7 @@ Public Const _CategoryName As String = "Social"
 Public Sub _InitializeChildMenus() ' override
     
     Me._AddChildMenu(("Twitter"), "!tw")
-    Me._AddChildMenu(("Twitter - Japanese"), "!tw+lang:ja")
+    If System.Language Begins "ja" Then Me._AddChildMenu(("Twitter - Japanese"), "!tw+lang:ja")
     Me._AddChildMenu(("Tumblr"), "!tumblr")
     Me._AddChildMenu(("Digg"), "!digg")
     Me._AddChildMenu(("Delicious"), "!delicious")
