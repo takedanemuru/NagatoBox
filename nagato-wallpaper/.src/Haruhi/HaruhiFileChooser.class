@@ -23,6 +23,7 @@ Public Sub Form_Open()
     FileChooser1.Filter = ["*.png;*.jpg;*.jpeg", "Picture Files"]
     FileChooser1.ShowPreview = True
     FileChooser1.FileView.IconSize = 128
+    FileChooser1.Root = Desktop.GetDirectory("PICTURES")
     
 End
 

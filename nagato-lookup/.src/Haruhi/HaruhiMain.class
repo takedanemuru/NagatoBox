@@ -47,7 +47,7 @@ Public Sub Form_Open()
     $searchBox = New NagatoSearchBox(MainHBox)
     $infomationButton = New NagatoInfomationButton(MainHBox)
     
-    MikuruNotify.Activate()
+    NagatoNotification.Show()
     
 End
 

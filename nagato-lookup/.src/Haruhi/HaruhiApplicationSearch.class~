@@ -34,11 +34,11 @@ Private Sub showResult()
     
     If ApplicationsIconView.Count > 0 Then
         ensureVisible()
-         Me.Show()
     Else
         setNotFound()
-        Me.Show()
     End If
+
+    Me.Show()
     
 End
 
@@ -66,6 +66,21 @@ Public Sub SetIconViewWithSearchQuery(argQuery As String)
     ApplicationsIconView.Clear()
 
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications("All")
+        If Not containsSearchQuery(yukiDesktopFile, argQuery) Then Continue
+        addDesktopFileIcon(yukiDesktopFile)
+    Next
+    
+    showResult()
+    
+End
+
+Public Sub SetIconViewWithAllSettingsApps()
+    
+    Dim yukiDesktopFile As NagatoDesktopFile
+
+    ApplicationsIconView.Clear()
+
+    For Each yukiDesktopFile In NagatoMenuCache3.GetApplications("Settings")
         If Not containsSearchQuery(yukiDesktopFile, argQuery) Then Continue
         addDesktopFileIcon(yukiDesktopFile)
     Next

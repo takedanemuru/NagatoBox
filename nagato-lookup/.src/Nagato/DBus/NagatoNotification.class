@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Static
+
+Private Const Service As String = "Session://org.freedesktop.Notifications"
+Private Const ObjectPath As String = "/org/freedesktop/Notifications"
+Private Const Interface As String = "org.freedesktop.Notifications"
+
+Private $proxy As DBusProxy
+
+Public Sub Show()
+    
+    If Not DBus.Session.Applications.Exist("org.freedesktop.Notifications") Then Return
+    
+    $proxy = DBus[Service][ObjectPath, Interface]
+    $proxy.Notify("Message", "2", Null, "nagato-lookup", "YUKI.N > nagato-lookup is activated.", Null, Null, 20)
+
+Catch
+    Return
+
+End

@@ -4,7 +4,7 @@ Inherits NagatoWallpaperRendarer
 
 Public Sub Set(argImage As Image)
     
-    Dim yukiImage As Image = New Image(Screen.W, Screen.H, HaruhiEdit.PreviewBackground)
+    Dim yukiImage As Image = New Image(Screen.W, Screen.H, HaruhiMain.PreviewBackground)
     
     Paint.Begin(yukiImage)
         Paint.DrawImage(argImage, Screen.W - argImage.W, Screen.H - argImage.H)

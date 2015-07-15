@@ -7,6 +7,6 @@ Public Sub Paint()
     Dim yukiImage As Image = Me._GetUnresizedThumbnail()
     Dim yukiPoint As PointF = Me._GetOriginPoint(yukiImage)
     
-    Paint.DrawImage(yukiImage, yukiPoint.X, HaruhiEdit.PreviewH - yukiImage.H)
+    Paint.DrawImage(yukiImage, yukiPoint.X, HaruhiMain.PreviewH - yukiImage.H)
     
 End

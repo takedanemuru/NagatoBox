@@ -17,6 +17,9 @@ Public Sub Main()
     If NagatoArguments.PipeMenu Then
         NagatoMenuCache3.Activate()
         NagatoPipeMenu.Get(NagatoArguments.Category)
+    Else If NagatoArguments.ShowAllSettingsApps Then
+        NagatoMenuCache3.Activate()
+        HaruhiApplicationSearch.SetIconViewWithAllSettingsApps()
     Else If IsUnique() Then
         NagatoMenuCache3.Activate()
         HaruhiMain.Show()

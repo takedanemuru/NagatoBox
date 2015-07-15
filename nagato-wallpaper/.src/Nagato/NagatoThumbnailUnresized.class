@@ -5,7 +5,7 @@ Inherits NagatoThumbnail
 Public Function _GetUnresizedThumbnail() As Image
     
     Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
-    Dim yukiRatio As Float = HaruhiEdit.PreviewRatio
+    Dim yukiRatio As Float = HaruhiMain.PreviewRatio
     
     Return yukiImage.Stretch(yukiImage.Width * yukiRatio, yukiImage.Height * yukiRatio)
     

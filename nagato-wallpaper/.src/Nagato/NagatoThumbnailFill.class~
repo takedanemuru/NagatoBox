@@ -4,7 +4,7 @@ Inherits NagatoThumbnail
 
 Public Sub Paint()
     
-    Dim yukiImage As Image = Image.Load(NagatoPreview.Path).Stretch(HaruhiEdit.PreviewDA.W, HaruhiEdit.PreviewDA.H)
+    Dim yukiImage As Image = Image.Load(NagatoPreview.Path).Stretch(HaruhiEdit.PreviewW, HaruhiEdit.PreviewH)
     
     Paint.DrawImage(yukiImage, 0, 0)
     

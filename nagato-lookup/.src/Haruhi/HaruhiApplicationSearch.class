@@ -74,6 +74,20 @@ Public Sub SetIconViewWithSearchQuery(argQuery As String)
     
 End
 
+Public Sub SetIconViewWithAllSettingsApps()
+    
+    Dim yukiDesktopFile As NagatoDesktopFile
+
+    ApplicationsIconView.Clear()
+
+    For Each yukiDesktopFile In NagatoMenuCache3.GetApplications("Settings")
+        addDesktopFileIcon(yukiDesktopFile)
+    Next
+    
+    showResult()
+    
+End
+
 Public Sub Form_Open()
 
     Me.Center()

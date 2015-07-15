@@ -7,7 +7,6 @@ Private Sub initializeRecentIcons()
     RecentIcons.Clear()
     
     For Each yukiPath In NagatoSettings.RecentPath
-        Debug yukiPath
         If Not Exist(yukiPath) Then Continue
         If DesktopMime.FromFile(yukiPath).Type Not Begins "image" Then Continue
         RecentIcons.Add(yukiPath, File.Name(yukiPath), MikuruThumbnailer.Get(yukiPath))

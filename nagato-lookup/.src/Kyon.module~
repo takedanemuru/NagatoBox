@@ -12,8 +12,7 @@ End
 Public Sub Main()
 
     NagatoArguments.Parsing()
-    
-    Application.Theme = "Numix-Circle"
+    MikuruTheme.Set()
     
     If NagatoArguments.PipeMenu Then
         NagatoMenuCache3.Activate()
@@ -22,5 +21,7 @@ Public Sub Main()
         NagatoMenuCache3.Activate()
         HaruhiMain.Show()
     End If
+    
+    HaruhiApplicationSearch.SetIconViewWithAllSettingsApps()
     
 End

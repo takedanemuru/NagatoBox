@@ -7,6 +7,8 @@ Property Read RecentPath As String[]
 Property LastColor As Integer
 Property LastMode As Integer
 
+Private Const HistoryMax As Integer = 30
+
 Private $settings As New Settings
 
 Private Sub overwriteRecentPaths(argPath As String)
@@ -16,7 +18,7 @@ Private Sub overwriteRecentPaths(argPath As String)
     
     If yukiTargetIndex > -1 Then yukiRecents.Remove(yukiTargetIndex)
     yukiRecents.Add(argPath, 0)
-    yukiRecents.Resize(30)
+    yukiRecents.Resize(HistoryMax)
     
     $settings["background/recent"] = yukiRecents.Copy()
     $settings.Save()

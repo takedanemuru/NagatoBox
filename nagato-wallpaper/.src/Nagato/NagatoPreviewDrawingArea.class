@@ -57,7 +57,7 @@ Public Sub Asakura_Draw()
     
     Paint.Begin($drawingArea)
         setBackgroundColor()
-        NagatoThumbnail.Set(HaruhiEdit.Mode)
+        NagatoThumbnail.Set(HaruhiMain.Mode)
     Paint.End()
     
 End

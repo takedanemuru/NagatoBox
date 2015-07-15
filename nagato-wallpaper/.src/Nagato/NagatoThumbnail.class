@@ -43,7 +43,7 @@ Public Function _GetOriginPoint(argImage As Image) As PointF
     
     Dim yukiPoint As New PointF
 
-    With HaruhiEdit
+    With HaruhiMain
         yukiPoint.X = IIf(argImage.W = .PreviewW, 0, (.PreviewW - argImage.W) / 2)
         yukiPoint.Y = IIf(argImage.H = .PreviewH, 0, (.PreviewH - argImage.H) / 2)
     End With

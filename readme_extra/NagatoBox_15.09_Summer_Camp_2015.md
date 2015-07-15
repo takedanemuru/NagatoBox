@@ -12,6 +12,11 @@
 + ~~desktop-panel configuration (background color, highlight color)~~
 + ~~new : root account warning label~~
 
+## nagato-lookup (version 42.1.1)
+
++ ~~do not use libnotify directly, use dbus instead.~~
++ ~~new : settings category window.~~
+
 ## nagato-session
 
 + more user friendly autostart(s) editing.
@@ -21,12 +26,12 @@
 + ~~new : to ease resize grid.~~
 + ~~upload (10-11 july)~~
 
-## nagato-wallpaper
+## nagato-wallpaper (version 42.1.1)
 
 + ~~new render modes(topLeft,TopCenter,TopRight,Left,Right...and more)~~
 + ~~new :about dialog~~
-+ new : move to nagato icons
-+ upgrade version to 42.1.x
++ ~~new : move to nagato icons~~
++ ~~upgrade version to 42.1.x~~
 
 ## nagato-web (version 42.1.1)
 

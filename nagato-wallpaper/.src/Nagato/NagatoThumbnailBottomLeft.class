@@ -6,6 +6,6 @@ Public Sub Paint()
     
     Dim yukiImage As Image = Me._GetUnresizedThumbnail()
     
-    Paint.DrawImage(yukiImage, 0, HaruhiEdit.PreviewH - yukiImage.H)
+    Paint.DrawImage(yukiImage, 0, HaruhiMain.PreviewH - yukiImage.H)
     
 End

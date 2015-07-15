@@ -4,14 +4,12 @@ Public Sub Main()
     
     Dim yukiArguments As New NagatoArguments
     
-    Debug HaruhiEdit.GoForIt
-    
-    MikuruTheme.Set()
     MikuruHidden.Ensure()
     
     If yukiArguments.SetLast Then
         NagatoWallpaper.SetLast()
     Else
+        MikuruTheme.Set()
         HaruhiEdit.Show()
         If yukiArguments.Options.Count > 0 Then HaruhiEdit.SetPath(yukiArguments.Options[0])
     End If
