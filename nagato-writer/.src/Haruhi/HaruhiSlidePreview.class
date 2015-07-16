@@ -27,17 +27,22 @@ End
 Public Sub Set(argText As String)
     
     If argText = "" Then Return
-    
+        
     resetHtmlPath()
     Exec getCommand() Wait
     
     WebSettings[WebSettings.JavascriptEnabled] = True
+    If NagatoSettings.UseMathjax Then MikuruMathjax.Convert($htmlPath)
     SlideWebView.Url = "file://" & Url$($htmlPath)
+    
+    If Not NagatoSettingsSlide.DoNotShowEscape Then HaruhiDialogStartSlide.ShowDialog()
     
 End
 
 Public Sub SlideWebView_KeyPress()
 
     If Key.Code = Key.Esc Then Me.Close()
+    If Key.Code = Key["?"] Then HaruhiDialogStartSlide.ShowDialog()
 
 End
+

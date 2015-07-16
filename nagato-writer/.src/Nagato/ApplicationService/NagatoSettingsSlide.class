@@ -4,6 +4,7 @@ Inherits NagatoSettingsCore
 
 Property Theme As Integer
 Property SectionLevel As Integer
+Property DoNotShowEscape As Boolean
 
 Private Function Theme_Read() As Integer
 
@@ -27,6 +28,19 @@ End
 Private Sub SectionLevel_Write(Value As Integer)
 
     Me._$settings["slide/level"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function DoNotShowEscape_Read() As Boolean
+
+    Return Me._$settings["slide/escape", False]    
+
+End
+
+Private Sub DoNotShowEscape_Write(Value As Boolean)
+
+    Me._$settings["slide/escape"] = Value
     Me._$settings.Save()
 
 End

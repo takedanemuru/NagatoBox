@@ -6,21 +6,41 @@ Property RelativePath As String
 Private Const MacroHome As String = "NAGATO_MACRO_HOME"
 Private Const MacroRelativePath As String = "NAGATO_MACRO_DIR"
 Private Const MacroImageLink As String = "![NAGATO_MACRO_IMAGE](./"
+Private Const MacroImageLinkRelative As String = "![NAGATO_MACRO_IMAGE]("
 Private Const MacroJekyllNow As String = "![_config.yml]({{ site.baseurl }}"
 
-Private $relativePath As String
+Private $relativePath As New NagatoRelativePath
+
+Private Function getReplacepattern(argLevel As Integer) As String
+    
+    Return String$(argLevel, "../")
+    
+End
+
+Private Function replaceRelativeImagePath(argText As String) As String
+    
+    Dim yukiLevel As Integer
+    Dim yukiText As String = argText
+    
+    For yukiLevel = $relativePath.DirectoryLevel DownTo 1
+        yukiText = Replace$(yukiText, getReplacepattern(yukiLevel), $relativePath.ParentDirectories[yukiLevel - 1] & "/")
+    Next
+    
+    MikuruArrayTest($relativePath.ParentDirectories)
+    
+    Return yukiText
+    
+End
 
 Public Function Set(argSourceText As String) As String
     
     Dim yukiText As String = argSourceText
     
-    yukiText = Replace$(yukiText, MacroRelativePath, Me.RelativePath)
+    yukiText = Replace$(yukiText, MacroRelativePath, $relativePath.RelativePath)
     yukiText = Replace$(yukiText, MacroHome, Me.HomePath)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", Me.RelativePath))
-    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![img](&1/", File.Dir(Me.RelativePath)))
-    
-    Debug Me.HomePath
-    Debug Me.RelativePath
+    yukiText = replaceRelativeImagePath(yukiText)
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", $relativePath.RelativePath))
+    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![img](&1/", File.Dir($relativePath.RelativePath)))
     
     Return yukiText
     
@@ -30,9 +50,9 @@ Public Function ConvertToRelative(argSourceText As String) As String
     
     Dim yukiText As String = argSourceText
     
-    yukiText = Replace$(yukiText, MacroRelativePath, File.Dir($relativePath))
+    yukiText = Replace$(yukiText, MacroRelativePath, $relativePath.Directory)
     yukiText = Replace$(yukiText, MacroHome, User.Home)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", File.Dir($relativePath)))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", $relativePath.Directory))
     
     Return yukiText
     
@@ -46,12 +66,12 @@ End
 
 Private Function RelativePath_Read() As String
 
-    Return Subst$("file://&1", File.Dir($relativePath))
+    Return $relativePath.RelativePath
 
 End
 
 Private Sub RelativePath_Write(Value As String)
 
-    $relativePath = Value
+    $relativePath.SetPath(Value)
 
 End

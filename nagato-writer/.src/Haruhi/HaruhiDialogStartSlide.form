@@ -1,0 +1,48 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,61,24)
+  Background = &HFFFFFF&
+  Icon = Picture["Pictures/icons/information-balloon.png"]
+  SkipTaskbar = True
+  Arrangement = Arrange.Horizontal
+  { PictureBox1 PictureBox
+    MoveScaled(0,0,16,22)
+    Picture = Picture["Pictures/Dounidemo.jpg"]
+    Stretch = True
+  }
+  { VBox1 VBox
+    MoveScaled(14,-1,41,24)
+    Expand = True
+    { TextLabel1 TextLabel
+      MoveScaled(0,0,46,12)
+      Font = Font["Bold"]
+      Foreground = &H7653DF&
+      Expand = True
+      Padding = 4
+      Text = ("YUKI.N > How to use slideshow.<br>\n<br>\nEscape : Quit<br>\nRight Cursor : Next slide<br>\nLeft Cursor : Previous slide<br>\n")
+      Alignment = Align.Left
+    }
+    { HBox1 HBox
+      MoveScaled(1,19,57,5)
+      Padding = 4
+      { CheckBox1 CheckBox
+        MoveScaled(0,0,3,3)
+        Font = Font["Bold"]
+        Foreground = &HFFFFFF&
+        NoTabFocus = True
+      }
+      { Label1 Label
+        MoveScaled(10,1,24,4)
+        Foreground = &H7653DF&
+        Expand = True
+        Padding = 4
+        Text = ("Do Not Show Anymore")
+      }
+      { Button1 Button
+        MoveScaled(40,1,16,4)
+        Text = ("START")
+      }
+    }
+  }
+}

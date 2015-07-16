@@ -8,6 +8,8 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     
     Exec ["pandoc", "-f", NagatoSettingsView.Syntax, "-s", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
     
+    If NagatoSettings.UseMathjax Then MikuruMathjax.Convert(argTargetPath)
+    
 End
 
 Public Sub Set(argSourceText As String)

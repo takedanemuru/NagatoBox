@@ -11,7 +11,7 @@ End
 
 Private Sub showMessage(argTarget As String)
     
-        Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
+    Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
     
 End
 

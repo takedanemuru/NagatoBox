@@ -1,5 +1,7 @@
 # NagatoBox 15.09 "Summer Camp 2015"
 
+![NAGATO_MACRO_IMAGE](../haruhi-chan_2.jpg)
+
 + until September 30
 + refresh README and readme_extras
 
@@ -16,6 +18,11 @@
 
 + ~~do not use libnotify directly, use dbus instead.~~
 + ~~new : settings category window.~~
+
+## nagato-map
+
++ new : weather forecast
++ foursquare api (register)
 
 ## nagato-session
 
@@ -38,4 +45,10 @@
 + ~~new : new search menu for reddit~~
 + ~~remove NagatoXdgUserDirs use Desktop.GetDirectory("DOWNLOAD") instead.~~
 + ~~upgrade version to 42.1.x~~
++ new : edit dialog for bookmark item
 
+## nagato-writer (version 42.1.2)
+
++ ~~fix : incorrect relative path on source text.~~
++ ~~new : dialog for start slideshow~~
++ ~~testing : mathjax rendering~~

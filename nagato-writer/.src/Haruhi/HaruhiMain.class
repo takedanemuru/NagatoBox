@@ -58,9 +58,8 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
         Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999
             $sourceEditor.FileEvent(argEvent, argArgs)
         Case MikuruSignal.PublishNone To MikuruSignal.PublishNone + 999
-            If argEvent = MikuruSignal.PublishDzslidePreview
-                HaruhiSlidePreview.Set($sourceEditor.Text)
-                HaruhiSlidePreview.Show()
+            If argEvent = MikuruSignal.PublishDzslidePreview Then
+                MikuruDzSlide($sourceEditor.Text)
             Else
                 MikuruPublisher(argEvent)
             End If

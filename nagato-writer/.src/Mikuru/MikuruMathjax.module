@@ -1,0 +1,19 @@
+' Gambas module file
+
+Private Sub insertMathjaxHeader(argTargetPath As String)
+
+    Dim yukiArray As String[] = Split(File.Load(argTargetPath), "\n", "", True)
+    Dim yukiHeadPosition As Integer = yukiArray.Find("<head>")
+    
+    yukiArray.Add(File.Load("Text/MathjaxHeader"), yukiHeadPosition + 1)
+    
+    File.Save(argTargetPath, yukiArray.Join("\n"))
+    
+End
+
+Public Function Convert(argTargetPath As String)
+    
+    insertMathjaxHeader(argTargetPath)
+    
+End
+

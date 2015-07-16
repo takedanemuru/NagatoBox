@@ -1,0 +1,16 @@
+' Gambas class file
+
+
+Public Sub Button1_Click()
+
+    If CheckBox1.Value = CheckBox.True Then NagatoSettingsSlide.DoNotShowEscape = True
+
+    Me.Close
+
+End
+
+Public Sub Form_Show()
+
+    Me.Center()
+
+End

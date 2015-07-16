@@ -1,0 +1,21 @@
+' Gambas module file
+
+Private Function isValidText(argText As String) As Boolean
+    
+    If argText Then Return True
+    
+    Message.Error(("YUKI.N > No Text."), ("OK"))
+    
+    Return False
+    
+End
+
+Public Sub _call(argText As String)
+    
+    If Not isValidText(argText) Then Return
+    
+    HaruhiSlidePreview.Set(argText)
+    HaruhiSlidePreview.Show()
+    
+End
+

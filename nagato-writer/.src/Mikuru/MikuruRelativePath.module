@@ -1,0 +1,48 @@
+' Gambas module file
+
+Private $parentDirectories As New String[]
+
+Private Sub addParentDirectory(argPath As String)
+    
+    Dim yukiDirectory As String = File.Dir(argPath)
+    
+    If yukiDirectory = "/" Then Return
+    $parentDirectories.Add(yukiDirectory)
+    addParentDirectory(yukiDirectory)
+    
+End
+
+Private Function getReplacePattern(argLevel As Integer) As String
+    
+    Dim yukiPattern As String = String$(argLevel + 1, "../")
+    
+    Return Left(yukiPattern, -1)
+    
+End
+
+Public Function getRelativePath(argImagePath As String) As String
+    
+    Dim yukiLevel As Integer
+    
+    For yukiLevel = 0 To $parentDirectories.Max
+        If argImagePath Begins $parentDirectories[yukiLevel] Then
+            Return Replace$(argImagePath, $parentDirectories[yukiLevel], getReplacePattern(yukiLevel))
+        Endif
+    Next
+    
+    Return argImagePath
+    
+End
+
+Public Sub _call(argSourceTextPath As String, argImagePath As String) As String
+    
+    If argImagePath Begins File.Dir(argSourceTextPath) Then
+        Return Replace$(argImagePath, File.Dir(argSourceTextPath), ".")
+    Else
+        $parentDirectories.Clear()
+        addParentDirectory(File.Dir(argSourceTextPath))
+        Return getRelativePath(argImagePath)
+    Endif
+    
+End
+

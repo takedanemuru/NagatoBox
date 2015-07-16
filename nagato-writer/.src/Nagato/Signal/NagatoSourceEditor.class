@@ -33,7 +33,7 @@ Private Sub insertImagePathRelative()
     With MikuruImageSelect
         HaruhiSelectImage.Directory = IIf($fileHandler.Path, File.Dir($fileHandler.Path), User.Home)
         If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
-        yukiPath = Replace$(.Path, File.Dir($fileHandler.Path), ".")
+        yukiPath = MikuruRelativePath($fileHandler.Path, .Path)
         $textArea.Insert(Subst$("![NAGATO_MACRO_IMAGE](&1)", yukiPath))
     End With
 

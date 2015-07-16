@@ -2,13 +2,8 @@
 
 Inherits NagatoSettingsCore
 
-Property TabSize As Integer
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
-
-Private Const DefaultTabSize As Integer = 4
-
-Event RequestReload
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -49,21 +44,6 @@ Public Sub PushRecentPath(argPath As String)
     Me._$settings["file/recent"] = yukiRecentPaths
     Me._$settings.Save()
     
-End
-
-Private Function TabSize_Read() As Integer
-
-    Return Me._$settings["editor/tab_size", DefaultTabSize]
-
-End
-
-Private Sub TabSize_Write(Value As Integer)
-
-    Me._$settings["editor/tab_size"] = Value
-    Me._$settings.Save()
-
-    Raise RequestReload
-
 End
 
 Private Function LivePreview_Read() As Boolean

@@ -1,0 +1,57 @@
+' Gambas class file
+
+Property Read RelativePath As String
+Property Read DirectoryLevel As Integer
+Property Read ParentDirectories As String[]
+Property Read Directory As String
+
+Private $relativePath As String
+Private $parentDirectories As New String[]
+
+Private Sub addParentDirectory(argPath As String)
+    
+    Dim yukiDirectory As String = File.Dir(argPath)
+    
+    If yukiDirectory = "/" Then Return
+    $parentDirectories.Add(yukiDirectory)
+    addParentDirectory(yukiDirectory)
+    
+End
+
+Private Sub resetParentDirectories(argPath As String)
+    
+    $parentDirectories.Clear()
+    addParentDirectory(File.Dir(argPath))
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $relativePath = argPath
+    resetParentDirectories(argPath)
+    
+End
+
+Private Function RelativePath_Read() As String
+
+    Return Subst$("file://&1", File.Dir($relativePath))
+
+End
+
+Private Function DirectoryLevel_Read() As Integer
+
+    Return $parentDirectories.Count
+
+End
+
+Private Function ParentDirectories_Read() As String[]
+
+    Return $parentDirectories
+
+End
+
+Private Function Directory_Read() As String
+
+    Return File.Dir($relativePath)
+
+End
