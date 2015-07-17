@@ -1,0 +1,59 @@
+' Gambas class file
+
+Private $bookmarkItem As New NagatoWebBookmarkItem
+
+Private Sub resetCategoryList()
+    
+    If NagatoDBWeb.CategoryCount > 0 Then CategoryComboBox.List = NagatoDBWeb.CategoryNames
+    CategoryComboBox.List.Add("", 0)
+    
+End
+
+Private Sub initializeWidgets(argCategory As String)
+    
+    resetCategoryList()
+    UserTitleTextBox.Text = $bookmarkItem.UserTitle
+    Try CategoryComboBox.Index = CategoryComboBox.List.Find(argCategory)
+    ApplyButton.Enabled = False
+    
+End
+
+Public Sub SetUrl(argUrl As String, argCategory As String)
+    
+    $bookmarkItem.InitializeWithUrl(argUrl)
+    initializeWidgets(argCategory)
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(0)
+
+End
+
+Public Sub ApplyButton_Click()
+    
+    If Not UserTitleTextBox.Text Then Return
+    
+    NagatoDBWeb.ChangeBookmarkCategory($bookmarkItem.Url, CategoryComboBox.Text)
+    NagatoDBWeb.RenameBookmark($bookmarkItem.Url, UserTitleTextBox.Text)
+    
+    Me.Close(1)
+    
+End
+
+Public Sub CategoryComboBox_Click()
+
+    ApplyButton.Enabled = True
+
+End
+
+Public Sub UserTitleTextBox_Change()
+
+    If Not UserTitleTextBox.Text Then
+        ApplyButton.Enabled = False
+    Else
+        ApplyButton.Enabled = True
+    Endif
+
+End

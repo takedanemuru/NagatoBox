@@ -99,6 +99,12 @@ Public Sub PushHistory(argUrl As String, argTitle As String)
     
 End
 
+Public Sub AddNewCategory(argCategoryName As String)
+    
+    $tableCategory.AddNewCategory(argCategoryName)
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()

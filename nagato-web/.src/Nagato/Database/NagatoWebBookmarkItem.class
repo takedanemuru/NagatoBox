@@ -1,0 +1,46 @@
+' Gambas class file
+
+Property Read Id As Integer
+Property Read Title As String
+Property Read UserTitle As String
+Property Read Url As String
+
+Private $id As Integer
+Private $title As String
+Private $userTitle As String
+Private $url As String
+
+Public Sub InitializeWithUrl(argUrl As String)
+    
+    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultFoundByUrl(argUrl)
+    
+    $id = yukiResult[NagatoDBWeb.ColumnId]
+    $title = yukiResult[NagatoDBWeb.ColumnPageName]
+    $userTitle = yukiResult[NagatoDBWeb.ColumnUserDefinedPageName]
+    $url = yukiResult[NagatoDBWeb.ColumnUrl]
+    
+End
+
+Private Function Id_Read() As Integer
+
+    Return $id
+
+End
+
+Private Function UserTitle_Read() As String
+
+    Return $userTitle
+
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Function Url_Read() As String
+
+    Return $url
+    
+End

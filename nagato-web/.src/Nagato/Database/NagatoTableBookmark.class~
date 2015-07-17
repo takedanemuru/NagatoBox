@@ -26,7 +26,7 @@ Public Function GetBookmarkResultFoundByCategoryName(argCategoryId As Integer) A
     Dim yukiQuery As String = "select * from &1 where category_id = &2 order by &3 asc"
     
     With NagatoDBWeb
-        yukiQuery = Subst$(yukiQuery, .TableBookmark, argCategoryId, .ColumnPageName)
+        yukiQuery = Subst$(yukiQuery, .TableBookmark, argCategoryId, .ColumnUserDefinedPageName)
     End With
     
     Return Me._$connection.Exec(yukiQuery)

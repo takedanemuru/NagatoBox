@@ -71,6 +71,12 @@ Public Function GetBookmarkResultFoundByCategoryName(argCategoryName As String) 
     
 End
 
+Public Function GetBookmarkResultFoundByUrl(argUrl As String) As Result
+    
+    Return $tableBookmark.GetBookmarkResultFoundByUrl(argUrl)
+    
+End
+
 Public Sub PushBookmark(argUrl As String, argTitle As String, argUserTitle As String, argCategory As String, Optional argIcon As Picture)
     
     Dim yukiCategoryId As Integer = $tableCategory.GetCategoryId(argCategory)

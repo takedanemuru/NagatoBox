@@ -143,7 +143,8 @@ Public Sub ContextMenuBookmark_MenuEventWithArgs(argEvent As Integer, argValues 
         Case NagatoContextMenuBookmark.ContextDelete
             removeBookmark(argValues[1])
         Case NagatoContextMenuBookmark.ContextEdit
-            
+            HaruhiEditWebBookmark.SetUrl($treeView.Key, $treeView[$treeView.Key].ParentKey) 
+            If HaruhiEditWebBookmark.ShowDialog() = 1 Then reload()
         Case NagatoContextMenuBookmark.ContextReload
             reload()
         Case NagatoContextMenuBookmark.ContextOpen

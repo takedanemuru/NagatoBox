@@ -45,10 +45,11 @@
 + ~~new : new search menu for reddit~~
 + ~~remove NagatoXdgUserDirs use Desktop.GetDirectory("DOWNLOAD") instead.~~
 + ~~upgrade version to 42.1.x~~
-+ new : edit dialog for bookmark item
++ ~~new : edit dialog for bookmark item~~
 
 ## nagato-writer (version 42.1.2)
 
 + ~~fix : incorrect relative path on source text.~~
 + ~~new : dialog for start slideshow~~
 + ~~testing : mathjax rendering~~
++ new : show file name on window header
