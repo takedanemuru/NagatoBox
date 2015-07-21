@@ -1,0 +1,25 @@
+' Gambas class file
+
+Private $progressBar As NagatoPainterProgressBar
+Private $text As NagatoPainterText
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $progressBar = New NagatoPainterProgressBar(argDrawingArea)
+    $text = New NagatoPainterText(argDrawingArea)
+    
+End
+
+Public Sub SetProgress(argPosition As Float, argDuration As Float)
+    
+    $progressBar.SetPosition(argPosition, argDuration)
+    $text.SetPosition(argPosition, argDuration)
+    
+End
+
+Public Sub Paint()
+    
+    $progressBar.Paint()
+    $text.Paint()
+    
+End

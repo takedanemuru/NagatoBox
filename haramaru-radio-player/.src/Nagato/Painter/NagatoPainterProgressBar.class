@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Private $position As Float = 1
+
+Private Sub paintProgressBarBackground()
+    
+    Paint.Brush = Paint.Color(Color.Merge(Color.Pink, Color.White, 0.4))
+    Paint.Rectangle(0, 0, Me._$drawingArea.W, Me._$drawingArea.H)
+    Paint.Fill()
+    
+End
+
+Private Sub paintProgressBarBody()
+    
+    Paint.Brush = Paint.Color(Color.Pink)
+    Paint.Rectangle(0, 0, Me._$drawingArea.W * $position, Me._$drawingArea.H)
+    Paint.Fill()
+    
+End
+
+Public Sub SetPosition(argPosition As Float, argDuration As Float)
+    
+    If argDuration = 0 Then
+        $position = 0
+    Else
+        $position = argPosition / argDuration
+    Endif
+    
+End
+
+Public Sub Paint()
+    
+    paintProgressBarBackground()
+    paintProgressBarBody()
+    
+End

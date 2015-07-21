@@ -29,6 +29,12 @@ Public Sub Parse(argSource As String)
     
 End
 
+Public Function GetUrl(argTitle As String) As String
+    
+    Return $collection[argTitle]
+    
+End
+
 Private Function Collection_Read() As Collection
 
     Return $collection

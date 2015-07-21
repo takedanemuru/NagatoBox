@@ -17,7 +17,9 @@ End
 Private Function File_Read() As Boolean
 
     If $options.Count = 0 Then Return False
+    If $options.Exist("file") Then Return True
+    If $options.Exist("files") Then Return True
 
-    Return $options[0] = "file"
+    Return False
 
 End

@@ -22,6 +22,14 @@ Private Sub initializeForm()
     
 End
 
+Private Sub setX11Properties()
+    
+    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", Me.Id, Type, TypeDesktop)
+    Try Shell "openbox --restart"
+    If Not Error Then NagatoDBus.Register()
+    
+End
+
 Public Sub RealodDesktopWallpaper()
     
     $desktop.ReloadDesktopWallpaper()
@@ -34,10 +42,7 @@ Public Sub Form_Open()
     initializeForm()
     $desktop = New NagatoDesktop(Me)
     $panel = New NagatoDesktopPanel(Me)
-    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3 && openbox --restart", Me.Id, Type, TypeDesktop)
-
-    If Not Error Then NagatoDBus.Register()
-
+    setX11Properties()
     $timer.Enabled = True
 
 End

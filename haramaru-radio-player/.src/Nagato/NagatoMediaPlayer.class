@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Position As Float
+Property Read Duration As Float
+
+Private $player As New MediaPlayer As "Player"
+
+Public Sub PlayUrl(argUrl As String)
+    
+    Try $player.Stop()
+    $player.URL = argUrl
+    $player.Play()
+
+End
+
+Public Sub Seek(argPosition As Float) ' argPosition should be 0 to 1
+    
+    $player.Position = $player.Duration * argPosition
+    
+End
+
+Public Sub Toggle()
+    
+    If $player.State = Media.Paused Then
+        $player.Play()
+    Else
+        $player.Pause()
+    End If
+    
+End
+
+Public Sub Player_State()
+    
+    If Media.Paused = $player.State Or If Media.Playing = $player.State Then
+        Raise Signal(MikuruSignal.MediaState, [$player.State])
+    End If
+    
+End
+
+Public Sub Player_Progres()
+    
+    Raise Signal(MikuruSignal.MediaProgress)
+    
+End
+
+Private Function Position_Read() As Float
+
+    Return $player.Position 
+
+End
+
+Private Function Duration_Read() As Float
+
+    Return $player.Duration
+
+End

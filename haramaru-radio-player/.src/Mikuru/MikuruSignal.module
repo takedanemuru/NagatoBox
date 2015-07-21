@@ -1,0 +1,5 @@
+' Gambas module file
+
+Public Enum RequestNone = 1000, RequestToggle = 1001, RequestSeek = 1002, RequestPlay = 1004
+Public Enum RequestDownload = 1005
+Public Enum MediaNone = 2000, MediaProgress = 2001, MediaState = 2002

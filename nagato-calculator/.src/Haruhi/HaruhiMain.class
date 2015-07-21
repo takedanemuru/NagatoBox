@@ -80,9 +80,9 @@ End
 
 Public Sub ClearButton_Click()
 
-        ResultLCD2.Visible = False
-        $calc.ClearAll()
-        $resultLcd.ShowMessage("clear all")
+    ResultLCD2.Visible = False
+    $calc.ClearAll()
+    $resultLcd.ShowMessage("clear all")
 
 End
 

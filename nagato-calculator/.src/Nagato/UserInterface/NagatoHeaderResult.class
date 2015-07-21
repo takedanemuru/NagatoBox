@@ -1,0 +1,27 @@
+' Gambas class file
+
+Private Const Header As String = "result:"
+Private Const HeaderLength As Integer = 6
+
+Private Function getSpace(argUsedLength As Integer) As String
+        
+    Return String$(NagatoSettings.LCDLength - argUsedLength, " ")
+        
+Catch
+        Return ""
+        
+End
+
+Public Sub GetText(argText As String) As String
+    
+    Return argText & getSpace(Len(argText))
+    
+End
+
+Public Sub GetTextWithHeader(argNumber As Float) As String
+    
+    Dim yukiSpace As String = getSpace(HeaderLength + NagatoNumber.GetValidLength(argNumber))
+    
+    Return Header & yukiSpace & argNumber
+    
+End

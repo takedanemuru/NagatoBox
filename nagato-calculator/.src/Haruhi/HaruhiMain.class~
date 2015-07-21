@@ -24,12 +24,6 @@ Public Sub Form_Open()
     
 End
 
-Public Sub Form_Close()
-        
-    NagatoSettings.SaveFormPosition(Me)
-        
-End
-
 Public Sub NumberButton_Click()
         
     $calc.SendNumber(Last.Tag)
@@ -98,33 +92,35 @@ Public Sub BackButton_Click()
 
 End
 
-Public Sub Form_KeyPress()
-        
-        Select Case Key.Code
-                Case Key.Esc
-                        ClearButton_Click()
-                Case Key.Return
-                        EnterButton_Click()
-                Case Key.BackSpace
-                        UndoButton_Click()
-                Case Key.Delete
-                        BackButton_Click()
-                Case Asc(".")
-                        DotButton_Click()
-                Case Asc("/")
-                        $calc.SendFunction(MikuruFunctionType.Devide)
-                Case Asc("-")
-                        $calc.SendFunction(MikuruFunctionType.Minus)
-                Case Asc("*")
-                        $calc.SendFunction(MikuruFunctionType.Multi)
-                Case Asc("+")
-                        $calc.SendFunction(MikuruFunctionType.Plus)
-                Case Asc("^")
-                        $calc.SendFunction(MikuruFunctionType.Power)
-                Case Asc("0"), Asc("1"), Asc("2"), Asc("3"), Asc("4"), Asc("5"), Asc("6"), Asc("7"), Asc("8"), Asc("9")
-                        $calc.SendNumber(CInt(Key.Text))
-        End Select
-        
+Public Sub FormHandler_KeyPressSpecial(argType As Integer)
+    
+    Select Case argType
+        Case MikuruSpecialKeyType.Back
+            BackButton_Click()
+        Case MikuruSpecialKeyType.Clear
+            ClearButton_Click()
+        Case MikuruSpecialKeyType.Dot
+            DotButton_Click()
+        Case MikuruSpecialKeyType.Enter
+            EnterButton_Click()
+        Case MikuruSpecialKeyType.Escape
+            ClearButton_Click()
+        Case MikuruSpecialKeyType.Undo
+            UndoButton_Click()
+    End Select
+    
+End
+
+Public Sub FormHandler_KeyPressFunction(argType As Integer)
+    
+    $calc.SendFunction(argType)
+    
+End
+
+Public Sub FormHandler_KeyPressNumber(argNumber As Integer)
+    
+    $calc.SendNumber(argNumber)
+    
 End
 
 Public Sub Calc_ResultChanged()

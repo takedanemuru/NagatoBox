@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Public _$uniqueName As String = "StarMenu"
+
+Public Enum MenuNone, MenuVisitOfficialSite, MenuAbout, MenuQuit
+
+Public Sub _RefreshChildMenus() ' override
+    
+    Me._AddMenu("Visit Official Site", MenuVisitOfficialSite, "web")
+        Me._AddMenu("", MenuNone)
+    Me._AddMenu("About", MenuAbout, "star")
+    Me._AddMenu("Quit", MenuQuit, "button-power")
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case MenuVisitOfficialSite
+            Desktop.Open(MikuruUrl.OfficialSite)
+        Case MenuAbout
+            HaruhiAbout.ShowDialog()
+        Case MenuQuit
+            HaruhiMain.Close()
+    End Select
+    
+End

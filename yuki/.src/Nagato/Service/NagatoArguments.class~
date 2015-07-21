@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Create Static
+
 Property Read File As Boolean
 
 Private $options As New String[]

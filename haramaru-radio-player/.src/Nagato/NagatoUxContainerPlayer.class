@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $timer As New Timer As "Timer"
+Private $player As New NagatoMediaPlayer As "MediaPlayer"
+Private $panelWidgets As NagatoUxContainerPanelWidgets
+
+Public Sub PlayUrl(argUrl As String)
+    
+    $player.PlayUrl(argUrl)
+    $timer.Enabled = True
+    
+End
+
+Public Sub Stop()
+    
+    $timer.Enabled = False
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $panelWidgets = New NagatoUxContainerPanelWidgets(argContainer) As "Widgets"
+    
+End
+
+Public Sub Widgets_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.RequestSeek
+            $player.Seek(argValues[0])
+        Case MikuruSignal.RequestToggle
+            $player.Toggle()
+    End Select
+    
+End
+
+Public Sub MediaPlayer_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.MediaProgress
+            ' doesn't work ?
+            $panelWidgets.SetProgress($player.Position, $player.Duration)
+        Case MikuruSignal.MediaState
+            $panelWidgets.SetState(argValues[0])
+    End Select
+    
+End
+
+Public Sub Timer_Timer()
+    
+    $panelWidgets.SetProgress($player.Position, $player.Duration)
+    
+End

@@ -5,7 +5,21 @@
 + until September 30
 + refresh README and readme_extras
 
+## haramaru-radio-player (version 42.1.3)
+
+*Haramaru Radio (an internet radio by Hara Yumi) player*
+
++ ~~remove mplayer dependency. use gstreamer instead.~~
++ ~~new : star menu~~
+    + ~~about~~
+    + ~~quit~~
++ ~~new : nagato-icons~~
++ ~~new : play/pause functionality~~
++ ~~new : ProgressBar and seek on it.~~
+
 ## nagato-files (version 42.1.2)
+
+*file manager and desktop shell*
 
 + drag and drop for desktop-panel
 + ~~support gksu execution.~~
@@ -20,6 +34,8 @@
 + ~~new : settings category window.~~
 
 ## nagato-map
+
+*map viewer*
 
 + new : weather forecast
 + foursquare api (register)
@@ -40,16 +56,16 @@
 + ~~new : move to nagato icons~~
 + ~~upgrade version to 42.1.x~~
 
-## nagato-web (version 42.1.1)
+## nagato-web (version 42.1.2)
 
 + ~~new : new search menu for reddit~~
 + ~~remove NagatoXdgUserDirs use Desktop.GetDirectory("DOWNLOAD") instead.~~
 + ~~upgrade version to 42.1.x~~
 + ~~new : edit dialog for bookmark item~~
 
-## nagato-writer (version 42.1.2)
+## nagato-writer (version 42.1.3)
 
 + ~~fix : incorrect relative path on source text.~~
 + ~~new : dialog for start slideshow~~
 + ~~testing : mathjax rendering~~
-+ new : show file name on window header
++ ~~new : show file name on window header~~

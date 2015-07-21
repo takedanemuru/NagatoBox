@@ -8,8 +8,6 @@ Private Sub catchCommand()
 
     If MikuruUserInput.Include(["move", "file", "files"]) Then
         NagatoMove.Show(User.Home)
-    Else If MikuruUserInput.Has("memo") Then
-        NagatoMemo.Show()
     Else
         NagatoMisc.Show()
     End If

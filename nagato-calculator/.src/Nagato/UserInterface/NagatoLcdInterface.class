@@ -1,25 +1,17 @@
 ' Gambas class file
 
 Private $lcdLabel As LCDLabel
-
-Private Function getSpace(argUsedLength As Integer) As String
-        
-        Return String$(NagatoSettings.LCDLength - argUsedLength, " ")
-        
-Catch
-        Return ""
-        
-End
+Private $header As New NagatoHeaderResult
 
 Public Sub ShowMessage(argText As String)
         
-        $lcdLabel.Text = argText & getSpace(Len(argText))
+    $lcdLabel.Text = $header.GetText(argText)
         
 End
 
 Public Sub ShowResultState(argNumber As Float)
         
-        $lcdLabel.Text = "result:" & getSpace(6 + NagatoNumber.GetValidLength(argNumber)) & argNumber
+    $lcdLabel.Text = $header.GetTextWithHeader(argNumber)
         
 End
 

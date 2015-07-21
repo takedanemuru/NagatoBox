@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoDownloader
+
+Property Read TargetPath As String
+
+Private $targetPath As String
+
+Public Sub StartDownloading(argUrl As String, argTargetPath As String)
+    
+    $targetPath = argTargetPath
+    Me._InitializeHttpClient()
+    Me._GetFile(argUrl, argTargetPath)
+    
+End
+
+Private Function TargetPath_Read() As String
+
+    Return $targetPath
+
+End

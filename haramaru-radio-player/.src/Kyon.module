@@ -2,7 +2,11 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
+    If Not Desktop.NetworkAvailable Then
+        Message.Warning("YUKI.N > Network not available.")
+    Else
+        HaruhiMain.Show()
+    End If
     
 End
 

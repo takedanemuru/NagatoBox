@@ -1,60 +1,30 @@
 ' Gambas class file
 
-Private $downloader As NagatoDownloader
-Private $xmlParser As New NagatoXmlParser As "XmlParser"
-Private $stream As Process
-Private $grids As NagatoGridsHandler
+Private $player As NagatoUxContainerPlayer
+Private $episodes As NagatoUxContainerEpisodes
 
 Public Sub Form_Open()
 
-    If Not Desktop.NetworkAvailable Then
-        Message.Warning("YUKI.N > Network not available.")
-    Else
-        Application.MainWindow = Me
-        NagatoSettings.LoadFormSettings(Me)
-        $grids = New NagatoGridsHandler(Me) As "MainGridView"
-        $downloader = New NagatoDownloader(MikuruUrl.Haramaru) As "Downloader"
-    Endif
+    Application.MainWindow = Me
+    NagatoSettings.LoadFormSettings(Me)
+    $player = New NagatoUxContainerPlayer(Me) As "Player"
+    $episodes = New NagatoUxContainerEpisodes(Me) As "Episodes"
 
 End
 
 Public Sub Form_Close()
     
-    Try $stream.Kill()
-    
-    NagatoSettings.SaveFormSettings(Me)
-    
-    Quit 0
-    
-End
-
-Public Sub Downloader_Finished()
-    
-    $xmlParser.Parse($downloader.Buffer)
+    If Message.Question(("Are you sure to quit Haramaru Radio Player ?"), ("Cancel"), ("Quit")) = 2 Then
+        $player.Stop()
+        NagatoSettings.SaveFormSettings(Me)
+    Else
+        Stop Event
+    End If
     
 End
 
-Public Sub XmlParser_Finished()
+Public Sub Episodes_Signal(argSignal As Integer, argValues As Variant[])
     
-    $grids.Set($xmlParser.Collection)
-    
-End
+    $player.PlayUrl($episodes.CurrentUrl)
 
-Public Sub MainGridView_Play(argTitle As String)
-    
-    Try $stream.Kill()
-
-    $stream = Exec ["mplayer", $xmlParser.Collection[argTitle]] 
-    Me.Title = Subst$(("now plaing : &1"), argTitle)
-    
-End
-
-Public Sub MainGridView_Download(argTitle As String)
-    
-    Dialog.Path = Subst$(User.Home &/ "&1.mp3", argTitle)
-    Dialog.Title = ("Download")
-    If Dialog.SaveFile() Then Return
-    
-    Try Exec ["wget", "-O", Dialog.Path, $xmlParser.Collection[argTitle]] 
-    
 End
