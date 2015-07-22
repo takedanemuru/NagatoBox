@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub _get(argColor As Integer, argOpacity As Integer) As Integer
+    
+    'Gambas3 color is a hexagonal integer in format "AARRGGBB"
+    'A : Alpha, R : Red, G : Green and B : Blue
+    'argOpacity = Zero shall mean fully opaque and = 256 shall mean fully transparent.
+    
+    Return argColor + argOpacity * (16777216)
+    
+End

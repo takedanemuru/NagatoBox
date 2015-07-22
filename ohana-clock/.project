@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.6.1
+# Compiled with Gambas 3.7.1
 Title=ohana-clock
-Startup=Ohana
+Startup=Kyon
 Icon=Pictures/ohana_clockface.png
-Version=0.2.2
+Version=42.1.1
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -13,7 +13,7 @@ Component=gb.settings
 Component=gb.form.stock
 Component=gb.qt4.ext
 Description="Matsumae Ohana Clock."
-Authors="takeda.nemuru 2013 <takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru 2013-2015 <takeda.nemuru@gmail.com>"
 TabSize=4
 Translate=1
 Language=ja

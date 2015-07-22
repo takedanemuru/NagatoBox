@@ -24,9 +24,11 @@ Public Sub _SetIcon(argColums As Integer, argRow As Integer, argIconName As Stri
     
     Dim yukiRow As Integer
     
+    Debug argRow
+    
     For yukiRow = 0 To Me._$gridView.Rows.Max
         With Me._$gridView
-            .[argRow, argColums].Picture = IIf(argRow = .Row, MikuruIcon[argIconName], Null)
+            .[yukiRow, argColums].Picture = IIf(yukiRow = argRow, MikuruIcon[argIconName], Null)
         End With
     Next
     
@@ -37,7 +39,7 @@ Public Sub _SetBackGround()
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To Me._$gridView.Columns.Max
-        Me._$gridView[Me._$gridView.Rows.Max, yukiIndex].Background = Color.Merge(Color.White, Color.Pink, 0.4)
+        Me._$gridView[Me._$gridView.Rows.Max, yukiIndex].Background = MikuruColor.Light
     Next
     
 End

@@ -1,0 +1,19 @@
+' Gambas class file
+
+Private $lock As Boolean = False
+
+Public Function IsLocked() As Boolean
+    
+    If $lock Then Return True
+    
+    $lock = True
+    
+    Return False
+    
+End
+
+Public Sub Unlock()
+    
+    $lock = False
+    
+End

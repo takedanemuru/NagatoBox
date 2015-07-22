@@ -1,0 +1,11 @@
+' Gambas class file
+
+
+Public Sub Form_Show()
+
+    TextLabel1.Alignment = Align.Center
+    TextLabel1.Foreground = Color.White
+    TextLabel1.Font.Size = Me.Font.Size * 1.2
+    TextLabel1.Text = MikuruAbout.Text
+
+End

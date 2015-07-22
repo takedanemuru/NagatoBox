@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoUxItem
+
+Private $button As MenuButton
+Private $menu As NagatoStarMenu
+
+Private Sub initializeButton(argContainer As Container)
+    
+    $button = New MenuButton(argContainer) 
+    
+    With $button
+        .W = argContainer.H
+        .Border = False
+        .Expand = False
+        .Arrow = False
+        .Picture = MikuruIcon["star", 16]
+        .Menu = "StarMenu"
+    End With
+    
+End
+
+Private Sub initializeStarMenu()
+    
+    $menu = New NagatoStarMenu(HaruhiMain, $button.Menu)
+    
+End
+
+Public Sub _Initialize(argContainer As Container) 
+    
+    initializeButton(argContainer)
+    initializeStarMenu()
+    
+End

@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Property Read CurrentUrl As String
+
+Private $grids As NagatoUxItemGridViewEpisodes
+Private $rdf As NagatoRdfFeederSSG
+
+Public Sub _new(argContainer As Container)
+    
+    $grids = New NagatoUxItemGridViewEpisodes(argContainer) As "GridViewEpisodes"
+    $rdf = New NagatoRdfFeederSSG As "RdfFeeder"
+    
+End
+
+Public Sub RdfFeeder_Finished()
+    
+    $grids.Set($rdf.Collection)
+    
+End
+
+Public Sub GridViewEpisodes_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.RequestDownload Then
+        MikuruSaveFile($grids.CurrentTitle, Me.CurrentUrl)
+    Else
+        Raise Signal(argSignal, argValues)
+    Endif
+
+End
+
+Private Function CurrentUrl_Read() As String
+
+    Return $rdf.GetUrl($grids.CurrentTitle)
+
+End

@@ -1,0 +1,31 @@
+' Gambas class file
+
+Create Private
+
+Public _$httpClient As HttpClient
+
+Event Finished
+
+Public Sub _InitializeHttpClient()
+    
+    Me._$httpClient = New HttpClient As "HttpClient"
+
+    With Me._$httpClient
+        .Async = True
+        .Timeout = 60
+    End With
+    
+End
+
+Public Sub _GetFile(argSourceUrl As String, Optional argTargetPath As String = Null)
+    
+    Me._$httpClient.URL = argSourceUrl
+    Me._$httpClient.Get(, argTargetPath)
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    Raise Finished
+    
+End

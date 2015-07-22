@@ -14,27 +14,23 @@
     { OpenFilesButton Button
       MoveScaled(0,0,5,5)
       ToolTip = ("Open File(s)")
-      Picture = Picture["icon:/medium/open"]
-      Border = False
     }
     { ClearButton Button
       MoveScaled(5,0,5,5)
       ToolTip = ("Clear All")
-      Picture = Picture["icon:/medium/clear"]
-      Border = False
     }
-    { Panel1 Panel
-      MoveScaled(10,1,2,4)
-      Expand = True
+    { AboutButton Button
+      MoveScaled(10,0,5,5)
+      ToolTip = ("Clear All")
     }
     { TypeComboBox ComboBox
       MoveScaled(18,1,15,4)
       ReadOnly = True
-      List = [("tar"), ("zip"), ("bzip2"), ("gzip"), ("rar"), ("lzh"), ("xz"), ("tar.gz"), ("tar.xz"), ("tar.bz2")]
       Text = ("ComboBox1")
     }
     { ApplyButton Button
       MoveScaled(33,1,16,4)
+      Expand = True
       Text = ("Create")
     }
   }

@@ -1,0 +1,9 @@
+' Gambas module file
+
+Property Read Text As String
+
+Private Function Text_Read() As String
+
+    Return Subst$(File.Load("text/About"), Application.Version)
+
+End

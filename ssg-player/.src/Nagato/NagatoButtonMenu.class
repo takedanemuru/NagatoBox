@@ -1,0 +1,35 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoMenu
+
+Property Read Name As String
+
+Public _$uniqueName As String
+
+Public Sub _RefreshChildMenus() ' virtual
+    
+    
+    
+End
+
+Public Sub _new(argRootObject As Object, argMenuName As String)
+    
+    Me._InitializeParentMenu(argRootObject, argMenuName)
+    Me._AddMenu("", 0)
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    Me._$parentMenu.Children.Clear()
+    Me._RefreshChildMenus()
+    
+End
+
+Private Function Name_Read() As String
+
+    Return Me._$uniqueName
+
+End

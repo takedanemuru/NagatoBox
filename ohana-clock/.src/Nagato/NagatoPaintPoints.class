@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoPaint
+
+Private Const PointRadiusCenter As Integer = 30
+Private Const PointRadiusClock As Integer = 10
+Private Const PointDistanceClock As Integer = 160
+
+Private Sub paintPoint(argX As Integer, argY As Integer, argRaius As Integer)
+    
+    Paint.Ellipse(argX - argRaius / 2, argY - argRaius / 2, argRaius, argRaius)    
+    
+End
+
+Private Sub paintCenterPoint()
+    
+    Paint.Brush = Paint.Color(MikuruOpaque[Color.Yellow, 128])
+    paintPoint(MikuruCenter.X, MikuruCenter.Y, PointRadiusCenter)
+    Paint.Fill()
+    
+End
+
+Private Sub paintClockPoint(argIndex As Integer) ' argIndex means 0 o'clock to 11 o'clock
+    
+    Dim yukiX As Integer = MikuruCenter.GetX(argIndex * 30, PointDistanceClock) 
+    Dim yukiY As Integer = MikuruCenter.GetY(argIndex * 30, PointDistanceClock) 
+    
+    paintPoint(yukiX, yukiY, PointRadiusClock)
+    
+End
+
+Private Sub paintClockPoints()
+    
+    Dim yukiIndex As Integer
+    
+    Paint.Brush = Paint.Color(MikuruOpaque[Color.White, 64])
+    For yukiIndex = 0 To 11
+        paintClockPoint(yukiIndex)
+    Next
+    Paint.Fill()
+    
+End
+
+Public Sub Paint()
+    
+    paintCenterPoint()
+    paintClockPoints()
+    
+End

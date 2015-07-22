@@ -12,12 +12,6 @@ Private Sub initializeTypeComboBox()
     
 End
 
-Private Function getArchiveType() As String
-    
-    Return MikuruArchiveType.List[TypeComboBox.Index]
-    
-End
-
 Private Sub checkExtension(argPath As String) As String
     
     Debug File.Ext(argPath)
@@ -44,6 +38,8 @@ End
 Public Sub Form_Open()
 
     Me.Center()
+    OpenFilesButton.Picture = MikuruIcon["folder"]
+    ClearButton.Picture = MikuruIcon["bin"]
     TypeComboBox.Index = 0
     $iconView.SetEmptyView()
     

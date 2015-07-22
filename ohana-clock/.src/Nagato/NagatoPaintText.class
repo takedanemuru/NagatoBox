@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoPaint
+
+Private $rectangle As Rect
+Private $clockText As New NagatoClockText
+
+Private Sub paintRectangle()
+    
+    With $rectangle
+        Paint.Brush = Paint.Color(MikuruOpaque[Color.Orange, 128])
+        Paint.Rectangle(.X, .Y, .Width, .Height, 10)
+        Paint.Fill()
+    End With
+    
+End
+
+Private Sub paintText()
+    
+    With $rectangle
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 20
+        Paint.RichText($clockText(), .X, .Y, .Width, .Height, Align.Center)
+        Paint.Fill()
+    End With
+    
+End
+
+Public Sub _new()
+    
+    $rectangle = New Rect(130, 250, 170, 80)
+    
+End
+
+
+Public Sub Paint()
+    
+    paintRectangle()
+    paintText()
+    
+End

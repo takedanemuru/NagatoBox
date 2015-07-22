@@ -3,13 +3,13 @@ msgid ""
 msgstr ""
 "#-#-#-#-#  #project.pot (nagato-archiver 3.7.1)  #-#-#-#-#\n"
 "Project-Id-Version: nagato-archiver 3.7.1\n"
-"POT-Creation-Date: 2015-04-27 0025 UTC\n"
+"POT-Creation-Date: 2015-07-22 0448 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "#-#-#-#-#  HaruhiMain.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
 "Project-Id-Version: $(PACKAGE) $(VERSION)\n"
-"POT-Creation-Date: 2015-04-27 00:25 UTC\n"
+"POT-Creation-Date: 2015-07-22 04:48 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,6 +22,12 @@ msgstr ""
 "#-#-#-#-#  MikuruArchiveType.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
 "Project-Id-Version: $(PACKAGE) $(VERSION)\n"
 "POT-Creation-Date: 2015-04-27 00:25 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  MikuruIcon.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-07-22 04:44 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -74,27 +80,31 @@ msgstr ""
 msgid "Open File(s)"
 msgstr ""
 
-#: HaruhiMain.form:35
+#: HaruhiMain.form:33
 msgid "Clear All"
 msgstr ""
 
-#: HaruhiMain.form:49
+#: HaruhiMain.form:38
+msgid "About nagato-archiver"
+msgstr ""
+
+#: HaruhiMain.form:44
 msgid "ComboBox1"
 msgstr ""
 
-#: HaruhiMain.form:54
+#: HaruhiMain.form:50
 msgid "Create"
 msgstr ""
 
-#: HaruhiMain.class:48
+#: HaruhiMain.class:51
 msgid "Open file"
 msgstr ""
 
-#: HaruhiMain.class:73
+#: HaruhiMain.class:76
 msgid "Set path to create"
 msgstr ""
 
-#: HaruhiMain.class:74
+#: HaruhiMain.class:77
 msgid "new_archive"
 msgstr ""
 

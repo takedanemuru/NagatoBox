@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Private $text As String = "Double Click Episode To Start"
+
+Public Sub SetPosition(argPosition As Float, argDuration As Float)
+    
+    If argDuration = 0 Then 
+        $text = ("Please wait ...")
+    Else
+        $text = Subst$("&1/&2", MikuruFloatToTime(argPosition), MikuruFloatToTime(argDuration))
+    End If
+    
+End
+
+Public Sub Paint()
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Bold = True
+    Paint.Text($text, 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Center)
+    Paint.Fill()
+    
+End
