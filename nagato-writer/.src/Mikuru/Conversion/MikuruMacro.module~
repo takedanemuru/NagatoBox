@@ -26,7 +26,7 @@ Private Function replaceRelativeImagePath(argText As String) As String
         yukiText = Replace$(yukiText, getReplacepattern(yukiLevel), $relativePath.ParentDirectories[yukiLevel - 1] & "/")
     Next
     
-    MikuruArrayTest($relativePath.ParentDirectories)
+    yukiText = Replace$(yukiText, "NAGATO_MACRO_IMAGE", "img")
     
     Return yukiText
     

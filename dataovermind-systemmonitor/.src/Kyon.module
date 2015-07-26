@@ -6,6 +6,6 @@ Public Sub Main()
 
     NagatoDBus.Register()
 
-    NagatoSystemObserver.Refresh()
+    NagatoObserverFacade.Start()
 
 End

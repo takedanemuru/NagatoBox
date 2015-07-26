@@ -39,9 +39,9 @@ Public Sub Player_State()
     
 End
 
-Public Sub Player_Progres()
+Public Sub Player_End()
     
-    Raise Signal(MikuruSignal.MediaProgress)
+    Raise Signal(MikuruSignal.MediaEnd, Null)
     
 End
 

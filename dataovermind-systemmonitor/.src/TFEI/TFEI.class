@@ -9,10 +9,14 @@ Property Read CpuUsage As Float
 Property Read MemoryUsage As Float
 Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
+Property Read NetworkTransmitTotal As Integer
+Property Read NetworkTransmitBps As Float
+Property Read NetworkReceiveTotal As Integer
+Property Read NetworkReceiveBps As Float
 
 Public Sub Stop() As Boolean
     
-    Try NagatoSystemObserver.Stop()
+    Try NagatoObserverFacade.Stop()
     
     If Not Error Then Return True
     
@@ -29,24 +33,48 @@ End
 
 Private Function CpuUsage_Read() As Float
 
-    Return NagatoSystemObserver.CpuUsage
+    Return NagatoObserverFacade.CpuUsage
 
 End
 
 Private Function MemoryUsage_Read() As Float
 
-    Return NagatoSystemObserver.MemoryUsage
+    Return NagatoObserverFacade.MemoryUsage
 
 End
 
 Private Function SwapUsage_Read() As Float
 
-    Return NagatoSystemObserver.SwapUsage
+    Return NagatoObserverFacade.SwapUsage
 
 End
 
 Private Function ProcessCount_Read() As Integer
 
-    Return NagatoSystemObserver.ProcessCount
+    Return NagatoObserverFacade.ProcessCount
+
+End
+
+Private Function NetworkTransmitTotal_Read() As Integer
+
+    Return NagatoObserverFacade.NetworkLoadTransmitTotal
+
+End
+
+Private Function NetworkTransmitBps_Read() As Float
+
+    Return NagatoObserverFacade.NetworkLoadTransmitBps
+
+End
+
+Private Function NetworkReceiveTotal_Read() As Integer
+
+    Return NagatoObserverFacade.NetworkLoadReceiveTotal
+
+End
+
+Private Function NetworkReceiveBps_Read() As Float
+
+    Return NagatoObserverFacade.NetworkLoadReceiveBps
 
 End

@@ -1,0 +1,76 @@
+' Gambas class file
+
+Property Read ReceiveBit As Integer
+Property Read ReceivePacket As Integer
+Property Read TransmitBit As Integer
+Property Read TransmitPacket As Integer
+
+Private $receiveBit As Integer
+Private $receivePacket As Integer
+Private $transmitBit As Integer
+Private $transmitPacket As Integer
+
+Private Sub clearValues()
+    
+    $receiveBit = 0
+    $receivePacket = 0
+    $transmitBit = 0
+    $transmitPacket = 0
+    
+End
+
+Private Sub readLine(argLine As String)
+    
+    Dim yukiData As String[] = Split(argLine, " ", "", True)
+    
+    If yukiData[0] = "lo:" Then Return ' ignore local loopback
+    $receiveBit += CInteger(yukiData[1])
+    $receivePacket += CInteger(yukiData[2])
+    $transmitBit += CInteger(yukiData[9])
+    $transmitPacket += CInteger(yukiData[10])
+
+End
+
+Private Sub setValues()
+    
+    Dim yukiLine As String
+    Dim yukiStream As File
+    
+    yukiStream = Open "/proc/net/dev" 
+    
+    For Each yukiLine In yukiStream.Lines
+        If String.InStr(yukiLine, "|") = 0 Then readLine(yukiLine) ' ignore headers
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    clearValues()
+    setValues()
+    
+End
+
+Private Function ReceiveBit_Read() As Integer
+
+    Return $receiveBit
+
+End
+
+Private Function ReceivePacket_Read() As Integer
+
+    Return $receivePacket
+
+End
+
+Private Function TransmitBit_Read() As Integer
+
+    Return $transmitBit 
+
+End
+
+Private Function TransmitPacket_Read() As Integer
+
+    Return $transmitPacket
+
+End

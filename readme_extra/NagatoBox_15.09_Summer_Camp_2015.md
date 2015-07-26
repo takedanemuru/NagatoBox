@@ -5,6 +5,12 @@
 + until September 30
 + refresh README and readme_extras
 
+## dtaovermind-systemmonitor (version 42.1.2)
+
+*system monitor daemon*
+
++ new : netload observation (transmit and receive)
+
 ## haramaru-radio-player (version 42.1.3)
 
 *Haramaru Radio (an internet radio by Hara Yumi) player*

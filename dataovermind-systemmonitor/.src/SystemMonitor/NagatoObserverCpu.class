@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoObserver
 
 Private $prevCpuUsage As Integer
 Private $prevCpuTotal As Integer
@@ -15,7 +15,7 @@ Private Function getSystemSnapShot() As String[]
     
 End
 
-Public Sub setPrevData()
+Public Sub SetPrevData()
     
     Dim yukiSnapShot As String[] = getSystemSnapShot()
     
@@ -24,7 +24,7 @@ Public Sub setPrevData()
     
 End
 
- Public Sub setCurrentData()
+ Private Sub setCurrentData()
     
     Dim yukiSnapShot As String[] = getSystemSnapShot()
     
@@ -36,11 +36,22 @@ End
     
 End
 
-Public Function GetCpuRate() As Float
+Private Function getCpuRate() As Float
+    
+    setCurrentData()
     
     Return ($currentCpuUsage - $prevCpuUsage) / ($currentCpuTotal - $prevCpuTotal)
     
 Catch
     Return 0
+    
+End
+
+Public Sub GetStep()
+    
+    Dim yukiUsage As Float = getCpuRate()
+    
+    Me._$usage = yukiUsage
+    Me._$history.Push(yukiUsage)
     
 End

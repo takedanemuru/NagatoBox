@@ -1,13 +1,13 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoObserver
 
 Private $memoryTotal As Integer
 Private $memoryFree As Integer
 Private $memoryBuffers As Integer
 Private $memoryCached As Integer
 
-Public Sub SetVariables()
+Private Sub setVariables()
     
     Dim yukiArray As String[]
     
@@ -19,8 +19,19 @@ Public Sub SetVariables()
     
 End
 
-Public Function GetMemoryRate() As Float
+Private Function getMemoryRate() As Float
+    
+    setVariables()
     
     Return ($memoryTotal - ($memoryFree + $memoryBuffers + $memoryCached)) / $memoryTotal
+    
+End
+
+Public Sub GetStep() ' virtual
+    
+    Dim yukiUsage As Float = getMemoryRate()
+    
+    Me._$usage = yukiUsage
+    Me._$history.Push(yukiUsage)
     
 End

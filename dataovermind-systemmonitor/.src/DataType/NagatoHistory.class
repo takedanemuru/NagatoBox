@@ -1,6 +1,8 @@
 ' Gambas class file
 
 Property Read History As Float[]
+Property Read Diff As Float
+Property Read Current As Float
 
 Private $length As Integer
 Private $history As Float[]
@@ -22,5 +24,21 @@ End
 Private Function History_Read() As Float[]
 
     Return $history
+
+End
+
+Private Function Diff_Read() As Float
+
+    If 2 > $history.Count Then Return 0
+
+    Return $history[$history.Max] - $history[$history.Max - 1]
+
+End
+
+Private Function Current_Read() As Float
+
+    If $history.Count = 0 Then Return 0
+
+    Return $history[$history.Max]
 
 End

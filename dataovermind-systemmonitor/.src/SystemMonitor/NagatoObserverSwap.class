@@ -1,8 +1,8 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoObserver
 
-Private Function GetSwap() As Float
+Private Function getSwap() As Float
     
     Dim yukiSnapShot As String[] = Split(File.Load("/proc/swaps"), "\n", "")
     Dim yukiSize As Integer
@@ -14,13 +14,15 @@ Private Function GetSwap() As Float
     Return yukiUsed / yukiSize
     
 Catch
-    Debug Error.Text
     Return 0
     
 End
 
-Public Function GetSwapPercentage() As Float
+Public Sub GetStep()
     
-    Return GetSwap()
+    Dim yukiUsage As Float = getSwap()
+    
+    Me._$usage = yukiUsage
+    Me._$history.Push(yukiUsage)
     
 End

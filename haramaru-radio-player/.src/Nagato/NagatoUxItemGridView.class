@@ -24,8 +24,6 @@ Public Sub _SetIcon(argColums As Integer, argRow As Integer, argIconName As Stri
     
     Dim yukiRow As Integer
     
-    Debug argRow
-    
     For yukiRow = 0 To Me._$gridView.Rows.Max
         With Me._$gridView
             .[yukiRow, argColums].Picture = IIf(yukiRow = argRow, MikuruIcon[argIconName], Null)

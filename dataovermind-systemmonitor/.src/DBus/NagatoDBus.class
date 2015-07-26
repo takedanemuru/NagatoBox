@@ -10,13 +10,7 @@ Public Const Interface As String = "org.gambas.dataovermind.systemmonitor.tfei"
 
 Public Function Activated() As Boolean
     
-    Try Debug DBus[Me.Service][Me.ObjectPath, Me.Interface].Ready
-    
-    If Not Error Then
-        Return True
-    Else
-        Return False
-    End If
+    Return DBus.Session.Applications.Exist(Me.Service)
     
 End
 

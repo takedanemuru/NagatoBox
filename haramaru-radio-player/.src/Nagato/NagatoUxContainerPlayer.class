@@ -40,10 +40,12 @@ Public Sub MediaPlayer_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.MediaProgress
-            ' doesn't work ?
-            $panelWidgets.SetProgress($player.Position, $player.Duration)
+            'doesn't work ?
+            $panelWidgets.SetProgress(argValues[0], argValues[1])
         Case MikuruSignal.MediaState
             $panelWidgets.SetState(argValues[0])
+        Case MikuruSignal.MediaEnd
+            ' TODO set end message to label and stop timer. 
     End Select
     
 End

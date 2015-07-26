@@ -1,0 +1,27 @@
+' Gambas class file
+
+Create Private
+
+Property Read Usage As Float
+Property Read History As Float[]
+
+Public _$usage As Float
+Public _$history As New NagatoHistory
+
+Public Sub GetStep() ' virtual
+    
+    
+    
+End
+
+Private Function Usage_Read() As Float
+
+    Return Me._$usage
+
+End
+
+Private Function History_Read() As Float[]
+
+    
+
+End
