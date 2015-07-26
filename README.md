@@ -12,7 +12,7 @@ Only watch this git from a distance in a well-lit room.
 
 ## Dependency
 
-Gambas3 3.6.3 or later varsion
+Gambas3 3.7 or later varsion
 
 ## Ubuntu and its variants
 
@@ -51,48 +51,62 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 ## Package List
 
-|Name			|Description
-|-----			|-----
-|nagato-archiver		|archiving tool
-|nagato-calculator		|calculator
-|nagato-calendar		|calendar
-|nagato-code-view		|code viewer for Gambas3
-|nagato-color-picker		|color picking tool
-|nagato-commander		|command executer
-|nagato-config-appearance	|look and feel config tool
-|nagato-config-screenlocker	|screenlocker and its congfig tool
-|nagato-dbus-finder		|dbus explorer
-|nagato-dictionary		|English/Japanese dictionary
-|nagato-extractor		|archived file extraction tool
-|nagato-font-view		|font viewer
-|nagato-gif-box		|gif animation viewer
-|nagato-image-view		|image viewer
-|nagato-keycode-checker	|keycode checker
-|nagato-lookup		|application finder
-|nagato-map		|map viewer
-|nagato-movie		|video viewer
-|nagato-navigator		|Deprecated, merged into nagato-files (-d)
-|nagato-network-manager	|network manager
-|nagato-openbox-logout	|logout manager for pure openbox3
-|nagato-pdf-view		|pdf viewer
-|nagato-player-x		|gstreamer based music player
-|nagato-power-manager	|power manager
-|nagato-screenshooter		|screenshot taking tool
-|nagato-session		|session and autostart manager
-|nagato-stockicon-list		|show stock icons for Gambas3
-|nagato-taskmanager		|taskmanager
-|nagato-text		|simple text pad
-|nagato-text-converter		|charactor-code conversion tool
-|nagato-wareki		|wareki comparison
-|nagato-wallpaper		|wallpaper config tool
-|nagato-weather		|weather forecast
-|nagato-web		|web browser
-|[nagato-writer](./readme_extra/nagato-writer)		|markdown editor
-|nekomimi-clock		|clock
-|haramaru-radio-player		|downloader/player for "haramaru radio"
-|ohana clock		|Bonbori-Matsuri is waiting for you.
-|yuki			|interface for humanoid interface
+### DataOverminds
+
+Application			|Version	|Description
+---			|----:	|----
+dataovermind-rssfeeder		|x.x.x	|rss daemon
+dataovermind-systemmonitor	|42.1.1	|system monitor daemon
+
+### NagatoApplications
+
+Application			|Version	|Description
+---			|----:	|----
+nagato-ambient		|x.x.x	|ambient sound player
+nagato-archiver		|x.x.x	|patool frontend for file archiving
+nagato-asx-player		|x.x.x	|asx file player
+nagato-calculator		|x.x.x	|calculator
+nagato-calendar		|x.x.x	|calendar
+nagato-code-view		|x.x.x	|code viewer for Gambas3
+nagato-color-picker		|x.x.x	|screen color picking tool
+nagato-config-appearance	|x.x.x	|appearance config tool
+nagato-config-screenlocker	|x.x.x	|frontend for i3 locker
+nagato-dbus-finder		|x.x.x	|explorer for dbus
+nagato-dictionary		|x.x.x	|English/Japanese dictionary
+nagato-extractor		|x.x.x	|patool frontend for file extractoring
+nagato-files			|42.1.4	|file manager and desktop shell
+nagato-font-view		|x.x.x	|font viewer
+nagato-gif-box*		|x.x.x	|gif animation viewer
+nagato-image-view		|x.x.x	|image viewer
+nagato-keycode-checker	|x.x.x	|keycode checker
+nagato-lookup		|42.1.1	|application launcher/finder
+nagato-map		|0.11.4	|map viewer
+nagato-movie		|x.x.x	|movie file player
+nagato-openbox-logout		|x.x.x	|logout dialog for openbox
+nagato-pdf-view		|x.x.x	|pdf viewer
+nagato-player-x		|x.x.x	|music player
+nagato-screenshooter		|x.x.x	|standalone screenshot application
+nagato-session		|x.x.x	|autostart manager
+nagato-taskmanager		|42.1.2	|task manager
+nagato-text			|x.x.x	|text editor
+nagato-text-converter*		|x.x.x	|charactor code converter
+nagato-wallpaper		|42.1.2	|wallpaper changer
+nagato-weather		|0.3.3	|weather forecast
+nagato-web		|42.1.2	|web browser
+[nagato-writer](./readme_extra/nagato-writer)		|42.1.3	|markdown editor
+yuki			|42.1.1	|interface for humanoid interface
+
+### Misc Applications
+
+Application			|Version	|Description
+---			|----:	|----
+haramaru-radio-player		|42.1.3	|haramaru-radio(an internet radio) player
+nekomimi-clock		|x.x.x	|clock
+ohana-clock		|x.x.x	|bonbori-matsuri has been waiting for you.
+rotate-cube-demo		|x.x.x	|OpenGL demo
+ssg-player			|42.1.3	|singer song gamer(an internet radio) player
+xkcd-reader			|x.x.x	|xkcd(online comic) reader.
 
 ## To Do
 
-[TODO](./readme_extra/NagatoBox_15.06_This_World_Has_Been_Waiting_For_Us.md)
+[TODO](./readme_extra/NagatoBox_15.09_Summer_Camp_2015.md)

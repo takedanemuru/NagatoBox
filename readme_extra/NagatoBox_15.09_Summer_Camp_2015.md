@@ -1,11 +1,13 @@
 # NagatoBox 15.09 "Summer Camp 2015"
 
-![NAGATO_MACRO_IMAGE](../haruhi-chan_2.jpg)
+![NAGATO_MACRO_IMAGE](./haruhichan_yuki.jpg)
+
+## project-wide objectives
 
 + until September 30
-+ refresh README and readme_extras
++ ~~refresh README and readme_extras~~
 
-## dtaovermind-systemmonitor (version 42.1.2)
+## dataovermind-systemmonitor (version 42.1.2)
 
 *system monitor daemon*
 
@@ -33,6 +35,8 @@
 + ~~.ReloadDesktopWallpaper() functionality for DBus interface~~
 + ~~desktop-panel configuration (background color, highlight color)~~
 + ~~new : root account warning label~~
++ new : chmod edit dialog (HaruhiEditChmod)
++ media conversion backend port to ffmpeg (?)
 
 ## nagato-lookup (version 42.1.1)
 
@@ -44,6 +48,7 @@
 *map viewer*
 
 + new : weather forecast
++ new : reload button for wikipedia articles tab
 + foursquare api (register)
 
 ## nagato-session
@@ -69,8 +74,9 @@
 + ~~upgrade version to 42.1.x~~
 + ~~new : edit dialog for bookmark item~~
 
-## nagato-writer (version 42.1.3)
+## nagato-writer (version 42.1.5)
 
++ ~~fix : DO NOT store symbolic link , store its reference path instead.~~
 + ~~fix : incorrect relative path on source text.~~
 + ~~new : dialog for start slideshow~~
 + ~~testing : mathjax rendering~~

@@ -18,6 +18,8 @@ Public Function SetPath(argPath As String) As String
     changePath(argPath)
     $buffer = File.Load(argPath)
 
+    HaruhiMain.Title = File.Name(argPath)
+
     Return $buffer
     
 End

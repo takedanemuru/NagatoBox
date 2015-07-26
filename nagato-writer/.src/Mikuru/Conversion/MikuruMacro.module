@@ -26,8 +26,6 @@ Private Function replaceRelativeImagePath(argText As String) As String
         yukiText = Replace$(yukiText, getReplacepattern(yukiLevel), $relativePath.ParentDirectories[yukiLevel - 1] & "/")
     Next
     
-    yukiText = Replace$(yukiText, "NAGATO_MACRO_IMAGE", "")
-    
     Return yukiText
     
 End
@@ -39,8 +37,10 @@ Public Function Set(argSourceText As String) As String
     yukiText = Replace$(yukiText, MacroRelativePath, $relativePath.RelativePath)
     yukiText = Replace$(yukiText, MacroHome, Me.HomePath)
     yukiText = replaceRelativeImagePath(yukiText)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", $relativePath.RelativePath))
-    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![img](&1/", File.Dir($relativePath.RelativePath)))
+    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![](&1/", $relativePath.RelativePath))
+    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![](&1/", File.Dir($relativePath.RelativePath)))
+    
+    yukiText = Replace$(yukiText, "NAGATO_MACRO_IMAGE", "")
     
     Return yukiText
     

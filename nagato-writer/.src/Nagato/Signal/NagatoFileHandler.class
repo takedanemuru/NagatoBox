@@ -15,10 +15,11 @@ End
 
 Public Function SetPath(argPath As String) As String
     
-    changePath(argPath)
-    $buffer = File.Load(argPath)
-
-    HaruhiMain.Title = File.Name(argPath)
+    Dim yukiPath As String = IIf(Stat(argPath).Type = gb.Link, Stat(argPath).Link, argPath)
+    
+    changePath(yukiPath)
+    $buffer = File.Load(yukiPath)
+    HaruhiMain.Title = File.Name(yukiPath)
 
     Return $buffer
     
