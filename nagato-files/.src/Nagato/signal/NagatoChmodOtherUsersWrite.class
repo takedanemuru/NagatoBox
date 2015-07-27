@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoChmod
+
+Public Function _GetlabelText() As String ' virtual interface
+    
+    Return "8"
+    
+End
+
+Public Sub _SetRadioButtons() ' virtual interface
+    
+    Me._SetRadioButton("-", "- : Other users cannot write it.")
+    Me._SetRadioButton("w", "w : Other users can write it.")
+    
+End

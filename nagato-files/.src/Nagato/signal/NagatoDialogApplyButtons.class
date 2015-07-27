@@ -3,6 +3,7 @@
 Inherits NagatoSignalWidget
 
 Property ApplyButtonEnabled As Boolean
+Property Read Height As Integer
 
 Private $hBox As HBox
 Private $panel As Panel
@@ -79,5 +80,11 @@ End
 Private Sub ApplyButtonEnabled_Write(Value As Boolean)
 
     $applyButton.Enabled = Value
+
+End
+
+Private Function Height_Read() As Integer
+
+    Return 48
 
 End

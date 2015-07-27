@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $chmodArray As New Object[]
+Private $chmod1 As NagatoChmodOwnerRead
+Private $chmod2 As NagatoChmodOwnerWrite
+Private $chmod3 As NagatoChmodOwnerExecute
+Private $chmod4 As NagatoChmodGroupRead
+Private $chmod5 As NagatoChmodGroupWrite
+Private $chmod6 As NagatoChmodGroupExecute
+Private $chmod7 As NagatoChmodOtherUsersRead
+Private $chmod8 As NagatoChmodOtherUsersWrite
+Private $chmod9 As NagatoChmodOtherUsersExecute
+
+Private Sub initializeChmods(argContainer As Container)
+    
+    $chmod1 = New NagatoChmodOwnerRead(argContainer) As "TFEI"
+    $chmod2 = New NagatoChmodOwnerWrite(argContainer) As "TFEI"
+    $chmod3 = New NagatoChmodOwnerExecute(argContainer) As "TFEI"
+    $chmod4 = New NagatoChmodGroupRead(argContainer) As "TFEI"
+    $chmod5 = New NagatoChmodGroupWrite(argContainer) As "TFEI"
+    $chmod6 = New NagatoChmodGroupExecute(argContainer) As "TFEI"
+    $chmod7 = New NagatoChmodOtherUsersRead(argContainer) As "TFEI"
+    $chmod8 = New NagatoChmodOtherUsersWrite(argContainer) As "TFEI"
+    $chmod9 = New NagatoChmodOtherUsersExecute(argContainer) As "TFEI"
+    
+End
+
+Private Function getChmod(argNumber As Integer) As Object
+    
+    Select Case argNumber
+        Case 1
+            Return $chmod1
+        Case 2
+            Return $chmod2
+        Case 3
+            Return $chmod3
+        Case 4
+            Return $chmod4
+        Case 5
+            Return $chmod5
+        Case 6
+            Return $chmod6
+        Case 7
+            Return $chmod7
+        Case 8
+            Return $chmod8
+        Case 9
+            Return $chmod9
+    End Select
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeChmods(argContainer)
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Dim yukiAuth As String = Stat(argPath).Auth
+    Dim yukiNumber As Integer
+    Dim yukiAuthTag As String
+    
+    For yukiNumber = 1 To 9
+        yukiAuthTag = String.Mid(yukiAuth, yukiNumber, 1)
+        getChmod(yukiNumber).SetPermission(yukiAuthTag)
+    Next
+    
+End
+
+Public Function GetAuth() As String
+    
+    Dim yukiAuth As String
+    Dim yukiNumber As Integer
+    
+    For yukiNumber = 1 To 9
+        yukiAuth &= getChmod(yukiNumber).GetAuthTag()
+    Next
+    
+    Return yukiAuth
+    
+End

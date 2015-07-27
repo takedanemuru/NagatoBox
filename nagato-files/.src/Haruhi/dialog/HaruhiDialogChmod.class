@@ -1,0 +1,48 @@
+' Gambas class file
+
+Private $chmodContainer As NagatoChmodContainer
+Private $applyButtons As NagatoDialogApplyButtons
+Private $path As String
+
+Private Sub initializeUx()
+    
+    $chmodContainer = New NagatoChmodContainer(Me) As "ChmodContainer"
+    $applyButtons = New NagatoDialogApplyButtons(Me) As "ApplyButtons"
+    
+    Me.H = NagatoChmod.LabelHeight * 24 + $applyButtons.Height
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $path = argPath
+    
+    Object.Lock($chmodContainer)
+        $chmodContainer.SetPath(argPath)
+    Object.Unlock($chmodContainer)
+    
+End
+
+Public Sub _new()
+    
+    initializeUx()
+    
+End
+
+Public Sub ChmodContainer_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.DialogChanged Then 
+        $applyButtons.ApplyButtonEnabled = True
+    End If
+    
+End
+
+Public Sub ApplyButtons_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.DialogApply Then
+        Try Chmod $path To $chmodContainer.GetAuth()
+    Endif
+    
+    Me.Close(argSignal)
+    
+End

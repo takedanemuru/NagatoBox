@@ -1,26 +1,11 @@
 ' Gambas module file
 
-Private Function getGroupPermissionText(argPermission As String) As String
-    
-    Dim yukiText As String
-    
-    yukiText = IIf(String.InStr(argPermission, "r") = 0, "-", "r")
-    yukiText &= IIf(String.InStr(argPermission, "w") = 0, "-", "w")
-    yukiText &= IIf(String.InStr(argPermission, "x") = 0, "-", "x")
-    
-    Return yukiText
-    
-End
-
 Public Function GetText(argPath As String) As String
     
     Dim yukiText As String = IIf(IsDir(argPath), "d", "-")
     
-    yukiText &= getGroupPermissionText(Stat(argPath).Perm.User)
-    yukiText &= getGroupPermissionText(Stat(argPath).Perm.Group)
-    yukiText &= getGroupPermissionText(Stat(argPath).Perm.Other)
+    yukiText &= Stat(argPath).Auth
     
     Return yukiText
     
 End
-

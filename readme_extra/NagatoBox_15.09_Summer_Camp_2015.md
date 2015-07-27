@@ -35,8 +35,7 @@
 + ~~.ReloadDesktopWallpaper() functionality for DBus interface~~
 + ~~desktop-panel configuration (background color, highlight color)~~
 + ~~new : root account warning label~~
-+ new : chmod edit dialog (HaruhiEditChmod)
-+ media conversion backend port to ffmpeg (?)
++ ~~new : chmod edit dialog (HaruhiEditChmod)~~
 
 ## nagato-lookup (version 42.1.1)
 
@@ -50,6 +49,7 @@
 + new : weather forecast
 + new : reload button for wikipedia articles tab
 + foursquare api (register)
++ up to 42.x.x
 
 ## nagato-session
 

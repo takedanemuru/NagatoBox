@@ -2,6 +2,8 @@
 
 Inherits NagatoSignalWidget
 
+Property ApplyButtonEnabled As Boolean
+
 Private $hBox As HBox
 Private $panel As Panel
 Private $cancelButton As Button
@@ -66,4 +68,16 @@ Public Sub Button_Click()
     
     Raise Signal(Last.Tag, Null)
     
+End
+
+Private Function ApplyButtonEnabled_Read() As Boolean
+
+    Return $applyButton.Enabled
+
+End
+
+Private Sub ApplyButtonEnabled_Write(Value As Boolean)
+
+    $applyButton.Enabled = Value
+
 End
