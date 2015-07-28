@@ -130,7 +130,7 @@ Public Sub Asakura_MouseDrag()
     If $tabs.GetTabOrder(Mouse.StartX) = ($tabs.Max + 1) Then Return
     
    If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then
-        Drag.Icon = Stock["large/down"]
+        Drag.Icon = MikuruIcon.Get("navigation-down", 48) 
         $drawingArea.Drag(CStr(Mouse.StartX), "text/nagato-web")
     Endif
     

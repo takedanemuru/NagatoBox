@@ -101,6 +101,6 @@ End
 
 Public Sub MenuButton_Click()
     
-    NagatoLeftPanel.Toggle()
+    Raise MenuEvent(NagatoMenuPipe.UxToggleLeftPane)
     
 End

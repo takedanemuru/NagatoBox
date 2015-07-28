@@ -61,7 +61,7 @@ Public Sub MenuItem_Click()
             Case .MenuQuit
                 HaruhiMain.Close()
             Case .MenuSearch
-                NagatoLeftPanel.Toggle()
+                Raise MenuEvent(NagatoMenuPipe.UxToggleLeftPane)
             Default
                 Raise MenuEvent(Last.Tag)
         End Select

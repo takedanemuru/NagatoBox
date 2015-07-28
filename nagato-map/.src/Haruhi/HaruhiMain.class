@@ -4,6 +4,7 @@ Public Enum OpenStreetMap, GoogleMap
 
 Private $menuBar As NagatoMenuBar
 Private $mapView As NagatoMapView
+Private $leftPanel As New NagatoLeftPanel As "MenuItem"
 
 Private Sub getScreenshot()
     
@@ -12,9 +13,7 @@ Private Sub getScreenshot()
     Dialog.Title = ("Save Picture")
     Dialog.Path = User.Home &/ "your_map.png"
     
-    If Not Dialog.SaveFile() Then
-        yukiScreenshot.Save(Dialog.Path)
-    Endif
+    If Not Dialog.SaveFile() Then yukiScreenshot.Save(Dialog.Path)
     
 End
 
@@ -33,10 +32,10 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
+    $menuBar = New NagatoMenuBar(MenuHBox) As "MenuItem"
     $mapView = New NagatoMapView(MapView) As "MapView"
     NagatoSettings.LoadFormSettings(Me)
-    NagatoLeftPanel.Activate(WeatherWikipediaSidePanel)
+    $leftPanel.Activate(WeatherWikipediaSidePanel)
 
 End
 
@@ -46,7 +45,7 @@ Public Sub Form_Close()
     
 End
 
-Public Sub MenuBar_MapSelect(argMapType As Integer)
+Public Sub MenuItem_MapSelect(argMapType As Integer)
     
     $mapView.ChangeLayer(argMapType)
     
@@ -58,16 +57,18 @@ Public Sub MapView_NewPoint(argLatitude As Float, argLongitude As Float)
     
 End
 
-Public Sub MenuBar_MenuEvent(argEvent As Integer)
+Public Sub MenuItem_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
+        Case NagatoMenuPipe.UxToggleLeftPane
+            $leftPanel.Toggle()
         Case NagatoMenuPipe.MenuInformation, NagatoMenuPipe.MenuRefreshWikipediaArticles
-            NagatoLeftPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
+            $leftPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
         Case NagatoMenuPipe.MenuBookmark
-            HaruhiAddBookmark.SetLocation(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
-            If HaruhiAddBookmark.ShowDialog() = HaruhiAddBookmark.Added Then
-                NagatoLeftPanel.AddBookmark()
-            Endif
+            With HaruhiAddBookmark
+                .SetLocation(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
+                If .ShowDialog() = .Added Then $leftPanel.AddBookmark()
+            End With
         Case NagatoMenuPipe.MapExport
             Wait 0.5
             getScreenshot()

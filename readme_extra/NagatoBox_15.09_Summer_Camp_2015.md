@@ -1,8 +1,8 @@
 # NagatoBox 15.09 "Summer Camp 2015"
 
-![NAGATO_MACRO_IMAGE](./haruhichan_yuki.jpg)
-
 ## project-wide objectives
+
+![NAGATO_MACRO_IMAGE](./haruhichan_yuki.jpg)
 
 + until September 30
 + ~~refresh README and readme_extras~~
@@ -11,7 +11,7 @@
 
 *system monitor daemon*
 
-+ new : netload observation (transmit and receive)
++ ~~new : netload observation (transmit and receive)~~
 
 ## haramaru-radio-player (version 42.1.3)
 
@@ -25,7 +25,7 @@
 + ~~new : play/pause functionality~~
 + ~~new : ProgressBar and seek on it.~~
 
-## nagato-files (version 42.1.2)
+## nagato-files (version 42.1.5)
 
 *file manager and desktop shell*
 
@@ -36,20 +36,21 @@
 + ~~desktop-panel configuration (background color, highlight color)~~
 + ~~new : root account warning label~~
 + ~~new : chmod edit dialog (HaruhiEditChmod)~~
++ new : dbus interface for Nagato Persona messaging functionality.
 
 ## nagato-lookup (version 42.1.1)
 
 + ~~do not use libnotify directly, use dbus instead.~~
 + ~~new : settings category window.~~
 
-## nagato-map
+## nagato-map (version 42.1.1)
 
 *map viewer*
 
 + new : weather forecast
-+ new : reload button for wikipedia articles tab
++ ~~new : reload button for wikipedia articles tab~~
 + foursquare api (register)
-+ up to 42.x.x
++ ~~up to 42.x.x~~
 
 ## nagato-session
 
@@ -67,12 +68,13 @@
 + ~~new : move to nagato icons~~
 + ~~upgrade version to 42.1.x~~
 
-## nagato-web (version 42.1.2)
+## nagato-web (version 42.1.3)
 
 + ~~new : new search menu for reddit~~
 + ~~remove NagatoXdgUserDirs use Desktop.GetDirectory("DOWNLOAD") instead.~~
 + ~~upgrade version to 42.1.x~~
 + ~~new : edit dialog for bookmark item~~
++ ~~do not use stock icon for tab D&D~~
 
 ## nagato-writer (version 42.1.5)
 

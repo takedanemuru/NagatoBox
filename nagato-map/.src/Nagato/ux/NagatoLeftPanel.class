@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoMenuPipe
 
 Private $sidePanel As SidePanel
 Private $tabStrip As TabStrip
@@ -42,10 +42,10 @@ Public Sub Activate(argSidePanel As SidePanel)
     initializeSidePanel(argSidePanel)
     initializeTabStrip()
     $weather = New NagatoInfoWeather($tabStrip)
-    $candidates = New NagatoInfoWikipediacandidates($tabStrip) As "Candidates"
+    $candidates = New NagatoInfoWikipediacandidates($tabStrip) As "Menu"
     $article = New NagatoInfoWikipediaArticle($tabStrip)
     $bookmark = New NagatoInfoBookmarks($tabStrip)
-    $search = New NagatoInfoSearch($tabStrip)
+    $search = New NagatoInfoSearch($tabStrip) As "Menu"
     
     $tabStrip.Index = 0
     
@@ -72,7 +72,7 @@ Public Sub AddBookmark()
     
 End
 
-Public Sub Candidates_NewArticle(argUrl As String)
+Public Sub Menu_NewArticle(argUrl As String)
     
     $article.Url = argUrl
     $tabStrip.Index = 2

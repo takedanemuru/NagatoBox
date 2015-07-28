@@ -74,7 +74,7 @@ nagato-config-screenlocker	|x.x.x	|frontend for i3 locker
 nagato-dbus-finder		|x.x.x	|explorer for dbus
 nagato-dictionary		|x.x.x	|English/Japanese dictionary
 nagato-extractor		|x.x.x	|patool frontend for file extractoring
-nagato-files			|42.1.4	|file manager and desktop shell
+nagato-files			|42.1.5	|file manager and desktop shell
 nagato-font-view		|x.x.x	|font viewer
 nagato-gif-box*		|x.x.x	|gif animation viewer
 nagato-image-view		|x.x.x	|image viewer

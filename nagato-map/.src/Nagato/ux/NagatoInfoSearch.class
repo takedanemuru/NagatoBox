@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoMenuPipe
+
 Private $searchBox As NagatoSearchBox
 Private $searchGrid As NagatoSearchGrid
 
@@ -13,7 +15,7 @@ Public Sub _new(argTabstrip As TabStrip)
     
     argTabstrip.Index = 3
     $searchBox = New NagatoSearchBox(argTabstrip) As "SearchBox"
-    $searchGrid = New NagatoSearchGrid(argTabstrip) As "SearchGrid"
+    $searchGrid = New NagatoSearchGrid(argTabstrip) As "Menu"
     
 End
 

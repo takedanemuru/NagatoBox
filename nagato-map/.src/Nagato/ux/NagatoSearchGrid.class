@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoMenuPipe
+
 Private $tabStrip As TabStrip
 Private $searchGrid As GridView
 
@@ -49,6 +51,27 @@ Private Sub setData(argCollection As Collection)
     
 End
 
+Private Function getLatitude(argRow As Integer) As Float
+    
+    Return CFloat($searchGrid[argRow, 1].Text)
+    
+End
+
+Private Function getLongitude(argRow As Integer) As Float
+    
+    Return CFloat($searchGrid[argRow, 2].Text)
+    
+End
+
+Public Function isValidRow(argRow As Integer) As Boolean
+    
+    If $searchGrid[argRow, 1].Text = "" Then Return False
+    If $searchGrid[argRow, 2].Text = "" Then Return False
+    
+    Return True
+    
+End
+
 Public Sub RefreshSearchGridData(argCollection As Collection)
     
     clearGrid()
@@ -65,15 +88,9 @@ End
 
 Public Sub SearchGrid_Activate()
     
-    Dim yukiRowIndex As Integer = $searchGrid.Row
-    Dim yukiLatitude As Float
-    Dim yukiLongitude As Float
+    If Not isValidRow($searchGrid.Row) Then Return
     
-    If $searchGrid[yukiRowIndex, 1].Text <> "" And If $searchGrid[yukiRowIndex, 2].Text <> "" Then
-        yukiLatitude = CFloat($searchGrid[yukiRowIndex, 1].Text)
-        yukiLongitude = CFloat($searchGrid[yukiRowIndex, 2].Text)
-        HaruhiMain.SetLocation(yukiLatitude, yukiLongitude, 12)
-        NagatoLeftPanel.Request(yukiLatitude, yukiLongitude)
-    Endif
+    HaruhiMain.SetLocation(getLatitude($searchGrid.Row), getLongitude($searchGrid.Row), 12)
+    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End

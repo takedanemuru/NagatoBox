@@ -39,8 +39,6 @@ Private Sub refresh()
     Next
     
 Catch
-    Debug "error"
-    Debug Error.Text
     Raise Error
     Return
     

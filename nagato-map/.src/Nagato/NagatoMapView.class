@@ -3,6 +3,8 @@
 Inherits NagatoMenuPipe
 
 Property Read Screenshot As Picture
+Property Read Latitude As Float
+Property Read Longitude As Float
 
 Private $mapView As MapView
 Private $marker As New NagatoMapMarker
@@ -93,5 +95,17 @@ Private Function Screenshot_Read() As Picture
     With $mapView
         Return Desktop.Screenshot(.ScreenX, .ScreenY, .W, .H)
     End With    
+
+End
+
+Private Function Latitude_Read() As Float
+
+    Return $mapView.Map.Center.Lat
+
+End
+
+Private Function Longitude_Read() As Float
+
+    Return $mapView.Map.Center.Lon
 
 End

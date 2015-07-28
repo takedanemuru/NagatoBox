@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoMenuPipe
+
 Private $tabstrip As TabStrip
 Private $wikipediaGrid As GridView
 Private $wikipediaGeoData As New NagatoWikipediaGeoData As "WikipediaGeoData"
@@ -18,6 +20,17 @@ Private Sub initializeWikipediaListGrid()
         .Rows.Count = 1
         .Expand = True
         .Mode = Select.Single
+    End With
+    
+End
+
+Private Sub initializeReloadButton()
+    
+    Dim yukiButton As New Button($tabstrip) As "ReloadButton"
+    
+    With yukiButton
+        .H = 32
+        .Text = ("Reload")
     End With
     
 End
@@ -54,6 +67,7 @@ Public Sub _new(argTabstrip As TabStrip)
     
     $tabstrip = argTabstrip
     initializeWikipediaListGrid()
+    initializeReloadButton()
     
 End
 
@@ -72,5 +86,11 @@ Public Sub CandidatesGrid_Activate()
         Raise NewArticle(yukiElement.Url)
         HaruhiMain.SetMarker(yukiElement.Latitude, yukiElement.Longitude)
     End If
+    
+End
+
+Public Sub ReloadButton_Click()
+    
+    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End
