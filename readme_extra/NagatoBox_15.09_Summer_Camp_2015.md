@@ -50,7 +50,7 @@
 + new : weather forecast
 + ~~new : reload button for wikipedia articles tab~~
 + foursquare api (register)
-+ ~~up to 42.x.x~~
++ ~~version up to 42.x.x~~
 
 ## nagato-session
 

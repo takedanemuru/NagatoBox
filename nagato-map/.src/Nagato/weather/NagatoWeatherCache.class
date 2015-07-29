@@ -4,52 +4,81 @@ Create Static
 
 Property Read IsReady As Boolean
 
-Private $downloader As New NagatoDownloaderWeather As "Downloader"
+Private $cache As New Collection
+Private $ready As Boolean = False
+Private $client As New NagatoWeatherHttpClient As "HttpClient"
 
 Event Finished
 
+Private Sub setAdditionalData(argWeatherElement As NagatoWeatherElement, argData As XmlElement[], argTimeStamp As String)
+    
+    If Not Object.IsValid(argWeatherElement) Then Return
+
+    If Not argWeatherElement[MikuruWeatherKey.HasIcon] Then
+        argWeatherElement.SetAdditionalData(argData)
+        $cache.Add(argWeatherElement, argTimeStamp)
+    End If 
+    
+End
+
+Private Sub refresh()
+    
+    Dim yukiXmlElement As XmlElement
+    Dim yukiWeatherElement As NagatoWeatherElement
+    Dim yukiChildElements As XmlElement[]
+    
+    For Each yukiXmlElement In $client.Elements
+        yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
+        If yukiChildElements.Count > 4 Then
+            yukiWeatherElement = New NagatoWeatherElement
+            yukiWeatherElement.SetEssentialData(yukiChildElements)
+        Else
+            setAdditionalData(yukiWeatherElement, yukiChildElements, yukiXmlElement.Attributes["to"])
+        Endif
+    Next
+    
+    $ready = True
+    
+    Raise Finished
+    
+End
+
 Public Sub Activate(argLatitude As Float, argLongtude As Float)
     
-    $downloader.Ready = False
-    $downloader.Get(NagatoWeatherApi.Get(argLatitude, argLongtude, 5))
+    $ready = False
+    $client.Activate(argLatitude, argLongtude)
     
 End
 
 Public Function GetWeatherElementMostRecent() As NagatoWeatherElement
     
-    Debug "get most recent"
-    Debug MikuruTimeStamp.GetRecent()
-    Debug $downloader.Cache.Count
-    
-    Return $downloader.Cache[MikuruTimeStamp.GetRecent()]
+    Return $cache[MikuruTimeStamp[0]]
     
 End
 
 Public Function HasElement(argTime As String) As Boolean
     
-    Return $downloader.Cache.Exist(argTime)
+    Return $cache.Exist(argTime)
     
 End
 
 Public Function GetElement(argTime As String) As NagatoWeatherElement
     
-    Return $downloader.Cache[argTime]
+    Return $cache[argTime]
     
 Catch
     Return Null
     
 End
 
-Public Sub Downloader_Finished()
+Public Sub HttpClient_Finished()
     
-    $downloader.Ready = True
-    
-    Raise Finished
+    refresh()
     
 End
 
 Private Function IsReady_Read() As Boolean
 
-    Return $downloader.Ready
+    Return $ready
 
 End

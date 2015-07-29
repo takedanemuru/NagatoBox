@@ -1,0 +1,62 @@
+' Gambas class file
+
+Property Read TabStrip As TabStrip
+
+Private $sidePanel As SidePanel
+Private $tabStrip As TabStrip
+
+Private Sub initializeSidePanel(argContainer As Container)
+    
+    $sidePanel = New SidePanel(argContainer)
+    
+    With $sidePanel
+        .Arrangement = Arrange.Fill
+        .Orientation = Align.Left
+        .W = 240
+    End With
+    
+End
+
+Private Sub initializeTabStrip()
+    
+    $tabStrip = New TabStrip($sidePanel) As "TabStrip"
+    
+    With $tabStrip
+        .Count = 5
+        .Arrangement = Arrange.Vertical
+        .Orientation = Align.Left
+        .[0].Text = ("Weather")
+        .[1].Text = ("Articles")
+        .[2].Text = ("Wikipedia")
+        .[3].Text = ("Search")
+        .[4].Text = ("Bookmark")
+    End With
+    
+End
+
+Public Sub Show(argTabIndex As Integer)
+    
+    $sidePanel.Hidden = False
+    $tabStrip.Index = argTabIndex
+    
+End
+
+Public Sub Close(argTabIndex As Integer)
+    
+    $sidePanel.Hidden = True
+    $tabStrip.Index = argTabIndex
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeSidePanel(argContainer)
+    initializeTabStrip()
+    
+End
+
+Private Function TabStrip_Read() As TabStrip
+
+    Return $tabStrip
+
+End

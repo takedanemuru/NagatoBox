@@ -2,59 +2,29 @@
 
 Inherits NagatoMenuPipe
 
-Private $sidePanel As SidePanel
-Private $tabStrip As TabStrip
+Private $leftPanelContainer As NagatoLeftPanelContainer
 Private $weather As NagatoInfoWeather
 Private $bookmark As NagatoInfoBookmarks
 Private $search As NagatoInfoSearch
 Private $candidates As NagatoInfoWikipediacandidates
 Private $article As NagatoInfoWikipediaArticle
 
-Private Sub initializeSidePanel(argSidePanel As SidePanel)
+Public Sub _new(argContainer As Container)
     
-    $sidePanel = argSidePanel
+    $leftPanelContainer = New NagatoLeftPanelContainer(argContainer)
+    $weather = New NagatoInfoWeather($leftPanelContainer.TabStrip)
+    $candidates = New NagatoInfoWikipediacandidates($leftPanelContainer.TabStrip) As "Menu"
+    $article = New NagatoInfoWikipediaArticle($leftPanelContainer.TabStrip)
+    $bookmark = New NagatoInfoBookmarks($leftPanelContainer.TabStrip)
+    $search = New NagatoInfoSearch($leftPanelContainer.TabStrip) As "Menu"
     
-    With $sidePanel
-        .Arrangement = Arrange.Fill
-    End With
-    
-End
-
-Private Sub initializeTabStrip()
-    
-    $tabStrip = New TabStrip($sidePanel) As "TabStrip"
-    
-    With $tabStrip
-        .Count = 5
-        .Arrangement = Arrange.Vertical
-        .Orientation = Align.Left
-        .[0].Text = ("Weather")
-        .[1].Text = ("Articles")
-        .[2].Text = ("Wikipedia")
-        .[3].Text = ("Search")
-        .[4].Text = ("Bookmark")
-    End With
-    
-End
-
-Public Sub Activate(argSidePanel As SidePanel)
-    
-    initializeSidePanel(argSidePanel)
-    initializeTabStrip()
-    $weather = New NagatoInfoWeather($tabStrip)
-    $candidates = New NagatoInfoWikipediacandidates($tabStrip) As "Menu"
-    $article = New NagatoInfoWikipediaArticle($tabStrip)
-    $bookmark = New NagatoInfoBookmarks($tabStrip)
-    $search = New NagatoInfoSearch($tabStrip) As "Menu"
-    
-    $tabStrip.Index = 0
+    $leftPanelContainer.Close(0)
     
 End
 
 Public Sub Toggle()
     
-    $sidePanel.Hidden = False
-    $tabStrip.Index = 3
+    $leftPanelContainer.Show(3)
     $search.SetFocus()
     
 End
@@ -75,6 +45,6 @@ End
 Public Sub Menu_NewArticle(argUrl As String)
     
     $article.Url = argUrl
-    $tabStrip.Index = 2
+    $leftPanelContainer.Show(2)
     
 End

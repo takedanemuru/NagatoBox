@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $gearButton As MenuButton
+
+Private Sub initializeButton(argContainer As Container)
+    
+    $gearButton = New MenuButton(argContainer)
+    
+    With $gearButton
+        .Arrow = False
+        .Width = argContainer.H
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("star")
+        .Border = False
+    End With
+    
+End
+
+Private Sub initializeButtonMenu()
+    
+    Dim yukiMenu As NagatoButtonMenu
+    
+    yukiMenu = New NagatoButtonMenu(HaruhiMain, $gearButton) As "Menu"
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButton(argContainer)
+    initializeButtonMenu()
+    
+End

@@ -11,8 +11,8 @@ Event Error
 
 Public Sub Start(argLatitude As Float, argLongitude As Float) As String
     
-    $downloader.Lang = NagatoSettings.WikipediaLanguageKey
-    $downloader.Get(Subst$(Api, NagatoSettings.WikipediaLanguageKey, argLatitude, argLongitude))
+    $downloader.Lang = NagatoSettingsWikipedia.LanguageKey
+    $downloader.Get(Subst$(Api, NagatoSettingsWikipedia.LanguageKey, argLatitude, argLongitude))
     
 End
 

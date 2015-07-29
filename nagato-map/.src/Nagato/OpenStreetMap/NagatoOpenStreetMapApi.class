@@ -19,11 +19,12 @@ Public Sub GetElements(argXmlDocument As XmlDocument) As Collection
     Dim yukiResult As New Collection
     Dim yukiNode As XmlNode
     Dim yukiGeoElement As NagatoGeoElement
+    Dim yukiCount As Integer
     
     For Each yukiNode In argXmlDocument.GetElementsByTagName("searchresults")[0].AllChildNodes
         With yukiNode.Attributes
-            Debug yukiNode.Children.Count ' DO NOT DELETE THIS LINE, to avoid bug.
-            If .["display_name"] = "0" Then Continue ' avoid bug on gambas 3.6.0
+            yukiCount = yukiNode.Children.Count ' DO NOT DELETE THIS LINE, to avoid bug.
+            If .["display_name"] = "0" Then Continue ' avoid invalid element
             If .["display_name"] = "" Then Continue
             yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])
             yukiResult.Add(yukiGeoElement, .["display_name"])

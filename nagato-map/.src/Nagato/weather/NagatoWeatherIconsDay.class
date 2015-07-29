@@ -1,0 +1,95 @@
+' Gambas class file
+
+Public Sub _get(argId As Integer) As Image
+    
+    Select Case argId
+        Case 1 'Sun
+            Return Image.Load("weather_icons/sunny.png")
+        Case 2 'LightCloud
+            Return Image.Load("weather_icons/cloudy1.png")
+        Case 3 'PartlyCloud
+            Return Image.Load("weather_icons/cloudy2.png")
+        Case 4 'Cloud
+            Return Image.Load("weather_icons/cloudy5.png")
+        Case 5 'LightRainSun
+            Return Image.Load("weather_icons/shower1.png")
+        Case 6 'LightRainThunderSun
+            Return Image.Load("weather_icons/tstorm1.png")
+        Case 7 'SleetSun
+            Return Image.Load("weather_icons/snow1.png")
+        Case 8 'SnowSun
+            Return Image.Load("weather_icons/snow2.png")
+        Case 9 'LightRain
+            Return Image.Load("weather_icons/light_rain.png")
+        Case 10 'Rain
+            Return Image.Load("weather_icons/shower3.png")
+        Case 11 'RainThunder
+            Return Image.Load("weather_icons/tstorm3.png")
+        Case 12 'Sleet
+            Return Image.Load("weather_icons/sleet.png")
+        Case 13 'Snow
+            Return Image.Load("weather_icons/snow4.png")
+        Case 14 'SnowThunder
+            Return Image.Load("weather_icons/snow5.png")
+        Case 15 'Fog
+            Return Image.Load("weather_icons/fog.png")
+        Case 20 'SleetSunThunder
+            Return Image.Load("weather_icons/sleet.png")
+        Case 21 'SnowSunThunder
+            Return Image.Load("weather_icons/snow3.png")
+        Case 22 'LightRainThunder
+            Return Image.Load("weather_icons/tstorm1.png")
+        Case 23 'SleetThunder
+            Return Image.Load("weather_icons/sleet.png")
+        Case 24 'DrizzleThunderSun
+            Return Image.Load("weather_icons/tstorm1.png")
+        Case 25 'RainThunderSun
+            Return Image.Load("weather_icons/tstorm3.png")
+        Case 26 'LightSleetThunderSun
+            Return Image.Load("weather_icons/sleet.png")
+        Case 27 'HeavySleetThunderSun
+            Return Image.Load("weather_icons/sleet.png")
+        Case 28 'LightSnowThunderSun
+            Return Image.Load("weather_icons/snow4.png")
+        Case 29 'HeavySnowThunderSun
+            Return Image.Load("weather_icons/snow5.png")
+        Case 30 'DrizzleThunder
+            Return Image.Load("weather_icons/tstorm1.png")
+        Case 31 'LightSleetThunder
+            Return Image.Load("weather_icons/sleet.png")
+        Case 32 'HeavySleetThunder
+            Return Image.Load("weather_icons/sleet.png")
+        Case 33 'LightSnowThunder
+            Return Image.Load("weather_icons/snow4.png")
+        Case 34 'HeavySnowThunder
+            Return Image.Load("weather_icons/snow5.png")
+        Case 40 'DrizzleSun
+            Return Image.Load("weather_icons/shower1.png")
+        Case 41 'RainSun
+            Return Image.Load("weather_icons/shower2.png")
+        Case 42 'LightSleetSun
+            Return Image.Load("weather_icons/sleet.png")
+        Case 43 'HeavySleetSun
+            Return Image.Load("weather_icons/sleet.png")
+        Case 44 'LightSnowSun
+            Return Image.Load("weather_icons/snow1.png")
+        Case 45 'HeavysnowSun
+            Return Image.Load("weather_icons/snow3.png")
+        Case 46 'Drizzle
+            Return Image.Load("weather_icons/shower1.png")
+        Case 47 'LightSleet
+            Return Image.Load("weather_icons/sleet.png")
+        Case 48 'HeavySleet
+            Return Image.Load("weather_icons/sleet.png")
+        Case 49 'LightSnow
+            Return Image.Load("weather_icons/snow3.png")
+        Case 50 'HeavySnow
+            Return Image.Load("weather_icons/snow5.png")
+        Case 100 To 199 ' for polar night
+            Return Me.GetIconImageNight(argId - 100)
+        Default
+            Return Image.Load("weather_icons/dunno.png")
+    End Select
+    
+End
+

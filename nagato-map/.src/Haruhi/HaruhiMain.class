@@ -4,18 +4,7 @@ Public Enum OpenStreetMap, GoogleMap
 
 Private $menuBar As NagatoMenuBar
 Private $mapView As NagatoMapView
-Private $leftPanel As New NagatoLeftPanel As "MenuItem"
-
-Private Sub getScreenshot()
-    
-    Dim yukiScreenshot As Picture = $mapView.Screenshot
-    
-    Dialog.Title = ("Save Picture")
-    Dialog.Path = User.Home &/ "your_map.png"
-    
-    If Not Dialog.SaveFile() Then yukiScreenshot.Save(Dialog.Path)
-    
-End
+Private $leftPanel As NagatoLeftPanel 
 
 Public Sub SetLocation(argLatitude As Float, argLongitude As Float, argZoom As Integer)
     
@@ -32,10 +21,11 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    $menuBar = New NagatoMenuBar(MenuHBox) As "MenuItem"
-    $mapView = New NagatoMapView(MapView) As "MapView"
     NagatoSettings.LoadFormSettings(Me)
-    $leftPanel.Activate(WeatherWikipediaSidePanel)
+
+    $menuBar = New NagatoMenuBar(MenuHBox) As "TFEI"
+    $leftPanel = New NagatoLeftPanel(MainHBox) As "TFEI"
+    $mapView = New NagatoMapView(MainHBox) As "TFEI"
 
 End
 
@@ -45,33 +35,29 @@ Public Sub Form_Close()
     
 End
 
-Public Sub MenuItem_MapSelect(argMapType As Integer)
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
-    $mapView.ChangeLayer(argMapType)
-    
-End
-
-Public Sub MapView_NewPoint(argLatitude As Float, argLongitude As Float)
-    
-    $menuBar.SetLocation(argLatitude, argLongitude)
+    If argSignal = NagatoMenuPipe.MapSelect Then
+        $mapView.ChangeLayer(argValues[0])
+    End If
     
 End
 
-Public Sub MenuItem_MenuEvent(argEvent As Integer)
+Public Sub TFEI_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
         Case NagatoMenuPipe.UxToggleLeftPane
             $leftPanel.Toggle()
         Case NagatoMenuPipe.MenuInformation, NagatoMenuPipe.MenuRefreshWikipediaArticles
-            $leftPanel.Request(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
+            $leftPanel.Request($mapView.MapPoint.Lat, $mapView.MapPoint.Lon)
         Case NagatoMenuPipe.MenuBookmark
-            With HaruhiAddBookmark
-                .SetLocation(MapView.Map.Center.Lat, MapView.Map.Center.Lon)
-                If .ShowDialog() = .Added Then $leftPanel.AddBookmark()
-            End With
+            HaruhiAddBookmark.SetLocation($mapView.MapPoint.Lat, $mapView.MapPoint.Lon)
+            If HaruhiAddBookmark.ShowDialog() = HaruhiAddBookmark.Added Then $leftPanel.AddBookmark()
         Case NagatoMenuPipe.MapExport
             Wait 0.5
-            getScreenshot()
+            MikuruDialogScreenShot($mapView.Screenshot)
+        Case NagatoMenuPipe.MapNewLocation
+            $menuBar.SetLocation($mapView.MapPoint.Lat, $mapView.MapPoint.Lon)
     End Select
     
 End

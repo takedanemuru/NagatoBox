@@ -3,7 +3,8 @@
 Inherits NagatoMenuPipe
 
 Private $tabstrip As TabStrip
-Private $wikipediaGrid As GridView
+Private $reloadButton As NagatoReloadButton
+Private $wikipediaGrid As NagatoGridViewWikipedia
 Private $wikipediaGeoData As New NagatoWikipediaGeoData As "WikipediaGeoData"
 
 Event NewArticle(argUrl As String)
@@ -11,27 +12,7 @@ Event NewArticle(argUrl As String)
 Private Sub initializeWikipediaListGrid()
     
     $tabStrip.Index = 1
-    
-    $wikipediaGrid = New GridView($tabStrip) As "CandidatesGrid"
-    
-    With $wikipediaGrid
-        .Header = GridView.None
-        .Columns.Count = 1
-        .Rows.Count = 1
-        .Expand = True
-        .Mode = Select.Single
-    End With
-    
-End
-
-Private Sub initializeReloadButton()
-    
-    Dim yukiButton As New Button($tabstrip) As "ReloadButton"
-    
-    With yukiButton
-        .H = 32
-        .Text = ("Reload")
-    End With
+    $wikipediaGrid = New NagatoGridViewWikipedia($tabstrip) As "WikipediaGridView"
     
 End
 
@@ -39,18 +20,8 @@ Private Sub setWikipediaArticles()
     
     Dim yukiElement As NagatoWikipediaGeoDataElement
     
-    $wikipediaGrid.Clear()
-    $wikipediaGrid.Rows.Count = 1
-    
     For Each yukiElement In $wikipediaGeoData.Elements
-        With $wikipediaGrid
-            .[.Rows.Max, 0].Text = yukiElement.Title
-            .[.Rows.Max, 0].Alignment = Align.Left
-            If Odd(.Rows.Max) Then 
-                $wikipediaGrid[.Rows.Max, 0].Background = Color.Merge(Color.White, Color.Violet, 0.1)
-            End If
-            Inc .Rows.Count
-        End With
+        $wikipediaGrid.SetData(yukiElement.Title)
     Next
     
     $tabStrip.Index = 1
@@ -67,30 +38,22 @@ Public Sub _new(argTabstrip As TabStrip)
     
     $tabstrip = argTabstrip
     initializeWikipediaListGrid()
-    initializeReloadButton()
+    $reloadButton = New NagatoReloadButton(argTabstrip) As "Menu"
     
 End
 
 Public Sub WikipediaGeoData_Finished()
     
+    $wikipediaGrid.Clear()
     setWikipediaArticles()
     
 End
 
-Public Sub CandidatesGrid_Activate()
+Public Sub WikipediaGridView_Activate(argRow As Integer)
     
-    Dim yukiElement As NagatoWikipediaGeoDataElement 
+    Dim yukiElement As NagatoWikipediaGeoDataElement = $wikipediaGeoData.Elements[argRow]
     
-    If $wikipediaGrid[$wikipediaGrid.Row, 0].Text <> "" Then
-        yukiElement = $wikipediaGeoData.Elements[$wikipediaGrid.Row]
-        Raise NewArticle(yukiElement.Url)
-        HaruhiMain.SetMarker(yukiElement.Latitude, yukiElement.Longitude)
-    End If
-    
-End
-
-Public Sub ReloadButton_Click()
-    
-    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
+    Raise NewArticle(yukiElement.Url)
+    HaruhiMain.SetMarker(yukiElement.Latitude, yukiElement.Longitude)
     
 End

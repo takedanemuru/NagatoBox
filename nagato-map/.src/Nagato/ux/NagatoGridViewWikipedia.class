@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoGridView
+
+Event Activate(argRow As Integer)
+
+Public Sub Clear()
+    
+    Me._$gridView.Clear()
+    Me._$gridView.Rows.Count = 0
+    
+End
+
+Public Sub SetData(argText As String)
+    
+    With Me._$gridView
+        Inc .Rows.Count
+        .[.Rows.Max, 0].Text = argText
+        .[.Rows.Max, 0].Alignment = Align.Left
+        Me._SetBackgroundColor()
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$gridView = New GridView(argContainer) As "CandidatesGrid"
+    
+    With Me._$gridView
+        .Header = GridView.None
+        .Columns.Count = 1
+        .Rows.Count = 0
+        .Expand = True
+        .Mode = Select.Single
+    End With
+    
+End
+
+Public Sub CandidatesGrid_Activate()
+    
+    If Me._IsValidRow(Me._$gridView.Row) Then Raise Activate(Me._$gridView.Row)
+    
+End

@@ -3,7 +3,7 @@
 Inherits NagatoMenuPipe
 
 Private $searchBox As NagatoSearchBox
-Private $searchGrid As NagatoSearchGrid
+Private $searchGrid As NagatoGridViewSearch
 
 Public Sub SetFocus()
     
@@ -15,7 +15,7 @@ Public Sub _new(argTabstrip As TabStrip)
     
     argTabstrip.Index = 3
     $searchBox = New NagatoSearchBox(argTabstrip) As "SearchBox"
-    $searchGrid = New NagatoSearchGrid(argTabstrip) As "Menu"
+    $searchGrid = New NagatoGridViewSearch(argTabstrip) As "Menu"
     
 End
 

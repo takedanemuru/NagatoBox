@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Public Sub _new(argContainer As Container)
+    
+    Dim yukiButton As New Button(argContainer) As "MenuButton"
+    
+    With yukiButton
+        .Border = False
+        .AutoResize = True
+        .Picture = MikuruIcon.Get("search")
+        .Text = ("Search")
+    End With
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise MenuEvent(NagatoMenuPipe.UxToggleLeftPane)
+    
+End

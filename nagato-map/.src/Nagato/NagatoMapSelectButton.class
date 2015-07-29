@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $container As Container
+
+Private Sub addMapSelectButton(argText As String, argTag As Integer, argValue As Boolean)
+    
+    Dim yukiButton As New ToggleButton($container) As "MapSelectButton"
+    
+    With yukiButton
+        .AutoResize = True
+        .Text = argText
+        .Tag = argTag
+        .Value = argValue
+        .Radio = True
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $container = argContainer
+    
+    addMapSelectButton("GoogleEarth", HaruhiMain.GoogleMap, False)
+    addMapSelectButton("OpenStreetMap", HaruhiMain.OpenStreetMap, True)
+    
+End
+
+Public Sub MapSelectButton_Click()
+    
+    Raise Signal(NagatoMenuPipe.MapSelect, [Last.Tag])
+    
+End

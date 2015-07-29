@@ -36,14 +36,14 @@ End
 Private Sub addLanguageMenus()
     
     Dim yukiMenu As Menu
-    Dim yukiCollection As Collection = NagatoSettings.WikipediaLanguages
+    Dim yukiCollection As Collection = NagatoSettingsWikipedia.Languages
     Dim yukiValue As String
     
     For Each yukiValue In yukiCollection
         yukiMenu = New Menu($parentMenu) As "LanguageMenu"
         yukiMenu.Text = yukiValue
         yukiMenu.Tag = yukiCollection.Key
-        If NagatoSettings.WikipediaLanguageKey = yukiCollection.Key Then 
+        If NagatoSettingsWikipedia.LanguageKey = yukiCollection.Key Then 
             yukiMenu.Picture = MikuruIcon.Get("button-check")
         Endif
     Next
@@ -68,9 +68,9 @@ End
 
 Public Sub LanguageMenu_Click()
     
-    If NagatoSettings.WikipediaLanguageKey = Last.Tag Then Return
+    If NagatoSettingsWikipedia.LanguageKey = Last.Tag Then Return
 
-    NagatoSettings.WikipediaLanguageKey = Last.Tag
+    NagatoSettingsWikipedia.LanguageKey = Last.Tag
     Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End
