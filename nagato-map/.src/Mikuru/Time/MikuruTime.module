@@ -32,3 +32,30 @@ Public Function IsDay(argLongitude As Float) As Boolean
     
 End
 
+Public Function GetLocalTimeStamp(argLongitude As Float) As String
+    
+    Dim yukiUtcTime As Date = DateAdd(Now(), gb.Hour, CInt(System.TimeZone / 3600))
+    Dim yukiLocalTime As Date = DateAdd(yukiUtcTime, gb.Hour, CInt(argLongitude / 15))
+    
+    Return Format$(yukiLocalTime, "yyyy-mm-ddThh-00-00Z")
+
+End
+
+Public Function IsLater(argTimeStampA As String, argTimeStampB As String) As Boolean
+    
+    Dim yukiPosition As Integer
+    
+    For yukiPosition = 1 To String.Len(argTimeStampA)
+        If Mid(argTimeStampA, yukiPosition, 1) = Mid(argTimeStampB, yukiPosition, 1) Then
+            Continue
+        Else If Mid(argTimeStampA, yukiPosition, 1) > Mid(argTimeStampB, yukiPosition, 1) Then
+            Return True
+        Else
+            Return False
+        Endif
+    Next
+    
+    Return False
+    
+End
+

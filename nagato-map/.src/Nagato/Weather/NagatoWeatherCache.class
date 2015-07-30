@@ -50,9 +50,14 @@ Public Sub Activate(argLatitude As Float, argLongtude As Float)
     
 End
 
-Public Function GetWeatherElementMostRecent() As NagatoWeatherElement
+Public Function GetWeatherElementMostRecent(argLongitude As Float) As NagatoWeatherElement
     
-    Return $cache[MikuruTimeStamp[0]]
+    Dim yukiElement As NagatoWeatherElement
+    Dim yukiLocalTimeStamp As String = MikuruTime.GetLocalTimeStamp(argLongitude)
+    
+    For Each yukiElement In $cache
+        If MikuruTime.IsLater($cache.Key, yukiLocalTimeStamp) Then Return yukiElement
+    Next
     
 End
 

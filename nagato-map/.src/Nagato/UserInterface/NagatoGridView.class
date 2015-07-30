@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Create Private
+
+Public _$gridView As GridView
+
+Public Sub _InitializeGridView(argContainer As Container) ' virtual interface
+    
+    
+    
+End
+
+Public Function _IsValidRow(argRow As Integer) As Boolean
+    
+    Dim yukiColumn As Integer
+    
+    For yukiColumn = 0 To Me._$gridView.Columns.Max
+        If Me._$gridView[argRow, yukiColumn].Text = "" Then Return False
+    Next
+    
+    Return True
+    
+End
+
+Public Sub _SetBackgroundColor()
+    
+    Dim yukiColumn As Integer
+    
+    If Odd(Me._$gridView.Rows.Max) Then Return
+    
+    For yukiColumn = 0 To Me._$gridView.Columns.Max
+        With Me._$gridView
+            .[.Rows.Max, yukiColumn].Background = Color.Merge(Color.White, Color.Violet, 0.1)
+        End With
+    Next
+    
+End
+
+Public Sub Clear()
+    
+    Me._$gridView.Clear()
+    Me._$gridView.Rows.Count = 0
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._InitializeGridView(argContainer)
+    
+End

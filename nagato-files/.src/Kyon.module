@@ -4,6 +4,7 @@ Private Sub activateDesktop()
     
     If Not NagatoDBus.DesktopActivated() Then
         HaruhiDesktop.Show()
+        HaruhiPersona.SetText(Subst$("YUKI.N > Welcome back, &1", System.User.Name))
     Else
         Message(("YUKI.N > nagato-desktop has been activated."), ("OK"))
     End If

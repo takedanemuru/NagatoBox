@@ -1,7 +1,8 @@
 ' Gambas class file
 
+Inherits NagatoWeatherPainter
+
 Private $textRect As New Rect
-Private $drawingArea As DrawingArea
 Private $currentWeather As NagatoWeatherElement
 
 Private Sub setTextRect()
@@ -9,8 +10,8 @@ Private Sub setTextRect()
     With $textRect
         .X = 8
         .Y = 8
-        .W = $drawingArea.W - 16
-        .H = $drawingArea.H - 16
+        .W = Me._$drawingArea.W - 16
+        .H = Me._$drawingArea.H - 16
     End With
     
 End
@@ -57,22 +58,18 @@ Private Function getStatus() As String
     
 End
 
-Public Sub Draw(argWeatherElement As NagatoWeatherElement)
+Public Sub _call(argWeatherElement As NagatoWeatherElement)
     
     $currentWeather = argWeatherElement
-    
     setTextRect()
+
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Bold = True
 
     With $textRect
         Paint.DrawRichText(getTitle(), .X, .Y, .W, .H, Align.Center)
         Paint.DrawRichText(getHeaders(), .X, .Y, .W, .H, Align.Left)
         Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
     End With
-    
-End
-
-Public Sub _new(argDrawingArea As DrawingArea)
-    
-    $drawingArea = argDrawingArea
     
 End

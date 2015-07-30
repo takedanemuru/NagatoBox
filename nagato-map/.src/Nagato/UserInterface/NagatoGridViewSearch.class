@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoGridViewLocations
+
+Private Sub clearGrid()
+    
+    With Me._$gridView
+        .Clear()
+        .Rows.Count = 0
+        .Width = 300
+        .Columns[0].W = 200
+    End With
+    
+End
+
+Private Sub setData(argCollection As Collection)
+    
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    For Each yukiGeoElement In argCollection
+        With Me._$gridView
+            Inc .Rows.Count
+            Me._$gridView[.Rows.Max, 0].Text = yukiGeoElement.VisibleName
+            Me._$gridView[.Rows.Max, 0].Alignment = Align.Left
+            Me._$gridView[.Rows.Max, 1].Text = yukiGeoElement.Latitude
+            Me._$gridView[.Rows.Max, 1].Alignment = Align.Right
+            Me._$gridView[.Rows.Max, 2].Text = yukiGeoElement.Longitude
+            Me._$gridView[.Rows.Max, 2].Alignment = Align.Right
+            Me._SetBackgroundColor()
+        End With
+    Next
+    
+End
+
+Public Sub _Activate(argLatitude As Float, argLongitude As Float)
+    
+    HaruhiMain.SetLocation(argLatitude, argLongitude, 12)
+    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
+    
+End
+
+Public Sub RefreshSearchGridData(argCollection As Collection)
+    
+    clearGrid()
+    setData(argCollection)
+    
+End

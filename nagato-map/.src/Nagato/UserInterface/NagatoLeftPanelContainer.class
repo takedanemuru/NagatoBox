@@ -12,7 +12,8 @@ Private Sub initializeSidePanel(argContainer As Container)
     With $sidePanel
         .Arrangement = Arrange.Fill
         .Orientation = Align.Left
-        .W = 240
+        .W = 320
+        .Background = Color.Violet
     End With
     
 End

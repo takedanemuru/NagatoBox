@@ -61,6 +61,12 @@ Public Sub ClockDrawingArea_Draw()
     
 End
 
+Public Sub ClockDrawingArea_MouseDown()
+    
+    
+    
+End
+
 Public Sub RssTimer_Timer()
     
     If Not Me.Visible Then Return

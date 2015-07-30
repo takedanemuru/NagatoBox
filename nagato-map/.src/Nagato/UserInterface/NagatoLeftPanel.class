@@ -44,7 +44,7 @@ End
 
 Public Sub Menu_NewArticle(argUrl As String)
     
-    $article.Url = argUrl
+    $article.SetUrl(argUrl)
     $leftPanelContainer.Show(2)
     
 End

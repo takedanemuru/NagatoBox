@@ -1,10 +1,8 @@
 ' Gambas class file
 
-Create Static
-
-Public Function GetText(argIndex As Integer) As String
+Public Sub _get(argIndex As Integer) As String
     
-    Select Case argIndex
+        Select Case argIndex
         Case 1 'Clear
             Return ("Clear")
         Case 2  'Fair
@@ -57,14 +55,3 @@ Public Function GetText(argIndex As Integer) As String
     
 End
 
-Public Sub GetColor(argIndex As Integer, Optional argIsDay As Boolean = Null) As Integer
-    
-    If argIsDay <> Null Then
-        Return IIf(argIsDay, MikuruWeatherColorDay(argIndex), MikuruWeatherColorNight(argIndex))
-    Else If Hour(Now()) >= 6 And If 18 > Hour(Now()) Then
-        Return MikuruWeatherColorDay(argIndex)
-    Else
-        Return MikuruWeatherColorNight(argIndex)
-    Endif
-    
-End

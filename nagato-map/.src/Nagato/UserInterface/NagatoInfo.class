@@ -1,0 +1,18 @@
+' Gambas class file
+
+Create Private
+
+Public _$tabStrip As TabStrip
+
+Public Sub _InitializeWidgets() ' virtual interface
+    
+    
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    Me._$tabStrip = argTabStrip
+    Me._InitializeWidgets()
+    
+End

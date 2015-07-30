@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoGridViewLocations
+
+Public Sub _Activate(argLatitude As Float, argLongitude As Float)
+    
+    HaruhiMain.SetMarker(argLatitude, argLongitude)
+    
+End
+
+Public Sub SetData(argName As String, argLatitude As String, argLongitude As String)
+    
+    With Me._$gridView
+        Inc .Rows.Count
+        .[.Rows.Max, 0].Text = argName
+        .[.Rows.Max, 1].Text = argLatitude
+        .[.Rows.Max, 2].Text = argLongitude
+    End With
+
+    Me._SetBackgroundColor()
+    
+End

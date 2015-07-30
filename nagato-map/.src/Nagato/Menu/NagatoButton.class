@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Create Private
+
+Public _$container As Container
+
+Public Sub _InitializeButton(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiButton As New Button(Me._$container) As "Button"
+    
+    With yukiButton
+        .Border = True
+        .AutoResize = True
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+        .H = 32
+    End With
+    
+End
+
+Public Sub _AddButton()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Me._AddButton()
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise MenuEvent(Last.Tag)
+    
+End

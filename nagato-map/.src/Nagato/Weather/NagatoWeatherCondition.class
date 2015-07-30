@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Static
+
+Private $text As New NagatoWeatherConditionsText
+
+Public Function GetText(argIndex As Integer) As String
+    
+    Return $text[argIndex]
+        
+End
+
+Public Sub GetColor(argIndex As Integer, Optional argIsDay As Boolean) As Integer
+    
+    If argIsDay Then
+        Return IIf(argIsDay, MikuruWeatherColorDay(argIndex), MikuruWeatherColorNight(argIndex))
+    Else If Hour(Now()) >= 6 And If 18 > Hour(Now()) Then
+        Return MikuruWeatherColorDay(argIndex)
+    Else
+        Return MikuruWeatherColorNight(argIndex)
+    Endif
+    
+End

@@ -6,6 +6,14 @@ Create Static
 
 Property Read Ready As String
 
+Public Sub SetTextToPersona(argText As String) As Boolean
+    
+    HaruhiPersona.SetText(argText)
+    
+    Return True
+    
+End
+
 Public Sub Show() As Boolean
     
     Try HaruhiDesktop.Show()

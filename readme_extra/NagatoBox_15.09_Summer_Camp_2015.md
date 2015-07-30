@@ -25,6 +25,13 @@
 + ~~new : play/pause functionality~~
 + ~~new : ProgressBar and seek on it.~~
 
+## nagato-archiver
+
+*patool frontend for archiving*
+
++ check papercuts
++ upload.
+
 ## nagato-files (version 42.1.5)
 
 *file manager and desktop shell*
@@ -36,21 +43,24 @@
 + ~~desktop-panel configuration (background color, highlight color)~~
 + ~~new : root account warning label~~
 + ~~new : chmod edit dialog (HaruhiEditChmod)~~
-+ new : dbus interface for Nagato Persona messaging functionality.
++ ~~new : dbus interface for Nagato Persona messaging functionality.~~
++ ~~new : welcome back message for desktop shell~~
 
 ## nagato-lookup (version 42.1.1)
 
 + ~~do not use libnotify directly, use dbus instead.~~
 + ~~new : settings category window.~~
 
-## nagato-map (version 42.1.1)
+## nagato-map (version 42.1.5)
 
 *map viewer*
 
-+ new : weather forecast
++ ~~new : weather forecast~~
 + ~~new : reload button for wikipedia articles tab~~
 + foursquare api (register)
 + ~~version up to 42.x.x~~
++ ~~new : check network connectivity on startup.~~
++ ~~fix : time zone diff on weather foprecast dialog.~~
 
 ## nagato-session
 

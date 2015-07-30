@@ -1,0 +1,63 @@
+' Gambas class file
+
+Inherits NagatoInfo
+
+Private $drawingArea As DrawingArea
+Private $weatherDrawingArea As NagatoWeatherDrawingArea
+Private $forecastButton As Button
+
+Private Sub addDrawingArea()
+    
+    $drawingArea = New DrawingArea(Me._$tabStrip) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = True
+        .Background = Color.Blue
+    End With
+    
+End
+
+Private Sub addForecastButton()
+    
+    $forecastButton = New Button(Me._$tabStrip) As "Button"
+    
+    With $forecastButton
+        .H = 32
+        .Text = ("Forecast")
+        .Enabled = False
+    End With
+    
+End
+
+Public Sub _InitializeWidgets()
+    
+    Me._$tabStrip.Index = 0
+    addDrawingArea()
+    addForecastButton()
+    $weatherDrawingArea = New NagatoWeatherDrawingArea($drawingArea)
+    
+End
+
+Public Sub Request(argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiObserver As Observer
+    
+    yukiObserver = New Observer(NagatoWeatherCache) As "Asakura"
+    
+    NagatoWeatherCache.Activate(argLatitude, argLongitude)
+    $weatherDrawingArea.SetLongitude(argLongitude)
+    
+End
+
+Public Sub Asakura_Finished()
+    
+    $weatherDrawingArea.Refresh()
+    $forecastButton.Enabled = True
+    
+End
+
+Public Sub Button_Click()
+    
+    HaruhiWeatherForecast.Show()
+    
+End

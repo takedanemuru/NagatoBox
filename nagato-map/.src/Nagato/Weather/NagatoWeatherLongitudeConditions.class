@@ -1,0 +1,42 @@
+' Gambas class file
+
+Property Read CurrentWeather As NagatoWeatherElement
+
+Private Const IconSize As Integer = 96
+
+Private $currentWeather As NagatoWeatherElement
+Private $longitude As Float
+
+Public Sub Refresh()
+    
+    $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent($longitude)
+    
+End
+
+Public Function GetBackground() As Integer
+    
+    Dim yukiId As Integer = $currentWeather[MikuruWeatherKey.IconId]
+    
+    Return NagatoWeatherCondition.GetColor(yukiId, MikuruTime.IsDay($longitude))
+    
+End
+
+Public Function GetIcon() As Image
+    
+    Dim yukiId As Integer = $currentWeather[MikuruWeatherKey.IconId]
+    
+    Return NagatoWeatherIcon.GetWithLongitude(yukiId, $longitude, IconSize)
+    
+End
+
+Public Sub SetLongitude(argLongitude As Float)
+    
+    $longitude = argLongitude
+    
+End
+
+Private Function CurrentWeather_Read() As NagatoWeatherElement
+
+    Return $currentWeather
+
+End

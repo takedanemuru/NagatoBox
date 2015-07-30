@@ -1,20 +1,9 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoButton
 
-Public Sub _new(argContainer As Container)
+Public Sub _AddButton()
     
-    Dim yukiButton As New Button(argContainer) As "ReloadButton"
-    
-    With yukiButton
-        .H = 32
-        .Text = ("Reload")
-    End With
-    
-End
-
-Public Sub ReloadButton_Click()
-    
-    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
+    Me._InitializeButton(("Reload"), NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End

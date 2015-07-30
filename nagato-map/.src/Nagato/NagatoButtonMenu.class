@@ -1,27 +1,14 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoMenu
 
 Private $uniqueName As String = "GearMenu"
-Private $rootMenu As Menu
 
 Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton)
     
-    $rootMenu = New Menu(argForm) As "ParentMenu"
-    $rootMenu.Name = $uniqueName
+    Me._$rootMenu = New Menu(argForm) As "ParentMenu"
+    Me._$rootMenu.Name = $uniqueName
     argButton.Menu = $uniqueName
-    
-End
-
-Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIcon As Picture)
-    
-    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
-    
-    With yukiMenu
-        .Text = argText
-        .Tag = argTag
-        If argIcon Then .Picture = argIcon
-    End With
     
 End
 
@@ -30,14 +17,14 @@ Private Sub addMenus()
     Dim yukiMenu As NagatoSubMenuWikipedia
     
     With NagatoMenuPipe
-        addMenuItem(("Search"), .MenuSearch, MikuruIcon.Get("search"))
-        yukiMenu = New NagatoSubMenuWikipedia($rootMenu) As "Menu"
-        addMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
-        addMenuItem(("Show Scale"), .MapShowScale, IIf(NagatoSettings.ShowScale, MikuruIcon.Get("button-check"), Null))
-        addMenuItem(("Export"), .MapExport, MikuruIcon.Get("hard-drive-download"))
-            addMenuItem((""), 0) ' as a separator
-        addMenuItem(("About"), .MenuAbout, MikuruIcon.Get("star"))
-        addMenuItem(("Close"), .MenuQuit, MikuruIcon.Get("button-cross"))
+        Me._AddMenuItem(("Search"), .MenuSearch, MikuruIcon.Get("search"))
+        yukiMenu = New NagatoSubMenuWikipedia(Me._$rootMenu) As "Menu"
+        Me._AddMenuItem(("Bookmark here"), .MenuBookmark, MikuruIcon.Get("book-bookmark"))
+        Me._AddMenuItem(("Show Scale"), .MapShowScale, MikuruIcon.GetCheck(NagatoSettings.ShowScale))
+        Me._AddMenuItem(("Export"), .MapExport, MikuruIcon.Get("hard-drive-download"))
+            Me._AddMenuItem((""), 0) ' as a separator
+        Me._AddMenuItem(("About"), .MenuAbout, MikuruIcon.Get("star"))
+        Me._AddMenuItem(("Close"), .MenuQuit, MikuruIcon.Get("button-cross"))
     End With
     
 End
@@ -45,8 +32,7 @@ End
 Public Sub _new(argForm As Form, argButton As MenuButton)
     
     initializeRootMenu(argForm, argButton)
-    addMenuItem("", 0)
-    'addMenus()
+    Me._AddMenuItem("", 0)
     
 End
 
@@ -71,7 +57,7 @@ End
 
 Public Sub ParentMenu_Show()
     
-    $rootMenu.Children.Clear()
+    Me._$rootMenu.Children.Clear()
     
     addMenus()
     

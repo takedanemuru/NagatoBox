@@ -6,3 +6,9 @@ Public Function Get(argIconName As String, Optional argIconSize As Integer = 16)
     
 End
 
+Public Function GetCheck(argFlag As Boolean, Optional argIconSize As Integer = 16) As Picture
+    
+    Return IIf(argFlag, Me.Get("button-check", argIconSize), Null)
+    
+End
+

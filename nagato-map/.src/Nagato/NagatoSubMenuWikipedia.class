@@ -1,34 +1,13 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
-
-Private $parentMenu As Menu
+Inherits NagatoMenu
 
 Private Sub initializeParentMenu(argRootMenu As Menu)
     
-    $parentMenu = New Menu(argRootMenu) As "ParentMenu"
+   Me._$rootMenu = New Menu(argRootMenu) As "ParentMenu"
     
-    With $parentMenu
+    With Me._$rootMenu
         .Text = ("Wikipedia")
-    End With
-    
-End
-
-Private Sub addSpacer()
-    
-    Dim yukiMenu As New Menu($parentMenu)
-    
-    yukiMenu.Text = ""
-    
-End
-
-Private Sub addRefreshMenu()
-    
-    Dim yukiMenu As New Menu($parentMenu) As "RefreshMenu"
-    
-    With yukiMenu
-        .Picture = MikuruIcon.Get("button-rotate-cw")
-        .Text = ("Refresh")
     End With
     
 End
@@ -40,12 +19,10 @@ Private Sub addLanguageMenus()
     Dim yukiValue As String
     
     For Each yukiValue In yukiCollection
-        yukiMenu = New Menu($parentMenu) As "LanguageMenu"
+        yukiMenu = New Menu(Me._$rootMenu) As "LanguageMenu"
         yukiMenu.Text = yukiValue
         yukiMenu.Tag = yukiCollection.Key
-        If NagatoSettingsWikipedia.LanguageKey = yukiCollection.Key Then 
-            yukiMenu.Picture = MikuruIcon.Get("button-check")
-        Endif
+        yukiMenu.Picture = MikuruIcon.GetCheck(NagatoSettingsWikipedia.LanguageKey = yukiCollection.Key)
     Next
     
 End
@@ -53,15 +30,15 @@ End
 Public Sub _new(argRootMenu As Menu)
     
     initializeParentMenu(argRootMenu)
-    addSpacer()
+    Me._AddMenuItem("", 0) ' as dummy menu to catch "ParentMenu_Show" event
     
 End
 
 Public Sub ParentMenu_Show()
     
-    $parentMenu.Children.Clear()
-    addRefreshMenu()
-    addSpacer()
+    Me._$rootMenu.Children.Clear()
+    Me._AddMenuItem(("Refresh"), NagatoMenuPipe.MenuRefreshWikipediaArticles, MikuruIcon.Get("button-rotate-cw"))
+    Me._AddMenuItem("", 0) ' as spacer
     addLanguageMenus()
     
 End
@@ -71,12 +48,6 @@ Public Sub LanguageMenu_Click()
     If NagatoSettingsWikipedia.LanguageKey = Last.Tag Then Return
 
     NagatoSettingsWikipedia.LanguageKey = Last.Tag
-    Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
-    
-End
-
-Public Sub RefreshMenu_Click()
-    
     Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End

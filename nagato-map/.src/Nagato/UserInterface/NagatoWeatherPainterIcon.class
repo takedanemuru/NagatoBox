@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoWeatherPainter
+
+Private Const HeadRoom As Integer = 16
+
+Public Sub _call(argIcon As Image)
+    
+    Paint.DrawImage(argIcon, (Me._$drawingArea.W - argIcon.W) / 2, HeadRoom)
+    
+End
