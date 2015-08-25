@@ -1,7 +1,5 @@
 ' Gambas module file
 
-Property Read DesktopFiles As DesktopFile[]
-
 Private $desktopFiles As New DesktopFile[]
 
 Private Function getApplicationNames(argPath As String) As String[]
@@ -12,17 +10,23 @@ Private Function getApplicationNames(argPath As String) As String[]
     
 End
 
+Private Sub setDesktopFile(argPath As String)
+    
+    Dim yukiDesktopFile As DesktopFile
+
+    If Not Exist(argPath) Then Return
+    
+    yukiDesktopFile = New DesktopFile(argPath)
+    $desktopFiles.Add(yukiDesktopFile)
+    
+End
+
 Private Function setDesktopFiles(argPath As String) As String[]
     
     Dim yukiName As String
-    Dim yukiPath As String
-    Dim yukiDesktopFile As DesktopFile
     
     For Each yukiName In getApplicationNames(argPath)
-        yukiPath = MikuruApplications.GlobalApplicationDirectory &/ yukiName
-        If Not Exist(yukiPath) Then Continue
-        yukiDesktopFile = New DesktopFile(yukiPath)
-        $desktopFiles.Add(yukiDesktopFile)
+        setDesktopFile(MikuruApplications.GlobalApplicationDirectory &/ yukiName)
     Next
     
 End
@@ -33,7 +37,7 @@ Private Sub showApplicationList()
     Dim yukiIndex As Integer = 0
     
     For Each yukiDesktopFile In $desktopFiles
-        Print Subst$("&1 : &2", yukiIndex, yukiDesktopFile.Name)
+        Print Subst$("&1 : &2 (&3)", yukiIndex, yukiDesktopFile.Name, yukiDesktopFile.Comment)
         Inc yukiIndex
     Next
     
@@ -43,10 +47,10 @@ End
 
 Private Sub catchCommand(argPath As String)
     
-    If Not MikuruUserInput("YUKI.N > Select application to open...") Then Return
-    If Not MikuruUserInput.IsValidIndex($desktopFiles.Max) Then Return
+    If Not NagatoUserInput.Catch("YUKI.N > Select application to open...") Then Return
+    If Not NagatoUserInput.IsValidIndex($desktopFiles.Max) Then Return
     
-    $desktopFiles[MikuruUserInput.Index].Run(argPath)
+    $desktopFiles[NagatoUserInput.Index].Run(argPath)
     
     MikuruDialog.Show("YUKI.N > Press [ENTER] to continue.")
     
@@ -67,10 +71,4 @@ Public Sub Select(argPath As String)
     showApplicationList()
     catchCommand(argPath)
     
-End
-
-Private Function DesktopFiles_Read() As DesktopFile[]
-
-    Return $desktopFiles
-
 End

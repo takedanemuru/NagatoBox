@@ -1,0 +1,26 @@
+' Gambas class file
+
+Create Static
+
+Property Read Categories As String[]
+
+Private $collecion As New NagatoDesktopFileCollection
+Private $categories As New NagatoCategories
+
+Public Sub Refresh()
+    
+    $collecion.Refresh()
+    
+End
+
+Public Sub _get(argCategory As String) As DesktopFile[]
+    
+    Return $collecion[argCategory]
+    
+End
+
+Private Function Categories_Read() As String[]
+
+    Return $categories.All
+
+End

@@ -1,22 +1,14 @@
 ' Gambas class file
 
-Private $consoleKitManager As DBusProxy
-Private Const ConsoleKitBus As String = "system://org.freedesktop.ConsoleKit"
-Private Const ConsoleKitManagerObjectPath As String = "/org/freedesktop/ConsoleKit/Manager"
-Private Const ConsoleKitManagerInterface As String = "org.freedesktop.ConsoleKit.Manager"
-
-Private $logindManager As DBusProxy
-Private Const LogindBus As String = "system://org.freedesktop.login1"
-Private Const LogindManagerObjectPath As String = "/org/freedesktop/login1"
-Private Const LogindManagerInterface As String = "org.freedesktop.login1.Manager"
-
 Public Sub CallBack(argTag As Integer)
     
     Select Case argTag
         Case 0
-            $logindManager.Reboot(False)
+            Shell "systemctl reboot"
         Case 1
-            $logindManager.PowerOff(False)
+            Shell "systemctl poweroff"
+        Case 2
+            Shell "openbox --exit"
     End Select
     
 End
@@ -25,31 +17,23 @@ Public Sub Form_Open()
 
     Me.Center()
     Me.Picture = Image.Load("Pictures/yukichan_25.jpg").Stretch(Me.Height, Me.Width).Picture
-    '$consoleKitManager = DBus[ConsoleKitBus][ConsoleKitManagerObjectPath, ConsoleKitManagerInterface]
-    $logindManager = DBus[LogindBus][LogindManagerObjectPath, LogindManagerInterface]
-    
-    Debug $logindManager.CanReboot()
     
 End
 
 Public Sub ExitButton_Click()
 
-    Shell "openbox --exit"
+    HaruhiQuit.Start(2)
 
 End
 
 Public Sub RebootButton_Click()
 
-    '$consoleKitManager.Restart()
     HaruhiQuit.Start(0)
-    '$logindManager.Reboot(False)
 
 End
 
 Public Sub ShutdownButton_Click()
 
-    '$consoleKitManager.Stop()
-    '$logindManager.PowerOff(False)
     HaruhiQuit.Start(1)
 
 End

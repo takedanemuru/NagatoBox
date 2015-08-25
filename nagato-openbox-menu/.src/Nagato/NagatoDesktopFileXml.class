@@ -1,0 +1,24 @@
+' Gambas class file
+
+Private Function removeArgumentFromExec(argExec As String) As String
+    
+    Dim yukiArray As String[] = Split(argExec, " ", "", True)
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = yukiArray.Max DownTo yukiIndex
+        If yukiArray[yukiIndex] Begins "%" Then yukiArray.Remove(yukiIndex, 1)
+    Next
+    
+    Return yukiArray.Join(" ")
+    
+End
+
+Public Function Get(argDesktopFile As DesktopFile) As String
+    
+    Dim yukiXml As String = File.Load("Text/MenuItemTemplate")
+    
+    yukiXml = Subst$(yukiXml, Quote$(argDesktopFile.Name), removeArgumentFromExec(argDesktopFile.Exec))
+    
+    Return Replace$(yukiXml, "&", "and")
+    
+End

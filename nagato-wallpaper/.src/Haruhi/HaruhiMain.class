@@ -35,7 +35,7 @@ Public Sub Form_Open()
 
     Application.MainWindow = Me
     Me.Center()
-    NagatoPreview.LoadLastProperties()
+    'NagatoPreview.LoadLastProperties()
     initializeWidgets()
     
 End

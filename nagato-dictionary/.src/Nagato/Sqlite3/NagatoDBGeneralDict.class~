@@ -16,6 +16,8 @@ Private Sub checkAndCreateTable()
     
     Dim yukiTable As Table
     
+    Try Me._$connection.Open()
+    
     If Not Me._$connection.Tables.Exist(TableGeneralDict) Then
         yukiTable = Me._$connection.Tables.Add(TableGeneralDict)
         yukiTable.Fields.Add(ColumnId, db.Serial)
@@ -46,7 +48,7 @@ End
  
  Public Function GetWithEnglish(argEnglish As String) As Result
     
-    Dim yukiQuery As String = Subst$("SELECT * FROM GeneralDict WHERE english LIKE &1", Quote$(argEnglish))
+    Dim yukiQuery As String = Subst$("SELECT * FROM GeneralDict WHERE english REGEXP &1", Quote$(argEnglish))
     
     Return Me._$connection.Exec(yukiQuery)
     

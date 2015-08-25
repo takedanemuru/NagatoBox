@@ -16,7 +16,9 @@ End
 
 Private Sub moveToUserInputPath()
     
-    Dim yukiPath As String = MikuruUserInput.GetFirstArgument(["move", "to"])
+    Dim yukiPath As String = NagatoUserInput.GetFirstArgument(["move", "to"])
+    
+    Print Subst$("YUKI.N > Now we are going to move to &1", yukiPath)
     
     If Exist(yukiPath) Then
         moveTo(yukiPath)
@@ -34,7 +36,7 @@ End
 
 Public Sub _call()
     
-    With MikuruUserInput
+    With NagatoUserInput
         If .CompleteMatch(["move", "root"]) Then
             moveTo("/")
         Else If .CompleteMatch(["move", "home"]) Then

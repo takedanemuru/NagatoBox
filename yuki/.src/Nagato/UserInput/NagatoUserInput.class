@@ -1,0 +1,86 @@
+' Gambas class file
+
+Create Static
+
+Property Read All As String[]
+Property Read Index As Integer
+Property Read Numbers As Integer[]
+Property Read NumbersMax As Integer
+Property Read NumbersMin As Integer
+
+Private $catch As New NagatoUserInputCatch
+Private $numbers As New NagatoUserInputNumbers
+
+Public Sub Catch(argMessage As String) As Boolean
+    
+    $numbers.ResetIndex()
+    
+    Return $catch.Catch(argMessage)
+    
+End
+
+Public Function Has(argValue As String) As Boolean
+    
+    Return $catch.Has(argValue)
+    
+End
+
+Public Function HasSearchQuery() As Boolean
+    
+    Return $catch.HasSearchQuery()
+    
+End
+
+Public Function Include(argValues As String[]) As Boolean
+    
+    Return $catch.Include(argValues)
+    
+End
+
+Public Function IsValidIndex(argMax As Integer) As Boolean
+    
+    Return $numbers.IsValidIndex(argMax, $catch.Inputs)
+    
+End
+
+Public Function CompleteMatch(argQueries As String[]) As Boolean
+    
+    Return $catch.CompleteMatch(argQueries)
+    
+End
+
+Public Function GetFirstArgument(argOptions As String[]) As String 
+    
+    Return $catch.GetFirstArgument(argOptions)
+    
+End
+
+Private Function All_Read() As String[]
+
+    Return $catch.Inputs
+
+End
+
+Private Function Index_Read() As Integer
+
+    Return $numbers.Index
+
+End
+
+Private Function Numbers_Read() As Integer[]
+
+    Return $numbers.GetAll($catch.Inputs)
+
+End
+
+Private Function NumbersMax_Read() As Integer
+
+    Return $numbers.GetMax($catch.Inputs)
+
+End
+
+Private Function NumbersMin_Read() As Integer
+
+    Return $numbers.GetMin($catch.Inputs)
+
+End

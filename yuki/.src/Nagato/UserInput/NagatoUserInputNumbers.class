@@ -1,0 +1,66 @@
+' Gambas class file
+
+Property Read Index As Integer
+
+Private $index As Integer
+
+Private Function getNumbers(argInputs As String[]) As Integer[]
+    
+    Dim yukiNumbers As New Integer[]
+    Dim yukiValue As Variant
+    
+    For Each yukiValue In argInputs
+        If Not IsNumber(yukiValue) Then Continue
+        yukiNumbers.Add(CInteger(yukiValue))
+    Next
+    
+    Return yukiNumbers.Sort(gb.Ascent)
+    
+End
+
+Public Sub ResetIndex()
+    
+    $index = +Inf
+    
+End
+
+Public Function GetMax(argInputs As String[]) As Integer
+
+    Dim yukiNumbers As Integer[] = getNumbers(argInputs)
+
+    Return yukiNumbers[yukiNumbers.Max]
+
+End
+
+Public Function GetMin(argInputs As String[]) As Integer
+
+    Dim yukiNumbers As Integer[] = getNumbers(argInputs)
+
+    Return yukiNumbers[0]
+
+End
+
+Public Function GetAll(argInputs As String[]) As Integer[]
+
+    Return getNumbers(argInputs)
+
+End
+
+Public Function IsValidIndex(argMax As Integer, argInputs As String[]) As Boolean
+    
+    Dim yukiValue As Integer
+    
+    For Each yukiValue In getNumbers(argInputs)
+        $index = yukiValue
+        Return (argMax >= yukiValue)
+    Next
+    
+    Return False
+    
+End
+
+Private Function Index_Read() As Integer
+
+    Return $index
+
+End

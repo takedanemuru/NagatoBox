@@ -1,0 +1,81 @@
+' Gambas class file
+
+Property Read Max As Integer
+
+Private $category As String
+Private $desktopFiles As New DesktopFile[]
+
+Private Function removeArgumentFromExec(argExec As String, argGksu As Boolean) As String
+    
+    Dim yukiArray As String[] = Split(argExec, " ", "", True)
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = yukiArray.Max DownTo yukiIndex
+        If yukiArray[yukiIndex] Begins "%" Then yukiArray.Remove(yukiIndex, 1)
+    Next
+    
+    If argGksu Then yukiArray.Add("gksu", 0)
+    
+    Return yukiArray.Join(" ")
+    
+End
+
+Private Function matches(argDesktopFile As DesktopFile, argQueries As String[]) As Boolean
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In argQueries
+        If argDesktopFile.Name Like Subst$("*&1*", Replace$(yukiQuery, "/", "")) Then Return True
+        If argDesktopFile.GenericName Like Subst$("*&1*", Replace$(yukiQuery, "/", "")) Then Return True
+        If argDesktopFile.Comment Like Subst$("*&1*", Replace$(yukiQuery, "/", "")) Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub ShowApps()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $desktopFiles.Max
+        Print Subst$("&1 : &2 (&3)", yukiIndex, $desktopFiles[yukiIndex].Name, $desktopFiles[yukiIndex].Comment)
+    Next
+    
+End
+
+Public Sub SetCategory(argCategory As String)
+    
+    $category = argCategory
+    $desktopFiles = NagatoMenuCache[$category].Copy()
+    
+End
+
+Public Sub SetFilter(argFilters As String[])
+    
+    Dim yukiDesktopFile As DesktopFile
+    
+    $desktopFiles.Clear()
+    
+    For Each yukiDesktopFile In NagatoMenuCache[$category]
+        If matches(yukiDesktopFile, argFilters) Then $desktopFiles.Add(yukiDesktopFile)
+    Next
+    
+    Print Subst$("YUKI.N > &1 mactches found", $desktopFiles.Count)
+    
+End
+
+Public Sub Launch(argIndex As Integer, argGksu As Boolean)
+    
+    Dim yukiDialogMessage As String = "YUKI.N > We are going to run &1, Press [ENTER] to continue."
+    
+    Try Shell removeArgumentFromExec($desktopFiles[argIndex].Exec, argGksu)
+    MikuruDialog.Show(Subst$(yukiDialogMessage, $desktopFiles[argIndex].Name))
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $desktopFiles.Max
+
+End

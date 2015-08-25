@@ -23,7 +23,7 @@ Private Sub deleteSelection()
     Dim yukiIndex As Integer
     Dim yukiDelete As New NagatoDelete
     
-    For Each yukiIndex In MikuruUserInput.Numbers
+    For Each yukiIndex In NagatoUserInput.Numbers
         If yukiIndex > $max Then Continue
         yukiDelete.Add($currentDirectory &/ $paths[yukiIndex])
     Next
@@ -35,7 +35,7 @@ End
 Private Function setVariables(argCurrentDirectory As String, argFileNames As String[]) As Boolean
     
     If argFileNames.Count = 0 Then Return False
-    If MikuruUserInput.Numbers.Count = 0 Then Return False
+    If NagatoUserInput.Numbers.Count = 0 Then Return False
     
     $currentDirectory = argCurrentDirectory
     $paths = argFileNames
@@ -49,7 +49,7 @@ Public Sub _call(argCurrentDirectory As String, argFileNames As String[])
     
     If Not setVariables(argCurrentDirectory, argFileNames) Then Return
     
-    With MikuruUserInput
+    With NagatoUserInput
         If .Has("to") And If .Numbers.Count >= 2 Then 
             delete(.NumbersMin, .NumbersMax)
         Else If .Has("until") Then

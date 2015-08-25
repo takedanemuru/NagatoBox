@@ -38,6 +38,7 @@ Public Sub Timer_Timer()
     
     If $count = String.Len($message) + 10 Then
         Debug $tag
+        Kyon.CallBack($tag)
         Me.Close()
     Endif
     

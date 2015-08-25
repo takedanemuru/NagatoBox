@@ -2,18 +2,22 @@
 
 Inherits NagatoUxContainer
 
-Public Enum TypeJapanese, TypePronunciation, TypeEnglish
+Property Read Type As Integer
+
+Public Enum TypeAuto, TypeJapanese, TypePronunciation, TypeEnglish
+
+Private $type As Integer = 0
 
 Public Sub _Initialize() ' override
     
     Dim yukiRadioButton As RadioButton
-    Dim yukiQueries As String[] = [("Japanese"), ("Pronunciation"), ("English")]
+    Dim yukiQueries As String[] = [("Auto"), ("Japanese"), ("Pronunciation"), ("English")]
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To yukiQueries.Max
         yukiRadioButton = New RadioButton(Me._$parentContainer) As "QuerySelector"
         With yukiRadioButton
-            If yukiIndex = 0 Then .Value = True
+            If yukiIndex = $type Then .Value = True
             .Text = yukiQueries[yukiIndex]
             .Tag = yukiIndex
             .AutoResize = True
@@ -24,6 +28,14 @@ End
 
 Public Sub QuerySelector_Click()
     
-    Raise Signal(MikuruSignal.QueryTypeChanged, [Last.Tag])
+    $type = Last.Tag
     
+    'Raise Signal(MikuruSignal.QueryTypeChanged, [Last.Tag])
+    
+End
+
+Private Function Type_Read() As Integer
+
+    Return $type
+
 End

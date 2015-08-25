@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoGridView
+
+Private Function getResult(argQueryType As Integer, argQueryWord As String) As Result
+    
+    Select Case argQueryType
+        Case NagatoQuerySelector.TypeJapanese
+            Return NagatoDBGeneralDict.Get(Subst$("%&1%", argQueryWord))
+        Case NagatoQuerySelector.TypePronunciation
+            Return NagatoDBGeneralDict.GetWithPronunciation(Subst$("%&1%", argQueryWord))
+        Case NagatoQuerySelector.TypeEnglish
+            Return NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQueryWord))
+    End Select
+    
+End
+
+Public Sub Searh(argQueryType As Integer, argQueryWord As String)
+    
+    Dim yukiResult As Result = getResult(argQueryType, argQueryWord)
+    
+    Me._Clear()
+    
+    For Each yukiResult
+        With NagatoDBGeneralDict
+            Me._SetData(.[.ColumnJapanese], .[.ColumnPronunciation], .[.ColumnEnglish])
+        End With
+    Next
+    
+    If yukiResult.Count = 0 Then Message.Info(("YUKI.N > Query not found."), ("OK"))
+    
+End

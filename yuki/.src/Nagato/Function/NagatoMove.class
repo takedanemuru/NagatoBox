@@ -1,28 +1,18 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoFunction
 
 Private $paths As New NagatoPaths
-
-Private Sub makeDirectory()
-    
-    If Not MikuruUserInput("YUKI.N > Input directory name.") Then Return
-    
-    MikuruDirectory.New($paths.CurrentDirectory, MikuruUserInput.All)
-    
-    MikuruDialog.Show("YUKI.N > New directory created. Press [ENTER] to continue.")
-    
-End
 
 Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when Break
     
     $paths.ClearFilter()
     
-    MikuruUserInput(Subst$("YUKI.N > We are in &1, Where do you want to go ?", $paths.CurrentDirectory))
+    NagatoUserInput.Catch(Subst$("YUKI.N > We are in &1, Where do you want to go ?", $paths.CurrentDirectory))
     
-    With MikuruUserInput
+    With NagatoUserInput
         If .Include(["here", "term", "terminal"]) Or If .CompleteMatch(["open", "terminal"]) Then
-            NagatoGuake.AddTab($paths.CurrentDirectory)
+            Desktop.OpenTerminal($paths.CurrentDirectory)
         Else If .Has("up") Then
             $paths.Up()
         Else If .Include(["break", "back", "escape", "esc"]) Then
@@ -31,16 +21,18 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
             $paths.ShowHidden = True
         Else If .CompleteMatch(["hide", "hidden"]) Then
             $paths.ShowHidden = False
-        Else If .CompleteMatch(["show", "property"]) And If .IsValidIndex($paths.Max) Then
+        Else If .Include(["properties", "property", "prop"]) And If .IsValidIndex($paths.Max) Then
             MikuruFileProperty.Show($paths.CurrentDirectory &/ $paths[.Index])
+        Else If .Include(["play", "music", "audio"]) And If .IsValidIndex($paths.Max) Then
+            NagatoPlayMusic.Show($paths.CurrentDirectory &/ $paths[.Index])
+        Else If .Include(["text"]) And If .IsValidIndex($paths.Max) Then
+            MikuruText.Show($paths.CurrentDirectory &/ $paths[.Index])
         Else If .Has("move") Then
             $paths.MoveTo()
-        Else If .Include(["find", "match", "matches", "filter"]) And If .Count >= 2 Then
-            $paths.SetFilter(MikuruUserInput.All)
         Else If .HasSearchQuery() Then
-            $paths.SetFilter(MikuruUserInput.All)
+            $paths.SetFilter(NagatoUserInput.All)
         Else If .CompleteMatch(["make", "dir"]) Or If .CompleteMatch(["make", "directory"]) Or If .Has("mkdir") Then
-            makeDirectory()
+            MikuruMakeDirectory.Show($paths.CurrentDirectory)
         Else If .Include(["remove", "delete", "trash"]) Then
             MikuruDelete($paths.CurrentDirectory, $paths.All)
         Else If .IsValidIndex($paths.Max) Then
@@ -61,10 +53,9 @@ Private Sub endlessEight()
     
 End
 
-Public Sub Show(Optional argDirectory As String = User.Home)
+Public Sub Show(Optional argValues As Variant[])
     
-    $paths.CurrentDirectory = argDirectory
-
+    $paths.CurrentDirectory = User.Home
     endlessEight()
-        
+    
 End

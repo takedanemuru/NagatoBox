@@ -9,3 +9,15 @@ Public Sub Show(argMessage As String)
     Line Input yukiInput
     
 End
+
+Public Function GetUserInputs(argMessage As String) As String[]
+    
+    Dim yukiInput As String
+    
+    Print argMessage
+    
+    Line Input yukiInput
+    
+    Return Split(yukiInput, " ", "", True)
+    
+End

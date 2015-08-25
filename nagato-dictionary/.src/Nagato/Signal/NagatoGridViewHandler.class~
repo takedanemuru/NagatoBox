@@ -23,6 +23,7 @@ Public Sub _Initialize()
     With $gridView
         .Columns.Count = 3
         .Rows.Count = 1
+        .Header = .Horizontal
         .Columns[0].Text = ("Japanese")
         .Columns[1].Text = ("Pronunciation")
         .Columns[2].Text = ("English")

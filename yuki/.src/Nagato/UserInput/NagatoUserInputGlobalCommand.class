@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoUserInputCore
+
+Public Sub Check(argInputs As String)
+    
+    Me._ResetInputs(argInputs)
+    
+    If Me._Includes(["q", "quit", "bye"]) Then
+        Print "YUKI.N > I, as indivisual, also desires for you to return."
+        Wait 3
+        Quit 0
+    Else If Me._Includes(["stop"]) Then
+        NagatoPlayMusic.Stop()
+    Endif
+    
+End

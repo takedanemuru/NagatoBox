@@ -1,0 +1,22 @@
+' Gambas module file
+
+Property Read MenuFileDirectory As String
+Property Read MenuIconsDirectory As String
+
+Public Sub EnsureMenuFileDirectory()
+    
+    If Not Exist(Me.MenuFileDirectory) Then Mkdir Me.MenuFileDirectory
+    
+End
+
+Private Function MenuFileDirectory_Read() As String
+
+    Return User.Home &/ ".nagato-openbox-menu"
+
+End
+
+Private Function MenuIconsDirectory_Read() As String
+
+    Return Me.MenuFileDirectory &/ "icons"
+
+End

@@ -1,0 +1,38 @@
+' Gambas class file
+
+Create Static
+
+Property Read File As Boolean
+Property Read App As Boolean
+
+Private $options As New String[]
+
+Public Sub Parse()
+    
+    Args.Begin()
+    
+    $options = Args.End()
+    
+End
+
+Private Function File_Read() As Boolean
+
+    If $options.Count = 0 Then Return False
+    If $options.Exist("file") Then Return True
+    If $options.Exist("files") Then Return True
+
+    Return False
+
+End
+
+Private Function App_Read() As Boolean
+
+    If $options.Count = 0 Then Return False
+    If $options.Exist("app") Then Return True
+    If $options.Exist("apps") Then Return True
+    If $options.Exist("application") Then Return True
+    If $options.Exist("applications") Then Return True
+
+    Return False
+
+End

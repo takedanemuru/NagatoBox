@@ -1,34 +1,35 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.7.1
+# Compiled with Gambas 3.8.0
 Title=yuki
 Startup=Kyon
 Icon=Pictures/question-balloon.png
-Version=42.1.1
+Version=42.1.45
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
-Component=gb.dbus
+Component=gb.db
+Component=gb.db.sqlite3
 Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.net
 Component=gb.net.curl
+Component=gb.media
 Component=gb.xml
 Description="command line interface for humanoid interface."
-Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=ja
 Maintainer=takedanemuru
 Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
-Url=http://takedanemuru.github.oi
+Url=http://takedanemuru.github.io
 License=S.O.S. License
-PackageName=yuki-42.1.1
+PackageName=yuki-42.1.45
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Shells"
 Categories=ubuntu:"ConsoleOnly"
 Groups=ubuntu:"admin"
-ExtraDependencies=ubuntu:"guake\t\t\ntrash-cli\t\t"

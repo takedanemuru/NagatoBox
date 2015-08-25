@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoFunction
+
+Private $launcher As New NagatoMenuLauncher
+
+Private Sub showCategories()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To NagatoMenuCache.Categories.Max
+        Print Subst$("&1 : &2", yukiIndex, NagatoMenuCache.Categories[yukiIndex])
+    Next
+    
+End
+
+Private Function catchCommand() As Boolean
+    
+    NagatoUserInput.Catch("YUKI.N > Select a category.")
+    
+    With NagatoUserInput
+        If .IsValidIndex(NagatoMenuCache.Categories.Max) Then
+            $launcher.Open(NagatoMenuCache.Categories[.Index])
+        Else If .Include(["break", "back", "esc", "escape"]) Then
+            Return True
+        End If
+    End With
+    
+    Return False
+    
+End
+
+Private Sub endlessEight()
+    
+    Do
+        showCategories()
+        If catchCommand() Then Break
+    Loop
+    
+End
+
+Public Sub Show(Optional argValues As Variant[])
+    
+    NagatoMenuCache.Refresh()
+    endlessEight()
+    
+End

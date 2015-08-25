@@ -13,8 +13,9 @@ Public Sub EnsureDictionaryData()
     Dim yukiDirectory As String = User.Home &/ ".nagato-dictionary"
     
     If Not Exist(yukiDirectory) Then Mkdir yukiDirectory
-    If Not Exist(yukiDirectory &/ "edict.sqlit3") Then
-         Copy "dictionary_data/edict.sqlite3" To yukiDirectory &/ "edict.sqlit3"
+    
+    If Not Exist(yukiDirectory &/ "edict.sqlite3") Then
+         Copy "dictionary_data/edict.sqlite3" To yukiDirectory &/ "edict.sqlite3"
     End If
     
 End
@@ -35,6 +36,6 @@ Private Function DBPath_Read() As String
 
     Dim yukiDirectory As String = User.Home &/ ".nagato-dictionary"
 
-    Return yukiDirectory &/ "edict.sqlit3"
+    Return yukiDirectory &/ "edict.sqlite3"
 
 End

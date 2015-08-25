@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $querySelector As NagatoQuerySelector
+Private $spacer As NagatoPanelSpacer
+Private $searchBox As NagatoSearchBox
+Private $starButton As NagatoStarButton
+
+Private Sub getType(argQueryWord As String) As Integer
+    
+    With $querySelector
+        If .Type = .TypeAuto And If IsAscii(argQueryWord) Then Return .TypeEnglish
+        If .Type = .TypeAuto Then Return .TypeJapanese
+        Return .Type
+    End With
+    
+End
+
+Public Sub _initialize() ' virtual
+    
+    $querySelector = New NagatoQuerySelector(Me._$parentContainer) As "TFEI"
+    $spacer = New NagatoPanelSpacer(Me._$parentContainer)
+    $searchBox = New NagatoSearchBox(Me._$parentContainer) As "TFEI"
+    $starButton = New NagatoStarButton(Me._$parentContainer) As "TFEI"
+    
+End
+
+Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
+    
+    Select Case argEvent
+        Case MikuruSignal.Query
+            Raise Signal(MikuruSignal.Query, [getType(argArgs[0]), argArgs[0]])
+        Default
+            Raise Signal(argEvent, argArgs)
+    End Select
+    
+End
+

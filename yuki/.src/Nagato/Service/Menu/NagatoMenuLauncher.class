@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private $desktopFilesHandler As New NagatoDesktopFilesHandler
+
+Private Function getCommand() As Boolean
+    
+    NagatoUserInput.Catch("YUKI .N > Select an application")
+    
+    With NagatoUserInput
+        If .HasSearchQuery() Then
+            $desktopFilesHandler.SetFilter(.All)
+            Return False
+        Else If .Include(["su", "sudo", "super", "gksu", "admin"]) And If .IsValidIndex($desktopFilesHandler.Max) Then
+            $desktopFilesHandler.Launch(.Index, True)
+        Else If .IsValidIndex($desktopFilesHandler.Max) Then
+            $desktopFilesHandler.Launch(.Index, False)
+        Endif
+    End With
+    
+    Return True
+    
+End
+
+Private Sub endlessEight()
+    
+    Do
+        $desktopFilesHandler.ShowApps()
+        If getCommand() Then Break
+    Loop
+    
+End
+
+Public Sub Open(argCategory As String)
+    
+    If Not NagatoMenuCache.Categories.Exist(argCategory) Then Return
+    If NagatoMenuCache[argCategory].Count = 0 Then Return
+
+    $desktopFilesHandler.SetCategory(argCategory)
+    endlessEight()
+    
+End

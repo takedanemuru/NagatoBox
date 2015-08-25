@@ -1,14 +1,14 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoFunction
 
-Public Sub Show()
+Public Sub Show(Optional argValues As Variant[])
     
-    If MikuruUserInput.Has("speak") Then
-        Print "YUKI.N > What ?"
-    Else If MikuruUserInput.CompleteMatch(["what", "time"]) Then
+    If NagatoUserInput.Has("speak") Then
+        Shell "fortune"
+    Else If NagatoUserInput.CompleteMatch(["what", "time"]) Then
         Print Format$(Now(), ("hh:nn:ss"))
-    Else If MikuruUserInput.CompleteMatch(["love", "you"]) Then
+    Else If NagatoUserInput.CompleteMatch(["love", "you"]) Then
         Print "YUKI.N > No way."
     End If
     

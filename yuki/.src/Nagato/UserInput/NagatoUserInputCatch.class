@@ -1,0 +1,80 @@
+' Gambas class file
+
+Inherits NagatoUserInputCore
+
+Property Read Inputs As String[]
+
+Private Sub checkGlobalCommand()
+    
+    If Me._Includes(["q", "quit", "bye"]) Then
+        Print "YUKI.N > I, as indivisual, also desires for you to return."
+        Wait 3
+        Quit 0
+    Else If Me._Includes(["stop"]) Then
+        NagatoPlayMusic.Stop()
+    Endif
+    
+End
+
+Public Function HasSearchQuery() As Boolean
+    
+    Return Me._HasSearchQuery()
+    
+End
+
+Public Function Has(argValue As String) As Boolean
+    
+    Return Me._Includes([argValue])
+    
+End
+
+Public Function Include(argValues As String[]) As Boolean
+    
+    Return Me._Includes(argValues)
+    
+End
+
+Public Function Catch(argMessage As String) As Boolean
+    
+    Me._$inputs.Clear
+    Me._$inputs = MikuruDialog.GetUserInputs(argMessage)
+    
+    checkGlobalCommand()
+    
+    Return (Me._$inputs.Count > 0)
+    
+End
+
+Public Function GetFirstArgument(argOptions As String[]) As String
+    
+    Dim yukiOption As String
+    Dim yukiInputs As String[] = Me._$inputs.Copy()
+    
+    For Each yukiOption In argOptions
+        If Not yukiInputs.Exist(yukiOption) Then Continue
+        yukiInputs.Remove(yukiInputs.Find(yukiOption))
+    Next
+    
+    If yukiInputs.Count = 0 Then Return [""]
+    
+    Return yukiInputs[0]
+    
+End
+
+Public Function CompleteMatch(argQueries As String[]) As Boolean
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In argQueries
+        If Not Me._$inputs.Exist(Replace$(yukiQuery, "/", "")) Then Return False
+    Next
+    
+    Return True
+    
+End
+
+Private Function Inputs_Read() As String[]
+
+    Return Me._$inputs
+
+End

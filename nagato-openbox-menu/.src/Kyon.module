@@ -1,0 +1,27 @@
+' Gambas module file
+
+Private Sub printPipeMenu()
+    
+    If Exist(MikuruPath.MenuFileDirectory &/ NagatoArgs.Category) Then
+        Print File.Load(MikuruPath.MenuFileDirectory &/ NagatoArgs.Category)
+    Else
+        Print NagatoMenuCache.Get(NagatoArgs.Category)
+    End If
+    
+End
+
+Public Sub Main()
+    
+    MikuruPath.EnsureMenuFileDirectory()
+    NagatoArgs.Parsing()
+    
+    If NagatoArgs.Category <> "" Then
+        If NagatoArgs.Force Then NagatoMenuCache.Refresh()
+        printPipeMenu()
+    Else If NagatoArgs.Available Then
+        MikuruArrayTest(NagatoMenuCache.Categories)
+    Else
+        NagatoMenuCache.Refresh()
+    End If
+    
+End

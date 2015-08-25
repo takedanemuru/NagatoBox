@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Sub Show(argPath As String)
+    
+    If Not Exist(argPath) Then Return
+    
+    If DesktopMime.FromFile(argPath).Type Not Begins "text" Then 
+        MikuruDialog.Show("YUKI.N > It's not text. Press [ENTER] to continue.")
+    Else
+        Print File.Load(argPath)
+        MikuruDialog.Show("YUKI.N > Press [ENTER] to continue.")
+    Endif
+    
+End

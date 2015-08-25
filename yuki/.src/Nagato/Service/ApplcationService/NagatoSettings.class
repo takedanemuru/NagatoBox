@@ -1,0 +1,41 @@
+' Gambas class file
+
+Property Read HasPlaylist As Boolean
+Property Read Playlist As String[]
+
+Private $settings As Settings
+
+Public Sub SetToPlaylist(argPath As String)
+    
+    Dim yukiPaths As String[]
+    
+    If Not Exist(argPath) Then Return
+    If DesktopMime.FromFile(argPath).Type Not Begins "audio" Then Return
+    
+    If Me.HasPlaylist Then
+        yukiPaths = Me.Playlist.Copy()
+        yukiPaths.Add(argPath)
+    Else
+        yukiPaths = [argPath]
+    Endif
+    
+    $settings["music/playlist"] = yukiPaths.Copy()
+    $settings.Save()
+    
+End
+
+Private Function Playlist_Read() As String[]
+
+    Return $settings["music/playlist", Null]
+
+End
+
+Private Function HasPlaylist_Read() As Boolean
+
+    If $settings["music/playlist", Null] = Null Then
+        Return False
+    Else
+        Return True
+    Endif
+
+End

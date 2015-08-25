@@ -5,8 +5,12 @@ Public Sub Main()
     NagatoSettings.EnsureDictionaryData()
     NagatoArgs.Parsing
     
-    'Debug "YUKI.N > Activate compdict table on " & NagatoDBCompDict.HostName
-    Debug "YUKI.N > Activate generaldict tabel on " & NagatoDBGeneralDict.HostName
+    Print "\t" & "YUKI.N"
+    Print "\t\t" & "YUKI.N"
+    Print "\t\t\t" & "YUKI.N"
+    Print "\t\t\t\t" & "YUKI.N"
+    
+    Debug "YUKI.N > Activate generaldict table on " & NagatoDBGeneralDict.HostName
     
     If NagatoArgs.Queries.Count > 0 Then 
         NagatoCommandlineInterface.ShowResults(NagatoArgs.Queries)

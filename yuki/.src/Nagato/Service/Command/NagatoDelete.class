@@ -1,0 +1,96 @@
+' Gambas class file
+
+Private $pathDirectory As New String[]
+Private $pathsFile As New String[]
+Private $pathsXdgUserDir As New String[]
+Private $pathUnwritable As New String[]
+
+Private Sub sendToTrashBin(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        Try Shell Subst$("gvfs-trash &1", Quote$(yukiPath)) Wait
+        Print "REMOVED: " & yukiPath
+    Next
+    
+End
+
+Private Sub show(argHeader As String, argArray As String[])
+    
+    Dim yukiPath As String
+    
+    If argArray.Count = 0 Then Return
+    
+    Print argHeader
+    
+    For Each yukiPath In argArray
+        Print yukiPath
+    Next
+    
+End
+
+Private Sub deleteFiles()
+    
+    sendToTrashBin($pathsFile)
+    sendToTrashBin($pathDirectory)
+    NagatoUserInput.Catch("YUKI.N > It's done, press [ENTER] to continue.")
+    
+End
+
+Private Sub showAll()
+    
+    show("[Directories]", $pathDirectory)
+    show("[Files]", $pathsFile)
+    show("[XDG User Dir] *You have no permission, should NOT be removed", $pathsXdgUserDir)
+    show("[Undeletable]  *You have no permission, should NOT be removed", $pathUnwritable)
+    
+End
+
+Private Sub hasdeletableFiles()
+    
+    showAll()
+    
+    NagatoUserInput.Catch("YUKI.N > We are going to remove listed files, OK? (y/n)")
+    
+    If NagatoUserInput.Has("y") Then deleteFiles()
+    
+End
+
+Private Sub noDeletableFiles()
+    
+    showAll()
+    
+    NagatoUserInput.Catch("YUKI.N > You requested to remove listed file(s), but you have no permission. Press [ENTER] to continue")
+    
+End
+
+Public Sub Add(argPath As String) ' requires full path
+    
+    If Not Exist(argPath) Then Return
+    
+    If Not MikuruAccess.IsWritable(argPath, False) Then
+        $pathUnwritable.Add(argPath)
+    Else If NagatoXdg.IsUserDir(argPath) Then
+        $pathsXdgUserDir.Add(argPath)
+    Else If IsDir(argPath) Then
+        $pathDirectory.Add(argPath)
+    Else
+        $pathsFile.Add(argPath)
+    Endif
+    
+End
+
+Public Sub Dialog()
+    
+    With MikuruArray
+        If .Count($pathsFile, $pathDirectory) > 0 Then
+            hasdeletableFiles()
+        Else If .Count($pathsXdgUserDir, $pathUnwritable) > 0 Then
+            noDeletableFiles()
+        Else
+            NagatoUserInput.Catch("YUKI.N > Invalid request. press [ENTER] to continue")
+        End If
+    End With
+    
+End

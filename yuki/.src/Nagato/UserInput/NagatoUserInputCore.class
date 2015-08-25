@@ -1,0 +1,62 @@
+' Gambas class file
+
+Public _$inputs As New String[]
+
+Public Function _HasSearchQuery() As Boolean
+    
+    Dim yukiInput As String
+    
+    For Each yukiInput In Me._$inputs
+        If yukiInput Begins "/" Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub _ResetInputs(argInputs As String)
+    
+    Me._$inputs.Clear()
+    Me._$inputs = Split(argInputs, " ", "", True)
+    
+End
+
+Public Function _GetFirstArgument(argOptions As String[]) As String
+    
+    Dim yukiOption As String
+    Dim yukiInputs As String[] = Me._$inputs.Copy()
+    
+    For Each yukiOption In argOptions
+        If Not yukiInputs.Exist(yukiOption) Then Continue
+        yukiInputs.Remove(yukiInputs.Find(yukiOption))
+    Next
+    
+    If yukiInputs.Count = 0 Then Return [""]
+    
+    Return yukiInputs[0]
+    
+End
+
+Public Sub _Includes(argOptions As String[]) As Boolean
+    
+    Dim yukiOption As String
+    
+    For Each yukiOption In argOptions
+        If Me._$inputs.Exist(yukiOption) Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Function _CompleteMatch(argQueries As String[]) As Boolean
+    
+    Dim yukiQuery As String
+    
+    For Each yukiQuery In argQueries
+        If Not Me._$inputs.Exist(Replace$(yukiQuery, "/", "")) Then Return False
+    Next
+    
+    Return True
+    
+End

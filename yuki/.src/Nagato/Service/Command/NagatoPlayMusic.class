@@ -1,0 +1,64 @@
+' Gambas class file
+
+Create Static
+
+Private $player As New MediaPlayer As "MediaPlayer"
+
+Private Function isValidPath(argPath As String) As Boolean
+    
+    Print "YUKI.N > we are going to play..." & argPath
+    
+    If Not Exist(argPath) Then Return False
+    If DesktopMime.FromFile(argPath).Type Not Begins "audio" Then Return False
+    
+    Return True
+    
+End
+
+Private Sub endlessEight()
+    
+    Do
+        MikuruDialog.Show("YUKI.N > type [stop] to stop music, press [ENTER] key to continue.")
+        Break
+    Loop
+    
+End
+
+Public Sub Show(argPath As String)
+    
+    If isValidPath(argPath)
+        Try $player.Stop()
+        $player.URL = Media.URL(argPath)
+        $player.Play()
+        endlessEight()
+    Else
+        MikuruDialog.Show("YUKI.N > Path is not valid, Press [ENTER] to continue.")
+    End If
+    
+End
+
+Public Sub Stop()
+    
+    Try $player.Stop()
+    
+End
+
+Public Sub MediaPlayer_Tag(argTagList As MediaTagList)
+    
+    Dim yukiTagName As String
+    Dim yukiTag As Variant
+    
+    For Each yukiTagName In argTagList.Tags
+        yukiTag = argTagList[yukiTagName]
+        If TypeOf(yukiTag) = gb.String Then Print Subst$("&1 : &2", yukiTagName, yukiTag)
+    Next
+    
+End
+
+Public Sub MediaPlayer_End()
+    
+    Print ("YUKI.N > Misic ends.")
+    
+    Try $player.Stop()
+    
+End

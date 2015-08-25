@@ -6,10 +6,12 @@ Private Const InterfaceName As String = "org.gambas.nagato.session.nagatointerfa
 
 Public Sub Set()
     
-    Dim yukiIconTheme As String
+    Dim yukiApplications As String[] = DBus.Session.Applications
     
-    If DBus.Session.Applications.Exist(ServiceName) Then
-        Application.Theme = DBus[ServiceName][ObjectPath, InterfaceName].IconTheme
+    Debug yukiApplications.Count
+    
+    If yukiApplications.Exist(ServiceName) Then
+        Try Application.Theme = DBus[ServiceName][ObjectPath, InterfaceName].IconTheme
     Endif
     
 End

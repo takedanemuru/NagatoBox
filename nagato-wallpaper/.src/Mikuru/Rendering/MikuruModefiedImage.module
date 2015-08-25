@@ -19,6 +19,8 @@ Public Sub Set(argMode As Integer)
             yukiRendarer = New NagatoWallpaperTopLeft
         Case MikuruRenderMode.TopCenter
             yukiRendarer = New NagatoWallpaperTopCenter
+        Case MikuruRenderMode.TopRight
+            yukiRendarer = New NagatoWallpaperTopRight
         Case MikuruRenderMode.Left
             yukiRendarer = New NagatoWallpaperLeft
         Case MikuruRenderMode.Right

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoFunction
+
+Private Sub endlessEight()
+    
+    Do
+        Break
+    Loop
+    
+End
+
+Public Sub Show(Optional argValues As Variant[])
+    
+    If Not Exist(User.Home &/ ".nagatodictionary/edict.sqlite3") Then
+        MikuruDialog.Show("YUKI.N > dictionary data not found. press [ENTER] to continue.")
+    Else
+        endlessEight()
+    Endif
+    
+End

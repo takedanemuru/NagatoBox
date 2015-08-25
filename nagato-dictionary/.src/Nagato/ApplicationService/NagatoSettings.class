@@ -6,7 +6,7 @@ Property Read ExactMatch As Boolean
 Property Read IgnoreCase As Boolean
 Property Read DBPath As String
 
-Private $settings As New Settings
+'Private $settings As New Settings
 
 Public Sub EnsureDictionaryData()
     

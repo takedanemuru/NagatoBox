@@ -1,26 +1,26 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.2
+# Compiled with Gambas 3.8.0
 Title=nagato-openbox-logout
 Startup=Kyon
 Icon=Pictures/button-power.png
-Version=0.2.1
+Version=42.1.1
 Component=gb.image
-Component=gb.qt4
+Component=gb.gui.qt
 Component=gb.form
 Component=gb.dbus
 Component=gb.settings
-Component=gb.qt4.ext
 Description="logout dialog for Openbox3"
-Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru<takeda.nemuru@yandex.com>"
+Environment="NAGATO_X=123"
 TabSize=4
 Translate=1
 Language=ja
 Maintainer=takedanemuru
 Vendor=The Alien and RadioNoise
-Address=takeda.nemuru@gmail.com
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-openbox-logout-0.2.1
+PackageName=nagato-openbox-logout-42.1.1
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

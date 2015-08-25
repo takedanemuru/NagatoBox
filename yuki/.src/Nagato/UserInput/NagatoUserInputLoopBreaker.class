@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoUserInputCore
+
+Property Read BreakerCode As Integer
+
+Private $breakerCode As Integer
+
+Public Function Catch(argMessage As String) As Boolean
+    
+    Me._ResetInputs(argMessage)
+    
+    If Me._Includes(["app", "apps", "application", "applications"]) Then
+        $breakerCode = NagatoMainLoop.HookApplications
+        Return True
+    Else If Me._Includes(["file", "files"]) Then
+        $breakerCode = NagatoMainLoop.HookFiles
+        Return True
+    Endif
+    
+    $breakerCode = NagatoMainLoop.HookNone
+    Return False
+    
+End
+
+Private Function BreakerCode_Read() As Integer
+
+    Return $breakerCode
+
+End

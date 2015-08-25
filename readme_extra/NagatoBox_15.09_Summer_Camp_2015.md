@@ -37,6 +37,7 @@
 *file manager and desktop shell*
 
 + drag and drop for desktop-panel
++ drop trash-cli dependency.
 + ~~support gksu execution.~~
     + ~~ensure mime-db for root user.~~
 + ~~.ReloadDesktopWallpaper() functionality for DBus interface~~

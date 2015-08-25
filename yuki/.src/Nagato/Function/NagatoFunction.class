@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Private
+
+Public Sub Show(Optional argValues As Variant[])
+    
+    ' virtual interface
+    Debug "if you see this, there're some errors on this code."
+    Debug "count for values";; argValues.Count
+    
+End

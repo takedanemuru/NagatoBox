@@ -2,14 +2,25 @@
 
 Create Static
 
+Public Enum HookNone, HookFiles, HookApplications, HookDictionary
+
+Private $apps As New NagatoApps
+Private $dictionary As New NagatoDictionary
+Private $files As New NagatoMove
+Private $misc As New NagatoMisc
+
 Private Sub catchCommand()
     
-    MikuruUserInput(("YUKI.N > Can you see this ?")) 
+    NagatoUserInput.Catch("YUKI.N > Can you see this ?") 
 
-    If MikuruUserInput.Include(["move", "file", "files"]) Then
-        NagatoMove.Show(User.Home)
+    If NagatoUserInput.Include(["move", "file", "files"]) Then
+        $files.Show([User.Home])
+    Else If NagatoUserInput.Include(["app", "apps", "application", "applications", "launch"]) Then
+        $apps.Show()
+    Else If NagatoUserInput.Include(["dic", "dict", "dictionary"]) Then
+        $dictionary.Show()
     Else
-        NagatoMisc.Show()
+        $misc.Show()
     End If
 
 End
@@ -17,7 +28,9 @@ End
 Private Sub catchApplicationArgument()
     
     If NagatoArguments.File Then
-        NagatoMove.Show()
+        $files.Show([User.Home])
+    Else If NagatoArguments.App Then
+        $apps.Show()
     Else
         catchCommand()
     Endif
@@ -26,13 +39,13 @@ End
 
 Private Sub endlessEight()
     
-    Dim yukiCount As Integer 
+    Dim yukiCount As Integer
     
     Do 
         Inc yukiCount
         If yukiCount = 1 Then catchApplicationArgument()
         If yukiCount > 1 Then catchCommand()
-    Loop Until yukiCount > 8
+    Loop
     
 End
 
