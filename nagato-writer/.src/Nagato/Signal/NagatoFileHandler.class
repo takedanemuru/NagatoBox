@@ -1,10 +1,12 @@
 ' Gambas class file
 
+Property Read Headers As Collection
 Property Read Buffer As String
 Property Read Path As String
 
 Private $buffer As String
 Private $path As String
+Private $headers As New NagatoSourceHeaders
 
 Private Sub changePath(argPath As String)
     
@@ -19,6 +21,7 @@ Public Function SetPath(argPath As String) As String
     
     changePath(yukiPath)
     $buffer = File.Load(yukiPath)
+    $headers.Refresh($buffer)
     HaruhiMain.Title = File.Name(yukiPath)
 
     Return $buffer
@@ -29,6 +32,7 @@ Public Sub New() As String
     
     $buffer = ""
     $path = ""
+    HaruhiMain.Title = ("Untitled.md")
     
     Return $buffer
     
@@ -58,6 +62,7 @@ Public Sub Save(argText As String)
         Me.SaveAs(argText)
     Else
         $buffer = argText
+        $headers.Refresh(argText)
         File.Save($path, argText)
     Endif
     
@@ -85,5 +90,11 @@ End
 Private Function Path_Read() As String
 
     Return $path
+
+End
+
+Private Function Headers_Read() As Collection
+
+    Return $headers.Headers
 
 End

@@ -66,6 +66,18 @@ Public Sub Insert(argText As String)
     
 End
 
+Public Sub MoveToLine(argLine As Integer)
+    
+    $textArea.SetFocus()
+    Try $textArea.Line = argLine + Int($textArea.H / $textArea.Font.H * 0.7)
+    If Not Error Then $textArea.EnsureVisible()
+    $textArea.Line = argLine
+
+Finally
+    $textArea.EnsureVisible()
+     
+End
+
 Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
     
     Select Case argTag
@@ -104,6 +116,8 @@ Private Sub Text_Write(Value As String)
 
     Object.Lock($textArea)
         $textArea.Text = Value
+        $textArea.SetFocus()
+        $textArea.Line = 0
     Object.Unlock($textArea)
     
 End

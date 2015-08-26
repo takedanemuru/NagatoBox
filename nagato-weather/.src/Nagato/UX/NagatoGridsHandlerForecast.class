@@ -37,7 +37,7 @@ Public Sub SetData(argDate As String)
     Dim yukiTime As String
     Dim yukiElement As NagatoWeatherElement
     
-    For yukiCount = 0 To 21
+    For yukiCount = 0 To 23
         yukiTime = Subst$("&1T&2:00:00Z", argDate, Format$(yukiCount, "0#"))
         If NagatoWeatherCache.HasElement(yukiTime) Then
             With Me._$grids

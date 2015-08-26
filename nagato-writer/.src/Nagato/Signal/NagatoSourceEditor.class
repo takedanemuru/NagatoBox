@@ -6,7 +6,9 @@ Property Text As String
 
 Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 
+Private $hBox As HBox
 Private $fileHandler As New NagatoFileHandler
+Private $headersList As NagatoSourceHeadersList
 Private $textArea As NagatoTextArea
 Private $observer As Observer
 
@@ -41,7 +43,9 @@ End
 
 Public Sub _Initialize()
     
-    $textArea = New NagatoTextArea(Me._$parentContainer) As "TFEI"
+    $hBox = New HBox(Me._$parentContainer)
+    $headersList = New NagatoSourceHeadersList($hBox) As "TFEI"
+    $textArea = New NagatoTextArea($hBox) As "TFEI"
     $observer = New Observer(NagatoSettingsView) As "Asakura"
 
 End
@@ -65,6 +69,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     
     If Not NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
     NagatoSettings.PushRecentPath($fileHandler.Path)
+    $headersList.Refresh($fileHandler.Headers)
 
 End
 
@@ -104,6 +109,16 @@ Public Sub GetSaveStatus() As Integer
             Raise Signal(MikuruSignal.FileSave, Null)
             Return Me.ResponseSaved
     End Select
+    
+End
+
+Public Sub TFEI_SIgnal(argEvent As Integer, argValues As Variant[])
+    
+    If argEvent = MikuruSignal.ViewMoveToLine Then
+        $textArea.MoveToLine(argValues[0])
+    Else
+        Me._RaiseSignal(argEvent, argValues)
+    End If
     
 End
 

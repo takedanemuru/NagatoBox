@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $sidePanel As SidePanel
+Private $listView As ListView
+
+Private Sub initializeSidePanel()
+    
+    $sidePanel = New SidePanel(Me._$parentContainer)
+    
+    With $sidePanel
+        .W = 160
+        .Expand = False
+        .Arrangement = Arrange.Fill
+        .Orientation = Align.Left
+        .Hidden = True
+    End With
+    
+End
+
+Private Sub initializeListView()
+    
+    $listView = New ListView($sidePanel) As "ListView"
+    
+    With $listView
+        .Expand = True
+        .Foreground = Color.White
+        .Background = Color.Violet
+    End With
+    
+End
+
+Public Sub _initialize() ' override
+    
+    initializeSidePanel()
+    initializeListView()
+    
+End
+
+Public Sub Refresh(argCollection As Collection)
+    
+    Dim yukiHeader As String
+    
+    $listView.Clear()
+    
+    For Each yukiHeader In argCollection
+        $listView.Add(argCollection.Key, yukiHeader)
+    Next
+    
+    $listView.Refresh()
+    
+End
+
+Public Sub ListView_Activate()
+    
+    Raise Signal(MikuruSignal.ViewMoveToLine, [CInt(Last.Key)])
+    
+End

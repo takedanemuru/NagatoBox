@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Property Read Headers As Collection
+
+Private $headers As New Collection
+
+Public Sub Clear()
+    
+    $headers.Clear()
+    
+End
+
+Public Sub Refresh(argBuffer As String)
+    
+    Dim yukiIndex As Integer
+    Dim yukiLines As String[] = Split(argBuffer, "\n")
+    
+    $headers.Clear()
+    
+    For yukiIndex = 0 To yukiLines.Max
+        If yukiLines[yukiIndex] Not Begins "#" Then Continue
+        If yukiLines[yukiIndex] Begins "#######" Then Continue ' header level 7 doesn't work.
+        $headers.Add(yukiLines[yukiIndex], CString(yukiIndex))
+    Next
+    
+End
+
+Private Function Headers_Read() As Collection
+
+    Return $headers
+
+End
