@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.3
+# Compiled with Gambas 3.8.0
 Title=nagato-pdf-view
 Startup=Kyon
 Icon=picture/blue/document.png
-Version=0.4.3
+Version=42.1.1
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -12,16 +12,16 @@ Component=gb.settings
 Component=gb.pdf
 Component=gb.qt4.ext
 Description="pdf viewer"
-Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru<takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=en
 Maintainer=takedanemuru
 Vendor=The Alien and RadioNoise
-Address=takeda.nemuru@gmail.com
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-pdf-view-0.4.3
+PackageName=nagato-pdf-view-42.1.1
 CreateEachDirectory=1
 MimeTypes="application/pdf","application/x-pdf"
 Packager=1

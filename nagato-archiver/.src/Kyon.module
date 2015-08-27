@@ -2,8 +2,6 @@
 
 Public Sub Main()
     
-    Application.Theme = "Numix-Circle"
-    
     NagatoArguments.Parsing()
     HaruhiMain.Show()
     If NagatoArguments.Paths.Count > 0 Then HaruhiMain.SetPaths(NagatoArguments.Paths)

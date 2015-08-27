@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub _get(argIconName As String, Optional argIconSize As Integer = 16) As Picture
+    
+    Dim yukiImage As Image = Image.Load(Subst$("Pictures/Icons/&1.png", argIconName))
+    
+    Return yukiImage.Stretch(argIconSize, argIconSize).Picture
+    
+End
+

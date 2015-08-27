@@ -109,8 +109,8 @@ Public Sub SetDocument(argPath As String)
     
     $pdfPath = argPath
     $pdfDocument.Open(argPath)
-    Debug $pdfDocument.Info.Layout
-    Debug $pdfDocument.Info.Author 
+    ' Debug $pdfDocument.Info.Layout
+    ' Debug $pdfDocument.Info.Author 
     $currentPage = 1
     showCurrentPage()
     

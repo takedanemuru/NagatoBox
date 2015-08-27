@@ -110,7 +110,7 @@ Public Sub SetDocument(argPath As String)
     $pdfPath = argPath
     $pdfDocument.Open(argPath)
     Debug $pdfDocument.Info.Layout
-    $pdfDocument.Info.Mode = PdfPageMode.FullScreen
+    Debug $pdfDocument.Info.Author 
     $currentPage = 1
     showCurrentPage()
     

@@ -3,11 +3,21 @@
 Private $iconView As NagatoIconView
 Private $observer As Observer
 
+Private Sub initializeButtons()
+    
+    OpenFilesButton.Picture = MikuruIcon["folder"]
+    ClearButton.Picture = MikuruIcon["bin"]
+    
+End
+
 Public Sub _new()
 
-    $observer = New Observer(NagatoFileStore) As "Asakura"
+    initializeButtons()
 
+    $observer = New Observer(NagatoFileStore) As "Asakura"
     $iconView = New NagatoIconView(FilesIconView) As "IconView"
+    
+    Debug NagatoFileStore.Count
     
     If NagatoFileStore.Count = 0 Then
         $iconView.SetEmptyView()

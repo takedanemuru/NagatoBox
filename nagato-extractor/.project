@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.7.1
+# Compiled with Gambas 3.8.0
 Title=nagato-extractor
 Startup=Kyon
 Icon=Pictures/Icons/hard-drive-upload.png
-Version=0.6.1
+Version=42.1.1
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -21,10 +21,10 @@ Translate=1
 Language=ja
 Maintainer=takedanemuru
 Vendor=Integrated Data Thought Entity
-Address=takeda.nemuru@gmail.com
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-extractor-0.6.1
+PackageName=nagato-extractor-42.1.1
 CreateEachDirectory=1
 MimeTypes="application/lha","application/x-compress","application/x-lha","application/x-lha-compressed","application/x-lk-rlestream","application/x-lzh","application/x-unknown-content-type-LhasaArchive","application/x-zip-compressed","application/zip","binary/lzh","application/x-gzip","multipart/x-gzip","multipart/x-zip","application/gzip","application/x-rar-compressed","application/x-rar","application/x-tar","application/x-compressed-tar","application/x-xz-compressed-tar","application/x-bzip","application/x-bzip-compressed-tar"
 Packager=1
