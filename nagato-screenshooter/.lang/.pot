@@ -1,16 +1,62 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-11-01 04:27+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"#-#-#-#-#  #project.pot (nagato-screenshooter 3.8.0)  #-#-#-#-#\n"
+"Project-Id-Version: nagato-screenshooter 3.8.0\n"
+"POT-Creation-Date: 2015-08-28 03時48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  HaruhiMain.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  Kyon.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  MikuruDesktop.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  MikuruSafePath.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  MikuruShutterSound.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  NagatoArguments.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  NagatoScreenshot.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  NagatoSettings.pot ($(PACKAGE) $(VERSION))  #-#-#-#-#\n"
+"Project-Id-Version: $(PACKAGE) $(VERSION)\n"
+"POT-Creation-Date: 2015-08-28 03:48 UTC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .project:1 HaruhiSave.form:16
+#: .project:1 HaruhiMain.form:16
 msgid "nagato-screenshooter"
 msgstr ""
 
@@ -18,38 +64,38 @@ msgstr ""
 msgid "commandline screenshot taking application for print key."
 msgstr ""
 
-#: HaruhiSave.form:31
+#: HaruhiMain.form:31
 msgid "Save"
 msgstr ""
 
-#: HaruhiSave.form:37
+#: HaruhiMain.form:37
 msgid "Cancel"
 msgstr ""
 
-#: HaruhiSave.form:43
+#: HaruhiMain.form:43
 msgid "Home"
 msgstr ""
 
-#: HaruhiSave.form:49
+#: HaruhiMain.form:49
 msgid "FileName"
 msgstr ""
 
-#: HaruhiSave.form:55
+#: HaruhiMain.form:55
 msgid "Directory :"
 msgstr ""
 
-#: HaruhiSave.form:61
+#: HaruhiMain.form:61
 msgid "File Name :"
 msgstr ""
 
-#: HaruhiSave.form:68
+#: HaruhiMain.form:68
 msgid "Change default directory"
 msgstr ""
 
-#: HaruhiSave.class:52
+#: HaruhiMain.class:28
 msgid "yyyy/mm/dd_hh:nn:mm"
 msgstr ""
 
-#: HaruhiSave.class:115
+#: HaruhiMain.class:58
 msgid "Select directory"
 msgstr ""

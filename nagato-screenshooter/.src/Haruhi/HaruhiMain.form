@@ -3,7 +3,7 @@
 { Form Form
   MoveScaled(0,0,84,31)
   Text = ("nagato-screenshooter")
-  Icon = Picture["picture/ss_03_04.png"]
+  Icon = Picture["picture/camera.png"]
   Resizable = False
   { PreviewPictureBox PictureBox
     MoveScaled(1,1,28.5714,28.5714)
@@ -41,7 +41,7 @@
     Font = Font["Bold"]
     Text = ("File Name :")
   }
-  { CheckBox1 CheckBox
+  { ChangeDefaultDirCheckBox CheckBox
     MoveScaled(31,15,52,4)
     Visible = False
     Font = Font["Bold"]

@@ -17,11 +17,8 @@ End
 Public Sub Main()
     
     parsingApplicationArguments()
-    Application.MainWindow = HaruhiSave
     
-    'Wait $delay
-    Wait 5
-    'HaruhiSave.Call($onlyActiveWindow)
-    HaruhiSave.Call(True)
+    Wait $delay
+    HaruhiMain.Call($onlyActiveWindow)
     
 End

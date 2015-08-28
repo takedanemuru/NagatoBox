@@ -31,8 +31,6 @@ Public Sub Set()
     Dim yukiStream As Stream
     Dim yukiLine As String
     
-    Debug Desktop.ActiveWindow
-    
     yukiStream = Shell Subst$("xwininfo -id &1", Desktop.ActiveWindow) For Input
 
     While Not Eof(yukiStream)

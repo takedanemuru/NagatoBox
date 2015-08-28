@@ -1,0 +1,73 @@
+' Gambas class file
+
+Private $screenshot As New NagatoScreenshot
+
+Private Sub initializePreview()
+    
+    Dim yukiPreview As Picture = $screenshot.Preview
+    
+    With PreviewPictureBox
+        .Picture = yukiPreview
+        .H = yukiPreview.H
+        .W = yukiPreview.W
+    End With
+    
+End
+
+Private Sub resetDirectoryButtonBox(argPath As String)
+    
+    With DirectoryButtonBox
+        .Text = argPath
+        .Picture = IIf(argPath = User.Home, Stock["small/home"], Stock["small/directory"])
+    End With
+    
+End
+
+Private Sub initializeFileNameTextBox()
+    
+    Dim yukiTimeStamp As String = Format$(Now, ("yyyy/mm/dd_hh:nn:mm"))
+    
+    FileNameTextBox.Text = Subst$("screenshot_&1", yukiTimeStamp)
+    
+End
+
+Public Sub Call()
+    
+    If Not MikuruDesktop.HasActiveWindow() Then Return
+    
+    $screenshot.Set()
+    initializePreview()
+    MikuruShutterSound.Play()
+    Me.Center()
+    Me.Show()
+    Application.MainWindow = Me
+    resetDirectoryButtonBox(NagatoSettings.Directory)
+    initializeFileNameTextBox()
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close()
+
+End
+
+Public Sub DirectoryButtonBox_Click()
+
+    Dialog.Path = DirectoryButtonBox.Text
+    Dialog.Title = ("Select directory")
+
+    If Not Dialog.SelectDirectory() And If DirectoryButtonBox.Text <> Dialog.Path Then
+        resetDirectoryButtonBox(Dialog.Path)
+        ChangeDefaultDirCheckBox.Visible = True
+    Endif
+
+End
+
+Public Sub SaveButton_Click()
+
+    $screenshot.Save(MikuruSafePath(DirectoryButtonBox.Text &/ FileNameTextBox.Text))
+    If ChangeDefaultDirCheckBox.Value Then NagatoSettings.Directory = DirectoryButtonBox.Text 
+    Me.Close()
+
+End

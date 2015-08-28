@@ -1,0 +1,36 @@
+' Gambas class file
+
+Property Read Preview As Picture
+
+Private Const MaxSize As Integer = 200
+
+Private $screenshot As Picture
+
+Public Sub Set()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    If NagatoArguments.OnlyActiveWindow Then
+        yukiDesktopWindow = New DesktopWindow(Desktop.ActiveWindow)
+        $screenshot = yukiDesktopWindow.GetScreenshot(False)
+    Else
+        $screenshot = Desktop.Screenshot()
+    End If
+    
+End
+
+Public Sub Save(argPath As String)
+    
+    Try $screenshot.Save(argPath)
+    
+End
+
+Private Function Preview_Read() As Picture
+
+    Dim yukiRate As Float = Min(MaxSize / $screenshot.H, MaxSize / $screenshot.W)
+    
+    With $screenshot
+        Return .Image.Stretch(.W * yukiRate, .H * yukiRate).Picture
+    End With
+
+End

@@ -1,0 +1,32 @@
+' Gambas class file
+
+Create Static
+
+Property Read Delay As Integer
+Property Read OnlyActiveWindow As Boolean
+
+Private $delay As Integer = 0
+Private $onlyActiveWindow As Boolean = False
+
+Public Sub Parse()
+    
+    Dim yukiArgs As String[]
+    
+    Args.Begin("nagato-screenshooter : ")
+        $delay = Args.GetInteger("d", "delay", "delay in seconds")
+        $onlyActiveWindow = Args.Has("w", "only-active", "only active window")
+    yukiArgs = Args.End()
+    
+End
+
+Private Function Delay_Read() As Integer
+
+    Return $delay
+
+End
+
+Private Function OnlyActiveWindow_Read() As Boolean
+
+    Return $onlyActiveWindow
+
+End

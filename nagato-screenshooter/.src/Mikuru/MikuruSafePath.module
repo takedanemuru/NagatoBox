@@ -1,0 +1,24 @@
+' Gambas module file
+
+Private Function getSafePath(argFileName As String) As String
+    
+    Dim yukiIndex As Integer = 0
+    Dim yukiPath As String
+    
+    Do
+        Inc yukiIndex
+        yukiPath = Subst$("&1(&2).png", argFileName, yukiIndex)
+        If Not Exist(yukiPath) Then Return yukiPath 
+    Loop
+    
+End
+
+Public Function Get(argFileName As String) As String
+    
+    If Not Exist(argFileName & ".png") Then
+        Return argFileName & ".png"
+    Else
+        Return getSafePath(argFileName)
+    End If
+    
+End
