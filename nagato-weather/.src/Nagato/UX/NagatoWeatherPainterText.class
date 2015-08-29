@@ -61,14 +61,16 @@ End
 Public Sub Draw(argWeatherElement As NagatoWeatherElement)
     
     $currentWeather = argWeatherElement
-    
     setTextRect()
 
-    With $textRect
-        Paint.DrawRichText(getTitle(), .X, .Y, .W, .H, Align.Center)
-        Paint.DrawRichText(getHeaders(), .X, .Y, .W, .H, Align.Left)
-        Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
-    End With
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Bold = True
+        With $textRect
+            Paint.DrawRichText(getTitle(), .X, .Y, .W, .H, Align.Center)
+            Paint.DrawRichText(getHeaders(), .X, .Y, .W, .H, Align.Left)
+            Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
+        End With
+    Paint.Fill()
     
 End
 
@@ -77,4 +79,3 @@ Public Sub _new(argDrawingArea As DrawingArea)
     $drawingArea = argDrawingArea
     
 End
-

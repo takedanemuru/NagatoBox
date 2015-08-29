@@ -2,7 +2,11 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
-    HaruhiMain.Request(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
+    If Not Desktop.NetworkAvailable Then
+        Message.Warning("Network unavailable.")
+    Else
+        HaruhiMain.Show()
+        HaruhiMain.Request(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
+    End If
     
 End

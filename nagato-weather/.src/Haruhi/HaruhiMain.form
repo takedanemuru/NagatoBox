@@ -5,20 +5,4 @@
   Icon = Picture["Pictures/icons/umbrella.png"]
   Border = False
   Arrangement = Arrange.Vertical
-  { MenuHBox HBox
-    MoveScaled(9,8,45,4)
-    { Panel1 Panel
-      MoveScaled(0,0,23,3)
-      Expand = True
-    }
-    { StarButton MenuButton
-      MoveScaled(38,0,4,4)
-      Visible = False
-      Picture = Picture["Pictures/icons/star(1).png"]
-      Arrow = False
-    }
-  }
-  { MainDrawingArea DrawingArea
-    MoveScaled(22,29,24,24)
-  }
 }

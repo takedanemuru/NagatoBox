@@ -1,7 +1,7 @@
 ' Gambas class file
 
+Private $menuBar As NagatoMenuBar
 Private $weatherDrawingArea As NagatoWeatherDrawingArea
-Private $starMenu As NagatoStarMenu
 Private $observer As Observer
 
 Private Sub resetTitleBar()
@@ -10,24 +10,18 @@ Private Sub resetTitleBar()
     
 End
 
-Private Sub initializeDrawingArea()
-
-    $weatherDrawingArea = New NagatoWeatherDrawingArea(MainDrawingArea) As "WeatherDrawingArea"
-    
-End
-
 Public Sub Request(argLatitude As Float, argLongitude As Float)
     
     $observer = New Observer(NagatoWeatherCache) As "Asakura"
     NagatoWeatherCache.Activate(argLatitude, argLongitude)
-    $weatherDrawingArea.Longitude = argLongitude
+    $weatherDrawingArea.ChangeLongitude(argLongitude)
     
 End
 
 Public Sub _new()
 
-    initializeDrawingArea()
-    $starMenu = New NagatoStarMenu(StarButton)
+    $menuBar = New NagatoMenuBar(Me) As "Widget"
+    $weatherDrawingArea = New NagatoWeatherDrawingArea(Me) As "Widget"
     
 End
 
@@ -41,12 +35,6 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-
-    If Not Desktop.NetworkAvailable Then
-        Message.Warning("Network unavailable.")
-        Return
-    End If
-
     NagatoSettingsForm.Load(Me)
     Me.Border = NagatoSettingsForm.ShowBorder
     resetTitleBar()
@@ -59,60 +47,23 @@ Public Sub Form_Close()
 
 End
 
-Public Sub Form_Resize()
+Public Sub Widget_BackgroundColor(argBackground As Integer)
     
-    With MainDrawingArea
-        .H = Me.H
-        .W = Me.W
-        .X = 0
-        .Y = 0
-    End With
+    $menuBar.SetBackgroundColor(argBackground)
     
 End
 
-Public Sub WeatherDrawingArea_BackgroundColor(argBackground As Integer)
-    
-    MenuHBox.Background = argBackground
-    
-End
+Public Sub Widget_MoveFormTo(argX As Integer, argY As Integer)
 
-Public Sub MenuHBox_Enter()
+    If Not NagatoSettingsForm.ShowBorder Then Return
 
-    StarButton.Visible = True
+    Me.X = argX
+    Me.Y = argY 
 
 End
 
-Public Sub MenuHBox_Leave()
+Public Sub Widget_ChangeStarButtonVisible(argVisible As Boolean)
 
-    StarButton.Visible = False
-
-End
-
-Public Sub MainDrawingArea_MouseDrag()
-
-    If Me.Border = True Then Return
-
-    With Mouse
-        Me.X = .ScreenX - .StartX
-        Me.Y = .ScreenY - .StartY
-    End With
-
-End
-
-Public Sub MainDrawingArea_Enter()
-
-    StarButton.Visible = True
-
-End
-
-Public Sub MainDrawingArea_Leave()
-
-    StarButton.Visible = False
-
-End
-
-Public Sub Panel1_MouseDrag()
-
-    MainDrawingArea_MouseDrag()
+    $menuBar.SetStarButtonVisible(argVisible)
 
 End

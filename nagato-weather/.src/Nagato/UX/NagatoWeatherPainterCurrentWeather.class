@@ -1,0 +1,43 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $textPainter As NagatoWeatherPainterText
+Private $data As New NagatoWeatherCurrentData
+
+Private Sub drawWeatherInfomation()
+    
+    Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color($data.BackgroundColor)
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
+        Paint.DrawImage($data.Icon, ($drawingArea.W - $data.Icon.W) / 2, 16)
+        $textPainter.Draw($data.CurrentElement)
+    Paint.End()
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End
+
+Public Function Draw() As Integer
+    
+    $data.Reset()
+    drawWeatherInfomation()
+    
+    Return $data.BackgroundColor
+    
+End
+
+Public Sub ChangeLongitude(argLongitude As Float)
+    
+    $data.ChangeLongitude(argLongitude)
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $textPainter = New NagatoWeatherPainterText($drawingArea)
+
+End

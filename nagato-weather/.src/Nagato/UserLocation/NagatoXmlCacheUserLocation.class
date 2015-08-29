@@ -1,0 +1,51 @@
+' Gambas class file
+
+Property Read Cache As Collection
+
+Private $cache As New Collection
+Private $xml As New XmlDocument
+
+Private Sub setGeoElement(argName As String, argLatitude As Float, argLongitude As Float)
+    
+    Dim yukiGeoElement As New NagatoGeoElement(argName, argLatitude, argLongitude)
+    
+    If $cache.Exist(yukiGeoElement.VisibleName) Then Return
+    $cache.Add(yukiGeoElement, yukiGeoElement.VisibleName)
+     
+End
+
+Private Sub setAttributes(argNode As XmlNode)
+    
+    With argNode.Attributes
+        Debug .Count ' DO NOT remove this line to avoid bug.
+        If .["display_name"] = "0" Then Return
+        If .["display_name"] = "" Then Return
+        setGeoElement(.["display_name"], .["lat"], .["lon"])
+    End With
+    
+End
+
+Public Sub ResetCache(argBuffer As String)
+    
+    Dim yukiNode As XmlNode
+    
+    $cache.Clear()
+    $xml.FromString(argBuffer)
+    
+    For Each yukiNode In $xml.GetElementsByTagName("searchresults")[0].AllChildNodes
+        setAttributes(yukiNode)
+    Next
+    
+End
+
+Public Function _get(argVisibleName As String) As NagatoGeoElement
+    
+    Return $cache[argVisibleName]
+    
+End
+
+Private Function Cache_Read() As Collection
+
+    Return $cache
+
+End

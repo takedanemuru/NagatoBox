@@ -4,13 +4,11 @@ Private $grids As NagatoGridsHandlerForecast
 
 Private Sub refresh()
     
-    Dim yukiCount As Integer
+    Dim yukiDayFromToday As Integer
     Dim yukiDate As String
     
-    If Not NagatoWeatherCache.IsReady Then Return
-    
-    For yukiCount = 0 To 14
-        yukiDate = Format$(DateAdd(Now, gb.Day, yukiCount), "yyyy-mm-dd")
+    For yukiDayFromToday = 0 To 14
+        yukiDate = Format$(DateAdd(Now, gb.Day, yukiDayFromToday), "yyyy-mm-dd")
         $grids.SetData(yukiDate)
     Next
     
@@ -20,7 +18,7 @@ Public Sub Form_Open()
 
     Me.Center()
     $grids = New NagatoGridsHandlerForecast(WeatherforecastGrid)
-    refresh()
+    If NagatoWeatherCache.IsReady Then refresh()
 
 End
 

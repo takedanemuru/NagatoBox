@@ -1,0 +1,39 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+
+Private Sub drawBackground(argBackground As Integer)
+    
+    Paint.Brush = Paint.Color(argBackground)
+    Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+    Paint.Fill()
+    
+End
+
+Private Sub drawTextContent()
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Bold = True
+    Paint.DrawRichText("Please wait...", 0, 0, $drawingArea.W, $drawingArea.H, Align.Center)
+    
+End
+
+Public Function Draw() As Integer
+    
+    Dim yukiBackground As Integer = Color.DarkBlue
+    
+    Paint.Begin($drawingArea)
+        drawBackground(yukiBackground)
+        Paint.DrawImage(MikuruIcon.Get("question", 48).Image, ($drawingArea.W - 48) / 2, 16)
+        drawTextContent()
+    Paint.End()
+    
+    Return yukiBackground
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    
+End

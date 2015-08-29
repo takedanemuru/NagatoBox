@@ -1,0 +1,49 @@
+' Gambas class file
+
+Property Read Buffer As String
+
+Private $buffer As String
+Private $httpClient As New HttpClient As "HttpClient"
+Private $xml As New XmlDocument
+
+Event Finished
+
+Public Sub Activate(argLocation As String)
+    
+    Dim yukiLocation As String = Replace$(argLocation, " ", "+")
+    
+    $buffer = ""
+    
+    With $httpClient
+        .Async = True
+        .URL = Subst$(MikuruOpenStreetMap.NominatimApi, Quote$(yukiLocation))
+        .Timeout = 30
+        .Get()
+    End With
+    
+Catch 
+    Return 'to avoid changing property during downloading.
+    
+End
+
+Public Sub HttpClient_Read()
+     
+    Dim yukiLines As String = Read #Last, Lof(Last)
+     
+    $buffer &= yukiLines
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    $httpClient.Close()
+    
+    Raise Finished
+    
+End
+
+Private Function Buffer_Read() As String
+
+    Return $buffer
+
+End

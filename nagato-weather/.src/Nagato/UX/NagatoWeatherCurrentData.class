@@ -1,0 +1,42 @@
+' Gambas class file
+
+Property Read Icon As Image
+Property Read CurrentElement As NagatoWeatherElement
+Property Read BackgroundColor As Integer
+
+Private Const IconSize As Integer = 96
+
+Private $currentWeather As NagatoWeatherElement
+Private $longitude As Float
+Private $backgroundColor As Integer
+
+Public Sub ChangeLongitude(argLongitude As Integer)
+    
+    $longitude = argLongitude
+    
+End
+
+Public Sub Reset()
+    
+    $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
+    $backgroundColor = MikuruWeatherColor($currentWeather[MikuruWeatherKey.IconId], MikuruTime.IsDay($longitude))
+    
+End
+
+Private Function Icon_Read() As Image
+
+    Return MikuruWeatherIcon(MikuruTime.IsDay($longitude), $currentWeather[MikuruWeatherKey.IconId], IconSize)
+
+End
+
+Private Function CurrentElement_Read() As NagatoWeatherElement
+
+    Return $currentWeather
+
+End
+
+Private Function BackgroundColor_Read() As Integer
+
+    Return $backgroundColor
+
+End

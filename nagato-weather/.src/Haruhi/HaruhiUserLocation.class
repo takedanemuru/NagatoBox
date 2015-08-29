@@ -1,67 +1,26 @@
 ' Gambas class file
 
-Private $buffer As String
-Private $cache As New Collection
-Private $httpClient As New HttpClient As "HttpClient"
-Private $xml As New XmlDocument
-
-Private Sub parseBuffer()
-    
-    Dim yukiNode As XmlNode
-    Dim yukiGeoElement As NagatoGeoElement
-    
-    $xml.FromString($buffer)
-    
-    For Each yukiNode In $xml.GetElementsByTagName("searchresults")[0].AllChildNodes
-        With yukiNode.Attributes
-            Debug .Count
-            If .["display_name"] = "0" Then Continue ' avoid bug on gambas 3.6.0
-            If .["display_name"] = "" Then Continue
-            yukiGeoElement = New NagatoGeoElement(.["display_name"], .["lat"], .["lon"])
-            If Not ListView1.Exist(.["display_name"]) Then
-                ListView1.Add(.["display_name"], .["display_name"])
-                $cache.Add(yukiGeoElement, .["display_name"])
-            End If
-        End With
-    Next
-    
-End
-
-Private Sub startDownloading(argLocation As String)
-    
-     $buffer = ""
-    
-    With $httpClient
-        .URL = Subst$(MikuruOpenStreetMap.NominatimApi, Quote$(argLocation))
-        .Async = True
-        .Timeout = 20
-        .Get()
-    End With
-    
-End
-
-Public Sub HttpClient_Read()
-    
-    $buffer &= Read #Last, Lof(Last)
-    
-End
+Private $httpClient As New NagatoHttpClientUserLocation As "HttpClient"
+Private $cache As New NagatoXmlCacheUserLocation
 
 Public Sub HttpClient_Finished()
     
-    parseBuffer()
+    Dim yukiGeoElement As NagatoGeoElement
+    
+    $cache.ResetCache($httpClient.Buffer)
+    
+    For Each yukiGeoElement In $cache.Cache
+        LocationsListView.Add(yukiGeoElement.VisibleName, yukiGeoElement.VisibleName)
+    Next
     
 End
 
 Public Sub form_Open()
     
-    Dim yukiText As String = ("<b><tt>Location Name:</tt></b> &1<br><b><tt>Latitude:</tt></b> &2<br><b><tt>Longitude:</tt></b> &3")
-    
-    With NagatoSettings
-        yukiText = Subst$(yukiText, .UserLocationName, .UserLatitude, .UserLongitude)
+    With LocationLabel
+        .Text = NagatoSettings.UserLocationLabelText
+        .Height = .Font.RichTextHeight(.Text) + 16
     End With
-    
-    LocationLabel.Text = yukiText
-    LocationLabel.Height = LocationLabel.Font.RichTextHeight(yukiText) + 16
     
 End
 
@@ -69,9 +28,8 @@ Public Sub FindButtonBox_Click()
     
     With FindButtonBox
         If .Text = "" Then Return
-        ListView1.Clear()
-        $cache.Clear()
-        startDownloading(Replace$(.Text, " ", "+"))
+        LocationsListView.Clear()
+        $httpClient.Activate(.Text)
     End With
     
 End
@@ -82,19 +40,9 @@ Public Sub FindButtonBox_Activate()
 
 End
 
-Public Sub ListView1_Activate()
+Public Sub LocationsListView_Activate()
     
-    Dim yukiGeoElement As NagatoGeoElement = $cache[ListView1.Key]
-    
-    With NagatoSettings
-        .UserLocationName = yukiGeoElement.VisibleName
-        .UserLatitude = yukiGeoElement.Latitude
-        .UserLongitude = yukiGeoElement.Longitude
-    End With
-    
+    NagatoSettings.ChangeUserLocation($cache[LocationsListView.Key])
     Me.Close(MikuruDialog.ResponseApply)
-    
-Catch
-    Return
     
 End

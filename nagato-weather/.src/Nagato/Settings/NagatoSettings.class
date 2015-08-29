@@ -2,9 +2,19 @@
 
 Inherits NagatoSettingsCore
 
-Property UserLatitude As Float
-Property UserLongitude As Float
-Property UserLocationName As String
+Property Read UserLatitude As Float
+Property Read UserLongitude As Float
+Property Read UserLocationName As String
+Property Read UserLocationLabelText As String
+
+Public Sub ChangeUserLocation(argGeoElement As NagatoGeoElement)
+    
+    Me._$settings["geo/latitude"] = NagatoCipher.Encryption(argGeoElement.Latitude)
+    Me._$settings["geo/longitude"] = NagatoCipher.Encryption(argGeoElement.Longitude)
+    Me._$settings["geo/visible-name"] = NagatoCipher.Encryption(argGeoElement.VisibleName)
+    Me._$settings.Save()
+    
+End
 
 Private Function UserLatitude_Read() As Float
 
@@ -16,13 +26,6 @@ Private Function UserLatitude_Read() As Float
         Return CFloat(NagatoCipher.Decryption(yukiLatitude))
     Endif
 
-
-End
-
-Private Sub UserLatitude_Write(Value As Float)
-
-    Me._$settings["geo/latitude"] = NagatoCipher.Encryption(Value)
-    Me._$settings.Save()
 
 End
 
@@ -38,13 +41,6 @@ Private Function UserLongitude_Read() As Float
 
 End
 
-Private Sub UserLongitude_Write(Value As Float)
-
-    Me._$settings["geo/longitude"] = NagatoCipher.Encryption(Value)
-    Me._$settings.Save()
-
-End
-
 Private Function UserLocationName_Read() As String
 
     Dim yukiVisibleName As String = Me._$settings["geo/visible-name", ""]
@@ -57,9 +53,10 @@ Private Function UserLocationName_Read() As String
 
 End
 
-Private Sub UserLocationName_Write(Value As String)
+Private Function UserLocationLabelText_Read() As String
 
-    Me._$settings["geo/visible-name"] = NagatoCipher.Encryption(Value)
-    Me._$settings.Save()
+    Dim yukiTemplate As String = File.Load("Text/LocationLabelText")
+
+   Return Subst$(yukiTemplate, Me.UserLocationName, Me.UserLatitude, Me.UserLongitude)
 
 End

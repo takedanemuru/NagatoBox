@@ -1,0 +1,86 @@
+' Gambas class file
+
+Private $hBox As HBox
+Private $spacer As Panel
+Private $button As MenuButton
+Private $starMenu As NagatoStarMenu
+
+Event MoveFormTo(argX As Integer, argY As Integer)
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hBox = New HBox(argContainer) As "HBox"
+    
+    With $hBox
+        .H = 28
+    End With
+    
+End
+
+Private Sub initializePanel()
+    
+    $spacer = New Panel($hBox) As "Spacer"
+    
+    With $spacer
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeButton()
+    
+    $button = New MenuButton($hBox)
+    
+    With $button
+        .Expand = False
+        .W = $hBox.H
+        .Border = True
+        .Action = False
+        .Picture = MikuruIcon["star"]
+        .Visible = False
+    End With
+    
+    $starMenu = New NagatoStarMenu($button)
+    
+End
+
+Public Sub SetBackgroundColor(argColor As Integer)
+    
+    $hBox.Background = argColor
+    
+End
+
+Public Sub SetStarButtonVisible(argVisible As Boolean)
+    
+    $button.Visible = argVisible
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeHBox(argContainer)
+    initializePanel()
+    initializeButton()
+    
+End
+
+Public Sub HBox_Enter()
+
+    $button.Visible = True
+
+End
+
+Public Sub HBox_Leave()
+
+    $button.Visible = False
+
+End
+
+Public Sub Spacer_MouseDrag()
+
+    Dim yukiX As Integer = Mouse.ScreenX - Mouse.StartX
+    Dim yukiY As Integer = Mouse.ScreenY - Mouse.StartY
+    
+    Raise MoveFormTo(yukiX, yukiY)
+
+End
