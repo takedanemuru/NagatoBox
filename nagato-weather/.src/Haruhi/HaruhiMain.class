@@ -6,15 +6,7 @@ Private $observer As Observer
 
 Private Sub resetTitleBar()
     
-    Me.Title = Subst$(("Weather Information for &1"), NagatoSettings.UserLocationName)
-    
-End
-
-Public Sub Request(argLatitude As Float, argLongitude As Float)
-    
-    $observer = New Observer(NagatoWeatherCache) As "Asakura"
-    NagatoWeatherCache.Activate(argLatitude, argLongitude)
-    $weatherDrawingArea.ChangeLongitude(argLongitude)
+    Me.Title = Subst$(("Weather Information for &1"), NagatoSettingsLocation.UserLocationName)
     
 End
 
@@ -22,11 +14,13 @@ Public Sub _new()
 
     $menuBar = New NagatoMenuBar(Me) As "Widget"
     $weatherDrawingArea = New NagatoWeatherDrawingArea(Me) As "Widget"
+    $observer = New Observer(NagatoWeatherCache) As "Asakura"
     
 End
 
 Public Sub Asakura_Finished()
     
+    $weatherDrawingArea.ChangeLongitude(NagatoSettingsLocation.UserLongitude)
     $weatherDrawingArea.Refresh()
     resetTitleBar()
     
@@ -36,8 +30,9 @@ Public Sub Form_Open()
 
     Application.MainWindow = Me
     NagatoSettingsForm.Load(Me)
-    Me.Border = NagatoSettingsForm.ShowBorder
     resetTitleBar()
+    NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
+    $weatherDrawingArea.ChangeLongitude(NagatoSettingsLocation.UserLongitude)
 
 End
 
@@ -47,23 +42,13 @@ Public Sub Form_Close()
 
 End
 
-Public Sub Widget_BackgroundColor(argBackground As Integer)
+Public Sub Widget_Signal(argSignal As Integer, argValues As Variant[])
     
-    $menuBar.SetBackgroundColor(argBackground)
+    Select Case argSignal
+        Case MikuruSignal.ViewChangeBackground
+            $menuBar.SetBackgroundColor(argValues[0])
+        Case MikuruSignal.ViewChangeStarButtonVisible
+            $menuBar.SetStarButtonVisible(argValues[0])
+    End Select
     
-End
-
-Public Sub Widget_MoveFormTo(argX As Integer, argY As Integer)
-
-    If Not NagatoSettingsForm.ShowBorder Then Return
-
-    Me.X = argX
-    Me.Y = argY 
-
-End
-
-Public Sub Widget_ChangeStarButtonVisible(argVisible As Boolean)
-
-    $menuBar.SetStarButtonVisible(argVisible)
-
 End

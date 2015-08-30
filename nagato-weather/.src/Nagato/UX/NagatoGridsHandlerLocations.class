@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoGridsHandler
+
+Event Activate(argLocationName As String)
+
+Private Sub getRowColor() As Integer
+    
+    Return Color.Merge(Color.White, Color.Violet, 0.3)
+    
+End
+
+Public Sub _InitializeGridView() ' override
+    
+    With Me._$grids
+        .Grid = False
+        .Header = GridView.Horizontal
+        .Columns.Count = 3
+        Me._$grids.AutoResize = True
+        Me._SetColumnTitles(("Name"), ("Latitude"), ("Longitude"))
+        .Rows.Height = 24
+        .ScrollBar = Scroll.Vertical
+        .Expand = True
+    End With
+    
+    NagatoSettingsGrids.Load(Me._$grids)
+    
+End
+
+Public Sub SetData(argGeoElement As NagatoGeoElement)
+    
+    Inc Me._$grids.Rows.Count
+    
+    Me._SetColumn(0, Align.Left, argGeoElement.VisibleName)
+    Me._SetColumn(1, Align.Left, argGeoElement.Latitude)
+    Me._SetColumn(2, Align.Left, argGeoElement.Longitude)
+    
+    If Odd(Me._$grids.Rows.Max) Then Me._SetBackgroundColor(getRowColor())
+    
+End
+
+Public Sub Clear()
+    
+    Me._$grids.Clear()
+    
+End
+
+Public Sub GridView_Activate()
+    
+    Raise Activate(Me._$grids[Me._$grids.Row, 0].Text)
+    
+End

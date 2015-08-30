@@ -16,14 +16,14 @@ End
 
 Public Sub Form_Open()
 
-    Me.Center()
-    $grids = New NagatoGridsHandlerForecast(WeatherforecastGrid)
+    $grids = New NagatoGridsHandlerForecast(Me)
     If NagatoWeatherCache.IsReady Then refresh()
+    NagatoSettingsForm.Load(Me)
 
 End
 
 Public Sub Form_Close()
-    
-    NagatoSettingsGrids.Save(WeatherforecastGrid)
-    
+
+    NagatoSettingsForm.Save(Me)
+
 End

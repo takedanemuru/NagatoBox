@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read Hbox As HBox
+
+Private $hBox As HBox
+
+Public Sub SetBackgroundColor(argColor As Integer)
+    
+    $hBox.Background = argColor
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $hBox = New HBox(argContainer) As "HBox"
+    $hBox.H = 28
+    
+End
+
+Public Sub HBox_Enter()
+
+    Raise Signal(MikuruSignal.ViewChangeStarButtonVisible, [True])
+
+End
+
+Public Sub HBox_Leave()
+
+    Raise Signal(MikuruSignal.ViewChangeStarButtonVisible, [False])
+
+End
+
+Private Function Hbox_Read() As HBox
+
+    Return $hBox
+
+End

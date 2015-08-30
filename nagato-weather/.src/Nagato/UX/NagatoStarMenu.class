@@ -1,47 +1,18 @@
 ' Gambas class file
 
-Private $rootMenu As Menu
+Inherits NagatoButtonMenu
 
 Enum MenuNone, MenuSetLocation, MenuShowForecast, MenuToggleBorder, MenuAbout, MenuQuit
 
-Private Sub initializeRootMenu(argMenuButton As MenuButton)
-    
-    argMenuButton.Menu = "StarMenu"
-    
-    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
-    $rootMenu.Name = "StarMenu"
-    
-End
-
-Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName As String)
-    
-    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
-    
-    With yukiMenu
-        .Text = argText
-        .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon[argIconName]
-    End With
-    
-End
-
-Public Sub _new(argMenuButton As MenuButton)
-    
-    initializeRootMenu(argMenuButton)
-    addMenu("dummy", MenuNone)
-    
-End
-
 Public Sub RootMenu_Show()
     
-    $rootMenu.Children.Clear()
+    Me._$rootMenu.Children.Clear()
     
-    addMenu(("Set User Location"), MenuSetLocation, "user")
-    addMenu(("Forecast"), MenuShowForecast, "umbrella")
-    addMenu(("Show Border"), MenuToggleBorder, IIf(NagatoSettingsForm.ShowBorder, "button-check", Null))
-        addMenu("", MenuNone)
-    addMenu(("About"), MenuAbout, "star")
-    addMenu(("Quit"), MenuQuit, "button-cross")
+    Me._AddMenu(("Set User Location"), MenuSetLocation, "user")
+    Me._AddMenu(("Forecast"), MenuShowForecast, "information-balloon")
+        Me._AddMenu("", MenuNone)
+    Me._AddMenu(("About"), MenuAbout, "star")
+    Me._AddMenu(("Quit"), MenuQuit, "button-power")
     
 End
 
@@ -49,14 +20,10 @@ Public Sub MenuItem_Click()
     
     Select Case Last.Tag
         Case MenuSetLocation
-            If HaruhiUserLocation.ShowDialog() = MikuruDialog.ResponseApply Then
-                NagatoWeatherCache.Activate(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
-            Endif
+            If HaruhiUserLocation.ShowDialog() <> MikuruDialog.ResponseApply Then Return
+            NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
         Case MenuShowForecast
             HaruhiWeatherForecast.Show()
-        Case MenuToggleBorder
-            NagatoSettingsForm.ShowBorder = Not NagatoSettingsForm.ShowBorder
-            HaruhiMain.Border = NagatoSettingsForm.ShowBorder
         Case MenuAbout
             HaruhiAbout.Show()
         Case MenuQuit

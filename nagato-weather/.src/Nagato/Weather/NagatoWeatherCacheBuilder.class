@@ -1,0 +1,45 @@
+' Gambas class file
+
+Private $cache As New Collection
+Private $temporaryElement As NagatoWeatherElement
+
+Private Sub setAdditionalData(argData As XmlElement[], argTimeStamp As String)
+    
+    If Not Object.IsValid($temporaryElement) Then Return
+    If $temporaryElement[MikuruWeatherKey.HasIcon] Then Return
+    $temporaryElement.SetAdditionalData(argData)
+    $cache.Add($temporaryElement, argTimeStamp)
+    
+End
+
+Private Sub setData(argParentElement As XmlElement)
+    
+    Dim yukiChildElements As XmlElement[] = argParentElement.ChildElements[0].ChildElements
+
+    If yukiChildElements.Count > 4 Then
+        $temporaryElement = New NagatoWeatherElement
+        $temporaryElement.SetEssentialData(yukiChildElements)
+    Else
+        setAdditionalData(yukiChildElements, argParentElement.Attributes["to"])
+    Endif
+    
+End
+
+Private Sub parseXml(argElements As XmlElement[])
+    
+    Dim yukiXmlElement As XmlElement
+    
+    For Each yukiXmlElement In argElements
+        setData(yukiXmlElement)
+    Next
+    
+End
+
+Public Function Refresh(argElements As XmlElement[]) As Collection
+    
+    $cache.Clear()
+    parseXml(argElements)
+    
+    Return $cache
+    
+End

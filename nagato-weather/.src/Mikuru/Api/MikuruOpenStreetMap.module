@@ -5,6 +5,14 @@ Property Read Pattern As String
 Property Read Copyright As String
 Property Read NominatimApi As String
 
+Public Sub _get(argLocation As String) As String
+    
+    Dim yukiLocation As String = Replace$(argLocation, " ", "+")
+    
+    Return Subst$(Me.NominatimApi, Quote$(yukiLocation))
+    
+End
+
 Private Function Name_Read() As String
 
     Return "OpenStreetMap"

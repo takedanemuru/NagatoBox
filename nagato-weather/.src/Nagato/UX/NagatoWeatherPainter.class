@@ -1,0 +1,19 @@
+' Gambas class file
+
+Create Private
+
+Public _$drawingArea As DrawingArea
+
+Public Sub _DrawBackground(argBackground As Integer)
+    
+    Paint.Brush = Paint.Color(argBackground)
+    Paint.Rectangle(0, 0, Me._$drawingArea.W, Me._$drawingArea.H)
+    Paint.Fill()
+    
+End
+
+Public Sub Draw() As Integer
+    
+    ' virtual interface Must be overridden
+    
+End

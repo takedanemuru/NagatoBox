@@ -1,42 +1,15 @@
 ' Gambas class file
 
-Private $textRect As New Rect
+Private $textRect As New NagatoTextRectangle
 Private $drawingArea As DrawingArea
 Private $currentWeather As NagatoWeatherElement
-
-Private Sub setTextRect()
-    
-    With $textRect
-        .X = 8
-        .Y = 8
-        .W = $drawingArea.W - 16
-        .H = $drawingArea.H - 16
-    End With
-    
-End
+Private $conditions As New NagatoWeatherCondition
 
 Private Function getTitle() As String
     
-    'Dim yukiCondition As String = Upper$(NagatoWeatherCondition.GetText($currentWeather[MikuruWeatherKey.IconId]))
-    Dim yukiCondition As String = $currentWeather[MikuruWeatherKey.IconName]
+    Dim yukiCondition As String = $conditions[$currentWeather[MikuruWeatherKey.IconId]]
     
     Return Subst$("<h2>&1</h2>&2", yukiCondition, String$(8, "<br>"))
-    
-End
-
-Private Function getHeaders() As String
-    
-    Dim yukiReturn As String = "<h2> </h2><br>"
-    
-    yukiReturn &= "Temperature:<br>"
-    yukiReturn &= "Wind Speed:<br>"
-    yukiReturn &= "Wind Direction:<br>"
-    yukiReturn &= "Hummidity:<br>"
-    yukiReturn &= "Cloudiness:<br>"
-    yukiReturn &= "Pressure:<br>"
-    yukiReturn &= "Precipitation:<br>"
-    
-    Return yukiReturn
     
 End
 
@@ -61,13 +34,13 @@ End
 Public Sub Draw(argWeatherElement As NagatoWeatherElement)
     
     $currentWeather = argWeatherElement
-    setTextRect()
+    $textRect.Reset($drawingArea)
 
     Paint.Brush = Paint.Color(Color.White)
     Paint.Font.Bold = True
-        With $textRect
+        With $textRect.Rect
             Paint.DrawRichText(getTitle(), .X, .Y, .W, .H, Align.Center)
-            Paint.DrawRichText(getHeaders(), .X, .Y, .W, .H, Align.Left)
+            Paint.DrawRichText(File.Load("Text/ConditionHeaders"), .X, .Y, .W, .H, Align.Left)
             Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
         End With
     Paint.Fill()

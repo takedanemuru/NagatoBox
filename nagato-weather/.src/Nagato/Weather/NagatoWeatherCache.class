@@ -6,42 +6,10 @@ Property Read IsReady As Boolean
 
 Private $cache As New Collection
 Private $ready As Boolean = False
-Private $client As New NagatoWeatherHttpClient As "HttpClient"
+Private $client As New NagatoHttpClientWeather As "HttpClient"
+Private $builder As New NagatoWeatherCacheBuilder
 
 Event Finished
-
-Private Sub setAdditionalData(argWeatherElement As NagatoWeatherElement, argData As XmlElement[], argTimeStamp As String)
-    
-    If Not Object.IsValid(argWeatherElement) Then Return
-
-    If Not argWeatherElement[MikuruWeatherKey.HasIcon] Then
-        argWeatherElement.SetAdditionalData(argData)
-        $cache.Add(argWeatherElement, argTimeStamp)
-    End If 
-    
-End
-
-Private Sub refresh()
-    
-    Dim yukiXmlElement As XmlElement
-    Dim yukiWeatherElement As NagatoWeatherElement
-    Dim yukiChildElements As XmlElement[]
-    
-    For Each yukiXmlElement In $client.Elements
-        yukiChildElements = yukiXmlElement.ChildElements[0].ChildElements
-        If yukiChildElements.Count > 4 Then
-            yukiWeatherElement = New NagatoWeatherElement
-            yukiWeatherElement.SetEssentialData(yukiChildElements)
-        Else
-            setAdditionalData(yukiWeatherElement, yukiChildElements, yukiXmlElement.Attributes["to"])
-        Endif
-    Next
-    
-    $ready = True
-    
-    Raise Finished
-    
-End
 
 Public Sub Activate(argLatitude As Float, argLongtude As Float)
     
@@ -73,7 +41,11 @@ End
 
 Public Sub HttpClient_Finished()
     
-    refresh()
+    $cache.Clear()
+    $cache = $builder.Refresh($client.Elements)
+    $ready = True
+    
+    Raise Finished
     
 End
 

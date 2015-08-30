@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Read UserLatitude As Float
+Property Read UserLongitude As Float
+Property Read UserLocationName As String
+
+Private $cipher As New NagatoCipher
+
+Private Function getDecodedString(argSource As String, argDefault As String) As String
+    
+    Return IIf(argSource = "", argDefault, $cipher.Decryption(argSource))
+    
+End
+
+Private Function getDecodedNumber(argSource As String, argDefault As Float) As Float
+    
+    Return IIf(argSource = "", argDefault, CFloat($cipher.Decryption(argSource)))
+    
+End
+
+Public Sub ChangeUserLocation(argGeoElement As NagatoGeoElement)
+    
+    Me._$settings["geo/latitude"] = $cipher.Encryption(argGeoElement.Latitude)
+    Me._$settings["geo/longitude"] = $cipher.Encryption(argGeoElement.Longitude)
+    Me._$settings["geo/visible-name"] = $cipher.Encryption(argGeoElement.VisibleName)
+    Me._$settings.Save()
+    
+End
+
+Private Function UserLatitude_Read() As Float
+
+    Return getDecodedNumber(Me._$settings["geo/latitude", ""], 34.773632)
+
+End
+
+Private Function UserLongitude_Read() As Float
+
+    Return getDecodedNumber(Me._$settings["geo/longitude", ""], 135.3166017)
+
+End
+
+Private Function UserLocationName_Read() As String
+
+    Return getDecodedString(Me._$settings["geo/visible-name", ""], "Nishinomiya-City Japan")
+
+End

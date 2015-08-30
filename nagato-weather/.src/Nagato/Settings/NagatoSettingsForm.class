@@ -1,35 +1,23 @@
 ' Gambas class file
 
-Inherits NagatoSettingsCore
-
-Property ShowBorder As Boolean
+Inherits NagatoSettings
 
 Public Sub Load(argForm As Form)
     
-    argForm.X = Me._$settings["form/x", argForm.X]
-    argForm.Y = Me._$settings["form/y", argForm.Y]
-    argForm.Height = Me._$settings["form/height", argForm.Height]
-    argForm.Width = Me._$settings["form/width", argForm.Width]
+    argForm.X = Me._$settings[Subst$("form_&1/x", argForm.Name), argForm.X]
+    argForm.Y = Me._$settings[Subst$("form_&1/y", argForm.Name), argForm.Y]
+    argForm.Height = Me._$settings[Subst$("form_&1/height", argForm.Name), argForm.Height]
+    argForm.Width = Me._$settings[Subst$("form_&1/width", argForm.Name), argForm.Width]
     
 End
 
 Public Sub Save(argForm As Form)
     
-    Me._$settings["form/x"] = argForm.X
-    Me._$settings["form/y"] = argForm.Y
-    Me._$settings["form/height"] = argForm.Height
-    Me._$settings["form/width"] = argForm.Width
+    Me._$settings[Subst$("form_&1/x", argForm.Name)] = argForm.X
+    Me._$settings[Subst$("form_&1/y", argForm.Name)] = argForm.Y
+    Me._$settings[Subst$("form_&1/height", argForm.Name)] = argForm.Height
+    Me._$settings[Subst$("form_&1/width", argForm.Name)] = argForm.Width
     
-End
-
-Private Function ShowBorder_Read() As Boolean
-
-    Return Me._$settings["form/border", True]
-
-End
-
-Private Sub ShowBorder_Write(Value As Boolean)
-
-    Me._$settings["form/border"] = Value
-
+    Me._$settings.Save()
+    
 End

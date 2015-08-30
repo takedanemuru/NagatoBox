@@ -1,39 +1,26 @@
 ' Gambas class file
 
-Private $hBox As HBox
+Inherits NagatoWidget
+
+Private $container As NagatoMenuBarContainer
 Private $spacer As Panel
 Private $button As MenuButton
 Private $starMenu As NagatoStarMenu
 
-Event MoveFormTo(argX As Integer, argY As Integer)
-
-Private Sub initializeHBox(argContainer As Container)
-    
-    $hBox = New HBox(argContainer) As "HBox"
-    
-    With $hBox
-        .H = 28
-    End With
-    
-End
-
 Private Sub initializePanel()
     
-    $spacer = New Panel($hBox) As "Spacer"
-    
-    With $spacer
-        .Expand = True
-    End With
+    $spacer = New Panel($container.Hbox)
+    $spacer.Expand = True
     
 End
 
 Private Sub initializeButton()
     
-    $button = New MenuButton($hBox)
+    $button = New MenuButton($container.Hbox)
     
     With $button
         .Expand = False
-        .W = $hBox.H
+        .W = $container.Hbox.H
         .Border = True
         .Action = False
         .Picture = MikuruIcon["star"]
@@ -46,7 +33,7 @@ End
 
 Public Sub SetBackgroundColor(argColor As Integer)
     
-    $hBox.Background = argColor
+    $container.SetBackgroundColor(argColor)
     
 End
 
@@ -58,29 +45,8 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    initializeHBox(argContainer)
+    $container = New NagatoMenuBarContainer(argContainer) As "TFEI"
     initializePanel()
     initializeButton()
     
-End
-
-Public Sub HBox_Enter()
-
-    $button.Visible = True
-
-End
-
-Public Sub HBox_Leave()
-
-    $button.Visible = False
-
-End
-
-Public Sub Spacer_MouseDrag()
-
-    Dim yukiX As Integer = Mouse.ScreenX - Mouse.StartX
-    Dim yukiY As Integer = Mouse.ScreenY - Mouse.StartY
-    
-    Raise MoveFormTo(yukiX, yukiY)
-
 End

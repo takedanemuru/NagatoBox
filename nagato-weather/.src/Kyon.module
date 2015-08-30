@@ -3,10 +3,9 @@
 Public Sub Main()
     
     If Not Desktop.NetworkAvailable Then
-        Message.Warning("Network unavailable.")
+        Message.Warning(("YUKI.N > Network unavailable."))
     Else
         HaruhiMain.Show()
-        HaruhiMain.Request(NagatoSettings.UserLatitude, NagatoSettings.UserLongitude)
     End If
     
 End

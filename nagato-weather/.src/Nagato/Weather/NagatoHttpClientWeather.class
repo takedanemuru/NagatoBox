@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoHttpClient
+
+Property Read Elements As XmlElement[]
+
+Private $xmlDocument As New XmlDocument
+
+Public Sub Activate(argLatitude As Float, argLongtude As Float)
+    
+    Me._Connect(MikuruApiWeather[argLatitude, argLongtude])
+    
+End
+
+Public Sub _Finished() ' override
+    
+    $xmlDocument.FromString(Me._$buffer)
+    
+End
+
+Private Function Elements_Read() As XmlElement[]
+
+    Dim yukiElements As XmlElement[] = $xmlDocument.GetElementsByTagName("time")
+
+    Return yukiElements
+
+End

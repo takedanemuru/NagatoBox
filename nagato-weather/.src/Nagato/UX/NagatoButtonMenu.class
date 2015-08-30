@@ -1,0 +1,31 @@
+' Gambas class file
+
+Public _$rootMenu As Menu
+
+Public Sub _InitializeRootMenu(argMenuButton As MenuButton)
+    
+    argMenuButton.Menu = "StarMenu"
+    
+    Me._$rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    Me._$rootMenu.Name = "StarMenu"
+    
+End
+
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon[argIconName]
+    End With
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton)
+    
+    Me._InitializeRootMenu(argMenuButton)
+    Me._AddMenu("dummy", 0)
+    
+End

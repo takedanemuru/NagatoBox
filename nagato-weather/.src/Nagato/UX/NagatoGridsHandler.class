@@ -6,22 +6,10 @@ Public _$grids As GridView
 
 Public Sub _SetBackgroundColor(argColor As Integer)
     
-    Dim yukiCount As Integer
-    
-    For yukiCount = 0 To Me._$grids.Columns.Max
-        With Me._$grids[Me._$grids.Rows.Max, yukiCount]
-            .Background = argColor
-        End With
-    Next
-    
-End
-
-Public Sub _SetColumnWidth(...)
-    
     Dim yukiIndex As Integer
     
-    For yukiIndex = 0 To Param.Max
-        Me._$grids.Columns[yukiIndex].Width = Param[yukiIndex]
+    For yukiIndex = 0 To Me._$grids.Columns.Max
+        Me._$grids[Me._$grids.Rows.Max, yukiIndex].Background = argColor
     Next
     
 End
@@ -42,9 +30,40 @@ Public Sub _InitializeGridView()
     
 End
 
-Public Sub _new(argGrids As GridView)
+Public Sub _SetColumnWidth(argColumnsIndex As Integer, Optional argMargin As Integer = 16)
     
-    Me._$grids = argGrids
+    Dim yukiColumnHeaderWidth As Integer
+    Dim yukiRowValueWidth As Integer
+    
+    With Me._$grids
+        yukiColumnHeaderWidth = Application.Font.RichTextWidth(.Columns[argColumnsIndex].Text) + argMargin
+        yukiRowValueWidth = Application.Font.RichTextWidth(.[.Rows.Max, argColumnsIndex].Text) + argMargin
+        .Columns[argColumnsIndex].W = Max(yukiColumnHeaderWidth, yukiRowValueWidth)
+    End With
+    
+End
+
+Public Sub _SetColumn(argColumn As Integer, argAlign As Integer, argData As String)
+    
+    With Me._$grids
+        .[.Rows.Max, argColumn].Text = argData
+        .[.Rows.Max, argColumn].Alignment = argAlign
+    End With
+    
+    Me._SetColumnWidth(argColumn)
+    
+End
+
+Public Sub _SetPicture(argColumn As Integer, argPicture As Picture, argMargin As Integer)
+    
+    Me._$grids[Me._$grids.Rows.Max, argColumn].Picture = argPicture
+    Me._SetColumnWidth(argColumn, argMargin)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$grids = New GridView(argContainer) As "GridView"
     Me._InitializeGridView()
     
 End

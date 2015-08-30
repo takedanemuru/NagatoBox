@@ -1,12 +1,10 @@
 ' Gambas class file
 
+Inherits NagatoWidget
+
 Private $drawingArea As DrawingArea
 Private $painterCurrentWeather As NagatoWeatherPainterCurrentWeather
 Private $painterPleaseWait As NagatoWeatherPainterPleaseWait
-
-Event BackgroundColor(argColor As Integer)
-Event MoveFormTo(argX As Integer, argY As Integer)
-Event ChangeStarButtonVisible(argVisible As Boolean)
 
 Public Sub Refresh()
     
@@ -40,27 +38,18 @@ Public Sub MainDrawingArea_Draw()
         yukiBackground = $painterPleaseWait.Draw()
     End If
 
-    Raise BackgroundColor(yukiBackground)
-    
-End
-
-Public Sub MainDrawingArea_MouseDrag()
-    
-    Dim yukiX As Integer = Mouse.ScreenX - Mouse.StartX
-    Dim yukiY As Integer = Mouse.ScreenY - Mouse.StartY
-    
-    Raise MoveFormTo(yukiX, yukiY)
+    Raise Signal(MikuruSignal.ViewChangeBackground, [yukiBackground])
     
 End
 
 Public Sub MainDrawingArea_Enter()
 
-    Raise ChangeStarButtonVisible(True)
+    Raise Signal(MikuruSignal.ViewChangeStarButtonVisible, [True])
 
 End
 
 Public Sub MainDrawingArea_Leave()
 
-    Raise ChangeStarButtonVisible(False)
+    Raise Signal(MikuruSignal.ViewChangeStarButtonVisible, [False])
 
 End

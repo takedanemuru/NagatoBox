@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private $textLabel As TextLabel
+
+Private Sub initializeTextLabel(argContainer As Container)
+    
+    $textLabel = New TextLabel(argContainer)
+    
+    With $textLabel
+        .Padding = 16
+        .Foreground = Color.White
+        .Background = Color.Merge(Color.White, Color.Violet, 0.3)
+        .Text = getText()
+        .Height = .Font.RichTextHeight(.Text) + 32
+    End With
+    
+End
+
+Private Function getText() As String
+
+    Dim yukiTemplate As String = File.Load("Text/LocationLabelText")
+    Dim yukiLabelText As String 
+
+    With NagatoSettingsLocation
+        yukiLabelText = Subst$(yukiTemplate, .UserLocationName, .UserLatitude, .UserLongitude)
+    End With 
+
+    Return yukiLabelText
+
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeTextLabel(argContainer)
+    
+End

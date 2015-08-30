@@ -1,8 +1,6 @@
 ' Gambas class file
 
-Create Static
-
-Public Function GetText(argIndex As Integer) As String
+Public Sub _get(argIndex As Integer) As String
     
     Select Case argIndex
         Case 1 'Clear

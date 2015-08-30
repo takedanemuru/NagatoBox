@@ -2,6 +2,9 @@
 
 Private $httpClient As New NagatoHttpClientUserLocation As "HttpClient"
 Private $cache As New NagatoXmlCacheUserLocation
+Private $label As NagatoLocationTextLabel
+Private $searchBox As NagatoSearchBox
+Private $grids As NagatoGridsHandlerLocations
 
 Public Sub HttpClient_Finished()
     
@@ -10,39 +13,36 @@ Public Sub HttpClient_Finished()
     $cache.ResetCache($httpClient.Buffer)
     
     For Each yukiGeoElement In $cache.Cache
-        LocationsListView.Add(yukiGeoElement.VisibleName, yukiGeoElement.VisibleName)
+        $grids.SetData(yukiGeoElement)
     Next
     
 End
 
-Public Sub form_Open()
+Public Sub Form_Open()
     
-    With LocationLabel
-        .Text = NagatoSettings.UserLocationLabelText
-        .Height = .Font.RichTextHeight(.Text) + 16
-    End With
-    
-End
-
-Public Sub FindButtonBox_Click()
-    
-    With FindButtonBox
-        If .Text = "" Then Return
-        LocationsListView.Clear()
-        $httpClient.Activate(.Text)
-    End With
+    NagatoSettingsForm.Load(Me)
+    $label = New NagatoLocationTextLabel(Me)
+    $searchBox = New NagatoSearchBox(Me) As "SearchBox"
+    $grids = New NagatoGridsHandlerLocations(Me) As "Grids"
     
 End
 
-Public Sub FindButtonBox_Activate()
-
-    FindButtonBox_Click()
-
+Public Sub Form_Close()
+    
+    NagatoSettingsForm.Save(Me)
+    
 End
 
-Public Sub LocationsListView_Activate()
+Public Sub SearchBox_Activated(argQuery As String)
     
-    NagatoSettings.ChangeUserLocation($cache[LocationsListView.Key])
+    $grids.Clear()
+    $httpClient.Activate(argQuery)
+    
+End
+
+Public Sub Grids_Activate(argLocationName As String)
+    
+    NagatoSettingsLocation.ChangeUserLocation($cache[argLocationName])
     Me.Close(MikuruDialog.ResponseApply)
     
 End

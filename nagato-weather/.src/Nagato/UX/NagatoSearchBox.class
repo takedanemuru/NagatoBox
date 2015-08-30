@@ -1,0 +1,28 @@
+' Gambas class file
+
+Private $buttonBox As ButtonBox
+
+Event Activated(argQuery As String)
+
+Public Sub _new(argContainer As Container)
+    
+    $buttonBox = New ButtonBox(argContainer) As "ButtonBox"
+    
+    With $buttonBox
+        .H = 32
+        .Picture = MikuruIcon["search"]
+    End With
+    
+End
+
+Public Sub ButtonBox_Click()
+    
+    If $buttonBox.Text <> "" Then Raise Activated($buttonBox.Text)
+    
+End
+
+Public Sub ButtonBox_Activate()
+
+    ButtonBox_Click()
+
+End

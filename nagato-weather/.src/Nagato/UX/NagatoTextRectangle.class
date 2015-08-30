@@ -1,0 +1,22 @@
+' Gambas class file
+
+Property Read Rect As Rect
+
+Private $rectangle As New Rect
+
+Public Sub Reset(argDrawingArea As DrawingArea)
+    
+    With $rectangle
+        .X = 8
+        .Y = 8
+        .W = argDrawingArea.W - 16
+        .H = argDrawingArea.H - 16
+    End With
+    
+End
+
+Private Function Rect_Read() As Rect
+
+    Return $rectangle
+
+End
