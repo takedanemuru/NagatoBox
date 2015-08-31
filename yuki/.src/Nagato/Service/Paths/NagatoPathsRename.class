@@ -1,0 +1,13 @@
+' Gambas class file
+
+Public Sub _call(argCurrentDirectory As String, argSourceFileName As String)
+    
+    Dim yukiPath As String = NagatoUserInput.GetFirstArgumentWithoutNumber(["rename", "to"])
+    
+    If Exist(argCurrentDirectory &/ yukiPath) Then
+        MikuruDialog.Show("YUKI.N > Same path has been existed. I am going to abort your command.")
+    Else
+        Move (argCurrentDirectory &/ argSourceFileName) To (argCurrentDirectory &/ yukiPath)
+    Endif
+    
+End

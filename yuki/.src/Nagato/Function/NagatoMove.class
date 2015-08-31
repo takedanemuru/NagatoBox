@@ -3,6 +3,7 @@
 Inherits NagatoFunction
 
 Private $paths As New NagatoPaths
+Private $rename As New NagatoPathsRename
 
 Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when Break
     
@@ -15,6 +16,8 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
             Desktop.OpenTerminal($paths.CurrentDirectory)
         Else If .Has("up") Then
             $paths.Up()
+        Else If .Has("rename") And If .IsValidIndex($paths.Max) Then
+            $rename($paths.CurrentDirectory, $paths[.Index])
         Else If .Include(["break", "back", "escape", "esc"]) Then
             Return True
         Else If .CompleteMatch(["show", "hidden"]) Then

@@ -55,9 +55,26 @@ Public Function GetFirstArgument(argOptions As String[]) As String
         yukiInputs.Remove(yukiInputs.Find(yukiOption))
     Next
     
-    If yukiInputs.Count = 0 Then Return [""]
+    If yukiInputs.Count = 0 Then Return ""
     
     Return yukiInputs[0]
+    
+End
+
+Public Function GetFirstArgumentWithoutNumber(argOptions As String[]) As String
+    
+    Dim yukiResult As New String[]
+    Dim yukiInput As String
+    
+    For Each yukiInput In Me._$inputs
+        If argOptions.Exist(yukiInput) Then Continue
+        If IsNumber(yukiInput) Then Continue
+        yukiResult.Add(yukiInput)
+    Next
+    
+    If yukiResult.Count = 0 Then Return ""
+    
+    Return yukiResult[0]
     
 End
 

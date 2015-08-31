@@ -55,6 +55,12 @@ Public Function GetFirstArgument(argOptions As String[]) As String
     
 End
 
+Public Function GetFirstArgumentWithoutNumber(argOptions As String[]) As String 
+    
+    Return $catch.GetFirstArgumentWithoutNumber(argOptions)
+    
+End
+
 Private Function All_Read() As String[]
 
     Return $catch.Inputs
