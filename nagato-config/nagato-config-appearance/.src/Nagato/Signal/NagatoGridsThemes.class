@@ -6,9 +6,12 @@ Public Sub _InitializeGrids()
     
     Me._SetGridsFrame(("Widget Theme"))
     
+    setList(NagatoConfigFacade.ThemesList)
+    setCurrentTheme(NagatoConfigFacade.WidgetTheme)
+    
 End
 
-Public Sub SetCurrentTheme(argThemeName As String)
+Private Sub setCurrentTheme(argThemeName As String)
     
     Dim yukiIndex As Integer
     
@@ -20,7 +23,7 @@ Public Sub SetCurrentTheme(argThemeName As String)
     
 End
 
-Public Sub SetList(argList As String[])
+Private Sub setList(argList As String[])
     
     Dim yukiThemeName As String
     

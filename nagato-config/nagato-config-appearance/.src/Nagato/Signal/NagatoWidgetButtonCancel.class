@@ -1,17 +1,15 @@
 ' Gambas class file
 
-Inherits NagatoWidget
+Inherits NagatoWidgetButton
 
-Private $button As Button
+Public Sub _GetText() As String 'virtual interface
+    
+    Return ("Cancel")
+    
+End
 
-Public Sub _InitializeWidget(argContainer As Container) ' virtual
+Public Sub Button_Click()
     
-    $button = New Button(argContainer) As "Button"
-    
-    With $button
-        .W = 120
-        .Text = ("Cancel")
-        .Enabled = True
-    End With
+    HaruhiMain.Close()
     
 End

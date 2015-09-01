@@ -4,29 +4,18 @@ Private $toolbarThemes As NagatoToolbarWidgetThemes
 Private $gridsThemes As NagatoGridsThemes
 Private $applyButtons As NagatoToolbarApplyButtons
 
-Private $icons As NagatoIconSettingsHandler
-Private $cursors As NagatoCursorSettingsHandler
+Private $icons As NagatoSettingsHandlerIcon
+Private $cursors As NagatoSettingsHandlerCursor
 
-Private Sub initializeGridThemes()
-    
-    $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "Themes"
-    
-    With $gridsThemes
-        .SetList(NagatoConfigFacade.ThemesList)
-        .SetCurrentTheme(NagatoConfigFacade.WidgetTheme)
-    End With
-    
-End
 
 Public Sub _new()
 
     MainTabStrip.Index = 0
     $toolbarThemes = New NagatoToolbarWidgetThemes(MainTabStrip)
-    initializeGridThemes()
-    $applyButtons = New NagatoToolbarApplyButtons(Me)
-
-    $icons = New NagatoIconSettingsHandler(MainTabStrip) As "Themes"
-    $cursors = New NagatoCursorSettingsHandler(MainTabStrip) As "Themes"
+    $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "SettingsHandler"
+    $icons = New NagatoSettingsHandlerIcon(MainTabStrip) As "SettingsHandler"
+    $cursors = New NagatoSettingsHandlerCursor(MainTabStrip) As "SettingsHandler"
+    $applyButtons = New NagatoToolbarApplyButtons(Me) As "ApplyButtons"
 
 End
 
@@ -42,7 +31,7 @@ Public Sub Form_Close()
     
 End
 
-Public Sub Themes_Signal(argSignal As Integer, argValues As Variant[])
+Public Sub SettingsHandler_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.PropertyChanged Then $applyButtons.Activate()
     

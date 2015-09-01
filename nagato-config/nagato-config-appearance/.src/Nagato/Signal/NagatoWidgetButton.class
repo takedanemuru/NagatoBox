@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public Const ButtonWidth As Integer = 120
+
+Public _$button As Button
+
+Public Sub _GetText() As String 'virtual interface
+    
+    Return "YUKI.N > THIS IS ERROR"
+    
+End
+
+Public Sub _InitializeWidget(argContainer As Container) ' override
+    
+    Me._$button = New Button(argContainer) As "Button"
+    
+    With Me._$button
+        .W = Me.ButtonWidth
+        .Text = Me._GetText()
+        .Enabled = True
+    End With
+    
+End

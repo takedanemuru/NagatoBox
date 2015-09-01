@@ -1,24 +1,16 @@
 ' Gambas class file
 
-Inherits NagatoWidget
+Inherits NagatoWidgetButton
 
-Private $button As Button
-
-Public Sub _InitializeWidget(argContainer As Container) ' virtual
+Public Sub _GetText() As String
     
-    $button = New Button(argContainer) As "Button"
-    
-    With $button
-        .W = 120
-        .Text = ("Apply")
-        .Enabled = False
-    End With
+    Return ("Apply")
     
 End
 
 Public Sub Activate()
     
-    $button.Enabled = True
+    Me._$button.Enabled = True
     
 End
 

@@ -9,8 +9,8 @@ Private $applyButton As NagatoWidgetButtonApply
 Public Sub _InitializeWidgets()
     
     $spacer = New NagatoWidgetSpacer(Me._$HBox)
-    $cancelButton = New NagatoWidgetButtonCancel(Me._$HBox)
-    $applyButton = New NagatoWidgetButtonApply(Me._$HBox) 
+    $cancelButton = New NagatoWidgetButtonCancel(Me._$HBox) As "TFEI"
+    $applyButton = New NagatoWidgetButtonApply(Me._$HBox) As "TFEI"
     
 End
 

@@ -1,10 +1,9 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoSettingsHandler
 
-Private $tabStrip As TabStrip
 Private $iconView As IconView
-Private $grids As NagatoCursorThemeGrids
+Private $grids As NagatoGridsCursors
 
 Private Sub setIcons()
     
@@ -24,11 +23,8 @@ End
 
 Public Sub _new(argTabStrip As TabStrip)
     
-    $tabStrip = argTabStrip
-    $tabStrip.Index = 3
+    Me._SetTabstrip(argTabStrip, 3)
     
-    $grids = New NagatoCursorThemeGrids($tabStrip) As "TFEI"
-    
-    $tabStrip.Index = 0
+    $grids = New NagatoGridsCursors(Me._$tabStrip) As "TFEI"
     
 End

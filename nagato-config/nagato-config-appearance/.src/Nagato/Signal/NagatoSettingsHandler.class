@@ -1,0 +1,14 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoSignal
+
+Public _$tabStrip As TabStrip
+
+Public Sub _SetTabstrip(argTabstrip As TabStrip, argIndex As Integer)
+    
+    Me._$tabStrip = argTabstrip
+    Me._$tabStrip.Index = argIndex
+    
+End

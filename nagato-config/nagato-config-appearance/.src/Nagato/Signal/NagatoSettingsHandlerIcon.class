@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoSettingsHandler
+
+Private $iconView As NagatoIconViewIcons
+Private $grids As NagatoGridsIcons
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    Me._SetTabstrip(argTabStrip, 2)
+    $iconView = New NagatoIconViewIcons(argTabStrip)
+    $grids = New NagatoGridsIcons(Me._$tabStrip) As "TFEI"
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.PropertyChanged Then $iconView.Refresh(argValues[0])
+    
+    Raise Signal(argSignal, argValues)
+    
+End
