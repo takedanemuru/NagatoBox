@@ -1,0 +1,16 @@
+' Gambas class file
+
+Public Function _GetPathToSave(argExtend As String) As String
+    
+    Dialog.Title = ("Save file")
+    Dialog.Path = User.Home &/ "your_document." & argExtend
+    
+    Return IIf(Dialog.SaveFile(), "", Dialog.Path)
+    
+End
+
+Public Sub _ShowMessage(argTarget As String)
+    
+    Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
+    
+End

@@ -1,94 +1,73 @@
 ' Gambas class file
 
+Inherits NagatoSignal
+
 Property Read Headers As Collection
 Property Read Buffer As String
 Property Read Path As String
 
-Private $buffer As String
-Private $path As String
 Private $headers As New NagatoSourceHeaders
-
-Private Sub changePath(argPath As String)
-    
-    $path = argPath
-    MikuruMacro.RelativePath = argPath
-    
-End
+Private $buffer As New NagatoFileBufferHandler
 
 Public Function SetPath(argPath As String) As String
     
-    Dim yukiPath As String = IIf(Stat(argPath).Type = gb.Link, Stat(argPath).Link, argPath)
+    $buffer.SetPath(argPath)
+    $headers.Refresh($buffer.Text)
     
-    changePath(yukiPath)
-    $buffer = File.Load(yukiPath)
-    $headers.Refresh($buffer)
-    HaruhiMain.Title = File.Name(yukiPath)
-
-    Return $buffer
+    Return $buffer.Text
     
 End
 
 Public Sub New() As String
     
-    $buffer = ""
-    $path = ""
+    $buffer.New()
+    $headers.Refresh($buffer.Text)
     
-    Return $buffer
+    Return ""
     
 End
 
-Public Sub Open() As Boolean
+Public Function Open() As Boolean
     
-    Dialog.Title = ("Open file")
-    Dialog.Path = User.Home
-    If Dialog.OpenFile(False) Then Return False
-    If DesktopMime.FromFile(Dialog.Path).Type Not Begins "text" Then Return False
-    
-    Try $buffer = File.Load(Dialog.Path)
-    changePath(Dialog.Path)
-    Return True
-    
-Catch
-    Return False
+    If $buffer.Open() Then
+        $headers.Refresh($buffer.Text)
+        Return True
+    Else
+        Return False
+    Endif
     
 End
 
 Public Sub Save(argText As String)
     
-    If argText = $buffer Then Return
+    If argText = $buffer.Text Then Return
     
-    If $path = "" Then 
-        Me.SaveAs(argText)
-    Else
-        $buffer = argText
-        $headers.Refresh(argText)
-        File.Save($path, argText)
-    Endif
-    
+    $buffer.Save(argText)
+    $headers.Refresh(argText)
+
 End
 
 Public Sub SaveAs(argText As String)
     
-    Dialog.Path = Subst$("&1/your_file.md", User.Home)
-    Dialog.Title = ("Save file as ...")
-    If Dialog.SaveFile() Then Return
+    If $buffer.SaveAs(argText) Then $headers.Refresh($buffer.Text)
     
-    changePath(Dialog.Path)
-    $buffer = argText
+End
+
+Public Function EnsureSaved(argText As String)
     
-    File.Save($path, argText)
+    
     
 End
 
 Private Function Buffer_Read() As String
 
-    Return $buffer
+    Return $buffer.Text
 
 End
 
 Private Function Path_Read() As String
 
-    Return $path
+    Return $buffer.Path
 
 End
 

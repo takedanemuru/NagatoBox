@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoWidgetHandler
+
+Public Sub InsertBullets()
+    
+    Dim yukiText As String = Me._$widget.Selection.Text
+    
+    Me._$widget.Selection.Text = ("+ " & Replace$(yukiText, "\n", "\n+ "))
+    
+End
+
+Public Sub InsertNembers()
+    
+    Dim yukiText As String = Me._$widget.Selection.Text
+    Dim yukiIndex As Integer = 1
+    Dim yukiPosition As Integer
+    Dim yukiReplacement As String = "1. "
+    
+    For yukiPosition = 1 To String.Len(yukiText) 
+        If String.Mid(yukiText, yukiPosition, 1) = "\n" Then
+            Inc yukiIndex
+            yukiReplacement &= Subst$("\n&1. ", yukiIndex)
+        Else
+            yukiReplacement &= String.Mid(yukiText, yukiPosition, 1)
+        Endif
+    Next
+    
+    Me._$widget.Selection.Text = yukiReplacement
+    
+End

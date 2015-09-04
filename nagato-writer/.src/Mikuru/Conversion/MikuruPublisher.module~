@@ -11,7 +11,7 @@ End
 
 Private Sub showMessage(argTarget As String)
     
-        Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
+    Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))
     
 End
 
@@ -69,6 +69,17 @@ Private Sub toEpub()
     
 End
 
+Private Sub startSlideShow()
+    
+    If MikuruHtmlConverter.Source = "" Then
+        Message.Error(("YUKI.N > No Text."), ("OK"))
+    Else
+        HaruhiSlidePreview.Set(MikuruHtmlConverter.Source)
+        HaruhiSlidePreview.Show()
+    End If
+    
+End
+
 Public Sub _call(argSignal As Integer)
     
     If Not MikuruHtmlConverter.Source Then Return
@@ -82,6 +93,8 @@ Public Sub _call(argSignal As Integer)
             toOdt()
         Case MikuruSignal.PublishEpub3
             toEpub()
+        Case MikuruSignal.PublishDzslidePreview
+            startSlideShow()
     End Select
     
 End

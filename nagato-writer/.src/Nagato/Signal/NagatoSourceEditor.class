@@ -4,42 +4,12 @@ Inherits NagatoUxContainer
 
 Property Text As String
 
-Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
-
 Private $hBox As HBox
-Private $fileHandler As New NagatoFileHandler
+Private $fileHandler As New NagatoFileHandler As "TFEI"
 Private $headersList As NagatoSourceHeadersList
 Private $textArea As NagatoTextArea
+Private $appClosure As New NagatoAppClosure As "TFEI"
 Private $observer As Observer
-
-Private Function ensureSaved() As Boolean ' False means cancel to open file
-    
-    If $textArea.Text = $fileHandler.Buffer Then Return True
-    
-    Select Case HaruhiDialogClose.ShowDialog()
-        Case HaruhiDialogClose.ResponseCancel
-            Return False
-        Case HaruhiDialogClose.ResponseDiscard
-            Return True
-        Case HaruhiDialogClose.ResponseSave
-            Raise Signal(MikuruSignal.FileSave, Null)
-            Return True
-    End Select
-    
-End
-
-Private Sub insertImagePathRelative()
-    
-    Dim yukiPath As String
-    
-    With MikuruImageSelect
-        HaruhiSelectImage.Directory = IIf($fileHandler.Path, File.Dir($fileHandler.Path), User.Home)
-        If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
-        yukiPath = MikuruRelativePath($fileHandler.Path, .Path)
-        $textArea.Insert(Subst$("![NAGATO_MACRO_IMAGE](&1)", yukiPath))
-    End With
-
-End
 
 Public Sub _Initialize()
     
@@ -52,7 +22,7 @@ End
 
 Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     
-    If argEvent > (MikuruSignal.FileNone + 100) And If Not ensureSaved() Then Return
+    If argEvent > (MikuruSignal.FileNone + 100) And If Not $fileHandler.EnsureSaved($textArea.Text) Then Return
     
     Select Case argEvent
         Case MikuruSignal.FileNewMarkdown
@@ -62,9 +32,9 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
         Case MikuruSignal.FileOpen
             If $fileHandler.Open() Then $textArea.Text = $fileHandler.Buffer
         Case MikuruSignal.FileSave
-            If argEvent = MikuruSignal.FileSave Then $fileHandler.Save($textArea.Text)
+            $fileHandler.Save($textArea.Text)
         Case MikuruSignal.FileSaveAs
-            If argEvent = MikuruSignal.FileSaveAs Then $fileHandler.SaveAs($textArea.Text)
+            $fileHandler.SaveAs($textArea.Text)
     End Select
     
     If Not NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
@@ -73,9 +43,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
 
 End
 
-Public Sub EditEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
-    
-    If argArgs Then Debug argArgs.Count
+Public Sub EditEvent(argEvent As Integer, Optional argValues As Variant[])
     
     Select Case argEvent
         Case MikuruSignal.EditInsertBullets
@@ -83,42 +51,22 @@ Public Sub EditEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
         Case MikuruSignal.EditInsertNumbers
             $textArea.InsertNembers()
         Case MikuruSignal.EditInsertImage
-            With MikuruImageSelect
-                HaruhiSelectImage.Directory = IIf($fileHandler.Path, File.Dir($fileHandler.Path), User.Home)
-                If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
-                $textArea.Insert(Subst$("![image: &2](&1)", .Path, File.BaseName(.Path)))
-            End With
+            $textArea.InsertImageAbsolute($fileHandler.Path)
         Case MikuruSignal.EditInsertImageRelative
-            insertImagePathRelative()
+            $textArea.InsertImagePathRelative($fileHandler.Path)
         Case MikuruSignal.EditInsertUrl
-            $textArea.Insert("[title](http://www.somewhere.com)")
+            $textArea.InsertUrlTemplate()
+        Case MikuruSignal.EditMoveToLine
+            $textArea.MoveToLine(argValues[0])
     End Select
     
 End
 
 Public Sub GetSaveStatus() As Integer
     
-    If $textArea.Text = $fileHandler.Buffer Then Return Me.ResponseHasBeenSaved
-    
-    Select Case HaruhiDialogClose.ShowDialog()
-        Case HaruhiDialogClose.ResponseCancel
-            Return Me.ResponseCancel
-        Case HaruhiDialogClose.ResponseDiscard
-            Return Me.ResponseDiscard
-        Case HaruhiDialogClose.ResponseSave
-            Raise Signal(MikuruSignal.FileSave, Null)
-            Return Me.ResponseSaved
-    End Select
-    
-End
+    If $textArea.Text = $fileHandler.Buffer Then Return NagatoAppClosure.ResponseHasBeenSaved
 
-Public Sub TFEI_SIgnal(argEvent As Integer, argValues As Variant[])
-    
-    If argEvent = MikuruSignal.ViewMoveToLine Then
-        $textArea.MoveToLine(argValues[0])
-    Else
-        Me._RaiseSignal(argEvent, argValues)
-    End If
+    Return $appClosure.GetStatus()
     
 End
 

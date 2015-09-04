@@ -1,0 +1,87 @@
+' Gambas class file
+
+Property Read Text As String
+Property Read Path As String
+
+Private $path As String
+Private $buffer As String
+
+Private Sub changePath(argPath As String)
+    
+    $path = argPath
+    MikuruMacro.RelativePath = argPath
+    
+End
+
+Public Function SetPath(argPath As String) As String
+    
+    Dim yukiPath As String = IIf(Stat(argPath).Type = gb.Link, Stat(argPath).Link, argPath)
+    
+    changePath(yukiPath)
+    $buffer = File.Load(yukiPath)
+    HaruhiMain.Title = File.Name(yukiPath)
+
+    Return $buffer
+    
+End
+
+Public Sub New()
+    
+    $buffer = ""
+    $path = ""
+    HaruhiMain.Title = ("Untitled.md")
+    
+End
+
+Public Function Open() As Boolean
+    
+    Dialog.Title = ("Open file")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return False
+    If DesktopMime.FromFile(Dialog.Path).Type Not Begins "text" Then Return False
+    
+    $buffer = File.Load(Dialog.Path)
+    changePath(Dialog.Path)
+    Return True
+    
+Catch
+    Return False
+    
+End
+
+Public Sub Save(argText As String)
+    
+    If $path = "" Then 
+        Me.SaveAs(argText)
+    Else
+        $buffer = argText
+        File.Save($path, argText)
+    Endif
+    
+End
+
+Public Function SaveAs(argText As String) As Boolean
+    
+    Dialog.Path = Subst$("&1/your_file.md", User.Home)
+    Dialog.Title = ("Save file as ...")
+    If Dialog.SaveFile() Then Return False
+    
+    changePath(Dialog.Path)
+    $buffer = argText
+    File.Save($path, argText)
+    
+    Return True
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Function Text_Read() As String
+
+    Return $buffer
+
+End

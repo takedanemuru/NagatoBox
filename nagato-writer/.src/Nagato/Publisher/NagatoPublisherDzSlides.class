@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoPublisher
+
+Public Sub Publish()
+    
+    HaruhiSlidePreview.Set(MikuruHtmlConverter.Source)
+    HaruhiSlidePreview.Show()
+    
+End

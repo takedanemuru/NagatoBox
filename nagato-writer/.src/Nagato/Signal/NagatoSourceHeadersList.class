@@ -54,6 +54,6 @@ End
 
 Public Sub ListView_Activate()
     
-    Raise Signal(MikuruSignal.ViewMoveToLine, [CInt(Last.Key)])
+    Raise Signal(MikuruSignal.EditMoveToLine, [CInt(Last.Key)])
     
 End

@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
+
+Public Sub GetStatus() As Integer
+    
+    Select Case HaruhiDialogClose.ShowDialog()
+        Case HaruhiDialogClose.ResponseCancel
+            Return Me.ResponseCancel
+        Case HaruhiDialogClose.ResponseDiscard
+            Return Me.ResponseDiscard
+        Case HaruhiDialogClose.ResponseSave
+            Raise Signal(MikuruSignal.FileSave, Null)
+            Return Me.ResponseSaved
+    End Select
+    
+End

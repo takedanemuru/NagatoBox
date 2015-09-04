@@ -1,0 +1,14 @@
+' Gambas class file
+
+Inherits NagatoPublisher
+
+Public Sub Publish()
+    
+    Dim yukiTarget As String = Me._GetPathToSave("html")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
+    
+    Copy yukiSource To yukiTarget
+    
+    Me._ShowMessage(yukiTarget)
+    
+End

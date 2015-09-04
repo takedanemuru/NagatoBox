@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoWidgetHandler
+
+Public Sub InsertImagePathRelative(argCurrentPath As String)
+    
+    Dim yukiPath As String
+    
+    With MikuruImageSelect
+        HaruhiSelectImage.Directory = IIf(argCurrentPath, File.Dir(argCurrentPath), User.Home)
+        If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
+        yukiPath = MikuruRelativePath(argCurrentPath, .Path)
+        Me._$widget.Insert(Subst$("![NAGATO_MACRO_IMAGE](&1)", yukiPath))
+    End With
+    
+End
+
+Public Sub InsertImageAbsolute(argCurrentPath As String)
+    
+    With MikuruImageSelect
+        HaruhiSelectImage.Directory = IIf(argCurrentPath, File.Dir(argCurrentPath), User.Home)
+        If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
+        Me._$widget.Insert(Subst$("![image: &2](&1)", .Path, File.BaseName(.Path)))
+    End With
+    
+End

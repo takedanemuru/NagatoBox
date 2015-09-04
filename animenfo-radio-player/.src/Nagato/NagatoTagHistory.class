@@ -1,0 +1,29 @@
+' Gambas class file
+
+Private Const HistorySize As Integer = 10
+
+Property Read History As String[]
+Property Read Max As Integer
+
+Private $history As New String[]
+
+Public Sub Push(argTag As String, argValue As Variant)
+    
+    Dim yukiItem As String = Subst$("&1 : &2", argTag, CString(argValue))
+    
+    $history.Add(yukiItem, 0)
+    $history.Resize(HistorySize)
+    
+End
+
+Private Function History_Read() As String[]
+
+    Return $history
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $history.Max
+
+End

@@ -1,0 +1,79 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Property Read Text As String
+Property Read DialogPosition As Point
+Property Read TextArea As TextArea
+
+Private $textArea As TextArea
+
+Public Sub _initialize() ' override
+    
+    $textArea = New TextArea(Me._$parentContainer) As "TextArea"
+    
+    With $textArea
+        .Expand = True
+        .Foreground = Color.Violet
+        .Wrap = True
+        .SetFocus()
+    End With
+    
+End
+
+Public Sub Insert(argText As String)
+    
+    $textArea.Insert(argText)
+    
+End
+
+Public Sub MoveToLine(argLine As Integer)
+    
+    $textArea.SetFocus()
+    Try $textArea.Line = argLine + Int($textArea.H / $textArea.Font.H * 0.7)
+    If Not Error Then $textArea.EnsureVisible()
+    $textArea.Line = argLine
+
+Finally
+    $textArea.EnsureVisible()
+     
+End
+
+Public Sub SetTextWithNoSignal(argText As String)
+    
+    Object.Lock($textArea)
+        $textArea.Text = argText
+        $textArea.SetFocus()
+        $textArea.Line = 0
+    Object.Unlock($textArea)
+    
+End
+
+Public Sub TextArea_Change()
+    
+    If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $textArea.Text
+
+End
+
+Private Function DialogPosition_Read() As Point
+
+    Dim yukiPoint As New Point
+
+    yukiPoint.X = $textArea.ScreenX + $textArea.W + 64
+    yukiPoint.Y = $textArea.Y + 64
+
+    Return yukiPoint
+
+End
+
+Private Function TextArea_Read() As TextArea
+
+    Return $textArea
+
+End

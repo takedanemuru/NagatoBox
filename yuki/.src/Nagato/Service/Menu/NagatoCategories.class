@@ -7,20 +7,22 @@ Private $all As New String[]
 Public Sub _new()
     
     $all.Add("Nagato")
-    $all.Add("AudioVideo")
+
     $all.Add("Audio")
-    $all.Add("Video")
-    $all.Add("Science")
+    $all.Add("AudioVideo")
     $all.Add("Development")
     $all.Add("Education")
     $all.Add("Game")
-    $all.Add("Settings")
     $all.Add("Graphics")
+    $all.Add("Media")
     $all.Add("Network")
     $all.Add("Office")
+    $all.Add("Science")
+    $all.Add("Settings")
     $all.Add("System")
     $all.Add("Utility")
-    $all.Add("Media")
+    $all.Add("Video")
+
     $all.Add("All")
     
 End

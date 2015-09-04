@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoPublisher
+
+Public Sub Publish()
+    
+    Dim yukiTarget As String = Me._GetPathToSave("odt")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
+
+    If Not yukiTarget Then Return
+
+    Exec ["pandoc", yukiSource, "-o", yukiTarget] Wait
+
+    Me._ShowMessage(yukiTarget)
+    
+End

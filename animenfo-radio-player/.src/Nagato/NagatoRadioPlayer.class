@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $player As New MediaPlayer As "MediaPlayer"
+
+Event TagList(argTagList As MediaTagList)
+
+Public Sub Play()
+    
+    $player.ProgressiveDownload = True
+    $player.URL = "http://158.69.9.93:443/"
+    '$player.URL = "http://198.49.76.229:8902"
+    $player.Play()
+    
+Catch
+    Print Error.Text
+    
+End
+
+Public Sub MediaPlayer_Tag(argTagList As MediaTagList)
+    
+    Raise TagList(argTagList)
+    
+End

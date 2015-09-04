@@ -1,0 +1,34 @@
+' Gambas class file
+
+Private $html As New NagatoPublisherHtml
+Private $pdf As New NagatoPublisherPdf
+Private $odt As New NagatoPublisherOdt
+Private $epub As New NagatoPublisherEpub
+Private $dzSlides As New NagatoPublisherDzSlides
+
+Private Sub publish(argSignal As Integer)
+    
+    Select Case argSignal
+        Case MikuruSignal.PublishHtml
+            $html.Publish()
+        Case MikuruSignal.PublishPdf
+            $pdf.Publish()
+        Case MikuruSignal.PublishOdt
+            $odt.Publish()
+        Case MikuruSignal.PublishEpub3
+            $epub.Publish()
+        Case MikuruSignal.PublishDzslidePreview
+            $dzSlides.Publish()
+    End Select
+    
+End
+
+Public Sub _call(argSignal As Integer)
+    
+    If Not MikuruHtmlConverter.Source Then
+        Message(("YUKI.N > No source text."), ("OK"))
+    Else
+        publish(argSignal)
+    End If
+    
+End

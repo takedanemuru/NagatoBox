@@ -3,6 +3,7 @@
 Private $menuPanel As NagatoMenuPanel
 Private $sourceEditor As NagatoSourceEditor
 Private $previewer As NagatoPreviewer
+Private $publisher As New NagatoPublisherFacade
 
 Private Sub appEvent(argEvent As Integer)
     
@@ -39,16 +40,18 @@ End
 
 Public Sub Form_Close()
     
-    Select Case $sourceEditor.GetSaveStatus()
-        Case $sourceEditor.ResponseHasBeenSaved, $sourceEditor.ResponseDiscard
-            NagatoSettings.SaveFormSettings(Me)
-            Message.Info(("YUKI.N > I as indivisual also desire you to return... "), ("OK"))
-        Case $sourceEditor.ResponseSaved
-            NagatoSettings.SaveFormSettings(Me)
-            Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
-        Case $sourceEditor.ResponseCancel
-            Stop Event
-    End Select
+    With NagatoAppClosure
+        Select Case $sourceEditor.GetSaveStatus()
+            Case .ResponseHasBeenSaved, .ResponseDiscard
+                NagatoSettings.SaveFormSettings(Me)
+                Message.Info(("YUKI.N > I as indivisual also desire you to return... "), ("OK"))
+            Case .ResponseSaved
+                NagatoSettings.SaveFormSettings(Me)
+                Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
+            Case .ResponseCancel
+                Stop Event
+        End Select
+    End With
     
 End
 
@@ -58,11 +61,7 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
         Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999
             $sourceEditor.FileEvent(argEvent, argArgs)
         Case MikuruSignal.PublishNone To MikuruSignal.PublishNone + 999
-            If argEvent = MikuruSignal.PublishDzslidePreview Then
-                MikuruDzSlide($sourceEditor.Text)
-            Else
-                MikuruPublisher(argEvent)
-            End If
+            $publisher(argEvent)
         Case MikuruSignal.ViewPreview
             $previewer.Refresh($sourceEditor.Text)
         Case MikuruSignal.EditNone To MikuruSignal.EditNone + 999

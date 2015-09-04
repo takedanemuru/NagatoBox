@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoPublisher
+
+Public Sub Publish()
+    
+    Dim yukiTarget As String = Me._GetPathToSave("pdf")
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
+    
+    If Not yukiTarget Then Return
+
+    Exec ["wkhtmltopdf", "--encoding", "UTF-8", "--page-size", "A4", "--dpi", "300", yukiSource, yukiTarget] Wait
+
+    Me._ShowMessage(yukiTarget)
+    
+End
