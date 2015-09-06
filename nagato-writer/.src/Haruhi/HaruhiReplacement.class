@@ -1,11 +1,8 @@
 ' Gambas class file
 
-Event SignalStringTag(argTag As String, argValues As Variant[])
-Event Opened
-
 Public Sub Form_Open()
 
-    Raise Opened
+    NagatoSearchAndReplacementSignal.RaiseOpened()
 
 End
 
@@ -13,6 +10,6 @@ Public Sub SearchButtons_Click()
 
     If FindBox.Text = "" Then Return
 
-    Raise SignalStringTag(Last.Tag, [FindBox.Text, ReplacementBox.Text])
+    NagatoSearchAndReplacementSignal.RaiseQuery(Last.Tag, [FindBox.Text, ReplacementBox.Text])
 
 End

@@ -69,6 +69,7 @@ Public Sub Reload()
     If NagatoSettings.LastDirectory = "" Then Return
     
     sortGrids()
+    Raise Signal(MikuruSignal.ViewRefresh, [Subst$($data.Message, NagatoSettings.LastDirectory)])
     
 End
 

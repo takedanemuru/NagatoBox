@@ -2,7 +2,7 @@
 
 { Form Form
   MoveScaled(0,0,74,61)
-  Icon = Picture["Pictures/nagato_icons/button-synchronize.png"]
+  Icon = Picture["Pictures/icons/search.png"]
   Picture = Picture["Pictures/Dounidemo.jpg"]
   Resizable = False
   { FindBox TextBox
@@ -14,7 +14,7 @@
   { PrevButton Button SearchButtons
     Name = "PrevButton"
     MoveScaled(1,56,17,4)
-    Tag = "Previous"
+    Tag = "Back"
     Text = ("Previous")
   }
   { NextButton Button SearchButtons

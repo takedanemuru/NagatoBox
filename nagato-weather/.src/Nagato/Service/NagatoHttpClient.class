@@ -11,6 +11,8 @@ Event Finished
 
 Public Sub _Connect(argUrl As String)
     
+    Me._$buffer = ""
+    
     With Me._$httpClient
         .Async = True
         .URL = argUrl
@@ -23,7 +25,7 @@ Catch
     
 End
 
-Public Sub _Finished()
+Public Sub _OptionalAbstractOnFinished()
     
     
     
@@ -40,7 +42,7 @@ End
 Public Sub HttpClient_Finished()
     
     Me._$httpClient.Close()
-    Me._Finished()
+    Me._OptionalAbstractOnFinished()
     
     Raise Finished
     

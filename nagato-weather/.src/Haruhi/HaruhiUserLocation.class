@@ -6,15 +6,27 @@ Private $label As NagatoLocationTextLabel
 Private $searchBox As NagatoSearchBox
 Private $grids As NagatoGridsHandlerLocations
 
-Public Sub HttpClient_Finished()
+Private Sub refreshGridView()
     
     Dim yukiGeoElement As NagatoGeoElement
     
-    $cache.ResetCache($httpClient.Buffer)
+    $grids.Clear()
     
     For Each yukiGeoElement In $cache.Cache
         $grids.SetData(yukiGeoElement)
     Next
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    $cache.ResetCache($httpClient.Buffer)
+
+    If $cache.Cache.Count = 0 Then 
+        Message.Error(("YUKI.N > Location not found."), ("OK"))
+    Else
+        refreshGridView()
+    Endif
     
 End
 
@@ -33,16 +45,15 @@ Public Sub Form_Close()
     
 End
 
-Public Sub SearchBox_Activated(argQuery As String)
-    
-    $grids.Clear()
-    $httpClient.Activate(argQuery)
-    
-End
-
 Public Sub Grids_Activate(argLocationName As String)
     
     NagatoSettingsLocation.ChangeUserLocation($cache[argLocationName])
     Me.Close(MikuruDialog.ResponseApply)
+    
+End
+
+Public Sub SearchBox_Activated(argQuery As String)
+    
+    $httpClient(argQuery)
     
 End

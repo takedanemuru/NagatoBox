@@ -12,7 +12,7 @@ Only watch this git from a distance in a well-lit room.
 
 ## Dependency
 
-Gambas3 3.7 or later varsion
+Gambas3 3.8 or later varsion
 
 ## Ubuntu and its variants
 

@@ -6,7 +6,7 @@ Public Sub _get(argIndex As Integer) As String
         Case 1 'Clear
             Return ("Clear")
         Case 2  'Fair
-            Return ("Mostly Sunny")
+            Return ("Fair")
         Case 3  'Partly cloudy
             Return ("Partly Cloudy")
         Case 4  'Cloudy
@@ -49,8 +49,52 @@ Public Sub _get(argIndex As Integer) As String
             Return ("Rain Showers and Thunder")
         Case 23 'Sleet Showers and Thunder
             Return ("Sleet Showers and Thunder")
+        Case 24 'DrizzleThunderSun
+            Return ("Drizzle Thunder Sun")
+        Case 25 'RainThunderSun
+            Return ("Rain Thunder Sun")
+        Case 26 'LightSleetThunderSun
+            Return ("Light Sleet Thunder Sun")
+        Case 27 'HeavySleetThunderSun
+            Return ("Heavy Sleet Thunder Sun")
+        Case 28 'LightSnowThunderSun
+            Return ("Light Snow Thunder Sun")
+        Case 29 'HeavySnowThunderSun
+            Return ("Heavy Snow Thunder Sun")
+        Case 30 'DrizzleThunder
+            Return ("Drizzle Thunder")
+        Case 31 'LightSleetThunder
+            Return ("Light Sleet Thunder")
+        Case 32 'HeavySleetThunder
+            Return ("Heavy Sleet Thunder")
+        Case 33 'LightSnowThunder
+            Return ("Light Snow Thunder")
+        Case 34 'HeavySnowThunder
+            Return ("Heavy Snow Thunder")
+        Case 40 'DrizzleSun
+            Return ("Drizzle Sun")
+        Case 41 'RainSun
+            Return ("Rain Sun")
+        Case 42 'LightSleetSun
+            Return ("Light Sleet Sun")
+        Case 43 'HeavySleetSun
+            Return ("Heavy Sleet Sun")
+        Case 44 'LightSnowSun
+            Return ("Light Snow Sun")
+        Case 45 'HeavysnowSun
+            Return ("Heavy Snow Sun")
+        Case 46 'Drizzle
+            Return ("Drizzle")
+        Case 47 'LightSleet
+            Return ("Light Sleet")
+        Case 48 'HeavySleet
+            Return ("Heavy Sleet")
+        Case 49 'LightSnow
+            Return ("Light Snow")
+        Case 50 'HeavySnow
+            Return ("Heavy Snow")
         Default 'Unknown
-            Return ("Unknown")
+            Return ("Unknown Condition")
     End Select
     
 End

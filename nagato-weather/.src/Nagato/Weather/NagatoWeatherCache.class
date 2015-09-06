@@ -6,7 +6,7 @@ Property Read IsReady As Boolean
 
 Private $cache As New Collection
 Private $ready As Boolean = False
-Private $client As New NagatoHttpClientWeather As "HttpClient"
+Private $htmlClient As New NagatoHttpClientWeather As "HttpClient"
 Private $builder As New NagatoWeatherCacheBuilder
 
 Event Finished
@@ -14,7 +14,7 @@ Event Finished
 Public Sub Activate(argLatitude As Float, argLongtude As Float)
     
     $ready = False
-    $client.Activate(argLatitude, argLongtude)
+    $htmlClient(argLatitude, argLongtude)
     
 End
 
@@ -42,7 +42,7 @@ End
 Public Sub HttpClient_Finished()
     
     $cache.Clear()
-    $cache = $builder.Refresh($client.Elements)
+    $cache = $builder.Refresh($htmlClient.Elements)
     $ready = True
     
     Raise Finished

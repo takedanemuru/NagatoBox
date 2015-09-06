@@ -2,6 +2,8 @@
 
 Inherits NagatoGridsHandler
 
+Private $conditons As New NagatoWeatherCondition
+
 Private Sub getIcon(argCount As Integer, argElement As NagatoWeatherElement) As Picture
     
     Dim yukiIconId As Integer = argElement[MikuruWeatherKey.IconId]
@@ -26,7 +28,7 @@ Private Sub setRowData(argHour As Integer, argTime As String)
 
     With MikuruWeatherKey
         Me._SetColumn(0, Align.Left, MikuruReadableTime(argTime))
-        Me._SetColumn(1, Align.Left, yukiElement[.IconName])
+        Me._SetColumn(1, Align.Left, $conditons[yukiElement[.IconId]])
         Me._SetPicture(1, getIcon(argHour, yukiElement), 96)
         Me._SetColumn(2, Align.Right, Subst$("&1°C", yukiElement[.Temperature]))
         Me._SetColumn(3, Align.Right, Subst$("&1mm", yukiElement[.Precipitation]))
@@ -50,7 +52,7 @@ Public Sub SetData(argDate As String)
     
 End
 
-Public Sub _InitializeGridView() ' override
+Public Sub _AbstractOnInitializeGridView() ' override
     
     With Me._$grids
         .Grid = False

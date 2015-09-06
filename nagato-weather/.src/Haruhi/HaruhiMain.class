@@ -4,12 +4,6 @@ Private $menuBar As NagatoMenuBar
 Private $weatherDrawingArea As NagatoWeatherDrawingArea
 Private $observer As Observer
 
-Private Sub resetTitleBar()
-    
-    Me.Title = Subst$(("Weather Information for &1"), NagatoSettingsLocation.UserLocationName)
-    
-End
-
 Public Sub _new()
 
     $menuBar = New NagatoMenuBar(Me) As "Widget"
@@ -22,7 +16,7 @@ Public Sub Asakura_Finished()
     
     $weatherDrawingArea.ChangeLongitude(NagatoSettingsLocation.UserLongitude)
     $weatherDrawingArea.Refresh()
-    resetTitleBar()
+    Me.Title = NagatoSettingsLocation.UserLocationName
     
 End
 
@@ -30,7 +24,7 @@ Public Sub Form_Open()
 
     Application.MainWindow = Me
     NagatoSettingsForm.Load(Me)
-    resetTitleBar()
+    Me.Title = NagatoSettingsLocation.UserLocationName
     NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
     $weatherDrawingArea.ChangeLongitude(NagatoSettingsLocation.UserLongitude)
 

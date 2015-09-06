@@ -33,9 +33,9 @@ Public Sub MainDrawingArea_Draw()
     Dim yukiBackground As Integer
     
      If NagatoWeatherCache.IsReady
-        yukiBackground = $painterCurrentWeather.Draw()
+        yukiBackground = $painterCurrentWeather()
     Else
-        yukiBackground = $painterPleaseWait.Draw()
+        yukiBackground = $painterPleaseWait()
     End If
 
     Raise Signal(MikuruSignal.ViewChangeBackground, [yukiBackground])

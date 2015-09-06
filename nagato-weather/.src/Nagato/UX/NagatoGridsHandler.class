@@ -24,7 +24,7 @@ Public Sub _SetColumnTitles(...)
     
 End
 
-Public Sub _InitializeGridView()
+Public Sub _AbstractOnInitializeGridView()
     
     ' virtual, MUST be overridden.
     
@@ -64,6 +64,6 @@ End
 Public Sub _new(argContainer As Container)
     
     Me._$grids = New GridView(argContainer) As "GridView"
-    Me._InitializeGridView()
+    Me._AbstractOnInitializeGridView()
     
 End

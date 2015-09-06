@@ -20,7 +20,7 @@ Catch
     
 End
 
-Public Function Draw() As Integer
+Public Sub _call() As Integer
     
     $data.Reset()
     drawWeatherInfomation()

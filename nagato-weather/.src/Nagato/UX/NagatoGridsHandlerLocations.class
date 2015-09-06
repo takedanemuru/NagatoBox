@@ -10,7 +10,7 @@ Private Sub getRowColor() As Integer
     
 End
 
-Public Sub _InitializeGridView() ' override
+Public Sub _AbstractOnInitializeGridView() ' override
     
     With Me._$grids
         .Grid = False
@@ -42,6 +42,7 @@ End
 Public Sub Clear()
     
     Me._$grids.Clear()
+    Me._$grids.Rows.Count = 0
     
 End
 

@@ -22,3 +22,13 @@ Public Function Get(argFileName As String) As String
     End If
     
 End
+
+Public Sub _call(argFileName As String) As String
+    
+    If Not Exist(argFileName & ".png") Then
+        Return argFileName & ".png"
+    Else
+        Return getSafePath(argFileName)
+    End If
+    
+End

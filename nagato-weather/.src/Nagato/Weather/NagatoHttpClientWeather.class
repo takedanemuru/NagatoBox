@@ -6,15 +6,15 @@ Property Read Elements As XmlElement[]
 
 Private $xmlDocument As New XmlDocument
 
-Public Sub Activate(argLatitude As Float, argLongtude As Float)
+Public Sub _call(argLatitude As Float, argLongtude As Float)
     
     Me._Connect(MikuruApiWeather[argLatitude, argLongtude])
     
 End
 
-Public Sub _Finished() ' override
+Public Sub _OptionalAbstractOnFinished() ' override
     
-    $xmlDocument.FromString(Me._$buffer)
+    Try $xmlDocument.FromString(Me._$buffer)
     
 End
 

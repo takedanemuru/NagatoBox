@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoTextAreaSearchCore
+
+Public Sub _call(argTarget As String, argReplacement As String)
+    
+    If Not Me._HasQuery(argTarget) Then Return
+    
+    If 2 = Message.Question(("query found, replace them all ?"), ("Cancel"), ("Replace All")) Then
+        Me._$widget.Text = Replace$(Me._$widget.Text, argTarget, argReplacement, gb.IgnoreCase)
+    Endif
+    
+End

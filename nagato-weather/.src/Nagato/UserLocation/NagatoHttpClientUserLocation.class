@@ -2,9 +2,8 @@
 
 Inherits NagatoHttpClient
 
-Public Sub Activate(argLocation As String)
+Public Sub _call(argLocation As String)
     
-    Me._$buffer = ""
     Me._Connect(MikuruOpenStreetMap[argLocation])
     
 End

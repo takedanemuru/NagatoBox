@@ -20,7 +20,7 @@ Private Sub drawTextContent()
     
 End
 
-Public Function Draw() As Integer
+Public Sub _call() As Integer
     
     Dim yukiBackground As Integer = Color.DarkBlue
     

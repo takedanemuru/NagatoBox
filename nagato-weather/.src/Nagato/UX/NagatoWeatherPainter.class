@@ -11,9 +11,3 @@ Public Sub _DrawBackground(argBackground As Integer)
     Paint.Fill()
     
 End
-
-Public Sub Draw() As Integer
-    
-    ' virtual interface Must be overridden
-    
-End

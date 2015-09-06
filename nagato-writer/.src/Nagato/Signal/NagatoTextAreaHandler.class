@@ -7,6 +7,7 @@ Property Read DialogPosition As Point
 Property Read TextArea As TextArea
 
 Private $textArea As TextArea
+Private $observer As Observer
 
 Public Sub _initialize() ' override
     
@@ -18,6 +19,8 @@ Public Sub _initialize() ' override
         .Wrap = True
         .SetFocus()
     End With
+    
+    $observer = New Observer(NagatoSearchAndReplacementSignal) As "Asakura"
     
 End
 
@@ -46,6 +49,13 @@ Public Sub SetTextWithNoSignal(argText As String)
         $textArea.SetFocus()
         $textArea.Line = 0
     Object.Unlock($textArea)
+    
+End
+
+Public Sub Asakura_Opened()
+    
+    HaruhiReplacement.X = Me.DialogPosition.X
+    HaruhiReplacement.Y = Me.DialogPosition.Y
     
 End
 
