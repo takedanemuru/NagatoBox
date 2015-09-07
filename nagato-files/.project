@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.7.1
+# Compiled with Gambas 3.8.1
 Title=nagato-files
 Startup=Kyon
 Icon=folder.png
-Version=42.1.5
+Version=42.1.6
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -27,7 +27,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-files-42.1.5
+PackageName=nagato-files-42.1.6
 CreateEachDirectory=1
 MimeTypes="inode/directory"
 Packager=1
@@ -35,5 +35,5 @@ Systems=ubuntu
 Menus=ubuntu:"Applications/File Management"
 Categories=ubuntu:"Nagato;System;Utility"
 Groups=ubuntu:"x11"
-ExtraDependencies=ubuntu:"trash-cli\t\t\nnagato-extractor\t\t\nnagato-archiver\t\t\nnagato-wallpaper\t\t\nfortune-mod\t\t"
+ExtraDependencies=ubuntu:"nagato-extractor\t\t\nnagato-archiver\t\t\nnagato-wallpaper\t\t\nfortune-mod\t\t"
 ExtraFiles=ubuntu:"nagato-xdg-user-dirs.desktop\t/usr/share/applications\nnagato-desktop.desktop\t/usr/share/applications\nnagato-desktop.png\t/usr/share/pixmaps"

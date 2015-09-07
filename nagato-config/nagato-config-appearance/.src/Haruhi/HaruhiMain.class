@@ -1,21 +1,26 @@
 ' Gambas class file
 
-Private $toolbarThemes As NagatoToolbarWidgetThemes
-Private $gridsThemes As NagatoGridsThemes
-Private $applyButtons As NagatoToolbarApplyButtons
-
+Private $themes As NagatoSettingsHandlerTheme
+Private $fonts As NagatoSettingsHandlerFont
 Private $icons As NagatoSettingsHandlerIcon
 Private $cursors As NagatoSettingsHandlerCursor
+Private $applyButtons As NagatoToolbarApplyButtons
 
+Private Sub setupSettingsHandlers()
+    
+    $themes = New NagatoSettingsHandlerTheme(MainTabStrip, 0) As "SettingsHandler"
+    $fonts = New NagatoSettingsHandlerFont(MainTabStrip, 1) As "SettingsHandler"
+    $icons = New NagatoSettingsHandlerIcon(MainTabStrip, 2) As "SettingsHandler"
+    $cursors = New NagatoSettingsHandlerCursor(MainTabStrip, 3) As "SettingsHandler"
+    $applyButtons = New NagatoToolbarApplyButtons(Me) As "ApplyButtons"
+    
+End
 
 Public Sub _new()
 
     MainTabStrip.Index = 0
-    $toolbarThemes = New NagatoToolbarWidgetThemes(MainTabStrip)
-    $gridsThemes = New NagatoGridsThemes(MainTabStrip) As "SettingsHandler"
-    $icons = New NagatoSettingsHandlerIcon(MainTabStrip) As "SettingsHandler"
-    $cursors = New NagatoSettingsHandlerCursor(MainTabStrip) As "SettingsHandler"
-    $applyButtons = New NagatoToolbarApplyButtons(Me) As "ApplyButtons"
+        setupSettingsHandlers()
+    MainTabStrip.Index = 0
 
 End
 

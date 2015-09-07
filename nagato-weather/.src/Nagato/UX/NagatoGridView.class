@@ -61,6 +61,13 @@ Public Sub _SetPicture(argColumn As Integer, argPicture As Picture, argMargin As
     
 End
 
+Public Sub Clear()
+    
+    Me._$grids.Clear()
+    Me._$grids.Rows.Count = 0
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     Me._$grids = New GridView(argContainer) As "GridView"

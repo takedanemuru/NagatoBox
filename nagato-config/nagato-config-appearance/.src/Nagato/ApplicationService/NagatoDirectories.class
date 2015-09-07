@@ -1,0 +1,44 @@
+' Gambas class file
+
+Property Read Directories As String[]
+Property Read SubDirectories As String[]
+
+Public Const IconDirectory As String = "/usr/share/icons"
+
+Public _$directories As New String[]
+
+Public Function _IsCursorDirectory(argPath As String) As Boolean
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argPath, "*", gb.Directory)
+        If yukiPath = "cursors" Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub _AbstractOnInitialize()
+    
+    
+    
+End
+
+Public Sub _new()
+    
+    Me._AbstractOnInitialize()
+    
+End
+
+Private Function Directories_Read() As String[]
+
+    Return Me._$directories
+
+End
+
+Private Function SubDirectories_Read() As String[]
+
+    Return Dir(Me.IconDirectory, "*", gb.Directory).Sort(gb.IgnoreCase)
+
+End

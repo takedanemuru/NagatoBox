@@ -27,7 +27,7 @@ Public Sub Delete(argPaths As String[])
     
     For Each yukiPath In yukiPaths
         If Not Exist(yukiPath) Then Continue
-        Try Exec ["trash", yukiPath] Wait
+        Try Exec ["gvfs-trash", yukiPath] Wait
     Next
     
 End

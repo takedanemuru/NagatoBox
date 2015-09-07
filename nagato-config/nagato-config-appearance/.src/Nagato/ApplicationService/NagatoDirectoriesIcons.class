@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoDirectories
+
+Private Function hasThemeIndex(argPath As String) As Boolean
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argPath, "*", gb.File)
+        If yukiPath = "index.theme" Then Return True
+        If yukiPath = "theme.cache" Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub _AbstractOnInitialize()
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    For Each yukiPath In Me.SubDirectories
+        yukiFullPath = Me.IconDirectory &/ yukiPath
+        If Not hasThemeIndex(yukiFullPath) Then Continue
+        If Me._IsCursorDirectory(yukiFullPath) Then Continue
+        Me._$directories.Add(yukiFullPath)
+    Next
+    
+End

@@ -4,7 +4,7 @@ Private $httpClient As New NagatoHttpClientUserLocation As "HttpClient"
 Private $cache As New NagatoXmlCacheUserLocation
 Private $label As NagatoLocationTextLabel
 Private $searchBox As NagatoSearchBox
-Private $grids As NagatoGridsHandlerLocations
+Private $grids As NagatoGridViewLocations
 
 Private Sub refreshGridView()
     
@@ -13,7 +13,7 @@ Private Sub refreshGridView()
     $grids.Clear()
     
     For Each yukiGeoElement In $cache.Cache
-        $grids.SetData(yukiGeoElement)
+        $grids(yukiGeoElement)
     Next
     
 End
@@ -35,7 +35,7 @@ Public Sub Form_Open()
     NagatoSettingsForm.Load(Me)
     $label = New NagatoLocationTextLabel(Me)
     $searchBox = New NagatoSearchBox(Me) As "SearchBox"
-    $grids = New NagatoGridsHandlerLocations(Me) As "Grids"
+    $grids = New NagatoGridViewLocations(Me) As "Grids"
     
 End
 

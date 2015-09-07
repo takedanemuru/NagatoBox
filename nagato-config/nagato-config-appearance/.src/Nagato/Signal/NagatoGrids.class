@@ -19,7 +19,7 @@ Public Sub _SetGridsFrame(argTitle As String)
     
 End
 
-Public Sub _InitializeGrids() ' virtual, MUST be overridden
+Public Sub _AbstractOnInitializeGrids() 
     
     
     
@@ -40,6 +40,6 @@ End
 Public Sub _new(argContainer As Container)
     
     Me._$grids = New GridView(argContainer) As "Grids"
-    Me._InitializeGrids()
+    Me._AbstractOnInitializeGrids()
     
 End

@@ -12,3 +12,16 @@ Public Sub _SetTabstrip(argTabstrip As TabStrip, argIndex As Integer)
     Me._$tabStrip.Index = argIndex
     
 End
+
+Public Sub _AbstractSetupWidgets()
+    
+    
+    
+End
+
+Public Sub _new(argTabstrip As TabStrip, argTabIndex As Integer)
+    
+    Me._SetTabstrip(argTabstrip, argTabIndex)
+    Me._AbstractSetupWidgets()
+    
+End

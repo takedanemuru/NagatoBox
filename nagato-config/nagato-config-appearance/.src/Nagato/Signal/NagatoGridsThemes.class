@@ -2,7 +2,7 @@
 
 Inherits NagatoGrids
 
-Public Sub _InitializeGrids()
+Public Sub _AbstractOnInitializeGrids()
     
     Me._SetGridsFrame(("Widget Theme"))
     

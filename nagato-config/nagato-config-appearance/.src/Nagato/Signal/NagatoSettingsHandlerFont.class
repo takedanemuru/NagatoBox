@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoSettingsHandler
+
+Property Read Font As Font
+
+Private $fontChooser As FontChooser
+
+Public Sub _AbstractSetupWidgets()
+    
+    $fontChooser = New FontChooser(Me._$tabStrip) As "FontChooser"
+    $fontChooser.Expand = True
+    $fontChooser.ShowStyle = True
+    $fontChooser.ShowLabel = True
+    Debug $fontChooser.Value
+    
+End
+
+Public Sub FontChooser_Change()
+    
+    Dim yukiName As String
+    
+    For Each yukiName In Fonts
+        Debug yukiName
+    Next
+    
+    Debug $fontChooser.SelectedFont
+    
+End
+
+Private Function Font_Read() As Font
+
+    Dim yukiFont As New Font($fontChooser.SelectedFont)
+
+    Return yukiFont
+
+End

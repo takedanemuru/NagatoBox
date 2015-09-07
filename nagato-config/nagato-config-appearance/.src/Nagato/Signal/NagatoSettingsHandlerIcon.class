@@ -5,10 +5,9 @@ Inherits NagatoSettingsHandler
 Private $iconView As NagatoIconViewIcons
 Private $grids As NagatoGridsIcons
 
-Public Sub _new(argTabStrip As TabStrip)
+Public Sub _AbstractSetupWidgets()
     
-    Me._SetTabstrip(argTabStrip, 2)
-    $iconView = New NagatoIconViewIcons(argTabStrip)
+    $iconView = New NagatoIconViewIcons(Me._$tabStrip)
     $grids = New NagatoGridsIcons(Me._$tabStrip) As "TFEI"
     
 End

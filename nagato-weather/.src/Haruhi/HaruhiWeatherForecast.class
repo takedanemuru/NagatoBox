@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $grids As NagatoGridsHandlerForecast
+Private $grids As NagatoGridViewForecast
 
 Private Sub refresh()
     
@@ -9,14 +9,14 @@ Private Sub refresh()
     
     For yukiDayFromToday = 0 To 14
         yukiDate = Format$(DateAdd(Now, gb.Day, yukiDayFromToday), "yyyy-mm-dd")
-        $grids.SetData(yukiDate)
+        $grids(yukiDate)
     Next
     
 End
 
 Public Sub Form_Open()
 
-    $grids = New NagatoGridsHandlerForecast(Me)
+    $grids = New NagatoGridViewForecast(Me)
     If NagatoWeatherCache.IsReady Then refresh()
     NagatoSettingsForm.Load(Me)
 

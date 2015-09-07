@@ -2,17 +2,7 @@
 
 Inherits NagatoGrids
 
-Private Function hasData(argPath As String) As Boolean
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In Dir(argPath, "*", gb.Directory)
-        If yukiPath = "cursors" Then Return True
-    Next
-    
-    Return False
-    
-End
+Private $directories As NagatoDirectoriesCursors
 
 Private Sub setCheckMark(argName As String)
     
@@ -26,15 +16,13 @@ End
 
 Private Sub setData()
     
-    Dim yukiIconsDirectory As String = "/usr/share/icons"
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(yukiIconsDirectory, "*", gb.Directory).Sort(gb.IgnoreCase)
-        If Not hasData(yukiIconsDirectory &/ yukiPath) Then Continue
+    For Each yukiPath In $directories.Directories
         Inc Me._$grids.Rows.Count
-        Me._$grids[Me._$grids.Rows.Max, Me.ColumnTheme].Text = yukiPath
+        Me._$grids[Me._$grids.Rows.Max, Me.ColumnTheme].Text = File.Name(yukiPath)
         If Even(Me._$grids.Rows.Max) Then Me._SetBackground()
-        setCheckMark(yukiPath)
+        setCheckMark(File.Name(yukiPath))
     Next
     
 End
@@ -55,9 +43,10 @@ Private Sub setStarButton()
     
 End
 
-Public Sub _InitializeGrids()
+Public Sub _AbstractOnInitializeGrids()
     
     Me._SetGridsFrame("Cursor Theme")
+    $directories = New NagatoDirectoriesCursors
     setData()
     
 End

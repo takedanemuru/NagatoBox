@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoGridsHandler
+Inherits NagatoGridView
 
 Event Activate(argLocationName As String)
 
@@ -27,7 +27,7 @@ Public Sub _AbstractOnInitializeGridView() ' override
     
 End
 
-Public Sub SetData(argGeoElement As NagatoGeoElement)
+Public Sub _call(argGeoElement As NagatoGeoElement)
     
     Inc Me._$grids.Rows.Count
     
@@ -36,13 +36,6 @@ Public Sub SetData(argGeoElement As NagatoGeoElement)
     Me._SetColumn(2, Align.Left, argGeoElement.Longitude)
     
     If Odd(Me._$grids.Rows.Max) Then Me._SetBackgroundColor(getRowColor())
-    
-End
-
-Public Sub Clear()
-    
-    Me._$grids.Clear()
-    Me._$grids.Rows.Count = 0
     
 End
 

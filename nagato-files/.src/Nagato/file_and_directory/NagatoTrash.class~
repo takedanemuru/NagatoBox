@@ -9,43 +9,6 @@ Property Read Size As String
 
 Private $path As New NagatoTrashPath
 
-Private Function getTrashInfoPath(argPath As String) As String
-    
-    Return Quote(Replace$(argPath, Me.PathFiles, Me.PathInfo) & ".trashinfo")
-    
-End
-
-Private Function getDecodedPath(argPath As String) As String
-    
-    Return MikuruPath.GetSafePathName(URL.Decode(Replace(argPath, "Path=", "")))
-    
-End
-
-Private Function getPathToRestore(argPath As String) As String
-    
-    Dim yukiInfoPath As String = UnQuote(getTrashInfoPath(argPath))
-    Dim yukiStream As Stream
-    Dim yukiLine As String
-    Dim yukiResult As String = ""
-    
-    If Not Exist(yukiInfoPath) Then Return ""
-    
-    yukiStream = Open yukiInfoPath For Input
-
-    While Not Eof(yukiStream)
-        Line Input #yukiStream, yukiLine
-        If yukiLine Begins "Path=" Then
-            yukiResult = getDecodedPath(yukiLine)
-            Debug yukiResult
-        End If
-    Wend
-    
-    Close #yukiStream
-    
-    Return yukiResult
-    
-End
-
 Private Sub confirm(argPaths As String[]) As Boolean
     
     HaruhiDialogDelete.SetMessage(argPaths)
@@ -77,7 +40,7 @@ Public Sub DeleteFromTrashBin(argPaths As String[])
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue
-        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), getTrashInfoPath(yukiPath))
+        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), $path.GetTrashInfoPath(yukiPath))
     Next
     
 End
@@ -89,7 +52,7 @@ Public Sub Restore(argPaths As String[])
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue
-        yukiPathToRestore = getPathToRestore(yukiPath)
+        yukiPathToRestore = $path.GetPathToRestore(yukiPath)
         Try Copy yukiPath To yukiPathToRestore
         If Not Error Then Me.Delete([yukiPath])
     Next
@@ -98,7 +61,7 @@ End
 
 Public Function GetPreviousPath(argPath As String) As String
     
-    Return getPathToRestore(argPath)
+    Return $path.GetPathToRestore(argPath)
     
 End
 

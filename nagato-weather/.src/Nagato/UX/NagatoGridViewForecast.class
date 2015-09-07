@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoGridsHandler
+Inherits NagatoGridView
 
 Private $conditons As New NagatoWeatherCondition
 
@@ -37,21 +37,6 @@ Private Sub setRowData(argHour As Integer, argTime As String)
     
 End
 
-Public Sub SetData(argDate As String)
-    
-    Dim yukiHour As Integer
-    Dim yukiTime As String
-    
-    For yukiHour = 0 To 23
-        yukiTime = Subst$("&1T&2:00:00Z", argDate, Format$(yukiHour, "0#"))
-        If Not NagatoWeatherCache.HasElement(yukiTime) Then Continue
-        Inc Me._$grids.Rows.Count
-        setGridColor(yukiHour)
-        setRowData(yukiHour, yukiTime)
-    Next
-    
-End
-
 Public Sub _AbstractOnInitializeGridView() ' override
     
     With Me._$grids
@@ -66,5 +51,20 @@ Public Sub _AbstractOnInitializeGridView() ' override
     End With
     
     NagatoSettingsGrids.Load(Me._$grids)
+    
+End
+
+Public Sub _call(argDate As String)
+    
+    Dim yukiHour As Integer
+    Dim yukiTime As String
+    
+    For yukiHour = 0 To 23
+        yukiTime = Subst$("&1T&2:00:00Z", argDate, Format$(yukiHour, "0#"))
+        If Not NagatoWeatherCache.HasElement(yukiTime) Then Continue
+        Inc Me._$grids.Rows.Count
+        setGridColor(yukiHour)
+        setRowData(yukiHour, yukiTime)
+    Next
     
 End
