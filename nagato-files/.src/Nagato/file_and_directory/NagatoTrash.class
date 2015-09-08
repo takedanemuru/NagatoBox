@@ -32,6 +32,19 @@ Public Sub Delete(argPaths As String[])
     
 End
 
+Public Sub Empty()
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In Dir($path.Files)
+        yukiPaths.Add($path.Files &/ yukiPath)
+    Next
+    
+    Me.DeleteFromTrashBin(yukiPaths)
+    
+End
+
 Public Sub DeleteFromTrashBin(argPaths As String[])
     
     Dim yukiPath As String

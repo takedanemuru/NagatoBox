@@ -2,13 +2,15 @@
 
 Public Sub _call()
     
-    Dim yukiMessage As String = ("YUKI.N > We are going to empty trash bin...")
+    ' Dim yukiMessage As String = ("YUKI.N > We are going to empty trash bin...")
+    ' 
+    ' yukiMessage &= Subst$("&1\n&2 items &3", Space$(8), NagatoTrash.Count, NagatoTrash.Size)
+    ' 
+    ' If Message.Question(yukiMessage, ("Cancel"), ("Empty")) = 2 Then
+    '     
+    ' Endif
     
-    yukiMessage &= Subst$("&1\n&2 items &3", Space$(8), NagatoTrash.Count, NagatoTrash.Size)
-    
-    If Message.Question(yukiMessage, ("Cancel"), ("Empty")) = 2 Then
-        Shell "gvfs-trash --empty" Wait
-    Endif
+    NagatoTrash.Empty()
     
 End
 

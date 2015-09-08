@@ -23,7 +23,7 @@ End
 
 Private Sub reloadWallpaper()
     
-    If Not NagatoDBus.isNagatoDesktopActivated() Then
+    If Not NagatoDBus.IsNagatoDesktopActivated() Then
         Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     Else
         reloadNagatoDesktopWallpaper()

@@ -4,6 +4,8 @@ Fast
 
 Inherits NagatoMenuPipe
 
+Property Read Type As String
+
 Private $menuBar As NagatoMenuPanel
 Private $iconView As NagatoIconViewFile
 Private $log As NagatoDirectoryLog
@@ -182,4 +184,10 @@ Public Sub DirectoryObserver_MenuEventWithArg(argEvent As Integer, argFileName A
             $iconView.ShowLostDirectory()
     End Select
     
+End
+
+Private Function Type_Read() As String
+
+    Return "Filer"
+
 End

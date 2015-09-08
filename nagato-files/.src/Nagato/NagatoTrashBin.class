@@ -2,6 +2,8 @@
 
 Inherits NagatoSignal
 
+Property Read Type As String
+
 Private $menuPanel As NagatoMenuPanelTrashBin
 Private $iconView As NagatoIconViewTrashBin
 Private $directoryObserver As NagatoDirectoryObserver
@@ -86,4 +88,10 @@ Public Sub DirectoryObserver_Modefied(argPath As String)
     
     $iconView.Refresh()
     
+End
+
+Private Function Type_Read() As String
+
+    Return "TrashBin"
+
 End

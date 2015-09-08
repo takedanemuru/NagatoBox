@@ -1,8 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.1
 Title=nagato-openbox-menu
 Startup=Kyon
-Version=42.1.8
+Icon=Picture/database.png
+Version=42.1.9
 Component=gb.args
 Component=gb.image
 Component=gb.gui.qt
@@ -11,7 +12,7 @@ Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.form.stock
 Component=gb.xml
-Description="openbox menu generator"
+Description="A menu generator for Openbox3"
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Language=ja
@@ -19,7 +20,7 @@ Maintainer=takeda.nemuru
 Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 License=S.O.S. License
-PackageName=nagato-openbox-menu-42.1.8
+PackageName=nagato-openbox-menu-42.1.9
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

@@ -8,7 +8,7 @@ Public Sub _ClickAction()
         Case 0
             Try Shell "nagato-files -t"
         Case 1
-            Try Shell "gvfs-trash --empty"
+            NagatoTrash.Empty()
     End Select
     
 End

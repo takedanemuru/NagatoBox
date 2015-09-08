@@ -39,7 +39,7 @@ End
 Public Sub MouseHandler_Signal(argEvent As Integer, argValues As Variant[])
     
     If argEvent = NagatoContextMenuGtkBookmarks.ContextClearBin Then
-        MikuruDialogTrashEmpty()
+        NagatoTrash.Empty()
         Return
     Else If argValues[0] = "NagatoTrashBinKey" Then 
         TFEI.SetNewTrashBin()

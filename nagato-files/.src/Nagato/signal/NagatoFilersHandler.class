@@ -22,7 +22,9 @@ End
 
 Public Sub SetNewDirectory(argIndex As Integer, argDirectory As String)
     
-    $filers[argIndex].SetNewDirectory(argDirectory)
+    If $filers[argIndex].Type = "Filer" Then
+        $filers[argIndex].SetNewDirectory(argDirectory)
+    Endif
     
 End
 

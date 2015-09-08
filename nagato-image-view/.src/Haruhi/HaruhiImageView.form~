@@ -9,6 +9,7 @@
     Background = &H8BA0DF&
     Arrangement = Arrange.Vertical
     Orientation = Align.Left
+    Hidden = True
   }
   { VBox1 VBox
     MoveScaled(25,6,39,42)
@@ -26,6 +27,7 @@
       }
       { MainViewAfter ImageView
         MoveScaled(23,0,22,21)
+        Visible = False
         Background = &H6FDF6F&
         Expand = True
         Grid = True

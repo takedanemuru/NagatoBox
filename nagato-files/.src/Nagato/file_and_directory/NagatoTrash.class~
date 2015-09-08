@@ -27,8 +27,21 @@ Public Sub Delete(argPaths As String[])
     
     For Each yukiPath In yukiPaths
         If Not Exist(yukiPath) Then Continue
-        Try Exec ["trash", yukiPath] Wait
+        Try Exec ["gvfs-trash", yukiPath] Wait
     Next
+    
+End
+
+Public Sub Empty()
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In Dir($path.Info)
+        yukiPaths.Add($path.Info &/ yukiPath)
+    Next
+    
+    Me.DeleteFromTrashBin(yukiPaths)
     
 End
 

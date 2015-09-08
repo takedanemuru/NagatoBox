@@ -2,7 +2,7 @@
 
 Create Static
 
-Private Function isValidPath(argPath) As Boolean
+Private Function isValidPath(argPath As String) As Boolean
     
     If argPath = "" Then Return False
     If Not Exist(argPath) Then Return False
@@ -13,9 +13,11 @@ End
 
 Private Sub reloadNagatoDesktopWallpaper()
     
-    Dim yukiService As String = "Session://org.gambas.nagato.files"
+    Dim yukiService As String = "Session://org.gambas.nagato-files"
     Dim yukiObjectPath As String = "/org/nagato/files"
-    Dim yukiInterface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
+    Dim yukiInterface As String = "org.gambas.nagato-files.nagatointerfacedesktop"
+    
+    Debug "try reload"
     
     Try DBus[yukiService][yukiObjectPath, yukiInterface].ReloadDesktopWallpaper()
     
@@ -23,7 +25,7 @@ End
 
 Private Sub reloadWallpaper()
     
-    If Not NagatoDBus.isNagatoDesktopActivated() Then
+    If Not NagatoDBus.IsNagatoDesktopActivated() Then
         Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     Else
         reloadNagatoDesktopWallpaper()
