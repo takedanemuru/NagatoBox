@@ -1,10 +1,10 @@
 ' Gambas class file
 
-Inherits NagatoSignalData
-
 Property Read Collection As Collection
 
 Private $collection As New Collection
+Private $reader As New NagatoReader
+Private $methodsReader As New NagatoReaderMethods
 
 Public Sub _new(argType As String, argPath As String) 
     
@@ -13,6 +13,7 @@ Public Sub _new(argType As String, argPath As String)
         .[MikuruColumn.KeyName] = File.Name(argPath)
         .[MikuruColumn.KeyLines] = $reader.ReadLine(argPath)
         .[MikuruColumn.KeyLinesWithoutVoid] = $reader.ReadLineWithoutVoid(argPath)
+        If argType <> "Form" Then .[MikuruColumn.KeyMethods] = $methodsReader.ReadLine(argPath)
     End With
     
 End

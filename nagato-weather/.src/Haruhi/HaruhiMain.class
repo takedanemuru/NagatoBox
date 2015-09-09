@@ -14,7 +14,6 @@ End
 
 Public Sub Asakura_Finished()
     
-    $weatherDrawingArea.ChangeLongitude(NagatoSettingsLocation.UserLongitude)
     $weatherDrawingArea.Refresh()
     Me.Title = NagatoSettingsLocation.UserLocationName
     
@@ -26,7 +25,6 @@ Public Sub Form_Open()
     NagatoSettingsForm.Load(Me)
     Me.Title = NagatoSettingsLocation.UserLocationName
     NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
-    $weatherDrawingArea.ChangeLongitude(NagatoSettingsLocation.UserLongitude)
 
 End
 

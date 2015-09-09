@@ -1,0 +1,63 @@
+' Gambas class file
+
+Property Read NotShowIn As String[]
+Property Read OnlyShowIn As String
+Property Read ShowIn As Boolean
+
+Private $notShowIn As String[]
+Private $onlyShowIn As String = ""
+
+Private Function getDesktopType() As String
+    
+    If Desktop.Type = "KDE4" Then
+        Return "KDE"
+    Else
+        Return Desktop.Type
+    Endif
+    
+End
+
+Private Sub setNotShowIn(argData As String)
+    
+    argData = Replace(argData, "NotShowIn=", "")
+    $notShowIn = Split(argData, ";", "", True, False)
+    
+End
+
+Public Sub SetData(argLine As String)
+    
+    If argLine Begins "NotShowIn=" Then
+        setNotShowIn(argLine)
+    Else If argLine Begins "OnlyShowIn=" Then
+        $onlyShowIn = Replace$(argLine, "OnlyShowIn=", "")
+    End If
+    
+End
+
+Private Function NotShowIn_Read() As String[]
+
+    If Not Object.IsValid($notShowIn) Then
+        Return [""]
+    Else
+        Return $notShowIn
+    Endif
+
+End
+
+Private Function OnlyShowIn_Read() As String
+
+    Return $onlyShowIn
+
+End
+
+Private Function ShowIn_Read() As Boolean
+
+    If Me.NotShowIn.Exist(getDesktopType(), gb.IgnoreCase) Then Return False
+    
+    If $onlyShowIn <> "" Then
+        If InStr($onlyShowIn, getDesktopType(), gb.IgnoreCase) = 0 Then Return False
+    End If
+
+    Return True
+
+End

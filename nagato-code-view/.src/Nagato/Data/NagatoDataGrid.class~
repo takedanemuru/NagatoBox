@@ -2,12 +2,14 @@
 
 Property Read Count As Integer
 Property Read Data As Variant[]
+Property Read MothodCount As Integer
 
 Private $sort As New NagatoSort
 Private $targetColumn As Integer 
 Private $gridData As New Variant[]
 Private $linesOfCode As Integer
 Private $linesOfCodeWithoutVoid As Integer
+Private $methodsCount As Integer 
 
 Private Function ensureFirstRow(argRowData As Collection) As Boolean
     
@@ -53,6 +55,7 @@ Public Sub AddToGridData(argType As String, argPath As String)
     
     $linesOfCode += yukiRowData.Collection[MikuruColumn.KeyLines]
     $linesOfCodeWithoutVoid += yukiRowData.Collection[MikuruColumn.KeyLinesWithoutVoid]
+    Try $methodsCount += yukiRowData.Collection[MikuruColumn.KeyMethods]
     
     If ensureFirstRow(yukiRowData.Collection) Then Return
     If setRowData(yukiRowData.Collection) Then Return
@@ -76,6 +79,7 @@ Public Sub Clear()
     $gridData.Clear()
     $linesOfCode = 0
     $linesOfCodeWithoutVoid = 0
+    $methodsCount = 0
     
 End
 
@@ -96,12 +100,6 @@ Public Sub SetTargetIndex(argIndex As Integer)
     
 End
 
-' Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
-'     
-'     Debug argEvent
-'     
-' End
-
 Private Function Count_Read() As Integer
 
     Return $gridData.Count
@@ -111,5 +109,11 @@ End
 Private Function Data_Read() As Variant[]
 
     Return $gridData
+
+End
+
+Private Function MothodCount_Read() As Integer
+
+    Return $methodsCount
 
 End

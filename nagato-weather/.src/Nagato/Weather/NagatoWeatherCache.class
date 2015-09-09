@@ -20,7 +20,12 @@ End
 
 Public Function GetWeatherElementMostRecent() As NagatoWeatherElement
     
-    Return $cache[MikuruTimeStamp[0]]
+    Dim yukiWeatherElement As NagatoWeatherElement
+    
+    For Each yukiWeatherElement In $cache
+        If MikuruTimeStamp.IsPast($cache.Key) Then Continue
+        Return yukiWeatherElement
+    Next
     
 End
 

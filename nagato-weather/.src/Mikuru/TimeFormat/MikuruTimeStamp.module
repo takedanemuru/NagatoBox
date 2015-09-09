@@ -1,10 +1,62 @@
 ' Gambas module file
 
-Public Sub _get(argAddition As Integer) As String
+Private Function getLocationDate() As Date
     
-    Dim yukiDate As String = Format$(Now, ("yyyy-mm-dd"))
-    Dim yukiHour As String = Format$(((Hour(Now) Div 3) * 3 + argAddition * 3), "0#")
+    Dim yukiDate As Date = Now()
     
-    Return Subst$("&1T&2:00:00Z", yukiDate, yukiHour)
+    yukiDate = DateAdd(yukiDate, gb.Hour, CInt(System.TimeZone / 3600))
+    yukiDate = DateAdd(yukiDate, gb.Hour, CInt(NagatoSettingsLocation.UserLongitude / 15))
+    
+    Return yukiDate
+    
+End
+
+Private Function getLocationDateString() As String
+    
+    Dim yukiDate As Date = getLocationDate()
+    Dim yukiString As String
+    
+    yukiString = Format$(yukiDate, "yyyy_NAGATO_mm_NAGATO_dd")
+    yukiString = Replace$(yukiString, "_NAGATO_", "-")
+    
+    Return yukiString
+    
+End
+
+Private Function getHourString() As String
+    
+    Dim yukiString As String = Hour(getLocationDate())
+    
+    If String.Len(yukiString) = 1 Then yukiString = (0 & yukiString)
+    
+    Return yukiString
+    
+End
+
+Public Function IsPast(argTimeStamp As String) As Boolean
+    
+    Dim yukiCurrentStamp As String = Subst$("&1T&2:00:00Z", getLocationDateString(), getHourString())
+    Dim yukiIndex As Integer
+    Dim yukiResult As Integer
+    
+    For yukiIndex = 3 To 14
+        yukiResult = String.Comp(String.Mid(argTimeStamp, yukiIndex, 1), String.Mid(yukiCurrentStamp, yukiIndex, 1))
+        If yukiResult = -1 Then Return True
+        If yukiResult = 1 Then Return False
+    Next
+    
+    Return False
+    
+End
+
+Public Function IsDay() As Boolean
+    
+    Dim yukiHour As Integer = Hour(getLocationDate())
+    
+    If 18 >= yukiHour And If yukiHour >= 6 Then
+        Return True
+    Else
+        Return False
+    Endif
     
 End

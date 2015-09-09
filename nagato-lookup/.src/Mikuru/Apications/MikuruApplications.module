@@ -93,11 +93,8 @@ Public Sub Launch(argPath As String)
     If yukiDesktopFile.IsSettingsApplication Then
         CallMessage(argPath)
     Else
-        Debug "go for it !!"
         execute(argPath)
     End If
-    
-    Debug "done ?"
     
 End
 

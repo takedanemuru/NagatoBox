@@ -3,6 +3,7 @@
 Property Read Count As Integer
 Property Read GridData As Variant[]
 Property Read Message As String
+Property Read MethodCount As Integer
 
 Private $targetPath As String
 Private $pathCollection As New Collection
@@ -22,23 +23,14 @@ End
 Private Sub countLine(argDirectory As String)
     
     Dim yukiPath As String
+    Dim yukiType As Integer
     
-    For Each yukiPath In Dir(argDirectory)
-        readFile(argDirectory, yukiPath)
+    For Each yukiPath In RDir(argDirectory)
+        yukiType = NagatoFileType.GetType(argDirectory &/ yukiPath)
+        If yukiType = NagatoFileType.FileToRead Then
+            setRowData(argDirectory, yukiPath)
+        End If
     Next
-    
-End
-
-Private Sub readFile(argDirectory As String, argFileName As String)
-    
-    Select Case NagatoFileType.GetType(argDirectory &/ argFileName)
-        Case NagatoFileType.Directory
-            countLine(argDirectory &/ argFileName)
-        Case NagatoFileType.FileToRead
-            setRowData(argDirectory, argFileName)
-        Default
-            ' ignore
-    End Select
     
 End
 
@@ -93,5 +85,11 @@ Private Function Message_Read() As String
     Dim yukiLinesOfCode As String = Format$($dataGrid.GetLinesOfCode(False), "###,###,##0")
 
     Return Subst$($counter.Message, File.Name($targetPath), yukiLinesOfCode)
+
+End
+
+Private Function MethodCount_Read() As Integer
+
+    Return $dataGrid.MothodCount
 
 End

@@ -3,24 +3,14 @@
 Private $cache As New Collection
 Private $temporaryElement As NagatoWeatherElement
 
-Private Sub setAdditionalData(argData As XmlElement[], argTimeStamp As String)
+Private Sub setData(argXmlElement As XmlElement)
     
-    If Not Object.IsValid($temporaryElement) Then Return
-    If $temporaryElement[MikuruWeatherKey.HasIcon] Then Return
-    $temporaryElement.SetAdditionalData(argData)
-    $cache.Add($temporaryElement, argTimeStamp)
-    
-End
-
-Private Sub setData(argParentElement As XmlElement)
-    
-    Dim yukiChildElements As XmlElement[] = argParentElement.ChildElements[0].ChildElements
-
-    If yukiChildElements.Count > 4 Then
+    If argXmlElement.Attributes["from"] = argXmlElement.Attributes["to"] Then
         $temporaryElement = New NagatoWeatherElement
-        $temporaryElement.SetEssentialData(yukiChildElements)
-    Else
-        setAdditionalData(yukiChildElements, argParentElement.Attributes["to"])
+        $temporaryElement.SetEssentialData(argXmlElement)
+    Else If Object.IsValid($temporaryElement) And If Not $temporaryElement.HasIcon Then
+        $temporaryElement.SetAdditionalData(argXmlElement)
+        $cache.Add($temporaryElement, argXmlElement.Attributes["to"])
     Endif
     
 End

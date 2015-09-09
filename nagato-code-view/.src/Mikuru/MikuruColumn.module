@@ -4,6 +4,7 @@ Public Const KeyType As String = "type"
 Public Const KeyName As String = "name"
 Public Const KeyLines As String = "lines"
 Public Const KeyLinesWithoutVoid As String = "withoutvoid"
+Public Const KeyMethods As String = "methods"
 
 Public Function _get(argIndex As Integer) As String
     
@@ -16,6 +17,8 @@ Public Function _get(argIndex As Integer) As String
             Return MikuruColumn.KeyLines
         Case 3
             Return MikuruColumn.KeyLinesWithoutVoid
+        Case 4
+            Return MikuruColumn.KeyMethods
         Default
             Return ""
     End Select

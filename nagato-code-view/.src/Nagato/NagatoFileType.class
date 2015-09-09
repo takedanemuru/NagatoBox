@@ -2,7 +2,7 @@
 
 Create Static
 
-Public Enum Directory, FileToRead, FileToIgnore
+Public Enum Directory, FormFile, FileToRead, FileToIgnore
 
 Public Sub GetType(argPath As String) As Integer
     
@@ -11,6 +11,8 @@ Public Sub GetType(argPath As String) As Integer
     Else If argPath Like "*~" Then ' to ignore back-up files
         Return Me.FileToIgnore
     Else If argPath Like "*.class" Or If argPath Like "*.module" Then
+        Return Me.FileToRead
+    Else If argPath Like "*.form" Then
         Return Me.FileToRead
     Else
         Return Me.FileToIgnore

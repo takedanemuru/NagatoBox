@@ -5,13 +5,14 @@ Inherits NagatoUxContainer
 Private $data As New NagatoData 
 Private $grids As GridView
 Private $gridsHandler As NagatoGridViewHandler
+Private $dialog As New NagatoDialogSelectDirectory
 
 Private Sub sortGrids()
     
     $gridsHandler.Clear()
     $data.Refresh()
     $gridsHandler.Fill($data.GridData)
-    $gridsHandler.SetSumRow($data.GetLinesOfCode(False), $data.GetLinesOfCode(True))
+    $gridsHandler.SetSumRow($data.GetLinesOfCode(False), $data.GetLinesOfCode(True), $data.MethodCount)
     
 End
 
@@ -24,28 +25,11 @@ Private Sub openDirectory(argDirectory As String)
     
 End
 
-Private Function getTargetDirectory() As String
-    
-    Dialog.Title = ("Select Directory")
-    Dialog.Path = NagatoSettings.LastDirectory
-    Dialog.ShowHidden = True
-    
-    If Dialog.SelectDirectory() Then
-        Return ""
-    Else If Not Dir(Dialog.Path).Exist(".project") Then
-        Message.Warning(("YUKI.N > .project file not found."), ("OK"))
-        Return ""
-    Else
-        Return Dialog.Path
-    Endif
-    
-End
-
 Public Sub Open(Optional argDirectory As String = "")
     
     Dim yukiTargetDirectory As String = argDirectory
     
-    If yukiTargetDirectory = "" Then yukiTargetDirectory = getTargetDirectory()
+    If yukiTargetDirectory = "" Then yukiTargetDirectory = $dialog.GetTargetDirectory()
     If Exist(yukiTargetDirectory) Then openDirectory(yukiTargetDirectory)
     
 End

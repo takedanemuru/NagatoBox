@@ -43,3 +43,12 @@ Public Sub Form_Close()
     NagatoSettings.SaveFormSettings(Me)
     
 End
+
+Public Sub MainTabStrip_Close(Index As Integer)
+
+    If MainTabStrip.Count = 1 Then Return
+
+    MainTabStrip[Index].Children[0].Delete()
+    MainTabStrip[Index].Delete()
+
+End

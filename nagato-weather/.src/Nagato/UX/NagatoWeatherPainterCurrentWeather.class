@@ -29,12 +29,6 @@ Public Sub _call() As Integer
     
 End
 
-Public Sub ChangeLongitude(argLongitude As Float)
-    
-    $data.ChangeLongitude(argLongitude)
-    
-End
-
 Public Sub _new(argDrawingArea As DrawingArea)
     
     Me._$drawingArea = argDrawingArea

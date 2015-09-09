@@ -1,0 +1,180 @@
+' Gambas class file
+
+Property Read ProgramName As String
+Property Read Name As String
+Property Read CommonName As String
+Property Read GenericName As String
+Property Read Comment As String
+Property Read LocaleName As String
+Property Read LocaleGenericName As String
+Property Read LocaleComment As String
+Property Read NotShowIn As String[]
+Property Read OnlyShowIn As String
+Property Read ShowIn As Boolean
+Property Read IsSettingsApplication As Boolean
+Property Read IsMediaApplication As Boolean
+Property Read Valide As Boolean
+Property Read Exec As String
+Property Read Path As String
+
+Private $valide As Boolean = True
+Private $icon As NagatoDesktopFileIcon
+Private $names As NagatoDesktopFileNames
+Private $categories2 As New NagatoDesktopFileCategories
+Private $hidden As New NagatoDesktopFileHidden
+
+Public Sub setProperty(argLine As String)
+    
+    If argLine Begins "Categories=" Then $categories2.SetData(argLine)
+    $names.SetData(argLine)
+    $hidden.SetData(argLine)
+    
+End
+
+Private Sub setPropertyFromDesktopFile(argPath As String)
+    
+    Dim yukiFlag As Boolean = False
+    Dim yukiLine As String
+    Dim yukiStream As Stream 
+    
+    yukiStream = Open argPath For Input
+    
+    Do While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine = "[Desktop Entry]" Then
+            yukiFlag = True
+            Continue
+        Else If Not yukiFlag Then
+            Continue
+        Else If yukiLine Begins "[" Then
+            Break
+        Else
+            setProperty(yukiLine)
+        Endif 
+    Loop
+    
+   Close #yukiStream
+    
+End
+
+Public Sub _new(argPath As String)
+    
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+    
+    $names = New NagatoDesktopFileNames(yukiDesktopFile)
+    $icon = New NagatoDesktopFileIcon(yukiDesktopFile)
+    setPropertyFromDesktopFile(argPath)
+    
+Catch
+    $valide = False
+    Return
+    
+End
+
+Public Function HasCategory(argCategory As String) As Boolean
+    
+    Return $categories2.HasCategory(argCategory)
+    
+End
+
+Public Function GetIcon(argSize As Integer) As Picture
+    
+    Return $icon.GetIcon(argSize)
+    
+End
+
+Private Function Name_Read() As String
+
+    Return $names.Name
+
+End
+
+Private Function Path_Read() As String
+
+    Return $names.Path
+
+End
+
+Private Function NotShowIn_Read() As String[]
+
+    Return $hidden.NotShowIn
+
+End
+
+Private Function OnlyShowIn_Read() As String
+
+    Return $hidden.OnlyShowIn
+
+End
+
+Private Function ShowIn_Read() As Boolean
+
+    Return $hidden.ShowIn
+
+End
+
+Private Function GenericName_Read() As String
+
+    Return $names.GenericName
+
+End
+
+Private Function Comment_Read() As String
+
+    Return $names.Comment
+
+End
+
+Private Function ProgramName_Read() As String
+
+    Return $names.ProgramName
+
+End
+
+Private Function CommonName_Read() As String
+
+    Return $names.CommonName
+
+End
+
+Private Function LocaleName_Read() As String
+
+    Return $names.Name
+
+End
+
+Private Function LocaleGenericName_Read() As String
+
+    Return $names.LocaleGenericName
+
+End
+
+Private Function LocaleComment_Read() As String
+
+    Return $names.LocaleComment
+
+End
+
+Private Function IsSettingsApplication_Read() As Boolean
+
+    Return $categories2.IsSettingsApplication
+
+End
+
+Private Function IsMediaApplication_Read() As Boolean
+    
+    Return $categories2.IsMediaApplication
+    
+End
+
+Private Function Valide_Read() As Boolean
+
+    Return $valide
+
+End
+
+Private Function Exec_Read() As String
+
+    Return $names.Exec
+
+End

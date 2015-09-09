@@ -1,40 +1,57 @@
 ' Gambas class file
 
+Property Read HasIcon As Boolean
+
 Private $cache As New Collection
 
-Public Sub SetEssentialData(argXmlElements As XmlElement[])
+Private Sub setAttribute(argXmlElement As XmlElement, argTag As String, argAttribute As String, argKey As Integer)
     
-    $cache.Add(argXmlElements[0].Attributes["value"], MikuruWeatherKey.Temperature)
-    $cache.Add(argXmlElements[1].Attributes["name"], MikuruWeatherKey.WindDirection)
-    $cache.Add(argXmlElements[2].Attributes["mps"], MikuruWeatherKey.WindSpeed)
-    $cache.Add(argXmlElements[3].Attributes["value"], MikuruWeatherKey.Humidity)
-    $cache.Add(argXmlElements[4].Attributes["value"], MikuruWeatherKey.Pressure)
-    $cache.Add(argXmlElements[5].Attributes["percent"], MikuruWeatherKey.Cloudiness)
-    $cache.Add(argXmlElements[6].Attributes["percent"], MikuruWeatherKey.Fog)
-    $cache.Add(argXmlElements[7].Attributes["percent"], MikuruWeatherKey.LowCloud)
-    $cache.Add(argXmlElements[8].Attributes["percent"], MikuruWeatherKey.MediumCloud)
-    $cache.Add(argXmlElements[9].Attributes["percent"], MikuruWeatherKey.HighCloud)
+    Dim yukiXmlElement As XmlElement = argXmlElement.GetChildrenByTagName(argTag)[0]
+    
+    $cache.Add(yukiXmlElement.Attributes[argAttribute], argKey)
+    
+Catch ' if tag not found
+    Return
     
 End
 
-Public Sub SetAdditionalData(argXmlElements As XmlElement[])
+Public Sub SetEssentialData(argXmlElement As XmlElement)
+    
+    setAttribute(argXmlElement, "temperature", "value", MikuruWeatherKey.Temperature)
+    setAttribute(argXmlElement, "windDirection", "name", MikuruWeatherKey.WindDirection)
+    setAttribute(argXmlElement, "windSpeed", "mps", MikuruWeatherKey.WindSpeed)
+    setAttribute(argXmlElement, "humidity", "value", MikuruWeatherKey.Humidity)
+    setAttribute(argXmlElement, "pressure", "value", MikuruWeatherKey.Pressure)
+    setAttribute(argXmlElement, "cloudiness", "percent", MikuruWeatherKey.Cloudiness)
+    setAttribute(argXmlElement, "fog", "percent", MikuruWeatherKey.Fog)
+    setAttribute(argXmlElement, "lowClouds", "percent", MikuruWeatherKey.LowCloud)
+    setAttribute(argXmlElement, "mediumClouds", "percent", MikuruWeatherKey.MediumCloud)
+    setAttribute(argXmlElement, "highClouds", "percent", MikuruWeatherKey.HighCloud)
+    
+End
+
+Public Sub SetAdditionalData(argXmlElement As XmlElement)
     
     If $cache.Exist(MikuruWeatherKey.IconId) Then Return
     
-    $cache.Add(argXmlElements[0].Attributes["value"], MikuruWeatherKey.Precipitation)
-    $cache.Add(argXmlElements[argXmlElements.Max].Attributes["number"], MikuruWeatherKey.IconId)
-    $cache.Add(argXmlElements[argXmlElements.Max].Attributes["id"], MikuruWeatherKey.IconName)
+    setAttribute(argXmlElement, "precipitation", "value", MikuruWeatherKey.Precipitation)
+    setAttribute(argXmlElement, "symbol", "id", MikuruWeatherKey.IconName)
+    setAttribute(argXmlElement, "symbol", "number", MikuruWeatherKey.IconId)
     
 End
 
 Public Sub _get(argKey As Integer) As Variant
     
-    If argKey = MikuruWeatherKey.HasIcon Then
-        Return $cache.Exist(MikuruWeatherKey.IconId)
-    Else If argKey = MikuruWeatherKey.IconId Then
+    If argKey = MikuruWeatherKey.IconId Then
         If Not $cache.Exist(MikuruWeatherKey.IconId) Then Return 0
     End If
     
     Return $cache[argKey]
     
+End
+
+Private Function HasIcon_Read() As Boolean
+
+    Return $cache.Exist(MikuruWeatherKey.IconId)
+
 End

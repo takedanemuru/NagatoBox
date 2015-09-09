@@ -12,9 +12,6 @@ Private Sub setEditor(argPath As String)
     
     Dim yukiEditor As New Editor(MainTabStrip)
     
-    Debug argPath
-    Debug 
-    
     With yukiEditor
         .TabSize = 4
         .Flags[Editor.ShowLineNumbers] = True
@@ -45,4 +42,12 @@ Public Sub Form_Close()
     
     NagatoSettings.SaveFormSettings(Me)
     
+End
+
+Public Sub MainTabStrip_Close(Index As Integer)
+
+    If MainTabStrip.Count = 1 Then Return
+
+    MainTabStrip[Index].Children[0].Delete()
+
 End

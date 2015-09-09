@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private $methodsCount As Integer = 0
+
+Private Sub checkLine(argLine As String)
+    
+    Dim yukiWords As String[] = Split(argLine, " ", "", True)
+    
+    If yukiWords.Count = 0 Then Return
+    If yukiWords[0] == "Public" Or If yukiWords[0] == "Private" Then
+        If yukiWords[1] == "Sub" Or If yukiWords[1] == "Function" Or If yukiWords[1] == "Procedure" Then
+            Inc $methodsCount
+        Endif
+    Endif
+    
+End
+
+Public Sub ReadLine(argFullPath As String) As Integer
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    
+    $methodsCount = 0
+    
+    yukiStream = Open argFullPath For Input
+    
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine <> "" Then checkLine(yukiLine)
+    Wend
+    
+    Close #yukiStream
+    
+    Return $methodsCount
+    
+End

@@ -11,7 +11,7 @@ Public Function GetType(argDirectory As String, argFileName As String) As String
     If argFileName Like "*.module" Then
         Inc $moduleCount
         Return "Module"
-    Else If Exist(argDirectory &/ File.BaseName(argFileName) & ".form") Then
+    Else If argFileName Like "*.form" Then
         Inc $formCount
         Return "Form"
     Else

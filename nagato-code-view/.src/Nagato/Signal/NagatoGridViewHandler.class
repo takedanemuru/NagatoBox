@@ -8,7 +8,7 @@ Private Sub initializeGridView()
         .Header = GridView.Horizontal
         .Resizable = True
         .Expand = True
-        .Columns.Count = 4
+        .Columns.Count = 5
         .Columns[0].Text = ("Type")
         .Columns[0].Width = 100
         .Columns[0].Alignment = Align.Left
@@ -18,9 +18,12 @@ Private Sub initializeGridView()
         .Columns[2].Text = ("Lines")
         .Columns[2].Alignment = Align.Left
         .Columns[2].Width = 150
-        .Columns[3].Text = ("Lines exclude void")
+        .Columns[3].Text = ("Valid Lines")
         .Columns[3].Alignment = Align.Left
         .Columns[3].Width = 150
+        .Columns[4].Text = ("Methods")
+        .Columns[4].Alignment = Align.Left
+        .Columns[4].Width = 150
         .Rows.Count = 0
     End With
     
@@ -30,7 +33,7 @@ Private Sub setBackgroundColor()
     
     Dim yukiCount As Integer
     
-    For yukiCount = 0 To 3
+    For yukiCount = 0 To $grids.Columns.Max
         $grids[$grids.Rows.Max, yukiCount].Background = Color.Pink
     Next
     
@@ -45,15 +48,17 @@ Public Sub Fill(argGridData As Variant[])
         $grids[$grids.Rows.Max, 0].Text = argGridData[yukiCount]["type"]
         $grids[$grids.Rows.Max, 1].Text = argGridData[yukiCount]["name"]
         $grids[$grids.Rows.Max, 2].Text = Format$(argGridData[yukiCount]["lines"], "#,###,###,###")
-        $grids[$grids.Rows.Max, 3].Text = Format$(argGridData[yukiCount]["withoutvoid"], "#,###,###,###")
         $grids[$grids.Rows.Max, 2].Alignment = Align.Right
+        $grids[$grids.Rows.Max, 3].Text = Format$(argGridData[yukiCount]["withoutvoid"], "#,###,###,###")
         $grids[$grids.Rows.Max, 3].Alignment = Align.Right
+        Try $grids[$grids.Rows.Max, 4].Text = Format$(argGridData[yukiCount]["methods"], "#,###,###,###")
+        $grids[$grids.Rows.Max, 4].Alignment = Align.Right
         If argGridData[yukiCount]["lines"] > 100 Then setBackgroundColor()
     Next
     
 End
 
-Public Sub SetSumRow(argLines As Integer, argLinesWithoutVoid As Integer)
+Public Sub SetSumRow(argLines As Integer, argLinesWithoutVoid As Integer, argMethods As Integer)
     
     Inc $grids.Rows.Count
     
@@ -63,6 +68,8 @@ Public Sub SetSumRow(argLines As Integer, argLinesWithoutVoid As Integer)
         .[.Rows.Max, 2].Alignment = Align.Right
         .[.Rows.Max, 3].Text = Format$(argLinesWithoutVoid, "#,###,###")
         .[.Rows.Max, 3].Alignment = Align.Right
+        .[.Rows.Max, 4].Text = Format$(argMethods, "#,###,###")
+        .[.Rows.Max, 4].Alignment = Align.Right
     End With
     
 End

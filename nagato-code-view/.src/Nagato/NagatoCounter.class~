@@ -8,12 +8,12 @@ Private $classCount As Integer = 0
 
 Public Function GetType(argDirectory As String, argFileName As String) As String
     
-    Dim yukiType As String
+    Debug argFileName
     
     If argFileName Like "*.module" Then
         Inc $moduleCount
         Return "Module"
-    Else If Exist(argDirectory &/ File.BaseName(argFileName) & ".form") Then
+    Else If argFileName Like "*.form" Then
         Inc $formCount
         Return "Form"
     Else

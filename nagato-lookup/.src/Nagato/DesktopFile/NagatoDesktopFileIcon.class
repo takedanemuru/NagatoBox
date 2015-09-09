@@ -1,0 +1,29 @@
+' Gambas class file
+
+Private $desktopFile As DesktopFile
+
+Public Function GetIcon(argSize As Integer) As Picture
+    
+    Dim yukiImage As Image
+    
+    If $desktopFile.Icon Begins "/" And If File.Ext($desktopFile.Icon) <> "svg" Then
+        yukiImage = Image.Load($desktopFile.Icon)
+        yukiImage.Stretch(argSize, argSize)
+        Return yukiImage.Picture
+    Else If $desktopFile.Icon Begins "/" And If File.Ext($desktopFile.Icon) = "svg" 
+        Return Image.Load($desktopFile.Icon).Stretch(argSize, argSize).Picture
+    Else
+        If $desktopFile.Icon <> "" Then Return $desktopFile.GetIcon(argSize).Picture
+        Return MikuruIcons.Get("gear")
+    Endif
+    
+Catch
+    Return MikuruIcons.Get("gear")
+    
+End
+
+Public Sub _new(argDesktopFile As DesktopFile)
+    
+    $desktopFile = argDesktopFile
+    
+End

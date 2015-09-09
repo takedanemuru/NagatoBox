@@ -7,25 +7,18 @@ Property Read BackgroundColor As Integer
 Private Const IconSize As Integer = 96
 
 Private $currentWeather As NagatoWeatherElement
-Private $longitude As Float
 Private $backgroundColor As Integer
-
-Public Sub ChangeLongitude(argLongitude As Integer)
-    
-    $longitude = argLongitude
-    
-End
 
 Public Sub Reset()
     
     $currentWeather = NagatoWeatherCache.GetWeatherElementMostRecent()
-    $backgroundColor = MikuruWeatherColor($currentWeather[MikuruWeatherKey.IconId], MikuruTime.IsDay($longitude))
+    $backgroundColor = MikuruWeatherColor($currentWeather[MikuruWeatherKey.IconId], MikuruTimeStamp.IsDay())
     
 End
 
 Private Function Icon_Read() As Image
 
-    Return MikuruWeatherIcon(MikuruTime.IsDay($longitude), $currentWeather[MikuruWeatherKey.IconId], IconSize)
+    Return MikuruWeatherIcon(MikuruTimeStamp.IsDay(), $currentWeather[MikuruWeatherKey.IconId], IconSize)
 
 End
 

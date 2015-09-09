@@ -17,7 +17,7 @@ End
 Private Sub setAttributes(argNode As XmlNode)
     
     With argNode.Attributes
-        Debug .Count ' DO NOT remove this line to avoid bug.
+        Debug .Count ' DO NOT remove this line to avoid bug. (needless for version 3.8+)
         If .["display_name"] = "0" Then Return
         If .["display_name"] = "" Then Return
         setGeoElement(.["display_name"], .["lat"], .["lon"])

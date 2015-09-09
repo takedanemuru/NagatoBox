@@ -12,6 +12,9 @@ Public Function IsLesser(argGridData As Variant, argRowData As Variant) As Boole
         Return (argRowData > argGridData)
     Endif
     
+Catch
+    Return False
+    
 End
 
 Private Function Ascend_Read() As Boolean
