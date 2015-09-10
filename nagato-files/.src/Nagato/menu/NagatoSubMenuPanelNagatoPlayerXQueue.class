@@ -2,7 +2,7 @@
 
 Inherits NagatoSubMenu
 
-Private Const ApplicationName As String = "org.gambas.nagato.player.x"
+Private Const BusName As String = "org.gambas.nagato-player-x"
 Private Const ObjectPath As String = "/org/nagato/player/x"
 Private Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
 
@@ -10,7 +10,7 @@ Private $proxy As DBusProxy
 
 Private Sub initializeProxy()
     
-    $proxy = DBus[ApplicationName][ObjectPath, Interface]
+    $proxy = DBus[BusName][ObjectPath, Interface]
     
 End
 

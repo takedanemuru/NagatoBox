@@ -13,7 +13,7 @@ End
 
 Private Sub reloadNagatoDesktopWallpaper()
     
-    Dim yukiService As String = "Session://org.gambas.nagato.files"
+    Dim yukiService As String = "Session://org.gambas.nagato-files"
     Dim yukiObjectPath As String = "/org/nagato/files"
     Dim yukiInterface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
     
@@ -31,7 +31,7 @@ Private Sub reloadWallpaper()
     
 End
 
-Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer)
+Public Sub Set(argPath As String, argRenderMode As Integer)
     
     If Not isValidPath(argPath) Then Return
     

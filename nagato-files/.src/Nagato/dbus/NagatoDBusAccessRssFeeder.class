@@ -3,7 +3,7 @@
 Property Read Activated As Boolean
 Property Read TitleLength As Integer
 
-Private Const ServiceName As String = "org.gambas.dataovermind.rssfeeder"
+Private Const ServiceName As String = "org.gambas.dataovermind-rssfeeder"
 Private Const ObjectPath As String = "/org/dataovermind/rssfeeder"
 Private Const InterfaceName As String = "org.gambas.dataovermind.rssfeeder.tfei"
 

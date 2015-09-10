@@ -4,7 +4,7 @@ Property Read Enabled As Boolean
 
 Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack, ActionAddMusics
 
-Private Const ServiceName As String = "org.gambas.nagato.player.x"
+Private Const ServiceName As String = "org.gambas.nagato-player-x"
 Private Const ObjectPath As String = "/org/nagato/player/x"
 Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatointerface"
 

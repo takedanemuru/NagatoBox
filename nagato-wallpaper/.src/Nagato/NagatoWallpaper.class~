@@ -15,9 +15,7 @@ Private Sub reloadNagatoDesktopWallpaper()
     
     Dim yukiService As String = "Session://org.gambas.nagato-files"
     Dim yukiObjectPath As String = "/org/nagato/files"
-    Dim yukiInterface As String = "org.gambas.nagato-files.nagatointerfacedesktop"
-    
-    Debug "try reload"
+    Dim yukiInterface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
     
     Try DBus[yukiService][yukiObjectPath, yukiInterface].ReloadDesktopWallpaper()
     

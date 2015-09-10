@@ -4,19 +4,19 @@ Create Static
 
 Property Read Proxy As DBusProxy
 
-Public Const Service As String = "org.gambas.nagato.files"
+Public Const Service As String = "org.gambas.nagato-files"
 Public Const ObjectPath As String = "/org/nagato/files"
 Public Const Interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
 
 Public Function DesktopActivated() As Boolean
     
-    Try Debug DBus[Me.Service][Me.ObjectPath, Me.Interface].Ready
+    If Me.IsUnique Then Return False
     
-    If Not Error Then
-        Return True
-    Else
-        Return False
-    End If
+    Try Debug DBus[Me.Service][Me.ObjectPath, Me.Interface].Ready
+    If Not Error Then Return True
+
+Finally
+    Return False
     
 End
 

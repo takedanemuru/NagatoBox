@@ -42,12 +42,10 @@ End
 
 Public Sub ApplyButton_Click()
 
-    If NagatoPreview.Path = "" Then
-        Return
-    Else
-        NagatoWallpaper.Set(NagatoPreview.Path, NagatoPreview.Color, ModeComboBox.Index)
-        NagatoSettings.Refresh(ModeComboBox.Index)
-    End If
+    If NagatoPreview.Path = "" Then Return
+
+    NagatoWallpaper.Set(NagatoPreview.Path, ModeComboBox.Index)
+    NagatoSettings.Refresh(ModeComboBox.Index)
 
     Message.Info("YUKI.N > It 's done.", ("OK"))
 

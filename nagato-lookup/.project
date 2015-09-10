@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.7.1
+# Compiled with Gambas 3.8.90
 Title=nagato-lookup
 Startup=Kyon
 Icon=icons/arrow-up.png
-Version=42.1.1
+Version=42.1.2
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -25,11 +25,10 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.License
-PackageName=nagato-lookup-42.1.1
+PackageName=nagato-lookup-42.1.2
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
 Categories=ubuntu:"Nagato;System"
 Groups=ubuntu:"utils"
-ExtraDependencies=ubuntu:"nagato-session\t\t"

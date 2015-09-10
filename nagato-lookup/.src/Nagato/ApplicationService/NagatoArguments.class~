@@ -29,3 +29,9 @@ Private Function Category_Read() As String
     Return $category
 
 End
+
+Private Function ShowAllSettingsApps_Read() As Boolean
+
+    Return $showAllSettingsApps
+
+End

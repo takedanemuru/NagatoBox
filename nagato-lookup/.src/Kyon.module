@@ -1,28 +1,13 @@
 ' Gambas module file
 
-Private Function IsUnique() As Boolean
-    
-    If Not DBus.Session.Applications.Exist("org.gambas.nagato.lookup") Then
-        NagatoDBus.Register()
-        Return True
-    End If
-    
-End
-
 Public Sub Main()
 
-    NagatoArguments.Parsing()
-    MikuruTheme.Set()
-    
-    If NagatoArguments.PipeMenu Then
-        NagatoMenuCache3.Activate()
-        NagatoPipeMenu.Get(NagatoArguments.Category)
-    Else If NagatoArguments.ShowAllSettingsApps Then
-        NagatoMenuCache3.Activate()
-        HaruhiApplicationSearch.SetIconViewWithAllSettingsApps()
-    Else If IsUnique() Then
+    If NagatoDBus.IsUnique() Then
+        NagatoDBus.Register()
         NagatoMenuCache3.Activate()
         HaruhiMain.Show()
+    Else
+        Message.Error(("YUKI.N > nagato-lookup has been activated."), ("OK"))
     End If
     
 End

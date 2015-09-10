@@ -4,7 +4,6 @@ Private Sub activateDesktop()
     
     If Not NagatoDBus.DesktopActivated() Then
         HaruhiDesktop.Show()
-        HaruhiPersona.SetText(Subst$("YUKI.N > Welcome back, &1", System.User.Name))
     Else
         Message(("YUKI.N > nagato-desktop has been activated."), ("OK"))
     End If
@@ -15,8 +14,6 @@ Public Sub Main()
 
     ' this call activate NagatoDBSymbol, so do not delete.
     If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." 
-
-    MikuruTheme.Set()
     
     NagatoArguments.Parsing()
     

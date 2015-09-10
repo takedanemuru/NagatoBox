@@ -6,7 +6,7 @@ Private $interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
 
 Private Function checkActivation() As Boolean
     
-    Dim yukiProxy As DBusProxy = DBus["org.gambas.nagato.files"]["/org/nagato/files", $interface]
+    Dim yukiProxy As DBusProxy = DBus["org.gambas.nagato-files"]["/org/nagato/files", $interface]
     
     Return yukiProxy.Ready
     
@@ -19,7 +19,7 @@ Public Function IsNagatoDesktopActivated() As Boolean
     
     Dim yukiApplications As String[] = DBus.Session.Applications
     
-    If Not yukiApplications.Exist("org.gambas.nagato.files") Then Return False
+    If Not yukiApplications.Exist("org.gambas.nagato-files") Then Return False
     
     Return checkActivation()
     
