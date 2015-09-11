@@ -4,16 +4,19 @@ Create Static
 
 Property Path As String
 Property Color As Integer
+Property Mode As Integer
 Property Read IsValid As Boolean
 
 Private $path As String
 Private $color As Integer
+Private $mode As Integer
 
 Public Sub LoadLastProperties()
     
     With Me
         .Path = NagatoSettings.LastPath
         .Color = NagatoSettings.LastColor
+        .Mode = NagatoSettings.LastMode
     End With
     
 End
@@ -48,5 +51,17 @@ Private Function IsValid_Read() As Boolean
     If Not Exist($path) Then Return False
 
     Return True
+
+End
+
+Private Function Mode_Read() As Integer
+
+    Return $mode
+    
+End
+
+Private Sub Mode_Write(Value As Integer)
+
+    $mode = Value
 
 End

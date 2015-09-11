@@ -10,7 +10,7 @@ End
 
 Private Function getThumbnailForFillMode() As Image
     
-    Dim yukiImage As Image = Image.Load(NagatoPreview.Path)
+    Dim yukiImage As Image = Image.Load(NagatoPreviewProperties.Path)
     Dim yukiRate As Float = getFillRate(yukiImage)
     
     Return yukiImage.Stretch(yukiImage.Width * yukiRate, yukiImage.Height * yukiRate)

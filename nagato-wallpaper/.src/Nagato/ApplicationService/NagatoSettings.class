@@ -35,7 +35,7 @@ Public Sub Refresh(argWallpaperMode As Integer)
     
     With Me
         .LastPath = MikuruHidden.PathOriginalImage
-        .LastColor = NagatoPreview.Color
+        .LastColor = NagatoPreviewProperties.Color
         .LastMode = argWallpaperMode
     End With
     

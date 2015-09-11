@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $button As Button
+
+Public Sub _new(argContainer As Container)
+    
+    $button = New Button(argContainer) As "Button"
+    
+    With $button
+        .Picture = MikuruIcon["information-balloon"]
+        .W = 35
+    End With
+    
+End
+
+Public Sub Button_Click()
+    
+    HaruhiAbout.ShowDialog()
+    
+End

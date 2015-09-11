@@ -1,32 +1,19 @@
 ' Gambas class file
 
-Property Read Mode As Integer
-
 Private $drawingArea As NagatoPreviewDrawingArea
+Private $toolbar As NagatoToolBar
 
-Private Sub setButtonIcons()
-    
-    SelectButton.Picture = MikuruIcon["folder"]
-    AboutButton.Picture = MikuruIcon["information-balloon"]
-    ApplyButton.Picture = MikuruIcon["button-check"]
-    
-End
+Private Sub changeColor(argColor As Integer)
 
-Private Sub initializeWidgets()
-    
-    $drawingArea = New NagatoPreviewDrawingArea(PreviewDrawingArea)
-        
-    BackgroundColorButton.Color = NagatoPreview.Color
-    ModeComboBox.Index = NagatoSettings.LastMode
-    
-    setButtonIcons()
-    
+    NagatoPreViewProperties.Color = argColor
+    $drawingArea.Refresh(argColor)
+
 End
 
 Public Sub SetPath(argPath As String)
     
-    NagatoPreview.Path = argPath
-    PreviewDrawingArea.Refresh()
+    NagatoPreViewProperties.Path = argPath
+    $drawingArea.Refresh()
     NagatoSettings.PushToRecentPaths(argPath)
     
 End
@@ -34,46 +21,25 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
+    Me.H = 28 + Screen.Height * (Me.W / Screen.Width)
     Me.Center()
-    'NagatoPreview.LoadLastProperties()
-    initializeWidgets()
+    NagatoPreViewProperties.LoadLastProperties()
+    $drawingArea = New NagatoPreviewDrawingArea(Me)
+    $toolbar = New NagatoToolBar(Me) As "ToolBar"
     
 End
 
-Public Sub ApplyButton_Click()
-
-    If NagatoPreview.Path = "" Then Return
-
-    NagatoWallpaper.Set(NagatoPreview.Path, ModeComboBox.Index)
-    NagatoSettings.Refresh(ModeComboBox.Index)
-
-    Message.Info("YUKI.N > It 's done.", ("OK"))
-
-End
-
-Public Sub SelectButton_Click()
-
-    If HaruhiFileChooser.ShowDialog() = MikuruDialog.ResponseSelected Then
-        NagatoPreview.Path = MikuruDialog.Path
-        PreviewDrawingArea.Refresh()
-        NagatoSettings.PushToRecentPaths(MikuruDialog.Path)
-    Endif
-
-End
-
-Public Sub BackgroundColorButton_Change()
-
-    BackgroundColorButton.Foreground = BackgroundColorButton.Color
-    PreviewDrawingArea.Background = BackgroundColorButton.Color
-    NagatoPreview.Color = BackgroundColorButton.Color
-    PreviewDrawingArea.Refresh()
-
-End
-
-Public Sub ModeComboBox_Click()
-
-    PreviewDrawingArea.Refresh()
-
+Public Sub ToolBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.PropertyPathChanged
+            Me.SetPath(argValues[0])
+        Case MikuruSignal.PropertyModeChanged
+            $drawingArea.Refresh()
+        Case MikuruSignal.PropertyColorChanged
+            changeColor(argValues[0])
+    End Select
+    
 End
 
 Public Sub _unknown(...) As Variant
@@ -88,16 +54,4 @@ Public Sub _property(...) As Boolean
     
     Return True
     
-End
-
-Private Function Mode_Read() As Integer
-
-    Return ModeComboBox.Index
-
-End
-
-Public Sub AboutButton_Click()
-
-    HaruhiAbout.ShowDialog()
-
 End

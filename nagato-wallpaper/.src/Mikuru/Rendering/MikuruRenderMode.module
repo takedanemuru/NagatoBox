@@ -1,5 +1,7 @@
 ' Gambas module file
 
+Property Read List As String[]
+
 Public Enum Center, Tile, Full, Fit, Fill, TopLeft, TopCenter, TopRight, Left, Right, BottomLeft, BottomCenter, BottomRight
 
 Public Function getCommandLineOption(argMode As Integer) As String
@@ -17,4 +19,10 @@ Public Function getCommandLineOption(argMode As Integer) As String
             Return "-fill"
     End Select
     
+End
+
+Private Function List_Read() As String[]
+
+    Return ["Center", "Tile", "Full", "Fit", "Fill", "TopLeft", "TopCenter", "TopRight", "Left, Right", "BottomLeft", "BottomCenter", "BottomRight"]
+
 End

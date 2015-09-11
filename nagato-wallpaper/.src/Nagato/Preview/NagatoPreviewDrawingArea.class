@@ -1,23 +1,30 @@
 ' Gambas class file
 
 Private $drawingArea As DrawingArea
-Private $observer As Observer
 
 Private Sub setBackgroundColor()
     
     With Paint
-        .Brush = .Color(NagatoPreview.Color)
+        .Brush = .Color(NagatoPreviewProperties.Color)
         .Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
         .Fill()
     End With
     
 End
 
-Public Sub _new(argDrawingArea As DrawingArea)
+Public Sub _new(argContainer As Container)
     
-    $drawingArea = argDrawingArea
-    $drawingArea.H = Screen.Height * ($drawingArea.W / Screen.Width)
-    $observer = New Observer(argDrawingArea) As "Asakura"
+    $drawingArea = New DrawingArea(argContainer) As "Asakura"
+    $drawingArea.Expand = True
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Refresh(Optional argBackgroundColor As Integer)
+    
+    If argBackgroundColor Then $drawingArea.Background = argBackgroundColor
+    
+    $drawingArea.Refresh()
     
 End
 
@@ -25,16 +32,12 @@ Public Sub GetProperty(argPropertyName As String) As Variant
     
     With $drawingArea
         Select Case argPropertyName
-            Case "PreviewBackground"
-                Return .Background
             Case "PreviewH"
                 Return .H
             Case "PreviewW"
                 Return .W
             Case "PreviewRatio"
                 Return .W / Screen.Width
-            Default
-                Return Null
         End Select
     End With
     
@@ -45,7 +48,7 @@ Public Sub Asakura_Drop()
     ' PreviewDrawingArea can accept only "text/uri-list"
 
     If Drag.Type = Drag.Text And If MikuruDrag.CanAccept(Drag.Data) Then
-        NagatoPreview.Path = MikuruDrag.GetDragPath(Drag.Data)
+        NagatoPreviewProperties.Path = MikuruDrag.GetDragPath(Drag.Data)
         $drawingArea.Refresh()
     End If
 
@@ -53,11 +56,11 @@ End
 
 Public Sub Asakura_Draw()
     
-    If Not NagatoPreview.IsValid Then Return
+    If Not NagatoPreviewProperties.IsValid Then Return
     
     Paint.Begin($drawingArea)
         setBackgroundColor()
-        NagatoThumbnail.Set(HaruhiMain.Mode)
+        NagatoThumbnail.Set(NagatoPreviewProperties.Mode)
     Paint.End()
     
 End

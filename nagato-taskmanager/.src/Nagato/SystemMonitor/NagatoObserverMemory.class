@@ -28,7 +28,6 @@ Private Sub resetVariables()
     Do While Not Eof(yukiStream)
         Line Input #yukiStream, yukiLine
         setVariable(yukiLine)
-        If $memoryTotal > 0 And If $memoryAvailable > 0 Then Break
     Loop
     
    Close #yukiStream
@@ -40,7 +39,7 @@ Private Function getUsage() As Float
     resetVariables()
     
     If $memoryTotal > 0 And If $memoryAvailable > 0 Then
-        Return ($memoryAvailable / $memoryTotal)
+        Return ($memoryTotal - $memoryAvailable) / $memoryTotal
     Else
         Return ($memoryTotal - ($memoryFree + $memoryBuffers + $memoryCached)) / $memoryTotal
     End If

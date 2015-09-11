@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $button As Button
+
+Public Sub _new(argContainer As Container)
+    
+    $button = New Button(argContainer) As "Button"
+    
+    With $button
+        .Picture = MikuruIcon["button-check"]
+        .Text = "Apply"
+        .W = 84
+    End With
+    
+End
+
+Public Sub Button_Click()
+    
+    If NagatoPreviewProperties.Path = "" Then Return
+
+    NagatoWallpaperSetter.Set()
+    NagatoSettings.Refresh(NagatoPreviewProperties.Mode)
+
+    Message.Info("YUKI.N > It 's done.", ("OK"))
+
+End

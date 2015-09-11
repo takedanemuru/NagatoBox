@@ -13,30 +13,28 @@ End
 
 Private Sub reloadNagatoDesktopWallpaper()
     
-    Dim yukiService As String = "Session://org.gambas.nagato-files"
+    Dim yukiBusName As String = "Session://org.gambas.nagato-files"
     Dim yukiObjectPath As String = "/org/nagato/files"
     Dim yukiInterface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
     
-    Try DBus[yukiService][yukiObjectPath, yukiInterface].ReloadDesktopWallpaper()
+    Try DBus[yukiBusName][yukiObjectPath, yukiInterface].ReloadDesktopWallpaper()
     
 End
 
 Private Sub reloadWallpaper()
     
-    If Not NagatoDBus.IsNagatoDesktopActivated() Then
-        Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
-    Else
-        reloadNagatoDesktopWallpaper()
-    End If
+    If NagatoDBus.IsNagatoDesktopActivated() Then reloadNagatoDesktopWallpaper()
+
+    Shell Subst$("hsetroot &1 &2", "-center", MikuruHidden.PathModefiedImage)
     
 End
 
-Public Sub Set(argPath As String, argBackground As Integer, argRenderMode As Integer)
+Public Sub Set()
     
-    If Not isValidPath(argPath) Then Return
+    If Not isValidPath(NagatoPreviewProperties.Path) Then Return
     
-    MikuruOriginalImage.SetPath(argPath)
-    MikuruModefiedImage.Set(argRenderMode)
+    MikuruOriginalImage.SetPath(NagatoPreviewProperties.Path)
+    MikuruModefiedImage.Set(NagatoPreviewProperties.Mode)
     
     reloadWallpaper()
     

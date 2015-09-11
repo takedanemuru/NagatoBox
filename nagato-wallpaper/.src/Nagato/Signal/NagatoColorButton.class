@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Private $colorButton As ColorButton
+
+Public Sub _new(argContainer As Container)
+    
+    $colorButton = New ColorButton(argContainer) As "ColorButton"
+    
+    With $colorButton
+        .Color = NagatoSettings.LastColor
+        .W = 42
+    End With
+    
+End
+
+Public Sub ColorButton_Change()
+    
+    Raise Signal(MikuruSignal.PropertyColorChanged, [$colorButton.Value])
+    
+End

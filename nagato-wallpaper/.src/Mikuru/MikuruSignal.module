@@ -1,0 +1,4 @@
+' Gambas module file
+
+Public Enum PropertyNone = 2000, PropertyPathChanged = 2001, PropertyColorChanged = 2002
+Public Enum PropertyModeChanged = 2003, PropertyApplyChanges = 2004

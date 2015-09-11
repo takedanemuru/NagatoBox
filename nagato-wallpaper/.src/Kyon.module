@@ -7,7 +7,7 @@ Public Sub Main()
     MikuruHidden.Ensure()
     
     If yukiArguments.SetLast Then
-        NagatoWallpaper.SetLast()
+        NagatoWallpaperSetter.SetLast()
     Else
         HaruhiMain.Show()
         If yukiArguments.Options.Count > 0 Then HaruhiMain.SetPath(yukiArguments.Options[0])
