@@ -12,7 +12,7 @@ Private Sub sortGrids()
     $gridsHandler.Clear()
     $data.Refresh()
     $gridsHandler.Fill($data.GridData)
-    $gridsHandler.SetSumRow($data.GetLinesOfCode(False), $data.GetLinesOfCode(True), $data.MethodCount)
+    $gridsHandler.SetSumRow($data)
     
 End
 
@@ -59,12 +59,12 @@ End
 
 Public Sub _initialize() ' override
     
-    $grids = New GridView(Me._$parentContainer) As "Grids"
+    $grids = New GridView(Me._$parentContainer) As "Gridview"
     $gridsHandler = New NagatoGridViewHandler($grids)
     
 End
 
-Public Sub Grids_Activate()
+Public Sub GridView_Activate()
     
     Dim yukiRow As Integer = $grids.RowAt(Mouse.Y)
     
@@ -74,7 +74,7 @@ Public Sub Grids_Activate()
     
 End
 
-Public Sub Grids_ColumnClick(argIndex As Integer)
+Public Sub GridView_ColumnClick(argIndex As Integer)
     
     If $data.Count > 0 Then
         $data.SetTargetIndex(argIndex)

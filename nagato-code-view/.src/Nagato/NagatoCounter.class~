@@ -8,8 +8,6 @@ Private $classCount As Integer = 0
 
 Public Function GetType(argDirectory As String, argFileName As String) As String
     
-    Debug argFileName
-    
     If argFileName Like "*.module" Then
         Inc $moduleCount
         Return "Module"

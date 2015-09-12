@@ -3,17 +3,19 @@
 Property Read Collection As Collection
 
 Private $collection As New Collection
-Private $reader As New NagatoReader
-Private $methodsReader As New NagatoReaderMethods
+Private $reader2 As NagatoReader2
 
 Public Sub _new(argType As String, argPath As String) 
+    
+    $reader2 = New NagatoReader2(argPath)
     
     With $collection
         .[MikuruColumn.KeyType] = argType
         .[MikuruColumn.KeyName] = File.Name(argPath)
-        .[MikuruColumn.KeyLines] = $reader.ReadLine(argPath)
-        .[MikuruColumn.KeyLinesWithoutVoid] = $reader.ReadLineWithoutVoid(argPath)
-        .[MikuruColumn.KeyMethods] = $methodsReader.ReadLine(argPath)
+        .[MikuruColumn.KeyLines] = $reader2.LinesOfCodeAll
+        .[MikuruColumn.KeyLinesWithoutVoid] = $reader2.LinesOfCodeValid
+        .[MikuruColumn.KeyMethods] = $reader2.MethodCountAll
+        .[MikuruColumn.KeyProperty] = $reader2.PropertyCountAll
     End With
     
 End

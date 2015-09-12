@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Inherits NagatoSignalData
-
 Public Sub ReadLine(argFullPath As String) As Integer
     
     Dim yukiStream As Stream
@@ -12,8 +10,6 @@ Public Sub ReadLine(argFullPath As String) As Integer
     
     While Not Eof(yukiStream)
         Line Input #yukiStream, yukiLine
-        Raise Signal(MikuruSignal.DataIncLineCount, Null)
-        'NagatoCounter.IncLineCount()
         Inc yukiLocalLineCount
     Wend
     
@@ -34,8 +30,6 @@ Public Sub ReadLineWithoutVoid(argFullPath As String) As Integer
     While Not Eof(yukiStream)
         Line Input #yukiStream, yukiLine
         If yukiLine = "" Then Continue
-        'NagatoCounter.IncLineCountWithoutVoid()
-        Raise Signal(MikuruSignal.DataIncLineCountWithoutVoid, Null)
         Inc yukiLocalLineCount
     Wend
     

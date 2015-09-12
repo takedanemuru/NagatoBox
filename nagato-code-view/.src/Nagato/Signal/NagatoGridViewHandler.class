@@ -8,7 +8,7 @@ Private Sub initializeGridView()
         .Header = GridView.Horizontal
         .Resizable = True
         .Expand = True
-        .Columns.Count = 5
+        .Columns.Count = 7
         .Columns[0].Text = ("Type")
         .Columns[0].Width = 100
         .Columns[0].Alignment = Align.Left
@@ -17,13 +17,17 @@ Private Sub initializeGridView()
         .Columns[1].Alignment = Align.Left
         .Columns[2].Text = ("Lines")
         .Columns[2].Alignment = Align.Left
-        .Columns[2].Width = 150
+        .Columns[2].Width = 100
         .Columns[3].Text = ("Valid Lines")
         .Columns[3].Alignment = Align.Left
-        .Columns[3].Width = 150
-        .Columns[4].Text = ("Methods")
+        .Columns[3].Width = 100
+        .Columns[4].Text = ("Properties")
         .Columns[4].Alignment = Align.Left
-        .Columns[4].Width = 150
+        .Columns[4].Width = 100
+        .Columns[5].Text = ("Methods")
+        .Columns[5].Alignment = Align.Left
+        .Columns[5].Width = 100
+        .Columns[6].W = 16
         .Rows.Count = 0
     End With
     
@@ -51,25 +55,29 @@ Public Sub Fill(argGridData As Variant[])
         $grids[$grids.Rows.Max, 2].Alignment = Align.Right
         $grids[$grids.Rows.Max, 3].Text = Format$(argGridData[yukiCount]["withoutvoid"], "#,###,###,###")
         $grids[$grids.Rows.Max, 3].Alignment = Align.Right
-        Try $grids[$grids.Rows.Max, 4].Text = Format$(argGridData[yukiCount]["methods"], "#,###,###,###")
+        Try $grids[$grids.Rows.Max, 4].Text = Format$(argGridData[yukiCount]["properties"], "#,###,###,###")
         $grids[$grids.Rows.Max, 4].Alignment = Align.Right
-        If argGridData[yukiCount]["lines"] > 100 Then setBackgroundColor()
+        Try $grids[$grids.Rows.Max, 5].Text = Format$(argGridData[yukiCount]["methods"], "#,###,###,###")
+        $grids[$grids.Rows.Max, 5].Alignment = Align.Right
+        If argGridData[yukiCount]["lines"] >= 100 Then setBackgroundColor()
     Next
     
 End
 
-Public Sub SetSumRow(argLines As Integer, argLinesWithoutVoid As Integer, argMethods As Integer)
+Public Sub SetSumRow(argData As NagatoData)
     
     Inc $grids.Rows.Count
     
     With $grids
         .[.Rows.Max, 1].Text = ("TOTAL")
-        .[.Rows.Max, 2].Text = Format$(argLines, "#,###,###")
+        .[.Rows.Max, 2].Text = Format$(argData.GetLinesOfCode(False), "#,###,###")
         .[.Rows.Max, 2].Alignment = Align.Right
-        .[.Rows.Max, 3].Text = Format$(argLinesWithoutVoid, "#,###,###")
+        .[.Rows.Max, 3].Text = Format$(argData.GetLinesOfCode(True), "#,###,###")
         .[.Rows.Max, 3].Alignment = Align.Right
-        .[.Rows.Max, 4].Text = Format$(argMethods, "#,###,###")
+        .[.Rows.Max, 4].Text = Format$(argData.PropertyCount, "#,###,###")
         .[.Rows.Max, 4].Alignment = Align.Right
+        .[.Rows.Max, 5].Text = Format$(argData.MethodCount, "#,###,###")
+        .[.Rows.Max, 5].Alignment = Align.Right
     End With
     
 End

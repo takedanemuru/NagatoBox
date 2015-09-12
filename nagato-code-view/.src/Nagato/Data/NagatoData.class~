@@ -3,6 +3,8 @@
 Property Read Count As Integer
 Property Read GridData As Variant[]
 Property Read Message As String
+Property Read PropertyCount As Integer
+Property Read MethodCount As Integer
 
 Private $targetPath As String
 Private $pathCollection As New Collection
@@ -81,8 +83,20 @@ End
 
 Private Function Message_Read() As String
 
-    Dim yukiLinesOfCode As String = Format$($dataGrid.GetLinesOfCode(False), "###,###,##0")
+    Dim yukiLinesOfCode As String = Format$($dataGrid.GetLinesOfCode(True), "###,###,##0")
 
     Return Subst$($counter.Message, File.Name($targetPath), yukiLinesOfCode)
+
+End
+
+Private Function MethodCount_Read() As Integer
+
+    Return $dataGrid.MothodCount
+
+End
+
+Private Function PropertyCount_Read() As Integer
+
+    Return $dataGrid.PropertyCount
 
 End

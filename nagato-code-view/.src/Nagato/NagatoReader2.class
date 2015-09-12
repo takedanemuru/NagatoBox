@@ -1,0 +1,91 @@
+' Gambas class file
+
+Property Read LinesOfCodeAll As Integer
+Property Read LinesOfCodeValid As Integer
+Property Read PropertyCountAll As Integer
+Property Read MethodCountAll As Integer
+
+Private $linesOfCodeAll As Integer
+Private $lineOfCodeValid As Integer
+Private $propertyCountAll As Integer
+Private $methodCountAll As Integer
+
+Private $accessors As String[] = ["Public", "Private"]
+Private $procedures As String[] = ["Sub", "Function", "Procedure"]
+Private $propertyHandlers As New String[]
+
+Private Sub readProperty(argWords As String[])
+    
+    If argWords[0] == "Property" Then Inc $propertyCountAll
+    
+End
+
+Private Sub readMethod(argWords As String[])
+    
+    If Not $accessors.Exist(argWords[0], gb.IgnoreCase) Then Return
+    If Not $procedures.Exist(argWords[1], gb.IgnoreCase) Then Return
+    
+    Inc $methodCountAll
+    
+End
+
+Private Sub readLine(argLine As String)
+    
+    Dim yukiWords As String[] = Split(argLine, " ", "", True)
+    
+    If yukiWords.Count = 0 Then Return
+    If yukiWords[0] Begins "'" Then Return
+    
+    Inc $lineOfCodeValid
+    
+    readProperty(yukiWords)
+    readMethod(yukiWords)
+    
+End
+
+Private Sub readLines(argFullPath As String)
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    
+    yukiStream = Open argFullPath For Input
+    
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        Inc $linesOfCodeAll
+        readLine(yukiLine)
+    Wend
+    
+    Close #yukiStream
+    
+End
+
+Public Sub _new(argFullPath As String)
+    
+    readLines(argFullPath)
+    
+End
+
+Private Function LinesOfCodeAll_Read() As Integer
+
+    Return $linesOfCodeAll
+
+End
+
+Private Function LinesOfCodeValid_Read() As Integer
+
+    Return $lineOfCodeValid
+
+End
+
+Private Function MethodCountAll_Read() As Integer
+
+    Return $methodCountAll
+
+End
+
+Private Function PropertyCountAll_Read() As Integer
+
+    Return $propertyCountAll
+
+End

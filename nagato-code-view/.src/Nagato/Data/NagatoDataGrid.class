@@ -2,13 +2,15 @@
 
 Property Read Count As Integer
 Property Read Data As Variant[]
+Property Read PropertyCount As Integer
 Property Read MothodCount As Integer
 
 Private $sort As New NagatoSort
 Private $targetColumn As Integer 
 Private $gridData As New Variant[]
 Private $linesOfCode As Integer
-Private $linesOfCodeWithoutVoid As Integer
+Private $linesOfCodeValid As Integer
+Private $propertyCount As Integer
 Private $methodsCount As Integer 
 
 Private Function ensureFirstRow(argRowData As Collection) As Boolean
@@ -53,7 +55,8 @@ Public Sub AddToGridData(argType As String, argPath As String)
     Dim yukiRowData As New NagatoDataRow(argType, argPath)
     
     $linesOfCode += yukiRowData.Collection[MikuruColumn.KeyLines]
-    $linesOfCodeWithoutVoid += yukiRowData.Collection[MikuruColumn.KeyLinesWithoutVoid]
+    $linesOfCodeValid += yukiRowData.Collection[MikuruColumn.KeyLinesWithoutVoid]
+    Try $propertyCount += yukiRowData.Collection[MikuruColumn.KeyProperty]
     Try $methodsCount += yukiRowData.Collection[MikuruColumn.KeyMethods]
     
     If ensureFirstRow(yukiRowData.Collection) Then Return
@@ -66,7 +69,7 @@ End
 Public Sub GetLinesOfCode(argIgnoreVoid As Boolean) As Integer
     
     If argIgnoreVoid Then 
-        Return $linesOfCodeWithoutVoid
+        Return $linesOfCodeValid
     Else
         Return $linesOfCode
     Endif
@@ -77,7 +80,8 @@ Public Sub Clear()
     
     $gridData.Clear()
     $linesOfCode = 0
-    $linesOfCodeWithoutVoid = 0
+    $linesOfCodeValid = 0
+    $propertyCount = 0
     $methodsCount = 0
     
 End
@@ -114,5 +118,11 @@ End
 Private Function MothodCount_Read() As Integer
 
     Return $methodsCount
+
+End
+
+Private Function PropertyCount_Read() As Integer
+
+    Return $propertyCount
 
 End

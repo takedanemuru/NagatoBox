@@ -6,7 +6,7 @@ Private $moduleCount As Integer = 0
 Private $formCount As Integer = 0
 Private $classCount As Integer = 0
 
-Public Function GetType(argDirectory As String, argFileName As String) As String
+Public Function GetType(argFileName As String) As String
     
     If argFileName Like "*.module" Then
         Inc $moduleCount
