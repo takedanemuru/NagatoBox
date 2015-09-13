@@ -37,8 +37,8 @@ Public Sub Empty()
     Dim yukiPath As String
     Dim yukiPaths As New String[]
     
-    For Each yukiPath In Dir($path.Info)
-        yukiPaths.Add($path.Info &/ yukiPath)
+    For Each yukiPath In Dir($path.Files)
+        yukiPaths.Add($path.Files &/ yukiPath)
     Next
     
     Me.DeleteFromTrashBin(yukiPaths)

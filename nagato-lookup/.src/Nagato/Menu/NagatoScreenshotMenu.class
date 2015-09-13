@@ -39,7 +39,7 @@ Private Sub addIsOnlyActiveMenu()
     Dim yukiMenu As New Menu($parentMenu) As "IsOnlyActiveMenu"
     
     yukiMenu.Text = ("Only active window")
-    yukiMenu.Picture = IIf(NagatoSettings.OnlyActiveWindow, MikuruIcons.Get("button-check"), Null)
+    yukiMenu.Picture = IIf(NagatosettingsScreenShooter.OnlyActiveWindow, MikuruIcons.Get("button-check"), Null)
     
 End
 
@@ -78,7 +78,7 @@ End
 
 Public Sub IsOnlyActiveMenu_Click()
     
-    NagatoSettings.OnlyActiveWindow = Not NagatoSettings.OnlyActiveWindow
+    NagatosettingsScreenShooter.OnlyActiveWindow = Not NagatosettingsScreenShooter.OnlyActiveWindow
     
 End
 

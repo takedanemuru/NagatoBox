@@ -15,8 +15,6 @@ End
 
 Public Sub Form_Open()
 
-    Dim yukiDBusApplication As DBusApplication = DBus["org.freedesktop.DBus"]
-
     Me.Center()
     Me.Picture = Image.Load("Pictures/yukichan_25.jpg").Stretch(Me.Height, Me.Width).Picture
     

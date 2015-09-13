@@ -18,7 +18,7 @@ End
 Private Sub initializeDirectoryButtonBox()
     
     With DirectoryButtonBox
-        .Text = NagatoSettings.Directory
+        .Text = NagatosettingsScreenShooter.Directory
         .Picture = Stock["small/home"]
     End With
     
@@ -81,7 +81,7 @@ End
 Public Sub SaveButton_Click()
 
     $screenshooter.Save(getPath())
-    If CheckBox1.Value Then NagatoSettings.Directory = DirectoryButtonBox.Text 
+    If CheckBox1.Value Then NagatosettingsScreenShooter.Directory = DirectoryButtonBox.Text 
     Me.Close()
 
 End

@@ -7,7 +7,6 @@ Private Const LogindManagerObjectPath As String = "/org/freedesktop/login1"
 Private Const LogindManagerInterface As String = "org.freedesktop.login1.Manager"
 
 Private $logindManager As DBusProxy
-'Private $observer As Observer
 
 Private Sub initializeLogindManager()
     
@@ -51,13 +50,13 @@ Public Sub Logout(argType As Integer)
     
     Select Case argType
         Case TypeExit
-            Shell "openbox --exit"
+            Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
         Case TypeReboot
             $logindManager.Reboot(False)
         Case TypeShutdown
             $logindManager.PowerOff(True)
         Case TypeLockScreen
-            Try Shell "light-locker-command -l"
+            Try Shell "nagato-config-screenlocker -l"
     End Select
     
 End

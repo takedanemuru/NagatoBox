@@ -8,7 +8,7 @@ Private $panel As NagatoMenuPanelGlobalAutoStarts
 
 Private Function getTargetPath() As String
     
-    Dim yukiName As String = $gridView[$gridView.Row, NagatoGridsHeadersAutostarts.ColumnName].Text
+    Dim yukiName As String = $gridView[$gridView.Row, NagatoTableHeadersAutostarts.ColumnName].Text
     Dim yukiPath As String = MikuruAutostartDirectory.User &/ yukiName
 
     Return yukiPath

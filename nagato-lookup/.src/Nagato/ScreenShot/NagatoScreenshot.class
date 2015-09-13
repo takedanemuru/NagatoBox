@@ -45,7 +45,7 @@ End
 
 Public Sub Get() 
     
-    If NagatoSettings.OnlyActiveWindow Then
+    If NagatosettingsScreenShooter.OnlyActiveWindow Then
         If Not hasActiveWindow() Then Return
         MikuruActiveWindow.Set()
         With MikuruActiveWindow

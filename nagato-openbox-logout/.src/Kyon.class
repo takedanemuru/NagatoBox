@@ -8,7 +8,7 @@ Public Sub CallBack(argTag As Integer)
         Case 1
             Shell "systemctl poweroff"
         Case 2
-            Shell "openbox --exit"
+            Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
     End Select
     
 End

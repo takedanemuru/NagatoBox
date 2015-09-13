@@ -21,15 +21,15 @@ End
 
 Private Function getScreenshot() As Picture
     
+    ' very simple, but very unstable...
+    
     ' Dim yukiActiveWindow As New DesktopWindow(Desktop.ActiveWindow)
     ' 
-    ' Debug yukiActiveWindow.H
-    ' 
-    ' Return yukiActiveWindow.GetScreenshot(True)
+    ' Return yukiActiveWindow.GetScreenshot()
     
     Dim yukiRect As New Rect
     Dim yukiPicture As Picture
-    ' 
+     
     With MikuruActiveWindow
         yukiRect.X = .Rectangle.X
         yukiRect.Y = .Rectangle.Y - .Relative.Y

@@ -13,6 +13,14 @@ Private Sub initializeRootMenu(argMenuName As String)
     
 End
 
+Private Sub addPlacesMenu()
+    
+    Dim yukiMenu As NagatoMenuDirectory
+    
+    yukiMenu = New NagatoMenuDirectory($rootMenu, User.Home)
+    
+End
+
 Private Sub addLogoutMenu()
     
     Dim yukiMenu As New Menu($rootMenu) As "LogoutMenu"
@@ -49,6 +57,8 @@ End
 Public Sub _new(argMenuName As String)
     
     initializeRootMenu(argMenuName)
+    addPlacesMenu()
+        MikuruMenuSeparator.Set($rootMenu)
     $preferenceMenu = New NagatoPreferenceMenu($rootMenu)
     $screenshotMenu = New NagatoScreenshotMenu($rootMenu)
     $alsaMenu = New NagatoAlsaMenu($rootMenu)
@@ -77,6 +87,8 @@ End
 
 Public Sub LogoutMenu_Click()
     
-    Shell "nagato-session -l"
+    Debug "logout"
+    
+    'Shell "nagato-session -l"
     
 End

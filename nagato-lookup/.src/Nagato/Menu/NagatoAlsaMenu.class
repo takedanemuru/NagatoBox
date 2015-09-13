@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private $parentMenu As Menu
-Private $observer As Observer
+Private $alsa As New NagatoAlsaState
 Private $channel As String
 Private $volume As Integer
     
@@ -9,17 +9,9 @@ Private Function addIndicationMenu() As Boolean
     
     Dim yukiMenu As New Menu($parentMenu)
     
-    If MikuruAlsa.GetAlsaVolume("Master").Count > 0 Then
-        $channel = "Master"
-        $volume = MikuruAlsa.GetAlsaVolume($channel)[0]
+    If $alsa.Channel <> "" Then 
         yukiMenu.Picture = MikuruIcons.Get("speaker")
-        yukiMenu.Text = Subst$("ALSA Master: &1%", $volume)
-        Return True
-    Else If MikuruAlsa.GetAlsaVolume("PCM").Count > 0 Then
-        $channel = "PCM"
-        $volume = MikuruAlsa.GetAlsaVolume($channel)[0]
-        yukiMenu.Picture = MikuruIcons.Get("speaker")
-        yukiMenu.Text = Subst$("ALSA PCM: &1%", $volume)
+        yukiMenu.Text = Subst$("ALSA &1: &2%", $alsa.Channel, $alsa.Volume)
         Return True
     Else
         yukiMenu.Text = ("Couldn't find valid alsa volume channel.")
@@ -30,52 +22,28 @@ End
 
 Private Sub addVolumeMenu()
     
-    Dim yukiCount As Integer
-    Dim yukiMenu As Menu
+    Dim yukiVolume As Integer
     
-    For yukiCount = 100 DownTo 10 Step 10
-        yukiMenu = New Menu($parentMenu) As "AlsaMenu"
-        yukiMenu.Text = Subst$(("&1%"), yukiCount)
-        yukiMenu.Tag = yukiCount
-        If yukiCount = $volume Then yukiMenu.Picture = MikuruIcons.Get("button-check")
+    For yukiVolume = 100 DownTo 10 Step 10
+        Object.New("NagatoMenuItemAlsaVolume", [$parentMenu, [$alsa.Channel, yukiVolume, $alsa.Volume]])
     Next
-    
-End
-
-Private Sub addMuteMenu()
-    
-    Dim yukiMenu As New Menu($parentMenu) As "AlsaMenu"
-    
-    With yukiMenu
-        .Text = ("Mute")
-        .Picture = MikuruIcons.Get("speaker-mute")
-        .Tag = 0
-    End With
     
 End
 
 Private Sub initializeMenu()
     
     If addIndicationMenu() Then
-        addDummyMenu()
+        Object.New("NagatoMenuItemDummy", [$parentMenu])
         addVolumeMenu()
-        addDummyMenu()
-        addMuteMenu()
+        Object.New("NagatoMenuItemDummy", [$parentMenu])
+        Object.New("NagatoMenuItemAlsaMute", [$parentMenu, [$alsa.Channel, 0]])
     Endif
-    
-End
-
-Private Sub addDummyMenu()
-    
-    Dim yukiMenu As New Menu($parentMenu)
-    
-    yukiMenu.Text = ""
     
 End
 
 Private Sub addParentMenu(argRootMenu As Menu)
     
-    $parentMenu = New Menu(argRootMenu) 
+    $parentMenu = New Menu(argRootMenu) As "ParentMenu"
     
     With $parentMenu
         .Picture = MikuruIcons.Get("speaker")
@@ -87,20 +55,13 @@ End
 Public Sub _new(argMenu As Menu)
     
     addParentMenu(argMenu)
-    $observer = New Observer($parentMenu) As "Asakura"
-    addDummyMenu()
+    Object.New("NagatoMenuItemDummy", [$parentMenu])
     
 End
 
-Public Sub Asakura_Show()
+Public Sub ParentMenu_Show()
     
     $parentMenu.Children.Clear()
     initializeMenu()
-    
-End
-
-Public Sub AlsaMenu_Click()
-    
-    Try Shell Subst$("amixer sset &1 &2%", $channel, Last.Tag)
     
 End

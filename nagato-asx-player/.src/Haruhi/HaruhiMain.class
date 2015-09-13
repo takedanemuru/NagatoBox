@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private $xml As XmlDocument
-Private $stream As Process
+Private $player As New MediaPlayer
 
 Private Function getPathWithDialog() As String
     
@@ -55,7 +55,8 @@ Private Function play(argStreamPath As String)
     If argStreamPath Not Begins "mms://" Then
         TextLabel1.Text = ("YUKI.N > Some error caused.")
     Else
-        $stream = Exec ["mplayer", argStreamPath]
+        $player.URL = argStreamPath
+        $player.Play()
         TextLabel1.Text = Subst$(("now playing: &1"), argStreamPath)
     End If
 
@@ -74,7 +75,7 @@ End
 
 Public Sub Form_Close()
 
-    Try $stream.Kill()
+    Try $player.Stop()
 
     NagatoSettings.SaveFormSettings(Me)
 

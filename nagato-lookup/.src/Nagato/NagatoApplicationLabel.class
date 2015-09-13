@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private $textLabel As TextLabel
+Private $width As Integer
+
+Public Sub SetDescription(argKey As String)
+
+    Dim yukiDesktopFile As New NagatoDesktopFile(Last.Key)
+    Dim yukiProperty As String
+    
+    yukiProperty = Subst$("<b>Name:</b> &1<br>", yukiDesktopFile.Name)
+    yukiProperty &= Subst$("<b>Generic Name:</b> &1<br>", yukiDesktopFile.GenericName)
+    yukiProperty &= Subst$("<b>Exec:</b> &1<br>", yukiDesktopFile.Exec)
+    yukiProperty &= "<b>Description:</b> " & yukiDesktopFile.Comment
+
+    $textLabel.H = Application.Font.RichTextHeight(yukiProperty, $width)
+    $textLabel.Text = yukiProperty
+
+End
+
+Public Sub SetWidth(argWidth As Integer)
+    
+    $textLabel.W = argWidth
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $textLabel = New TextLabel(argContainer)
+    
+    With $textLabel
+        .H = 0
+        .Expand = False
+        .Foreground = Color.White
+        .Background = Color.Lighter(Color.Violet)
+    End With
+    
+    $width = argContainer.W
+    
+End
+

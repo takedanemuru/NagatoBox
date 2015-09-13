@@ -1,0 +1,36 @@
+' Gambas class file
+
+Create Private
+
+Public _$menu As Menu
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    
+    
+End
+
+Public Sub _OptionalAbstractOnInitialize(argValues As Variant[])
+    
+    
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    
+    
+End
+
+Public Sub _new(argParentMenu As Menu, Optional argValues As Variant[])
+    
+    Me._AbstractOnInitialize(argParentMenu)
+    If argValues Then Me._OptionalAbstractOnInitialize(argValues)
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._AbstractOnMenuClicked()
+    
+End

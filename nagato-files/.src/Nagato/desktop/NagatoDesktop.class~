@@ -3,7 +3,8 @@
 Public Const SpecialKeyClock As String = "DesktopClock"
 Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
 
-Private $iconView As IconView
+'Private $iconView As IconView
+Private $initializer As NagatoInitializerIconview
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
 Private $icons As NagatoDesktopIconsHandler
@@ -12,32 +13,38 @@ Private $mouse As NagatoDesktopMouseHandler
 Private $drop As NagatoDesktopDropHandler
 Private $activation As NagatoDesktopActivationHandler
 
-Private Sub initializeIconView(argContainer As Container)
-    
-    $iconView = New IconView(argContainer) As "DesktopIconView"
-    
-    With $iconView
-        .Expand = True
-        .Orientation = Arrange.Horizontal
-        .Border = False
-        .Mode = Select.Single
-        .Drop = True
-    End With
-    
-End
+' Private Sub initializeIconView(argContainer As Container)
+'     
+'     $iconView = New IconView(argContainer) As "DesktopIconView"
+'     
+'     With $iconView
+'         .Expand = True
+'         .Orientation = Arrange.Horizontal
+'         .Border = False
+'         .Mode = Select.Single
+'         .Drop = True
+'     End With
+'     
+' End
 
 Public Sub _new(argContainer As Container)
     
-    initializeIconView(argContainer)
-    
-    $wallpaper = New NagatoDesktopWallpaperHandler($iconView)
-    $icons = New NagatoDesktopIconsHandler($iconView)
-    $mouse = New NagatoDesktopMouseHandler($iconView) As "Handler"
-    $keyboard = New NagatoDesktopKeyboardHandler($iconView) As "Handler"
-    $drop = New NagatoDesktopDropHandler($iconView)
-    $activation = New NagatoDesktopActivationHandler($iconView)
-    $observer = New NagatoDesktopObserverHandler($iconView) As "Handler"
+    'initializeIconView(argContainer)
+    $initializer = New NagatoInitializerIconview(argContainer)
+    $wallpaper = New NagatoDesktopWallpaperHandler($initializer.IconView)
+    $icons = New NagatoDesktopIconsHandler($initializer.IconView)
+    $mouse = New NagatoDesktopMouseHandler($initializer.IconView) As "Handler"
+    $keyboard = New NagatoDesktopKeyboardHandler($initializer.IconView) As "Handler"
+    $drop = New NagatoDesktopDropHandler($initializer.IconView)
+    $activation = New NagatoDesktopActivationHandler($initializer.IconView)
+    $observer = New NagatoDesktopObserverHandler($initializer.IconView) As "Handler"
 
+End
+
+Public Sub ReloadDesktopWallpaper()
+    
+    $wallpaper.ReloadDesktopWallpaper()
+    
 End
 
 Public Sub Handler_RequestRefresh()

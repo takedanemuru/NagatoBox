@@ -11,12 +11,4 @@
     Expand = True
     Border = False
   }
-  { PropertyLabel TextLabel
-    MoveScaled(9,55,41,0)
-    Font = Font["+1"]
-    Background = &H8BA0DF&
-    Foreground = &HFFFFFF&
-    Text = ("    Not Selected")
-    Alignment = Align.Left
-  }
 }

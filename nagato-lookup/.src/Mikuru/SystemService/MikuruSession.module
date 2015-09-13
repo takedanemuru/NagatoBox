@@ -78,7 +78,7 @@ Public Sub Asakura_Finished(argType As Integer)
     
     Select Case argType
         Case TypeExit
-            Shell "openbox --exit"
+            Try Shell "dm-tool switch-to-greeter"
         Case TypeReboot
             $logindManager.Reboot(True)
         Case TypeShutdown

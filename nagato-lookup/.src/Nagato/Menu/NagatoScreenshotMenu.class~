@@ -68,7 +68,7 @@ End
 Public Sub ScreenshotMenu_Click()
     
     If Last.Tag = 0 Then
-        HaruhiSave.Call(False)
+        HaruhiSave.Call()
     Else
         $count = Last.Tag 
         $timer.Start()

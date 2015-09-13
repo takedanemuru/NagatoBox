@@ -1,0 +1,13 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoMenuItem
+
+Public _$channel As String
+
+Public Sub _AbstractOnMenuClicked()
+    
+    Try Shell Subst$("amixer sset &1 &2%", Me._$channel, Last.Tag)
+    
+End

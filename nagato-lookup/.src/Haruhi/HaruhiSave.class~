@@ -46,10 +46,10 @@ Private Function getPath() As String
     
 End
 
-Public Sub Call(argOnlyActive As Boolean)
+Public Sub Call()
     
     $shutterSound.Play()
-    $screenshooter.Get(argOnlyActive)
+    $screenshooter.Get()
     Me.Center()
     Me.Show()
     initializeDirectoryButtonBox()

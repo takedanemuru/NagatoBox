@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Me._$menu = New Menu(argParentMenu)
+    
+End

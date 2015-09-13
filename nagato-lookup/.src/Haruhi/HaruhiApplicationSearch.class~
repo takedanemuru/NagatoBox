@@ -4,6 +4,7 @@ Private Const IconSize As Integer = 64
 Private Const NotFoundKey As String = "NotFound"
 
 Private $iconViewHandler As NagatoIconViewHandler
+Private $label As NagatoApplicationLabel
 
 Private Sub addDesktopFileIcon(argDesktopFile As NagatoDesktopFile)
     
@@ -74,46 +75,25 @@ Public Sub SetIconViewWithSearchQuery(argQuery As String)
     
 End
 
-Public Sub SetIconViewWithAllSettingsApps()
-    
-    Dim yukiDesktopFile As NagatoDesktopFile
-
-    ApplicationsIconView.Clear()
-
-    For Each yukiDesktopFile In NagatoMenuCache3.GetApplications("Settings")
-        If Not containsSearchQuery(yukiDesktopFile, argQuery) Then Continue
-        addDesktopFileIcon(yukiDesktopFile)
-    Next
-    
-    showResult()
-    
-End
-
 Public Sub Form_Open()
 
     Me.Center()
     
     If Not Object.IsValid($iconViewHandler) Then
         $iconViewHandler = New NagatoIconViewHandler(ApplicationsIconView)
+        $label = New NagatoApplicationLabel(Me)
     End If
 
 End
 
+Public Sub Form_Arrange()
+    
+    $label.SetWidth(Me.W)
+    
+End
+
 Public Sub ApplicationsIconView_Click()
 
-    Dim yukiDesktopFile As NagatoDesktopFile
-    Dim yukiProperty As String
-    
-    If Last.Key = NotFoundKey Then Return
-    
-    yukiDesktopFile = New NagatoDesktopFile(Last.Key)
-    
-    yukiProperty = Subst$("<b>Name:</b> &1<br>", yukiDesktopFile.Name)
-    yukiProperty &= Subst$("<b>Generic Name:</b> &1<br>", yukiDesktopFile.GenericName)
-    yukiProperty &= Subst$("<b>Exec:</b> &1<br>", yukiDesktopFile.Exec)
-    yukiProperty &= "<b>Description:</b> " & yukiDesktopFile.Comment
-
-    PropertyLabel.H = PropertyLabel.Font.RichTextHeight(yukiProperty, PropertyLabel.W)
-    PropertyLabel.Text = yukiProperty
+    If Last.Key <> NotFoundKey Then $label.SetDescription(Last.Key)
 
 End

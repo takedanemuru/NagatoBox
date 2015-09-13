@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItemAlsa
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Me._$menu = New Menu(argParentMenu) As "MenuItem"
+    
+End
+
+Public Sub _OptionalAbstractOnInitialize(argValues As Variant[])
+    
+    Me._$channel = argValues[0]
+    
+    With Me._$menu
+        .Tag = argValues[1]
+        .Text = argValues[1]
+        .Picture = IIf(argValues[1] = argValues[2], MikuruIcons.Get("button-check"), Null)
+    End With
+    
+End

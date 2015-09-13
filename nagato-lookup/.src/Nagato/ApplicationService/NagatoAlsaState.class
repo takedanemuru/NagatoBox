@@ -1,0 +1,38 @@
+' Gambas class file
+
+Property Read Channel As String
+Property Read Volume As Integer
+
+Private $channel As String
+Private $volume As Integer
+
+Private Sub setChannel()
+    
+    If MikuruAlsa.GetAlsaVolume("Master").Count > 0 Then
+        $channel = "Master"
+    Else If MikuruAlsa.GetAlsaVolume("PCM").Count > 0 Then
+        $channel = "PCM"
+    Else
+        Return
+    End If
+    
+End
+
+Public Sub _new()
+    
+    setChannel()
+    $volume = MikuruAlsa.GetAlsaVolume($channel)[0]
+    
+End
+
+Private Function Channel_Read() As String
+
+    Return $channel
+
+End
+
+Private Function Volume_Read() As Integer
+
+    Return $volume
+
+End
