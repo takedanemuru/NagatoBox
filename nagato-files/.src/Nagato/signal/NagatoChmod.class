@@ -8,7 +8,8 @@ Public Const LabelHeight As Integer = 24
 
 Public _$HBox As HBox
 Public _$Label As Label
-Public _$radioButtons As NagatoChmodRadioButtons
+Public _$VBox As VBox
+Public _$radioButtons As New RadioButton[]
 
 Public Function _GetlabelText() As String ' virtual interface
     
@@ -41,7 +42,16 @@ End
 
 Public Sub _SetRadioButton(argTag As String, argText As String)
     
-    Me._$radioButtons.SetRadioButton(argTag, argText)
+    Dim yukiRadioButton As New RadioButton(Me._$VBox) As "RadioButton"
+    
+    With yukiRadioButton
+        .Text = argText
+        .H = Me.LabelHeight
+        .NoTabFocus = True
+        .Tag = argTag
+    End With
+    
+    Me._$radioButtons.Add(yukiRadioButton)
     
 End
 
@@ -65,19 +75,30 @@ End
 
 Public Sub _InitializeVBox() 
     
-    Me._$radioButtons = New NagatoChmodRadioButtons(Me._$HBox, Me._GetBackground()) As "TFEI"
+    Me._$VBox = New VBox(Me._$HBox)
+    Me._$VBox.Expand = True
     
 End
 
 Public Sub SetPermission(argAuthTag As String)
     
-    Me._$radioButtons.SetPermission(argAuthTag)
+    Dim yukiRadioButton As RadioButton
+    
+    For Each yukiRadioButton In Me._$radioButtons
+        If yukiRadioButton.Tag = argAuthTag Then yukiRadioButton.Value = True
+    Next
     
 End
 
 Public Function GetAuthTag() As String
     
-    Return Me._$radioButtons.GetAuthTag()
+    Dim yukiRadioButton As RadioButton
+    
+    For Each yukiRadioButton In Me._$radioButtons
+        If yukiRadioButton.Value Then Return yukiRadioButton.Tag
+    Next
+    
+    Return "-"
     
 End
 
@@ -87,5 +108,11 @@ Public Sub _new(argContainer As Container)
     Me._InitializeLabel()
     Me._InitializeVBox()
     Me._SetRadioButtons()
+    
+End
+
+Public Sub RadioButton_Click()
+    
+    Raise Signal(MikuruSignal.DialogChanged, Null)
     
 End

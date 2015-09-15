@@ -19,8 +19,6 @@ End
 
 Public Sub Form_Open()
     
-    Application.MainWindow = Me
-    NagatoSettings.LoadFormSettings(Me)
     NagatoObserverFacade.Activated = True
     initializeUserInterface()
     

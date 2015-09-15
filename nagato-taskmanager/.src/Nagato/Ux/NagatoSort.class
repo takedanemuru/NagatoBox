@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $sortAscend As Boolean = True
+Private $sortAscend As Boolean = False
 Private $targetHeader As New NagatoSystemGridsTargetHeader
 
 Private Function isLesser(argGridData As Variant, argRowData As Variant) As Boolean

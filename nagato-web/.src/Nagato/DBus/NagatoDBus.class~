@@ -4,7 +4,7 @@ Create Static
 
 Property Read Proxy As DBusProxy
 
-Public Const Service As String = "org.gambas.nagato.web"
+Public Const Service As String = "org.gambas.nagato-web"
 Public Const ObjectPath As String = "/org/nagato/web"
 Public Const Interface As String = "org.gambas.nagato.web.nagatointerface"
 

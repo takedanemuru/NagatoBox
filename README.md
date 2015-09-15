@@ -55,46 +55,46 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 Application			|Version	|Description
 ---			|----:	|----
-dataovermind-rssfeeder		|x.x.x	|rss daemon
-dataovermind-systemmonitor	|42.1.1	|system monitor daemon
+dataovermind-rssfeeder		|0.1.1	|rss daemon
+dataovermind-systemmonitor	|42.1.5	|system monitor daemon
 
 ### NagatoApplications
 
 Application			|Version	|Description
 ---			|----:	|----
 nagato-ambient		|x.x.x	|ambient sound player
-nagato-archiver		|x.x.x	|patool frontend for file archiving
-nagato-asx-player		|x.x.x	|asx file player
+nagato-archiver		|42.1.2	|patool frontend for file archiving
+nagato-asx-player		|42.1.1	|asx file player
 nagato-calculator		|x.x.x	|calculator
 nagato-calendar		|x.x.x	|calendar
-nagato-code-view		|x.x.x	|code viewer for Gambas3
+nagato-code-view		|42.1.2	|code viewer for Gambas3
 nagato-color-picker		|x.x.x	|screen color picking tool
-nagato-config-appearance	|x.x.x	|appearance config tool
-nagato-config-screenlocker	|x.x.x	|frontend for i3 locker
+nagato-config-appearance	|0.1.2	|appearance config tool
+nagato-config-screenlocker	|42.1.1	|frontend for i3 locker
 nagato-dbus-finder		|x.x.x	|explorer for dbus
-nagato-dictionary		|x.x.x	|English/Japanese dictionary
-nagato-extractor		|x.x.x	|patool frontend for file extractoring
+nagato-dictionary		|0.4.4	|English/Japanese dictionary
+nagato-extractor		|42.1.2	|patool frontend for file extractoring
 nagato-files			|42.1.5	|file manager and desktop shell
 nagato-font-view		|x.x.x	|font viewer
 nagato-gif-box*		|x.x.x	|gif animation viewer
 nagato-image-view		|x.x.x	|image viewer
 nagato-keycode-checker	|x.x.x	|keycode checker
-nagato-lookup		|42.1.1	|application launcher/finder
-nagato-map		|0.11.4	|map viewer
+nagato-lookup		|42.1.3	|application launcher/finder
+nagato-map		|42.1.5	|map viewer
 nagato-movie		|x.x.x	|movie file player
-nagato-openbox-logout		|x.x.x	|logout dialog for openbox
-nagato-pdf-view		|x.x.x	|pdf viewer
-nagato-player-x		|x.x.x	|music player
-nagato-screenshooter		|x.x.x	|standalone screenshot application
-nagato-session		|x.x.x	|autostart manager
+nagato-openbox-logout		|42.1.2	|logout dialog for openbox
+nagato-pdf-view		|42.1.1	|pdf viewer
+nagato-player-x		|42.1.0	|music player
+nagato-screenshooter		|42.1.2	|standalone screenshot application
+nagato-session		|42.1.2	|autostart manager
 nagato-taskmanager		|42.1.2	|task manager
 nagato-text			|x.x.x	|text editor
 nagato-text-converter*		|x.x.x	|charactor code converter
 nagato-wallpaper		|42.1.2	|wallpaper changer
-nagato-weather		|0.3.3	|weather forecast
+nagato-weather		|42.1.7	|weather forecast
 nagato-web		|42.1.2	|web browser
-[nagato-writer](./readme_extra/nagato-writer)		|42.1.3	|markdown editor
-yuki			|42.1.1	|interface for humanoid interface
+[nagato-writer](./readme_extra/nagato-writer)		|42.1.7	|markdown editor
+yuki			|42.1.48	|interface for humanoid interface
 
 ### Misc Applications
 

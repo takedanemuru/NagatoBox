@@ -50,12 +50,14 @@ End
 Public Sub Asakura_Enter()
     
     $lock = True
+    Me._$gridView.ScrollBar = Scroll.Vertical
     
 End
 
 Public Sub Asakura_Leave()
     
     $lock = False
+    Me._$gridView.ScrollBar = Scroll.None
     
 End
 

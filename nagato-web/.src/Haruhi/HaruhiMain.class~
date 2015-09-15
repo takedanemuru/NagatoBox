@@ -46,7 +46,7 @@ End
 
 Public Sub Form_Open()
 
-    NagatoSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
     Application.MainWindow = Me
     
     $persona = New NagatoPersona(DrawingArea1) As "Persona"
@@ -63,7 +63,7 @@ End
 
 Public Sub Form_Close()
     
-    NagatoSettings.SaveFormSettings(Me)
+    NagatoSettingsForm.Save(Me)
     NagatoDBus.Unregister()
     
 End

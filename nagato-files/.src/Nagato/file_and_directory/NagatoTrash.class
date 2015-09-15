@@ -11,7 +11,7 @@ Private $path As New NagatoTrashPath
 
 Private Sub confirm(argPaths As String[]) As Boolean
     
-    HaruhiDialogDelete.SetMessage(argPaths.Sort())
+    HaruhiDialogDelete.SetMessage(argPaths)
     If HaruhiDialogDelete.ShowDialog() = HaruhiDialogDelete.ResponseDelete Then Return True
     
     Return False

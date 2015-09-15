@@ -45,9 +45,6 @@ Public Sub _new()
 End
 
 Public Sub Form_Open()
-
-    NagatoSettingsForm.Load(Me)
-    Application.MainWindow = Me
     
     $persona = New NagatoPersona(DrawingArea1) As "Persona"
     $searchBox = New NagatoWebSearch(SearchBoxContainer) As "SearchBox"

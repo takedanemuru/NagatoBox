@@ -19,8 +19,6 @@ Public Sub Main()
     
     Dim yukiUrl As String = getSartupUrl()
     
-    Debug Desktop.GetDirectory("PICTURES")
-    
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()

@@ -6,11 +6,11 @@ Private $timer As New Timer As "Timer"
 Private $starButton As NagatoStarButton
 Private $systemGraph As NagatoSystemGraph
 Private $systemLabel As NagatoSystemLabel
-Private $systemGrids As NagatoSystemGrids
+Private $systemGrids As NagatoGridsProcess
 
 Private Sub initializeUserInterface()
     
-    $systemGrids = New NagatoSystemGrids(SystemMonitorGrid) As "UserInterface"
+    $systemGrids = New NagatoGridsProcess(SystemMonitorGrid) As "UserInterface"
     $starButton = New NagatoStarButton(HBox1) As "UserInterface"
     $systemGraph = New NagatoSystemGraph(GraphArea)
     $systemLabel = New NagatoSystemLabel(SystemLabel)

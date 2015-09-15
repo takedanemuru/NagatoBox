@@ -25,6 +25,7 @@ End
 Private Sub setX11Properties()
     
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", Me.Id, Type, TypeDesktop) Wait
+    
     If Error Then Return
     
     NagatoDBus.Register()
