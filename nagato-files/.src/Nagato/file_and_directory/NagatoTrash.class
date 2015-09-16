@@ -2,8 +2,6 @@
 
 Create Static
 
-Property Read PathFiles As String
-Property Read PathInfo As String
 Property Read Count As Integer
 Property Read Size As String
 
@@ -37,8 +35,8 @@ Public Sub Empty()
     Dim yukiPath As String
     Dim yukiPaths As New String[]
     
-    For Each yukiPath In Dir($path.Files)
-        yukiPaths.Add($path.Files &/ yukiPath)
+    For Each yukiPath In Dir(MikuruTrashPath.Files)
+        yukiPaths.Add(MikuruTrashPath.Files &/ yukiPath)
     Next
     
     Me.DeleteFromTrashBin(yukiPaths)
@@ -47,9 +45,13 @@ End
 
 Public Sub DeleteFromTrashBin(argPaths As String[])
     
-    Dim yukiPath As String
+    If confirm(argPaths) Then deleteFilesFromTrashBin(argPaths)
     
-    If Not confirm(argPaths) Then Return
+End
+
+Private Sub deleteFilesFromTrashBin(argPaths As String[])
+    
+    Dim yukiPath As String
     
     For Each yukiPath In argPaths
         If Not Exist(yukiPath) Then Continue
@@ -67,7 +69,7 @@ Public Sub Restore(argPaths As String[])
         If Not Exist(yukiPath) Then Continue
         yukiPathToRestore = $path.GetPathToRestore(yukiPath)
         Try Copy yukiPath To yukiPathToRestore
-        If Not Error Then Me.Delete([yukiPath])
+        If Not Error Then deleteFilesFromTrashBin([yukiPath])
     Next
     
 End
@@ -78,27 +80,15 @@ Public Function GetPreviousPath(argPath As String) As String
     
 End
 
-Private Function PathFiles_Read() As String
-
-    Return $path.Files
-
-End
-
-Private Function PathInfo_Read() As String
-
-    Return $path.Info
-
-End
-
 Private Function Count_Read() As Integer
 
-    Return Dir($path.Info).Count
+    Return Dir(MikuruTrashPath.Files).Count
 
 End
 
 Private Function Size_Read() As String
 
-    Dim yukiSize As Integer = MikuruFileSize.GetDirectorySize($path.Files)
+    Dim yukiSize As Integer = MikuruFileSize.GetDirectorySize(MikuruTrashPath.Files)
     
     Return MikuruFileSize(yukiSize)
 

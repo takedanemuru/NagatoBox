@@ -7,9 +7,8 @@ Create Private
 Public Const LabelHeight As Integer = 24
 
 Public _$HBox As HBox
-Public _$Label As Label
-Public _$VBox As VBox
-Public _$radioButtons As New RadioButton[]
+Public _$label As NagatoChmodLabel
+Public _$radioButtons As NagatoChmodRadioButtons
 
 Public Function _GetlabelText() As String ' virtual interface
     
@@ -42,16 +41,7 @@ End
 
 Public Sub _SetRadioButton(argTag As String, argText As String)
     
-    Dim yukiRadioButton As New RadioButton(Me._$VBox) As "RadioButton"
-    
-    With yukiRadioButton
-        .Text = argText
-        .H = Me.LabelHeight
-        .NoTabFocus = True
-        .Tag = argTag
-    End With
-    
-    Me._$radioButtons.Add(yukiRadioButton)
+    Me._$radioButtons.SetRadioButton(argTag, argText)
     
 End
 
@@ -61,58 +51,23 @@ Public Sub _SetRadioButtons() ' virtual interface
     
 End
 
-Public Sub _InitializeLabel()
-    
-    Me._$Label = New Label(Me._$HBox)
-    
-    With Me._$Label
-        .W = 48
-        .Text = Me._GetlabelText()
-        .Alignment = Align.Center
-    End With
-    
-End
-
-Public Sub _InitializeVBox() 
-    
-    Me._$VBox = New VBox(Me._$HBox)
-    Me._$VBox.Expand = True
-    
-End
-
 Public Sub SetPermission(argAuthTag As String)
     
-    Dim yukiRadioButton As RadioButton
-    
-    For Each yukiRadioButton In Me._$radioButtons
-        If yukiRadioButton.Tag = argAuthTag Then yukiRadioButton.Value = True
-    Next
+    Me._$radioButtons.SetPermission(argAuthTag)
     
 End
 
 Public Function GetAuthTag() As String
     
-    Dim yukiRadioButton As RadioButton
-    
-    For Each yukiRadioButton In Me._$radioButtons
-        If yukiRadioButton.Value Then Return yukiRadioButton.Tag
-    Next
-    
-    Return "-"
+    Return Me._$radioButtons.GetAuthTag()
     
 End
 
 Public Sub _new(argContainer As Container)
     
     Me._InitializeHBox(argContainer)
-    Me._InitializeLabel()
-    Me._InitializeVBox()
+    Me._$label = New NagatoChmodLabel(Me._$HBox, Me._GetlabelText())
+    Me._$radioButtons = New NagatoChmodRadioButtons(Me._$HBox) As "TFEI"
     Me._SetRadioButtons()
-    
-End
-
-Public Sub RadioButton_Click()
-    
-    Raise Signal(MikuruSignal.DialogChanged, Null)
     
 End

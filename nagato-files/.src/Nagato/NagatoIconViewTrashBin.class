@@ -26,8 +26,8 @@ Private Sub setIcons(argType As Integer, Optional argQuery As String)
     Dim yukiPath As String
     Dim yukiFullPath As String
     
-    For Each yukiPath In Dir(NagatoTrash.PathFiles, "*", argType).Sort(gb.IgnoreCase)
-        yukiFullPath = NagatoTrash.PathFiles &/ yukiPath
+    For Each yukiPath In Dir(MikuruTrashPath.Files, "*", argType).Sort(gb.IgnoreCase)
+        yukiFullPath = MikuruTrashPath.Files &/ yukiPath
         If Not Exist(yukiFullPath) Then Continue
         If argQuery And If (yukiPath Not Like "*" & argQuery & "*") Then Continue
         $iconView.Add(yukiFullPath, "", MikuruTile(yukiFullPath, $selection.Exist(yukiFullPath)))
@@ -49,7 +49,7 @@ Public Sub Refresh(Optional argLastSelected As String)
     
     setIcons(gb.Directory)
     setIcons(gb.File)
-    NagatoDBThumbnailer.CleanUp(NagatoTrash.PathFiles)
+    NagatoDBThumbnailer.CleanUp(MikuruTrashPath.Files)
     
     If argLastSelected Then ensureVisible(argLastSelected)
     

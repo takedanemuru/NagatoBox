@@ -1,0 +1,24 @@
+' Gambas class file
+
+Public Sub PopUp(argPath As String, argRoot As Boolean, argCount As Integer)
+    
+    Dim yukiPath As String = argPath
+    Dim yukiContextMenu As Object
+    
+    If yukiPath = "NOTFOUND" Then 
+        Return
+    Else If argRoot Then
+        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "Menu"
+    Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
+        yukiContextMenu = New NagatoContextMenuDesktopClock(HaruhiDesktop, "")
+    Else If yukiPath = NagatoDesktop.SpecialKeyTrashBin Then
+        yukiContextMenu = New NagatoContextMenuDesktopTrashBin(HaruhiDesktop, "")
+    Else If yukiPath = "" Or If argCount = 0 Then
+        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "Menu"
+    Else 
+        yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiDesktop, yukiPath) As "Menu"
+    End If
+
+    yukiContextMenu.Popup()
+    
+End

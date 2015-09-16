@@ -3,7 +3,7 @@
 Public Const SpecialKeyClock As String = "DesktopClock"
 Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
 
-Private $iconView As IconView
+Private $iconView As NagatoIconViewInitializer
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
 Private $icons As NagatoDesktopIconsHandler
@@ -12,31 +12,16 @@ Private $mouse As NagatoDesktopMouseHandler
 Private $drop As NagatoDesktopDropHandler
 Private $activation As NagatoDesktopActivationHandler
 
-Private Sub initializeIconView(argContainer As Container)
-    
-    $iconView = New IconView(argContainer) As "DesktopIconView"
-    
-    With $iconView
-        .Expand = True
-        .Orientation = Arrange.Horizontal
-        .Border = False
-        .Mode = Select.Single
-        .Drop = True
-    End With
-    
-End
-
 Public Sub _new(argContainer As Container)
     
-    initializeIconView(argContainer)
-    
-    $wallpaper = New NagatoDesktopWallpaperHandler($iconView)
-    $icons = New NagatoDesktopIconsHandler($iconView)
-    $mouse = New NagatoDesktopMouseHandler($iconView) As "Handler"
-    $keyboard = New NagatoDesktopKeyboardHandler($iconView) As "Handler"
-    $drop = New NagatoDesktopDropHandler($iconView)
-    $activation = New NagatoDesktopActivationHandler($iconView)
-    $observer = New NagatoDesktopObserverHandler($iconView) As "Handler"
+    $iconView = New NagatoIconViewInitializer(argContainer)
+    $wallpaper = New NagatoDesktopWallpaperHandler($iconView.IconView)
+    $icons = New NagatoDesktopIconsHandler($iconView.IconView)
+    $mouse = New NagatoDesktopMouseHandler($iconView.IconView) As "Handler"
+    $keyboard = New NagatoDesktopKeyboardHandler($iconView.IconView) As "Handler"
+    $drop = New NagatoDesktopDropHandler($iconView.IconView)
+    $activation = New NagatoDesktopActivationHandler($iconView.IconView)
+    $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Handler"
 
 End
 
@@ -88,14 +73,11 @@ Public Sub Handler_KeyPress(argKeyCode As Integer)
     
     Select Case argKeyCode
         Case Key.Enter, 16777220
-            Debug "enter"
         Case Key.Esc, 16777216
-            Debug "escape"
             Clipboard.Clear()
             $mouse.ClearAll()
             $icons.Refresh($mouse.SelectedPaths)
         Case Key.Delete
-            Debug "delete"
             NagatoTrash.Delete($mouse.SelectedPaths)
     End Select
     

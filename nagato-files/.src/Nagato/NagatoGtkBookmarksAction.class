@@ -4,7 +4,7 @@ Inherits NagatoGtkBookmarksHandler
 
 Private Sub setNewTrashBin()
     
-    If Exist(NagatoTrash.PathFiles) Then
+    If Exist(MikuruTrashPath.Files) Then
         TFEI.SetNewTrashBin()
     Else
         Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))

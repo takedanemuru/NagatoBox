@@ -43,40 +43,46 @@ Private Sub setBackgroundColor()
     
 End
 
+Private Sub setRow(argColumnIndex As Integer, argText As String, Optional argAlign As Integer = Align.Right)
+    
+    $grids[$grids.Rows.Max, argColumnIndex].Text = argText
+    $grids[$grids.Rows.Max, argColumnIndex].Alignment = argAlign
+    
+End
+
 Public Sub Fill(argGridData As Variant[])
     
     Dim yukiCount As Integer
     
     For yukiCount = 0 To argGridData.Max
         Inc $grids.Rows.Count
-        $grids[$grids.Rows.Max, 0].Text = argGridData[yukiCount]["type"]
-        $grids[$grids.Rows.Max, 1].Text = argGridData[yukiCount]["name"]
-        $grids[$grids.Rows.Max, 2].Text = Format$(argGridData[yukiCount]["lines"], "#,###,###,###")
-        $grids[$grids.Rows.Max, 2].Alignment = Align.Right
-        $grids[$grids.Rows.Max, 3].Text = Format$(argGridData[yukiCount]["withoutvoid"], "#,###,###,###")
-        $grids[$grids.Rows.Max, 3].Alignment = Align.Right
-        Try $grids[$grids.Rows.Max, 4].Text = Format$(argGridData[yukiCount]["properties"], "#,###,###,###")
-        $grids[$grids.Rows.Max, 4].Alignment = Align.Right
-        Try $grids[$grids.Rows.Max, 5].Text = Format$(argGridData[yukiCount]["methods"], "#,###,###,###")
-        $grids[$grids.Rows.Max, 5].Alignment = Align.Right
-        If argGridData[yukiCount]["lines"] >= 100 Then setBackgroundColor()
+        With argGridData[yukiCount]
+            $grids[$grids.Rows.Max, 0].Text = argGridData[yukiCount]["type"]
+            $grids[$grids.Rows.Max, 1].Text = argGridData[yukiCount]["name"]
+            setRow(2, Format$(.["lines"], "#,###,###,###"))
+            If .["type"] <> "Form" Then setRow(3, Format$(.["withoutvoid"], "#,###,###,###"))
+            setRow(4, Format$(.["properties"], "#,###,###,###"))
+            setRow(5, Format$(.["methods"], "#,###,###,###"))
+            If .["lines"] >= 100 Then setBackgroundColor()
+        End With
     Next
     
 End
 
-Public Sub SetSumRow(argLines As Integer, argLinesWithoutVoid As Integer, argProperties As Integer, argMethods As Integer)
+Public Sub SetSumRow(argData As NagatoData)
     
     Inc $grids.Rows.Count
     
     With $grids
         .[.Rows.Max, 1].Text = ("TOTAL")
-        .[.Rows.Max, 2].Text = Format$(argLines, "#,###,###")
-        .[.Rows.Max, 2].Alignment = Align.Right
-        .[.Rows.Max, 3].Text = Format$(argLinesWithoutVoid, "#,###,###")
+        setRow(2, Format$(argData.GetLinesOfCode(False), "#,###,###"))
+        ' .[.Rows.Max, 2].Text = Format$(argData.GetLinesOfCode(False), "#,###,###")
+        ' .[.Rows.Max, 2].Alignment = Align.Right
+        .[.Rows.Max, 3].Text = Format$(argData.GetLinesOfCode(True), "#,###,###")
         .[.Rows.Max, 3].Alignment = Align.Right
-        .[.Rows.Max, 4].Text = Format$(argProperties, "#,###,###")
+        .[.Rows.Max, 4].Text = Format$(argData.PropertyCount, "#,###,###")
         .[.Rows.Max, 4].Alignment = Align.Right
-        .[.Rows.Max, 5].Text = Format$(argMethods, "#,###,###")
+        .[.Rows.Max, 5].Text = Format$(argData.MethodCount, "#,###,###")
         .[.Rows.Max, 5].Alignment = Align.Right
     End With
     

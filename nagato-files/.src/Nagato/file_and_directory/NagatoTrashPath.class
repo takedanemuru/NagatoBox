@@ -1,8 +1,5 @@
 ' Gambas class file
 
-Property Read Files As String
-Property Read Info As String
-
 Private Function getDecodedPath(argPath As String) As String
     
     Return MikuruPath.GetSafePathName(URL.Decode(Replace(argPath, "Path=", "")))
@@ -11,7 +8,7 @@ End
 
 Public Function GetTrashInfoPath(argPath As String) As String
     
-    Return Quote(Replace$(argPath, Me.Files, Me.Info) & ".trashinfo")
+    Return Quote(Replace$(argPath, MikuruTrashPath.Files, MikuruTrashPath.Info) & ".trashinfo")
     
 End
 
@@ -37,16 +34,4 @@ Public Function GetPathToRestore(argPath As String) As String
     
     Return yukiResult
     
-End
-
-Private Function Files_Read() As String
-
-    Return User.Home &/ ".local/share/Trash/files"
-
-End
-
-Private Function Info_Read() As String
-
-    Return User.Home &/ ".local/share/Trash/info"
-
 End

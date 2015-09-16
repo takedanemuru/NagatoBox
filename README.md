@@ -67,7 +67,7 @@ nagato-archiver		|42.1.2	|patool frontend for file archiving
 nagato-asx-player		|42.1.1	|asx file player
 nagato-calculator		|x.x.x	|calculator
 nagato-calendar		|x.x.x	|calendar
-nagato-code-view		|42.1.2	|code viewer for Gambas3
+nagato-code-view		|42.1.3	|code viewer for Gambas3
 nagato-color-picker		|x.x.x	|screen color picking tool
 nagato-config-appearance	|0.1.2	|appearance config tool
 nagato-config-screenlocker	|42.1.1	|frontend for i3 locker

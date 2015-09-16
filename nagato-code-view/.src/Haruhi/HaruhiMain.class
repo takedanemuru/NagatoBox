@@ -5,9 +5,6 @@ Private $menuPanel As NagatoMenuPanel
 Private $grids As NagatoGridView
 
 Public Sub Form_Open()
-    
-    Application.MainWindow = Me
-    NagatoSettings.LoadFormSettings(Me)
 
     $label = New NagatoLabel(MessageBox)
     $menuPanel = New NagatoMenuPanel(PanelBox) As "TFEI"

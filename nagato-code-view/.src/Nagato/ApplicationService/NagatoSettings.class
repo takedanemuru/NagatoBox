@@ -7,16 +7,6 @@ Property Read RecentDirectories As String[]
 
 Private $settings As New Settings
 
-Private Function isValidDirectory(argDirectory As String) As Boolean
-    
-    If Not Exist(argDirectory) Then Return False
-    If Not IsDir(argDirectory) Then Return False 
-    If Not Dir(argDirectory).Exist(".project") Then Return False
-    
-    Return True
-    
-End
-
 Private Sub overwriteRecentDirectories(argDirectory As String)
     
     Dim yukiRecents As String[] = Me.RecentDirectories.Copy()
@@ -57,7 +47,7 @@ End
 
 Public Sub PushDirectory(argDirectory As String)
     
-    If Not isValidDirectory(argDirectory) Then Return
+    If MikuruProjectDirectory.IsValid(argDirectory) Then Return
     
     NagatoSettings.LastDirectory = File.Dir(argDirectory)
     
@@ -89,7 +79,8 @@ Private Function RecentDirectories_Read() As String[]
     Dim yukiPath As String
     
     For Each yukiPath In $settings["directory/recent", Null]
-        If isValidDirectory(yukiPath) Then yukiRecents.Add(yukiPath)
+        If Not MikuruProjectDirectory.IsValid(yukiPath) Then Continue
+        yukiRecents.Add(yukiPath)
     Next
 
     $settings["directory/recent"] = yukiRecents.Copy()

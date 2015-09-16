@@ -7,6 +7,7 @@ Property Read SelectedPaths As String[]
 Private $iconView As IconView
 Private $observer As Observer
 Private $selection As NagatoSelection
+Private $contextMenu As New NagatoContextMenuDesktop As "Menu"
 
 Event RequestRefresh
 
@@ -37,9 +38,7 @@ Public Sub Asakura_DragMove()
     $iconView.UnselectAll()
     
     If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) 
-        If IsDir($iconView.Item.Key) Then
-            $iconView.Item.Selected = True
-        End If
+        If IsDir($iconView.Item.Key) Then $iconView.Item.Selected = True
     End If
     
 End
@@ -72,24 +71,9 @@ End
 
 Public Sub Asakura_Menu()
     
-    Dim yukiPath As String = $iconView.Key
-    Dim yukiContextMenu As Object
-    
-    If yukiPath = "NOTFOUND" Then 
-        Return
-    Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "Menu"
-    Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
-        yukiContextMenu = New NagatoContextMenuDesktopClock(HaruhiDesktop, "")
-    Else If yukiPath = NagatoDesktop.SpecialKeyTrashBin Then
-        yukiContextMenu = New NagatoContextMenuDesktopTrashBin(HaruhiDesktop, "")
-    Else If yukiPath = "" Or If $selection.Count = 0 Then
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "Menu"
-    Else 
-        yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiDesktop, yukiPath) As "Menu"
-    End If
+    Dim yukiRoot As Boolean = $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) 
 
-    yukiContextMenu.Popup()
+    $contextMenu.PopUp($iconView.Key, yukiRoot, $selection.Count)
     
 End
 

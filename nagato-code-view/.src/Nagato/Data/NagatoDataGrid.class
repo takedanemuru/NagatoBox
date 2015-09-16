@@ -55,7 +55,7 @@ Public Sub AddToGridData(argType As String, argPath As String)
     Dim yukiRowData As New NagatoDataRow(argType, argPath)
     
     $linesOfCode += yukiRowData.Collection[MikuruColumn.KeyLines]
-    $linesOfCodeValid += yukiRowData.Collection[MikuruColumn.KeyLinesWithoutVoid]
+    If argType <> "Form" Then $linesOfCodeValid += yukiRowData.Collection[MikuruColumn.KeyLinesWithoutVoid]
     Try $propertyCount += yukiRowData.Collection[MikuruColumn.KeyProperty]
     Try $methodsCount += yukiRowData.Collection[MikuruColumn.KeyMethods]
     

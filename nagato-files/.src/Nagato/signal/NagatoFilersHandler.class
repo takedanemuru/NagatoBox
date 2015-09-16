@@ -6,7 +6,7 @@ Private $filers As New Variant[]
 
 Public Sub AddFiler(argTabStrip As TabStrip, argPath As String)
     
-    Dim yukiFiler As New NagatoFiler(argTabStrip, argPath) As "Filer"
+    Dim yukiFiler As New NagatoFiler(argTabStrip, argPath) 
     
     $filers.Add(yukiFiler)
     
@@ -22,15 +22,17 @@ End
 
 Public Sub SetNewDirectory(argIndex As Integer, argDirectory As String)
     
-    If $filers[argIndex].Type = "Filer" Then
+    If Object.Class($filers[argIndex]).Name = "NagatoFiler" Then
         $filers[argIndex].SetNewDirectory(argDirectory)
+    Else If Object.Class($filers[argIndex]).Name = "NagatoTrashBin"
+        TFEI.AddNewDirectory(argDirectory)
     Endif
     
 End
 
 Public Sub SetInitialPath(argTabStrip As TabStrip, argPath As String)
     
-    Dim yukiFiler As New NagatoFiler(argTabStrip, argPath) As "Filer"
+    Dim yukiFiler As New NagatoFiler(argTabStrip, argPath)
     
     $filers.Add(yukiFiler)
     

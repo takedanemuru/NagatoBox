@@ -52,7 +52,7 @@ Private Sub initializeObserver()
     $observer = New NagatoDirectoryObserver As "DirectoryObserver"
 
     With $observer
-        $observer.Directory = NagatoTrash.PathFiles
+        $observer.Directory = MikuruTrashPath.Files
         $observer.IntervalSecond = 1
     End With
     

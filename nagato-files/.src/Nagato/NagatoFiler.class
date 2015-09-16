@@ -1,10 +1,6 @@
 ' Gambas class file
 
-Fast
-
 Inherits NagatoMenuPipe
-
-Property Read Type As String
 
 Private $menuBar As NagatoMenuPanel
 Private $iconView As NagatoIconViewFile
@@ -14,8 +10,6 @@ Private $directoryObserver As NagatoFilerDirectoryObserver
 Private Sub ensureObserver(argDirectory As String)
     
     If Object.IsValid($directoryObserver) Then Return
-    
-    Debug "new observer"
     
     $directoryObserver = New NagatoFilerDirectoryObserver(argDirectory) As "DirectoryObserver"
     
@@ -184,10 +178,4 @@ Public Sub DirectoryObserver_MenuEventWithArg(argEvent As Integer, argFileName A
             $iconView.ShowLostDirectory()
     End Select
     
-End
-
-Private Function Type_Read() As String
-
-    Return "Filer"
-
 End

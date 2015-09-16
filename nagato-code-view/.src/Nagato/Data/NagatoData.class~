@@ -14,7 +14,7 @@ Private $counter As New NagatoCounter
 Private Sub setRowData(argDirectory As String, argFileName As String)
     
     Dim yukiJointPath As String = argDirectory &/ argFileName
-    Dim yukiType As String = $counter.GetType(argDirectory, argFileName)
+    Dim yukiType As String = $counter.GetType(argFileName)
     
     $pathCollection.Add(yukiJointPath, File.Name(yukiJointPath))
     $dataGrid.AddToGridData(yukiType, yukiJointPath)

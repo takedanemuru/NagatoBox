@@ -3,5 +3,7 @@
 Public Sub Main()
     
     HaruhiMain.Show()
+    Application.MainWindow = HaruhiMain
+    NagatoSettings.LoadFormSettings(HaruhiMain)
     
 End
