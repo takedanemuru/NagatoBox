@@ -4,7 +4,9 @@ Inherits NagatoPublisher
 
 Public Sub Publish()
     
-    HaruhiSlidePreview.Set(MikuruHtmlConverter.Source)
+    If MikuruHtmlConverter.Source = "" Then Return
+    
+    HaruhiSlidePreview.Set()
     HaruhiSlidePreview.Show()
     
 End

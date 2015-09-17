@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoValueList
+
+Public Enum DzSlides, Slidy
+
+Public _$count As Integer = 2
+Public _$values As Variant[] = ["dzslides", "slidy"]
+Public _$names As String[] = [("DzSlides"), ("Slidy")]

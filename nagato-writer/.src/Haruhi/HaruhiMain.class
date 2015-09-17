@@ -30,8 +30,6 @@ End
 
 Public Sub Form_Open()
 
-    NagatoSettings.LoadFormSettings(Me)
-
     $menuPanel = New NagatoMenuPanel(MenuPanelContainer) As "TFEI"
     $sourceEditor = New NagatoSourceEditor(MainContainer) As "TFEI"
     $previewer = New NagatoPreviewer(MainContainer) ' has no user control

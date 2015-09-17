@@ -4,19 +4,26 @@ Inherits NagatoSettingsCore
 
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
+Property UseMathjax As Boolean
 
 Public Sub LoadFormSettings(argForm As Form)
     
-    With argForm
-        .X = Me._$settings[Subst$("&1/x", argForm.Name), Screen.H * 0.125]
-        .Y = Me._$settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
-        .H = Me._$settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
-        .W = Me._$settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
-    End With
+    If Me._$settings[Subst$("&1/maximized", argForm.Name), False] Then
+        With argForm
+            .X = Me._$settings[Subst$("&1/x", argForm.Name), Screen.H * 0.125]
+            .Y = Me._$settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
+            .H = Me._$settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
+            .W = Me._$settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
+        End With
+    Else
+        argForm.Maximized = True
+    End If
     
 End
 
 Public Sub SaveFormSettings(argForm As Form)
+    
+    Me._$settings[Subst$("&1/maximized", argForm.Name)] = argForm.Maximized
     
     With argForm
         Me._$settings[Subst$("&1/x", argForm.Name)] = .X
@@ -62,5 +69,18 @@ End
 Private Function RecentFiles_Read() As String[]
 
     Return MikuruPaths.RemoveInvalid(Me._$settings["file/recent", Null])
+
+End
+
+Private Function UseMathjax_Read() As Boolean
+
+    Return Me._$settings["mathjax/use", False]
+
+End
+
+Private Sub UseMathjax_Write(Value As Boolean)
+
+    Me._$settings["mathjax/use"] = Value
+    Me._$settings.Save()
 
 End

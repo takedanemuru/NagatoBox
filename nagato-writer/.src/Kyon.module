@@ -7,5 +7,6 @@ Public Sub Main()
     
     HaruhiMain.Show()
     If NagatoArgs.Path Then HaruhiMain.SetPath(NagatoArgs.Path)
-    
+    NagatoSettings.LoadFormSettings(HaruhiMain)
+
 End

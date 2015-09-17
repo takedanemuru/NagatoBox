@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Function getIcon(argEngine As Integer) As Variant
+    
+    Return IIf(argEngine = NagatoSettingsSlide.Engine, "button-check", Null)
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    Dim yukiIndex As Integer
+    
+    With NagatoValueListSliderEngine
+        For yukiIndex = 0 To .Max
+            Me._AddMenu(.Names[yukiIndex], yukiIndex, getIcon(yukiIndex))
+        Next
+    End With
+
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsSlide.Engine = Last.Tag
+    
+End

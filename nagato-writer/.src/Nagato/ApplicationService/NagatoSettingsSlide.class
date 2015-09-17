@@ -5,10 +5,11 @@ Inherits NagatoSettingsCore
 Property Theme As Integer
 Property SectionLevel As Integer
 Property DoNotShowEscape As Boolean
+Property Engine As Integer
 
 Private Function Theme_Read() As Integer
 
-    Return Me._$settings["slide/theme", NagatoValueListCss.StyleLight]
+    Return Me._$settings["slide/theme", NagatoValueListCssPreview.StyleLight]
 
 End
 
@@ -41,6 +42,19 @@ End
 Private Sub DoNotShowEscape_Write(Value As Boolean)
 
     Me._$settings["slide/escape"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Engine_Read() As Integer
+
+    Return Me._$settings["slide/engine", NagatoValueListSliderEngine.DzSlides]
+
+End
+
+Private Sub Engine_Write(Value As Integer)
+
+    Me._$settings["slide/engine"] = Value
     Me._$settings.Save()
 
 End

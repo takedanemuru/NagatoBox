@@ -11,23 +11,23 @@ End
 
 Private Function getCommand() As String[]
     
-    Dim yukiCommand As String[] = ["pandoc", "-t"]
+    Dim yukiEngine As String = NagatoValueListSliderEngine.Values[NagatoSettingsSlide.Engine]
+    Dim yukiCommand As String[] = ["pandoc", "--to", yukiEngine]
     
     With yukiCommand
-        .Insert(["dzslides", Subst$("--include-after-body=&1", NagatoValueListCssSlide.Current)])
-        .Insert(["--slide-level", NagatoSettingsSlide.SectionLevel])
-        .Insert(["-s", MikuruHtmlConverter.WorkingFileAbsolute])
+        .Insert(["-s", "-i", MikuruHtmlConverter.WorkingFileAbsolute])
+        .Insert([Subst$("--include-after-body=&1", NagatoValueListCssSlide.Current)])
+        .Insert(["--parse-raw"])
         .Insert(["-o", $htmlPath])
+        .Insert(["--slide-level", NagatoSettingsSlide.SectionLevel])
     End With
 
     Return yukiCommand    
     
 End
 
-Public Sub Set(argText As String)
+Public Sub Set()
     
-    If argText = "" Then Return
-        
     resetHtmlPath()
     Exec getCommand() Wait
     
@@ -45,4 +45,3 @@ Public Sub SlideWebView_KeyPress()
     If Key.Code = Key["?"] Then HaruhiDialogStartSlide.ShowDialog()
 
 End
-
