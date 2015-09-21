@@ -1,0 +1,28 @@
+' Gambas class file
+
+Create Static
+
+Property Read Path As String
+
+Private $path As String
+
+Public Sub Parse()
+    
+    Dim yukiOptions As String[] 
+    Dim yukiPath As String
+    
+    args.Begin("nagato-image-view usage")
+        $path = args.Get("o", "open", "open image", "path to image")
+    yukiOptions = args.End()
+    
+    For Each yukiPath In yukiOptions
+        If Exist(yukiPath) Then $path = yukiPath
+    Next
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End

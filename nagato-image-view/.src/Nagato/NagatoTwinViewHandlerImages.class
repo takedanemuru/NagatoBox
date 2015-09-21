@@ -1,0 +1,70 @@
+' Gambas class file
+
+Inherits NagatoTwinViewHandler
+
+Property Read BeforeImage As Image
+Property Read AfterImage As Image
+
+Private Sub setBalance(argValues As Float[])
+    
+    Dim yukiImage As Image = Me._$before.Image.Copy()
+    
+    yukiImage.BeginBalance()
+        yukiImage.Brightness(argValues[0])
+        yukiImage.Saturation(argValues[1])
+        yukiImage.Hue(argValues[2])
+        yukiImage.Contrast(argValues[3])
+        yukiImage.Lightness(argValues[4])
+        yukiImage.Gamma(argValues[5])
+    Me._$after.Image = yukiImage.EndBalance()
+    
+End
+
+Public Sub Rotate(argAngle As Float)
+    
+    Me._$before.Image = Me._$before.Image.Rotate(Rad(argAngle))
+    Me._$after.Image = Me._$after.Image.Rotate(Rad(argAngle))
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Try Me._$before.Image = Image.Load(argPath)
+    If Not Error Then Me._$after.Image = Me._$before.Image
+    
+End
+
+Public Sub ApplyEffect()
+    
+    Me._$before.Image = Me._$after.Image
+    
+End
+
+Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
+    
+    Select Case argEffect
+        Case MikuruEffect.OilPaint
+            Me._$after.Image = Me._$after.Image.OilPaint(argValues[0])
+        Case MikuruEffect.Charcoal
+            Me._$after.Image = Me._$after.Image.Desaturate()
+        Case MikuruEffect.Resize
+            Me._$after.Image = Me._$after.Image.Stretch(argValues[1], argValues[0])
+        Case MikuruEffect.Balance
+            setBalance(argValues)
+        Case MikuruEffect.Trimming
+            Me._$after.Image = Me._$after.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
+    End Select
+    
+End
+
+Private Function BeforeImage_Read() As Image
+
+    Return Me._$before.Image
+
+End
+
+Private Function AfterImage_Read() As Image
+
+    Return Me._$after.Image
+
+End

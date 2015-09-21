@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Private $label As Label
+
+Public Sub _new(argContainer As Container, argText As String)
+    
+    $label = New Label(argContainer)
+    
+    With $label
+        .Font.Bold = True
+        .Foreground = Color.White
+        .Alignment = Align.Center
+        .H = 32
+        .Text = argText
+    End With
+    
+End

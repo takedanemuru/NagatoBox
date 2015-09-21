@@ -3,127 +3,77 @@
 Property Read BeforeImage As Image
 Property Read AfterImage As Image
 
-Private $before As ImageView
-Private $after As ImageView
-Private $previousZoom As Float
-
-Private Sub reserveZoom()
-    
-    $previousZoom = $before.Zoom
-    
-End
-
-Private Sub restoreZoom()
-    
-    $before.Zoom = $previousZoom
-    $after.Zoom = $previousZoom
-    
-End
+Private $images As NagatoTwinViewHandlerImages
+Private $zooms As NagatoTwinViewHandlerZooms
 
 Public Sub Rotate(argAngle As Float)
     
-    $previousZoom = $before.Zoom
-    
-    $before.Image = $before.Image.Rotate(Rad(argAngle))
-    $after.Image = $after.Image.Rotate(Rad(argAngle))
-    
-    restoreZoom()
+    $zooms.ReserveZoom()
+        $images.Rotate(argAngle)
+    $zooms.RestoreZoom()
     
 End
 
 Public Sub SetZoom(argZoom As Float)
     
-    $before.Zoom *= argZoom
-    $after.Zoom *= argZoom
+    $zooms.SetZoom(argZoom)
     
 End
 
 Public Sub SetZoomNormal()
     
-    $before.Zoom = 1
-    $after.Zoom = 1
+    $zooms.SetZoomNormal()
     
 End
 
 Public Sub SetZoomFit()
     
-    $before.ZoomFit()
-    $after.ZoomFit()
-
+    $zooms.SetZoomFit()
+    
 End
 
 Public Sub Toggle()
     
-    $after.Visible = Not $after.Visible
+    $zooms.EnsureVisible()
+    '$images.Toggle
     
 End
 
 Public Sub SetPath(argPath As String)
     
-    Try $before.Image = Image.Load(argPath)
-    If Not Error Then $after.Image = $before.Image
+    $images.SetPath(argPath)
     
 End
 
 Public Sub ApplyEffect()
     
-    $before.Image = $after.Image
-    
-End
-
-Private Sub setBalance(argValues As Float[])
-    
-    Dim yukiImage As Image = $before.Image.Copy()
-    
-    yukiImage.BeginBalance()
-        yukiImage.Brightness(argValues[0])
-        yukiImage.Saturation(argValues[1])
-        yukiImage.Hue(argValues[2])
-        yukiImage.Contrast(argValues[3])
-        yukiImage.Lightness(argValues[4])
-        yukiImage.Gamma(argValues[5])
-    $after.Image = yukiImage.EndBalance()
+    $images.ApplyEffect()
     
 End
 
 Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
     
-    $after.Image = $before.Image
-    
-    $after.Visible = True
-    
-    reserveZoom()
-    Select Case argEffect
-        Case MikuruEffect.OilPaint
-            $after.Image = $after.Image.OilPaint(argValues[0])
-        Case MikuruEffect.Charcoal
-            $after.Image = $after.Image.Desaturate()
-        Case MikuruEffect.Resize
-            $after.Image = $after.Image.Stretch(argValues[1], argValues[0])
-        Case MikuruEffect.Balance
-            setBalance(argValues)
-        Case MikuruEffect.Trimming
-            $after.Image = $after.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
-    End Select
-    restoreZoom()
+    $zooms.EnsureVisible()
+        $images.PreviewEffect(argEffect, argValues)
+    $zooms.RestoreZoom()
     
 End
 
 Public Sub _new(argViewBefore As ImageView, argViewAfter As ImageView)
     
-    $before = argViewBefore
-    $after = argViewAfter
+    $images = New NagatoTwinViewHandlerImages(argViewBefore, argViewAfter)
+    $zooms = New NagatoTwinViewHandlerZooms(argViewBefore, argViewAfter)
     
 End
 
 Private Function BeforeImage_Read() As Image
 
-    Return $before.Image
+    Return $images.BeforeImage
 
 End
 
 Private Function AfterImage_Read() As Image
 
-    Return $after.Image
+    Return $images.AfterImage
 
 End

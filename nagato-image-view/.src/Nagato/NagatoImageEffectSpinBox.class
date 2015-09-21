@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read Value As Integer
+
+Private $spinBox As SpinBox
+
+Event ChangeValue(argNewValue As Integer)
+
+Public Sub SetValueWithoutEvent(argValue As Integer)
+    
+    Object.Lock($spinBox)
+        $spinBox.Value = argValue
+   Object.Unlock($spinBox)
+    
+End
+
+Public Sub _new(argContainer As Container, argDefaultValue As Integer)
+    
+     $spinBox = New SpinBox(argContainer) As "SpinBox"
+    
+    With $spinBox
+        .MinValue = 1
+        .MaxValue = argDefaultValue * 2
+        .H = 32
+        .Value = argDefaultValue
+        .Step = 1
+    End With
+    
+End
+
+Public Sub SpinBox_Change()
+    
+    Raise ChangeValue($spinBox.Value)
+    
+End
+
+Private Function Value_Read() As Integer
+
+    Return $spinBox.Value
+
+End

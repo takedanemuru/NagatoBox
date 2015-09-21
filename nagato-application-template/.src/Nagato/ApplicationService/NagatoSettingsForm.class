@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Public Sub Load(argForm As Form)
+    
+    With argForm
+        .H = Me._$settings[Subst$("form/&1", .Name), .H]
+        .W = Me._$settings[Subst$("form/&1", .Name), .W]
+        .X = Me._$settings[Subst$("form/&1", .Name), .X]
+        .Y = Me._$settings[Subst$("form/&1", .Name), .Y]
+    End With
+    
+End
+
+Public Sub Save(argForm As Form)
+    
+    With argForm
+        Me._$settings[Subst$("form/&1", .Name)] = .H
+        Me._$settings[Subst$("form/&1", .Name)] = .W
+        Me._$settings[Subst$("form/&1", .Name)] = .X
+        Me._$settings[Subst$("form/&1", .Name)] = .Y
+    End With
+    
+    Me._$settings.Save()
+    
+End

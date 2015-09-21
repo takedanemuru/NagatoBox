@@ -1,32 +1,36 @@
 ' Gambas module file
 
-Private $path As String
+Private Sub showMain(argPath As String)
+    
+    If Not Exist(argPath) Then
+        Message.Warning(("YUKI.N > Path not found"), ("OK"))
+    Else
+        NagatoSettings.LoadFormSettings(HaruhiImageView)
+        Application.MainWindow = HaruhiImageView
+        HaruhiImageView.Show()
+        HaruhiImageView.SetImage(argPath)
+    End If
+    
+End
 
-Private Sub parseArguments()
+Private Sub selectPicturePath()
     
-    Dim yukiOptions As String[] 
-    Dim yukiPath As String
+    Dialog.Path = User.Home
+    Dialog.Title = ("Select Picture")
+    Dialog.Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture Files"]
     
-    args.Begin("nagato-image-view usage")
-        $path = args.Get("o", "open", "open image", "path to image")
-    yukiOptions = args.End()
-    
-    For Each yukiPath In yukiOptions
-        If Exist(yukiPath) Then $path = yukiPath
-    Next
+    If Not Dialog.OpenFile(False) Then showMain(Dialog.Path)
     
 End
 
 Public Sub Main()
     
-    parseArguments()
+    NagatoArguments.Parse()
     
-    HaruhiImageView.Show()
-    
-    If $path <> "" Then
-        HaruhiImageView.SetImage($path)
+    If NagatoArguments.Path Then
+        showMain(NagatoArguments.Path)
     Else
-        HaruhiImageView.SetImage("pictures/default_picture.jpg")
+        selectPicturePath()
     End If
     
 End

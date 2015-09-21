@@ -1,0 +1,11 @@
+' Gambas class file
+
+Public _$after As ImageView
+Public _$before As ImageView
+
+Public Sub _new(argViewBefore As ImageView, argViewAfter As ImageView)
+    
+    Me._$before = argViewBefore
+    Me._$after = argViewAfter
+    
+End

@@ -9,20 +9,6 @@ Private $heightSlider As SpinBox
 Private $widthSlider As SpinBox
 Private $linkCheckbox As CheckBox
 
-Private Sub addLabel(argText As String)
-    
-    Dim yukiLabel As New Label($container)
-    
-    With yukiLabel
-        .Font.Bold = True
-        .Foreground = Color.White
-        .Alignment = Align.Center
-        .H = 32
-        .Text = argText
-    End With
-    
-End
-
 Private Sub addHeightSliderBox()
     
     $heightSlider = New SpinBox($container) As "HeightSlider"
@@ -68,9 +54,9 @@ Public Sub _new(argContainer As Container)
     $container = argContainer
     Try $container.Children.Clear()
     
-    addLabel(("Height"))
+    Object.New("NagatoImageEffectLabel", [argContainer, ("Height")])
     addHeightSliderBox()
-    addLabel(("Width"))
+    Object.New("NagatoImageEffectLabel", [argContainer, ("Width")])
     addWidthSliderBox()
     addLinkCheckbox()
     
@@ -91,8 +77,6 @@ End
 Public Sub WidthSlider_Change()
     
     If Not $linkCheckbox.Value Then Return
-
-    Debug "width changed"
 
     With HaruhiImageView
         Object.Lock($heightSlider)

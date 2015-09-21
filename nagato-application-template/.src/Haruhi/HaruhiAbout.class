@@ -1,0 +1,22 @@
+' Gambas class file
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    AboutTextLabel.Text = Subst$(File.Load("Text/AboutText"), Application.Version)
+    
+End
+
+Public Sub LicenseButton_Click()
+
+    If LicenseButton.Value Then
+        IconPictureBox.Visible = False
+        AboutTextLabel.Text = File.Load("Text/SOSLicence")
+        AboutTextLabel.Alignment = Align.Left
+    Else
+        IconPictureBox.Visible = True
+        AboutTextLabel.Text = Subst$(File.Load("Text/AboutText"), Application.Name, Application.Version)
+        AboutTextLabel.Alignment = Align.Center
+    Endif
+
+End

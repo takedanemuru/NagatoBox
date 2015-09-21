@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoTwinViewHandler
+
+Private $previousZoom As Float
+
+Public Sub ReserveZoom()
+    
+    $previousZoom = Me._$before.Zoom
+    
+End
+
+Public Sub RestoreZoom()
+    
+    Me._$before.Zoom = $previousZoom
+    Me._$after.Zoom = $previousZoom
+    
+End
+
+Public Sub SetZoom(argZoom As Float)
+    
+    Me._$before.Zoom *= argZoom
+    Me._$after.Zoom *= argZoom
+    
+End
+
+Public Sub SetZoomNormal()
+    
+    Me._$before.Zoom = 1
+    Me._$after.Zoom = 1
+    
+End
+
+Public Sub SetZoomFit()
+    
+    Me._$before.ZoomFit()
+    Me._$after.ZoomFit()
+
+End
+
+Public Sub EnsureVisible()
+    
+    Me._$after.Visible = True
+    Me._$after.Zoom = Me._$before.Zoom
+    Me.ReserveZoom()
+    
+End
