@@ -65,10 +65,10 @@ Application			|Version	|Description
 nagato-ambient		|42.1.0	|ambient sound player
 nagato-archiver		|42.1.2	|patool frontend for file archiving
 nagato-asx-player		|42.1.1	|asx file player
-nagato-calculator		|x.x.x	|calculator
+nagato-calculator		|42.1.1	|calculator
 nagato-calendar		|x.x.x	|calendar
 nagato-code-view		|42.1.3	|code viewer for Gambas3
-nagato-color-picker		|x.x.x	|screen color picking tool
+nagato-color-picker		|0.0.2	|screen color picking tool
 nagato-config-appearance	|0.1.2	|appearance config tool
 nagato-config-screenlocker	|42.1.1	|frontend for i3 locker
 nagato-dbus-finder		|x.x.x	|explorer for dbus
@@ -76,7 +76,7 @@ nagato-dictionary		|42.1.1	|English/Japanese dictionary
 nagato-extractor		|42.1.2	|patool frontend for file extractoring
 nagato-files			|42.1.5	|file manager and desktop shell
 nagato-font-view		|x.x.x	|font viewer
-nagato-gif-box*		|x.x.x	|gif animation viewer
+nagato-gif-box*		|42.1.0	|gif animation viewer
 nagato-image-view		|42.1.0	|image viewer
 nagato-keycode-checker	|x.x.x	|keycode checker
 nagato-lookup		|42.1.3	|application launcher/finder
@@ -89,7 +89,7 @@ nagato-screenshooter		|42.1.2	|standalone screenshot application
 nagato-session		|42.1.2	|autostart manager
 nagato-taskmanager		|42.1.2	|task manager
 nagato-text			|x.x.x	|text editor
-nagato-text-converter*		|x.x.x	|charactor code converter
+nagato-text-converter*		|42.1.0	|charactor code converter
 nagato-wallpaper		|42.1.2	|wallpaper changer
 nagato-weather		|42.1.7	|weather forecast
 nagato-web		|42.1.2	|web browser

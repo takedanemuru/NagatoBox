@@ -30,7 +30,7 @@ Private Sub addMenus()
     addMenuItem(("Open"), MikuruMenuEvent.FileOpen, MikuruIcon.Get("folder"))
         addMenuItem("", MikuruMenuEvent.None) ' separator
     addMenuItem(("About"), MikuruMenuEvent.AppAbout, MikuruIcon.Get("star"))
-    addMenuItem(("Close"), MikuruMenuEvent.AppClose, MikuruIcon.Get("button-cross"))
+    addMenuItem(("Close"), MikuruMenuEvent.AppClose, MikuruIcon.Get("button-power"))
     
 End
 

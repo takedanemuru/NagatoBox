@@ -19,7 +19,7 @@ Private Function removeCharactors(argSource As String, argToRemove As String[]) 
     
 End
 
-Private Function getData(argPath As String)
+Private Function getData(argPath As String) As String[]
     
     Dim yukiOutput As String
     

@@ -6,10 +6,7 @@ Public Function GetMms(argPath As String) As String
     Dim yukiXmlElements As XmlElement[]
     
     yukiXmlDocument.FromString(File.Load(argPath))
-    
     yukiXmlElements = yukiXmlDocument.GetElementsByTagName("REF")
-    
-    Debug yukiXmlElements[0].Attributes["HREF"]
     
     Return yukiXmlElements[0].Attributes["HREF"]
     

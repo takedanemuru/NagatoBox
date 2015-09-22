@@ -3,23 +3,26 @@
 Private $path As String
 Private $options As String[]
 
-Private Sub parsingArgs()
+Private Sub setPath()
     
     Dim yukiOption As String 
+    
+    For Each yukiOption In $options
+        If Not Exist(yukiOption) Then Continue
+        $path = yukiOption
+        Break
+    Next
+    
+End
+
+Private Sub parsingArgs()
     
     Args.Begin(("nagato-movie-usage"))
         $path = Args.Get("p", "play", "play movie file", "path to play")
         If Not Exist($path) Then $path = ""
     $options = Args.End()
     
-    If $path <> "" Then Return
-    
-    For Each yukiOption In $options
-        If Exist(yukiOption) Then 
-            $path = yukiOption
-            Break
-        End If
-    Next
+    If $path = "" Then setPath()
     
 End
 
@@ -28,5 +31,7 @@ Public Sub Main()
     parsingArgs()
     HaruhiMain.Show()
     HaruhiMain.SetPathAndPlay($path)
+    NagatoSettings.LoadFormSettings(HaruhiMain)
+    Application.MainWindow = HaruhiMain
     
 End
