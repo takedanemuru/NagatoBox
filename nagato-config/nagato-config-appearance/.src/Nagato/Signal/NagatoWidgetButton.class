@@ -12,6 +12,12 @@ Public Sub _GetText() As String 'virtual interface
     
 End
 
+Public Function _GetEnabled() As Boolean
+    
+    Return True
+    
+End
+
 Public Sub _InitializeWidget(argContainer As Container) ' override
     
     Me._$button = New Button(argContainer) As "Button"
@@ -19,7 +25,7 @@ Public Sub _InitializeWidget(argContainer As Container) ' override
     With Me._$button
         .W = Me.ButtonWidth
         .Text = Me._GetText()
-        .Enabled = True
+        .Enabled = Me._GetEnabled()
     End With
     
 End

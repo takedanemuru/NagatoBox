@@ -21,7 +21,7 @@ Private Sub setIcons()
 
 End
 
-Public Sub _AbstractSetupWidgets()
+Public Sub _AbstractOnSetupWidgets()
     
     $grids = New NagatoGridsCursors(Me._$tabStrip) As "TFEI"
     

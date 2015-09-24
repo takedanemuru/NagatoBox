@@ -2,36 +2,10 @@
 
 Inherits NagatoSettingsHandler
 
-Property Read Font As Font
+Private $fontChooser As NagatoWidgetFontChooser
 
-Private $fontChooser As FontChooser
-
-Public Sub _AbstractSetupWidgets()
+Public Sub _AbstractOnSetupWidgets()
     
-    $fontChooser = New FontChooser(Me._$tabStrip) As "FontChooser"
-    $fontChooser.Expand = True
-    $fontChooser.ShowStyle = True
-    $fontChooser.ShowLabel = True
-    Debug $fontChooser.Value
+    $fontChooser = New NagatoWidgetFontChooser(Me._$tabStrip) As "TFEI"
     
-End
-
-Public Sub FontChooser_Change()
-    
-    Dim yukiName As String
-    
-    For Each yukiName In Fonts
-        Debug yukiName
-    Next
-    
-    Debug $fontChooser.SelectedFont
-    
-End
-
-Private Function Font_Read() As Font
-
-    Dim yukiFont As New Font($fontChooser.SelectedFont)
-
-    Return yukiFont
-
 End

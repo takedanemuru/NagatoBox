@@ -69,9 +69,9 @@ nagato-calculator		|42.1.1	|calculator
 nagato-calendar		|x.x.x	|calendar
 nagato-code-view		|42.1.3	|code viewer for Gambas3
 nagato-color-picker		|0.0.2	|screen color picking tool
-nagato-config-appearance	|0.1.2	|appearance config tool
+nagato-config-appearance	|42.1.2	|appearance config tool
 nagato-config-screenlocker	|42.1.1	|frontend for i3 locker
-nagato-dbus-finder		|x.x.x	|explorer for dbus
+nagato-dbus-finder		|0.3.1	|explorer for dbus
 nagato-dictionary		|42.1.1	|English/Japanese dictionary
 nagato-extractor		|42.1.2	|patool frontend for file extractoring
 nagato-files			|42.1.5	|file manager and desktop shell
@@ -81,7 +81,7 @@ nagato-image-view		|42.1.0	|image viewer
 nagato-keycode-checker	|x.x.x	|keycode checker
 nagato-lookup		|42.1.3	|application launcher/finder
 nagato-map		|42.1.5	|map viewer
-nagato-movie		|x.x.x	|movie file player
+nagato-movie		|42.1.0	|movie file player
 nagato-openbox-logout		|42.1.2	|logout dialog for openbox
 nagato-pdf-view		|42.1.1	|pdf viewer
 nagato-player-x		|42.1.0	|music player
@@ -100,6 +100,7 @@ yuki			|42.1.48	|interface for humanoid interface
 
 Application			|Version	|Description
 ---			|----:	|----
+animenfo-radio-player		|x.x.x	|animeNfo fm player
 haramaru-radio-player		|42.1.3	|haramaru-radio(an internet radio) player
 nekomimi-clock		|x.x.x	|clock
 ohana-clock		|x.x.x	|bonbori-matsuri has been waiting for you.

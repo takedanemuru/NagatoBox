@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoMenuPipe
+
 Public Sub PopUp(argPath As String, argRoot As Boolean, argCount As Integer)
     
     Dim yukiPath As String = argPath

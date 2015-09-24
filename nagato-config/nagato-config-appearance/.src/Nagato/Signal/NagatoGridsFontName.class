@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Property Read FontName As String
+
+Private $currentRow As Integer
+Private $currentFontName As String
+
+Event Changed
+
+Private Function checkCurrentFont(argFontName As String)
+    
+    If argFontName <> Application.Font.Name Then Return
+    Me._$grids[Me._$grids.Rows.Max, 0].Picture = MikuruIcon["button-check"]
+    $currentRow = Me._$grids.Rows.Max
+    $currentFontName = argFontName
+    
+End
+
+Private Sub setData()
+    
+    Dim yukiFontName As String
+    
+    For Each yukiFontName In Fonts
+        Inc Me._$grids.Rows.Count
+        Me._$grids[Me._$grids.Rows.Max, 1].Text = yukiFontName
+        If Even(Me._$grids.Rows.Max) Then Me._SetBackground()
+        checkCurrentFont(yukiFontName)
+    Next
+    
+    Me._$grids[$currentRow, 0].EnsureVisible()
+    
+End
+
+Public Sub _AbstractOnInitializeGrids()
+    
+    Me._SetGridsFrame((""))
+    setData()
+    
+End
+
+Public Sub Grids_Activate()
+    
+    $currentFontName = Me._$grids[Me._$grids.Row, 1].Text
+    
+    Raise Changed
+    
+End
+
+Private Function FontName_Read() As String
+
+    Return $currentFontName
+
+End

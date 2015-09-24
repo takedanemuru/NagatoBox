@@ -79,7 +79,7 @@ End
 
 Public Sub Menu_MenuEvent(argEvent As Integer)
     
-    Raise RequestRefresh
+    If argEvent = NagatoMenuPipe.ViewReload Then Raise RequestRefresh
     
 End
 

@@ -4,7 +4,7 @@ Inherits NagatoSettingsHandler
 
 Private $gridView As NagatoGridsThemes
 
-Public Sub _AbstractSetupWidgets()
+Public Sub _AbstractOnSetupWidgets()
     
     $gridView = New NagatoGridsThemes(Me._$tabStrip) As "TFEI"
     

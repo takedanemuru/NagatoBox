@@ -13,7 +13,7 @@ Public Sub _SetTabstrip(argTabstrip As TabStrip, argIndex As Integer)
     
 End
 
-Public Sub _AbstractSetupWidgets()
+Public Sub _AbstractOnSetupWidgets()
     
     
     
@@ -22,6 +22,6 @@ End
 Public Sub _new(argTabstrip As TabStrip, argTabIndex As Integer)
     
     Me._SetTabstrip(argTabstrip, argTabIndex)
-    Me._AbstractSetupWidgets()
+    Me._AbstractOnSetupWidgets()
     
 End

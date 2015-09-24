@@ -2,12 +2,12 @@
 
 Inherits NagatoSettingsHandler
 
-Private $iconView As NagatoIconViewIcons
+Private $iconView As NagatoWidgetIconPreview
 Private $grids As NagatoGridsIcons
 
-Public Sub _AbstractSetupWidgets()
+Public Sub _AbstractOnSetupWidgets()
     
-    $iconView = New NagatoIconViewIcons(Me._$tabStrip)
+    $iconView = New NagatoWidgetIconPreview(Me._$tabStrip)
     $grids = New NagatoGridsIcons(Me._$tabStrip) As "TFEI"
     
 End

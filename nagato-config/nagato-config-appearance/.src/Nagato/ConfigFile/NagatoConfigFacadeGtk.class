@@ -1,0 +1,77 @@
+' Gambas class file
+
+Property Read WidgetTheme As String
+Property Read WidgetThemeMatched As Boolean
+Property Read IconTheme As String
+Property Read CursorTheme As String
+
+Private $configGtk2 As NagatoConfigFile
+Private $configGtk3 As NagatoConfigFile
+
+Private Function isThemesMatched() As Boolean
+    
+    If ($configGtk2["", "gtk-theme-name"] <> $configGtk3["Settings", "gtk-theme-name"]) Then Return False
+
+    Return True
+    
+End
+
+Private Sub setWidgetTheme()
+    
+    $configGtk2["", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
+    $configGtk3["Settings", "gtk-theme-name"] = NagatoInterimStatus.WidgetTheme
+    
+End
+
+Private Sub setIconTheme()
+    
+    $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+    $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+    
+End
+
+Private Sub setFontName()
+    
+    $configGtk2["", "gtk-font-name"] = NagatoInterimStatus.FontName
+    $configGtk3["Settings", "gtk-font-name"] = NagatoInterimStatus.FontName
+    
+End
+
+Public Sub Set()
+    
+    If NagatoInterimStatus.WidgetTheme Then setWidgetTheme()
+    If NagatoInterimStatus.IconTheme Then setIconTheme()
+    If NagatoInterimStatus.FontName Then setFontName()
+    
+End
+
+Public Sub _new()
+    
+    $configGtk2 = New NagatoConfigFile(User.Home &/ ".gtkrc-2.0", False)
+    $configGtk3 = New NagatoConfigFile(Desktop.ConfigDir &/ "gtk-3.0" &/ "settings.ini", True)
+    
+End
+
+Private Function CursorTheme_Read() As String
+
+    Return $configGtk2["", "gtk-cursor-theme-name"] 
+
+End
+
+Private Function IconTheme_Read() As String
+
+    Return $configGtk2["", "gtk-icon-theme-name"] 
+
+End
+
+Private Function WidgetThemeMatched_Read() As Boolean
+
+    Return isThemesMatched()
+
+End
+
+Private Function WidgetTheme_Read() As String
+
+    Return IIf(isThemesMatched(), $configGtk2["", "gtk-theme-name"], Null)
+
+End

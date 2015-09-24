@@ -8,6 +8,12 @@ Public Sub _GetText() As String
     
 End
 
+Public Function _GetEnabled() As Boolean
+    
+    Return False
+    
+End
+
 Public Sub Activate()
     
     Me._$button.Enabled = True

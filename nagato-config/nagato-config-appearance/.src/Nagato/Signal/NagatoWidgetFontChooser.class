@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $hBox As HBox
+Private $fontSize As NagatoWidgetFontSize
+Private $fontFamily As NagatoWidgetFontFamily
+Private $fontNameGridView As NagatoGridsFontName
+Private $fontPreview As NagatoWidgetFontPreview
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .H = 24
+    End With
+    
+End
+
+Private Function getFontName() As String
+    
+    Return Subst$("&1 &2 &3", $fontNameGridView.FontName, $fontFamily.Value, $fontSize.Value)
+    
+End
+
+Public Sub _InitializeWidget(argContainer As Container) ' override
+    
+    initializeHBox(argContainer)
+    $fontSize = New NagatoWidgetFontSize($hBox) As "Font"
+    $fontFamily = New NagatoWidgetFontFamily($hBox) As "Font"
+    $fontNameGridView = New NagatoGridsFontName(argContainer) As "Font"
+    $fontPreview = New NagatoWidgetFontPreview(argContainer)
+    
+End
+
+Public Sub Font_Changed()
+    
+    $fontFamily.SetNewFontFamily($fontNameGridView.FontName)
+    $fontPreview.SetFontSize($fontSize.Value)
+    $fontPreview.SetFontName($fontNameGridView.FontName)
+    
+    NagatoInterimStatus.FontName = getFontName()
+    
+    Raise Signal(MikuruSignal.PropertyChanged, Null)
+    
+End
+

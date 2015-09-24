@@ -3,7 +3,7 @@
 Title=nagato-files
 Startup=Kyon
 Icon=folder.png
-Version=42.1.12
+Version=42.1.14
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -19,6 +19,7 @@ Component=gb.qt4.webkit
 Component=gb.web
 Description="a file manager for NagatoBox"
 Authors="takeda.nemuru@yandex.com"
+Environment="WINDOW_TYPE=_NET_WM_WINDOW_TYPE"
 TabSize=4
 Translate=1
 Language=ja
@@ -27,7 +28,7 @@ Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-files-42.1.12
+PackageName=nagato-files-42.1.14
 CreateEachDirectory=1
 MimeTypes="inode/directory"
 Packager=1

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read Value As String
+
+Private $fontFamilyComboBox As ComboBox
+
+Public Sub _InitializeWidget(argContainer As Container) ' override
+    
+    Dim yukiFont As New Font(Application.Font.Name)
+    
+    $fontFamilyComboBox = New ComboBox(argContainer)
+    
+    With $fontFamilyComboBox
+        .Expand = True
+        .ReadOnly = True
+        .List = yukiFont.Styles
+        .Index = .List.Max
+    End With
+    
+End
+
+Public Sub SetNewFontFamily(argFontName As String)
+    
+    Dim yukiFont As New Font(argFontName)
+    
+    With $fontFamilyComboBox
+        .List.Clear()
+        .List = yukiFont.Styles
+        .Index = .List.Max
+    End With
+    
+End
+
+
+Private Function Value_Read() As String
+
+    Return $fontFamilyComboBox[$fontFamilyComboBox.Index].Text
+
+End
