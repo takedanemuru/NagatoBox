@@ -63,6 +63,8 @@ End
 
 Public Sub RecentDirectoryMenu_Click()
     
+    NagatoSettings.PushDirectory(Last.Tag)
+    
     Raise Signal(MikuruSignal.FileOpenRecent, [Last.Tag])
     
 End

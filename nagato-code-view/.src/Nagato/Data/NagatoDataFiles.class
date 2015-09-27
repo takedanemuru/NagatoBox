@@ -1,0 +1,87 @@
+' Gambas class file
+
+Property Read Data As Variant[]
+Property Read LinesOfCodePhysical As Integer
+Property Read LinesOfCodeLogical As Integer
+Property Read PropertyCount As Integer
+Property Read MethodsCount As Integer
+
+Private $pathCollection As New Collection
+Private $dataGrid As New NagatoDataGrid 
+Private $dataCounts As New NagatoDataCounts
+Private $fileTypes As New NagatoFileTypes
+
+Public Sub SetData(argPath As String)
+    
+    Dim yukiType As String = $fileTypes.GetType(argPath)
+    
+    $pathCollection.Add(argPath, File.Name(argPath))
+    $dataGrid.AddToGridData(yukiType, argPath)
+    $dataCounts.Count(yukiType, argPath)
+
+End
+
+Public Sub Clear()
+    
+    $fileTypes.Clear()
+    $pathCollection.Clear()
+    $dataCounts.Clear()
+    $dataGrid.Clear()
+    
+End
+
+Public Sub Reset()
+    
+     $dataGrid.Reset()
+    
+End
+
+Public Sub SetTargetIndex(argIndex As Integer)
+    
+    $dataGrid.SetTargetIndex(argIndex)
+    
+End
+
+Public Function GetPath(argKey As String) As String
+    
+    Return $pathCollection[argKey]
+    
+End
+
+Public Function GetMessage(argPath As String) As String
+    
+    Dim yukiLinesOfCode As String = Format$($dataCounts.LinesOfCodeLogical, "###,###,##0")
+
+    Return Subst$($fileTypes.Message, File.Name(argPath), yukiLinesOfCode)
+    
+End
+
+Private Function LinesOfCodePhysical_Read() As Integer
+
+    Return $dataCounts.LinesOfCodePhysical
+
+End
+
+Private Function LinesOfCodeLogical_Read() As Integer
+
+    Return $dataCounts.LinesOfCodeLogical
+
+End
+
+Private Function PropertyCount_Read() As Integer
+
+    Return $dataCounts.PropertyCount
+
+End
+
+Private Function MethodsCount_Read() As Integer
+
+    Return $dataCounts.MethodsCount
+
+End
+
+Private Function Data_Read() As Variant[]
+
+    Return $dataGrid.Data
+
+End

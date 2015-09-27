@@ -2,17 +2,9 @@
 
 Public Enum TypeExit, TypeReboot, TypeShutdown, TypeLockScreen
 
-Private Const LogindBus As String = "system://org.freedesktop.login1"
-Private Const LogindManagerObjectPath As String = "/org/freedesktop/login1"
-Private Const LogindManagerInterface As String = "org.freedesktop.login1.Manager"
-
-Private $logindManager As DBusProxy
-
-Private Sub initializeLogindManager()
-    
-    $logindManager = DBus[LogindBus][LogindManagerObjectPath, LogindManagerInterface]
-    
-End
+Private Const BusName As String = "system://org.freedesktop.login1"
+Private Const ObjectPath As String = "/org/freedesktop/login1"
+Private Const Interface As String = "org.freedesktop.login1.Manager"
 
 Public Function IsOpenbox() As Boolean
     
@@ -46,15 +38,15 @@ End
 
 Public Sub Logout(argType As Integer)
     
-    If Not Object.IsValid($logindManager) Then initializeLogindManager()
+    Dim yukiDBusProxy As DBusProxy = DBus[BusName][ObjectPath, Interface]
     
     Select Case argType
         Case TypeExit
             Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
         Case TypeReboot
-            $logindManager.Reboot(False)
+            yukiDBusProxy.Reboot(False)
         Case TypeShutdown
-            $logindManager.PowerOff(True)
+            yukiDBusProxy.PowerOff(True)
         Case TypeLockScreen
             Try Shell "nagato-config-screenlocker -l"
     End Select

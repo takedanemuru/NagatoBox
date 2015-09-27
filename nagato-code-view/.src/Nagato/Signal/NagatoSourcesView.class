@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $project As New NagatoGambas3Project 
+Private $grids As GridView
+Private $gridsHandler As NagatoGridViewHandler
+Private $dialog As New NagatoDialogSelectDirectory
+
+Private Sub sortGrids()
+    
+    $gridsHandler.Clear()
+    $project.Refresh()
+    $gridsHandler.Fill($project.GridData)
+    $gridsHandler.SetSumRow($project)
+    
+End
+
+Private Sub openDirectory(argDirectory As String)
+    
+    $project.Clear(argDirectory)
+    sortGrids()
+    Raise Signal(MikuruSignal.ViewRefresh, [Subst$($project.Message, File.Name(argDirectory))])
+    NagatoSettings.PushDirectory(argDirectory)
+    
+End
+
+Public Sub Open(Optional argDirectory As String = "")
+    
+    Dim yukiTargetDirectory As String = argDirectory
+    
+    If yukiTargetDirectory = "" Then yukiTargetDirectory = $dialog.GetTargetDirectory()
+    If Exist(yukiTargetDirectory) Then openDirectory(yukiTargetDirectory)
+    
+End
+
+Public Sub Filter(argQuery As String)
+    
+    $gridsHandler.Filter(argQuery)
+    
+End
+
+Public Sub Reload()
+    
+    If NagatoSettings.LastDirectory = "" Then Return
+    
+    sortGrids()
+    Raise Signal(MikuruSignal.ViewRefresh, [Subst$($project.Message, NagatoSettings.LastDirectory)])
+    
+End
+
+Public Sub _initialize() ' override
+    
+    $grids = New GridView(Me._$parentContainer) As "Gridview"
+    $gridsHandler = New NagatoGridViewHandler($grids)
+    
+End
+
+Public Sub GridView_Activate()
+    
+    Dim yukiRow As Integer = $grids.RowAt(Mouse.Y)
+    
+    If yukiRow <> $grids.Rows.Max Then 
+        Raise Signal(MikuruSignal.ViewShowCodeView, [$project.GetPath($grids[yukiRow, 1].Text)])
+    End If
+    
+End
+
+Public Sub GridView_ColumnClick(argIndex As Integer)
+    
+    If $project.Count > 0 Then
+        $project.SetTargetIndex(argIndex)
+        sortGrids()
+    End If
+    
+End

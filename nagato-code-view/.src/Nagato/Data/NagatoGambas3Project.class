@@ -1,0 +1,77 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read GridData As Variant[]
+Property Read Message As String
+Property Read PropertyCount As Integer
+Property Read MethodCount As Integer
+
+Private $projectDirectory As New NagatoProjectDirectory
+Private $data As New NagatoDataFiles
+
+Public Sub Refresh()
+    
+    Dim yukiPath As String
+    
+    $data.Clear()
+
+    For Each yukiPath In $projectDirectory.FilePaths
+        $data.SetData(yukiPath)
+    Next
+    
+End
+
+Public Sub Clear(argPath As String)
+    
+    $projectDirectory.SetPath(argPath)
+    $data.Reset()
+    
+End
+
+Public Sub SetTargetIndex(argIndex As Integer)
+    
+    $data.SetTargetIndex(argIndex)
+    
+End
+
+Public Function GetPath(argKey As String) As String
+    
+    Return $data.GetPath(argKey)
+    
+End
+
+Public Function GetLinesOfCode(argIgnoreVoid As Boolean) As Integer
+    
+    Return IIf(argIgnoreVoid, $data.LinesOfCodeLogical, $data.LinesOfCodePhysical)
+    
+End
+
+Private Function GridData_Read() As Variant[]
+
+    Return $data.Data
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $data.Data.Count
+
+End
+
+Private Function Message_Read() As String
+
+    Return $data.GetMessage($projectDirectory.Path)
+
+End
+
+Private Function MethodCount_Read() As Integer
+
+    Return $data.MethodsCount
+
+End
+
+Private Function PropertyCount_Read() As Integer
+
+    Return $data.PropertyCount
+
+End
