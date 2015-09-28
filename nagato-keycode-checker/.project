@@ -1,25 +1,26 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.2
+# Compiled with Gambas 3.8.90
 Title=nagato-keycode-checker
 Startup=Kyon
 Icon=pictures/keyboard.png
-Version=0.12.1
+Version=42.1.0
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.settings
 Component=gb.qt4.ext
 Description="check keycode.\n\nthis software is licensed under s.o.s.license."
-Authors="takeda.nemuru\n<takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru\n<takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
-Language=ja
+Language=en
 Maintainer=takedanemuru
 Vendor=The Alien and RadioNoise
-Address=takeda.nemuru@gmail.com
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-keycode-checker-0.12.1
+PackageName=nagato-keycode-checker-42.1.0
+PackageVersion=2
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu

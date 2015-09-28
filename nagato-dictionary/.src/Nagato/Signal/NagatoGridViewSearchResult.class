@@ -23,7 +23,7 @@ Public Sub Searh(argQueryType As Integer, argQueryWord As String)
     
     For Each yukiResult
         With NagatoDBGeneralDict
-            Me._SetData(.[.ColumnJapanese], .[.ColumnPronunciation], .[.ColumnEnglish])
+            Me._SetData(yukiResult[.ColumnJapanese], yukiResult[.ColumnPronunciation], yukiResult[.ColumnEnglish])
         End With
     Next
     

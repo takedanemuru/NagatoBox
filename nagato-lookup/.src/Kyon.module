@@ -1,6 +1,18 @@
 ' Gambas module file
 
+Private Sub setIconTheme()
+    
+    Dim yukiOutput As String
+    
+    Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
+    
+    Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
+    
+End
+
 Public Sub Main()
+
+    If Not Application.Theme Then setIconTheme()
 
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()

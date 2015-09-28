@@ -72,13 +72,12 @@ nagato-color-picker		|0.0.2	|screen color picking tool
 nagato-config-appearance	|42.1.2	|appearance config tool
 nagato-config-screenlocker	|42.1.1	|frontend for i3 locker
 nagato-dbus-finder		|0.3.1	|explorer for dbus
-nagato-dictionary		|42.1.1	|English/Japanese dictionary
+nagato-dictionary		|42.1.2	|English/Japanese dictionary
 nagato-extractor		|42.1.2	|patool frontend for file extractoring
 nagato-files			|42.1.5	|file manager and desktop shell
 nagato-font-view		|x.x.x	|font viewer
 nagato-gif-box*		|42.1.0	|gif animation viewer
 nagato-image-view		|42.1.0	|image viewer
-nagato-keycode-checker	|x.x.x	|keycode checker
 nagato-lookup		|42.1.3	|application launcher/finder
 nagato-map		|42.1.5	|map viewer
 nagato-movie		|42.1.0	|movie file player
@@ -100,13 +99,13 @@ yuki			|42.1.48	|interface for humanoid interface
 
 Application			|Version	|Description
 ---			|----:	|----
-animenfo-radio-player		|x.x.x	|animeNfo fm player
+animenfo-radio-player		|42.1.0	|animeNfo fm player
 haramaru-radio-player		|42.1.3	|haramaru-radio(an internet radio) player
-nekomimi-clock		|x.x.x	|clock
+nekomimi-clock		|0.2.0	|clock
 ohana-clock		|x.x.x	|bonbori-matsuri has been waiting for you.
 rotate-cube-demo		|x.x.x	|OpenGL demo
 ssg-player			|42.1.3	|singer song gamer(an internet radio) player
-xkcd-reader			|x.x.x	|xkcd(online comic) reader.
+xkcd-reader			|0.2.0	|xkcd(online comic) reader.
 
 ## To Do
 

@@ -7,13 +7,11 @@ Create Static
 Property Read Ready As String
 Property Read IconTheme As String
 
-Public Sub Test() As Boolean
+Public Function Register() As Boolean
     
-    Return True
+    Try NagatoDBus.Register()
     
-    ' Try HaruhiDesktop.Show()
-    ' 
-    ' If Not Error Then Return True
+    If Not Error Then Return True
     
 Finally
     Return False

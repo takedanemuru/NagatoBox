@@ -25,6 +25,7 @@ End
 Private Sub setX11Properties()
     
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", Me.Id, Type, TypeDesktop) Wait
+    Try Shell "openbox --restart"
     
     If Error Then Return
     
@@ -42,12 +43,17 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    initializeForm()
     $desktop = New NagatoDesktop(Me)
     $panel = New NagatoDesktopPanel(Me)
-    setX11Properties()
     $timer.Enabled = True
 
+End
+
+Public Sub SetAsDesktop()
+    
+    initializeForm()
+    setX11Properties()
+    
 End
 
 Public Sub Form_Close()

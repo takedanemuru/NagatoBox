@@ -1,13 +1,27 @@
 ' Gambas module file
 
+Private Sub setIconTheme()
+    
+    Dim yukiOutput As String
+    
+    If Application.Theme Then Return
+    
+    Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
+    
+    Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
+    
+End
+
 Public Sub Main()
+
+    setIconTheme()
 
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         NagatoMenuCache3.Activate()
         HaruhiMain.Show()
     Else
-        Message.Error(("YUKI.N > nagato-lookup has been activated.")
+        Message.Error(("YUKI.N > nagato-lookup has been activated."), ("OK"))
     End If
     
 End

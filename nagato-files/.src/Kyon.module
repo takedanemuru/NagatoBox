@@ -4,16 +4,29 @@ Private Sub activateDesktop()
     
     If Not NagatoDBus.DesktopActivated() Then
         HaruhiDesktop.Show()
+        HaruhiDesktop.SetAsDesktop()
     Else
         Message(("YUKI.N > nagato-desktop has been activated."), ("OK"))
     End If
     
 End
 
+Private Sub setIconTheme()
+    
+    Dim yukiOutput As String
+    
+    If Application.Theme Then Return
+    
+    Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
+    
+    Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
+    
+End
+
 Public Sub Main()
 
     ' this call activate NagatoDBSymbol, so do not delete.
-    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate files..." 
+    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate nagato-files..." 
     
     NagatoArguments.Parsing()
     
@@ -21,7 +34,9 @@ Public Sub Main()
     'activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
     
-    NagatoClipBoard.Activate()
+    setIconTheme()
+    
+     NagatoClipBoard.Activate()
     
     If NagatoArguments.DesktopIcons Then
         activateDesktop()

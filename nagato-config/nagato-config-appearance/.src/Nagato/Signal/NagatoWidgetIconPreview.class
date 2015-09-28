@@ -9,7 +9,7 @@ Private Sub setIcons()
     Dim yukiItemName As String
     
     For Each yukiItemName In Stock.Icons
-        $iconView.Add(yukiItemName, "", Stock[Subst$("medium/&1", "", yukiItemName)])
+        $iconView.Add(yukiItemName, yukiItemName, Stock[Subst$("24/&1", yukiItemName)])
     Next
 
     $iconView.Refresh()
@@ -32,6 +32,7 @@ Public Sub _InitializeWidget(argContainer As Container)
     With $iconView
         .Expand = True
         .GridSize = 12
+        .Background = Color.Lighter(Color.Violet)
     End With
     
     setIcons()
