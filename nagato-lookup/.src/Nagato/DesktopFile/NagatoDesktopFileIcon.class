@@ -1,23 +1,41 @@
 ' Gambas class file
 
+Private Const HicolorIcons As String = "/usr/share/icons/hicolor/32x32/apps"
+Private Const PixmapIcons As String = "/usr/share/pixmaps"
+
 Private $desktopFile As DesktopFile
+Private $path As String
+
+Private Function getIconPath(argDirectory As String) As String
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In RDir(argDirectory)
+        If File.BaseName(yukiPath) <> File.BaseName($desktopFile.Icon) Then Continue
+        Return (argDirectory &/ yukiPath)
+    Next
+    
+    Return ""
+    
+End
+
+Private Function setPath()
+    
+    If $desktopFile.Icon Begins "/" Then $path = $desktopFile.Icon
+    If Not $path Then $path = getIconPath(HicolorIcons)
+    If Not $path Then $path = getIconPath(PixmapIcons)
+    
+End
 
 Public Function GetIcon(argSize As Integer) As Picture
     
-    Dim yukiImage As Image
-    
-    If $desktopFile.Icon Begins "/" And If File.Ext($desktopFile.Icon) <> "svg" Then
-        yukiImage = Image.Load($desktopFile.Icon)
-        yukiImage.Stretch(argSize, argSize)
-        Return yukiImage.Picture
-    Else If $desktopFile.Icon Begins "/" And If File.Ext($desktopFile.Icon) = "svg" 
-        Return Image.Load($desktopFile.Icon).Stretch(argSize, argSize).Picture
+    If $path Then 
+        Return Image.Load($path).Stretch(argSize, argSize).Picture
     Else
-        If $desktopFile.Icon <> "" Then Return $desktopFile.GetIcon(argSize).Picture
-        Return MikuruIcons.Get("gear")
+        Return $desktopFile.GetIcon(argSize).Picture
     Endif
     
-Catch
+Finally
     Return MikuruIcons.Get("gear")
     
 End
@@ -25,5 +43,6 @@ End
 Public Sub _new(argDesktopFile As DesktopFile)
     
     $desktopFile = argDesktopFile
+    setPath()
     
 End

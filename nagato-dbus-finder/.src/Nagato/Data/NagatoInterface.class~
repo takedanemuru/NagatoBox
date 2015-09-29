@@ -7,8 +7,8 @@ Private Sub setTreeView(argParent As String, argName As String)
     
     If Not HaruhiMain.TreeView1.Exist(argParent) Then
         HaruhiMain.TreeView1.Add($interface, argName)
-    Else
-        HaruhiMain.TreeView1.Add($interface, argName,, argParent)
+    Else If Not HaruhiMain.TreeView1.Exist($interface) Then
+        Try HaruhiMain.TreeView1.Add($interface, argName, MikuruIcon.Get("equalizer"), argParent)
     End If
     
 End
@@ -33,6 +33,6 @@ Public Sub _new(argParent As String, argName As String, argXml As XmlElement)
     
     setChildElements("method", "NagatoMethod")
     setChildElements("signal", "NagatoSignal")
-    setChildElements("property", NagatoProperty.ClassName)
+    setChildElements("property", "NagatoProperty")
     
 End

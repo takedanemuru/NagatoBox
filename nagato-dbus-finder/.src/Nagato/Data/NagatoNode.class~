@@ -33,18 +33,24 @@ End
 
 Private Sub addTreeViewItem(argParent As String, argName As String)
     
-    Select Case argParent
-        Case ""
-            'do nothing
-        Case "/"
-            HaruhiMain.TreeView1.Add($key, argName, MikuruIcon.Get("folder"))
-        Default
-            HaruhiMain.TreeView1.Add($key, argName, MikuruIcon.Get("folder"), argParent)
-    End Select
+    If Not $key Then Return
+    
+    If HaruhiMain.TreeView1.Exist($key) Then Return
+    
+    HaruhiMain.TreeView1.Add($key, $key, MikuruIcon.Get("folder"))
+    
+    ' Select Case argParent
+    '     Case ""
+    '         'do nothing
+    '     Case "/"
+    '         HaruhiMain.TreeView1.Add($key, argName, MikuruIcon.Get("folder"))
+    '     Default
+    '         HaruhiMain.TreeView1.Add($key, argName, MikuruIcon.Get("folder"), argParent)
+    ' End Select
     
 End
 
-Private Function IsAccessable() As Boolean
+Private Function isAccessable() As Boolean
     
     If MikuruGDBus.Mode = MikuruGDBus.ModeSession Then
         If DBus["Session://" & $service]._Introspect($key) = "" Then Return False
@@ -61,7 +67,7 @@ Public Sub _new(argService As String, argParent As String, argName As String)
     $key = argParent &/ argName
     $service = argService
     
-    If IsAccessable() Then
+    If isAccessable() Then
         addTreeViewItem(argParent, argName)
         $xml = MikuruGDBus.Get(argService, $key)
         setInterfaces()

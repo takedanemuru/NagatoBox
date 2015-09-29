@@ -32,8 +32,8 @@ Public Sub DBusList_Click()
 
 End
 
-Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
-    
+Public Sub MenuBar_Signal(argSignal As Integer, ...)
+   
     Select Case argSignal
         Case MikuruSignal.DBusRefresh
             TreeView1.Clear()

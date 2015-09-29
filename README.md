@@ -71,7 +71,7 @@ nagato-code-view		|42.1.3	|code viewer for Gambas3
 nagato-color-picker		|0.0.2	|screen color picking tool
 nagato-config-appearance	|42.1.2	|appearance config tool
 nagato-config-screenlocker	|42.1.1	|frontend for i3 locker
-nagato-dbus-finder		|0.3.1	|explorer for dbus
+nagato-dbus-finder		|42.1.0	|explorer for dbus
 nagato-dictionary		|42.1.2	|English/Japanese dictionary
 nagato-extractor		|42.1.2	|patool frontend for file extractoring
 nagato-files			|42.1.5	|file manager and desktop shell
@@ -102,7 +102,7 @@ Application			|Version	|Description
 animenfo-radio-player		|42.1.0	|animeNfo fm player
 haramaru-radio-player		|42.1.3	|haramaru-radio(an internet radio) player
 nekomimi-clock		|0.2.0	|clock
-ohana-clock		|x.x.x	|bonbori-matsuri has been waiting for you.
+ohana-clock		|0.2.2	|bonbori-matsuri has been waiting for you.
 rotate-cube-demo		|x.x.x	|OpenGL demo
 ssg-player			|42.1.3	|singer song gamer(an internet radio) player
 xkcd-reader			|0.2.0	|xkcd(online comic) reader.
