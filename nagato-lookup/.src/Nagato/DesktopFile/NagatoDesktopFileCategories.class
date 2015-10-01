@@ -37,7 +37,7 @@ End
 Private Function IsMediaApplication_Read() As Boolean
 
     If Me.HasCategory("Audio") Then Return True
-    If Me.HasCategory("video") Then Return True
+    If Me.HasCategory("Video") Then Return True
     If Me.HasCategory("AudioVideo") Then Return True
     
     Return False

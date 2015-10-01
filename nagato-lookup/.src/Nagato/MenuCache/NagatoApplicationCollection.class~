@@ -1,12 +1,11 @@
 ' Gambas class file
 
+Private $initializer As New NagatoApplicationCollectionInitializer
 Private $Applications As New Collection
 
 Private Sub setApplication(argCategoryKey As String, argDesktopFile As NagatoDesktopFile)
     
-    Dim yukiCollection As Collection = $Applications[argCategoryKey]
-    
-    Try yukiCollection.Add(argDesktopFile, argDesktopFile.Path)
+    Try $Applications[argCategoryKey].Add(argDesktopFile, argDesktopFile.Path)
     
 End
 
@@ -15,16 +14,16 @@ Private Sub addDesktopFiles(argPath As String)
     Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
     
     With yukiDesktopFile
-        If .Path = "" Then Return
-        Try $Applications["All"].Add(yukiDesktopFile, .Path)
-        If Not .ShowIn Then Return
+        If yukiDesktopFile.Path = "" Then Return
+        Try $Applications["All"].Add(yukiDesktopFile, yukiDesktopFile.Path)
+        If Not yukiDesktopFile.ShowIn Then Return
         If .HasCategory("Nagato") Then setApplication("Nagato", yukiDesktopFile)
         If .HasCategory("Settings") Then setApplication("Settings", yukiDesktopFile)
         If .HasCategory("Graphics") Then setApplication("Graphics", yukiDesktopFile)
-        If .IsMediaApplication Then setApplication("Medias", yukiDesktopFile)
+        If .HasCategory("Audio", "Video", "AudioVideo") Then setApplication("Medias", yukiDesktopFile)
         If .HasCategory("Education") Then setApplication("Educations", yukiDesktopFile)
         If .HasCategory("Development") Then setApplication("Developments", yukiDesktopFile)
-        If .HasCategory("Network") Or If .HasCategory("Internet") Then setApplication("Networks", yukiDesktopFile)
+        If .HasCategory("Network", "Internet") Then setApplication("Networks", yukiDesktopFile)
         If .HasCategory("Office") Then setApplication("Offices", yukiDesktopFile)
         If .HasCategory("Game") Then setApplication("Games", yukiDesktopFile)
         If .HasCategory("Utility") Then setApplication("Utilities", yukiDesktopFile)
@@ -55,25 +54,12 @@ Private Sub addApplications(argDirectory As String, Optional argKDE As Boolean =
     
     Dim yukiPath As String
     
+    If Not Exist(argDirectory) Then Return
+    
     For Each yukiPath In Dir(argDirectory).Sort()
-        If File.Ext(argDirectory &/ yukiPath) = "desktop" Then
-            addDesktopFiles(argDirectory &/ yukiPath)
-            Debug "done"
-            If argKDE Then addKde4DesktopFiles(argDirectory &/ yukiPath)
-            Debug "done"
-        Endif
-    Next
-    
-End
-
-Public Sub initializeCollection()
-    
-    Dim yukiCategory As String
-    Dim yukiCollection As Collection
-    
-    For Each yukiCategory In MikuruApplicationCategories.All
-        yukiCollection = New Collection
-        $Applications.Add(yukiCollection, yukiCategory)
+        If File.Ext(argDirectory &/ yukiPath) <> "desktop" Then Continue
+        addDesktopFiles(argDirectory &/ yukiPath)
+        If argKDE Then addKde4DesktopFiles(argDirectory &/ yukiPath)
     Next
     
 End
@@ -99,7 +85,7 @@ End
 
 Public Sub _new()
     
-    initializeCollection()
+    $Applications = $initializer.GetCollection()
     addApplications(MikuruApplicationDirectory.Global)
     addApplications(MikuruApplicationDirectory.KDE4, True)
     addApplications(MikuruApplicationDirectory.Local)

@@ -9,7 +9,7 @@ Private Sub sortByName(argCategory As String, ByRef refNames As String[], ByRef 
     Dim yukiName As String
     
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
-        yukiName = yukiDesktopFile.Name
+        yukiName = yukiDesktopFile.GetName(True)
         If yukiName = "" Then yukiName = File.BaseName(yukiDesktopFile.Path)
         refNames.Add(yukiName)
         refCollection.Add(yukiDesktopFile, yukiName)
@@ -78,8 +78,6 @@ Public Sub _new(argMenuButton As MenuButton, argCategory As String, argUniqueNam
 End
 
 Public Sub ApplicationMenu_Click()
-    
-    Debug Last.Tag
     
     MikuruApplications.Launch(Last.Tag)
     NagatoSettings.PushApplicationPath(Last.Tag)

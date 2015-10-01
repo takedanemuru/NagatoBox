@@ -25,6 +25,6 @@ End
 
 Private Function GlobalMimeList_Read() As String
 
-    Return "/usr/share/applications/defaults.list"
+    Return "/usr/share/applications/mimeinfo.cache"
 
 End

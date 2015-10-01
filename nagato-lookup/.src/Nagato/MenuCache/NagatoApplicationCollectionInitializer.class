@@ -1,0 +1,17 @@
+' Gambas class file
+
+Private $Applications As New Collection
+
+Public Sub GetCollection() As Collection
+    
+    Dim yukiCategory As String
+    Dim yukiCollection As Collection
+    
+    For Each yukiCategory In MikuruApplicationCategories.All
+        yukiCollection = New Collection
+        $Applications.Add(yukiCollection, yukiCategory)
+    Next
+    
+    Return $Applications.Copy()
+    
+End

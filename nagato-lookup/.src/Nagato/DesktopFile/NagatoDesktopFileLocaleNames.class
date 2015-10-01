@@ -1,0 +1,44 @@
+' Gambas class file
+
+Property Read LocaleGenericName As String
+Property Read LocaleComment As String
+
+Private $locale As String
+Private $language As String
+Private $localGenericName As String = ""
+Private $localeComment As String = ""
+Private $languageGenericName As String = ""
+Private $languageComment As String = ""
+
+Public Sub SetData(argLine As String)
+    
+    If argLine Begins Subst$("GenericName[&1]=", $locale) Then
+        $localGenericName = Replace$(argLine, Subst$("GenericName[&1]=", $locale), "")
+    Else If argLine Begins Subst$("Comment[&1]=", $locale) Then
+        $localeComment = Replace$(argLine, Subst$("Comment[&1]=", $locale), "")
+    Else If argLine Begins Subst$("GenericName[&1]=", $language) Then
+        $languageGenericName = Replace$(argLine, Subst$("GenericName[&1]=", $language), "")
+    Else If argLine Begins Subst$("Comment[&1]=", $language) Then
+        $localeComment = Replace$(argLine, Subst$("Comment[&1]=", $language), "")
+    End If 
+    
+End
+
+Public Sub _new()
+    
+    $locale = Replace$(System.Language, "." & System.Charset, "")
+    $language = Left$($locale, 2)
+    
+End
+
+Private Function LocaleGenericName_Read() As String
+
+    Return IIf($localGenericName, $localGenericName, $languageGenericName)
+
+End
+
+Private Function LocaleComment_Read() As String
+
+    Return IIf($localeComment, $localeComment, $languageComment)
+
+End

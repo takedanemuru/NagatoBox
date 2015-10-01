@@ -3,16 +3,23 @@
 Private $textLabel As TextLabel
 Private $width As Integer
 
-Public Sub SetDescription(argKey As String)
-
-    Dim yukiDesktopFile As New NagatoDesktopFile(Last.Key)
+Private Function getProperty(argDesktopFile As NagatoDesktopFile) As String
+    
     Dim yukiProperty As String
     
-    yukiProperty = Subst$("<b>Name:</b> &1<br>", yukiDesktopFile.Name)
-    yukiProperty &= Subst$("<b>Generic Name:</b> &1<br>", yukiDesktopFile.GenericName)
-    yukiProperty &= Subst$("<b>Exec:</b> &1<br>", yukiDesktopFile.Exec)
-    yukiProperty &= "<b>Description:</b> " & yukiDesktopFile.Comment
+    yukiProperty = Subst$("<b>Name:</b> &1<br>", argDesktopFile.GetName(True))
+    yukiProperty &= Subst$("<b>Generic Name:</b> &1<br>", argDesktopFile.GetGenericName(True))
+    yukiProperty &= Subst$("<b>Exec:</b> &1<br>", argDesktopFile.Exec)
+    yukiProperty &= "<b>Description:</b> " & argDesktopFile.GetComment(True)
+    
+    Return yukiProperty
+    
+End
 
+Public Sub SetDescription(argKey As String)
+
+    Dim yukiProperty As String = getProperty(Object.New("NagatoDesktopFile", [Last.Key]))
+    
     $textLabel.H = Application.Font.RichTextHeight(yukiProperty, $width)
     $textLabel.Text = yukiProperty
 

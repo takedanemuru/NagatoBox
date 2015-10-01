@@ -33,12 +33,9 @@ End
 
 Private Sub showResult()
     
-    If ApplicationsIconView.Count > 0 Then
-        ensureVisible()
-    Else
-        setNotFound()
-    End If
+    If ApplicationsIconView.Count = 0 Then setNotFound()
 
+    ensureVisible()
     Me.Show()
     
 End
@@ -48,12 +45,12 @@ Private Function containsSearchQuery(argDesktopFile As NagatoDesktopFile, argQue
     
     With argDesktopFile
         If File.BaseName(.Path) Like Subst$("*&1*", argQuery) Then Return True
-        If .CommonName Like Subst$("*&1*", argQuery) Then Return True
-        If .Name Like Subst$("*&1*", argQuery) Then Return True
-        If .GenericName Like Subst$("*&1*", argQuery) Then Return True
-        If .Comment Like Subst$("*&1*", argQuery) Then Return True
-        If .LocaleGenericName Like Subst$("*&1*", argQuery) Then Return True
-        If .LocaleComment Like Subst$("*&1*", argQuery) Then Return True
+        If .GetName(False) Like Subst$("*&1*", argQuery) Then Return True
+        If .GetGenericName(False) Like Subst$("*&1*", argQuery) Then Return True
+        If .GetComment(False) Like Subst$("*&1*", argQuery) Then Return True
+        If .GetName(True) Like Subst$("*&1*", argQuery) Then Return True
+        If .GetGenericName(True) Like Subst$("*&1*", argQuery) Then Return True
+        If .GetComment(True) Like Subst$("*&1*", argQuery) Then Return True
     End With
     
     Return False

@@ -1,0 +1,73 @@
+' Gambas class file
+
+Property Read Name As String
+Property Read CommonName As String
+Property Read GenericName As String
+Property Read Comment As String
+Property Read LocaleName As String
+Property Read Path As String
+Property Read Exec As String
+
+Private $name As String = ""
+Private $genericName As String = ""
+Private $comment As String = ""
+Private $desktopFile As DesktopFile
+
+Public Sub SetData(argLine As String)
+    
+    If argLine Begins "Name=" Then
+        $name = Replace$(argLine, "Name=", "")
+    Else If argLine Begins "GenericName=" Then
+        $genericName = Replace$(argLine, "GenericName=", "")
+    Else If argLine Begins "Comment=" Then
+        $comment = Replace$(argLine, "Comment=", "")
+    End If 
+    
+End
+Public Sub _new(argDesktopFile As DesktopFile)
+    
+    $desktopFile = argDesktopFile
+    
+End
+
+Private Function Name_Read() As String
+
+    Return $desktopFile.Name
+
+End
+
+Private Function CommonName_Read() As String
+
+    Return $name
+
+End
+
+Private Function GenericName_Read() As String
+
+    Return IIf($genericName, $genericName, $desktopFile.Name)
+    
+End
+
+Private Function Comment_Read() As String
+
+    Return $comment
+
+End
+
+Private Function LocaleName_Read() As String
+
+    Return $desktopFile.Name
+
+End
+
+Private Function Path_Read() As String
+    
+    Return $desktopFile.Path
+    
+End
+
+Private Function Exec_Read() As String
+
+    Return $desktopFile.Exec
+
+End

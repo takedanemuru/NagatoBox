@@ -11,136 +11,78 @@ Property Read LocaleComment As String
 Property Read Path As String
 Property Read Exec As String
 
-Private $locale As String
-Private $language As String
-Private $name As String = ""
-Private $genericName As String = ""
-Private $comment As String = ""
-Private $localGenericName As String = ""
-Private $localeComment As String = ""
-Private $languageGenericName As String = ""
-Private $languageComment As String = ""
-Private $desktopFile As DesktopFile
-
+Private $commonNames As NagatoDesktopFileNamesCommon
+Private $localeNames As New NagatoDesktopFileLocaleNames
 
 Public Sub SetData(argLine As String)
     
-    If argLine Begins "Name=" Then
-        $name = Replace$(argLine, "Name=", "")
-    Else If argLine Begins "GenericName=" Then
-        $genericName = Replace$(argLine, "GenericName=", "")
-    Else If argLine Begins "Comment=" Then
-        $comment = Replace$(argLine, "Comment=", "")
-    Else If argLine Begins Subst$("GenericName[&1]=", $locale) Then
-        $localGenericName = Replace$(argLine, Subst$("GenericName[&1]=", $locale), "")
-    Else If argLine Begins Subst$("Comment[&1]=", $locale) Then
-        $localeComment = Replace$(argLine, Subst$("Comment[&1]=", $locale), "")
-    Else If argLine Begins Subst$("GenericName[&1]=", $language) Then
-        $languageGenericName = Replace$(argLine, Subst$("GenericName[&1]=", $language), "")
-    Else If argLine Begins Subst$("Comment[&1]=", $language) Then
-        $localeComment = Replace$(argLine, Subst$("Comment[&1]=", $language), "")
-    End If 
-    
+    $commonNames.SetData(argLine)
+    $localeNames.SetData(argLine)
+
 End
 
 Public Sub _new(argDesktopFile As DesktopFile)
     
-    $locale = Replace$(System.Language, "." & System.Charset, "")
-    $language = Left$($locale, 2)
-    $desktopFile = argDesktopFile
+    $commonNames = New NagatoDesktopFileNamesCommon(argDesktopFile)
     
 End
 
 Private Function Name_Read() As String
 
-    Return $desktopFile.Name
-    
-Catch
-    Return ""
+    Return $commonNames.Name
 
 End
 
 Private Function Path_Read() As String
 
-    Return $desktopFile.Path
+    Return $commonNames.Path
     
-Catch
-    Return ""
-
 End
 
 Private Function GenericName_Read() As String
 
-    If $genericName <> "" Then
-        Return $genericName
-    Else 
-        Return $desktopFile.Name
-    Endif
+    Return $commonNames.GenericName
     
-Catch
-    Return ""
-
 End
 
 Private Function Comment_Read() As String
 
-    Return $comment
+    Return $commonNames.Comment
 
 End
 
 Private Function ProgramName_Read() As String
-
-    Return $desktopFile.ProgramName
     
-Catch
-    Return ""
-
+    Return $commonNames.ProgramName
+    
 End
 
 Private Function CommonName_Read() As String
 
-    Return $name
-
-Catch 
-    Return ""
-
+    Return $commonNames.CommonName
+    
 End
 
 Private Function LocaleName_Read() As String
 
-    Return $desktopFile.Name
+    Return $commonNames.LocaleName
 
 End
 
 Private Function LocaleGenericName_Read() As String
 
-    If $localGenericName <> "" Then
-        Return $localGenericName
-    Else If $languageGenericName <> "" Then
-        Return $languageGenericName
-    Else
-        Return ""
-    Endif
+    Return $localeNames.LocaleGenericName
 
 End
 
 Private Function LocaleComment_Read() As String
 
-    If $localeComment <> "" Then
-        Return $localeComment
-    Else If $languageComment <> "" Then
-        Return $languageComment
-    Else
-        Return ""
-    Endif
+    Return $localeNames.LocaleComment
 
 End
 
 Private Function Exec_Read() As String
 
-    Return $desktopFile.Exec
-
-Catch
-    Return ""
+    Return $commonNames.Exec
 
 End

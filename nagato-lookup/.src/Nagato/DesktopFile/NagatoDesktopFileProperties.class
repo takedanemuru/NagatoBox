@@ -1,0 +1,93 @@
+' Gambas class file
+
+Property Read ShowIn As Boolean
+Property Read Exec As String
+Property Read Path As String 
+
+Private $names As NagatoDesktopFileNames
+Private $categories2 As New NagatoDesktopFileCategories
+Private $hidden As New NagatoDesktopFileHidden
+
+Public Sub setProperty(argLine As String)
+    
+    If argLine Begins "Categories=" Then $categories2.SetData(argLine)
+    $names.SetData(argLine)
+    $hidden.SetData(argLine)
+    
+End
+
+Private Sub setPropertyFromDesktopFile(argPath As String)
+    
+    Dim yukiFlag As Boolean = False
+    Dim yukiLine As String
+    Dim yukiStream As Stream 
+    
+    yukiStream = Open argPath For Input
+    
+    Do While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine = "[Desktop Entry]" Then
+            yukiFlag = True
+        Else If yukiLine Begins "[" Then
+            Break
+        Else
+            If yukiFlag Then setProperty(yukiLine)
+        Endif 
+    Loop
+    
+   Close #yukiStream
+    
+End
+
+Public Sub _new(argPath As String, argDesktopFile As DesktopFile)
+    
+    $names = New NagatoDesktopFileNames(argDesktopFile)
+    setPropertyFromDesktopFile(argPath)
+    
+End
+
+Public Function GetName(argTranslate As Boolean) As String
+    
+    If argTranslate And If $names.LocaleName Then Return $names.LocaleName
+    If $names.CommonName Then Return $names.CommonName
+    If $names.Name Then Return $names.Name
+    
+    Return $names.ProgramName
+    
+End
+
+Public Function GetGenericName(argTranslate As Boolean) As String
+    
+    Return IIf(argTranslate, $names.LocaleGenericName, $names.GenericName)
+    
+End
+
+Public Function GetComment(argTranslate As Boolean) As String
+    
+    Return IIf(argTranslate, $names.LocaleComment, $names.Comment)
+    
+End
+
+Public Function HasCategory(argCategory As String) As Boolean
+    
+    Return $categories2.HasCategory(argCategory)
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $names.Path
+
+End
+
+Private Function ShowIn_Read() As Boolean
+
+    Return $hidden.ShowIn
+
+End
+
+Private Function Exec_Read() As String
+
+    Return $names.Exec
+
+End

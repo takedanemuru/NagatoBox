@@ -3,19 +3,25 @@
 Private $menuButton As MenuButton
 Private $rootMenu As Menu
 
+Private Sub addApplicationMenu(argPath As String)
+    
+    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
+    Dim yukiMenu As New Menu($rootMenu) As "ApplicationMenu"
+    
+    With yukiMenu
+        .Text = yukiDesktopFile.GetName(True)
+        .Tag = argPath
+        .Picture = yukiDesktopFile.GetIcon(32)
+    End With
+    
+End
+
 Private Sub initializeMenus()
     
     Dim yukiPath As String
-    Dim yukiDesktopFile As NagatoDesktopFile
-    Dim yukiMenu As Menu
     
     For Each yukiPath In NagatoSettings.RecentApplications
-        If Not Exist(yukiPath) Then Continue
-        yukiDesktopFile = New NagatoDesktopFile(yukiPath) 
-        yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
-        yukiMenu.Text = IIf(yukiDesktopFile.Name = "", File.BaseName(yukiPath), yukiDesktopFile.Name)
-        yukiMenu.Tag = yukiPath
-        yukiMenu.Picture = yukiDesktopFile.GetIcon(64)
+        If Exist(yukiPath) Then addApplicationMenu(yukiPath)
     Next
     
 End

@@ -9,7 +9,7 @@ Private Sub sortByName(argCategory As String, ByRef refNames As String[], ByRef 
     Dim yukiName As String
     
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
-        yukiName = yukiDesktopFile.Name
+        yukiName = yukiDesktopFile.GetName(True)
         If yukiName = "" Then yukiName = File.BaseName(yukiDesktopFile.Path)
         refNames.Add(yukiName)
         refCollection.Add(yukiDesktopFile, yukiName)
@@ -28,7 +28,7 @@ Private Sub setEachApplicationMenu(argDesktopFile As NagatoDesktopFile)
     yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
     
     With yukiMenu
-        .Text = IIf(argDesktopFile.Name = "", File.BaseName(argDesktopFile.Path), argDesktopFile.Name)
+        .Text = argDesktopFile.GetName(True)
         .Tag = argDesktopFile.Path
         .Picture = argDesktopFile.GetIcon(64)
     End With
