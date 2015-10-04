@@ -9,7 +9,7 @@ Private Sub addArg(argElement As XmlElement)
     Dim yukiName As String = IIf(argElement.Attributes["name"] = "", "arg", argElement.Attributes["name"])
     
     If $args <> "" Then $args &= ", "
-    $args &= Subst$("&1 As &2", yukiName, yukiType)
+    $args &= Subst$("&1 As &2", yukiName, MikuruTypeConverter(yukiType))
     
 End
 
@@ -19,7 +19,7 @@ Private Sub addReturn(argElement As XmlElement)
     Dim yukiName As String = IIf(argElement.Attributes["name"] = "", "return", argElement.Attributes["name"])
 
     If $returns <> "" Then $returns &= ", "
-    $returns &= Subst$("&1 As &2", yukiName, yukiType)
+    $returns &= Subst$("&1 As &2", yukiName, MikuruTypeConverter(yukiType))
     
 End
 
@@ -37,7 +37,6 @@ Public Sub _new(argParentKey As String, argElement As XmlElement)
         Endif
     Next
     
-    '$returns = IIf($returns = "", "", Subst$("&1", $returns))
     yukiText = Subst$("&1 (&2) &3", yukiName, $args, $returns)
     
     Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("gear"), argParentKey)

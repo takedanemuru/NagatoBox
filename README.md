@@ -109,4 +109,4 @@ xkcd-reader			|0.2.0	|xkcd(online comic) reader.
 
 ## To Do
 
-[TODO](./readme_extra/NagatoBox_15.09_Summer_Camp_2015.md)
+[TODO](./readme_extra/NagatoBox_15.12_Acceleration.md)

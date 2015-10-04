@@ -1,39 +1,111 @@
 ' Gambas module file
 
-Public Function Get(argType As String) As String
+Private Function getTypeText(argTest As String) As String
+    
+    Dim yukiTypeText As String
+    
+    If argTest = "a{" Then Return "Dict of ("
+    If argTest Begins "{" Then Return ""
+    If argTest Begins "}" Then Return IIf(argTest Not Ends "}", "), ", ")")
+
+    yukiTypeText = IIf(argTest Begins "a", Me.Get(argTest), Me.Get(String.Left(argTest, 1)))
+
+    Return IIf(argTest Not Ends "}", yukiTypeText & ", ", yukiTypeText)
+
+End
+
+Private Function getDict(argType As String) As String
+    
+    Dim yukiDict As String 
+    Dim yukiIndex As Integer = 1
+    
+    Do
+        yukiDict &= getTypeText(String.Mid(argType, yukiIndex, 2))
+        Inc yukiIndex
+    Loop Until yukiIndex = String.Len(argType)
+    
+    Return yukiDict & ")"
+    
+End
+
+Private Function sanitizeText(argString As String) As String
+    
+    argString = Replace$(argString, "(", "{")
+    argString = Replace$(argString, ")", "}")
+    
+    Return argString
+    
+End
+
+Private Function getType(argType As String) As String
     
     Select Case argType
         Case "ao"
             Return "object[]"
-        Case "b"
-            Return "boolean"
         Case "o"
             Return "object"
+        Case "ab"
+            Return "boolean[]"
+        Case "b"
+            Return "boolean"
+        Case "as"
+            Return "string[]"
         Case "s"
             Return "string"
+        Case "ay"
+            Return "byte[]"
         Case "y"
             Return "byte"
+        Case "an"
+            Return "int16[]"
         Case "n"
             Return "int16"
+        Case "aq"
+            Return "uint16[]"
         Case "q"
             Return "uint16"
+        Case "ai"
+            Return "int32[]"
         Case "i"
             Return "int32"
+        Case "au"
+            Return "uint32[]"
         Case "u"
             Return "uint32"
+        Case "ax"
+            Return "int64[]"
         Case "x"
             Return "int64"
+        Case "at"
+            Return "uint64[]"
         Case "t"
             Return "uint64"
+        Case "ad"
+            Return "float[]"
         Case "d"
             Return "float"
+        Case "aq"
+            Return "sign[]"
         Case "q"
             Return "sign"
+        Case "av"
+            Return "variant[]"
         Case "v"
             Return "variant"
         Default
             Return argType
     End Select
+    
+End
+
+Public Function Get(argType As String) As String
+    
+    argType = sanitizeText(argType)
+    
+    If argType Begins "a{" Then Return getDict(argType)
+    If argType Begins "{" Then Return "Dict of (" & getDict(argType)
+    
+    Return getType(argType)
     
 End
 

@@ -5,7 +5,7 @@ Create Private
 Property Read BaseColor As Integer
 
 Public Const TileSize As Integer = 128
-Public Const TextWidth As Integer = 112
+Public Const TextWidth As Integer = 112 ' TileSize - Margin * 2
 Public Const IconSize As Integer = 64
 Public Const Margin As Integer = 8
 
