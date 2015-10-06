@@ -8,7 +8,7 @@ Private Sub addOpenWithDefaultMenu(argDesktopFile As DesktopFile)
     
     With yukiMenu
         .Text = Subst$(("Open with &1"), argDesktopFile.Name)
-        .Picture = MikuruIcon.GetDesktopEntryIcon(argDesktopFile.Path)
+        .Picture = MikuruIconDesktopEntry[argDesktopFile.Path]
         .Tag = NagatoMenuPipe.FileOpen
     End With
     

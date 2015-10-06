@@ -8,7 +8,7 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     
     Dim yukiBaseImage As Image = Me._GetBaseImage(argSelected)
     Dim yukiDesktopFile As New DesktopFile(argPath)
-    Dim yukiIcon As Picture = MikuruIcon.GetDesktopEntryIcon(argPath, Me.IconSize)
+    Dim yukiIcon As Picture = MikuruIconDesktopEntry[argPath, Me.IconSize]
     Dim yukiMode As Integer = MikuruTileMode(argPath, argSelected)
     Dim yukiTile As Picture = Me._GetTile2(yukiBaseImage, yukiIcon, yukiDesktopFile.Name, yukiMode)
     

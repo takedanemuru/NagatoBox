@@ -16,7 +16,7 @@ End
 Public Sub SetPath(argPath As String)
     
     If Not Exist(argPath) Then
-        Message.Warning(("YUKI.N > File not exist.")
+        Message.Warning(("YUKI.N > File not exist."))
     Else
         MikuruStringCode.Check(argPath)
         activateMe()
@@ -28,7 +28,7 @@ End
 Public Sub OpenWithPath(Optional argPath As String = "")
     
     If argPath And If Not Exist(argPath) Then
-        Message.Warning(("YUKI.N > File not exist.")
+        Message.Warning(("YUKI.N > File not exist."))
         Return
     Endif
     

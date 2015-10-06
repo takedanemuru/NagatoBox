@@ -38,7 +38,7 @@ Private Sub setIcons(argDirectory As String, Optional argFilter As String)
         If Error Then Continue
         If yukiDesktopFile.Name = "" Then Continue
         If argFilter And If yukiDesktopFile.Name Not Like Subst$("*&1*", argFilter) Then Continue
-        yukiIcon = MikuruIcon.GetDesktopEntryIcon(argDirectory &/ yukiPath)
+        yukiIcon = MikuruIconDesktopEntry[argDirectory &/ yukiPath]
         ApplicationsListView.Add(yukiDesktopFile.Path, yukiDesktopFile.Name, yukiIcon)
     Next
     

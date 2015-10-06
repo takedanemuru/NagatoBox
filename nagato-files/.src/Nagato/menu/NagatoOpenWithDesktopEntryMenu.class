@@ -19,7 +19,7 @@ Private Sub initializeItem()
     yukiMenu = New Menu($parentMenu) As "OpenWithMenu"
     
     With yukiMenu
-        .Picture = MikuruIcon.GetDesktopEntryIcon(yukiDesktopFile.Path, 32)
+        .Picture = MikuruIconDesktopEntry[yukiDesktopFile.Path, 32]
         .Text = yukiDesktopFile.Name
         .Tag = yukiDesktopFile
     End With

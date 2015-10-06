@@ -1,28 +1,29 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.3
+# Compiled with Gambas 3.8.90
 Title=nagato-text
 Startup=Kyon
 Icon=Pictures/nagato_icons/document-edit.png
-Version=0.7.1
+Version=42.2.1
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
 Component=gb.dbus
+Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.qt4.ext
 Description="a simple text editor"
-Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=ja
 Maintainer=takedanemuru
 Vendor=Integrated Data Thought Entity
-Address=takeda.nemuru@gmail.com
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.License
-PackageName=nagato-text-0.7.1
+PackageName=nagato-text-42.2.1
 CreateEachDirectory=1
 MimeTypes="text/plain","text/html","application/x-desktop"
 Packager=1
