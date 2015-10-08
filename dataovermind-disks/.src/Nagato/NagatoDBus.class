@@ -1,0 +1,45 @@
+' Gambas class file
+
+Create Static
+
+Property Read Proxy As DBusProxy
+
+Public Const Service As String = "org.gambas.dataovermind-diks"
+Public Const ObjectPath As String = "/org/dataovermind/disks"
+Public Const Interface As String = "org.gambas.dataovermind.disks.tfei"
+
+Public Function Activated() As Boolean
+    
+    Try Debug DBus[Me.Service][Me.ObjectPath, Me.Interface].Ready
+    
+    If Not Error Then
+        Return True
+    Else
+        Return False
+    End If
+    
+End
+
+Public Function IsUnique() As Boolean
+    
+    Return Not DBus.Session.Applications.Exist(Me.Service)
+    
+End
+
+Public Sub Register()
+    
+    DBus.Session.Register(TFEI, Me.ObjectPath)
+    
+End
+
+Public Sub Unregister()
+    
+    DBus.Session.Unregister(TFEI)
+    
+End
+
+Private Function Proxy_Read() As DBusProxy
+
+    Return DBus[Me.Service][Me.ObjectPath, Me.Interface]
+
+End

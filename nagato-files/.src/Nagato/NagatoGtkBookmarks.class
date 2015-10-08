@@ -20,6 +20,8 @@ End
 
 Public Sub _new(argContainer As Container)
     
+    'NagatoDBusAccessUDisks2.Activate()
+    
     $initializer = New NagatoGtkBookmarksInitializer(argContainer)
     $surfaceHandler = New NagatoGtkBookmarksSurface($initializer.ListView)
     $surfaceHandler.AddBookmarkItems()

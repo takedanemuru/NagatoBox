@@ -1,0 +1,29 @@
+' Gambas class file
+
+Create Static
+
+Private $directoryObserver As NagatoDirectoryObserver
+Private $mounter As New NagatoDiskMounter
+
+Public Sub Activate()
+    
+    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
+    $directoryObserver.Directory = "/dev/disk/by-uuid"
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argFileName As String)
+    
+    Debug "modefied"
+    
+    $mounter.Check()
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argFileName As String)
+    
+    Debug "deleted"
+    
+    $mounter.Check()
+    
+End

@@ -1,0 +1,29 @@
+' Gambas class file
+
+Private Sub readLines(argLines As String[])
+    
+    Dim yukiLine As String
+    Dim yukiData As String[]
+    
+    For Each yukiLine In argLines
+        If yukiLine Not Begins "l" Then Continue
+        yukiData = Split(yukiLine, " ", "", True)
+        Debug yukiData.Count
+        Try Debug yukiData[yukiData.Max - 2]
+        Try Debug Replace$(yukiData[yukiData.Max], "../..", "/dev")
+    Next
+    
+End
+
+Public Sub Check()
+    
+    Dim yukiOutput As String
+    
+    Debug Exist("/dev/disk/by-uuid")
+    
+    'double check.
+    Shell "ls -al /dev/disk/by-uuid" To yukiOutput
+    
+    readLines(Split(yukiOutput, "\n", "", True))
+    
+End
