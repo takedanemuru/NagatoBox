@@ -1,0 +1,42 @@
+' Gambas class file
+
+Property Read Available As Boolean
+Property Read Proxy As DBusProxy
+
+Private Const BusName As String = "org.gambas.nagato-files"
+Private Const ObjectPath As String = "/org/nagato/files"
+Private Const Interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
+
+Public Sub Added(argMessage As String)
+    
+    If Me.Available Then
+        Me.Proxy.SetTextToPersona(argMessage)
+    Else
+        Message.Info("YUKI.N > " & argMessage, ("OK"))
+    Endif
+    
+End
+
+Public Sub Removed(argDisk As String)
+    
+    Dim yukiMessage As String = Subst$("YUKI.N > &1 unmounted.", argDisk)
+    
+    If Me.Available Then
+        Me.Proxy.SetTextToPersona(yukiMessage)
+    Else
+        Message.Delete("YUKI.N > " & yukiMessage, ("OK"))
+    Endif
+    
+End
+
+Private Function Available_Read() As Boolean
+
+    Return DBus.Session.Applications.Exist(BusName)
+
+End
+
+Private Function Proxy_Read() As DBusProxy
+
+    Return DBus[BusName][ObjectPath, Interface]
+
+End

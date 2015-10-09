@@ -1,29 +1,48 @@
 ' Gambas class file
 
-Private Sub readLines(argLines As String[])
-    
-    Dim yukiLine As String
-    Dim yukiData As String[]
-    
-    For Each yukiLine In argLines
-        If yukiLine Not Begins "l" Then Continue
-        yukiData = Split(yukiLine, " ", "", True)
-        Debug yukiData.Count
-        Try Debug yukiData[yukiData.Max - 2]
-        Try Debug Replace$(yukiData[yukiData.Max], "../..", "/dev")
-    Next
-    
-End
+Private $disksData As New NagatoDisksData As "DisksData"
+Private $message As New NagatoMessage
 
-Public Sub Check()
+Private Function getOutput() As String
     
     Dim yukiOutput As String
     
     Debug Exist("/dev/disk/by-uuid")
     
-    'double check.
     Shell "ls -al /dev/disk/by-uuid" To yukiOutput
     
-    readLines(Split(yukiOutput, "\n", "", True))
+    Return yukiOutput
+    
+End
+
+Public Sub Check()
+    
+    $disksData.SetData(Split(getOutput(), "\n", "", True))
+    
+End
+
+Public Sub DisksData_DriveAdded(argDrives As String[])
+    
+    Dim yukiDrive As String
+    Dim yukiMessage As String
+    
+    For Each yukiDrive In argDrives
+        Try Exec ["udisksctl", "mount", "-b", yukiDrive] To yukiMessage
+        If Not Error Then 
+            $message.Added(yukiMessage)
+        Else
+            Message.Error(Subst$("YUKI.N > I couldn't mount &1.", yukiDrive), ("OK"))
+        End If
+    Next
+    
+End
+
+Public Sub DisksData_DriveRemoved(argDrives As String[])
+    
+    Dim yukiDrive As String
+    
+    For Each yukiDrive In argDrives
+        $message.Removed(yukiDrive)
+    Next
     
 End

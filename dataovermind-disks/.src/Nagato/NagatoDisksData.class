@@ -1,0 +1,60 @@
+' Gambas class file
+
+Private $previousData As New String[]
+Private $currentData As New String[]
+
+Event DriveAdded(argDrives As String[])
+Event DriveRemoved(argDrives As String[])
+
+Private Function getDiff(argSubject As String[], argObject As String[]) As String[]
+    
+    Dim yukiData As String
+    Dim yukiResult As New String[]
+    
+    For Each yukiData In argSubject
+        If Not argObject.Exist(yukiData) Then yukiResult.Add(yukiData)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Private Sub compareData()
+    
+    Dim yukiAdded As String[] = getDiff($currentData, $previousData)
+    Dim yukiRemoved As String[] = getDiff($previousData, $currentData)
+    
+    If yukiAdded.Count > 0 Then Raise DriveAdded(yukiAdded)
+    If yukiRemoved.Count > 0 Then Raise DriveRemoved(yukiRemoved)
+    
+End
+
+Private Sub refreshCurrentData(argLines As String[])
+    
+    Dim yukiLine As String
+    Dim yukiData As String[]
+    
+    $currentData.Clear()
+
+    For Each yukiLine In argLines
+        If yukiLine Not Begins "l" Then Continue
+        yukiData = Split(yukiLine, " ", "", True)
+        If Not yukiData.Exist("->") Then Continue
+        $currentData.Add(Replace$(yukiData[yukiData.Max], "../..", "/dev"))
+    Next
+    
+End
+
+Private Sub refreshPreviousData()
+    
+    If $previousData.Count > 0 Then compareData()
+    $previousData = $currentData.Copy()
+    
+End
+
+Public Sub SetData(argLines As String[])
+    
+    refreshCurrentData(argLines)
+    refreshPreviousData()
+    
+End

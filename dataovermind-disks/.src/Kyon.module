@@ -2,7 +2,11 @@
 
 Public Sub Main()
     
-    NagatoDBus.Register()
-    NagatoDisks.Activate()
+    If Not NagatoDBus.IsUnique Then
+        Message.Warning(("YUKI.N > dataovermind-disks has been activated."), ("OK"))
+    Else
+        NagatoDBus.Register()
+        NagatoDisks.Activate()
+    End If
     
 End
