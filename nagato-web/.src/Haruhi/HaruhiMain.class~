@@ -3,38 +3,27 @@
 Property Read Titles As String[]
 Property Read ActiveIndex As Integer
 
-Private $persona As NagatoPersona
-Private $menubar As NagatoMenuBar
-Private $searchBox As NagatoWebSearch
-Private $webs As NagatoWebs
-Private $inPageSearch As NagatoInPageSearch
+Private $headerContainer As NagatoHeaderContainer
+Private $bodyCotainer As NagatoBodyContainer
 Private $downloadBar As NagatoWebdownloadsBar
 Private $bookmarkTreeView As NagatoBookmarkTreeView
 
-Private Sub addWeb(Optional argUrl As String = NagatoSettings.HomePage)
+Private Sub refreshTitle()
     
-    $webs.AddWeb(argUrl)
-    $menubar.SetUrl(argUrl)
-    
-End
-
-Private Sub insertWeb(argIndex As Integer, Optional argUrl As String = NagatoSettings.HomePage)
-    
-    $webs.InsertWeb(argIndex, argUrl)
-    $menubar.SetUrl(argUrl)
+    $headerContainer.Refresh()
+    Me.Title = $bodyCotainer.ActiveTabTitle
     
 End
 
 Public Sub AddUrl(argUrl As String)
     
-    addWeb(argUrl)
-    $webs.ShowLastTab()
+    $bodyCotainer.AddUrl(argUrl)
     
 End
 
 Public Sub SetUrl(argUrl As String)
     
-    $webs.SetActiveTabUrl(argUrl)
+    $bodyCotainer.SetUrl(argUrl)
     
 End
 
@@ -45,19 +34,13 @@ Public Sub _new()
 End
 
 Public Sub Form_Open()
-
-    NagatoSettingsForm.Load(Me)
-    Application.MainWindow = Me
     
-    $persona = New NagatoPersona(DrawingArea1) As "Persona"
-    $searchBox = New NagatoWebSearch(SearchBoxContainer) As "SearchBox"
-    $menubar = New NagatoMenuBar(MenuHBox) As "MenuBar"
-    $webs = New NagatoWebs(WebsVBox) As "Webs"
-    $inPageSearch = New NagatoInPageSearch(InPageSearchHBox) As "InPageSearch"
+    $headerContainer = New NagatoHeaderContainer(PersonaDrawingArea, SearchBoxContainer) As "Header"
+    $bodyCotainer = New NagatoBodyContainer(MenuHBox, WebsVBox, InPageSearchHBox) As "Body"
     $bookmarkTreeView = New NagatoBookmarkTreeView(LeftPanel) As "BookmarkTreeView"
-    $downloadBar = New NagatoWebdownloadsBar(WebDownloadsHBox) As "DownloadBar"
+    $downloadBar = New NagatoWebdownloadsBar(MainVBox) As "DownloadBar"
     
-    addWeb()
+    $bodyCotainer.Start()
     
 End
 
@@ -68,166 +51,72 @@ Public Sub Form_Close()
     
 End
 
-Public Sub SearchBox_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+Public Sub BookmarkTreeView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
-        Case NagatoMenuPipe.SearchApiCall
-            addWeb(argArgument)
-            $webs.ShowLastTab()
+        Case NagatoMenuPipe.WebNew
+            $bodyCotainer.AddUrl(argArgument)
     End Select
     
 End
 
-Public Sub MenuBar_MenuEvent(argEvent As Integer)
+Public Sub Body_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebBack
-            $webs.Back()
-        Case NagatoMenuPipe.WebForward
-            $webs.Forward()
-        Case NagatoMenuPipe.UrlAddBookmark
-            With HaruhiAddWebBookmark
-                .SetTitle($webs.ActiveTabTitle)
-                .SetList(NagatoDBWeb.CategoryNames)
-                If .ShowDialog() = 1 Then
-                    NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
-                Endif
-            End With
+        Case NagatoMenuPipe.WebRequestRefresh
+            $headerContainer.Refresh()
         Case NagatoMenuPipe.ViewEditBookmark
             LeftPanel.Hidden = False
     End Select
     
 End
 
-Public Sub BookmarkTreeView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+Public Sub Body_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebNew
-            addWeb(argArgument)
-            $webs.ShowLastTab()
-    End Select
-    
-End
-
-Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    Select Case argEvent
-        Case NagatoMenuPipe.UrlNew
-            $webs.SetActiveTabUrl(argArgument)
-        Case NagatoMenuPipe.WebNew
-            addWeb(argArgument)
-            $webs.ShowLastTab()
-    End Select
-    
-End
-
-Public Sub Webs_MenuEvent(argEvent As Integer)
-    
-    Select Case argEvent
-        Case NagatoMenuPipe.WebRequestRefresh
-            $persona.Refresh()
-        Case NagatoMenuPipe.InPageSearchToggle
-            $inPageSearch.SetFocus()
-            InPageSearchHBox.Visible = Not InPageSearchHBox.Visible
-    End Select
-    
-End
-
-Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    Select Case argEvent
-        Case NagatoMenuPipe.WebNew
-            addWeb(argArgument)
-            $webs.ShowLastTab()
-        Case NagatoMenuPipe.WebNewInsert
-            insertWeb($webs.ActiveIndex + 1, argArgument) ' insert new web tab next to active tab
-            $webs.ShowActiveTab()
         Case NagatoMenuPipe.WebDownload
             $downloadBar.SetWebDownload(argArgument)
     End Select
     
 End
 
-Public Sub Webs_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+Public Sub Body_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebLoaded
-            $menubar.SetUrl(argArguments[0])
         Case NagatoMenuPipe.WebProgress
-            $persona.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
+            $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
     End Select
     
 End
 
-Public Sub Persona_MenuEvent(argEvent As Integer)
+Public Sub Header_MenuEvent(argEvent As Integer)
     
-    Select Case argEvent
-        Case NagatoMenuPipe.PersonaNew
-            addWeb()
-            $webs.ShowLastTab()
-    End Select
+    $bodyCotainer.HeaderCall(argEvent, Null)
     
 End
 
-Public Sub Persona_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+Public Sub Header_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
-    Select Case argEvent
-        Case NagatoMenuPipe.PersonaSelect
-            $webs.ShowTab(argArgument)
-        Case NagatoMenuPipe.PersonaDelete
-            $webs.RemoveTab(argArgument)
-    End Select
-    
-    $menubar.SetUrl($webs.ActiveTabUrl)
-    $persona.Refresh()
+    $bodyCotainer.HeaderCall(argEvent, [argArgument])
+    refreshTitle()
     
 End
 
-Public Sub Persona_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+Public Sub Header_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
     
-    Select Case argEvent
-        Case NagatoMenuPipe.PersonaReorder
-            If argArguments[0] = argArguments[1] Then Return
-            $webs.Reorder(argArguments[0], argArguments[1])
-    End Select
-    
-    $menubar.SetUrl($webs.ActiveTabUrl)
-    $persona.Refresh()
-    
-End
-
-Public Sub InPageSearch_MenuEvent(argEvent As Integer)
-    
-    Select Case argEvent
-        Case NagatoMenuPipe.InPageSearchClose
-            InPageSearchHBox.Visible = False
-    End Select
-    
-End
-
-Public Sub InPageSearch_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    Select Case argEvent
-        Case NagatoMenuPipe.InPageSearchQuery
-            $webs.InPageSearch(argArgument)
-    End Select
+    $bodyCotainer.HeaderCall(argEvent, argArguments)
+    refreshTitle()
     
 End
 
 Private Function Titles_Read() As String[]
 
-    Return $webs.Titles
+    Return $bodyCotainer.Titles
 
 End
 
 Private Function ActiveIndex_Read() As Integer
 
-    Return $webs.ActiveIndex
-
-End
-
-Public Sub DrawingArea1_Draw()
-
-    $searchBox.Move(DrawingArea1.H, DrawingArea1.W)
+    Return $bodyCotainer.ActiveIndex
 
 End

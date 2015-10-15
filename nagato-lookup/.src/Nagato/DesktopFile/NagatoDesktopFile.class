@@ -32,6 +32,9 @@ Public Function GetIcon(argSize As Integer) As Picture
     
     Return $icon.GetIcon(argSize)
     
+Catch
+    Return MikuruIcons.Get("gear", argSize)
+    
 End
 
 Public Function GetName(argTranslate As Boolean) As String

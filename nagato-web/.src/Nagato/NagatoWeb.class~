@@ -51,11 +51,7 @@ End
 
 Public Sub Toggle(argActiveTabIndex As Integer)
     
-    If argActiveTabIndex = Me.UniqueIndex Then
-        $webView.Visible = True
-    Else
-        $webView.Visible = False
-    Endif
+    $webView.Visible = (argActiveTabIndex = Me.UniqueIndex)
     
 End
 
@@ -82,11 +78,10 @@ End
 
 Public Sub WebView_Load()
     
-    If $webView.Progress = 1 Then
-        Debug $webView.Url
-        Debug $webView.Title
-        Raise MenuEventWithArgs(NagatoMenuPipe.WebLoaded, [$webView.Url, $webView.Title])
-    End If
+    If 1 > $webView.Progress Then Return
+    Raise MenuEventWithArgs(NagatoMenuPipe.WebLoaded, [$webView.Url, $webView.Title])
+    Debug $webView.History.Max
+    Debug $webView.History.Index
     
 End
 

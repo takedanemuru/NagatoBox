@@ -6,9 +6,15 @@ Private $container As Container
 Private $backButton As NagatoBackButton
 Private $forwardButton As NagatoForwardButton
 Private $urlBox As NagatoUrlBox
-'Private $historyButton As NagatoHistoryButton
 Private $bookmarkButton As NagatoBookmarkButton
 Private $startButton As NagatoStartButton
+
+Public Sub SetNavigationButton(argHistoryIndex As Integer, argHistoryMax As Integer)
+    
+    $backButton.SetEnabled(argHistoryIndex > 0)
+    $forwardButton.SetEnabled(argHistoryIndex <> argHistoryMax)
+    
+End
 
 Public Sub SetUrl(argUrl As String)
     

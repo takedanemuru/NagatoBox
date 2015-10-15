@@ -42,13 +42,8 @@ End
 
 Public Sub SetFocus()
     
+    $searchBox.Text = ""
     $searchBox.SetFocus()
-    
-End
-
-Public Sub Clear()
-    
-    Debug "clear"
     
 End
 

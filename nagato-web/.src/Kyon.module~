@@ -23,12 +23,12 @@ Public Sub Main()
         NagatoDBus.Register()
         HaruhiMain.Show()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
-    Else ' has been activated
-        If yukiUrl = "" Then
-            NagatoDBus.Proxy.Show()
-        Else
-            NagatoDBus.Proxy.SetUrl(yukiUrl)
-        Endif
+        NagatoSettingsForm.Load(HaruhiMain)
+        Application.MainWindow = HaruhiMain
+    Else If yukiUrl = "" Then
+        NagatoDBus.Proxy.Show()
+    Else
+        NagatoDBus.Proxy.SetUrl(yukiUrl)
     End If
     
 End

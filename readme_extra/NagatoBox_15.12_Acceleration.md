@@ -13,8 +13,8 @@
 
 + ~~initial release.~~
 + ~~new : detect and mount removable disk(s) automatically~~
-+ new : send message to nagato-shell if possible.
-+ new : avoid non-unique launch.
++ ~~new : send message to nagato-shell if possible.~~
++ ~~new : avoid non-unique launch.~~
 
 ## Applications
 
@@ -28,6 +28,10 @@
 + new : webdav access
 + ~~new : removal disk detection~~ use dataovermind-disks
 
+### nagato-gif-box (version 42.2.1)
+
++ ~~fix : mail address~~
+
 ### nagato-session
 
 + revive context menu.
@@ -36,3 +40,6 @@
 
 + fix : search and replace functionality
 
+### nagato-web (version 42.2.6)
+
++ ~~new : disable navigation button when webview has no history.~~

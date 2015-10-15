@@ -2,40 +2,47 @@
 
 Create Static
 
-Private Sub searchEnglish(argQuery As String)
+Private Function searchEnglish(argQuery As String) As Integer
     
     Dim yukiResult As Result = NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQuery))
     
     For Each yukiResult
         With NagatoDBGeneralDict
-            Print yukiResult[.ColumnJapanese]
+            Print yukiResult[.ColumnJapanese], yukiResult[.ColumnEnglish]
         End With
     Next
     
+    Return yukiResult.Count
+    
 End
 
-Private Sub searchJapanese(argQuery As String)
+Private Function searchJapanese(argQuery As String) As Integer
     
     Dim yukiResult As Result = NagatoDBGeneralDict.Get(Subst$("%&1%", argQuery))
     
     For Each yukiResult
         With NagatoDBGeneralDict
-            Print yukiResult[.ColumnEnglish]
+            Print yukiResult[.ColumnJapanese], yukiResult[.ColumnEnglish]
         End With
     Next
+    
+    Return yukiResult.Count
     
 End
 
 Public Sub ShowResults(argQueries As String[])
     
     Dim yukiQuery As String
+    Dim yukiResultCount As Integer
     
     For Each yukiQuery In argQueries
         If IsAscii(yukiQuery) Then
-            searchEnglish(yukiQuery)
+            yukiResultCount = searchEnglish(yukiQuery)
         Else
-            searchJapanese(yukiQuery)
+            yukiResultCount = searchJapanese(yukiQuery)
         End If
     Next
+    
+    If yukiResultCount Then Debug "found"
     
 End

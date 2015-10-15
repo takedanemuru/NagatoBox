@@ -14,12 +14,17 @@ End
 Private Sub setIconTheme()
     
     Dim yukiOutput As String
+    Dim yukiProxy As DBusProxy 
     
-    If Application.Theme Then Return
-    
-    Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
-    
-    Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
+    If DBus.Session.Applications.Exist("org.gambas.nagato-session") Then
+        yukiProxy = DBus["org.gambas.nagato-session"]["/org/nagato/session", "org.gambas.nagato.session.nagatointerface"]
+        Application.Theme = yukiProxy.IconTheme
+        Stock.Refresh()
+    Else
+        If Application.Theme <> "?" Then Return
+        Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
+        Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
+    End If
     
 End
 
@@ -29,12 +34,11 @@ Public Sub Main()
     If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate nagato-files..." 
     
     NagatoArguments.Parsing()
+    setIconTheme()
     
     'Only For Testing
     'activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
-    
-    setIconTheme()
     
      NagatoClipBoard.Activate()
     

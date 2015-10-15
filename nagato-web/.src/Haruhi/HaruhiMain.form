@@ -11,10 +11,10 @@
     Orientation = Align.Left
     Hidden = True
   }
-  { VBox1 VBox
+  { MainVBox VBox
     MoveScaled(13,3,59,49)
     Expand = True
-    { DrawingArea1 DrawingArea
+    { PersonaDrawingArea DrawingArea
       MoveScaled(0,0,68,17.7143)
       Tracking = True
       Drop = True
@@ -31,10 +31,6 @@
     }
     { InPageSearchHBox HBox
       MoveScaled(4,39,67,4)
-      Visible = False
-    }
-    { WebDownloadsHBox HBox
-      MoveScaled(1,44,67,4)
       Visible = False
     }
   }

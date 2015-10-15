@@ -6,27 +6,30 @@ Property Read ActiveTabTitle As String
 Property Read ActiveTabUrl As String
 Property Read ActiveIndex As Integer
 Property Read Titles As String[]
+Property Read ActiveWeb As NagatoWeb
 
 Private $container As Container
 Private $webs As New Collection
-Private $webOrder As New Integer[]
-Private $webActiveIndex As Integer = 0
+' Private $webOrder As New Integer[]
+' Private $webActiveIndex As Integer = 0
 
-Private Function getNextTabOrder(argTabIndex As Integer) As Integer
-    
-    If $webOrder.Count = 1 Then
-        Return -1
-    Else If $webOrder.Count = 2 Then
-        Return 0
-    Else If argTabIndex = $webActiveIndex Then
-        Return IIf(argTabIndex = $webOrder.Max, argTabIndex - 1, argTabIndex)
-    Else If argTabIndex > $webActiveIndex Then
-        Return $webActiveIndex
-    Else
-        Return $webActiveIndex - 1
-    Endif
-    
-End
+Private $webOrder2 As New NagatoWebOrder
+
+' Private Function getNextTabOrder(argTabIndex As Integer) As Integer
+'     
+'     If $webOrder.Count = 1 Then
+'         Return -1
+'     Else If $webOrder.Count = 2 Then
+'         Return 0
+'     Else If argTabIndex = $webActiveIndex Then
+'         Return IIf(argTabIndex = $webOrder.Max, argTabIndex - 1, argTabIndex)
+'     Else If argTabIndex > $webActiveIndex Then
+'         Return $webActiveIndex
+'     Else
+'         Return $webActiveIndex - 1
+'     Endif
+'     
+' End
 
 Public Sub AddWeb(argUrl As String)
     
@@ -34,8 +37,9 @@ Public Sub AddWeb(argUrl As String)
     Dim yukiWeb As New NagatoWeb($container, argUrl, yukiUniqueIndex) As "Menu"
 
     $webs.Add(yukiWeb, yukiUniqueIndex)
-    $webOrder.Add(yukiUniqueIndex)
-    
+    '$webOrder.Add(yukiUniqueIndex)
+    $webOrder2.Set(yukiUniqueIndex)
+     
 End
 
 Public Sub InsertWeb(argIndex As Integer, argUrl As String)
@@ -44,7 +48,8 @@ Public Sub InsertWeb(argIndex As Integer, argUrl As String)
     Dim yukiWeb As New NagatoWeb($container, argUrl, yukiUniqueIndex) As "Menu"
 
     $webs.Add(yukiWeb, yukiUniqueIndex)
-    $webOrder.Add(yukiUniqueIndex, argIndex)
+    '$webOrder.Add(yukiUniqueIndex, argIndex)
+    $webOrder2.Set(yukiUniqueIndex, argIndex)
     
 End
 
@@ -52,82 +57,93 @@ Public Sub ShowActiveTab()
     
     Dim yukiCount As Integer
     
-    For yukiCount = 0 To $webOrder.Max
-        $webs[$webOrder[yukiCount]].Toggle($webOrder[$webActiveIndex])
+    ' For yukiCount = 0 To $webOrder.Max
+    '     $webs[$webOrder[yukiCount]].Toggle($webOrder[$webActiveIndex])
+    For yukiCount = 0 To $webOrder2.Max
+        $webs[$webOrder2[yukiCount]].Toggle($webOrder2.ActiveOrder)
     Next
     
 End
 
 Public Sub ShowLastTab()
     
-    $webActiveIndex = $webOrder.Max
+    '$webActiveIndex = $webOrder.Max
+    $webOrder2.MoveActiveIndex($webOrder2.Max)
     Me.ShowActiveTab()
     
 End
 
 Public Sub ShowTab(argIndex As Integer)
     
-    $webActiveIndex = argIndex
+    ' $webActiveIndex = argIndex
+    $webOrder2.MoveActiveIndex(argIndex)
     Me.ShowActiveTab()
     
 End
 
 Public Sub SetActiveTabUrl(argUrl As String)
     
-    $webs[$webOrder[$webActiveIndex]].SetUrl(argUrl)
+    Me.ActiveWeb.SetUrl(argUrl)
     
 End
 
 Public Sub RemoveTab(argTabIndex As Integer)
     
-    Dim yukiNextActiveTabIndex As Integer = getNextTabOrder(argTabIndex)
+'    Dim yukiNextActiveTabIndex As Integer = getNextTabOrder(argTabIndex)
+    Dim yukiNextActiveTabIndex As Integer = $webOrder2.GetNextTabOrder(argTabIndex)
     
-    If $webOrder.Count = 1 Then Return
+'     If $webOrder.Count = 1 Then Return
+    If $webOrder2.Max = 0 Then Return
     
-    $webs[$webOrder[argTabIndex]].Delete()
-    $webs.Remove($webOrder[argTabIndex])
-    $webOrder.Remove(argTabIndex)
-    
-    $webActiveIndex = yukiNextActiveTabIndex
+    ' $webs[$webOrder[argTabIndex]].Delete()
+    ' $webs.Remove($webOrder[argTabIndex])
+    $webs[$webOrder2[argTabIndex]].Delete()
+    $webs.Remove($webOrder2[argTabIndex])
+    ' $webOrder.Remove(argTabIndex)
+    ' 
+    ' $webActiveIndex = yukiNextActiveTabIndex
+    $webOrder2.Remove(argTabIndex, yukiNextActiveTabIndex)
     Me.ShowActiveTab()
     
 End
 
 Public Sub InPageSearch(argQuery As String)
     
-    $webs[$webOrder[$webActiveIndex]].InPageSearch(argQuery)
+    Me.ActiveWeb.InPageSearch(argQuery)
     
 End
 
 Public Sub Forward()
     
-    $webs[$webOrder[$webActiveIndex]].Forward()
+    Me.ActiveWeb.Forward()
     
 End
 
 Public Sub Back()
     
-    $webs[$webOrder[$webActiveIndex]].Back()
+    Me.ActiveWeb.Back()
     
 End
 
 Public Sub Reorder(argOrigin As Integer, argTarget As Integer)
     
-    Dim yukiActiveTab As Integer = -1
+    ' Dim yukiActiveTab As Integer = -1
+    ' 
+    ' If argOrigin = $webActiveIndex Then yukiActiveTab = argTarget
+    ' 
+    ' If argOrigin > argTarget Then
+    '     $webOrder.Add($webOrder[argOrigin], argTarget)
+    '     $webOrder.Remove(argOrigin + 1, 1)
+    ' Else
+    '     Try $webOrder.Add($webOrder[argOrigin], argTarget + 1)
+    '     If Error Then $webOrder.Add($webOrder[argOrigin])
+    '     $webOrder.Remove(argOrigin, 1)
+    ' Endif
+    ' 
+    ' If yukiActiveTab <> -1 Then $webActiveIndex = yukiActiveTab
+    ' If $webActiveIndex > $webOrder.Max Then $webActiveIndex = $webOrder.Max
     
-    If argOrigin = $webActiveIndex Then yukiActiveTab = argTarget
-    
-    If argOrigin > argTarget Then
-        $webOrder.Add($webOrder[argOrigin], argTarget)
-        $webOrder.Remove(argOrigin + 1, 1)
-    Else
-        Try $webOrder.Add($webOrder[argOrigin], argTarget + 1)
-        If Error Then $webOrder.Add($webOrder[argOrigin])
-        $webOrder.Remove(argOrigin, 1)
-    Endif
-    
-    If yukiActiveTab <> -1 Then $webActiveIndex = yukiActiveTab
-    If $webActiveIndex > $webOrder.Max Then $webActiveIndex = $webOrder.Max
+    $webOrder2.Reorder(argOrigin, argTarget)
     
 End
 
@@ -139,19 +155,20 @@ End
 
 Private Function ActiveTabTitle_Read() As String
 
-    Return $webs[$webOrder[$webActiveIndex]].Title
+    ' Return $webs[$webOrder[$webActiveIndex]].Title
+    Return $webs[$webOrder2.ActiveOrder].Title
 
 End
 
 Private Function ActiveIndex_Read() As Integer
 
-    Return $webActiveIndex
+    Return $webOrder2.ActiveIndex
 
 End
 
 Private Function ActiveTabUrl_Read() As String
 
-    Return $webs[$webOrder[$webActiveIndex]].Url
+    Return Me.ActiveWeb.Url
 
 End
 
@@ -160,10 +177,18 @@ Private Function Titles_Read() As String[]
     Dim yukiCount As Integer
     Dim yukiReturn As New String[]
 
-    For yukiCount = 0 To $webOrder.Max
-        yukiReturn.Add($webs[$webOrder[yukiCount]].Title)
+    For yukiCount = 0 To $webOrder2.Max
+'         yukiReturn.Add($webs[$webOrder[yukiCount]].Title)
+        yukiReturn.Add($webs[$webOrder2[yukiCount]].Title)
     Next
 
     Return yukiReturn
+
+End
+
+Private Function ActiveWeb_Read() As NagatoWeb
+
+'     Return $webs[$webOrder[$webActiveIndex]]
+    Return $webs[$webOrder2.ActiveOrder]
 
 End

@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $container As Container
+Private $container As HBox
 Private $downloadsHBox As HBox
 
 Private Sub initializeDownloadsHBox()
@@ -22,6 +22,7 @@ Private Sub initializeCloseButton()
         .Expand = False
         .Picture = MikuruIcon.Get("button-cross")
         .Border = False
+        .Arrow = False
     End With
     
 End
@@ -46,10 +47,11 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $container = argContainer
+    $container = New HBox(argContainer)
+    $container.H = 32
+    $container.Visible = False
     initializeDownloadsHBox()
     initializeCloseButton()
-    $container.Visible = False
     
 End
 

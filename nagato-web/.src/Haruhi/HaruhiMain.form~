@@ -2,6 +2,7 @@
 
 { Form Form
   MoveScaled(0,0,75,55)
+  Font = Font["URW Gothic L"]
   Icon = Picture["pictures/icons/web.png"]
   Arrangement = Arrange.Horizontal
   { LeftPanel SidePanel
@@ -10,10 +11,10 @@
     Orientation = Align.Left
     Hidden = True
   }
-  { VBox1 VBox
+  { MainVBox VBox
     MoveScaled(13,3,59,49)
     Expand = True
-    { DrawingArea1 DrawingArea
+    { PersonaDrawingArea DrawingArea
       MoveScaled(0,0,68,17.7143)
       Tracking = True
       Drop = True

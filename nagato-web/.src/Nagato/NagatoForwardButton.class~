@@ -1,15 +1,16 @@
 ' Gambas class file
 
-Inherits NagatoMenuWidget
+Inherits NagatoNavigationButton
 
 Public Sub _InitializeWidget() ' override
     
-    Dim yukiButton As New MenuButton(Me._$container) As "Button"
+    Me._$button = New MenuButton(Me._$container) As "Button"
     
-    With yukiButton
+    With Me._$button
         .Expand = False
         .Border = False
         .Width = Me._$container.Height
+        .Enabled = False
         .Picture = MikuruIcon.Get("arrow-right")
     End With
     

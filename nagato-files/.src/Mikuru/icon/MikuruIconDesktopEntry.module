@@ -19,9 +19,20 @@ Private Function getIconPath(argDirectory As String) As String
     
 End
 
+Private Function getIconPathFormDesktopFileData(argPath As String) As String
+    
+    Dim yukiPath As String = PixmapIcons &/ File.BaseName(argPath) & ".png"
+
+    If Exist(yukiPath) Then Return yukiPath
+    If Exist(argPath) Then Return argPath
+    
+    Return ""
+    
+End
+
 Private Function setPath()
     
-    $path = IIf($desktopFile.Icon Begins "/", $desktopFile.Icon, "")
+    If $desktopFile.Icon Begins "/" Then $path = getIconPathFormDesktopFileData($desktopFile.Icon)
     If Not $path Then $path = getIconPath(HicolorIcons)
     If Not $path Then $path = getIconPath(PixmapIcons)
     

@@ -2,8 +2,6 @@
 
 Private $parentMenu As Menu
 Private $alsa As New NagatoAlsaState
-Private $channel As String
-Private $volume As Integer
     
 Private Function addIndicationMenu() As Boolean
     
