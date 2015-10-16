@@ -4,17 +4,19 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
+    HaruhiLogin.Show()
+    
     If NagatoArguments.Autostart Then
+        HaruhiLogin.Show()
         NagatoLoginSound.PlayDefault()
         NagatoXdgAutostarts.Execute()
         NagatoDBus.Register()
+        HaruhiLogin.RequestClose()
     Else If NagatoArguments.Logout Then
         HaruhiLogout.Show()
     Else
         NagatoXdgAutostarts.Initialize()
         HaruhiMain.Show()
     End If
-    
-    NagatoDBus.Register()
     
 End

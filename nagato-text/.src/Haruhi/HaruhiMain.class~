@@ -28,7 +28,7 @@ End
 Public Sub OpenWithPath(Optional argPath As String = "")
     
     If argPath And If Not Exist(argPath) Then
-        Message.Warning(("YUKI.N > File not exist.")
+        Message.Warning(("YUKI.N > File not exist."))
         Return
     Endif
     

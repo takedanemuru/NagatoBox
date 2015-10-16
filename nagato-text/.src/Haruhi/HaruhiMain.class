@@ -76,9 +76,3 @@ Public Sub MainTabStrip_Signal(argTag As Integer, argValues As Variant[])
     $recentPaths.Refresh(argValues[0])
     
 End
-
-Public Sub Asakura_SignalStringTag(argTag As String, argValues As Variant[])
-    
-    $tabStrip.Search(argTag, argValues)
-    
-End

@@ -83,9 +83,8 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
             With HaruhiAddWebBookmark
                 .SetTitle($webs.ActiveTabTitle)
                 .SetList(NagatoDBWeb.CategoryNames)
-                If .ShowDialog() = 1 Then
-                    NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
-                Endif
+                If .ShowDialog() <> 1 Then Return
+                NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
             End With
         Default
             Raise MenuEvent(argEvent)

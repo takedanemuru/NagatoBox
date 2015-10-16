@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Border = False
+  Stacking = Window.Above
+  FullScreen = True
+  SkipTaskbar = True
+  Arrangement = Arrange.Fill
+  { MessageScreen DrawingArea
+    MoveScaled(5,16,24,24)
+    Background = &H9F9F9F&
+  }
+  { MessageTimer #Timer
+    #MoveScaled(37,39)
+    Delay = 150
+  }
+}

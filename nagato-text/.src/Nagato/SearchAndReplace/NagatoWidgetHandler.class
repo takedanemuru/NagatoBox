@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Private
+
+Public _$widget As Object
+Public _$observer As Observer
+
+Public Sub _Initialize()
+    
+    
+    
+End
+
+Public Sub _new(argObject As Object)
+    
+    Me._$widget = argObject
+    Me._$observer = New Observer(Me._$widget) As "Asakura"
+    
+    Me._Initialize()
+    
+End

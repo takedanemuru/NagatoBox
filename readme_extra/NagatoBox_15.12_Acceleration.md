@@ -36,9 +36,9 @@
 
 + revive context menu.
 
-### nagato-text
+### nagato-text (versin 42.2.2)
 
-+ fix : search and replace functionality
++ ~~fix : search and replace functionality~~
 
 ### nagato-web (version 42.2.6)
 

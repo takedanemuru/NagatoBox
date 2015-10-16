@@ -29,7 +29,6 @@ Private Sub setX11Properties()
     
     If Error Then Return
     
-    NagatoDBus.Register()
     HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
     
 End
@@ -53,6 +52,7 @@ Public Sub SetAsDesktop()
     
     initializeForm()
     setX11Properties()
+    NagatoDBus.Register()
     
 End
 

@@ -5,6 +5,7 @@ Inherits NagatoMenuSignal
 Property Text As String
 
 Private $textArea As TextArea
+Private $searchAndReplace As NagatoTextAreaSearchAndReplace
 
 Private Function getCurrentPositionInUTF8(argQuery As String) As Integer ' read comment about return value.
     
@@ -25,7 +26,7 @@ Private Function getCurrentPositionInUTF8Back(argQuery As String) As Integer ' r
     
     ' this function should return -1 when there's no matching word.
     
-    Dim yukiSearchStartFrom As Integer = String.Len(Left$($textArea.Text, $textArea.Pos)) - 2
+    Dim yukiSearchStartFrom As Integer = String.Len(Left$($textArea.Text, $textArea.Pos)) - String.Len(argQuery)
     Dim yukiPosition As Integer = yukiSearchStartFrom 
     
     Do
@@ -86,6 +87,23 @@ Public Sub ReplaceAll(argTarget As String, argReplacement As String)
     
 End
 
+Public Sub Search(argTag As String, argValues As Variant[])
+    
+    $searchAndReplace.Search(argTag, argValues)
+    
+    ' Select Case argTag
+    '     Case "Next"
+    '         $textArea.SearchText(argValues[0])
+    '     Case "Previous"
+    '         $textArea.SearchTextBack(argValues[0])
+    '     Case "Replace"
+    '         $textArea.ReplaceOne(argValues[0], argValues[1])
+    '     Case "ReplaceAll"
+    '         $textArea.ReplaceAll(argValues[0], argValues[1])
+    ' End Select
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $textArea = New TextArea(argContainer) As "TextArea"
@@ -95,6 +113,8 @@ Public Sub _new(argContainer As Container)
         .SetFocus()
     End With
     
+    $searchAndReplace = New NagatoTextAreaSearchAndReplace($textArea)
+    
 End
 
 Public Sub TextArea_KeyPress()
@@ -103,6 +123,7 @@ Public Sub TextArea_KeyPress()
         If Key.Code = Key["t"] Then Raise Signal(MikuruSignal.ViewNewTab, [""])
         If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, [""])
         If Key.Code = Key["f"] Then Raise Signal(MikuruSignal.EditSearch, [""])
+        If Key.Code = Key["r"] Then HaruhiReplacement.Show()
     End If
     
 End

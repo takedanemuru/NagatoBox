@@ -1,0 +1,50 @@
+' Gambas class file
+
+Private $message As String
+Private $position As Integer
+Private $closable As Boolean = False
+
+Event RequestClose
+
+Private Function getCursor() As String
+    
+    If $position > String.Len($message) And If Odd($position Div 2) Then
+        Return ""
+    Else
+        Return "_"
+    Endif
+    
+End
+
+Private Sub checkClosable()
+    
+    If Not $closable Then Return
+    If String.Len($message) + 7 > $position Then Return
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato-files") Then Return
+    
+    Raise RequestClose
+    
+End
+
+Public Function Get() As String
+    
+    Dim yukiMessage As String = "YUKI.N > " & String.Left($message, $position) & getCursor()
+    
+    Inc $position
+    checkClosable()
+    
+    Return yukiMessage
+    
+End
+
+Public Sub Close()
+    
+    $closable = True
+    
+End
+
+Public Sub _new()
+    
+    $message = ("Can you see this ?")
+    
+End

@@ -1,0 +1,50 @@
+' Gambas class file
+
+Private $message As New NagatoMessageLogin As "Message"
+
+Public Sub RequestClose()
+    
+    $message.Close()
+    
+End
+
+Public Sub Form_Open()
+
+    Me.H = Screen.H
+    Me.W = Screen.W
+
+    MessageScreen.SetFocus()
+    MessageTimer.Enabled = True
+
+End
+
+Public Sub MessageTimer_Timer()
+    
+    MessageScreen.Refresh()
+    
+End
+
+Public Sub MessageScreen_DblClick()
+
+    Me.Close()
+
+End
+
+Public Sub MessageScreen_Draw()
+    
+    With Paint
+        .Begin(MessageScreen)
+        .Brush = .Color(Color.White)
+        .Font.Bold = True
+        .Text($message.Get(), 120, Screen.H / 2)
+        .Fill()
+        .End()
+    End With
+    
+End
+
+Public Sub Message_RequestClose()
+    
+    Me.Close()
+    
+End

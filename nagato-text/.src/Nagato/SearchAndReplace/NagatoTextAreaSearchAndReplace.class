@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoWidgetHandler
+
+Private $searchTextBack As NagatoTextAreaSearchTextBack
+Private $searchTextNext As NagatoTextAreaSerchTextNext
+Private $replaceOne As NagatoTextAreaReplaceOne
+Private $replaceAll As NagatoTextAreaReplaceAll
+
+Public Sub _Initialize()
+    
+    $searchTextBack = New NagatoTextAreaSearchTextBack(Me._$widget)
+    $searchTextNext = New NagatoTextAreaSerchTextNext(Me._$widget)
+    $replaceOne = New NagatoTextAreaReplaceOne(Me._$widget)
+    $replaceAll = New NagatoTextAreaReplaceAll(Me._$widget)
+    
+End
+
+Public Sub Search(argQuery As String, argValues As Variant[])
+    
+    Select Case argQuery
+        Case "Back"
+            $searchTextBack(argValues[0])
+        Case "Next"
+            $searchTextNext(argValues[0])
+        Case "Replace"
+            $replaceOne(argValues[0], argValues[1])
+        Case "ReplaceAll"
+            $replaceAll(argValues[0], argValues[1])
+    End Select
+    
+End

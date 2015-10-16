@@ -5,6 +5,7 @@ Inherits NagatoMenuSignal
 Private $tabStrip As TabStrip
 Private $textPads As New NagatoTextPad[]
 Private $observer As Observer
+Private $searchAndReplace As Observer
 
 Public Sub NewTab(Optional argPath As String = "")
     
@@ -20,11 +21,11 @@ Public Sub NewTab(Optional argPath As String = "")
     
 End
 
-Public Sub Search(argTag As String, argValues As Variant[])
+Public Sub SearchAndReplace_Query(argType As String, argQuery As Variant[])
     
     If $tabStrip.Index = 0 Then Return
     
-    $textPads[$tabStrip.Index].Search(argTag, argValues)
+    $textPads[$tabStrip.Index - 1].Search(argType, argValues)
     
 End
 
@@ -32,6 +33,7 @@ Public Sub _new(argTabStrip As TabStrip)
     
     $tabStrip = argTabStrip
     $observer = New Observer($tabStrip) As "Asakura"
+    $searchAndReplace = New Observer(NagatoSearchAndReplacementSignal) As "SearchAndReplace"
     
 End
 
@@ -50,7 +52,7 @@ End
 
 Public Sub Asakura_Close(argIndex As Integer)
 
-    If argIndex <> 0 Then $textPads.Remove(argIndex)
+    If argIndex <> 0 Then $textPads.Remove(argIndex - 1)
     MikuruTabStrip.Delete($tabStrip, argIndex)
     
 End
