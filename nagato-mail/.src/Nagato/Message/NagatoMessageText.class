@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private $textArea As TextArea
+
+Private Sub initializeTextArea(argContainer As Container)
+    
+    $textArea = New TextArea(argContainer)
+    
+    With $textArea
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _new(argMimePart As MimePart, argContainer As Container)
+    
+    initializeTextArea(argContainer)
+    $textArea.Text = argMimePart.Data
+    
+End

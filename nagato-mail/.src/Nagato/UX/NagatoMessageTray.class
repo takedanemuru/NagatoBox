@@ -1,0 +1,37 @@
+' Gambas class file
+
+Private $treeView As TreeView
+
+Event Activate(argIndex As Integer)
+
+Private Sub setSubject(argIndex As Integer, argMessage As MimeMessage)
+    
+    If Not $treeView.Exist(argMessage.Sender) Then 
+        $treeView.Add(argMessage.Sender, argMessage.Sender, MikuruIcon["folder"])
+    End If
+    
+    $treeView.Add(argIndex, argMessage.Subject, MikuruIcon["information-balloon"], argMessage.Sender)
+    
+End
+
+Public Sub SetAll()
+    
+    Dim yukIndex As Integer
+    
+    For yukIndex = 0 To NagatoPop3.Max
+        setSubject(yukIndex, NagatoPop3[yukIndex])
+    Next
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $treeView = New TreeView(argContainer) As "TreeView"
+    
+End
+
+Public Sub TreeView_Activate()
+    
+    If IsInteger($treeView.Current.Key) Then Raise Activate(CInt($treeView.Current.Key))
+    
+End

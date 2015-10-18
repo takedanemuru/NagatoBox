@@ -1,0 +1,47 @@
+' Gambas class file
+
+Create Static
+
+Property Read Ready As Boolean
+Property Read Max As Integer
+
+Private $pop3Client As Pop3Client
+Private $ready As Boolean = False
+
+Event MessageCount(argCount As Integer)
+
+Public Sub Connect()
+    
+    $pop3Client = New Pop3Client
+
+    With $pop3Client
+        .Host = "pop.yandex.com"
+        .Encrypt = Net.SSL
+        .Port = 995
+        .User = "******"
+        .Password = "******"
+        .Open()
+    End With
+    
+    $ready = True
+    HaruhiMain.SetSubjects()
+    
+End
+
+Public Sub _get(argIndex As Integer) As MimeMessage
+    
+    Return $pop3Client[argIndex].Message
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $pop3Client.Count - 1
+
+End

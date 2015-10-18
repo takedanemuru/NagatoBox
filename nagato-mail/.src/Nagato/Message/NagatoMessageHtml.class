@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private $webView As WebView
+
+Private Sub initializeTextArea(argContainer As Container)
+    
+    $webView = New WebView(argContainer)
+    
+    With $webView
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _new(argMimePart As MimePart, argContainer As Container)
+    
+    initializeTextArea(argContainer)
+    $webView.HTML = argMimePart.Data
+    
+End

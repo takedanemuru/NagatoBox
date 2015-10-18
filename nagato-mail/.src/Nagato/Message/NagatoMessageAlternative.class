@@ -1,0 +1,32 @@
+' Gambas class file
+
+Private $container As Container
+
+Private Sub setSubObject(argMimePart As MimePart)
+    
+    Dim yukiObject As Object
+
+    Select Case argMimePart.ContentType
+         Case "multipart/alternative"
+            yukiObject = New NagatoMessageAlternative(argMimePart, $container)
+        Case "text/html"
+            yukiObject = New NagatoMessageHtml(argMimePart, $container)
+        Case "text/plain"
+            yukiObject = New NagatoMessageText(argMimePart, $container)
+    End Select
+    
+End
+
+Public Sub _new(argMimePart As MimePart, argContainer As Container)
+    
+    Dim yukiCount As Integer
+    
+    $container = argContainer
+    
+    If argMimePart.Count = 0 Then Return
+    
+    For yukiCount = 0 To argMimePart.Count - 1
+        setSubObject(argMimePart[yukiCount])
+    Next
+    
+End

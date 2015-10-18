@@ -32,6 +32,16 @@
 
 + ~~fix : mail address~~
 
+### nagato-mail
+
+> email client for NagatoBox
+
++ ~~initial release~~
++ setup dialog
++ username and password encryption
++ ~~png icon~~
++ ~~capsulize pop3client~~
+
 ### nagato-session
 
 + revive context menu.

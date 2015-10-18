@@ -1,0 +1,36 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.8.90
+Title=nagato-mail
+Startup=Kyon
+Icon=Pictures/Icons/mail-open.png
+Version=42.2.1
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.net
+Component=gb.net.curl
+Component=gb.mime
+Component=gb.net.pop3
+Component=gb.net.smtp
+Component=gb.qt4.ext
+Component=gb.qt4.webkit
+Component=gb.web
+Description="a mail client"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takedanemuru
+Vendor=IntegratedDataThoughtEntity
+Address=takeda.nemuru@yandex.com
+Url=http://takedanemuru.github.io/
+License=S.O.S. License
+PackageName=nagato-mail-42.2.1
+CreateEachDirectory=1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Network/Communication"
+Categories=ubuntu:"Nagato;Network"
+Groups=ubuntu:"mail"
+ExtraFiles=ubuntu:"nagato-mail.png\t/usr/share/pixmaps"
