@@ -8,20 +8,12 @@ Property Read UserAutoStarts As NagatoAutostarts
 Private $userAutoStarts As NagatoAutoStarts
 Private $globalAutoStarts As NagatoAutoStarts
 
-Private Sub execAll()
-    
-    Dim yukiExecuted As String[]
-    
-    yukiExecuted = $globalAutoStarts.Execute([""], $userAutoStarts)
-    $userAutoStarts.Execute(yukiExecuted)
-    
-End
-
 Public Sub Execute()
     
     Me.Initialize()
     
-    execAll()
+    $userAutoStarts.ExecuteAll()
+    $globalAutoStarts.ExecuteAll()
 
 End
 

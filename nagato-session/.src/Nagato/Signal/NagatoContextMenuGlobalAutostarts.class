@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _AbstractOnInitialize()
+    
+    With MikuruSignal
+        Me._AddMenuItem("Create Blocker", .AutostartsNewBlocker, "construction", Not Me._$autostart.Overridden)
+        Me._AddMenuItem("Show Detail", .AutostartsShowSourceReadOnly, "search")
+    End With
+    
+End

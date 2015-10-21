@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _AbstractOnInitialize()
+    
+    Me._AddMenuItem("New", MikuruSignal.AutostartsNew, "magic-wand")
+    Me._AddMenuItem("Show Detail", MikuruSignal.AutostartsShowSourceReadOnly, "search")
+    Me._AddMenuItem("Edit", MikuruSignal.AutostartsShowSource, "document-edit")
+    Me._AddMenuItem("Delete", MikuruSignal.AutostartsDelete, "bin")
+    
+End

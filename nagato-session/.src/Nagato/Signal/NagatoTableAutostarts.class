@@ -2,7 +2,6 @@
 
 Inherits NagatoTable
 
-Private $overriddens As New String[]
 Private $headerTitles As New NagatoTableHeadersAutostarts
 Private $autostartFiles As New NagatoAutostartFile[]
 
@@ -31,7 +30,7 @@ Private Sub setTypeColumn(argAutostartFile As NagatoAutostartFile)
         setType(("HIDDEN"), Color.Orange, "traffic-cone")
     Else If Not argAutostartFile.Required Then 
         setType(("NOT SHOW"), Color.Gray, "exclamation")
-    Else If $overriddens.Exist(argAutostartFile.Name) Then 
+    Else If argAutostartFile.Overridden Then
         setType(("OVERRIDDEN"), Color.Blue, "construction")
     End If
     
@@ -63,12 +62,16 @@ Private Sub setData(argData As NagatoAutostarts)
     Next
 End
 
-Public Sub _new(argGridView As GridView, argAutostarts As NagatoAutostarts, Optional argOverriddens As String[])
-    
-    If argOverriddens Then $overriddens = argOverriddens.Copy()
+Public Sub _new(argGridView As GridView, argAutostarts As NagatoAutostarts)
     
     initializeGrid(argGridView)
     setData(argAutostarts)
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoAutostartFile
+    
+    Return $autostartFiles[argIndex]
     
 End
 

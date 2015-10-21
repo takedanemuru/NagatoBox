@@ -6,15 +6,6 @@ Private $gridView As TableView
 Private $gridviewHandler As NagatoTableAutostarts
 Private $panel As NagatoMenuPanelGlobalAutoStarts
 
-Private Function getTargetPath() As String
-    
-    Dim yukiName As String = $gridView[$gridView.Row, NagatoTableHeadersAutostarts.ColumnName].Text
-    Dim yukiPath As String = MikuruAutostartDirectory.User &/ yukiName
-
-    Return yukiPath
-    
-End
-
 Public Sub _InitializePanel()
     
     $panel = New NagatoMenuPanelGlobalAutoStarts(Me._$container) As "TFEI"
@@ -23,10 +14,10 @@ End
 
 Public Sub _InitializeGridView()
     
-    $gridView = New TableView(Me._$container) As "TFEI"
+    $gridView = New TableView(Me._$container) As "TableView"
     
     With NagatoXdgAutostarts
-        $gridviewHandler = New NagatoTableAutostarts($gridView, .GlobalAutoStarts, .UserAutoStarts.Hiddens)
+        $gridviewHandler = New NagatoTableAutostarts($gridView, .GlobalAutoStarts)
     End With
     
     NagatoSettings.LoadGridsSettings($gridView)
@@ -39,16 +30,23 @@ Public Sub SaveSettings()
     
 End
 
-Public Sub Asakura_Activate()
+Public Sub TableView_Activate()
     
-    'showDetail($gridView.RowAt(Mouse.Y))
+    ' TODO Show detail
+    
+    If $gridView.Rows.Selection.Count = 0 Then Return
+
+    Debug $gridView.RowAt(Mouse.Y)
     
 End
 
-Public Sub TFEI_Menu()
+Public Sub TableView_Menu()
+    
+    Dim yukiContextMenu As NagatoContextMenu
     
     If $gridView.Rows.Selection.Count = 0 Then Return
-        
-    Debug getTargetPath()
+    
+    yukiContextMenu = New NagatoContextMenuGlobalAutostarts($gridviewHandler[$gridView.Row])
+    yukiContextMenu.Popup()
     
 End

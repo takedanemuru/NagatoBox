@@ -42,6 +42,7 @@ Public Sub _SetGridsProperties()
     With Me._$table
         .Expand = True
         .Mode = Select.Single
+        .Columns.Count = 7
     End With
     
     NagatoSettings.LoadGridsSettings(Me._$table)

@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public _$rootMenu As Menu
+Public _$autostart As NagatoAutostartFile
+
+Public Sub _AddMenuItem(argText As String, argTag As Integer, Optional argIconName As String, argEnabled As Boolean = True)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+        .Enabled = argEnabled
+    End With
+    
+End
+
+Public Sub _AbstractOnInitialize()
+    
+    
+    
+End
+
+Public Sub Popup()
+    
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new(argAutostartFile As NagatoAutostartFile)
+    
+    Me._$autostart = argAutostartFile
+    Me._$rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    Me._AbstractOnInitialize()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Debug Last.Tag
+    
+End

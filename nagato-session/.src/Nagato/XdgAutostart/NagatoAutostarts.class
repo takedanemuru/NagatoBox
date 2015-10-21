@@ -1,72 +1,41 @@
 ' Gambas class file
 
 Property Read All As NagatoAutostartFile[]
-Property Read Hiddens As String[]
 
-Private $desktopFiles As New NagatoAutostartFile[]
+Private $autostartFiles As New NagatoAutostartFile[]
 
-Private Sub setDesktopFiles(argDirectory As String)
+Private Sub execute(argAutostartFile As NagatoAutostartFile)
     
-    Dim yukiPath As String
-    Dim yukiDesktopFile As NagatoAutostartFile
-    
-    For Each yukiPath In Dir(argDirectory)
-        yukiDesktopFile = New NagatoAutostartFile(argDirectory &/ yukiPath)
-        $desktopFiles.Add(yukiDesktopFile)
-    Next
+    If argAutostartFile.Exec = "" Then Return
+    Try Shell argAutostartFile.Exec
+    If Error Then Try Shell argAutostartFile.TryExec
     
 End
 
-Public Function IsBlocked(argName As String) As Boolean
+Public Function ExecuteAll() 
     
-    Dim yukiDesktopFile As NagatoAutostartFile
+    Dim yukiAutostartFile As NagatoAutostartFile
     
-    For Each yukiDesktopFile In $desktopFiles
-        If yukiDesktopFile.Name = argName And If Not yukiDesktopFile.Required Then Return True
+    For Each yukiAutostartFile In $autostartFiles
+        If yukiAutostartFile.Overridden Then Continue
+        If Not yukiAutostartFile.Required Then Continue
+        execute(yukiAutostartFile)
     Next
-    
-    Return False
-    
-End
-
-Public Function Execute(argExecuted As String[], Optional argBlocks As NagatoAutoStarts) As String[]
-    
-    Dim yukiResult As New String[]
-    Dim yukiDesktopFile As NagatoAutostartFile
-    
-    For Each yukiDesktopFile In $desktopFiles
-        If argExecuted.Exist(yukiDesktopFile.Name) Then Continue
-        If argBlocks And If argBlocks.IsBlocked(yukiDesktopFile.Name) Then Continue
-        If Not yukiDesktopFile.Required Then Continue
-        If yukiDesktopFile.Exec <> "" Then Try Shell yukiDesktopFile.Exec
-        If Not Error Then yukiResult.Add(yukiDesktopFile.Name)
-    Next
-    
-    Return yukiResult
     
 End
 
 Public Sub _new(argDirectory As String)
     
-    setDesktopFiles(argDirectory)
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory)
+        $autostartFiles.Add(Object.New("NagatoAutostartFile", [argDirectory &/ yukiPath]))
+    Next
     
 End
 
 Private Function All_Read() As NagatoAutostartFile[]
 
-    Return $desktopFiles
-
-End
-
-Private Function Hiddens_Read() As String[]
-
-    Dim yukiHiddens As New String[]
-    Dim yukiAutostartFile As NagatoAutostartFile
-    
-    For Each yukiAutostartFile In $desktopFiles
-        If Not yukiAutostartFile.Required Then yukiHiddens.Add(yukiAutostartFile.Name)
-    Next
-
-    Return yukiHiddens
+    Return $autostartFiles
 
 End

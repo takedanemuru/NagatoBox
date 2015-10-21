@@ -14,7 +14,7 @@ End
 
 Public Sub _InitializeGridView()
     
-    $tableView = New TableView(Me._$container) As "TFEI"
+    $tableView = New TableView(Me._$container) As "TableView"
     $tableViewHandler = New NagatoTableAutostarts($tableView, NagatoXdgAutostarts.UserAutoStarts)
     NagatoSettings.LoadGridsSettings($tableView)
     
@@ -26,9 +26,20 @@ Public Sub SaveSettings()
     
 End
 
-Public Sub Asakura_Activate()
+Public Sub TableView_Activate()
     
     ' ShowDetail($tableView.RowAt(Mouse.Y))
+    
+End
+
+Public Sub TableView_Menu()
+    
+    Dim yukiContextMenu As NagatoContextMenuUserAutostarts
+    
+    If $tableView.Rows.Selection.Count = 0 Then Return
+    
+    yukiContextMenu = New NagatoContextMenuUserAutostarts($tableViewHandler[$tableView.Row])
+    yukiContextMenu.Popup()
     
 End
 
