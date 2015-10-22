@@ -18,25 +18,21 @@ Private $configQt As NagatoConfigFile
 
 Private Function isThemesMatched() As Boolean
     
-    If ($configGtk2["", "gtk-theme-name"] = $configGtk3["Settings", "gtk-theme-name"]) Then
-        If $themes.List.Exist($configGtk2["", "gtk-theme-name"]) Then
-            Return True
-        End If
-    End If
+    If ($configGtk2["", "gtk-theme-name"] <> $configGtk3["Settings", "gtk-theme-name"]) Then Return False
+    If $themes.List.Exist($configGtk2["", "gtk-theme-name"]) Then Return True
     
 Finally
     Return False
     
 End
 
-' Public Sub Set()
-'     
-'     If NagatoInterimStatus.IconTheme Then
-'         $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
-'         $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
-'     Endif
-'     
-' End
+Public Sub Set()
+    
+    If Not NagatoInterimStatus.IconTheme Then Return
+    $configGtk2["", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+    $configGtk3["Settings", "gtk-icon-theme-name"] = NagatoInterimStatus.IconTheme
+    
+End
 
 Public Sub _new()
     
@@ -55,11 +51,7 @@ End
 
 Private Function WidgetTheme_Read() As String
 
-    If Me.WidgetThemeMatched Then
-        Return $configGtk2["", "gtk-theme-name"] 
-    Else
-        Return Null
-    Endif
+    Return IIf(isThemesMatched(), $configGtk2["", "gtk-theme-name"], Null)
 
 End
 
@@ -71,19 +63,15 @@ End
 
 Private Function IsThemeUnified_Read() As Boolean
 
-    If $configQt["Qt", "style"] = "GTK+" Then
-        Return True
-    Else
-        Return False
-    Endif
-    
+    IIf($configQt["Qt", "style"] = "GTK+", True, False)
+
 End
 
 Private Function Status_Read() As Integer
 
     If $themes.Count = 0 Then
         Return MikuruConfig.NotFound
-    Else If isThemesMatched Then
+    Else If isThemesMatched() Then
         Return MikuruConfig.Matched
     Else
         Return MikuruConfig.NotMatched

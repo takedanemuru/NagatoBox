@@ -12,7 +12,6 @@ Private Function getIconPath(argDirectory As String) As String
     
     For Each yukiPath In RDir(argDirectory).Sort()
         If File.BaseName(yukiPath) <> File.BaseName($desktopFile.Icon) Then Continue
-        Debug yukiPath
         Return (argDirectory &/ yukiPath)
     Next
     

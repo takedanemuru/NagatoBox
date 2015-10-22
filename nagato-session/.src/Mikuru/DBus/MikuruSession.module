@@ -2,19 +2,23 @@
 
 Public Enum TypeExit, TypeReboot, TypeShutdown, TypeLockScreen
 
-Private Const BusName As String = "system://org.freedesktop.login1"
-Private Const ObjectPath As String = "/org/freedesktop/login1"
-Private Const Interface As String = "org.freedesktop.login1.Manager"
+Private $logind As New NagatoLogind
 
-Public Function IsOpenbox() As Boolean
+Private Function getDesktopSession() As String
     
     Dim yukiOutput As String
     
     Shell "printenv | grep DESKTOP_SESSION" To yukiOutput
     
-    If (yukiOutput Ends "openbox\n") Then
-        Return True
-    Else If (yukiOutput Ends "NagatoBox\n") Then
+    Return Replace(yukiOutput, "\n", "")
+    
+End
+
+Public Function IsOpenbox() As Boolean
+    
+    Dim yukiDesktop As String = getDesktopSession()
+    
+    If (yukiDesktop Ends "openbox") Or If (yukiDesktop Ends "NagatoBox") Then
         Return True
     Else
         Return False
@@ -24,29 +28,19 @@ End
 
 Public Function IsNagatoBox() As Boolean
     
-    Dim yukiOutput As String
-    
-    Shell "printenv | grep DESKTOP_SESSION" To yukiOutput
-    
-    If (yukiOutput Ends "NagatoBox\n") Then
-        Return True
-    Else
-        Return False
-    Endif
-    
+    Return (getDesktopSession() Ends "NagatoBox") 
+
 End
 
 Public Sub Logout(argType As Integer)
-    
-    Dim yukiDBusProxy As DBusProxy = DBus[BusName][ObjectPath, Interface]
     
     Select Case argType
         Case TypeExit
             Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
         Case TypeReboot
-            yukiDBusProxy.Reboot(False)
+            $logind.Reboot()
         Case TypeShutdown
-            yukiDBusProxy.PowerOff(True)
+            $logind.PowerOff()
         Case TypeLockScreen
             Try Shell "nagato-config-screenlocker -l"
     End Select

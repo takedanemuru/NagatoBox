@@ -1,0 +1,25 @@
+' Gambas class file
+
+Private Const BusName As String = "system://org.freedesktop.login1"
+Private Const ObjectPath As String = "/org/freedesktop/login1"
+Private Const Interface As String = "org.freedesktop.login1.Manager"
+
+Private $proxy As DBusProxy
+
+Public Sub Reboot()
+    
+    $proxy.Reboot(False)
+    
+End
+
+Public Sub PowerOff()
+    
+    $proxy.PowerOff(True)
+    
+End
+
+Public Sub _new()
+    
+    $proxy = New DBusProxy(BusName, ObjectPath, Interface)
+    
+End

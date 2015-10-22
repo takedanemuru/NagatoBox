@@ -3,6 +3,13 @@
 Private $message As New NagatoMessage As "Message"
 Private $legend As New NagatoLogoutLegend
 
+Private Sub setMessage(argMessageType As Integer)
+    
+    $message.Set(argMessageType)
+    $legend.Hide()
+    
+End
+
 Public Sub Form_Open()
 
     Me.H = Screen.H
@@ -28,22 +35,16 @@ End
 Public Sub MessageScreen_KeyPress()
     
     Select Case Key.Code
-        Case Key.Esc
-            Me.Close()
-        Case Key.Enter, 16777220
+        Case Key.Esc, Key.Enter, 16777220
             Me.Close()
         Case Key["E"]
-            $message.Set(NagatoMessage.ModeLogout)
-            $legend.Hide()
+            setMessage(NagatoMessage.ModeLogout)
         Case Key["R"]
-            $message.Set(NagatoMessage.ModeReboot)
-            $legend.Hide()
+            setMessage(NagatoMessage.ModeReboot)
         Case Key["S"]
-            $message.Set(NagatoMessage.ModeShutDown)
-            $legend.Hide()
+            setMessage(NagatoMessage.ModeShutDown)
         Case Key["L"]
-            $message.Set(NagatoMessage.ModeLockScreen)
-            $legend.Hide()
+            setMessage(NagatoMessage.ModeLockScreen)
     End Select
     
 End
