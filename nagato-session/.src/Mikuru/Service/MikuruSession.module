@@ -36,12 +36,13 @@ Public Sub Logout(argType As Integer)
     
     Select Case argType
         Case TypeExit
-            Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
+            Shell Subst$("loginctl kill-user &1", User.Id)
         Case TypeReboot
             $logind.Reboot()
         Case TypeShutdown
             $logind.PowerOff()
         Case TypeLockScreen
+            Try HaruhiLogout.Close()
             Try Shell "nagato-config-screenlocker -l"
     End Select
     

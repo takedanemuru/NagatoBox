@@ -3,6 +3,7 @@
 Property Read Name As String
 Property Read CommonName As String
 Property Read GenericName As String
+Property Read ProgramName As String
 Property Read Comment As String
 Property Read LocaleName As String
 Property Read Path As String
@@ -69,5 +70,11 @@ End
 Private Function Exec_Read() As String
 
     Return $desktopFile.Exec
+
+End
+
+Private Function ProgramName_Read() As String
+
+    Return $desktopFile.ProgramName
 
 End

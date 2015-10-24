@@ -1,22 +1,9 @@
 [Breakpoints]
 Count=0
 
-[DebugWindow]
-Count=0
-
-[DebugWindow/$grid[$grid.Rows.Max, yukiCount]]
-Geometry=[0,0,210,210]
-
 [OpenFile]
-File[1]=".src/Haruhi/Main/HaruhiMain.form"
-Active=5
-Count=6
-File[2]=".src/Haruhi/Main/HaruhiMain.class:0.0"
-File[3]=".src/Nagato/Theme/NagatoConfigFacade.class:0.87"
-File[4]=".src/Mikuru/DBus/MikuruSession.module:0.2"
-File[5]=".src/Nagato/DBus/NagatoLogind.class:27.6"
-File[6]=".src/Haruhi/Main/HaruhiLogout.class:4.25"
-
-[Watches]
-Count=0
+Count=2
+Active=2
+File[1]=".src/Kyon.module:34.13"
+File[2]=".src/Mikuru/Service/MikuruSession.module:0.38"
 

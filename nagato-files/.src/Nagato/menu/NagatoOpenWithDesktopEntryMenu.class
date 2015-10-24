@@ -4,20 +4,13 @@ Inherits NagatoMenuPipe
 
 Private $parentMenu As Menu
 Private $path As String
-Private $desktopEntryName As String
+Private $desktopEntryPath As String
 
 Private Sub initializeItem()
     
-    Dim yukiMenu As Menu
-    Dim yukiPath As String = "/usr/share/applications/" & $desktopEntryName
-    Dim yukiDesktopFile As DesktopFile
+    Dim yukiDesktopFile As New DesktopFile($desktopEntryPath)
+    Dim yukiMenu As New Menu($parentMenu) As "OpenWithMenu"
 
-    If Not Exist(yukiPath) Then Return
-    
-    yukiDesktopFile = New DesktopFile(yukiPath)
-
-    yukiMenu = New Menu($parentMenu) As "OpenWithMenu"
-    
     With yukiMenu
         .Picture = MikuruIconDesktopEntry[yukiDesktopFile.Path, 32]
         .Text = yukiDesktopFile.Name
@@ -33,8 +26,8 @@ Public Sub _new(argParentMenu As Menu, argPath As String, argDesktopEntryName As
     
     $parentMenu = argParentMenu
     $path = argPath
-    $desktopEntryName = argDesktopEntryName
-    initializeItem()
+    $desktopEntryPath = "/usr/share/applications/" & argDesktopEntryName
+    If Exist($desktopEntryPath) Then initializeItem()
     
 End
 
@@ -43,7 +36,6 @@ Public Sub OpenWithMenu_Click()
     Dim yukiDesktopFile As DesktopFile = Last.Tag
     
     MikuruChangeDefaultApplication(yukiDesktopFile, $path)
-
     yukiDesktopFile.Run($path)
     
 Catch

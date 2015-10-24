@@ -7,10 +7,10 @@ Public Sub Main()
     
     Debug "YUKI.N > Activate generaldict table on " & NagatoDBGeneralDict.HostName
     
-    'If NagatoArgs.Queries.Count > 0 Then 
+    If NagatoArgs.Queries.Count > 0 Then 
         NagatoCommandlineInterface.ShowResults(NagatoArgs.Queries)
-    ' Else
-    '     HaruhiMain.Show()
-    ' End If
-    ' 
+    Else
+        HaruhiMain.Show()
+    End If
+    
 End

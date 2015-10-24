@@ -32,6 +32,8 @@ End
 
 Private Function setPath()
     
+    $path = ""
+    
     If $desktopFile.Icon Begins "/" Then $path = getIconPathFormDesktopFileData($desktopFile.Icon)
     If Not $path Then $path = getIconPath(HicolorIcons)
     If Not $path Then $path = getIconPath(PixmapIcons)
