@@ -2,10 +2,8 @@
 
 Public Function ConversionRequired(argSourcePath As String, argTargetPath As String) As Boolean
     
-    With MikuruMimeType
-        If Not .IsMediaFile(argSourcePath) Then Return False
-        If File.Ext(argTargetPath) = File.Ext(argSourcePath) Then Return False 
-    End With
+    If Not MikuruMimeType.IsMediaFile(argSourcePath) Then Return False
+    If File.Ext(argTargetPath) = File.Ext(argSourcePath) Then Return False 
     
     Return True
     
@@ -13,6 +11,6 @@ End
 
 Public Sub ConvertFile(argSourcePath As String, argTargetPath As String)
     
-    Exec ["avconv", "-i", argSourcePath, argTargetPath]
+    Exec ["ffmpeg", "-i", argSourcePath, Quote$(argTargetPath)]
     
 End

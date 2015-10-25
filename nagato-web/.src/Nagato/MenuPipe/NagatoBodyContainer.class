@@ -58,6 +58,8 @@ Public Sub HeaderCall(argEvent As Integer, argArguments As Variant[])
         Case NagatoMenuPipe.PersonaReorder
             If argArguments[0] = argArguments[1] Then Return
             $webs.Reorder(argArguments[0], argArguments[1])
+        Case NagatoMenuPipe.WebProgress
+            If argArguments[0] = $webs.ActiveWeb.UniqueIndex Then $menubar.SetUrl(argArguments[1])
     End Select
     
     $menubar.SetUrl($webs.ActiveTabUrl)
@@ -134,6 +136,7 @@ Public Sub Webs_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[]
     
     Select Case argEvent
         Case NagatoMenuPipe.WebLoaded
+            If argArguments[4] <> $webs.ActiveWeb.UniqueIndex Then Return
             $menubar.SetUrl(argArguments[0])
             $menubar.SetNavigationButton(argArguments[2], argArguments[3])
             HaruhiMain.Title = argArguments[1]

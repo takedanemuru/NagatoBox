@@ -35,8 +35,6 @@ End
 
 Public Function PushHistory(argCommandLine As String)
     
-    Debug argCommandLine
-    
     If argCommandLine = "" Then Return
     
     $commandHistory.Add(argCommandLine)

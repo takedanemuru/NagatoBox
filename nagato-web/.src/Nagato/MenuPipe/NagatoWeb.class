@@ -78,10 +78,17 @@ End
 
 Public Sub WebView_Load()
     
+    Dim yukiValues As New Variant[]
+    
     If 1 > $webView.Progress Then Return
-    With $webView
-        Raise MenuEventWithArgs(NagatoMenuPipe.WebLoaded, [.Url, .Title, .History.Index, .History.Max])
-    End With
+    
+    yukiValues.Add($webView.Url)
+    yukiValues.Add($webView.Title)
+    yukiValues.Add($webView.History.Index)
+    yukiValues.Add($webView.History.Max)
+    yukiValues.Add(Me.UniqueIndex)
+    
+    Raise MenuEventWithArgs(NagatoMenuPipe.WebLoaded, yukiValues)
     
 End
 

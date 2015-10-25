@@ -2,6 +2,7 @@
 
 Create Static
 
+Property Read History As String[]
 Property Read HasHistory As Boolean
 Property Read LastCommand As String
 
@@ -51,5 +52,11 @@ End
 Private Function LastCommand_Read() As String
 
     Return $commandHistory[$commandHistory.Max]
+
+End
+
+Private Function History_Read() As String[]
+
+    Return $commandHistory
 
 End

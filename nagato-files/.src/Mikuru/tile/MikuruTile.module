@@ -18,6 +18,8 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
                 Return NagatoThumbnailPdf.Get(argPath, argSelected)
             Case .TypeApplication
                 Return $applicationTile(argPath, argSelected)
+            Case .TypeVideo
+                Return NagatoThumbnailVideo.Get(argPath, argSelected)
             Default
                 Return $fileTile(argPath, argSelected)
         End Select
