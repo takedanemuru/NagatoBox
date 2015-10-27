@@ -5,18 +5,6 @@ Inherits NagatoMenuPipe
 Private $treeView As TreeView
 Private $title As String
 
-Private Function isWebPage(argKey As String) As Boolean
-    
-    If argKey Begins "http://" Then
-        Return True
-    Else If argKey Begins "https://" Then
-        Return True
-    Else
-        Return False
-    Endif
-    
-End
-
 Private Sub setBookmark(argCategory As String)
     
     Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultFoundByCategoryName(argCategory)
@@ -50,7 +38,6 @@ End
 Private Sub reload()
     
     $treeView.Clear()
-    
     setCategory()
     setTrashBin()
     
@@ -75,15 +62,13 @@ End
 
 Public Sub TreeView_Activate()
     
-    Debug $treeView.Key
-    
     If $treeView.Key Begins "http" Then Raise MenuEventWithArg(NagatoMenuPipe.WebNew, $treeView.Key) 
     
 End
 
 Public Sub TreeView_MouseDrag()
     
-    If isWebPage($treeView.Key) Then
+    If MikuruUrl.IsWebPage($treeView.Key) Then
         $title = $treeView.Current.Text
         Drag.Icon = Stock["medium/file"]
         $treeView.Drag($treeView.Key, "text/plain")
@@ -106,12 +91,12 @@ Public Sub TreeView_Drop()
     Dim yukiCategory As String
     
     If $title = "" Then Return
-    If Not isWebPage(Drag.Data) Then Return
+    If Not MikuruUrl.IsWebPage(Drag.Data) Then Return
     
     If $treeView.Item.Key = "NagatoTrashBin" Then
         removeBookmark(Drag.Data)
     Else
-        yukiCategory = IIf(isWebPage($treeView.Item.Key), $treeView.Item.ParentKey, $treeView.Item.Key)
+        yukiCategory = IIf(MikuruUrl.IsWebPage($treeView.Item.Key), $treeView.Item.ParentKey, $treeView.Item.Key)
         Try $treeView.Remove(Drag.Data)
         Try $treeView.Add(Drag.Data, $title,, yukiCategory)
         If Not Error Then NagatoDBWeb.ChangeBookmarkCategory(Drag.Data, yukiCategory)
@@ -126,7 +111,7 @@ Public Sub TreeView_Menu()
     Dim yukiCategory As String
     Dim yukiKey As String = $treeView.Key
     
-    If isWebPage(yukiKey) Then
+    If MikuruUrl.IsWebPage(yukiKey) Then
         yukiCategory = $treeView[yukiKey].ParentKey
         yukiMenu = New NagatoContextMenuBookmark(HaruhiMain, yukiCategory, yukiKey) As "ContextMenuBookmark"
     Else

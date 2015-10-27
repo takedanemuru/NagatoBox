@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoMenuWidget
+
+Private $button As MenuButton
+Private $menu As NagatoDownloadMenu
+
+Public Sub SetUrl(argUrl As String)
+    
+    $button.Visible = MikuruUrl.IsYouTubeVideo(argUrl)
+    $menu.SetUrl(argUrl)
+    
+End
+
+Private Sub initializeButton()
+    
+    $button = New MenuButton(Me._$container)
+    
+    With $button
+        .Expand = False
+        .Border = False
+        .Width = Me._$container.Height
+        .Picture = MikuruIcon.Get("hard-drive-download")
+    End With    
+    
+    $menu = New NagatoDownloadMenu($button)
+    
+End
+
+Public Sub _InitializeWidget() ' override
+    
+    initializeButton()
+    
+End

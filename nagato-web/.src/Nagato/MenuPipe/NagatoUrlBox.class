@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuWidget
 
+Property Read Url As String
+
 Private $urlBox As ButtonBox
 
 Public Sub _InitializeWidget() ' override
@@ -37,4 +39,10 @@ Public Sub UrlBox_Activate()
     
     UrlBox_Click()
     
+End
+
+Private Function Url_Read() As String
+
+    Return $urlBox.Text
+
 End

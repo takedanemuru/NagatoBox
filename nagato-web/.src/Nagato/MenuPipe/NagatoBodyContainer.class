@@ -50,6 +50,7 @@ Public Sub HeaderCall(argEvent As Integer, argArguments As Variant[])
             $webs.ShowLastTab()
          Case NagatoMenuPipe.PersonaSelect
             $webs.ShowTab(argArguments[0])
+            $menubar.SetNavigationButton($webs.ActiveWeb.HistoryIndex, $webs.ActiveWeb.HistoryMax)
         Case NagatoMenuPipe.PersonaDelete
             $webs.RemoveTab(argArguments[0])
          Case NagatoMenuPipe.SearchApiCall
@@ -59,7 +60,9 @@ Public Sub HeaderCall(argEvent As Integer, argArguments As Variant[])
             If argArguments[0] = argArguments[1] Then Return
             $webs.Reorder(argArguments[0], argArguments[1])
         Case NagatoMenuPipe.WebProgress
-            If argArguments[0] = $webs.ActiveWeb.UniqueIndex Then $menubar.SetUrl(argArguments[1])
+            If argArguments[0] <> $webs.ActiveWeb.UniqueIndex Then Return
+            $menubar.SetUrl(argArguments[1])
+            $menubar.SetNavigationButton($webs.ActiveWeb.HistoryIndex, $webs.ActiveWeb.HistoryMax)
     End Select
     
     $menubar.SetUrl($webs.ActiveTabUrl)
@@ -134,15 +137,7 @@ End
 
 Public Sub Webs_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
     
-    Select Case argEvent
-        Case NagatoMenuPipe.WebLoaded
-            If argArguments[4] <> $webs.ActiveWeb.UniqueIndex Then Return
-            $menubar.SetUrl(argArguments[0])
-            $menubar.SetNavigationButton(argArguments[2], argArguments[3])
-            HaruhiMain.Title = argArguments[1]
-        Default
-            Raise MenuEventWithArgs(argEvent, argArguments)
-    End Select
+    Raise MenuEventWithArgs(argEvent, argArguments)
     
 End
 

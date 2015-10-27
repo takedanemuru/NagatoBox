@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoButtonMenu
+
+Private Enum MenuDownloadMovie, MenuDownloadMusic
+
+Private $url As String
+
+Public Function _AbstractOnGetUniqueName() As String
+    
+    Return "DownloadMenu"
+    
+End
+
+Public Sub _InitializeCategoryMenus()
+    
+    Me._AddMenu(("Download As Video"), MenuDownloadMovie, "video")
+    Me._AddMenu(("Download As Music"), MenuDownloadMusic, "music")
+    
+End
+
+Public Sub SetUrl(argUrl As String)
+    
+    $url = argUrl
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    If Not MikuruUrl.IsYouTubeVideo($url) Then Return
+    
+    Select Case Last.Tag
+        Case MenuDownloadMovie
+            Try Exec ["youtube-dl", "-f", "webm", $url]
+        Case MenuDownloadMusic
+            Try Exec ["youtube-dl", "-x", "--audio-format", "mp3", $url]
+    End Select
+    
+End

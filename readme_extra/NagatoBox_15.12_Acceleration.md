@@ -27,10 +27,15 @@
 + enhance treeview context menu
 + new : webdav access
 + ~~new : removal disk detection~~ use dataovermind-disks
++ ~~new : video thumbnailing~~
 
 ### nagato-gif-box (version 42.2.1)
 
 + ~~fix : mail address~~
+
+### nagato-lookup
+
++ ~~fix : revive lost properties~~
 
 ### nagato-mail
 
@@ -50,6 +55,9 @@
 
 + ~~fix : search and replace functionality~~
 
-### nagato-web (version 42.2.6)
+### nagato-web (version 42.2.9)
 
 + ~~new : disable navigation button when webview has no history.~~
++ ~~new : fix title, url, go-back-button and download-button reloading sequence~~
++ ~~new : download button~~
+

@@ -1,0 +1,19 @@
+' Gambas module file
+
+Public Function IsWebPage(argKey As String) As Boolean
+    
+    If argKey Begins "http://" Then
+        Return True
+    Else If argKey Begins "https://" Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Public Function IsYouTubeVideo(argUrl As String) As Boolean
+    
+    Return argUrl Begins "https://www.youtube.com/watch?v="
+    
+End

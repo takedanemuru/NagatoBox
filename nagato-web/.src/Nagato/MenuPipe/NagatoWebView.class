@@ -1,0 +1,110 @@
+' Gambas class file
+
+Inherits NagatoMenuPipe
+
+Property Read WebView As WebView
+
+Private $webView As WebView
+Private $uniqueIndex As Integer
+Private $lastLink As String
+
+Public Sub Forward()
+    
+    Try $webView.Forward()
+    
+End
+
+Public Sub Back()
+    
+    Try $webView.Back()
+    
+End
+
+Public Sub Delete()
+    
+    $webView.Delete()
+    
+End
+
+Public Sub Toggle(argVisible As Boolean)
+    
+    $webView.Visible = argVisible
+    
+End
+
+Public Sub InPageSearch(argQuery As String)
+    
+    $webView.FindText(argQuery, False, False, True)
+    
+End
+
+Public Sub SetUrl(argUrl As String)
+    
+    $webView.Url = argUrl
+    
+End
+
+Public Sub _new(argContainer As Container, argUrl As String, argUniqueIndex As Integer)
+    
+    $webView = New WebView(argContainer) As "WebView"
+     
+    With $webView
+        .Expand = True
+        .Url = argUrl
+        .UserAgent = "NagatoWeb"
+        .Tracking = True
+        .Font = Application.Font
+    End With
+    
+    $uniqueIndex = argUniqueIndex
+    
+End
+
+Public Sub WebView_MouseMove()
+    
+    Dim yukiHitTest As WebHitTest = $webView.HitTest(Mouse.X, Mouse.Y)
+    Dim yukiUrl As String = yukiHitTest.Url
+    
+    If yukiUrl <> "" Then $lastLink = yukiUrl
+    
+End
+
+Public Sub WebView_NewWindow(argModal As Boolean)
+    
+    Raise MenuEventWithArg(NagatoMenuPipe.WebNewInsert, $lastLink)
+    
+End
+
+Public Sub WebView_KeyPress()
+    
+    If Key.Alt And If Key.Code = Key.Left Then $webView.Back()
+    If Key.Alt And If Key.Code = Key.Right Then $webView.Forward()
+    If Key.Control And If Key.Code = Key["f"] Then Raise MenuEvent(NagatoMenuPipe.InPageSearchToggle)
+    
+End
+
+Public Sub WebView_Download(argDownload As WebDownload)
+    
+    Raise MenuEventWithArg(NagatoMenuPipe.WebDownload, argDownload)
+    
+End
+
+Public Sub WebView_Progress()
+    
+    Dim yukiValues As New Variant[]
+    
+    yukiValues.Add($uniqueIndex)
+    yukiValues.Add($webView.Url)
+    yukiValues.Add($webView.Progress)
+    yukiValues.Add($webView.History)
+    yukiValues.Add($webView.Title)
+    
+    Raise MenuEventWithArgs(NagatoMenuPipe.WebProgress, yukiValues)
+    
+End
+
+Private Function WebView_Read() As WebView
+
+    Return $webView
+
+End
