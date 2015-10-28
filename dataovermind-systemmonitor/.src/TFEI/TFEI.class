@@ -6,8 +6,11 @@ Create Static
 
 Property Read Ready As String
 Property Read CpuUsage As Float
+Property Read CpuHistory As Float[]
 Property Read MemoryUsage As Float
+Property Read MemoryHistory As Float[]
 Property Read SwapUsage As Float
+Property Read SwapHistory As Float[]
 Property Read ProcessCount As Integer
 Property Read NetworkTransmitTotal As Integer
 Property Read NetworkTransmitBps As Float
@@ -76,5 +79,23 @@ End
 Private Function NetworkReceiveBps_Read() As Float
 
     Return NagatoObserverFacade.NetworkLoadReceiveBps
+
+End
+
+Private Function CpuHistory_Read() As Float[]
+
+    Return NagatoObserverFacade.CpuHistory
+
+End
+
+Private Function MemoryHistory_Read() As Float[]
+
+    Return NagatoObserverFacade.MemoryHistory
+
+End
+
+Private Function SwapHistory_Read() As Float[]
+
+    Return NagatoObserverFacade.SwapHistory
 
 End

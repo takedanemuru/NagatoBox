@@ -76,6 +76,8 @@ Public Sub Body_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     Select Case argEvent
         Case NagatoMenuPipe.WebDownload
             $downloadBar.SetWebDownload(argArgument)
+        Case NagatoMenuPipe.PersonaSetText
+            $headerContainer.SetText(argArgument)
     End Select
     
 End

@@ -5,6 +5,7 @@ Inherits NagatoButtonMenu
 Private Enum MenuDownloadMovie, MenuDownloadMusic
 
 Private $url As String
+Private $downloader As New NagatoYoutubeDL As "Menu"
 
 Public Function _AbstractOnGetUniqueName() As String
     
@@ -27,13 +28,12 @@ End
 
 Public Sub MenuItem_Click()
     
-    If Not MikuruUrl.IsYouTubeVideo($url) Then Return
-    
-    Select Case Last.Tag
-        Case MenuDownloadMovie
-            Try Exec ["youtube-dl", "-f", "webm", $url]
-        Case MenuDownloadMusic
-            Try Exec ["youtube-dl", "-x", "--audio-format", "mp3", $url]
-    End Select
+    If Not MikuruUrl.IsYouTubeVideo($url) Then
+        Return
+    Else If Last.Tag = MenuDownloadMovie Then
+        $downloader.DownloadAsMovie($url)
+    Else If Last.Tag = MenuDownloadMusic Then
+        $downloader.DownloadAsMusic($url)
+    End If
     
 End

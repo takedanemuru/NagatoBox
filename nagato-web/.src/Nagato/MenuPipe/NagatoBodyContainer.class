@@ -105,6 +105,8 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
         Case NagatoMenuPipe.WebNew
             addWeb(argArgument)
             $webs.ShowLastTab()
+        Default
+            Raise MenuEventWithArg(argEvent, argArgument)
     End Select
     
 End

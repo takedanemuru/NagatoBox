@@ -80,11 +80,7 @@ End
 
 Public Sub DeleteMenu_Click()
     
-    If IsDir(Me._$path) Then
-        MikuruFile.TrashDirectory(Me._$path)
-    Else
-        MikuruFile.TrashFile(Me._$path)
-    Endif
+    NagatoTrash.Delete([Me._$path])
     
     Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
     

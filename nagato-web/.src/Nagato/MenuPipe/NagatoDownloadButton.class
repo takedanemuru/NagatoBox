@@ -23,7 +23,7 @@ Private Sub initializeButton()
         .Picture = MikuruIcon.Get("hard-drive-download")
     End With    
     
-    $menu = New NagatoDownloadMenu($button)
+    $menu = New NagatoDownloadMenu($button) As "Menu"
     
 End
 

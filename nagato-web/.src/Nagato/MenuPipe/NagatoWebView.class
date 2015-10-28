@@ -103,6 +103,12 @@ Public Sub WebView_Progress()
     
 End
 
+Public Sub WebView_Load()
+    
+    Me.WebView_Progress()
+    
+End
+
 Private Function WebView_Read() As WebView
 
     Return $webView

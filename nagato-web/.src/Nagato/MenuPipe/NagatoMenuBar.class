@@ -32,7 +32,7 @@ Public Sub _new(argContainer As Container)
     $backButton = New NagatoBackButton(argContainer) As "Menu"
     $forwardButton = New NagatoForwardButton(argContainer) As "Menu"
     $urlBox = New NagatoUrlBox(argContainer) As "Menu"
-    $downloadButton = New NagatoDownloadButton(argContainer)
+    $downloadButton = New NagatoDownloadButton(argContainer) As "Menu"
 '     $historyButton = New NagatoHistoryButton(argContainer) As "Menu"
     $bookmarkButton = New NagatoBookmarkButton(argContainer) As "Menu"
     $startButton = New NagatoStartButton(argContainer) As "Menu"

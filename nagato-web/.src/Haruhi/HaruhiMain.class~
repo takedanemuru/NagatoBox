@@ -84,7 +84,7 @@ Public Sub Body_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[]
     
     Select Case argEvent
         Case NagatoMenuPipe.WebProgress
-            Me.Title = argArgument[4]
+            Me.Title = argArguments[4]
             $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
             $bodyCotainer.HeaderCall(argEvent, argArguments)
     End Select
