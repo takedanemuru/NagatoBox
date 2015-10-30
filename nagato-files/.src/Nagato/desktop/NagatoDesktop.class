@@ -73,6 +73,7 @@ Public Sub Handler_KeyPress(argKeyCode As Integer)
     
     Select Case argKeyCode
         Case Key.Enter, 16777220
+            ' to do
         Case Key.Esc, 16777216
             Clipboard.Clear()
             $mouse.ClearAll()

@@ -16,7 +16,6 @@ Public Sub Parsing()
     yukiPaths = Args.End()
     
     If yukiPaths.Count > 0 Then $paths = yukiPaths.Copy()
-    If $paths.Count > 0 Then Debug $paths[0]
     
 End
 

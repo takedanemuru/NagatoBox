@@ -27,27 +27,11 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Pi
     
 End
 
-Private Sub addSortMenu()
-    
-    Dim yukiSortMenu As NagatoSortMenu
-    
-    yukiSortMenu = New NagatoSortMenu(Me._$rootMenu)
-    
-End
-
 Private Sub addCreateMenu()
     
     Dim yukiCreateMenu As NagatoCreateMenu
     
     yukiCreateMenu = New NagatoCreateMenu(Me._$rootMenu) As "Menu"
-    
-End
-
-Private Sub addSettingsMenu()
-    
-    Dim yukiMenu As NagatoSubMenuSettings
-    
-    yukiMenu = New NagatoSubMenuSettings(Me._$rootMenu)
     
 End
 
@@ -60,13 +44,14 @@ Private Sub refreshChildMenus()
             Me._AddMenu("", 0) ' Spacer
         addCreateMenu()
             Me._AddMenu("", 0) ' Spacer
-        addSortMenu()
+        Object.New("NagatoSortMenu", [Me._$rootMenu])
             Me._AddMenu("", 0) ' Spacer
         Me._AddMenu(("Select all"), .ViewSelectAll)
         Me._AddMenu(("Unselect all"), .ViewUnselectAll)
         Me._AddMenu(("Invert selection"), .ViewInvertSelection)
             Me._AddMenu("", 0) ' Spacer
-        addSettingsMenu()
+        'Me._AddMenu(("Open Terminal Here"), .ViewOpenTerminalHere, MikuruIcon("monitor"))
+        Object.New("NagatoSubMenuSettings", [Me._$rootMenu])
             Me._AddMenu("", 0) ' Spacer
         Object.New("NagatoMenuItemAbout", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemAppQuit", [Me._$rootMenu, Me._$path])

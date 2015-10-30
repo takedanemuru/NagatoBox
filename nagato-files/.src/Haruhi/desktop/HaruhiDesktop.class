@@ -1,8 +1,5 @@
 ' Gambas class file
 
-Private Const Type As String = "_NET_WM_WINDOW_TYPE"
-Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
-
 Private Const Margin As Integer = 2
 
 Private $desktop As NagatoDesktop
@@ -22,17 +19,6 @@ Private Sub initializeForm()
     
 End
 
-Private Sub setX11Properties()
-    
-    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", Me.Id, Type, TypeDesktop) Wait
-    Try Shell "openbox --restart"
-    
-    If Error Then Return
-    
-    HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
-    
-End
-
 Public Sub RealodDesktopWallpaper()
     
     $desktop.ReloadDesktopWallpaper()
@@ -42,18 +28,20 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    $desktop = New NagatoDesktop(Me)
-    $panel = New NagatoDesktopPanel(Me)
-    $timer.Enabled = True
-
-End
-
-Public Sub SetAsDesktop()
-    
     initializeForm()
-    setX11Properties()
-    NagatoDBus.Register()
     
+    If MikuruX11.SetAsRoot(Me.Id) Then 
+        NagatoDBus.Register()
+        $desktop = New NagatoDesktop(Me)
+        $panel = New NagatoDesktopPanel(Me)
+        MikuruX11.ReservePanelHeightOnScreen(Me.Id)
+        $timer.Enabled = True
+        HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
+    Else
+        Message.Error("YUKI.N > Fail to activate nagato-desktop", ("OK"))
+        Me.Close()
+    End If
+
 End
 
 Public Sub Form_Close()

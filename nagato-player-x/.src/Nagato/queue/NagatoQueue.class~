@@ -68,8 +68,8 @@ Public Sub EditIndexes(argIndexes As Integer[])
         HaruhiTagEdit.Show()
     Else
         MikuruArrayTest($musicList.GetPathsFromIndexes(argIndexes))
-        ' HaruhiTagEditBulk.StartEdit($musicList.GetPathsFromIndexes(argIndexes))
-        ' HaruhiTagEditBulk.Show()
+        HaruhiTagEditBulk.StartEdit($musicList.GetPathsFromIndexes(argIndexes))
+        HaruhiTagEditBulk.Show()
     Endif
     
 End
@@ -206,6 +206,8 @@ Public Sub Player_MusicEnd()
     Else
         Me.Next()
     End If
+    
+    HaruhiPlayer.Title = ""
     
 End
 

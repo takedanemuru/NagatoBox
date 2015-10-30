@@ -10,13 +10,7 @@ Public Const Interface As String = "org.gambas.nagato.files.nagatointerfacedeskt
 
 Public Function DesktopActivated() As Boolean
     
-    If Me.IsUnique Then Return False
-    
-    Try Debug DBus[Me.Service][Me.ObjectPath, Me.Interface].Ready
-    If Not Error Then Return True
-
-Finally
-    Return False
+    Return DBus.Session.Applications.Exist(Service)
     
 End
 

@@ -7,15 +7,6 @@ Private $systray As NagatoPanelSystray
 Private $pager As NagatoPanelPager
 Private $clock As NagatoPanelClock
 
-Private Sub reservePanelHeightOnScreen() 
-    
-    Dim yukiProperty As String = "_NET_WM_STRUT"
-    Dim yukiValue As String = Subst$("0,0,0,&1", NagatoSettingsPanel.Height) 
-    
-    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", HaruhiDesktop.Id, yukiProperty, yukiValue) Wait
-    
-End
-
 Private Sub setPanelItems()
     
     $starButton = New NagatoMenuDesktopPanelButton($container) As "StarMenu"
@@ -42,7 +33,6 @@ Public Sub _new(argForm As Form)
     
     initializeContainer(argForm)
     setPanelItems()
-    reservePanelHeightOnScreen()
     
 End
 

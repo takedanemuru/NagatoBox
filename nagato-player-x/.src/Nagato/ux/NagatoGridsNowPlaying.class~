@@ -113,8 +113,6 @@ End
 
 Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
     
-    Debug argSignal
-    
    If Me._$grids.Rows.Selection.Count = 0 Then Return
    
     Select Case argSignal

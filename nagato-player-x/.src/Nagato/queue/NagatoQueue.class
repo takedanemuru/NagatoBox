@@ -207,6 +207,8 @@ Public Sub Player_MusicEnd()
         Me.Next()
     End If
     
+    HaruhiPlayer.Title = Me.Title
+    
 End
 
 Public Sub Player_State(argState As Integer)

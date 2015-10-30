@@ -39,7 +39,7 @@ End
 Public Sub _InitializeGrids() 'override
     
     With Me._$grids
-        .Columns.Count = 5
+        .Columns.Count = 6
         .Columns[ColumnIcon].W = MikuruUx.Padding
         .Columns[ColumnTitle].Text = "Title"
         .Columns[ColumnArtist].Text = "Artist"

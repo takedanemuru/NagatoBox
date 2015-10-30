@@ -4,7 +4,6 @@ Private Sub activateDesktop()
     
     If Not NagatoDBus.DesktopActivated() Then
         HaruhiDesktop.Show()
-        HaruhiDesktop.SetAsDesktop()
     Else
         Message(("YUKI.N > nagato-desktop has been activated."), ("OK"))
     End If
@@ -20,8 +19,7 @@ Private Sub setIconTheme()
         yukiProxy = DBus["org.gambas.nagato-session"]["/org/nagato/session", "org.gambas.nagato.session.nagatointerface"]
         Application.Theme = yukiProxy.IconTheme
         Stock.Refresh()
-    Else
-        If Application.Theme <> "?" Then Return
+    Else If Application.Theme = "?" Then
         Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
         Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
     End If

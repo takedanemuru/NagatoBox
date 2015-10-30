@@ -143,6 +143,10 @@ Public Sub MenuItem_MenuEvent(argEvent As Integer)
                 refresh($log.Current)
             Case .ViewSelectAll, .ViewUnselectAll, .ViewInvertSelection
                 $iconView.SelectItems(argEvent)
+            Case .ViewOpenTerminalHere
+                NagatoOpen.OpenTerminal($log.Current)
+                ' 'Try Desktop.OpenTerminal($log.Current)
+                'Try Exec ["x-terminal-emulator", "-d", $log.Current]
             Case .DirCreate
                 If Not Exist($log.Current) Then Return
                 HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))

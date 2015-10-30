@@ -24,7 +24,7 @@ Private Function Paths_Read() As String[]
 
     Dim yukiPaths As String[] = MikuruPath.Sanitize($paths)
 
-    If $path <> "" Then Return [$path]
+    If MikuruPath.IsValideMediaFilePath($path) Then Return [$path] 
     If yukiPaths.Count > 0 Then Return yukiPaths
 
     Return Null

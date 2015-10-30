@@ -32,7 +32,7 @@ Catch
     
 End
 
-Public Sub _PaintIcon(argDesktopWindow As DesktopWIndow, argRect As Rect)
+Public Sub _PaintIcon(argDesktopWindow As DesktopWindow, argRect As Rect)
     
     If argDesktopWindow.Icon Then
         Paint.DrawImage(argDesktopWindow.Icon.Stretch(16, 16), argRect.X + 4, argRect.Y + 4)
