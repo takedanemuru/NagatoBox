@@ -12,6 +12,20 @@ Private Function getPdfIcon() As Picture
     
 End
 
+Private Function getVideoIcon() As Picture
+    
+    Dim yukiImage As Image
+    Dim yukiRate As Float
+    
+    If Not NagatoDBThumbnailer.HasThumbnail(Me._$currentPath, 128) Then Return getIcon()
+    
+    yukiImage = NagatoDBThumbnailer.Get(Me._$currentPath, 128).Image
+    yukiRate = Min(Me.IconSize / yukiImage.H, Me.IconSize / yukiImage.W)
+    
+    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
+    
+End
+
 Private Function getIcon() As Picture
     
     Dim yukiImage As Image
@@ -39,6 +53,8 @@ Public Function Paint(argPath As String) As Integer
     
     If DesktopMime.FromFile(argPath).Type = "application/pdf"
         yukiIcon = getPdfIcon()
+    Else If DesktopMime.FromFile(argPath).Type Begins "video" Then
+        yukiIcon = getVideoIcon()
     Else
         yukiIcon = getIcon()
     End If

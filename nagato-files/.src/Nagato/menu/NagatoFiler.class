@@ -116,14 +116,17 @@ Public Sub MenuItem_MenuEventWithArg(argEvent As Integer, argArgument As Variant
                 fileEventHandler(argEvent, argArgument)
             Case .CreateArchive
                 MikuruCreate.Archive($iconView.Selection)
-             Case .TagAdd
+            Case .ViewChangeThumbnail
+                HaruhiThumbnailSelector.SetThumbnails(argArgument)
+                refresh($log.Current)
+            Case .TagAdd
                  If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
-             Case .TagRemove
+            Case .TagRemove
                  NagatoDBSymbol.RemovePaths($iconView.Selection)
                  $iconView.Refresh($log.Current)
-             Case .PathNew
+            Case .PathNew
                 If IsDir(argArgument) Then move(argArgument)
-             Case .CreateCopyWholeDirectory
+            Case .CreateCopyWholeDirectory
                  MikuruFileManuever.CopyToDirectory([argArgument], $log.Current)
         End Select
     End With

@@ -46,6 +46,14 @@ Private Sub addMoveToMenu()
     
 End
 
+Private Sub addChangeThumbnailMenu()
+    
+    If DesktopMime.FromFile(Me._$path).Type Not Begins "video" Then Return
+    
+    Me._AddContextMenu2(("Change Thumbnail"), NagatoMenuPipe.ViewChangeThumbnail, "image", True)
+
+End
+
 Public Sub _AddChildMenus()
     
     With NagatoMenuPipe
@@ -54,6 +62,7 @@ Public Sub _AddChildMenus()
         Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])
         addOpenAsTextMenu()
         Object.New("NagatoMenuItemRename", [Me._$rootMenu, Me._$path])
+        addChangeThumbnailMenu()
         Object.New("NagatoMenuItemCopyFilePath", [Me._$rootMenu, Me._$path])
         Object.New("NagatoMenuItemCreateLink", [Me._$rootMenu, Me._$path])
         Me._AddShowPropertyMenu()

@@ -1,0 +1,98 @@
+' Gambas class file
+
+Property Read SelectedPath As String
+
+Private Const Command As String = "ffmpegthumbnailer -s 512 -t &1% -i &2 -o &3"
+
+Private $sourcePath As String
+Private $tempDir As String
+Private $tempPath As String
+Private $position As Integer
+Private $selectedPath As String
+
+Private Function getThumbnailImage(argImage As Image) As Picture
+    
+    Dim yukiBaseImage As New Image(128, 128, Color.Transparent)
+    Dim yukiRate As Float = Max(128 / argImage.H, 128 / argImage.W)
+    Dim yukiThumbnail As Image = argImage.Stretch(argImage.W * yukiRate, argImage.H * yukiRate)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.DrawImage(yukiThumbnail, (128 - yukiThumbnail.W) / 2, (128 - yukiThumbnail.H) / 2)    
+    Paint.End()
+    
+    Return yukiBaseImage.Picture
+    
+End
+
+Private Sub show()
+    
+    Dim yukiPath As String
+    Dim yukiImage As Image
+    
+    For Each yukiPath In Dir($tempDir).Sort(gb.Natural)
+        Try yukiImage = Image.Load($tempDir &/ yukiPath)
+        If Error Then Break
+        ThumbnailsIconView.Add($tempDir &/ yukiPath, "", getThumbnailImage(yukiImage))
+    Next
+    
+    Me.ShowDialog()
+    
+End
+
+Private Sub ensureWorkingDirectory()
+    
+    Dim yukiPath As String
+    
+    $tempDir = User.Home &/ ".nagato-thumbnailer-working-directory"
+    
+    Try Mkdir $tempDir
+    
+    For Each yukiPath In Dir($tempDir)
+        Kill ($tempDir &/ yukiPath)
+    Next
+    
+End
+
+Private Sub generateThumbnails(argPath As String)
+    
+    Dim yukiPosition As Float = Rnd(10)
+    Dim yukiResult As String
+    
+    Do
+        $tempPath = $tempDir &/ yukiPosition & ".png"
+        Shell Subst$(Command, yukiPosition, Quote$(argPath), $tempPath) To yukiResult
+        Print yukiResult
+        yukiPosition += 5
+        If yukiPosition > 100 Then Break
+    Loop
+    
+End
+
+Public Sub SetThumbnails(argPath As String)
+    
+    If DesktopMime.FromFile(argPath).Type Not Begins "video" Then Return
+    
+    $sourcePath = argPath
+    ensureWorkingDirectory()
+    generateThumbnails(argPath)
+    
+    show()
+    
+End
+
+Public Sub ThumbnailsIconView_Activate()
+
+    $selectedPath = ThumbnailsIconView.Key
+
+    NagatoDBThumbnailer.Delete($sourcePath)
+    NagatoDBThumbnailer.Push($sourcePath, 128, getThumbnailImage(Image.Load($selectedPath)))
+
+    Me.Close(1)
+
+End
+
+Private Function SelectedPath_Read() As String
+
+    Return $selectedPath
+
+End

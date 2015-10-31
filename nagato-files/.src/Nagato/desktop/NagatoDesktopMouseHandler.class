@@ -109,6 +109,9 @@ Public Sub Menu_MenuEventWithArg(argEvent As Integer, argValue As Variant)
             Case .TagRemove
                 NagatoDBSymbol.RemovePaths($selection.Paths)
                 Raise RequestRefresh
+            Case .ViewChangeThumbnail
+                HaruhiThumbnailSelector.SetThumbnails(argValue)
+                Raise RequestRefresh
         End Select
     End With
     
