@@ -55,9 +55,18 @@ Catch
     
 End
 
+Public Function GetFeedItem() As String[]
+    
+    If Not Object.IsValid($proxy) Then Return ["", "", "", ""]
+    
+    Return $proxy.GetFeedItem($feedIndex, $itemIndex)
+    
+End
+
 Public Sub Activate()
     
     If Not DBus.Session.Applications.Exist(ServiceName) Then Shell "dataovermind-rssfeeder"
+    
     If DBus.Session.Applications.Exist(ServiceName) Then 
         If Not Object.IsValid($proxy) Then $proxy = DBus[ServiceName][ObjectPath, InterfaceName]
     End If

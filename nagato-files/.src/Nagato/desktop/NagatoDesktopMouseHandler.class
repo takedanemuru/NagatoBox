@@ -62,6 +62,7 @@ Public Sub Asakura_MouseDown()
         With $iconView
             If .Key = NagatoDesktop.SpecialKeyClock Then Return
             If .Key = NagatoDesktop.SpecialKeyTrashBin Then Return
+            If .Key = NagatoDesktop.SpecialKeyRssFeeder Then Return
             $selection.Push(.Key, Mouse.Left)
             .[.Key].Picture = MikuruTile(.Key, $selection.Paths.Exist(.Key))
         End With

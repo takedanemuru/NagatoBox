@@ -8,7 +8,7 @@ Private Sub initializeMenu(argParentMenu As Menu)
     Dim yukiMenu As New Menu(argParentMenu) As "OpenWithMenu"
     
     With yukiMenu
-        .Picture = MikuruIcons.GetDesktopEntryIcon($desktopFile.Path, 24)
+        .Picture = MikuruIcons.GetDesktopEntryIcon($desktopFile.Path, 64)
         .Text = $desktopFile.Name
         .Tag = $desktopFile.Path
     End With

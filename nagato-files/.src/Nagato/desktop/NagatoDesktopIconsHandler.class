@@ -4,6 +4,7 @@ Inherits NagatoDesktopHandler
 
 Private $iconView As IconView
 Private $clock As NagatoDesktopClock
+Private $rss As NagatoDesktopRssFeeds
 Private $trashBin As NagatoDesktopTrashBin 
 
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
@@ -19,16 +20,13 @@ End
 
 Private Sub initializeIcons(argSelectedPaths As String[])
     
-    If NagatoSettingsDesktop.ShowClock Then 
-        $clock = New NagatoDesktopClock($iconView)
-    End If
+    If NagatoSettingsDesktop.ShowClock Then $clock = New NagatoDesktopClock($iconView)
+    $rss = New NagatoDesktopRssFeeds($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)
     
-    If NagatoSettingsDesktop.ShowTrashBin Then
-        $trashBin = New NagatoDesktopTrashBin($iconView)
-    End If
+    If NagatoSettingsDesktop.ShowTrashBin Then $trashBin = New NagatoDesktopTrashBin($iconView)
     
 End
 

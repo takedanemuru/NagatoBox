@@ -79,6 +79,6 @@ End
 
 Private Function Ready_Read() As Boolean
 
-    
+    Return $ready
 
 End

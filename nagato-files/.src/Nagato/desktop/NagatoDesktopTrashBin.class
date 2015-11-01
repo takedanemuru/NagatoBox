@@ -38,7 +38,6 @@ Private Sub initializeIcon()
         Paint.Font.Size = FontSize
         Paint.Font.Bold = True
         Paint.DrawPicture(Stock["64/trash"], 32, 8)
-        'Paint.RichText(getText(), 0, IconSize * 0.66, IconSize, IconSize * 0.33, Align.Center)
         paintLabel()
         Paint.Fill()
     Paint.End()

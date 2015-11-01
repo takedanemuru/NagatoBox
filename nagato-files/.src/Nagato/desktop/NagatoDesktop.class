@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Public Const SpecialKeyClock As String = "DesktopClock"
+Public Const SpecialKeyRssFeeder As String = "DesktopRssFeeder"
 Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
 
 Private $iconView As NagatoIconViewInitializer

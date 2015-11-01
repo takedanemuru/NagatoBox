@@ -27,6 +27,8 @@ Public Sub Asakura_Activate()
         MikuruDesktopEntry.Execute(yukiPath)
     Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
         ' ignore
+    Else If yukiPath = NagatoDesktop.SpecialKeyRssFeeder Then
+        ' ignore
     Else ' for files
         MikuruFile.Exec(yukiPath)
     End If

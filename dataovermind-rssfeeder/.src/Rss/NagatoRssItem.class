@@ -4,11 +4,14 @@ Property Read Valid As Boolean
 Property Read Title As String
 Property Read Description As String
 Property Read Link As String
+Property Read ThumbnailPath As String
 
 Private $valid As Boolean = False
 Private $title As String
 Private $description As String
 Private $link As String
+Private $thumbnailPath As String 
+Private $thumbnailWidth As Integer
 
 Public Sub _new(argXmlElement As XmlElement)
     
@@ -22,6 +25,8 @@ Public Sub _new(argXmlElement As XmlElement)
                 $description = yukiNode.Value
             Case "link"
                 $link = yukiNode.Value
+            Case "media:thumbnail"
+                If CInt(yukiNode.Attributes["width"]) > $thumbnailWidth Then $thumbnailPath = yukiNode.Attributes["url"]
         End Select
     Next
     
@@ -50,5 +55,11 @@ End
 Private Function Link_Read() As String
 
     Return $link
+
+End
+
+Private Function ThumbnailPath_Read() As String
+
+    Return $thumbnailPath
 
 End

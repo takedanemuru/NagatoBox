@@ -19,7 +19,7 @@ Public Sub _new(argParentMenu As Menu, argDesktopFileName As String, argPath As 
     
     If Not Dir(MikuruApplicationDirectory.Global).Exist(argDesktopFileName) Then Return
     
-    $desktopFile = New DesktopFile(MikuruApplicationDirectory &/ argDesktopFileName)
+    $desktopFile = New DesktopFile(MikuruApplicationDirectory.Global &/ argDesktopFileName)
     $path = argPath
     initializeMenu(argParentMenu)
     

@@ -1,0 +1,100 @@
+' Gambas class file
+
+Inherits NagatoDesktopSpecialIcon
+
+Private Const IconSize As Integer = 128
+Private Const FontSize As Integer = 11
+Private Const TextWidth As Integer = 112 ' TileSize - Margin * 2
+Private Const Margin As Integer = 8
+
+Private $iconView As IconView
+Private $observer As Observer
+Private $feeder As New NagatoDBusAccessRssFeeder
+Private $thumbnailer As New NagatoDesktopRssThumbnail
+
+Private Function getBaseImage(argTitle As String) As Image
+    
+    Dim yukiImage As Image
+
+    If $thumbnailer.HasThumbnail(argTitle) Then
+        yukiImage = $thumbnailer.GetThumbnail(argTitle)
+    Else
+        yukiImage = New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
+    Endif
+
+    Return yukiImage
+    
+End
+
+Private Sub paintLabel(argText As String)
+    
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TextWidth) + Margin * 2
+    
+    Paint.Brush = Paint.Color(Color.Orange + 16777216 * 128)
+    Paint.Rectangle(0, IconSize - yukiHeight, IconSize, yukiHeight)
+    Paint.Fill()
+    
+End
+
+Private Sub paintDescription(argText As String)
+    
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TextWidth)
+    Dim yukiY As Integer = IconSize - yukiHeight - Margin
+    
+    Paint.Font.Size = Application.Font.Size
+    Paint.Font.Bold = True
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText(argText, Margin, yukiY, TextWidth, yukiHeight, Align.Center)
+    Paint.Fill()
+    
+End
+
+Public Function getIcon() As Picture
+    
+    Dim yukiFeedItems As String[] = $feeder.GetFeedItem()
+    Dim yukiImage As Image = getBaseImage(yukiFeedItems[0])
+    
+    Paint.Begin(yukiImage)
+        Paint.DrawPicture(MikuruIcon.Get("feed-alt", 24), 8, 8)
+        If $thumbnailer.HasThumbnail(yukiFeedItems[0]) Then paintLabel(yukiFeedItems[0])
+        paintDescription(yukiFeedItems[0])
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+Catch
+    Return getBaseImage("")
+    
+End
+
+Public Sub Stop()
+    
+    'Try NagatoDesktopTimer.Stop()
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    Dim yukiImage As New Image(128, 128, Color.Orange + 16777216 * 128)
+    
+    $iconView = argIconView
+    $iconView.Add(NagatoDesktop.SpecialKeyRssFeeder, "", yukiImage.Picture)
+    
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    If Not $iconView.Exist(NagatoDesktop.SpecialKeyRssFeeder) Then Return
+    If Not $feeder.Activated Then $feeder.Activate()
+    If Not $feeder.Activated Then Return
+    
+    If Second(Now()) Mod 15 = 0 Then 
+        $feeder.Next()
+        $thumbnailer.SetUrl($feeder.GetFeedItem())
+    End If
+    
+    $iconView[NagatoDesktop.SpecialKeyRssFeeder].Picture = getIcon()
+    
+End

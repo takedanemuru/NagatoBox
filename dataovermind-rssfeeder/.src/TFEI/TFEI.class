@@ -39,6 +39,7 @@ Public Sub GetFeedItem(argFeedIndex As Integer, argItemIndex As Integer) As Stri
         yukiArray.Add(.Title)
         yukiArray.Add(.Description)
         yukiArray.Add(.Link)
+        yukiArray.Add(.ThumbnailPath)
     End With
     
     Return yukiArray

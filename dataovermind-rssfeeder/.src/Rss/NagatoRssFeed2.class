@@ -17,7 +17,6 @@ Private Sub setTitle()
     Dim yukiElements As XmlElement[] = $xmlDocument.GetElementsByTagName("title")
     
      If yukiElements.Count > 0 Then
-         'Debug yukiElements[0].ChildNodes[0].Value
          Try $title = yukiElements[0].ChildNodes[0].Value
      Endif
     

@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.7.1
+# Compiled with Gambas 3.8.90
 Title=dataovermind-rssfeeder
 Startup=Kyon
 Icon=pictures/information-balloon.png
-Version=0.0.1
+Version=42.2.3
 Component=gb.dbus
 Component=gb.settings
 Component=gb.net
@@ -15,14 +15,15 @@ TabSize=4
 Translate=1
 Language=ja
 Maintainer=takedanemuru
-Vendor=Integrated Data Thought Entity
+Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex
 Url=takedanemuru.github.io
 License=S.O.S. License
-PackageName=dataovermind-rssfeeder-0.0.1
+PackageName=dataovermind-rssfeeder-42.2.3
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
 Categories=ubuntu:"System"
 Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"dataovermind-rssfeeder.png\t/usr/share/pixmaps"
