@@ -7,6 +7,7 @@ Property ShowHidden As Boolean
 Property SortBy As Integer
 Property SortAscent As Boolean
 Property ShowClock As Boolean
+Property ShowRss As Boolean
 Property ShowTrashBin As Boolean
 
 Event Changed
@@ -91,6 +92,22 @@ Private Sub ShowTrashBin_Write(Value As Boolean)
 
     If Value <> Me._$settings["desktop_view/show_trash_bin"]
         Me._$settings["desktop_view/show_trash_bin"] = Value
+        Me._$settings.Save()
+        Raise Changed
+    End If
+
+End
+
+Private Function ShowRss_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_rss", True]
+
+End
+
+Private Sub ShowRss_Write(Value As Boolean)
+
+    If Value <> Me._$settings["desktop_view/show_rss"]
+        Me._$settings["desktop_view/show_rss"] = Value
         Me._$settings.Save()
         Raise Changed
     End If

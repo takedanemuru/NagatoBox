@@ -21,7 +21,7 @@ End
 Private Sub initializeIcons(argSelectedPaths As String[])
     
     If NagatoSettingsDesktop.ShowClock Then $clock = New NagatoDesktopClock($iconView)
-    $rss = New NagatoDesktopRssFeeds($iconView)
+    If NagatoSettingsDesktop.ShowRss Then $rss = New NagatoDesktopRssFeeds($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)
@@ -41,9 +41,9 @@ End
 
 Private Sub clearAll()
     
-    detachObject($clock)
-    detachObject($trashBin)
-    $iconView.Clear()    
+    Try detachObject($clock)
+    Try detachObject($trashBin)
+    $iconView.Clear()
     
 End
 

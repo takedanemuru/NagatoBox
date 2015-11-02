@@ -10,7 +10,7 @@ Private $observer As Observer
 
 Private Function getBaseImage() As Image
     
-    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + 16777216 * 128)
+    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + Color.Transparent * -128)
 
     Return yukiImage
     
@@ -33,7 +33,7 @@ End
 
 Public Sub Stop()
     
-    'Try NagatoDesktopTimer.Stop()
+    
     
 End
 

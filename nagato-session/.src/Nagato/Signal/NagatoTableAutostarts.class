@@ -75,8 +75,9 @@ Public Sub _get(argIndex As Integer) As NagatoAutostartFile
     
 End
 
-Public Sub Refresh()
+Public Sub Refresh(argAutostarts As NagatoAutostarts)
     
-    'refresh?
+    Me._ClearGrids()
+    setData(argAutostarts)
     
 End

@@ -15,12 +15,14 @@ End
 Public Sub _InitializeGridView()
     
     $gridView = New TableView(Me._$container) As "TableView"
-    
-    With NagatoXdgAutostarts
-        $gridviewHandler = New NagatoTableAutostarts($gridView, .GlobalAutoStarts)
-    End With
-    
+    $gridviewHandler = New NagatoTableAutostarts($gridView, NagatoXdgAutostarts.GlobalAutoStarts)
     NagatoSettings.LoadGridsSettings($gridView)
+    
+End
+
+Public Sub Reload()
+    
+    $gridviewHandler.Refresh(NagatoXdgAutostarts.GlobalAutoStarts)
     
 End
 

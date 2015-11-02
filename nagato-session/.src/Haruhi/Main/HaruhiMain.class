@@ -40,3 +40,11 @@ Public Sub Form_Close()
     NagatoSettings.SaveFormSettings(Me)
     
 End
+
+Public Sub Asakura_Changed()
+    
+    NagatoXdgAutostarts.Initialize()
+    $autostartTabGlobal.Reload()
+    $autostartTabUser.Reload()
+    
+End

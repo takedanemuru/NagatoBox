@@ -32,7 +32,7 @@ Public Sub MainDrawingArea_Draw()
     
     Paint.Begin(MainDrawingArea)
         Paint.DrawImage(Image.Load("pictures/persona.jpg").Stretch(MainDrawingArea.W, MainDrawingArea.H), 0, 0)
-        Paint.Brush = Paint.Color(Color.Violet + 16777216 * 128)
+        Paint.Brush = Paint.Color(Color.Violet + Color.Transparent * -128)
         Paint.Rectangle(20, 170, 260, 110)
         Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)

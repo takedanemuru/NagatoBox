@@ -95,9 +95,8 @@ End
 
 Public Sub PopUpContextMenu()
     
-    Dim yukiMenu As NagatoContextMenuIconViewFiler
+    Dim yukiMenu As New NagatoContextMenuIconViewFiler(HaruhiMain, $data.CurrentDirectory)
     
-    yukiMenu = New NagatoContextMenuIconViewFiler(HaruhiMain, $data.CurrentDirectory)
     yukiMenu.PopUp()
     
 End
@@ -110,9 +109,8 @@ End
 
 Public Sub Enter()
     
-    If IsDir($selectionBar.LastSelected) Then 
-        Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, $selectionBar.LastSelected)
-    End If
+    If Not IsDir($selectionBar.LastSelected) Then Return
+    Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, $selectionBar.LastSelected)
     
 End
 

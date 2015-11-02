@@ -7,7 +7,6 @@ Private Const Command As String = "ffmpegthumbnailer -s 512 -t &1% -i &2 -o &3"
 Private $sourcePath As String
 Private $tempDir As String
 Private $tempPath As String
-Private $position As Integer
 Private $selectedPath As String
 
 Private Function getThumbnailImage(argImage As Image) As Picture

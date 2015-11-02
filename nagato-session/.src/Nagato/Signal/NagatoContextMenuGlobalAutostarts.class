@@ -10,3 +10,15 @@ Public Sub _AbstractOnInitialize()
     End With
     
 End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case MikuruSignal.AutostartsNewBlocker
+            Debug "new block"
+            MikuruBlocker.Create(Me._$autostart.Name)
+        Case MikuruSignal.AutostartsShowSourceReadOnly
+            Debug "show detail read-only"
+    End Select
+    
+End

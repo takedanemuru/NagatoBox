@@ -21,6 +21,7 @@ Public Sub _ClearGrids()
     With Me._$table
         .Clear()
         .Rows.Count = 0
+        .Refresh()
     End With
     
 End

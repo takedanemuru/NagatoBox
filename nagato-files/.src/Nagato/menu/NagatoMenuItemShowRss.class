@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Private Function getIcon() As Picture
+    
+    Return IIf(NagatoSettingsDesktop.ShowRss, MikuruIcon.Get("button-check"), Null)
+    
+End
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("Show RSS")
+        .Picture = getIcon()
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsDesktop.ShowRss = Not NagatoSettingsDesktop.ShowRss
+    
+End
+

@@ -3,6 +3,8 @@
 Private $observerGlobal As NagatoDirectoryObserver
 Private $observerUser As NagatoDirectoryObserver
 
+Event Changed
+
 Public Sub _new()
     
     $observerGlobal = New NagatoDirectoryObserver As "Asakura"
@@ -10,5 +12,17 @@ Public Sub _new()
     
     $observerGlobal.Directory = MikuruAutostartDirectory.Global
     $observerUser.Directory = MikuruAutostartDirectory.User
+    
+End
+
+Public Sub Asakura_Deleted(argFileName As String)
+    
+    Raise Changed
+    
+End
+
+Public Sub Asakura_Modefied(argFileName As String)
+    
+    Raise Changed
     
 End

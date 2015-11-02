@@ -30,7 +30,7 @@ Private Sub paintLabel(argText As String)
     
     Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TextWidth) + Margin * 2
     
-    Paint.Brush = Paint.Color(Color.Orange + 16777216 * 128)
+    Paint.Brush = Paint.Color(Color.Gray + 16777216 * 128)
     Paint.Rectangle(0, IconSize - yukiHeight, IconSize, yukiHeight)
     Paint.Fill()
     

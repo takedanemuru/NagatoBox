@@ -10,3 +10,9 @@ Public Sub _AbstractOnInitialize()
     Me._AddMenuItem("Delete", MikuruSignal.AutostartsDelete, "bin")
     
 End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(Last.Tag, [Me._$autostart])
+    
+End

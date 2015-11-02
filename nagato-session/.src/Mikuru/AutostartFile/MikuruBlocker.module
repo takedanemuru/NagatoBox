@@ -2,7 +2,7 @@
 
 Public Sub Create(argApplicationName As String)
     
-    Dim yukiPath As String = MikuruAutostartDirectory.User &/ argApplicationName & ".desktop"
+    Dim yukiPath As String = MikuruAutostartDirectory.User &/ argApplicationName
     Dim yukiText As String = File.Load("text/BlockerTemplate")
     
     Try File.Save(yukiPath, yukiText)
