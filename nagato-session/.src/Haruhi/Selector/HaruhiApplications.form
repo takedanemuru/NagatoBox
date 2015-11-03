@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Vertical
+  { SearchButtonBox ButtonBox
+    MoveScaled(4,3,57,4)
+    Picture = Picture["pictures/mono_icon/search.png"]
+  }
+  { ApplicationsIconView IconView
+    MoveScaled(3,11,58,47)
+    ToolTip = ("Double click or DnD to Desktop to create launcher")
+    Expand = True
+  }
+}

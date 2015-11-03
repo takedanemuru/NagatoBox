@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Size As Integer
+
+Private Function Size_Read() As Integer
+
+    Return Me._$settings["tile/size", 128]
+
+End
+
+Private Sub Size_Write(Value As Integer)
+
+     Me._$settings["tile/size"] = 128
+    Me._$settings.Save()
+
+End

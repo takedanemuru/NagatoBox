@@ -2,28 +2,20 @@
 
 Inherits NagatoDesktopSpecialIcon
 
-Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 16
 
 Private $iconView As IconView
 Private $observer As Observer
 
-Private Function getBaseImage() As Image
-    
-    Dim yukiImage As New Image(IconSize, IconSize, Color.Orange + Color.Transparent * -128)
-
-    Return yukiImage
-    
-End
-
 Public Function getIcon() As Picture
     
-    Dim yukiImage As Image = getBaseImage()
+    Dim yukiImage As Image = MikuruTileBaseImage[Color.Orange, 128]
+    Dim yukiText As String = Format$(Now(), NagatoSettingsDesktop.ClockFormat)
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Size = FontSize
-        Paint.RichText(Format$(Now(), NagatoSettingsDesktop.ClockFormat), 0, 0, IconSize, IconSize, Align.Center)
+        Paint.RichText(yukiText, 0, 0, NagatoSettingsTile.Size, NagatoSettingsTile.Size, Align.Center)
         Paint.Fill()
     Paint.End()
     

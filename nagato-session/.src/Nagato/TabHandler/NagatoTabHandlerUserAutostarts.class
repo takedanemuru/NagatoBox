@@ -53,7 +53,7 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.AutostartsNew
-            Debug HaruhiSelectApplication.ShowDialog()
+            Debug HaruhiApplications.ShowDialog()
         Case MikuruSignal.AutostartsShowSource
             
         Case MikuruSignal.AutostartsDelete

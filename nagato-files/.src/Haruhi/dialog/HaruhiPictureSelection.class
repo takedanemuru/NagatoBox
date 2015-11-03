@@ -6,7 +6,7 @@ Public Sub Form_Open()
     With PictureChooser
         .Filter = ["*.png;*.jpg;*.jpeg", "Picture Files"]
         .ShowPreview = True
-        .FileView.IconSize = 128
+        .FileView.IconSize = NagatoSettingsTile.Size
     End With
 
 End

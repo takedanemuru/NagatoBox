@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Property Read WOrkingDirectory As String
+Property Read WorkingDirectory As String
 
 Private $httpClient As New HttpClient As "HttpClient"
 Private $url As String
@@ -30,10 +30,10 @@ Public Sub GetThumbnail(argTitle As String) As Image
     
     Dim yukiImage As Image = Image.Load(Me.WorkingDirectory &/ argTitle & ".jpg")
     
-    Return MikuruTileImage.Justify(yukiImage, 128)
+    Return MikuruTileImage.Justify(yukiImage, NagatoSettingsTile.Size)
     
 Catch
-    Return New Image(128, 128, Color.Orange + 16777216 * 128)
+    Return MikuruTileBaseImage[Color.Orange, 128]
     
 End
 
@@ -54,7 +54,7 @@ Public Sub HttpClient_Finished()
     
 End
 
-Private Function WOrkingDirectory_Read() As String
+Private Function WorkingDirectory_Read() As String
 
     Return User.Home &/ ".nagato-files-rss-working-directory"
 

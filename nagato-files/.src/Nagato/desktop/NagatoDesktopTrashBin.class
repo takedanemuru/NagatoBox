@@ -2,7 +2,6 @@
 
 Inherits NagatoDesktopSpecialIcon
 
-Private Const IconSize As Integer = 128
 Private Const FontSize As Integer = 10
 
 Private $iconView As IconView
@@ -23,15 +22,17 @@ End
 Private Sub paintLabel()
     
     Dim yukiText As String = getText()
-    Dim yukiHeight As Integer = Application.Font.RichTextHeight(yukiText, 128 - 16)
+    Dim yukiHeight As Integer = Application.Font.RichTextHeight(yukiText, NagatoSettingsTile.Size - 16)
     
-    Paint.RichText(yukiText, 0, 128 - yukiHeight - 16, IconSize, yukiHeight + 16, Align.Center)
+    With NagatoSettingsTile
+        Paint.RichText(yukiText, 0, .Size - yukiHeight - 16, .Size, yukiHeight + 16, Align.Center)
+    End With
     
 End
 
 Private Sub initializeIcon()
     
-    Dim yukiImage As New Image(IconSize, IconSize, Color.DarkGreen + 16777216 * 128)
+    Dim yukiImage As Image = MikuruTileBaseImage[Color.DarkGreen, 128]
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
