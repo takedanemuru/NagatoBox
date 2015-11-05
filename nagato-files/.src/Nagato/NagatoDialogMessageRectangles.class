@@ -1,0 +1,64 @@
+' Gambas class file
+
+Property Read LabelRectangle As Rect
+Property Read TextRectangle As Rect
+
+Private Const Margin As Integer = 8
+
+Private $baseRect As New Rect
+Private $textHeight As Integer
+Private $labelRectangle As New Rect
+Private $textRectangle As New Rect
+    
+Private Sub setLabelRectangle()
+    
+    With $labelRectangle
+        .X = 1 * Margin
+        .Y = $baseRect.H - ($textHeight + 3 * Margin)
+        .W = $baseRect.W - (2 * Margin)
+        .H = $textHeight + (2 * Margin)
+    End With
+    
+End
+
+Private Sub setTextRectangle()
+    
+    With $textRectangle
+        .X = $labelRectangle.X + (1 * Margin)
+        .Y = $labelRectangle.Y + (1 * Margin)
+        .W = $labelRectangle.W - (2 * Margin)
+        .H = $labelRectangle.H - (2 * Margin)
+    End With
+    
+End
+    
+Public Sub SetRichText(argFont As Font, argText As String)
+    
+    $textHeight = argFont.RichTextHeight(argText, $baseRect.W - (4 * Margin))
+    setLabelRectangle()
+    setTextRectangle()
+    
+End
+    
+Public Sub _new(argX As Integer, argY As Integer, argWidth As Integer, argHeight As Integer)
+    
+    With $baseRect
+        .X = argX
+        .Y = argY
+        .W = argWidth
+        .H = argHeight
+    End With
+    
+End
+
+Private Function LabelRectangle_Read() As Rect
+
+    Return $labelRectangle
+
+End
+
+Private Function TextRectangle_Read() As Rect
+
+    Return $textRectangle
+
+End

@@ -2,43 +2,58 @@
 
 Public Enum ResponseCancel, ResponseDelete
 
-Private $message As String
+Private $rectangles As NagatoDialogMessageRectangles
+Private $message As New NagatoDialogMessageDeletingPaths
+
+Private Sub paintLabel()
+    
+    Dim yukiRect As Rect = $rectangles.LabelRectangle
+    
+    Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Violet, 128))
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
+    
+End
+
+Private Sub paintText()
+    
+    Dim yukiRect As Rect = $rectangles.TextRectangle
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText($message.RichText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Function getBackground() As Image
+    
+    Return Image.Load("pictures/persona.jpg").Stretch(MainDrawingArea.W, MainDrawingArea.H)
+    
+End
 
 Public Sub SetMessage(argPaths As String[])
     
-    Dim yukiIndex As Integer
-    
-    $message = "YUKI.N > We are going to kill..<br><br>"
-    
-    For yukiIndex = 0 To argPaths.Max
-        $message &= Subst$("&1<br>", File.Name(argPaths[yukiIndex]))
-        If yukiIndex = 2 Then 
-            $message &= Subst$(("and other &1 more file(s)"), argPaths.Count - 3)
-            Break
-        Endif
-    Next
-    
+    $message.SetMessage(argPaths)
     MainDrawingArea.Refresh()
     
 End
 
 Public Sub Form_Open()
 
-    
+    With MainDrawingArea
+        $rectangles = New NagatoDialogMessageRectangles(0, 0, Me.W, Me.H - HBox1.H)
+    End With
 
 End
 
 Public Sub MainDrawingArea_Draw()
     
     Paint.Begin(MainDrawingArea)
-        Paint.DrawImage(Image.Load("pictures/persona.jpg").Stretch(MainDrawingArea.W, MainDrawingArea.H), 0, 0)
-        Paint.Brush = MikuruColor.Transparent(Color.Violet, 128)
-        Paint.Rectangle(20, 170, 260, 110)
-        Paint.Fill()
-        Paint.Brush = Paint.Color(Color.White)
+        Paint.DrawImage(getBackground(), 0, 0)
         Paint.Font.Bold = True
-        Paint.RichText($message, 20, 170, 260, 110, Align.Center)
-        Paint.Fill()
+        $rectangles.SetRichText(Paint.Font, $message.RichText)
+        paintLabel()
+        paintText()
     Paint.End()
     
 End

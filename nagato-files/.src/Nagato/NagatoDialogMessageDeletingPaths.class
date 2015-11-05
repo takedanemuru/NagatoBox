@@ -1,0 +1,26 @@
+' Gambas class file
+
+Property Read RichText As String
+
+Private $message As String
+
+Public Sub SetMessage(argPaths As String[])
+    
+    Dim yukiIndex As Integer
+    
+    $message = "YUKI.N > We are going to kill..<br>"
+    
+    For yukiIndex = 0 To argPaths.Max
+        $message &= Subst$("<br>&1", File.Name(argPaths[yukiIndex]))
+        If 10 > yukiIndex Then Continue
+        $message &= Subst$(("<br>and other &1 more file(s)"), argPaths.Count - 11)
+        Break
+    Next
+    
+End
+
+Private Function RichText_Read() As String
+
+    Return $message
+
+End
