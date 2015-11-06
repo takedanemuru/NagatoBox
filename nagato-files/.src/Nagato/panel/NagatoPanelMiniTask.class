@@ -4,6 +4,7 @@ Property Visible As Boolean
 
 Private $container As HBox
 Private $observer As Observer
+Private $windows As New NagatoDesktopWindowsTypeC
 
 Private Function setIcon(argDesktopWindow As DesktopWindow) As Boolean
     
@@ -19,56 +20,52 @@ Private Function setIcon(argDesktopWindow As DesktopWindow) As Boolean
         .Tag = argDesktopWindow.Id
     End With
     
-    Return True
+Finally
+    Return Not Error
     
-Catch
-    Return False
+End
+
+Private Function setIcons() As Integer
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    Dim yukiIndex As Integer
+    Dim yukiWidth As Integer = $container.H
+    
+    For yukiIndex = 0 To NagatoDesktopWatcher2.Max
+        yukiDesktopWindow = NagatoDesktopWatcher2[yukiIndex]
+        If yukiDesktopWindow.SkipTaskbar Then Continue
+        If setIcon(yukiDesktopWindow) Then yukiWidth += $container.H
+    Next
+    
+    Return yukiWidth
     
 End
 
 Private Sub refresh()
     
-    Dim yukiDesktopWindow As DesktopWindow
-    Dim yukiWidth As Integer = $container.H
-    
     $container.Children.Clear()
-    
-    For Each yukiDesktopWindow In Desktop.Windows
-        If yukiDesktopWindow.SkipTaskbar Then Continue
-        If setIcon(yukiDesktopWindow) Then yukiWidth += $container.H
-    Next
-    
-    If yukiWidth <> $container.W Then $container.W = yukiWidth
+    $container.W = setIcons()
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    $observer = New Observer(NagatoDesktopWatcher2) As "Asakura"
     
     $container = New HBox(argContainer)
     $container.Visible = False
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub Asakura_ListChanged()
     
-    If Not $container.Visible Then Return
-    
-    Desktop.Windows.Refresh()
-    refresh()
-    
-Catch
-    Debug Error.Text
-    Return
+    If $container.Visible Then refresh()
     
 End
 
 Public Sub TaskIcon_Click()
     
-    Dim yukiDesktopWindow As DesktopWindow
-    
-    yukiDesktopWindow = New DesktopWindow(Last.Tag)
+    Dim yukiDesktopWindow As New DesktopWindow(Last.Tag)
     
     Desktop.Current = yukiDesktopWindow.Desktop
     yukiDesktopWindow.Activate()
@@ -87,5 +84,7 @@ End
 Private Sub Visible_Write(Value As Boolean)
 
     $container.Visible = Value
+
+    Me.Asakura_ListChanged()
 
 End

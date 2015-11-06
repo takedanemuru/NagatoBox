@@ -27,6 +27,9 @@ Public Sub ChangeMode(argMode As Integer)
     $rssFeeder.Visible = (argMode = Me.ModeRss)
     $player.Visible = (argMode = Me.ModePlayer)
     
+    If argMode = Me.ModeTasksTypeA Then $tasksTypeA.ForceReload()
+    If argMode = Me.ModeTasksTypeB Then $tasksTypeB.ForceReload()
+    
 End
 
 Public Sub ForceReload()

@@ -6,10 +6,9 @@ Private $windows As NagatoDesktopWindowsTypeA
 
 Private Sub showContextMenu(argMouseX As Integer)
     
-    Dim yukiWindow As DesktopWindow 
+    Dim yukiWindow As DesktopWindow = $windows.GetDesktopWindowByMouseX(argMouseX)
     Dim yukiMenu As NagatoContextMenuPanelTask
     
-    yukiWindow = $windows.GetDesktopWindowByMouseX(argMouseX)
     yukiMenu = New NagatoContextMenuPanelTask(HaruhiDesktop, "", yukiWindow)
     yukiMenu.Popup()
     
@@ -59,6 +58,12 @@ Public Sub _Refresh()
     
 End
 
+Public Sub _Show()
+    
+    Me._Refresh()
+    
+End
+
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
     $windows = New NagatoDesktopWindowsTypeA
@@ -72,10 +77,10 @@ Public Sub ClockDrawingArea_Draw()
     Dim yukiIndex As Integer
 
     Paint.Begin(Me._$drawingArea)
-        Paint.Font.Bold = True
-        For yukiIndex = 0 To $windows.Max
-            paintTask(yukiIndex)
-        Next
+    Paint.Font.Bold = True
+    For yukiIndex = 0 To $windows.Max
+        paintTask(yukiIndex)
+    Next
     Paint.End()
     
 End

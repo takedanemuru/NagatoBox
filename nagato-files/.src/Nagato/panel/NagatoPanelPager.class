@@ -5,7 +5,7 @@ Inherits NagatoPanelContentCore
 Private Const BoxSize As Integer = 22
 
 Private $drawingArea As DrawingArea
-Private $watcher As New NagatoDesktopWatcher As "DesktopWatcher"
+Private $observer As Observer
 Private $painter As New NagatoPagerPainter
 
 Private Function getPagerWidth() As Integer
@@ -40,7 +40,7 @@ End
 
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
-    $drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
+    $drawingArea = New DrawingArea(argContainer) As "PagerDrawingArea"
     
     With $drawingArea
         .Expand = argExpand
@@ -48,9 +48,11 @@ Public Sub _new(argContainer As Container, argExpand As Boolean)
         .Width = getPagerWidth()
     End With
     
+    $observer = New Observer(NagatoDesktopWatcher2) As "Asakura"
+    
 End
 
-Public Sub ClockDrawingArea_Draw()
+Public Sub PagerDrawingArea_Draw()
 
     Paint.Begin($drawingArea)
         $painter.Paint()
@@ -58,14 +60,14 @@ Public Sub ClockDrawingArea_Draw()
     
 End
 
-Public Sub ClockDrawingArea_MouseDown()
+Public Sub PagerDrawingArea_MouseDown()
     
     If Mouse.Left Then Desktop.Current = (Mouse.X Div BoxSize)
     If Mouse.Right Then popUpContextMenu()
     
 End
 
-Public Sub DesktopWatcher_Changed()
+Public Sub Asakura_VirtualDesktopChanged()
     
     refreshAll()
     

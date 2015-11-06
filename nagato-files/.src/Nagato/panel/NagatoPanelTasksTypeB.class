@@ -6,11 +6,9 @@ Private $windows As NagatoDesktopWindowsTypeB
 
 Private Sub showContextMenu(argMouseX As Integer)
     
-    Dim yukiWindow As DesktopWindow 
-    Dim yukiMenu As NagatoContextMenuPanelTask
+    Dim yukiWindow As DesktopWindow = $windows.GetDesktopWindowByMouseX(argMouseX)
+    Dim yukiMenu As New NagatoContextMenuPanelTask(HaruhiDesktop, "", yukiWindow)
     
-    yukiWindow = $windows.GetDesktopWindowByMouseX(argMouseX)
-    yukiMenu = New NagatoContextMenuPanelTask(HaruhiDesktop, "", yukiWindow)
     yukiMenu.Popup()
     
 End
@@ -20,6 +18,12 @@ Public Sub _Refresh()
     $windows.Refresh(Me._$drawingArea.W)
     
     Me._$drawingArea.Refresh()
+    
+End
+
+Public Sub _Show()
+    
+    Me._Refresh()
     
 End
 

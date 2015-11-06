@@ -9,6 +9,12 @@ Property Visible As Boolean
 Public _$drawingArea As DrawingArea
 Public _$observer As Observer
 
+Public Sub _InitializeObserver()
+    
+    Me._$observer = New Observer(HaruhiDesktop) As "Asakura"
+    
+End
+
 Public Sub _Initialize(argContainer As Container, argExpand As Boolean)
     
     Me._$drawingArea = New DrawingArea(argContainer) As "ClockDrawingArea"
@@ -20,7 +26,7 @@ Public Sub _Initialize(argContainer As Container, argExpand As Boolean)
         If argExpand Then .Visible = False
     End With
     
-    Me._$observer = New Observer(HaruhiDesktop) As "Asakura"
+    Me._InitializeObserver()
     
 End
 
@@ -79,10 +85,9 @@ End
 
 Private Sub Visible_Write(Value As Boolean)
 
-    If Me._$drawingArea.Visible <> Value Then
-        Me._$drawingArea.Visible = Value
-        If Not Value Then Me._Close()
-        If Value Then Me._Show()
-    End If
+    If Me._$drawingArea.Visible = Value Then Return
+    Me._$drawingArea.Visible = Value
+    If Not Value Then Me._Close()
+    If Value Then Me._Show()
 
 End
