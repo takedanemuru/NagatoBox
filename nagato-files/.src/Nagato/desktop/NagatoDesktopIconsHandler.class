@@ -5,6 +5,7 @@ Inherits NagatoDesktopHandler
 Private $iconView As IconView
 Private $clock As NagatoDesktopClock
 Private $rss As NagatoDesktopRssFeeds
+Private $systemMonitor As NagatoDesktopSystemMonitor
 Private $trashBin As NagatoDesktopTrashBin 
 
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
@@ -22,6 +23,7 @@ Private Sub initializeIcons(argSelectedPaths As String[])
     
     If NagatoSettingsDesktop.ShowClock Then $clock = New NagatoDesktopClock($iconView)
     If NagatoSettingsDesktop.ShowRss Then $rss = New NagatoDesktopRssFeeds($iconView)
+    If NagatoSettingsDesktop.ShowSystemMonitor Then $systemMonitor = New NagatoDesktopSystemMonitor($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)

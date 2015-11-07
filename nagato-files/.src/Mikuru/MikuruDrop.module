@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public Enum TypeVoid, TypeDirectory, TypeApplication, TypeFile, TypeClock, TypeTrashBin
+Public Enum TypeVoid, TypeDirectory, TypeApplication, TypeFile, TypeClock, TypeRss, TypeSysmon, TypeTrashBin
 
 Public Function GetType(argIconView As IconView) As Integer
     
@@ -12,6 +12,10 @@ Public Function GetType(argIconView As IconView) As Integer
         Return Me.TypeApplication
     Else If argIconView.Item.Key = NagatoDesktop.SpecialKeyClock Then
         Return Me.TypeClock
+    Else If argIconView.Item.Key = NagatoDesktop.SpecialKeySystemMonitor Then
+        Return Me.TypeSysmon
+    Else If argIconView.Item.Key = NagatoDesktop.SpecialKeyRssFeeder Then
+        Return Me.TypeRss
     Else If argIconView.Item.Key = NagatoDesktop.SpecialKeyTrashBin Then
         Return Me.TypeTrashBin
     Else

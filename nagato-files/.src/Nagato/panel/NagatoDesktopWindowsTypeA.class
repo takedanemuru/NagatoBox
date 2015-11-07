@@ -15,9 +15,12 @@ End
 
 Public Function GetDesktopWindowByMouseX(argMouseX As Integer) As DesktopWindow
     
-    Dim yukiWindowIndex As Integer = argMouseX Div CInt($totalWidth / (NagatoDesktopWatcher2.Max + 1))
+    Dim yukiWindowIndex As Integer = argMouseX Div CInt($totalWidth / (NagatoDesktopWatcher2.Count))
     
     Return NagatoDesktopWatcher2[yukiWindowIndex]
+    
+Catch
+    Return Null
     
 End
 

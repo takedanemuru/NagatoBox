@@ -11,12 +11,24 @@ Private $feeder As New NagatoDBusAccessRssFeeder
 Private $thumbnailer As New NagatoDesktopRssThumbnail
 Private $labelPainter As New NagatoPainterPathLabel
 
+Private Function getBaseImageText() As Image
+    
+    Dim yukiBaseImage As Image = MikuruTileBaseImage[Color.Orange, 192]
+    
+    Paint.Begin(yukiBaseImage)
+        NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialRssText)
+    Paint.End()
+    
+    Return yukiBaseImage
+    
+End
+
 Private Function getBaseImage(argTitle As String) As Image
     
     If $thumbnailer.HasThumbnail(argTitle) Then
         Return $thumbnailer.GetThumbnail(argTitle)
     Else
-        Return MikuruTileBaseImage[Color.Orange, 128]
+        Return getBaseImageText()
     Endif
     
 End
@@ -54,7 +66,6 @@ Public Function getIcon() As Picture
     Paint.Begin(yukiImage)
         If $thumbnailer.HasThumbnail(yukiTitle) Then paintLabel(yukiTitle)
         paintDescription(yukiTitle)
-        Paint.DrawPicture(MikuruIcon.Get("feed-alt", 24), 8, 8)
     Paint.End()
     
     Return yukiImage.Picture

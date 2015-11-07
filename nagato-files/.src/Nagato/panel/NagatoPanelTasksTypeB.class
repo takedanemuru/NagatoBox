@@ -4,15 +4,6 @@ Inherits NagatoPanelTasks
 
 Private $windows As NagatoDesktopWindowsTypeB
 
-Private Sub showContextMenu(argMouseX As Integer)
-    
-    Dim yukiWindow As DesktopWindow = $windows.GetDesktopWindowByMouseX(argMouseX)
-    Dim yukiMenu As New NagatoContextMenuPanelTask(HaruhiDesktop, "", yukiWindow)
-    
-    yukiMenu.Popup()
-    
-End
-
 Public Sub _Refresh()
     
     $windows.Refresh(Me._$drawingArea.W)
@@ -91,6 +82,6 @@ End
 Public Sub ClockDrawingArea_MouseDown()
     
     If Mouse.Left Then $windows.ActivateWindowByMouseX(Mouse.X)
-    If Mouse.Right Then showContextMenu(Mouse.X)
+    If Mouse.Right Then Me._PopUpContextMenu($windows.GetDesktopWindowByMouseX(Mouse.X))
     
 End

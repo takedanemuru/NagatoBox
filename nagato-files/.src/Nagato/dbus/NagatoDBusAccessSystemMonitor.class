@@ -1,6 +1,10 @@
 ' Gambas class file
 
 Property Read Activated As Boolean
+Property Read CpuUsage As Float
+Property Read MemoryUsage As Float
+Property Read SwapUsage As Float
+Property Read ProcessCount As Integer
 
 Private Const ServiceName As String = "org.gambas.dataovermind-systemmonitor"
 Private Const ObjectPath As String = "/org/dataovermind/systemmonitor"
@@ -38,5 +42,29 @@ Private Function Activated_Read() As Boolean
     If Not Object.IsValid($proxy) Then Return False 
 
     Return True
+
+End
+
+Private Function CpuUsage_Read() As Float
+
+    Return $proxy.CpuUsage
+
+End
+
+Private Function MemoryUsage_Read() As Float
+
+    Return $proxy.MemoryUsage
+
+End
+
+Private Function SwapUsage_Read() As Float
+
+    Return $proxy.SwapUsage
+
+End
+
+Private Function ProcessCount_Read() As Integer
+
+    Return $proxy.ProcessCount
 
 End

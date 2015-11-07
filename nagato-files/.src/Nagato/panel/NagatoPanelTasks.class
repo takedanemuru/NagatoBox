@@ -8,6 +8,14 @@ Private Function getText(argDesktopWindow As DesktopWindow, argWidth As Integer)
     
 End
 
+Public Sub _PopUpContextMenu(argDesktopWindow As DesktopWindow)
+    
+    Dim yukiMenu As New NagatoContextMenuPanelTask(HaruhiDesktop, "", argDesktopWindow)
+    
+    yukiMenu.Popup()
+    
+End
+
 Public Sub _InitializeObserver()
     
     Me._$observer = New Observer(NagatoDesktopWatcher2) As "Asakura"

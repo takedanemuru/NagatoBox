@@ -1,0 +1,111 @@
+' Gambas class file
+
+Inherits NagatoDesktopSpecialIcon
+
+Private $iconView As IconView
+Private $observer As Observer
+Private $systemMonitor As New NagatoDBusAccessSystemMonitor
+Private $textRectangle As New Rect
+
+Private Function getBaseImage() As Image
+    
+    Dim yukiBaseImage As Image = MikuruTileBaseImage[Color.Blue, 192]
+    
+    Paint.Begin(yukiBaseImage)
+        NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialSystems)
+    Paint.End()
+    
+    Return yukiBaseImage
+    
+End
+
+Private Sub setTextRectangle(argLabelText As String)
+    
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argLabelText, NagatoSettingsTile.Size)
+    
+    With $textRectangle
+        .X = 8
+        .Y = NagatoSettingsTile.Size - (yukiHeight + 8)
+        .W = NagatoSettingsTile.Size - 16
+        .H = yukiHeight
+    End With
+    
+End
+
+Private Function getLabel() As String
+    
+    Dim yukiText As String
+    
+    yukiText &= "CPU :" "<br>"
+    yukiText &= "Mem :" & "<br>"
+    yukiText &= "Swap :" & "<br>"
+    yukiText &= "Proc :" 
+    
+    setTextRectangle(yukiText)
+    
+    Return yukiText
+    
+End
+
+Private Function getText() As String
+    
+    Dim yukiText As String
+    
+    yukiText &= Format$($systemMonitor.CpuUsage, "##0.00%") & "<br>"
+    yukiText &= Format$($systemMonitor.MemoryUsage, "##0.00%") & "<br>"
+    yukiText &= Format$($systemMonitor.SwapUsage, "##0.00%") & "<br>"
+    yukiText &= $systemMonitor.ProcessCount
+    
+    Return yukiText
+    
+End
+
+Private Sub paintText()
+    
+    With $textRectangle
+        Paint.RichText(getLabel(), .X, .Y, .W, .H, Align.Left)
+        Paint.RichText(getText(), .X, .Y, .W, .H, Align.Right)
+    End With
+    
+End
+
+Public Function getIcon() As Picture
+    
+    Dim yukiImage As Image = getBaseImage()
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Font.Size = Application.Font.Size
+        paintText()
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
+
+Public Sub Stop()
+    
+    
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconView = argIconView
+    $iconView.Add(NagatoDesktop.SpecialKeySystemMonitor, "", getBaseImage().Picture)
+    
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    If Not $iconView.Exist(NagatoDesktop.SpecialKeySystemMonitor) Then Return
+    If Not $systemMonitor.Activated Then $systemMonitor.Activate()
+    If Not $systemMonitor.Activated Then Return
+    
+    $iconView[NagatoDesktop.SpecialKeySystemMonitor].Picture = getIcon()
+    
+End

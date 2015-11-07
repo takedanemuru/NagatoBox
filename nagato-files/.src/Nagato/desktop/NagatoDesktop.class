@@ -2,6 +2,7 @@
 
 Public Const SpecialKeyClock As String = "DesktopClock"
 Public Const SpecialKeyRssFeeder As String = "DesktopRssFeeder"
+Public Const SpecialKeySystemMonitor As String = "DesktopSystemMonitor"
 Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
 
 Private $iconView As NagatoIconViewInitializer

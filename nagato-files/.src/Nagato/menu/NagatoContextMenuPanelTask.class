@@ -15,6 +15,7 @@ Private Sub addWindowMenu()
         Me._AddContextMenu2(("Minimize"), MenuMinimize, "navigation-down", (Not .Minimized))
         Me._AddContextMenu2(("Maximize"), MenuMaximize, "navigation-up", (Not .Maximized))
             Me._AddContextMenu("", MenuNone)
+        If Me._$desktopWindow = Null Then Return
         yukiMenu = New NagatoSubMenuPanelTaskMoveTo(Me._$rootMenu, .Desktop) As "MoveToMenu"
             Me._AddContextMenu("", MenuNone)
     End With

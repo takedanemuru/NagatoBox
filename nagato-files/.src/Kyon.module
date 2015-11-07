@@ -35,20 +35,20 @@ Public Sub Main()
     setIconTheme()
     
     'Only For Testing
-    activateDesktop()
+    'activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
     
      NagatoClipBoard.Activate()
     
-    ' If NagatoArguments.DesktopIcons Then
-    '     activateDesktop()
-    ' Else If NagatoArguments.XdgUserDirs Then
-    '     HaruhiXdgConfig.Show()
-    ' Else If NagatoArguments.OpenTrashBin Then
-    '     HaruhiMain.Show()
-    '     TFEI.SetNewTrashBin()
-    ' Else
-    '     HaruhiMain.Show()
-    ' End If
+    If NagatoArguments.DesktopIcons Then
+        activateDesktop()
+    Else If NagatoArguments.XdgUserDirs Then
+        HaruhiXdgConfig.Show()
+    Else If NagatoArguments.OpenTrashBin Then
+        HaruhiMain.Show()
+        TFEI.SetNewTrashBin()
+    Else
+        HaruhiMain.Show()
+    End If
 
 End

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoLabelPainter
+
+Private Const LabelHeight As Integer = 24
+
+Public Sub PaintModeText()
+    
+    paint.Brush = paint.Color(MikuruColor.Transparent(Color.Orange, 128))
+        Paint.Rectangle(0, 0, NagatoSettingsTile.Size, LabelHeight)
+    paint.Fill()
+        Paint.DrawPicture(MikuruIcon.Get("feed-alt"), 4, 4)
+    paint.Brush = paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText("RSS", 24, 0, NagatoSettingsTile.Size - 48, LabelHeight, Align.Center)
+    Paint.Fill()
+    paint.Brush = paint.Color(MikuruColor.Transparent(Color.White, 128))
+        Paint.LineWidth = 2
+        Paint.MoveTo(0, 24)
+        Paint.LineTo(NagatoSettingsTile.Size, 24)
+    Paint.Stroke()
+    
+End
+
+Public Sub PaintModeThumbnail()
+    
+    paint.Brush = paint.Color(MikuruColor.Transparent(Color.Gradient, 192))
+        Paint.Rectangle(0, 0, NagatoSettingsTile.Size, LabelHeight)
+    paint.Fill()
+        Paint.DrawPicture(MikuruIcon.Get("feed-alt"), 4, 4)
+    paint.Brush = paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText("RSS", 24, 0, NagatoSettingsTile.Size - 48, LabelHeight, Align.Center)
+    Paint.Fill()
+    paint.Brush = paint.Color(MikuruColor.Transparent(Color.White, 128))
+        Paint.LineWidth = 2
+        Paint.MoveTo(0, 24)
+        Paint.LineTo(NagatoSettingsTile.Size, 24)
+    Paint.Stroke()
+    
+End

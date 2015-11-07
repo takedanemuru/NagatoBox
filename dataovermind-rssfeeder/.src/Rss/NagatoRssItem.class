@@ -12,6 +12,13 @@ Private $description As String
 Private $link As String
 Private $thumbnailPath As String 
 Private $thumbnailWidth As Integer
+Private $sanitizer As New NagatoText
+
+Private Function sanitize(argText As String) As String
+    
+    Return $sanitizer.Sanitize(argText, "<link>", "</link>", "<![CDATA[", "]]>", "<!--", "-->", "\n")
+    
+End
 
 Public Sub _new(argXmlElement As XmlElement)
     
@@ -24,9 +31,11 @@ Public Sub _new(argXmlElement As XmlElement)
             Case "description"
                 $description = yukiNode.Value
             Case "link"
-                $link = yukiNode.Value
+                $link = IIf(yukiNode.Value, yukiNode.Value, sanitize(yukiNode.ToString()))
             Case "media:thumbnail"
                 If CInt(yukiNode.Attributes["width"]) > $thumbnailWidth Then $thumbnailPath = yukiNode.Attributes["url"]
+            Case "enclosure"
+                If yukiNode.Attributes["type"] Begins "image" Then $thumbnailPath = yukiNode.Attributes["url"]
         End Select
     Next
     

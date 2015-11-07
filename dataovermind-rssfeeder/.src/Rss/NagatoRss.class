@@ -21,6 +21,8 @@ Private Sub setFeeds()
     
     For Each yukiLine In NagatoSettings.FeedLines
         yukiFeed = New NagatoRssFeed2(yukiLine) As "RssFeed"
+        Debug yukiFeed.Title
+        Debug yukiFeed.Items.Count
     Next
     
 End
@@ -48,8 +50,6 @@ Public Sub _get(argFeedIndex As Integer) As NagatoRssFeed2
 End
 
 Public Sub RssFeed_Finished(argFeed As NagatoRssFeed2)
-    
-    'Debug argFeed.Items.Count
     
     If argFeed.Items.Count > 0 Then 
         Try $feeds.Add(argFeed)

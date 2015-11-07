@@ -7,6 +7,8 @@ Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
 Private $cutLabelPainter As New NagatoPainterCutLabel
 Private $renamedLabelPainter As New NagatoPainterRenamedLabel
 Private $copiedLabelPainter As New NagatoPainterCopiedlabel
+Private $systemMonitorLabelPainter As New NagatoLabelPainterSystemMonitor
+Private $rssLabelPainter As New NagatoLabelPainterRss
 
 Public Sub _call(argMode As Integer)
     
@@ -14,7 +16,7 @@ Public Sub _call(argMode As Integer)
     
 End
 
-Public Sub Paint(argMode As Integer)
+Public Sub Paint(argMode As Integer, Optional argText As String)
     
     With MikuruTileMode
             Select Case argMode
@@ -28,6 +30,12 @@ Public Sub Paint(argMode As Integer)
                     $selectedLabelPainter.Paint()
                 Case .ModeRenamed 
                     $renamedLabelPainter.Paint()
+                Case .SpecialSystems
+                    $systemMonitorLabelPainter.Paint()
+                Case .SpecialRssText
+                    $rssLabelPainter.PaintModeText()
+                Case .SpecialRssThumbnail
+                    $rssLabelPainter.PaintModeThumbnail()
                 Case .ModeNull
                     ' ignore
             End Select

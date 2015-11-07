@@ -7,16 +7,19 @@ Private $url As String
 
 Private Sub ensureWorkingDirectory()
     
-    If Not Exist(Me.WOrkingDirectory) Then Mkdir Me.WOrkingDirectory
+    If Not Exist(Me.WOrkingDirectory) Then Mkdir Me.WorkingDirectory
     
 End
 
 Private Sub startDownload(argFeedItem As String[])
     
+    If Me.HasThumbnail(argFeedItem[0]) Then Return
+    If $httpClient.Status <> Net.Inactive Then Return
+    
     $httpClient.URL = argFeedItem[3]
     $httpClient.Async = True
-    $httpClient.Timeout = 15
-    $httpClient.Get(, Me.WOrkingDirectory &/ argFeedItem[0] & ".jpg")
+    $httpClient.Timeout = 10
+    $httpClient.Get(, Me.WorkingDirectory &/ argFeedItem[0] & ".jpg")
     
 End
 

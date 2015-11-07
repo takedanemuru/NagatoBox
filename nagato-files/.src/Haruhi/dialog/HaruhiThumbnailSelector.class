@@ -23,6 +23,14 @@ Private Function getThumbnailImage(argImage As Image) As Picture
     
 End
 
+Public Function getThumbnailImageForDB(argImage As Image) As Picture
+    
+    Dim yukiRate As Float = Max(128 / argImage.H, 128 / argImage.W)
+
+    Return argImage.Stretch(argImage.W * yukiRate, argImage.H * yukiRate).Picture
+    
+End
+
 Private Sub show()
     
     Dim yukiPath As String
@@ -84,7 +92,7 @@ Public Sub ThumbnailsIconView_Activate()
     $selectedPath = ThumbnailsIconView.Key
 
     NagatoDBThumbnailer.Delete($sourcePath)
-    NagatoDBThumbnailer.Push($sourcePath, 128, getThumbnailImage(Image.Load($selectedPath)))
+    NagatoDBThumbnailer.Push($sourcePath, 128, getThumbnailImageForDB(Image.Load($selectedPath)))
 
     Me.Close(1)
 
