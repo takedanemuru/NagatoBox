@@ -2,21 +2,7 @@
 
 Inherits NagatoObserver
 
-Private $memoryTotal As Integer
-Private $memoryAvailable As Integer
-Private $memoryFree As Integer
-Private $memoryBuffers As Integer
-Private $memoryCached As Integer
-
-Private Sub setVariable(argLine As String)
-    
-    If argLine Begins "MemTotal" Then $memoryTotal = Split(argLine, " ", "", True)[1]
-    If argLine Begins "MemAvailable" Then $memoryAvailable = Split(argLine, " ", "", True)[1]
-    If argLine Begins "MemFree" Then $memoryFree = Split(argLine, " ", "", True)[1]
-    If argLine Begins "Buffers" Then $memoryBuffers = Split(argLine, " ", "", True)[1]
-    If argLine Begins "Cached" Then $memoryCached = Split(argLine, " ", "", True)[1]
-    
-End
+Private $data As New NagatoMemoryData
 
 Private Sub resetVariables()
     
@@ -27,30 +13,17 @@ Private Sub resetVariables()
     
     Do While Not Eof(yukiStream)
         Line Input #yukiStream, yukiLine
-        setVariable(yukiLine)
+        $data.ReadLine(yukiLine)
     Loop
     
    Close #yukiStream
     
 End
 
-Private Function getMemoryRate() As Float
+Public Function _GetUsage() As Float ' override
     
     resetVariables()
     
-    If $memoryTotal > 0 And If $memoryAvailable > 0 Then
-        Return ($memoryTotal - $memoryAvailable) / $memoryTotal
-    Else
-        Return ($memoryTotal - ($memoryFree + $memoryBuffers + $memoryCached)) / $memoryTotal
-    End If
-    
-End
-
-Public Sub GetStep() ' override
-    
-    Dim yukiUsage As Float = getMemoryRate()
-    
-    Me._$usage = yukiUsage
-    Me._$history.Push(yukiUsage)
+    Return $data.Usage
     
 End

@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoObserverFacadeCore
+
+Property Read TransmitTotal As Integer
+Property Read TransmitBps As Float
+Property Read ReceiveTotal As Integer
+Property Read ReceiveBps As Float
+
+Private $networkload As New NagatoNetworkLoad
+
+Public Sub Asakura_PrepStep()
+    
+    $networkload.Prep()
+    
+End
+
+Public Sub Asakura_Step()
+    
+    $networkload.Step()
+    
+End
+
+Private Function TransmitTotal_Read() As Integer
+
+    Return $networkload.TransmitTotal
+
+End
+
+Private Function TransmitBps_Read() As Float
+
+    Return $networkload.TransmitBps
+
+End
+
+Private Function ReceiveTotal_Read() As Integer
+
+    Return $networkload.ReceiveTotal
+
+End
+
+Private Function ReceiveBps_Read() As Float
+
+    Return $networkload.ReceiveBps 
+
+End

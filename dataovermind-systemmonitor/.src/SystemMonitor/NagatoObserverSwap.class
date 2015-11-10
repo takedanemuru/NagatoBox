@@ -2,27 +2,15 @@
 
 Inherits NagatoObserver
 
-Private Function getSwap() As Float
+Public Function _GetUsage() As Float
     
     Dim yukiSnapShot As String[] = Split(File.Load("/proc/swaps"), "\n", "")
-    Dim yukiSize As Integer
-    Dim yukiUsed As Integer
-    
-    yukiSize = Split(yukiSnapShot[1], "\t", "", True)[1]
-    yukiUsed = Split(yukiSnapShot[1], "\t", "", True)[2]
+    Dim yukiSize As Integer = Split(yukiSnapShot[1], "\t", "", True)[1]
+    Dim yukiUsed As Integer = Split(yukiSnapShot[1], "\t", "", True)[2]
     
     Return yukiUsed / yukiSize
     
 Catch
     Return 0
-    
-End
-
-Public Sub GetStep()
-    
-    Dim yukiUsage As Float = getSwap()
-    
-    Me._$usage = yukiUsage
-    Me._$history.Push(yukiUsage)
     
 End

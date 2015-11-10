@@ -12,6 +12,7 @@ Property Read MemoryHistory As Float[]
 Property Read SwapUsage As Float
 Property Read SwapHistory As Float[]
 Property Read ProcessCount As Integer
+Property Read ProcessHistory As Integer[]
 Property Read NetworkTransmitTotal As Integer
 Property Read NetworkTransmitBps As Float
 Property Read NetworkReceiveTotal As Integer
@@ -19,12 +20,10 @@ Property Read NetworkReceiveBps As Float
 
 Public Sub Stop() As Boolean
     
-    Try NagatoObserverFacade.Stop()
+    Try NagatoObserverFacadeSystem.Stop()
+    Try NagatoObserverFacadeNetwork.Start()
     
-    If Not Error Then Return True
-    
-Catch
-    Return False
+    Return (Not Error )
     
 End
 
@@ -36,66 +35,72 @@ End
 
 Private Function CpuUsage_Read() As Float
 
-    Return NagatoObserverFacade.CpuUsage
+    Return NagatoObserverFacadeSystem.CpuUsage
 
 End
 
 Private Function MemoryUsage_Read() As Float
 
-    Return NagatoObserverFacade.MemoryUsage
+    Return NagatoObserverFacadeSystem.MemoryUsage
 
 End
 
 Private Function SwapUsage_Read() As Float
 
-    Return NagatoObserverFacade.SwapUsage
+    Return NagatoObserverFacadeSystem.SwapUsage
 
 End
 
 Private Function ProcessCount_Read() As Integer
 
-    Return NagatoObserverFacade.ProcessCount
-
-End
-
-Private Function NetworkTransmitTotal_Read() As Integer
-
-    Return NagatoObserverFacade.NetworkLoadTransmitTotal
-
-End
-
-Private Function NetworkTransmitBps_Read() As Float
-
-    Return NagatoObserverFacade.NetworkLoadTransmitBps
-
-End
-
-Private Function NetworkReceiveTotal_Read() As Integer
-
-    Return NagatoObserverFacade.NetworkLoadReceiveTotal
-
-End
-
-Private Function NetworkReceiveBps_Read() As Float
-
-    Return NagatoObserverFacade.NetworkLoadReceiveBps
+    Return NagatoObserverFacadeSystem.ProcessCount
 
 End
 
 Private Function CpuHistory_Read() As Float[]
 
-    Return NagatoObserverFacade.CpuHistory
+    Return NagatoObserverFacadeSystem.CpuHistory
 
 End
 
 Private Function MemoryHistory_Read() As Float[]
 
-    Return NagatoObserverFacade.MemoryHistory
+    Return NagatoObserverFacadeSystem.MemoryHistory
 
 End
 
 Private Function SwapHistory_Read() As Float[]
 
-    Return NagatoObserverFacade.SwapHistory
+    Return NagatoObserverFacadeSystem.SwapHistory
+
+End
+
+Private Function ProcessHistory_Read() As Integer[]
+
+    Return NagatoObserverFacadeSystem.ProcessHistrory
+
+End
+
+Private Function NetworkTransmitTotal_Read() As Integer
+
+    Return NagatoObserverFacadeNetwork.NetworkLoadTransmitTotal
+
+End
+
+Private Function NetworkTransmitBps_Read() As Float
+
+    Return NagatoObserverFacadeNetwork.NetworkLoadTransmitBps
+
+End
+
+Private Function NetworkReceiveTotal_Read() As Integer
+
+    Return NagatoObserverFacadeNetwork.NetworkLoadReceiveTotal
+
+End
+
+Private Function NetworkReceiveBps_Read() As Float
+
+    Return NagatoObserverFacadeNetwork.NetworkLoadReceiveBps
 
 End

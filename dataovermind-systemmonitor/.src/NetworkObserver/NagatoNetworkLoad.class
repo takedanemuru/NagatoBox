@@ -15,8 +15,8 @@ Public Sub Prep()
     
     $streamReader.Refresh()
     
-    $receiveHistory.Push($streamReader.ReceiveBit)
-    $transmitHistory.Push($streamReader.TransmitBit)
+    $receiveHistory.Push($streamReader.ReceiveBytes)
+    $transmitHistory.Push($streamReader.TransmitBytes)
     
 End
 
@@ -24,32 +24,33 @@ Public Sub Step()
     
     $streamReader.Refresh()
     
-    $receiveHistory.Push($streamReader.ReceiveBit)
-    $transmitHistory.Push($streamReader.TransmitBit)
+    $receiveHistory.Push($streamReader.ReceiveBytes)
+    $transmitHistory.Push($streamReader.TransmitBytes)
     
 End
 
 Private Function ReceiveTotal_Read() As Integer
 
-    Return $receiveHistory.Current
+    Return $streamReader.ReceiveTotal
 
 End
 
 Private Function ReceiveBps_Read() As Float
 
-    Return $receiveHistory.Diff * (1000 / NagatoSettings.ObservationInterval) * 8
+
+    Return $streamReader.ReceiveBytes
 
 End
 
 Private Function TransmitTotal_Read() As Integer
 
-    Return $transmitHistory.Current
+    Return $streamReader.TransmitTotal
 
 End
 
 Private Function TransmitBps_Read() As Float
 
-    Return $transmitHistory.Diff * (1000 / NagatoSettings.ObservationInterval) * 8
+    Return $streamReader.TransmitBytes
 
 End
 

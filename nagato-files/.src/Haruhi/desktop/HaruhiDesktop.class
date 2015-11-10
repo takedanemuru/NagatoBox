@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Private Const Margin As Integer = 2
-
 Private $desktop As NagatoDesktop
 Private $panel As NagatoDesktopPanel
 Private $timer As New Timer As "DesktopTimer"

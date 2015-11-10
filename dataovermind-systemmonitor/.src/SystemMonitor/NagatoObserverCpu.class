@@ -36,7 +36,7 @@ End
     
 End
 
-Private Function getCpuRate() As Float
+Public Function _GetUsage() As Float ' override
     
     setCurrentData()
     
@@ -44,14 +44,5 @@ Private Function getCpuRate() As Float
     
 Catch
     Return 0
-    
-End
-
-Public Sub GetStep()
-    
-    Dim yukiUsage As Float = getCpuRate()
-    
-    Me._$usage = yukiUsage
-    Me._$history.Push(yukiUsage)
     
 End

@@ -2,17 +2,8 @@
 
 Inherits NagatoObserver
 
-Private Function getProcessCount() As Integer
+Public Function _GetUsage() As Float
     
     Return Dir("/proc", "[0-9]*", gb.Directory).Count
-    
-End
-
-Public Sub GetStep() ' virtual
-    
-    Dim yukiUsage As Integer = getProcessCount()
-    
-    Me._$usage = yukiUsage
-    Me._$history.Push(yukiUsage)
     
 End

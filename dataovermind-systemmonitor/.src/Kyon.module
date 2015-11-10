@@ -1,11 +1,43 @@
 ' Gambas module file
 
-Public Sub Main()
+Private $timer As New Timer As "DebugTimer"
 
+Private Sub test()
+    
+    NagatoObserverFacadeSystem.Start()
+    NagatoObserverFacadeNetwork.Start()
+
+    $timer.Enabled = True
+    
+End
+
+Private Sub normal()
+    
     If NagatoDBus.Activated() Then Return
 
     NagatoDBus.Register()
 
-    NagatoObserverFacade.Start()
+    NagatoObserverFacadeSystem.Start()
+    NagatoObserverFacadeNetwork.Start()
 
+End
+
+Public Sub Main()
+
+    'test()
+    normal()
+
+End
+
+Public Sub DebugTimer_Timer()
+    
+    With NagatoObserverFacadeNetwork
+        Print "Receive"
+        Print "\tBps : " & Format$(.ReceiveBps, "###,###,###,###,##0 Bps")
+        Print "\tTotal : " & Format$(.ReceiveTotal, "###,###,###,###,##0 Bytes")
+        Print "Transmit"
+        Print "\tBps : " & Format$(.TransmitBps, "###,###,###,###,##0 Bps")
+        Print "\tTotal : " & Format$(.TransmitTotal, "###,###,###,###,##0 Bytes")
+    End With
+    
 End

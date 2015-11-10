@@ -1,0 +1,35 @@
+' Gambas class file
+
+Property Read Usage As Float
+
+Private $memoryTotal As Integer
+Private $memoryAvailable As Integer
+Private $memoryFree As Integer
+Private $memoryBuffers As Integer
+Private $memoryCached As Integer
+
+Private Function getValue(argLine As String) As Float
+    
+    Return Split(argLine, " ", "", True)[1]
+    
+End
+
+Public Sub ReadLine(argLine As String)
+    
+    If argLine Begins "MemTotal" Then $memoryTotal = getValue(argLine)
+    If argLine Begins "MemAvailable" Then $memoryAvailable = getValue(argLine)
+    If argLine Begins "MemFree" Then $memoryFree = getValue(argLine)
+    If argLine Begins "Buffers" Then $memoryBuffers = getValue(argLine)
+    If argLine Begins "Cached" Then $memoryCached = getValue(argLine)
+    
+End
+
+Private Function Usage_Read() As Float
+
+    If $memoryTotal > 0 And If $memoryAvailable > 0 Then
+        Return ($memoryTotal - $memoryAvailable) / $memoryTotal
+    Else
+        Return ($memoryTotal - ($memoryFree + $memoryBuffers + $memoryCached)) / $memoryTotal
+    End If
+
+End

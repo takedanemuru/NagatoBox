@@ -7,6 +7,7 @@ Property Read Count As Integer
 
 Private $watcher As DesktopWatcher
 Private $windows As New NagatoDesktopWindowsTypeC
+Private $titles As New NagatoWindowsTitleChecker As "Titles"
 
 Event Changed
 Event VirtualDesktopChanged
@@ -43,6 +44,13 @@ Public Sub DesktopWatcher_Change()
     
     Raise Changed
     Raise VirtualDesktopChanged
+    
+End
+
+Public Sub Titles_Changed()
+    
+    Raise Changed
+    Raise ListChanged
     
 End
 

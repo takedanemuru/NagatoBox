@@ -8,9 +8,20 @@ Property Read History As Float[]
 Public _$usage As Float
 Public _$history As New NagatoHistory
 
-Public Sub GetStep() ' virtual
+Public Function _GetUsage() As Float ' virtual
     
+    Debug "some error occured. this method must be overridden."
     
+    Return 0
+    
+End
+
+Public Sub GetStep()
+    
+    Dim yukiUsage As Float = Me._GetUsage()
+    
+    Me._$usage = yukiUsage
+    Me._$history.Push(yukiUsage)
     
 End
 
@@ -22,6 +33,6 @@ End
 
 Private Function History_Read() As Float[]
 
-    
+    Return Me._$history
 
 End

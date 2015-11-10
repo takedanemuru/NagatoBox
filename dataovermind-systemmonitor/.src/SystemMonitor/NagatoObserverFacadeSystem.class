@@ -1,43 +1,24 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoObserverFacadeCore
 
 Property Read CpuUsage As Float
 Property Read MemoryUsage As Float
 Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
-Property Read Activated As Boolean
 Property Read CpuHistory As Float[]
 Property Read MemoryHistory As Float[]
 Property Read SwapHistory As Float[]
-Property Read NetworkLoadTransmitTotal As Integer
-Property Read NetworkLoadTransmitBps As Float
-Property Read NetworkLoadReceiveTotal As Integer
-Property Read NetworkLoadReceiveBps As Float
+Property Read ProcessHistrory As Integer[]
 
-Private $timer As NagatoTimer
 Private $cpu As New NagatoObserverCpu
 Private $memory As New NagatoObserverMemory
 Private $swap As New NagatoObserverSwap
 Private $process As New NagatoObserverProcess
-Private $networkload As New NagatoNetworkLoad
-
-Public Sub Stop()
-    
-    $timer.Stop()
-    
-End
-
-Public Sub Start()
-    
-    $timer = New NagatoTimer As "Asakura"
-    
-End
 
 Public Sub Asakura_PrepStep()
     
     $cpu.SetPrevData()
-    $networkload.Prep()
     
 End
 
@@ -47,7 +28,6 @@ Public Sub Asakura_Step()
     $memory.GetStep()
     $swap.GetStep()
     $process.GetStep()
-    $networkload.Step()
     
 End
 
@@ -66,12 +46,6 @@ End
 Private Function SwapUsage_Read() As Float
 
     Return $swap.Usage
-
-End
-
-Private Function Activated_Read() As Boolean
-
-    Return $timer.Enabled
 
 End
 
@@ -99,26 +73,8 @@ Private Function SwapHistory_Read() As Float[]
 
 End
 
-Private Function NetworkLoadTransmitTotal_Read() As Integer
+Private Function ProcessHistrory_Read() As Integer[]
 
-    Return $networkload.ReceiveTotal
-
-End
-
-Private Function NetworkLoadTransmitBps_Read() As Float
-
-    Return $networkload.TransmitBps
-
-End
-
-Private Function NetworkLoadReceiveTotal_Read() As Integer
-
-    Return $networkload.ReceiveTotal
-
-End
-
-Private Function NetworkLoadReceiveBps_Read() As Float
-
-    Return $networkload.ReceiveBps
+    Return $process.History
 
 End
