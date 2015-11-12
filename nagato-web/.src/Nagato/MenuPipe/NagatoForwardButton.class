@@ -11,6 +11,8 @@ Public Sub _InitializeWidget() ' override
         .Border = False
         .Width = Me._$container.Height
         .Enabled = False
+        .Arrow = False
+        .NoTabFocus = True
         .Picture = MikuruIcon.Get("navigation-right")
     End With
     

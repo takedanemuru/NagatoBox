@@ -1,0 +1,19 @@
+' Gambas class file
+
+Private $exec As NagatoUXDesktopEntryContainer
+Private $onlyShowIn As NagatoListEditor
+Private $notShowIn As NagatoListEditor
+
+Public Sub _new()
+    
+    $exec = New NagatoUXDesktopEntryContainer(Me)
+    $onlyShowIn = New NagatoListEditor(Me, ("Only Show In"))
+    $notShowIn = New NagatoListEditor(Me, ("Not Show In"))
+    
+End
+
+Public Sub Form_Show()
+
+    
+
+End

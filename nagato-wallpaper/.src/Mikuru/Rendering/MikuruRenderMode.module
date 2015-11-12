@@ -23,6 +23,6 @@ End
 
 Private Function List_Read() As String[]
 
-    Return ["Center", "Tile", "Full", "Fit", "Fill", "TopLeft", "TopCenter", "TopRight", "Left, Right", "BottomLeft", "BottomCenter", "BottomRight"]
+    Return ["Center", "Tile", "Full", "Fit", "Fill", "TopLeft", "TopCenter", "TopRight", "Left", "Right", "BottomLeft", "BottomCenter", "BottomRight"]
 
 End

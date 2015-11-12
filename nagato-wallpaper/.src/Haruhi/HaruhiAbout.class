@@ -3,6 +3,7 @@
 Public Sub Form_Open()
     
     Me.Center()
+    Me.Picture = Picture.Load("Pictures/about.png")
     AboutTextLabel.Text = Subst$(File.Load("Text/AboutText"), Application.Version)
     
 End

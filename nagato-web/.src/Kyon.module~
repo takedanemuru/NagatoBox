@@ -19,7 +19,7 @@ Public Sub Main()
     
     Dim yukiUrl As String = getSartupUrl()
     
-    'If NagatoDBus.IsUnique() Then
+    If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
@@ -29,6 +29,6 @@ Public Sub Main()
     '     NagatoDBus.Proxy.Show()
     ' Else
     '     NagatoDBus.Proxy.SetUrl(yukiUrl)
-    ' End If
+    End If
     
 End

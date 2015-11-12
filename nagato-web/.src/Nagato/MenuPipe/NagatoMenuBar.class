@@ -14,6 +14,7 @@ Public Sub SetNavigationButton(argHistoryIndex As Integer, argHistoryMax As Inte
     
     $backButton.SetEnabled(argHistoryIndex > 0)
     $forwardButton.SetEnabled(argHistoryIndex <> argHistoryMax)
+    $urlBox.SetFocus()
     
 End
 

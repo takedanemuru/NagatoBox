@@ -1,0 +1,50 @@
+' Gambas class file
+
+Private $hBox As HBox
+Private $pictureBox As PictureBox
+Private $vBox As VBox
+Private $execLabel As NagatoUXDesktopEntryExec
+Private $tryExecLabel As NagatoUXDesktopEntryExec
+
+Private Sub initializePictureBox(argContainer As Container)
+    
+    $pictureBox = New PictureBox(argContainer)
+    
+    With $pictureBox
+        .H = argContainer.H
+        .W = argContainer.H
+        .Picture = MikuruIcon.Get("gear", 48)
+        .Alignment = Align.Center
+    End With
+    
+End
+
+Private Sub initializeVBox(argContainer As Container)
+    
+    $vBox = New VBox(argContainer)
+    
+    With $vBox
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .H = 60
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeHBox(argContainer)
+    initializePictureBox($hBox)
+    initializeVBox($hBox)
+    $execLabel = New NagatoUXDesktopEntryExec($vBox, "Exec")
+    $tryExecLabel = New NagatoUXDesktopEntryExec($vBox, "Try Exec")
+    
+End

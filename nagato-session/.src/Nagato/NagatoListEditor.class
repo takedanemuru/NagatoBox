@@ -1,0 +1,32 @@
+' Gambas class file
+
+Private $label As Label
+Private $listEditor As ListEditor
+
+Private Sub initializeLabel(argContainer As Container, argLabelText As String)
+    
+    $label = New Label(argContainer)
+    
+    With $label
+        .Text = Space$(4) & argLabelText
+        .H = 24
+    End With
+    
+End
+
+Private Sub initializeListEditor(argContainer As Container)
+    
+    $listEditor = New ListEditor(argContainer) As "ListEditor"
+    
+    With $listEditor
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container, argLabelText As String)
+    
+    initializeLabel(argContainer, argLabelText)
+    initializeListEditor(argContainer)
+    
+End

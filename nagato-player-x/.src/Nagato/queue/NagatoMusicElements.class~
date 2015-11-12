@@ -4,6 +4,14 @@ Property Read Count As Integer
 
 Private $musicElements As New NagatoMusicElement[]
 
+Private Function isPlayableFormat(argPath As String) As Boolean
+    
+    If File.Ext(argPath) = "m4a" Then Return False
+    
+    Return True
+    
+End
+
 Public Function FindIndex(argPath As String) As Integer
     
     Dim yukiCount As Integer
@@ -32,6 +40,7 @@ Public Function AddMusics(argPaths As String[]) As Integer
     Dim yukiCount As Integer = 0
     
     For Each yukiPath In MikuruPath.Sanitize(argPaths)
+        If Not isPlayableFormat(yukiPath) Then Continue
         addElement(yukiPath)
         Inc yukiCount
     Next
@@ -64,13 +73,9 @@ End
 Public Sub Initialize(argPaths As String[])
     
     Dim yukiPath As String
-    'Dim yukiMusicElement As NagatoMusicElement
     
     For Each yukiPath In MikuruPath.Sanitize(argPaths.Insert(NagatoSettingsMusic.LoadPaths()))
         addElement(yukiPath)
-        ' NagatoDBMedia.EnsureLibrary(yukiPath)
-        ' yukiMusicElement = New NagatoMusicElement(yukiPath)
-        ' $musicElements.Add(yukiMusicElement)
     Next
     
 End

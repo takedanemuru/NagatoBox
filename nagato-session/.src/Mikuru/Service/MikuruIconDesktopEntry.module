@@ -29,7 +29,8 @@ Private Function getIconPath(argDirectory As String) As String
     Dim yukiPath As String
     
     For Each yukiPath In RDir(argDirectory)
-        If File.BaseName(yukiPath) = File.BaseName($desktopFile.Icon) Then Return (argDirectory &/ yukiPath)
+        If File.BaseName(yukiPath) <> File.BaseName($desktopFile.Icon) Then Continue
+        Return (argDirectory &/ yukiPath)
     Next
     
     Return ""
@@ -47,11 +48,19 @@ Private Function getIconPathFormDesktopFileData(argPath As String) As String
     
 End
 
+Private Function getIconPathFromAbsolutePath() As String
+    
+    If $desktopFile.Icon Begins "/" Then 
+        Return getIconPathFormDesktopFileData($desktopFile.Icon)
+    Else
+        Return ""
+    End If
+    
+End
+
 Private Function setPath()
     
-    $path = ""
-    
-    If $desktopFile.Icon Begins "/" Then $path = getIconPathFormDesktopFileData($desktopFile.Icon)
+    $path = getIconPathFromAbsolutePath()
     If Not $path Then $path = getHicolorIconPath()
     If Not $path Then $path = getIconPath(PixmapIcons)
     

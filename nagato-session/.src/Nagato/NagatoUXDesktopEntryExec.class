@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private $subContainer As HBox
+Private $label As Label
+Private $textBox As TextBox
+
+Private Sub initializeLabel(argLabelText As String)
+    
+    $label = New Label($subContainer)
+    
+    With $label
+        .Text = argLabelText
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeTextBox()
+    
+    $textBox = New TextBox($subContainer)
+    
+    With $textBox
+        .Text = ""
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeSubContainer(argContainer As Container)
+    
+    $subContainer = New HBox(argContainer)
+
+    With $subContainer
+        .H = 24
+        .Expand = True
+        .Padding = 2
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container, argLabelText As String)
+    
+    initializeSubContainer(argContainer)
+    initializeLabel(argLabelText)
+    initializeTextBox()
+    
+End
