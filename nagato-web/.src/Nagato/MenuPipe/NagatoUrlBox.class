@@ -23,14 +23,7 @@ Public Sub SetUrl(argUrl As String)
     
     Object.Lock($urlBox)
         $urlBox.Text = argUrl
-        $urlBox.SetFocus()
     Object.Unlock($urlBox)
-    
-End
-
-Public Sub SetFocus()
-    
-    '$urlBox.SetFocus()
     
 End
 

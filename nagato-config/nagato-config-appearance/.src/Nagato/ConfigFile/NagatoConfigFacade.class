@@ -20,6 +20,8 @@ Public Sub Set()
     $configGtk.Set()
     $configQt["Qt", "style"] = "GTK+"
     
+    Message.Info("YUKI.N > It's done.", ("OK"))
+    
 End
 
 Public Sub _new()

@@ -61,6 +61,7 @@ Public Sub HeaderCall(argEvent As Integer, argArguments As Variant[])
             $webs.Reorder(argArguments[0], argArguments[1])
         Case NagatoMenuPipe.WebProgress
             If argArguments[0] <> $webs.ActiveWeb.UniqueIndex Then Return
+            $webs.ShowTab($webs.ActiveIndex)
             $menubar.SetUrl(argArguments[1])
             $menubar.SetNavigationButton($webs.ActiveWeb.HistoryIndex, $webs.ActiveWeb.HistoryMax)
     End Select
