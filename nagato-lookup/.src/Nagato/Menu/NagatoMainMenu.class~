@@ -13,36 +13,6 @@ Private Sub initializeRootMenu(argMenuName As String)
     
 End
 
-Private Sub addPlacesMenu()
-    
-    Dim yukiMenu As NagatoMenuDirectory
-    
-    yukiMenu = New NagatoMenuDirectory($rootMenu, User.Home)
-    
-End
-
-Private Sub addLogoutMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "LogoutMenu"
-    
-    With yukiMenu
-        .Picture = MikuruIcons.Get("button-power")
-        .Text = IIf(MikuruSession.IsNagatoBox(), ("Logout (NagatoBox)"), ("Logout (Openbox)"))
-    End With
-    
-End
-
-Private Sub addAboutMenu()
-    
-    Dim yukiMenu As New Menu($rootMenu) As "AboutMenu"
-    
-    With yukiMenu
-        .Picture = MikuruIcons.Get("star")
-        .Text = ("About")
-    End With
-    
-End
-
 Private Sub addCloseMenu()
     
     Dim yukiMenu As New Menu($rootMenu) As "CloseMenu"
@@ -57,38 +27,27 @@ End
 Public Sub _new(argMenuName As String)
     
     initializeRootMenu(argMenuName)
-    addPlacesMenu()
+    Object.New("NagatoMenuDirectory", [$rootMenu, User.Home])
         MikuruMenuSeparator.Set($rootMenu)
     $preferenceMenu = New NagatoPreferenceMenu($rootMenu)
     $screenshotMenu = New NagatoScreenshotMenu($rootMenu)
     $alsaMenu = New NagatoAlsaMenu($rootMenu)
         MikuruMenuSeparator.Set($rootMenu)
-    addAboutMenu()
+    Object.New("NagatoMenuItemAbout", [$rootMenu])
     If Not MikuruSession.IsOpenbox() Then addCloseMenu()
-    If MikuruSession.IsOpenbox() Then
-        addLogoutMenu()
-    End If
-    
-End
-
-Public Sub AboutMenu_Click()
-    
-    HaruhiAbout.Show()
+    If MikuruSession.IsOpenbox() Then Object.New("NagatoMenuItemLogout", [$rootMenu])
     
 End
 
 Public Sub CloseMenu_Click()
     
-    If Message.Question(("YUKI.N > Are you sure to close this application ?"), ("Cancel"), ("Close")) = 2 Then
-        HaruhiMain.Close()
-    End If
+    Dim yukiMessage As String = ("YUKI.N > Are you sure to close this application ?")
     
-End
-
-Public Sub LogoutMenu_Click()
-    
-    Debug "logout"
-    
-    'Shell "nagato-session -l"
+    Select Case Message.Question(yukiMessage, ("Cancel"), ("Close")) 
+        Case 2
+            HaruhiMain.Close()
+        Default
+            ' ignore
+    End Select
     
 End

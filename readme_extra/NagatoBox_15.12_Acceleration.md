@@ -22,6 +22,12 @@
 
 ## Applications
 
+### nagato-config-appearance
+
++ ~~new : add "done" message dialog~~
++ ~~new : save gtk.css file if it's not existed.~~
++ ~~new : pixmap icon~~
+
 ### nagato-dbus-finder
 
 + ~~fix : show data types more correctlly~~
@@ -41,6 +47,7 @@
 ### nagato-lookup
 
 + ~~fix : revive lost properties~~
++ ~~new : add "lock screen menu"~~
 
 ### nagato-mail
 
@@ -55,6 +62,7 @@
 ### nagato-session
 
 + revive context menu.
++ ~~new : add pixmap icon~~
 
 ### nagato-text (versin 42.2.2)
 
@@ -67,3 +75,10 @@
 + ~~new : download button~~
     + ~~new : select destination directory~~
     + ~~new : show progress on persona message area~~
+
+## Misc Applications
+
+### haramaru-radio-player
+
++ ~~new : use shell command instead of desktop.open()~~
++ ~~fix : offiocial site url~~

@@ -8,6 +8,14 @@ Property Read CursorTheme As String
 Private $configGtk2 As NagatoConfigFile
 Private $configGtk3 As NagatoConfigFile
 
+Private Sub ensureGtkCssFile()
+    
+    Dim yukiPath As String = Desktop.ConfigDir &/ "gtk-3.0" &/ "gtk.css"
+    
+    If Not Exist(yukiPath) Then File.Save(yukiPath, File.Load("ConfigFiles/gtk.css"))
+    
+End
+
 Private Function isThemesMatched() As Boolean
     
     If ($configGtk2["", "gtk-theme-name"] <> $configGtk3["Settings", "gtk-theme-name"]) Then Return False
@@ -49,6 +57,7 @@ Public Sub _new()
     
     $configGtk2 = New NagatoConfigFile(User.Home &/ ".gtkrc-2.0", False)
     $configGtk3 = New NagatoConfigFile(Desktop.ConfigDir &/ "gtk-3.0" &/ "settings.ini", True)
+    ensureGtkCssFile()
     
 End
 

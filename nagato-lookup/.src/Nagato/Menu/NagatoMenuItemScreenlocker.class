@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+     Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.Get("lock")
+        .Text = ("Lock Screen")
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    Try Shell "nagato-config-screenlocker -l"
+    
+End

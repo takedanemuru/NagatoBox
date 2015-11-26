@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+     Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.Get("button-power")
+        .Text = IIf(MikuruSession.IsNagatoBox(), ("Logout (NagatoBox)"), ("Logout (Openbox)"))
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    Shell "nagato-session -l"
+    
+End
