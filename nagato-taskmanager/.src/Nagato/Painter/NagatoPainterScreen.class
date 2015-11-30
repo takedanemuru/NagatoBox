@@ -29,7 +29,7 @@ Private Sub paintImage()
     
 End
 
-Public Sub Paint()
+Public Sub _OnPaint()
     
     paintImage()
     paintGridLine()

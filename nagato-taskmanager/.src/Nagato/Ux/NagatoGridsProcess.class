@@ -25,11 +25,20 @@ Private Sub setRowData(argProcessData As NagatoProcessData)
     
 End
 
+Private Function isFiltered(argProcessName As String) As Boolean
+    
+    If HaruhiMain.Filter = "" Then Return False
+    
+    Return argProcessName Not Like Subst$("*&1*", HaruhiMain.Filter)
+    
+End
+
 Private Sub setRows()
     
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To $data.Max
+        If isFiltered($data[yukiIndex].Name) Then Continue
         setRowData($data[yukiIndex])
     Next
     

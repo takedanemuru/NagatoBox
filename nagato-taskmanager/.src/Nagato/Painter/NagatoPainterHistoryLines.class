@@ -33,7 +33,7 @@ Private Sub paintLine(argColor As Integer, argHistory As Float[])
     
 End
 
-Public Sub Paint()
+Public Sub _OnPaint() ' override
 
     If 3 > NagatoObserverFacade.CpuHistory.Count Then Return
     

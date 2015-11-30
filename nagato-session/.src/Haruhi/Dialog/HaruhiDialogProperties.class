@@ -4,6 +4,18 @@ Private $exec As NagatoUXDesktopEntryContainer
 Private $onlyShowIn As NagatoListEditor
 Private $notShowIn As NagatoListEditor
 
+Public Sub SetProperties(argAutostartFile As NagatoAutostartFile)
+    
+    With argAutostartFile
+        Debug .Name
+        Debug .Hide
+        Debug .Exec
+        Debug .Overridden
+        Debug .OnlyShowInByText
+    End With
+    
+End
+
 Public Sub _new()
     
     $exec = New NagatoUXDesktopEntryContainer(Me)

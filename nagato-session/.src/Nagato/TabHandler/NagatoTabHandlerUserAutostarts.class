@@ -54,8 +54,9 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.AutostartsNew
             Debug HaruhiDialogProperties.ShowDialog()
-        Case MikuruSignal.AutostartsShowSource
-            
+        Case MikuruSignal.AutostartsShowSourceReadOnly
+            HaruhiDialogProperties.SetProperties(argValues[0])
+            HaruhiDialogProperties.ShowDialog()
         Case MikuruSignal.AutostartsDelete
             If Message.Question("YUKI.N > Are you sure ?", ("Cancel"), ("OK")) = 2 Then
                 Kill argValues[0].Path

@@ -3,6 +3,12 @@
 Private $id As Integer
 Private $name As String
 
+Private Function isUserProcess(argId As Integer) As Boolean
+    
+    Return Access(Subst$("/proc/&1/environ", argId), gb.Read)
+    
+End
+
 Private Function getKillMessage() As String
     
     Return Subst$(("Are you sure to kill &1(Process ID: &2) ?"), $name, $id)
@@ -17,6 +23,15 @@ Private Sub killProcess()
     
 End
 
+Private Sub killRootProcess()
+    
+    Dim yukiWarning1 As String = ("WARNING : THIS IS NOT A USER PROCESS.\n") 
+    Dim yukiWarning2 As String = ("You need root privileges to kill this process.\n") 
+    
+    Message.Warning(yukiWarning1 & yukiWarning2, ("OK"))
+    
+End
+
 Public Sub _call(argId As Integer, argName As String)
     
     If argName = "" Then Return
@@ -24,6 +39,10 @@ Public Sub _call(argId As Integer, argName As String)
     $id = argId
     $name = argName
     
-    killProcess()
+    If isUserProcess(argId) Then
+        killProcess()
+    Else
+        killRootProcess()
+    End If
     
 End

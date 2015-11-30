@@ -3,6 +3,7 @@
 Property Read IsSelected As Boolean
 
 Private $timer As New Timer As "Timer"
+Private $filter As NagatoFilter
 Private $starButton As NagatoStarButton
 Private $systemGraph As NagatoSystemGraph
 Private $systemLabel As NagatoSystemLabel
@@ -11,6 +12,7 @@ Private $systemGrids As NagatoGridsProcess
 Private Sub initializeUserInterface()
     
     $systemGrids = New NagatoGridsProcess(SystemMonitorGrid) As "UserInterface"
+    $filter = New NagatoFilter(HBox1)
     $starButton = New NagatoStarButton(HBox1) As "UserInterface"
     $systemGraph = New NagatoSystemGraph(GraphArea)
     $systemLabel = New NagatoSystemLabel(SystemLabel)
@@ -19,8 +21,6 @@ End
 
 Public Sub Form_Open()
     
-    Application.MainWindow = Me
-    NagatoSettings.LoadFormSettings(Me)
     NagatoObserverFacade.Activated = True
     initializeUserInterface()
     
@@ -50,6 +50,8 @@ Public Sub UserInterface_Signal(argSignal As Integer, argValues As Variant[])
             $systemGrids.Unselect()
         Case MikuruSignal.ProcessKill
             MikuruKillProcess($systemGrids.LastSelectedId, $systemGrids.LastSelectedName)
+        Case MikuruSignal.ApplicationShowFilter
+            $filter.Toggle()
         Case MikuruSignal.ApplicationAbout
             HaruhiAbout.ShowDialog()
         Case MikuruSignal.ApplicationQuit

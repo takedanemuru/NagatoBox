@@ -16,8 +16,14 @@ Public Sub _SetLineProperties(argColor As Integer, argWidth As Float)
     
 End
 
-Public Sub Paint() ' virtual interface
+Public Sub _OnPaint() ' must be overridden.
     
     
+    
+End
+
+Public Sub Paint() 
+    
+    Me._OnPaint()
     
 End

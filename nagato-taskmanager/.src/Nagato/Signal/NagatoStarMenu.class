@@ -22,7 +22,9 @@ End
 Private Sub initializeChildMenus()
 
     If HaruhiMain.IsSelected Then addProcessMenu()
-    Me._AddMenu(("About nagato-taskmanager"), MikuruSignal.ApplicationAbout, "star")
+    Me._AddMenu(("Filter"), MikuruSignal.ApplicationShowFilter, "search")
+        Me._AddMenu((""), MikuruSignal.None)
+    Me._AddMenu(("About"), MikuruSignal.ApplicationAbout, "star")
     Me._AddMenu(("Quit"), MikuruSignal.ApplicationQuit, "button-power")
     
 End
@@ -37,7 +39,6 @@ End
 Public Sub RootMenu_Show()
     
     Me._$rootMenu.Children.Clear()
-    
     initializeChildMenus()
     
 End

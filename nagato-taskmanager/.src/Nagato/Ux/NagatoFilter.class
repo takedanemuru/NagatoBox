@@ -1,0 +1,33 @@
+' Gambas class file
+
+Property Read Filter As String
+
+Private $serchBox As ButtonBox
+
+Public Sub Toggle()
+    
+    $serchBox.Visible = Not $serchBox.Visible
+    
+    If $serchBox.Visible Then $serchBox.SetFocus()
+    If Not $serchBox.Visible Then $serchBox.Clear()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $serchBox = New ButtonBox(argContainer) As "SearchBox"
+    
+    With $serchBox
+        .Border = False
+        .W = 200
+       .Picture = MikuruIcon.Get("search")
+       .Visible = False
+    End With
+    
+End
+
+Private Function Filter_Read() As String
+
+    Return $serchBox.Text
+
+End
