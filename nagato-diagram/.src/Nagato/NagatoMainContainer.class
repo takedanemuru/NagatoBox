@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $hSplit As HSplit
+Private $sourceEditor As NagatoSourceEditor
+Private $previewer As NagatoPreviewer
+
+Private Sub initializeHSplit(argContainer As Container)
+    
+    $hSplit = New HSplit(argContainer)
+    
+    With $hSplit
+        .Expand = True
+    End With
+    
+End
+
+Public Sub RefreshPreview()
+    
+    If $sourceEditor.Text Then $previewer.ShowPreview($sourceEditor.Text)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeHSplit(argContainer)
+    $sourceEditor = New NagatoSourceEditor($hSplit)
+    $previewer = New NagatoPreviewer($hSplit)
+    
+End

@@ -1,0 +1,11 @@
+' Gambas module file
+
+Property Read Ready As Boolean
+
+Private $settings As New Settings
+
+Private Function Ready_Read() As Boolean
+
+    Return $settings["app/ready", True]
+
+End

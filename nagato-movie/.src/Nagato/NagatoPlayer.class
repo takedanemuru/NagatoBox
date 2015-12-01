@@ -41,12 +41,19 @@ Public Sub SetBackground()
     
 End
 
+Public Sub TakeScreenshot()
+    
+    
+    
+End
+
 Private Sub initializeMediaPlayerAndControl()
     
     $mediaPlayer = New MediaPlayer As "MediaPlayer"
     $mediaControl = New MediaControl($mediaPlayer, "ximagesink") As "MediaControl"
     $mediaPlayer.Video.Output = $mediaControl
     $mediaPlayer.Audio.Volume = 1
+    $mediaPlayer.Buffering = True
     
 End
 

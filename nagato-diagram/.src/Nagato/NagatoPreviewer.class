@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $imageView As ImageView
+
+Private Sub initializeImageView(argContainer As Container)
+    
+    $imageView = New ImageView(argContainer) 
+    
+End
+
+Public Sub ShowPreview(argSourceText As String)
+    
+    Dim yukiOutput As String
+    Dim yukiSourcePath As String = User.Home &/ "test.dot"
+    Dim yukiTargetPath As String = User.Home &/ "dot_test.png"
+    
+    File.Save(yukiSourcePath, argSourceText)
+    
+    Exec ["dot", "-Tpng", yukiSourcePath, "-o", yukiTargetPath] To yukiOutput
+    
+    If Not yukiOutput Then
+        $imageView.Image = Image.Load(yukiTargetPath)
+    Else
+        Message.Error("YUKI.N > " & yukiOutput, ("OK"))
+    End If
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeImageView(argContainer)
+    
+End

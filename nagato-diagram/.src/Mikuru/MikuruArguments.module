@@ -1,0 +1,9 @@
+' Gambas module file
+
+Property Read Ready As Boolean
+
+Private Function Ready_Read() As Boolean
+
+    Return True
+
+End

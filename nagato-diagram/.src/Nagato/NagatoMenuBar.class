@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $container As HBox
+Private $previewButton As NagatoPreviewButton
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $container = New HBox(argContainer)
+    
+    With $container
+        .H = 24
+        .Expand = False
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    $previewButton = New NagatoPreviewButton($container) As "TFEI"
+    
+End

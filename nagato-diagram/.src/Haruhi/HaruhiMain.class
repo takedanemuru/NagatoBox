@@ -1,0 +1,21 @@
+' Gambas class file
+
+Private $menuBar As NagatoMenuBar
+Private $mainContainer As NagatoMainContainer
+
+Public Sub _new()
+    
+    $menuBar = New NagatoMenuBar(Me) As "MenuBar"
+    $mainContainer = New NagatoMainContainer(Me) As "MainContainer"
+    
+End
+
+Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+
+    Select Case argSignal
+        Case MikuruSignal.PreviewRefresh
+            Debug "refresh"
+            $mainContainer.RefreshPreview()
+    End Select
+    
+End

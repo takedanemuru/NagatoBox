@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Text As String
+
+Private $editor As TextEditor
+
+Private Sub initializeTextEditor(argContainer As Container)
+    
+    $editor = New TextEditor(argContainer)
+    
+    With $editor
+        .Highlight = "c"
+        .TabSize = 4
+        .Font.Size = 11
+        .Text = "digraph {\n\n}"
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeTextEditor(argContainer)
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $editor.Text
+
+End
