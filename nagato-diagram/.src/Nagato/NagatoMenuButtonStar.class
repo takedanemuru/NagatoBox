@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private $pulldownMenu As NagatoStarMenu
+
+Public Sub _OnInitializeButton()
+    
+    Me._AddButton("", MikuruSignal.Void, "star")
+    
+End
+
+Public Sub _OptionalOnInitializePullDownMenu()
+    
+    Me._$button.Menu = NagatoStarMenu.UniqueName
+    $pulldownMenu = New NagatoStarMenu As "TFEI"
+    
+End

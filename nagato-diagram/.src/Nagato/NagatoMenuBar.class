@@ -2,23 +2,25 @@
 
 Inherits NagatoObject
 
-Private $container As HBox
-Private $previewButton As NagatoPreviewButton
-
-Private Sub initializeContainer(argContainer As Container)
-    
-    $container = New HBox(argContainer)
-    
-    With $container
-        .H = 24
-        .Expand = False
-    End With
-    
-End
+Private $container As NagatoWidgetPanelContainer
+Private $newButton As NagatoMenuButtonNew
+Private $recentButton As NagatoMenuButtonRecent
+Private $openButton As NagatoMenuButtonOpen
+Private $previewButton As NagatoMenuButtonPreview
+Private $starButton As NagatoMenuButtonStar
 
 Public Sub _new(argContainer As Container)
     
-    initializeContainer(argContainer)
-    $previewButton = New NagatoPreviewButton($container) As "TFEI"
+    $container = New NagatoWidgetPanelContainer(argContainer)
+    
+    $newButton = New NagatoMenuButtonNew($container.Container) As "TFEI"
+    $recentButton = New NagatoMenuButtonRecent($container.Container) As "TFEI"
+    $openButton = New NagatoMenuButtonOpen($container.Container) As "TFEI"
+        Object.New("NagatoWidgetSeparator", [$container.Container])
+    
+        Object.New("NagatoWidgetSeparator", [$container.Container])
+    $previewButton = New NagatoMenuButtonPreview($container.Container) As "TFEI"
+        Object.New("NagatoWidgetSpacer", [$container.Container])
+    $starButton = New NagatoMenuButtonStar($container.Container) As "TFEI"
     
 End

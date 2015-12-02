@@ -1,0 +1,48 @@
+' Gambas class file
+
+Property Read Image As Image
+
+Private $image As Image
+Private $sourcePath As String
+Private $targetPath As String
+
+Private Sub resetPaths()
+    
+    $sourcePath = Temp$() & ".dot"
+    $targetPath = Temp$() & ".png"
+    
+End
+
+Private Sub resetImage()
+    
+    Dim yukiOutput As String
+
+    Exec ["dot", "-Tpng", $sourcePath, "-o", $targetPath] To yukiOutput
+    
+    If Not yukiOutput Then
+        Try $image = Image.Load($targetPath)
+    Else
+        Message.Error("YUKI.N > " & yukiOutput, ("OK"))
+    End If
+    
+End
+
+Public Sub Refresh(argSourceText As String)
+    
+    resetPaths()
+    File.Save($sourcePath, argSourceText)
+    resetImage()
+    
+End
+
+Public Sub _new()
+    
+    $image = New Image(16, 16, Color.White) ' just a dummy to avoid error
+    
+End
+
+Private Function Image_Read() As Image
+
+    Return $image
+
+End

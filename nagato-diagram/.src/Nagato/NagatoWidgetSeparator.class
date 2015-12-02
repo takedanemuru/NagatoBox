@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public Sub _OnInitializeWidget()
+    
+    Dim yukiSeparator As New Separator(Me._$container)
+    
+    With yukiSeparator
+        .Expand = False
+    End With
+    
+End

@@ -8,13 +8,16 @@ Private $editor As TextEditor
 
 Private Sub initializeTextEditor(argContainer As Container)
     
-    $editor = New TextEditor(argContainer)
+    $editor = New TextEditor(argContainer) As "TextEditor"
     
     With $editor
         .Highlight = "c"
         .TabSize = 4
-        .Font.Size = 11
-        .Text = "digraph {\n\n}"
+        .Font.Size = 12
+        .Text = File.Load("Text/Template_1")
+        .ShowLineNumber = True
+        .LineNumberOffset = True
+        .ShowSpaces = True
     End With
     
 End
@@ -29,4 +32,10 @@ Private Function Text_Read() As String
 
     Return $editor.Text
 
+End
+
+Public Sub TextEditor_KeyPress()
+    
+    Debug Key.Code
+    
 End

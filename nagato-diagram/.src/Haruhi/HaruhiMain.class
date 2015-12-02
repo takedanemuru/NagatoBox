@@ -5,16 +5,25 @@ Private $mainContainer As NagatoMainContainer
 
 Public Sub _new()
     
-    $menuBar = New NagatoMenuBar(Me) As "MenuBar"
-    $mainContainer = New NagatoMainContainer(Me) As "MainContainer"
+    Application.MainWindow = Me
+    
+    $menuBar = New NagatoMenuBar(Me) As "UX"
+    $mainContainer = New NagatoMainContainer(Me) As "UX"
+    
+    $mainContainer.RefreshPreview()
     
 End
 
-Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+Public Sub Form_Close()
+    
+    
+    
+End
+
+Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
 
     Select Case argSignal
         Case MikuruSignal.PreviewRefresh
-            Debug "refresh"
             $mainContainer.RefreshPreview()
     End Select
     

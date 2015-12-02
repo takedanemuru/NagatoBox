@@ -1,3 +1,6 @@
 ' Gambas module file
 
+Public Enum Void = 0
+Public Enum FileHeader = 1000, FileNew = 1001, FileRecent = 1002, FileOpen = 1003
+Public Enum FileSave = 1004, FileSaveAs = 1005
 Public Enum PreviewHeader = 2000, PreviewRefresh = 2001

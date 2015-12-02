@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read Container As HBox
+
+Private $hBox As HBox
+
+Public Sub _OnInitializeWidget()
+    
+    $hBox = New HBox(Me._$container)
+    
+    With $hBox
+        .Expand = False
+        .H = 32
+    End With
+    
+End
+
+Private Function Container_Read() As HBox
+
+    Return $hBox
+
+End
