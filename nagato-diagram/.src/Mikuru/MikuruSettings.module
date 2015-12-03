@@ -1,11 +1,42 @@
 ' Gambas module file
 
-Property Read Ready As Boolean
+Property Layout As Integer[]
 
-Private $settings As New Settings
+Public _$settings As New Settings
 
-Private Function Ready_Read() As Boolean
+Public Sub LoadFormSettings(argForm As Form)
+    
+    With argForm
+        .X = Me._$settings["form/x", .X]
+        .Y = Me._$settings["form/y", .Y]
+        .W = Me._$settings["form/w", .W]
+        .H = Me._$settings["form/h", .H]
+    End With
+    
+End
 
-    Return $settings["app/ready", True]
+Public Sub SaveFormSettings(argForm As Form)
+    
+    With argForm
+        Me._$settings["form/x"] = .X
+        Me._$settings["form/y"] = .Y
+        Me._$settings["form/w"] = .W
+        Me._$settings["form/h"] = .H
+    End With
+    
+    Me._$settings.Save()
+    
+End
+
+Private Function Layout_Read() As Integer[]
+
+    Return Me._$settings["layout/width", [1, 1]]
+
+End
+
+Private Sub Layout_Write(Value As Integer[])
+
+    Me._$settings["layout/width"] = Value
+    Me._$settings.Save()
 
 End

@@ -2,13 +2,15 @@
 
 Inherits NagatoObject
 
+Property Read Text As String
+
 Private $hSplit As HSplit
 Private $sourceEditor As NagatoSourceEditor
 Private $previewer As NagatoPreviewer
 
 Private Sub initializeHSplit(argContainer As Container)
     
-    $hSplit = New HSplit(argContainer)
+    $hSplit = New HSplit(argContainer) As "HSplit"
     
     With $hSplit
         .Expand = True
@@ -22,10 +24,36 @@ Public Sub RefreshPreview()
     
 End
 
+Public Sub SetPath(argPath As String)
+    
+    $sourceEditor.SetPath(argPath) 
+    $previewer.ShowPreview($sourceEditor.Text)
+    
+End
+
+Public Sub Export()
+    
+    $previewer.Export()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeHSplit(argContainer)
     $sourceEditor = New NagatoSourceEditor($hSplit)
     $previewer = New NagatoPreviewer($hSplit)
+    $hSplit.Layout = MikuruSettings.Layout
     
+End
+
+Public Sub HSplit_Arrange()
+    
+    MikuruSettings.Layout = $hSplit.Layout
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $sourceEditor.Text
+
 End

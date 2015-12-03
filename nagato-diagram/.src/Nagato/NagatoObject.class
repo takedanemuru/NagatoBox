@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Create Private
+
 Event Signal(argSignal As Integer, argValues As Variant[])
 
 Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])

@@ -3,5 +3,8 @@
 { Form Form
   MoveScaled(0,0,85,64)
   Icon = Picture["Pictures/Icons/ruler.png"]
-  Arrangement = Arrange.Vertical
+  Arrangement = Arrange.Fill
+  { MainVBox VBox
+    MoveScaled(3,7,78,55)
+  }
 }

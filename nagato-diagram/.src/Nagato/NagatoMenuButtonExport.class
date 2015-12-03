@@ -4,6 +4,6 @@ Inherits NagatoMenuButton
 
 Public Sub _OnInitializeButton()
     
-    Me._AddButton(("Save As"), MikuruSignal.FileSaveAs, "documents")
+    Me._AddButton(("Export"), MikuruSignal.PreviewExport, "hard-drive-upload")
     
 End

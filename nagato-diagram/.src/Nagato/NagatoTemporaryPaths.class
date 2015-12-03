@@ -1,0 +1,26 @@
+' Gambas class file
+
+Property Read SourcePath As String
+Property Read TargetPath As String
+
+Private $sourcePath As String
+Private $targetPath As String
+
+Public Sub Reset()
+    
+    $sourcePath = Temp$() & ".dot"
+    $targetPath = Temp$() & ".png"
+    
+End
+
+Private Function SourcePath_Read() As String
+
+    Return $sourcePath
+
+End
+
+Private Function TargetPath_Read() As String
+
+    Return $targetPath
+
+End

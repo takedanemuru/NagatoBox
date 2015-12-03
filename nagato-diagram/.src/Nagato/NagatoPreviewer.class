@@ -12,6 +12,17 @@ Public Sub ShowPreview(argSourceText As String)
     
 End
 
+Public Sub Export()
+    
+    Dialog.Title = ("Save image")
+    Dialog.Path = Desktop.GetDirectory("DOCUMENTS") &/ ("your_graph.png")
+    
+    If Dialog.SaveFile() Then Return
+    
+    $imageView.Image.Save(Dialog.Path)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $imageView = New ImageView(argContainer) 

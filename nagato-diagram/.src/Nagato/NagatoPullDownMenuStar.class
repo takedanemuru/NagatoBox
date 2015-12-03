@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoPulldownMenu
+
+Public Sub _OnRootMenuShow()
+    
+    Me._addMenuItem("About", MikuruSignal.ApplicationAbout, "star")
+    Me._addMenuItem("Quit", MikuruSignal.ApplicationQuit, "button-power")
+    
+End

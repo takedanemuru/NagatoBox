@@ -3,24 +3,16 @@
 Property Read Image As Image
 
 Private $image As Image
-Private $sourcePath As String
-Private $targetPath As String
-
-Private Sub resetPaths()
-    
-    $sourcePath = Temp$() & ".dot"
-    $targetPath = Temp$() & ".png"
-    
-End
+Private $temporaryPaths As New NagatoTemporaryPaths
 
 Private Sub resetImage()
     
     Dim yukiOutput As String
 
-    Exec ["dot", "-Tpng", $sourcePath, "-o", $targetPath] To yukiOutput
+    Exec ["dot", "-Tpng", $temporaryPaths.SourcePath, "-o", $temporaryPaths.TargetPath] To yukiOutput
     
     If Not yukiOutput Then
-        Try $image = Image.Load($targetPath)
+        Try $image = Image.Load($temporaryPaths.TargetPath)
     Else
         Message.Error("YUKI.N > " & yukiOutput, ("OK"))
     End If
@@ -29,8 +21,8 @@ End
 
 Public Sub Refresh(argSourceText As String)
     
-    resetPaths()
-    File.Save($sourcePath, argSourceText)
+    $temporaryPaths.Reset()
+    File.Save($temporaryPaths.SourcePath, argSourceText)
     resetImage()
     
 End

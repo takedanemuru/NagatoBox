@@ -2,29 +2,48 @@
 
 Private $menuBar As NagatoMenuBar
 Private $mainContainer As NagatoMainContainer
+Private $pathHandler As New NagatoSourcePaths As "UX"
 
 Public Sub _new()
     
     Application.MainWindow = Me
     
-    $menuBar = New NagatoMenuBar(Me) As "UX"
-    $mainContainer = New NagatoMainContainer(Me) As "UX"
+    $menuBar = New NagatoMenuBar(MainVBox) As "UX"
+    $mainContainer = New NagatoMainContainer(MainVBox) As "UX"
     
     $mainContainer.RefreshPreview()
     
 End
 
+Public Sub Form_Open()
+    
+    MikuruSettings.LoadFormSettings(Me)
+    
+End
+
 Public Sub Form_Close()
     
-    
+    MikuruSettings.SaveFormSettings(Me)
     
 End
 
 Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
 
     Select Case argSignal
+        Case MikuruSignal.FileOpen
+            $pathHandler.Open()
+        Case MikuruSignal.FileSaveAs
+            $pathHandler.SaveAs($mainContainer.Text)
         Case MikuruSignal.PreviewRefresh
             $mainContainer.RefreshPreview()
+        Case MikuruSignal.PreviewExport
+            $mainContainer.Export()
+        Case MikuruSignal.SourceNew
+            $mainContainer.SetPath(argValues[0])
+        Case MikuruSignal.ApplicationAbout
+            HaruhiAbout.ShowDialog()
+        Case MikuruSignal.ApplicationQuit
+            Me.Close()
     End Select
     
 End

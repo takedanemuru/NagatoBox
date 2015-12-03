@@ -2,7 +2,9 @@
 
 Inherits NagatoMenuButton
 
-Private $pulldownMenu As NagatoStarMenu
+Private Const MenuName As String = "StarMenu"
+
+Private $pulldownMenu As NagatoPullDownMenuStar
 
 Public Sub _OnInitializeButton()
     
@@ -12,7 +14,7 @@ End
 
 Public Sub _OptionalOnInitializePullDownMenu()
     
-    Me._$button.Menu = NagatoStarMenu.UniqueName
-    $pulldownMenu = New NagatoStarMenu As "TFEI"
+    Me._$button.Menu = MenuName
+    $pulldownMenu = New NagatoPullDownMenuStar(MenuName) As "TFEI"
     
 End

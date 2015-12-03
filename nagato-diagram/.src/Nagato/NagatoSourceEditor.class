@@ -1,30 +1,55 @@
 ' Gambas class file
 
-Inherits NagatoObject
+Inherits NagatoWidget
 
 Property Read Text As String
 
 Private $editor As TextEditor
 
-Private Sub initializeTextEditor(argContainer As Container)
+Private Sub initializeHighlightProperties()
     
-    $editor = New TextEditor(argContainer) As "TextEditor"
-    
-    With $editor
-        .Highlight = "c"
-        .TabSize = 4
-        .Font.Size = 12
-        .Text = File.Load("Text/Template_1")
-        .ShowLineNumber = True
-        .LineNumberOffset = True
-        .ShowSpaces = True
+    With $editor.Styles
+        .[Highlight.Background].Color = 16247
+        .[Highlight.String].Color = Color.Orange
+        .[Highlight.Number].Color = Color.Red
+        .[Highlight.Keyword].Color = Color.Red
+        .[Highlight.Normal].Color = Color.White
+        .[Highlight.Symbol].Color = Color.White
+        .[Highlight.Function].Color = Color.White
+        .[Highlight.Operator].Color = Color.Yellow
     End With
     
 End
 
-Public Sub _new(argContainer As Container)
+Private Sub initializeEditorProperties()
     
-    initializeTextEditor(argContainer)
+    With $editor
+        .Foreground = Color.White
+        .Highlight = "c"
+        .TabSize = 4
+        .Font.Size = 12
+        .Font.Bold = True
+        .Text = File.Load("Text/Template_1")
+        .ShowLineNumber = True
+        .LineNumberOffset = True
+        .ShowSpaces = True
+        .ShowModified = True
+    End With
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    $editor = New TextEditor(Me._$container) As "TextEditor"
+    
+    initializeEditorProperties()
+    initializeHighlightProperties()
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Try $editor.Text = File.Load(argPath)
     
 End
 
