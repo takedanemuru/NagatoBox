@@ -3,10 +3,17 @@
 Inherits NagatoObject
 
 Private $currentPath As String
+Private $saved As Boolean = True
 
 Public Sub NewPath(argPath As String)
     
     $currentPath = argPath
+    
+End
+
+Public Sub SourceChanged()
+    
+    $saved = False
     
 End
 
@@ -20,6 +27,20 @@ Public Sub Open()
     
     Raise Signal(MikuruSignal.SourceNew, [Dialog.Path])
     
+    $currentPath = Dialog.Path
+    $saved = True
+    
+End
+
+Public Sub Save(argSource As String)
+    
+    If $currentPath = "" Then
+        Me.SaveAs(argSource)
+        $saved = True
+    Else
+        File.Save($currentPath, argSource)
+    Endif
+    
 End
 
 Public Sub SaveAs(argSource As String)
@@ -30,6 +51,30 @@ Public Sub SaveAs(argSource As String)
     If Dialog.SaveFile() Then Return
 
     File.Save(Dialog.Path, argSource)
+    
     $currentPath = Dialog.Path
+    $saved = True
+    
+End
+
+Public Function IsClosable(argSource As String) As Boolean
+    
+    If $saved Then Return True
+    
+    Select Case Message.Warning(("YUKI.N > your changes not saved."), ("Cancel"), ("Save"), ("Discard changes"))
+        Case 1
+            Return False
+        Case 2
+            Me.Save(argSource)
+            Return True
+        Case 3
+            Return True
+    End Select
+    
+End
+
+Public Sub _new()
+    
+    $currentPath = MikuruArguments.Path
     
 End

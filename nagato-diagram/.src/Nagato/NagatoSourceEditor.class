@@ -24,7 +24,6 @@ End
 Private Sub initializeEditorProperties()
     
     With $editor
-        .Foreground = Color.White
         .Highlight = "c"
         .TabSize = 4
         .Font.Size = 12
@@ -61,6 +60,13 @@ End
 
 Public Sub TextEditor_KeyPress()
     
-    Debug Key.Code
+    
     
 End
+
+Public Sub TextEditor_Change()
+    
+    Raise Signal(MikuruSignal.SourceChanged, Null)
+    
+End
+

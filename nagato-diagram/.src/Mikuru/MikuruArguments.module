@@ -1,9 +1,26 @@
 ' Gambas module file
 
-Property Read Ready As Boolean
+Property Read Path As String
 
-Private Function Ready_Read() As Boolean
+Private $paths As New String[]
 
-    Return True
+Public Sub Parsing()
+    
+    Args.Begin("usage")
+    
+    $paths = Args.End()
+    
+End
 
+Private Function Path_Read() As String
+
+    Dim yukiPath As String
+    
+    For Each yukiPath In $paths
+        If Not Exist(yukiPath) Then Continue
+        If DesktopMime.FromFile(yukiPath).Type = "text/vnd.graphviz" Then Return yukiPath
+    Next
+    
+    Return ""
+    
 End

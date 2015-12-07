@@ -18,6 +18,16 @@ Private Sub initializeHSplit(argContainer As Container)
     
 End
 
+Private Sub setSource()
+    
+    If MikuruArguments.Path = "" Then
+        Me.RefreshPreview()
+    Else
+        Me.SetPath(MikuruArguments.Path)
+    End If
+    
+End
+
 Public Sub RefreshPreview()
     
     If $sourceEditor.Text Then $previewer.ShowPreview($sourceEditor.Text)
@@ -40,9 +50,10 @@ End
 Public Sub _new(argContainer As Container)
     
     initializeHSplit(argContainer)
-    $sourceEditor = New NagatoSourceEditor($hSplit)
-    $previewer = New NagatoPreviewer($hSplit)
+    $sourceEditor = New NagatoSourceEditor($hSplit) As "TFEI"
+    $previewer = New NagatoPreviewer($hSplit) As "TFEI"
     $hSplit.Layout = MikuruSettings.Layout
+    setSource()
     
 End
 

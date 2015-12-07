@@ -2,6 +2,7 @@
 
 Public Sub Main()
     
+    MikuruArguments.Parsing()
     HaruhiMain.Show()
     
 End

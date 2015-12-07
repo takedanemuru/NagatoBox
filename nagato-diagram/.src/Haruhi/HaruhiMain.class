@@ -4,14 +4,46 @@ Private $menuBar As NagatoMenuBar
 Private $mainContainer As NagatoMainContainer
 Private $pathHandler As New NagatoSourcePaths As "UX"
 
+Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileOpen
+            $pathHandler.Open()
+        Case MikuruSignal.FileSave
+            $pathHandler.Save($mainContainer.Text)
+        Case MikuruSignal.FileSaveAs
+            $pathHandler.SaveAs($mainContainer.Text)
+    End Select
+    
+End
+
+Private Sub previewEvent(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.PreviewRefresh
+            $mainContainer.RefreshPreview()
+        Case MikuruSignal.PreviewExport
+            $mainContainer.Export()
+    End Select
+    
+End
+
+Private Sub sourceEvent(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.SourceNew
+            $mainContainer.SetPath(argValues[0])
+        Case MikuruSignal.SourceChanged
+            $pathHandler.SourceChanged()
+    End Select
+    
+End
+
 Public Sub _new()
     
     Application.MainWindow = Me
-    
     $menuBar = New NagatoMenuBar(MainVBox) As "UX"
     $mainContainer = New NagatoMainContainer(MainVBox) As "UX"
-    
-    $mainContainer.RefreshPreview()
     
 End
 
@@ -23,23 +55,23 @@ End
 
 Public Sub Form_Close()
     
-    MikuruSettings.SaveFormSettings(Me)
+    If $pathHandler.IsClosable($mainContainer.Text) Then
+        MikuruSettings.SaveFormSettings(Me)
+    Else
+        Stop Event
+    End If
     
 End
 
 Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
 
     Select Case argSignal
-        Case MikuruSignal.FileOpen
-            $pathHandler.Open()
-        Case MikuruSignal.FileSaveAs
-            $pathHandler.SaveAs($mainContainer.Text)
-        Case MikuruSignal.PreviewRefresh
-            $mainContainer.RefreshPreview()
-        Case MikuruSignal.PreviewExport
-            $mainContainer.Export()
-        Case MikuruSignal.SourceNew
-            $mainContainer.SetPath(argValues[0])
+        Case MikuruSignal.FileHeader To MikuruSignal.FileHeader + 999
+            fileEvent(argSignal, argValues)
+        Case MikuruSignal.PreviewHeader To MikuruSignal.PreviewHeader + 999
+            previewEvent(argSignal, argValues)
+        Case MikuruSignal.SourceHeader To MikuruSignal.SourceHeader + 999
+            sourceEvent(argSignal, argValues)
         Case MikuruSignal.ApplicationAbout
             HaruhiAbout.ShowDialog()
         Case MikuruSignal.ApplicationQuit
