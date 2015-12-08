@@ -47,6 +47,12 @@ Public Sub Export()
     
 End
 
+Public Sub SetZoom(argSignal As Integer)
+    
+    $previewer.SetZoom(argSignal)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeHSplit(argContainer)

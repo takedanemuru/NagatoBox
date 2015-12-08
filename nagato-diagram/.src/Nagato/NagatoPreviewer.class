@@ -12,6 +12,21 @@ Public Sub ShowPreview(argSourceText As String)
     
 End
 
+Public Sub SetZoom(argSignal As Integer)
+    
+    Select Case argSignal
+        Case MikuruSignal.ZoomIn
+            $imageView.Zoom *= 1.2
+        Case MikuruSignal.ZoomOut
+            $imageView.Zoom *= 0.8
+        Case MikuruSignal.ZoomFit
+            $imageView.ZoomFit()
+        Case MikuruSignal.ZoomNormal
+            $imageView.Zoom = 1
+    End Select
+    
+End
+
 Public Sub Export()
     
     Dialog.Title = ("Save image")

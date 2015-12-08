@@ -2,8 +2,19 @@
 
 Inherits NagatoMenuButton
 
+Private Const MenuName As String = "RecentFileMenu"
+
+Private $pulldownMenu As Object
+
 Public Sub _OnInitializeButton()
     
-    Me._AddButton(("Recent"), MikuruSignal.FileRecent, "alarm-clock")
+    Me._AddButton(("Recent"), MikuruSignal.Void, "alarm-clock")
+    
+End
+
+Public Sub _OptionalOnInitializePullDownMenu()
+    
+    Me._$button.Menu = MenuName
+    $pulldownMenu = New NagatoPullDownMenuRecentPaths(MenuName) As "TFEI"
     
 End

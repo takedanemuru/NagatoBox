@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeButton()
+    
+    Me._AddButton(("Zoom-In"), MikuruSignal.ZoomIn)
+    
+End

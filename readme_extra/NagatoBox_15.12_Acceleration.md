@@ -19,6 +19,7 @@
 ### dataovermind-systemmonitor (version 42.2.7)
 
 + ~~DBus Interface : history for Processor Usage, Memory Usage and Swap Usage~~
++ new : temperature monitor
 
 ## Applications
 
@@ -27,6 +28,10 @@
 + ~~new : add "done" message dialog~~
 + ~~new : save gtk.css file if it's not existed.~~
 + ~~new : pixmap icon~~
+
+### nagato-diagram
+
++ ~~implement essential functionalities.~~
 
 ### nagato-dbus-finder
 
@@ -39,6 +44,7 @@
 + new : webdav access
 + ~~new : removal disk detection~~ use dataovermind-disks
 + ~~new : video thumbnailing~~
++ fix : solve circular reference on chmod editor
 
 ### nagato-gif-box (version 42.2.1)
 

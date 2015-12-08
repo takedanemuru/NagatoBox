@@ -2,5 +2,9 @@
 
 { Form Form
   MoveScaled(0,0,75,81)
-  Arrangement = Arrange.Vertical
+  Arrangement = Arrange.Fill
+  { MainVBox VBox
+    MoveScaled(9,4,61,48)
+    Expand = True
+  }
 }

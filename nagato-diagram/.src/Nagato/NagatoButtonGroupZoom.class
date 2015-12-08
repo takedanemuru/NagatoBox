@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $zoomIn As NagatoMenuButtonZoomIn
+Private $zoomOut As NagatoMenuButtonZoomOut
+Private $zoomFit As NagatoMenuButtonZoomFit
+Private $zoomNormal As NagatoMenuButtonZoomNormal
+
+Public Sub _OnInitializeWidget()
+    
+    $zoomIn = New NagatoMenuButtonZoomIn(Me._$container) As "TFEI"
+    $zoomOut = New NagatoMenuButtonZoomOut(Me._$container) As "TFEI"
+    $zoomFit = New NagatoMenuButtonZoomFit(Me._$container) As "TFEI"
+    $zoomNormal = New NagatoMenuButtonZoomNormal(Me._$container) As "TFEI"
+    
+End

@@ -5,9 +5,11 @@ Inherits NagatoObject
 Private $currentPath As String
 Private $saved As Boolean = True
 
-Public Sub NewPath(argPath As String)
+Private Sub setNewPath(argPath As String)
     
     $currentPath = argPath
+    $saved = True
+    MikuruSettings.SaveRecntPath(argPath)
     
 End
 
@@ -27,8 +29,7 @@ Public Sub Open()
     
     Raise Signal(MikuruSignal.SourceNew, [Dialog.Path])
     
-    $currentPath = Dialog.Path
-    $saved = True
+    setNewPath(Dialog.Path)
     
 End
 
@@ -36,9 +37,9 @@ Public Sub Save(argSource As String)
     
     If $currentPath = "" Then
         Me.SaveAs(argSource)
-        $saved = True
     Else
         File.Save($currentPath, argSource)
+        $saved = True
     Endif
     
 End
@@ -52,8 +53,7 @@ Public Sub SaveAs(argSource As String)
 
     File.Save(Dialog.Path, argSource)
     
-    $currentPath = Dialog.Path
-    $saved = True
+    setNewPath(Dialog.Path)
     
 End
 
@@ -62,19 +62,29 @@ Public Function IsClosable(argSource As String) As Boolean
     If $saved Then Return True
     
     Select Case Message.Warning(("YUKI.N > your changes not saved."), ("Cancel"), ("Save"), ("Discard changes"))
-        Case 1
+        Case 1 'Cancel
             Return False
-        Case 2
+        Case 2 'Save
             Me.Save(argSource)
-            Return True
-        Case 3
+            Return $saved
+        Case 3 'Discard
             Return True
     End Select
     
 End
 
+Public Sub IsOverridable(argSource As String) As Boolean
+    
+    Dim yukiIsOverridable As Boolean = Me.IsClosable(argSource)
+    
+    If yukiIsOverridable Then $currentPath = ""
+    
+    Return yukiIsOverridable
+    
+End
+
 Public Sub _new()
     
-    $currentPath = MikuruArguments.Path
+    setNewPath(MikuruArguments.Path)
     
 End

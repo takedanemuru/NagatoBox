@@ -9,6 +9,7 @@ Private $openButton As NagatoMenuButtonOpen
 Private $saveButton As NagatoMenuButtonSave
 Private $saveAsButton As NagatoMenuButtonSaveAs
 Private $previewButton As NagatoMenuButtonPreview
+Private $buttonGroupZoom As NagatoButtonGroupZoom
 Private $exportButton As NagatoMenuButtonExport
 Private $starButton As NagatoMenuButtonStar
 
@@ -24,6 +25,7 @@ Public Sub _OnInitializeWidget()
     $saveAsButton = New NagatoMenuButtonSaveAs($container.Container) As "TFEI"
         Object.New("NagatoWidgetSeparator", [$container.Container])
     $previewButton = New NagatoMenuButtonPreview($container.Container) As "TFEI"
+    $buttonGroupZoom = New NagatoButtonGroupZoom($container.Container) As "TFEI"
     $exportButton = New NagatoMenuButtonExport($container.Container) As "TFEI"
         Object.New("NagatoWidgetSpacer", [$container.Container])
     $starButton = New NagatoMenuButtonStar($container.Container) As "TFEI"

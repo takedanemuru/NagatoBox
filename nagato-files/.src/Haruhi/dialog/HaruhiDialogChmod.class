@@ -6,9 +6,10 @@ Private $path As String
 
 Private Sub initializeUx()
     
-    $chmodContainer = New NagatoChmodContainer(Me) As "ChmodContainer"
-    $applyButtons = New NagatoDialogApplyButtons(Me) As "ApplyButtons"
+    $chmodContainer = New NagatoChmodContainer(MainVBox) As "ChmodContainer"
+    $applyButtons = New NagatoDialogApplyButtons(MainVBox) As "ApplyButtons"
     
+    ' 24 is total number of chmod rows.
     Me.H = NagatoChmod.LabelHeight * 24 + $applyButtons.Height
     
 End
