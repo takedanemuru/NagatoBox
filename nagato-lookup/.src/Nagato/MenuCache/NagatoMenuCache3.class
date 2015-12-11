@@ -10,7 +10,9 @@ Private $observer As NagatoApplicationDirectoriesObserver
 
 Public Function GetApplications(argCategory As String) As Collection
     
-    Return $applications.GetApplications(argCategory)
+    Dim yukiCollection As Collection = $applications.GetApplications(argCategory)
+    
+    Return yukiCollection
     
 End
 

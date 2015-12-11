@@ -1,41 +1,12 @@
 ' Gambas class file
 
 Private $menuPanel As NagatoMenuPanel
-Private $gridViewHandler As NagatoGridViewSearchResult
-
-' Private Function getResult(argQueryType As Integer, argQueryWord As String) As Result
-'     
-'     Select Case argQueryType
-'         Case NagatoQuerySelector.TypeJapanese
-'             Return NagatoDBGeneralDict.Get(Subst$("%&1%", argQueryWord))
-'         Case NagatoQuerySelector.TypePronunciation
-'             Return NagatoDBGeneralDict.GetWithPronunciation(Subst$("%&1%", argQueryWord))
-'         Case NagatoQuerySelector.TypeEnglish
-'             Return NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQueryWord))
-'     End Select
-'     
-' End
-' 
-' Private Function searh(argQueryType As Integer, argQueryWord As String) As String
-'     
-'     Dim yukiResult As Result = getResult(argQueryType, argQueryWord)
-'     
-'     $gridViewHandler.Clear()
-'     
-'     If yukiResult.Count = 0 Then Message.Info(("YUKI.N > Query not found."), ("OK"))
-'     
-'     For Each yukiResult
-'         With NagatoDBGeneralDict
-'             $gridViewHandler.SetData(yukiResult[.ColumnJapanese], yukiResult[.ColumnPronunciation], yukiResult[.ColumnEnglish])
-'         End With
-'     Next
-'     
-' End
+Private $gridView As NagatoGridViewSearchResult
 
 Public Sub _new()
 
     $menuPanel = New NagatoMenuPanel(MenuPanel) As "MenuPanel"
-    $gridViewHandler = New NagatoGridViewSearchResult(Me)
+    $gridView = New NagatoGridViewSearchResult(Me)
 
 End
 
@@ -50,7 +21,7 @@ Public Sub MenuPanel_Signal(argEvent As Integer, argArgs As Variant[])
     
     Select Case argEvent
         Case MikuruSignal.Query 
-            $gridViewHandler.Searh(argArgs[0], argArgs[1])
+            $gridView.Searh(argArgs[0], argArgs[1])
         Case MikuruSignal.ApplicationAbout
             HaruhiAbout.ShowDialog()
         Case MikuruSignal.ApplicationQuit

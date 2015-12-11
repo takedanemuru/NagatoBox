@@ -3,6 +3,7 @@
 Public Sub Initialize()
     
     With WebSettings
+        .Cache.Enabled = True
         .[.PluginsEnabled] = True
         .[.JavascriptEnabled] = True
         .[.JavascriptCanOpenWindows] = True

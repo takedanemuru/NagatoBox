@@ -6,12 +6,8 @@ Private $recentApplicationsButton As NagatoRecentApplicationsButton
 
 Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As Picture)
     
-    Dim yukiButton As MenuButton
-    Dim yukiMenu As NagatoApplicationsMenu
-    
-    If NagatoMenuCache3.GetApplications(argCategory).Count = 0 Then Return
-    
-    yukiButton = New MenuButton(Me._$container) 
+    Dim yukiButton As New MenuButton(Me._$container) 
+    Dim yukiMenu As NagatoPullDownMenuCategory
     
     With yukiButton
         .Text = argTitle
@@ -19,22 +15,17 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
         .Arrow = False
         If argIcon Then .Picture = argIcon
         .Border = False
-        .Foreground = NagatoSettings.FontColor
+        .Menu = argCategory
     End With
 
-    yukiMenu = New NagatoApplicationsMenu(yukiButton, argCategory, argTitle)
-    
-Catch
-    Return
+    yukiMenu = New NagatoPullDownMenuCategory(argCategory)
     
 End
 
 Public Sub _InitializeWidget()
     
-    If NagatoSettings.RecentApplications Then 
-        $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container)
-    End If
-    
+    $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container)
+
     addMenuButton(("Nagato"), "Nagato", MikuruIcons.Get("star"))
     addMenuButton(("Develop"), "Developments", MikuruIcons.Get("wrench"))
     addMenuButton(("Education"), "Educations", MikuruIcons.Get("bank"))

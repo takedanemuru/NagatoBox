@@ -6,7 +6,7 @@ Private $gridView As NagatoGridViewSearchResult
 Public Sub _new()
 
     $menuPanel = New NagatoMenuPanel(MenuPanel) As "MenuPanel"
-    $gridView = New NagatoGridViewSearchResult(Me)
+    $gridView = New NagatoGridViewSearchResult(MainVBox)
 
 End
 

@@ -1,22 +1,19 @@
 ' Gambas class file
 
-Private $applicationDirectoryObserver As NagatoDirectoryObserver
-Private $kdeApplicationDirectoryObserver As NagatoDirectoryObserver
-Private $localApplicationDirectoryObserver As NagatoDirectoryObserver
+Private $globalObserver As NagatoDirectoryObserver
+Private $kdeObserver As NagatoDirectoryObserver
+Private $localObserver As NagatoDirectoryObserver
 
 Event Modefied(argPath As String)
 Event Deleted(argPath As String)
 
 Private Sub initializeDirectoryObservers()
     
-    $applicationDirectoryObserver = New NagatoDirectoryObserver As "ApplicationObserver"
-    $applicationDirectoryObserver.Directory = MikuruApplicationDirectory.Global
-    
-    $kdeApplicationDirectoryObserver = New NagatoDirectoryObserver As "ApplicationObserver"
-    $kdeApplicationDirectoryObserver.Directory = MikuruApplicationDirectory.KDE4
-    
-    $localApplicationDirectoryObserver = New NagatoDirectoryObserver As "ApplicationObserver"
-    $localApplicationDirectoryObserver.Directory = MikuruApplicationDirectory.Local
+    With MikuruApplicationDirectory
+        $globalObserver = New NagatoDirectoryObserver(.Global) As "ApplicationObserver"
+        $kdeObserver = New NagatoDirectoryObserver(.KDE4) As "ApplicationObserver"
+        $localObserver = New NagatoDirectoryObserver(.Local) As "ApplicationObserver"
+    End With
     
 End
 

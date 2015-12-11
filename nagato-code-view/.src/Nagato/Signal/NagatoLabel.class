@@ -2,17 +2,35 @@
 
 Inherits NagatoUxContainer
 
+Private $hBox As HBox
+Private $pictureBox As PictureBox
 Private $label As TextLabel
 
-Public Sub SetText(argText As String)
+Private Sub initializeHBox()
     
-    $label.Text = argText
+    $hBox = New HBox(Me._$parentContainer)
+    
+    With $hBox
+        .H = 250
+    End With
     
 End
 
-Public Sub _initialize() ' virtual
+Private Sub initializePictureBox()
     
-    $label = New TextLabel(Me._$parentContainer)
+    $pictureBox = New PictureBox($hBox)
+    
+    With $pictureBox
+        .W = 161
+        .Stretch = True
+        .Picture = Picture.Load("Pictures/looking_back.jpg")
+    End With
+    
+End
+
+Private Sub initializeLabel()
+    
+    $label = New TextLabel($hBox)
     
     With $label
         .Background = 16444890
@@ -23,5 +41,19 @@ Public Sub _initialize() ' virtual
         .Font.Size = 12
         .Foreground = 6179679
     End With
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    $label.Text = argText
+    
+End
+
+Public Sub _initialize() ' virtual
+    
+    initializeHBox()
+    initializePictureBox()
+    initializeLabel()
     
 End

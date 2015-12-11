@@ -1,0 +1,37 @@
+' Gambas module file
+
+Private Function getDesktopSession() As String
+    
+    Dim yukiOutput As String
+    
+    Shell "printenv | grep DESKTOP_SESSION" To yukiOutput
+    
+    Return yukiOutput
+    
+End
+
+Public Function IsOpenbox() As Boolean
+    
+    Dim yukiOutput As String = getDesktopSession()
+    
+    If (yukiOutput Ends "openbox\n") Then
+        Return True
+    Else If (yukiOutput Ends "NagatoBox\n") Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Public Function IsNagatoBox() As Boolean
+    
+    Dim yukiOutput As String = getDesktopSession()
+    
+    If (yukiOutput Ends "NagatoBox\n") Then
+        Return True
+    Else
+        Return False
+    Endif
+    
+End

@@ -30,6 +30,8 @@ Public Sub SetCode(argPath As String)
     setEditor(argPath)
     Me.Title = File.Name(argPath)
 
+    Me.Show()
+
 End
 
 Public Sub Form_Show()

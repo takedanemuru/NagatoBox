@@ -1,0 +1,42 @@
+' Gambas class file
+
+Property Read Max As Integer
+
+Private $names As New String[]
+Private $collection As New Collection
+
+Private Sub refresh(argCategory As String)
+    
+    Dim yukiDesktopFile As Variant
+    Dim yukiName As String
+    
+    For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)
+        If Not Exist(yukiDesktopFile.Path) Then Continue
+        yukiName = yukiDesktopFile.GetName(True)
+        If yukiName = "" Then yukiName = File.BaseName(yukiDesktopFile.Path)
+        $names.Add(yukiName)
+        $collection.Add(yukiDesktopFile, yukiName)
+    Next
+    
+End
+
+Public Sub SortByNameIgnoreCase(argCategory As String)
+    
+    $names.Clear()
+    $collection.Clear()
+    refresh(argCategory)
+    $names.Sort(gb.IgnoreCase)
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoDesktopFile
+    
+    Return $collection[$names[argIndex]]
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $names.Max
+
+End

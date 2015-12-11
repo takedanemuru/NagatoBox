@@ -1,0 +1,14 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenuApplications
+
+Public Sub _OnRefreshChildMenus()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoSettings.RecentApplications
+        If Not Exist(yukiPath) Then Continue
+        Me._AddApplicationMenu(Object.New("NagatoDesktopFile", [yukiPath]))
+    Next
+    
+End

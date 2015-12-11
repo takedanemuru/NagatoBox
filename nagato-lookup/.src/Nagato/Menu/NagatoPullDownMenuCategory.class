@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenuApplications
+
+Private $sorter As New NagatoApplicationSorter
+
+Public Sub _OnRefreshChildMenus()
+    
+    Dim yukiIndex As Integer
+    
+    $sorter.SortByNameIgnoreCase(Me._$rootMenu.Name)
+    
+    For yukiIndex = 0 To $sorter.Max
+        Me._AddApplicationMenu($sorter[yukiIndex])
+    Next
+
+End

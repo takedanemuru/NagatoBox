@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private $alsa As New NagatoAlsaState
+    
+Private Function addIndicationMenu() As Boolean
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu)
+    
+    If $alsa.Channel <> "" Then 
+        yukiMenu.Picture = MikuruIcons.Get("speaker")
+        yukiMenu.Text = Subst$("ALSA &1: &2%", $alsa.Channel, $alsa.Volume)
+        Return True
+    Else
+        yukiMenu.Text = ("Couldn't find valid alsa volume channel.")
+        Return False
+    Endif
+    
+End
+
+Private Sub addVolumeMenu()
+    
+    Dim yukiVolume As Integer
+    
+    For yukiVolume = 100 DownTo 10 Step 10
+        Object.New("NagatoMenuItemAlsaVolume", [Me._$parentMenu, [$alsa.Channel, yukiVolume, $alsa.Volume]])
+    Next
+    
+End
+
+Public Sub _OnRefreshChildMenus()
+    
+    If addIndicationMenu() Then
+        Object.New("NagatoMenuItemDummy", [Me._$parentMenu])
+        addVolumeMenu()
+        Object.New("NagatoMenuItemDummy", [Me._$parentMenu])
+        Object.New("NagatoMenuItemAlsaMute", [Me._$parentMenu, [$alsa.Channel, 0]])
+    Endif
+    
+End
+
+Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With Me._$parentMenu
+        .Picture = MikuruIcons.Get("speaker")
+        .Text = ("Alsa volume")
+    End With
+    
+End

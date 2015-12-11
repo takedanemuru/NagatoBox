@@ -32,9 +32,11 @@ Public Sub _new(argMenuName As String)
     $preferenceMenu = New NagatoPreferenceMenu($rootMenu)
     $screenshotMenu = New NagatoScreenshotMenu($rootMenu)
     $alsaMenu = New NagatoAlsaMenu($rootMenu)
+    Object.New("NagatoMenuItemScreenlocker", [$rootMenu])
         MikuruMenuSeparator.Set($rootMenu)
     Object.New("NagatoMenuItemAbout", [$rootMenu])
-    If Not MikuruSession.IsOpenbox() Then addCloseMenu()
+    'If Not MikuruSession.IsOpenbox() Then addCloseMenu()
+    addCloseMenu()
     If MikuruSession.IsOpenbox() Then Object.New("NagatoMenuItemLogout", [$rootMenu])
     
 End

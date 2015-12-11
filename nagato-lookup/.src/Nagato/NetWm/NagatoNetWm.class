@@ -1,0 +1,18 @@
+' Gambas class file
+
+Private $id As Integer
+
+Public Sub SetHeight(argHeight As Integer)
+    
+    Dim yukiProperty As String = "_NET_WM_STRUT"
+    Dim yukiValue As String = Subst$("0,0,&1,0", argHeight) 
+    
+    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", $id, yukiProperty, yukiValue)
+    
+End
+
+Public Sub _new(argId As Integer)
+    
+    $id = argId
+    
+End

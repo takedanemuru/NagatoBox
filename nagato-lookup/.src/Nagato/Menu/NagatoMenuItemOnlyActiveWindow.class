@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Me._$menu = New Menu(argParentMenu) As "MenuItem"
+    
+    With Me._$menu
+        .Text = ("Only active window")
+        .Picture = MikuruIcons.GetCheckButton(NagatosettingsScreenShooter.OnlyActiveWindow)
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+        NagatosettingsScreenShooter.OnlyActiveWindow = Not NagatosettingsScreenShooter.OnlyActiveWindow
+    
+End

@@ -2,12 +2,15 @@
 
 Inherits NagatoWidget
 
+Private Const MenuName As String = "RecentApplications"
+
 Public Sub _InitializeWidget() 'override
     
     Dim yukiButton As MenuButton
-    Dim yukiMenu As NagatoRecentApplicationsMenu
+    'Dim yukiMenu As NagatoRecentApplicationsMenu
+    Dim yukiMenu As NagatoPullDownMenuRecent
     
-    If Not NagatoSettings.RecentApplications Then Return
+    'If Not NagatoSettings.RecentApplications Then Return
     
     yukiButton = New MenuButton(Me._$container)
     
@@ -17,10 +20,11 @@ Public Sub _InitializeWidget() 'override
         .Arrow = False
         .Picture = MikuruIcons.Get("alarm-clock")
         .Border = False
-        .Foreground = NagatoSettings.FontColor
-        .Font.Bold = True
+'        .Foreground = NagatoSettings.FontColor
+        .Menu = MenuName
     End With
     
-    yukiMenu = New NagatoRecentApplicationsMenu(yukiButton)
+    'yukiMenu = New NagatoRecentApplicationsMenu(yukiButton)
+    yukiMenu = New NagatoPullDownMenuRecent(MenuName)
     
 End

@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With Me._$parentMenu
+        .Text = ("Screenshot")
+        .Picture = MikuruIcons.Get("camera")
+    End With
+    
+End
+
+Public Sub _OnRefreshChildMenus()
+    
+    Object.New("NagatoMenuItemOnlyActiveWindow", [Me._$parentMenu])
+        MikuruMenuSeparator.Set(Me._$parentMenu)
+    Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["now", 0]])
+        MikuruMenuSeparator.Set(Me._$parentMenu)
+    Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["5 seconds later", 5]])
+    Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["15 seconds later", 15]])
+    Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["30 seconds later", 30]])
+    Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["1 minute later", 60]])
+    
+End

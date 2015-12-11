@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.Get("button-power")
+        .Text = ("Close")
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    Dim yukiMessage As String = ("YUKI.N > Are you sure to close this application ?")
+    
+    Select Case Message.Question(yukiMessage, ("Cancel"), ("Close")) 
+        Case 2
+            HaruhiMain.Close()
+        Default
+            ' ignore
+    End Select
+    
+End

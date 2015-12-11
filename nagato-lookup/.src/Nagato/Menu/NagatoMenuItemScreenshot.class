@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Me._$menu = New Menu(argParentMenu) As "MenuItem"
+    
+    With Me._$menu
+       ' see OptionalAbstract
+    End With
+    
+End
+
+Public Sub _OptionalAbstractOnInitialize(argValues As Variant[])
+    
+    With Me._$menu
+        .Text = argValues[0]
+        .Tag = argValues[1]
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    If Last.Tag = 0 Then
+        HaruhiSave.Call()
+    Else
+        MikuruScreenshotCountDown.Start(Last.Tag)
+    End If
+    
+End

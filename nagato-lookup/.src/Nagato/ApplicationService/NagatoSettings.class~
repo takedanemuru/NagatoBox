@@ -5,8 +5,6 @@ Inherits NagatoSettingsCore
 Property Read RecentApplications As String[]
 Property FormColor As Integer
 Property FontColor As Integer
-Property Directory As String
-Property OnlyActiveWindow As Boolean
 
 Private Const StoreMax As Integer = 30
 
@@ -77,32 +75,6 @@ End
 Private Sub FontColor_Write(Value As Integer)
 
     Me._$settings["color/font"] = Value
-    Me._$settings.Save()
-
-End
-
-Private Function Directory_Read() As String
-
-    Return Me._$settings["screenshot/directory", User.Home]
-
-End
-
-Private Sub Directory_Write(Value As String)
-
-    Me._$settings["screenshot/directory"] = Value
-    Me._$settings.Save()
-
-End
-
-Private Function OnlyActiveWindow_Read() As Boolean
-
-    Return Me._$settings["screenshot/only_active", False]
-
-End
-
-Private Sub OnlyActiveWindow_Write(Value As Boolean)
-
-    Me._$settings["screenshot/only_active"] = Value
     Me._$settings.Save()
 
 End

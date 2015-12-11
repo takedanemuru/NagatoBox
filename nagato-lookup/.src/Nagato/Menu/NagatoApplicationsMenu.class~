@@ -28,7 +28,7 @@ Private Sub setEachApplicationMenu(argDesktopFile As NagatoDesktopFile)
     yukiMenu = New Menu($rootMenu) As "ApplicationMenu"
     
     With yukiMenu
-        .Text = IIf(argDesktopFile.Name = "", File.BaseName(argDesktopFile.Path), argDesktopFile.Name)
+        .Text = argDesktopFile.GetName(True)
         .Tag = argDesktopFile.Path
         .Picture = argDesktopFile.GetIcon(64)
     End With

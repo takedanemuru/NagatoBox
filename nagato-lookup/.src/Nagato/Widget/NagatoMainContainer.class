@@ -1,0 +1,21 @@
+' Gambas class file
+
+Private $applicationButtons As NagatoApplicationButtons
+Private $spacer As NagatoSpacer
+Private $searchBox As NagatoSearchBox
+Private $infomationButton As NagatoInfomationButton
+
+Public Sub ClearSearchQuery()
+    
+    $searchBox.Clear()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $applicationButtons = New NagatoApplicationButtons(argContainer)
+    $spacer = New NagatoSpacer(argContainer)
+    $searchBox = New NagatoSearchBox(argContainer)
+    $infomationButton = New NagatoInfomationButton(argContainer)
+    
+End

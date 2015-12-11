@@ -2,18 +2,20 @@
 
 Inherits NagatoWidget
 
+Private Const MenuName As String = "StarMenu"
+
 Public Sub _InitializeWidget() 'override
     
     Dim yukiButton As New MenuButton(Me._$container)
-    Dim yukiMenu As NagatoMainMenu
+    Dim yukiMenu As NagatoPullDownMenuStar
     
     With yukiButton
         .Picture = MikuruIcons.Get("star")
         .Width = Me._$container.Height
         .Border = False
-        .Name = "HelpAndPreference"
+        .Menu = MenuName
     End With
     
-    yukiMenu = New NagatoMainMenu(yukiButton.Menu)
+    yukiMenu = New NagatoPullDownMenuStar(MenuName)
     
 End

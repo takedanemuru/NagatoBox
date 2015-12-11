@@ -1,8 +1,5 @@
 ' Gambas class file
 
-Property Directory As String
-Property IntervalSecond As Integer
-
 Private $directory As String
 Private $timer As New Timer As "Timer"
 Private $lastObserved As Date
@@ -15,14 +12,13 @@ Private Sub checkDeletedPath(argCurrentPaths As String[])
     
     Dim yukiPath As String
     
-    If Object.IsValid($previousPaths) Then
-        For Each yukiPath In $previousPaths
-             If Not argCurrentPaths.Exist(yukiPath) Then
-                Debug "deleted: " & yukiPath
-                Raise Deleted(yukiPath)
-             End If
-        Next
-    Endif
+    If Not Object.IsValid($previousPaths) Then Return
+
+    For Each yukiPath In $previousPaths
+        If argCurrentPaths.Exist(yukiPath) Then Continue
+        Debug "deleted: " & yukiPath
+        Raise Deleted(yukiPath)
+    Next
     
 End
 
@@ -39,9 +35,15 @@ Private Sub checkModefiedPath(argCurrentPaths As String[])
     
 End
 
-Public Sub _new()
+Public Sub ChangeDirectory(argDirectory As String)
+    
+    $directory = argDirectory
+    
+End
 
-    $directory = User.Home
+Public Sub _new(Optional argDirectory As String = User.Home)
+
+    $directory = argDirectory
     $lastObserved = Now
     $timer.Delay = 5000
     $timer.Start()
@@ -50,41 +52,17 @@ End
 
 Public Sub Timer_Timer()
     
-    Dim yukiCurrentPaths As String[] = Dir($directory)
+    Dim yukiCurrentPaths As String[] = Dir($directory, "*.desktop")
     
     checkDeletedPath(yukiCurrentPaths)
     checkModefiedPath(yukiCurrentPaths)
     
     $lastObserved = Now
-    $previousPaths = yukiCurrentPaths
     
-Catch
-    Debug Error.Text
-    Debug $directory
+    $previousPaths.Clear()
+    $previousPaths = yukiCurrentPaths.Copy()
+    
+Catch 'to avoid error when ~/.local/share/applications/foobar not existed
     Return
     
-End
-
-Private Function Directory_Read() As String
-
-    Return $directory
-
-End
-
-Private Sub Directory_Write(Value As String)
-
-    $directory = Value
-
-End
-
-Private Function IntervalSecond_Read() As Integer
-
-    Return $timer.Delay / 1000
-
-End
-
-Private Sub IntervalSecond_Write(Value As Integer)
-
-    $timer.Delay = Value * 1000
-
 End

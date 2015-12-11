@@ -1,16 +1,12 @@
 ' Gambas module file
 
-Private Const QuestionLine0 As String = ("This software is a settings applications.\n")
-Private Const QuestionLine1 As String = ("Do you want to launch this application as super user ?")
-
 Private Function getCommand(argExec As String, argAsSuperUser As Boolean) As String
     
     Dim yukiReturn As String = IIf(argAsSuperUser, "gksu", "")
     Dim yukiCommand As String
     
     For Each yukiCommand In Split(argExec, " ", "")
-        If yukiCommand Begins "%" Then Continue
-        yukiReturn &= (" " & yukiCommand)
+        If yukiCommand Not Begins "%" Then yukiReturn &= (" " & yukiCommand)
     Next
         
     Return yukiReturn

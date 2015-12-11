@@ -8,7 +8,7 @@ Public Sub _AbstractOnInitialize(argParentMenu As Menu)
     
     With yukiMenu
         .Picture = MikuruIcons.Get("button-power")
-        .Text = IIf(MikuruSession.IsNagatoBox(), ("Logout (NagatoBox)"), ("Logout (Openbox)"))
+        .Text = IIf(MikuruSessionType.IsNagatoBox(), ("Logout (NagatoBox)"), ("Logout (Openbox)"))
     End With
     
 End

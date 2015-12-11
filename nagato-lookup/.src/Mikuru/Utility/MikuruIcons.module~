@@ -10,18 +10,6 @@ Public Function GetDesktopEntryIcon(argPath As String, Optional argSize As Integ
     
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiDesktopFileIcon As New NagatoDesktopFileIcon(yukiDesktopFile)
-    ' Dim yukiIcon As Image
-    ' 
-    ' If Exist(yukiDesktopFile.Icon) Then
-    '     yukiIcon = Image.Load(yukiDesktopFile.Icon)
-    '     If argSize > Max(yukiIcon.H, yukiIcon.W) Then
-    '         Return yukiIcon.Picture
-    '     Else
-    '         Return yukiIcon.Stretch(argSize, argSize).Picture
-    '     End If
-    ' Else
-    '     Return yukiDesktopFile.GetIcon(argSize).Picture
-    ' End If
     
     Return yukiDesktopFileIcon.GetIcon(argSize)
     

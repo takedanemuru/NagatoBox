@@ -3,19 +3,8 @@
 Private Const HeightHide As Integer = 1
 Private Const HeightShow As Integer = 28
 
-Private $applicationButtons As NagatoApplicationButtons
-Private $spacer As NagatoSpacer
-Private $searchBox As NagatoSearchBox
-Private $infomationButton As NagatoInfomationButton
-
-Private Sub setNetWmStrut(argHeight As Integer)
-    
-    Dim yukiProperty As String = "_NET_WM_STRUT"
-    Dim yukiValue As String = Subst$("0,0,&1,0", argHeight) 
-    
-    Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", Me.Id, yukiProperty, yukiValue)
-    
-End
+Private $mainContainer As NagatoMainContainer
+Private $netWm As NagatoNetWm
 
 Private Sub initializeForm()
     
@@ -24,29 +13,15 @@ Private Sub initializeForm()
     Me.Width = Screen.Width
     Me.Height = HeightHide
     Me.Background = NagatoSettings.FormColor
-    MainHBox.Visible = False
-    
-End
-
-Public Sub SetForegroundColor(argColor As Integer)
-    
-    Dim yukiObject As Object
-    
-    For Each yukiObject In MainHBox.Children
-        If Object.Type(yukiObject) = "MenuButton" Then yukiObject.Foreground = argColor
-    Next
     
 End
 
 Public Sub Form_Open()
     
     Application.MainWindow = Me
+    $netWm = New NagatoNetWm(Me.Id)
     initializeForm()
-    $applicationButtons = New NagatoApplicationButtons(MainHBox)
-    $spacer = New NagatoSpacer(MainHBox)
-    $searchBox = New NagatoSearchBox(MainHBox)
-    $infomationButton = New NagatoInfomationButton(MainHBox)
-    
+    $mainContainer = New NagatoMainContainer(MainHBox)
     NagatoNotification.Show()
     
 End
@@ -60,17 +35,15 @@ End
 Public Sub Form_Enter()
     
     Me.Height = HeightShow
-    MainHBox.Visible = True
-    setNetWmStrut(Me.H)
+    $netWm.SetHeight(Me.H)
     
 End
 
 Public Sub Form_Leave()
     
     Me.Height = HeightHide
-    MainHBox.Visible = False
-    setNetWmStrut(0)
-    $searchBox.Clear()
+    $netWm.SetHeight(0)
+    $mainContainer.ClearSearchQuery()
     
 End
 

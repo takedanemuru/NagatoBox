@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Create Private
+
+Private Const IconSize As Integer = 64
+
+Public Sub _AddApplicationMenu(argDesktopFile As NagatoDesktopFile)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ApplicationMenu"
+    
+    With yukiMenu
+        .Text = argDesktopFile.GetName(True)
+        .Tag = argDesktopFile.Path
+        .Picture = argDesktopFile.GetIcon(IconSize)
+    End With
+    
+End
+
+Public Sub ApplicationMenu_Click()
+    
+    MikuruApplications.Launch(Last.Tag)
+    NagatoSettings.PushApplicationPath(Last.Tag)
+    
+End

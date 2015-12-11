@@ -1,0 +1,46 @@
+' Gambas class file
+
+Public _$rootMenu As Menu
+
+Public Sub _InitializeRootMenu(argMenuName As String)
+    
+    Me._$rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    
+    With Me._$rootMenu
+        .Text = ""
+        .Name = argMenuName
+    End With
+    
+End
+
+Public Sub _AddMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If ArgIconName Then .Picture = MikuruIcons.Get(ArgIconName)
+    End With
+    
+End
+
+Public Sub _OnRefreshChildMenus()
+    
+    
+    
+End
+
+Public Sub _new(argMenuName As String)
+    
+    Me._InitializeRootMenu(argMenuName)
+    Me._AddMenuItem("", 0) ' as dummy menu to catch "RootMenu_Show" event
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    Me._$rootMenu.Children.Clear()
+    Me._OnRefreshChildMenus()
+    
+End

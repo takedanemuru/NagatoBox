@@ -1,0 +1,23 @@
+' Gambas module file
+
+Private $timer As New Timer As "Timer"
+Private $count As Integer
+
+Public Sub Start(argCount As Integer)
+    
+    $count = argCount
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Dec $count
+    
+    If $count = 0 Then
+        HaruhiSave.Call()
+        $timer.Stop
+    Endif
+    
+End
+
