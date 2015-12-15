@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $pictureBox As PictureBox
+
+Public Sub _OnInitializeWidget()
+    
+    $pictureBox = New PictureBox(Me._$container)
+    
+    With $pictureBox
+        .H = Me._$container.H
+        .W = Me._$container.H
+        .Picture = MikuruIcon.Get("gear", 48)
+        .Alignment = Align.Center
+    End With
+    
+End
+
+Public Sub SetProperties(argAutostartFile As NagatoAutostartFile)
+    
+    $pictureBox.Picture = MikuruIconDesktopEntry[argAutostartFile.Path, 64]
+    
+End

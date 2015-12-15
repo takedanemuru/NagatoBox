@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoUXContainerHorizontal
+
+Private $pictureBox As NagatoWidgetDesktopEntryIcon
+Private $execs As NagatoUXContainerExecs
+
+Public Sub _OnInitializeWidgets()
+    
+    Me._SetCOntainerHeight(60)
+
+    $pictureBox = New NagatoWidgetDesktopEntryIcon(Me._$container)
+    $execs = New NagatoUXContainerExecs(Me._$container)
+    
+End
+
+Public Sub SetProperties(argAutostartFile As NagatoAutostartFile)
+    
+    $pictureBox.SetProperties(argAutostartFile)
+    $execs.SetProperties(argAutostartFile)
+    
+End

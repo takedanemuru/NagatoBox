@@ -1,68 +1,16 @@
 ' Gambas module file
 
-Private Const HicolorIcons As String = "/usr/share/icons/hicolor/&1x&1/apps"
-Private Const PixmapIcons As String = "/usr/share/pixmaps"
-
-Private $iconSizes As String[] = ["256", "192", "128", "96", "72", "64", "48", "36", "32", "24"]
 Private $desktopFile As DesktopFile
 Private $path As String
-
-Private Function getHicolorIconPath() As String
-    
-    Dim yukiSize As String
-    Dim yukiDirectory As String
-    Dim yukiPath As String
-    
-    For Each yukiSize In $iconSizes
-        yukiDirectory = Subst(HicolorIcons, yukiSize)
-        If Not Exist(yukiDirectory) Then Continue
-        yukiPath = getIconPath(yukiDirectory)
-        If yukiPath Then Return yukiPath
-    Next
-    
-    Return ""
-    
-End
-
-Private Function getIconPath(argDirectory As String) As String
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In RDir(argDirectory)
-        If File.BaseName(yukiPath) <> File.BaseName($desktopFile.Icon) Then Continue
-        Return (argDirectory &/ yukiPath)
-    Next
-    
-    Return ""
-    
-End
-
-Private Function getIconPathFormDesktopFileData(argPath As String) As String
-    
-    Dim yukiPath As String = PixmapIcons &/ File.BaseName(argPath) & ".png"
-
-    If Exist(yukiPath) Then Return yukiPath
-    If Exist(argPath) Then Return argPath
-    
-    Return ""
-    
-End
-
-Private Function getIconPathFromAbsolutePath() As String
-    
-    If $desktopFile.Icon Begins "/" Then 
-        Return getIconPathFormDesktopFileData($desktopFile.Icon)
-    Else
-        Return ""
-    End If
-    
-End
+Private $absoluteIconPath As New NagatoDesktopEntryIconAbsolute
+Private $hicolorIconPath As New NagatoDesktopEntryIconPathHicolor
+Private $pixmapIconPath As New NagatoDesktopEntryIconPixmap
 
 Private Function setPath()
     
-    $path = getIconPathFromAbsolutePath()
-    If Not $path Then $path = getHicolorIconPath()
-    If Not $path Then $path = getIconPath(PixmapIcons)
+    If $desktopFile.Icon Begins "/" Then $path = $absoluteIconPath[$desktopFile.Icon]
+    If Not $path Then $path = $hicolorIconPath[$desktopFile.Icon]
+    If Not $path Then $path = $pixmapIconPath[$desktopFile.Icon]
     
 End
 

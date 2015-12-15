@@ -9,6 +9,8 @@ Property Read Required As Boolean
 Property Read Hide As Boolean
 Property Read OnlyShowInByText As String
 Property Read NotShowInByText As String
+Property Read OnlyShowIn As String[]
+Property Read NotShowIn As String[]
 
 Private $path As String
 Private $properties As NagatoAutostartFileProperties
@@ -52,13 +54,13 @@ End
 
 Private Function OnlyShowInByText_Read() As String
 
-    Return $properties.OnlyShowInByText
+    Return $properties.OnlyShowIn.Join("; ")
 
 End
 
 Private Function NotShowInByText_Read() As String
 
-    Return $properties.NotShowInByText
+    Return $properties.NotShowIn.Join("; ")
 
 End
 
@@ -74,4 +76,16 @@ Private Function Overridden_Read() As Boolean
     
     Return Dir(MikuruAutostartDirectory.User).Exist(Me.Name)
     
+End
+
+Private Function OnlyShowIn_Read() As String[]
+
+    Return $properties.OnlyShowIn
+
+End
+
+Private Function NotShowIn_Read() As String[]
+
+    Return $properties.NotShowIn
+
 End

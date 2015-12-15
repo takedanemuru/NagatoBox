@@ -1,0 +1,15 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoUXContainer
+
+Public Sub _OnInitializeContainer(argParentContainer As Container)
+    
+    Me._$container = New VBox(argParentContainer)
+    
+    With Me._$container
+        .Expand = True
+    End With
+    
+End

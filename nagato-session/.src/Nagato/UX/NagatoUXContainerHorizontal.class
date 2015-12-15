@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoUXContainer
+
+Public Sub _SetContainerHeight(argHeight As Integer)
+    
+    Me._$container.H = argHeight
+    
+End
+
+Public Sub _OnInitializeContainer(argParentContainer As Container)
+    
+    Me._$container = New HBox(argParentContainer)
+    
+    With Me._$container
+        .Expand = False
+    End With
+    
+End

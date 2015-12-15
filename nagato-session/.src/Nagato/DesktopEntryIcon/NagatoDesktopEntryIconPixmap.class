@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoDesktopEntryIcon
+
+Private Const PixmapIcons As String = "/usr/share/pixmaps"
+
+Public Sub _OnGetIconPath() As String
+    
+    Return Me._GetIconPath(PixmapIcons)
+    
+End

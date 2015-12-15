@@ -38,6 +38,12 @@ Private Sub initializeSubContainer(argContainer As Container)
     
 End
 
+Public Sub SetProperty(argExec As String)
+    
+    $textBox.Text = argExec
+    
+End
+
 Public Sub _new(argContainer As Container, argLabelText As String)
     
     initializeSubContainer(argContainer)

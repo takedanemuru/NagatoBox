@@ -1,31 +1,21 @@
 ' Gambas class file
 
-Private $exec As NagatoUXDesktopEntryContainer
-Private $onlyShowIn As NagatoListEditor
-Private $notShowIn As NagatoListEditor
+Private $exec As NagatoUXContainerDesktopEntry
+Private $onlyShowIn As NagatoUXContainerListEditor
+Private $notShowIn As NagatoUXContainerListEditor
 
 Public Sub SetProperties(argAutostartFile As NagatoAutostartFile)
     
-    With argAutostartFile
-        Debug .Name
-        Debug .Hide
-        Debug .Exec
-        Debug .Overridden
-        Debug .OnlyShowInByText
-    End With
+    $exec.SetProperties(argAutostartFile)
+    $onlyShowIn.SetList(argAutostartFile.OnlyShowIn)
+    $notShowIn.SetList(argAutostartFile.NotShowIn)
     
 End
 
 Public Sub _new()
     
-    $exec = New NagatoUXDesktopEntryContainer(Me)
-    $onlyShowIn = New NagatoListEditor(Me, ("Only Show In"))
-    $notShowIn = New NagatoListEditor(Me, ("Not Show In"))
+    $exec = New NagatoUXContainerDesktopEntry(MainVBox)
+    $onlyShowIn = New NagatoUXContainerListEditor(MainVBox)
+    $notShowIn = New NagatoUXContainerListEditor(MainVBox)
     
-End
-
-Public Sub Form_Show()
-
-    
-
 End

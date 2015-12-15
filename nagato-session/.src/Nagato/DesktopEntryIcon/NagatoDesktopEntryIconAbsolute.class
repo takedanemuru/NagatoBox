@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoDesktopEntryIcon
+
+Private Const PixmapIcons As String = "/usr/share/pixmaps"
+
+Public Function _OnGetIconPath() As String
+    
+    Dim yukiPath As String = PixmapIcons &/ File.BaseName(Me._$path) & ".png"
+
+    If Exist(yukiPath) Then Return yukiPath
+    If Exist(Me._$path) Then Return Me._$path
+    
+    Return ""
+    
+End

@@ -1,0 +1,30 @@
+' Gambas class file
+
+Public _$path As String
+
+Public Function _GetIconPath(argDirectory As String) As String
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In RDir(argDirectory)
+        If File.BaseName(yukiPath) <> File.BaseName(Me._$path) Then Continue
+        Return (argDirectory &/ yukiPath)
+    Next
+    
+    Return ""
+    
+End
+
+Public Function _OnGetIconPath() As String
+    
+    
+    
+End
+
+Public Sub _get(argPath As String) As String
+    
+    Me._$path = argPath
+    
+    Return Me._OnGetIconPath()
+    
+End

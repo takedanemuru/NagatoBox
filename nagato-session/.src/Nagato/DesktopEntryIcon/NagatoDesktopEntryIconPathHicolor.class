@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoDesktopEntryIcon
+
+Private $directories As NagatoHicolorIconsDirectories
+
+Private Function _OnGetIconPath() As String
+    
+    Dim yukiDirectory As String
+    Dim yukiPath As String
+    
+    For Each yukiDirectory In $directories.Directories
+        yukiPath = Me._GetIconPath(yukiDirectory)
+        If yukiPath Then Return yukiPath
+    Next
+    
+    Return ""
+    
+End

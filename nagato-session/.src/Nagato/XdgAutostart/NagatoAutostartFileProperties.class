@@ -4,22 +4,21 @@ Property Read Exec As String
 Property Read TryExec As String
 Property Read Required As Boolean
 Property Read Hide As Boolean
-Property Read OnlyShowInByText As String
-Property Read NotShowInByText As String
+Property Read OnlyShowIn As String[]
+Property Read NotShowIn As String[]
 
 Private $exec As String
 Private $tryExec As String
-Private $onlyShowIn As Boolean = False
-Private $onlyShowInByText As String
-Private $notShowIn As Boolean = False
-Private $notShowInByText As String
+Private $onlyShowInList As New String[]
+Private $notShowInList As New String[]
 Private $hide As Boolean = False
 
-Private Sub getProperty(argLine As String, argTargetSession As String) As Boolean
+Private Sub getList(argHeader As String, argLine As String) As String[]
     
-    Dim yukiTargets As String[] = Split(argLine, ";", "", True)
+    Dim yukiLine As String = Replace$(argLine, argHeader, "")
+    Dim yukiList As String[] = Split(yukiLine, ";", "", True)
     
-    Return yukiTargets.Exist(argTargetSession)
+    Return yukiList.Copy()
     
 End
 
@@ -34,10 +33,8 @@ Public Sub _new(argPath As String)
         Line Input #yukiStream, yukiLine
         If yukiLine Begins "Exec" Then $exec = Replace$(yukiLine, "Exec=", "")
         If yukiLine Begins "TryExec" Then $tryExec = Replace$(yukiLine, "TryExec=", "")
-        If yukiLine Begins "NotShowIn" Then $notShowIn = getProperty(Replace$(yukiLine, "NotShowIn=", ""), "NagatoBox")
-        If yukiLine Begins "NotShowIn" Then $notShowInByText = Replace$(yukiLine, "NotShowIn=", "")
-        If yukiLine Begins "OnlyShowIn" Then $onlyShowIn = Not getProperty(Replace$(yukiLine, "OnlyShowIn=", ""), "NagatoBox")
-        If yukiLine Begins "OnlyShowIn" Then $onlyShowInByText = Replace$(yukiLine, "OnlyShowIn=", "")
+        If yukiLine Begins "NotShowIn" Then $notShowInList = getList("NotShowIn=", yukiLine)
+        If yukiLine Begins "OnlyShowIn" Then $onlyShowInList = getList("OnlyShowIn=", yukiLine)
         If yukiLine Begins "Hidden" Then $hide = (Replace$(yukiLine, "Hidden=", "") Like "true")
     Wend
     
@@ -48,8 +45,8 @@ End
 Private Function Required_Read() As Boolean
 
     If $hide Then Return False
-    If $onlyShowIn Then Return False
-    If $notShowIn Then Return False
+    If $onlyShowInList.Count > 0 And If Not $onlyShowInList.Exist("NagatoBox") Then Return False
+    If $notShowInList.Exist("NagatoBox") Then Return False
     
     Return True
 
@@ -73,14 +70,14 @@ Private Function Hide_Read() As Boolean
 
 End
 
-Private Function OnlyShowInByText_Read() As String
+Private Function OnlyShowIn_Read() As String[]
 
-    Return $onlyShowInByText
+    Return $onlyShowInList
 
 End
 
-Private Function NotShowInByText_Read() As String
+Private Function NotShowIn_Read() As String[]
 
-    Return $notShowInByText
+    Return $notShowInList
 
 End

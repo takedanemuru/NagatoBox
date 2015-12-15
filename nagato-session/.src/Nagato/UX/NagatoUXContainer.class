@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Create Private
+
+Public _$container As Container
+Public _$title As String
+
+Public Sub _OnInitializeContainer(argParentContainer As Container)
+    
+    
+    
+End
+
+Public Sub _OnInitializeWidgets()
+    
+    
+    
+End
+
+Public Sub _OptionalOnSetEnabled(argEnebled As Boolean)
+    
+    
+    
+End
+
+Public Sub SetEnebled(argEnebled As Boolean)
+    
+    Me._OptionalOnSetEnabled(argEnebled)
+    
+End
+
+Public Sub _new(argParentContainer As Container, Optional argTitle As String)
+    
+    Me._OnInitializeContainer(argParentContainer)
+    Me._OnInitializeWidgets()
+    
+    If argTitle Then Me._$title = argTitle
+    
+End

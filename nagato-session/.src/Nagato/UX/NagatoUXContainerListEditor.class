@@ -1,0 +1,40 @@
+' Gambas class file
+
+Inherits NagatoUXContainerVirtical
+
+Private $label As Label
+Private $listEditor As ListEditor
+
+Private Sub initializeLabel()
+    
+    $label = New Label(Me._$container)
+    
+    With $label
+      '  .Text = Space$(4) & argLabelText
+        .H = 24
+    End With
+    
+End
+
+Private Sub initializeListEditor()
+    
+    $listEditor = New ListEditor(Me._$container) As "ListEditor"
+    
+    With $listEditor
+        .Expand = True
+    End With
+    
+End
+
+Public Sub SetList(argList As String[])
+    
+    $listEditor.List = argList
+    
+End
+
+Public Sub _OnInitializeWidgets()
+    
+    initializeLabel()
+    initializeListEditor()
+    
+End
