@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Mode As Integer
+Property Path As String
+
+Private Function Mode_Read() As Integer
+
+    Return Me._$settings["login_sound/mode", NagatoLoginSound.Choir]
+
+End
+
+Private Sub Mode_Write(Value As Integer)
+
+   Me._$settings["login_sound/mode"] = Value
+   Me._$settings.Save()
+
+End
+
+Private Function Path_Read() As String
+
+    Return Me._$settings["login_sound/path", ""]
+
+End
+
+Private Sub Path_Write(Value As String)
+
+   Me._$settings["login_sound/path"] = Value
+   Me._$settings.Save()
+
+End

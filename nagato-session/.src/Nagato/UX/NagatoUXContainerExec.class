@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoUXContainerHorizontal
+
+Private $textBox As TextBox
+
+Private Sub initializeTextBox()
+    
+    $textBox = New TextBox(Me._$container) As "TextBox"
+    
+    With $textBox
+        .Text = ""
+        .Expand = True
+    End With
+    
+End
+
+Public Sub SetProperty(argExec As String)
+    
+    $textBox.Text = argExec
+    
+End
+
+Public Sub _OnInitializeWidgets()
+    
+    Me._SetContainerHeight(30)
+    
+    Object.New("NagatoWidgetStaticLabel", [Me._$container, Me._$title])
+    initializeTextBox()
+    
+End

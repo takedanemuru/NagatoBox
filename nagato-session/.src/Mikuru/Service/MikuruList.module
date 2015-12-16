@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub _get(argHeader As String, argLine As String, Optional argSeparator As String = ";") As String[]
+    
+    Dim yukiLine As String = Replace$(argLine, argHeader, "")
+    Dim yukiList As String[] = Split(yukiLine, argSeparator, "", True)
+    
+    Return yukiList.Copy()
+    
+End

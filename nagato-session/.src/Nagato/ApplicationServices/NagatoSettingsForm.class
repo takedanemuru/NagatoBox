@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Public Sub Load(argForm As Form)
+    
+    argForm.Height = Me._$settings[Subst$("&1/height", argForm.Name), argForm.Height]
+    argForm.Width = Me._$settings[Subst$("&1/width", argForm.Name), argForm.Width]
+    argForm.X = Me._$settings[Subst$("&1/x", argForm.Name), argForm.X]
+    argForm.Y = Me._$settings[Subst$("&1/y", argForm.Name), argForm.Y]
+    
+End
+
+Public Sub Save(argForm As Form)
+    
+   Me._$settings[Subst$("&1/height", argForm.Name)] = argForm.Height
+   Me._$settings[Subst$("&1/width", argForm.Name)] = argForm.Width
+   Me._$settings[Subst$("&1/x", argForm.Name)] = argForm.X
+   Me._$settings[Subst$("&1/y", argForm.Name)] = argForm.Y
+    
+   Me._$settings.Save()
+    
+End

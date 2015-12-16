@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoWidgetMenuButtonStar
+
+Public Function _OnGetMenuName() As String
+    
+    Return "StarMenuUserAutostart"
+    
+End
+
+Public Sub _OnInitializeStarMenu()
+    
+    Dim yukiMenu As NagatoStarMenuUserAutostarts
+    
+    yukiMenu = New NagatoStarMenuUserAutostarts(Me._OnGetMenuName()) As "TFEI"
+    
+End

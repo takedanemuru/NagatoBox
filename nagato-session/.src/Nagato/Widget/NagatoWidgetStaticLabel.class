@@ -1,0 +1,15 @@
+' Gambas class file
+
+Private $label As Label
+
+Public Sub _new(argContainer As Container, argText As String, Optional argHeight As Integer = 0)
+    
+    $label = New Label(argContainer)
+    
+    With $label
+        .Text = Space$(4) & argText
+        If argHeight = 0 Then .Expand = True
+        If argHeight > 0 Then .H = argHeight
+    End With
+    
+End

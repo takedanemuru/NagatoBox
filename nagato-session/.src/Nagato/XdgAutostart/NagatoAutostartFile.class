@@ -7,8 +7,6 @@ Property Read Exec As String
 Property Read TryExec As String
 Property Read Required As Boolean
 Property Read Hide As Boolean
-Property Read OnlyShowInByText As String
-Property Read NotShowInByText As String
 Property Read OnlyShowIn As String[]
 Property Read NotShowIn As String[]
 
@@ -49,18 +47,6 @@ End
 Private Function Hide_Read() As Boolean
 
     Return $properties.Hide
-
-End
-
-Private Function OnlyShowInByText_Read() As String
-
-    Return $properties.OnlyShowIn.Join("; ")
-
-End
-
-Private Function NotShowInByText_Read() As String
-
-    Return $properties.NotShowIn.Join("; ")
 
 End
 

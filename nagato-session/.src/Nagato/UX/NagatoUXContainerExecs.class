@@ -2,13 +2,13 @@
 
 Inherits NagatoUXContainerVirtical
 
-Private $execLabel As NagatoUXDesktopEntryExec
-Private $tryExecLabel As NagatoUXDesktopEntryExec
+Private $execLabel As NagatoUXContainerExec
+Private $tryExecLabel As NagatoUXContainerExec
 
 Public Sub _OnInitializeWidgets()
     
-    $execLabel = New NagatoUXDesktopEntryExec(Me._$container, "Exec")
-    $tryExecLabel = New NagatoUXDesktopEntryExec(Me._$container, "Try Exec")
+    $execLabel = New NagatoUXContainerExec(Me._$container, "Exec")
+    $tryExecLabel = New NagatoUXContainerExec(Me._$container, "Try Exec")
     
 End
 

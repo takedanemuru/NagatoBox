@@ -41,12 +41,11 @@ Private Sub setProperties(argAutostartFile As NagatoAutostartFile)
     With NagatoTableHeadersAutostarts
         setTypeColumn(argAutostartFile)
         Me._SetProperty(.ColumnName, argAutostartFile.Name)
-        Me._SetProperty(.ColumnOnlyShowIn, argAutostartFile.OnlyShowInByText)
-        Me._SetProperty(.ColumnNotShowIn, argAutostartFile.NotShowInByText)
-        If Not argAutostartFile.Hide Then
-            Me._SetProperty(.ColumnExec, argAutostartFile.Exec)
-            Me._SetProperty(.ColumnTryExec, argAutostartFile.TryExec)
-        End If
+        Me._SetProperty(.ColumnOnlyShowIn, argAutostartFile.OnlyShowIn.Join(", "))
+        Me._SetProperty(.ColumnNotShowIn, argAutostartFile.NotShowIn.Join(", "))
+        If argAutostartFile.Hide Then Return
+        Me._SetProperty(.ColumnExec, argAutostartFile.Exec)
+        Me._SetProperty(.ColumnTryExec, argAutostartFile.TryExec)
     End With
     
 End

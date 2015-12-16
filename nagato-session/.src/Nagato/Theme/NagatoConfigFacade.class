@@ -4,7 +4,6 @@ Create Static
 
 Property Read Status As Integer
 Property Read ThemesList As String[]
-Property Read ThemesCount As Integer
 Property Read WidgetTheme As String
 Property Read WidgetThemeMatched As Boolean
 Property Read IsThemeUnified As Boolean
@@ -69,20 +68,11 @@ End
 
 Private Function Status_Read() As Integer
 
-    If $themes.Count = 0 Then
-        Return MikuruConfig.NotFound
-    Else If isThemesMatched() Then
-        Return MikuruConfig.Matched
-    Else
-        Return MikuruConfig.NotMatched
-    Endif
+    If $themes.Count = 0 Then Return MikuruConfig.NotFound
+    If isThemesMatched() Then Return MikuruConfig.Matched
+       
+    Return MikuruConfig.NotMatched
     
-End
-
-Private Function ThemesCount_Read() As Integer
-
-    Return $themes.Count
-
 End
 
 Private Function IconTheme_Read() As String

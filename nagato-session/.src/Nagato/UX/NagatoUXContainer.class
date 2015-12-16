@@ -33,9 +33,9 @@ End
 
 Public Sub _new(argParentContainer As Container, Optional argTitle As String)
     
+    If argTitle Then Me._$title = argTitle
+    
     Me._OnInitializeContainer(argParentContainer)
     Me._OnInitializeWidgets()
-    
-    If argTitle Then Me._$title = argTitle
     
 End

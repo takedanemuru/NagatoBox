@@ -38,8 +38,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    'Debug Last.Tag
-    
     Raise Signal(Last.Tag, Null)
     
 End

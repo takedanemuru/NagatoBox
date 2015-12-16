@@ -2,19 +2,7 @@
 
 Inherits NagatoUXContainerVirtical
 
-Private $label As Label
 Private $listEditor As ListEditor
-
-Private Sub initializeLabel()
-    
-    $label = New Label(Me._$container)
-    
-    With $label
-      '  .Text = Space$(4) & argLabelText
-        .H = 24
-    End With
-    
-End
 
 Private Sub initializeListEditor()
     
@@ -34,7 +22,7 @@ End
 
 Public Sub _OnInitializeWidgets()
     
-    initializeLabel()
+    Object.New("NagatoWidgetStaticLabel", [Me._$container, Me._$title, 30])
     initializeListEditor()
     
 End

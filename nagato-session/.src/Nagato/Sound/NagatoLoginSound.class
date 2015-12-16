@@ -6,7 +6,7 @@ Public Enum None, Choir, Ubuntu, Welcumz, UserDefined
 
 Public Sub PlayDefault()
     
-    Select Case NagatoSettings.LoginSoundMode
+    Select Case NagatoSettingsLoginSound.Mode
         Case Me.None
             Return
         Case Me.Choir
@@ -18,4 +18,3 @@ Public Sub PlayDefault()
     End Select
 
 End
-

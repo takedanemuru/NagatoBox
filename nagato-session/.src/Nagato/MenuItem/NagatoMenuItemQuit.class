@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnMenuItemClick()
+    
+    If HaruhiDialogQuitApplication.ShowDialog() = MikuruDialog.ResponseQuit Then
+        HaruhiMain.Close()
+    Endif
+    
+End

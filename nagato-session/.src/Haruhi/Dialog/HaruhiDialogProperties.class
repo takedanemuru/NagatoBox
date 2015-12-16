@@ -15,7 +15,7 @@ End
 Public Sub _new()
     
     $exec = New NagatoUXContainerDesktopEntry(MainVBox)
-    $onlyShowIn = New NagatoUXContainerListEditor(MainVBox)
-    $notShowIn = New NagatoUXContainerListEditor(MainVBox)
+    $onlyShowIn = New NagatoUXContainerListEditor(MainVBox, "Only Show In...")
+    $notShowIn = New NagatoUXContainerListEditor(MainVBox, "Not Show In...")
     
 End

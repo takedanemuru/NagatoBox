@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$menuButton As MenuButton
+
+Public Function _OnGetMenuName() As String
+    
+    Return "YUKI.N > DO NOT CALL ME."
+    
+End
+
+Public Sub _OnInitializeStarMenu()
+    
+    
+    
+End
+
+Public Sub _InitializeMenuButton()
+    
+    Me._$menuButton = New MenuButton(Me._$container)
+    
+    With Me._$menuButton
+        .Picture = MikuruIcon.Get("star")
+        .Arrow = False
+        .AutoResize = True
+        .Border = False
+        .Menu = Me._OnGetMenuName()
+    End With
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    Me._OnInitializeStarMenu()
+    Me._InitializeMenuButton()
+    
+End

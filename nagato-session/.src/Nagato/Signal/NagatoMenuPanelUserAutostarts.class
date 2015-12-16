@@ -2,39 +2,12 @@
 
 Inherits NagatoMenuPanel
 
-Private $panel As Panel
-Private $menuButton As MenuButton
-
-Private Sub addPanel()
-    
-    $panel = New Panel(Me._$container)
-    
-    With $panel
-        .Expand = True
-    End With
-    
-End
-
-Private Sub addStarButton()
-    
-    Dim yukiMenu As New NagatoStarMenuUserAutostarts("StarMenuUserAutostarts") As "TFEI"
-
-    $menuButton = New MenuButton(Me._$container)
-    
-    With $menuButton
-        .Picture = MikuruIcon.Get("star")
-        .Arrow = False
-        .AutoResize = True
-        .Border = False
-        .Menu = "StarMenuUserAutostarts"
-    End With
-    
-End
+Private $menuButton As NagatoWidgetMenuButtonStarUserAutostart
 
 Public Sub _Initialize() ' override
     
     Me._AddMenuButton(("New"), MikuruSignal.AutostartsNew, "magic-wand")
-    addPanel()
-    addStarButton()
+    Object.New("NagatoWidgetPanelSpacer", [Me._$container])
+    $menuButton = New NagatoWidgetMenuButtonStarUserAutostart(Me._$container) As "TFEI"
     
 End

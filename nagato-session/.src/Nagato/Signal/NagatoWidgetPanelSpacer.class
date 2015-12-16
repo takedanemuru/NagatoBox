@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $panel As Panel ' used as spacer
+
+Public Sub _OnInitializeWidget()
+    
+    $panel = New Panel(Me._$container)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End

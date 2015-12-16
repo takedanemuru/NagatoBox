@@ -4,8 +4,6 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
-    
-    
     If NagatoArguments.Autostart Then
         HaruhiLogin.Show()
         NagatoLoginSound.PlayDefault()

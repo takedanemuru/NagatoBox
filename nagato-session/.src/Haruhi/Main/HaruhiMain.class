@@ -28,7 +28,7 @@ Public Sub Form_Open()
     
     Application.MainWindow = Me
     MikuruTheme.Set()
-    NagatoSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
     initializeTabStrip()
     
 End
@@ -37,7 +37,7 @@ Public Sub Form_Close()
     
     $autostartTabGlobal.SaveSettings()
     $autostartTabUser.SaveSettings()
-    NagatoSettings.SaveFormSettings(Me)
+    NagatoSettingsForm.Save(Me)
     
 End
 
