@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$container As Container
+Public _$menuButton As MenuButton
+
+Public Sub _OnInitializeButton()
+    
+    
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Me._OnInitializeButton()
+    Me._OptionalOnInitializePulldownMenu()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

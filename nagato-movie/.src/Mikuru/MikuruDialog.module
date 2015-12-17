@@ -1,0 +1,34 @@
+' Gambas module file
+
+Property Read Path As String
+
+Private $path As String
+
+Private Function openDialog() As Boolean
+    
+    $path = ""
+    Dialog.Title = ("Open file")
+    Dialog.Path = NagatoSettings.LastDirectory &/ ""
+    
+    Return Dialog.OpenFile(False) 
+    
+End
+
+Public Sub OpenFile() As Boolean
+    
+    If openDialog() Then Return False
+
+    $path = Dialog.Path
+    NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
+    HaruhiMain.Title = File.BaseName(Dialog.Path)
+
+    Return True
+    
+End
+
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End

@@ -6,14 +6,10 @@
   Arrangement = Arrange.Vertical
   { MenuHBox HBox
     MoveScaled(6,5,38,4)
+    Visible = False
   }
   { MediaTimer #Timer
     #MoveScaled(32,12)
     Enabled = True
-  }
-  { MediaDrawingArea DrawingArea
-    MoveScaled(2,22,44,18)
-    Expand = True
-    Cached = True
   }
 }

@@ -35,7 +35,8 @@ Public Sub _new(argMediaPlayer As MediaPlayer)
     $mediaPlayer = argMediaPlayer
     initializeVisualizerNames()
     addVisualizer()
-        
+    argMediaPlayer.Video.Visualisation = Me.GetVisualizer(Me.Corona)
+    
 End
 
 Public Function GetVisualizer(argIndex As Integer) As MediaControl

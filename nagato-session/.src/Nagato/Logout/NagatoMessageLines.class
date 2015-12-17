@@ -1,0 +1,67 @@
+' Gambas class file
+
+Private Const MessageDelay As Integer = 20
+
+Private $messages As New String[]
+Private $line As Integer = 0
+
+Private Function getCursor(argPosition As Integer) As String
+    
+    If argPosition > String.Len($messages[$line]) And If Odd(argPosition Div 2) Then
+        Return ""
+    Else
+        Return "_"
+    Endif
+    
+End
+
+Public Sub LineEnds(argPosition As Integer) As Boolean
+    
+    If $line = $messages.Max Then Return False
+    If String.Len($messages[$line]) + MessageDelay > argPosition Then Return False
+    
+    Return True
+    
+End
+
+Public Sub MessageEnds(argPosition As Integer) As Boolean
+    
+    If $line <> $messages.Max Then Return False
+    If String.Len($messages[$line]) + MessageDelay > argPosition Then Return False
+    
+    Return True
+    
+End
+
+Public Sub Next()
+    
+    Inc $line
+    
+End
+
+Public Sub FinalMessage()
+    
+    $messages.Clear()
+    $messages.Add("Another visit to the library would.")
+    $line = 0
+    
+End
+
+Public Sub _get(argPosition As Integer) As String
+    
+    Return "YUKI.N > " & String.Left($messages[$line], argPosition) & getCursor(argPosition)
+    
+End
+
+Public Sub _new()
+    
+    With $messages
+        .Add("This is an emergency escape program.")
+        .Add("If you wish to restore the world to its original state, press the ENTER key. If this is not the case, please press any other key.")
+        .Add("If the program is started, you will have a chance to return time and space to its previous values. Success is not guaranteed. Also, your return is not guaranteed.")
+        .Add("This program will only run once. After that, it is erased.")
+        .Add("If it is not started, the program will be deleted.")
+        .Add("READY?")
+    End With
+    
+End

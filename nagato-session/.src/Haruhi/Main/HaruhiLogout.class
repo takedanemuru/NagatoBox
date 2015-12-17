@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $message As New NagatoMessage As "Message"
+Private $message As New NagatoMessage 
 Private $legend As New NagatoLogoutLegend
 
 Private Sub setMessage(argMessageType As Integer)
@@ -14,7 +14,9 @@ Public Sub Form_Open()
 
     Me.H = Screen.H
     Me.W = Screen.W
+    Me.Sticky = True
 
+    $message.Reset()
     MessageScreen.SetFocus()
     MessageTimer.Enabled = True
 
@@ -37,14 +39,12 @@ Public Sub MessageScreen_KeyPress()
     Select Case Key.Code
         Case Key.Esc, Key.Enter, 16777220
             Me.Close()
-        Case Key["E"]
+        Case Key["E"], Key["L"]
             setMessage(NagatoMessage.ModeLogout)
         Case Key["R"]
             setMessage(NagatoMessage.ModeReboot)
         Case Key["S"]
             setMessage(NagatoMessage.ModeShutDown)
-        Case Key["L"]
-            setMessage(NagatoMessage.ModeLockScreen)
     End Select
     
 End
@@ -62,19 +62,3 @@ Public Sub MessageScreen_Draw()
     End With
     
 End
-
-Public Sub Message_Finished(argMode As Integer)
-    
-    Select Case argMode
-        Case NagatoMessage.ModeLogout
-            MikuruSession.Logout(MikuruSession.TypeExit)
-        Case NagatoMessage.ModeReboot
-            MikuruSession.Logout(MikuruSession.TypeReboot)
-        Case NagatoMessage.ModeShutDown
-            MikuruSession.Logout(MikuruSession.TypeShutdown)
-        Case NagatoMessage.ModeLockScreen
-            MikuruSession.Logout(MikuruSession.TypeLockScreen)
-    End Select
-    
-End
-

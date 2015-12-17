@@ -2,18 +2,7 @@
 
 Private $menuBar As NagatoMenuBar
 Private $player As NagatoPlayer
-
-Private Sub openFile()
-    
-    Dialog.Title = ("Open file")
-    Dialog.Path = NagatoSettings.LastDirectory &/ ""
-    
-    If Not Dialog.OpenFile(False) Then
-        $player.SetPathAndPlay(Dialog.Path)
-        NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
-    Endif
-    
-End
+Private $drawingArea As NagatoDrawingArea
 
 Public Sub SetPathAndPlay(argPath As String)
     
@@ -21,10 +10,11 @@ Public Sub SetPathAndPlay(argPath As String)
     
 End
 
-Public Sub Form_Open()
+Public Sub _new()
 
     $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
-    $player = New NagatoPlayer(MediaDrawingArea) As "Player"
+    $drawingArea = New NagatoDrawingArea(Me)
+    $player = New NagatoPlayer($drawingArea.DrawingArea) As "Player"
 
 End
 
@@ -36,34 +26,13 @@ End
 
 Public Sub Form_Resize()
     
-    $player.SetBackground()
+    $drawingArea.SetBackground()
     
 End
 
-Public Sub MenuBar_NewPosition(argPosition As Float)
+Public Sub MenuBar_Signal(argEvent As Integer, argValues As Variant[])
     
-    $player.SetPosition(argPosition)
-    
-End
-
-Public Sub MenuBar_MenuEvent(argEvent As Integer)
-    
-    With MikuruMenuEvent
-        Select Case argEvent
-           Case .MediaPlay
-                $player.Play()
-            Case .MediaPause
-                $player.Pause()
-            Case .FileOpen
-                openFile()
-            Case .MediaScreenShot
-                $player.TakeScreenshot()
-            Case .AppAbout
-                HaruhiAbout.ShowDialog()
-            Case .AppClose
-                Me.Close()
-        End Select
-    End With
+    $player.SignalReceiver(argEvent, argValues)
     
 End
 
@@ -71,4 +40,16 @@ Public Sub MediaTimer_Timer()
 
     $menuBar.SetWidgetProperty($player.Position, $player.Duration)
 
+End
+
+Public Sub Form_Enter()
+    
+    MenuHBox.Visible = True
+    
+End
+
+Public Sub Form_Leave()
+    
+    MenuHBox.Visible = False
+    
 End

@@ -16,13 +16,13 @@ Public Sub _InitializeGridView()
     
     $tableView = New TableView(Me._$container) As "TableView"
     $tableViewHandler = New NagatoTableAutostarts($tableView, NagatoXdgAutostarts.UserAutoStarts)
-    NagatoSettings.LoadGridsSettings($tableView)
+    NagatoSettingsGridView.Load($tableView)
     
 End
 
 Public Sub SaveSettings()
     
-    NagatoSettings.SaveGridsSettings($tableView)
+    NagatoSettingsGridView.Save($tableView)
     
 End
 

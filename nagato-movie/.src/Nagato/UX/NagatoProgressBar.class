@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $progressSlider As Slider
+
+Public Sub SetWidgetProperty(argPosition As Float, argDuration As Float)
+    
+    Object.Lock($progressSlider)
+        Try $progressSlider.Value = 100 * (argPosition / argDuration)
+    Object.Unlock($progressSlider)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+     $progressSlider = New Slider(argContainer) As "ProgressSlider"
+    
+    With $progressSlider
+        .Value = 0
+        .Expand = True
+    End With
+    
+End
+
+Public Sub ProgressSlider_Change()
+    
+    Raise Signal(MikuruMenuEvent.MediaProgress, [$progressSlider.Value])
+    
+End

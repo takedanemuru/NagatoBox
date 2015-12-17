@@ -46,7 +46,7 @@ Public Sub _SetGridsProperties()
         .Columns.Count = 7
     End With
     
-    NagatoSettings.LoadGridsSettings(Me._$table)
+    NagatoSettingsGridView.Load(Me._$table)
     
 End
 

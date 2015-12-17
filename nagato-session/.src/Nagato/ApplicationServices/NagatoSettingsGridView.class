@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Public Sub Load(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+            .Width = Me._$settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
+        End With
+    Next
+    
+End
+
+Public Sub Save(argGrids As GridView)
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To argGrids.Columns.Max
+        With argGrids.Columns[yukiCount]
+           Me._$settings[Subst$("&1/column&2width", argGrids.Name, yukiCount)] = .Width
+        End With
+    Next
+    
+   Me._$settings.Save()
+    
+End

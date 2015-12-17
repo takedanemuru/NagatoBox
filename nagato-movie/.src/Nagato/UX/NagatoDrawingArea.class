@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read DrawingArea As DrawingArea
+
+Private Const MessageTemplate As String = "<b>YUKI.N > Open file to play.</b>"
+
+Private $drawingArea As DrawingArea
+
+Public Sub SetBackground()
+    
+    $drawingArea.Clear()
+    
+    Draw.Begin($drawingArea)
+        Draw.Font.Size = 12
+        Draw.Foreground = Color.White
+        Draw.RichText(MessageTemplate, 0, 0, $drawingArea.W, $drawingArea.H, Align.Center)
+    Draw.End()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $drawingArea = New DrawingArea(argContainer)
+    
+    With $drawingArea
+        .Cached = True
+        .Expand = True
+        .Background = Color.Lighter(Color.Violet)
+    End With
+    
+End
+
+Private Function DrawingArea_Read() As DrawingArea
+
+    Return $drawingArea
+
+End

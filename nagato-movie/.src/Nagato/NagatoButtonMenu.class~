@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Private $uniqueName As String = "GearMenu"
 Private $rootMenu As Menu
@@ -28,10 +28,9 @@ End
 Private Sub addMenus()
     
     addMenuItem(("Open"), MikuruMenuEvent.FileOpen, MikuruIcon.Get("folder"))
-    addMenuItem(("Screenshot"), MikuruMenuEvent.MediaScreenShot, MikuruIcon.Get("camera"))
         addMenuItem("", MikuruMenuEvent.None) ' separator
-    addMenuItem(("About"), MikuruMenuEvent.AppAbout, MikuruIcon.Get("star"))
-    addMenuItem(("Close"), MikuruMenuEvent.AppClose, MikuruIcon.Get("button-power"))
+    Object.New("NagatoMenuItemAbout", [$rootMenu, ("About"), "star"])
+    Object.New("NagatoMenuItemQuit", [$rootMenu, ("Quit"), "button-power"])
     
 End
 
@@ -44,6 +43,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    Raise MenuEvent(Last.Tag)
+    Raise MenuEvent(Last.Tag, Null)
     
 End

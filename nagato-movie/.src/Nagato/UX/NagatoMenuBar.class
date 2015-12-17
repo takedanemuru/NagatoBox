@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $playButton As NagatoMenuButtonPlay
+Private $pauseButton As NagatoMenuButtonPause
+Private $progressIndicator As NagatoProgressIndicator
+Private $starButton As NagatoMenuButtonStar
+
+Public Sub SetWidgetProperty(argPosition As Float, argDuration As Float)
+    
+    $progressIndicator.SetWidgetProperty(argPosition, argDuration)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $playButton = New NagatoMenuButtonPlay(argContainer) As "TFEI"
+    $pauseButton = New NagatoMenuButtonPause(argContainer) As "TFEI"
+    $progressIndicator = New NagatoProgressIndicator(argContainer) As "TFEI"
+    $starButton = New NagatoMenuButtonStar(argContainer) As "TFEI"
+    
+End

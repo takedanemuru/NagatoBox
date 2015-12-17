@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public Function GetTime(argSecond As Integer) As String
+Public Sub _get(argSecond As Integer) As String
     
     Dim yukiHour As Integer = argSecond Div 3600
     Dim yukiMinute As Integer = (argSecond Mod 3600) Div 60

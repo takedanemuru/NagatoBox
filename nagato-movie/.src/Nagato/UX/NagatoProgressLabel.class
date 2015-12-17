@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $progressLabel As TextLabel
+
+Private Function getText(argPosition As Float, argDuration As Float) As String
+    
+    Dim yukiPosition As String = MikuruTimeFormat[argPosition]
+    Dim yukiDuration As String = MikuruTimeFormat[argDuration]
+    
+    Return Subst$((" <b>&1</b> / &2 "), yukiPosition, yukiDuration)
+    
+End
+
+Public Sub SetWidgetProperty(argPosition As Float, argDuration As Float)
+    
+    $progressLabel.Text = getText(argPosition, argDuration)
+    $progressLabel.Width = $progressLabel.Font.RichTextWidth($progressLabel.Text)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $progressLabel = New TextLabel(argContainer)
+    
+    With $progressLabel
+        .Text = ""
+        .AutoResize = True
+        .Alignment = Align.Center
+    End With
+    
+End

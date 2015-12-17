@@ -1,7 +1,5 @@
 ' Gambas module file
 
-Public Enum TypeExit, TypeReboot, TypeShutdown, TypeLockScreen
-
 Private $logind As New NagatoLogind
 
 Private Function getDesktopSession() As String
@@ -35,15 +33,12 @@ End
 Public Sub Logout(argType As Integer)
     
     Select Case argType
-        Case TypeExit
+        Case NagatoMessage.ModeLogout
             Shell Subst$("loginctl kill-user &1", User.Id)
-        Case TypeReboot
+        Case NagatoMessage.ModeReboot
             $logind.Reboot()
-        Case TypeShutdown
+        Case NagatoMessage.ModeShutdown
             $logind.PowerOff()
-        Case TypeLockScreen
-            Try HaruhiLogout.Close()
-            Try Shell "nagato-config-screenlocker -l"
     End Select
     
 End

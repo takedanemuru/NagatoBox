@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$rootMenu As Menu
+
+Public Sub _InitializeRootMenu(argMenuName As String)
+    
+    Me._$rootMenu = New Menu(HaruhiMain)
+    Me._$rootMenu.Name = argMenuName
+    
+End
+
+Public Sub _AddMenuItem(argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    
+    
+End
+
+Public Sub _new(argMenuName As String)
+    
+    Me._InitializeRootMenu(argMenuName)
+    Me._OnInitializeChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

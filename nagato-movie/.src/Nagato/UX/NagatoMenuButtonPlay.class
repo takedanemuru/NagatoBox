@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeButton()
+    
+    Me._$menuButton = New MenuButton(Me._$container) As "MenuButton"
+    
+    With Me._$menuButton
+        .Arrow = False
+        .AutoResize = True
+        .Text = ("Play")
+        .Border = False
+        .Picture = MikuruIcon["button-play"]
+        .Tag = MikuruMenuEvent.MediaPlay
+    End With
+    
+End

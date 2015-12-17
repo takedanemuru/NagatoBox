@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $progressSlider As NagatoProgressBar
+Private $progressLabel As NagatoProgressLabel
+
+Public Sub SetWidgetProperty(argPosition As Float, argDuration As Float)
+    
+    $progressLabel.SetWidgetProperty(argPosition, argDuration)
+    $progressSlider.SetWidgetProperty(argPosition, argDuration)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $progressSlider = New NagatoProgressBar(argContainer) As "TFEI"
+    $progressLabel = New NagatoProgressLabel(argContainer)
+    
+End

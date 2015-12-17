@@ -1,0 +1,67 @@
+' Gambas class file
+
+Property Read Position As Float
+Property Read Duration As Float
+
+Private $mediaPlayer As MediaPlayer
+Private $mediaControl As MediaControl
+Private $visualizers As NagatoVisualizers
+
+Private Sub playPath(argPath As String)
+    
+    Try $mediaPlayer.Stop()
+    $mediaPlayer.URL = Media.URL(argPath)
+    $mediaPlayer.Play()
+    
+End
+
+Private Sub initializeMediaPlayerAndControl(argDrawingArea As DrawingArea)
+    
+    $mediaPlayer = New MediaPlayer As "MediaPlayer"
+    $mediaControl = New MediaControl($mediaPlayer, "ximagesink") As "MediaControl"
+    $mediaControl.SetWindow(argDrawingArea)
+    $mediaPlayer.Video.Output = $mediaControl
+    $mediaPlayer.Audio.Volume = 1
+    $mediaPlayer.Buffering = True
+    
+End
+
+Public Sub SetPathAndPlay(argPath As String)
+    
+    If argPath Then playPath(argPath)
+    
+End
+
+Public Sub SignalReceiver(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruMenuEvent.MediaPlay
+            Try $mediaPlayer.Play()
+        Case MikuruMenuEvent.MediaPause
+            Try $mediaPlayer.Pause()
+        Case MikuruMenuEvent.MediaProgress
+            $mediaPlayer.Position = $mediaPlayer.Duration * (argValues[0] / 100)
+        Case MikuruMenuEvent.FileOpen
+            If MikuruDialog.OpenFile() Then Me.SetPathAndPlay(MikuruDialog.Path)
+    End Select
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    initializeMediaPlayerAndControl(argDrawingArea)
+    $visualizers = New NagatoVisualizers($mediaPlayer)
+    
+End
+
+Private Function Position_Read() As Float
+
+    Return $mediaPlayer.Position
+
+End
+
+Private Function Duration_Read() As Float
+
+    Return $mediaPlayer.Duration
+
+End
