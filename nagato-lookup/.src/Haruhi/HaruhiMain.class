@@ -12,7 +12,7 @@ Private Sub initializeForm()
     Me.Y = 0
     Me.Width = Screen.Width
     Me.Height = HeightHide
-    Me.Background = NagatoSettings.FormColor
+    Me.Background = NagatoSettingsForm.Foreground
     
 End
 

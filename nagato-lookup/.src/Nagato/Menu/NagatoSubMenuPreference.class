@@ -12,31 +12,10 @@ Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
     End With
     
 End
-Private Sub addFormColorMenu()
-    
-    Dim yukiMenu As New Menu(Me._$parentMenu) As "FormColorMenu"
-    
-    With yukiMenu
-        .Picture = MikuruColorChip.Get(NagatoSettings.FormColor)
-        .Text = ("Change form color")
-    End With
-    
-End
 
 Public Sub _OnRefreshChildMenus()
     
-    addFormColorMenu()
-    
-End
-
-Public Sub FormColorMenu_Click()
-    
-    HaruhiColorChooser.Title = ("Select form color")
-    HaruhiColorChooser.SetColor(NagatoSettings.FormColor)
-    
-    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
-        NagatoSettings.FormColor = MikuruDialog.Color
-        HaruhiMain.Background = MikuruDialog.Color
-    Endif
+    Object.New("NagatoMenuItemForegroundColor", [Me._$parentMenu])
+    Object.New("NagatoSubMenuRecentApplications", [Me._$parentMenu])
     
 End

@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addRecentApplicationsMenusMax()
+    
+    Dim yukiMax As Integer
+    
+    For yukiMax = 10 To 50 Step 10
+        Object.New("NagatoMenuItemRecentApplicationsMax", [Me._$parentMenu, [yukiMax]])
+    Next
+    
+End
+
+Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With Me._$parentMenu
+        .Picture = MikuruIcons.Get("alarm-clock")
+        .Text = ("Recent Applications")
+    End With
+    
+End
+
+Public Sub _OnRefreshChildMenus()
+    
+    Object.New("NagatoMenuItemRecentApplicationsClear", [Me._$parentMenu])
+        MikuruMenuSeparator.Set(Me._$parentMenu)
+    addRecentApplicationsMenusMax()
+    
+End

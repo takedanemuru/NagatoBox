@@ -50,12 +50,9 @@ End
 
 Public Sub _RefreshAll()
     
-    If Not Me._$drawingArea.Visible Then Return
-    
-    Me._Refresh()
+    If Me._$drawingArea.Visible Then Me._Refresh()
     
 Catch
-    Debug Error.Text
     Return
     
 End

@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+     Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruColorChip.Get(NagatoSettingsForm.Foreground)
+        .Text = ("Change form color")
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    HaruhiColorChooser.Title = ("Select form color")
+    HaruhiColorChooser.SetColor(NagatoSettingsForm.Foreground)
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        NagatoSettingsForm.Foreground = MikuruDialog.Color
+        HaruhiMain.Background = MikuruDialog.Color
+    Endif
+    
+End

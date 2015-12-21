@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSettingsCore
+Inherits NagatoSettings
 
 Property Directory As String
 Property OnlyActiveWindow As Boolean

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Read List As String[]
+Property Max As Integer
+
+Private Const DefaultMax As Integer = 30
+
+Public Sub Push(argPath As String)
+    
+    Me._$settings["apps/recent"] = MikuruPath.Push(argPath, Me._$settings["apps/recent", [""]])
+    Me._$settings.Save()
+    
+End
+
+Public Sub Clear()
+    
+    Me._$settings["apps/recent"] = [""]
+    Me._$settings.Save()
+    
+End
+
+Private Function List_Read() As String[]
+
+    Return MikuruPath.Sanitize(Me._$settings["apps/recent", [""]])
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return Me._$settings["apps/max", DefaultMax]
+
+End
+
+Private Sub Max_Write(Value As Integer)
+
+    Me._$settings["apps/max"] = Value
+    Me._$settings.Save()
+
+End

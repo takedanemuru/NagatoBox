@@ -1,0 +1,28 @@
+' Gambas module file
+
+Public Function Sanitize(argPaths As String[]) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In argPaths
+        If Exist(yukiPath) Then yukiPaths.Add(yukiPath)
+    Next
+    
+    Return yukiPaths.Copy()
+    
+End
+
+Public Function Push(argPath As String, argPaths As String[]) As String[]
+    
+    Dim yukiPaths As String[] = argPaths.Copy()
+    
+    Try yukiPaths.Remove(yukiPaths.Find(argPath))
+    yukiPaths.Add(argPath, 0)
+    With NagatoSettingsRecentApplications
+        If yukiPaths.Count > .Max Then yukiPaths.Resize(.Max)
+    End With
+    
+    Return yukiPaths.Copy()
+    
+End

@@ -80,6 +80,8 @@ Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
             $mainContainer.SetZoom(argSignal)
         Case MikuruSignal.SourceHeader To MikuruSignal.SourceHeader + 999
             sourceEvent(argSignal, argValues)
+        Case MikuruSignal.ApplicationHelp
+            HaruhiHelp.Show()
         Case MikuruSignal.ApplicationAbout
             HaruhiAbout.ShowDialog()
         Case MikuruSignal.ApplicationQuit

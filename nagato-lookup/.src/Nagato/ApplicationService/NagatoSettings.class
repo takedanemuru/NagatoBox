@@ -1,66 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSettingsCore
+Create Static
+Create Private
 
-Property Read RecentApplications As String[]
-Property FormColor As Integer
-
-Private Const StoreMax As Integer = 30
-
-Private $recentApplications As String[]
-
-Private Sub loadRecentApps() As String[]
-    
-    Return Me._$settings["apps/recent", Null]
-    
-End
-
-Private Sub saveRecentApps(argAppPaths As String[])
-    
-    ' paticipate to force shutdown
-    Me._$settings["apps/recent"] = Null
-    Me._$settings.Save()
-    
-    Me._$settings["apps/recent"] = argAppPaths
-    Me._$settings.Save()
-    
-End
-
-Public Sub PushApplicationPath(argPath As String)
-    
-    If $recentApplications Then
-        Try $recentApplications.Remove($recentApplications.Find(argPath))
-        $recentApplications.Add(argPath, 0)
-        If $recentApplications.Count > StoreMax Then $recentApplications.Resize(StoreMax)
-    Else
-        $recentApplications = [argPath]
-    End If
-    
-    saveRecentApps($recentApplications)
-    
-End
-
-Public Sub _new()
-    
-    $recentApplications = loadRecentApps()
-    
-End
-
-Private Function RecentApplications_Read() As String[]
-
-    Return $recentApplications
-
-End
-
-Private Function FormColor_Read() As Integer
-
-    Return Me._$settings["color/form", Color.DarkBlue]
-
-End
-
-Private Sub FormColor_Write(Value As Integer)
-
-    Me._$settings["color/form"] = Value
-    Me._$settings.Save()
-
-End
+Public _$settings As New Settings

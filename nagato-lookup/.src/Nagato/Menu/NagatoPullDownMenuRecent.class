@@ -6,9 +6,11 @@ Public Sub _OnRefreshChildMenus()
     
     Dim yukiPath As String
     
-    For Each yukiPath In NagatoSettings.RecentApplications
+    For Each yukiPath In NagatoSettingsRecentApplications.List
         If Not Exist(yukiPath) Then Continue
         Me._AddApplicationMenu(Object.New("NagatoDesktopFile", [yukiPath]))
     Next
+    
+    If Me._$rootMenu.Children.Count = 0 Then Me._AddMenuItem(("Not Found"), 0)
     
 End

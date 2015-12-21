@@ -1,0 +1,37 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,85,64)
+  Arrangement = Arrange.Fill
+  { HelpTabStrip TabStrip
+    MoveScaled(4,5,77,53)
+    Expand = True
+    Arrangement = Arrange.Fill
+    Count = 4
+    Index = 0
+    Text = ("Attributes")
+    { AttributesWebView WebView
+      MoveScaled(27,23,16,16)
+      Url = "http://www.graphviz.org/content/attrs"
+    }
+    Index = 1
+    Text = ("Node shapes")
+    { NodeShapesWebView WebView
+      MoveScaled(21,18,16,16)
+      Url = "http://www.graphviz.org/content/node-shapes"
+    }
+    Index = 2
+    Text = ("Arrow shapes")
+    { ArrowShapesWebView WebView
+      MoveScaled(31,18,16,16)
+      Url = "http://www.graphviz.org/content/arrow-shapes"
+    }
+    Index = 3
+    Text = ("Colors")
+    { ColorsWebView WebView
+      MoveScaled(27,18,16,16)
+      Url = "http://www.graphviz.org/content/color-names"
+    }
+    Index = 0
+  }
+}

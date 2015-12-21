@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Private $menu As Menu
+
+Private Function getPicture(argCount As Integer) As Picture
+    
+    If argCount = NagatoSettingsRecentApplications.Max Then
+        Return MikuruIcons("button-check")
+    Else
+        Return Null
+    Endif
+    
+End
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    ' see Optional
+    $menu = New Menu(argParentMenu) As "MenuItem"
+    
+End
+
+Public Sub _OptionalAbstractOnInitialize(argValues As Variant[])
+    
+    With $menu
+        .Text = argValues[0]
+        .Tag = argValues[0]
+        .Picture = getPicture(argValues[0])
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    NagatoSettingsRecentApplications.Max = Last.Tag
+    
+End
