@@ -33,11 +33,7 @@ End
 
 Public Function IsAccessable(argService As String, argObjectPath As String) As Boolean
     
-    If DBus[getModeHeader() & argService]._Introspect(argObjectPath) = "" Then
-        Return False
-    Else
-        Return True
-    End If
+    Return IIf(DBus[getModeHeader() & argService]._Introspect(argObjectPath) = "", False, True)
     
 End
 

@@ -5,6 +5,7 @@ Property Read CpuUsage As Float
 Property Read MemoryUsage As Float
 Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
+Property Read Thermal As Float
 
 Private Const ServiceName As String = "org.gambas.dataovermind-systemmonitor"
 Private Const ObjectPath As String = "/org/dataovermind/systemmonitor"
@@ -66,5 +67,13 @@ End
 Private Function ProcessCount_Read() As Integer
 
     Return $proxy.ProcessCount
+
+End
+
+Private Function Thermal_Read() As Float
+
+    If $proxy.ThermalCount = 0 Then Return 0
+
+    Return ($proxy.GetTemperature(0)) / 1000
 
 End

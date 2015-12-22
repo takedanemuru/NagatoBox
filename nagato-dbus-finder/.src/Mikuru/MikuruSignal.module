@@ -1,3 +1,4 @@
 ' Gambas module file
 
 Public Enum DBusHeader = 1000, DBusRefresh = 1001
+Public Enum ApplicationHeader = 9000, ApplicationAbout = 9001, ApplicationQuit = 9002

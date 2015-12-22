@@ -1,77 +1,40 @@
 ' Gambas class file
 
-Private $service As String
-Private $key As String
 Private $xml As XmlDocument
 
-Private Sub setInterfaces()
+Private Sub setInterfaces(argObjectPath As String)
     
     Dim yukiElement As XmlElement
     Dim yukiName As String
-    Dim yukiInterface As NagatoInterface
     
     For Each yukiElement In $xml.GetElementsByTagName("interface")
         yukiName = yukiElement.Attributes["name"]
-        yukiInterface = New NagatoInterface($key, yukiName, yukiElement)
+        Object.New("NagatoInterface", [argObjectPath, yukiName, yukiElement])
     Next
     
 End
 
-Private Sub setNodes()
+Private Sub setNodes(argBusName As String, argObjectPath As String)
     
     Dim yukiElement As XmlElement
     Dim yukiName As String
-    Dim yukiNode As NagatoNode
     
     For Each yukiElement In $xml.GetElementsByTagName("node")
         If yukiElement = $xml.Root Then Continue
         yukiName = yukiElement.Attributes["name"]
-        If yukiName <> "" Then yukiNode = New NagatoNode($service, $key, yukiName)
+        If yukiName Then Object.New("NagatoNode", [argBusName, argObjectPath, yukiName])
     Next
-    
-End
-
-Private Sub addTreeViewItem(argParent As String, argName As String)
-    
-    If Not $key Then Return
-    
-    If HaruhiMain.TreeView1.Exist($key) Then Return
-    
-    HaruhiMain.TreeView1.Add($key, $key, MikuruIcon.Get("folder"))
-    
-    ' Select Case argParent
-    '     Case ""
-    '         'do nothing
-    '     Case "/"
-    '         HaruhiMain.TreeView1.Add($key, argName, MikuruIcon.Get("folder"))
-    '     Default
-    '         HaruhiMain.TreeView1.Add($key, argName, MikuruIcon.Get("folder"), argParent)
-    ' End Select
-    
-End
-
-Private Function isAccessable() As Boolean
-    
-    If MikuruGDBus.Mode = MikuruGDBus.ModeSession Then
-        If DBus["Session://" & $service]._Introspect($key) = "" Then Return False
-    Else
-        If DBus["System://" & $service]._Introspect($key) = "" Then Return False
-    Endif
-    
-    Return True
     
 End
 
 Public Sub _new(argService As String, argParent As String, argName As String)
     
-    $key = argParent &/ argName
-    $service = argService
+    Dim yukiObjectPath As String = argParent &/ argName
     
-    If isAccessable() Then
-        addTreeViewItem(argParent, argName)
-        $xml = MikuruGDBus.Get(argService, $key)
-        setInterfaces()
-        setNodes()
-    End If
+    If Not MikuruGDBus.IsAccessable(argService, yukiObjectPath) Then Return
+    HaruhiMain.AddNode(yukiObjectPath)
+    $xml = MikuruGDBus.Get(argService, yukiObjectPath)
+    setInterfaces(yukiObjectPath)
+    setNodes(argService, yukiObjectPath)
     
 End

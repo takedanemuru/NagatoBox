@@ -1,0 +1,31 @@
+' Gambas class file
+
+Public _$args As Object
+
+Public Sub _OnInitializeArgsHandler(argElement As XmlElement)
+    
+    
+    
+End
+
+Public Function _OnGetIconName() As String
+    
+    Return "YUKI.N > Don't see this."
+    
+End
+
+Public Sub _SetItemToTreeView(argParentKey As String)
+    
+    Dim yukiIcon As Picture = MikuruIcon[Me._OnGetIconName()]
+    Dim yukiUniqueKey As String = argParentKey & "_" & Me._$args.Name
+    
+    Try HaruhiMain.TreeView1.Add(yukiUniqueKey, Me._$args.Text, yukiIcon, argParentKey)
+    
+End
+ 
+Public Sub _new(argParentKey As String, argElement As XmlElement)
+    
+    Me._OnInitializeArgsHandler(argElement)
+    Me._SetItemToTreeView(argParentKey)
+    
+End

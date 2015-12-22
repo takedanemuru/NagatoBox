@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoPulldownMenu
+
+Public Sub _OnRefreshChildMenus()
+    
+    Me._AddMenuItem(("Refresh"), MikuruSignal.DBusRefresh, "button-rotate-cw")
+        Me._AddMenuItem("", 0)
+    Me._AddMenuItem(("About"), MikuruSignal.ApplicationAbout, "star")
+    Me._AddMenuItem(("Quit"), MikuruSignal.ApplicationQuit, "button-power")
+    
+End

@@ -1,0 +1,23 @@
+' Gambas class file
+
+Property Read Temperature As Integer
+
+Private $directoryPath As String
+
+Public Sub _new(argDirectoryPath As String)
+    
+    $directorypath = argDirectoryPath
+    
+End
+
+Private Function Temperature_Read() As Integer
+    
+    Dim yukiTemperature As String
+    
+    If Not Dir($directoryPath).Exist("temp") Then Return 0
+    
+    yukiTemperature = File.Load($directoryPath &/ "temp")
+    
+    Return CInteger(Replace$(yukiTemperature, "\n", ""))
+    
+End

@@ -10,21 +10,11 @@ Private Function getModeText() As String
     
     Return IIf($mode = Me.ModeSession, "--session", "--system")
     
-    ' If $mode = Me.ModeSession Then
-    '     Return "--session"
-    ' Else
-    '     Return "--system"
-    ' Endif
-    
 End
 
 Private Function getModeHeader() As String
     
-    If $mode = Me.ModeSession Then
-        Return "Session://"
-    Else
-        Return "System://"
-    Endif
+    Return IIf($mode = Me.ModeSession, "Session://", "System://")
     
 End
 

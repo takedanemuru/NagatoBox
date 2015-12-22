@@ -1,0 +1,36 @@
+' Gambas module file
+
+Public Sub _get(argType As String) As String
+    
+    Select Case argType
+        Case "o"
+            Return "object"
+        Case "b"
+            Return "boolean"
+        Case "s"
+            Return "string"
+        Case "y"
+            Return "byte"
+        Case "n"
+            Return "int16"
+        Case "q"
+            Return "uint16"
+        Case "i"
+            Return "int32"
+        Case "u"
+            Return "uint32"
+        Case "x"
+            Return "int64"
+        Case "t"
+            Return "uint64"
+        Case "d"
+            Return "float"
+        Case "q"
+            Return "sign"
+        Case "v"
+            Return "variant"
+        Default
+            Return argType
+    End Select
+    
+End

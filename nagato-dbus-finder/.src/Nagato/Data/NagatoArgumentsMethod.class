@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoArguments
+
+Private $args As NagatoMethodArgumentValues
+Private $returns As NagatoMethodArgumentValues
+
+Public Sub _OnSetValues(argElement As XmlElement)
+    
+    Dim yukiElement As XmlElement
+    
+    For Each yukiElement In argElement.ChildElements
+        If yukiElement.TagName <> "arg" Then Continue
+        If yukiElement.Attributes["direction"] = "" Then $args.Add(yukiElement)
+        If yukiElement.Attributes["direction"] = "in" Then $args.Add(yukiElement)
+        If yukiElement.Attributes["direction"] = "out" Then $returns.Add(yukiElement)
+    Next
+    
+End
+
+Public Sub _OptionalOnInitializeArgsHandlers()
+    
+    $args = New NagatoMethodArgumentValues("arg")
+    $returns = New NagatoMethodArgumentValues("return")
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Return Subst$("&1 (&2) &3", Me._$name, $args.Text, $returns.Text)
+    
+End

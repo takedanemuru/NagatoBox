@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private Const MenuName As String = "StarMenu"
+
+Private Sub addButton(argContainer As Container)
+    
+    Dim yukiButton As New MenuButton(argContainer)
+    
+    With yukiButton
+        .W = argContainer.H
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+        .Picture = MikuruIcon.Get("star")
+        .Expand = False
+        .Menu = MenuName
+    End With
+    
+End
+
+Private Sub addMenu()
+    
+    Dim yukiMenu As NagatoPulldownMenuStar
+    
+    yukiMenu = New NagatoPulldownMenuStar(MenuName) As "TFEI"
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Object.New("NagatoSpacer", [argContainer])
+    addButton(argContainer)
+    addMenu()
+    
+End

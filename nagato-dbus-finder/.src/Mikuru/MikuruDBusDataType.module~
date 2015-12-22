@@ -28,70 +28,24 @@ Private Function getDict(argType As String) As String
     
 End
 
+Private Function sanitizeText(argString As String) As String
+    
+    argString = Replace$(argString, "(", "{")
+    argString = Replace$(argString, ")", "}")
+    
+    Return argString
+    
+End
+
 Public Function Get(argType As String) As String
     
-    argType = Replace$(argType, "(", "{")
-    argType = Replace$(argType, ")", "}")
+    argType = sanitizeText(argType)
     
     If argType Begins "a{" Then Return getDict(argType)
     If argType Begins "{" Then Return "Dict of (" & getDict(argType)
+    If argType Begins "a" Then Return (MikuruDBusDataTypeDict[Right$(argType)] & "[]")
     
-    Select Case argType
-        Case "ao"
-            Return "object[]"
-        Case "o"
-            Return "object"
-        Case "ab"
-            Return "boolean[]"
-        Case "b"
-            Return "boolean"
-        Case "as"
-            Return "string[]"
-        Case "s"
-            Return "string"
-        Case "ay"
-            Return "byte[]"
-        Case "y"
-            Return "byte"
-        Case "an"
-            Return "int16[]"
-        Case "n"
-            Return "int16"
-        Case "aq"
-            Return "uint16[]"
-        Case "q"
-            Return "uint16"
-        Case "ai"
-            Return "int32[]"
-        Case "i"
-            Return "int32"
-        Case "au"
-            Return "uint32[]"
-        Case "u"
-            Return "uint32"
-        Case "ax"
-            Return "int64[]"
-        Case "x"
-            Return "int64"
-        Case "at"
-            Return "uint64[]"
-        Case "t"
-            Return "uint64"
-        Case "ad"
-            Return "float[]"
-        Case "d"
-            Return "float"
-        Case "aq"
-            Return "sign[]"
-        Case "q"
-            Return "sign"
-        Case "av"
-            Return "variant[]"
-        Case "v"
-            Return "variant"
-        Default
-            Return argType
-    End Select
+    Return MikuruDBusDataTypeDict[argType]
     
 End
 

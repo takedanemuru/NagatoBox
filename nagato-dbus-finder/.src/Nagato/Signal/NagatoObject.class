@@ -4,9 +4,7 @@ Create Private
 
 Event Signal(argEvent As Integer, argValues As Variant[])
 
-Public Sub NagatoMenu_Signal(argEvent As Integer, argValues As Variant[])
-    
-    Debug argEvent
+Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
     
     Raise Signal(argEvent, argValues)
     

@@ -1,14 +1,15 @@
 ' Gambas class file
 
-Public Sub _new(argParentKey As String, argElement As XmlElement)
+Inherits NagatoSymbol
+
+Public Sub _OnInitializeArgsHandler(argElement As XmlElement)
     
-    Dim yukiName As String = argElement.Attributes["name"]
-    Dim yukiText As String = "&1 (&2) As &3"
-    Dim yukiAccess As String = IIf(argElement.Attributes["access"] = "read", "Read Only", "Read/Write")
-    Dim yukiType As String = MikuruDBusDataType.Get(argElement.Attributes["type"])
+    Me._$args = New NagatoArgumentsProperty(argElement)
     
-    yukiText = Subst$(yukiText, yukiName, yukiAccess, yukiType)
+End
+
+Public Function _OnGetIconName() As String
     
-    Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("information-balloon"), argParentKey)
+    Return "information-balloon"
     
 End

@@ -9,7 +9,7 @@ Public Sub AddNode(argKey As String)
     If Not argKey Then Return
     If Me.TreeView1.Exist(argKey) Then Return
     
-    Me.TreeView1.Add(argKey, argKey, MikuruIcon.Get("folder"))
+    Me.TreeView1.Add(argKey, argKey, MikuruIcon["folder"])
     
 End
 
@@ -48,6 +48,10 @@ Public Sub MenuBar_Signal(argSignal As Integer, ...)
             TreeView1.Clear()
             $listSession.Refresh()
             $listSystem.Refresh()
+        Case MikuruSignal.ApplicationAbout
+            HaruhiAbout.ShowDialog()
+        Case MikuruSignal.ApplicationQuit
+            Me.Close()
     End Select
     
 End

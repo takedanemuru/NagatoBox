@@ -36,10 +36,11 @@ Private Function getLabel() As String
     
     Dim yukiText As String
     
-    yukiText &= "CPU :" "<br>"
-    yukiText &= "Mem :" & "<br>"
-    yukiText &= "Swap :" & "<br>"
-    yukiText &= "Proc :" 
+    yukiText &= "CPU<br>"
+    yukiText &= "Mem.<br>"
+    yukiText &= "Swap<br>"
+    yukiText &= "Proc.<br>"
+    yukiText &= "Temp."
     
     setTextRectangle(yukiText)
     
@@ -54,7 +55,8 @@ Private Function getText() As String
     yukiText &= Format$($systemMonitor.CpuUsage, "##0.00%") & "<br>"
     yukiText &= Format$($systemMonitor.MemoryUsage, "##0.00%") & "<br>"
     yukiText &= Format$($systemMonitor.SwapUsage, "##0.00%") & "<br>"
-    yukiText &= $systemMonitor.ProcessCount
+    yukiText &= $systemMonitor.ProcessCount & "<br>"
+    yukiText &= Format$($systemMonitor.Thermal, "##0.00°C")
     
     Return yukiText
     
@@ -76,7 +78,7 @@ Public Function getIcon() As Picture
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.Font.Size = Application.Font.Size
+        Paint.Font.Size = Application.Font.Size - 1
         paintText()
         Paint.Fill()
     Paint.End()

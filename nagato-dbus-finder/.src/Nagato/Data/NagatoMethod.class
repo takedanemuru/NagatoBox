@@ -1,44 +1,15 @@
 ' Gambas class file
 
-Private $args As String
-Private $returns As String
+Inherits NagatoSymbol
 
-Private Sub addArg(argElement As XmlElement)
+Public Sub _OnInitializeArgsHandler(argElement As XmlElement)
     
-    Dim yukiType As String = MikuruDBusDataType.Get((argElement.Attributes["type"]))
-    Dim yukiName As String = IIf(argElement.Attributes["name"] = "", "arg", argElement.Attributes["name"])
-    
-    If $args <> "" Then $args &= ", "
-    $args &= Subst$("&1 As &2", yukiName, yukiType)
+    Me._$args = New NagatoArgumentsMethod(argElement)
     
 End
 
-Private Sub addReturn(argElement As XmlElement)
+Public Function _OnGetIconName() As String
     
-    Dim yukiType As String = MikuruDBusDataType.Get((argElement.Attributes["type"]))
-    Dim yukiName As String = IIf(argElement.Attributes["name"] = "", "return", argElement.Attributes["name"])
-
-    If $returns <> "" Then $returns &= ", "
-    $returns &= Subst$("&1 As &2", yukiName, yukiType)
-    
-End
-
-Public Sub _new(argParentKey As String, argElement As XmlElement)
-    
-    Dim yukiName As String = argElement.Attributes["name"]
-    Dim yukiElement As XmlElement
-    Dim yukiText As String
-    
-    For Each yukiElement In argElement.ChildElements
-        If yukiElement.Attributes["direction"] = "in" Then
-            addArg(yukiElement)
-        Else If yukiElement.Attributes["direction"] = "out"
-            addReturn(yukiElement)
-        Endif
-    Next
-    
-    yukiText = Subst$("&1 (&2) &3", yukiName, $args, $returns)
-    
-    Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("gear"), argParentKey)
+    Return "gear"
     
 End

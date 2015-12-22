@@ -1,16 +1,25 @@
 ' Gambas class file
 
-Inherits NagatoData
+Inherits NagatoSymbol
 
-Public Sub _new(argParentKey As String, argElement As XmlElement)
+Public Sub _OnInitializeArgsHandler(argElement As XmlElement)
     
-    Dim yukiName As String = argElement.Attributes["name"]
-    Dim yukiText As String = "&1 (&2) As &3"
-    Dim yukiAccess As String = IIf(argElement.Attributes["access"] = "read", "Read Only", "Read/Write")
-    Dim yukiType As String = MikuruDBusDataType.Get(argElement.Attributes["type"])
-    
-    yukiText = Subst$(yukiText, yukiName, yukiAccess, yukiType)
-    
-    Try HaruhiMain.TreeView1.Add(argParentKey & "_" & yukiName, yukiText, MikuruIcon.Get("information-balloon"), argParentKey)
+    Me._$args = New NagatoArgumentsProperty(argElement)
     
 End
+
+Public Function _OnGetIconName() As String
+    
+    Return "information-balloon"
+    
+End
+
+' Public Sub _new(argParentKey As String, argElement As XmlElement)
+'     
+'     Dim yukiArgs As New NagatoArgumentsProperty(argElement)
+'     
+'     With yukiArgs
+'         Try HaruhiMain.TreeView1.Add(argParentKey & "_" & .Name, .Text, MikuruIcon["information-balloon"], argParentKey)
+'     End With
+'     
+' End

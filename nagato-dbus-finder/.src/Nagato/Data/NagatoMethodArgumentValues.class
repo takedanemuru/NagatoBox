@@ -1,0 +1,28 @@
+' Gambas class file
+
+Property Read Text As String
+
+Private $defaultName As String
+Private $text As String
+
+Public Sub Add(argElement As XmlElement)
+    
+    Dim yukiType As String = MikuruDBusDataType.Get((argElement.Attributes["type"]))
+    Dim yukiName As String = IIf(argElement.Attributes["name"] = "", $defaultName, argElement.Attributes["name"])
+    
+    If $text <> "" Then $text &= ", "
+    $text &= Subst$("&1 As &2", yukiName, yukiType)
+    
+End
+
+Public Sub _new(argDefaultName As String)
+    
+    $defaultName = argDefaultName
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $text
+
+End

@@ -17,6 +17,7 @@ Property Read NetworkTransmitTotal As Integer
 Property Read NetworkTransmitBps As Float
 Property Read NetworkReceiveTotal As Integer
 Property Read NetworkReceiveBps As Float
+Property Read ThermalCount As Integer
 
 Public Sub Stop() As Boolean
     
@@ -24,6 +25,14 @@ Public Sub Stop() As Boolean
     Try NagatoObserverFacadeNetwork.Start()
     
     Return (Not Error )
+    
+End
+
+Public Sub GetTemperature(argThermalZoneIndex As Integer) As Integer
+    
+    If Me.ThermalCount = 0 Then Return 0
+    
+    Return NagatoObserverFacadeHardware.GetTemperature(argThermalZoneIndex)
     
 End
 
@@ -102,5 +111,11 @@ End
 Private Function NetworkReceiveBps_Read() As Float
 
     Return NagatoObserverFacadeNetwork.NetworkLoadReceiveBps
+
+End
+
+Private Function ThermalCount_Read() As Integer
+
+    Return NagatoObserverFacadeHardware.Count
 
 End

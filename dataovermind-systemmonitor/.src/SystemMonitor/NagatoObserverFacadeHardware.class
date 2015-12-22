@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoObserverFacadeCore
+
+Property Read Count As Integer
+
+Private Const ThermalDirectory As String = "/sys/class/thermal"
+
+Private $thermalZones As New NagatoThermalZone[]
+
+Private Sub addThermalZone(argPath As String)
+    
+    Dim yukiThermalZone As New NagatoThermalZone(argPath)
+    
+    $thermalZones.Add(yukiThermalZone)
+    
+End
+
+Public Sub GetTemperature(argIndex As Integer) As Integer
+    
+    If argIndex > $thermalZones.Max Then Return 0
+    
+    Return $thermalZones[argIndex].Temperature
+    
+End
+
+Public Sub Asakura_PrepStep()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(ThermalDirectory)
+        If Not Dir(ThermalDirectory &/ yukiPath).Exist("temp") Then Continue
+        addThermalZone(ThermalDirectory &/ yukiPath)
+    Next
+    
+End
+
+Public Sub Asakura_Step()
+    
+    ' pass
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $thermalZones.Count
+
+End

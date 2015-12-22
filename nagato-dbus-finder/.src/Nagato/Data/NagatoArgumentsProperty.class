@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoArguments
+
+Private $text As String
+
+Public Sub _OnSetValues(argElement As XmlElement)
+    
+    Dim yukiAccess As String = IIf(argElement.Attributes["access"] = "read", "Read Only", "Read/Write")
+    Dim yukiType As String = MikuruDBusDataType.Get(argElement.Attributes["type"])
+    
+    $text = Subst$("(&1) As &2", yukiAccess, yukiType)
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Return Subst$("&1 &2", Me._$name, $text)
+    
+End

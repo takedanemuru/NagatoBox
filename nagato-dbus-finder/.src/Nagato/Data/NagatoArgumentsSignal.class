@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoArguments
+
+Private $text As String
+
+Public Sub _OnSetValues(argElement As XmlElement)
+    
+    Dim yukiElement As XmlElement
+    Dim yukiCount As Integer
+    
+    For Each yukiElement In argElement.ChildElements
+        Inc yukiCount
+        If yukiCount > 1 Then $text &= ", "
+        $text &= Subst$("arg&1 As &2", yukiCount, MikuruDBusDataType.Get(yukiElement.Attributes["type"]))
+    Next
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Return Subst$("&1 (&2)", Me._$name, $text)
+    
+End
