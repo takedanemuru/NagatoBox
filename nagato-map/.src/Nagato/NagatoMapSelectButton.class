@@ -22,8 +22,9 @@ Public Sub _new(argContainer As Container)
     
     $container = argContainer
     
-    addMapSelectButton("GoogleEarth", HaruhiMain.GoogleMap, False)
-    addMapSelectButton("OpenStreetMap", HaruhiMain.OpenStreetMap, True)
+    addMapSelectButton(("GoogleEarth"), HaruhiMain.GoogleMap, False)
+    addMapSelectButton(("GoogleEarth (with road data)"), HaruhiMain.GoogleMapWithRoad, False)
+    addMapSelectButton(("OpenStreetMap"), HaruhiMain.OpenStreetMap, True)
     
 End
 

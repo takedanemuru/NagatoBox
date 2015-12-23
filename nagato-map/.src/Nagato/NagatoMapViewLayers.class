@@ -20,9 +20,15 @@ Public Sub SetVisibleLayer(argMapType As Integer)
         If argMapType = HaruhiMain.OpenStreetMap Then
             .Map[MikuruOpenStreetMap.Name].Visible = True
             .Map[MikuruGoogleMap.Name].Visible = False
-        Else
+            .Map[MikuruGoogleMap.NameRoad].Visible = False
+        Else If argMapType = HaruhiMain.GoogleMapWithRoad Then
             .Map[MikuruOpenStreetMap.Name].Visible = False
             .Map[MikuruGoogleMap.Name].Visible = True
+            .Map[MikuruGoogleMap.NameRoad].Visible = True
+        Else If argMapType = HaruhiMain.GoogleMap Then
+            .Map[MikuruOpenStreetMap.Name].Visible = False
+            .Map[MikuruGoogleMap.Name].Visible = True
+            .Map[MikuruGoogleMap.NameRoad].Visible = False
         End If
     End With
     

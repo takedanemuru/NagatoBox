@@ -1,7 +1,9 @@
 ' Gambas module file
 
 Property Read Pattern As String
+Property Read PatternRoad As String
 Property Read Name As String
+Property Read NameRoad As String
 Property Read Cache As String
 Property Read SubDomains As String[]
 Property Read Arguments As Collection
@@ -10,6 +12,7 @@ Public Sub AddTile(argMapView As MapView)
     
     With Me
         argMapView.Map.AddTile(.Name, .Pattern, .Arguments, .Cache).SubDomains = .SubDomains
+        argMapView.Map.AddTile(.NameRoad, .PatternRoad, Null).SubDomains = .SubDomains
     End With
     
 End
@@ -41,5 +44,17 @@ End
 Private Function Arguments_Read() As Collection
 
     Return ["version": "162"]
+
+End
+
+Private Function NameRoad_Read() As String
+
+    Return "GoogleRoad"
+
+End
+
+Private Function PatternRoad_Read() As String
+
+    Return "https://mts{s}.google.com/vt/lyrs=h@282000000&src=app&expIds=201527&rlbl=1&x={x}&y={y}&z={z}&s=Ga"
 
 End

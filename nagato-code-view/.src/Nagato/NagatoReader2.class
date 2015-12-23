@@ -12,7 +12,7 @@ Private $methodCountAll As Integer
 
 Private $accessors As String[] = ["Public", "Private"]
 Private $procedures As String[] = ["Sub", "Function", "Procedure"]
-Private $propertyHandlers As New String[]
+'Private $propertyHandlers As New String[]
 
 Private Sub readProperty(argWords As String[])
     

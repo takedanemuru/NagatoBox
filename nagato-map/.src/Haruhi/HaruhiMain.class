@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Public Enum OpenStreetMap, GoogleMap
+Public Enum OpenStreetMap, GoogleMap, GoogleMapWithRoad
 
 Private $menuBar As NagatoMenuBar
 Private $mapView As NagatoMapView
@@ -21,7 +21,6 @@ End
 Public Sub Form_Open()
 
     Application.MainWindow = Me
-    NagatoSettings.LoadFormSettings(Me)
 
     $menuBar = New NagatoMenuBar(MenuHBox) As "TFEI"
     $leftPanel = New NagatoLeftPanel(MainHBox) As "TFEI"
