@@ -13,6 +13,11 @@ Private Sub playPath(argPath As String)
     $mediaPlayer.URL = Media.URL(argPath)
     $mediaPlayer.Play()
     
+    HaruhiMain.Title = File.BaseName(argPath)
+    
+Catch
+    Return
+    
 End
 
 Private Sub initializeMediaPlayerAndControl(argDrawingArea As DrawingArea)

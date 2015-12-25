@@ -17,7 +17,7 @@ Private Sub checkDeletedPath(argCurrentPaths As String[])
     If Not Object.IsValid($previousPaths) Then Return
 
     For Each yukiPath In $previousPaths
-        If Not argCurrentPaths.Exist(yukiPath) Then Raise Deleted(yukiPath)
+        If Not argCurrentPaths.Exist(yukiPath) Then Raise Deleted($directory &/ yukiPath)
     Next
     
 End
@@ -29,7 +29,7 @@ Private Sub checkModefiedPath(argCurrentPaths As String[])
     For Each yukiPath In argCurrentPaths
         If Not Exist($directory &/ yukiPath) Then Continue
         If DateDiff(Stat($directory &/ yukiPath).LastChange, $lastObserved, gb.Second) > Interval Then Continue
-        Raise Modefied(yukiPath)
+        Raise Modefied($directory &/ yukiPath)
     Next
     
 End

@@ -25,12 +25,12 @@ End
 
 Public Sub ApplicationObserver_Deleted(argPath As String)
     
-    Raise Deleted(Last.Directory &/ argPath)
+    Raise Deleted(argPath)
     
 End
 
 Public Sub ApplicationObserver_Modefied(argPath As String)
     
-    Raise Modefied(Last.Directory &/ argPath)
+    Raise Modefied(argPath)
     
 End
