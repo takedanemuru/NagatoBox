@@ -23,7 +23,11 @@ End
 
 Private Function List_Read() As String[]
 
-    Return MikuruPath.Sanitize(Me._$settings["apps/recent", [""]])
+    Dim yukiList As String[] = MikuruPath.Sanitize(Me._$settings["apps/recent", [""]])
+
+    Try yukiList.Resize(Me.Max)
+
+    Return yukiList
 
 End
 

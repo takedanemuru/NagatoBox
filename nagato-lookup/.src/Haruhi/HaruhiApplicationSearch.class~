@@ -1,19 +1,17 @@
 ' Gambas class file
 
-Private Const IconSize As Integer = 64
 Private Const NotFoundKey As String = "NotFound"
 
 Private $iconViewHandler As NagatoIconViewHandler
 Private $label As NagatoApplicationLabel
+Private $tile As New NagatoDesktopFileTile
 
 Private Sub addDesktopFileIcon(argDesktopFile As NagatoDesktopFile)
-    
-    Dim yukiIcon As Picture = argDesktopFile.GetIcon(IconSize).Image.Stretch(IconSize, IconSize).Picture
     
     ' To avoid key error, because KDE apps are added twice in menu-cache. 
     If ApplicationsIconView.Exist(argDesktopFile.Path) Then Return
     
-    ApplicationsIconView.Add(argDesktopFile.Path, argDesktopFile.CommonName, yukiIcon)
+    ApplicationsIconView.Add(argDesktopFile.Path, Null, $tile[argDesktopFile])
     
 End
 
@@ -27,7 +25,7 @@ End
 
 Private Sub setNotFound()
     
-    ApplicationsIconView.Add(NotFoundKey, "Not found", MikuruIcons.Get("exclamation", IconSize))
+    ApplicationsIconView.Add(NotFoundKey, Null, $tile.GetNotFoundTile())
     
 End
 

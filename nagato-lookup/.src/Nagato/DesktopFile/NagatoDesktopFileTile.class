@@ -1,0 +1,77 @@
+' Gambas class file
+
+Private Const IconSize As Integer = 64
+Private Const TileSize As Integer = 128
+Private Const Margine As Integer = 8
+
+Private Function getRect(argText As String) As Rect
+    
+    Dim yukiRect As New Rect
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TileSize - 2 * Margine)
+    
+    With yukiRect
+        .H = yukiHeight
+        .W = TileSize - 2 * Margine
+        .X = Margine
+        .Y = TileSize - (yukiHeight + 2 * Margine)
+    End With
+    
+    Return yukiRect
+    
+End
+
+Private Sub paintText(argText As String)
+    
+    Dim yukiRect As Rect
+    
+    Paint.Font.Size = Application.Font.Size
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Bold = True
+    yukiRect = getRect(argText)
+    Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Sub paintIcon(argIcon As Picture)
+    
+    Dim yukiX As Integer = (TileSize - argIcon.W) / 2
+    Dim yukiY As Integer = Margine + ((IconSize - argIcon.H) / 2)
+    
+    Paint.DrawPicture(argIcon, yukiX, yukiY)
+    
+End
+
+Private Function getBaseImage(argcolor As Integer) As Image
+    
+    Dim yukiBaseImage As New Image(TileSize, TileSize, argcolor + Color.Transparent * -128)
+    
+    Return yukiBaseImage
+    
+End
+
+Public Sub _get(argDesktopFile As NagatoDesktopFile) As Picture
+    
+    Dim yukiBaseImage As Image = getBaseImage(Color.Violet)
+    
+    Paint.Begin(yukiBaseImage)
+        paintIcon(argDesktopFile.GetIcon(IconSize))
+        paintText(argDesktopFile.GetName(True))
+    Paint.End()
+    
+    Return yukiBaseImage.Picture
+    
+End
+
+Public Function GetNotFoundTile() As Picture
+    
+    Dim yukiBaseImage As Image = getBaseImage(Color.Green)
+    
+    Paint.Begin(yukiBaseImage)
+        paintIcon(MikuruIcons.Get("exclamation", IconSize))
+        paintText(("Not found"))
+    Paint.End()
+    
+    Return yukiBaseImage.Picture
+    
+End

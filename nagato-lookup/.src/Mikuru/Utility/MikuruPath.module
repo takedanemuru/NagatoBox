@@ -1,5 +1,7 @@
 ' Gambas module file
 
+Private Const StoringLimit As Integer = 50
+
 Public Function Sanitize(argPaths As String[]) As String[]
     
     Dim yukiPath As String
@@ -19,9 +21,7 @@ Public Function Push(argPath As String, argPaths As String[]) As String[]
     
     Try yukiPaths.Remove(yukiPaths.Find(argPath))
     yukiPaths.Add(argPath, 0)
-    With NagatoSettingsRecentApplications
-        If yukiPaths.Count > .Max Then yukiPaths.Resize(.Max)
-    End With
+    If yukiPaths.Count > StoringLimit Then yukiPaths.Resize(StoringLimit)
     
     Return yukiPaths.Copy()
     

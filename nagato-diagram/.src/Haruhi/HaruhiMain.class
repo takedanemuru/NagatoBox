@@ -17,8 +17,10 @@ Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
             MikuruSettings.ClearRecntPaths()
         Case MikuruSignal.FileSave
             $pathHandler.Save($mainContainer.Text)
+            $mainContainer.RefreshPreview()
         Case MikuruSignal.FileSaveAs
             $pathHandler.SaveAs($mainContainer.Text)
+            $mainContainer.RefreshPreview()
     End Select
     
 End

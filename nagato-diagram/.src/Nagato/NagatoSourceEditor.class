@@ -60,7 +60,8 @@ End
 
 Public Sub TextEditor_KeyPress()
     
-    
+    If Key.Control And If Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null)
+    If Key.Control And If Key.Shift And If Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
     
 End
 

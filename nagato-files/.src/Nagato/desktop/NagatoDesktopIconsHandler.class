@@ -45,7 +45,7 @@ Private Sub clearAll()
     
     Try detachObject($clock)
     Try detachObject($trashBin)
-    $iconView.Clear()
+    Try $iconView.Clear()
     
 End
 
