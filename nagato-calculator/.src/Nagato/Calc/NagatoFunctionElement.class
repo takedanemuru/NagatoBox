@@ -1,0 +1,54 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Name As String
+Property Read Type As Integer
+
+Private $functionType As Integer
+
+Private Sub getDivision(argNumber1 As Float, argNumber2 As Float) As Float
+        
+    If argNumber2 = 0 Then
+        Raise Signal(MikuruSignal.ErrorDivisionByZero, Null)
+        Return 0
+    Else
+        Return argNumber1 / argNumber2
+    Endif
+        
+End
+
+Public Sub SetFunction(argFunction As Integer)
+    
+    $functionType = argFunction
+    
+End
+
+Public Function Execute(argNumber1 As Float, argNumber2 As Float) As Float
+        
+    Select Case $functionType
+        Case MikuruFunctionType.Devide
+            Return getDivision(argNumber1, argNumber2)
+        Case MikuruFunctionType.Minus
+            Return argNumber1 - argNumber2
+        Case MikuruFunctionType.Multi
+            Return argNumber1 * argNumber2
+        Case MikuruFunctionType.Plus, MikuruFunctionType.Start
+            Return argNumber1 + argNumber2
+        Case MikuruFunctionType.Power
+            Return argNumber1 ^ argNumber2
+    End Select
+        
+End
+
+Private Function Name_Read() As String
+
+    Return MikuruFunctionType.GetFunctionName($functionType)
+
+End
+
+Private Function Type_Read() As Integer
+
+    Return $functionType
+
+End

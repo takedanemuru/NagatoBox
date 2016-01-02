@@ -52,7 +52,5 @@ Public Sub Asakura_KeyPress()
         Case Asc("0"), Asc("1"), Asc("2"), Asc("3"), Asc("4"), Asc("5"), Asc("6"), Asc("7"), Asc("8"), Asc("9")
             Raise KeyPressNumber(CInt(Key.Text))
     End Select
-        
-    Debug "pressed"
-        
+    
 End

@@ -1,0 +1,17 @@
+' Gambas class file
+
+Property Lock As Boolean
+
+Private $lock As Boolean = False
+
+Private Function Lock_Read() As Boolean
+
+    Return $lock
+
+End
+
+Private Sub Lock_Write(Value As Boolean)
+
+    $lock = Value
+
+End

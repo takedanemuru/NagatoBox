@@ -1,0 +1,41 @@
+' Gambas module file
+
+Private Function getFracLength(argNumber As Float) As Integer
+    
+    If Frac(argNumber) = 0 Then
+            Return 0
+    Else
+            Return Len(Replace$(Str$(Frac(argNumber)), "0.", ""))
+    Endif
+    
+End
+
+Private Function getAdditionalZero(argNumber As Float, argFloatingPoint As Integer) As String
+        
+    Dim yukiFracLength As Integer = getFracLength(argNumber)
+    
+    If argFloatingPoint > yukiFracLength And If argFloatingPoint <> 0 Then
+        Return String$((argFloatingPoint - 1) - yukiFracLength, "0")
+    Else
+        Return ""
+    Endif
+        
+End
+
+Public Function GetString(argNumber As Float, argFloatingPoint As Integer) As String
+    
+    Dim yukiNumber As String = Str$(argNumber)
+    Dim yukiAddtionalDot As String = ""
+    Dim yukiAddtionalZero As String = getAdditionalZero(argNumber, argFloatingPoint)
+    
+    If InStr(yukiNumber, ".") = 0 And If argFloatingPoint > 0 Then yukiAddtionalDot = "."
+    
+    Return yukiNumber & yukiAddtionalDot & yukiAddtionalZero
+        
+End
+
+Public Function GetValidLength(argText As String) As Integer
+    
+    Return IIf(InStr(argText, ".") = 0, Len(argText), Len(argText) - 1)
+    
+End

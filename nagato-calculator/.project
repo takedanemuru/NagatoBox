@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.4
 Title=nagato-calculator
 Startup=Kyon
 Icon=picture/calculator.png
-Version=42.1.1
+Version=42.3.3
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -19,10 +19,11 @@ Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.License
-PackageName=nagato-calculator-42.1.1
+PackageName=nagato-calculator-42.3.3
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Science/Mathematics"
 Categories=ubuntu:"Nagato;Science;Utility"
 Groups=ubuntu:"x11"
+ExtraFiles=ubuntu:"nagato-calculator.png\t/usr/share/pixmaps"

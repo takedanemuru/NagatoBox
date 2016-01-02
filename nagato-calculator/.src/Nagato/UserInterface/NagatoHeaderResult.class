@@ -20,7 +20,7 @@ End
 
 Public Sub GetTextWithHeader(argNumber As Float) As String
     
-    Dim yukiSpace As String = getSpace(HeaderLength + NagatoNumber.GetValidLength(argNumber))
+    Dim yukiSpace As String = getSpace(HeaderLength + MikuruNumber.GetValidLength(argNumber))
     
     Return Header & yukiSpace & argNumber
     

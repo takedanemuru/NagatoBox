@@ -1,58 +1,38 @@
 ' Gambas class file
 
-Property Read Result As Float
-Property Read Text As String
+Inherits NagatoObject
 
-Private $result As Float = 0
 Private $currentElement As NagatoCalcElement
-Private $history As New NagatoCalcHistory
-Private $observer As Observer
-
-Event ResultChanged
-Event BufferChanged
-Event DivisionByZero
-
-Private Sub setHistoryAndExecute()
-    
-    $history.Add($currentElement)
-    $result = $currentElement.Execute($result)
-    
-    Raise ResultChanged
-        
-End
+Private $history As New NagatoCalcHistory As "TFEI"
+Private $locker As New NagatoLocker
 
 Private Sub setNewBuffer(argFunctionType As Integer)
     
-    $currentElement = New NagatoCalcElement 
-    $observer = New Observer($currentElement) As "Asakura"
-    $currentElement.SetFunction(argFunctionType)
+    $currentElement = New NagatoCalcElement(argFunctionType) As "TFEI"
+    $locker.Lock = False
     
 End
 
 Public Sub SendNumber(argNumber As String)
     
-    If $currentElement.Lock Then Return
-    
-    $currentElement.PushNumber(argNumber)
+    If Not $locker.Lock Then $currentElement.PushNumber(argNumber)
     
 End
 
 Public Sub SendFunction(argFunctionType As Integer)
         
-        If $currentElement.HasNumber And Not $currentElement.Lock Then
-                setHistoryAndExecute()
-                setNewBuffer(argFunctionType)
-        Else If $currentElement.HasNumber And $currentElement.Lock Then
-                setNewBuffer(argFunctionType)
-        Else
-                $currentElement.SetFunction(argFunctionType)
-        Endif
+    If $currentElement.HasNumber And Not $locker.Lock Then
+        $history.Add($currentElement)
+        setNewBuffer(argFunctionType)
+    Else If $currentElement.HasNumber And $locker.Lock Then
+        setNewBuffer(argFunctionType)
+    Else
+        $currentElement.SetFunction(argFunctionType)
+    Endif
         
 End
 
 Public Sub SendDot()
-    
-    If $currentElement.FloatingPoint <> 0 Then Return
     
     $currentElement.PushDot()
     
@@ -60,37 +40,28 @@ End
 
 Public Sub SwitchSign()
     
-    If $currentElement.Lock Then Return
-
-    $currentElement.SwitchSign()
+    If Not $locker.Lock Then $currentElement.SwitchSign()
     
 End
 
 Public Sub SendEnter()
     
-    If Not $currentElement.HasNumber Then Return
-        
-    With $currentElement
-        .Lock = True
-        If .FunctionType = MikuruFunctionType.Start Then .SetFunction(MikuruFunctionType.Plus)
-    End With
+    If Not $currentElement.SendEnter() Then Return
     
-    setHistoryAndExecute()
+    $locker.Lock = True
+    $history.Add($currentElement)
     
 End
 
 Public Sub Undo()
     
-    $result = $history.Undo()
-    
-    Raise ResultChanged
+    $history.Undo()
     
 End
 
 Public Sub ClearAll()
     
     $history.Clear()
-    $result = 0
     setNewBuffer(MikuruFunctionType.Start)    
     
 End
@@ -104,29 +75,5 @@ End
 Public Sub _new()
     
     setNewBuffer(MikuruFunctionType.Start)
-    
-End
-
-Private Function Result_Read() As Float
-
-    Return $result
-
-End
-
-Private Function Text_Read() As String
-
-    Return $currentElement.Text
-
-End
-
-Public Sub Asakura_Change()
-    
-    Raise BufferChanged
-    
-End
-
-Public Sub Asakura_DivisionByZero()
-    
-    Raise DivisionByZero
     
 End

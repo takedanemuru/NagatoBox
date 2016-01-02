@@ -45,7 +45,7 @@ Public Sub Asakura_KeyPress()
             Raise KeyPressFunction(MikuruFunctionType.Minus)
         Case Asc("*")
             Raise KeyPressFunction(MikuruFunctionType.Multi)
-        Case Asc("+")
+        Case Asc("+"), Key.Space
             Raise KeyPressFunction(MikuruFunctionType.Plus)
         Case Asc("^")
             Raise KeyPressFunction(MikuruFunctionType.Power)

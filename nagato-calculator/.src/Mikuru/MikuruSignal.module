@@ -1,0 +1,5 @@
+' Gambas module file
+
+Public Enum CalcHeader = 6000, CalcBufferChanged = 6001, CalcResultChanged = 6002
+Public Enum ErrorHeader = 8000, ErrorDivisionByZero = 8001
+

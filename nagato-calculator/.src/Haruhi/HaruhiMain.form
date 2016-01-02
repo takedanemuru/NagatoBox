@@ -4,130 +4,38 @@
   MoveScaled(0,0,64.2857,51.4286)
   Icon = Picture["picture/calculator.png"]
   Picture = Picture["picture/121017-bigthumbnail.jpg"]
-  { DotButton Button
-    MoveScaled(1,44,6,6)
-    Tag = "dot"
-    Text = (".")
+  { MemoryRunButton Button
+    MoveScaled(43,33,6,3)
+    Background = &HFF7F00&
+    Text = ("MR")
   }
-  { ClearButton Button
-    MoveScaled(1,37,6,6)
-    Tag = "clear"
-    Text = ("clear")
+  { MemoryDevideButton Button
+    MoveScaled(36,33,6,3)
+    Background = &HFF7F00&
+    Text = ("M/")
   }
-  { ZeroButton Button NumberButton
-    Name = "ZeroButton"
-    MoveScaled(8,44,6,6)
-    Tag = "0"
-    Text = ("0")
+  { MemoryMultiButton Button
+    MoveScaled(29,33,6,3)
+    Background = &HFF7F00&
+    Text = ("M*")
   }
-  { FiveButton Button NumberButton
-    Name = "FiveButton"
-    MoveScaled(8,37,6,6)
-    Tag = "5"
-    Text = ("5")
+  { MemoryMinusButton Button
+    MoveScaled(22,33,6,3)
+    Background = &HFF7F00&
+    Text = ("M-")
   }
-  { OneButton Button NumberButton
-    Name = "OneButton"
-    MoveScaled(15,44,6,6)
-    Tag = "1"
-    Text = ("1")
+  { MemoryPlusButton Button
+    MoveScaled(15,33,6,3)
+    Background = &HFF7F00&
+    Text = ("M+")
   }
-  { SixButton Button NumberButton
-    Name = "SixButton"
-    MoveScaled(15,37,6,6)
-    Tag = "6"
-    Text = ("6")
+  { BackButton Button
+    MoveScaled(8,33,6,3)
+    Text = ("back")
   }
-  { TwoButton Button NumberButton
-    Name = "TwoButton"
-    MoveScaled(22,44,6,6)
-    Tag = "2"
-    Text = ("2")
-  }
-  { SevenButton Button NumberButton
-    Name = "SevenButton"
-    MoveScaled(22,37,6,6)
-    Tag = "7"
-    Text = ("7")
-  }
-  { ThreeButton Button NumberButton
-    Name = "ThreeButton"
-    MoveScaled(29,44,6,6)
-    Tag = "3"
-    Text = ("3")
-  }
-  { EightButton Button NumberButton
-    Name = "EightButton"
-    MoveScaled(29,37,6,6)
-    Tag = "8"
-    Text = ("8")
-  }
-  { FourButton Button NumberButton
-    Name = "FourButton"
-    MoveScaled(36,44,6,6)
-    Tag = "4"
-    Text = ("4")
-  }
-  { NineButton Button NumberButton
-    Name = "NineButton"
-    MoveScaled(36,37,6,6)
-    Tag = "9"
-    Text = ("9")
-  }
-  { MinusButton Button FunctionButton
-    Name = "MinusButton"
-    MoveScaled(43,44,6,6)
-    Tag = "2"
-    Text = ("-")
-  }
-  { MultiButton Button FunctionButton
-    Name = "MultiButton"
-    MoveScaled(43,37,6,6)
-    Tag = "3"
-    Text = ("*")
-  }
-  { EnterButton Button
-    MoveScaled(57,37,6,13)
-    Text = ("enter")
-  }
-  { DevideButton Button FunctionButton
-    Name = "DevideButton"
-    MoveScaled(50,37,6,6)
-    Tag = "4"
-    Text = ("/")
-  }
-  { PlusButton Button FunctionButton
-    Name = "PlusButton"
-    MoveScaled(50,44,6,6)
-    Tag = "1"
-    Text = ("+")
-  }
-  { ReverseButton Button
-    MoveScaled(50,33,6,3)
-    Text = ("+/-")
-  }
-  { PowerButton Button FunctionButton
-    Name = "PowerButton"
-    MoveScaled(57,33,6,3)
-    Tag = "5"
-    Text = ("pow")
-  }
-  { UndoButton Button
-    MoveScaled(1,33,6,3)
-    Text = ("undo")
-  }
-  { ResultLCD LCDLabel
-    MoveScaled(1,16,62,6)
-    Text = ("welcome to nagato calculator")
-    Sheared = True
-    HighlightColor = &H7F00FF&
-  }
-  { BufferLCD LCDLabel
-    MoveScaled(1,22,62,5)
-    Background = &HFFFEFE&
-    Text = ("                          ")
-    Sheared = True
-    HighlightColor = &H00FF00&
+  { MenuButton1 MenuButton
+    MoveScaled(57,1,6,4)
+    Picture = Picture["icon:/small/options"]
   }
   { ResultLCD2 LCDLabel
     MoveScaled(1,11,62,6)
@@ -136,37 +44,129 @@
     Sheared = True
     HighlightColor = &HFF0000&
   }
-  { MenuButton1 MenuButton
-    MoveScaled(57,1,6,4)
-    Picture = Picture["icon:/small/options"]
+  { BufferLCD LCDLabel
+    MoveScaled(1,22,62,5)
+    Background = &HFFFEFE&
+    Text = ("                          ")
+    Sheared = True
+    HighlightColor = &H00FF00&
   }
-  { BackButton Button
-    MoveScaled(8,33,6,3)
-    Text = ("back")
+  { ResultLCD LCDLabel
+    MoveScaled(1,16,62,6)
+    Text = ("welcome to nagato calculator")
+    Sheared = True
+    HighlightColor = &H7F00FF&
   }
-  { MemoryPlusButton Button
-    MoveScaled(15,33,6,3)
-    Background = &HFF7F00&
-    Text = ("M+")
+  { UndoButton Button
+    MoveScaled(1,33,6,3)
+    Text = ("undo")
   }
-  { MemoryMinusButton Button
-    MoveScaled(22,33,6,3)
-    Background = &HFF7F00&
-    Text = ("M-")
+  { PowerButton Button FunctionButton
+    Name = "PowerButton"
+    MoveScaled(57,33,6,3)
+    Tag = "5"
+    Text = ("pow")
   }
-  { MemoryMultiButton Button
-    MoveScaled(29,33,6,3)
-    Background = &HFF7F00&
-    Text = ("M*")
+  { ReverseButton Button
+    MoveScaled(50,33,6,3)
+    Text = ("+/-")
   }
-  { MemoryDevideButton Button
-    MoveScaled(36,33,6,3)
-    Background = &HFF7F00&
-    Text = ("M/")
+  { PlusButton Button FunctionButton
+    Name = "PlusButton"
+    MoveScaled(50,44,6,6)
+    Tag = "1"
+    Text = ("+")
   }
-  { MemoryRunButton Button
-    MoveScaled(43,33,6,3)
-    Background = &HFF7F00&
-    Text = ("MR")
+  { DevideButton Button FunctionButton
+    Name = "DevideButton"
+    MoveScaled(50,37,6,6)
+    Tag = "4"
+    Text = ("/")
+  }
+  { EnterButton Button
+    MoveScaled(57,37,6,13)
+    Text = ("enter")
+  }
+  { MultiButton Button FunctionButton
+    Name = "MultiButton"
+    MoveScaled(43,37,6,6)
+    Tag = "3"
+    Text = ("*")
+  }
+  { MinusButton Button FunctionButton
+    Name = "MinusButton"
+    MoveScaled(43,44,6,6)
+    Tag = "2"
+    Text = ("-")
+  }
+  { NineButton Button NumberButton
+    Name = "NineButton"
+    MoveScaled(36,37,6,6)
+    Tag = "9"
+    Text = ("9")
+  }
+  { FourButton Button NumberButton
+    Name = "FourButton"
+    MoveScaled(36,44,6,6)
+    Tag = "4"
+    Text = ("4")
+  }
+  { EightButton Button NumberButton
+    Name = "EightButton"
+    MoveScaled(29,37,6,6)
+    Tag = "8"
+    Text = ("8")
+  }
+  { ThreeButton Button NumberButton
+    Name = "ThreeButton"
+    MoveScaled(29,44,6,6)
+    Tag = "3"
+    Text = ("3")
+  }
+  { SevenButton Button NumberButton
+    Name = "SevenButton"
+    MoveScaled(22,37,6,6)
+    Tag = "7"
+    Text = ("7")
+  }
+  { TwoButton Button NumberButton
+    Name = "TwoButton"
+    MoveScaled(22,44,6,6)
+    Tag = "2"
+    Text = ("2")
+  }
+  { SixButton Button NumberButton
+    Name = "SixButton"
+    MoveScaled(15,37,6,6)
+    Tag = "6"
+    Text = ("6")
+  }
+  { OneButton Button NumberButton
+    Name = "OneButton"
+    MoveScaled(15,44,6,6)
+    Tag = "1"
+    Text = ("1")
+  }
+  { FiveButton Button NumberButton
+    Name = "FiveButton"
+    MoveScaled(8,37,6,6)
+    Tag = "5"
+    Text = ("5")
+  }
+  { ZeroButton Button NumberButton
+    Name = "ZeroButton"
+    MoveScaled(8,44,6,6)
+    Tag = "0"
+    Text = ("0")
+  }
+  { ClearButton Button
+    MoveScaled(1,37,6,6)
+    Tag = "clear"
+    Text = ("clear")
+  }
+  { DotButton Button
+    MoveScaled(1,44,6,6)
+    Tag = "dot"
+    Text = (".")
   }
 }

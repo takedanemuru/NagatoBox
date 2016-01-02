@@ -1,184 +1,97 @@
 ' Gambas class file
 
-Property Read Text As String
+Inherits NagatoObject
+
 Property Read HasNumber As Boolean
-Property Read IsNegative As Boolean
-Property Read FunctionType As Integer
-Property Read FloatingPoint As Integer
-Property Read Number As Float 
-Property Lock As Boolean
 
-Private $hasNumber As Boolean = False
-Private $functionType As Integer
-Private $isNegative As Boolean = False
-Private $number As Float = 0
-Private $floatingPoint As Integer = 0
-Private $lock As Boolean = False
+Private $function As New NagatoFunctionElement As "TFEI"
+Private $num As New NagatoNumberElement As "TFEI"
 
-Event Change
-Event DivisionByZero
+Private Function getText() As String
 
-Private Function getSign(argElement As NagatoCalcElement) As String
-        
-        If argElement.IsNegative And If Str$(argElement.Number) Not Begins "-" Then
-                Return "-"
-        Else
-                Return ""
-        Endif
-        
-End
-
-Private Function getTotalLength() As Integer
-
-        Dim yukiHeaderLength As Integer = Len(MikuruFunctionType.GetFunctionName($functionType))
-        Dim yukiNumberLength As Integer = NagatoNumber.GetValidLength(NagatoNumber.GetStringConversion(Me)) 
-
-        Return yukiHeaderLength + yukiNumberLength
+    Dim yukiHeader As String = $function.Name & ":"
+    Dim yukiSpace As String = getSpace()
+    Dim yukiNumberText As String = NagatoNumber2.GetString($num.Number, $num.FloatingPoint)
+    
+    Return yukiHeader & yukiSpace & $num.Sign & yukiNumberText
 
 End
 
 Private Function getSpace() As String
-        
-        Return String$(NagatoSettings.LCDLength - getTotalLength(), " ")
-        
-Catch
-        Return ""
-        
+    
+    Dim yukiHeaderLength As Integer = Len($function.Name)
+    Dim yukiNumberText As String = NagatoNumber2.GetString($num.Number, $num.FloatingPoint)
+    Dim yukiNumberLength As Integer = MikuruNumber.GetValidLength(yukiNumberText) 
+
+    Return String$(NagatoSettings.LCDLength - (yukiHeaderLength + yukiNumberLength), " ")
+    
 End
 
-Private Sub getDivision(argNumber As Float) As Float
-        
-        If $number = 0 Then
-                Raise DivisionByZero
-                Return 0
-        Else
-                Return argNumber / $number
-        Endif
-        
+Public Function SendEnter() As Boolean ' returns false if rejected.
+    
+    If Not $num.HasNumber Then Return False
+    
+    If $function.Type = MikuruFunctionType.Start Then $function.SetFunction(MikuruFunctionType.Plus)
+    
+    Return True
+    
 End
 
 Public Sub SwitchSign()
-        
-        $isNegative = Not $isNegative
-        $number *= -1
-        
-        Raise Change
+    
+    $num.SwitchSign()
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
         
 End
 
 Public Sub PushNumber(argNumber As Integer)
-        
-        If Not $hasNumber Then $hasNumber = True
-        
-        If $floatingPoint = 0 Then
-                $number = $number * 10 + argNumber
-        Else
-                $number += ((1 / 10) ^ $floatingPoint * argNumber)
-                Inc $floatingPoint
-        Endif
-        
-        If $isNegative And If $number > 0 Then $number *= -1
-        
-        Raise Change
-        
+    
+    $num.PushNumber(argNumber)
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
+    
 End
 
 Public Sub Back()
-        
-        $number = 0
-        $floatingPoint = 0
-        
-        Raise Change
-        
+    
+    $num.Back()
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
+    
 End
 
 Public Sub PushDot()
-        
-        If $floatingPoint <> 0 Then Return
-        
-        If Not $hasNumber Then $hasNumber = True
-        $floatingPoint = 1
-        
-        Raise Change
-        
+    
+    If $num.FloatingPoint <> 0 Then Return
+    If Not $num.PushDot() Then Return
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
+    
 End
 
 Public Sub SetFunction(argFunctionType As Integer)
-        
-        $functionType = argFunctionType
-        
-        Raise Change
-        
+    
+    $function.SetFunction(argFunctionType)
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
+    
 End
 
 Public Function Execute(argNumber As Float) As Float
-        
-        With MikuruFunctionType
-                Select Case $functionType
-                        Case .Devide
-                                Return getDivision(argNumber)
-                        Case .Minus
-                                Return argNumber - $number
-                        Case .Multi
-                                Return argNumber * $number
-                        Case .Plus, .Start
-                                Return argNumber + $number
-                        Case .Power
-                                Return argNumber ^ $number
-                End Select
-        End With
-        
+    
+    Return $function.Execute(argNumber, $num.Number)
+    
 End
 
-Private Function Number_Read() As Float
-
-        Return $number
-
+Public Sub _new(argFunctionType As Integer)
+    
+    $function.SetFunction(argFunctionType)
+    
 End
 
 Private Function HasNumber_Read() As Boolean
-        
-        Return $hasNumber
-        
-End
-
-Private Function IsNegative_Read() As Boolean
-
-        Return $isNegative
-
-End
-
-Private Function FloatingPoint_Read() As Integer
-
-        Return $floatingPoint
-
-End
-
-Private Function Lock_Read() As Boolean
-
-        Return $lock
-
-End
-
-Private Sub Lock_Write(Value As Boolean)
-
-        $lock = Value
-
-End
-
-Private Function FunctionType_Read() As Integer
-
-        Return $functionType
-
-End
-
-Private Function Text_Read() As String
-
-    Dim yukiSign As String = getSign(Me)
-    Dim yukiHeader As String = MikuruFunctionType.GetFunctionName($functionType) & ":"
-    Dim yukiSpace As String = getSpace()
-    Dim yukiNumber As String = NagatoNumber.GetStringConversion(Me)
     
-    Return yukiHeader & yukiSpace & yukiSign & yukiNumber
-
+    Return $num.HasNumber
+    
 End

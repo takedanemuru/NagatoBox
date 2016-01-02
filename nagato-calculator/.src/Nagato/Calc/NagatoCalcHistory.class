@@ -1,35 +1,42 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Private $history As New NagatoCalcElement[]
 
-Event OutOfBounds
+Private Function getCurrentResult() As Float
 
-Public Sub Undo() As Float
-        
-        Dim yukiResult As Float = 0
-        Dim yukiCounter As Integer
-        
-        If 1 >= $history.Count Then Return 0
-        
-        For yukiCounter = 0 To $history.Max - 1
-                yukiResult = $history[yukiCounter].Execute(yukiResult)
-        Next
-        
-        $history.Resize($history.Count - 1)
-        
-        Return yukiResult
-        
+    Dim yukiResult As Float = 0
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $history.Max
+        yukiResult = $history[yukiIndex].Execute(yukiResult)
+    Next
+    
+    Return yukiResult
+
 End
 
-Public Sub Add(argElement As NagatoCalcElement)
-        
-        $history.Add(argElement)
-        
+Public Sub Undo() 
+    
+    If 1 >= $history.Count Then Return 
+    
+    $history.Resize($history.Count - 1)
+
+    Raise Signal(MikuruSignal.CalcResultChanged, [getCurrentResult()])
+    
+End
+
+Public Sub Add(argElement As NagatoCalcElement) 
+    
+    $history.Add(argElement)
+    
+    Raise Signal(MikuruSignal.CalcResultChanged, [getCurrentResult()])
+    
 End
 
 Public Sub Clear()
-        
-        $history.Clear()
-        
+    
+    $history.Clear()
+    
 End
-

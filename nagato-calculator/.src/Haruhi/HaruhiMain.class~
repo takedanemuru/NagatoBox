@@ -60,29 +60,22 @@ Public Sub UndoButton_Click()
 
 End
 
-Public Sub Calc_BufferChanged()
-        
-        $greeter.Stop()
-        $bufferLcd.ShowBufferState2($calc.Text)
-        
-Catch
-        ' to avoid null greeter object.
-        Return
-        
-End
-
-Public Sub Calc_DivisionByZero()
-        
-        ResultLCD2.Visible = True
-        $messageLcd.ShowMessage("error division by zero")
-        
-End
+' Public Sub Calc_BufferChanged()
+'         
+'     $greeter.Stop()
+'     $bufferLcd.ShowBufferState2($calc.Text)
+'         
+' Catch
+'         ' to avoid null greeter object.
+'         Return
+'         
+' End
 
 Public Sub ClearButton_Click()
 
-        ResultLCD2.Visible = False
-        $calc.ClearAll()
-        $resultLcd.ShowMessage("clear all")
+    ResultLCD2.Visible = False
+    $calc.ClearAll()
+    $resultLcd.ShowMessage("clear all")
 
 End
 
@@ -123,8 +116,17 @@ Public Sub FormHandler_KeyPressNumber(argNumber As Integer)
     
 End
 
-Public Sub Calc_ResultChanged()
+Public Sub Calc_Signal(argSignal As Integer, argValues As Variant[])
     
-    $resultLcd.ShowResultState($calc.Result)
+    Select Case argSignal
+        Case MikuruSignal.CalcResultChanged
+            $resultLcd.ShowResultState(argValues[0])
+        Case MikuruSignal.CalcBufferChanged
+            Try $greeter.Stop()
+            $bufferLcd.ShowBufferState2(argValues[0])
+        Case MikuruSignal.ErrorDivisionByZero
+            ResultLCD2.Visible = True
+            $messageLcd.ShowMessage("error division by zero")
+    End Select
     
 End
