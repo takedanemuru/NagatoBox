@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read HasNumber As Boolean
+Property Read FloatingPoint As Integer
+
+Private $hasNumber As Boolean = False
+Private $floatingPoint As Integer = 0
+
+Public Sub PushNumber()
+    
+    $hasNumber = True
+    If $floatingPoint <> 0 Then Inc $floatingPoint
+    
+End
+
+Public Sub Back()
+    
+    $floatingPoint = 0
+    $hasNumber = False
+
+End
+
+Public Sub PushDot()
+    
+    If $floatingPoint <> 0 Then Return 
+    
+    $hasNumber = True
+    $floatingPoint = 1
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, Null)
+    
+End
+
+Private Function HasNumber_Read() As Boolean
+
+    Return $hasNumber
+
+End
+
+Private Function FloatingPoint_Read() As Integer
+
+    Return $floatingPoint
+
+End

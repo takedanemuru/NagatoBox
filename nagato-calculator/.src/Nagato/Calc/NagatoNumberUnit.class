@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Sign As String
+Property Read Number As Float 
+
+Private $isNegative As Boolean = False
+Private $number As Float = 0
+
+Public Sub SwitchSign()
+        
+    $isNegative = Not $isNegative
+    $number *= -1
+    
+    Raise Signal(MikuruSignal.CalcBufferChanged, Null)
+    
+End
+
+Public Sub PushNumber(argNumber As Integer, argFloatingPoint As Integer)
+    
+    If argFloatingPoint = 0 Then
+        $number = $number * 10 + argNumber
+    Else
+        $number += ((1 / 10) ^ argFloatingPoint * argNumber)
+    Endif
+    
+    If $isNegative And If $number > 0 Then $number *= -1
+    
+End
+
+Public Sub Back()
+    
+    $number = 0
+    $isNegative = False
+
+End
+
+Private Function Sign_Read() As String
+
+    If $isNegative And If Str$($number) Not Begins "-" Then Return "-"
+
+    Return ""
+
+End
+
+Private Function Number_Read() As Float
+
+    Return $number
+
+End

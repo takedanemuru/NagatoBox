@@ -1,0 +1,30 @@
+' Gambas class file
+
+Private Const TimerDelay As Integer = 250 'in millisecond
+
+Private $timer As Timer
+
+Event Timer
+
+Public Sub Stop()
+    
+    $timer.Stop()
+    
+End
+
+Public Sub _new()
+    
+    $timer = New Timer As "Timer"
+    
+    With $timer
+            .Delay = TimerDelay
+            .Enabled = True
+    End With
+
+End
+
+Public Sub Timer_Timer()
+    
+    Raise Timer
+    
+End

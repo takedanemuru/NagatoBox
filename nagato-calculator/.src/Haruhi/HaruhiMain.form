@@ -7,39 +7,49 @@
   { MemoryRunButton Button
     MoveScaled(43,33,6,3)
     Background = &HFF7F00&
+    NoTabFocus = True
     Text = ("MR")
   }
   { MemoryDevideButton Button
     MoveScaled(36,33,6,3)
     Background = &HFF7F00&
+    NoTabFocus = True
     Text = ("M/")
   }
   { MemoryMultiButton Button
     MoveScaled(29,33,6,3)
     Background = &HFF7F00&
+    NoTabFocus = True
     Text = ("M*")
   }
   { MemoryMinusButton Button
     MoveScaled(22,33,6,3)
     Background = &HFF7F00&
+    NoTabFocus = True
     Text = ("M-")
   }
   { MemoryPlusButton Button
     MoveScaled(15,33,6,3)
     Background = &HFF7F00&
+    NoTabFocus = True
     Text = ("M+")
   }
-  { BackButton Button
+  { BackButton Button SpecialKeys
+    Name = "BackButton"
     MoveScaled(8,33,6,3)
+    Tag = "4"
+    NoTabFocus = True
     Text = ("back")
   }
   { MenuButton1 MenuButton
     MoveScaled(57,1,6,4)
+    NoTabFocus = True
     Picture = Picture["icon:/small/options"]
   }
-  { ResultLCD2 LCDLabel
+  { ErrorLCD LCDLabel
     MoveScaled(1,11,62,6)
     Visible = False
+    NoTabFocus = True
     Text = ("welcome to nagato calculator")
     Sheared = True
     HighlightColor = &HFF0000&
@@ -47,126 +57,156 @@
   { BufferLCD LCDLabel
     MoveScaled(1,22,62,5)
     Background = &HFFFEFE&
+    NoTabFocus = True
     Text = ("                          ")
     Sheared = True
     HighlightColor = &H00FF00&
   }
   { ResultLCD LCDLabel
     MoveScaled(1,16,62,6)
+    NoTabFocus = True
     Text = ("welcome to nagato calculator")
     Sheared = True
     HighlightColor = &H7F00FF&
   }
-  { UndoButton Button
+  { UndoButton Button SpecialKeys
+    Name = "UndoButton"
     MoveScaled(1,33,6,3)
+    Tag = "2"
+    NoTabFocus = True
     Text = ("undo")
   }
   { PowerButton Button FunctionButton
     Name = "PowerButton"
     MoveScaled(57,33,6,3)
     Tag = "5"
+    NoTabFocus = True
     Text = ("pow")
   }
-  { ReverseButton Button
+  { ReverseButton Button SpecialKeys
+    Name = "ReverseButton"
     MoveScaled(50,33,6,3)
+    Tag = "6"
+    NoTabFocus = True
     Text = ("+/-")
   }
   { PlusButton Button FunctionButton
     Name = "PlusButton"
     MoveScaled(50,44,6,6)
     Tag = "1"
+    NoTabFocus = True
     Text = ("+")
   }
   { DevideButton Button FunctionButton
     Name = "DevideButton"
     MoveScaled(50,37,6,6)
     Tag = "4"
+    NoTabFocus = True
     Text = ("/")
   }
-  { EnterButton Button
+  { EnterButton Button SpecialKeys
+    Name = "EnterButton"
     MoveScaled(57,37,6,13)
+    Tag = "1"
+    NoTabFocus = True
     Text = ("enter")
   }
   { MultiButton Button FunctionButton
     Name = "MultiButton"
     MoveScaled(43,37,6,6)
     Tag = "3"
+    NoTabFocus = True
     Text = ("*")
   }
   { MinusButton Button FunctionButton
     Name = "MinusButton"
     MoveScaled(43,44,6,6)
     Tag = "2"
+    NoTabFocus = True
     Text = ("-")
   }
   { NineButton Button NumberButton
     Name = "NineButton"
     MoveScaled(36,37,6,6)
     Tag = "9"
+    NoTabFocus = True
     Text = ("9")
   }
   { FourButton Button NumberButton
     Name = "FourButton"
     MoveScaled(36,44,6,6)
     Tag = "4"
+    NoTabFocus = True
     Text = ("4")
   }
   { EightButton Button NumberButton
     Name = "EightButton"
     MoveScaled(29,37,6,6)
     Tag = "8"
+    NoTabFocus = True
     Text = ("8")
   }
   { ThreeButton Button NumberButton
     Name = "ThreeButton"
     MoveScaled(29,44,6,6)
     Tag = "3"
+    NoTabFocus = True
     Text = ("3")
   }
   { SevenButton Button NumberButton
     Name = "SevenButton"
     MoveScaled(22,37,6,6)
     Tag = "7"
+    NoTabFocus = True
     Text = ("7")
   }
   { TwoButton Button NumberButton
     Name = "TwoButton"
     MoveScaled(22,44,6,6)
     Tag = "2"
+    NoTabFocus = True
     Text = ("2")
   }
   { SixButton Button NumberButton
     Name = "SixButton"
     MoveScaled(15,37,6,6)
     Tag = "6"
+    NoTabFocus = True
     Text = ("6")
   }
   { OneButton Button NumberButton
     Name = "OneButton"
     MoveScaled(15,44,6,6)
     Tag = "1"
+    NoTabFocus = True
     Text = ("1")
   }
   { FiveButton Button NumberButton
     Name = "FiveButton"
     MoveScaled(8,37,6,6)
     Tag = "5"
+    NoTabFocus = True
     Text = ("5")
   }
   { ZeroButton Button NumberButton
     Name = "ZeroButton"
     MoveScaled(8,44,6,6)
     Tag = "0"
+    NoTabFocus = True
     Text = ("0")
   }
-  { ClearButton Button
+  { ClearButton Button SpecialKeys
+    Name = "ClearButton"
     MoveScaled(1,37,6,6)
-    Tag = "clear"
+    Tag = "0"
+    NoTabFocus = True
     Text = ("clear")
   }
-  { DotButton Button
+  { DotButton Button SpecialKeys
+    Name = "DotButton"
     MoveScaled(1,44,6,6)
-    Tag = "dot"
+    Tag = "3"
+    NoTabFocus = True
     Text = (".")
   }
 }

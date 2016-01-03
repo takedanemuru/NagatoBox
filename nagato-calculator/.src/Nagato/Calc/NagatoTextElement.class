@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read Text As String
+
+Private $function As NagatoFunctionElement 
+Private $num As NagatoNumberElement 
+
+Private Function getSpace() As String
+    
+    Dim yukiHeaderLength As Integer = Len($function.Name)
+    Dim yukiNumberLength As Integer = MikuruNumber.GetValidLength($num.Text) 
+
+    Return String$(NagatoSettings.LCDLength - (yukiHeaderLength + yukiNumberLength), " ")
+    
+End
+
+Private Function getText() As String
+
+    Dim yukiHeader As String = $function.Name & ":"
+    Dim yukiSpace As String = getSpace()
+    
+    Return yukiHeader & yukiSpace & $num.Sign & $num.Text
+
+End
+
+Public Sub _new(argFunctionElement As NagatoFunctionElement, argNumberElement As NagatoNumberElement)
+    
+    $function = argFunctionElement
+    $num = argNumberElement
+    
+End
+
+Private Function Text_Read() As String
+
+    Return getText()
+
+End

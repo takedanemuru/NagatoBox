@@ -3,6 +3,12 @@
 Private $lcdLabel As LCDLabel
 Private $header As New NagatoHeaderResult
 
+Public Sub SetVisible(argVisible As Boolean)
+    
+    $lcdLabel.Visible = argVisible
+    
+End
+
 Public Sub ShowMessage(argText As String)
         
     $lcdLabel.Text = $header.GetText(argText)

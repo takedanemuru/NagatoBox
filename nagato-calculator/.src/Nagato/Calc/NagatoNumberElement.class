@@ -7,74 +7,59 @@ Property Read HasNumber As Boolean
 Property Read Number As Float 
 Property Read Text As String
 
-Private $isNegative As Boolean = False
-Private $number As Float = 0
-Private $hasNumber As Boolean = False
-Private $floatingPoint As Integer = 0
+Private $numberUnit As New NagatoNumberUnit As "TFEI"
+Private $floatingPointUnit As New NagatoFloatingPointUnit As "TFEI"
 
 Public Sub SwitchSign()
-        
-    $isNegative = Not $isNegative
-    $number *= -1
+    
+    $numberUnit.SwitchSign()
     
 End
 
 Public Sub PushNumber(argNumber As Integer)
-        
-    If Not $hasNumber Then $hasNumber = True
+
+    $numberUnit.PushNumber(argNumber, $floatingPointUnit.FloatingPoint)
+    $floatingPointUnit.PushNumber()
     
-    If $floatingPoint = 0 Then
-        $number = $number * 10 + argNumber
-    Else
-        $number += ((1 / 10) ^ $floatingPoint * argNumber)
-        Inc $floatingPoint
-    Endif
-    
-    If $isNegative And If $number > 0 Then $number *= -1
-    
+    Raise Signal(MikuruSignal.CalcBufferChanged, Null)
+
 End
 
 Public Sub Back()
     
-    $number = 0
-    $floatingPoint = 0
-    $hasNumber = False
+    $numberUnit.Back()
+    $floatingPointUnit.Back()
     
+    Raise Signal(MikuruSignal.CalcBufferChanged, Null)
+
 End
 
-Public Sub PushDot() As Boolean ' returns false if rejected.
+Public Sub PushDot()
     
-    If $floatingPoint <> 0 Then Return False
-    
-    If Not $hasNumber Then $hasNumber = True
-    $floatingPoint = 1
-    
-    Return True
+    $floatingPointUnit.PushDot()
     
 End
 
 Private Function Sign_Read() As String
 
-    If $isNegative And If Str$($number) Not Begins "-" Then Return "-"
-
-    Return ""
+    Return $numberUnit.Sign
 
 End
 
 Private Function HasNumber_Read() As Boolean
         
-    Return $hasNumber
+    Return $floatingPointUnit.HasNumber
         
 End
 
 Private Function Number_Read() As Float
 
-    Return $number
+    Return $numberUnit.Number
 
 End
 
 Private Function Text_Read() As String
 
-    Return MikuruNumber.GetString($number, $floatingPoint)
+    Return MikuruNumber.GetString($numberUnit.Number, $floatingPointUnit.FloatingPoint)
 
 End

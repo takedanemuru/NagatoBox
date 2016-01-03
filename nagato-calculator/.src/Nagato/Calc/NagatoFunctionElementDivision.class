@@ -1,0 +1,14 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public Sub _call(argNumber1 As Float, argNumber2 As Float) As Float
+        
+    If argNumber2 = 0 Then
+        Raise Signal(MikuruSignal.ErrorDivisionByZero, Null)
+        Return 0
+    Else
+        Return argNumber1 / argNumber2
+    Endif
+        
+End

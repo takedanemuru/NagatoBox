@@ -2,13 +2,14 @@
 
 Inherits NagatoObject
 
-Private $currentElement As NagatoCalcElement
+Private $currentElement As NagatoCalcElement 
 Private $history As New NagatoCalcHistory As "TFEI"
 Private $locker As New NagatoLocker
 
 Private Sub setNewBuffer(argFunctionType As Integer)
     
-    $currentElement = New NagatoCalcElement(argFunctionType) As "TFEI"
+    $currentElement = New NagatoCalcElement As "TFEI"
+    $currentElement.SetFunction(argFunctionType)
     $locker.Lock = False
     
 End
@@ -21,10 +22,8 @@ End
 
 Public Sub SendFunction(argFunctionType As Integer)
         
-    If $currentElement.HasNumber And Not $locker.Lock Then
-        $history.Add($currentElement)
-        setNewBuffer(argFunctionType)
-    Else If $currentElement.HasNumber And $locker.Lock Then
+    If $currentElement.HasNumber Then
+        If Not $locker.Lock Then $history.Add($currentElement)
         setNewBuffer(argFunctionType)
     Else
         $currentElement.SetFunction(argFunctionType)
@@ -46,13 +45,9 @@ End
 
 Public Sub SendEnter()
     
-    If Not $currentElement.HasNumber Then Return
+    If Not $currentElement.SendEnter() Then Return
     
-    If $currentElement.FunctionType = MikuruFunctionType.Start Then 
-        $currentElement.SetFunction(MikuruFunctionType.Plus)
-    End If
     $locker.Lock = True
-    
     $history.Add($currentElement)
     
 End

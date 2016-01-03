@@ -1,0 +1,40 @@
+' Gambas class file
+
+Property Read Length As Integer
+Property Read Text As String
+Property Read Position As Integer
+
+Private $message As String
+Private $position As Integer 
+
+Public Sub SetPosition()
+    
+    Inc $position
+    If Mid($message, $position, 1) = "." Then Inc $position
+    If $position >= Me.Length Then $position = 1
+    
+End
+
+Public Sub _new()
+    
+    $message = Space$(NagatoSettings.LCDLength) & File.Load("text/GreeterMessage")
+    
+End
+
+Private Function Length_Read() As Integer
+
+    Return Len($message)
+
+End
+
+Private Function Text_Read() As String
+
+    Return $message
+
+End
+
+Private Function Position_Read() As Integer
+
+    Return $position
+
+End

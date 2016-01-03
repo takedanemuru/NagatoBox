@@ -6,24 +6,7 @@ Property Read HasNumber As Boolean
 
 Private $function As New NagatoFunctionElement As "TFEI"
 Private $num As New NagatoNumberElement As "TFEI"
-
-Private Function getText() As String
-
-    Dim yukiHeader As String = $function.Name & ":"
-    Dim yukiSpace As String = getSpace()
-    
-    Return yukiHeader & yukiSpace & $num.Sign & $num.Text
-
-End
-
-Private Function getSpace() As String
-    
-    Dim yukiHeaderLength As Integer = Len($function.Name)
-    Dim yukiNumberLength As Integer = MikuruNumber.GetValidLength($num.Text) 
-
-    Return String$(NagatoSettings.LCDLength - (yukiHeaderLength + yukiNumberLength), " ")
-    
-End
+Private $text As NagatoTextElement 
 
 Public Function SendEnter() As Boolean ' returns false if rejected.
     
@@ -39,15 +22,11 @@ Public Sub SwitchSign()
     
     $num.SwitchSign()
     
-    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
-        
 End
 
 Public Sub PushNumber(argNumber As Integer)
     
     $num.PushNumber(argNumber)
-    
-    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
     
 End
 
@@ -55,23 +34,17 @@ Public Sub Back()
     
     $num.Back()
     
-    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
-    
 End
 
 Public Sub PushDot()
     
-    If Not $num.PushDot() Then Return
-    
-    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
+    $num.PushDot() 
     
 End
 
 Public Sub SetFunction(argFunctionType As Integer)
     
     $function.SetFunction(argFunctionType)
-    
-    Raise Signal(MikuruSignal.CalcBufferChanged, [getText()])
     
 End
 
@@ -81,9 +54,20 @@ Public Function Execute(argNumber As Float) As Float
     
 End
 
-Public Sub _new(argFunctionType As Integer)
+Public Sub _new()
     
-    $function.SetFunction(argFunctionType)
+    $text = New NagatoTextElement($function, $num)
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.CalcBufferChanged
+            Raise Signal(MikuruSignal.CalcBufferChanged, [$text.Text])
+        Default
+            Raise Signal(argSignal, argValues)
+    End Select
     
 End
 

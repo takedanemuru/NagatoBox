@@ -6,29 +6,21 @@ Property Read Name As String
 Property Read Type As Integer
 
 Private $functionType As Integer
-
-Private Sub getDivision(argNumber1 As Float, argNumber2 As Float) As Float
-        
-    If argNumber2 = 0 Then
-        Raise Signal(MikuruSignal.ErrorDivisionByZero, Null)
-        Return 0
-    Else
-        Return argNumber1 / argNumber2
-    Endif
-        
-End
+Private $division As New NagatoFunctionElementDivision As "TFEI"
 
 Public Sub SetFunction(argFunction As Integer)
     
     $functionType = argFunction
     
+    Raise Signal(MikuruSignal.CalcBufferChanged, Null)
+    
 End
 
 Public Function Execute(argNumber1 As Float, argNumber2 As Float) As Float
-        
+    
     Select Case $functionType
         Case MikuruFunctionType.Devide
-            Return getDivision(argNumber1, argNumber2)
+            Return $division(argNumber1, argNumber2)
         Case MikuruFunctionType.Minus
             Return argNumber1 - argNumber2
         Case MikuruFunctionType.Multi
@@ -38,7 +30,7 @@ Public Function Execute(argNumber1 As Float, argNumber2 As Float) As Float
         Case MikuruFunctionType.Power
             Return argNumber1 ^ argNumber2
     End Select
-        
+    
 End
 
 Private Function Name_Read() As String

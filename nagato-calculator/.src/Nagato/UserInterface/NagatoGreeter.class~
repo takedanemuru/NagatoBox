@@ -1,93 +1,26 @@
 ' Gambas class file
 
-Private Const TimerDelay As Integer = 500 'in millisecond
-
 Private $lcdLabel As NagatoLcdInterface
-Private $timer As Timer
-Private $position As Integer 
-Private $addtion As Integer
-Private $message As String
-Private $messageLength As Integer
-
-Private Sub initializeTimer()
-        
-        $timer = New Timer As "Timer"
-        
-        With $timer
-                .Delay = TimerDelay
-                .Enabled = True
-        End With
-        
-End
-
-Private Sub setPosition()
-        
-        Inc $position
-        If Mid($message, $position, 1) = "." Then Inc $position
-        If $position >= $messageLength Then $position = 1
-        
-End
-
-Private Function getAdjustedTextForDot(argText As String) As String
-        
-        Dim yukiResult As String = argText
-        Dim yukiPosition As Integer
-        
-        $addtion = 0
-        
-        Do
-                yukiPosition = InStr(yukiResult, ".", yukiPosition, True)
-                If yukiPosition = 0 Then Break
-                Inc yukiPosition
-                Inc $addtion
-                yukiResult = Mid$($message, $position, NagatoSettings.LCDLength + $addtion)
-        Loop
-        
-        Return yukiResult
-        
-End
-
-Private Function getSpaceAddedTextForEnd(argText As String) As String
-        
-        Dim yukiMessage As String = argText
-        
-        If NagatoSettings.LCDLength + $addtion > $messageLength - $position Then
-                yukiMessage &= String$(NagatoSettings.LCDLength + $addtion) - ($messageLength - $position + 1), " ")
-        Endif
-        
-        Return yukiMessage
-        
-End
-
-Private Sub getMessage() As String
-        
-        Dim yukiResult As String
-        
-        yukiResult = getAdjustedTextForDot(Mid$($message, $position, NagatoSettings.LCDLength))
-        yukiResult = getSpaceAddedTextForEnd(yukiResult)
-        
-        Return yukiResult
-        
-End
+Private $message As NagatoMessage
+Private $timer As NagatoTimer
 
 Public Sub Stop()
-        
-        $timer.Enabled = False
-        
+    
+    $timer.Stop()
+    
 End
 
 Public Sub _new(argLcdLabel As NagatoLcdInterface)
-        
-        $lcdLabel = argLcdLabel
-        $message = String$(NagatoSettings.LCDLength, " ") & File.Load("text/GreeterMessage")
-        $messageLength = Len($message)
-        initializeTimer()
-        
+    
+    $lcdLabel = argLcdLabel
+    $message = New NagatoMessage
+    $timer = New NagatoTimer As "Timer"
+    
 End
 
 Public Sub Timer_Timer()
-        
-        setPosition()
-        $lcdLabel.ShowMessage(getMessage())
-        
+    
+    $message.SetPosition()
+    $lcdLabel.ShowMessage($message.NextText)
+    
 End

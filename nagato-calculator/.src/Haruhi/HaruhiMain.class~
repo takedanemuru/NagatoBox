@@ -1,26 +1,35 @@
 ' Gambas class file
 
-Private $messageLcd As NagatoLcdInterface
-Private $resultLcd As NagatoLcdInterface
-Private $bufferLcd As NagatoLcdInterface
-Private $greeter As NagatoGreeter
 Private $calc As NagatoCalc 
 Private $formHandler As NagatoFormHandler
+Private $lcdHandler As NagatoLCDHandler
 
-Public Sub _new()
+Private Sub specialKeysEvents(argType As Integer)
     
-    $formHandler = New NagatoFormHandler(Me) As "FormHandler"
+    Select Case argType
+        Case MikuruSpecialKeyType.Back
+            $calc.Back()
+        Case MikuruSpecialKeyType.Clear, MikuruSpecialKeyType.Escape
+            $lcdHandler.ClearAll()
+            $calc.ClearAll()
+        Case MikuruSpecialKeyType.Dot
+            $calc.SendDot()
+        Case MikuruSpecialKeyType.Enter
+            $calc.SendEnter()
+        Case MikuruSpecialKeyType.Undo
+            $calc.Undo()
+        Case MikuruSpecialKeyType.SwitchSign
+            $calc.SwitchSign()
+    End Select
     
 End
 
 Public Sub Form_Open()
 
+    $formHandler = New NagatoFormHandler(Me) As "FormHandler"
     $calc = New NagatoCalc As "Calc"
-    $messageLcd = New NagatoLcdInterface(ResultLCD2)
-    $resultLcd = New NagatoLcdInterface(ResultLCD)
-    $bufferLcd = New NagatoLcdInterface(BufferLCD)
+    $lcdHandler = New NagatoLCDHandler(ErrorLCD, ResultLCD, BufferLCD)
     BackButton.Text = String.Chr$(8594) 'back arrow
-    $greeter = New NagatoGreeter($bufferLcd)
     
 End
 
@@ -30,89 +39,46 @@ Public Sub NumberButton_Click()
         
 End
 
-Public Sub DotButton_Click()
-    
-    $calc.SendDot()
-        
-End
-
-Public Sub ReverseButton_Click()
-
-    $calc.SwitchSign()
-
-End
-
-Public Sub EnterButton_Click()
-
-    $calc.SendEnter()
-
-End
-
 Public Sub FunctionButton_Click()
 
     $calc.SendFunction(Last.Tag)
 
 End
 
-Public Sub UndoButton_Click()
-
-    $calc.Undo()
-
+Public Sub SpecialKeys_Click()
+    
+    specialKeysEvents(Last.Tag)
+    
 End
 
-' Public Sub Calc_BufferChanged()
-'         
-'     $greeter.Stop()
-'     $bufferLcd.ShowBufferState2($calc.Text)
-'         
-' Catch
-'         ' to avoid null greeter object.
-'         Return
-'         
+' Public Sub FormHandler_KeyPressSpecial(argType As Integer)
+'     
+'     specialKeysEvents(argType)
+'     
+' End
+' 
+' Public Sub FormHandler_KeyPressFunction(argType As Integer)
+'     
+'     $calc.SendFunction(argType)
+'     
+' End
+' 
+' Public Sub FormHandler_KeyPressNumber(argNumber As Integer)
+'     
+'     $calc.SendNumber(argNumber)
+'     
 ' End
 
-Public Sub ClearButton_Click()
-
-    ResultLCD2.Visible = False
-    $calc.ClearAll()
-    $resultLcd.ShowMessage("clear all")
-
-End
-
-Public Sub BackButton_Click()
-
-    $calc.Back()
-
-End
-
-Public Sub FormHandler_KeyPressSpecial(argType As Integer)
+Public Sub FormHandler_Signal(argSignal As Integer, argValues As Variant[])
     
-    Select Case argType
-        Case MikuruSpecialKeyType.Back
-            BackButton_Click()
-        Case MikuruSpecialKeyType.Clear
-            ClearButton_Click()
-        Case MikuruSpecialKeyType.Dot
-            DotButton_Click()
-        Case MikuruSpecialKeyType.Enter
-            EnterButton_Click()
-        Case MikuruSpecialKeyType.Escape
-            ClearButton_Click()
-        Case MikuruSpecialKeyType.Undo
-            UndoButton_Click()
+    Select Case argSignal
+        Case MikuruSignal.KeyPressFunction
+            $calc.SendFunction(argValues[0])
+        Case MikuruSignal.KeyPressSpecial
+            specialKeysEvents(argValues[0])
+        Case MikuruSignal.KeyPressNumber
+            $calc.SendNumber(argValues[0])
     End Select
-    
-End
-
-Public Sub FormHandler_KeyPressFunction(argType As Integer)
-    
-    $calc.SendFunction(argType)
-    
-End
-
-Public Sub FormHandler_KeyPressNumber(argNumber As Integer)
-    
-    $calc.SendNumber(argNumber)
     
 End
 
@@ -120,13 +86,11 @@ Public Sub Calc_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.CalcResultChanged
-            $resultLcd.ShowResultState(argValues[0])
+            $lcdHandler.SetResult(argValues[0])
         Case MikuruSignal.CalcBufferChanged
-            Try $greeter.Stop()
-            $bufferLcd.ShowBufferState2(argValues[0])
+            $lcdHandler.SetBuffer(argValues[0])
         Case MikuruSignal.ErrorDivisionByZero
-            ResultLCD2.Visible = True
-            $messageLcd.ShowMessage("error division by zero")
+            $lcdHandler.SetError(("error division by zero"))
     End Select
     
 End

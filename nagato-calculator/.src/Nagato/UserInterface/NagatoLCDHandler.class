@@ -1,0 +1,42 @@
+' Gambas class file
+
+Private $messageLcd As NagatoLcdInterface
+Private $resultLcd As NagatoLcdInterface
+Private $bufferLcd As NagatoLcdInterface
+Private $greeter As NagatoGreeter
+
+Public Sub _new(argMessageLcd As LCDLabel, argResultLcd As LCDLabel, argBufferLcd As LCDLabel)
+    
+    $messageLcd = New NagatoLcdInterface(argMessageLcd)
+    $resultLcd = New NagatoLcdInterface(argResultLcd)
+    $bufferLcd = New NagatoLcdInterface(argBufferLcd)
+    $greeter = New NagatoGreeter($bufferLcd) 
+    
+End
+
+Public Sub ClearAll()
+
+    $messageLcd.SetVisible(False)
+    $resultLcd.ShowMessage("clear all")
+
+End
+
+Public Sub SetResult(argText As String)
+    
+    $resultLcd.ShowResultState(argText)
+    
+End
+
+Public Sub SetBuffer(argText As String)
+    
+    Try $greeter.Stop()
+    $bufferLcd.ShowBufferState2(argText)
+    
+End
+
+Public Sub SetError(argText As String)
+    
+    $messageLcd.SetVisible(True)
+    $messageLcd.ShowMessage(argText)
+    
+End

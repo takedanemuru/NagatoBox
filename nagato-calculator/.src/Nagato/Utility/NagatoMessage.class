@@ -1,0 +1,34 @@
+' Gambas class file
+
+Property Read Text As String
+
+Private $message As New NagatoMessageText
+
+Private Function getMessage() As String
+    
+    Dim yukiPosition As Integer 
+    Dim yukiAdditionalLength As Integer
+    Dim yukiSpace As String
+    
+    Do
+        If Mid$($message.Text, yukiPosition + $message.Position, 1) = "." Then Inc yukiAdditionalLength
+        Inc yukiPosition
+        If (yukiPosition + $message.Position) > $message.Length Then yukiSpace &= Space$(1)
+        If (yukiPosition - yukiAdditionalLength) > NagatoSettings.LCDLength Then Break
+    Loop
+    
+    Return Mid$($message.Text, $message.position, NagatoSettings.LCDLength + yukiAdditionalLength) & yukiSpace
+    
+End
+
+Public Sub SetPosition()
+    
+    $message.SetPosition()
+    
+End
+
+Private Function Text_Read() As String
+
+    Return getMessage()
+
+End
