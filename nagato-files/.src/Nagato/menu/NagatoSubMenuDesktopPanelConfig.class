@@ -56,7 +56,7 @@ Public Sub MenuItem_Click()
     
     If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
         changeSettings(yukiLastTag)
-        Raise MenuEvent(NagatoMenuPipe.ViewPanelColorChanged)
+        Raise Signal(NagatoObject.ViewPanelColorChanged, Null)
     End If
     
 End

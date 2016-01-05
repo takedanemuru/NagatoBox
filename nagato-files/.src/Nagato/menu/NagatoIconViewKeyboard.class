@@ -10,13 +10,13 @@ Private Sub pressKeyWithAlt(argKeyCode As Integer)
     
     Select Case argKeyCode
         Case Key["h"]
-            Raise MenuEvent(NagatoMenuPipe.MoveHome)
+            Raise Signal(NagatoObject.MoveHome, Null)
         Case Key["u"]
-            Raise MenuEvent(NagatoMenuPipe.MoveUp)
+            Raise Signal(NagatoObject.MoveUp, Null)
         Case Key["b"]
-            Raise MenuEvent(NagatoMenuPipe.MoveBack)
+            Raise Signal(NagatoObject.MoveBack, Null)
         Case Key["f"]
-            Raise MenuEvent(NagatoMenuPipe.MoveForward)
+            Raise Signal(NagatoObject.MoveForward, Null)
     End Select
     
 End

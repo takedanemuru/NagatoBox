@@ -3,6 +3,7 @@
 Create Static
 
 Property LastDirectory As String
+Property Vizualizer As Integer
 
 Private $settings As New Settings
 
@@ -33,6 +34,19 @@ End
 Private Sub LastDirectory_Write(Value As String)
 
     $settings["directory/last"] = Value
+    $settings.Save()
+
+End
+
+Private Function Vizualizer_Read() As Integer
+
+    Return $settings["media/vizualizer", NagatoVisualizers.Jackdaw]
+
+End
+
+Private Sub Vizualizer_Write(Value As Integer)
+
+    $settings["media/vizualizer"] = Value
     $settings.Save()
 
 End

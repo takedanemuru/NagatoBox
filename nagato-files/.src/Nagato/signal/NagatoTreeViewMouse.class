@@ -57,7 +57,7 @@ Public Sub Asakura_Menu()
     
 End
 
-Public Sub ContextMenu_MenuEventWithArg(argEvent As Integer, argPath As Variant)
+Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoContextMenuTreeView.ContextRefresh

@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignalWidget
+Inherits NagatoObjectWidget
 
 Property ApplyButtonEnabled As Boolean
 Property Read Height As Integer

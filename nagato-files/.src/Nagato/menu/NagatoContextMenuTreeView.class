@@ -74,7 +74,7 @@ End
 
 Public Sub RenameMenu_Click()
     
-    If rename(Me._$path) Then Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
+    If rename(Me._$path) Then Raise Signal(Me.ContextRefresh, [Me._$path])
     
 End
 
@@ -82,6 +82,6 @@ Public Sub DeleteMenu_Click()
     
     NagatoTrash.Delete([Me._$path])
     
-    Raise MenuEventWithArg(Me.ContextRefresh, Me._$path)
+    Raise SIgnal(Me.ContextRefresh, [Me._$path])
     
 End

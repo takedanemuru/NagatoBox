@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Public Enum ButtonAll, ButtonInvert, ButtonArchive, ButtonMoveTo, ButtonCopyTo, ButtonDelete
 

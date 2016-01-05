@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Public _$rootMenu As Menu ' As Parent menu
 Public _$path As String

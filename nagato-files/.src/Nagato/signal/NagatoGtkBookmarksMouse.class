@@ -71,11 +71,11 @@ Public Sub Asakura_Menu()
     
 End
 
-Public Sub ContextMenu_MenuEventWithArg(argEvent As Integer, argArg As Variant)
+Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
     
     Dim yukiValues As New Variant[]
     
-    yukiValues.Add(argArg)
+    yukiValues.Add(argValues[0])
     
     Raise Signal(argEvent, yukiValues)
     

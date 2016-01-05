@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Property Directory As String
 
@@ -26,20 +26,20 @@ End
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
     If Not NagatoSettings.ShowHidden And If File.Name(argFileName) Begins "." Then Return
-    Raise MenuEventWithArg(NagatoMenuPipe.ObserverModefy, argFileName)
+    Raise Signal(NagatoObject.ObserverModefy, [argFileName])
     
 End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
     If Not NagatoSettings.ShowHidden And If File.Name(argFileName) Begins "." Then Return
-    Raise MenuEventWithArg(NagatoMenuPipe.ObserverDelete, argFileName)
+    Raise Signal(NagatoObject.ObserverDelete, [argFileName])
     
 End
 
 Public Sub DirectoryObserver_Lost()
     
-    Raise MenuEventWithArg(NagatoMenuPipe.ObserverLost, "")
+    Raise Signal(NagatoObject.ObserverLost, [""])
     
 End
 

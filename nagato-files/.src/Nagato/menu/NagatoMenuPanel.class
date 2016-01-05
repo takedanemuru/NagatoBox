@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Property Read Path As String
 
@@ -32,9 +32,9 @@ Public Sub _new(argContainer As Container)
     
     $container = New NagatoPanelContainer(argContainer)
     $selectionButton = New NagatoMenuPanelSelectionButton($container.HBox)
-    $buttonSuite = New NagatoMenuPanelButtonSuit($container.HBox) As "Menu"
-    $pathBar = New NagatoPathBar($container.HBox) As "Menu"
-    $starButton = New NagatoMenuPanelStarButton($container.HBox) As "Menu"
+    $buttonSuite = New NagatoMenuPanelButtonSuit($container.HBox) As "TFEI"
+    $pathBar = New NagatoPathBar($container.HBox) As "TFEI"
+    $starButton = New NagatoMenuPanelStarButton($container.HBox) As "TFEI"
     
 End
 
@@ -44,10 +44,10 @@ Private Function Path_Read() As String
 
 End
 
-Public Sub Menu_Changed()
+Public Sub TFEI_Changed()
     
-    If $pathBar.DirectoryPath <> "" Then 
-        Raise MenuEventWithArgs(NagatoMenuPipe.ViewSearch, [$pathBar.DirectoryPath, $pathBar.FilePath])
-    End If
+    If $pathBar.DirectoryPath = "" Then Return
+
+    Raise Signal(NagatoObject.ViewSearch, [$pathBar.DirectoryPath, $pathBar.FilePath])
     
 End

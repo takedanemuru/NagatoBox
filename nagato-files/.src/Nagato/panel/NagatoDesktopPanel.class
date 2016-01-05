@@ -42,7 +42,7 @@ Public Sub StarMenu_ChangeMode(argMode As Integer)
     
 End
 
-Public Sub StarMenu_MenuEvent(argEvent As Integer)
+Public Sub StarMenu_Signal(argEvent As Integer, argValues As Variant[])
     
     $container.Background = NagatoSettingsPanel.Background
     $main.ForceReload()

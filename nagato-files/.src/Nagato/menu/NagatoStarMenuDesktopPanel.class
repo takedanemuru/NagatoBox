@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Public _$rootMenu As Menu
 
@@ -20,7 +20,7 @@ Private Sub addConfigSubMenu()
     
     Dim yukiSubMenu As NagatoSubMenuDesktopPanelConfig
     
-    yukiSubMenu = New NagatoSubMenuDesktopPanelConfig(Me._$rootMenu) As "Menu"
+    yukiSubMenu = New NagatoSubMenuDesktopPanelConfig(Me._$rootMenu) As "TFEI"
     
 End
 

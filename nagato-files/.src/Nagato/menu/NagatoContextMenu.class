@@ -1,13 +1,13 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Public _$rootMenu As Menu
 Public _$path As String
 
 Public Sub _ClickAction()
     
-    Raise MenuEventWithArg(Last.Tag, Me._$path)
+    Raise Signal(Last.Tag, [Me._$path])
     
 End
 

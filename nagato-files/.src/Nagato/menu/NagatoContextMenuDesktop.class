@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Public Sub PopUp(argPath As String, argRoot As Boolean, argCount As Integer)
     
@@ -10,15 +10,15 @@ Public Sub PopUp(argPath As String, argRoot As Boolean, argCount As Integer)
     If yukiPath = "NOTFOUND" Then 
         Return
     Else If argRoot Then
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "Menu"
+        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "TFEI"
     Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
         yukiContextMenu = New NagatoContextMenuDesktopClock(HaruhiDesktop, "")
     Else If yukiPath = NagatoDesktop.SpecialKeyTrashBin Then
         yukiContextMenu = New NagatoContextMenuDesktopTrashBin(HaruhiDesktop, "")
     Else If yukiPath = "" Or If argCount = 0 Then
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "Menu"
+        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "TFEI"
     Else 
-        yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiDesktop, yukiPath) As "Menu"
+        yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiDesktop, yukiPath) As "TFEI"
     End If
 
     yukiContextMenu.Popup()

@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoObject
 
 Property Read TabStrip As TabStrip
 Property Read Count As Integer

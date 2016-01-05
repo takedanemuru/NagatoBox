@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Public _$rootMenu As Menu
 Public _$path As String
@@ -31,13 +31,13 @@ Private Sub addCreateMenu()
     
     Dim yukiCreateMenu As NagatoCreateMenu
     
-    yukiCreateMenu = New NagatoCreateMenu(Me._$rootMenu) As "Menu"
+    yukiCreateMenu = New NagatoCreateMenu(Me._$rootMenu) As "TFEI"
     
 End
 
 Private Sub refreshChildMenus()
     
-    With NagatoMenuPipe
+    With NagatoObject
         Me._AddMenu(("New Tab"), .ViewNewTab)
         Object.New("NagatoMenuItemShowHidden", [Me._$rootMenu, Me._$path])
         Me._AddMenu(("Force reload"), .ViewForceReload, MikuruIcon.Get("button-synchronize"))
@@ -77,6 +77,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    Raise MenuEvent(Last.Tag)
+    Raise Siganl(Last.Tag, Null)
     
 End

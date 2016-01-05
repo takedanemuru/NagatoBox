@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoMenuPipe
+Inherits NagatoObject
 
 Private $menuBar As NagatoMenuPanel
 Private $iconView As NagatoIconViewFile
@@ -32,29 +32,56 @@ End
 
 Private Sub fileEventHandler(argEvent As Integer, argArgument As Variant)
     
-    With NagatoMenuPipe
-        Select Case argEvent
-            Case .FileDelete
-                NagatoTrash.Delete($iconView.Selection)
-            Case .FileMoveToCurrentDir
-                MikuruFileManuever.MoveToDirectory([argArgument], $log.Current)
-            Case .FileMoveTo
-                If argArgument Then
-                    MikuruFileManuever.MoveToDirectory($iconView.Selection, argArgument)
-                Else
-                    MikuruFileManuever.MoveTo($iconView.Selection)
-                Endif
-            Case .FileCopyTo
-                If argArgument Then
-                    MikuruFileManuever.CopyToDirectory($iconView.Selection, argArgument)
-                Else
-                    MikuruFileManuever.CopyTo($iconView.Selection)
-                Endif
-            Case .FileCreate
-                If Not Exist($log.Current) Then Return
-                Copy argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument))
-        End Select
-    End With
+    Select Case argEvent
+        Case NagatoObject.FileDelete
+            NagatoTrash.Delete($iconView.Selection)
+        Case NagatoObject.FileMoveToCurrentDir
+            MikuruFileManuever.MoveToDirectory([argArgument], $log.Current)
+        Case NagatoObject.FileMoveTo
+            MikuruFileManuever.MoveTo($iconView.Selection, argArgument)
+        Case NagatoObject.FileCopyTo
+            MikuruFileManuever.CopyTo($iconView.Selection, argArgument)
+        Case NagatoObject.FileCreate
+            If Not Exist($log.Current) Then Return
+            Copy argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument))
+    End Select
+    
+End
+
+Private Sub viewEventHandler(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case NagatoObject.ViewChangeThumbnail
+            HaruhiThumbnailSelector.SetThumbnails(argValues[0])
+            refresh($log.Current)
+        Case NagatoObject.ViewNewTab
+            TFEI.AddNewDirectory(User.Home)
+        Case NagatoObject.ViewForceReload
+            NagatoDBThumbnailer.ForceCleanUp($log.Current)
+            refresh($log.Current)
+        Case NagatoObject.ViewSelectAll, NagatoObject.ViewUnselectAll, NagatoObject.ViewInvertSelection
+            $iconView.SelectItems(argSignal)
+        Case NagatoObject.ViewOpenTerminalHere
+            NagatoOpen.OpenTerminal($log.Current)
+        Case NagatoObject.ViewSearch
+            Object.Lock($menuBar)
+                Me.SetNewDirectory(argValues[0])
+                Me.SetSeachResult(argValues[1], False)
+                $menuBar.SetUnexistPath(argValues[0] &/ argValues[1])
+            Object.Unlock($menuBar)
+    End Select
+    
+End
+
+Public Sub tagEventHandler(argSignal As Integer)
+    
+    Select Case argSignal
+        Case NagatoObject.TagAdd
+             If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
+        Case NagatoObject.TagRemove
+             NagatoDBSymbol.RemovePaths($iconView.Selection)
+             $iconView.Refresh($log.Current)
+    End Select
     
 End
 
@@ -104,84 +131,43 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
 End
 
-Public Sub MenuItem_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    With NagatoMenuPipe
-        Select Case argEvent
-            Case .DirOpen
-                move(argArgument)
-            Case .DirOpenInNewTab
-                TFEI.AddNewDirectory(argArgument)
-            Case .FileHeader To .FileHeader + 999
-                fileEventHandler(argEvent, argArgument)
-            Case .CreateArchive
-                MikuruCreate.Archive($iconView.Selection)
-            Case .ViewChangeThumbnail
-                HaruhiThumbnailSelector.SetThumbnails(argArgument)
-                refresh($log.Current)
-            Case .TagAdd
-                 If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
-            Case .TagRemove
-                 NagatoDBSymbol.RemovePaths($iconView.Selection)
-                 $iconView.Refresh($log.Current)
-            Case .PathNew
-                If IsDir(argArgument) Then move(argArgument)
-            Case .CreateCopyWholeDirectory
-                 MikuruFileManuever.CopyToDirectory([argArgument], $log.Current)
-        End Select
-    End With
-    
-End
-
-Public Sub MenuItem_MenuEvent(argEvent As Integer)
-    
-    With NagatoMenuPipe
-        Select Case argEvent
-            Case .MoveHeader To .MoveHeader + 999
-                move($log.GetMoveTo(argEvent))
-            Case .ViewNewTab
-                TFEI.AddNewDirectory(User.Home)
-            Case .ViewForceReload
-                NagatoDBThumbnailer.ForceCleanUp($log.Current)
-                refresh($log.Current)
-            Case .ViewSelectAll, .ViewUnselectAll, .ViewInvertSelection
-                $iconView.SelectItems(argEvent)
-            Case .ViewOpenTerminalHere
-                NagatoOpen.OpenTerminal($log.Current)
-                ' 'Try Desktop.OpenTerminal($log.Current)
-                'Try Exec ["x-terminal-emulator", "-d", $log.Current]
-            Case .DirCreate
-                If Not Exist($log.Current) Then Return
-                HaruhiNewDirectory.SetPath($log.Current &/ ("New directory"))
-                HaruhiNewDirectory.ShowDialog()
-            Case .CreateBlankText
-                If Not Exist($log.Current) Then Return
-                File.Save(MikuruPath.GetSafePathName($log.Current &/ ("blank.text")), "")
-        End Select
-    End With
-    
-End
-
-Public Sub MenuItem_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
-    
-    If argEvent = NagatoMenuPipe.ViewSearch Then
-        Object.Lock($menuBar)
-            Me.SetNewDirectory(argArguments[0])
-            Me.SetSeachResult(argArguments[1], False)
-            $menuBar.SetUnexistPath(argArguments[0] &/ argArguments[1])
-        Object.Unlock($menuBar)
-    End If
-    
-End
-
-Public Sub DirectoryObserver_MenuEventWithArg(argEvent As Integer, argFileName As Variant)
+Public Sub MenuItem_Signal(argEvent As Integer, argArgument As Variant[])
     
     Select Case argEvent
-        Case NagatoMenuPipe.ObserverModefy
-            If Not $iconView.HasKey($log.Current, argFileName) Then refresh($log.Current)
-        Case NagatoMenuPipe.ObserverDelete
-            $iconView.Delete($log.Current &/ argFileName)
-        Case NagatoMenuPipe.ObserverLost
+        Case NagatoObject.DirOpen
+            move(argArgument[0])
+        Case NagatoObject.DirOpenInNewTab
+            TFEI.AddNewDirectory(argArgument[0])
+        Case NagatoObject.FileHeader To NagatoObject.FileHeader + 999
+            fileEventHandler(argEvent, argArgument[0])
+        Case NagatoObject.MoveHeader To NagatoObject.MoveHeader + 999
+            move($log.GetMoveTo(argEvent))
+        Case NagatoObject.ViewHeader To NagatoObject.ViewHeader + 999
+            viewEventHandler(argEvent, argArgument)
+        Case NagatoObject.TagHeader To NagatoObject.TagHeader + 999
+            tagEventHandler()
+        Case NagatoObject.PathNew
+            If IsDir(argArgument) Then move(argArgument[0])
+        Case NagatoObject.CreateCopyWholeDirectory
+             MikuruFileManuever.CopyToDirectory([argArgument[0]], $log.Current)
+        Case NagatoObject.CreateArchive
+            MikuruCreate.Archive($iconView.Selection)
+        Case NagatoObject.CreateBlankText
+            MikuruCreate.BlankText($log.Current)
+        Case NagatoObject.DirCreate
+            MikuruCreate.NewDirectory($log.Current)
+    End Select
+    
+End
+
+Public Sub DirectoryObserver_Signal(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case NagatoObject.ObserverModefy
+            If Not $iconView.HasKey($log.Current, argValues[0]) Then refresh($log.Current)
+        Case NagatoObject.ObserverDelete
+            $iconView.Delete($log.Current &/ argValues[0])
+        Case NagatoObject.ObserverLost
             $iconView.ShowLostDirectory()
     End Select
     

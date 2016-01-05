@@ -25,6 +25,6 @@ End
 
 Public Sub FileMenu_Click()
     
-    Raise MenuEventWithArg(NagatoMenuPipe.FileCopyTo, Last.Tag)
+    Raise Signal(NagatoObject.FileCopyTo, [Last.Tag])
     
 End

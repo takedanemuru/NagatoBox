@@ -82,17 +82,21 @@ Public Sub CopyToDirectory(argPaths As String[], argDirectory As String)
     
 End
 
-Public Sub MoveTo(argPaths As String[])
+Public Sub MoveTo(argPaths As String[], Optional argDirectory As String = "")
     
-    Dim yukiDirectory As String = getTargetDirectory(("Move To ..."), argPaths[0])
+    Dim yukiDirectory As String = argDirectory
     
+    If Not Exist(yukiDirectory) Then yukiDirectory = getTargetDirectory(("Move To..."), argPaths[0])
+
     If yukiDirectory Then Me.MoveToDirectory(argPaths, yukiDirectory)
     
 End
 
-Public Sub CopyTo(argPaths As String[])
+Public Sub CopyTo(argPaths As String[], Optional argDirectory As String = "")
     
-    Dim yukiDirectory As String = getTargetDirectory(("Copy To..."), argPaths[0])
+    Dim yukiDirectory As String = argDirectory
+    
+    If Not Exist(yukiDirectory) Then yukiDirectory = getTargetDirectory(("Copy To..."), argPaths[0])
     
     If yukiDirectory Then Me.CopyToDirectory(argPaths, yukiDirectory)
 

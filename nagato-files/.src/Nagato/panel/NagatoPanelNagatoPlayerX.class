@@ -61,9 +61,9 @@ Public Sub ClockDrawingArea_MouseDown()
     
 End
 
-Public Sub ContextMenu_MenuEventWithArg(argTag As Integer, argValue As Variant)
+Public Sub ContextMenu_Signal(argTag As Integer, argValues As Variant[])
     
-    If argValue Then Return
+    If argValues[0] Then Return
     
     $access.Action(argTag)
     

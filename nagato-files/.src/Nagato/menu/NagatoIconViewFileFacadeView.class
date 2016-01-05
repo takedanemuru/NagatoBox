@@ -103,14 +103,14 @@ End
 
 Public Sub NewTab()
     
-    Raise MenuEventWithArg(NagatoMenuPipe.DirOpenInNewTab, $data.CurrentDirectory)
+    Raise Signal(NagatoObject.DirOpenInNewTab, [$data.CurrentDirectory])
     
 End
 
 Public Sub Enter()
     
     If Not IsDir($selectionBar.LastSelected) Then Return
-    Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, $selectionBar.LastSelected)
+    Raise Signal(NagatoObject.DirOpen, [$selectionBar.LastSelected])
     
 End
 

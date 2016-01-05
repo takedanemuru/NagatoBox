@@ -7,7 +7,7 @@ Public Sub _AddFileOpenMenu()
     Dim yukiMenu As Object
     
     If IsDir(Me._$path) Then
-        With NagatoMenuPipe
+        With NagatoObject
             Me._AddContextMenu("Open", .DirOpen, MikuruIcon.Get("folder"))
             Me._AddContextMenu("Open in new tab", .DirOpenInNewTab, MikuruIcon.Get("toggle-expand-alt"))
         End With

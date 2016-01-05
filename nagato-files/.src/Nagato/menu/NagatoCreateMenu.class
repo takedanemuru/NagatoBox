@@ -65,8 +65,8 @@ End
 
 Public Sub _InitializeMenu() ' override
     
-    Me._AddMenu(("New Directory"), NagatoMenuPipe.DirCreate, "folder")
-    Me._AddMenu(("New Text File"), NagatoMenuPipe.CreateBlankText, "document")
+    Me._AddMenu(("New Directory"), NagatoObject.DirCreate, "folder")
+    Me._AddMenu(("New Text File"), NagatoObject.CreateBlankText, "document")
         Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
     addDirectories(Me._$rootMenu, NagatoXdg.UserDirs.Templates)
     
@@ -74,7 +74,7 @@ End
 
 Public Sub MenuItem_Click()
     
-    Raise MenuEvent(Last.Tag)
+    Raise Signal(Last.Tag, Null)
     
 End
 
@@ -82,12 +82,10 @@ Public Sub CopyWholeDirectoryMenu_Click()
     
     Debug Last.Tag
     
-    'Raise MenuEventWithArg(NagatoMenuPipe.CreateCopyWholeDirectory, Last.Tag)
-    
 End
 
 Public Sub CreateFileMenu_Click()
     
-    Raise MenuEventWithArg(NagatoMenuPipe.FileCreate, Last.Tag)
+    Raise Signal(NagatoObject.FileCreate, [Last.Tag])
     
 End

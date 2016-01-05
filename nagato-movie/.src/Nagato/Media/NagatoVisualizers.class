@@ -35,7 +35,7 @@ Public Sub _new(argMediaPlayer As MediaPlayer)
     $mediaPlayer = argMediaPlayer
     initializeVisualizerNames()
     addVisualizer()
-    argMediaPlayer.Video.Visualisation = Me.GetVisualizer(Me.Corona)
+    argMediaPlayer.Video.Visualisation = Me.GetVisualizer(NagatoSettings.Vizualizer)
     
 End
 

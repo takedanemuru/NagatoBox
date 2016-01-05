@@ -32,24 +32,24 @@ End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
-    Raise Signal(NagatoMenuPipe.ObserverDelete, argFileName)
+    Raise Signal(NagatoObject.ObserverDelete, argFileName)
     
 End
 
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
-    Raise Signal(NagatoMenuPipe.ObserverModefy, argFileName)
+    Raise Signal(NagatoObject.ObserverModefy, argFileName)
     
 End
 
 Public Sub SettingsObserver_Changed()
     
-    Raise Signal(NagatoMenuPipe.ViewForceReload, "")
+    Raise Signal(NagatoObject.ViewForceReload, "")
     
 End
 
 Public Sub ClipboardObserver_Changed()
     
-    Raise Signal(NagatoMenuPipe.ViewForceReload, "")
+    Raise Signal(NagatoObject.ViewForceReload, "")
     
 End

@@ -8,7 +8,7 @@ Private Sub dropFile(argPath As String)
     
     Select Case MikuruDrop.GetType(Me._$iconView)
         Case MikuruDrop.TypeVoid ' Move to current directory
-            Raise MenuEventWithArg(NagatoMenuPipe.FileMoveToCurrentDir, argPath)
+            Raise Signal(NagatoObject.FileMoveToCurrentDir, [argPath])
         Case MikuruDrop.TypeFile
             Debug "ignore"
         Case MikuruDrop.TypeDirectory
@@ -55,7 +55,7 @@ Public Sub Asakura_Activate()
     If Me._$iconView.Key = "" Then Return
     
     If IsDir(Me._$iconView.Key) Then
-        Raise MenuEventWithArg(NagatoMenuPipe.DirOpen, Me._$iconView.Key)
+        Raise Signal(NagatoObject.DirOpen, [Me._$iconView.Key])
     Else
         MikuruFile.Exec(Me._$iconView.Key)
     End If
@@ -84,9 +84,9 @@ Public Sub Asakura_Menu()
     If yukiPath = "NOTFOUND" Then
         Return
     Else If isVoidArea(yukiPath) Then
-        Raise MenuEvent(NagatoMenuPipe.ViewContextMenu)
+        Raise Signal(NagatoObject.ViewContextMenu, Null)
     Else 
-        yukiContextMenu = New NagatoIconViewContextMenu2Filer(HaruhiMain, yukiPath) As "Menu"
+        yukiContextMenu = New NagatoIconViewContextMenu2Filer(HaruhiMain, yukiPath) As "TFEI"
         yukiContextMenu.Popup()
     End If
     

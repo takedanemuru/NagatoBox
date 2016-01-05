@@ -6,7 +6,7 @@ Private Sub addSortMenu()
     
     Dim yukiMenu As NagatoSortMenu
     
-    yukiMenu = New NagatoSortMenu(Me._$rootMenu) As "Menu"
+    yukiMenu = New NagatoSortMenu(Me._$rootMenu) As "TFEI"
     
 End
 
@@ -20,10 +20,8 @@ End
 
 Public Sub _AddChildMenus()
     
-    With NagatoMenuPipe
-        Object.New("NagatoMenuItemCreateDirectory", [Me._$rootMenu, Me._$path &/ ("New Directory")])
-        addFromTemplateMenu()
-        addSortMenu()
-    End With
+    Object.New("NagatoMenuItemCreateDirectory", [Me._$rootMenu, Me._$path &/ ("New Directory")])
+    addFromTemplateMenu()
+    addSortMenu()
     
 End

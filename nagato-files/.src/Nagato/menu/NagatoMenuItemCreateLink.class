@@ -16,11 +16,11 @@ End
 
 Public Sub MenuItem_Click()
     
-    Dialog.Path = File.Dir(Me._$path) &/ "link_to_" & File.Name(Me._$path)
+    Dialog.Path = File.Dir(Me._$path) &/ File.Name(Me._$path)
     Dialog.Title = ("Create Symbolic Link")
     
     If Dialog.SaveFile() Then Return
     
-    Link Me._$path To Dialog.Path
+    Try Link Me._$path To MikuruPath.GetSafePathName(Dialog.Path)
     
 End

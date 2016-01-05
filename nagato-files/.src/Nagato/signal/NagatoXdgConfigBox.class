@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignalWidget
+Inherits NagatoObjectWidget
 
 Private $hBox As HBox
 Private $pathBox As ButtonBox

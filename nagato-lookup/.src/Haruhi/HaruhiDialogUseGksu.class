@@ -5,7 +5,7 @@ Public Enum None, NormalUser, SuperUser
 Public Sub Form_Open()
     
     Me.Center()
-    Me.Picture = Image.Load("pictures/yukichan_36.jpg").Stretch(Me.Width, Me.Height).Picture
+    Me.Picture = Image.Load("pictures/dialog_300.jpg").Stretch(Me.Width, Me.Height).Picture
     
 End
 

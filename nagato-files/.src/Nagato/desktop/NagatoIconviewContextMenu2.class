@@ -34,7 +34,7 @@ Private Sub addCopyToMenu()
     
     Dim yukiMenu As NagatoSubMenuCopyTo
     
-    yukiMenu = New NagatoSubMenuCopyTo(Me._$rootMenu, Me._$path) As "Menu"
+    yukiMenu = New NagatoSubMenuCopyTo(Me._$rootMenu, Me._$path) As "TFEI"
     
 End
 
@@ -42,7 +42,7 @@ Private Sub addMoveToMenu()
     
     Dim yukiMenu As NagatoSubMenuMoveTo
     
-    yukiMenu = New NagatoSubMenuMoveTo(Me._$rootMenu, Me._$path) As "Menu"
+    yukiMenu = New NagatoSubMenuMoveTo(Me._$rootMenu, Me._$path) As "TFEI"
     
 End
 
@@ -50,13 +50,13 @@ Private Sub addChangeThumbnailMenu()
     
     If DesktopMime.FromFile(Me._$path).Type Not Begins "video" Then Return
     
-    Me._AddContextMenu2(("Change Thumbnail"), NagatoMenuPipe.ViewChangeThumbnail, "image", True)
+    Me._AddContextMenu2(("Change Thumbnail"), NagatoObject.ViewChangeThumbnail, "image", True)
 
 End
 
 Public Sub _AddChildMenus()
     
-    With NagatoMenuPipe
+    With NagatoObject
         Me._AddFileOpenMenu()
             If Me._$rootMenu.Children.Count > 0 Then Me._AddContextMenu("", 0) ' As Spacer
         Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, Me._$path])

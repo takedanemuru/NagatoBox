@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoObject
 
 Private $chmodArray As New Object[]
 Private $chmod1 As NagatoChmodOwnerRead

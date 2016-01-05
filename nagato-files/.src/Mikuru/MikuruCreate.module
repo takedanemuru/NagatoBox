@@ -19,3 +19,17 @@ Public Sub Clone(argCurrentDirectory As String, argSelection As String[])
     
 End
 
+Public Sub BlankText(argCurrentDirectory As String)
+    
+    If Not Exist(argCurrentDirectory) Then Return
+    File.Save(MikuruPath.GetSafePathName(argCurrentDirectory &/ ("blank.text")), "")
+    
+End
+
+Public Sub NewDirectory(argCurrentDirectory As String)
+    
+    If Not Exist(argCurrentDirectory) Then Return
+    HaruhiNewDirectory.SetPath(argCurrentDirectory &/ ("New directory"))
+    HaruhiNewDirectory.ShowDialog()
+    
+End

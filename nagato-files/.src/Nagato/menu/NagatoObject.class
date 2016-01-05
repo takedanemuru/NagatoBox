@@ -20,24 +20,10 @@ Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002,
 Public Enum CreateHeader = 9000, CreateArchive = 9001, CreateClone = 9002, CreateSymblicLink = 9003
 Public Enum CreateBlankText = 9004, CreateCopyWholeDirectory = 9005
 
-Event MenuEvent(argEvent As Integer)
-Event MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-Event MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+Event Signal(argEvent As Integer, argValues As Variant[])
 
-Public Sub Menu_MenuEvent(argEvent As Integer)
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
-    Raise MenuEvent(argEvent)
-    
-End
-
-Public Sub Menu_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    Raise MenuEventWithArg(argEvent, argArgument)
-    
-End
-
-Public Sub Menu_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
-    
-    Raise MenuEventWithArgs(argEvent, argArguments)
+    Raise Signal(argSignal, argValues)
     
 End

@@ -7,7 +7,7 @@ Property Read SelectedPaths As String[]
 Private $iconView As IconView
 Private $observer As Observer
 Private $selection As NagatoSelection
-Private $contextMenu As New NagatoContextMenuDesktop As "Menu"
+Private $contextMenu As New NagatoContextMenuDesktop As "TFEI"
 
 Event RequestRefresh
 
@@ -79,32 +79,20 @@ Public Sub Asakura_Menu()
     
 End
 
-Public Sub Menu_MenuEvent(argEvent As Integer)
+Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
     
-    If argEvent = NagatoMenuPipe.ViewReload Then Raise RequestRefresh
-    
-End
-
-Public Sub Menu_MenuEventWithArg(argEvent As Integer, argValue As Variant)
-    
-    With NagatoMenuPipe
+    With NagatoObject
         Select Case argEvent
+            Case .ViewReload
+                Raise RequestRefresh
             Case .CreateArchive
                 Shell "nagato-archiver " & $selection.Paths.Join(" ")
             Case .FileDelete
                 NagatoTrash.Delete($selection.Paths)
             Case .FileCopyTo
-                If Not argValue Then
-                    MikuruFileManuever.CopyTo($selection.Paths)
-                Else
-                    MikuruFileManuever.CopyToDirectory($selection.Paths, argValue)
-                End If
+                MikuruFileManuever.CopyTo($selection.Paths, argValues[0])
             Case .FileMoveTo
-                If Not argValue Then
-                    MikuruFileManuever.MoveTo($selection.Paths)
-                Else
-                    MikuruFileManuever.MoveToDirectory($selection.Paths, argValue)
-                End If
+                MikuruFileManuever.MoveTo($selection.Paths, argValues[0])
             Case .TagAdd
                 NagatoFilerDialogs.Tagging($selection.Paths) 
                 Raise RequestRefresh
@@ -112,7 +100,7 @@ Public Sub Menu_MenuEventWithArg(argEvent As Integer, argValue As Variant)
                 NagatoDBSymbol.RemovePaths($selection.Paths)
                 Raise RequestRefresh
             Case .ViewChangeThumbnail
-                HaruhiThumbnailSelector.SetThumbnails(argValue)
+                HaruhiThumbnailSelector.SetThumbnails(argValues[0])
                 Raise RequestRefresh
         End Select
     End With

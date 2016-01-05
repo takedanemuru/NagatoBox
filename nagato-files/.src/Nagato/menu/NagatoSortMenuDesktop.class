@@ -53,6 +53,6 @@ Public Sub MenuItem_Click()
             NagatoSettingsDesktop.SortBy = Last.Tag
     End Select
     
-    Raise MenuEvent(NagatoMenuPipe.ViewReload)
+    Raise Signal(NagatoObject.ViewReload, Null)
     
 End

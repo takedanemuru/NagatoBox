@@ -4,7 +4,7 @@ Inherits NagatoContextMenu
 
 Public Sub _AddChildMenus()
     
-    With NagatoMenuPipe
+    With NagatoObject
         Object.New("NagatoMenuItemEditPanelClockFormat", [Me._$rootMenu, ""])
     End With
     

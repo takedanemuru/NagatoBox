@@ -20,7 +20,7 @@ End
 
 Private Sub setButtonProperty()
     
-    With NagatoMenuPipe
+    With NagatoObject
         addButton($backButton, "", .MoveBack, MikuruIcon.Get("arrow-left"))
         addButton($homeButton, "", .MoveHome, MikuruIcon.Get("home"))
         addButton($upButton, "Parent directory", .MoveUp, MikuruIcon.Get("arrow-up"))
@@ -51,6 +51,6 @@ End
 
 Public Sub MenuButton_Click()
     
-    Raise MenuEvent(Last.Tag)
+    Raise Signal(Last.Tag, Null)
     
 End

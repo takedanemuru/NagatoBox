@@ -6,7 +6,7 @@ Private Sub addSortMenu()
     
     Dim yukiMenu As NagatoSortMenuDesktop
     
-    yukiMenu = New NagatoSortMenuDesktop(Me._$rootMenu) As "Menu"
+    yukiMenu = New NagatoSortMenuDesktop(Me._$rootMenu) As "TFEI"
     
 End
 
@@ -28,7 +28,7 @@ End
 
 Public Sub _AddChildMenus()
     
-    With NagatoMenuPipe
+    With NagatoObject
         Object.New("NagatoMenuItemOpenDesktop", [Me._$rootMenu, ""])
             Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
         Object.New("NagatoMenuItemChangeWallpaper", [Me._$rootMenu, ""])

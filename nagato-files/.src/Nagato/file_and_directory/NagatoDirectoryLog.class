@@ -23,7 +23,7 @@ End
 
 Public Function GetMoveTo(argEvent As Integer) As String
     
-    With NagatoMenuPipe
+    With NagatoObject
         Select Case argEvent
             Case .MoveBack
                 If Me.HasBack Then Return (Me.Back)
