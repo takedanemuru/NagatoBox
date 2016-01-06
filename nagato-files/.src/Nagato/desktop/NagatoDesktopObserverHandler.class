@@ -23,7 +23,7 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $settingsObserver = New Observer(NagatoSettingsDesktop) As "SettingsObserver"
+    $settingsObserver = New Observer(NagatoSettingsDesktopTile) As "SettingsObserver"
     $clipboardObserver = New Observer(NagatoClipBoard) As "ClipboardObserver"
     
     initializeObserver()

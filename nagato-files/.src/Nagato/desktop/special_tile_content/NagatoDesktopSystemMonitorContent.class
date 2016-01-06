@@ -1,0 +1,42 @@
+' Gambas class file
+
+Property Read Label As String
+Property Read Content As String
+
+Private $systemMonitor As New NagatoDBusAccessSystemMonitor
+
+Public Function EnsureActivation() As Boolean
+    
+    If Not $systemMonitor.Activated Then $systemMonitor.Activate()
+    
+    Return $systemMonitor.Activated
+    
+End
+
+Private Function Label_Read() As String
+
+    Dim yukiText As String
+    
+    yukiText &= "CPU<br>"
+    yukiText &= "Mem.<br>"
+    yukiText &= "Swap<br>"
+    yukiText &= "Proc.<br>"
+    yukiText &= "Temp."
+    
+    Return yukiText
+
+End
+
+Private Function Content_Read() As String
+
+    Dim yukiText As String
+    
+    yukiText &= Format$($systemMonitor.CpuUsage, "##0.00%") & "<br>"
+    yukiText &= Format$($systemMonitor.MemoryUsage, "##0.00%") & "<br>"
+    yukiText &= Format$($systemMonitor.SwapUsage, "##0.00%") & "<br>"
+    yukiText &= $systemMonitor.ProcessCount & "<br>"
+    yukiText &= Format$($systemMonitor.Thermal, "##0.00°C")
+    
+    Return yukiText
+
+End

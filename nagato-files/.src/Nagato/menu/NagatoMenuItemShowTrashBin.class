@@ -2,19 +2,13 @@
 
 Inherits NagatoMenuItem
 
-Private Function getIcon() As Picture
-    
-    Return IIf(NagatoSettingsDesktop.ShowTrashBin, MikuruIcon.Get("button-check"), Null)
-    
-End
-
 Public Sub _InitializeItem() 'override
     
     Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
     
     With yukiMenu
         .Text = ("Show TrashBin")
-        .Picture = getIcon()
+        .Picture = MikuruIcon.GetCheckButton(NagatoSettingsDesktopTile.ShowTrashBin)
         .Tag = Me._$path
     End With
     
@@ -22,6 +16,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    NagatoSettingsDesktop.ShowTrashBin = Not NagatoSettingsDesktop.ShowTrashBin
+    NagatoSettingsDesktopTile.ShowTrashBin = Not NagatoSettingsDesktopTile.ShowTrashBin
     
 End

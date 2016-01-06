@@ -9,7 +9,7 @@ Private $target As Integer = Me.TargetDesktop
 Private Function readValue() As String
     
     If $target = Me.TargetDesktop Then
-        Return Object.GetProperty(NagatoSettingsDesktop, "ClockFormat")
+        Return Object.GetProperty(NagatoSettingsDesktopTile, "ClockFormat")
     Else
         Return Object.GetProperty(NagatoSettingsPanel, "ClockFormat")
     Endif
@@ -19,7 +19,7 @@ End
 Private Sub setValue(argValue As String)
     
     If $target = Me.TargetDesktop Then
-        Object.SetProperty(NagatoSettingsDesktop, "ClockFormat", argValue)
+        Object.SetProperty(NagatoSettingsDesktopTile, "ClockFormat", argValue)
     Else
         Object.SetProperty(NagatoSettingsPanel, "ClockFormat", argValue)
     Endif

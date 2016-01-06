@@ -54,19 +54,13 @@ End
 
 Public Sub Asakura_MouseDown()
     
-     If $iconView.Key = "" Then Return
-    
-    If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
+     If $iconView.Key = "" Then
+        Return
+    Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
         $iconView.Current.Selected = False
-    Else
-        With $iconView
-            If .Key = NagatoDesktop.SpecialKeyClock Then Return
-            If .Key = NagatoDesktop.SpecialKeyTrashBin Then Return
-            If .Key = NagatoDesktop.SpecialKeySystemMonitor Then Return
-            If .Key = NagatoDesktop.SpecialKeyRssFeeder Then Return
-            $selection.Push(.Key, Mouse.Left)
-            .[.Key].Picture = MikuruTile(.Key, $selection.Paths.Exist(.Key))
-        End With
+    Else If Not NagatoDesktop.IsSpecialKey($iconView.Key) Then
+        $selection.Push($iconView.Key, Mouse.Left)
+        $iconView[$iconView.Key].Picture = MikuruTile($iconView.Key, $selection.Paths.Exist($iconView.Key))
     End If
     
 End
@@ -81,29 +75,27 @@ End
 
 Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
     
-    With NagatoObject
-        Select Case argEvent
-            Case .ViewReload
-                Raise RequestRefresh
-            Case .CreateArchive
-                Shell "nagato-archiver " & $selection.Paths.Join(" ")
-            Case .FileDelete
-                NagatoTrash.Delete($selection.Paths)
-            Case .FileCopyTo
-                MikuruFileManuever.CopyTo($selection.Paths, argValues[0])
-            Case .FileMoveTo
-                MikuruFileManuever.MoveTo($selection.Paths, argValues[0])
-            Case .TagAdd
-                NagatoFilerDialogs.Tagging($selection.Paths) 
-                Raise RequestRefresh
-            Case .TagRemove
-                NagatoDBSymbol.RemovePaths($selection.Paths)
-                Raise RequestRefresh
-            Case .ViewChangeThumbnail
-                HaruhiThumbnailSelector.SetThumbnails(argValues[0])
-                Raise RequestRefresh
-        End Select
-    End With
+    Select Case argEvent
+        Case NagatoObject.ViewReload
+            Raise RequestRefresh
+        Case NagatoObject.CreateArchive
+            Shell "nagato-archiver " & $selection.Paths.Join(" ")
+        Case NagatoObject.FileDelete
+            NagatoTrash.Delete($selection.Paths)
+        Case NagatoObject.FileCopyTo
+            MikuruFileManuever.CopyTo($selection.Paths, argValues[0])
+        Case NagatoObject.FileMoveTo
+            MikuruFileManuever.MoveTo($selection.Paths, argValues[0])
+        Case NagatoObject.TagAdd
+            NagatoFilerDialogs.Tagging($selection.Paths) 
+            Raise RequestRefresh
+        Case NagatoObject.TagRemove
+            NagatoDBSymbol.RemovePaths($selection.Paths)
+            Raise RequestRefresh
+        Case NagatoObject.ViewChangeThumbnail
+            HaruhiThumbnailSelector.SetThumbnails(argValues[0])
+            Raise RequestRefresh
+    End Select
     
 End
 

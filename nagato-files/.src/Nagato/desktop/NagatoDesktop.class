@@ -14,6 +14,23 @@ Private $mouse As NagatoDesktopMouseHandler
 Private $drop As NagatoDesktopDropHandler
 Private $activation As NagatoDesktopActivationHandler
 
+Static Public Function IsSpecialKey(argKey As String) As Boolean
+    
+    If argKey = NagatoDesktop.SpecialKeyClock Then Return True
+    If argKey = NagatoDesktop.SpecialKeyTrashBin Then Return True
+    If argKey = NagatoDesktop.SpecialKeySystemMonitor Then Return True
+    If argKey = NagatoDesktop.SpecialKeyRssFeeder Then Return True
+    
+    Return False
+    
+End
+
+Public Sub ReloadDesktopWallpaper()
+    
+    $wallpaper.ReloadDesktopWallpaper()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $iconView = New NagatoIconViewInitializer(argContainer)
@@ -25,12 +42,6 @@ Public Sub _new(argContainer As Container)
     $activation = New NagatoDesktopActivationHandler($iconView.IconView)
     $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Handler"
 
-End
-
-Public Sub ReloadDesktopWallpaper()
-    
-    $wallpaper.ReloadDesktopWallpaper()
-    
 End
 
 Public Sub Handler_RequestRefresh()

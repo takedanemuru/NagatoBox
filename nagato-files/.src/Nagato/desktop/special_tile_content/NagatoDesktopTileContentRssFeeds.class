@@ -1,0 +1,39 @@
+' Gambas class file
+
+Property Read Title As String
+Property Read HasThumbnail As Boolean
+
+Private $feeder As New NagatoDBusAccessRssFeeder
+Private $thumbnailer As New NagatoDesktopRssThumbnail
+
+Public Function GetThumbnail(argTitle As String) As Image
+    
+    Return $thumbnailer.GetThumbnail(argTitle)
+    
+End
+
+Public Function EnsureActivation() As Boolean
+    
+    If Not $feeder.Activated Then $feeder.Activate()
+    If Not $feeder.Activated Then Return False
+    
+    If Second(Now()) Mod 15 = 0 Then 
+        $feeder.Next()
+        $thumbnailer.SetUrl($feeder.GetFeedItem())
+    End If
+    
+    Return True
+    
+End
+
+Private Function Title_Read() As String
+
+    Return $feeder.GetFeedItem()[0]
+
+End
+
+Private Function HasThumbnail_Read() As Boolean
+
+    Return $thumbnailer.HasThumbnail(Me.Title)
+
+End

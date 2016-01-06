@@ -1,15 +1,14 @@
 ' Gambas class file
 
-Inherits NagatoDesktopSpecialIcon
+Inherits NagatoDesktopTile
 
 Private Const TextWidth As Integer = 112 ' TileSize - Margin * 2
 Private Const Margin As Integer = 8
 
 Private $iconView As IconView
 Private $observer As Observer
-Private $feeder As New NagatoDBusAccessRssFeeder
-Private $thumbnailer As New NagatoDesktopRssThumbnail
 Private $labelPainter As New NagatoPainterPathLabel
+Private $rssFeeds As New NagatoDesktopTileContentRssFeeds
 
 Private Function getBaseImageText() As Image
     
@@ -25,11 +24,7 @@ End
 
 Private Function getBaseImage(argTitle As String) As Image
     
-    If $thumbnailer.HasThumbnail(argTitle) Then
-        Return $thumbnailer.GetThumbnail(argTitle)
-    Else
-        Return getBaseImageText()
-    Endif
+    Return IIf($rssFeeds.HasThumbnail, $rssFeeds.GetThumbnail(argTitle), getBaseImageText())
     
 End
 
@@ -60,12 +55,11 @@ End
 
 Public Function getIcon() As Picture
     
-    Dim yukiTitle As String = $feeder.GetFeedItem()[0]
-    Dim yukiImage As Image = getBaseImage(yukiTitle)
+    Dim yukiImage As Image = getBaseImage($rssFeeds.Title)
     
     Paint.Begin(yukiImage)
-        If $thumbnailer.HasThumbnail(yukiTitle) Then paintLabel(yukiTitle)
-        paintDescription(yukiTitle)
+        If $rssFeeds.HasThumbnail Then paintLabel($rssFeeds.Title)
+        paintDescription($rssFeeds.Title)
     Paint.End()
     
     Return yukiImage.Picture
@@ -77,7 +71,7 @@ End
 
 Public Sub Stop()
     
-    'Try NagatoDesktopTimer.Stop()
+    
     
 End
 
@@ -93,13 +87,7 @@ End
 Public Sub Asakura_Timer()
     
     If Not $iconView.Exist(NagatoDesktop.SpecialKeyRssFeeder) Then Return
-    If Not $feeder.Activated Then $feeder.Activate()
-    If Not $feeder.Activated Then Return
-    
-    If Second(Now()) Mod 15 = 0 Then 
-        $feeder.Next()
-        $thumbnailer.SetUrl($feeder.GetFeedItem())
-    End If
+    If Not $rssFeeds.EnsureActivation() Then Return
     
     $iconView[NagatoDesktop.SpecialKeyRssFeeder].Picture = getIcon()
     

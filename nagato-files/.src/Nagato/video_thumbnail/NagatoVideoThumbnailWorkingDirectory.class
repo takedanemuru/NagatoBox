@@ -1,0 +1,45 @@
+' Gambas class file
+
+Property Read Directory As String
+Property Read Paths As String[]
+
+Private $tempDir As String
+
+Public Sub Clear()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir($tempDir)
+        Kill ($tempDir &/ yukiPath)
+    Next
+    
+End
+
+Public Sub _new()
+    
+    $tempDir = User.Home &/ ".nagato-thumbnailer-working-directory"
+    
+    Try Mkdir $tempDir
+    
+    Me.Clear()
+    
+End
+
+Private Function Directory_Read() As String
+
+    Return $tempDir
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Dim yukiPaths As New String[]
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir($tempDir).Sort(gb.Natural)
+        yukiPaths.Add($tempDir &/ yukiPath)
+    Next
+    
+    Return yukiPaths
+    
+End

@@ -1,0 +1,82 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property ClockFormat As String
+Property ShowClock As Boolean
+Property ShowRss As Boolean
+Property ShowSystemMonitor As Boolean
+Property ShowTrashBin As Boolean
+
+Event Changed
+
+Private Sub changeSetting(argValue As Variant, argKey As String)
+    
+    If argValue <> Me._$settings[argKey]
+        Me._$settings[argKey] = argValue
+        Me._$settings.Save()
+        Raise Changed
+    End If
+    
+End
+
+Private Function ClockFormat_Read() As String
+
+    Return Me._$settings["clock/format", ("hh:nn:ss")]
+
+End
+
+Private Sub ClockFormat_Write(Value As String)
+
+    Me._$settings["clock/format"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function ShowClock_Read() As Boolean
+    
+    Return Me._$settings["desktop_view/show_clock", True]
+    
+End
+
+Private Sub ShowClock_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_clock")
+
+End
+
+Private Function ShowTrashBin_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_trash_bin", True]
+
+End
+
+Private Sub ShowTrashBin_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_trash_bin")
+
+End
+
+Private Function ShowRss_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_rss", True]
+
+End
+
+Private Sub ShowRss_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_rss")
+
+End
+
+Private Function ShowSystemMonitor_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_system_monitor", True]
+
+End
+
+Private Sub ShowSystemMonitor_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_system_monitor")
+
+End

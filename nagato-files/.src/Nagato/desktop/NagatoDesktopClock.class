@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoDesktopSpecialIcon
+Inherits NagatoDesktopTile
 
 Private Const FontSize As Integer = 16
 
@@ -10,7 +10,7 @@ Private $observer As Observer
 Public Function getIcon() As Picture
     
     Dim yukiImage As Image = MikuruTileBaseImage[Color.Orange, 128]
-    Dim yukiText As String = Format$(Now(), NagatoSettingsDesktop.ClockFormat)
+    Dim yukiText As String = Format$(Now(), NagatoSettingsDesktopTile.ClockFormat)
     
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)

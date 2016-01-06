@@ -2,19 +2,13 @@
 
 Inherits NagatoMenuItem
 
-Private Function getIcon() As Picture
-    
-    Return IIf(NagatoSettingsDesktop.ShowSystemMonitor, MikuruIcon.Get("button-check"), Null)
-    
-End
-
 Public Sub _InitializeItem() 'override
     
     Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
     
     With yukiMenu
         .Text = ("Show System Monitor")
-        .Picture = getIcon()
+        .Picture = MikuruIcon.GetCheckButton(NagatoSettingsDesktopTile.ShowSystemMonitor)
         .Tag = Me._$path
     End With
     
@@ -22,6 +16,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    NagatoSettingsDesktop.ShowSystemMonitor = Not NagatoSettingsDesktop.ShowSystemMonitor
+    NagatoSettingsDesktopTile.ShowSystemMonitor = Not NagatoSettingsDesktopTile.ShowSystemMonitor
     
 End

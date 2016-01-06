@@ -78,20 +78,14 @@ Public Sub CleanUp(argDir As String)
     Dim yukiResult As Result = Me._$connection.Edit(TableThumbnail, "directory = &1", argDir)
     
     For Each yukiResult
-        If Not Dir(argDir).Exist(File.Name(yukiResult[ColumnPath])) Then
-            yukiResult.Delete()
-        Endif
+        If Not Dir(argDir).Exist(File.Name(yukiResult[ColumnPath])) Then yukiResult.Delete()
     Next
     
 End
 
 Public Sub ForceCleanUp(argDir As String)
     
-    Dim yukiResult As Result = Me._$connection.Edit(TableThumbnail, "directory = &1", argDir)
-    
-    For Each yukiResult
-        yukiResult.Delete()
-    Next
+    Me._$connection.Delete(TableThumbnail, "directory = &1", argDir)
     
 End
 

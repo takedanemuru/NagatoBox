@@ -1,11 +1,12 @@
 ' Gambas class file
 
-Inherits NagatoDesktopSpecialIcon
+Inherits NagatoDesktopTile
 
 Private $iconView As IconView
 Private $observer As Observer
-Private $systemMonitor As New NagatoDBusAccessSystemMonitor
 Private $textRectangle As New Rect
+
+Private $systemMonitor2 As New NagatoDesktopSystemMonitorContent
 
 Private Function getBaseImage() As Image
     
@@ -32,41 +33,13 @@ Private Sub setTextRectangle(argLabelText As String)
     
 End
 
-Private Function getLabel() As String
-    
-    Dim yukiText As String
-    
-    yukiText &= "CPU<br>"
-    yukiText &= "Mem.<br>"
-    yukiText &= "Swap<br>"
-    yukiText &= "Proc.<br>"
-    yukiText &= "Temp."
-    
-    setTextRectangle(yukiText)
-    
-    Return yukiText
-    
-End
-
-Private Function getText() As String
-    
-    Dim yukiText As String
-    
-    yukiText &= Format$($systemMonitor.CpuUsage, "##0.00%") & "<br>"
-    yukiText &= Format$($systemMonitor.MemoryUsage, "##0.00%") & "<br>"
-    yukiText &= Format$($systemMonitor.SwapUsage, "##0.00%") & "<br>"
-    yukiText &= $systemMonitor.ProcessCount & "<br>"
-    yukiText &= Format$($systemMonitor.Thermal, "##0.00°C")
-    
-    Return yukiText
-    
-End
-
 Private Sub paintText()
     
+    setTextRectangle($systemMonitor2.Label)
+    
     With $textRectangle
-        Paint.RichText(getLabel(), .X, .Y, .W, .H, Align.Left)
-        Paint.RichText(getText(), .X, .Y, .W, .H, Align.Right)
+        Paint.RichText($systemMonitor2.Label, .X, .Y, .W, .H, Align.Left)
+        Paint.RichText($systemMonitor2.Content, .X, .Y, .W, .H, Align.Right)
     End With
     
 End
@@ -89,7 +62,7 @@ End
 
 Public Sub Stop()
     
-    
+    Object.Lock($observer)
     
 End
 
@@ -105,8 +78,7 @@ End
 Public Sub Asakura_Timer()
     
     If Not $iconView.Exist(NagatoDesktop.SpecialKeySystemMonitor) Then Return
-    If Not $systemMonitor.Activated Then $systemMonitor.Activate()
-    If Not $systemMonitor.Activated Then Return
+    If Not $systemMonitor2.EnsureActivation() Then Return
     
     $iconView[NagatoDesktop.SpecialKeySystemMonitor].Picture = getIcon()
     

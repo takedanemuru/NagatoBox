@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public Function Justify(argImage As Image, argSize As Integer) As Image
+Public Function Justify(argImage As Image, Optional argSize As Integer = NagatoSettingsTile.Size) As Image
     
     Dim yukiBaseImage As New Image(argSize, argSize, Color.Transparent)
     Dim yukiRate As Float = Max(argSize / argImage.H, argSize / argImage.W)
