@@ -1,0 +1,14 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "StarMenu"
+
+Public Sub _OptionalOnInitializeMenuButton()
+    
+    Dim yukiMenu As New NagatoPullDownMenuStar(MenuName)
+    
+    Me._$menuButton.Picture = MikuruIcon["star"]
+    Me._$menuButton.Menu = MenuName
+    
+End

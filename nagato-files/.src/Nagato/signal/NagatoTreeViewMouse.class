@@ -3,7 +3,7 @@
 Inherits NagatoTreeViewHandler
 
 Event Move(argDirectory As String)
-Event RequestRefresh()
+Event RequestRefresh
 
 Private Sub moveFiles(argDirectory As String)
     
@@ -12,7 +12,7 @@ Private Sub moveFiles(argDirectory As String)
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If Exist(yukiPath) Then 
-            Try Move yukiPath To MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
+            Try Move yukiPath To MikuruSafePath(argDirectory &/ File.Name(yukiPath))
             yukiFlag = True
         Endif
     Next

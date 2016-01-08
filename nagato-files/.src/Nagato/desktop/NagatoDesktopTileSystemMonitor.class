@@ -69,7 +69,7 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(NagatoDesktop.SpecialKeySystemMonitor, "", getBaseImage().Picture)
+    $iconView.Add(NagatoDesktopSpecialKey.SystemMonitor, "", getBaseImage().Picture)
     
     $observer = New Observer(HaruhiDesktop) As "Asakura"
     
@@ -77,9 +77,9 @@ End
 
 Public Sub Asakura_Timer()
     
-    If Not $iconView.Exist(NagatoDesktop.SpecialKeySystemMonitor) Then Return
+    If Not $iconView.Exist(NagatoDesktopSpecialKey.SystemMonitor) Then Return
     If Not $systemMonitor2.EnsureActivation() Then Return
     
-    $iconView[NagatoDesktop.SpecialKeySystemMonitor].Picture = getIcon()
+    $iconView[NagatoDesktopSpecialKey.SystemMonitor].Picture = getIcon()
     
 End

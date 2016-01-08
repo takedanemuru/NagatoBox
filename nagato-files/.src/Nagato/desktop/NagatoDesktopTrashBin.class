@@ -30,7 +30,7 @@ Private Sub initializeIcon()
         Paint.Fill()
     Paint.End()
     
-    Try $iconView[NagatoDesktop.SpecialKeyTrashBin].Picture = yukiImage.Picture 
+    Try $iconView[NagatoDesktopSpecialKey.TrashBin].Picture = yukiImage.Picture 
     
 End
 
@@ -43,7 +43,7 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(NagatoDesktop.SpecialKeyTrashBin, "")
+    $iconView.Add(NagatoDesktopSpecialKey.TrashBin, "")
     
     $trashObserver = New NagatoDesktopTrashObserver As "TrashObserver"
     initializeIcon()

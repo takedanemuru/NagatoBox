@@ -30,7 +30,6 @@ Public Sub _new()
 
     With $observer
         .Directory = MikuruTrashPath.Files
-        .IntervalSecond = 1
     End With
     
 End

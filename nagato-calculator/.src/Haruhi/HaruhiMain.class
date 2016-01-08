@@ -3,6 +3,7 @@
 Private $calc As NagatoCalc 
 Private $formHandler As NagatoFormHandler
 Private $lcdHandler As NagatoLCDHandler
+Private $starButton As NagatoMenuButtonStar
 
 Private Sub specialKeysEvents(argType As Integer)
     
@@ -30,6 +31,7 @@ Public Sub Form_Open()
     $calc = New NagatoCalc As "Calc"
     $lcdHandler = New NagatoLCDHandler(ErrorLCD, ResultLCD, BufferLCD)
     BackButton.Text = String.Chr$(8594) 'back arrow
+    $starButton = New NagatoMenuButtonStar(StarButton) As "StarButton"
     
 End
 

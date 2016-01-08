@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OptionalOnGetText() As String
+    
+    Return ("Quit")
+    
+End
+
+Public Sub _OptionalOnGetIconName() As String
+    
+    Return "button-power"
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    HaruhiMain.Close()
+    
+End

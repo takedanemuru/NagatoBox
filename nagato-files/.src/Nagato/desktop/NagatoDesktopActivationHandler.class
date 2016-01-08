@@ -25,9 +25,9 @@ Public Sub Asakura_Activate()
         Try Shell Subst$("nagato-files &1", Quote$(yukiPath))
     Else If MikuruMimeType.IsDesktopEntry(yukiPath) Then
         MikuruDesktopEntry.Execute(yukiPath)
-    Else If yukiPath = NagatoDesktop.SpecialKeyClock Then
+    Else If yukiPath = NagatoDesktopSpecialKey.Clock Then
         ' ignore
-    Else If yukiPath = NagatoDesktop.SpecialKeyRssFeeder Then
+    Else If yukiPath = NagatoDesktopSpecialKey.RssFeeder Then
         ' ignore
     Else ' for files
         MikuruFile.Exec(yukiPath)

@@ -12,7 +12,6 @@ Private Sub initializeDirectoryObserver()
     
     With $directoryObserver
         .Directory = MikuruTrashPath.Files
-        .IntervalSecond = 1
     End With
     
 End

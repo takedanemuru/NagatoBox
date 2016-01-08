@@ -21,6 +21,6 @@ Public Sub MenuItem_Click()
     
     If Dialog.SaveFile() Then Return
     
-    Try Link Me._$path To MikuruPath.GetSafePathName(Dialog.Path)
+    Try Link Me._$path To MikuruSafePath(Dialog.Path)
     
 End

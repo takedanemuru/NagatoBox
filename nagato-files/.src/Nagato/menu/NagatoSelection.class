@@ -6,8 +6,8 @@ Property Read LastPath As String
 Property Read Paths As String[]
 Property Read Count As Integer
 
-Private $paths As New String[]
 Private $lastPath As String = ""
+Private $paths As New NagatoPathsHandler
 
 Event Changed
 
@@ -17,34 +17,11 @@ Public Function Exist(argPath As String) As Boolean
     
 End
 
-Public Sub Toggle(argPath As String)
-    
-    If Me.Exist(argPath) Then
-        Me.RemovePath(argPath)
-    Else
-        Me.PushPath(argPath)
-    Endif
-    
-    Raise Changed
-    
-End
-
 Public Sub ClearAll()
     
-    $paths.Clear()
+    $paths.ClearAll()
     
     Raise Changed
-    
-End
-
-Public Sub ClearWithoutLastSelection()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In $paths
-        If yukiPath = $lastPath Then Continue
-        $paths.Remove($paths.Find(yukiPath))
-    Next
     
 End
 
@@ -59,51 +36,57 @@ Public Sub PushPath(argPath As String)
     
 End
 
-Public Sub Push(argPath As String, argLeftClick As Boolean)
+Public Sub RemovePath(argPath As String)
     
-    If argLeftClick Then
-        Me.Toggle(argPath)
+    $paths.Remove(argPath)
+    
+    Raise Changed
+    
+End
+
+Public Sub Toggle(argPath As String)
+    
+    If $paths.Exist(argPath) Then
+        Me.RemovePath(argPath)
     Else
         Me.PushPath(argPath)
     End If
     
 End
 
-Public Sub SetPaths(argPaths As String[])
+Public Sub ClearWithoutLastSelection()
     
-    $paths.Clear()
-    $paths = argPaths.Copy()
-    
-    If Not argPaths.Exist($lastPath) Then
-        $lastPath = IIf($paths.Count > 0, argPaths[0], "")
-    Endif
+    $paths.Clear($lastPath)
     
 End
 
-Public Sub RemovePath(argPath As String)
+Public Sub Push(argPath As String, argLeftClick As Boolean)
     
-    Try $paths.Remove($paths.Find(argPath))
+    If argLeftClick Then 
+        Me.Toggle(argPath)
+    Else
+        Me.PushPath(argPath)
+    End If
+
+End
+
+Public Sub SetPaths(argPaths As String[])
     
-    Raise Changed
+    Dim yukiFirstPath As String = $paths.Reset(argPaths)
+    
+    If argPaths.Exist($lastPath) Then $lastPath = yukiFirstPath
     
 End
 
 Public Sub Sanitize()
     
-    Dim yukiPath As String
-    Dim yukiPaths As New String[]
-    
-    For Each yukiPath In $paths
-        If Exist(yukiPath) Then yukiPaths.Add(yukiPath)
-    Next
-    
-    $paths = yukiPaths.Copy()
+    $paths.Sanitize()
     
 End
 
 Private Function Paths_Read() As String[]
 
-    Return $paths
+    Return $paths.Paths
 
 End
 

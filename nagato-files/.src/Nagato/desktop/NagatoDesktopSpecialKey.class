@@ -1,0 +1,19 @@
+' Gambas class file
+
+Create Static
+
+Public Const Clock As String = "DesktopClock"
+Public Const Feeder As String = "DesktopRssFeeder"
+Public Const SystemMonitor As String = "DesktopSystemMonitor"
+Public Const TrashBin As String = "DesktopTrashBin"
+
+Static Public Function IsSpecialKey(argKey As String) As Boolean
+    
+    If argKey = Me.Clock Then Return True
+    If argKey = Me.TrashBin Then Return True
+    If argKey = Me.SystemMonitor Then Return True
+    If argKey = Me.RssFeeder Then Return True
+    
+    Return False
+    
+End

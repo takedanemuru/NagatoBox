@@ -17,7 +17,6 @@ Public Sub _new(argDirectory As String)
     $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
     
     With $directoryObserver
-        .IntervalSecond = 1
         .Directory = argDirectory
     End With
     

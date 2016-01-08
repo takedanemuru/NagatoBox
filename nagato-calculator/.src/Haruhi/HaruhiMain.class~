@@ -51,24 +51,6 @@ Public Sub SpecialKeys_Click()
     
 End
 
-' Public Sub FormHandler_KeyPressSpecial(argType As Integer)
-'     
-'     specialKeysEvents(argType)
-'     
-' End
-' 
-' Public Sub FormHandler_KeyPressFunction(argType As Integer)
-'     
-'     $calc.SendFunction(argType)
-'     
-' End
-' 
-' Public Sub FormHandler_KeyPressNumber(argNumber As Integer)
-'     
-'     $calc.SendNumber(argNumber)
-'     
-' End
-
 Public Sub FormHandler_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal

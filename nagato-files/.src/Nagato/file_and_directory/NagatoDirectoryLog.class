@@ -11,30 +11,25 @@ Private $level As Integer
 
 Private Sub IsForward(argPath As String) As Boolean
     
-    If $log.Max = -1 Then
-        Return False
-    Else If $level <> $log.Max Then
-        Return IIf($log[$level + 1] = argPath, True, False)
-    Else
-        Return False
-    Endif
+    If $log.Max = -1 Then Return False
+    If $level <> $log.Max Then Return IIf($log[$level + 1] = argPath, True, False)
+        
+    Return False
     
 End
 
 Public Function GetMoveTo(argEvent As Integer) As String
     
-    With NagatoObject
-        Select Case argEvent
-            Case .MoveBack
-                If Me.HasBack Then Return (Me.Back)
-            Case .MoveForward
-                If Me.HasForward Then Return (Me.Forward)
-            Case .MoveHome
-                If Me.Current <> User.Home Then Return (User.Home)
-            Case .MoveUp
-                If Me.Current <> "/" Then Return (File.Dir(Me.Current))
-        End Select
-    End With
+    Select Case argEvent
+        Case NagatoObject.MoveBack
+            If Me.HasBack Then Return (Me.Back)
+        Case NagatoObject.MoveForward
+            If Me.HasForward Then Return (Me.Forward)
+        Case NagatoObject.MoveHome
+            If Me.Current <> User.Home Then Return (User.Home)
+        Case NagatoObject.MoveUp
+            If Me.Current <> "/" Then Return (File.Dir(Me.Current))
+    End Select
     
     Return ""
     
@@ -78,18 +73,12 @@ End
 
 Private Function Back_Read() As String
 
-    Return $log[$level - 1]
-
-Catch
-    Return Null
+    Return IIf(Me.HasBack, $log[$level - 1], Null)
 
 End
 
 Private Function Forward_Read() As String
 
-    Return $log[$level + 1]
-
-Catch
-    Return Null
+    Return IIf(Me.HasForward, $log[$level + 1], Null)
 
 End

@@ -22,7 +22,6 @@ Public Sub Form_Open()
     $leftPane = New NagatoLeftPane(LeftPanel) As "LeftPane"
     $mainPane = New NagatoMainPane(MainTabStrip) As "MainPane"
     $rightPane = New NagatoRightPane(RightPanel) As "RightPane"
-    
     $observer = New Observer(TFEI) As "Asakura"
     $mainPane.SetInitialPath(NagatoArguments.StartupPath)
     
@@ -34,8 +33,6 @@ End
 Public Sub Form_Close()
     
     NagatoSettingsForm.Save(Me)
-    
-    Quit 0
     
 End
 

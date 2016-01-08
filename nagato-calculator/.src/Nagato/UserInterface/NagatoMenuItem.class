@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public Sub _OptionalOnGetText() As String
+    
+    Return ""
+    
+End
+
+Public Sub _OptionalOnGetIconName() As String
+    
+    Return ""
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argRootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = Me._OptionalOnGetText()
+        .Picture = MikuruIcon[Me._OptionalOnGetIconName()]
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._OnClickMenuItem()
+    
+End

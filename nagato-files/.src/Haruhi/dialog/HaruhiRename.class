@@ -55,7 +55,7 @@ Public Sub ApplyButton_Click()
     Else If Exist($targetPath.FullPath) Then
         Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
     Else
-        yukiTargetPath = MikuruPath.GetSafePathName($targetPath.FullPath)
+        yukiTargetPath = MikuruSafePath($targetPath.FullPath)
         Move $sourcePath.FullPath To yukiTargetPath
         MikuruLastRenamed.Path = yukiTargetPath
         Me.Close(MikuruDialog.ResponseApply)

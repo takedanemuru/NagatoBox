@@ -1,30 +1,5 @@
 ' Gambas module file
 
-Public Sub CutUriList(argTargetDirectory As String, argUriList As String)
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(argUriList)
-        If (argTargetDirectory &/ File.Name(yukiPath)) = yukiPath Then Continue
-        If Not Exist(yukiPath) Then Continue
-        Try Copy yukiPath To MikuruPath.GetSafePathName(argTargetDirectory &/ File.Name(yukiPath))
-        If Not Error Then Try Kill yukiPath
-    Next
-    
-    Clipboard.Clear()
-    
-End
-
-Public Sub CopyUriList(argTargetDirectory As String, argUriList As String)
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In NagatoDrag2.GetPaths(argUriList)
-        Try Copy yukiPath To MikuruPath.GetSafePathName(argTargetDirectory &/ File.Name(yukiPath))
-    Next
-    
-End
-
 Private Sub copyDir(argTargetDirectory As String, argSourceDirectory As String)
     
     Dim yukiPath As String
@@ -60,7 +35,7 @@ Public Sub MoveToDirectory(argPaths As String[], argDirectory As String)
     Dim yukiTargetPath As String
     
     For Each yukiPath In argPaths
-        yukiTargetPath = MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
+        yukiTargetPath = MikuruSafePath(argDirectory &/ File.Name(yukiPath))
         Try Move yukiPath To yukiTargetPath
     Next
     
@@ -72,7 +47,7 @@ Public Sub CopyToDirectory(argPaths As String[], argDirectory As String)
     Dim yukiTargetPath As String
     
     For Each yukiPath In argPaths
-        yukiTargetPath = MikuruPath.GetSafePathName(argDirectory &/ File.Name(yukiPath))
+        yukiTargetPath = MikuruSafePath(argDirectory &/ File.Name(yukiPath))
         If Not IsDir(yukiPath) Then
             Try Copy yukiPath To yukiTargetPath
         Else

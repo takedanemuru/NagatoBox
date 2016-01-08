@@ -2,7 +2,6 @@
 
 Inherits NagatoObject
 
-Private $chmodArray As New Object[]
 Private $chmod1 As NagatoChmodOwnerRead
 Private $chmod2 As NagatoChmodOwnerWrite
 Private $chmod3 As NagatoChmodOwnerExecute
@@ -12,20 +11,6 @@ Private $chmod6 As NagatoChmodGroupExecute
 Private $chmod7 As NagatoChmodOtherUsersRead
 Private $chmod8 As NagatoChmodOtherUsersWrite
 Private $chmod9 As NagatoChmodOtherUsersExecute
-
-Private Sub initializeChmods(argContainer As Container)
-    
-    $chmod1 = New NagatoChmodOwnerRead(argContainer) As "TFEI"
-    $chmod2 = New NagatoChmodOwnerWrite(argContainer) As "TFEI"
-    $chmod3 = New NagatoChmodOwnerExecute(argContainer) As "TFEI"
-    $chmod4 = New NagatoChmodGroupRead(argContainer) As "TFEI"
-    $chmod5 = New NagatoChmodGroupWrite(argContainer) As "TFEI"
-    $chmod6 = New NagatoChmodGroupExecute(argContainer) As "TFEI"
-    $chmod7 = New NagatoChmodOtherUsersRead(argContainer) As "TFEI"
-    $chmod8 = New NagatoChmodOtherUsersWrite(argContainer) As "TFEI"
-    $chmod9 = New NagatoChmodOtherUsersExecute(argContainer) As "TFEI"
-    
-End
 
 Private Function getChmod(argNumber As Integer) As Object
     
@@ -54,7 +39,15 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    initializeChmods(argContainer)
+    $chmod1 = New NagatoChmodOwnerRead(argContainer) As "TFEI"
+    $chmod2 = New NagatoChmodOwnerWrite(argContainer) As "TFEI"
+    $chmod3 = New NagatoChmodOwnerExecute(argContainer) As "TFEI"
+    $chmod4 = New NagatoChmodGroupRead(argContainer) As "TFEI"
+    $chmod5 = New NagatoChmodGroupWrite(argContainer) As "TFEI"
+    $chmod6 = New NagatoChmodGroupExecute(argContainer) As "TFEI"
+    $chmod7 = New NagatoChmodOtherUsersRead(argContainer) As "TFEI"
+    $chmod8 = New NagatoChmodOtherUsersWrite(argContainer) As "TFEI"
+    $chmod9 = New NagatoChmodOtherUsersExecute(argContainer) As "TFEI"
     
 End
 

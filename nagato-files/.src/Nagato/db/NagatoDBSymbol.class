@@ -32,11 +32,7 @@ Public Function GetSymbolName(argPath As String) As String
     
     Dim yukiResult As Result = Me._$connection.Find(TableSymbol, "path_name = &1", argPath)
     
-    If yukiResult.Count = 0 Then
-        Return ""
-    Else
-        Return yukiResult[ColumnSymbol]
-    Endif
+    Return IIf(yukiResult = 0, "", yukiResult[ColumnSymbol])
     
 Catch
     Return ""
@@ -57,7 +53,6 @@ Public Sub Push(argPath As String, argSymbol As String)
     Me._$connection.Commit()
     
 Catch
-    Debug Error.Text
     Me._$connection.Rollback()
     
 End
@@ -67,8 +62,7 @@ Public Sub PushPaths(argPaths As String[], argSymbol As String)
     Dim yukiPath As String
     
     For Each yukiPath In argPaths
-        If Not Exist(yukiPath) Then Continue
-        Me.Push(yukiPath, argSymbol)
+        If Exist(yukiPath) Then Me.Push(yukiPath, argSymbol)
     Next
     
 End

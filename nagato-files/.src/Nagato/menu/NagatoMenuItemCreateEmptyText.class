@@ -15,6 +15,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    File.Save(MikuruPath.GetSafePathName(Me._$path &/ "new_text.txt"), "")
+    File.Save(MikuruSafePath(Me._$path &/ "new_text.txt"), "")
     
 End

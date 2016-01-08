@@ -32,7 +32,7 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(NagatoDesktop.SpecialKeyClock, "", getIcon())
+    $iconView.Add(NagatoDesktopSpecialKey.Clock, "", getIcon())
     
     $observer = New Observer(HaruhiDesktop) As "Asakura"
     
@@ -40,8 +40,8 @@ End
 
 Public Sub Asakura_Timer()
     
-    If Not $iconView.Exist(NagatoDesktop.SpecialKeyClock) Then Return
+    If Not $iconView.Exist(NagatoDesktopSpecialKey.Clock) Then Return
     
-    $iconView[NagatoDesktop.SpecialKeyClock].Picture = getIcon()
+    $iconView[NagatoDesktopSpecialKey.Clock].Picture = getIcon()
     
 End

@@ -116,11 +116,7 @@ End
 
 Public Sub PasteFromClipBoard()
     
-    If Clipboard.Format = "text/uri-list" Then 
-        MikuruFileManuever.CopyUriList($data.CurrentDirectory, Clipboard.Paste("text/uri-list"))
-    Else If Clipboard.Format = "text/nagato-selection-cut" Then
-        MikuruFileManuever.CutUriList($data.CurrentDirectory, Clipboard.Paste("text/nagato-selection-cut"))
-    End If
+    NagatoClipBoard.Paste($data.CurrentDirectory)
     
 End
 

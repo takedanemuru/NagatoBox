@@ -8,17 +8,15 @@ Public Function GetPaths(argData As String) As String[]
     
     Dim yukiLine As String
     Dim yukiDecodedUrl As String
-    Dim yukiResult As New String[]
+    Dim yukiPaths As New String[]
     
-    ' each line of "text/uri-list" ends "\r\n"
-    
-    For Each yukiLine In Split(argData, "\n", "", True)
+    For Each yukiLine In Split(argData, "\n", "", True) ' each line of "text/uri-list" ends "\r\n"
         If yukiLine = "" Then Continue
         yukiDecodedUrl = $uriDecoder.GetConvertedUri(yukiLine)
-        If Exist(yukiDecodedUrl) Then yukiResult.Add(yukiDecodedUrl)
+        If Exist(yukiDecodedUrl) Then yukiPaths.Add(yukiDecodedUrl)
     Next
     
-    Return yukiResult
+    Return yukiPaths
     
 End
 
@@ -28,11 +26,10 @@ Public Function GetUriList(argPaths As String[]) As String
     Dim yukiResult As String
     
     For Each yukiPath In argPaths
-        If Exist(yukiPath) Then
-            yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
-            yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
-            yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
-        Endif
+        If Not Exist(yukiPath) Then Continue
+        yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+        yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
+        yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
     Next
     
     Return yukiResult
@@ -45,11 +42,10 @@ Public Function GetUriListCopy(argPaths As String[]) As String
     Dim yukiResult As String
     
     For Each yukiPath In argPaths
-        If Exist(yukiPath) Then
-            yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
-            yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
-            yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
-        Endif
+        If Not Exist(yukiPath) Then Continue
+        yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+        yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
+        yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
     Next
     
     Return yukiResult
@@ -62,11 +58,10 @@ Public Function GetUriListCut(argPaths As String[]) As String
     Dim yukiResult As String
     
     For Each yukiPath In argPaths
-        If Exist(yukiPath) Then
-            yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
-            yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
-            yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
-        Endif
+        If Not Exist(yukiPath) Then Continue
+        yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+        yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
+        yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
     Next
     
     Return yukiResult

@@ -41,10 +41,10 @@
     NoTabFocus = True
     Text = ("back")
   }
-  { MenuButton1 MenuButton
-    MoveScaled(57,1,6,4)
+  { StarButton MenuButton
+    MoveScaled(59,1,4,4)
     NoTabFocus = True
-    Picture = Picture["icon:/small/options"]
+    Arrow = False
   }
   { ErrorLCD LCDLabel
     MoveScaled(1,11,62,6)

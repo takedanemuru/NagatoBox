@@ -1,10 +1,5 @@
 ' Gambas class file
 
-Public Const SpecialKeyClock As String = "DesktopClock"
-Public Const SpecialKeyRssFeeder As String = "DesktopRssFeeder"
-Public Const SpecialKeySystemMonitor As String = "DesktopSystemMonitor"
-Public Const SpecialKeyTrashBin As String = "DesktopTrashBin"
-
 Private $iconView As NagatoIconViewInitializer
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
@@ -13,17 +8,6 @@ Private $keyboard As NagatoDesktopKeyboardHandler
 Private $mouse As NagatoDesktopMouseHandler
 Private $drop As NagatoDesktopDropHandler
 Private $activation As NagatoDesktopActivationHandler
-
-Static Public Function IsSpecialKey(argKey As String) As Boolean
-    
-    If argKey = NagatoDesktop.SpecialKeyClock Then Return True
-    If argKey = NagatoDesktop.SpecialKeyTrashBin Then Return True
-    If argKey = NagatoDesktop.SpecialKeySystemMonitor Then Return True
-    If argKey = NagatoDesktop.SpecialKeyRssFeeder Then Return True
-    
-    Return False
-    
-End
 
 Public Sub ReloadDesktopWallpaper()
     
@@ -73,11 +57,7 @@ Public Sub Handler_KeyPressWithControl(argKeyCode As Integer)
             If $mouse.SelectedPaths.Count = 0 Then Return
             Clipboard.Copy(NagatoDrag2.GetUriListCopy($mouse.SelectedPaths), "text/uri-list")
         Case Key["v"]
-            If Clipboard.Format = "text/uri-list" Then 
-                MikuruFileManuever.CopyUriList(Desktop.Path, Clipboard.Paste("text/uri-list"))
-            Else If Clipboard.Format = "text/nagato-selection-cut" Then
-                MikuruFileManuever.CutUriList(Desktop.Path, Clipboard.Paste("text/nagato-selection-cut"))
-            End If
+            NagatoClipBoard.Paste(Desktop.Path)
     End Select
     
 End

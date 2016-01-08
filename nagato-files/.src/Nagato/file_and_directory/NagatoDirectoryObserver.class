@@ -1,7 +1,6 @@
 ' Gambas class file
 
 Property Directory As String
-Property IntervalSecond As Integer
 
 Private $directory As String
 Private $timer As New Timer As "Timer"
@@ -16,13 +15,19 @@ Private Sub checkDeletedPath(argCurrentPaths As String[])
     
     Dim yukiPath As String
     
-    If Object.IsValid($previousPaths) Then
-        For Each yukiPath In $previousPaths
-             If Not argCurrentPaths.Exist(yukiPath) Then
-                Raise Deleted(yukiPath)
-             End If
-        Next
-    Endif
+    If Not Object.IsValid($previousPaths) Then Return
+
+    For Each yukiPath In $previousPaths
+         If Not argCurrentPaths.Exist(yukiPath) Then Raise Deleted(yukiPath)
+    Next
+    
+End
+
+Private Sub withinLastObserved(argPath As String) As Boolean
+    
+    Dim yukiLastChanged As Date = Stat($directory &/ argPath).LastChange
+    
+    Return DateDiff(yukiLastChanged, $lastObserved, gb.Second) > ($timer.Delay / 1000)
     
 End
 
@@ -32,17 +37,16 @@ Private Sub checkModefiedPath(argCurrentPaths As String[])
     
     For Each yukiPath In argCurrentPaths
         If Not Exist($directory &/ yukiPath) Then Continue
-        If DateDiff(Stat($directory &/ yukiPath).LastChange, $lastObserved, gb.Second) > Me.IntervalSecond Then Continue
-        Raise Modefied(yukiPath)
+        If Not withinLastObserved(yukiPath) Then Raise Modefied(yukiPath)
     Next
     
 End
 
-Public Sub _new()
+Public Sub _new(Optional argInterval As Integer = 1000)
 
     $directory = User.Home
     $lastObserved = Now
-    $timer.Delay = 5000
+    $timer.Delay = argInterval
     $timer.Start()
 
 End
@@ -72,17 +76,5 @@ End
 Private Sub Directory_Write(Value As String)
 
     $directory = Value
-
-End
-
-Private Function IntervalSecond_Read() As Integer
-
-    Return $timer.Delay / 1000
-
-End
-
-Private Sub IntervalSecond_Write(Value As Integer)
-
-    $timer.Delay = Value * 1000
 
 End

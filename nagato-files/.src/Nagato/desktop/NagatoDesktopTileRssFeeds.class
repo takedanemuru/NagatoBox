@@ -78,7 +78,7 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
-    $iconView.Add(NagatoDesktop.SpecialKeyRssFeeder, "", MikuruTileBaseImage[Color.Orange, 128].Picture)
+    $iconView.Add(NagatoDesktopSpecialKey.RssFeeder, "", MikuruTileBaseImage[Color.Orange, 128].Picture)
     
     $observer = New Observer(HaruhiDesktop) As "Asakura"
     
@@ -86,9 +86,9 @@ End
 
 Public Sub Asakura_Timer()
     
-    If Not $iconView.Exist(NagatoDesktop.SpecialKeyRssFeeder) Then Return
+    If Not $iconView.Exist(NagatoDesktopSpecialKey.RssFeeder) Then Return
     If Not $rssFeeds.EnsureActivation() Then Return
     
-    $iconView[NagatoDesktop.SpecialKeyRssFeeder].Picture = getIcon()
+    $iconView[NagatoDesktopSpecialKey.RssFeeder].Picture = getIcon()
     
 End

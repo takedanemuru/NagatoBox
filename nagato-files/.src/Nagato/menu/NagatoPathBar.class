@@ -24,25 +24,27 @@ Private Sub initializeButtonBox(argContainer As Container)
     
 End
 
+Private Sub setPathWithNoEvent(argPath As String)
+    
+    Object.Lock($pathBar)
+        $pathBar.Text = argPath
+    Object.Unlock($pathBar)
+    
+End
+
 Public Sub SetPath(argPath As String)
     
     If Not Exist(argPath) Then Return
     
     Object.Lock($fileCompletion)
-        Object.Lock($pathBar)
-            $pathBar.Text = argPath
-        Object.Unlock($pathBar)
+        setPathWithNoEvent(argPath)
     Object.Unlock($fileCompletion)
     
 End
 
 Public Sub SetUnexistPath(argPath As String)
     
-    Object.Lock($pathBar)
-        Object.Lock($pathBar)
-            $pathBar.Text = argPath
-        Object.Unlock($pathBar)
-    Object.Unlock($pathBar)
+    setPathWithNoEvent(argPath)
     
 End
 

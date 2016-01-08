@@ -15,7 +15,6 @@ Private Sub initializeObserver()
     
     With $directoryObserver
         .Directory = Desktop.Path
-        .IntervalSecond = 1
     End With
     
 End

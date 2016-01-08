@@ -7,8 +7,9 @@
 ### nagato-calculator 
 
 + ~~code refactoring~~
-+ add icons
++ ~~add icons~~
 
 ### nagato-files
 
-+ merge "NagatoMenuPipe" and "NagatoSignal" into "NagatoObject"
++ ~~merge "NagatoMenuPipe" and "NagatoSignal" into "NagatoObject"~~
++ ~~purge useless code~~

@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$menuButton As MenuButton
+
+Public Sub _OptionalOnInitializeMenuButton()
+    
+    
+    
+End
+
+Public Sub _new(argMenuButton As MenuButton)
+    
+    Me._$menuButton = argMenuButton
+    Me._OptionalOnInitializeMenuButton()
+    
+End

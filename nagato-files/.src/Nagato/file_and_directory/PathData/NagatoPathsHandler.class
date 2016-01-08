@@ -1,0 +1,71 @@
+' Gambas class file
+
+Property Read Paths As String[]
+Property Read Count As Integer
+
+Private $paths As New String[]
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return $paths.Exist(argPath)
+    
+End
+
+Public Sub ClearAll()
+    
+    $paths.Clear()
+    
+End
+
+Public Sub Add(argPath As String)
+    
+    $paths.Add(argPath)
+    
+End
+
+Public Sub Remove(argPath As String)
+    
+    Try $paths.Remove($paths.Find(argPath))
+    
+End
+
+Public Sub Clear(argPathToKeep As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In $paths
+        If yukiPath <> argPathToKeep Then $paths.Remove($paths.Find(yukiPath))
+    Next
+    
+End
+
+Public Function Reset(argPaths As String[]) As String ' returns new first path
+    
+    $paths.Clear()
+    $paths = argPaths.Copy()
+    
+    Return IIf($paths.Count > 0, argPaths[0], "")
+    
+End
+
+Public Sub Sanitize()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = $paths.Max DownTo 0
+        If Not Exist($paths[yukiIndex]) Then $paths.Remove(yukiIndex)
+    Next
+    
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $paths
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+End

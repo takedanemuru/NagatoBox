@@ -30,6 +30,16 @@ Private Sub move(argDirectory As String)
     
 End
 
+Private Sub filtering(argDirectory As String, argQuery As String)
+    
+    Object.Lock($menuBar)
+        Me.SetNewDirectory(argDirectory)
+        Me.SetSeachResult(argQuery, False)
+        $menuBar.SetUnexistPath(argDirectory &/ argQuery)
+    Object.Unlock($menuBar)
+    
+End
+
 Private Sub fileEventHandler(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
@@ -43,7 +53,7 @@ Private Sub fileEventHandler(argEvent As Integer, argArgument As Variant)
             MikuruFileManuever.CopyTo($iconView.Selection, argArgument)
         Case NagatoObject.FileCreate
             If Not Exist($log.Current) Then Return
-            Copy argArgument To MikuruPath.GetSafePathName($log.Current &/ File.Name(argArgument))
+            Copy argArgument To MikuruSafePath($log.Current &/ File.Name(argArgument))
     End Select
     
 End
@@ -64,11 +74,7 @@ Private Sub viewEventHandler(argSignal As Integer, argValues As Variant[])
         Case NagatoObject.ViewOpenTerminalHere
             NagatoOpen.OpenTerminal($log.Current)
         Case NagatoObject.ViewSearch
-            Object.Lock($menuBar)
-                Me.SetNewDirectory(argValues[0])
-                Me.SetSeachResult(argValues[1], False)
-                $menuBar.SetUnexistPath(argValues[0] &/ argValues[1])
-            Object.Unlock($menuBar)
+            filtering(argValues[0], argValues[1])
     End Select
     
 End

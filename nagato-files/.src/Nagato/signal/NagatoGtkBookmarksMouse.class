@@ -23,7 +23,7 @@ Private Sub moveFiles()
     
     For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
         If Exist(yukiPath) Then 
-            Try Move yukiPath To MikuruPath.GetSafePathName(Me._$listView.Item.Key &/ File.Name(yukiPath))
+            Try Move yukiPath To MikuruSafePath(Me._$listView.Item.Key &/ File.Name(yukiPath))
         Endif
     Next
     

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OptionalOnGetText() As String
+    
+    Return "About"
+    
+End
+
+Public Sub _OptionalOnGetIconName() As String
+    
+    Return "star"
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    HaruhiAbout.ShowDialog()
+    
+End

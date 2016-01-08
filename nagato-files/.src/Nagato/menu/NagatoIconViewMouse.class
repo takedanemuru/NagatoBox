@@ -12,7 +12,7 @@ Private Sub dropFile(argPath As String)
         Case MikuruDrop.TypeFile
             Debug "ignore"
         Case MikuruDrop.TypeDirectory
-           Try Move argPath To MikuruPath.GetSafePathName(Me._$iconView.Item.Key &/ File.Name(argPath))
+           Try Move argPath To MikuruSafePath(Me._$iconView.Item.Key &/ File.Name(argPath))
         Case MikuruDrop.TypeApplication
             Debug "Try execute app with: " & argPath
     End Select
