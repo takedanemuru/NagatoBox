@@ -16,27 +16,17 @@ End Struct
 
 Public UserDirs As New Directories
 
-Private Function getDir(argType As String) As String
-    
-    Dim yukiResult As String
-    
-    Shell Subst$("xdg-user-dir &1", argType) To yukiResult
-    
-    Return Replace$(yukiResult, "\n", "")
-    
-End
-
 Private Sub initializeDirData()
     
     With UserDirs
-        .Desktop = getDir("DESKTOP")
-        .Documents = getDir("DOCUMENTS")
-        .Download = getDir("DOWNLOAD")
-        .Music = getDir("MUSIC")
-        .Pictures = getDir("PICTURES")
-        .PublicShare = getDir("PUBLICSHARE")
-        .Templates = getDir("TEMPLATES")
-        .Videos = getDir("VIDEOS")
+        .Desktop = Desktop.GetDirectory("DESKTOP")
+        .Documents = Desktop.GetDirectory("DOCUMENTS")
+        .Download = Desktop.GetDirectory("DOWNLOAD")
+        .Music = Desktop.GetDirectory("MUSIC")
+        .Pictures = Desktop.GetDirectory("PICTURES")
+        .PublicShare = Desktop.GetDirectory("PUBLICSHARE")
+        .Templates = Desktop.GetDirectory("TEMPLATES")
+        .Videos = Desktop.GetDirectory("VIDEOS")
     End With
     
 End

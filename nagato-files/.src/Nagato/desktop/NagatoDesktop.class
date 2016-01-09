@@ -28,22 +28,16 @@ Public Sub _new(argContainer As Container)
 
 End
 
-Public Sub Handler_RequestRefresh()
-    
-    $icons.Refresh($mouse.SelectedPaths)
-    
-End
-
-Public Sub Handler_Signal(argEvent As Integer, argValue As Variant)
+Public Sub Handler_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoObject.ObserverDelete
-            $mouse.Delete(Desktop.Path &/ argValue)
-            $icons.Refresh($mouse.SelectedPaths)
+            $mouse.Delete(Desktop.Path &/ argValues[0])
         Case NagatoObject.ObserverModefy, NagatoObject.ViewForceReload
             $mouse.ClearAll()
-            $icons.Refresh($mouse.SelectedPaths)
     End Select
+
+    $icons.Refresh($mouse.SelectedPaths)
     
 End
 
@@ -51,11 +45,9 @@ Public Sub Handler_KeyPressWithControl(argKeyCode As Integer)
     
     Select Case argKeyCode
         Case Key["x"]
-            If $mouse.SelectedPaths.Count = 0 Then Return
-            Clipboard.Copy(NagatoDrag2.GetUriListCopy($mouse.SelectedPaths), "text/nagato-selection-cut")
+            NagatoClipBoard.Cut($mouse.SelectedPaths)
         Case Key["c"]
-            If $mouse.SelectedPaths.Count = 0 Then Return
-            Clipboard.Copy(NagatoDrag2.GetUriListCopy($mouse.SelectedPaths), "text/uri-list")
+            NagatoClipBoard.Copy($mouse.SelectedPaths)
         Case Key["v"]
             NagatoClipBoard.Paste(Desktop.Path)
     End Select
@@ -65,9 +57,9 @@ End
 Public Sub Handler_KeyPress(argKeyCode As Integer)
     
     Select Case argKeyCode
-        Case Key.Enter, 16777220
+        Case Key.Enter, Key.Space
             ' to do
-        Case Key.Esc, 16777216
+        Case Key.Esc
             Clipboard.Clear()
             $mouse.ClearAll()
             $icons.Refresh($mouse.SelectedPaths)

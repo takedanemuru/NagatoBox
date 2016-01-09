@@ -7,15 +7,10 @@ Private $directoryObserver As NagatoDirectoryObserver
 Private $clipboardObserver As Observer
 Private $settingsObserver As Observer
 
-Event Signal(argSignal As Integer, argValues As Variant)
-
 Private Sub initializeObserver()
     
     $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
-    
-    With $directoryObserver
-        .Directory = Desktop.Path
-    End With
+    $directoryObserver.Directory = Desktop.Path
     
 End
 
@@ -31,24 +26,24 @@ End
 
 Public Sub DirectoryObserver_Deleted(argFileName As String)
     
-    Raise Signal(NagatoObject.ObserverDelete, argFileName)
+    Raise Signal(NagatoObject.ObserverDelete, [argFileName])
     
 End
 
 Public Sub DirectoryObserver_Modefied(argFileName As String)
     
-    Raise Signal(NagatoObject.ObserverModefy, argFileName)
+    Raise Signal(NagatoObject.ObserverModefy, [argFileName])
     
 End
 
 Public Sub SettingsObserver_Changed()
     
-    Raise Signal(NagatoObject.ViewForceReload, "")
+    Raise Signal(NagatoObject.ViewForceReload, [""])
     
 End
 
 Public Sub ClipboardObserver_Changed()
     
-    Raise Signal(NagatoObject.ViewForceReload, "")
+    Raise Signal(NagatoObject.ViewForceReload, [""])
     
 End

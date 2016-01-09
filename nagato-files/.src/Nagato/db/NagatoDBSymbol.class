@@ -32,7 +32,7 @@ Public Function GetSymbolName(argPath As String) As String
     
     Dim yukiResult As Result = Me._$connection.Find(TableSymbol, "path_name = &1", argPath)
     
-    Return IIf(yukiResult = 0, "", yukiResult[ColumnSymbol])
+    Return IIf(yukiResult.Count = 0, "", yukiResult[ColumnSymbol])
     
 Catch
     Return ""

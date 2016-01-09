@@ -43,11 +43,3 @@ Private Function Path_Read() As String
     Return $pathBar.Path
 
 End
-
-Public Sub TFEI_Changed()
-    
-    If $pathBar.DirectoryPath = "" Then Return
-
-    Raise Signal(NagatoObject.ViewSearch, [$pathBar.DirectoryPath, $pathBar.FilePath])
-    
-End

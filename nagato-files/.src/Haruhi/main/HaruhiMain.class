@@ -34,6 +34,8 @@ Public Sub Form_Close()
     
     NagatoSettingsForm.Save(Me)
     
+    Quit 0
+    
 End
 
 Public Sub LeftPane_Signal(argSignal As Integer, argValues As Variant[])

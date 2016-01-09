@@ -2,8 +2,6 @@
 
 Inherits NagatoIconViewHandler
 
-Event MouseDown(argPath As String)
-
 Private Sub dropFile(argPath As String)
     
     Select Case MikuruDrop.GetType(Me._$iconView)
@@ -71,7 +69,7 @@ Public Sub Asakura_MouseDown()
     Else If Me._$iconView.FindAt(Mouse.X, Mouse.Y) Then
         Me._$iconView.Current.Selected = False
     Else
-        Raise MouseDown(Me._$iconView.Key)
+        Raise Signal(NagatoObject.UserInputMouseDown, [Me._$iconView.Key, Mouse.Left])
     End If
     
 End

@@ -12,14 +12,16 @@ Public Enum ViewPanelColorChanged = 4012, ViewOpenTerminalHere = 4013, ViewChang
 Public Enum FileHeader = 5000, FileOpen = 5001, FileOpenWith = 5002, FileDelete = 5003, FileRename = 5004
 Public Enum FileCopy = 5005
 Public Enum FileCreate = 5006, FileShowProperty = 5007, FileUnarchive = 5008, FileMoveToCurrentDir = 5009
-Public Enum FileMoveTo = 5010, FileCopyTo = 5011
+Public Enum FileMoveTo = 5010, FileCopyTo = 5011, FilePasteFromClipboard = 5012
 Public Enum DirHeader = 6000, DirOpen = 6001, DirOpenInNewTab = 6002, DirDelete = 6003, DirRename = 6004
 Public Enum DirCreate = 6005, DirShowProperty = 6006, DirComputeSize = 6007
 Public Enum TagHeader = 7000, TagAdd = 7001, TagRemove = 7002
 Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002, ObserverLost = 8003
 Public Enum CreateHeader = 9000, CreateArchive = 9001, CreateClone = 9002, CreateSymblicLink = 9003
 Public Enum CreateBlankText = 9004, CreateCopyWholeDirectory = 9005
-Public Enum ControlHeader = 10000, ControlChanged = 10001
+Public Enum ControlHeader = 10000, ControlChanged = 10001, ControlActivated = 10002
+Public Enum UserInputHeader = 11000, UserInputMouseDrag = 11001, UserInputMouseDown = 11002
+Public Enum UserInputKeyPress = 11003, UserInputKeyPressWithControl = 11004
 
 Event Signal(argEvent As Integer, argValues As Variant[])
 

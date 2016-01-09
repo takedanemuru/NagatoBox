@@ -5,6 +5,18 @@ Inherits NagatoDesktopHandler
 Private $iconView As IconView
 Private $observer As Observer
 
+Private Sub activate(argPath As String)
+    
+    If IsDir(argPath) Then
+        Try Shell Subst$("nagato-files &1", Quote$(argPath))
+    Else If MikuruMimeType.IsDesktopEntry(argPath) Then
+        MikuruDesktopEntry.Execute(argPath)
+    Else ' for files
+        MikuruFile.Exec(argPath)
+    End If
+    
+End
+
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
@@ -14,23 +26,10 @@ End
 
 Public Sub Asakura_Activate()
     
-    Dim yukiPath As String = $iconView.Key
-    
-    If Not Exist(yukiPath) Then 
-        Return
-    Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
+    If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
         $iconView.Current.Selected = False
-        Return
-    Else If IsDir(yukiPath) Then
-        Try Shell Subst$("nagato-files &1", Quote$(yukiPath))
-    Else If MikuruMimeType.IsDesktopEntry(yukiPath) Then
-        MikuruDesktopEntry.Execute(yukiPath)
-    Else If yukiPath = NagatoDesktopSpecialKey.Clock Then
-        ' ignore
-    Else If yukiPath = NagatoDesktopSpecialKey.RssFeeder Then
-        ' ignore
-    Else ' for files
-        MikuruFile.Exec(yukiPath)
+    Else If Exist($iconView.Key) Then
+        activate($iconView.Key)
     End If
     
 End

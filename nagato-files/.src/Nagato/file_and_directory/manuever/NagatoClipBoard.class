@@ -29,6 +29,20 @@ Public Function Paste(argDirectory As String)
     
 End
 
+Public Sub Copy(argSelection As String[])
+    
+    If argSelection.Count = 0 Then Return
+    Clipboard.Copy(NagatoDrag2.GetUriListCopy(argSelection), "text/uri-list")
+
+    
+End
+
+Public Sub Cut(argSelection As String[])
+    
+    If argSelection.Count = 0 Then Return
+    Clipboard.Copy(NagatoDrag2.GetUriListCopy(argSelection), "text/nagato-selection-cut")   
+End
+
 Public Sub Timer_Timer()
     
     If $pathsCopy.CheckModefied() Then Raise Changed

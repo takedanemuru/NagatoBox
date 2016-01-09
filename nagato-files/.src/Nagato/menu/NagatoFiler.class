@@ -3,7 +3,7 @@
 Inherits NagatoObject
 
 Private $menuBar As NagatoMenuPanel
-Private $iconView As NagatoIconViewFile
+Private $iconView As NagatoIconViewFiler
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoFilerDirectoryObserver
 
@@ -54,6 +54,8 @@ Private Sub fileEventHandler(argEvent As Integer, argArgument As Variant)
         Case NagatoObject.FileCreate
             If Not Exist($log.Current) Then Return
             Copy argArgument To MikuruSafePath($log.Current &/ File.Name(argArgument))
+        Case NagatoObject.FilePasteFromClipboard
+            NagatoClipBoard.Paste($log.Current)
     End Select
     
 End
@@ -131,7 +133,7 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuItem"
-    $iconView = New NagatoIconViewFile(argContainer) As "MenuItem"
+    $iconView = New NagatoIconViewFiler(argContainer) As "MenuItem"
     
     move(IIf(argDirectory = "", User.Home, argDirectory))
     
@@ -151,9 +153,9 @@ Public Sub MenuItem_Signal(argEvent As Integer, argArgument As Variant[])
         Case NagatoObject.ViewHeader To NagatoObject.ViewHeader + 999
             viewEventHandler(argEvent, argArgument)
         Case NagatoObject.TagHeader To NagatoObject.TagHeader + 999
-            tagEventHandler()
+            tagEventHandler(argEvent)
         Case NagatoObject.PathNew
-            If IsDir(argArgument) Then move(argArgument[0])
+            If IsDir(argArgument[0]) Then move(argArgument[0])
         Case NagatoObject.CreateCopyWholeDirectory
              MikuruFileManuever.CopyToDirectory([argArgument[0]], $log.Current)
         Case NagatoObject.CreateArchive

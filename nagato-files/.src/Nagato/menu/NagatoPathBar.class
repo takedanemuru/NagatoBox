@@ -3,97 +3,46 @@
 Inherits NagatoObject
 
 Property Read Path As String
-Property Read DirectoryPath As String
-Property Read FilePath As String
 
-Private $pathBar As ButtonBox
+Private $buttonBox As NagatoPathBarButtonBox
 Private $fileCompletion As FileCompletion
-
-Event Changed
-
-Private Sub initializeButtonBox(argContainer As Container)
-    
-    $pathBar = New ButtonBox(argContainer) As "PathBar"
-    
-    With $pathBar
-        .Expand = True
-        .Picture = MikuruIcon.Get("button-rotate-ccw")
-    End With
-    
-    $fileCompletion = New FileCompletion($pathBar.Editor) As "PathBarCompletion"
-    
-End
-
-Private Sub setPathWithNoEvent(argPath As String)
-    
-    Object.Lock($pathBar)
-        $pathBar.Text = argPath
-    Object.Unlock($pathBar)
-    
-End
 
 Public Sub SetPath(argPath As String)
     
     If Not Exist(argPath) Then Return
     
     Object.Lock($fileCompletion)
-        setPathWithNoEvent(argPath)
+       $buttonBox.SetPathWithNoEvent(argPath)
     Object.Unlock($fileCompletion)
     
 End
 
 Public Sub SetUnexistPath(argPath As String)
     
-    setPathWithNoEvent(argPath)
+    $buttonBox.SetPathWithNoEvent(argPath)
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    initializeButtonBox(argContainer)
+    $buttonBox = New NagatoPathBarButtonBox(argContainer) As "TFEI"
+    $fileCompletion = New FileCompletion($buttonBox.Editor) 
     
 End
 
-Public Sub PathBar_Activate()
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
-    Raise Changed
-    
-End
-
-Public Sub PathBar_Click()
-    
-    PathBar_Activate()
-    
-End
-
-Public Sub PathBar_Change()
-    
-    $fileCompletion.Open()
+    Select Case argSignal
+        Case NagatoObject.ControlChanged
+            $fileCompletion.Open()
+        Default
+            Raise Signal(argSignal, argValues)
+    End Select
     
 End
 
 Private Function Path_Read() As String
 
-    Return $pathBar.Text
-
-End
-
-Private Function DirectoryPath_Read() As String
-
-    Dim yukiPath As String = $pathBar.Text
-
-    If Exist(yukiPath) And If IsDir(yukiPath) Then Return yukiPath
-    If Exist(File.Dir(yukiPath)) And If IsDir(File.Dir(yukiPath)) Then Return File.Dir(yukiPath)
-
-    Return ""
-
-End
-
-Private Function FilePath_Read() As String
-
-    If Me.DirectoryPath = "" Then Return
-    If Exist($pathBar.Text) And If IsDir($pathBar.Text) Then Return ""
-
-    Return File.Name($pathBar.Text)
+    Return $buttonBox.Path
 
 End

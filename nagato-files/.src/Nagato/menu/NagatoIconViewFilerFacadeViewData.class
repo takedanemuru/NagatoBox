@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoIconViewFileFacade
+Inherits NagatoIconViewFilerFacade
 
 Property Read CurrentDirectory As String
 Property Read Query As String[]

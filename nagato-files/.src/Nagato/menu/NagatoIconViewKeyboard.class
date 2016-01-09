@@ -2,10 +2,6 @@
 
 Inherits NagatoIconViewHandler
 
-Event KeyPress(argKeyCode As Integer)
-Event KeyPressWithAlt(argKeyCode As Integer)
-Event KeyPressWithControl(argKeyCode As Integer)
-
 Private Sub pressKeyWithAlt(argKeyCode As Integer)
     
     Select Case argKeyCode
@@ -21,15 +17,34 @@ Private Sub pressKeyWithAlt(argKeyCode As Integer)
     
 End
 
+Private Sub pressKeyWithCtrl(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key["h"]
+            NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
+            TFEI.RefreshAll()
+        Case Key["n"]
+            Raise Signal(NagatoObject.DirCreate, Null)
+        Case Key["f"]
+            TFEI.SetSearch(False)
+        Case Key["v"]
+            Raise Signal(NagatoObject.FilePasteFromClipboard, [""])
+        Case Key["t"]
+            Raise Signal(NagatoObject.DirOpenInNewTab, [User.Home])
+        Default
+            Raise Signal(NagatoObject.UserInputKeyPressWithControl, [Key.Code])
+    End Select
+    
+End
+
 Public Sub Asakura_KeyPress()
     
     If Key.Control Then
-        Raise KeyPressWithControl(Key.Code)
+        pressKeyWithCtrl(Key.Code)
     Else If Key.Alt Then
         pressKeyWithAlt(Key.Code)
-        'Raise KeyPressWithAlt(Key.Code)
     Else
-        Raise KeyPress(Key.Code)
+        Raise Signal(NagatoObject.UserInputKeyPress, [Key.Code])
     End If
     
 End

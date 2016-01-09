@@ -34,11 +34,11 @@ Public Sub Main()
     NagatoArguments.Parsing()
     setIconTheme()
     
+     NagatoClipBoard.Activate()
+
     'Only For Testing
     'activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
-    
-     NagatoClipBoard.Activate()
     
     If NagatoArguments.DesktopIcons Then
         activateDesktop()

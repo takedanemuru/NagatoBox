@@ -1,13 +1,13 @@
 ' Gambas class file
 
-Inherits NagatoIconViewFileFacade
+Inherits NagatoIconViewFilerFacade
 
 Property Read Selection As String[]
 
 Private $iconViewAction As NagatoIconViewAction
 Private $iconView As NagatoIconViewSurface
 Private $selectionBar As NagatoSelectionBar 
-Private $data As New NagatoIconViewFileFacadeViewData
+Private $data As New NagatoIconViewFilerFacadeViewData
 Private $observer As Observer
 
 Private Sub clearSelection()
@@ -101,22 +101,10 @@ Public Sub PopUpContextMenu()
     
 End
 
-Public Sub NewTab()
-    
-    Raise Signal(NagatoObject.DirOpenInNewTab, [$data.CurrentDirectory])
-    
-End
-
 Public Sub Enter()
     
     If Not IsDir($selectionBar.LastSelected) Then Return
     Raise Signal(NagatoObject.DirOpen, [$selectionBar.LastSelected])
-    
-End
-
-Public Sub PasteFromClipBoard()
-    
-    NagatoClipBoard.Paste($data.CurrentDirectory)
     
 End
 

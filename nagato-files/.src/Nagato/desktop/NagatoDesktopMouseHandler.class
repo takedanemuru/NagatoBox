@@ -9,8 +9,6 @@ Private $observer As Observer
 Private $selection As NagatoSelection
 Private $contextMenu As New NagatoContextMenuDesktop As "TFEI"
 
-Event RequestRefresh
-
 Public Sub ClearAll()
     
     $selection.ClearAll()
@@ -36,16 +34,15 @@ Public Sub Asakura_DragMove()
     Dim yukiScrollArea As ScrollArea = $iconView.Children[0]
     
     $iconView.UnselectAll()
-    
-    If Not $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) 
-        If IsDir($iconView.Item.Key) Then $iconView.Item.Selected = True
-    End If
+    If $iconView.FindAt(Drag.X + yukiScrollArea.ScrollX, Drag.Y) Then Return
+    If IsDir($iconView.Item.Key) Then $iconView.Item.Selected = True
     
 End
 
 Public Sub Asakura_MouseDrag()
     
     If $selection.Count = 0 Then Return
+    If NagatoDesktopSpecialKey.IsSpecialKey($iconView.Key) Then Return
     
     Drag.Icon = $iconView.Current.Picture
     $iconView.Drag(NagatoDrag2.GetUriList($selection.Paths), MikuruMimeType.UriList)
@@ -76,8 +73,6 @@ End
 Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
-        Case NagatoObject.ViewReload
-            Raise RequestRefresh
         Case NagatoObject.CreateArchive
             Shell "nagato-archiver " & $selection.Paths.Join(" ")
         Case NagatoObject.FileDelete
@@ -88,14 +83,13 @@ Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
             MikuruFileManuever.MoveTo($selection.Paths, argValues[0])
         Case NagatoObject.TagAdd
             NagatoFilerDialogs.Tagging($selection.Paths) 
-            Raise RequestRefresh
         Case NagatoObject.TagRemove
             NagatoDBSymbol.RemovePaths($selection.Paths)
-            Raise RequestRefresh
         Case NagatoObject.ViewChangeThumbnail
             HaruhiThumbnailSelector.SetThumbnails(argValues[0])
-            Raise RequestRefresh
     End Select
+    
+    Raise Signal(argEvent, argValues)
     
 End
 

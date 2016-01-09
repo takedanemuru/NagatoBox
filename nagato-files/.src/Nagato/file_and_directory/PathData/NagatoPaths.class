@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Paths As String[]
+Property Read Count As Integer
+
+Public _$paths As New String[]
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return Me._$paths.Exist(argPath)
+    
+End
+
+Public Sub Remove(argPath As String)
+    
+    
+    
+End
+
+Public Sub Sanitize()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = Me._$paths.Max DownTo 0
+        If Not Exist(Me._$paths[yukiIndex]) Then Me._$paths.Remove(yukiIndex)
+    Next
+    
+End
+
+Public Function Reset(argPaths As String[]) As String ' returns new first path
+    
+    Me._$paths.Clear()
+    Me._$paths = argPaths.Copy()
+    
+    Return IIf(Me._$paths.Count > 0, argPaths[0], "")
+    
+End
+
+Private Function Paths_Read() As String[]
+
+    Return Me._$paths
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return Me._$paths.Count
+
+End

@@ -2,8 +2,6 @@
 
 Inherits NagatoIconViewHandler
 
-Event MouseDrag
-
 Public Sub MouseDrag(argUriList As String)
     
     Drag.Icon = Me._$iconView.Current.Picture
@@ -13,7 +11,7 @@ End
 
 Public Sub Asakura_MouseDrag()
     
-    Raise MouseDrag
+    Raise Signal(NagatoObject.UserInputMouseDrag, Null)
     
 End
 

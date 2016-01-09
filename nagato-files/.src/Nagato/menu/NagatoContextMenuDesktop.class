@@ -2,25 +2,50 @@
 
 Inherits NagatoObject
 
-Public Sub PopUp(argPath As String, argRoot As Boolean, argCount As Integer)
+Private Sub popUpRootDesktopMenu()
     
-    Dim yukiPath As String = argPath
+    Dim yukiMenu As New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "TFEI"
+    
+    yukiMenu.Popup()
+    
+End
+
+Private Sub popUpSpecialTileMenu(argPath As String)
+    
     Dim yukiContextMenu As Object
     
-    If yukiPath = "NOTFOUND" Then 
-        Return
-    Else If argRoot Then
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "TFEI"
-    Else If yukiPath = NagatoDesktopSpecialKey.Clock Then
+    If argPath = NagatoDesktopSpecialKey.Clock Then
         yukiContextMenu = New NagatoContextMenuDesktopClock(HaruhiDesktop, "")
-    Else If yukiPath = NagatoDesktopSpecialKey.TrashBin Then
+    Else If argPath = NagatoDesktopSpecialKey.TrashBin Then
         yukiContextMenu = New NagatoContextMenuDesktopTrashBin(HaruhiDesktop, "")
-    Else If yukiPath = "" Or If argCount = 0 Then
-        yukiContextMenu = New NagatoContextMenuRootDesktop(HaruhiDesktop, "") As "TFEI"
-    Else 
-        yukiContextMenu = New NagatoIconviewContextMenu2(HaruhiDesktop, yukiPath) As "TFEI"
+    Else
+        Return
     End If
+    
+    yukiContextMenu.PopUp()
+    
+End
 
-    yukiContextMenu.Popup()
+Private Sub popUpContextMenu(argPath As String)
+    
+    Dim yukiMenu As New NagatoIconviewContextMenu2(HaruhiDesktop, argPath) As "TFEI"
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub PopUp(argPath As String, argRoot As Boolean, argCount As Integer)
+    
+    If argPath = "NOTFOUND" Then 
+        Return
+    Else If argRoot Then 
+        popUpRootDesktopMenu()
+    Else If NagatoDesktopSpecialKey.IsSpecialKey(argPath) Then
+        popUpSpecialTileMenu(argPath)
+    Else If argPath = "" Or If argCount = 0 Then 
+        popUpRootDesktopMenu()
+    Else If Exist(argPath) Then 
+        popUpContextMenu(argPath)
+    End If
     
 End

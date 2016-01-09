@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $iconViewMouse As NagatoFilerMouseHandler
+Private $iconViewDrag As NagatoIconViewDrag
+Private $iconViewKeyboard As NagatoIconViewKeyboard
+
+Public Sub Drag(argSelection As String[])
+    
+    If argSelection.Count = 0 Then Return
+    $iconViewDrag.MouseDrag(NagatoDrag2.GetUriList(argSelection))
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $iconViewMouse = New NagatoFilerMouseHandler(argIconView) As "TFEI"
+    $iconViewDrag = New NagatoIconViewDrag(argIconView) As "TFEI"
+    $iconViewKeyboard = New NagatoIconViewKeyboard(argIconView) As "TFEI"
+    
+End

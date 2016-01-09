@@ -1,25 +1,16 @@
 ' Gambas class file
 
-Inherits NagatoObject
+Inherits NagatoPaths
 
 Property Read LastPath As String
-Property Read Paths As String[]
-Property Read Count As Integer
 
 Private $lastPath As String = ""
-Private $paths As New NagatoPathsHandler
 
 Event Changed
 
-Public Function Exist(argPath As String) As Boolean
-    
-    Return $paths.Exist(argPath)
-    
-End
-
 Public Sub ClearAll()
     
-    $paths.ClearAll()
+    Me._$paths.Clear()
     
     Raise Changed
     
@@ -27,8 +18,8 @@ End
 
 Public Sub PushPath(argPath As String)
     
-    If Not $paths.Exist(argPath) Then
-        $paths.Add(argPath)
+    If Not Me._$paths.Exist(argPath) Then
+        Me._$paths.Add(argPath)
         $lastPath = argPath
     End If
     
@@ -38,7 +29,7 @@ End
 
 Public Sub RemovePath(argPath As String)
     
-    $paths.Remove(argPath)
+    Try Me._$paths.Remove(Me._$paths.Find(argPath))
     
     Raise Changed
     
@@ -46,7 +37,7 @@ End
 
 Public Sub Toggle(argPath As String)
     
-    If $paths.Exist(argPath) Then
+    If Me._$paths.Exist(argPath) Then
         Me.RemovePath(argPath)
     Else
         Me.PushPath(argPath)
@@ -56,7 +47,11 @@ End
 
 Public Sub ClearWithoutLastSelection()
     
-    $paths.Clear($lastPath)
+    Dim yukiPath As String
+    
+    For Each yukiPath In Me._$paths
+        If yukiPath <> $lastPath Then Me._$paths.Remove(Me._$paths.Find(yukiPath))
+    Next
     
 End
 
@@ -72,28 +67,10 @@ End
 
 Public Sub SetPaths(argPaths As String[])
     
-    Dim yukiFirstPath As String = $paths.Reset(argPaths)
+    Dim yukiFirstPath As String = Me.Reset(argPaths)
     
     If argPaths.Exist($lastPath) Then $lastPath = yukiFirstPath
     
-End
-
-Public Sub Sanitize()
-    
-    $paths.Sanitize()
-    
-End
-
-Private Function Paths_Read() As String[]
-
-    Return $paths.Paths
-
-End
-
-Private Function Count_Read() As Integer
-
-    Return $paths.Count
-
 End
 
 Private Function LastPath_Read() As String
