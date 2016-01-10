@@ -6,11 +6,13 @@ Inherits NagatoObject
 
 Public _$iconView As IconView
 Public _$observer As Observer
+Public _$selection As NagatoSelection
 
-Public Sub _new(argIconView As IconView)
+Public Sub _new(argIconView As IconView, Optional argSelection As NagatoSelection)
     
     Me._$iconView = argIconView
     Me._$iconView.SetFocus()
     Me._$observer = New Observer(Me._$iconView) As "Asakura"
+    If argSelection Then Me._$selection = argSelection
     
 End

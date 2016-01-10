@@ -2,16 +2,11 @@
 
 Inherits NagatoIconViewHandler
 
-Public Sub MouseDrag(argUriList As String)
-    
-    Drag.Icon = Me._$iconView.Current.Picture
-    Me._$iconView.Drag(argUriList, MikuruMimeType.UriList)
-    
-End
-
 Public Sub Asakura_MouseDrag()
     
-    Raise Signal(NagatoObject.UserInputMouseDrag, Null)
+    If Me._$selection.Count = 0 Then Return
+    Drag.Icon = Me._$iconView.Current.Picture
+    Me._$iconView.Drag(NagatoDrag2.GetUriList(Me._$selection.Paths), MikuruMimeType.UriList)
     
 End
 

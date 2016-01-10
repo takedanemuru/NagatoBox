@@ -22,6 +22,7 @@ Public Enum CreateBlankText = 9004, CreateCopyWholeDirectory = 9005
 Public Enum ControlHeader = 10000, ControlChanged = 10001, ControlActivated = 10002
 Public Enum UserInputHeader = 11000, UserInputMouseDrag = 11001, UserInputMouseDown = 11002
 Public Enum UserInputKeyPress = 11003, UserInputKeyPressWithControl = 11004
+Public Enum UserInputCallContextMenu = 10005
 
 Event Signal(argEvent As Integer, argValues As Variant[])
 

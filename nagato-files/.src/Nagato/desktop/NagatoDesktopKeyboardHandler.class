@@ -4,26 +4,57 @@ Inherits NagatoDesktopHandler
 
 Private $iconView As IconView
 Private $observer As Observer
+Private $selection As NagatoSelection
 
 Event KeyPress(argKeyCode As Integer)
 Event KeyPressWithAlt(argKeyCode As Integer)
 Event KeyPressWithControl(argKeyCode As Integer)
 
-Public Sub _new(argIconView As IconView)
+Private Sub keyPressWithControl(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key["x"]
+            NagatoClipBoard.Cut($selection.Paths)
+        Case Key["c"]
+            NagatoClipBoard.Copy($selection.Paths)
+        Case Key["v"]
+            NagatoClipBoard.Paste(Desktop.Path)
+    End Select
+    
+End
+
+Private Sub keyPress(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key.Enter, Key.Space
+            ' to do
+        Case Key.Esc
+            Clipboard.Clear()
+            $selection.ClearAll()
+            Raise Signal(NagatoObject.ViewReload, Null)
+        Case Key.Delete
+            NagatoTrash.Delete($selection.Paths)
+    End Select
+    
+End
+
+Public Sub _new(argIconView As IconView, argSelection As NagatoSelection)
     
     $iconView = argIconView
     $observer = New Observer($iconView) As "Asakura"
+    $selection = argSelection
     
 End
 
 Public Sub Asakura_KeyPress()
     
     If Key.Control Then
-        Raise KeyPressWithControl(Key.Code)
+        keyPressWithControl(Key.Code)
     Else If Key.Alt Then
-        Raise KeyPressWithAlt(Key.Code)
+        ' currently no functionalities.
+        ' keyPressWithAlt(Key.Code) 
     Else
-        Raise KeyPress(Key.Code)
+        keyPress(Key.Code)
     End If
 
 End

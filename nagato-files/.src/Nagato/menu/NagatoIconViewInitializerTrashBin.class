@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read IconView As IconView
+
+Private $iconView As IconView
+
+Event MouseDown(argKey As String)
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $iconView = New IconView(argTabStrip) As "TrashBinIconView"
+    
+    With $iconView
+        .Expand = True
+        .ScrollBar = Scroll.Horizontal
+        .Orientation = Arrange.Horizontal
+        .Picture = Picture.Load("pictures/yukichan_31.jpg")
+    End With
+    
+End
+
+Public Sub TrashBinIconView_MouseDown()
+    
+    Raise MouseDown(Last.key)
+    
+End
+
+Private Function IconView_Read() As IconView
+
+    Return $iconView
+
+End

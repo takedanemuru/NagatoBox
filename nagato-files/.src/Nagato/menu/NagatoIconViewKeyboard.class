@@ -2,6 +2,20 @@
 
 Inherits NagatoIconViewHandler
 
+Private Sub pressKey(argKeyCode As Integer)
+    
+    Select Case argKeyCode
+        Case Key.Enter, 16777220
+            If Not IsDir(Me._$selection.LastSelected) Then Return
+            Raise Signal(NagatoObject.DirOpen, [Me._$selection.LastSelected])
+        Case Key.Esc, 16777216
+            Raise Signal(NagatoObject.ViewUnselectAll, Null)
+        Case Key.Delete
+            NagatoTrash.Delete(Me._$selection.Selection)
+    End Select
+    
+End
+
 Private Sub pressKeyWithAlt(argKeyCode As Integer)
     
     Select Case argKeyCode
@@ -27,12 +41,14 @@ Private Sub pressKeyWithCtrl(argKeyCode As Integer)
             Raise Signal(NagatoObject.DirCreate, Null)
         Case Key["f"]
             TFEI.SetSearch(False)
+        Case Key["x"]
+            NagatoClipBoard.Cut(Me._$selection.Selection)
+        Case Key["c"]
+            NagatoClipBoard.Copy(Me._$selection.Selection)
         Case Key["v"]
             Raise Signal(NagatoObject.FilePasteFromClipboard, [""])
         Case Key["t"]
             Raise Signal(NagatoObject.DirOpenInNewTab, [User.Home])
-        Default
-            Raise Signal(NagatoObject.UserInputKeyPressWithControl, [Key.Code])
     End Select
     
 End
@@ -44,8 +60,7 @@ Public Sub Asakura_KeyPress()
     Else If Key.Alt Then
         pressKeyWithAlt(Key.Code)
     Else
-        Raise Signal(NagatoObject.UserInputKeyPress, [Key.Code])
+        pressKey(Key.Code)
     End If
     
 End
-

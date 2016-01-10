@@ -2,18 +2,15 @@
 
 Inherits NagatoObject
 
-Property Read Count As Integer
-Property Read Paths As String[]
-Property Read LastSelected As String
-
-Private $selection As New NagatoSelection As "Selection"
+Private $selection As NagatoSelection 
 Private $widgets As NagatoSelectionBarWidgets
+Private $observer As Observer
 
-Event Cancel
-
-Public Sub _new(argContainer As TabStrip)
+Public Sub _new(argContainer As TabStrip, argSelection As NagatoSelection)
     
     $widgets = New NagatoSelectionBarWidgets(argContainer) As "Widgets"
+    $selection = argSelection
+    $observer = New Observer($selection) As "Asakura"
     
 End
 
@@ -51,7 +48,6 @@ End
 Public Sub SetPaths(argPaths As String[])
     
     $selection.SetPaths(argPaths)
-    Me.Selection_Changed()
     
 End
 
@@ -59,7 +55,7 @@ Public Sub Widgets_ButtonAction(argAction As Integer)
     
     Select Case argAction
         Case NagatoSelectionBarWidgets.ButtonAll
-            Raise Cancel
+            Raise Signal(NagatoObject.ViewUnselectAll, Null)
         Case NagatoSelectionBarWidgets.ButtonCopyTo
             MikuruFileManuever.CopyTo($selection.Paths)
         Case NagatoSelectionBarWidgets.ButtonMoveTo
@@ -70,29 +66,8 @@ Public Sub Widgets_ButtonAction(argAction As Integer)
     
 End
 
-Public Sub Selection_Changed()
+Public Sub Asakura_Changed()
     
     $widgets.SetCount($selection.Count)
     
-End
-
-Private Function Count_Read() As Integer
-
-    Return $selection.Paths.Count
-
-End
-
-Private Function Paths_Read() As String[]
-
-    Return $selection.Paths
-
-End
-
-Private Function LastSelected_Read() As String
-
-    Return $selection.LastPath
-
-Catch
-    Return ""
-
 End

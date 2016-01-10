@@ -3,30 +3,28 @@
 Inherits NagatoObject
 
 Private $menuBar As NagatoMenuPanel
-Private $iconView As NagatoIconViewFiler
+Private $iconView As NagatoFilerSurface
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoFilerDirectoryObserver
 
-Private Sub ensureObserver(argDirectory As String)
+Private Sub refresh(argDirectory As String)
     
-    If Object.IsValid($directoryObserver) Then Return
+    $menuBar.SetPath(argDirectory)
+    $iconView.Refresh(argDirectory)
     
-    $directoryObserver = New NagatoFilerDirectoryObserver(argDirectory) As "DirectoryObserver"
+Catch
+    Return
     
 End
 
 Private Sub move(argDirectory As String)
-   
-    Dim yukiDirectory As String = argDirectory
    
     If Not Exist(argDirectory) Then Return
     TFEI.SetMainTabStrip(File.BaseName(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
     $log.Move(argDirectory)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
     refresh(argDirectory)
-    ensureObserver(argDirectory)
-    
-    $directoryObserver.SetDirectory(yukiDirectory)
+    $directoryObserver.SetDirectory(argDirectory)
     
 End
 
@@ -71,12 +69,18 @@ Private Sub viewEventHandler(argSignal As Integer, argValues As Variant[])
         Case NagatoObject.ViewForceReload
             NagatoDBThumbnailer.ForceCleanUp($log.Current)
             refresh($log.Current)
-        Case NagatoObject.ViewSelectAll, NagatoObject.ViewUnselectAll, NagatoObject.ViewInvertSelection
-            $iconView.SelectItems(argSignal)
+        Case NagatoObject.ViewSelectAll
+            $iconView.SelectAll()
+        Case NagatoObject.ViewUnselectAll
+            $iconView.Refresh($log.Current)
+        Case NagatoObject.ViewInvertSelection
+            $iconView.InvertSelection()
         Case NagatoObject.ViewOpenTerminalHere
             NagatoOpen.OpenTerminal($log.Current)
         Case NagatoObject.ViewSearch
             filtering(argValues[0], argValues[1])
+        Case NagatoObject.ViewContextMenu
+            popUpContextMenu()
     End Select
     
 End
@@ -93,13 +97,11 @@ Public Sub tagEventHandler(argSignal As Integer)
     
 End
 
-Private Sub refresh(argDirectory As String)
+Private Sub popUpContextMenu()
     
-    $menuBar.SetPath(argDirectory)
-    $iconView.Refresh(argDirectory)
+    Dim yukiMenu As New NagatoContextMenuIconViewFiler(HaruhiMain, $log.Current)
     
-Catch
-    Return
+    yukiMenu.PopUp()
     
 End
 
@@ -133,8 +135,9 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuItem"
-    $iconView = New NagatoIconViewFiler(argContainer) As "MenuItem"
-    
+    $iconView = New NagatoFilerSurface(argContainer) As "MenuItem"
+    $directoryObserver = New NagatoFilerDirectoryObserver(argDirectory) As "DirectoryObserver"
+
     move(IIf(argDirectory = "", User.Home, argDirectory))
     
 End
@@ -164,6 +167,8 @@ Public Sub MenuItem_Signal(argEvent As Integer, argArgument As Variant[])
             MikuruCreate.BlankText($log.Current)
         Case NagatoObject.DirCreate
             MikuruCreate.NewDirectory($log.Current)
+        Case NagatoObject.UserInputMouseDown
+            $iconView.MouseDown(argArgument[0], argArgument[1])
     End Select
     
 End
@@ -172,7 +177,7 @@ Public Sub DirectoryObserver_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoObject.ObserverModefy
-            If Not $iconView.HasKey($log.Current, argValues[0]) Then refresh($log.Current)
+            If Not $iconView.HasKey($log.Current &/ argValues[0]) Then refresh($log.Current)
         Case NagatoObject.ObserverDelete
             $iconView.Delete($log.Current &/ argValues[0])
         Case NagatoObject.ObserverLost

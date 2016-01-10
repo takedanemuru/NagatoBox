@@ -6,20 +6,16 @@ Property Read Selection As String[]
 
 Private $iconViewAction As NagatoIconViewAction
 Private $iconView As NagatoIconViewSurface
-Private $selectionBar As NagatoSelectionBar 
 Private $data As New NagatoIconViewFilerFacadeViewData
 Private $observer As Observer
+Private $userInput As NagatoFilerUserInput
 
 Private Sub clearSelection()
     
-    Dim yukiSelectedPaths As String[] = $selectionBar.Paths.Copy()
-    Dim yukiPath As String
+    Dim yukiSelectedPaths As String[] = $userInput.Paths.Copy()
     
-    $selectionBar.ClearWithoutLastSelected()
-    
-    For Each yukiPath In yukiSelectedPaths
-        $iconView.ResetIcon(yukiPath, False)
-    Next
+    $userInput.ClearWithoutLastSelected()
+    $iconView.ClearSelection(yukiSelectedPaths)
     
 End
 
@@ -32,24 +28,23 @@ End
 Public Sub Refresh(argDirectory As String)
     
     $data.NewDirectory(argDirectory)
-    $selectionBar.ClearAll()
-    $iconView.Refresh($data.CurrentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
+    $userInput.ClearAll()
+    $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
     
 End
 
 Public Sub RefreshWithSearchQuery(argPaths As String[])
     
     $data.NewQuery(argPaths)
-    $iconView.RefreshWithSearchResult($data.Query, $selectionBar.Paths)
+    $iconView.RefreshWithSearchResult($data.Query, $userInput.Selection)
     
 End
 
 Public Sub Delete(argPath As String)
     
-    If $iconViewAction.Delete(argPath) Then $selectionBar.Remove(argPath)
-    If MikuruDirectory.GetCountNonRecursive($data.CurrentDirectory, NagatoSettings.ShowHidden) = 0 Then 
-        Me.Refresh($data.CurrentDirectory)
-    End If
+    If $iconViewAction.Delete(argPath) Then $userInput.Remove(argPath)
+    If MikuruDirectory.GetCountNonRecursive($data.CurrentDirectory, NagatoSettings.ShowHidden) > 0 Then Return
+    Me.Refresh($data.CurrentDirectory)
     
 End
 
@@ -62,28 +57,22 @@ End
 Public Sub SelectAll()
     
     If Not NagatoSettings.MultipleSelection Then NagatoSettings.MultipleSelection = True
-    $selectionBar.SetPaths(MikuruDirectory.GetAll($data.CurrentDirectory))
-    $iconView.Refresh($data.CurrentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
-    
-End
-
-Public Sub UnselectAll()
-    
-    Me.Refresh($data.CurrentDirectory)
+    $userInput.SetPaths(MikuruDirectory.GetAll($data.CurrentDirectory))
+    $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
     
 End
 
 Public Sub InvertSelection()
     
-    If Not NagatoSettings.MultipleSelection Then NagatoSettings.MultipleSelection = True
-    $selectionBar.SetPaths(MikuruDirectory.GetInverted($data.CurrentDirectory, $selectionBar.Paths))
-    $iconView.Refresh($data.CurrentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
+    NagatoSettings.MultipleSelection = True
+    $userInput.SetPaths(MikuruDirectory.GetInverted($data.CurrentDirectory, $userInput.Selection))
+    $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
     
 End
 
-Public Sub EnsureVisibleLastSelected()
+Public Sub EnsureVisible()
     
-    $iconView.Ensure($selectionBar.LastSelected)
+    $iconView.Ensure($userInput.LastSelected)
     
 End
 
@@ -93,58 +82,38 @@ Public Sub ShowLostDirectory()
     
 End
 
-Public Sub PopUpContextMenu()
-    
-    Dim yukiMenu As New NagatoContextMenuIconViewFiler(HaruhiMain, $data.CurrentDirectory)
-    
-    yukiMenu.PopUp()
-    
-End
-
-Public Sub Enter()
-    
-    If Not IsDir($selectionBar.LastSelected) Then Return
-    Raise Signal(NagatoObject.DirOpen, [$selectionBar.LastSelected])
-    
-End
-
 Public Sub MouseDown(argPath As String, argMouseLeft As Boolean)
     
-    $selectionBar.Push(argPath, Mouse.Left)
+    $userInput.Push(argPath, Mouse.Left)
     If Not NagatoSettings.MultipleSelection Then clearSelection()
-    $iconView.ResetIcon(argPath, $selectionBar.Exist(argPath))
-    
-    TFEI.SetFileProperty($selectionBar.LastSelected)
-    
-End
-
-Public Sub _new(argContainer As Container, argIconView As IconView)
-    
-    $iconViewAction = New NagatoIconViewAction(argIconView) 
-    $iconView = New NagatoIconViewSurface(argIconView) 
-    $selectionBar = New NagatoSelectionBar(argContainer) As "SelectionBar"
-    $observer = New Observer(NagatoClipBoard) As "Asakura"    
+    $iconView.ResetIcon(argPath, $userInput.Exist(argPath))
+    TFEI.SetFileProperty($userInput.LastSelected)
     
 End
 
-Public Sub SelectionBar_Cancel()
+Public Sub _new(argContainer As Container)
     
-    Me.Refresh($data.CurrentDirectory)
+    Dim yukiInitializer As New NagatoIconViewInitializer(argContainer)
+
+    $iconViewAction = New NagatoIconViewAction(yukiInitializer.IconView) 
+    $iconView = New NagatoIconViewSurface(yukiInitializer.IconView) 
+    $observer = New Observer(NagatoClipBoard) As "Asakura"
+    $userInput = New NagatoFilerUserInput(yukiInitializer.IconView) As "TFEI"
     
 End
 
 Private Function Selection_Read() As String[]
 
-    Return $selectionBar.Paths
+    Return $userInput.Selection
 
 End
 
 Public Sub Asakura_Changed()
     
     If $data.Query.Count > 0 Then
-        $iconView.RefreshWithSearchResult($data.Query, $selectionBar.Paths)
+        $iconView.RefreshWithSearchResult($data.Query, $userInput.Selection)
     Else
-        $iconView.Refresh($data.CurrentDirectory, $selectionBar.Paths, $selectionBar.LastSelected)
+        $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
     End If
     
 End

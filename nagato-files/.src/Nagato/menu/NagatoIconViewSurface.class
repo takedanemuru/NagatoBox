@@ -2,23 +2,6 @@
 
 Inherits NagatoIconViewHandler
 
-Public Function getPattern() As String
-    
-    Return IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
-    
-End
-
-Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
-    
-    Dim yukiPath As String
-
-    For Each yukiPath In NagatoSortFiler.Get(argDirectory, argType)
-        If Not Access(yukiPath, gb.Read) Then Continue
-        Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
-    Next
-    
-End
-
 Private Sub ensureVisible(argPath As String)
     
     If Me._$iconView.Exist(argPath) Then Me._$iconView[argPath].EnsureVisible()
@@ -28,8 +11,8 @@ End
 Private Sub refreshIconView(argDirectory As String, argSelection As String[], argLastSelected As String)
     
     Me._$iconView.Clear()
-    setIcon(argDirectory, argSelection, gb.Directory)
-    setIcon(argDirectory, argSelection, gb.File)
+    setIcons(NagatoSortFiler.Get(argDirectory, gb.Directory), argSelection, True)
+    setIcons(NagatoSortFiler.Get(argDirectory, gb.File), argSelection, False)
     If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     NagatoDBThumbnailer.CleanUp(argDirectory)
     ensureVisible(IIf(MikuruLastRenamed.Path, MikuruLastRenamed.Path, argLastSelected))
@@ -37,15 +20,14 @@ Private Sub refreshIconView(argDirectory As String, argSelection As String[], ar
     
 End
 
-Private Sub setIcons(argPaths As String[], argSelection As String[], argOnlyDirectory As Boolean)
+Private Sub setIcons(argPaths As String[], argSelection As String[], argDirectoryOnly As Boolean)
     
     Dim yukiPath As String
     
     For Each yukiPath In argPaths.Sort(gb.IgnoreCase + gb.Natural)
-        If IsDir(yukiPath) = argOnlyDirectory Then 
-            If Not MikuruAccessible(yukiPath) Then Continue 
-            Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
-        End If
+        If Not IsDir(yukiPath) = argDirectoryOnly Then Continue
+        If Not MikuruAccessible(yukiPath) Then Continue 
+        Me._$iconView.Add(yukiPath, "", MikuruTile(yukiPath, argSelection.Exist(yukiPath)))
     Next
     
 End
@@ -65,10 +47,8 @@ End
 Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[])
     
     Me._$iconView.Clear()
-    
     setIcons(argPaths, argSelection, True)
     setIcons(argPaths, argSelection, False)
-    
     If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     
 End
@@ -76,6 +56,16 @@ End
 Public Sub Ensure(argPath As String)
     
     ensureVisible(argPath)
+    
+End
+
+Public Sub ClearSelection(argSelection As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argSelection
+        Me.ResetIcon(yukiPath, False)
+    Next
     
 End
 

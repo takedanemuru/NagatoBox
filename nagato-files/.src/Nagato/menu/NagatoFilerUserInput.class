@@ -2,21 +2,74 @@
 
 Inherits NagatoObject
 
+Property Read Selection As String[]
+Property Read LastSelected As String
+
+Private $selection As NagatoSelection 
+Private $selectionBar As NagatoSelectionBar 
 Private $iconViewMouse As NagatoFilerMouseHandler
 Private $iconViewDrag As NagatoIconViewDrag
 Private $iconViewKeyboard As NagatoIconViewKeyboard
 
-Public Sub Drag(argSelection As String[])
+Event Cancel
+
+Public Sub ClearAll()
     
-    If argSelection.Count = 0 Then Return
-    $iconViewDrag.MouseDrag(NagatoDrag2.GetUriList(argSelection))
+    $selection.ClearAll()
+    
+End
+
+Public Sub Push(argPath As String, argMouseLeft As Boolean)
+    
+    $selection.Push(argPath, argMouseLeft)
+    
+End
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return $selection.Exist(argPath)
+    
+End
+
+Public Sub SetPaths(argPaths As String[])
+    
+    $selection.SetPaths(argPaths)
+    
+End
+
+Public Sub Remove(argPath As String)
+    
+    $selection.RemovePath(argPath)
+    
+End
+
+Public Sub ClearWithoutLastSelected()
+    
+    $selection.ClearWithoutLastSelection()
     
 End
 
 Public Sub _new(argIconView As IconView)
     
-    $iconViewMouse = New NagatoFilerMouseHandler(argIconView) As "TFEI"
-    $iconViewDrag = New NagatoIconViewDrag(argIconView) As "TFEI"
+    $selection = New NagatoSelection 
+    $selectionBar = New NagatoSelectionBar(argIconView.Parent, $selection) As "TFEI"
+    $iconViewMouse = New NagatoFilerMouseHandler(argIconView, $selection) As "TFEI"
+    $iconViewDrag = New NagatoIconViewDrag(argIconView, $selection) As "TFEI"
     $iconViewKeyboard = New NagatoIconViewKeyboard(argIconView) As "TFEI"
     
+End
+
+Private Function Selection_Read() As String[]
+
+    Return $selection.Paths
+    
+End
+
+Private Function LastSelected_Read() As String
+
+    Return $selection.LastPath
+    
+Catch
+    Return ""
+
 End

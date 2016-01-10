@@ -4,10 +4,7 @@ Private $iconView As NagatoIconViewInitializer
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
 Private $icons As NagatoDesktopIconsHandler
-Private $keyboard As NagatoDesktopKeyboardHandler
-Private $mouse As NagatoDesktopMouseHandler
-Private $drop As NagatoDesktopDropHandler
-Private $activation As NagatoDesktopActivationHandler
+Private $userInput As NagatoDesktopUserInput
 
 Public Sub ReloadDesktopWallpaper()
     
@@ -20,10 +17,7 @@ Public Sub _new(argContainer As Container)
     $iconView = New NagatoIconViewInitializer(argContainer)
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView.IconView)
     $icons = New NagatoDesktopIconsHandler($iconView.IconView)
-    $mouse = New NagatoDesktopMouseHandler($iconView.IconView) As "Handler"
-    $keyboard = New NagatoDesktopKeyboardHandler($iconView.IconView) As "Handler"
-    $drop = New NagatoDesktopDropHandler($iconView.IconView)
-    $activation = New NagatoDesktopActivationHandler($iconView.IconView)
+    $userInput = New NagatoDesktopUserInput($iconView.IconView) As "Handler"
     $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Handler"
 
 End
@@ -32,39 +26,11 @@ Public Sub Handler_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoObject.ObserverDelete
-            $mouse.Delete(Desktop.Path &/ argValues[0])
-        Case NagatoObject.ObserverModefy, NagatoObject.ViewForceReload
-            $mouse.ClearAll()
+            $userInput.Delete(Desktop.Path &/ argValues[0])
+        Case NagatoObject.ObserverModefy, NagatoObject.ViewForceReload, NagatoObject.ViewReload
+            $userInput.Clear()
     End Select
 
-    $icons.Refresh($mouse.SelectedPaths)
-    
-End
-
-Public Sub Handler_KeyPressWithControl(argKeyCode As Integer)
-    
-    Select Case argKeyCode
-        Case Key["x"]
-            NagatoClipBoard.Cut($mouse.SelectedPaths)
-        Case Key["c"]
-            NagatoClipBoard.Copy($mouse.SelectedPaths)
-        Case Key["v"]
-            NagatoClipBoard.Paste(Desktop.Path)
-    End Select
-    
-End
-
-Public Sub Handler_KeyPress(argKeyCode As Integer)
-    
-    Select Case argKeyCode
-        Case Key.Enter, Key.Space
-            ' to do
-        Case Key.Esc
-            Clipboard.Clear()
-            $mouse.ClearAll()
-            $icons.Refresh($mouse.SelectedPaths)
-        Case Key.Delete
-            NagatoTrash.Delete($mouse.SelectedPaths)
-    End Select
+    $icons.Refresh($userInput.Selection)
     
 End

@@ -2,30 +2,16 @@
 
 Inherits NagatoDesktopHandler
 
-Property Read SelectedPaths As String[]
-
 Private $iconView As IconView
 Private $observer As Observer
 Private $selection As NagatoSelection
-Private $contextMenu As New NagatoContextMenuDesktop As "TFEI"
+Private $contextMenu As New NagatoContextMenuDesktop As "ContextMenu"
 
-Public Sub ClearAll()
-    
-    $selection.ClearAll()
-    
-End
-
-Public Sub Delete(argPath As String)
-    
-    $selection.RemovePath(argPath)
-    
-End
-
-Public Sub _new(argIconView As IconView)
+Public Sub _new(argIconView As IconView, argSelection As NagatoSelection)
     
     $iconView = argIconView
-    $selection = New NagatoSelection
     $observer = New Observer($iconView) As "Asakura"
+    $selection = argSelection
     
 End
 
@@ -41,9 +27,8 @@ End
 
 Public Sub Asakura_MouseDrag()
     
-    If $selection.Count = 0 Then Return
     If NagatoDesktopSpecialKey.IsSpecialKey($iconView.Key) Then Return
-    
+    If $selection.Count = 0 Then Return
     Drag.Icon = $iconView.Current.Picture
     $iconView.Drag(NagatoDrag2.GetUriList($selection.Paths), MikuruMimeType.UriList)
     
@@ -57,7 +42,7 @@ Public Sub Asakura_MouseDown()
         $iconView.Current.Selected = False
     Else If Not NagatoDesktopSpecialKey.IsSpecialKey($iconView.Key) Then
         $selection.Push($iconView.Key, Mouse.Left)
-        $iconView[$iconView.Key].Picture = MikuruTile($iconView.Key, $selection.Paths.Exist($iconView.Key))
+        $iconView[$iconView.Key].Picture = MikuruTile($iconView.Key, $selection.Exist($iconView.Key))
     End If
     
 End
@@ -67,10 +52,10 @@ Public Sub Asakura_Menu()
     Dim yukiRoot As Boolean = $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) 
 
     $contextMenu.PopUp($iconView.Key, yukiRoot, $selection.Count)
-    
+
 End
 
-Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
+Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoObject.CreateArchive
@@ -91,10 +76,4 @@ Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
     
     Raise Signal(argEvent, argValues)
     
-End
-
-Private Function SelectedPaths_Read() As String[]
-
-    Return $selection.Paths
-
 End
