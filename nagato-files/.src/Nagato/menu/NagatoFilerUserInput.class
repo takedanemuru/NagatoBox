@@ -55,7 +55,7 @@ Public Sub _new(argIconView As IconView)
     $selectionBar = New NagatoSelectionBar(argIconView.Parent, $selection) As "TFEI"
     $iconViewMouse = New NagatoFilerMouseHandler(argIconView, $selection) As "TFEI"
     $iconViewDrag = New NagatoIconViewDrag(argIconView, $selection) As "TFEI"
-    $iconViewKeyboard = New NagatoIconViewKeyboard(argIconView) As "TFEI"
+    $iconViewKeyboard = New NagatoIconViewKeyboard(argIconView, $selection) As "TFEI"
     
 End
 

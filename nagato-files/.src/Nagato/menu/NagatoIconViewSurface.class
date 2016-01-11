@@ -8,18 +8,6 @@ Private Sub ensureVisible(argPath As String)
     
 End
 
-Private Sub refreshIconView(argDirectory As String, argSelection As String[], argLastSelected As String)
-    
-    Me._$iconView.Clear()
-    setIcons(NagatoSortFiler.Get(argDirectory, gb.Directory), argSelection, True)
-    setIcons(NagatoSortFiler.Get(argDirectory, gb.File), argSelection, False)
-    If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
-    NagatoDBThumbnailer.CleanUp(argDirectory)
-    ensureVisible(IIf(MikuruLastRenamed.Path, MikuruLastRenamed.Path, argLastSelected))
-    MikuruLastRenamed.Clear()
-    
-End
-
 Private Sub setIcons(argPaths As String[], argSelection As String[], argDirectoryOnly As Boolean)
     
     Dim yukiPath As String
@@ -32,23 +20,23 @@ Private Sub setIcons(argPaths As String[], argSelection As String[], argDirector
     
 End
 
-Public Sub ResetIcon(argPath As String, argSelected As Boolean)
-    
-    Me._$iconView[argPath].Picture = MikuruTile(argPath, argSelected)
-    
-End
-
-Public Sub Refresh(argDirectory As String, argSelection As String[], argLastSelected As String)
-    
-    refreshIconView(argDirectory, argSelection, argLastSelected)
-    
-End
-
-Public Sub RefreshWithSearchResult(argPaths As String[], argSelection As String[])
+Public Sub RefreshIconView(argDirectory As String, argSelection As String[], argLastSelected As String)
     
     Me._$iconView.Clear()
-    setIcons(argPaths, argSelection, True)
-    setIcons(argPaths, argSelection, False)
+    setIcons(NagatoSortFiler.Get(argDirectory, gb.Directory), argSelection, True)
+    setIcons(NagatoSortFiler.Get(argDirectory, gb.File), argSelection, False)
+    If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+    NagatoDBThumbnailer.CleanUp(argDirectory)
+    ensureVisible(IIf(MikuruLastRenamed.Path, MikuruLastRenamed.Path, argLastSelected))
+    MikuruLastRenamed.Clear()
+    
+End
+
+Public Sub RefreshWithSearchResult(argSearchResult As String[], argSelection As String[])
+    
+    Me._$iconView.Clear()
+    setIcons(argSearchResult, argSelection, True)
+    setIcons(argSearchResult, argSelection, False)
     If Me._$iconView.Count = 0 Then Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
     
 End
@@ -66,6 +54,12 @@ Public Sub ClearSelection(argSelection As String[])
     For Each yukiPath In argSelection
         Me.ResetIcon(yukiPath, False)
     Next
+    
+End
+
+Public Sub ResetIcon(argPath As String, argSelected As Boolean)
+    
+    Me._$iconView[argPath].Picture = MikuruTile(argPath, argSelected)
     
 End
 

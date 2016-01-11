@@ -1,0 +1,21 @@
+' Gambas class file
+
+Public Sub _call(argDirectory As String, argSelection As String[], argEvent As Integer, argArgument As Variant)
+    
+    Select Case argEvent
+        Case NagatoObject.FileDelete
+            NagatoTrash.Delete(argSelection)
+        Case NagatoObject.FileMoveToCurrentDir
+            MikuruFileManuever.MoveToDirectory([argArgument], argDirectory)
+        Case NagatoObject.FileMoveTo
+            MikuruFileManuever.MoveTo(argSelection, argArgument)
+        Case NagatoObject.FileCopyTo
+            MikuruFileManuever.CopyTo(argSelection, argArgument)
+        Case NagatoObject.FileCreate
+            If Not Exist(argDirectory) Then Return
+            Copy argArgument To MikuruSafePath(argDirectory &/ File.Name(argArgument))
+        Case NagatoObject.FilePasteFromClipboard
+            NagatoClipBoard.Paste(argDirectory)
+    End Select
+    
+End

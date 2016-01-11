@@ -77,3 +77,9 @@ Public Function SeachQuery(argDirectory As String, argQuery As String, argRecurs
     Return yukiResult
     
 End
+
+Public Sub _get(argDirectory As String, argQuery As String, argRecursive As Boolean) As String[]
+    
+    Return Me.SeachQuery(argDirectory, argQuery, argRecursive)
+    
+End

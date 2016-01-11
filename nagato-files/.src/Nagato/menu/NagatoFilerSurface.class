@@ -1,13 +1,10 @@
 ' Gambas class file
 
-Inherits NagatoIconViewFilerFacade
+Inherits NagatoObject
 
 Property Read Selection As String[]
 
-Private $iconViewAction As NagatoIconViewAction
-Private $iconView As NagatoIconViewSurface
-Private $data As New NagatoIconViewFilerFacadeViewData
-Private $observer As Observer
+Private $iconView As NagatoFilerIconView
 Private $userInput As NagatoFilerUserInput
 
 Private Sub clearSelection()
@@ -21,52 +18,50 @@ End
 
 Public Sub SetFocus(argPath As String)
     
-    $iconViewAction.SetFocus(argPath)
+    $iconView.SetFocus(argPath)
     
 End
 
 Public Sub Refresh(argDirectory As String)
     
-    $data.NewDirectory(argDirectory)
     $userInput.ClearAll()
-    $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
+    $iconView.Refresh(argDirectory, $userInput.Selection, $userInput.LastSelected)
     
 End
 
 Public Sub RefreshWithSearchQuery(argPaths As String[])
     
-    $data.NewQuery(argPaths)
-    $iconView.RefreshWithSearchResult($data.Query, $userInput.Selection)
+    $iconView.RefreshWithSearchResult(argPaths, $userInput.Selection)
     
 End
 
-Public Sub Delete(argPath As String)
+Public Sub Delete(argDirectory As String, argPath As String)
     
-    If $iconViewAction.Delete(argPath) Then $userInput.Remove(argPath)
-    If MikuruDirectory.GetCountNonRecursive($data.CurrentDirectory, NagatoSettings.ShowHidden) > 0 Then Return
-    Me.Refresh($data.CurrentDirectory)
+    If $iconView.Delete(argPath) Then $userInput.Remove(argPath)
+    If MikuruDirectory.GetCountNonRecursive(argDirectory, NagatoSettings.ShowHidden) > 0 Then Return
+    Me.Refresh(argDirectory)
     
 End
 
 Public Sub HasKey(argPath As String) As Boolean
     
-    Return $iconViewAction.Exist(argPath)
+    Return $iconView.Exist(argPath)
     
 End
 
-Public Sub SelectAll()
-    
-    If Not NagatoSettings.MultipleSelection Then NagatoSettings.MultipleSelection = True
-    $userInput.SetPaths(MikuruDirectory.GetAll($data.CurrentDirectory))
-    $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
-    
-End
-
-Public Sub InvertSelection()
+Public Sub SelectAll(argDirectory As String)
     
     NagatoSettings.MultipleSelection = True
-    $userInput.SetPaths(MikuruDirectory.GetInverted($data.CurrentDirectory, $userInput.Selection))
-    $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
+    $userInput.SetPaths(MikuruDirectory.GetAll(argDirectory))
+    $iconView.Refresh(argDirectory, $userInput.Selection, $userInput.LastSelected)
+    
+End
+
+Public Sub InvertSelection(argDirectory As String)
+    
+    NagatoSettings.MultipleSelection = True
+    $userInput.SetPaths(MikuruDirectory.GetInverted(argDirectory, $userInput.Selection))
+    $iconView.Refresh(argDirectory, $userInput.Selection, $userInput.LastSelected)
     
 End
 
@@ -91,14 +86,18 @@ Public Sub MouseDown(argPath As String, argMouseLeft As Boolean)
     
 End
 
+Public Sub RefreshKeepQuery(argDirectory As String)
+    
+    $iconView.RefreshKeepQuery(argDirectory, $userInput.Selection, $userInput.LastSelected)
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     Dim yukiInitializer As New NagatoIconViewInitializer(argContainer)
 
-    $iconViewAction = New NagatoIconViewAction(yukiInitializer.IconView) 
-    $iconView = New NagatoIconViewSurface(yukiInitializer.IconView) 
-    $observer = New Observer(NagatoClipBoard) As "Asakura"
     $userInput = New NagatoFilerUserInput(yukiInitializer.IconView) As "TFEI"
+    $iconView = New NagatoFilerIconView(yukiInitializer.IconView) 
     
 End
 
@@ -106,14 +105,4 @@ Private Function Selection_Read() As String[]
 
     Return $userInput.Selection
 
-End
-
-Public Sub Asakura_Changed()
-    
-    If $data.Query.Count > 0 Then
-        $iconView.RefreshWithSearchResult($data.Query, $userInput.Selection)
-    Else
-        $iconView.Refresh($data.CurrentDirectory, $userInput.Selection, $userInput.LastSelected)
-    End If
-    
 End

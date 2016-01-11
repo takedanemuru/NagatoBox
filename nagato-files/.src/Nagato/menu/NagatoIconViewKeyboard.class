@@ -11,7 +11,7 @@ Private Sub pressKey(argKeyCode As Integer)
         Case Key.Esc, 16777216
             Raise Signal(NagatoObject.ViewUnselectAll, Null)
         Case Key.Delete
-            NagatoTrash.Delete(Me._$selection.Selection)
+            NagatoTrash.Delete(Me._$selection.Paths)
     End Select
     
 End
@@ -42,9 +42,9 @@ Private Sub pressKeyWithCtrl(argKeyCode As Integer)
         Case Key["f"]
             TFEI.SetSearch(False)
         Case Key["x"]
-            NagatoClipBoard.Cut(Me._$selection.Selection)
+            NagatoClipBoard.Cut(Me._$selection.Paths)
         Case Key["c"]
-            NagatoClipBoard.Copy(Me._$selection.Selection)
+            NagatoClipBoard.Copy(Me._$selection.Paths)
         Case Key["v"]
             Raise Signal(NagatoObject.FilePasteFromClipboard, [""])
         Case Key["t"]

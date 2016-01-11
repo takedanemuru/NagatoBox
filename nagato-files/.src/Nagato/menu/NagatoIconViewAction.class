@@ -12,9 +12,7 @@ End
 Public Function Delete(argPath As String) As Boolean
     
     Try Me._$iconView.Remove(argPath)
-    
     If Error Then Return False
-
     Me._$iconView.Refresh()
     Return True
     

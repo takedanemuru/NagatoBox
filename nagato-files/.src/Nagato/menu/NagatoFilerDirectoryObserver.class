@@ -5,6 +5,7 @@ Inherits NagatoObject
 Property Directory As String
 
 Private $directoryObserver As NagatoDirectoryObserver
+Private $clipboardObserver As Observer
 
 Public Sub SetDirectory(argDirectory As String)
     
@@ -16,6 +17,8 @@ Public Sub _new(argDirectory As String)
     
     $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
     $directoryObserver.Directory = argDirectory
+    
+    $clipboardObserver = New Observer(NagatoClipBoard) As "ClipboardObserver"
     
 End
 
@@ -36,6 +39,12 @@ End
 Public Sub DirectoryObserver_Lost()
     
     Raise Signal(NagatoObject.ObserverLost, [""])
+    
+End
+
+Public Sub ClipboardObserver_Changed()
+    
+    Raise Signal(NagatoObject.ObserverClipboardChanged, Null)
     
 End
 

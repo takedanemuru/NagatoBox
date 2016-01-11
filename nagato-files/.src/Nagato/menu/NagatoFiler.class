@@ -3,17 +3,16 @@
 Inherits NagatoObject
 
 Private $menuBar As NagatoMenuPanel
-Private $iconView As NagatoFilerSurface
+Private $surface As NagatoFilerSurface
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoFilerDirectoryObserver
+
+Private $fileEvent As New NagatoFilerEventFile
 
 Private Sub refresh(argDirectory As String)
     
     $menuBar.SetPath(argDirectory)
-    $iconView.Refresh(argDirectory)
-    
-Catch
-    Return
+    $surface.Refresh(argDirectory)
     
 End
 
@@ -38,26 +37,6 @@ Private Sub filtering(argDirectory As String, argQuery As String)
     
 End
 
-Private Sub fileEventHandler(argEvent As Integer, argArgument As Variant)
-    
-    Select Case argEvent
-        Case NagatoObject.FileDelete
-            NagatoTrash.Delete($iconView.Selection)
-        Case NagatoObject.FileMoveToCurrentDir
-            MikuruFileManuever.MoveToDirectory([argArgument], $log.Current)
-        Case NagatoObject.FileMoveTo
-            MikuruFileManuever.MoveTo($iconView.Selection, argArgument)
-        Case NagatoObject.FileCopyTo
-            MikuruFileManuever.CopyTo($iconView.Selection, argArgument)
-        Case NagatoObject.FileCreate
-            If Not Exist($log.Current) Then Return
-            Copy argArgument To MikuruSafePath($log.Current &/ File.Name(argArgument))
-        Case NagatoObject.FilePasteFromClipboard
-            NagatoClipBoard.Paste($log.Current)
-    End Select
-    
-End
-
 Private Sub viewEventHandler(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
@@ -70,11 +49,12 @@ Private Sub viewEventHandler(argSignal As Integer, argValues As Variant[])
             NagatoDBThumbnailer.ForceCleanUp($log.Current)
             refresh($log.Current)
         Case NagatoObject.ViewSelectAll
-            $iconView.SelectAll()
+            $surface.SelectAll($log.Current)
         Case NagatoObject.ViewUnselectAll
-            $iconView.Refresh($log.Current)
+            Clipboard.Clear()
+            $surface.Refresh($log.Current)
         Case NagatoObject.ViewInvertSelection
-            $iconView.InvertSelection()
+            $surface.InvertSelection($log.Current)
         Case NagatoObject.ViewOpenTerminalHere
             NagatoOpen.OpenTerminal($log.Current)
         Case NagatoObject.ViewSearch
@@ -89,10 +69,10 @@ Public Sub tagEventHandler(argSignal As Integer)
     
     Select Case argSignal
         Case NagatoObject.TagAdd
-             If NagatoFilerDialogs.Tagging($iconView.Selection) Then $iconView.Refresh($log.Current)
+             If NagatoFilerDialogs.Tagging($surface.Selection) Then $surface.Refresh($log.Current)
         Case NagatoObject.TagRemove
-             NagatoDBSymbol.RemovePaths($iconView.Selection)
-             $iconView.Refresh($log.Current)
+             NagatoDBSymbol.RemovePaths($surface.Selection)
+             $surface.Refresh($log.Current)
     End Select
     
 End
@@ -113,9 +93,7 @@ End
 
 Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
-    Dim yukiQuery As String[] = MikuruFileSearch.SeachQuery($log.Current, argQuery, argRecursive)
-    
-    $iconView.RefreshWithSearchQuery(yukiQuery)
+    $surface.RefreshWithSearchQuery(MikuruFileSearch[$log.Current, argQuery, argRecursive])
     
 End
 
@@ -127,7 +105,7 @@ End
 
 Public Sub EnsureVisible()
     
-    $iconView.EnsureVisible()
+    $surface.EnsureVisible()
     
 End
 
@@ -135,7 +113,7 @@ Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
     $menuBar = New NagatoMenuPanel(argContainer) As "MenuItem"
-    $iconView = New NagatoFilerSurface(argContainer) As "MenuItem"
+    $surface = New NagatoFilerSurface(argContainer) As "MenuItem"
     $directoryObserver = New NagatoFilerDirectoryObserver(argDirectory) As "DirectoryObserver"
 
     move(IIf(argDirectory = "", User.Home, argDirectory))
@@ -150,7 +128,7 @@ Public Sub MenuItem_Signal(argEvent As Integer, argArgument As Variant[])
         Case NagatoObject.DirOpenInNewTab
             TFEI.AddNewDirectory(argArgument[0])
         Case NagatoObject.FileHeader To NagatoObject.FileHeader + 999
-            fileEventHandler(argEvent, argArgument[0])
+            $fileEvent($log.Current, $surface.Selection, argEvent, argArgument)
         Case NagatoObject.MoveHeader To NagatoObject.MoveHeader + 999
             move($log.GetMoveTo(argEvent))
         Case NagatoObject.ViewHeader To NagatoObject.ViewHeader + 999
@@ -162,13 +140,13 @@ Public Sub MenuItem_Signal(argEvent As Integer, argArgument As Variant[])
         Case NagatoObject.CreateCopyWholeDirectory
              MikuruFileManuever.CopyToDirectory([argArgument[0]], $log.Current)
         Case NagatoObject.CreateArchive
-            MikuruCreate.Archive($iconView.Selection)
+            MikuruCreate.Archive($surface.Selection)
         Case NagatoObject.CreateBlankText
             MikuruCreate.BlankText($log.Current)
         Case NagatoObject.DirCreate
             MikuruCreate.NewDirectory($log.Current)
         Case NagatoObject.UserInputMouseDown
-            $iconView.MouseDown(argArgument[0], argArgument[1])
+            $surface.MouseDown(argArgument[0], argArgument[1])
     End Select
     
 End
@@ -177,11 +155,13 @@ Public Sub DirectoryObserver_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoObject.ObserverModefy
-            If Not $iconView.HasKey($log.Current &/ argValues[0]) Then refresh($log.Current)
+            If Not $surface.HasKey($log.Current &/ argValues[0]) Then refresh($log.Current)
         Case NagatoObject.ObserverDelete
-            $iconView.Delete($log.Current &/ argValues[0])
+            $surface.Delete($log.Current, $log.Current &/ argValues[0])
         Case NagatoObject.ObserverLost
-            $iconView.ShowLostDirectory()
+            $surface.ShowLostDirectory()
+        Case NagatoObject.ObserverClipboardChanged
+            $surface.RefreshKeepQuery($log.Current)
     End Select
     
 End
