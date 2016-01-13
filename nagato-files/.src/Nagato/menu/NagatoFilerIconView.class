@@ -43,19 +43,13 @@ End
 
 Public Sub ClearSelection(argSelection As String[])
     
-    $surface.ClearSelection()
+    $surface.ClearSelection(argSelection)
     
 End
 
 Public Sub ShowLostDirectory()
     
     $surface.ShowLostDirectory()
-    
-End
-
-Public Sub SetFocus(argPath As String)
-    
-    $actions.SetFocus(argPath)
     
 End
 

@@ -1,0 +1,16 @@
+' Gambas class file
+
+Public _$log As NagatoDirectoryLog
+Public _$userInput As NagatoFilerUserInput
+
+Public Enum RequestNewSelection = 1001, RequestFiltering = 1002, RequestRefresh = 1003
+Public Enum RequestSurfaceRefresh = 1004, RequestMove = 1005, RequestMouseDown = 1006
+
+Event Request(argRequest As Integer, argValues As Variant[])
+
+Public Sub _new(argLog As NagatoDirectoryLog, argUserInput As NagatoFilerUserInput)
+    
+    Me._$log = argLog
+    Me._$userInput = argUserInput
+    
+End

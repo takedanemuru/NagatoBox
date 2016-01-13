@@ -1,12 +1,13 @@
 ' Gambas class file
 
 Public Enum MenuNone = 0
-Public Enum MoveHeader = 1000, MoveBack = 1001, MoveForward = 1002, MoveUp = 1003, MoveHome = 1004
-Public Enum PathHeader = 2000, PathNew = 2001, PathCopyToClipboard = 2002, PathCutToClipboard = 2003
+Public Enum MoveHeader = 1000, MoveBack = 1001, MoveForward = 1002, MoveUp = 1003
+Public Enum MoveHome = 1004, MoveOpenDirectory = 1005, MoveOpenDirectoryInNewTab = 1006
+Public Enum PathHeader = 2000, PathCopyToClipboard = 2002, PathCutToClipboard = 2003
 Public Enum PathPasteFromClipboard = 2004
 Public Enum AppHeader = 3000, AppAbout = 3001, AppQuit = 3002
 Public Enum ViewHeader = 4000, ViewShowHidden = 4001, ViewNewTab = 4002, ViewNewPane = 4003, ViewReload = 4004
-Public Enum ViewReloadItem = 4005, ViewForceReload = 4006, ViewSearch = 4007
+Public Enum ViewReloadItem = 4005, ViewForceReload = 4006, ViewFiltering = 4007
 Public Enum ViewSelectAll = 4008, ViewUnselectAll = 4009, ViewInvertSelection = 4010, ViewContextMenu = 4011
 Public Enum ViewPanelColorChanged = 4012, ViewOpenTerminalHere = 4013, ViewChangeThumbnail = 4014
 Public Enum FileHeader = 5000, FileOpen = 5001, FileOpenWith = 5002, FileDelete = 5003, FileRename = 5004
@@ -14,12 +15,12 @@ Public Enum FileCopy = 5005
 Public Enum FileCreate = 5006, FileShowProperty = 5007, FileUnarchive = 5008, FileMoveToCurrentDir = 5009
 Public Enum FileMoveTo = 5010, FileCopyTo = 5011, FilePasteFromClipboard = 5012
 Public Enum DirHeader = 6000, DirOpen = 6001, DirOpenInNewTab = 6002, DirDelete = 6003, DirRename = 6004
-Public Enum DirCreate = 6005, DirShowProperty = 6006, DirComputeSize = 6007
+Public Enum DirShowProperty = 6006, DirComputeSize = 6007
 Public Enum TagHeader = 7000, TagAdd = 7001, TagRemove = 7002
 Public Enum ObserverHeader = 8000, ObserverModefy = 8001, ObserverDelete = 8002, ObserverLost = 8003
 Public Enum ObserverClipboardChanged = 8004
 Public Enum CreateHeader = 9000, CreateArchive = 9001, CreateClone = 9002, CreateSymblicLink = 9003
-Public Enum CreateBlankText = 9004, CreateCopyWholeDirectory = 9005
+Public Enum CreateBlankText = 9004, CreateCopyWholeDirectory = 9005, CreateDirectory = 9006
 Public Enum ControlHeader = 10000, ControlChanged = 10001, ControlActivated = 10002
 Public Enum UserInputHeader = 11000, UserInputMouseDrag = 11001, UserInputMouseDown = 11002
 Public Enum UserInputKeyPress = 11003, UserInputKeyPressWithControl = 11004

@@ -53,7 +53,7 @@ Public Sub Asakura_Activate()
     If Me._$iconView.Key = "" Then Return
     
     If IsDir(Me._$iconView.Key) Then
-        Raise Signal(NagatoObject.DirOpen, [Me._$iconView.Key])
+        Raise Signal(NagatoObject.MoveOpenDirectory, [Me._$iconView.Key])
     Else
         MikuruFile.Exec(Me._$iconView.Key)
     End If

@@ -2,12 +2,12 @@
 
 Inherits NagatoIconViewHandler
 
-Public Sub SetFocus(argPath As String)
-    
-    Me._$iconView[argPath].Selected = True
-    Me._$iconView[argPath].EnsureVisible()
-    
-End
+' Public Sub SetFocus(argPath As String)
+'     
+'     Me._$iconView[argPath].Selected = True
+'     Me._$iconView[argPath].EnsureVisible()
+'     
+' End
 
 Public Function Delete(argPath As String) As Boolean
     

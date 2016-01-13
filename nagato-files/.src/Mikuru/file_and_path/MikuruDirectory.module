@@ -38,9 +38,6 @@ Public Sub GetInverted(argDirectory As String, argSelected As String[]) As Strin
     Dim yukiInverted As String[] = Me.GetAll(argDirectory)
     Dim yukiPath As String
     
-    MikuruArrayTest(yukiInverted)
-    MikuruArrayTest(argSelected)
-    
     For Each yukiPath In argSelected
         Try yukiInverted.Remove(yukiInverted.Find(yukiPath))
     Next
@@ -49,12 +46,10 @@ Public Sub GetInverted(argDirectory As String, argSelected As String[]) As Strin
     
 End
 
-Public Sub GetCountNonRecursive(argDirectory As String, argIncludeHidden As Boolean) As Integer
+Public Sub HasItem(argDirectory As String) As Integer
     
-    If argIncludeHidden Then
-        Return Dir(argDirectory, "*").Count
-    Else
-        Return Dir(argDirectory, "[^.]*").Count
-    Endif
+    If NagatoSettings.ShowHidden Then Return (Dir(argDirectory, "*").Count > 0)
+    
+    Return (Dir(argDirectory, "[^.]*").Count > 0)
     
 End

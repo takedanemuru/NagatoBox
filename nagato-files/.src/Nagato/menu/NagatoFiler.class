@@ -2,17 +2,16 @@
 
 Inherits NagatoObject
 
-Private $menuBar As NagatoMenuPanel
-Private $surface As NagatoFilerSurface
 Private $log As NagatoDirectoryLog
 Private $directoryObserver As NagatoFilerDirectoryObserver
-
-Private $fileEvent As New NagatoFilerEventFile
+Private $menuBar As NagatoMenuPanel
+Private $surface As NagatoFilerSurface
+Private $eventFacade As NagatoFilerEventFacade
 
 Private Sub refresh(argDirectory As String)
     
     $menuBar.SetPath(argDirectory)
-    $surface.Refresh(argDirectory)
+    $surface.SurfaceRefresh(argDirectory)
     
 End
 
@@ -23,7 +22,7 @@ Private Sub move(argDirectory As String)
     $log.Move(argDirectory)
     $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
     refresh(argDirectory)
-    $directoryObserver.SetDirectory(argDirectory)
+    $directoryObserver.Directory = argDirectory
     
 End
 
@@ -37,54 +36,6 @@ Private Sub filtering(argDirectory As String, argQuery As String)
     
 End
 
-Private Sub viewEventHandler(argSignal As Integer, argValues As Variant[])
-    
-    Select Case argSignal
-        Case NagatoObject.ViewChangeThumbnail
-            HaruhiThumbnailSelector.SetThumbnails(argValues[0])
-            refresh($log.Current)
-        Case NagatoObject.ViewNewTab
-            TFEI.AddNewDirectory(User.Home)
-        Case NagatoObject.ViewForceReload
-            NagatoDBThumbnailer.ForceCleanUp($log.Current)
-            refresh($log.Current)
-        Case NagatoObject.ViewSelectAll
-            $surface.SelectAll($log.Current)
-        Case NagatoObject.ViewUnselectAll
-            Clipboard.Clear()
-            $surface.Refresh($log.Current)
-        Case NagatoObject.ViewInvertSelection
-            $surface.InvertSelection($log.Current)
-        Case NagatoObject.ViewOpenTerminalHere
-            NagatoOpen.OpenTerminal($log.Current)
-        Case NagatoObject.ViewSearch
-            filtering(argValues[0], argValues[1])
-        Case NagatoObject.ViewContextMenu
-            popUpContextMenu()
-    End Select
-    
-End
-
-Public Sub tagEventHandler(argSignal As Integer)
-    
-    Select Case argSignal
-        Case NagatoObject.TagAdd
-             If NagatoFilerDialogs.Tagging($surface.Selection) Then $surface.Refresh($log.Current)
-        Case NagatoObject.TagRemove
-             NagatoDBSymbol.RemovePaths($surface.Selection)
-             $surface.Refresh($log.Current)
-    End Select
-    
-End
-
-Private Sub popUpContextMenu()
-    
-    Dim yukiMenu As New NagatoContextMenuIconViewFiler(HaruhiMain, $log.Current)
-    
-    yukiMenu.PopUp()
-    
-End
-
 Public Sub SetNewDirectory(argDirectory As String)
     
     If $log.Current <> argDirectory Then move(argDirectory)
@@ -93,7 +44,9 @@ End
 
 Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
     
-    $surface.RefreshWithSearchQuery(MikuruFileSearch[$log.Current, argQuery, argRecursive])
+    Dim yukiSearchResult As String[] = MikuruFileSearch[$log.Current, argQuery, argRecursive]
+    
+    $surface.SetSeachResult(yukiSearchResult)
     
 End
 
@@ -112,42 +65,18 @@ End
 Public Sub _new(argContainer As TabStrip, argDirectory As String)
     
     $log = New NagatoDirectoryLog
-    $menuBar = New NagatoMenuPanel(argContainer) As "MenuItem"
-    $surface = New NagatoFilerSurface(argContainer) As "MenuItem"
+    $menuBar = New NagatoMenuPanel(argContainer) As "UserInterface"
+    $surface = New NagatoFilerSurface(argContainer) As "UserInterface"
     $directoryObserver = New NagatoFilerDirectoryObserver(argDirectory) As "DirectoryObserver"
-
+    $eventFacade = New NagatoFilerEventFacade($log, $surface.UserInput) As "EventHandler"
+    
     move(IIf(argDirectory = "", User.Home, argDirectory))
     
 End
 
-Public Sub MenuItem_Signal(argEvent As Integer, argArgument As Variant[])
+Public Sub UserInterface_Signal(argEvent As Integer, argArgument As Variant[])
     
-    Select Case argEvent
-        Case NagatoObject.DirOpen
-            move(argArgument[0])
-        Case NagatoObject.DirOpenInNewTab
-            TFEI.AddNewDirectory(argArgument[0])
-        Case NagatoObject.FileHeader To NagatoObject.FileHeader + 999
-            $fileEvent($log.Current, $surface.Selection, argEvent, argArgument)
-        Case NagatoObject.MoveHeader To NagatoObject.MoveHeader + 999
-            move($log.GetMoveTo(argEvent))
-        Case NagatoObject.ViewHeader To NagatoObject.ViewHeader + 999
-            viewEventHandler(argEvent, argArgument)
-        Case NagatoObject.TagHeader To NagatoObject.TagHeader + 999
-            tagEventHandler(argEvent)
-        Case NagatoObject.PathNew
-            If IsDir(argArgument[0]) Then move(argArgument[0])
-        Case NagatoObject.CreateCopyWholeDirectory
-             MikuruFileManuever.CopyToDirectory([argArgument[0]], $log.Current)
-        Case NagatoObject.CreateArchive
-            MikuruCreate.Archive($surface.Selection)
-        Case NagatoObject.CreateBlankText
-            MikuruCreate.BlankText($log.Current)
-        Case NagatoObject.DirCreate
-            MikuruCreate.NewDirectory($log.Current)
-        Case NagatoObject.UserInputMouseDown
-            $surface.MouseDown(argArgument[0], argArgument[1])
-    End Select
+    $eventFacade(argEvent, argArgument)
     
 End
 
@@ -155,13 +84,32 @@ Public Sub DirectoryObserver_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoObject.ObserverModefy
-            If Not $surface.HasKey($log.Current &/ argValues[0]) Then refresh($log.Current)
+            If Not $surface.Exist($log.Current &/ argValues[0]) Then refresh($log.Current)
         Case NagatoObject.ObserverDelete
-            $surface.Delete($log.Current, $log.Current &/ argValues[0])
+            $surface.SurfaceDelete($log.Current, $log.Current &/ argValues[0])
         Case NagatoObject.ObserverLost
             $surface.ShowLostDirectory()
         Case NagatoObject.ObserverClipboardChanged
             $surface.RefreshKeepQuery($log.Current)
+    End Select
+    
+End
+
+Public Sub EventHandler_Request(argRequest As Integer, argValues As Variant[])
+    
+    Select Case argRequest
+        Case NagatoFilerEvent.RequestFiltering
+            filtering(argValues[0], argValues[1])
+        Case NagatoFilerEvent.RequestNewSelection
+            $surface.NewSelection($log.Current, argValues[0])
+        Case NagatoFilerEvent.RequestRefresh
+            refresh(argValues[0])
+        Case NagatoFilerEvent.RequestSurfaceRefresh
+            $surface.SurfaceRefresh(argValues[0])
+        Case NagatoFilerEvent.RequestMove
+            move(argValues[0])
+        Case NagatoFilerEvent.RequestMouseDown
+            $surface.MouseDown(argValues[0], argValues[1])
     End Select
     
 End

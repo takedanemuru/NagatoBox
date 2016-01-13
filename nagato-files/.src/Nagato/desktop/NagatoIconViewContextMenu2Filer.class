@@ -8,8 +8,8 @@ Public Sub _AddFileOpenMenu()
     
     If IsDir(Me._$path) Then
         With NagatoObject
-            Me._AddContextMenu("Open", .DirOpen, MikuruIcon.Get("folder"))
-            Me._AddContextMenu("Open in new tab", .DirOpenInNewTab, MikuruIcon.Get("toggle-expand-alt"))
+            Me._AddContextMenu("Open", .MoveOpenDirectory, MikuruIcon.Get("folder"))
+            Me._AddContextMenu("Open in new tab", .MoveOpenDirectoryInNewTab, MikuruIcon.Get("toggle-expand-alt"))
         End With
     Else If MikuruMimeType.IsDesktopEntry(Me._$path) Then
         yukiMenu = New NagatoDefaultActionMenuDesktopEntry(Me._$rootMenu, Me._$path)

@@ -7,7 +7,7 @@ Private Sub pressKey(argKeyCode As Integer)
     Select Case argKeyCode
         Case Key.Enter, 16777220
             If Not IsDir(Me._$selection.LastSelected) Then Return
-            Raise Signal(NagatoObject.DirOpen, [Me._$selection.LastSelected])
+            Raise Signal(NagatoObject.MoveOpenDirectory, [Me._$selection.LastSelected])
         Case Key.Esc, 16777216
             Raise Signal(NagatoObject.ViewUnselectAll, Null)
         Case Key.Delete
@@ -38,7 +38,7 @@ Private Sub pressKeyWithCtrl(argKeyCode As Integer)
             NagatoSettings.ShowHidden = Not NagatoSettings.ShowHidden
             TFEI.RefreshAll()
         Case Key["n"]
-            Raise Signal(NagatoObject.DirCreate, Null)
+            Raise Signal(NagatoObject.CreateDirectory, Null)
         Case Key["f"]
             TFEI.SetSearch(False)
         Case Key["x"]
@@ -48,7 +48,7 @@ Private Sub pressKeyWithCtrl(argKeyCode As Integer)
         Case Key["v"]
             Raise Signal(NagatoObject.FilePasteFromClipboard, [""])
         Case Key["t"]
-            Raise Signal(NagatoObject.DirOpenInNewTab, [User.Home])
+            Raise Signal(NagatoObject.MoveOpenDirectoryInNewTab, [User.Home])
     End Select
     
 End

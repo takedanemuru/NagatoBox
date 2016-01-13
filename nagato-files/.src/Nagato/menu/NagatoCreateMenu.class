@@ -65,7 +65,7 @@ End
 
 Public Sub _InitializeMenu() ' override
     
-    Me._AddMenu(("New Directory"), NagatoObject.DirCreate, "folder")
+    Me._AddMenu(("New Directory"), NagatoObject.CreateDirectory, "folder")
     Me._AddMenu(("New Text File"), NagatoObject.CreateBlankText, "document")
         Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
     addDirectories(Me._$rootMenu, NagatoXdg.UserDirs.Templates)

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Private $fileEvent As NagatoFilerEventFile
+Private $viewEvent As NagatoFilerEventView
+Private $tagEvent As NagatoFilerEventTag
+Private $createEvent As NagatoFilerEventCreate
+Private $moveEvent As NagatoFilerEventMove
+
+Event Request(argRequest As Integer, argValues As Variant[])
+
+Public Sub _new(argLog As NagatoDirectoryLog, argUserInput As NagatoFilerUserInput)
+    
+    $fileEvent = New NagatoFilerEventFile(argLog, argUserInput)
+    $viewEvent = New NagatoFilerEventView(argLog, argUserInput) As "EventHandler"
+    $tagEvent = New NagatoFilerEventTag(argLog, argUserInput) As "EventHandler"
+    $moveEvent = New NagatoFilerEventMove(argLog, argUserInput) As "EventHandler"
+    $createEvent = New NagatoFilerEventCreate(argLog, argUserInput)
+    
+End
+
+Public Sub _call(argEvent As Integer, argArgument As Variant[])
+    
+    Select Case argEvent
+        Case NagatoObject.FileHeader To NagatoObject.FileHeader + 999
+            $fileEvent(argEvent, argArgument)
+        Case NagatoObject.MoveHeader To NagatoObject.MoveHeader + 999
+            $moveEvent(argEvent, argArgument)
+        Case NagatoObject.ViewHeader To NagatoObject.ViewHeader + 999
+            $viewEvent(argEvent, argArgument)
+        Case NagatoObject.TagHeader To NagatoObject.TagHeader + 999
+            $tagEvent(argEvent, argArgument)
+        Case NagatoObject.CreateHeader To NagatoObject.CreateHeader + 999
+            $createEvent(argEvent, argArgument)
+        Case NagatoObject.UserInputMouseDown
+            Raise Request(NagatoFilerEvent.RequestMouseDown, argArgument)
+    End Select
+    
+End
+
+Public Sub EventHandler_Request(argRequest As Integer, argValues As Variant[])
+    
+    Raise Request(argRequest, argValues)
+    
+End

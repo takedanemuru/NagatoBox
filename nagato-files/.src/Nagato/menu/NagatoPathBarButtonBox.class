@@ -33,7 +33,7 @@ Public Sub ButtonBox_Activate()
     yukiData.Add(MikuruPathBarAddress.GetDirectory($buttonBox.Text))
     yukiData.Add(MikuruPathBarAddress.GetFileName($buttonBox.Text))
     
-    Raise Signal(NagatoObject.ViewSearch, yukiData)
+    Raise Signal(NagatoObject.ViewFiltering, yukiData)
     
 End
 
