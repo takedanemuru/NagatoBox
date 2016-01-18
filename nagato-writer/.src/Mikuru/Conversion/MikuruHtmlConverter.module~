@@ -5,7 +5,7 @@ Property Read WorkingFileRelative As String
 Property Read WorkingFileAbsolute As String
 
 Private $sourceText As String
-Private $workinPathAbsolute As New NagatoWorkingFile
+Private $workinPathAbsolute As New NagatoWorkingFileAbsolute
 Private $workinPathRelative As New NagatoWorkingFileRelative
 
 Public Sub ToHtmlDirect(argSourceText As String)
@@ -13,6 +13,16 @@ Public Sub ToHtmlDirect(argSourceText As String)
     $sourceText = argSourceText
     $workinPathAbsolute.Set(argSourceText)
 
+End
+
+Public Sub Export(argTargetPath As String)
+    
+    Dim yukiTempPath As String = Temp$() & ".md"
+    
+    File.Save(yukiTempPath, $sourceText)
+    
+    Exec ["pandoc", "-f", "html", "--self-contained", "-o", argTargetPath, yukiTempPath]
+    
 End
 
 Private Function Source_Read() As String

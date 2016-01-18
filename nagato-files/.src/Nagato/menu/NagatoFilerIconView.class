@@ -3,25 +3,25 @@
 Inherits NagatoIconViewHandler
 
 Private $searchResult As New String[]
-Private $surface As NagatoIconViewSurface
+Private $icons As NagatoIconViewIcons
 Private $actions As NagatoIconViewAction
 
 Public Sub ResetIcon(argPath As String, argSelected As Boolean)
     
-    $surface.ResetIcon(argPath, argSelected)
+    $icons.ResetIcon(argPath, argSelected)
     
 End
 
 Public Sub Refresh(argDirectory As String, argSelection As String[], argLastSelected As String)
     
-    $surface.RefreshIconView(argDirectory, argSelection, argLastSelected)
+    $icons.RefreshIconView(argDirectory, argSelection, argLastSelected)
     
 End
 
 Public Sub RefreshWithSearchResult(argSearchResult As String[], argSelection As String[])
     
     $searchResult = argSearchResult.Copy()
-    $surface.RefreshWithSearchResult(argSearchResult, argSelection)
+    $icons.RefreshWithSearchResult(argSearchResult, argSelection)
     
 End
 
@@ -37,19 +37,19 @@ End
 
 Public Sub Ensure(argPath As String)
     
-    $surface.Ensure(argPath)
+    $icons.Ensure(argPath)
     
 End
 
 Public Sub ClearSelection(argSelection As String[])
     
-    $surface.ClearSelection(argSelection)
+    $icons.ClearSelection(argSelection)
     
 End
 
 Public Sub ShowLostDirectory()
     
-    $surface.ShowLostDirectory()
+    $icons.ShowLostDirectory()
     
 End
 
@@ -67,7 +67,7 @@ End
 
 Public Sub _OptionalOnInitialize()
     
-    $surface = New NagatoIconViewSurface(Me._$iconView)
+    $icons = New NagatoIconViewIcons(Me._$iconView)
     $actions = New NagatoIconViewAction(Me._$iconView)
     
 End

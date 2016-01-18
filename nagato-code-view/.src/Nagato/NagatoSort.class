@@ -3,16 +3,12 @@
 Property Read Ascend As Boolean
 Property Read TargetColumn As Integer
 
-Private $ascend As Boolean = True
+Private $ascend As Boolean 
 Private $targetColumn As Integer 
 
 Public Function IsLesser(argGridData As Variant, argRowData As Variant) As Boolean
     
-    If $ascend Then
-        Return (argGridData > argRowData)
-    Else
-        Return (argRowData > argGridData)
-    Endif
+    Return IIf($ascend, (argGridData > argRowData), (argRowData > argGridData))
     
 Catch
     Return False
@@ -32,7 +28,7 @@ End
 Public Sub Reset()
     
     $targetColumn = -1
-    $ascend = True
+    $ascend = False
     
 End
 

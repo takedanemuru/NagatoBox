@@ -39,7 +39,7 @@ End
 
 Public Sub EnsureVisible()
     
-    $iconView.Ensure()
+    $iconView.Ensure($userInput.LastSelected)
     
 End
 
@@ -51,7 +51,7 @@ End
 
 Public Sub RefreshKeepQuery(argDirectory As String)
     
-    $iconView.RefreshKeepQuery(argDirectory)
+    $iconView.RefreshKeepQuery(argDirectory, $userInput.Selection, $userInput.LastSelected)
     
 End
 

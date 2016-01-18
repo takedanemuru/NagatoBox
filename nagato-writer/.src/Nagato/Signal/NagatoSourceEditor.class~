@@ -2,7 +2,8 @@
 
 Inherits NagatoUxContainer
 
-Property Text As String
+Property Read Text As String
+Property Read Path As String
 
 Private $hBox As HBox
 Private $fileHandler As New NagatoFileHandler As "TFEI"
@@ -40,10 +41,11 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     If Not NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
     NagatoSettings.PushRecentPath($fileHandler.Path)
     $headersList.Refresh($fileHandler.Headers)
+'    If $fileHandler.Path Then HaruhiMain.Title = File.Name($fileHandler.Path)
 
 End
 
-Public Sub EditEvent(argEvent As Integer)
+Public Sub EditEvent(argEvent As Integer, Optional argValues As Variant[])
     
     Select Case argEvent
         Case MikuruSignal.EditInsertBullets
@@ -56,6 +58,8 @@ Public Sub EditEvent(argEvent As Integer)
             $textArea.InsertImagePathRelative($fileHandler.Path)
         Case MikuruSignal.EditInsertUrl
             $textArea.InsertUrlTemplate()
+        Case MikuruSignal.EditMoveToLine
+            $textArea.MoveToLine(argValues[0])
     End Select
     
 End
@@ -65,16 +69,6 @@ Public Sub GetSaveStatus() As Integer
     If $textArea.Text = $fileHandler.Buffer Then Return NagatoAppClosure.ResponseHasBeenSaved
 
     Return $appClosure.GetStatus()
-    
-End
-
-Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
-    
-    If argEvent = MikuruSignal.ViewMoveToLine Then
-        $textArea.MoveToLine(argValues[0])
-    Else
-        Me._RaiseSignal(argEvent, argValues)
-    End If
     
 End
 
@@ -90,8 +84,8 @@ Private Function Text_Read() As String
 
 End
 
-Private Sub Text_Write(Value As String)
+Private Function Path_Read() As String
 
-    $textArea.Text = Value
+    Return $fileHandler.Path
 
 End

@@ -21,7 +21,7 @@ End
 
 Public Function Paste(argDirectory As String)
     
-    If Clipboard.Format = "text/uri-list" Then 
+    If Clipboard.Formats.Exist("text/uri-list") Then 
         MikuruUriList.Copy(argDirectory, Clipboard.Paste("text/uri-list"))
     Else If Clipboard.Format = "text/nagato-selection-cut" Then
         MikuruUriList.Cut(argDirectory, Clipboard.Paste("text/nagato-selection-cut"))

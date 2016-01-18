@@ -77,6 +77,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    Raise Siganl(Last.Tag, Null)
+    Raise Signal(Last.Tag, Null)
     
 End

@@ -9,6 +9,15 @@ Public Function _GetPathToSave(argExtend As String) As String
     
 End
 
+Public Function _GetPathToSave2(argExtention As String, argPath As String) As String
+    
+    Dialog.Title = ("Save file")
+    Dialog.Path = File.Dir(argPath) &/ File.BaseName(argPath) & "." & argExtention
+    
+    Return IIf(Dialog.SaveFile(), "", Dialog.Path)
+    
+End
+
 Public Sub _ShowMessage(argTarget As String)
     
     Message.Info(Subst$("YUKI.N > File successfully saved to &1", argTarget), ("OK"))

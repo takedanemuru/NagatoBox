@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.90
+# Compiled with Gambas 3.8.4
 Title=nagato-writer
 Startup=Kyon
 Icon=Pictures/icons/quill.png
-Version=42.1.10
+Version=42.3.11
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -14,6 +14,8 @@ Component=gb.settings
 Component=gb.qt4.ext
 Component=gb.qt4.webkit
 Component=gb.util.web
+Component=gb.xml
+Component=gb.xml.html
 Description="a markdown editor"
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
@@ -24,7 +26,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-writer-42.1.10
+PackageName=nagato-writer-42.3.11
 CreateEachDirectory=1
 MimeTypes="text/x-markdown"
 Packager=1

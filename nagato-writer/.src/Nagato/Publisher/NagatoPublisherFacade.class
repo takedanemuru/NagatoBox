@@ -6,11 +6,11 @@ Private $odt As New NagatoPublisherOdt
 Private $epub As New NagatoPublisherEpub
 Private $dzSlides As New NagatoPublisherDzSlides
 
-Private Sub publish(argSignal As Integer)
+Private Sub publish(argSignal As Integer, argPath As String)
     
     Select Case argSignal
         Case MikuruSignal.PublishHtml
-            $html.Publish()
+            $html.Publish(argPath)
         Case MikuruSignal.PublishPdf
             $pdf.Publish()
         Case MikuruSignal.PublishOdt
@@ -23,12 +23,12 @@ Private Sub publish(argSignal As Integer)
     
 End
 
-Public Sub _call(argSignal As Integer)
+Public Sub _call(argSignal As Integer, argPath As String)
     
     If Not MikuruHtmlConverter.Source Then
         Message(("YUKI.N > No source text."), ("OK"))
     Else
-        publish(argSignal)
+        publish(argSignal, argPath)
     End If
     
 End

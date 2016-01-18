@@ -2,11 +2,36 @@
 
 Inherits NagatoPublisher
 
-Public Sub Publish()
+Private Function setStandaloneHtml(argPath As String) As String
     
-    Dim yukiTarget As String = Me._GetPathToSave("html")
-    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
+    Dim yukiHtmlDocument As New HtmlDocument(MikuruHtmlConverter.WorkingFileAbsolute)
     
+    yukiHtmlDocument.Title = (File.BaseName(argPath))
+    yukiHtmlDocument.StyleSheets.Add("./" & File.Name(NagatoValueListCssPreview.Current))
+    
+    Return yukiHtmlDocument.Content
+    
+End
+
+Private Sub ensureCssFile(argDirectory As String)
+    
+    Dim yukiTargetPath As String = argDirectory &/ File.Name(NagatoValueListCssPreview.Current)
+    
+    If Exist(yukiTargetPath) Then Return
+    Copy NagatoValueListCssPreview.Current To yukiTargetPath
+    
+End
+
+Public Sub Publish(argPath As String)
+    
+    Dim yukiTarget As String = Me._GetPathToSave2("html", argPath)
+    Dim yukiSource As String = Temp$()
+    
+    If Not yukiTarget Then Return
+
+    File.Save(yukiSource, setStandaloneHtml(yukiTarget))
+    ensureCssFile(File.Dir(yukiTarget))
+    If Exist(yukiTarget) Then Kill yukiTarget
     Copy yukiSource To yukiTarget
     
     Me._ShowMessage(yukiTarget)

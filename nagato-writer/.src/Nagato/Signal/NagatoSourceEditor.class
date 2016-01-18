@@ -2,7 +2,8 @@
 
 Inherits NagatoUxContainer
 
-Property Text As String
+Property Read Text As String
+Property Read Path As String
 
 Private $hBox As HBox
 Private $fileHandler As New NagatoFileHandler As "TFEI"
@@ -82,8 +83,8 @@ Private Function Text_Read() As String
 
 End
 
-Private Sub Text_Write(Value As String)
+Private Function Path_Read() As String
 
-    $textArea.Text = Value
+    Return $fileHandler.Path
 
 End

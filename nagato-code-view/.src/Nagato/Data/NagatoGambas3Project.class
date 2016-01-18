@@ -5,6 +5,7 @@ Property Read GridData As Variant[]
 Property Read Message As String
 Property Read PropertyCount As Integer
 Property Read MethodCount As Integer
+Property Read Ascend As Boolean
 
 Private $projectDirectory As New NagatoProjectDirectory
 Private $data As New NagatoDataFiles
@@ -73,5 +74,11 @@ End
 Private Function PropertyCount_Read() As Integer
 
     Return $data.PropertyCount
+
+End
+
+Private Function Ascend_Read() As Boolean
+
+    Return $data.Ascend
 
 End
