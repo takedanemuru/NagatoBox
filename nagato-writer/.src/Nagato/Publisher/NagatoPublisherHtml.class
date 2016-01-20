@@ -7,7 +7,7 @@ Private Function setStandaloneHtml(argPath As String) As String
     Dim yukiHtmlDocument As New HtmlDocument(MikuruHtmlConverter.WorkingFileAbsolute)
     
     yukiHtmlDocument.Title = (File.BaseName(argPath))
-    yukiHtmlDocument.StyleSheets.Add("./" & File.Name(NagatoValueListCssPreview.Current))
+    yukiHtmlDocument.StyleSheets.Add("./" & File.Name(NagatoValueListCssWeb.Current))
     
     Return yukiHtmlDocument.Content
     
@@ -15,10 +15,10 @@ End
 
 Private Sub ensureCssFile(argDirectory As String)
     
-    Dim yukiTargetPath As String = argDirectory &/ File.Name(NagatoValueListCssPreview.Current)
+    Dim yukiTargetPath As String = argDirectory &/ File.Name(NagatoValueListCssWeb.Current)
     
     If Exist(yukiTargetPath) Then Return
-    Copy NagatoValueListCssPreview.Current To yukiTargetPath
+    Copy NagatoValueListCssWeb.Current To yukiTargetPath
     
 End
 

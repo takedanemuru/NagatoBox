@@ -32,6 +32,8 @@
 + ~~show file name on title bar.~~
 + ~~set title tag on exported html file.~~
 + ~~set css path (relative. must be like ./target.css) on exported html file.~~
++ ~~new : web page specified css files.~~
++ ~~new : png icons.~~
 
 ## Dataoverminds
 

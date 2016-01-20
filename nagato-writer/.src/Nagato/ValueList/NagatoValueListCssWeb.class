@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoValueListCss
+
+Public _$count As Integer = 3
+Public _$values As Variant[] 
+Public _$names As String[] = [("GitHub Style"), ("Light Theme"), ("Dark Theme")]
+
+Public _$themes As String[] = ["github_web.css", "light_theme_web.css", "dark_theme_web.css"]
+
+Public Sub EnsureCssData()
+    
+    Me._$values = New Variant[]
+    Me._EnsureThemes(NagatoValueListCssWeb.Max)
+    
+End
+
+Public Function _GetCurrent() As String
+    
+    Return Me._$values[NagatoSettingsView.CssIndex]
+    
+End
