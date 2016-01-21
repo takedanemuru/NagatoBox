@@ -18,8 +18,8 @@
 
 ### nagato-lookup
 
-+ "use system theme" for appearance config.
-+ fix version number.
++ ~~"use system theme" for appearance config.~~ (BAD IDEA)
++ ~~fix version number.~~
 
 ### nagato-session
 

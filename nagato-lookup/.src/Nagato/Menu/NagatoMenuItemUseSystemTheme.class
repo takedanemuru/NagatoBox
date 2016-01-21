@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.GetCheckButton(NagatoSettingsForm.UseSystemTheme)
+        .Text = ("Use System Theme")
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    NagatoSettingsForm.UseSystemTheme = Not NagatoSettingsForm.UseSystemTheme
+    
+    If NagatoSettingsForm.UseSystemTheme Then
+        HaruhiMain.Background = Color.Transparent
+    Endif
+    
+End

@@ -7,16 +7,15 @@ Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
     Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
     
     With Me._$parentMenu
-        .Picture = MikuruIcons("equalizer")
-        .Text = ("Preference")
+        .Picture = MikuruIcons("color-palette")
+        .Text = ("Appearance")
     End With
     
 End
 
 Public Sub _OnRefreshChildMenus()
     
-    'Object.New("NagatoSubMenuAppearance", [Me._$parentMenu])
+    Object.New("NagatoMenuitemUseSystemTheme", [Me._$parentMenu])
     Object.New("NagatoMenuItemForegroundColor", [Me._$parentMenu])
-    Object.New("NagatoSubMenuRecentApplications", [Me._$parentMenu])
     
 End

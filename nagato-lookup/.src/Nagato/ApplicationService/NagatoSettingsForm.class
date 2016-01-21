@@ -3,6 +3,7 @@
 Inherits NagatoSettings
 
 Property Foreground As Integer
+Property UseSystemTheme As Boolean
 
 Private Function Foreground_Read() As Integer
 
@@ -13,6 +14,19 @@ End
 Private Sub Foreground_Write(Value As Integer)
 
     Me._$settings["color/form"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function UseSystemTheme_Read() As Boolean
+
+    Return Me._$settings["color/use_system_theme", True]
+
+End
+
+Private Sub UseSystemTheme_Write(Value As Boolean)
+
+    Me._$settings["color/use_system_theme"] = Value
     Me._$settings.Save()
 
 End
