@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Function getDesktopFilesWithMimeType() As String[]
+    
+    Dim yukiMimeList As String = "/usr/share/applications/mimeinfo.cache"
+    
+    Return MikuruConfFlie(yukiMimeList, "text/plain").Sort(gb.Natural)
+    
+End
+
+Public Sub AddOpenWithMenu(argDesktopFileName As String)
+    
+    Dim yukiPath As String = "/usr/share/applications" &/ argDesktopFileName
+    Dim yukiMenu As Menu
+    Dim yukiDesktopFile As DesktopFile
+    Dim yukiIcon As NagatoDesktopFileIcon
+    
+    If Not Exist(yukiPath) Then Return
+    
+    yukiMenu = New Menu(Me._$parentMenu) As "OpenWithMenu"
+    yukiDesktopFile = New DesktopFile(yukiPath)
+    yukiIcon = New NagatoDesktopFileIcon(yukiDesktopFile)
+    
+    With yukiMenu
+        .Text = yukiDesktopFile.Name
+        .Picture = yukiIcon.GetIcon(64)
+        .Tag = yukiDesktopFile
+    End With
+    
+End
+
+Public Function _OnGetText() As String
+    
+    Return ("Open As Text")
+    
+End
+
+Public Function _OnGetIcon() As Picture
+    
+    Return MikuruIcon.Get("document-edit")
+    
+End
+
+Public Sub _OnRefreshChildMenus()
+    
+    Dim yukiAdditionalDesktopFile As String
+    Dim yukiChecker As New String[]
+    
+    For Each yukiAdditionalDesktopFile In getDesktopFilesWithMimeType()
+        If yukiChecker.Exist(yukiAdditionalDesktopFile) Then Continue
+        AddOpenWithMenu(yukiAdditionalDesktopFile)
+        yukiChecker.Add(yukiAdditionalDesktopFile)
+    Next
+    
+End
+
+Public Sub OpenWithMenu_Click()
+    
+    Dim yukiDesktopFile As DesktopFile = Last.Tag
+    Dim yukiAutostartFile As NagatoAutostartFile = Me._$value
+    
+    Try yukiDesktopFile.Run(yukiAutostartFile.Path)
+    
+End

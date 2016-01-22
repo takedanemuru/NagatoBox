@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public _$parentMenu As Menu
+Public _$value As Variant
+
+Public Function _OnGetText() As String
+    
+    Return ""
+    
+End
+
+Public Function _OnGetIcon() As Picture
+    
+    Return Null
+    
+End
+
+Public Sub _OnRefreshChildMenus()
+    
+    
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With Me._$parentMenu
+        .Text = Me._OnGetText()
+        .Picture = Me._OnGetIcon()
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu, argValue As Variant)
+    
+    Me._InitializeParentMenu(argRootMenu)
+    Object.New("NagatoMenuItemDummy", [Me._$parentMenu, Null])
+    Me._$value = argValue
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    Me._$parentMenu.Children.Clear()
+    Me._OnRefreshChildMenus()
+    
+End

@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoMenuItem2
+
+Public Function _OnGetText() As String
+    
+    Return "YUKI.N > Don't look at me."
+    
+End

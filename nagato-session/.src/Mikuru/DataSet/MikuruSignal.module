@@ -2,3 +2,4 @@
 
 Public Enum AutostartsNone = 1000, AutostartsShowSource = 1001, AutostartsShowSourceReadOnly = 1002
 Public Enum AutostartsNew = 1003, AutostartsNewBlocker = 1004, AutostartsDelete = 1005
+Public Enum AutostartsCopyToUserAutostarts = 1006

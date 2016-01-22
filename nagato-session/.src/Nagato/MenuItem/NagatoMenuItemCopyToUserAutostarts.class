@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoMenuItem2
+
+Private Function isConfirmedToKill() As Boolean
+    
+    Dim yukiMessage As String = ("Autostart File has been exist. Are you sure to replace it ?")
+    
+    If Message.Warning(yukiMessage, ("Cancel"), ("Replace")) = 2 Then Return True
+    
+    Return False
+    
+End
+
+Public Function _OnGetText() As String
+    
+    Return ("Copy To User Autostarts")
+    
+End
+
+Public Function _OnGetIcon() As Picture
+    
+    Return MikuruIcon.Get("documents")
+    
+End
+
+Public Sub _OnMenuItemClick()
+    
+    Dim yukiAutostart As NagatoAutostartFile = Me._$value
+    Dim yukiTargetPath As String = MikuruAutostartDirectory.User &/ yukiAutostart.Name
+    
+    If Not Exist(yukiTargetPath) Then
+        Copy yukiAutostart.Path To yukiTargetPath
+    Else If isConfirmedToKill() Then
+        Try Kill yukiTargetPath
+        If Not Error Then Copy yukiAutostart.Path To yukiTargetPath
+    Endif
+    
+End

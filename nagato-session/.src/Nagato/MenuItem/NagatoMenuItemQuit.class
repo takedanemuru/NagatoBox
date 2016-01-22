@@ -1,6 +1,18 @@
 ' Gambas class file
 
-Inherits NagatoMenuItem
+Inherits NagatoMenuItem2
+
+Public Function _OnGetText() As String
+    
+    Return ("Quit")
+    
+End
+
+Public Function _OnGetIcon() As Picture
+    
+    Return MikuruIcon.Get("button-power")
+    
+End
 
 Public Sub _OnMenuItemClick()
     

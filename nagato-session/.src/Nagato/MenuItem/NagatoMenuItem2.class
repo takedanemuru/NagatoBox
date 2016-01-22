@@ -1,0 +1,47 @@
+' Gambas class file
+
+Public _$menu As Menu
+Public _$value As Variant
+
+Public Function _OnGetText() As String
+    
+    Return ""
+    
+End
+
+Public Function _OnGetIcon() As Picture
+    
+    Return Null
+    
+End
+
+Public Sub _OnMenuItemClick()
+    
+    
+    
+End
+
+Public Sub _InitializeMenu(argRootMenu As Menu)
+    
+    Me._$menu = New Menu(argRootMenu) As "MenuItem"
+    
+    With Me._$menu
+        .Text = Me._OnGetText()
+        .Picture = Me._OnGetIcon()
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu, argValue As Variant)
+    
+    Me._InitializeMenu(argRootMenu)
+    Me._$value = argValue
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._OnMenuItemClick()
+    
+End
+

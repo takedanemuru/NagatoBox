@@ -6,6 +6,7 @@ Public Sub _AbstractOnInitialize()
     
     Me._AddMenuItem("New", MikuruSignal.AutostartsNew, "magic-wand")
     Me._AddMenuItem("Show Detail", MikuruSignal.AutostartsShowSourceReadOnly, "search")
+    Object.New("NagatoSubMenuOpenAsText", [Me._$rootMenu, Me._$autostart])
     Me._AddMenuItem("Edit", MikuruSignal.AutostartsShowSource, "document-edit")
     Me._AddMenuItem("Delete", MikuruSignal.AutostartsDelete, "bin")
     

@@ -9,6 +9,8 @@ Public Sub _AbstractOnInitialize()
         Me._AddMenuItem("Show Detail", .AutostartsShowSourceReadOnly, "search")
     End With
     
+    Object.New("NagatoMenuItemCopyToUserAutostarts", [Me._$rootMenu, Me._$autostart])
+    
 End
 
 Public Sub MenuItem_Click()

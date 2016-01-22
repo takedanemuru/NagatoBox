@@ -23,8 +23,9 @@
 
 ### nagato-session
 
-+ edit desktop entry files in user autostarts as text file.
-+ copy desktop entry file from global autostarts to user autostarts
++ ~~edit desktop entry files in user autostarts directory as text file.~~
+    + ~~load icon from pixmap if it exists.~~
++ ~~copy desktop entry file from global autostarts to user autostarts~~
 + about dialog for NagatoBox ?
 
 ### nagato-writer
