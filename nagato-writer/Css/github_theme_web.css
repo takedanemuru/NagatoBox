@@ -1,11 +1,14 @@
 body {
-  font-family: Helvetica, arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: white;
-  padding: 30px; }
+    font-family: Helvetica, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    width: 640px;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 30px; }
 
 body > *:first-child {
   margin-top: 0 !important; }
@@ -82,12 +85,13 @@ h6 {
 p, blockquote, ul, ol, dl, li, table, pre {
   margin: 15px 0; }
 
-hr {
-  background: transparent url("images/dirty-shade.png") repeat-x 0 0;
-  border: 0 none;
-  color: #cccccc;
-  height: 4px;
-  padding: 0; }
+hr{
+    border:none;
+    border-top:solid 4px #CCC;
+    height:1px;
+    color:#E7E7E7;
+    margin: 0 6 0 6;
+}
 
 body > h2:first-child {
   margin-top: 0;

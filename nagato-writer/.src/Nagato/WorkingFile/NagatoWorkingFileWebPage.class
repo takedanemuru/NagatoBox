@@ -6,7 +6,9 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     
     Dim yukiCss As String = Subst$("--css=&1", NagatoValueListCssPreview.Current)
     
-    Exec ["pandoc", "-f", NagatoSettingsView.Syntax, "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    Exec ["pandoc", "-f", NagatoSettingsView.Syntax, "-s", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    
+    If NagatoSettings.UseMathjax Then MikuruMathjax.Convert(argTargetPath)
     
 End
 
@@ -15,7 +17,7 @@ Public Sub Set(argSourceText As String)
     Dim yukiSourcePath As String = Temp$()
     
     Me._ResetWorkingPath()
-    File.Save(yukiSourcePath, MikuruMacro.ConvertToRelative(argSourceText))
+    File.Save(yukiSourcePath, argSourceText)
     convert(yukiSourcePath, Me._$workingPath)
     
 End

@@ -89,18 +89,13 @@ h6 {
 p, blockquote, ul, ol, dl, li, table, pre {
   margin: 15px 0; }
 
-/*
-hr {
-  border-bottom: 4px solid #DFDFDF;
-  padding: 0; }
-*/  
-
-hr {
-  background: transparent url("images/dirty-shade.png") repeat-x 0 0;
-  border: 0 none;
-  color: #cccccc;
-  height: 4px;
-  padding: 0; }
+hr{
+    border:none;
+    border-top:solid 1px #CCC;
+    height:1px;
+    color:#FFFFFF;
+    margin: 0 6 0 6;
+}
 
 body > h2:first-child {
   margin-top: 0;

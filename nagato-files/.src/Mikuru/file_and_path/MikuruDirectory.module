@@ -25,7 +25,6 @@ Public Sub GetAll(argCurrentDirectory As String) As String[]
     Dim yukiPath As String
     
     For Each yukiPath In Dir(argCurrentDirectory, yukiPattern)
-        Debug argCurrentDirectory &/ yukiPath
         yukiAll.Add(argCurrentDirectory &/ yukiPath)
     Next
     

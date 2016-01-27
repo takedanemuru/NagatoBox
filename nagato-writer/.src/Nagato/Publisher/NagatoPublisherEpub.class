@@ -2,17 +2,17 @@
 
 Inherits NagatoPublisher
 
-Public Sub Publish()
+Public Sub Publish(argPath As String)
     
-    Dim yukiTarget As String = Me._GetPathToSave("epub")
-    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
+    Dim yukiTarget As String = Me._GetPathToSave2("epub", argPath)
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileEpub
     Dim yukiCover As String = "--epub-cover-image=" & User.Home &/ "headphones_x.png"
+    Dim yukiCss As String = NagatoValueListCssPreview.Current
     
     If Not yukiTarget Then Return
+    If HaruhiEpubMetadata.ShowDialog() <> MikuruDialog.ResponseApply Then Return
 
-    HaruhiEpubMetadata.ShowDialog()
-
-    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", NagatoValueListCssPreview.Current, "-S", yukiSource, "-o", yukiTarget] 
+    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", yukiCss, "-S", yukiSource, "-o", yukiTarget] 
     
     Me._ShowMessage(yukiTarget)
     

@@ -6,7 +6,7 @@ Public _$count As Integer = 3
 Public _$values As Variant[] 
 Public _$names As String[] = [("GitHub Style"), ("Light Theme"), ("Dark Theme")]
 
-Public _$themes As String[] = ["github.css", "light_theme.css", "dark_theme.css"]
+Public _$themes As String[] = ["github_theme.css", "light_theme.css", "dark_theme.css"]
 
 Public Sub EnsureCssData()
     

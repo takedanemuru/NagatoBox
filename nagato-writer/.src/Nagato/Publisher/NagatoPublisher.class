@@ -1,9 +1,9 @@
 ' Gambas class file
 
-Public Function _GetPathToSave(argExtend As String) As String
+Public Function _GetPathToSave(argExtend As String, Optional argName As String) As String
     
     Dialog.Title = ("Save file")
-    Dialog.Path = User.Home &/ "your_document." & argExtend
+    Dialog.Path = User.Home &/ IIf(argName, argName & ".", "your_document.") & argExtend
     
     Return IIf(Dialog.SaveFile(), "", Dialog.Path)
     

@@ -1,8 +1,9 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,65,76)
+  MoveScaled(0,0,94,76)
   Expand = True
+  Picture = Picture["Pictures/reading_nagato_yuki.jpg"]
   Arrangement = Arrange.Vertical
   Padding = 16
   { HBox1 HBox
@@ -10,6 +11,7 @@
     Padding = 8
     { TextLabel1 TextLabel
       MoveScaled(3,15,24,4)
+      Expand = True
       Text = ("Cover Image")
       Alignment = Align.Left
     }
@@ -23,6 +25,7 @@
     Padding = 4
     { TextLabel2 TextLabel
       MoveScaled(0,0,24,4)
+      Expand = True
       Text = ("Title")
       Alignment = Align.Left
     }
@@ -35,6 +38,7 @@
     Padding = 4
     { TextLabel3 TextLabel
       MoveScaled(0,0,24,4)
+      Expand = True
       Text = ("Auther")
       Alignment = Align.Left
     }
@@ -47,11 +51,32 @@
     Padding = 4
     { TextLabel4 TextLabel
       MoveScaled(0,0,24,4)
+      Expand = True
       Text = ("License")
       Alignment = Align.Left
     }
     { LicenseTextBox TextBox
       MoveScaled(28,1,34.2857,4)
+    }
+  }
+  { Spacer1 Panel
+    MoveScaled(13,62,34,6)
+    Enabled = False
+    Expand = True
+  }
+  { HBox5 HBox
+    MoveScaled(2,70,61,5)
+    { Spacer Panel
+      MoveScaled(0,0,24,4)
+      Expand = True
+    }
+    { CancelButton Button
+      MoveScaled(26,0,16,4)
+      Text = ("Cancel")
+    }
+    { ApplyButton Button
+      MoveScaled(44,0,16,4)
+      Text = ("Apply")
     }
   }
 }

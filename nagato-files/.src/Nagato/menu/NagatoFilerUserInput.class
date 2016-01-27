@@ -11,8 +11,6 @@ Private $iconViewMouse As NagatoFilerMouseHandler
 Private $iconViewDrag As NagatoIconViewDrag
 Private $iconViewKeyboard As NagatoIconViewKeyboard
 
-Event Cancel
-
 Public Sub ClearAll()
     
     $selection.ClearAll()

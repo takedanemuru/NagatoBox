@@ -1,8 +1,19 @@
 ' Gambas class file
 
-
 Public Sub Form_Open()
 
     AutherTextBox.Text = User.Name
+
+End
+
+Public Sub ApplyButton_Click()
+
+    Me.Close(MikuruDialog.ResponseApply)
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(MikuruDialog.ResponseCancel)
 
 End

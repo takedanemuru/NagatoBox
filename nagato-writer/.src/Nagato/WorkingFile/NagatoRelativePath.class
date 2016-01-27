@@ -1,9 +1,9 @@
 ' Gambas class file
 
-Property Read RelativePath As String
 Property Read DirectoryLevel As Integer
 Property Read ParentDirectories As String[]
-Property Read Directory As String
+Property Read ParentDirectoryUrl As String
+Property Read ParentDirectoryPath As String
 
 Private $relativePath As String
 Private $parentDirectories As New String[]
@@ -32,12 +32,6 @@ Public Sub SetPath(argPath As String)
     
 End
 
-Private Function RelativePath_Read() As String
-
-    Return Subst$("file://&1", File.Dir($relativePath))
-
-End
-
 Private Function DirectoryLevel_Read() As Integer
 
     Return $parentDirectories.Count
@@ -50,7 +44,13 @@ Private Function ParentDirectories_Read() As String[]
 
 End
 
-Private Function Directory_Read() As String
+Private Function ParentDirectoryUrl_Read() As String
+
+    Return Subst$("file://&1", File.Dir($relativePath))
+
+End
+
+Private Function ParentDirectoryPath_Read() As String
 
     Return File.Dir($relativePath)
 

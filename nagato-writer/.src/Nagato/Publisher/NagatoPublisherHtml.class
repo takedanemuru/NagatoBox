@@ -4,7 +4,7 @@ Inherits NagatoPublisher
 
 Private Function setStandaloneHtml(argPath As String) As String
     
-    Dim yukiHtmlDocument As New HtmlDocument(MikuruHtmlConverter.WorkingFileAbsolute)
+    Dim yukiHtmlDocument As New HtmlDocument(MikuruHtmlConverter.WorkingFileWebpage)
     
     yukiHtmlDocument.Title = (File.BaseName(argPath))
     yukiHtmlDocument.StyleSheets.Add("./" & File.Name(NagatoValueListCssWeb.Current))

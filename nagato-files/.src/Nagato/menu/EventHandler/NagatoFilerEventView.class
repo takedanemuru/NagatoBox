@@ -25,7 +25,7 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
             Clipboard.Clear()
             Raise Request(NagatoFilerEvent.RequestSurfaceRefresh, [Me._$log.Current])
         Case NagatoObject.ViewInvertSelection
-            callRequestNewSelection(MikuruDirectory.GetInverted(Me._$log.Current))
+            callRequestNewSelection(MikuruDirectory.GetInverted(Me._$log.Current, Me._$userInput.Selection))
         Case NagatoObject.ViewOpenTerminalHere
             NagatoOpen.OpenTerminal(Me._$log.Current)
         Case NagatoObject.ViewFiltering

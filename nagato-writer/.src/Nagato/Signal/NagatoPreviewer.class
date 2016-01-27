@@ -6,9 +6,7 @@ Private $webview As WebView
 
 Public Sub Refresh(argSource As String)
     
-    MikuruHtmlConverter.ToHtmlDirect(argSource)
-    $webview.Url = "file://" & Url$(MikuruHtmlConverter.WorkingFileAbsolute)
-    
+    $webview.Url = MikuruHtmlConverter.Convert(argSource)
     $webview.Refresh()
     
 End

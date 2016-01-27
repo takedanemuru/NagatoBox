@@ -41,6 +41,16 @@ Public Function _GetBaseImage(argSelected As Boolean) As Image
     
 End
 
+Public Function _GetTextToFitHeight(argText As String) As String
+    
+    Dim yukiFont As Font = Application.Font.Copy()
+    
+    yukiFont.Bold = True
+    
+    Return MikuruCollapsedText.GetFitToHeight(argText, yukiFont, Me.TextWidth, 100)
+    
+End
+
 Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As String, argMode As Integer) As Picture
     
     With Paint

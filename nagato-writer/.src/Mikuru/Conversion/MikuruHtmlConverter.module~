@@ -1,46 +1,48 @@
 ' Gambas module file
 
-Property Read Source As String
+Property Read HasSource As Boolean
 Property Read WorkingFileRelative As String
 Property Read WorkingFileAbsolute As String
+Property Read WorkingFileWebpage As String
 
 Private $sourceText As String
-Private $workinPathAbsolute As New NagatoWorkingFileAbsolute
-Private $workinPathRelative As New NagatoWorkingFileRelative
+Private $workingPathAbsolute As New NagatoWorkingFileAbsolute
+Private $workingPathRelative As New NagatoWorkingFileRelative
+Private $workingPathWebpage As New NagatoWorkingFileWebPage
 
-Public Sub ToHtmlDirect(argSourceText As String)
+Public Sub Convert(argSourceText As String) As String
 
     $sourceText = argSourceText
-    $workinPathAbsolute.Set(argSourceText)
+    $workingPathAbsolute.Set(argSourceText)
 
-End
-
-Public Sub Export(argTargetPath As String)
-    
-    Dim yukiTempPath As String = Temp$() & ".md"
-    
-    File.Save(yukiTempPath, $sourceText)
-    
-    Exec ["pandoc", "-f", "html", "--self-contained", "-o", argTargetPath, yukiTempPath]
-    
-End
-
-Private Function Source_Read() As String
-
-    Return $sourceText
+    Return $workingPathAbsolute.WorkingUrl
 
 End
 
 Private Function WorkingFileRelative_Read() As String
 
-    $workinPathRelative.Set($sourceText)
+    $workingPathRelative.Set($sourceText)
 
-    Return $workinPathRelative.WorkingPath
+    Return $workingPathRelative.WorkingPath
 
 End
 
 Private Function WorkingFileAbsolute_Read() As String
 
-    Return $workinPathAbsolute.WorkingPath
+    Return $workingPathAbsolute.WorkingPath
+
+End
+
+Private Function WorkingFileWebpage_Read() As String
+
+    $workingPathWebpage.Set($sourceText)
+
+    Return $workingPathWebpage.WorkingPath
+
+End
+
+Private Function HasSource_Read() As Boolean
+
+    Return $sourceText
 
 End

@@ -16,7 +16,7 @@ Private Sub publish(argSignal As Integer, argPath As String)
         Case MikuruSignal.PublishOdt
             $odt.Publish()
         Case MikuruSignal.PublishEpub3
-            $epub.Publish()
+            $epub.Publish(argPath)
         Case MikuruSignal.PublishDzslidePreview
             $dzSlides.Publish()
     End Select
@@ -25,7 +25,7 @@ End
 
 Public Sub _call(argSignal As Integer, argPath As String)
     
-    If Not MikuruHtmlConverter.Source Then
+    If Not MikuruHtmlConverter.HasSource Then
         Message(("YUKI.N > No source text."), ("OK"))
     Else
         publish(argSignal, argPath)

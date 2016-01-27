@@ -36,6 +36,9 @@ Public Function Reset(argPaths As String[]) As String ' returns new first path
     
     Return IIf(Me._$paths.Count > 0, argPaths[0], "")
     
+Catch
+    Return ""
+    
 End
 
 Private Function Paths_Read() As String[]

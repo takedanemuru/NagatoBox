@@ -6,11 +6,11 @@ Public _$baseColor As Integer = Color.Blue
 
 Private Function getFolderDescription(argPath As String) As String
     
+    Dim yukiText As String = Me._GetTextToFitHeight(File.Name(argPath))
     Dim yukiFolders As String = Subst$("folder:&1", Dir(argPath, "*", gb.Directory).Count)
     Dim yukiFiles As String = Subst$("file:&1", Dir(argPath, "*", gb.File).Count)
-    Dim yukiText As String = File.Name(argPath) & "<br>" & yukiFolders & " " & yukiFiles
     
-    Return yukiText
+    Return yukiText & "<br>" & yukiFolders & " " & yukiFiles
     
 End
 

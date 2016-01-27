@@ -35,6 +35,10 @@
 + ~~set css path (relative. must be like ./target.css) on exported html file.~~
 + ~~new : web page specified css files.~~
 + ~~new : png icons.~~
++ ~~drop "dirty-shade.png" usage for css~~
++ ~~rename NagatoWorkingFileRelative to NagatoWorkingFileEPub~~
++ remove NAGATO_MACRO usage completely.
++ ~~fix : css files naming confusion~~
 
 ## Dataoverminds
 

@@ -5,7 +5,7 @@ Inherits NagatoPublisher
 Public Sub Publish()
     
     Dim yukiTarget As String = Me._GetPathToSave("odt")
-    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileRelative
+    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileAbsolute
 
     If Not yukiTarget Then Return
 

@@ -1,12 +1,7 @@
 ' Gambas module file
 
-Property Read HomePath As String
 Property RelativePath As String
 
-Private Const MacroHome As String = "NAGATO_MACRO_HOME"
-Private Const MacroRelativePath As String = "NAGATO_MACRO_DIR"
-Private Const MacroImageLink As String = "![NAGATO_MACRO_IMAGE](./"
-Private Const MacroImageLinkRelative As String = "![NAGATO_MACRO_IMAGE]("
 Private Const MacroJekyllNow As String = "![_config.yml]({{ site.baseurl }}"
 
 Private $relativePath As New NagatoRelativePath
@@ -21,52 +16,38 @@ Private Function replaceRelativeImagePath(argText As String) As String
     
     Dim yukiLevel As Integer
     Dim yukiText As String = argText
+    Dim yukiReplacement As String
     
     For yukiLevel = $relativePath.DirectoryLevel DownTo 1
-        yukiText = Replace$(yukiText, getReplacepattern(yukiLevel), $relativePath.ParentDirectories[yukiLevel - 1] & "/")
+        yukiReplacement = $relativePath.ParentDirectories[yukiLevel - 1] & "/"
+        yukiText = Replace$(yukiText, getReplacepattern(yukiLevel), yukiReplacement)
     Next
     
     Return yukiText
     
 End
 
-Public Function Set(argSourceText As String) As String
+Public Function ConvertToAbsolute(argSourceText As String) As String
     
     Dim yukiText As String = argSourceText
     
-    yukiText = Replace$(yukiText, MacroRelativePath, $relativePath.RelativePath)
-    yukiText = Replace$(yukiText, MacroHome, Me.HomePath)
     yukiText = replaceRelativeImagePath(yukiText)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![](&1/", $relativePath.RelativePath))
-    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![](&1/", File.Dir($relativePath.RelativePath)))
-    
-    yukiText = Replace$(yukiText, "NAGATO_MACRO_IMAGE", "")
+    yukiText = Replace$(yukiText, "](./", Subst$("](&1/", $relativePath.ParentDirectoryUrl))
+    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![](&1/", File.Dir($relativePath.ParentDirectoryUrl)))
     
     Return yukiText
     
 End
 
-Public Function ConvertToRelative(argSourceText As String) As String
+Public Function ConvertToEpub3(argSourceText As String) As String
     
-    Dim yukiText As String = argSourceText
+    Return Replace$(argSourceText, "](./", $relativePath.ParentDirectoryPath)
     
-    yukiText = Replace$(yukiText, MacroRelativePath, $relativePath.Directory)
-    yukiText = Replace$(yukiText, MacroHome, User.Home)
-    yukiText = Replace$(yukiText, MacroImageLink, Subst$("![img](&1/", $relativePath.Directory))
-    
-    Return yukiText
-    
-End
-
-Private Function HomePath_Read() As String
-
-    Return Subst$("file://&1", User.Home)
-
 End
 
 Private Function RelativePath_Read() As String
 
-    Return $relativePath.RelativePath
+    Return $relativePath.ParentDirectoryUrl
 
 End
 

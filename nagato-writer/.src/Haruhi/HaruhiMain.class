@@ -18,6 +18,7 @@ End
 
 Public Sub SetPath(argPath As String)
     
+    Me.Title = File.Name(argPath)
     $sourceEditor.FileEvent(MikuruSignal.FileOpenPath, [argPath])
     
 End

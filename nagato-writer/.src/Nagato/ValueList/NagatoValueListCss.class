@@ -50,7 +50,6 @@ Public Sub EnsureCssData()
     ensureDirectory(Me.Directory)
     ensureDirectory(Me.ImageDirectory)
     
-    Try Copy "Css/dirty-shade.png" To Me.ImageDirectory &/ "dirty-shade.png" 
     Try Copy "Css/para.png" To Me.ImageDirectory &/ "para.png"
     
     NagatoValueListCssPreview.EnsureCssData()

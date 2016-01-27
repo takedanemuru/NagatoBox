@@ -10,7 +10,7 @@ Public Sub InsertImagePathRelative(argCurrentPath As String)
         HaruhiSelectImage.Directory = IIf(argCurrentPath, File.Dir(argCurrentPath), User.Home)
         If HaruhiSelectImage.ShowDialog() <> .ResponseApply Then Return
         yukiPath = MikuruRelativePath(argCurrentPath, .Path)
-        Me._$widget.Insert(Subst$("![NAGATO_MACRO_IMAGE](&1)", yukiPath))
+        Me._$widget.Insert(Subst$("![&1](&2)", File.BaseName(yukiPath), yukiPath))
     End With
     
 End
