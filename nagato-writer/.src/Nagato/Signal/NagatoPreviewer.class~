@@ -6,9 +6,7 @@ Private $webview As WebView
 
 Public Sub Refresh(argSource As String)
     
-    MikuruHtmlConverter.Convert(argSource)
-    $webview.Url = MikuruHtmlConverter.PreviewUrl
-    
+    $webview.Url = MikuruHtmlConverter.Convert(argSource)
     $webview.Refresh()
     
 End

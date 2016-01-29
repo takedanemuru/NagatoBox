@@ -5,10 +5,24 @@ Inherits NagatoSignal
 Property Read Headers As Collection
 
 Private $headers As New Collection
+Private $headerLines As New NagatoHeaderLines
+
+Private Sub addHeaderData(argData As String, argLine As Integer)
+    
+    Dim yukiHeaderLevel As Integer
+    
+    For yukiHeaderLevel = 6 DownTo 1
+        If argData Not Begins String$(yukiHeaderLevel, "#") Then Continue
+        $headerLines.Add(yukiHeaderLevel, argLine)
+        Break
+    Next
+    
+End
 
 Public Sub Clear()
     
     $headers.Clear()
+    $headerLines.Clear()
     
 End
 
@@ -18,12 +32,20 @@ Public Sub Refresh(argBuffer As String)
     Dim yukiLines As String[] = Split(argBuffer, "\n")
     
     $headers.Clear()
+    $headerLines.Clear()
     
     For yukiIndex = 0 To yukiLines.Max
         If yukiLines[yukiIndex] Not Begins "#" Then Continue
         If yukiLines[yukiIndex] Begins "#######" Then Continue ' header level 7 doesn't work.
+        addHeaderData(yukiLines[yukiIndex], yukiIndex)
         $headers.Add(yukiLines[yukiIndex], CString(yukiIndex))
     Next
+    
+End
+
+Public Function GetIndex(argLine As Integer) As Integer
+    
+    Return $headerLines.All.Find(argLine)
     
 End
 

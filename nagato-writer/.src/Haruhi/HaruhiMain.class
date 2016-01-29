@@ -39,18 +39,16 @@ End
 
 Public Sub Form_Close()
     
-    With NagatoAppClosure
-        Select Case $sourceEditor.GetSaveStatus()
-            Case .ResponseHasBeenSaved, .ResponseDiscard
-                NagatoSettings.SaveFormSettings(Me)
-                Message.Info(("YUKI.N > I as indivisual also desire you to return... "), ("OK"))
-            Case .ResponseSaved
-                NagatoSettings.SaveFormSettings(Me)
-                Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
-            Case .ResponseCancel
-                Stop Event
-        End Select
-    End With
+    Select Case $sourceEditor.GetSaveStatus()
+        Case NagatoAppClosure.ResponseHasBeenSaved, NagatoAppClosure.ResponseDiscard
+            NagatoSettings.SaveFormSettings(Me)
+            Message.Info(("YUKI.N > I as indivisual also desire you to return... "), ("OK"))
+        Case NagatoAppClosure.ResponseSaved
+            NagatoSettings.SaveFormSettings(Me)
+            Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
+        Case NagatoAppClosure.ResponseCancel
+            Stop Event
+    End Select
     
 End
 
@@ -63,6 +61,9 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
             $publisher(argEvent, $sourceEditor.Path)
         Case MikuruSignal.ViewPreview
             $previewer.Refresh($sourceEditor.Text)
+        Case MikuruSignal.ViewMoveTag
+            Try Debug MikuruHtmlConverter.IDs[argArgs[0]]
+            If Not Error Then $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
         Case MikuruSignal.EditNone To MikuruSignal.EditNone + 999
             $sourceEditor.EditEvent(argEvent, argArgs)
         Case MikuruSignal.AppNone To MikuruSignal.AppNone + 999

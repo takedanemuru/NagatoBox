@@ -1,0 +1,51 @@
+' Gambas class file
+
+Property Read All As Integer[]
+
+Private $h1 As New Integer[]
+Private $h2 As New Integer[]
+Private $h3 As New Integer[]
+Private $h4 As New Integer[]
+Private $h5 As New Integer[]
+Private $h6 As New Integer[]
+Private $all As New Integer[][]
+
+Public Sub _new()
+    
+    $all.Add($h1)
+    $all.Add($h2)
+    $all.Add($h3)
+    $all.Add($h4)
+    $all.Add($h5)
+    $all.Add($h6)
+    
+End
+
+Public Sub Clear()
+    
+    Dim yukiArray As Integer[]
+    
+    For Each yukiArray In $all
+        yukiArray.Clear()
+    Next
+    
+End
+
+Public Sub Add(argHeaderLevel As Integer, argLine As Integer)
+    
+    $all[argHeaderLevel - 1].Add(argLine)
+    
+End
+
+Private Function All_Read() As Integer[]
+
+    Dim yukiAll As New Integer[]
+    Dim yukiArray As Integer[]
+    
+    For Each yukiArray In $all
+        yukiAll = yukiAll.Insert(yukiArray)
+    Next
+
+    Return yukiAll
+
+End

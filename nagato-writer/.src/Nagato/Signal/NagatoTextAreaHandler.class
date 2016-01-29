@@ -59,6 +59,12 @@ Public Sub Asakura_Opened()
     
 End
 
+Public Sub TextArea_Cursor()
+    
+    Raise Signal(MikuruSignal.ViewMoveCursor, [$textArea.Line])
+    
+End
+
 Public Sub TextArea_Change()
     
     If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)

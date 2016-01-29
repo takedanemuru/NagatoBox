@@ -1,13 +1,13 @@
 ' Gambas module file
 
 Property Read HasSource As Boolean
-Property Read WorkingFileRelative As String
+Property Read WorkingFileEpub As String
 Property Read WorkingFileAbsolute As String
 Property Read WorkingFileWebpage As String
 
 Private $sourceText As String
 Private $workingPathAbsolute As New NagatoWorkingFileAbsolute
-Private $workingPathRelative As New NagatoWorkingFileRelative
+Private $workingPathEpub As New NagatoWorkingFileEpub
 Private $workingPathWebpage As New NagatoWorkingFileWebPage
 
 Public Sub Convert(argSourceText As String) As String
@@ -19,11 +19,11 @@ Public Sub Convert(argSourceText As String) As String
 
 End
 
-Private Function WorkingFileRelative_Read() As String
+Private Function WorkingFileEpub_Read() As String
 
-    $workingPathRelative.Set($sourceText)
+    $workingPathEpub.Set($sourceText)
 
-    Return $workingPathRelative.WorkingPath
+    Return $workingPathEpub.WorkingPath
 
 End
 

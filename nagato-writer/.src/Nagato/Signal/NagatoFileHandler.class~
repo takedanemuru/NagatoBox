@@ -2,12 +2,27 @@
 
 Inherits NagatoSignal
 
-Property Read Headers As Collection
 Property Read Buffer As String
 Property Read Path As String
 
 Private $headers As New NagatoSourceHeaders
 Private $buffer As New NagatoFileBufferHandler
+
+Public Function GetHeaderIndex(argLine As Integer) As Integer
+    
+    Dim yukiLine As String
+    Dim yukiKey As Integer
+    
+    For Each yukiLine In $headers.Headers
+        yukiKey = CInt($headers.Headers.Key) 
+        If argLine > yukiKey Then Continue
+        If argLine = yukiKey Then Return $headers.GetIndex(yukiKey) 
+        Return $headers.GetIndex(yukiKey) - 1
+    Next
+    
+    Return -1
+    
+End
 
 Public Function SetPath(argPath As String) As String
     
@@ -53,9 +68,19 @@ Public Sub SaveAs(argText As String)
     
 End
 
-Public Function EnsureSaved(argText As String)
+Public Function EnsureSaved(argText As String) As Boolean
     
+    If argText = $buffer.Text Then Return True
     
+    Select Case HaruhiDialogClose.ShowDialog()
+        Case HaruhiDialogClose.ResponseCancel
+            Return False
+        Case HaruhiDialogClose.ResponseDiscard
+            Return True
+        Case HaruhiDialogClose.ResponseSave
+            Raise Signal(MikuruSignal.FileSave, Null)
+            Return True
+    End Select
     
 End
 
@@ -68,11 +93,5 @@ End
 Private Function Path_Read() As String
 
     Return $buffer.Path
-
-End
-
-Private Function Headers_Read() As Collection
-
-    Return $headers.Headers
 
 End

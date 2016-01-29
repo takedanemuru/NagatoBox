@@ -8,9 +8,25 @@ Property Read Path As String
 Private $hBox As HBox
 Private $fileHandler As New NagatoFileHandler As "TFEI"
 Private $headersList As NagatoSourceHeadersList
-Private $textArea As NagatoTextArea
+Private $textArea As NagatoTextArea 
 Private $appClosure As New NagatoAppClosure As "TFEI"
 Private $observer As Observer
+
+Private Function getHeaderIndex(argLine As Integer) As Integer
+    
+    Dim yukiLine As String
+    Dim yukiKey As Integer
+    
+    For Each yukiLine In $fileHandler.Headers
+        yukiKey = CInt($fileHandler.Headers.Key) 
+        If argLine > yukiKey Then Continue
+        If argLine = yukiKey Then Return $fileHandler.GetIndex(yukiKey) 
+        Return $fileHandler.GetIndex(yukiKey) - 1
+    Next
+    
+    Return -1
+    
+End
 
 Public Sub _Initialize()
     
@@ -41,7 +57,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     If Not NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
     NagatoSettings.PushRecentPath($fileHandler.Path)
     $headersList.Refresh($fileHandler.Headers)
-'    If $fileHandler.Path Then HaruhiMain.Title = File.Name($fileHandler.Path)
+    If $fileHandler.Path Then HaruhiMain.Title = File.Name($fileHandler.Path)
 
 End
 
@@ -69,6 +85,16 @@ Public Sub GetSaveStatus() As Integer
     If $textArea.Text = $fileHandler.Buffer Then Return NagatoAppClosure.ResponseHasBeenSaved
 
     Return $appClosure.GetStatus()
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.ViewMoveCursor Then
+        Raise Signal(MikuruSignal.ViewMoveTag, [getHeaderIndex(argValues[0])])
+    Else
+        Raise Signal(argSignal, argValues)
+    Endif
     
 End
 

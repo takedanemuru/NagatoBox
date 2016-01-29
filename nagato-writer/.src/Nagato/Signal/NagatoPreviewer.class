@@ -3,10 +3,19 @@
 Inherits NagatoUxContainer
 
 Private $webview As WebView
+Private $baseUrl As String
 
 Public Sub Refresh(argSource As String)
     
-    $webview.Url = MikuruHtmlConverter.Convert(argSource)
+    $baseUrl = MikuruHtmlConverter.Convert(argSource)
+    $webview.Url = $baseUrl
+    $webview.Refresh()
+    
+End
+
+Public Sub MoveToTag(argID As String)
+    
+    $webview.Url = $baseUrl & "#" & argID
     $webview.Refresh()
     
 End
