@@ -4,6 +4,7 @@ Private $menuPanel As NagatoMenuPanel
 Private $sourceEditor As NagatoSourceEditor
 Private $previewer As NagatoPreviewer
 Private $publisher As New NagatoPublisherFacade
+Private $observer As Observer
 
 Private Sub appEvent(argEvent As Integer)
     
@@ -26,6 +27,7 @@ End
 Public Sub _new()
 
     Application.MainWindow = Me
+    $observer = New Observer(NagatoSettingsView) As "Asakura"
 
 End
 
@@ -61,13 +63,20 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
             $publisher(argEvent, $sourceEditor.Path)
         Case MikuruSignal.ViewPreview
             $previewer.Refresh($sourceEditor.Text)
+        Case MikuruSignal.ViewMoveToBottom
+            $previewer.MoveToTag(MikuruHtmlConverter.BottomId)
         Case MikuruSignal.ViewMoveTag
-            Try Debug MikuruHtmlConverter.IDs[argArgs[0]]
-            If Not Error Then $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
+            If argArgs[0] >= 0 Then $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
         Case MikuruSignal.EditNone To MikuruSignal.EditNone + 999
             $sourceEditor.EditEvent(argEvent, argArgs)
         Case MikuruSignal.AppNone To MikuruSignal.AppNone + 999
             appEvent(argEvent)
     End Select
+    
+End
+
+Public Sub Asakura_RequestReload()
+    
+    $sourceEditor.FileEvent(MikuruSignal.FileSave, Null)
     
 End

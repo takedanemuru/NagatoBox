@@ -3,9 +3,11 @@
 Inherits NagatoWorkingFile
 
 Property Read IDs As String[]
+Property Read BottomId As String
 
 Private $htmlDocument As HtmlDocument
 Private $ids As New String[]
+Private $bottomId As String
 
 Private Function getSafeId(argTag As String) As String
     
@@ -46,6 +48,17 @@ Private Sub setId(argTargetPath As String)
         parseIds($htmlDocument.GetElementsByTagName(yukiTag))
     Next
     
+    'File.Save(argTargetPath, $htmlDocument.Content)
+    
+End
+
+Private Sub setHiddenBottomId(argTargetPath As String)
+    
+    $bottomId = getSafeId("nagato-auto-tag-bottom-")
+    
+    $htmlDocument.Body.NewElement("div")
+    $htmlDocument.Body.LastChild.NewAttribute("id", $bottomId)
+    
     File.Save(argTargetPath, $htmlDocument.Content)
     
 End
@@ -60,6 +73,7 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     If NagatoSettings.UseMathjax Then MikuruMathjax.Convert(argTargetPath)
     
     setId(argTargetPath)
+    setHiddenBottomId(argTargetPath)
     
 End
 
@@ -76,5 +90,11 @@ End
 Private Function IDs_Read() As String[]
 
     Return $ids
+
+End
+
+Private Function BottomId_Read() As String
+
+    Return $bottomId
 
 End

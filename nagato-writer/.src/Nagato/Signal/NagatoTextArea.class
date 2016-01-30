@@ -3,6 +3,7 @@
 Inherits NagatoUxContainer
 
 Property Text As String
+Property Read Line As Integer
 
 Private $textArea As NagatoTextAreaHandler
 Private $keyboardHandler As NagatoTextAreaKeyboard
@@ -17,6 +18,12 @@ Public Sub _initialize() ' override
     $keyboardHandler = New NagatoTextAreaKeyboard($textArea.TextArea) As "TFEI"
     $searchAndReplace = New NagatoTextAreaSearchAndReplace($textArea.TextArea) As "TFEI"
     $insertImagePath = New NagatoTextAreaInsertImagePath($textArea.TextArea) 
+    
+End
+
+Public Sub CheckCursorPosition()
+    
+    $textArea.CheckCursorPosition()
     
 End
 
@@ -65,5 +72,11 @@ End
 Private Sub Text_Write(Value As String)
 
     $textArea.SetTextWithNoSignal(Value)
+
+End
+
+Private Function Line_Read() As Integer
+
+    Return $textArea.Line
 
 End

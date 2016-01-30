@@ -5,6 +5,7 @@ Inherits NagatoUxContainer
 Property Read Text As String
 Property Read DialogPosition As Point
 Property Read TextArea As TextArea
+Property Read Line As Integer
 
 Private $textArea As TextArea
 Private $observer As Observer
@@ -52,6 +53,12 @@ Public Sub SetTextWithNoSignal(argText As String)
     
 End
 
+Public Sub CheckCursorPosition()
+    
+    Me.TextArea_Cursor()
+    
+End
+
 Public Sub Asakura_Opened()
     
     HaruhiReplacement.X = Me.DialogPosition.X
@@ -61,7 +68,11 @@ End
 
 Public Sub TextArea_Cursor()
     
-    Raise Signal(MikuruSignal.ViewMoveCursor, [$textArea.Line])
+    If $textArea.Pos + 4 > $textArea.Length Then
+        Raise Signal(MikuruSignal.ViewMoveToBottom, Null)
+    Else
+        Raise Signal(MikuruSignal.ViewMoveCursor, [$textArea.Line])
+    Endif
     
 End
 
@@ -91,5 +102,11 @@ End
 Private Function TextArea_Read() As TextArea
 
     Return $textArea
+
+End
+
+Private Function Line_Read() As Integer
+
+    Return $textArea.Line
 
 End

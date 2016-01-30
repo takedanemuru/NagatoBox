@@ -37,8 +37,9 @@
 + ~~new : png icons.~~
 + ~~drop "dirty-shade.png" usage for css~~
 + ~~rename NagatoWorkingFileRelative to NagatoWorkingFileEPub~~
-+ remove NAGATO_MACRO usage completely.
++ ~~remove NAGATO_MACRO usage completely.~~
 + ~~fix : css files naming confusion~~
++ finish epub3 metadata dialog.
 
 ## Dataoverminds
 

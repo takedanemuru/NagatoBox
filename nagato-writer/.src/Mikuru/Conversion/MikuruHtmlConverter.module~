@@ -4,6 +4,7 @@ Property Read HasSource As Boolean
 Property Read WorkingFileEpub As String
 Property Read WorkingFileAbsolute As String
 Property Read WorkingFileWebpage As String
+Property Read IDs As String[]
 
 Private $sourceText As String
 Private $workingPathAbsolute As New NagatoWorkingFileAbsolute
@@ -44,5 +45,11 @@ End
 Private Function HasSource_Read() As Boolean
 
     Return $sourceText
+
+End
+
+Private Function IDs_Read() As String[]
+
+    Return $workingPathAbsolute.IDs
 
 End

@@ -11,17 +11,7 @@ Private $buffer As New NagatoFileBufferHandler
 
 Public Function GetHeaderIndex(argLine As Integer) As Integer
     
-    Dim yukiLine As String
-    Dim yukiKey As Integer
-    
-    For Each yukiLine In $headers.Headers
-        yukiKey = CInt($headers.Headers.Key) 
-        If argLine > yukiKey Then Continue
-        If argLine = yukiKey Then Return $headers.GetIndex(yukiKey) 
-        Return $headers.GetIndex(yukiKey) - 1
-    Next
-    
-    Return -1
+    Return $headers.GetHeaderIndex(argLine)
     
 End
 

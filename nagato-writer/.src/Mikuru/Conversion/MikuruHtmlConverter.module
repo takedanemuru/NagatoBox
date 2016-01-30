@@ -5,6 +5,7 @@ Property Read WorkingFileEpub As String
 Property Read WorkingFileAbsolute As String
 Property Read WorkingFileWebpage As String
 Property Read IDs As String[]
+Property Read BottomId As String
 
 Private $sourceText As String
 Private $workingPathAbsolute As New NagatoWorkingFileAbsolute
@@ -51,5 +52,11 @@ End
 Private Function IDs_Read() As String[]
 
     Return $workingPathAbsolute.IDs
+
+End
+
+Private Function BottomId_Read() As String
+
+    Return $workingPathAbsolute.BottomId
 
 End

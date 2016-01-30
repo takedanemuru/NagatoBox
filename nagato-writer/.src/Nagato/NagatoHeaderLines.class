@@ -37,13 +37,19 @@ Public Sub Add(argHeaderLevel As Integer, argLine As Integer)
     
 End
 
+Public Sub _get(argLine As Integer) As Integer
+    
+    Return Me.All.Find(argLine)
+    
+End
+
 Private Function All_Read() As Integer[]
 
     Dim yukiAll As New Integer[]
-    Dim yukiArray As Integer[]
+    Dim yukiIndex As Integer
     
-    For Each yukiArray In $all
-        yukiAll = yukiAll.Insert(yukiArray)
+    For yukiIndex = 0 To $all.Max
+        yukiAll = yukiAll.Insert($all[yukiIndex])
     Next
 
     Return yukiAll

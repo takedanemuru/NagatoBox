@@ -7,17 +7,15 @@ Property Read Path As String
 
 Private $hBox As HBox
 Private $fileHandler As New NagatoFileHandler As "TFEI"
-Private $headersList As NagatoSourceHeadersList
+Private $headersList As NagatoListViewSourceHeaders
 Private $textArea As NagatoTextArea 
 Private $appClosure As New NagatoAppClosure As "TFEI"
-Private $observer As Observer
 
 Public Sub _Initialize()
     
     $hBox = New HBox(Me._$parentContainer)
-    $headersList = New NagatoSourceHeadersList($hBox) As "TFEI"
+    $headersList = New NagatoListViewSourceHeaders($hBox) As "TFEI"
     $textArea = New NagatoTextArea($hBox) As "TFEI"
-    $observer = New Observer(NagatoSettingsView) As "Asakura"
 
 End
 
@@ -42,6 +40,8 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     NagatoSettings.PushRecentPath($fileHandler.Path)
     $headersList.Refresh($fileHandler.Headers)
     If $fileHandler.Path Then HaruhiMain.Title = File.Name($fileHandler.Path)
+    Raise Signal(MikuruSignal.ViewMoveTag, [$fileHandler.GetHeaderIndex($textArea.Line)])
+    $textArea.CheckCursorPosition()
 
 End
 
@@ -67,7 +67,7 @@ End
 Public Sub GetSaveStatus() As Integer
     
     If $textArea.Text = $fileHandler.Buffer Then Return NagatoAppClosure.ResponseHasBeenSaved
-
+    
     Return $appClosure.GetStatus()
     
 End
@@ -79,12 +79,6 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     Else
         Raise Signal(argSignal, argValues)
     Endif
-    
-End
-
-Public Sub Asakura_RequestReload()
-    
-    Raise Signal(MikuruSignal.FileSave, Null)
     
 End
 
