@@ -22,7 +22,7 @@ Public Sub _call(argEvent As Integer, argArgument As Variant[])
     
     Select Case argEvent
         Case NagatoObject.FileHeader To NagatoObject.FileHeader + 999
-            $fileEvent(argEvent, argArgument)
+            $fileEvent(argEvent, argArgument[0])
         Case NagatoObject.MoveHeader To NagatoObject.MoveHeader + 999
             $moveEvent(argEvent, argArgument)
         Case NagatoObject.ViewHeader To NagatoObject.ViewHeader + 999

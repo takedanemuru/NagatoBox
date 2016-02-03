@@ -3,11 +3,23 @@
 Inherits NagatoUxContainer
 
 Private $webview As WebView
+Private $baseUrl As String
 
 Public Sub Refresh(argSource As String)
     
-    $webview.Url = MikuruHtmlConverter.Convert(argSource)
+    $baseUrl = MikuruHtmlConverter.Convert(argSource)
+    $webview.Url = $baseUrl
     $webview.Refresh()
+    
+End
+
+Public Sub MoveToTag(argID As String)
+    
+    Dim yukiUrl As String = $baseUrl & "#" & argID
+    
+    If $webview.Url = yukiUrl Then Return
+    $webview.Url = yukiUrl
+    '$webview.Refresh()
     
 End
 

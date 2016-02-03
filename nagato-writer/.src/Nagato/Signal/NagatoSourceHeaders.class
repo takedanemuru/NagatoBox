@@ -6,6 +6,7 @@ Property Read Headers As Collection
 
 Private $headers As New Collection
 Private $headerLines As New NagatoHeaderLines
+Private $textBuffer As New NagatoTextBuffer
 
 Private Sub addHeaderData(argData As String, argLine As Integer)
     
@@ -29,15 +30,15 @@ End
 Public Sub Refresh(argBuffer As String)
     
     Dim yukiLine As Integer
-    Dim yukiLines As String[] = Split(argBuffer, "\n")
     
     Me.Clear()
+    $textBuffer.Set(argBuffer)
     
-    For yukiLine = 0 To yukiLines.Max
-        If yukiLines[yukiLine] Not Begins "#" Then Continue
-        If yukiLines[yukiLine] Begins "#######" Then Continue ' header level 7 doesn't work.
-        addHeaderData(yukiLines[yukiLine], yukiLine)
-        $headers.Add(yukiLines[yukiLine], CString(yukiLine))
+    For yukiLine = 0 To $textBuffer.Max
+        If $textBuffer[yukiLine] Not Begins "#" Then Continue
+        If $textBuffer[yukiLine] Begins "#######" Then Continue ' header level 7 doesn't work.
+        addHeaderData($textBuffer[yukiLine], yukiLine)
+        $headers.Add($textBuffer[yukiLine], CString(yukiLine))
     Next
     
 End
@@ -46,11 +47,14 @@ Public Function GetHeaderIndex(argLine As Integer) As Integer
     
     Dim yukiLine As String
     Dim yukiData As New NagatoDualInteger
+    Dim yukiCount As Integer
     
     For Each yukiLine In $headers
+        Inc yukiCount
         yukiData.Push(CInteger($headers.Key))
         If yukiData.Current = argLine Then Return $headerLines[yukiData.Current] 
         If yukiData.Current > argLine Then Return $headerLines[yukiData.Previous]
+        If yukiCount = $headers.Count Then Return $headerLines[yukiData.Current]
     Next
     
     Return -1

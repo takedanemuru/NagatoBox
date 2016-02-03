@@ -68,7 +68,7 @@ End
 
 Public Sub TextArea_Cursor()
     
-    If $textArea.Pos + 4 > $textArea.Length Then
+    If $textArea.Line + 5 > Split($textArea.Text, "\n").Count Then
         Raise Signal(MikuruSignal.ViewMoveToBottom, Null)
     Else
         Raise Signal(MikuruSignal.ViewMoveCursor, [$textArea.Line])

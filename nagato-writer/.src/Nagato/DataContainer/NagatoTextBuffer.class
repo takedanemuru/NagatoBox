@@ -1,0 +1,50 @@
+' Gambas class file
+
+Property Read Max As Integer
+
+Private $lines As New String[]
+
+Private Function isUnderlineHeader(argLineIndex As Integer) As Boolean
+    
+    Return True
+    
+End
+
+Public Sub Set(argText As String)
+    
+    $lines.Clear()
+    $lines = Split(argText, "\n")
+    
+End
+
+Public Function GetHeaderLevel(argLineIndex As Integer) As Integer
+    
+    If $lines[argLineIndex] = "" Then 
+        Debug "void"
+        Return 0
+    Else If Replace$($lines[argLineIndex], "=", "") = "" Then
+        Debug "level-1"
+    Else If Replace$($lines[argLineIndex], "-", "") = "" Then
+        Debug "level-2"
+    End If
+        
+    Return 0
+    
+End
+
+Public Sub _get(argLineIndex As Integer) As String
+    
+    Me.GetHeaderLevel(argLineIndex)
+    
+    Return $lines[argLineIndex]
+    
+Catch
+    Return ""
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $lines.Max
+
+End

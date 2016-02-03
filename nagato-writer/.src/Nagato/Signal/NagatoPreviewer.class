@@ -15,7 +15,10 @@ End
 
 Public Sub MoveToTag(argID As String)
     
-    $webview.Url = $baseUrl & "#" & argID
+    Dim yukiUrl As String = $baseUrl & "#" & argID
+    
+    If $webview.Url = yukiUrl Then Return
+    $webview.Url = yukiUrl
     $webview.Refresh()
     
 End
