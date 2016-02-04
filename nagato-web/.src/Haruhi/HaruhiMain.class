@@ -27,6 +27,12 @@ Public Sub SetUrl(argUrl As String)
     
 End
 
+Public Sub RefreshPersona()
+    
+    $headerContainer.Refresh()
+    
+End
+
 Public Sub _new()
 
     MikuruWebSettings.Initialize()

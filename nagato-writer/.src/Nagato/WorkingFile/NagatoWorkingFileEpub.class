@@ -4,9 +4,7 @@ Inherits NagatoWorkingFile
 
 Private Sub convert(argSourcePath As String, argTargetPath As String)
     
-    Dim yukiCss As String = Subst$("--css=&1", NagatoValueListCssPreview.Current)
-    
-    Exec ["pandoc", "-f", NagatoSettingsView.Syntax, "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    Exec MikuruPandocCommand.GetStandardCommand(argSourcePath, argTargetPath) Wait
     
 End
 

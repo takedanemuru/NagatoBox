@@ -63,11 +63,7 @@ End
 
 Private Sub convert(argSourcePath As String, argTargetPath As String)
     
-    Dim yukiSyntax As String = NagatoSettingsView.Syntax
-    Dim yukiCss As String = Subst$("--css=&1", NagatoValueListCssPreview.Current)
-    Dim yukiMathjax As String = "--mathjax=https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"
-    
-    Exec ["pandoc", yukiMathjax, "-f", yukiSyntax, "-s", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath] Wait
+    Exec MikuruPandocCommand.GetPreviewCommand(argSourcePath, argTargetPath) Wait
     
     setId(argTargetPath)
     setHiddenBottomId(argTargetPath)

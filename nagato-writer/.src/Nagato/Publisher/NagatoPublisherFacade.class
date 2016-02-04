@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $html As New NagatoPublisherHtml
+Private $htmlStandAlone As New NagatoPublisherHtmlStandAlone
 Private $pdf As New NagatoPublisherPdf
 Private $odt As New NagatoPublisherOdt
 Private $epub As New NagatoPublisherEpub
@@ -11,6 +12,8 @@ Private Sub publish(argSignal As Integer, argPath As String)
     Select Case argSignal
         Case MikuruSignal.PublishHtml
             $html.Publish(argPath)
+        Case MikuruSignal.PublishHtmlStandAlone
+            $htmlStandAlone.Publish(argPath)
         Case MikuruSignal.PublishPdf
             $pdf.Publish()
         Case MikuruSignal.PublishOdt

@@ -2,11 +2,33 @@
 
 Property Read Max As Integer
 
+Private Enum HeaderNone, Header1, Header2
+
 Private $lines As New String[]
 
-Private Function isUnderlineHeader(argLineIndex As Integer) As Boolean
+Private Function getUnderlineHeaderLevel(argLineIndex As Integer) As Integer
     
-    Return True
+    If $lines[argLineIndex + 1] = "" Then Return 0
+    If Replace$($lines[argLineIndex + 1], "=", "") = "" Then Return Header1
+    If Replace$($lines[argLineIndex + 1], "-", "") = "" Then Return Header2
+    
+Finally
+    Return HeaderNone
+    
+End
+
+Private Sub getSharpHeaderLevel(argLineIndex As Integer) As Integer
+    
+    Dim yukiHeaderLevel As Integer
+    
+    If $lines[argLineIndex] Not Begins "#" Then Return 0
+    If $lines[argLineIndex] Begins String$(7, "#") Then Return 0 ' H7 doesn't work.
+
+    For yukiHeaderLevel = 6 DownTo 1
+        If $lines[argLineIndex] Begins String$(yukiHeaderLevel, "#") Then Return yukiHeaderLevel
+    Next
+    
+    Return 0
     
 End
 
@@ -19,16 +41,16 @@ End
 
 Public Function GetHeaderLevel(argLineIndex As Integer) As Integer
     
-    If $lines[argLineIndex] = "" Then 
-        Debug "void"
-        Return 0
-    Else If Replace$($lines[argLineIndex], "=", "") = "" Then
-        Debug "level-1"
-    Else If Replace$($lines[argLineIndex], "-", "") = "" Then
-        Debug "level-2"
-    End If
-        
-    Return 0
+    If $lines[argLineIndex] = "" Then Return 0
+    
+    Select Case getUnderlineHeaderLevel(argLineIndex)
+        Case Header1
+            Return 1
+        Case Header2
+            Return 2
+        Default
+            Return getSharpHeaderLevel(argLineIndex)
+    End Select
     
 End
 

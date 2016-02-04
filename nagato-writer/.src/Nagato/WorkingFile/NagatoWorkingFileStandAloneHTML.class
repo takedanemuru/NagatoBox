@@ -4,7 +4,7 @@ Inherits NagatoWorkingFile
 
 Private Sub convert(argSourcePath As String, argTargetPath As String)
     
-    Exec MikuruPandocCommand.GetPreviewCommand(argSourcePath, argTargetPath) Wait
+    Exec MikuruPandocCommand.GetStandAloneCommand(argSourcePath, argTargetPath) Wait
 
 End
 
@@ -13,7 +13,7 @@ Public Sub Set(argSourceText As String)
     Dim yukiSourcePath As String = Temp$()
     
     Me._ResetWorkingPath()
-    File.Save(yukiSourcePath, argSourceText)
+    File.Save(yukiSourcePath, MikuruMacro.ConvertToStandAloneHtml(argSourceText))
     convert(yukiSourcePath, Me._$workingPath)
     
 End

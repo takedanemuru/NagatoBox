@@ -2,44 +2,32 @@
 
 Inherits NagatoSignal
 
-Property Read Headers As Collection
+Property Read Headers As Collection ' HeaderText , LineNumber
 
 Private $headers As New Collection
 Private $headerLines As New NagatoHeaderLines
 Private $textBuffer As New NagatoTextBuffer
 
-Private Sub addHeaderData(argData As String, argLine As Integer)
+Private Sub parseHeaderData()
     
+    Dim yukiLine As Integer
     Dim yukiHeaderLevel As Integer
     
-    For yukiHeaderLevel = 6 DownTo 1
-        If argData Not Begins String$(yukiHeaderLevel, "#") Then Continue
-        $headerLines.Add(yukiHeaderLevel, argLine)
-        Break
+    For yukiLine = 0 To $textBuffer.Max
+        yukiHeaderLevel = $textBuffer.GetHeaderLevel(yukiLine)
+        If yukiHeaderLevel = 0 Then Continue
+        $headerLines.Add(yukiHeaderLevel, yukiLine)
+        $headers.Add($textBuffer[yukiLine], CString(yukiLine))
     Next
-    
-End
-
-Public Sub Clear()
-    
-    $headers.Clear()
-    $headerLines.Clear()
     
 End
 
 Public Sub Refresh(argBuffer As String)
     
-    Dim yukiLine As Integer
-    
-    Me.Clear()
     $textBuffer.Set(argBuffer)
-    
-    For yukiLine = 0 To $textBuffer.Max
-        If $textBuffer[yukiLine] Not Begins "#" Then Continue
-        If $textBuffer[yukiLine] Begins "#######" Then Continue ' header level 7 doesn't work.
-        addHeaderData($textBuffer[yukiLine], yukiLine)
-        $headers.Add($textBuffer[yukiLine], CString(yukiLine))
-    Next
+    $headers.Clear()
+    $headerLines.Clear()
+    parseHeaderData()
     
 End
 
@@ -47,17 +35,14 @@ Public Function GetHeaderIndex(argLine As Integer) As Integer
     
     Dim yukiLine As String
     Dim yukiData As New NagatoDualInteger
-    Dim yukiCount As Integer
     
     For Each yukiLine In $headers
-        Inc yukiCount
         yukiData.Push(CInteger($headers.Key))
         If yukiData.Current = argLine Then Return $headerLines[yukiData.Current] 
         If yukiData.Current > argLine Then Return $headerLines[yukiData.Previous]
-        If yukiCount = $headers.Count Then Return $headerLines[yukiData.Current]
     Next
     
-    Return -1
+    Return $headerLines[yukiData.Current]
     
 End
 

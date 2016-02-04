@@ -1,0 +1,44 @@
+' Gambas module file
+
+Private Function getBasicCommand(argSourcePath As String, argTargetPath As String) As String[]
+    
+    Dim yukiSyntax As String = NagatoSettingsView.Syntax
+    Dim yukiCss As String = Subst$("--css=&1", NagatoValueListCssPreview.Current)
+    
+    Return ["pandoc", "-f", yukiSyntax, "-s", "-t", "html5", yukiCss, argSourcePath, "-o", argTargetPath]
+    
+End
+
+Public Function getMathJaxOption() As String
+    
+    Dim yukiPath As String = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"
+    
+    Return Subst$("--mathjax=&1", yukiPath)
+    
+End
+
+Public Function GetPreviewCommand(argSourcePath As String, argTargetPath As String) As String[]
+    
+    Dim yukiCommand As String[] = getBasicCommand(argSourcePath, argTargetPath)
+    
+    If NagatoSettings.UseMathjax Then yukiCommand.Add(getMathJaxOption(), 1)
+    
+    Return yukiCommand
+    
+End
+
+Public Function GetStandardCommand(argSourcePath As String, argTargetPath As String) As String[]
+    
+    Return getBasicCommand(argSourcePath, argTargetPath)
+    
+End
+
+Public Function GetStandAloneCommand(argSourcePath As String, argTargetPath As String) As String[]
+    
+    Dim yukiCommand As String[] = getBasicCommand(argSourcePath, argTargetPath)
+    
+    yukiCommand.Add("--self-contained", 1)
+    
+    Return yukiCommand
+    
+End

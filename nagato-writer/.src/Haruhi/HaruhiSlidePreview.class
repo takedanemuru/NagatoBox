@@ -32,7 +32,6 @@ Public Sub Set()
     Exec getCommand() Wait
     
     WebSettings[WebSettings.JavascriptEnabled] = True
-    If NagatoSettings.UseMathjax Then MikuruMathjax.Convert($htmlPath)
     SlideWebView.Url = "file://" & Url$($htmlPath)
     
     If Not NagatoSettingsSlide.DoNotShowEscape Then HaruhiDialogStartSlide.ShowDialog()

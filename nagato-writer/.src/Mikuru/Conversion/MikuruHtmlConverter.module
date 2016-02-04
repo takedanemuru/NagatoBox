@@ -4,6 +4,7 @@ Property Read HasSource As Boolean
 Property Read WorkingFileEpub As String
 Property Read WorkingFileAbsolute As String
 Property Read WorkingFileWebpage As String
+Property Read WorkingFileStandAloneHtml As String
 Property Read IDs As String[]
 Property Read BottomId As String
 
@@ -11,6 +12,7 @@ Private $sourceText As String
 Private $workingPathAbsolute As New NagatoWorkingFileAbsolute
 Private $workingPathEpub As New NagatoWorkingFileEpub
 Private $workingPathWebpage As New NagatoWorkingFileWebPage
+Private $workingPathStandAloneHtml As New NagatoWorkingFileStandAloneHTML
 
 Public Sub Convert(argSourceText As String) As String
 
@@ -58,5 +60,13 @@ End
 Private Function BottomId_Read() As String
 
     Return $workingPathAbsolute.BottomId
+
+End
+
+Private Function WorkingFileStandAloneHtml_Read() As String
+
+    $workingPathStandAloneHtml.Set($sourceText)
+    
+    Return $workingPathStandAloneHtml.WorkingPath
 
 End

@@ -6,7 +6,8 @@ Public Sub _AddChildMenus()
     
     With MikuruSignal
         Me._AddMenu(("PDF"), .PublishPdf)
-        Me._AddMenu(("HTML"), .PublishHtml)
+        Me._AddMenu(("HTML (Web Page)"), .PublishHtml)
+        Me._AddMenu(("HTML (Stand Alone)"), .PublishHtmlStandAlone)
         Me._AddMenu(("ODT (LibreOffice)"), .PublishOdt)
         Me._AddMenu(("EPUB3"), .PublishEpub3)
     End With

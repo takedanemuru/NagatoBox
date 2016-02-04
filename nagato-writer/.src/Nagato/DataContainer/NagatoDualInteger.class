@@ -3,8 +3,8 @@
 Property Read Current As Integer
 Property Read Previous As Integer
 
-Private $current As Integer = 0
-Private $previous As Integer = 0
+Private $current As Integer = -Inf
+Private $previous As Integer = -Inf
 
 Public Sub Push(argData As Integer)
     

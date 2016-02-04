@@ -12,7 +12,7 @@ Public Sub Publish(argPath As String)
     If Not yukiTarget Then Return
     If HaruhiEpubMetadata.ShowDialog() <> MikuruDialog.ResponseApply Then Return
 
-    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", yukiCss, "-S", yukiSource, "-o", yukiTarget] 
+    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", yukiCss, "-S", yukiSource, "-o", yukiTarget] Wait
     
     Me._ShowMessage(yukiTarget)
     

@@ -39,7 +39,7 @@ Public Function ConvertToAbsolute(argSourceText As String) As String
     
 End
 
-Public Function ConverToEpub3(argSourceText As String) As String
+Public Function ConvertToEpub3(argSourceText As String) As String
     
     Return Replace$(argSourceText, "](./", $relativePath.ParentDirectoryPath)
     

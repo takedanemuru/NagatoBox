@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoPublisher
+
+Private Function setStandaloneHtml(argPath As String) As String
+    
+    Dim yukiHtmlDocument As New HtmlDocument(MikuruHtmlConverter.WorkingFileStandAloneHtml)
+    
+    yukiHtmlDocument.Title = (File.BaseName(argPath))
+    
+    Return yukiHtmlDocument.Content
+    
+End
+
+Public Sub Publish(argPath As String)
+    
+    Dim yukiTarget As String = Me._GetPathToSave2("html", argPath)
+    Dim yukiSource As String = Temp$()
+    
+    If Not yukiTarget Then Return
+
+    File.Save(yukiSource, setStandaloneHtml(yukiTarget))
+    If Exist(yukiTarget) Then Kill yukiTarget
+    Copy yukiSource To yukiTarget
+    
+    Me._ShowMessage(yukiTarget)
+    
+End
