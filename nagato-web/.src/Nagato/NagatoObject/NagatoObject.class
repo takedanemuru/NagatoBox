@@ -1,0 +1,30 @@
+' Gambas class file
+
+Event MenuEvent(argEvent As Integer)
+Event MenuEventWithArg(argEvent As Integer, argArgumet As Variant)
+Event MenuEventWithArgs(argEvent As Integer, argArgumet As Variant[])
+Event Signal(argSignal As Integer, argArguments As Variant[])
+
+Public Sub TFEI_Signal(argSignal As Integer, argArguments As Variant[])
+    
+    Raise Signal(argSignal, argArguments)
+    
+End
+
+Public Sub TFEI_MenuEvent(argEvent As Integer)
+    
+    Raise MenuEvent(argEvent)
+    
+End
+
+Public Sub TFEI_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+    
+    Raise MenuEventWithArg(argEvent, argArgument)
+    
+End
+
+Public Sub TFEI_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+    
+    Raise MenuEventWithArgs(argEvent, argArguments)
+    
+End

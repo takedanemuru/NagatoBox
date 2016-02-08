@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoNavigationButton
+
+Public Sub _InitializeWidget() ' override
+    
+    Me._$button = New MenuButton(Me._$container) As "Button"
+    
+    With Me._$button
+        .Expand = False
+        .Border = False
+        .Width = Me._$container.H
+        .Arrow = False
+        .NoTabFocus = True
+        .Enabled = False
+        .Picture = MikuruIcon.Get("navigation-left")
+    End With
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise MenuEvent(MikuruSignal.WebBack)
+    
+End

@@ -1,0 +1,26 @@
+' Gambas class file
+
+Property Read Previous As String
+Property Read Current As String
+
+Private $previous As String
+Private $current As String
+
+Public Sub Push(argNewString As String)
+    
+    $previous = $current
+    $current = argNewString
+    
+End
+
+Private Function Previous_Read() As String
+
+    Return $previous
+
+End
+
+Private Function Current_Read() As String
+
+    Return $current
+
+End

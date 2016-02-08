@@ -21,7 +21,7 @@ Public Sub _EnsureTable() ' override
 
 End
 
-Public Function GetBookmarkResultFoundByCategoryName(argCategoryId As Integer) As Result
+Public Function GetBookmarkResultByCategoryName(argCategoryId As Integer) As Result
     
     Dim yukiQuery As String = "select * from &1 where category_id = &2 order by &3 asc"
     

@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $categories As New Collection
+Private $categoryMenus As NagatoSubMenuBookmarkCategories
+Private $pageMenus As NagatoSubMenuBookmarkPages
+
+Public Sub Refresh()
+    
+    $categories.Clear()
+    $categoryMenus.Refresh()
+    $pageMenus.Refresh()
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    $categoryMenus = New NagatoSubMenuBookmarkCategories(argRootMenu, $categories)
+    $pageMenus = New NagatoSubMenuBookmarkPages(argRootMenu, $categories) As "TFEI"
+    
+End

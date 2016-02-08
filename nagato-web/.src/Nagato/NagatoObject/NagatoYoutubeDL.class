@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private Function getDestinationPath(argDefault As String) As String
+    
+    Dialog.Title = "Select Directory"
+    Dialog.Path = Desktop.GetDirectory(argDefault)
+    
+    If Not Dialog.SelectDirectory() Then Return Dialog.Path
+    
+Finally
+    Return ""
+    
+End
+
+Public Sub DownloadAsMovie(argUrl As String)
+    
+    Dim yukiDirectory As String = getDestinationPath("VIDEOS")
+    
+    If yukiDirectory = "" Then Return
+    
+    Exec ["youtube-dl", "-f", "webm", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
+    
+End
+
+Public Sub DownloadAsMusic(argUrl As String)
+    
+    Dim yukiDirectory As String = getDestinationPath("MUSIC")
+    
+    If yukiDirectory = "" Then Return
+
+    Exec ["youtube-dl", "-x", "--audio-format", "mp3", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
+    
+End
+
+Public Sub YouTubeDL_Read()
+    
+    Dim yukiLine As String
+    
+    Read #Last, yukiLine, -256
+    
+    Raise MenuEventWithArg(MikuruSignal.PersonaSetText, yukiLine)
+    
+End

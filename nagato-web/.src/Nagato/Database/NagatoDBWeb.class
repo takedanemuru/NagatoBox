@@ -63,11 +63,11 @@ Public Sub DeleteCategory(argCategoryName As String)
     
 End
 
-Public Function GetBookmarkResultFoundByCategoryName(argCategoryName As String) As Result
+Public Function GetBookmarkResultByCategoryName(argCategoryName As String) As Result
     
     Dim yukiId As Integer = $tableCategory.GetCategoryId(argCategoryName)
     
-    Return $tableBookmark.GetBookmarkResultFoundByCategoryName(yukiId)
+    Return $tableBookmark.GetBookmarkResultByCategoryName(yukiId)
     
 End
 

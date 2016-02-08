@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $categories As Collection
+Private $rootMenu As Menu
+
+Private Sub addItem(argResult As Result, argCategory As String)
+    
+    Dim yukiMenu As New Menu($categories[argCategory]) As "BookmarkItemMenu"
+    Dim yukiTitle As String = argResult[NagatoDBWeb.ColumnUserDefinedPageName]
+    
+    With yukiMenu
+        .Text = MikuruCollapsedText[yukiTitle, Int(Screen.W / 4)]
+        .Tag = argResult[NagatoDBWeb.ColumnUrl]
+    End With
+    
+End
+
+Private Sub addBookmarkItems(argCategory As String)
+    
+    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultByCategoryName(argCategory)
+    
+    For Each yukiResult
+        If yukiResult[NagatoDBWeb.ColumnUserDefinedPageName] = "" Then Continue
+        addItem(yukiResult, argCategory)
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    Dim yukiCategory As String
+    
+    For Each yukiCategory In NagatoDBWeb.CategoryNames
+        If Not NagatoDBWeb.HasBookmarkInCategory(yukiCategory) Then Continue
+        addBookmarkItems(yukiCategory)
+    Next
+    
+End
+
+Public Sub _new(argRootMenu As Menu, argCategoryCollection As Collection)
+    
+    $rootMenu = argRootMenu
+    $categories = argCategoryCollection
+    
+End
+
+Public Sub BookmarkItemMenu_Click()
+    
+    Raise MenuEventWithArg(MikuruSignal.WebNew, Last.Tag)
+    
+End

@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $categories As Collection
+Private $rootMenu As Menu
+
+Private Sub addCategoryItem(argKey As NagatoTupleString, argCategory As String)
+    
+    Dim yukiExists As Boolean = $categories.Exist(argKey.Previous)
+    Dim yukiMenu As New Menu(IIf(yukiExists, $categories[argKey.Previous], $rootMenu))
+    
+    yukiMenu.Text = argCategory
+    yukiMenu.Picture = MikuruIcon.Get("folder")
+    $categories.Add(yukiMenu, argKey.Current)
+
+End
+
+Private Sub addBookmarkCategory(argCategory As String) 
+    
+    Dim yukiCategory As String
+    Dim yukiKey As New NagatoTupleString
+    
+    For Each yukiCategory In Split(argCategory, "/", "", True)
+        yukiKey.Push(yukiKey.Current &/ yukiCategory)
+        If $categories.Exist(yukiKey.Current) Then Continue
+        addCategoryItem(yukiKey, yukiCategory)
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    Dim yukiCategory As String
+    
+    For Each yukiCategory In NagatoDBWeb.CategoryNames
+        If Not NagatoDBWeb.HasBookmarkInCategory(yukiCategory) Then Continue
+        addBookmarkCategory(yukiCategory)
+    Next
+    
+End
+
+Public Sub _new(argRootMenu As Menu, argCategoryCollection As Collection)
+    
+    $rootMenu = argRootMenu
+    $categories = argCategoryCollection
+    
+End

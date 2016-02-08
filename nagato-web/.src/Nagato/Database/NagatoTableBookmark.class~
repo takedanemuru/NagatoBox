@@ -33,6 +33,12 @@ Public Function GetBookmarkResultFoundByCategoryName(argCategoryId As Integer) A
     
 End
 
+Public Function GetBookmarkResultFoundByUrl(argUrl As String) As Result
+    
+    Return Me._$connection.Find(NagatoDBWeb.TableBookmark, "url = &1", argUrl)
+    
+End
+
 Public Function HasBookmarkInCategory(argCategoryId As Integer) As Boolean
     
     With NagatoDBWeb

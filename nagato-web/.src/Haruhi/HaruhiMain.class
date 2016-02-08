@@ -60,7 +60,7 @@ End
 Public Sub BookmarkTreeView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebNew
+        Case MikuruSignal.WebNew
             $bodyCotainer.AddUrl(argArgument)
     End Select
     
@@ -69,9 +69,9 @@ End
 Public Sub Body_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebRequestRefresh
+        Case MikuruSignal.WebRequestRefresh
             $headerContainer.Refresh()
-        Case NagatoMenuPipe.ViewEditBookmark
+        Case MikuruSignal.ViewEditBookmark
             LeftPanel.Hidden = False
     End Select
     
@@ -80,9 +80,9 @@ End
 Public Sub Body_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebDownload
+        Case MikuruSignal.WebDownload
             $downloadBar.SetWebDownload(argArgument)
-        Case NagatoMenuPipe.PersonaSetText
+        Case MikuruSignal.PersonaSetText
             $headerContainer.SetText(argArgument)
     End Select
     
@@ -91,7 +91,7 @@ End
 Public Sub Body_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
     
     Select Case argEvent
-        Case NagatoMenuPipe.WebProgress
+        Case MikuruSignal.WebProgress
             Me.Title = argArguments[4]
             $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
             $bodyCotainer.HeaderCall(argEvent, argArguments)
