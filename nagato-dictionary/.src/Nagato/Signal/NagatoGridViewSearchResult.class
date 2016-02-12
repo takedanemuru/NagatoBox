@@ -15,18 +15,30 @@ Private Function getResult(argQueryType As Integer, argQueryWord As String) As R
     
 End
 
+Private Function setRow(argResult As Result) As Boolean
+    
+    Dim yukiJapanese As String = argResult[NagatoDBGeneralDict.ColumnJapanese] 
+    Dim yukiPronounciation As String = argResult[NagatoDBGeneralDict.ColumnPronunciation] 
+    Dim yukiEnglish As String = Replace$(argResult[NagatoDBGeneralDict.ColumnEnglish], ")", "")
+    
+    If yukiEnglish = "" Or If yukiJapanese = "" Then Return False
+    Me._SetData(yukiJapanese, yukiPronounciation, yukiEnglish)
+
+    Return True
+
+End
+
 Public Sub Searh(argQueryType As Integer, argQueryWord As String)
     
     Dim yukiResult As Result = getResult(argQueryType, argQueryWord)
+    Dim yukiCount As Integer
     
     Me._Clear()
     
     For Each yukiResult
-        With NagatoDBGeneralDict
-            Me._SetData(yukiResult[.ColumnJapanese], yukiResult[.ColumnPronunciation], yukiResult[.ColumnEnglish])
-        End With
+        If setRow(yukiResult) Then Inc yukiCount
     Next
     
-    If yukiResult.Count = 0 Then Message.Info(("YUKI.N > Query not found."), ("OK"))
+    If yukiCount = 0 Then Message.Info(("YUKI.N > Query not found."), ("OK"))
     
 End

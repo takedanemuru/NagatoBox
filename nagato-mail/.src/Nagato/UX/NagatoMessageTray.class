@@ -19,6 +19,7 @@ Public Sub SetAll()
     Dim yukIndex As Integer
     
     For yukIndex = 0 To NagatoPop3.Max
+        Debug yukIndex
         setSubject(yukIndex, NagatoPop3[yukIndex])
     Next
     

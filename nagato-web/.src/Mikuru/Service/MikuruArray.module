@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Function RemoveVoid(argSource As String[]) As String[]
+    
+    Dim yukiStrings As New String[]
+    Dim yukiString As String
+    
+    For Each yukiString In argSource
+        If yukiString = "" Then Continue
+        yukiStrings.Add(yukiString)
+    Next
+    
+    Return yukiStrings
+    
+End

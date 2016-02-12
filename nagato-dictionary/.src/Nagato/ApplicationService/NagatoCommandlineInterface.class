@@ -2,31 +2,66 @@
 
 Create Static
 
+Private Function isExactMatch(argQuery As String, argSubject As String) As Boolean
+    
+    Dim yukiTest As String
+    
+    For Each yukiTest In Split(argSubject, " ", "", True)
+        If yukiTest == argQuery Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Private Sub showEnglishResult(argResult As Result, argQuery As String) As Boolean
+    
+    Dim yukiJapanese As String = argResult[NagatoDBGeneralDict.ColumnJapanese]
+    Dim yukiEnglish As String = argResult[NagatoDBGeneralDict.ColumnEnglish]
+    
+    If yukiEnglish = "" Then Return False
+    If Not NagatoArgs.Fuzzy And If Not isExactMatch(argQuery, yukiEnglish) Then Return False
+    Print yukiJapanese, Replace$(yukiEnglish, ")", "")
+    
+    Return True
+    
+End
+
 Private Function searchEnglish(argQuery As String) As Integer
     
     Dim yukiResult As Result = NagatoDBGeneralDict.GetWithEnglish(Subst$("%&1%", argQuery))
+    Dim yukiCount As Integer
     
     For Each yukiResult
-        With NagatoDBGeneralDict
-            Print yukiResult[.ColumnJapanese], yukiResult[.ColumnEnglish]
-        End With
+        If showEnglishResult(yukiResult, argQuery) Then Inc yukiCount
     Next
     
-    Return yukiResult.Count
+    Return yukiCount
+    
+End
+
+Private Sub showJapaneseResult(argResult As Result) As Boolean
+    
+    Dim yukiJapanese As String = argResult[NagatoDBGeneralDict.ColumnJapanese]
+    Dim yukiEnglish As String = argResult[NagatoDBGeneralDict.ColumnEnglish]
+    
+    If yukiEnglish = "" Then Return False
+    Print yukiJapanese, Replace$(yukiEnglish, ")", "")
+    
+    Return True
     
 End
 
 Private Function searchJapanese(argQuery As String) As Integer
     
     Dim yukiResult As Result = NagatoDBGeneralDict.Get(Subst$("%&1%", argQuery))
+    Dim yukiCount As Integer
     
     For Each yukiResult
-        With NagatoDBGeneralDict
-            Print yukiResult[.ColumnJapanese], yukiResult[.ColumnEnglish]
-        End With
+        If showJapaneseResult(yukiResult) Then Inc yukiCount
     Next
     
-    Return yukiResult.Count
+    Return yukiCount
     
 End
 
@@ -36,11 +71,7 @@ Public Sub ShowResults(argQueries As String[])
     Dim yukiResultCount As Integer
     
     For Each yukiQuery In argQueries
-        If IsAscii(yukiQuery) Then
-            yukiResultCount = searchEnglish(yukiQuery)
-        Else
-            yukiResultCount = searchJapanese(yukiQuery)
-        End If
+        yukiResultCount = IIf(IsAscii(yukiQuery), searchEnglish(yukiQuery), searchJapanese(yukiQuery))
     Next
     
     If Not yukiResultCount Then Print "YUKI.N > Query not found."

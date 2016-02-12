@@ -19,12 +19,18 @@ Public Sub Connect()
         .Encrypt = Net.SSL
         .Port = 995
         .User = "******"
-        .Password = "******"
+        .Password = "*******"
         .Open()
     End With
     
     $ready = True
     HaruhiMain.SetSubjects()
+    
+End
+
+Public Sub GetText(argIndex As Integer) As String
+    
+    Return $pop3Client[argIndex].Text
     
 End
 

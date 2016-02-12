@@ -36,7 +36,7 @@ Public Function GetDirectory(argDirectory As String, Optional argSize As Integer
         Case User.Home
             Return MikuruIcon.Get("home", argSize)
         Case NagatoXdg.UserDirs.Desktop
-            Return Stock[Subst$("&1/desktop", argSize)]
+            Return getDirectoryWithSymbol("desktop", argSize)
         Case NagatoXdg.UserDirs.Download
             Return getDirectoryWithSymbol("hard-drive-download", argSize)
         Case NagatoXdg.UserDirs.Music

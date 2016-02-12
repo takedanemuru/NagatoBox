@@ -27,9 +27,7 @@ End
 
 Public Sub Asakura_MessageCount(argCount As Integer)
     
-    Debug argCount
-    
-    $messageTray.SetAll()
+    '$messageTray.SetAll()
     
 End
 

@@ -3,13 +3,15 @@
 Create Static
 
 Property Read Queries As String[]
+Property Read Fuzzy As Boolean
 
+Private $fuzzy As Boolean = False
 Private $queries As String[]
 
 Public Sub Parsing()
     
     Args.Begin()
-    
+        $fuzzy = Args.Has("f", "fuzzy", "Fuzzy Search")
     $queries = Args.End()
     
 End
@@ -17,8 +19,14 @@ End
 
 Private Function Queries_Read() As String[]
 
-    'Return $queries
+    Return $queries
 
-    Return ["課題"]
+End
+
+Private Function Fuzzy_Read() As Boolean
+
+    Return True
+
+    Return $fuzzy
 
 End

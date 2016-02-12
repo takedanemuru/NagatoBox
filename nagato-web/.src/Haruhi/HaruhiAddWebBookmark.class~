@@ -11,6 +11,8 @@ End
 
 Public Sub SetList(argList As String[])
     
+    MikuruArrayTest(argList)
+    
     argList.Add("", 0)
     CategoryComboBox.List = argList
     
@@ -21,6 +23,7 @@ Public Sub Form_Open()
     Dim yukiImage As Image = Image.Load("pictures/yukichan_29.jpg")
 
     Me.Picture = yukiImage.Stretch(Me.Width, Me.Height).Picture
+    AddButton.Enabled = False
 
 End
 
@@ -32,12 +35,24 @@ End
 
 Public Sub AddButton_Click()
     
-    If UserTitleTextBox.Text = "" Then Return
-    
     UserTitle = UserTitleTextBox.Text
     Category = CategoryComboBox.Text
     
-    ' see NagatoWebBrowser.Toolbar_AddBookmark()
     Me.Close(1)
     
+End
+
+Public Sub UserTitleTextBox_Change()
+
+    If UserTitleTextBox.Text = "" Then AddButton.Enabled = False
+    If CategoryComboBox.Text = "" Then AddButton.Enabled = False
+    
+    AddButton.Enabled = True
+    
+End
+
+Public Sub CategoryComboBox_Change()
+
+    UserTitleTextBox_Change()
+
 End

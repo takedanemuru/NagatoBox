@@ -19,7 +19,7 @@ Private Sub setIconTheme()
         yukiProxy = DBus["org.gambas.nagato-session"]["/org/nagato/session", "org.gambas.nagato.session.nagatointerface"]
         Application.Theme = yukiProxy.IconTheme
         Stock.Refresh()
-    Else If Application.Theme = "?" Then
+    Else If Application.Theme = "?" Or If Application.Theme = "" Then
         Shell "cat ~/.config/gtk-3.0/settings.ini | grep gtk-icon-theme-name" To yukiOutput
         Application.Theme = Replace$(Replace(yukiOutput, "gtk-icon-theme-name=", ""), "\n", "")
     End If
