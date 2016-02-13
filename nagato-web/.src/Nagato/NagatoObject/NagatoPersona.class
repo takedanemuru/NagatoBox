@@ -7,7 +7,6 @@ Private $drawingArea As DrawingArea
 Private $tabs As NagatoTabs
 Private $painter As NagatoTabPainter
 Private $message As New NagatoMessage As "Message"
-Private $lock As Boolean = False
 
 Private Sub drawMessage()
     
@@ -80,9 +79,7 @@ End
 
 Public Sub Asakura_Draw()
     
-    If $lock Then Return
-    
-    $lock = True
+    Object.Lock($drawingArea)
     
     Paint.Begin($drawingArea)
         Paint.DrawImage(MikuruPersona.Image, 0, NagatoSettingsPersona.Y)
@@ -92,7 +89,7 @@ Public Sub Asakura_Draw()
         drawPlusButton()
     Paint.End()
     
-    $lock = False
+    Object.Unlock($drawingArea)
     
 End
 

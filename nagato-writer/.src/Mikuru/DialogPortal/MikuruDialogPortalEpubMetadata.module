@@ -1,0 +1,77 @@
+' Gambas module file
+
+Property Read ImagePath As String
+Property Read MetaData As String
+
+Private $imagePath As String
+Private $title As String
+Private $auther As String
+
+Private Function getImagePath() As String
+    
+    Dim yukiImage As New Image(600, 900, Color.Lighter(Color.Violet), Image.Standard)
+    Dim yukiPath As String = Temp$() & ".png"
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.Font.Size = 15
+        Paint.RichText($title, 0, 0, 600, 600, Align.Center)
+        Paint.Font.Size = 12
+        Paint.RichText($auther, 0, 600, 600, 300, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    yukiImage.Save(yukiPath)
+    
+    Return yukiPath
+    
+End
+
+Private Function getMetadata() As String
+    
+    Dim yukiMetadata As String = File.Load("Templates/metadata.xml")
+    Dim yukiPath As String = Temp$() & ".xml"
+    
+    yukiMetadata = Replace$(yukiMetadata, "NAGATO_AUTHER", $auther)
+    yukiMetadata = Replace$(yukiMetadata, "NAGATO_TITLE", $title)
+    yukiMetadata = Replace$(yukiMetadata, "NAGATO_DATE_", "")
+    yukiMetadata = Replace$(yukiMetadata, "YYYY", Format$(Now(), "yyyy"))
+    yukiMetadata = Replace$(yukiMetadata, "MM", Format$(Now(), "mm"))
+    yukiMetadata = Replace$(yukiMetadata, "DD", Format$(Now(), "dd"))
+    
+    File.Save(yukiPath, yukiMetadata)
+    
+    Return "--epub-metadata=" & yukiPath
+    
+End
+
+Public Function Start(argPath As String) As Boolean
+    
+    $title = File.BaseName(argPath)
+    $auther = User.Name
+    
+    HaruhiEpubMetadata.SetDefaultData($title, $auther)
+    If HaruhiEpubMetadata.ShowDialog() <> MikuruDialog.ResponseApply Then Return False
+    
+    Return True
+    
+End
+
+Public Sub SetImagePath(argPath As String)
+    
+    $imagePath = argPath
+    
+End
+
+Private Function MetaData_Read() As String
+
+    Return getMetadata()
+
+End
+
+Private Function ImagePath_Read() As String
+
+    Return "--epub-cover-image=" & IIf($imagePath = "", getImagePath(), $imagePath)
+
+End

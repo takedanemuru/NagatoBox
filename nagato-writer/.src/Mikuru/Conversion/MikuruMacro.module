@@ -53,7 +53,9 @@ End
 
 Public Function ConvertToEpub3(argSourceText As String) As String
     
-    Return Replace$(argSourceText, "](./", $relativePath.ParentDirectoryPath)
+    Dim yukiText As String = replaceRelativeImagePath(argSourceText)
+    
+    Return Replace$(yukiText, "](./", $relativePath.ParentDirectoryPath)
     
 End
 

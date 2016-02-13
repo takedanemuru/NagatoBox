@@ -2,17 +2,31 @@
 
 Inherits NagatoPublisher
 
+Private Function getCommand(argTargetPath As String) As String[]
+    
+    Dim yukiCommand As String[] = ["pandoc", "-t", "epub3", "--toc"]
+    
+    yukiCommand.Add(MikuruDialogPortalEpubMetadata.ImagePath)
+    yukiCommand.Add(MikuruDialogPortalEpubMetadata.MetaData)
+    yukiCommand.Add("-c")
+    yukiCommand.Add(NagatoValueListCssPreview.Current)
+    yukiCommand.Add("-S")
+    yukiCommand.Add(MikuruHtmlConverter.WorkingFileEpub)
+    yukiCommand.Add("-o")
+    yukiCommand.Add(argTargetPath)
+    
+    Return yukiCommand
+    
+End
+
 Public Sub Publish(argPath As String)
     
     Dim yukiTarget As String = Me._GetPathToSave2("epub", argPath)
-    Dim yukiSource As String = MikuruHtmlConverter.WorkingFileEpub
-    Dim yukiCover As String = "--epub-cover-image=" & User.Home &/ "headphones_x.png"
-    Dim yukiCss As String = NagatoValueListCssPreview.Current
     
     If Not yukiTarget Then Return
-    If HaruhiEpubMetadata.ShowDialog() <> MikuruDialog.ResponseApply Then Return
+    If Not MikuruDialogPortalEpubMetadata.Start(argPath) Then Return
 
-    Exec ["pandoc", "-t", "epub3", yukiCover, "-c", yukiCss, "-S", yukiSource, "-o", yukiTarget] Wait
+    Exec getCommand(yukiTarget) Wait
     
     Me._ShowMessage(yukiTarget)
     

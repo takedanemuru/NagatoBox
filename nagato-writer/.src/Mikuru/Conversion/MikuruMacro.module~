@@ -39,9 +39,25 @@ Public Function ConvertToAbsolute(argSourceText As String) As String
     
 End
 
+Public Function ConvertToStandAloneHtml(argSourceText As String) As String
+    
+    Dim yukiText As String = argSourceText
+    
+    yukiText = replaceRelativeImagePath(yukiText)
+    yukiText = Replace$(yukiText, "](./", Subst$("](&1/", $relativePath.ParentDirectoryPath))
+    yukiText = Replace$(yukiText, MacroJekyllNow, Subst$("![](&1/", File.Dir($relativePath.ParentDirectoryPath)))
+    
+    Return yukiText
+    
+End
+
 Public Function ConvertToEpub3(argSourceText As String) As String
     
-    Return Replace$(argSourceText, "](./", $relativePath.ParentDirectoryPath)
+    Dim yukiText As String = argSourceText
+    
+    yukiText = replaceRelativeImagePath(yukiText)
+    
+    Return Replace$(yukiText, "](./", $relativePath.ParentDirectoryPath)
     
 End
 

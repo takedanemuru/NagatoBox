@@ -18,6 +18,7 @@
     { PictureBox1 PictureBox
       MoveScaled(28,0,34.2857,34.2857)
       Background = &HDFDFFF&
+      ToolTip = ("Double Click Here To Select Image")
     }
   }
   { HBox2 HBox
@@ -29,7 +30,7 @@
       Text = ("Title")
       Alignment = Align.Left
     }
-    { titleTextBox TextBox
+    { TitleTextBox TextBox
       MoveScaled(28,1,34.2857,4)
     }
   }
@@ -48,6 +49,7 @@
   }
   { HBox4 HBox
     MoveScaled(1,53,62,5)
+    Visible = False
     Padding = 4
     { TextLabel4 TextLabel
       MoveScaled(0,0,24,4)

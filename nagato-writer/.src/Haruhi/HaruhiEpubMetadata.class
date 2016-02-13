@@ -1,8 +1,28 @@
 ' Gambas class file
 
+Private $title As String
+Private $auther As String
+
+Private Sub refreshPictureBox(argPath As String)
+    
+    Dim yukiImage As Image = Image.Load(argPath)
+    Dim yukiRate As Float = Max((yukiImage.H / PictureBox1.H), (yukiImage.W / PictureBox1.W))
+
+    PictureBox1.Picture = yukiImage.Stretch(yukiImage.W / yukiRate, yukiImage.H / yukiRate).Picture
+    
+End
+
+Public Sub SetDefaultData(argTitle As String, argAuther As String)
+    
+    $title = argTitle
+    $auther = argAuther
+    
+End
+
 Public Sub Form_Open()
 
-    AutherTextBox.Text = User.Name
+    AutherTextBox.Text = $auther
+    TitleTextBox.Text = $title
 
 End
 
@@ -16,4 +36,13 @@ Public Sub CancelButton_Click()
 
     Me.Close(MikuruDialog.ResponseCancel)
 
+End
+
+Public Sub PictureBox1_DblClick()
+
+    If HaruhiSelectImage.ShowDialog() <> MikuruDialog.ResponseApply Then Return
+
+    MikuruDialogPortalEpubMetadata.SetImagePath(MikuruImageSelect.Path)
+    refreshPictureBox(MikuruImageSelect.Path)
+    
 End
