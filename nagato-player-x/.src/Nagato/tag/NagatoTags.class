@@ -1,0 +1,77 @@
+' Gambas class file
+
+Property Title As String
+Property Artist As String
+Property Album As String
+Property Read Duration As Float
+
+Private $title As New NagatoTagTitle
+Private $artist As New NagatoTagArtist
+Private $album As New NagatoTagAlbum
+Private $duration As Float
+
+Private Sub setTagFromDatabase(argPath As String)
+    
+    Dim yukiResult As Result = NagatoDBMedia.GetMusicResultByPath(argPath)
+    
+    With NagatoDBMedia
+        $title.Set(yukiResult[.Column.Title])
+        $artist.Set(yukiResult[.Column.Artist])
+        $album.Set(yukiResult[.Column.Album])
+        $duration = yukiResult[.Column.Duration]
+    End With
+    
+End
+
+Public Sub SetTag(argPath As String)
+    
+    If NagatoDBMedia.HasLibrary(argPath) Then setTagFromDatabase(argPath)
+        
+    $title.SetFromPath(argPath)
+    $artist.SetFromPath(argPath)
+    $album.SetFromPath(argPath)
+    If $duration = 0 Then $duration = MikuruDuration.GetDuration(argPath)
+    
+End
+
+Private Function Title_Read() As String
+
+    Return $title.Value
+
+End
+
+Private Sub Title_Write(Value As String)
+
+    $title.Set(Value)
+
+End
+
+Private Function Artist_Read() As String
+
+    Return $artist.Value
+
+End
+
+Private Sub Artist_Write(Value As String)
+
+   $artist.Set(Value)
+
+End
+
+Private Function Album_Read() As String
+
+    Return $album.Value
+
+End
+
+Private Sub Album_Write(Value As String)
+
+    $album.Set(Value)
+
+End
+
+Private Function Duration_Read() As Float
+
+    Return $duration
+
+End

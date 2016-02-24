@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoWidgetPainter
+
+Private $messageDuration As Integer = 0
+Private $message As String = ""
+
+Private Function getInfoText() As String
+    
+    If NagatoQueue.Count = 0 Then
+        Return Subst$("<b>YUKI.N > Can you see this ?</b>")
+    Else
+        Return Subst$("<b>&1</b>", NagatoQueue.GetTag(MikuruTag.Title))
+    Endif
+    
+End
+
+Private Sub drawMessage()
+    
+    Dim yukiMessage As String = IIf($messageDuration > 0, $message, getInfoText())
+    
+    Me._PaintRichText(MikuruUx.InfoBoxInternal, yukiMessage)
+    
+End
+
+Private Sub drawCoverArt()
+    
+    Me._PaintClipRectangle(MikuruUx.CoverArt.Rect, 1 * MikuruUx.Grid)
+    Draw.Picture(NagatoQueue.CoverArt, MikuruUx.CoverArt.X, MikuruUx.CoverArt.Y)
+    Paint.ResetClip()
+    Paint.Restore()
+    
+End
+
+Public Sub SetMessage(argText As String, argDuration As Integer)
+    
+    $message = argText
+    $messageDuration = argDuration
+    
+End
+
+Public Sub Draw()
+    
+    Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
+    If NagatoQueue.CoverArt Then drawCoverArt()
+    drawMessage()
+    
+    Dec $messageDuration
+    
+End

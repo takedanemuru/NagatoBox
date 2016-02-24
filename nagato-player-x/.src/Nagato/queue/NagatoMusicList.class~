@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Property Read CurrentPath As String
+Property Read CurrentUrl As String
 Property Read CurrentPosition As Integer
 Property Read Paths As String[]
 Property Read Count As Integer
@@ -11,6 +11,20 @@ Private $position As New NagatoMusicPosition As "MusicPosition"
 Event Moved
 Event Changed
 Event SelectionMoved(argSelection As Integer[])
+
+Public Function GetPathsFromIndexes(argIndexes As Integer[]) As String[]
+    
+    Dim yukiResult As New String[]
+    Dim yukiIndex As Integer
+    
+    For Each yukiIndex In argIndexes
+        If yukiIndex >= $musicElements.Count Then Continue
+        yukiResult.Add($musicElements[yukiIndex].Path)
+    Next
+    
+    Return yukiResult
+    
+End
 
 Public Function SetPath(argPath As String) As Boolean
     
@@ -112,15 +126,24 @@ Public Function GetElement(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Public Function GetTitle(argIndex As Integer) As String
+Public Function GetCollection() As Collection
     
-    Return $musicElements.GetTag("Title", argIndex)
+    Dim yukiCollection As New Collection
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Me.Count - 1
+        yukiCollection.Add(Me.GetTitle(yukiIndex), Me.Paths[yukiIndex])
+    Next
+    
+    Return yukiCollection
     
 End
 
-Public Function GetTag(argTag As String) As String
+Public Function GetTag(argTagType As Integer) As String
     
-    Return $musicElements.GetTag(argTag, $position.Current)
+    If $musicElements.Count = "" Then Return ""
+    
+    Return $musicElements.GetTag(argTagType, $position.Current)
     
 End
 
@@ -210,9 +233,9 @@ Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
 End
 
-Private Function CurrentPath_Read() As String
+Private Function CurrentUrl_Read() As String
 
-    Return MikuruPath.GetUrl($musicElements[$position.Current].Path)
+    Return Media.URL($musicElements[$position.Current].Path)
 
 Catch
     Return ""

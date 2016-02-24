@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoTags
+
+Property Read Rect As Rect
+
+Public _$rect As Rect
+
+Public Sub _new()
+    
+    With MikuruUx
+        Me._$rect = New Rect(1 * .Grid, 48 * .Grid, 34 * .Grid, 3 * .Grid)
+    End With
+    
+End
+
+Private Function Rect_Read() As Rect
+
+    Return Me._$rect
+
+End

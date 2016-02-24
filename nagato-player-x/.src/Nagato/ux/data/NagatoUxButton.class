@@ -1,0 +1,25 @@
+' Gambas class file
+
+Property Read Rect As Rect
+
+Public _$rect As Rect
+
+Public Sub _OnGetY() As Integer
+    
+    Return 0 ' this is just a dummy to avoid error
+    
+End
+
+Public Sub _new()
+    
+    With MikuruUx
+        Me._$rect = New Rect(1 * .Grid, Me._OnGetY(), 12 * .Grid, 3 * .Grid)
+    End With
+    
+End
+
+Private Function Rect_Read() As Rect
+
+    Return Me._$rect
+
+End

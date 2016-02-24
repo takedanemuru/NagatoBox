@@ -17,6 +17,7 @@ End
 Public Function GetPicture(argPath As String, argSize As Integer) As Picture
     
     Dim yukiImage As Image
+    Dim yukiRate As Float
     
     ensureDirectory()
     
@@ -24,12 +25,11 @@ Public Function GetPicture(argPath As String, argSize As Integer) As Picture
     
     If Dir(Me.WorkingDirectory).Count > 0 Then
         yukiImage = Image.Load(Me.WorkingDirectory &/ Dir(Me.WorkingDirectory)[0])
-        Return yukiImage.Stretch(argSize, argSize).Picture
-    Else
-        Return Null
+        yukiRate = Max(argSize / yukiImage.H, argSize / yukiImage.W)
+        Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
     Endif
     
-Catch
+Finally
     Return Null
     
 End
@@ -39,6 +39,8 @@ Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     Dim yukiCommand As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
     
     Shell Subst$(yukiCommand, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
+    
+    If Media.URL(argMusicPath) = NagatoQueue.CurrentUrl Then NagatoQueue.ReloadCoverArt()
     
 End
 

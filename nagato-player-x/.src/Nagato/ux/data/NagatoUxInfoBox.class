@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoTags
+
+Property Read External As Rect
+Property Read Internal As Rect
+
+Private $internal As Rect
+Private $internalWithCoverArt As Rect
+Private $external As Rect
+
+Public Sub _new()
+    
+    With MikuruUx
+        $external = New Rect(1 * .Grid, 36 * .Grid, 34 * .Grid, 11 * .Grid)
+        $internal = New Rect(2 * .Grid, 37 * .Grid, 32 * .Grid, 9 * .Grid)
+        $internalWithCoverArt = New Rect(15 * .Grid, 37 * .Grid, 19 * .Grid, 9 * .Grid)
+    End With
+    
+End
+
+Private Function External_Read() As Rect
+
+    Return $external
+
+End
+
+Private Function Internal_Read() As Rect
+    
+    Return IIf(NagatoQueue.CoverArt, $internalWithCoverArt, $internal)
+    
+End

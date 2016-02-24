@@ -1,0 +1,23 @@
+' Gambas class file
+
+Property Read Unit As Integer
+Property Read SearchBoxWidth As Integer
+Property Read MessagePositionMargin As Integer
+
+Private Function Unit_Read() As Integer
+
+    Return 8
+
+End
+
+Private Function SearchBoxWidth_Read() As Integer
+
+    Return 30 * Me.Unit
+
+End
+
+Private Function MessagePositionMargin_Read() As Integer
+
+    Return 3 * Me.Unit
+
+End

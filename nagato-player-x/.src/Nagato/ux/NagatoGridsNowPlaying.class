@@ -68,10 +68,9 @@ Public Sub MoveTo(argUrl As String)
     Me._ClearIcon(ColumnIcon)
     
     For yukiRow = 0 To Me._$grids.Rows.Max
-        If NagatoQueue[yukiRow].Path = argUrl Then
-            Me._$grids[yukiRow, ColumnIcon].EnsureVisible()
-            $playMark.Set(yukiRow)
-        Endif
+        If NagatoQueue[yukiRow].Path <> argUrl Then Continue
+        Me._$grids[yukiRow, ColumnIcon].EnsureVisible()
+        $playMark.Set(yukiRow)
     Next
     
 End
@@ -133,10 +132,7 @@ End
 Public Sub _ColumnClick(argIndex As Integer) 'override
     
     Me._$sortAscend = Not Me._$sortAscend
-    
-    If argIndex = 0 Then Return
-    
-    NagatoQueue.Sort(argIndex, Me._$sortAscend)
+    If argIndex > 0 Then NagatoQueue.Sort(argIndex, Me._$sortAscend)
     
 End
 

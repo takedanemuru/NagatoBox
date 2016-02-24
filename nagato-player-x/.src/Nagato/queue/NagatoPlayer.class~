@@ -46,7 +46,7 @@ Public Sub SetUrlAndPlay(argPath As String)
     
     If NagatoQueue.SetPath(argPath) Then
         Try $player.Stop
-        $player.URL = MikuruPath.GetUrl(argPath)
+        $player.URL = Media.URL(argPath)
         $player.Play()
     End If
     
@@ -59,7 +59,7 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        Try $player.URL = NagatoQueue.CurrentPath
+        Try $player.URL = NagatoQueue.CurrentUrl
     End If
     
     $player.Play()
@@ -73,7 +73,7 @@ End
 Public Sub ResetUrl()
     
     Try $player.Stop()
-    $player.URL = NagatoQueue.CurrentPath
+    $player.URL = NagatoQueue.CurrentUrl
     $player.Position = 0
     
 End
@@ -93,12 +93,6 @@ End
 Public Sub Player_End()
     
     Raise MusicEnd
-    
-End
-
-Public Sub Player_State()
-    
-    Raise State($player.State)
     
 End
 

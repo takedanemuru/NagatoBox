@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Function DecodUrlToPath(argUrl As String) As String 
+    
+    Dim yukiCount As Integer
+    Dim yukiPath As String = Replace$(URL.Decode(argUrl), "file://", "")
+    
+    For yukiCount = 0 To 5
+        If Exist(yukiPath) Then Return yukiPath
+        yukiPath = Left$(yukiPath, -1 * yukiCount)
+    Next
+    
+    Return ""
+    
+End

@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoUxButton
+
+Public Sub _OnGetY() As Integer
+    
+    Return 17 * MikuruUx.Grid
+    
+End

@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoTag
+
+Public Sub _OnSetFromPath(argPath As String)
+    
+    Me._$value = MikuruId3TagInfo.GetAlbum(argPath)
+    
+Catch
+    Me._$value = ""
+    
+End

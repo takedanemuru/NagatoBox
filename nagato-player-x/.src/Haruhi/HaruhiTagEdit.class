@@ -1,7 +1,6 @@
 ' Gambas class file
 
 Private $edited As Boolean
-Private $albumartUnloaded As Boolean = True
 Private $albumartPath As String
 Private $targetPath As String
 Private $observer As Observer
@@ -67,10 +66,8 @@ Public Sub ApplyButton_Click()
     If $targetPath = "" Then Return
 
     setNewTag()
-    
     Me.Close(MikuruDialog.ResponseApply)
-    
-    If Not $albumartUnloaded Then MikuruEyeD3.SetPicture($targetPath, $albumartPath)
+    If $albumartPath Then MikuruEyeD3.SetPicture($targetPath, $albumartPath)
     
     Raise TagChanged
     
@@ -94,11 +91,9 @@ End
 Public Sub Asakura_Select(argFullPath As String)
     
     $albumartPath = argFullPath
-    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(14 * MikuruUX.Grid, 14 * MikuruUX.Grid).Picture
-    $albumartUnloaded = False
+    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(MikuruUx.CoverArt.W, MikuruUX.CoverArt.H).Picture
     
 Catch
-    Debug Error.Text
     Return
     
 End

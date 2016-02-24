@@ -7,7 +7,6 @@ Private $buttons As New NagatoButtonPainter
 Private $volumeButton As New NagatoVolumeButtonPainter
 Private $infoBox As New NagatoInfoBoxPainter
 Private $progressBar As New NagatoProgressBarPainter
-Private $coverArt As New NagatoCoverArtPainter
 
 Public Sub SetMessage(argMessage As String, argDuration As Integer)
     
@@ -45,7 +44,6 @@ Public Sub Asakura_Draw()
         End If
         $infoBox.Draw()
         $progressBar.Draw()
-        '$coverArt.Draw()
     Paint.End()
 
     HaruhiPlayer.Title = NagatoQueue.Title

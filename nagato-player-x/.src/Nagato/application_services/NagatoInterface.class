@@ -109,7 +109,7 @@ End
 
 Private Function Title_Read() As String
 
-    Return NagatoQueue.Title
+    Return NagatoQueue.GetTag(MikuruTag.Title)
 
 End
 
@@ -121,13 +121,13 @@ End
 
 Private Function Artist_Read() As String
 
-    Return NagatoQueue.Artist
+    Return NagatoQueue.GetTag(MikuruTag.Artist)
 
 End
 
 Private Function Album_Read() As String
 
-    Return NagatoQueue.Album
+    Return NagatoQueue.GetTag(MikuruTag.Album)
 
 End
 

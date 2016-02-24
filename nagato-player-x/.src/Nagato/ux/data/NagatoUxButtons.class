@@ -1,0 +1,67 @@
+' Gambas class file
+
+Property Read PlayButton As NagatoUxButtonPlay
+Property Read PauseButton As NagatoUxButtonPause
+Property Read BackButton As NagatoUxButtonBack
+Property Read NextButton As NagatoUxButtonNext
+Property Read ShuffleButton As NagatoUxButtonShuffle
+Property Read RepeatButton As NagatoUxButtonRepeat
+Property Read PlaylistButton As NagatoUxButtonPlaylist
+Property Read VolumeButton As NagatoUxButtonVolume
+
+Private $play As New NagatoUxButtonPlay
+Private $pause As New NagatoUxButtonPause
+Private $next As New NagatoUxButtonNext
+Private $back As New NagatoUxButtonBack
+Private $shuffle As New NagatoUxButtonShuffle
+Private $repeat As New NagatoUxButtonRepeat
+Private $playlist As New NagatoUxButtonPlaylist
+Private $volume As New NagatoUxButtonVolume
+
+Private Function PlayButton_Read() As NagatoUxButtonPlay
+
+    Return $play
+
+End
+
+Private Function PauseButton_Read() As NagatoUxButtonPause
+
+    Return $pause
+
+End
+
+Private Function NextButton_Read() As NagatoUxButtonNext
+
+    Return $next
+
+End
+
+Private Function BackButton_Read() As NagatoUxButtonBack
+
+    Return $back
+
+End
+
+Private Function ShuffleButton_Read() As NagatoUxButtonShuffle
+
+    Return $shuffle
+
+End
+
+Private Function RepeatButton_Read() As NagatoUxButtonRepeat
+
+    Return $repeat
+
+End
+
+Private Function PlaylistButton_Read() As NagatoUxButtonPlaylist
+
+    Return $playlist
+
+End
+
+Private Function VolumeButton_Read() As NagatoUxButtonVolume
+
+    Return $volume
+
+End

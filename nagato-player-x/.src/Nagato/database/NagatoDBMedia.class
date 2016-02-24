@@ -4,28 +4,16 @@ Inherits NagatoDB
 
 Create Static
 
+Property Read Column As NagatoDBColumns
+
 Public Const TableAlbumArt As String = "album_art"
-Public Const ColumnId As String = "id"
-Public Const ColumnArtist As String = "artist"
-Public Const ColumnAlbum As String = "album"
-Public Const ColumnPicture As String = "picture"
-Public Const ColumnDuration As String = "duration"
-
 Public Const TableLibrary As String = "library"
-Public Const ColumnPath As String = "path"
-Public Const ColumnTitle As String = "title"
-Public Const ColumnPlayTimes As String = "play_times"
-Public Const ColumnStars As String = "stars"
-
 Public Const TablePlaylistNames As String = "playlist_names"
-Public Const ColumnPlaylistName As String = "playlist_name"
-Public Const ColumnPlaylistOrder As String = "playlist_order"
-
 Public Const TablePlaylistData As String = "playlist_data"
-Public Const ColumnPlaylistNameId As String = "playlist_name_id"
 
 Public _$uniqueName As String = "Media"
 
+Private $columns As New NagatoDBColumns
 Private $tableAlbumArt As NagatoTableAlbumArt
 Private $tableLibrary As NagatoTableLibrary
 Private $tablePlaylistNames As NagatoTablePlaylistNames
@@ -41,26 +29,8 @@ Private Sub getAlbumAndArtistFromAlbumId(argId As Integer, ByRef refAlbum As Str
     
     Dim yukiResult As Result = Me._$connection.Find(TableAlbumArt, "id = &1", argId)
     
-    refAlbum = yukiResult[ColumnAlbum]
-    refArtist = yukiResult[ColumnArtist]
-    
-End
-
-Public Sub GetSongPathsFromAlbumId(argAlbumId As Integer) As String[]
-    
-    Dim yukiAlbum As String
-    Dim yukiArtist As String
-    Dim yukiResult As Result
-    Dim yukiPaths As New String[]
-    
-    getAlbumAndArtistFromAlbumId(argAlbumId, ByRef yukiAlbum, ByRef yukiArtist)
-    yukiResult = Me._$connection.Find(TableLibrary, "artist = &1 and album = &2", yukiArtist, yukiAlbum)
-    
-    For Each yukiResult
-        If Exist(yukiResult[ColumnPath]) Then yukiPaths.Add(yukiResult[ColumnPath])
-    Next
-    
-    Return yukiPaths
+    refAlbum = yukiResult[Me.Colum.Album]
+    refArtist = yukiResult[Me.Column.Artist]
     
 End
 
@@ -68,7 +38,7 @@ Public Function HasAlbumArt(argArtist As String, argAlbum As String) As Boolean
     
     Dim yukiResult As Result = Me._$connection.Find(TableAlbumArt, "artist = &1 and album = &2", argArtist, argAlbum)
     
-    Return (yukiResult.Count > 0)
+    Return IIf(yukiResult.Count > 0, True, False)
     
 End
 
@@ -76,7 +46,7 @@ Public Function GetAlbumArt(argArtist As String, argAlbum As String) As Picture
     
     Dim yukiResult As Result = Me._$connection.Find(TableAlbumArt, "artist = &1 and album = &2", argArtist, argAlbum)
     
-    Return MikuruBlob.GetPictureFromBlob(yukiResult[ColumnPicture].Data)
+    Return MikuruBlob.GetPictureFromBlob(yukiResult[Me.Column.Picture].Data)
     
 End
 
@@ -94,13 +64,13 @@ Public Function GetTitleFromPath(argPath As String) As String
     
     yukiResult = Me._$connection.Find(TableLibrary, "path = &1", argPath)
     
-    Return yukiResult[ColumnTitle]
+    Return yukiResult[Me.Column.Title]
     
 End
 
 Public Function GetAllAlbum() As Result
     
-    Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableAlbumArt, ColumnAlbum)
+    Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableAlbumArt, Me.Column.Album)
     
     Return Me._$connection.Exec(yukiQuery)
     
@@ -114,14 +84,13 @@ Public Sub SetAlbumArt(argArtist As String, argAlbum As String, argPicture As Pi
     
     Me._$connection.Begin()
         yukiResult = Me._$connection.Create(TableAlbumArt)
-        yukiResult[ColumnArtist] = argArtist
-        yukiResult[ColumnAlbum] = argAlbum
-        yukiResult[ColumnPicture] = MikuruBlob.GetBlobFromPicture(argPicture)
+        yukiResult[Me.Column.Artist] = argArtist
+        yukiResult[Me.Column.Album] = argAlbum
+        yukiResult[Me.Column.Picture] = MikuruBlob.GetBlobFromPicture(argPicture)
         yukiResult.Update()
     Me._$connection.Commit()
     
 Catch
-    Debug Error.Text
     Me._$connection.Rollback()
     
 End
@@ -159,28 +128,9 @@ Public Function FetchDuration(argPath As String, argDuration As Float) As Boolea
     
 End
 
-' Public Sub SetLibrary(argPath As String, Optional argTitle As String, Optional argArtist As String, Optional argAlbum As String)
-'     
-'     Dim yukiResult As Result 
-'     Dim yukiTitle As String = IIf(argTitle, argTitle, File.BaseName(argPath))
-'     
-'     Me._$connection.Begin()
-'         yukiResult = Me._$connection.Edit(TableLibrary, "path = &1", argPath)
-'         yukiResult[ColumnTitle] = yukiTitle
-'         If argArtist Then yukiResult[ColumnArtist] = argArtist
-'         If argAlbum Then yukiResult[ColumnAlbum] = argAlbum
-'         yukiResult.Update()
-'     Me._$connection.Commit()
-'     
-' Catch
-'     Debug Error.Text
-'     Me._$connection.Rollback()
-'     
-' End
-
 Public Sub AddLibrary(argPath As String, argTitle As String, argArtist As String, argAlbum As String)
     
-    $tableLibrary.Add(argPath, argTitle, argArtist, argAlbum)
+    $tableLibrary.AddTags(argPath, [argTitle, argArtist, argAlbum])
     
 End
 
@@ -224,7 +174,7 @@ End
 
 Public Function GetLibrary() As Result
     
-    Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableLibrary, ColumnTitle)
+    Dim yukiQuery As String = Subst$("select * from &1 order by &2 asc", TableLibrary, Me.Column.Title)
     
     Return Me._$connection.Exec(yukiQuery)
     
@@ -258,4 +208,10 @@ Public Sub _new()
     $tablePlaylistNames = New NagatoTablePlaylistNames(Me._$connection)
     $tablePlaylistData = New NagatoTablePlaylistData(Me._$connection)
     
+End
+
+Private Function Column_Read() As NagatoDBColumns
+
+    Return $columns
+
 End

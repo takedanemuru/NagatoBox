@@ -1,0 +1,29 @@
+' Gambas class file
+
+Property Read Value As String
+
+Public _$value As String
+
+Public Sub _OnSetFromPath(argPath As String)
+    
+    
+    
+End
+
+Public Sub Set(argValue As String)
+    
+    If Me._$value = "" Then Me._$value = argvalue
+    
+End
+
+Public Sub SetFromPath(argPath As String)
+    
+    Me._OnSetFromPath(argPath)
+    
+End
+
+Private Function Value_Read() As String
+
+    Return Me._$value
+
+End

@@ -52,7 +52,7 @@ Public Function GetPlaylistNameId(argPlaylistName As String) As Integer
     
     yukiResult = Me._$connection.Find(NagatoDBMedia.TablePlaylistNames, "playlist_name = &1", argPlaylistName)
     
-    Return yukiResult[NagatoDBMedia.ColumnId]
+    Return yukiResult[NagatoDBMedia.Column.Id]
     
 End
 

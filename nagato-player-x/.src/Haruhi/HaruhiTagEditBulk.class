@@ -12,10 +12,6 @@ Private Sub initializeWidgets()
     AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($paths[0])
     ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($paths[0])
     
-    ' If NagatoDBMedia.HasAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text) Then
-    '     AlbumArtPictureBox.Picture = NagatoDBMedia.GetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text)
-    ' End If
-    
 End
 
 Private Sub startAlbumArtSelection()
@@ -36,8 +32,6 @@ Private Sub setNewTag()
             If ArtistTextBox.Text <> "" Then .NewArtist(yukiPath, ArtistTextBox.Text)
             If AlbumTextBox.Text <> "" Then .NewAlbum(yukiPath, AlbumTextBox.Text)
             If Not $albumartUnloaded Then MikuruEyeD3.SetPicture(yukiPath, $albumartPath)
-            'NagatoDBMedia.SetLibrary(yukiPath, TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
-            Debug yukiPath
         End With
     Next
     

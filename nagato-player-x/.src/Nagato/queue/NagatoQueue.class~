@@ -5,14 +5,10 @@ Create Static
 Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
-Property Read CurrentPath As String
+Property Read CurrentUrl As String
 Property Read State As Integer
 Property Read Collection As Collection
-
 Property Read CoverArt As Picture
-Property Read Title As String
-Property Read Artist As String
-Property Read Album As String
 
 Property Read ProgressRate As Float
 Property Read ProgressText As String
@@ -26,6 +22,14 @@ Event Moved
 Event Changed
 Event TagChanged
 Event SelectionMoved(argIndexes As Integer[])
+
+Public Sub ReloadCoverArt()
+    
+    Dim yukiPath As String = MikuruUrl.DecodUrlToPath(Me.CurrentUrl)
+    
+    $coverArt = MikuruEyeD3.GetPicture(yukiPath, MikuruUx.CoverArt.Size)
+    
+End
 
 Public Function SetPath(argPath As String) As Boolean
     
@@ -41,7 +45,6 @@ Public Sub AddMusics(argPaths As String[])
     Raise Changed
     
 Catch
-    Debug "abort add music"
     Return
     
 End
@@ -83,17 +86,13 @@ End
 
 Public Sub ListMoveUp(argIndexes As Integer[])
     
-    If argIndexes.Count = 0 Then Return
-    
-    $musicList.MoveUp(argIndexes)
+    If argIndexes.Count > 0 Then $musicList.MoveUp(argIndexes)
     
 End
 
 Public Sub ListMoveDown(argIndexes As Integer[])
     
-    If argIndexes.Count = 0 Then Return
-
-    $musicList.MoveDown(argIndexes)
+    If argIndexes.Count > 0 Then $musicList.MoveDown(argIndexes)
 
 End
 
@@ -181,6 +180,7 @@ End
 Public Sub SetPathAndPlay(argPath As String)
     
     $player.SetUrlAndPlay(argPath)
+
     Raise Moved
     
 End
@@ -193,9 +193,7 @@ End
 
 Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
-    If $musicList.Count = 0 Then Return
-    
-    $musicList.Sort(argType, argSortAscend)
+    If $musicList.Count > 0 Then $musicList.Sort(argType, argSortAscend)
     
 End
 
@@ -207,7 +205,7 @@ Public Sub Player_MusicEnd()
         Me.Next()
     End If
     
-    HaruhiPlayer.Title = ""
+    HaruhiPlayer.Title = Me.Title
     
 End
 
@@ -227,7 +225,7 @@ End
 
 Public Sub Player_FetchTags(argTags As Variant[])
     
-    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
+    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentUrl)
     
     If Not NagatoDBMedia.FetchTags(yukiPath, argTags) Then Return
     
@@ -241,9 +239,9 @@ End
 
 Public Sub MusicList_Moved()
     
-    Dim yukiPath As String = MikuruPath.UrlToPath(Me.CurrentPath)
+    Dim yukiPath As String = MikuruUrl.DecodUrlToPath(Me.CurrentUrl)
     
-    $coverArt = MikuruEyeD3.GetPicture(yukiPath, 96)
+    $coverArt = MikuruEyeD3.GetPicture(yukiPath, MikuruUx.CoverArt.Size)
     
     Raise Moved
     
@@ -284,22 +282,10 @@ Private Function Paths_Read() As String[]
 
 End
 
-Private Function Title_Read() As String
-
-    Return IIf($musicList.Count > 0, $musicList.GetTag("Title"), "")
-
-End
-
-Private Function Artist_Read() As String
-
-    Return IIf($musicList.Count > 0, $musicList.GetTag("Artist"), "")
-
-End
-
-Private Function Album_Read() As String
-
-    Return IIf($musicList.Count > 0, $musicList.GetTag("Album"), "")
-
+Public Function GetTag(argTagType As Integer) As String
+    
+    Return $musicList.GetTag(argTagType)
+    
 End
 
 Private Function State_Read() As Integer
@@ -308,24 +294,9 @@ Private Function State_Read() As Integer
 
 End
 
-Private Function CurrentPath_Read() As String
-
-    Return $musicList.CurrentPath
-
-End
-
 Private Function Collection_Read() As Collection
 
-    Dim yukiCollection As New Collection
-    Dim yukiIndex As Integer
-    
-    If $musicList.Count = 0 Then Return yukiCollection
-    
-    For yukiIndex = 0 To $musicList.Count - 1
-        yukiCollection.Add($musicList.GetTitle(yukiIndex), $musicList.Paths[yukiIndex])
-    Next
-    
-    Return yukiCollection
+    Return $musicList.GetCollection()
 
 End
 
@@ -356,5 +327,11 @@ End
 Private Sub SoftwareVolume_Write(Value As Float)
 
     $player.SoftwareVolume = Value
+
+End
+
+Private Function CurrentUrl_Read() As String
+
+    Return $musicList.CurrentUrl
 
 End

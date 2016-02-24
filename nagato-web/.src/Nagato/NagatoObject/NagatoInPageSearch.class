@@ -20,7 +20,7 @@ Private Sub initializeSearchBox()
     $searchBox = New ButtonBox($container) As "SearchBox"
     
     With $searchBox
-        .Width = 240
+        .Width = TFEI.UX.SearchBoxWidth
         .Picture = MikuruIcon.Get("search")
         .Expand = False
     End With

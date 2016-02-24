@@ -9,39 +9,18 @@ Public Sub _EnsureTable() 'override
     With NagatoDBMedia
         If Not Me._$connection.Tables.Exist(.TableLibrary) Then
             yukiTable = Me._$connection.Tables.Add(.TableLibrary)
-            yukiTable.Fields.Add(.ColumnId, db.Serial)
-            yukiTable.Fields.Add(.ColumnTitle, db.String)
-            yukiTable.Fields.Add(.ColumnArtist, db.String)
-            yukiTable.Fields.Add(.ColumnAlbum, db.String)
-            yukiTable.Fields.Add(.ColumnPath, gb.String)
-            yukiTable.Fields.Add(.ColumnPlayTimes, gb.Integer)
-            yukiTable.Fields.Add(.ColumnStars, gb.Integer)
-            yukiTable.Fields.Add(.ColumnDuration, gb.Float)
-            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Fields.Add(.Column.Id, db.Serial)
+            yukiTable.Fields.Add(.Column.Title, db.String)
+            yukiTable.Fields.Add(.Column.Artist, db.String)
+            yukiTable.Fields.Add(.Column.Album, db.String)
+            yukiTable.Fields.Add(.Column.Path, gb.String)
+            yukiTable.Fields.Add(.Column.PlayTimes, gb.Integer)
+            yukiTable.Fields.Add(.Column.Stars, gb.Integer)
+            yukiTable.Fields.Add(.Column.Duration, gb.Float)
+            yukiTable.PrimaryKey = [.Column.Id]
             yukiTable.Update()
         Endif
     End With
-    
-End
-
-Public Sub Add(argPath As String, argTitle As String, argArtist As String, argAlbum As String)
-    
-    Dim yukiResult As Result
-    
-    With NagatoDBMedia
-        Me._$connection.Begin()
-            yukiResult = Me._$connection.Create(.TableLibrary)
-            yukiResult[.ColumnPath] = argPath
-            yukiResult[.ColumnTitle] = argTitle
-            yukiResult[.ColumnArtist] = argArtist
-            yukiResult[.ColumnAlbum] = argAlbum
-            yukiResult.Update()
-        Me._$connection.Commit()
-    End With
-    
-Catch
-    Debug Error.Text
-    Me._$connection.Rollback()
     
 End
 
@@ -52,11 +31,11 @@ Public Sub AddTags(argPath As String, argTags As Variant[])
     With NagatoDBMedia
         Me._$connection.Begin()
             yukiResult = Me._$connection.Create(.TableLibrary)
-            yukiResult[.ColumnPath] = argPath
-            yukiResult[.ColumnTitle] = argTags[0]
-            yukiResult[.ColumnArtist] = argTags[1]
-            yukiResult[.ColumnAlbum] = argTags[2]
-            yukiResult[.ColumnDuration] = argTags[3]
+            yukiResult[.Column.Path] = argPath
+            yukiResult[.Column.Title] = argTags[0]
+            yukiResult[.Column.Artist] = argTags[1]
+            yukiResult[.Column.Album] = argTags[2]
+            If argTags.Max = 4 Then yukiResult[.Column.Duration] = argTags[3]
             yukiResult.Update()
         Me._$connection.Commit()
     End With
@@ -75,16 +54,16 @@ Public Function FetchTags(argPath As String, argTags As Variant[]) As Boolean 'r
     With NagatoDBMedia
         Me._$connection.Begin()
             yukiResult = Me._$connection.Edit(.TableLibrary, "path = &1", argPath)
-            If yukiResult[.ColumnTitle] <> argTags[0] Then 
-                yukiResult[.ColumnTitle] = argTags[0]
+            If yukiResult[.Column.Title] <> argTags[0] Then 
+                yukiResult[.Column.Title] = argTags[0]
                 yukiFlag = True
             End If
-            If yukiResult[.ColumnArtist] <> argTags[1] Then
-                yukiResult[.ColumnArtist] = argTags[1]
+            If yukiResult[.Column.Artist] <> argTags[1] Then
+                yukiResult[.Column.Artist] = argTags[1]
                 yukiFlag = True
             End If
-            If yukiResult[.ColumnAlbum] <> argTags[2] Then 
-                yukiResult[.ColumnAlbum] = argTags[2]
+            If yukiResult[.Column.Album] <> argTags[2] Then 
+                yukiResult[.Column.Album] = argTags[2]
                 yukiFlag = True
             End If
             yukiResult.Update()
@@ -108,7 +87,7 @@ Public Function FetchDuration(argPath As String, argDuration As Float) As Boolea
     With NagatoDBMedia
         Me._$connection.Begin()
             yukiResult = Me._$connection.Edit(.TableLibrary, "path = &1", argPath)
-            yukiResult[.ColumnDuration] = argDuration
+            yukiResult[.Column.Duration] = argDuration
             yukiResult.Update()
         Me._$connection.Commit()
         yukiFlag = True
@@ -131,11 +110,11 @@ Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
     Me._$connection.Begin()
         yukiResult = Me._$connection.Create(NagatoDBMedia.TableLibrary)
-        yukiResult[NagatoDBMedia.ColumnTitle] = MikuruId3TagInfo.GetTitle(argPath)
-        yukiResult[NagatoDBMedia.ColumnArtist] = MikuruId3TagInfo.GetArtist(argPath)
-        yukiResult[NagatoDBMedia.ColumnAlbum] = MikuruId3TagInfo.GetAlbum(argPath)
-        yukiResult[NagatoDBMedia.ColumnDuration] = MikuruDuration.GetDuration(argPath)
-        yukiResult[NagatoDBMedia.ColumnPath] = argPath
+        yukiResult[NagatoDBMedia.Column.Title] = MikuruId3TagInfo.GetTitle(argPath)
+        yukiResult[NagatoDBMedia.Column.Artist] = MikuruId3TagInfo.GetArtist(argPath)
+        yukiResult[NagatoDBMedia.Column.Album] = MikuruId3TagInfo.GetAlbum(argPath)
+        yukiResult[NagatoDBMedia.Column.Duration] = MikuruDuration.GetDuration(argPath)
+        yukiResult[NagatoDBMedia.Column.Path] = argPath
         yukiResult.Update()
     Me._$connection.Commit()
     

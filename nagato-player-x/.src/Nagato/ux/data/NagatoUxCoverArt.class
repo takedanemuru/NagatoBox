@@ -1,0 +1,54 @@
+' Gambas class file
+
+Property Read H As Integer
+Property Read W As Integer
+Property Read X As Float
+Property Read Y As Float
+Property Read Rect As Rect
+Property Read Size As Integer
+
+Private $rect As Rect
+
+Public Sub _new()
+    
+    With MikuruUx
+        $rect = New Rect(2 * .Grid, 34 * .Grid, Me.Size, Me.Size)
+    End With
+    
+End
+
+Private Function H_Read() As Integer
+
+    Return $rect.H
+
+End
+
+Private Function W_Read() As Integer
+
+    Return $rect.W
+
+End
+
+Private Function Rect_Read() As Rect
+
+    Return $rect
+
+End
+
+Private Function X_Read() As Float
+
+    Return $rect.X + ($rect.W - NagatoQueue.CoverArt.H) / 2
+    
+End
+
+Private Function Y_Read() As Float
+
+    Return $rect.Y + ($rect.H - NagatoQueue.CoverArt.H) / 2
+    
+End
+
+Private Function Size_Read() As Integer
+
+    Return 12 * MikuruUx.Grid
+
+End

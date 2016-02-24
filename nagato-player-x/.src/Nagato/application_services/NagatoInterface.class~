@@ -115,7 +115,7 @@ End
 
 Private Function ProgressInText_Read() As String
 
-    Return NagatoQueue.Player.ProgressText
+    Return NagatoQueue.ProgressText
 
 End
 

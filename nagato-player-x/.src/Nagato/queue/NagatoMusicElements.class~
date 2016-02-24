@@ -12,6 +12,16 @@ Private Function isPlayableFormat(argPath As String) As Boolean
     
 End
 
+Private Sub addElement(argPath As String)
+    
+    Dim yukiElement As NagatoMusicElement
+    
+    NagatoDBMedia.EnsureLibrary(argPath)
+    yukiElement = New NagatoMusicElement(argPath)
+    $musicElements.Add(yukiElement)
+    
+End
+
 Public Function FindIndex(argPath As String) As Integer
     
     Dim yukiCount As Integer
@@ -21,16 +31,6 @@ Public Function FindIndex(argPath As String) As Integer
     Next
     
     Return -1
-    
-End
-
-Private Sub addElement(argPath As String)
-    
-    Dim yukiElement As NagatoMusicElement
-    
-    NagatoDBMedia.EnsureLibrary(argPath)
-    yukiElement = New NagatoMusicElement(argPath)
-    $musicElements.Add(yukiElement)
     
 End
 
@@ -86,14 +86,14 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Public Function GetTag(argTag As String, argIndex As Integer) As String
+Public Function GetTag(argTag As Index, argIndex As Integer) As String
     
     Select Case argTag
-        Case "Title"
+        Case MikuruTag.Title
             Return $musicElements[argIndex].Title
-        Case "Artist"
+        Case MikuruTag.Artist
             Return $musicElements[argIndex].Artist
-        Case "Album"
+        Case MikuruTag.Album
             Return $musicElements[argIndex].Album
     End Select
     

@@ -21,12 +21,21 @@
 + ~~"use system theme" for appearance config.~~ (BAD IDEA)
 + ~~fix version number.~~
 
+### nagato-player-x
+
++ refine playlist ux.
++ cui front-end ?
+
 ### nagato-session
 
 + ~~edit desktop entry files in user autostarts directory as text file.~~
     + ~~load icon from pixmap if it exists.~~
 + ~~copy desktop entry file from global autostarts to user autostarts~~
 + about dialog for NagatoBox ?
+
+### nagato-web
+
++ new : sub category for web bookmarks
 
 ### nagato-writer
 
@@ -39,7 +48,8 @@
 + ~~rename NagatoWorkingFileRelative to NagatoWorkingFileEPub~~
 + ~~remove NAGATO_MACRO usage completely.~~
 + ~~fix : css files naming confusion~~
-+ finish epub3 metadata dialog.
++ ~~finish epub3 metadata dialog.~~
++ new : option to show columns, rows and total count of charactors.
 
 ## Dataoverminds
 

@@ -1,14 +1,13 @@
 ' Gambas module file
 
-Private Sub $player As New MediaPlayer
+Private $player As New MediaPlayer
 
 Public Sub _call()
-'Public Sub _call(argPaths As String[])
     
     Dim yukiPath As String
     
     For Each yukiPath In NagatoSettingsMusic.LoadPaths()
-        $player.URL = MikuruPath.GetUrl(yukiPath)
+        $player.URL = Media.URL(yukiPath)
         Debug $player.Duration
     Next
     

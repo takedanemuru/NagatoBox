@@ -13,7 +13,7 @@ Private Sub drawMessage()
     If $message.Text = "" Then Return
     
     Paint.Brush = Paint.Color(Color.Orange)
-    Paint.Text($message.Text, 24, 24)
+    Paint.Text($message.Text, TFEI.UX.MessagePositionMargin, TFEI.UX.MessagePositionMargin)
     Paint.Fill()
     
 End

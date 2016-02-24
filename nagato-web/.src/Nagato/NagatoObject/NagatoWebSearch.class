@@ -39,6 +39,6 @@ End
 
 Public Sub Asakura_SizeChanged(argSize As Integer)
     
-    $container.W = argSize + $queryBox.FixedWidth
+    $container.W = argSize + TFEI.UX.SearchBoxWidth
     
 End

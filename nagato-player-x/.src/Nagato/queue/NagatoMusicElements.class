@@ -86,14 +86,14 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Public Function GetTag(argTag As String, argIndex As Integer) As String
+Public Function GetTag(argTag As Integer, argIndex As Integer) As String
     
     Select Case argTag
-        Case "Title"
+        Case MikuruTag.Title
             Return $musicElements[argIndex].Title
-        Case "Artist"
+        Case MikuruTag.Artist
             Return $musicElements[argIndex].Artist
-        Case "Album"
+        Case MikuruTag.Album
             Return $musicElements[argIndex].Album
     End Select
     

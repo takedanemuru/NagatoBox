@@ -2,37 +2,12 @@
 
 Public Enum Image, Music, Directory, None
 
-Private Function decodeUrl(argUrl As String) As String
-    
-    Dim yukiCount As Integer
-    Dim yukiPath As String = Replace$(URL.Decode(argUrl), "file://", "")
-    
-    For yukiCount = 0 To 5
-        If Exist(yukiPath) Then Return yukiPath
-        yukiPath = Left$(yukiPath, -1 * yukiCount)
-    Next
-    
-    Return ""
-    
-End
-
-Public Function UrlToPath(argUrl As String) As String
-    
-    Return decodeUrl(argUrl)
-    
-End
-
 Public Function IsValideMediaFilePath(argPath As String) As Boolean
     
-    If Not Exist(argPath) Then
-        Return False
-    Else If DesktopMime.FromFile(argPath).Type Begins "audio" Then
-        Return True
-    Else If DesktopMime.FromFile(argPath).Type Begins "video" Then
-        Return True
-    Else
-        Return False
-    End If
+    If Not Exist(argPath) Then Return False
+    If MikuruMimeType.IsAudioFile(argPath) Then Return True
+    
+    Return False
     
 End
 
@@ -42,13 +17,8 @@ Public Function Sanitize(argPaths As String[]) As String[]
     Dim yukiResult As New String[] 
     
     For Each yukiPath In argPaths
-        If Not Exist(yukiPath) Then
-            Continue
-        Else If DesktopMime.FromFile(yukiPath).Type Begins "audio" Then
-            yukiResult.Add(yukiPath)
-        Else If DesktopMime.FromFile(yukiPath).Type Begins "video" Then
-            yukiResult.Add(yukiPath)
-        End If
+        If Not Exist(yukiPath) Then Continue
+        If MikuruMimeType.IsAudioFile(yukiPath) Then yukiResult.Add(yukiPath)
     Next
     
     Return yukiResult
@@ -61,7 +31,7 @@ Public Function GetDragDataType(argData As String) As Integer
     Dim yukiPath As String
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
-        yukiPath = decodeUrl(yukiUrl)
+        yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
         Debug DesktopMime.FromFile(yukiPath).Type
         If IsDir(yukiPath) Then Return Me.Directory
         If DesktopMime.FromFile(yukiPath).Type Begins "image" Then Return Me.Image
@@ -78,12 +48,9 @@ Public Function GetDirecoryPath(argData As String) As String
     Dim yukiPath As String 
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
-        yukiPath = decodeUrl(yukiUrl)
-        If Not Exist(yukiPath) Or If Not IsDir(yukiPath) Then
-            Continue
-        Else
-            Return yukiPath
-        End If
+        yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
+        If Not Exist(yukiPath) Or If Not IsDir(yukiPath) Then Continue
+        Return yukiPath
     Next
     
 Catch
@@ -97,7 +64,7 @@ Public Function GetImagePath(argData As String) As String
     Dim yukiPath As String
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
-        yukiPath = decodeUrl(yukiUrl)
+        yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
         If DesktopMime.FromFile(yukiPath).Type Begins "image" Then Return yukiPath
     Next
     
@@ -110,16 +77,10 @@ Public Function GetMusicPaths(argData As String) As String[]
     Dim yukiPaths As New String[]
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
-        yukiPath = decodeUrl(yukiUrl)
+        yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
         If DesktopMime.FromFile(yukiPath).Type Begins "audio" Then yukiPaths.Add(yukiPath)
     Next
     
     Return yukiPaths
-    
-End
-
-Public Function GetUrl(argPath As String) As String
-    
-    Return Media.URL(argPath)
     
 End

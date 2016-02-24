@@ -63,11 +63,11 @@ Private Sub setData()
     
     For Each yukiResult
         yukiCollection = New Collection
-        If Not Exist(yukiResult[NagatoDBMedia.ColumnPath]) Then Continue
-        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnTitle], getKey(ColumnTitle))
-        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnArtist], getKey(ColumnArtist))
-        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnAlbum], getKey(ColumnAlbum))
-        yukiCollection.Add(yukiResult[NagatoDBMedia.ColumnPath], getKey(ColumnPath))
+        If Not Exist(yukiResult[NagatoDBMedia.Column.Path]) Then Continue
+        yukiCollection.Add(yukiResult[NagatoDBMedia.Column.Title], getKey(ColumnTitle))
+        yukiCollection.Add(yukiResult[NagatoDBMedia.Column.Artist], getKey(ColumnArtist))
+        yukiCollection.Add(yukiResult[NagatoDBMedia.Column.Album], getKey(ColumnAlbum))
+        yukiCollection.Add(yukiResult[NagatoDBMedia.Column.Path], getKey(ColumnPath))
         setGridData(yukiCollection)
     Next
     
@@ -131,6 +131,8 @@ Public Sub _InitializeGrids() 'override
 End
 
 Public Sub Asakura_ColumnClick(argIndex As Integer)
+    
+    Debug argIndex
     
     Select Case argIndex
         Case 1 To 3
