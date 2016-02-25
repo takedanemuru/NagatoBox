@@ -1,0 +1,56 @@
+' Gambas class file
+
+Private $player As NagatoPlayer 
+
+Property Read State As Integer
+Property Read ProgressRate As Float
+Property Read ProgressText As String
+Property SoftwareVolume As Float
+
+Public Function GetProgressTextByRate(argRate As Float) As String
+    
+    Return $player.GetProgressTextByRate(argRate)
+    
+End
+
+Public Sub SetProgress(argProgress As Float) ' argFloat must be between 0 to 1
+    
+    $player.SetPosition(argProgress)
+    
+End
+
+Public Sub _new(argPlayer As NagatoPlayer)
+    
+    $player = argPlayer
+    
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+End
+
+Private Function ProgressRate_Read() As Float
+
+    Return $player.ProgressRate
+
+End
+
+Private Function ProgressText_Read() As String
+
+    Return $player.ProgressText
+
+End
+
+Private Function SoftwareVolume_Read() As Float
+
+    Return $player.SoftwareVolume
+
+End
+
+Private Sub SoftwareVolume_Write(Value As Float)
+
+    $player.SoftwareVolume = Value
+
+End

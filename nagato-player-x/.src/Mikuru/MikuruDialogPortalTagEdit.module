@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Sub SetTag(argPath As String)
+    
+    HaruhiTagEdit.SetPath(argPath)
+    HaruhiTagEdit.Show()
+    
+End
+
+Public Sub SetTagBulk(argPaths As String[])
+    
+    HaruhiTagEditBulk.StartEdit(argPaths)
+    HaruhiTagEditBulk.Show()
+    
+End

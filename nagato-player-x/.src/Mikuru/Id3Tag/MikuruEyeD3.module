@@ -40,7 +40,7 @@ Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
     Shell Subst$(yukiCommand, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
     
-    If Media.URL(argMusicPath) = NagatoQueue.CurrentUrl Then NagatoQueue.ReloadCoverArt()
+    If Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl Then NagatoQueue.ChannelCoverArt.Reload()
     
 End
 

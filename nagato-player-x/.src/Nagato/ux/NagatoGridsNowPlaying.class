@@ -18,7 +18,7 @@ Private Sub refreshData()
     
     Me._ClearGrids()
     
-    For yukiRowIndex = 0 To NagatoQueue.Count - 1
+    For yukiRowIndex = 0 To NagatoQueue.ChannelList.Count - 1
         Inc Me._$grids.Rows.Count
         If $playMark.Set(yukiRowIndex) Then yukiCurrentRow = yukiRowIndex
         yukiElement = NagatoQueue[yukiRowIndex]

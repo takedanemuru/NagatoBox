@@ -8,7 +8,7 @@ Private Sub save(argPlaylistNameId As Integer, argPath As String)
     
     With NagatoDBMedia
         Me._$connection.Begin()
-            yukiResult = Me._$connection.Create(.TablePlaylistData)
+            yukiResult = Me._$connection.Create(.Table.PlaylistData)
             yukiResult[.ColumnPlaylistNameId] = argPlaylistNameId
             yukiResult[.ColumnPath] = argPath
             yukiResult.Update()
@@ -26,8 +26,8 @@ Public Sub _EnsureTable() 'override
     Dim yukiTable As Table
     
     With NagatoDBMedia
-        If Not Me._$connection.Tables.Exist(.TablePlaylistData) Then
-            yukiTable = Me._$connection.Tables.Add(.TablePlaylistData)
+        If Not Me._$connection.Tables.Exist(.Table.PlaylistData) Then
+            yukiTable = Me._$connection.Tables.Add(.Table.PlaylistData)
             yukiTable.Fields.Add(.ColumnId, db.Serial)
             yukiTable.Fields.Add(.ColumnPlaylistNameId, db.Integer)
             yukiTable.Fields.Add(.ColumnPath, db.String)
@@ -42,7 +42,7 @@ Public Sub OverwritePlaylist(argPlaylistNameId As Integer, argPaths As String[])
     
     Dim yukiPath As String
     
-    Try Me._$connection.Delete(NagatoDBMedia.TablePlaylistData, "playlist_name_id = &1", argPlaylistNameId)
+    Try Me._$connection.Delete(NagatoDBMedia.Table.PlaylistData, "playlist_name_id = &1", argPlaylistNameId)
     
     For Each yukiPath In argPaths
         save(argPlaylistNameId, yukiPath)

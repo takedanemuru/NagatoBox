@@ -28,7 +28,7 @@ End
 
 Public Sub Form_Close()
     
-    NagatoQueue.SavePaths()
+    NagatoQueue.ChannelList.Save()
     NagatoSettingsForm.Save(Me)
     
 End

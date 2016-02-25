@@ -1,12 +1,20 @@
 ' Gambas class file
 
 Property Read Rect As Rect
+Property Read W As Integer
+Property Read X As Integer
 
 Public _$rect As Rect
 
 Public Sub _OnGetY() As Integer
     
     Return 0 ' this is just a dummy to avoid error
+    
+End
+
+Public Function Contains(argX As Integer, argY As Integer) As Boolean
+    
+    Return Me._$rect.Contains(argX, argY)
     
 End
 
@@ -21,5 +29,17 @@ End
 Private Function Rect_Read() As Rect
 
     Return Me._$rect
+
+End
+
+Private Function W_Read() As Integer
+
+    Return Me._$rect.W
+
+End
+
+Private Function X_Read() As Integer
+
+    Return Me._$rect.X
 
 End

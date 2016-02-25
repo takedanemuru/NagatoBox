@@ -1,0 +1,75 @@
+' Gambas class file
+
+Property Read Count As Integer
+Property Read Paths As String[]
+Property Read CurrentIndex As Integer
+Property Read CurrentUrl As String
+Property Read Collection As Collection
+
+Private $musicList As NagatoMusicList
+
+Public Function SetPath(argPath As String) As Boolean
+    
+    Return $musicList.SetPath(argPath)
+    
+End
+
+Public Sub AddDirectory(argPath As String)
+    
+    $musicList.AddDirectory(argPath)
+    
+End
+
+Public Sub Save()
+    
+    NagatoSettingsMusic.SavePaths($musicList.Paths)
+    
+End
+
+Public Sub MoveUp(argIndexes As Integer[])
+    
+    If argIndexes.Count > 0 Then $musicList.MoveUp(argIndexes)
+    
+End
+
+Public Sub MoveDown(argIndexes As Integer[])
+    
+    If argIndexes.Count > 0 Then $musicList.MoveDown(argIndexes)
+
+End
+
+Public Sub _new(argMusicList As NagatoMusicList)
+    
+    $musicList = argMusicList
+    
+End
+
+Private Function CurrentUrl_Read() As String
+
+    Return $musicList.CurrentUrl
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $musicList.Count
+
+End
+
+Private Function CurrentIndex_Read() As Integer
+
+    Return $musicList.CurrentPosition
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $musicList.Paths
+
+End
+
+Private Function Collection_Read() As Collection
+
+    Return $musicList.GetCollection()
+
+End

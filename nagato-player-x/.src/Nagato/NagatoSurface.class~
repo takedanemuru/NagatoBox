@@ -11,7 +11,7 @@ Public Sub Drop(argData As Variant)
         Case MikuruPath.Music
             NagatoQueue.AddMusics(MikuruPath.GetMusicPaths(argData))
         Case MikuruPath.Directory
-            NagatoQueue.AddDirectory(MikuruPath.GetDirecoryPath(argData))
+            NagatoQueue.ChannelList.AddDirectory(MikuruPath.GetDirecoryPath(argData))
     End Select
     
 End
@@ -19,13 +19,13 @@ End
 Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
 
     If MikuruUx.PlayButton.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.Play()
+        NagatoQueue.ChannelPlayControl.Play()
     Else If MikuruUx.PauseButton.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.Pause()
+        NagatoQueue.ChannelPlayControl.Pause()
     Else If MikuruUx.NextButton.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.Next()
+        NagatoQueue.ChannelPlayControl.Next()
     Else If MikuruUx.BackButton.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.Back()
+        NagatoQueue.ChannelPlayControl.Back()
     Else If MikuruUx.ShuffleButton.Contains(argMouseX, argMouseY) Then
         NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
     Else If MikuruUx.RepeatButton.Contains(argMouseX, argMouseY) Then
@@ -34,14 +34,14 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
         HaruhiPlayList.EnsureVisible()
     Else If MikuruUx.VolumeButton.Contains(argMouseX, argMouseY) Then
         With MikuruUx.VolumeButton
-            NagatoQueue.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
+            NagatoQueue.ChannelPlayState.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
         End With
     Else If MikuruUx.InfoBox.Contains(argMouseX, argMouseY) Then
-        HaruhiTagEdit.SetPath(NagatoQueue.CurrentPath)
+        HaruhiTagEdit.SetPath(NagatoQueue.ChannelList.CurrentUrl)
         HaruhiTagEdit.ShowDialog()
     Else If MikuruUx.ProgressBar.Contains(argMouseX, argMouseY) Then
         With MikuruUx.ProgressBar
-            NagatoQueue.SetProgress((argMouseX - .X) / (.W - .X))
+            NagatoQueue.ChannelPlayState.SetProgress((argMouseX - .X) / (.W - .X))
         End With
     Endif
 

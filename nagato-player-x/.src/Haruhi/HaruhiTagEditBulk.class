@@ -37,16 +37,6 @@ Private Sub setNewTag()
     
 End
 
-Private Sub setNewPicture()
-    
-    If AlbumTextBox.Text = "" Then Return
-    If ArtistTextBox.Text = "" Then Return
-    If $albumartUnloaded Then Return
-    
-    NagatoDBMedia.SetAlbumArt(ArtistTextBox.Text, AlbumTextBox.Text, AlbumArtPictureBox.Picture)
-    
-End
-
 Public Sub StartEdit(argPaths As String[])
     
     $paths = argPaths.Copy()
@@ -71,8 +61,6 @@ End
 Public Sub ApplyButton_Click()
     
     setNewTag()
-    setNewPicture()
-    
     Me.Close(MikuruDialog.ResponseApply)
     
 End

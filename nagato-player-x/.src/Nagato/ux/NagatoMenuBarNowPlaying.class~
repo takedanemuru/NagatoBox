@@ -4,7 +4,7 @@ Inherits NagatoMenuBar
 
 Public Sub _AddStarMenu() 'override
     
-    Dim yukiMenu As New NagatoNowPlayingMenu As "StarMenu"
+    Dim yukiMenu As New NagatoNowPlayingMenu As "NagatoMenu"
      
     Me._$starButton.Menu = yukiMenu.Name
     

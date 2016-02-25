@@ -2,19 +2,12 @@
 
 Property Read Grid As Integer
 Property Read Padding As Integer
-Property Read PlayButton As Rect
-Property Read PauseButton As Rect
-Property Read BackButton As Rect
-Property Read NextButton As Rect
-Property Read ShuffleButton As Rect
-Property Read RepeatButton As Rect
-Property Read PlaylistButton As Rect
-Property Read VolumeButton As Rect
 Property Read InfoBox As Rect
 Property Read InfoBoxInternal As Rect
 Property Read ProgressBar As Rect
 Property Read CoverArt As NagatoUxCoverArt
-
+Property Read Button As NagatoUxButtons
+ 
 Private $coverArt As New NagatoUxCoverArt
 Private $buttons As New NagatoUxButtons
 Private $infoBox As New NagatoUxInfoBox
@@ -23,54 +16,6 @@ Private $progressBar As New NagatoUxProgressBar
 Private Function Grid_Read() As Integer
 
     Return IIf(Desktop.Resolution > 96, 16, 8)
-
-End
-
-Private Function PlayButton_Read() As Rect
-
-    Return $buttons.PlayButton.Rect
-
-End
-
-Private Function PauseButton_Read() As Rect
-
-    Return $buttons.PauseButton.Rect
-
-End
-
-Private Function BackButton_Read() As Rect
-
-    Return $buttons.BackButton.Rect
-
-End
-
-Private Function NextButton_Read() As Rect
-
-    Return $buttons.NextButton.Rect
-
-End
-
-Private Function ShuffleButton_Read() As Rect
-
-    Return $buttons.ShuffleButton.Rect
-
-End
-
-Private Function RepeatButton_Read() As Rect
-
-    Return $buttons.RepeatButton.Rect
-
-End
-
-Private Function PlaylistButton_Read() As Rect
-
-    Return $buttons.PlaylistButton.Rect
-
-End
-
-Private Function VolumeButton_Read() As Rect
-
-    Return $buttons.VolumeButton.Rect
 
 End
 
@@ -101,5 +46,11 @@ End
 Private Function CoverArt_Read() As NagatoUxCoverArt
 
     Return $coverArt
+
+End
+
+Private Function Button_Read() As NagatoUxButtons
+
+    Return $buttons
 
 End

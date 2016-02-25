@@ -24,7 +24,7 @@ End
 
 Public Function Play() As Boolean
     
-    NagatoQueue.Play()
+    NagatoQueue.ChannelPlayControl.Play()
     
     Return True
     
@@ -32,7 +32,7 @@ End
 
 Public Function Pause() As Boolean
     
-    NagatoQueue.Pause()
+    NagatoQueue.ChannelPlayControl.Pause()
     
     Return True
     
@@ -40,7 +40,7 @@ End
 
 Public Function Back() As Boolean
     
-    NagatoQueue.Back()
+    NagatoQueue.ChannelPlayControl.Back()
     
     Return True
     
@@ -48,7 +48,7 @@ End
 
 Public Function Next() As Boolean
     
-    NagatoQueue.Next()
+    NagatoQueue.ChannelPlayControl.Next()
     
     Return True
     
@@ -72,7 +72,7 @@ End
 
 Public Function PlayPathInQueue(argPath As String) As Boolean
     
-    If NagatoQueue.Paths.Exist(argPath) Then
+    If NagatoQueue.ChannelList.Paths.Exist(argPath) Then
         NagatoQueue.SetPathAndPlay(argPath)
         Return True
     Else
@@ -109,31 +109,31 @@ End
 
 Private Function Title_Read() As String
 
-    Return NagatoQueue.Title
+    Return NagatoQueue.GetTag(MikuruTag.Title)
 
 End
 
 Private Function ProgressInText_Read() As String
 
-    Return NagatoQueue.ProgressText
+    Return NagatoQueue.ChannelPlayState.ProgressText
 
 End
 
 Private Function Artist_Read() As String
 
-    Return NagatoQueue.Artist
+    Return NagatoQueue.GetTag(MikuruTag.Artist)
 
 End
 
 Private Function Album_Read() As String
 
-    Return NagatoQueue.Album
+    Return NagatoQueue.GetTag(MikuruTag.Album)
 
 End
 
 Private Function Paths_Read() As String[]
 
-    Return NagatoQueue.Paths
+    Return NagatoQueue.ChannelList.Paths
 
 End
 

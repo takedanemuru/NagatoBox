@@ -2,8 +2,8 @@
 
 Private $nowPlayingTab As NagatoTabNowPlaying
 Private $playlistsTab As NagatoTabPlaylists
-Private $albumsTab As NagatoTabAlbums
-Private $libraryTab As NagatoTabLibrary
+' Private $albumsTab As NagatoTabAlbums
+' Private $libraryTab As NagatoTabLibrary
 
 Public Sub _new()
 
@@ -11,8 +11,8 @@ Public Sub _new()
     
     $nowPlayingTab = New NagatoTabNowPlaying(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
     $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
-    $albumsTab = New NagatoTabAlbums(AlbumsStarButton, AlbumsIconView) As "AlbumsTab"
-    $libraryTab = New NagatoTabLibrary(LibraryStarButton, LibraryGrids) As "LibraryTab"
+    ' $albumsTab = New NagatoTabAlbums(AlbumsStarButton, AlbumsIconView) As "AlbumsTab"
+    ' $libraryTab = New NagatoTabLibrary(LibraryStarButton, LibraryGrids) As "LibraryTab"
     
 End
 

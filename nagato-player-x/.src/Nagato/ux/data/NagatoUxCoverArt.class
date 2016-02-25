@@ -37,13 +37,13 @@ End
 
 Private Function X_Read() As Float
 
-    Return $rect.X + ($rect.W - NagatoQueue.CoverArt.H) / 2
+    Return $rect.X + ($rect.W - NagatoQueue.ChannelCoverArt.H) / 2
     
 End
 
 Private Function Y_Read() As Float
 
-    Return $rect.Y + ($rect.H - NagatoQueue.CoverArt.H) / 2
+    Return $rect.Y + ($rect.H - NagatoQueue.ChannelCoverArt.H) / 2
     
 End
 

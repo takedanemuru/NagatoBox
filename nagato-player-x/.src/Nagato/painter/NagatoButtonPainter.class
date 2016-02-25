@@ -11,12 +11,12 @@ End
 
 Public Sub Draw()
     
-    paintButton(MikuruUx.PlayButton, ("PLAY"), MikuruState.Play)
-    paintButton(MikuruUx.PauseButton, ("PAUSE"), MikuruState.Pause)
-    paintButton(MikuruUx.BackButton, ("BACK"))
-    paintButton(MikuruUx.NextButton, ("NEXT"))
-    paintButton(MikuruUx.ShuffleButton, ("SHUFFLE"), MikuruState.Shuffle)
-    paintButton(MikuruUx.RepeatButton, ("REPEAT"), MikuruState.Repeats)
-    paintButton(MikuruUx.PlaylistButton, ("PLAYLIST"))
+    paintButton(MikuruUx.Button.Play.Rect, ("PLAY"), MikuruState.Play)
+    paintButton(MikuruUx.Button.Pause.Rect, ("PAUSE"), MikuruState.Pause)
+    paintButton(MikuruUx.Button.Back.Rect, ("BACK"))
+    paintButton(MikuruUx.Button.Next.Rect, ("NEXT"))
+    paintButton(MikuruUx.Button.Shuffle.Rect, ("SHUFFLE"), MikuruState.Shuffle)
+    paintButton(MikuruUx.Button.Repeat.Rect, ("REPEAT"), MikuruState.Repeats)
+    paintButton(MikuruUx.Button.Playlist.Rect, ("PLAYLIST"))
 
 End

@@ -38,7 +38,7 @@ End
 
 Public Sub SetUrlAndPlay(argPath As String)
     
-    If NagatoQueue.SetPath(argPath) Then
+    If NagatoQueue.ChannelList.SetPath(argPath) Then
         Try $player.Stop
         $player.URL = Media.URL(argPath)
         $player.Play()
@@ -53,7 +53,7 @@ Public Sub Play(Optional argPosition As Float)
     
     If $player.State <> Media.Paused Then
         Try $player.Stop
-        Try $player.URL = NagatoQueue.CurrentUrl
+        Try $player.URL = NagatoQueue.ChannelList.CurrentUrl
     End If
     
     $player.Play()
@@ -67,7 +67,7 @@ End
 Public Sub ResetUrl()
     
     Try $player.Stop()
-    $player.URL = NagatoQueue.CurrentUrl
+    $player.URL = NagatoQueue.ChannelList.CurrentUrl
     $player.Position = 0
     
 End

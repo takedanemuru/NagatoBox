@@ -1,0 +1,60 @@
+' Gambas class file
+
+Private $player As NagatoPlayer 
+Private $musicList As NagatoMusicList 
+Private $observer As Observer
+
+Public Sub Play()
+    
+    If $musicList.Count > 0 And If $player.State <> Media.Playing Then $player.Play()
+    
+End
+
+Public Sub Pause()
+    
+    $player.Pause()
+    
+End
+
+Public Sub Next()
+    
+    If $musicList.Count = 0 Then Return
+    
+    $musicList.Next()
+    If $player.State = Media.Playing Then Try $player.Play(0)
+    If $player.State <> Media.Playing Then $player.ResetUrl()
+    
+End
+
+Public Sub Back()
+    
+    If $musicList.Count = 0 Then Return
+    
+    If $player.State = Media.Playing And If $player.ProgressRate > 0.05 Then
+        $player.SetPosition(0)
+    Else If $player.State = Media.Playing Then
+        $musicList.Back()
+        $player.Play(0)
+    Else ' when $player is stopped/paused
+        $musicList.Back()
+        $player.ResetUrl()
+    End If
+    
+End
+
+Public Sub _new(argPlayer As NagatoPlayer, argMusicList As NagatoMusicList)
+    
+    $player = argPlayer
+    $musicList = argMusicList
+    $observer = New Observer($player) As "Asakura"
+    
+End
+
+Public Sub Asakura_MusicEnd()
+    
+    If NagatoSettingsMusic.Repeat Then Me.Back()
+    If Not NagatoSettingsMusic.Repeat Then Me.Next()
+    
+    HaruhiPlayer.Title = $musicList.GetTag(MikuruTag.Title)
+    
+End

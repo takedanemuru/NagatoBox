@@ -1,9 +1,12 @@
 ' Gambas class file
 
 Property Read CurrentUrl As String
+Property Read CurrentPath As String
 Property Read CurrentPosition As Integer
 Property Read Paths As String[]
 Property Read Count As Integer
+
+Private $assistantMove As NagatoMusicListAssistantMove
 
 Private $musicElements As New NagatoMusicElements
 Private $position As New NagatoMusicPosition As "MusicPosition"
@@ -112,11 +115,12 @@ End
 Public Sub _new(argPaths As String[])
     
     $musicElements.Initialize(argPaths)
+    $assistantMove = New NagatoMusicListAssistantMove($musicElements, $position)
     
-    If $musicElements.Count > 0 Then 
-        $position.Refresh($musicElements.Count)
-        Raise Changed
-    End If
+    If $musicElements.Count = 0 Then Return  
+    $position.Refresh($musicElements.Count)
+    If NagatoSettingsMusic.Shuffle Then Me.Next()
+    Raise Changed
     
 End
 
@@ -132,7 +136,7 @@ Public Function GetCollection() As Collection
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To Me.Count - 1
-        yukiCollection.Add(Me.GetTitle(yukiIndex), Me.Paths[yukiIndex])
+        yukiCollection.Add($musicElements[yukiIndex].Title, Me.Paths[yukiIndex])
     Next
     
     Return yukiCollection
@@ -155,36 +159,7 @@ End
 
 Public Sub MoveDown(argSelection As Integer[])
     
-    Dim yukiCount As Integer
-    Dim yukiIndex As Integer
-    Dim yukiBuffer As New NagatoMusicElement[]
-    Dim yukiMax As Integer
-    Dim yukiInsertPosition As Integer
-    Dim yukiNewCurrentPosition As Integer
-    Dim yukiNewSelection As New Integer[]
-    
-    yukiMax = argSelection.Sort()[argSelection.Max]
-    
-    For yukiCount = 0 To $musicElements.Count - 1
-        If argSelection.Exist(yukiCount) Then Continue
-        yukiBuffer.Add($musicElements[yukiCount])
-        If yukiCount = (yukiMax + 1) Then yukiInsertPosition = yukiCount 
-        If yukiCount = $position.Current Then yukiNewCurrentPosition = yukiCount
-    Next
-    
-   For Each yukiIndex In argSelection
-       yukiBuffer.Add($musicElements[yukiIndex], yukiInsertPosition)
-       If yukiIndex = $position.Current Then
-            yukiNewCurrentPosition = yukiInsertPosition
-       Else If yukiNewCurrentPosition > yukiInsertPosition Then 
-           Inc yukiNewCurrentPosition
-       End If
-       yukiNewSelection.Add(yukiInsertPosition)
-       Inc yukiInsertPosition
-   Next
-    
-    $musicElements.Set(yukiBuffer)
-    $position.Current = yukiNewCurrentPosition
+    Dim yukiNewSelection As Integer[] = $assistantMove.Down(argSelection)
     
     Raise SelectionMoved(yukiNewSelection)
     
@@ -192,42 +167,15 @@ End
 
 Public Sub MoveUp(argSelection As Integer[])
     
-    Dim yukiCount As Integer
-    Dim yukiBuffer As New NagatoMusicElement[]
-    Dim yukiInsertPosition As Integer = Max(0, argSelection.Sort()[0] - 1)
-    Dim yukiNewCurrentPosition As Integer
-    Dim yukiNewSelection As New Integer[]
-
-    For yukiCount = 0 To $musicElements.Count - 1
-        If argSelection.Exist(yukiCount) Then
-            yukiBuffer.Insert([$musicElements[yukiCount]], yukiInsertPosition)
-            If yukiCount = $position.Current Then yukiNewCurrentPosition = yukiInsertPosition
-            yukiNewSelection.Add(yukiInsertPosition)
-            Inc yukiInsertPosition
-        Else
-            yukiBuffer.Add($musicElements[yukiCount])
-            If yukiCount = $position.Current Then yukiNewCurrentPosition = yukiCount
-        Endif
-    Next
-
-    $musicElements.Set(yukiBuffer)
-    $position.Current = yukiNewCurrentPosition
-
+    Dim yukiNewSelection As Integer[] = $assistantMove.Up()
+    
     Raise SelectionMoved(yukiNewSelection)
     
 End
 
 Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
-    Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
-    Dim yukiCount As Integer
-    
-    For yukiCount = 0 To $musicElements.Count - 1
-        yukiBuffer.Set($musicElements[yukiCount], (yukiCount = $position.Current))
-    Next
-    
-    $musicElements.Set(yukiBuffer.Elements)
-    $position.ResetOnSort(yukiBuffer.Current, $musicElements.Count)
+    $assistantMove.Sort(argType, argSortAscend)
     
     Raise Changed
     
@@ -265,4 +213,13 @@ Public Sub MusicPosition_Moved()
     
     Raise Moved
     
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $musicElements[$position.Current].Path
+
+Catch
+    Return ""
+
 End

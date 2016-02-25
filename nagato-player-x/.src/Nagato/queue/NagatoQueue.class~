@@ -2,40 +2,22 @@
 
 Create Static
 
-Property Read Count As Integer
-Property Read Paths As String[]
-Property Read CurrentIndex As Integer
-Property Read CurrentUrl As String
-Property Read State As Integer
-Property Read Collection As Collection
-Property Read CoverArt As Picture
-
-Property Read ProgressRate As Float
-Property Read ProgressText As String
-Property SoftwareVolume As Float
+Property Read ChannelPlayControl As NagatoQueueAssistantPlayControl
+Property Read ChannelPlayState As NagatoQueueAssistantPlayState
+Property Read ChannelCoverArt As NagatoQueueAssistantCoverArt
+Property Read ChannelList As NagatoQueueAssistantList
 
 Private $player As New NagatoPlayer As "Player"
 Private $musicList As NagatoMusicList 
-Private $coverArt As Picture
+Private $assistantPlayControl As NagatoQueueAssistantPlayControl
+Private $assistantPlayState As NagatoQueueAssistantPlayState
+Private $assistantCoverArt As NagatoQueueAssistantCoverArt
+Private $assistantList As NagatoQueueAssistantList
 
 Event Moved
 Event Changed
 Event TagChanged
 Event SelectionMoved(argIndexes As Integer[])
-
-Public Sub ReloadCoverArt()
-    
-    Dim yukiPath As String = MikuruUrl.DecodUrlToPath(Me.CurrentUrl)
-    
-    $coverArt = MikuruEyeD3.GetPicture(yukiPath, MikuruUx.CoverArt.Size)
-    
-End
-
-Public Function SetPath(argPath As String) As Boolean
-    
-    Return $musicList.SetPath(argPath)
-    
-End
 
 Public Sub AddMusics(argPaths As String[])
     
@@ -64,16 +46,10 @@ End
 
 Public Sub EditIndexes(argIndexes As Integer[])
     
-    If argIndexes.Count = 0 Then
-        Return
-    Else If argIndexes.Count = 1 Then
-        HaruhiTagEdit.SetPath($musicList.GetElement(argIndexes[0]).Path)
-        HaruhiTagEdit.Show()
-    Else
-        MikuruArrayTest($musicList.GetPathsFromIndexes(argIndexes))
-        HaruhiTagEditBulk.StartEdit($musicList.GetPathsFromIndexes(argIndexes))
-        HaruhiTagEditBulk.Show()
-    Endif
+    With MikuruDialogPortalTagEdit
+        If argIndexes.Count = 1 Then .SetTag($musicList.GetElement(argIndexes[0]).Path)
+        If argIndexes.Count > 0 Then .SetTagBulk($musicList.GetPathsFromIndexes(argIndexes))
+    End With
     
 End
 
@@ -84,31 +60,11 @@ Public Sub ClearAll()
     
 End
 
-Public Sub ListMoveUp(argIndexes As Integer[])
-    
-    If argIndexes.Count > 0 Then $musicList.MoveUp(argIndexes)
-    
-End
-
-Public Sub ListMoveDown(argIndexes As Integer[])
-    
-    If argIndexes.Count > 0 Then $musicList.MoveDown(argIndexes)
-
-End
-
-Public Sub SavePaths()
-    
-    NagatoSettingsMusic.SavePaths($musicList.Paths)
-    
-End
-
 Public Sub RefreshTag()
     
-    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentPath)
-    
-    $musicList.SetTag("Title", MikuruId3TagInfo.GetTitle(yukiPath))
-    $musicList.SetTag("Artist", MikuruId3TagInfo.GetArtist(yukiPath))
-    $musicList.SetTag("Album", MikuruId3TagInfo.GetAlbum(yukiPath))
+    $musicList.SetTag("Title", MikuruId3TagInfo.GetTitle($musicList.CurrentPath))
+    $musicList.SetTag("Artist", MikuruId3TagInfo.GetArtist($musicList.CurrentPath))
+    $musicList.SetTag("Album", MikuruId3TagInfo.GetAlbum($musicList.CurrentPath))
     
     Raise TagChanged
     
@@ -117,63 +73,16 @@ End
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) As "MusicList"
-    
-    If $musicList.Count > 0 And If NagatoSettingsMusic.Shuffle Then $musicList.Next()
+    $assistantPlayControl = New NagatoQueueAssistantPlayControl($player, $musicList)
+    $assistantPlayState = New NagatoQueueAssistantPlayState($player)
+    $assistantCoverArt = New NagatoQueueAssistantCoverArt($musicList)
+    $assistantList = New NagatoQueueAssistantList($musicList)
     
 End
 
 Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
     Return $musicList.GetElement(argIndex)
-    
-End
-
-Public Function GetProgressTextByRate(argRate As Float) As String
-    
-    Return $player.GetProgressTextByRate(argRate)
-    
-End
-
-Public Sub Play()
-    
-    If Me.Count = 0 Then Return
-    If $player.State <> Media.Playing Then $player.Play()
-    
-End
-
-Public Sub Pause()
-    
-    $player.Pause()
-    
-End
-
-Public Sub Next()
-    
-    If Me.Count = 0 Then Return
-    
-    $musicList.Next()
-      
-    If $player.State = Media.Playing Then
-        Try $player.Play(0)
-    Else
-        $player.ResetUrl()
-    End If
-    
-End
-
-Public Sub Back()
-    
-    If Me.Count = 0 Then Return
-    
-    If $player.State = Media.Playing And If $player.ProgressRate > 0.05 Then
-        $player.SetPosition(0)
-    Else If $player.State = Media.Playing Then
-        $musicList.Back()
-        $player.Play(0)
-    Else ' when $player is stopped/paused
-        $musicList.Back()
-        $player.ResetUrl()
-    End If
     
 End
 
@@ -185,27 +94,9 @@ Public Sub SetPathAndPlay(argPath As String)
     
 End
 
-Public Sub SetProgress(argProgress As Float) ' argFloat must be between 0 to 1
-    
-    $player.SetPosition(argProgress)
-    
-End
-
 Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
     If $musicList.Count > 0 Then $musicList.Sort(argType, argSortAscend)
-    
-End
-
-Public Sub Player_MusicEnd()
-    
-    If NagatoSettingsMusic.Repeat Then
-        Me.Back()
-    Else
-        Me.Next()
-    End If
-    
-    HaruhiPlayer.Title = Me.Title
     
 End
 
@@ -217,17 +108,13 @@ End
 
 Public Sub Player_FetchDuration(argDuration As Float)
     
-    If NagatoDBMedia.FetchDuration(MikuruUrlDecode(Me.CurrentPath), argDuration) Then
-        Raise TagChanged
-    Endif
+    If NagatoDBMedia.FetchDuration($musicList.CurrentPath, argDuration) Then Raise TagChanged
     
 End
 
 Public Sub Player_FetchTags(argTags As Variant[])
     
-    Dim yukiPath As String = MikuruUrlDecode(Me.CurrentUrl)
-    
-    If Not NagatoDBMedia.FetchTags(yukiPath, argTags) Then Return
+    If Not NagatoDBMedia.FetchTags($musicList.CurrentPath, argTags) Then Return
     
     $musicList.SetTag("Title", argTags[0])
     $musicList.SetTag("Artist", argTags[1])
@@ -239,9 +126,7 @@ End
 
 Public Sub MusicList_Moved()
     
-    Dim yukiPath As String = MikuruUrl.DecodUrlToPath(Me.CurrentUrl)
-    
-    $coverArt = MikuruEyeD3.GetPicture(yukiPath, MikuruUx.CoverArt.Size)
+    $assistantCoverArt.Reload()
     
     Raise Moved
     
@@ -261,77 +146,32 @@ Public Sub MusicList_SelectionMoved(argSelection As Integer[])
     
 End
 
-Private Function Count_Read() As Integer
-
-    Return $musicList.Count
-
-Catch
-    Return 0
-
-End
-
-Private Function CurrentIndex_Read() As Integer
-
-    Return $musicList.CurrentPosition
-
-End
-
-Private Function Paths_Read() As String[]
-
-    Return $musicList.Paths
-
-End
-
 Public Function GetTag(argTagType As Integer) As String
     
     Return $musicList.GetTag(argTagType)
     
 End
 
-Private Function State_Read() As Integer
+Private Function ChannelPlayControl_Read() As NagatoQueueAssistantPlayControl
 
-    Return $player.State
-
-End
-
-Private Function Collection_Read() As Collection
-
-    Return $musicList.GetCollection()
+    Return $assistantPlayControl
 
 End
 
-Private Function CoverArt_Read() As Picture
+Private Function ChannelPlayState_Read() As NagatoQueueAssistantPlayState
 
-    Return $coverArt
-
-End
-
-Private Function ProgressRate_Read() As Float
-
-    Return $player.ProgressRate
+    Return $assistantPlayState
 
 End
 
-Private Function ProgressText_Read() As String
+Private Function ChannelCoverArt_Read() As NagatoQueueAssistantCoverArt
 
-    Return $player.ProgressText
-
-End
-
-Private Function SoftwareVolume_Read() As Float
-
-    Return $player.SoftwareVolume
+    Return $assistantCoverArt
 
 End
 
-Private Sub SoftwareVolume_Write(Value As Float)
+Private Function ChannelList_Read() As NagatoQueueAssistantList
 
-    $player.SoftwareVolume = Value
-
-End
-
-Private Function CurrentUrl_Read() As String
-
-    Return $musicList.CurrentUrl
+    Return $assistantList
 
 End

@@ -27,6 +27,6 @@ End
 
 Private Function Internal_Read() As Rect
     
-    Return IIf(NagatoQueue.CoverArt, $internalWithCoverArt, $internal)
+    Return IIf(NagatoQueue.ChannelCoverArt.Picture, $internalWithCoverArt, $internal)
     
 End

@@ -16,9 +16,9 @@ End
 
 Public Function Set(argRowIndex As Integer) As Boolean
     
-    If argRowIndex <> NagatoQueue.CurrentIndex Then
+    If argRowIndex <> NagatoQueue.ChannelList.CurrentIndex Then
         Return False
-    Else If NagatoQueue.State = Media.Playing Then
+    Else If NagatoQueue.ChannelPlayState.State = Media.Playing Then
         $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
         Return True
     Else

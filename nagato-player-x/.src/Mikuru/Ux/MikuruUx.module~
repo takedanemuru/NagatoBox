@@ -14,10 +14,12 @@ Property Read InfoBox As Rect
 Property Read InfoBoxInternal As Rect
 Property Read ProgressBar As Rect
 Property Read CoverArt As NagatoUxCoverArt
-
+Property Read Button As NagatoUxButtons
+ 
 Private $coverArt As New NagatoUxCoverArt
 Private $buttons As New NagatoUxButtons
 Private $infoBox As New NagatoUxInfoBox
+Private $progressBar As New NagatoUxProgressBar
 
 Private Function Grid_Read() As Integer
 
@@ -27,49 +29,49 @@ End
 
 Private Function PlayButton_Read() As Rect
 
-    Return $buttons.PlayButton.Rect
+    Return $buttons.Play.Rect
 
 End
 
 Private Function PauseButton_Read() As Rect
 
-    Return $buttons.PauseButton.Rect
+    Return $buttons.Pause.Rect
 
 End
 
 Private Function BackButton_Read() As Rect
 
-    Return $buttons.BackButton.Rect
+    Return $buttons.Back.Rect
 
 End
 
 Private Function NextButton_Read() As Rect
 
-    Return $buttons.NextButton.Rect
+    Return $buttons.Next.Rect
 
 End
 
 Private Function ShuffleButton_Read() As Rect
 
-    Return $buttons.ShuffleButton.Rect
+    Return $buttons.Shuffle.Rect
 
 End
 
 Private Function RepeatButton_Read() As Rect
 
-    Return $buttons.RepeatButton.Rect
+    Return $buttons.Repeat.Rect
 
 End
 
 Private Function PlaylistButton_Read() As Rect
 
-    Return $buttons.PlaylistButton.Rect
+    Return $buttons.Playlist.Rect
 
 End
 
 Private Function VolumeButton_Read() As Rect
 
-    Return $buttons.VolumeButton.Rect
+    Return $buttons.Volume.Rect
 
 End
 
@@ -81,9 +83,7 @@ End
 
 Private Function ProgressBar_Read() As Rect
 
-    Dim yukiRectangle As New Rect(1 * Me.Grid, 48 * Me.Grid, 34 * Me.Grid, 3 * Me.Grid)
-    
-    Return yukiRectangle
+    Return $progressBar.Rect
     
 End
 
@@ -102,5 +102,11 @@ End
 Private Function CoverArt_Read() As NagatoUxCoverArt
 
     Return $coverArt
+
+End
+
+Private Function Button_Read() As NagatoUxButtons
+
+    Return $buttons
 
 End
