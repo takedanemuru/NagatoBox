@@ -1,0 +1,74 @@
+' Gambas class file
+
+Property Read ChannelMove As NagatoMusicListAssistantMove
+Property Read ChannelQueue As NagatoMusicListAssistantQueue
+Property Read ChannelCurrent As NagatoMusicListAssistantCurrent
+Property Read ChannelTags As NagatoMusicListAssistantTags
+Property Read ChannelIndex As NagatoMusicListAssistantIndex
+
+Private $assistantMove As NagatoMusicListAssistantMove
+Private $assistantQueue As NagatoMusicListAssistantQueue
+Private $assistantCurrent As NagatoMusicListAssistantCurrent
+Private $assistantTags As NagatoMusicListAssistantTags
+Private $assistantIndex As NagatoMusicListAssistantIndex
+
+Private $musicElements As New NagatoMusicElements
+Private $position As New NagatoMusicPosition As "MusicPosition"
+
+Private Sub initializeChannels()
+    
+    $assistantMove = New NagatoMusicListAssistantMove($musicElements, $position)
+    $assistantQueue = New NagatoMusicListAssistantQueue($musicElements, $position)
+    $assistantCurrent = New NagatoMusicListAssistantCurrent($musicElements, $position)
+    $assistantTags = New NagatoMusicListAssistantTags($musicElements, $position)
+    $assistantIndex = New NagatoMusicListAssistantIndex($musicElements, $position)
+    
+End
+
+Public Sub _new(argPaths As String[])
+    
+    $musicElements.Initialize(argPaths)
+    initializeChannels()
+    If $musicElements.Count = 0 Then Return  
+    $position.Refresh($musicElements.Count)
+    If NagatoSettingsMusic.Shuffle Then $assistantIndex.Next()
+    NagatoSettingsMusic.SavePaths($musicElements.Paths)
+    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoMusicElement
+    
+    Return $musicElements[argIndex]
+    
+End
+
+Private Function ChannelMove_Read() As NagatoMusicListAssistantMove
+
+    Return $assistantMove
+
+End
+
+Private Function ChannelQueue_Read() As NagatoMusicListAssistantQueue
+
+    Return $assistantQueue
+
+End
+
+Private Function ChannelCurrent_Read() As NagatoMusicListAssistantCurrent
+
+    Return $assistantCurrent
+
+End
+
+Private Function ChannelTags_Read() As NagatoMusicListAssistantTags
+
+    Return $assistantTags
+
+End
+
+Private Function ChannelIndex_Read() As NagatoMusicListAssistantIndex
+
+    Return $assistantIndex
+
+End

@@ -8,7 +8,7 @@ Private $coverArt As Picture
 
 Public Sub Reload()
     
-    $coverArt = MikuruEyeD3.GetPicture($musicList.CurrentPath, MikuruUx.CoverArt.Size)
+    $coverArt = MikuruEyeD3.GetPicture($musicList.ChannelCurrent.Path, MikuruUx.CoverArt.Size)
     
 End
 

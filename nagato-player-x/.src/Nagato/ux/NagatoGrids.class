@@ -134,28 +134,3 @@ Public Sub Asakura_ColumnClick(argIndex As Integer)
     Me._ColumnClick(argIndex)
     
 End
-
-Public Sub Asakura_DragMove()
-    
-    Debug "dragmove"
-    
-End
-
-Public Sub Asakura_MouseDrag()
-    
-    Drag.Icon = MikuruIcon.Get("arrow-right")
-    Me._$grids.Drag("dummy", "text/nagato-music-items")
-    
-End
-
-Public Sub Asakura_Drag()
-    
-    
-    
-End
-
-Public Sub Asakura_Drop()
-    
-    
-    
-End

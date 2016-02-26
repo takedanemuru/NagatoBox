@@ -1,0 +1,85 @@
+' Gambas class file
+
+Inherits NagatoMusicListAssistant
+
+Public Sub Sort(argType As Integer, argSortAscend As Boolean)
+    
+    Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
+    Dim yukiCount As Integer
+    
+    If Me._$musicElements.Count = 0 Then Return
+    
+    For yukiCount = 0 To Me._$musicElements.Count - 1
+        yukiBuffer.Set(Me._$musicElements[yukiCount], (yukiCount = Me._$position.Current))
+    Next
+    
+    Me._$musicElements.Set(yukiBuffer.Elements)
+    Me._$position.ResetOnSort(yukiBuffer.Current, Me._$musicElements.Count)
+    
+    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    
+End
+
+Public Sub Up(argSelection As Integer[]) 
+    
+    Dim yukiCount As Integer
+    Dim yukiBuffer As New NagatoMusicElement[]
+    Dim yukiInsertPosition As Integer = Max(0, argSelection.Sort()[0] - 1)
+    Dim yukiNewCurrentPosition As Integer
+    Dim yukiNewSelection As New Integer[]
+
+    For yukiCount = 0 To Me._$musicElements.Count - 1
+        If argSelection.Exist(yukiCount) Then
+            yukiBuffer.Insert([Me._$musicElements[yukiCount]], yukiInsertPosition)
+            If yukiCount = Me._$position.Current Then yukiNewCurrentPosition = yukiInsertPosition
+            yukiNewSelection.Add(yukiInsertPosition)
+            Inc yukiInsertPosition
+        Else
+            yukiBuffer.Add(Me._$musicElements[yukiCount])
+            If yukiCount = Me._$position.Current Then yukiNewCurrentPosition = yukiCount
+        Endif
+    Next
+
+    Me._$musicElements.Set(yukiBuffer)
+    Me._$position.Current = yukiNewCurrentPosition
+
+    NagatoBroadCast(NagatoBroadCast.SignalSelectionMoved, yukiNewSelection)
+    
+End
+
+Public Sub Down(argSelection As Integer[]) 
+    
+    Dim yukiCount As Integer
+    Dim yukiIndex As Integer
+    Dim yukiBuffer As New NagatoMusicElement[]
+    Dim yukiMax As Integer
+    Dim yukiInsertPosition As Integer
+    Dim yukiNewCurrentPosition As Integer
+    Dim yukiNewSelection As New Integer[]
+    
+    yukiMax = argSelection.Sort()[argSelection.Max]
+    
+    For yukiCount = 0 To Me._$musicElements.Count - 1
+        If argSelection.Exist(yukiCount) Then Continue
+        yukiBuffer.Add(Me._$musicElements[yukiCount])
+        If yukiCount = (yukiMax + 1) Then yukiInsertPosition = yukiCount 
+        If yukiCount = Me._$position.Current Then yukiNewCurrentPosition = yukiCount
+    Next
+    
+   For Each yukiIndex In argSelection
+       yukiBuffer.Add(Me._$musicElements[yukiIndex], yukiInsertPosition)
+       If yukiIndex = Me._$position.Current Then
+            yukiNewCurrentPosition = yukiInsertPosition
+       Else If yukiNewCurrentPosition > yukiInsertPosition Then 
+           Inc yukiNewCurrentPosition
+       End If
+       yukiNewSelection.Add(yukiInsertPosition)
+       Inc yukiInsertPosition
+   Next
+    
+    Me._$musicElements.Set(yukiBuffer)
+    Me._$position.Current = yukiNewCurrentPosition
+    
+    NagatoBroadCast(NagatoBroadCast.SignalSelectionMoved, yukiNewSelection)
+    
+End

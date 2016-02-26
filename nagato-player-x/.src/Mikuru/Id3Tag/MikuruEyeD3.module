@@ -2,6 +2,8 @@
 
 Property Read WorkingDirectory As String
 
+Private Const Command As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
+
 Private Sub ensureDirectory()
     
     Dim yukiPath As String
@@ -36,11 +38,10 @@ End
 
 Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
-    Dim yukiCommand As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
+    Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
     
-    Shell Subst$(yukiCommand, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
-    
-    If Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl Then NagatoQueue.ChannelCoverArt.Reload()
+    If Media.URL(argMusicPath) <> NagatoQueue.ChannelList.CurrentUrl Then Return
+    NagatoQueue.ChannelCoverArt.Reload()
     
 End
 

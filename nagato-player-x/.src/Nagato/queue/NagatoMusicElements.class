@@ -1,16 +1,9 @@
 ' Gambas class file
 
 Property Read Count As Integer
+Property Read Paths As String[]
 
 Private $musicElements As New NagatoMusicElement[]
-
-Private Function isPlayableFormat(argPath As String) As Boolean
-    
-    If File.Ext(argPath) = "m4a" Then Return False
-    
-    Return True
-    
-End
 
 Private Sub addElement(argPath As String)
     
@@ -40,7 +33,7 @@ Public Function AddMusics(argPaths As String[]) As Integer
     Dim yukiCount As Integer = 0
     
     For Each yukiPath In MikuruPath.Sanitize(argPaths)
-        If Not isPlayableFormat(yukiPath) Then Continue
+        If Not MikuruMusicFormat.IsPlayable(yukiPath) Then Continue
         addElement(yukiPath)
         Inc yukiCount
     Next
@@ -102,16 +95,11 @@ Catch
     
 End
 
-Public Sub SetTag(argTag As String, argIndex As Integer, argValue As String) 
+Public Sub SetTag(argIndex As Integer, argTitle As String, argArtist As String, argAlbum As String) 
     
-    Select Case argTag
-        Case "Title"
-            $musicElements[argIndex].Title = argValue
-        Case "Artist"
-            $musicElements[argIndex].Artist = argValue
-        Case "Album"
-            $musicElements[argIndex].Album = argValue
-    End Select
+    $musicElements[argIndex].Title = argTitle
+    $musicElements[argIndex].Artist = argArtist
+    $musicElements[argIndex].Album = argAlbum
     
 Catch
     Return
@@ -127,5 +115,18 @@ End
 Private Function Count_Read() As Integer
 
     Return $musicElements.Count
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Dim yukiPaths As New String[]
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $musicElements.Count - 1
+        yukiPaths.Add($musicElements[yukiCount].Path)
+    Next
+
+    Return yukiPaths
 
 End

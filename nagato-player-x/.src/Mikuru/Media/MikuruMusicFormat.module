@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Function IsPlayable(argPath As String) As Boolean
+    
+    If File.Ext(argPath) = "m4a" Then Return False
+    
+    Return True
+    
+End

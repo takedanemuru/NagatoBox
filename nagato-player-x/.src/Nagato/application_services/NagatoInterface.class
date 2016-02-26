@@ -72,12 +72,10 @@ End
 
 Public Function PlayPathInQueue(argPath As String) As Boolean
     
-    If NagatoQueue.ChannelList.Paths.Exist(argPath) Then
-        NagatoQueue.SetPathAndPlay(argPath)
-        Return True
-    Else
-        Return False
-    Endif
+    If Not NagatoQueue.ChannelList.Paths.Exist(argPath) Then Return False
+
+    NagatoQueue.SetPathAndPlay(argPath)
+    Return True
     
 End
 
@@ -109,7 +107,7 @@ End
 
 Private Function Title_Read() As String
 
-    Return NagatoQueue.GetTag(MikuruTag.Title)
+    Return NagatoQueue.ChannelTags.Get(MikuruTag.Title)
 
 End
 
@@ -121,13 +119,13 @@ End
 
 Private Function Artist_Read() As String
 
-    Return NagatoQueue.GetTag(MikuruTag.Artist)
+    Return NagatoQueue.ChannelTags.Get(MikuruTag.Artist)
 
 End
 
 Private Function Album_Read() As String
 
-    Return NagatoQueue.GetTag(MikuruTag.Album)
+    Return NagatoQueue.ChannelTags.Get(MikuruTag.Album)
 
 End
 

@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Property Read Count As Integer
+Property Read Paths As String[]
 
 Private $musicElements As New NagatoMusicElement[]
 
@@ -86,7 +87,7 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Public Function GetTag(argTag As Index, argIndex As Integer) As String
+Public Function GetTag(argTag As Integer, argIndex As Integer) As String
     
     Select Case argTag
         Case MikuruTag.Title
@@ -102,16 +103,11 @@ Catch
     
 End
 
-Public Sub SetTag(argTag As String, argIndex As Integer, argValue As String) 
+Public Sub SetTag(argIndex As Integer, argTitle As String, argArtist As String, argAlbum As String) 
     
-    Select Case argTag
-        Case "Title"
-            $musicElements[argIndex].Title = argValue
-        Case "Artist"
-            $musicElements[argIndex].Artist = argValue
-        Case "Album"
-            $musicElements[argIndex].Album = argValue
-    End Select
+    $musicElements[argIndex].Title = argTitle
+    $musicElements[argIndex].Artist = argArtist
+    $musicElements[argIndex].Album = argAlbum
     
 Catch
     Return
@@ -127,5 +123,18 @@ End
 Private Function Count_Read() As Integer
 
     Return $musicElements.Count
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Dim yukiPaths As New String[]
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $musicElements.Count - 1
+        yukiPaths.Add($musicElements[yukiCount].Path)
+    Next
+
+    Return yukiPaths
 
 End

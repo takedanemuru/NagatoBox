@@ -1,0 +1,51 @@
+' Gambas class file
+
+Private $player As NagatoPlayer 
+Private $musicList As NagatoMusicList 
+Private $observer As Observer
+
+Public Sub EditByIndexes(argIndexes As Integer[])
+    
+    With MikuruDialogPortalTagEdit
+        If argIndexes.Count = 1 Then .SetTag($musicList[argIndexes[0]].Path)
+        If argIndexes.Count > 0 Then .SetTagBulk($musicList.ChannelQueue.GetPathsByIndexes(argIndexes))
+    End With
+    
+End
+
+Public Sub Refresh(argTitle As String, argArtist As String, argAlbum As String)
+    
+    $musicList.ChannelTags.Set(argTitle, argArtist, argAlbum)
+    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
+    
+End
+
+Public Function Get(argTagType As Integer) As String
+    
+    Return $musicList.ChannelTags.Get(argTagType)
+    
+End
+
+Public Sub _new(argPlayer As NagatoPlayer, argMusicList As NagatoMusicList)
+    
+    $player = argPlayer
+    $musicList = argMusicList
+    
+    $observer = New Observer($player) As "Asakura"
+    
+End
+
+Public Sub Asakura_FetchDuration(argDuration As Float)
+    
+    NagatoDBMedia.FetchDuration($musicList.ChannelCurrent.Path, argDuration) 
+    
+End
+
+Public Sub Asakura_FetchTags(argTagList As MediaTagList)
+    
+    If Not NagatoDBMedia.FetchTags($musicList.ChannelCurrent.Path, argTagList) Then Return
+
+    $musicList.ChannelTags.Set(argTagList["title"], argTagList["artist"], argTagList["album"])
+    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
+    
+End

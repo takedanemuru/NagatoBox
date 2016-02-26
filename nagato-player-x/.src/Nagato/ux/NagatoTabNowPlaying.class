@@ -22,7 +22,7 @@ Public Sub _new(argContainer As Container, argGrids As GridView)
     
     $menuBar = New NagatoMenuBarNowPlaying(argContainer) As "MenuBar"
     $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
-    $queueObserver = New Observer(NagatoQueue) As "Asakura"
+    $queueObserver = New Observer(NagatoBroadCast) As "Asakura"
     
 End
 

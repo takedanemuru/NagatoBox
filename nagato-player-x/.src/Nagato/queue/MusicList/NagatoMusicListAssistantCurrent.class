@@ -1,0 +1,39 @@
+' Gambas class file
+
+Property Read Url As String
+Property Read Path As String
+Property Read Position As Integer
+
+Private $musicElements As NagatoMusicElements
+Private $position As NagatoMusicPosition 
+
+Public Sub _new(argElements As NagatoMusicElements, argPosition As NagatoMusicPosition)
+    
+    $musicElements = argElements
+    $position = argPosition
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $musicElements[$position.Current].Path
+
+Catch
+    Return ""
+
+End
+
+Private Function Url_Read() As String
+
+    Return Media.URL($musicElements[$position.Current].Path)
+
+Catch
+    Return ""
+
+End
+
+Private Function Position_Read() As Integer
+
+    Return $position.Current
+
+End

@@ -10,31 +10,25 @@ Private $musicList As NagatoMusicList
 
 Public Function SetPath(argPath As String) As Boolean
     
-    Return $musicList.SetPath(argPath)
+    Return $musicList.ChannelIndex.SetPath(argPath)
     
 End
 
 Public Sub AddDirectory(argPath As String)
     
-    $musicList.AddDirectory(argPath)
-    
-End
-
-Public Sub Save()
-    
-    NagatoSettingsMusic.SavePaths($musicList.Paths)
+    $musicList.ChannelQueue.EnqueueDirectory(argPath)
     
 End
 
 Public Sub MoveUp(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then $musicList.MoveUp(argIndexes)
+    If argIndexes.Count > 0 Then $musicList.ChannelMove.Up(argIndexes)
     
 End
 
 Public Sub MoveDown(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then $musicList.MoveDown(argIndexes)
+    If argIndexes.Count > 0 Then $musicList.ChannelMove.Down(argIndexes)
 
 End
 
@@ -46,19 +40,19 @@ End
 
 Private Function CurrentUrl_Read() As String
 
-    Return $musicList.CurrentUrl
+    Return $musicList.ChannelCurrent.Url
 
 End
 
 Private Function Count_Read() As Integer
 
-    Return $musicList.Count
+    Return $musicList.ChannelQueue.Count
 
 End
 
 Private Function CurrentIndex_Read() As Integer
 
-    Return $musicList.CurrentPosition
+    Return $musicList.ChannelCurrent.Position
 
 End
 
@@ -70,6 +64,6 @@ End
 
 Private Function Collection_Read() As Collection
 
-    Return $musicList.GetCollection()
+    Return $musicList.ChannelQueue.GetCollection()
 
 End

@@ -46,6 +46,6 @@ Public Sub Asakura_Draw()
         $progressBar.Draw()
     Paint.End()
 
-    HaruhiPlayer.Title = NagatoQueue.Title
+    HaruhiPlayer.Title = NagatoQueue.GetTag(MikuruTag.Title)
     
 End

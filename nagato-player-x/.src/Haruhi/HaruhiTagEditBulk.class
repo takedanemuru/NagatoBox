@@ -1,6 +1,5 @@
 ' Gambas class file
 
-Private $edited As Boolean
 Private $albumartUnloaded As Boolean = True
 Private $observer As Observer
 Private $albumartPath As String
@@ -9,6 +8,7 @@ Private $paths As String[]
 
 Private Sub initializeWidgets()
     
+    ApplyButton.Enabled = False
     AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($paths[0])
     ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($paths[0])
     
@@ -40,7 +40,6 @@ End
 Public Sub StartEdit(argPaths As String[])
     
     $paths = argPaths.Copy()
-    
     initializeWidgets()
     
 End
@@ -67,7 +66,7 @@ End
 
 Public Sub TextBox_Change()
 
-    $edited = True
+    ApplyButton.Enabled = True
 
 End
 
@@ -85,9 +84,7 @@ End
 
 Public Sub Asakura_Select(argFullPath As String)
     
-    Dim yukiSize As Integer = 14 * MikuruUx.Grid
-    
-    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(yukiSize, yukiSize).Picture
+    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Picture
     $albumartUnloaded = False
     $albumartPath = argFullPath
     

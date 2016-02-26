@@ -72,12 +72,10 @@ End
 
 Public Function PlayPathInQueue(argPath As String) As Boolean
     
-    If NagatoQueue.ChannelList.Paths.Exist(argPath) Then
-        NagatoQueue.SetPathAndPlay(argPath)
-        Return True
-    Else
-        Return False
-    Endif
+    If Not NagatoQueue.ChannelList.Paths.Exist(argPath) Then Return False
+
+    NagatoQueue.SetPathAndPlay(argPath)
+    Return True
     
 End
 
@@ -97,7 +95,7 @@ End
 
 Public Function GetTitle(argPath As String) As String
     
-    Return NagatoQueue.Collection[argPath]
+    Return NagatoQueue.ChannelList.Collection[argPath]
     
 End
 
@@ -139,7 +137,7 @@ End
 
 Private Function Queue_Read() As Collection
 
-    Return NagatoQueue.Collection
+    Return NagatoQueue.ChannelList.Collection
 
 End
 

@@ -1,0 +1,97 @@
+' Gambas class file
+
+Create Static
+
+Property Read ChannelPlayControl As NagatoQueueAssistantPlayControl
+Property Read ChannelPlayState As NagatoQueueAssistantPlayState
+Property Read ChannelCoverArt As NagatoQueueAssistantCoverArt
+Property Read ChannelList As NagatoQueueAssistantList
+Property Read ChannelTags As NagatoQueueAssistantTags
+
+Private $player As New NagatoPlayer
+Private $musicList As NagatoMusicList 
+Private $assistantPlayControl As NagatoQueueAssistantPlayControl
+Private $assistantPlayState As NagatoQueueAssistantPlayState
+Private $assistantCoverArt As NagatoQueueAssistantCoverArt
+Private $assistantList As NagatoQueueAssistantList
+Private $assistantTags As NagatoQueueAssistantTags
+
+Public Sub AddMusics(argPaths As String[])
+    
+    $musicList.ChannelQueue.EnqueuePaths(argPaths)
+
+End
+
+Public Sub DeleteIndexes(argIndexes As Integer[])
+    
+    $player.Stop()
+    If $musicList.ChannelQueue.DequeueIndexes(argIndexes) Then $player.Play()
+    
+End
+
+Public Sub Sort(argType As Integer, argAscend As Boolean)
+    
+    $musicList.ChannelMove.Sort(argType, argAscend)
+    
+End
+
+Public Sub ClearAll()
+    
+    $player.Stop()
+    $musicList.ChannelQueue.ClearAll()
+    
+End
+
+Public Sub Activate(Optional argPaths As String[] = [""])
+    
+    $musicList = New NagatoMusicList(argPaths) 
+    $assistantPlayControl = New NagatoQueueAssistantPlayControl($player, $musicList)
+    $assistantPlayState = New NagatoQueueAssistantPlayState($player)
+    $assistantCoverArt = New NagatoQueueAssistantCoverArt($musicList)
+    $assistantList = New NagatoQueueAssistantList($musicList)
+    $assistantTags = New NagatoQueueAssistantTags($player, $musicList)
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoMusicElement
+    
+    Return $musicList[argIndex]
+    
+End
+
+Public Sub SetPathAndPlay(argPath As String)
+    
+    $player.SetUrlAndPlay(argPath)
+    NagatoBroadCast(NagatoBroadCast.SignalMoved)
+    
+End
+
+Private Function ChannelPlayControl_Read() As NagatoQueueAssistantPlayControl
+
+    Return $assistantPlayControl
+
+End
+
+Private Function ChannelPlayState_Read() As NagatoQueueAssistantPlayState
+
+    Return $assistantPlayState
+
+End
+
+Private Function ChannelCoverArt_Read() As NagatoQueueAssistantCoverArt
+
+    Return $assistantCoverArt
+
+End
+
+Private Function ChannelList_Read() As NagatoQueueAssistantList
+
+    Return $assistantList
+
+End
+
+Private Function ChannelTags_Read() As NagatoQueueAssistantTags
+
+    Return $assistantTags
+
+End

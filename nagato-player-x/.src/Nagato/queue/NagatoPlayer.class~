@@ -10,7 +10,7 @@ Private $lastFetched As Date
 Private $durationFetcher As New NagatoDurationFetcher
 
 Event MusicEnd
-Event FetchTags(argTags As Variant[])
+Event FetchTags(argMediaTagList As MediaTagList)
 Event FetchDuration(argDuration As Float)
 
 Private Function getDuration(Optional argRate As Float = 0) As String
@@ -38,7 +38,7 @@ End
 
 Public Sub SetUrlAndPlay(argPath As String)
     
-    If NagatoQueue.SetPath(argPath) Then
+    If NagatoQueue.ChannelList.SetPath(argPath) Then
         Try $player.Stop
         $player.URL = Media.URL(argPath)
         $player.Play()
@@ -59,7 +59,6 @@ Public Sub Play(Optional argPosition As Float)
     $player.Play()
     
 Catch
-    Debug Error.Text
     Return
     
 End
@@ -92,13 +91,8 @@ End
 
 Public Sub Player_Tag(argTagList As MediaTagList)
     
-    Dim yukiTags As New Variant[]
-    
     If ($lastFetched = Null) Or If DateDiff($lastFetched, Now(), gb.Second) > 2 Then 
-        yukiTags.Add(argTagList["title"])
-        yukiTags.Add(argTagList["artist"])
-        yukiTags.Add(argTagList["album"])
-        Raise FetchTags(yukiTags)
+        Raise FetchTags(argTagList)
         $lastFetched = Now()
     End If
     
@@ -111,19 +105,16 @@ Private Function ProgressRate_Read() As Float
     Return ($player.Position / $player.Duration)
 
 Catch
+    Debug Error.Text
     Return 0
     
 End
 
 Private Function ProgressText_Read() As String
 
-    Dim yukiResult As String
-    
     If $player.Duration = 0 Then Return ""
     
-    yukiResult = Subst$("&1 / &2", MikuruFloatToTime($player.Position), MikuruFloatToTime($player.Duration))
-    
-    Return yukiResult
+    Return Subst$("&1 / &2", MikuruFloatToTime($player.Position), MikuruFloatToTime($player.Duration))
 
 End
 

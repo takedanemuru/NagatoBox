@@ -37,7 +37,7 @@ Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
 End
 
-Public Sub FetchTags(argPath As String, argTags As Variant[]) As Boolean ' return true when something changed
+Public Sub FetchTags(argPath As String, argTags As MediaTagList) As Boolean ' return true when something changed
     
     If Me.HasLibrary(argPath) Then
         Return $tableLibrary.FetchTags(argPath, argTags)
@@ -85,11 +85,11 @@ End
 Public Function GetMusicPathsInPlaylist(argPlaylistName As String) As String[]
     
     Dim yukiResultForId As Result = Me._$connection.Find(Me.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
-    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", yukiResultForId[Me.ColumnId])
+    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", yukiResultForId[Me.Column.Id])
     Dim yukiPaths As New String[]
     
     For Each yukiResult
-        yukiPaths.Add(yukiResult[Me.ColumnPath])
+        yukiPaths.Add(yukiResult[Me.Column.Path])
     Next
     
     Return yukiPaths

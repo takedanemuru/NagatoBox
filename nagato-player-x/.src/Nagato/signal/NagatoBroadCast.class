@@ -1,0 +1,26 @@
+' Gambas class file
+
+Create Static
+
+Public Enum SignalChanged, SignalMoved, SignalSelectionMoved, SignalTagChanged
+
+Event Changed
+Event Moved
+Event TagChanged
+Event SelectionMoved(argNewSelection As Integer[])
+
+Public Sub _call(argSignal As Integer, ...)
+    
+    Select Case argSignal
+        Case SignalChanged
+            Raise Changed
+        Case SignalSelectionMoved
+            Raise SelectionMoved(Param[0])
+        Case SignalTagChanged
+            Raise TagChanged
+        Case SignalMoved
+            Try NagatoQueue.ChannelCoverArt.Reload()
+            Raise Moved
+    End Select
+    
+End

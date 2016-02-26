@@ -22,7 +22,7 @@ Public Sub _new(argContainer As Container, argGrids As GridView)
     
     $menuBar = New NagatoMenuBarNowPlaying(argContainer) As "MenuBar"
     $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
-    $queueObserver = New Observer(NagatoQueue) As "Asakura"
+    $queueObserver = New Observer(TFEI) As "Asakura"
     
 End
 
@@ -32,9 +32,9 @@ Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
         Case MikuruSignal.ListSaveAs
             saveAsPlaylist()
         Case MikuruSignal.ListUp
-            NagatoQueue.ListMoveUp($grids.Selection)
+            NagatoQueue.ChannelList.MoveUp($grids.Selection)
         Case MikuruSignal.ListDown
-            NagatoQueue.ListMoveDown($grids.Selection)
+            NagatoQueue.ChannelList.MoveDown($grids.Selection)
     End Select
     
 End

@@ -5,15 +5,12 @@ Property Current As Integer
 Private $randomOrder As New NagatoRandomizedOrder
 Private $index As New NagatoMusicPositionIndex
 
-Event Moved
-
 Private Function checkCount(argCount As Integer) As Boolean
     
-    If argCount = 0 Then 
+    If 1 >= argCount Then 
         Return False
     Else
-        'If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
-        $randomOrder.Refresh(argCount - 1)
+        If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
         Return True
     End If
     
@@ -24,7 +21,7 @@ Public Sub Next(argCount As Integer)
     If checkCount(argCount) Then 
         $index.Next()
         If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Next()
-        Raise Moved
+        TFEI(TFEI.SignalMoved)
     End If
     
 End
@@ -34,7 +31,7 @@ Public Sub Back(argCount As Integer)
     If checkCount(argCount) Then
         $index.Back()
         If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Back()
-        Raise Moved
+        TFEI(TFEI.SignalMoved)
     End If
     
 End
