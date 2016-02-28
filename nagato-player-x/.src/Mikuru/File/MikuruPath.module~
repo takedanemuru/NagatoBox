@@ -4,15 +4,10 @@ Public Enum Image, Music, Directory, None
 
 Public Function IsValideMediaFilePath(argPath As String) As Boolean
     
-    If Not Exist(argPath) Then
-        Return False
-    Else If DesktopMime.FromFile(argPath).Type Begins "audio" Then
-        Return True
-    Else If DesktopMime.FromFile(argPath).Type Begins "video" Then
-        Return True
-    Else
-        Return False
-    End If
+    If Not Exist(argPath) Then Return False
+    If MikuruMimeType.IsAudioFile(argPath) Then Return True
+    
+    Return False
     
 End
 
@@ -22,13 +17,8 @@ Public Function Sanitize(argPaths As String[]) As String[]
     Dim yukiResult As New String[] 
     
     For Each yukiPath In argPaths
-        If Not Exist(yukiPath) Then
-            Continue
-        Else If DesktopMime.FromFile(yukiPath).Type Begins "audio" Then
-            yukiResult.Add(yukiPath)
-        Else If DesktopMime.FromFile(yukiPath).Type Begins "video" Then
-            yukiResult.Add(yukiPath)
-        End If
+        If Not Exist(yukiPath) Then Continue
+        If MikuruMimeType.IsAudioFile(yukiPath) Then yukiResult.Add(yukiPath)
     Next
     
     Return yukiResult
@@ -59,11 +49,8 @@ Public Function GetDirecoryPath(argData As String) As String
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
         yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
-        If Not Exist(yukiPath) Or If Not IsDir(yukiPath) Then
-            Continue
-        Else
-            Return yukiPath
-        End If
+        If Not Exist(yukiPath) Or If Not IsDir(yukiPath) Then Continue
+        Return yukiPath
     Next
     
 Catch

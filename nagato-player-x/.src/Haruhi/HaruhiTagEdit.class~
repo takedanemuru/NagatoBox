@@ -30,13 +30,12 @@ Private Sub setNewTag()
         If AlbumTextBox.Text <> "" Then .NewAlbum($targetPath, AlbumTextBox.Text)
     End With
     
-    NagatoQueue.RefreshTag(TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
+    NagatoQueue.ChannelTags.Refresh(TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
     
 End
 
 Public Sub SetPath(argPath As String)
     
-    ApplyButton.Enabled = False
     $targetPath = MikuruUrlDecode(argPath)
     setTags()
     setPicture()
@@ -46,6 +45,7 @@ End
 Public Sub Form_Open()
 
     Me.Center()
+    ApplyButton.Enabled = False
 
 End
 
@@ -84,7 +84,7 @@ End
 Public Sub Asakura_Select(argFullPath As String)
     
     $albumartPath = argFullPath
-    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(MikuruUx.CoverArt.W, MikuruUX.CoverArt.H).Picture
+    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Picture
     
 Catch
     Return

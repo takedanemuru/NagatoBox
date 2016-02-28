@@ -52,6 +52,8 @@ End
 
 Public Sub Asakura_MusicEnd()
     
+    Debug "go next"
+    
     If NagatoSettingsMusic.Repeat Then Me.Back()
     If Not NagatoSettingsMusic.Repeat Then Me.Next()
     

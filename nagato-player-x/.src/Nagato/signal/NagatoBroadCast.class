@@ -17,6 +17,7 @@ Public Sub _call(argSignal As Integer, ...)
         Case SignalSelectionMoved
             Raise SelectionMoved(Param[0])
         Case SignalTagChanged
+            Try NagatoQueue.ChannelCoverArt.Reload()
             Raise TagChanged
         Case SignalMoved
             Try NagatoQueue.ChannelCoverArt.Reload()

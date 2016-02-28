@@ -9,7 +9,7 @@ Private Sub push(argPlaylistName As String)
     With NagatoDBMedia
         Me._$connection.Begin()
             yukiResult = Me._$connection.Create(.Table.PlaylistNames)
-            yukiResult[.ColumnPlaylistName] = argPlaylistName
+            yukiResult[.Column.PlaylistName] = argPlaylistName
             yukiResult.Update()
         Me._$connection.Commit()
     End With
@@ -53,6 +53,9 @@ Public Function GetPlaylistNameId(argPlaylistName As String) As Integer
     yukiResult = Me._$connection.Find(NagatoDBMedia.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
     
     Return yukiResult[NagatoDBMedia.Column.Id]
+    
+Catch
+    Return -1
     
 End
 

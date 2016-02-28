@@ -1,14 +1,13 @@
 ' Gambas class file
 
-Private $musicElements As NagatoMusicElements
-Private $position As NagatoMusicPosition 
+Inherits NagatoMusicListAssistant
 
 Public Function SetPath(argPath As String) As Boolean
     
     'Array.Find()  shall retun -1 when query is not found
-    If $musicElements.FindIndex(argPath) = -1 Then Return False
+    If Me._$musicElements.FindIndex(argPath) = -1 Then Return False
 
-    $position.Current = $musicElements.FindIndex(argPath) 
+    Me._$position.Current = Me._$musicElements.FindIndex(argPath) 
     NagatoBroadCast(NagatoBroadCast.SignalMoved)
     Return True
     
@@ -16,19 +15,12 @@ End
 
 Public Sub Next()
     
-    $position.Next($musicElements.Count)
+    Me._$position.Next(Me._$musicElements.Count)
     
 End
 
 Public Sub Back()
     
-    $position.Back($musicElements.Count)
-    
-End
-
-Public Sub _new(argElements As NagatoMusicElements, argPosition As NagatoMusicPosition)
-    
-    $musicElements = argElements
-    $position = argPosition
+    Me._$position.Back(Me._$musicElements.Count)
     
 End

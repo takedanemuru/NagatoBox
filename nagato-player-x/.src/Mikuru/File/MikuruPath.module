@@ -32,7 +32,6 @@ Public Function GetDragDataType(argData As String) As Integer
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
         yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
-        Debug DesktopMime.FromFile(yukiPath).Type
         If IsDir(yukiPath) Then Return Me.Directory
         If DesktopMime.FromFile(yukiPath).Type Begins "image" Then Return Me.Image
         If DesktopMime.FromFile(yukiPath).Type Begins "audio" Then Return Me.Music

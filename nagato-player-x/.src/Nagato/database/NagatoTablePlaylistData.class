@@ -2,18 +2,22 @@
 
 Inherits NagatoTable
 
+Private Sub deleteDuplicatedRecord(argPlaylistNameId As Integer)
+    
+    Try Me._$connection.Delete(NagatoDBMedia.Table.PlaylistData, "playlist_name_id = &1", argPlaylistNameId)
+    
+End
+
 Private Sub save(argPlaylistNameId As Integer, argPath As String)
     
     Dim yukiResult As Result
     
-    With NagatoDBMedia
-        Me._$connection.Begin()
-            yukiResult = Me._$connection.Create(.Table.PlaylistData)
-            yukiResult[.ColumnPlaylistNameId] = argPlaylistNameId
-            yukiResult[.ColumnPath] = argPath
-            yukiResult.Update()
-        Me._$connection.Commit()
-    End With
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(NagatoDBMedia.Table.PlaylistData)
+        yukiResult[NagatoDBMedia.Column.PlaylistNameId] = argPlaylistNameId
+        yukiResult[NagatoDBMedia.Column.Path] = argPath
+        yukiResult.Update()
+    Me._$connection.Commit()
     
 Catch
     Debug Error.Text
@@ -21,31 +25,36 @@ Catch
     
 End
 
+Private Sub savePaths(argPlaylistNameId As Integer, argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        save(argPlaylistNameId, yukiPath)
+    Next
+    
+End
+
 Public Sub _EnsureTable() 'override
     
     Dim yukiTable As Table
     
-    With NagatoDBMedia
-        If Not Me._$connection.Tables.Exist(.Table.PlaylistData) Then
-            yukiTable = Me._$connection.Tables.Add(.Table.PlaylistData)
-            yukiTable.Fields.Add(.ColumnId, db.Serial)
-            yukiTable.Fields.Add(.ColumnPlaylistNameId, db.Integer)
-            yukiTable.Fields.Add(.ColumnPath, db.String)
-            yukiTable.PrimaryKey = [.ColumnId]
-            yukiTable.Update()
-        Endif
-    End With
+    If Me._$connection.Tables.Exist(NagatoDBMedia.Table.PlaylistData) Then Return
+
+    yukiTable = Me._$connection.Tables.Add(NagatoDBMedia.Table.PlaylistData)
+    yukiTable.Fields.Add(NagatoDBMedia.Column.Id, db.Serial)
+    yukiTable.Fields.Add(NagatoDBMedia.Column.PlaylistNameId, db.Integer)
+    yukiTable.Fields.Add(NagatoDBMedia.Column.Path, db.String)
+    yukiTable.PrimaryKey = [NagatoDBMedia.Column.Id]
+    yukiTable.Update()
     
 End
 
 Public Sub OverwritePlaylist(argPlaylistNameId As Integer, argPaths As String[])
     
-    Dim yukiPath As String
+    If 0 > argPlaylistNameId Then Return
     
-    Try Me._$connection.Delete(NagatoDBMedia.Table.PlaylistData, "playlist_name_id = &1", argPlaylistNameId)
-    
-    For Each yukiPath In argPaths
-        save(argPlaylistNameId, yukiPath)
-    Next
+    deleteDuplicatedRecord(argPlaylistNameId)
+    savePaths(argPlaylistNameId, argPaths)
     
 End

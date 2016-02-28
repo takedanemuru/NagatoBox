@@ -4,8 +4,6 @@ Private $albumartPath As String
 Private $targetPath As String
 Private $observer As Observer
 
-Event TagChanged
-
 Private Sub setTags()
     
     TitleTextBox.Text = MikuruId3TagInfo.GetTitle($targetPath)
@@ -36,7 +34,6 @@ End
 
 Public Sub SetPath(argPath As String)
     
-    ApplyButton.Enabled = False
     $targetPath = MikuruUrlDecode(argPath)
     setTags()
     setPicture()
@@ -46,6 +43,7 @@ End
 Public Sub Form_Open()
 
     Me.Center()
+    ApplyButton.Enabled = False
 
 End
 
@@ -84,7 +82,7 @@ End
 Public Sub Asakura_Select(argFullPath As String)
     
     $albumartPath = argFullPath
-    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Stretch(MikuruUx.CoverArt.W, MikuruUX.CoverArt.H).Picture
+    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Picture
     
 Catch
     Return

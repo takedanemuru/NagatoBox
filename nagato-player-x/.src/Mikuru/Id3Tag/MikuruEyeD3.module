@@ -38,10 +38,14 @@ End
 
 Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
-    Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
+    Dim yukiNowPlaying As Boolean 
     
-    If Media.URL(argMusicPath) <> NagatoQueue.ChannelList.CurrentUrl Then Return
-    NagatoQueue.ChannelCoverArt.Reload()
+    yukiNowPlaying = (Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl)
+    
+    If yukiNowPlaying Then NagatoQueue.ChannelPlayControl.Pause()
+    Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
+    If yukiNowPlaying Then NagatoQueue.ChannelPlayControl.Play()
+    If yukiNowPlaying Then NagatoQueue.ChannelCoverArt.Reload()
     
 End
 

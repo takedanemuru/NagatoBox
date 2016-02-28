@@ -8,7 +8,6 @@ Private $paths As String[]
 
 Private Sub initializeWidgets()
     
-    ApplyButton.Enabled = False
     AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($paths[0])
     ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($paths[0])
     
@@ -39,6 +38,8 @@ End
 
 Public Sub StartEdit(argPaths As String[])
     
+    MikuruArrayTest(argPaths)
+    
     $paths = argPaths.Copy()
     initializeWidgets()
     
@@ -47,7 +48,7 @@ End
 Public Sub Form_Show()
     
     Me.Center()
-    Me.Show()
+    ApplyButton.Enabled = False
     
 End
 
@@ -60,6 +61,7 @@ End
 Public Sub ApplyButton_Click()
     
     setNewTag()
+    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
     Me.Close(MikuruDialog.ResponseApply)
     
 End
