@@ -118,7 +118,7 @@ Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.ListDelete
             NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
         Case MikuruSignal.ListEdit
-            NagatoQueue.EditIndexes(Me._$grids.Rows.Selection)
+            NagatoQueue.ChannelTags.EditByIndexes(Me._$grids.Rows.Selection)
     End Select
     
 End

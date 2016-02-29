@@ -27,12 +27,12 @@ End
 
 Public Sub _new(argPaths As String[])
     
-    $musicElements.Initialize(argPaths)
+    $musicElements.ChannelQueue.Initialize(argPaths)
     initializeChannels()
-    If $musicElements.Count = 0 Then Return  
-    $position.Refresh($musicElements.Count)
+    If $musicElements.ChannelPaths.Count = 0 Then Return  
+    $position.Refresh($musicElements.ChannelPaths.Count)
     If NagatoSettingsMusic.Shuffle Then $assistantIndex.Next()
-    NagatoSettingsMusic.SavePaths($musicElements.Paths)
+    NagatoSettingsMusic.SavePaths($musicElements.ChannelPaths.All)
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
     
 End

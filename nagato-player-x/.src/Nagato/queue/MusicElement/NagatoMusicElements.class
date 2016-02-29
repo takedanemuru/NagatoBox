@@ -1,0 +1,48 @@
+' Gambas class file
+
+Property Read ChannelTags As NagatoMusicElementsAssistantTags
+Property Read ChannelPaths As NagatoMusicElementsAssistantPaths
+Property Read ChannelQueue As NagatoMusicElementsAssistantQueue
+
+Private $musicElements As New NagatoMusicElement[]
+Private $assistantTags As NagatoMusicElementsAssistantTags
+Private $assistantPaths As NagatoMusicElementsAssistantPaths
+Private $assistantQueue As NagatoMusicElementsAssistantQueue
+
+Public Sub _get(argIndex As Integer) As NagatoMusicElement
+    
+    Return $musicElements[argIndex]
+    
+End
+
+Public Sub _new()
+    
+    $assistantTags = New NagatoMusicElementsAssistantTags($musicElements)
+    $assistantPaths = New NagatoMusicElementsAssistantPaths($musicElements)
+    $assistantQueue = New NagatoMusicElementsAssistantQueue($musicElements)
+    
+End
+
+Public Sub Set(argMusicElements As NagatoMusicElement[])
+    
+    $musicElements = argMusicElements
+    
+End
+
+Private Function ChannelTags_Read() As NagatoMusicElementsAssistantTags
+
+    Return $assistantTags
+
+End
+
+Private Function ChannelPaths_Read() As NagatoMusicElementsAssistantPaths
+
+    Return $assistantPaths
+
+End
+
+Private Function ChannelQueue_Read() As NagatoMusicElementsAssistantQueue
+
+    Return $assistantQueue
+
+End

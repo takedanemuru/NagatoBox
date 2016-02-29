@@ -1,0 +1,43 @@
+' Gambas class file
+
+Property SoftwareVolume As Float
+Property Read State As Integer
+Property Read IsPlaying As Boolean
+
+Private $player As MediaPlayer
+
+Public Sub _new(argPlayer As MediaPlayer)
+    
+    $player = argPlayer
+    
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+Catch
+    Return MediaPlayer.Null
+
+End
+
+Private Function SoftwareVolume_Read() As Float
+
+    Return $player.Audio.Volume
+
+Catch
+    Return 0
+
+End
+
+Private Sub SoftwareVolume_Write(Value As Float)
+
+    Try $player.Audio.Volume = Min(Value, 1)
+
+End
+
+Private Function IsPlaying_Read() As Boolean
+
+    Return $player.State = Media.Playing
+
+End

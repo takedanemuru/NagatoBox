@@ -74,7 +74,7 @@ Public Function PlayPathInQueue(argPath As String) As Boolean
     
     If Not NagatoQueue.ChannelList.Paths.Exist(argPath) Then Return False
 
-    NagatoQueue.SetPathAndPlay(argPath)
+    NagatoQueue.ChannelPlayControl.SetPathAndPlay(argPath)
     Return True
     
 End

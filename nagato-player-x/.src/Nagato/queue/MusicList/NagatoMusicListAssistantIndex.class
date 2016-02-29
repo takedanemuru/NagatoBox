@@ -5,9 +5,9 @@ Inherits NagatoMusicListAssistant
 Public Function SetPath(argPath As String) As Boolean
     
     'Array.Find()  shall retun -1 when query is not found
-    If Me._$musicElements.FindIndex(argPath) = -1 Then Return False
+    If Me._$musicElements.ChannelQueue.FindIndex(argPath) = -1 Then Return False
 
-    Me._$position.Current = Me._$musicElements.FindIndex(argPath) 
+    Me._$position.Current = Me._$musicElements.ChannelQueue.FindIndex(argPath) 
     NagatoBroadCast(NagatoBroadCast.SignalMoved)
     Return True
     
@@ -15,12 +15,12 @@ End
 
 Public Sub Next()
     
-    Me._$position.Next(Me._$musicElements.Count)
+    Me._$position.Next(Me._$musicElements.ChannelPaths.Count)
     
 End
 
 Public Sub Back()
     
-    Me._$position.Back(Me._$musicElements.Count)
+    Me._$position.Back(Me._$musicElements.ChannelPaths.Count)
     
 End

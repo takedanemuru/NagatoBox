@@ -4,14 +4,14 @@ Inherits NagatoMusicListAssistant
 
 Public Function Get(argTagType As Integer) As String
     
-    If Me._$musicElements.Count = 0 Then Return ""
+    If Me._$musicElements.ChannelPaths.Count = 0 Then Return ""
     
-    Return Me._$musicElements.GetTag(argTagType, Me._$position.Current)
+    Return Me._$musicElements.ChannelTags.Get(argTagType, Me._$position.Current)
     
 End
 
 Public Sub Set(argTitle As String, argArtist As String, argAlbum As String) 
     
-    Me._$musicElements.SetTag(Me._$position.Current, argTitle, argArtist, argAlbum)
+    Me._$musicElements.ChannelTags.Set(Me._$position.Current, argTitle, argArtist, argAlbum)
     
 End

@@ -1,0 +1,18 @@
+' Gambas class file
+
+Public _$player As NagatoPlayer 
+Public _$musicList As NagatoMusicList 
+
+Public Sub _OptionalOnInitialize()
+    
+    
+    
+End
+
+Public Sub _new(argPlayer As NagatoPlayer, argMusicList As NagatoMusicList)
+    
+    Me._$player = argPlayer
+    Me._$musicList = argMusicList
+    Me._OptionalOnInitialize()
+    
+End

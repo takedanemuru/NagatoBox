@@ -1,56 +1,53 @@
 ' Gambas module file
 
-Property Read WorkingDirectory As String
-
 Private Const Command As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
 
-Private Sub ensureDirectory()
+Private $workingDirectory As New NagatoWorkingDirectoryEyeD3
+
+Private Function getPictureFormWorkingDirectory(argSize As Integer) As Picture
     
-    Dim yukiPath As String
+    Dim yukiImage As Image = Image.Load($workingDirectory[0])
+    Dim yukiRate As Float = Max(argSize / yukiImage.H, argSize / yukiImage.W)
     
-    If Not Exist(Me.WorkingDirectory) Then Mkdir Me.WorkingDirectory
+    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
     
-    For Each yukiPath In Dir(Me.WorkingDirectory)
-        Kill Me.WorkingDirectory &/ yukiPath
-    Next
+Catch
+    Return Null
+    
+End
+
+Private Sub setAlbumArtToFile(argPicturePath As String, argMusicPath As String)
+    
+    Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
+    
+End
+
+Private Sub setAlbumArtToCurrentPlayingFile(argPicturePath As String, argMusicPath As String)
+    
+    NagatoQueue.ChannelPlayControl.Pause()
+        setAlbumArtToFile(argPicturePath, argMusicPath)
+    NagatoQueue.ChannelPlayControl.Play()
+    NagatoQueue.ChannelCoverArt.Reload()
     
 End
 
 Public Function GetPicture(argPath As String, argSize As Integer) As Picture
     
-    Dim yukiImage As Image
-    Dim yukiRate As Float
-    
-    ensureDirectory()
-    
-    Try Shell Subst$("eyeD3 -i &1 &2", Me.WorkingDirectory, Quote$(argPath)) Wait
-    
-    If Dir(Me.WorkingDirectory).Count > 0 Then
-        yukiImage = Image.Load(Me.WorkingDirectory &/ Dir(Me.WorkingDirectory)[0])
-        yukiRate = Max(argSize / yukiImage.H, argSize / yukiImage.W)
-        Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
-    Endif
-    
+    $workingDirectory.Ensure()
+    Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) Wait
+    If $workingDirectory.HasFile Then Return getPictureFormWorkingDirectory(argSize)
+
 Finally
     Return Null
     
 End
 
-Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
+Public Sub SetPicture(argPicturePath As String, argMusicPath As String)
     
-    Dim yukiNowPlaying As Boolean 
+    If (Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl) Then
+        setAlbumArtToCurrentPlayingFile(argPicturePath, argMusicPath)
+    Else
+        setAlbumArtToFile(argPicturePath, argMusicPath)
+    Endif
     
-    yukiNowPlaying = (Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl)
-    
-    If yukiNowPlaying Then NagatoQueue.ChannelPlayControl.Pause()
-    Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
-    If yukiNowPlaying Then NagatoQueue.ChannelPlayControl.Play()
-    If yukiNowPlaying Then NagatoQueue.ChannelCoverArt.Reload()
-    
-End
-
-Private Function WorkingDirectory_Read() As String
-
-    Return User.Home &/ ".nagatobox-eyeD3-working-directory"
-
 End

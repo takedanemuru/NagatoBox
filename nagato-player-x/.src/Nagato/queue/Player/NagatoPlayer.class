@@ -1,0 +1,99 @@
+' Gambas class file
+
+Property Read ChannelState As NagatoPlayerAssistantState
+Property Read ChannelProgress As NagatoPlayerAssistantProgress
+
+Private $player As New MediaPlayer As "Player"
+Private $lastFetched As Date
+Private $assistantState As NagatoPlayerAssistantState
+Private $assistantProgress As NagatoPlayerAssistantProgress
+
+Event MusicEnd
+Event FetchTags(argMediaTagList As MediaTagList)
+Event FetchDuration(argDuration As Float)
+
+Public Sub SetUrlAndPlay(argPath As String)
+    
+    If Not NagatoQueue.ChannelList.SetPath(argPath) Then Return
+    Try $player.Stop
+    $player.URL = Media.URL(argPath)
+    $player.Play()
+    
+Catch
+    Return
+    
+End
+
+Public Sub Play(Optional argPosition As Float)
+    
+    If $player.State <> Media.Paused Then
+        Try $player.Stop
+        Try $player.URL = NagatoQueue.ChannelList.CurrentUrl
+    End If
+    
+    $player.Play()
+    
+Catch
+    Return
+    
+End
+
+Public Sub ResetUrl()
+    
+    Try $player.Stop()
+    $player.URL = NagatoQueue.ChannelList.CurrentUrl
+    $player.Position = 0
+    
+End
+
+Public Sub Pause()
+    
+    Try $player.Pause()
+   
+End
+
+Public Sub Stop()
+    
+    Try $player.Stop()
+    
+End
+
+Public Sub _new()
+    
+    $assistantState = New NagatoPlayerAssistantState($player)
+    $assistantProgress = New NagatoPlayerAssistantProgress($player) As "Assistant"
+    
+End
+
+Public Sub Player_End()
+    
+    Raise MusicEnd
+    
+End
+
+Public Sub Player_Tag(argTagList As MediaTagList)
+    
+    If ($lastFetched = Null) Or If DateDiff($lastFetched, Now(), gb.Second) > 2 Then 
+        Raise FetchTags(argTagList)
+        $lastFetched = Now()
+    End If
+    
+End
+
+Public Sub Assistant_FetchDuration(argDuration As Float)
+    
+    Raise FetchDuration(argDuration)
+    
+End
+
+Private Function ChannelState_Read() As NagatoPlayerAssistantState
+
+    Return $assistantState
+
+End
+
+Private Function ChannelProgress_Read() As NagatoPlayerAssistantProgress
+
+    Return $assistantProgress
+
+End

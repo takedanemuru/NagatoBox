@@ -1,62 +1,69 @@
 ' Gambas class file
 
-Private $player As NagatoPlayer 
-Private $musicList As NagatoMusicList 
+Inherits NagatoQueueAssistant
+
 Private $observer As Observer
 
 Public Sub Play()
     
-    If $musicList.ChannelQueue.Count > 0 And If $player.State <> Media.Playing Then $player.Play()
+    If Me._$musicList.ChannelQueue.Count = 0 Then Return
+    If Not Me._$player.ChannelState.IsPlaying Then Me._$player.Play()
     
 End
 
 Public Sub Pause()
     
-    $player.Pause()
+    Me._$player.Pause()
     
 End
 
 Public Sub Next()
     
-    If $musicList.ChannelQueue.Count = 0 Then Return
+    If Me._$musicList.ChannelQueue.Count = 0 Then Return
     
-    $musicList.ChannelIndex.Next()
-    If $player.State = Media.Playing Then Try $player.Play(0)
-    If $player.State <> Media.Playing Then $player.ResetUrl()
+    Me._$musicList.ChannelIndex.Next()
+    If Me._$player.ChannelState.IsPlaying Then 
+        Try Me._$player.Play(0)
+    Else
+        Me._$player.ResetUrl()
+    End If
     
 End
 
 Public Sub Back()
     
-    If $musicList.ChannelQueue.Count = 0 Then Return
+    If Me._$musicList.ChannelQueue.Count = 0 Then Return
     
-    If $player.State = Media.Playing And If $player.ProgressRate > 0.05 Then
-        $player.SetPosition(0)
-    Else If $player.State = Media.Playing Then
-        $musicList.ChannelIndex.Back()
-        $player.Play(0)
-    Else ' when $player is stopped/paused
-        $musicList.ChannelIndex.Back()
-        $player.ResetUrl()
+    If Me._$player.ChannelState.IsPlaying And If Me._$player.ChannelProgress.Rate > 0.05 Then
+        Me._$player.ChannelProgress.SetByRate(0)
+    Else If Me._$player.ChannelState.IsPlaying Then
+        Me._$musicList.ChannelIndex.Back()
+        Me._$player.Play(0)
+    Else ' when Me._$player is stopped/paused
+        Me._$musicList.ChannelIndex.Back()
+        Me._$player.ResetUrl()
     End If
     
 End
 
-Public Sub _new(argPlayer As NagatoPlayer, argMusicList As NagatoMusicList)
+Public Sub SetPathAndPlay(argPath As String)
     
-    $player = argPlayer
-    $musicList = argMusicList
-    $observer = New Observer($player) As "Asakura"
+    Me._$player.SetUrlAndPlay(argPath)
+    NagatoBroadCast(NagatoBroadCast.SignalMoved)
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $observer = New Observer(Me._$player) As "Asakura"
     
 End
 
 Public Sub Asakura_MusicEnd()
     
-    Debug "go next"
-    
     If NagatoSettingsMusic.Repeat Then Me.Back()
     If Not NagatoSettingsMusic.Repeat Then Me.Next()
     
-    HaruhiPlayer.Title = $musicList.ChannelTags.Get(MikuruTag.Title)
+    HaruhiPlayer.Title = Me._$musicList.ChannelTags.Get(MikuruTag.Title)
     
 End

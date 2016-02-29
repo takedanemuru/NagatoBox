@@ -125,7 +125,7 @@ End
 
 Public Sub _Activate() 'override
     
-   NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
+   NagatoQueue.ChannelPlayControl.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
     
 End
 

@@ -1,20 +1,15 @@
 ' Gambas class file
 
+Inherits NagatoQueueAssistant
+
 Property Read Picture As Picture
 Property Read H As Integer
 
-Private $musicList As NagatoMusicList 
 Private $coverArt As Picture
 
 Public Sub Reload()
     
-    $coverArt = MikuruEyeD3.GetPicture($musicList.ChannelCurrent.Path, MikuruUx.CoverArt.Size)
-    
-End
-
-Public Sub _new(argMusicList As NagatoMusicList)
-    
-    $musicList = argMusicList
+    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList.ChannelCurrent.Path, MikuruUx.CoverArt.Size)
     
 End
 

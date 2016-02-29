@@ -1,69 +1,63 @@
 ' Gambas class file
 
+Inherits NagatoQueueAssistant
+
 Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
 Property Read CurrentUrl As String
 Property Read Collection As Collection
 
-Private $musicList As NagatoMusicList
-
 Public Function SetPath(argPath As String) As Boolean
     
-    Return $musicList.ChannelIndex.SetPath(argPath)
+    Return Me._$musicList.ChannelIndex.SetPath(argPath)
     
 End
 
 Public Sub AddDirectory(argPath As String)
     
-    $musicList.ChannelQueue.EnqueueDirectory(argPath)
+    Me._$musicList.ChannelQueue.EnqueueDirectory(argPath)
     
 End
 
 Public Sub MoveUp(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then $musicList.ChannelMove.Up(argIndexes)
+    If argIndexes.Count > 0 Then Me._$musicList.ChannelMove.Up(argIndexes)
     
 End
 
 Public Sub MoveDown(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then $musicList.ChannelMove.Down(argIndexes)
+    If argIndexes.Count > 0 Then Me._$musicList.ChannelMove.Down(argIndexes)
 
-End
-
-Public Sub _new(argMusicList As NagatoMusicList)
-    
-    $musicList = argMusicList
-    
 End
 
 Private Function CurrentUrl_Read() As String
 
-    Return $musicList.ChannelCurrent.Url
+    Return Me._$musicList.ChannelCurrent.Url
 
 End
 
 Private Function Count_Read() As Integer
 
-    Return $musicList.ChannelQueue.Count
+    Return Me._$musicList.ChannelQueue.Count
 
 End
 
 Private Function CurrentIndex_Read() As Integer
 
-    Return $musicList.ChannelCurrent.Position
+    Return Me._$musicList.ChannelCurrent.Position
 
 End
 
 Private Function Paths_Read() As String[]
 
-    Return $musicList.Paths
+    Return Me._$musicList.Paths
 
 End
 
 Private Function Collection_Read() As Collection
 
-    Return $musicList.ChannelQueue.GetCollection()
+    Return Me._$musicList.ChannelQueue.GetCollection()
 
 End

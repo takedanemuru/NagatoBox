@@ -46,9 +46,9 @@ Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) 
     $assistantPlayControl = New NagatoQueueAssistantPlayControl($player, $musicList)
-    $assistantPlayState = New NagatoQueueAssistantPlayState($player)
-    $assistantCoverArt = New NagatoQueueAssistantCoverArt($musicList)
-    $assistantList = New NagatoQueueAssistantList($musicList)
+    $assistantPlayState = New NagatoQueueAssistantPlayState($player, $musicList)
+    $assistantCoverArt = New NagatoQueueAssistantCoverArt($player, $musicList)
+    $assistantList = New NagatoQueueAssistantList($player, $musicList)
     $assistantTags = New NagatoQueueAssistantTags($player, $musicList)
     
 End
@@ -56,13 +56,6 @@ End
 Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
     Return $musicList[argIndex]
-    
-End
-
-Public Sub SetPathAndPlay(argPath As String)
-    
-    $player.SetUrlAndPlay(argPath)
-    NagatoBroadCast(NagatoBroadCast.SignalMoved)
     
 End
 
