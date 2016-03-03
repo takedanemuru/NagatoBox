@@ -8,11 +8,24 @@ Property Read TextArea As TextArea
 Property Read Line As Integer
 
 Private $textArea As TextArea
+Private $statusPanel As NagatoStatusPanel
+Private $container As VBox
 Private $observer As Observer
 
-Public Sub _initialize() ' override
+Private Sub initializeVBox()
     
-    $textArea = New TextArea(Me._$parentContainer) As "TextArea"
+    $container = New VBox(Me._$parentContainer)
+    
+    With $container
+        .H = 24
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeTextArea()
+    
+    $textArea = New TextArea($container) As "TextArea"
     
     With $textArea
         .Expand = True
@@ -21,6 +34,13 @@ Public Sub _initialize() ' override
         .SetFocus()
     End With
     
+End
+
+Public Sub _initialize() ' override
+    
+    initializeVBox()
+    initializeTextArea()
+    $statusPanel = New NagatoStatusPanel($container, [$textArea])
     $observer = New Observer(NagatoSearchAndReplacementSignal) As "Asakura"
     
 End

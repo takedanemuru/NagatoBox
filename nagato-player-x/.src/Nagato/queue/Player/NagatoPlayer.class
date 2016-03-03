@@ -32,6 +32,7 @@ Public Sub Play(Optional argPosition As Float)
     End If
     
     $player.Play()
+    If argPosition Then $player.Position = argPosition
     
 Catch
     Return

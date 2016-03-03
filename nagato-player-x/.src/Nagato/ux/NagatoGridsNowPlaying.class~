@@ -8,26 +8,35 @@ Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
 
-Private Sub refreshData()
+Private Function insertRows() As Integer
     
     Dim yukiRowIndex As Integer
     Dim yukiElement As NagatoMusicElement
     Dim yukiCurrentRow As Integer
-    
-    If Not Object.IsValid(Me._$grids) Then Return
-    
-    Me._ClearGrids()
-    
+
     For yukiRowIndex = 0 To NagatoQueue.ChannelList.Count - 1
         Inc Me._$grids.Rows.Count
         If $playMark.Set(yukiRowIndex) Then yukiCurrentRow = yukiRowIndex
         yukiElement = NagatoQueue[yukiRowIndex]
-        Me._SetGridData(Me._$grids.Rows.Max, ColumnTitle, yukiElement.Title)
-        Me._SetGridData(Me._$grids.Rows.Max, ColumnArtist, yukiElement.Artist)
-        Me._SetGridData(Me._$grids.Rows.Max, ColumnAlbum, yukiElement.Album)
-        Me._SetGridDataRight(Me._$grids.Rows.Max, ColumnTime, MikuruFloatToTime(yukiElement.Duration))
-        If Odd(yukiRowIndex) Then Me._SetBackgroundColor(yukiRowIndex, MikuruColor.GridBackgroundViolet)
+        Me._SetGridData(ColumnTitle, yukiElement.Title)
+        Me._SetGridData(ColumnArtist, yukiElement.Artist)
+        Me._SetGridData(ColumnAlbum, yukiElement.Album)
+        Me._SetGridDataRight(ColumnTime, MikuruFloatToTime(yukiElement.Duration))
     Next
+    
+    Return yukiCurrentRow
+    
+End
+
+Private Sub refreshData()
+    
+    Dim yukiCurrentRow As Integer
+    
+    'If Not Object.IsValid(Me._$grids) Then Return
+    
+    Me._ClearGrids()
+    yukiCurrentRow = insertRows()
+    Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
     
     If yukiCurrentRow > 0 Then Me._$grids[yukiCurrentRow, 0].EnsureVisible()
     
@@ -125,7 +134,7 @@ End
 
 Public Sub _Activate() 'override
     
-   NagatoQueue.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
+   NagatoQueue.ChannelPlayControl.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
     
 End
 

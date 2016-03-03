@@ -12,11 +12,9 @@ Public Sub _AddChildMenus()
     
     Dim yukiIndex As Integer
     
-    With NagatoValueListSliderEngine
-        For yukiIndex = 0 To .Max
-            Me._AddMenu(.Names[yukiIndex], yukiIndex, getIcon(yukiIndex))
-        Next
-    End With
+    For yukiIndex = 0 To NagatoValueListSliderEngine.Max
+        Me._AddMenu(NagatoValueListSliderEngine.Names[yukiIndex], yukiIndex, getIcon(yukiIndex))
+    Next
 
 End
 

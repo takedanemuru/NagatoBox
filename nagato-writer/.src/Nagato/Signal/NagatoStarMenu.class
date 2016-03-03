@@ -11,6 +11,7 @@ Public Sub _RefreshChildMenus() ' override
     Dim yukiSlideMenu As NagatoSubMenuSlide
     
     Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
+    Object.New("NagatoMenuItemShowStatusPanel", [Me._$parentMenu])
     yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, ("Export"), "book-open-bookmark") As "TFEI"
     Object.New("NagatoSubMenuTabKey", [Me._$parentMenu, ("Tab Key"), "navigation-right-button"])
     Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])

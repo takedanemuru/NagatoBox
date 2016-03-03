@@ -6,16 +6,22 @@ Inherits NagatoSignal
 
 Public _$parentContainer As Container
 
+Public Sub _OptionalOnInitialize(argValues As Variant[])
+    
+    
+    
+End
+
 Public Sub _initialize() ' virtual
     
     
     
 End
 
-Public Sub _new(argContainer As Container)
+Public Sub _new(argContainer As Container, Optional argValues As Variant[])
     
     Me._$parentContainer = argContainer
-    
     Me._initialize()
+    If argValues Then Me._OptionalOnInitialize(argValues)
     
 End

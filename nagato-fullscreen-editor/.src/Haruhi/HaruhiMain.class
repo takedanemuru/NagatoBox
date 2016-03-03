@@ -1,0 +1,38 @@
+' Gambas class file
+
+Private $settingsHandler As NagatoSettingsHandler
+Private $fileHandler As NagatoFileHandler
+Private $keyboardHandler As NagatoKeyboardHandler
+Private $contextMenu As NagatoContextMenu 
+
+Public Sub _new()
+    
+    $settingsHandler = New NagatoSettingsHandler(TextArea)
+    $fileHandler = New NagatoFileHandler(TextArea)
+    $keyboardHandler = New NagatoKeyboardHandler(TextArea) As "TFEI"
+    $contextMenu = New NagatoContextMenu As "TFEI" 
+    Application.MainWindow = Me
+    
+End
+
+Public Sub Form_Menu()
+
+    $contextMenu.PopUp()
+
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileNew
+            $fileHandler.New()
+        Case MikuruSignal.FileSave
+            $fileHandler.Save()
+        Case MikuruSignal.FileOpen
+            $fileHandler.Open()
+        Case MikuruSignal.ApplicationQuit
+            $fileHandler.Save()
+            Me.Close()
+    End Select
+    
+End

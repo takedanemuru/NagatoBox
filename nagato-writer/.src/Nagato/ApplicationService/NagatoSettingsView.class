@@ -7,8 +7,10 @@ Property Read Syntax As String
 Property CssIndex As Integer
 Property Read TabSize As Integer
 Property TabSizeIndex As Integer
+Property ShowStatusPanel As Boolean
 
 Event RequestReload
+Event ToggleStatusPanel
 
 Private Function Syntax_Read() As String
 
@@ -67,5 +69,21 @@ End
 Private Function TabSize_Read() As Integer
 
     Return NagatoValueListTabSize.Values[Me.TabSizeIndex]
+
+End
+
+Private Function ShowStatusPanel_Read() As Boolean
+
+    Return Me._$settings["editor/show_statuspanel", False]
+
+End
+
+Private Sub ShowStatusPanel_Write(Value As Boolean)
+
+    If Me._$settings["editor/show_statuspanel"] <> Value Then
+        Me._$settings["editor/show_statuspanel"] = Value
+        Me._$settings.Save()
+        Raise ToggleStatusPanel
+    End If
 
 End

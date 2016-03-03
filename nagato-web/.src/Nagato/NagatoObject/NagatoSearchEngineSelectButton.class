@@ -17,6 +17,8 @@ Private Sub initializeButton()
         .AutoResize = True
         .Arrow = False
         .Border = False
+        .Background = Color.White + Color.Transparent * 192
+        .Tooltip = ("Select Search Engine")
     End With
     
 End

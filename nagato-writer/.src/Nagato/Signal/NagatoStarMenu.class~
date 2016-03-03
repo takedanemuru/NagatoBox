@@ -4,6 +4,12 @@ Inherits NagatoButtonMenu
 
 Public _$uniqueName As String = "StarMenu"
 
+Private Function getIcon() As String
+    
+    Return IIf(NagatoSettingsView.ShowStatusPanel, "button-check", Null)
+    
+End
+
 Public Sub _RefreshChildMenus() ' override
     
     Dim yukiPublishMenu As NagatoSubMenuPublish
@@ -11,10 +17,12 @@ Public Sub _RefreshChildMenus() ' override
     Dim yukiSlideMenu As NagatoSubMenuSlide
     
     Me._AddMenu("Preview", MikuruSignal.ViewPreview, "search")
+    Me._AddMenu(("Show Status Panel"), MikuruSignal.ViewToggleStatusPanel, getIcon())
     yukiPublishMenu = New NagatoSubMenuPublish(Me._$parentMenu, ("Export"), "book-open-bookmark") As "TFEI"
     Object.New("NagatoSubMenuTabKey", [Me._$parentMenu, ("Tab Key"), "navigation-right-button"])
     Object.New("NagatoSubMenuSettings", [Me._$parentMenu, ("Settings"), "equalizer"])
     yukiInsertMenu = New NagatoSubMenuInsert(Me._$parentMenu, ("Insert"), "toggle-expand-alt") As "TFEI"
+    Object.New("NagatoSubMenuSyntax", [Me._$parentMenu, ("Syntax"), "quill"])
     Object.New("NagatoSubMenuCss", [Me._$parentMenu, ("CSS"), "ruler"])
     yukiSlideMenu = New NagatoSubMenuSlide(Me._$parentMenu, ("Slide Show"), "presentation") As "TFEI"
         Me._AddMenu("", 0)

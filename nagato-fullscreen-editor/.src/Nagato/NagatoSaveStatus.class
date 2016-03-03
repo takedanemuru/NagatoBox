@@ -1,0 +1,51 @@
+' Gambas class file
+
+Property Read Saved As Boolean
+
+Private $path As String
+Private $saved As Boolean = False
+Private $observer As Observer
+
+Public Function GetPathToSave() As String
+    
+    If $path Then Return $path
+    If Not $path Then Return MikuruDialog.GetPathToSave()
+    
+End
+
+Public Function SaveToPath(argPath As String) As Boolean
+    
+    If argPath = "" Then Return False
+    
+    $path = argPath
+    $saved = True
+    HaruhiMain.Title = File.Name($path)
+    
+    Return True
+    
+End
+
+Public Sub New()
+    
+    $path = ""
+    $saved = False
+    
+End
+
+Public Sub _new(argTextArea As TextArea)
+    
+    $observer = New Observer(argTextArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    $saved = False
+    
+End
+
+Private Function Saved_Read() As Boolean
+
+    Return $saved
+
+End

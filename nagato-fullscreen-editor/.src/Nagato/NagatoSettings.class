@@ -1,0 +1,33 @@
+' Gambas class file
+
+Create Static
+
+Property FontSize As Integer
+Property Foreground As Integer
+
+Private $settings As New Settings
+
+Private Function FontSize_Read() As Integer
+
+    Return $settings["font/size", 14]
+
+End
+
+Private Sub FontSize_Write(Value As Integer)
+
+    $settings["font/size"] = Value
+    $settings.Save()
+
+End
+
+Private Function Foreground_Read() As Integer
+
+    
+
+End
+
+Private Sub Foreground_Write(Value As Integer)
+
+    
+
+End

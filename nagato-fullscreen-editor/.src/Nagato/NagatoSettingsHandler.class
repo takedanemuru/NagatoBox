@@ -1,0 +1,29 @@
+' Gambas class file
+
+Private $textArea As TextArea
+
+Private Sub initializeTextArea()
+    
+    $textArea.Font.Size = NagatoSettings.FontSize
+    $textArea.Background = MikuruTransparent(Color.White, 0.8)
+    $textArea.Foreground = Color.Violet
+    
+End
+
+Private Sub setTextAreaSizeAndPosition()
+    
+    $textArea.H = Screen.H - 48 * 2
+    $textArea.W = Screen.H
+    $textArea.X = (Screen.W - $textArea.W) / 2
+    $textArea.Y = 48
+    
+End
+
+Public Sub _new(argTextArea As TextArea)
+    
+    $textArea = argTextArea
+    
+    initializeTextArea()
+    setTextAreaSizeAndPosition()
+    
+End

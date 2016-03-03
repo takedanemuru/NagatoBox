@@ -34,7 +34,7 @@ End
 
 Public Sub SetPath(argPath As String)
     
-    $targetPath = MikuruUrlDecode(argPath)
+    $targetPath = MikuruUrl.DecodeUrlToPath(argPath)
     setTags()
     setPicture()
     

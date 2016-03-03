@@ -1,0 +1,46 @@
+' Gambas class file
+
+Private $textArea As TextArea
+Private $saveStatus As NagatoSaveStatus
+
+Private Sub saveFileToPath(argPath As String, Optional argReload As Boolean)
+    
+    If Not $saveStatus.SaveToPath(argPath) Then Return
+    If argReload Then $textArea.Text = File.Load(argPath)
+    File.Save(argPath, $textArea.Text)
+    
+End
+
+Public Sub New()
+    
+    If Not $saveStatus.Saved And If Not $textArea.Text = "" Then Me.Save()
+    $saveStatus.New()
+    $textArea.Text = ""
+    
+End
+
+Public Sub Open()
+    
+    If Not $saveStatus.Saved And If Not $textArea.Text = "" Then Me.Save()
+    saveFileToPath(MikuruDialog.GetPathToOpen(), True)
+    
+End
+
+Public Sub Save()
+    
+    If $textArea.Text Then saveFileToPath($saveStatus.GetPathToSave())
+    
+End
+
+Public Sub SaveAs()
+    
+    If Not $textArea.Text Then saveFileToPath(MikuruDialog.GetPathToSave())
+    
+End
+
+Public Sub _new(argTextArea As TextArea)
+    
+    $textArea = argTextArea
+    $saveStatus = New NagatoSaveStatus(argTextArea)
+    
+End

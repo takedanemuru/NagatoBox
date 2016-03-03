@@ -1,2 +1,8 @@
 ' Gambas module file
 
+Public Sub _call(argUrl As String) As String
+    
+    Return Replace$(URL.Decode(argUrl), "file://", "")
+    
+End
+

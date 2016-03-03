@@ -1,0 +1,28 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.8.4
+Title=nagato-fullscreen-editor
+Startup=Kyon
+Icon=Picture/icons/document-edit.png
+Version=0.0.3
+Component=gb.args
+Component=gb.image
+Component=gb.gui.qt
+Component=gb.form
+Component=gb.settings
+Description="a dead copy of FocusWriter :)"
+Authors="takeda.nemuru@yandex.com"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=takedanemuru
+Address=takedanemuru@voyagertrain
+License=General Public License
+PackageName=nagato-fullscreen-editor-0.0.2
+CreateEachDirectory=1
+MimeTypes="text/plain"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Editors"
+Categories=ubuntu:"Nagato;Office;Utility"
+Groups=ubuntu:"editors"
+ExtraFiles=ubuntu:"nagato-fullscreen-editor.png\t/usr/share/pixmaps"

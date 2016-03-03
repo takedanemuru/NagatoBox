@@ -8,6 +8,7 @@ Public Enum ViewNone = 2000, ViewPreview = 2001, ViewMoveCursor = 2002, ViewMove
 Public Enum ViewMoveToBottom = 2004
 Public Enum PublishNone = 3000, PublishPdf = 3001, PublishHtml = 3002, PublishPlainText = 3003
 Public Enum PublishSlidy = 3004, PublishDzslidePreview = 3005, PublishOdt = 3006, PublishEpub3 = 3007
+Public Enum PublishHtmlStandAlone = 3008
 Public Enum EditNone = 4000, EditInsertNumbers = 4001, EditInsertBullets = 4002, EditInsertUrl = 4003
 Public Enum EditInsertImage = 4004, EditInsertImageRelative = 4005, EditMoveToLine = 4006
 Public Enum AppNone = 9000, AppAbout = 9001, AppQuit = 9002

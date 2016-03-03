@@ -19,12 +19,22 @@ Public Function _GetSelectionText(argColumnIndex As Integer) As String[]
     
 End
 
-Public Sub _SetBackgroundColor(argRow As Integer, argColor As Integer)
+Private Sub setBackgroundColor(argRow As Integer, argColor As Integer)
     
     Dim yukiColumn As Integer
     
     For yukiColumn = 0 To Me._$grids.Columns.Max
         Me._$grids[argRow, yukiColumn].Background = argColor
+    Next
+    
+End
+
+Public Sub _SetBackgroundStripe(argColor As Integer)
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$grids.Rows.Max
+        If Odd(yukiRow) Then setBackgroundColor(yukiRow, argColor)
     Next
     
 End
@@ -48,11 +58,11 @@ Public Sub _ClearGrids()
     
 End
 
-Public Sub _SetGridData(argRow As Integer, argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
+Public Sub _SetGridData(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
     
     Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
     
-    Me._$grids[argRow, argColumn].Text = argData
+    Me._$grids[Me._$grids.Rows.Max, argColumn].Text = argData
     
     If argExpand And If yukiWidth > Me._$grids.Columns[argColumn].W Then
         Me._$grids.Columns[argColumn].W = yukiWidth
@@ -60,26 +70,16 @@ Public Sub _SetGridData(argRow As Integer, argColumn As Integer, argData As Stri
     
 End
 
-Public Sub _SetGridDataRight(argRow As Integer, argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
+Public Sub _SetGridDataRight(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
     
     Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
     
-    Me._$grids[argRow, argColumn].Text = argData
-    Me._$grids[argRow, argColumn].Alignment = Align.Right
+    Me._$grids[Me._$grids.Rows.Max, argColumn].Text = argData
+    Me._$grids[Me._$grids.Rows.Max, argColumn].Alignment = Align.Right
     
     If argExpand And If yukiWidth > Me._$grids.Columns[argColumn].W Then
         Me._$grids.Columns[argColumn].W = yukiWidth
     Endif
-    
-End
-
-Public Sub _AdjustColumnWidth(argColumn As Integer, argRow As Integer)
-    
-    With Me._$grids
-        If .Font.TextWidth(.[argRow, argColumn].Text) + MikuruUx.Grid > .Columns[argColumn].W Then
-            .Columns[argColumn].W = .Font.TextWidth(.[argRow, argColumn].Text) + MikuruUx.Grid
-        Endif
-    End With
     
 End
 

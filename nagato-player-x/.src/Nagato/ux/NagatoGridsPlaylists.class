@@ -4,7 +4,7 @@ Inherits NagatoGrids
 
 Property Read Selection As Integer[]
 
-Private Enum ColumnIcon, ColumnTitle, ColumnCount, ColumnSpacer
+Private Enum ColumnIcon, ColumnTitle, ColumnDescription, ColumnCount, ColumnSpacer
 
 Private Sub refreshData()
     
@@ -12,33 +12,40 @@ Private Sub refreshData()
     
     For Each yukiResult
         Inc Me._$grids.Rows.Count
-        Me._$grids[Me._$grids.Rows.Max, ColumnTitle].Text = yukiResult[NagatoDBMedia.Column.PlaylistName]
-        Me._AdjustColumnWidth(ColumnTitle, Me._$grids.Rows.Max)
-        Me._$grids[Me._$grids.Rows.Max, ColumnCount].Text = NagatoDBMedia.GetMusicCountInPlaylist(yukiResult[NagatoDBMedia.Column.Id])
-        Me._$grids[Me._$grids.Rows.Max, ColumnCount].Alignment = Align.Right
-        Me._AdjustColumnWidth(ColumnCount, Me._$grids.Rows.Max)
-        If Odd(Me._$grids.Rows.Max) Then Me._SetBackgroundColor(Me._$grids.Rows.Max, MikuruColor.GridBackgroundViolet)
+        Me._SetGridData(ColumnTitle, yukiResult[NagatoDBMedia.Column.PlaylistName])
+        Me._SetGridDataRight(ColumnCount, NagatoDBMedia.GetMusicCountInPlaylist(yukiResult[NagatoDBMedia.Column.Id]))
     Next
+    
+    Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
     
 End
 
 Public Sub _InitializeGrids() 'override
     
     With Me._$grids
-        .Columns.Count = 4
+        .Columns.Count = 5
         .Columns[ColumnIcon].W = MikuruUx.Padding
-        .Columns[ColumnTitle].Text = "Name"
-        .Columns[ColumnCount].Text = "Musics"
+        .Columns[ColumnTitle].Text = ("Name")
+        .Columns[ColumnDescription].Text = ("Description")
+        .Columns[ColumnCount].Text = ("Musics")
     End With
     
     If NagatoDBMedia.HasPlaylist() Then refreshData()
-    
+
 End
 
 Public Sub Refresh()
     
     Me._$grids.Clear()
     Me._InitializeGrids()
+    
+End
+
+Public Sub _ContextMenu() ' override
+    
+    Dim yukiMenu As New NagatoContextMenuLibrary As "ContextMenu"
+    
+    yukiMenu.PopUp()
     
 End
 

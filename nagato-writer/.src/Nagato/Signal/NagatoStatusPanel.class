@@ -1,0 +1,57 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $textLabel As TextLabel
+Private $textArea As TextArea
+Private $observer As Observer
+Private $observerForTextArea As Observer
+
+Private Sub setLabelText()
+    
+    Dim yukiTemplate As String = File.Load("Templates/StatusPanelTemplate.txt")
+    
+    With $textArea
+        $textLabel.Text = Subst$(yukiTemplate, .Column, .Line, .ToLine(.Length), .Length)
+    End With
+    
+End
+
+Public Sub _OptionalOnInitialize(argValues As Variant[])
+    
+    $textArea = argValues[0]
+    $observerForTextArea = New Observer($textArea) As "TextArea"
+    
+End
+
+Public Sub _initialize() ' virtual
+    
+    $textLabel = New TextLabel(Me._$parentContainer)
+    
+    With $textLabel
+        .H = 24
+        .Alignment = Align.Right
+        .Visible = NagatoSettingsView.ShowStatusPanel
+    End With
+    
+    $observer = New Observer(NagatoSettingsView) As "Asakura"
+    
+End
+
+Public Sub TextArea_Change()
+    
+    setLabelText()
+    
+End
+
+Public Sub TextArea_Cursor()
+    
+    setLabelText()
+    
+End
+
+Public Sub Asakura_ToggleStatusPanel()
+    
+    $textLabel.Visible = NagatoSettingsView.ShowStatusPanel
+    
+End

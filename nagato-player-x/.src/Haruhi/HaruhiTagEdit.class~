@@ -4,8 +4,6 @@ Private $albumartPath As String
 Private $targetPath As String
 Private $observer As Observer
 
-Event TagChanged
-
 Private Sub setTags()
     
     TitleTextBox.Text = MikuruId3TagInfo.GetTitle($targetPath)

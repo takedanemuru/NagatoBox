@@ -2,7 +2,7 @@
 
 Inherits NagatoContextMenu
 
-Private Enum MenuNone, MenuEdit, MenuAdd, MenuReplace
+Private Enum MenuNone, MenuEdit, MenuAdd, MenuReplace, MenuDelete
 
 Event Add
 Event Replace
@@ -17,7 +17,7 @@ End
 
 Public Sub _InitializeChildMenus()
     
-    Me._AddMenu(("Edit tag"), MenuEdit, "tag")
+    Me._AddMenu(("Delete"), MenuDelete, "bin")
         Me._AddMenu("", MenuNone)
     Me._AddMenu(("Add to queue"), MenuAdd)
     Me._AddMenu(("Replace queue"), MenuReplace)
