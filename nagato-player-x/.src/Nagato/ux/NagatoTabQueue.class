@@ -1,9 +1,9 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoTab
 
-Private $menuBar As NagatoMenuBarNowPlaying
-Private $grids As NagatoGridsNowPlaying
+Private $menuBar As NagatoMenuBarQueue
+Private $grids As NagatoGridsQueue
 Private $queueObserver As Observer
 
 Event NewPlaylist
@@ -18,10 +18,10 @@ Private Sub saveAsPlaylist()
     
 End
 
-Public Sub _new(argContainer As Container, argGrids As GridView)
+Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
     
-    $menuBar = New NagatoMenuBarNowPlaying(argContainer) As "MenuBar"
-    $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
+    $menuBar = New NagatoMenuBarQueue(argContainer) As "MenuBar"
+    $grids = New NagatoGridsQueue(argGrids) As "Grids"
     $queueObserver = New Observer(NagatoBroadCast) As "Asakura"
     
 End
@@ -41,17 +41,13 @@ End
 
 Public Sub Asakura_Changed()
     
-    If Not Object.IsValid($grids) Then Return
-    
-    $grids.Refresh()
+    If Object.IsValid($grids) Then $grids.Refresh()
     
 End
 
 Public Sub Asakura_Moved()
     
-    If Not Object.IsValid($grids) Then Return
-    
-    $grids.Refresh()
+    If Object.IsValid($grids) Then $grids.Refresh()
     
 End
 

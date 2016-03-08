@@ -13,6 +13,12 @@ Public Sub Reload()
     
 End
 
+Public Sub _OptionalOnInitialize()
+    
+    Me.Reload()
+    
+End
+
 Private Function Picture_Read() As Picture
 
     Return $coverArt

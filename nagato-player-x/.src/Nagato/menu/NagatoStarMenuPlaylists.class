@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoStarMenu
+
+Public Function _OnGetMenuName() As String
+    
+    Return "StarMenuPlaylists"
+    
+End

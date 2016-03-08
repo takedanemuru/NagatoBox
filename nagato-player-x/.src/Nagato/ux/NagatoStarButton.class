@@ -1,0 +1,29 @@
+' Gambas class file
+
+Public _$starButton As MenuButton
+
+Public Sub _OnInitializeStarMenu()
+    
+    
+    
+End
+
+Private Sub initializeButton(argContainer As Container)
+    
+    Me._$starButton = New MenuButton(argContainer) As "StarButton"
+    
+    With Me._$starButton
+        .W = argContainer.H
+        .Picture = MikuruIcon.Get("star")
+        .Arrow = False
+        .Border = False
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButton(argContainer)
+    Me._OnInitializeStarMenu()
+    
+End

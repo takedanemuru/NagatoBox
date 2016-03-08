@@ -30,18 +30,8 @@
     Index = 1
     Text = ("Playlists")
     Picture = Picture["Pictures/icons/music.png"]
-    { HBox2 HBox
+    { MenuPanelPlaylists HBox
       MoveScaled(2,0,74,4)
-      { SpacerPanel2 Panel
-        MoveScaled(0,0,45,3)
-        Expand = True
-      }
-      { StarButtonPlaylists MenuButton
-        MoveScaled(69,0,4,4)
-        Picture = Picture["Pictures/star(1).png"]
-        Arrow = False
-        Border = False
-      }
     }
     { PlaylistsGrid GridView
       MoveScaled(0,5,77,31)

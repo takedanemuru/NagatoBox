@@ -1,16 +1,17 @@
 ' Gambas class file
 
+Inherits NagatoPlayerAssistant
+
 Property Read Rate As Float
 Property Read Text As String
 
-Private $player As MediaPlayer
 Private $durationFetcher As New NagatoDurationFetcher
 
 Event FetchDuration(argDuration As Float)
 
 Private Function getDuration(Optional argRate As Float = 0) As String
     
-    Return MikuruFloatToTime($player.Duration * argRate)
+    Return MikuruFloatToTime(Me._$player.Duration * argRate)
     
 End
 
@@ -27,21 +28,21 @@ Public Sub SetByRate(argRate As Float)
     
     If argRate > 1 Then argRate = 1
     
-    $player.Position = $player.Duration * argRate
+    Me._$player.Position = Me._$player.Duration * argRate
     
 End
 
 Public Sub _new(argPlayer As MediaPlayer)
     
-    $player = argPlayer
+    Me._$player = argPlayer
     
 End
 
 Private Function Rate_Read() As Float
 
-    If $durationFetcher($player.Duration) Then Raise FetchDuration($player.Duration)
+    If $durationFetcher(Me._$player.Duration) Then Raise FetchDuration(Me._$player.Duration)
 
-    Return ($player.Position / $player.Duration)
+    Return (Me._$player.Position / Me._$player.Duration)
 
 Catch
     Return 0
@@ -50,11 +51,8 @@ End
 
 Private Function Text_Read() As String
 
-    Dim yukiPosition As String = MikuruFloatToTime($player.Position)
-    Dim yukiDuration As String = MikuruFloatToTime($player.Duration)
-
-    If yukiDuration = 0 Then Return ""
+    If Me._$player.Duration = 0 Then Return ""
     
-    Return Subst$("&1 / &2", yukiPosition, yukiDuration)
+    Return Me.GetTextByRate(Me._$player.Position / Me._$player.Duration)
 
 End

@@ -1,10 +1,12 @@
 ' Gambas class file
 
+Inherits NagatoSignal
+
 Property Read Name As String
 
 Public _$rootMenu As Menu
 
-Public Sub _InitializeRootMenu()
+Public Sub _OnInitializeRootMenu()
     
     Me._$rootMenu = New Menu(HaruhiPlayList)
     
@@ -12,6 +14,18 @@ Public Sub _InitializeRootMenu()
         .Visible = False
         .Name = Me.Name
     End With
+    
+End
+
+Public Sub _OptionalOnInitializeChildMenus()
+    
+    
+    
+End
+
+Public Sub _OnMenuItemClick(argSignal As Integer)
+    
+    
     
 End
 
@@ -27,47 +41,27 @@ Public Sub _AddMenuItem(argText As String, argTag As Integer, Optional argIconNa
     
 End
 
-Public Sub _AddSpacer()
+Public Sub _new()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu)
-    
-    With yukiMenu 
-        .Text = ""
-    End With
-    
-End
-
-Public Sub _AddAboutMenu()
-    
-    Dim yukiMenu As New Menu(Me._$rootMenu) As "AboutMenu"
-    
-    With yukiMenu 
-        .Picture = Picture.Load("Pictures/headphone.png")
-        .Text = ("About nagato-player-x")
-    End With
+    Me._OnInitializeRootMenu()
+    Me._OptionalOnInitializeChildMenus()
+        Me._AddMenuItem("", MikuruSignal.None)
+    Me._AddMenuItem(("About"), MikuruSignal.ApplicationAbout, "star")
+        Me._AddMenuItem("", MikuruSignal.None)
+    Me._AddMenuItem(("Close This Window"), MikuruSignal.ApplicationAbout, "button-cross")
     
 End
 
-Public Sub _AddClosePlaylistMenu()
+Public Sub MenuItem_Click()
     
-    Dim yukiMenu As New Menu(Me._$rootMenu) As "ClosePlaylistMenu"
-    
-    With yukiMenu 
-        .Picture = Picture.Load("Pictures/button-cross.png")
-        .Text = ("Close playlist")
-    End With
-    
-End
-
-Public Sub ClosePlaylistMenu_Click()
-    
-    HaruhiPlayList.Close()
-    
-End
-
-Public Sub AboutMenu_Click()
-    
-    HaruhiAbout.Show()
+    Select Case Last.Tag
+        Case MikuruSignal.ApplicationAbout
+            HaruhiAbout.ShowDialog()
+        Case MikuruSignal.ApplicationClosePlaylistsWindow
+            HaruhiPlayList.Close()
+        Default
+            Me._OnMenuItemClick(Last.Tag)
+    End Select
     
 End
 

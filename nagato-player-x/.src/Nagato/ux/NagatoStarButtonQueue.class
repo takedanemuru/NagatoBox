@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoStarButton
+
+Public Sub _OnInitializeStarMenu()
+    
+    Dim yukiMenu As New NagatoStarMenuQueue As "NagatoMenu"
+     
+    Me._$starButton.Menu = yukiMenu.Name
+    
+End
+

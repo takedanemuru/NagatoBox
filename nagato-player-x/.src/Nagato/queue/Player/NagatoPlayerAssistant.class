@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Private
+
+Public _$player As MediaPlayer
+
+Public Sub _new(argPlayer As MediaPlayer)
+    
+    Me._$player = argPlayer
+    
+End

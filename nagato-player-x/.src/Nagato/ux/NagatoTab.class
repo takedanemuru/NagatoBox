@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoSignal
+
+Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container, argGrids As GridView)
+    
+    Me._OnInitialize(argContainer, argGrids)
+    
+End

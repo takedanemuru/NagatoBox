@@ -3,7 +3,7 @@
 Inherits NagatoSignal
 
 Public _$container As Container
-Public _$starButton As MenuButton
+'Public _$starButton As MenuButton
 
 Public Sub _AddPanel()
     
@@ -15,9 +15,9 @@ End
 
 Public Sub _AddSeparator()
     
-    Dim yukiSeparator As New Separator(Me._$container)
+    Dim yukiSeparator As Separator
     
-    Debug yukiSeparator.Background
+    yukiSeparator = New Separator(Me._$container)
     
 End
 
@@ -43,24 +43,24 @@ Public Sub _AddStarMenu()
     
 End
 
-Public Sub _AddStarButton()
-    
-    Me._$starButton = New MenuButton(Me._$container) As "StarButton"
-    
-    With Me._$starButton
-        .W = Me._$container.H
-        .Picture = MikuruIcon.Get("star")
-        .Arrow = False
-        .Border = False
-    End With
-    
-    Me._AddStarMenu()
-    
-End
+' Public Sub _AddStarButton()
+'     
+'     Me._$starButton = New MenuButton(Me._$container) As "StarButton"
+'     
+'     With Me._$starButton
+'         .W = Me._$container.H
+'         .Picture = MikuruIcon.Get("star")
+'         .Arrow = False
+'         .Border = False
+'     End With
+'     
+'     Me._AddStarMenu()
+'     
+' End
 
 Public Sub _Initialize()
     
-    
+    'virtual
     
 End
 

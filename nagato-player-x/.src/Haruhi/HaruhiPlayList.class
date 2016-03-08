@@ -1,14 +1,14 @@
 ' Gambas class file
 
-Private $nowPlayingTab As NagatoTabNowPlaying
+Private $nowPlayingTab As NagatoTabQueue
 Private $playlistsTab As NagatoTabPlaylists
 
 Public Sub _new()
 
     NagatoSettingsForm.Load(Me)
     
-    $nowPlayingTab = New NagatoTabNowPlaying(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
-    $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
+    $nowPlayingTab = New NagatoTabQueue(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
+    $playlistsTab = New NagatoTabPlaylists(MenuPanelPlaylists, PlaylistsGrid) As "PlaylistsGrids"
     
 End
 

@@ -80,7 +80,7 @@ Public Function FetchDuration(argPath As String, argDuration As Float) As Boolea
     Me._$connection.Begin()
         yukiResult = Me._$connection.Edit(NagatoDBMedia.Table.Library, "path = &1", argPath)
         yukiFlag = (yukiResult[NagatoDBMedia.Column.Duration] = argDuration)
-        If Not yukiFlag Then yukiResult[NagatoDBMedia.Column.Duration] = argDuration
+        If Not yukiFlag And If argDuration > 0 Then yukiResult[NagatoDBMedia.Column.Duration] = argDuration
         yukiResult.Update()
     Me._$connection.Commit()
     

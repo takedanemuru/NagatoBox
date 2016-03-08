@@ -10,6 +10,12 @@ Private Sub saveAsPlaylist()
     
 End
 
+Public Function _OnGetMenuName() As String
+    
+    Return "StarMenuQueue"
+    
+End
+
 Public Sub _OptionalOnInitializeChildMenus()
     
     Me._AddMenuItem(("Add music"), MikuruSignal.ListAddMusic, "music")
@@ -33,10 +39,4 @@ Public Sub _OnMenuItemClick(argTag As Integer)
             NagatoQueue.ClearAll()
     End Select
     
-End
-
-Private Function Name_Read() As String
-
-    Return "NowPlayingMenu"
-
 End

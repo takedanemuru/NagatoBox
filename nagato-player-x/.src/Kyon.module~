@@ -4,13 +4,13 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
-    'If NagatoDBus.IsUnique() Then
+    If NagatoDBus.IsUnique() Then
         NagatoQueue.Activate()
         HaruhiPlayer.Show() 
         If NagatoArguments.Paths <> Null Then NagatoQueue.AddMusics(NagatoArguments.Paths)
-    ' Else
-    '     NagatoDBus.Proxy.MoveToCurrentDesktop()
-    '     If NagatoArguments.Paths <> Null Then NagatoDBus.Proxy.AddMusics(NagatoArguments.Paths)
-    ' End If
+    Else
+        NagatoDBus.Proxy.MoveToCurrentDesktop()
+        If NagatoArguments.Paths <> Null Then NagatoDBus.Proxy.AddMusics(NagatoArguments.Paths)
+    End If
     
 End

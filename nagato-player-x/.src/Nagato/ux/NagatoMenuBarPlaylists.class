@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoMenuBar
+
+Public Sub _OnInitialize() 'override
+    
+        Me._AddPanel()
+    Object.New("NagatoStarButtonPlaylists", [Me._$container])
+    
+End

@@ -45,11 +45,11 @@ End
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) 
+    $assistantList = New NagatoQueueAssistantList($player, $musicList)
+    $assistantCoverArt = New NagatoQueueAssistantCoverArt($player, $musicList)
+    $assistantTags = New NagatoQueueAssistantTags($player, $musicList)
     $assistantPlayControl = New NagatoQueueAssistantPlayControl($player, $musicList)
     $assistantPlayState = New NagatoQueueAssistantPlayState($player, $musicList)
-    $assistantCoverArt = New NagatoQueueAssistantCoverArt($player, $musicList)
-    $assistantList = New NagatoQueueAssistantList($player, $musicList)
-    $assistantTags = New NagatoQueueAssistantTags($player, $musicList)
     
 End
 

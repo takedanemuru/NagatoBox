@@ -4,9 +4,11 @@ Inherits NagatoMenuBar
 
 Public Sub _AddStarMenu() 'override
     
-    Dim yukiMenu As New NagatoNowPlayingMenu As "NagatoMenu"
-     
-    Me._$starButton.Menu = yukiMenu.Name
+    Dim yukiButton As New NagatoStarButtonQueue(Me._$container)
+    
+    ' Dim yukiMenu As New NagatoNowPlayingMenu As "NagatoMenu"
+    '  
+    ' Me._$starButton.Menu = yukiMenu.Name
     
 End
 
@@ -26,7 +28,7 @@ Public Sub _Initialize() 'override
     Me._AddButton(MikuruSignal.ListAddDirectory, "folder", ("Add Folder"))
     Me._AddButton(MikuruSignal.ListClear, "bin", ("Clear"))
         Me._AddPanel()
-    Me._AddStarButton()
+    Me._AddStarMenu()
     
 End
 
@@ -34,13 +36,13 @@ Public Sub MenuButton_Click()
     
     Select Case Last.Tag
         Case MikuruSignal.QueuePlay
-            NagatoQueue.Play()
+            NagatoQueue.ChannelPlayControl.Play()
         Case MikuruSignal.QueuePause
-            NagatoQueue.Pause()
+            NagatoQueue.ChannelPlayControl.Pause()
         Case MikuruSignal.QueueNext
-            NagatoQueue.Next()
+            NagatoQueue.ChannelPlayControl.Next()
         Case MikuruSignal.QueueBack
-            NagatoQueue.Back()
+            NagatoQueue.ChannelPlayControl.Back()
         Case MikuruSignal.QueueShuffle
             NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
         Case MikuruSignal.QueueRepeat

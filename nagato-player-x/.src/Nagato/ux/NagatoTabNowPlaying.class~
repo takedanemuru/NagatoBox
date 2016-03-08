@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoTab
 
 Private $menuBar As NagatoMenuBarNowPlaying
 Private $grids As NagatoGridsNowPlaying
@@ -18,11 +18,11 @@ Private Sub saveAsPlaylist()
     
 End
 
-Public Sub _new(argContainer As Container, argGrids As GridView)
+Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
     
     $menuBar = New NagatoMenuBarNowPlaying(argContainer) As "MenuBar"
     $grids = New NagatoGridsNowPlaying(argGrids) As "Grids"
-    $queueObserver = New Observer(TFEI) As "Asakura"
+    $queueObserver = New Observer(NagatoBroadCast) As "Asakura"
     
 End
 

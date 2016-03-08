@@ -42,7 +42,7 @@ End
 Public Sub Draw()
     
     Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
-    If NagatoQueue.ChannelCoverArt.Picture Then drawCoverArt()
+    If NagatoQueue.ChannelCoverArt.Picture <> Null Then drawCoverArt()
     drawMessage()
     
     Dec $messageDuration

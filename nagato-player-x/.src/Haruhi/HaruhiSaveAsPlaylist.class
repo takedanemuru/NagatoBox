@@ -4,7 +4,7 @@ Private $notEntered As Boolean = True
 
 Private Sub setFormPicture()
     
-    Dim yukiImage As Image = Image.Load("Pictures/yukichan_31.jpg")
+    Dim yukiImage As Image = Image.Load("Pictures/default_background.png")
     
     Me.Picture = yukiImage.Stretch(Me.W, Me.H).Picture
     

@@ -2,17 +2,13 @@
 
 Private $nowPlayingTab As NagatoTabNowPlaying
 Private $playlistsTab As NagatoTabPlaylists
-' Private $albumsTab As NagatoTabAlbums
-' Private $libraryTab As NagatoTabLibrary
 
 Public Sub _new()
 
     NagatoSettingsForm.Load(Me)
     
     $nowPlayingTab = New NagatoTabNowPlaying(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
-    $playlistsTab = New NagatoTabPlaylists(StarButtonPlaylists, PlaylistsGrid) As "PlaylistsGrids"
-    ' $albumsTab = New NagatoTabAlbums(AlbumsStarButton, AlbumsIconView) As "AlbumsTab"
-    ' $libraryTab = New NagatoTabLibrary(LibraryStarButton, LibraryGrids) As "LibraryTab"
+    $playlistsTab = New NagatoTabPlaylists(MenuPanelPlaylists, PlaylistsGrid) As "PlaylistsGrids"
     
 End
 
@@ -28,7 +24,6 @@ End
 
 Public Sub Form_Close()
     
-    NagatoQueue.ChannelList.Save()
     NagatoSettingsForm.Save(Me)
     
 End
@@ -38,4 +33,3 @@ Public Sub NowPlayingTab_NewPlayList()
     $playlistsTab.Refresh()
     
 End
-
