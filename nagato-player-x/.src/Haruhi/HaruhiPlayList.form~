@@ -30,7 +30,7 @@
     Index = 1
     Text = ("Playlists")
     Picture = Picture["Pictures/icons/music.png"]
-    { HBox2 HBox
+    { MenuPanelPlaylists HBox
       MoveScaled(2,0,74,4)
     }
     { PlaylistsGrid GridView

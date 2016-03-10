@@ -32,12 +32,6 @@ Public Sub SetByRate(argRate As Float)
     
 End
 
-Public Sub _new(argPlayer As MediaPlayer)
-    
-    Me._$player = argPlayer
-    
-End
-
 Private Function Rate_Read() As Float
 
     If $durationFetcher(Me._$player.Duration) Then Raise FetchDuration(Me._$player.Duration)

@@ -6,7 +6,6 @@ Property Read Count As Integer
 
 Private Sub musicListChanged()
     
-    NagatoSettingsMusic.SavePaths(Me._$musicElements.Paths)
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
     
 End

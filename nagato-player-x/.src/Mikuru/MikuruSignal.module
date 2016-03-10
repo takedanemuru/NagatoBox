@@ -5,5 +5,6 @@ Public Enum QueuePlay = 1001, QueuePause = 1002, QueueNext = 1003, QueueBack = 1
 Public Enum QueueShuffle = 1005, QueueRepeat = 1006
 Public Enum ListAddMusic = 2001, ListAddDirectory = 2002, ListSaveAs = 2003, ListClear = 2004
 Public Enum ListUp = 2005, ListDown = 2006, ListEdit = 2007, ListDelete = 2008
+Public Enum ListDeleteDuplicateMusic = 2009
 Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationCloseMainWindow = 9002
 Public Enum ApplicationClosePlaylistsWindow = 9003

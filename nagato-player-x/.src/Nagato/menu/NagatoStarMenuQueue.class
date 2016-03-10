@@ -21,6 +21,7 @@ Public Sub _OptionalOnInitializeChildMenus()
     Me._AddMenuItem(("Add music"), MikuruSignal.ListAddMusic, "music")
     Me._AddMenuItem(("Add directory"), MikuruSignal.ListAddDirectory, "folder")
     Me._AddMenuItem(("Save as playlist"), MikuruSignal.ListSaveAs, "hard-drive-download")
+    Me._AddMenuItem(("Remove Duplicate Music"), MikuruSignal.ListDeleteDuplicateMusic)
         Me._AddMenuItem("", MikuruSignal.None)
     Me._AddMenuItem(("Clear queue"), MikuruSignal.ListClear, "bin")
     
@@ -37,6 +38,8 @@ Public Sub _OnMenuItemClick(argTag As Integer)
             saveAsPlaylist()
         Case MikuruSignal.ListClear
             NagatoQueue.ClearAll()
+        Case MikuruSignal.ListDeleteDuplicateMusic
+            NagatoQueue.RemoveDuplicateMusic()
     End Select
     
 End

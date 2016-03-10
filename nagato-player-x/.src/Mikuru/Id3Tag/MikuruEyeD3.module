@@ -1,6 +1,7 @@
 ' Gambas module file
 
 Private Const Command As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
+Private Const Command2 As String = "eyeD3 --remove-images &1"
 
 Private $workingDirectory As New NagatoWorkingDirectoryEyeD3
 
@@ -18,6 +19,7 @@ End
 
 Private Sub setAlbumArtToFile(argPicturePath As String, argMusicPath As String)
     
+    Shell Subst$(Command2, Quote$(argMusicPath)) Wait
     Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
     
 End
@@ -42,7 +44,7 @@ Finally
     
 End
 
-Public Sub SetPicture(argPicturePath As String, argMusicPath As String)
+Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
     If (Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl) Then
         setAlbumArtToCurrentPlayingFile(argPicturePath, argMusicPath)

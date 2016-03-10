@@ -34,7 +34,7 @@ End
 
 Public Sub SetPath(argPath As String)
     
-    $targetPath = MikuruUrlDecode(argPath)
+    $targetPath = MikuruUrl.DecodeUrlToPath(argPath)
     setTags()
     setPicture()
     
@@ -83,6 +83,7 @@ Public Sub Asakura_Select(argFullPath As String)
     
     $albumartPath = argFullPath
     AlbumArtPictureBox.Picture = Image.Load(argFullPath).Picture
+    ApplyButton.Enabled = True
     
 Catch
     Return

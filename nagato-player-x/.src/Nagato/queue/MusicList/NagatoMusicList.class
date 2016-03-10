@@ -25,6 +25,33 @@ Private Sub initializeChannels()
     
 End
 
+Private Function isDuplicate(argPath As String, argIndex As Integer) As Boolean
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = (argIndex - 1) DownTo 0
+        If argPath = $musicElements[yukiIndex].Path Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub RemoveDuplicateMusic()
+    
+    Dim yukiIndex As Integer
+    Dim yukiIndexes As New Integer[]
+    
+    For yukiIndex = $musicElements.ChannelPaths.Max DownTo 1
+        If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
+    Next
+    
+    If yukiIndexes.Count > 0 Then $musicElements.ChannelQueue.DequeuByIndexes(yukiIndexes)
+    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    NagatoSettingsMusic.SavePaths($musicElements.ChannelPaths.All)
+    
+End
+
 Public Sub _new(argPaths As String[])
     
     $musicElements.ChannelQueue.Initialize(argPaths)

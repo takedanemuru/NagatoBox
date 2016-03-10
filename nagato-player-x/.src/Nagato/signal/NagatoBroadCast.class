@@ -24,4 +24,6 @@ Public Sub _call(argSignal As Integer, ...)
             Raise Moved
     End Select
     
+    Try NagatoSettingsMusic.SavePaths(NagatoQueue.ChannelList.Paths)
+    
 End

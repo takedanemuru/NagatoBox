@@ -42,6 +42,12 @@ Public Sub ClearAll()
     
 End
 
+Public Sub RemoveDuplicateMusic()
+    
+    $musicList.RemoveDuplicateMusic()
+    
+End
+
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) 

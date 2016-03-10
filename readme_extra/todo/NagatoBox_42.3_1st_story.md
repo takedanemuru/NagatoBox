@@ -27,8 +27,8 @@
 + cui front-end ?
 + ~~refactoring : separate huge size classes.~~
 + fix : start-up sequence
-+ refactoring : make all NagatoPlayerAssistant* to inherit same parent class.
-+ new : able to remove duplicated file from queue list, and create its menu
++ ~~refactoring : make all NagatoPlayerAssistant* to inherit same parent class.~~
++ ~~new : able to remove duplicated file from queue list, and create its menu~~
 
 ### nagato-session (v42.3.16)
 
