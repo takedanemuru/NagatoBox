@@ -2,11 +2,11 @@
 
 Create Static
 
-Private $selectedLabelPainter As New NagatoPainterSelectedLabel
-Private $readOnlyLabelPainter As New NagatoPainterReadOnlyLabel
-Private $cutLabelPainter As New NagatoPainterCutLabel
-Private $renamedLabelPainter As New NagatoPainterRenamedLabel
-Private $copiedLabelPainter As New NagatoPainterCopiedlabel
+Private $selectedLabelPainter As New NagatoLabelPainterSelected
+Private $readOnlyLabelPainter As New NagatoLabelPainterReadOnly
+Private $cutLabelPainter As New NagatoLabelPainterCut
+Private $renamedLabelPainter As New NagatoLabelPainterRenamed
+Private $copiedLabelPainter As New NagatoLabelPainterCopied
 Private $systemMonitorLabelPainter As New NagatoLabelPainterSystemMonitor
 Private $rssLabelPainter As New NagatoLabelPainterRss
 
@@ -33,9 +33,7 @@ Public Sub Paint(argMode As Integer, Optional argText As String)
                 Case .SpecialSystems
                     $systemMonitorLabelPainter.Paint()
                 Case .SpecialRssText
-                    $rssLabelPainter.PaintModeText()
-                Case .SpecialRssThumbnail
-                    $rssLabelPainter.PaintModeThumbnail()
+                    $rssLabelPainter.Paint()
                 Case .ModeNull
                     ' ignore
             End Select

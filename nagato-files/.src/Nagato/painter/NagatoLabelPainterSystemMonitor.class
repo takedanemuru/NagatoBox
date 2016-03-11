@@ -2,22 +2,20 @@
 
 Inherits NagatoLabelPainter
 
-Private Const LabelHeight As Integer = 24
-
-Public Sub Paint()
+Public Sub _OnGetLabelColor() As Integer
     
-    paint.Brush = paint.Color(MikuruColor.Transparent(Color.Blue, 128))
-        Paint.Rectangle(0, 0, NagatoSettingsTile.Size, LabelHeight)
-    paint.Fill()
-        Paint.DrawPicture(MikuruIcon.Get("computer"), 4, 4)
-    paint.Brush = paint.Color(Color.White)
-        Paint.Font.Bold = True
-        Paint.RichText("System", 24, 0, NagatoSettingsTile.Size - 48, LabelHeight, Align.Center)
-    Paint.Fill()
-    paint.Brush = paint.Color(MikuruColor.Transparent(Color.White, 128))
-        Paint.LineWidth = 2
-        Paint.MoveTo(0, 24)
-        Paint.LineTo(NagatoSettingsTile.Size, 24)
-    Paint.Stroke()
+    Return MikuruColor.Transparent(Color.Blue, 128)
+    
+End
+
+Public Sub _OnGetIconName() As String
+    
+    Return "computer"
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "System"
     
 End

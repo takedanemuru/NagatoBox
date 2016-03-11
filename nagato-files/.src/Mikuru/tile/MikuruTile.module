@@ -7,6 +7,14 @@ Private $voidTile As New NagatoTileVoid
 Private $brokenTile As New NagatoTileBroken
 Private $lostDirectoryTile As New NagatoTileLostDirectory
 
+Private Function getThumbnailImage(argPath As String, argSelected As Boolean) As Picture
+    
+    Dim yukiPicture As Picture = NagatoThumbnailImage.Get(argPath, argSelected)
+    
+    Return yukiPicture
+    
+End
+
 Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     
     If Not Access(argPath) Then Return $brokenTile(argPath, argSelected)
@@ -16,7 +24,7 @@ Public Sub _call(argPath As String, argSelected As Boolean) As Picture
             Case .TypeDirectory
                 Return $directoryTile(argPath, argSelected)
             Case .TypeImage
-                Return NagatoThumbnailImage.Get(argPath, argSelected)
+                Return getThumbnailImage(argPath, argSelected)
             Case .TypePdf
                 Return NagatoThumbnailPdf.Get(argPath, argSelected)
             Case .TypeApplication

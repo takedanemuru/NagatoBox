@@ -2,7 +2,7 @@
 
 Inherits NagatoThumbnail
 
-Private $labelPainter As New NagatoPainterBrokenLabel
+Private $labelPainter As New NagatoLabelPainterBroken
 
 Private Function getBrokenImage() As Image
     

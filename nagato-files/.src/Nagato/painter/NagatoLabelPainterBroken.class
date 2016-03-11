@@ -4,18 +4,18 @@ Inherits NagatoLabelPainter
 
 Public Sub _OnGetLabelColor() As Integer
     
-    Return MikuruColor.Transparent(Color.Orange, 128)
+    Return MikuruColor.Transparent(Color.Green, 128)
     
 End
 
 Public Sub _OnGetIconName() As String
     
-    Return "feed-alt"
+    Return "exclamation"
     
 End
 
 Public Sub _OnGetLabelText() As String
     
-    Return "RSS"
+    Return "BROKEN"
     
 End

@@ -2,8 +2,67 @@
 
 Create Private
 
+Private Const ThumbnailSize As Integer = 128
+Private Const LabelHeight As Integer = 24
+
+Public Sub _OnGetLabelColor() As Integer
+    
+    Return Color.Transparent ' THIS IS DUMMY 
+    
+End
+
+Public Sub _OnGetIconName() As String
+    
+    Return "DON'T LOOK AT ME !!"
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "DON'T LOOK AT ME !!"
+    
+End
+
+Public Sub _OptionalOnGetLineColor() As Integer
+    
+    Return Color.White
+    
+End
+
+Private Sub paintRectangle()
+    
+    paint.Brush = paint.Color(Me._OnGetLabelColor())
+        Paint.Rectangle(0, 0, ThumbnailSize, LabelHeight)
+    paint.Fill()
+    
+End
+
+Private Sub paintLabelText()
+    
+    Dim yukiWidth As Integer = ThumbnailSize - LabelHeight * 2
+    
+    paint.Brush = paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.RichText(Me._OnGetLabelText(), LabelHeight, 0, yukiWidth, LabelHeight, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Sub paintLabelBorder()
+    
+    paint.Brush = paint.Color(Me._OptionalOnGetLineColor())
+        Paint.LineWidth = 2
+        Paint.MoveTo(0, LabelHeight)
+        Paint.LineTo(ThumbnailSize, LabelHeight)
+    Paint.Stroke()
+    
+End
+
 Public Sub Paint()
     
-    
+    paintRectangle()
+    Paint.DrawPicture(MikuruIcon.Get(Me._OnGetIconName()), 4, 4)
+    paintLabelText()
+    paintLabelBorder()
     
 End

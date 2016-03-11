@@ -28,13 +28,15 @@ Private Function getBaseImage(argTitle As String) As Image
     
 End
 
-Private Sub paintLabel(argText As String)
+Private Sub paintDescriptionShade(argText As String)
     
     Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TextWidth) + Margin * 2
     
     Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Gray, 128))
     Paint.Rectangle(0, NagatoSettingsTile.Size - yukiHeight, NagatoSettingsTile.Size, yukiHeight)
     Paint.Fill()
+    
+    Paint.DrawPicture(MikuruIcon("feed-alt"), 4, 4)
     
 End
 
@@ -58,7 +60,7 @@ Public Function getIcon() As Picture
     Dim yukiImage As Image = getBaseImage($rssFeeds.Title)
     
     Paint.Begin(yukiImage)
-        If $rssFeeds.HasThumbnail Then paintLabel($rssFeeds.Title)
+        If $rssFeeds.HasThumbnail Then paintDescriptionShade($rssFeeds.Title)
         paintDescription($rssFeeds.Title)
     Paint.End()
     
