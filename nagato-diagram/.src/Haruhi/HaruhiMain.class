@@ -13,6 +13,7 @@ Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
             $pathHandler.Open()
         Case MikuruSignal.FileRecent
             $mainContainer.SetPath(argValues[0])
+            $pathHandler.OpenNewRecentFile(argValues[0])
         Case MikuruSignal.FileRecentClear
             MikuruSettings.ClearRecntPaths()
         Case MikuruSignal.FileSave

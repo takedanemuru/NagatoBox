@@ -5,25 +5,48 @@ Inherits NagatoObject
 Private $graphGenerator As NagatoGraphGenerator
 Private $imageView As ImageView
 
+Private Sub zoom()
+    
+    Select Case MikuruSettings.ZoomType
+        Case MikuruSettings.ZoomFit
+            $imageView.ZoomFit()
+        Case MikuruSettings.ZoomNormal
+            $imageView.Zoom = 1
+        Case MikuruSettings.ZoomRating
+            $imageView.Zoom = MikuruSettings.ZoomRate
+    End Select
+    
+End
+
+Private Sub saveZoomSettings(argSignal As Integer)
+    
+    Select Case argSignal
+        Case MikuruSignal.ZoomIn
+            MikuruSettings.ZoomType = MikuruSettings.ZoomRating
+            MikuruSettings.ZoomRate *= 1.2
+        Case MikuruSignal.ZoomOut
+            MikuruSettings.ZoomType = MikuruSettings.ZoomRating
+            MikuruSettings.ZoomRate *= 0.8
+        Case MikuruSignal.ZoomFit
+            MikuruSettings.ZoomType = MikuruSettings.ZoomFit
+        Case MikuruSignal.ZoomNormal
+            MikuruSettings.ZoomType = MikuruSettings.ZoomNormal
+    End Select
+    
+End
+
 Public Sub ShowPreview(argSourceText As String)
     
     $graphGenerator.Refresh(argSourceText)
     $imageView.Image = $graphGenerator.Image
+    zoom()
     
 End
 
 Public Sub SetZoom(argSignal As Integer)
     
-    Select Case argSignal
-        Case MikuruSignal.ZoomIn
-            $imageView.Zoom *= 1.2
-        Case MikuruSignal.ZoomOut
-            $imageView.Zoom *= 0.8
-        Case MikuruSignal.ZoomFit
-            $imageView.ZoomFit()
-        Case MikuruSignal.ZoomNormal
-            $imageView.Zoom = 1
-    End Select
+    saveZoomSettings(argSignal)
+    zoom()
     
 End
 

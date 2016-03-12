@@ -1,8 +1,12 @@
 ' Gambas module file
 
 Property Layout As Integer[]
+Property ZoomType As Integer
+Property ZoomRate As Float
 
 Public _$settings As New Settings
+
+Public Enum ZoomFit, ZoomNormal, ZoomRating
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -58,5 +62,32 @@ Private Sub Layout_Write(Value As Integer[])
 
     Me._$settings["layout/width"] = Value
     Me._$settings.Save()
+
+End
+
+Private Function ZoomType_Read() As Integer
+
+    Return Me._$settings["zoom/type", ZoomNormal]
+
+End
+
+Private Sub ZoomType_Write(Value As Integer)
+
+    Me._$settings["zoom/type"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function ZoomRate_Read() As Float
+
+    Return Me._$settings["zoom/rate", 1] 
+
+End
+
+Private Sub ZoomRate_Write(Value As Float)
+
+    Me._$settings["zoom/rate"] = Value
+    Me._$settings.Save()
+    
 
 End

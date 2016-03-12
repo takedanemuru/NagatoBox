@@ -83,6 +83,12 @@ Public Sub IsOverridable(argSource As String) As Boolean
     
 End
 
+Public Sub OpenNewRecentFile(argPath As String)
+    
+    setNewPath(argPath)
+    
+End
+
 Public Sub _new()
     
     setNewPath(MikuruArguments.Path)

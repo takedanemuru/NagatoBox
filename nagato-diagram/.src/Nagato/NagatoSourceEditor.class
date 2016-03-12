@@ -17,6 +17,7 @@ Private Sub initializeHighlightProperties()
         .[Highlight.Symbol].Color = Color.White
         .[Highlight.Function].Color = Color.White
         .[Highlight.Operator].Color = Color.Yellow
+        .[Highlight.Comment].Color = Color.Green
     End With
     
 End
@@ -34,6 +35,18 @@ Private Sub initializeEditorProperties()
         .ShowSpaces = True
         .ShowModified = True
     End With
+    
+End
+
+Private Sub pressWithControlAndShiftKey(argKeyCode As Integer)
+    
+    If argKeyCode = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    
+End
+
+Private Sub pressWithControlKey(argKeyCode As Integer)
+    
+    If argKeyCode = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null)
     
 End
 
@@ -60,8 +73,11 @@ End
 
 Public Sub TextEditor_KeyPress()
     
-    If Key.Control And If Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null)
-    If Key.Control And If Key.Shift And If Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    If Key.Control And If Key.Shift Then 
+        pressWithControlAndShiftKey(Key.Code)
+    Else If Key.Control Then
+        pressWithControlKey(Key.Code)
+    Endif
     
 End
 

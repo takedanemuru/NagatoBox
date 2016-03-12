@@ -16,11 +16,11 @@ Public Sub _Connect(argUrl As String)
     With Me._$httpClient
         .Async = True
         .URL = argUrl
-        .Timeout = 30
+        .Timeout = 60
         .Get()
     End With
     
-Catch 
+Catch
     Return 'to avoid changing property during downloading.
     
 End
@@ -34,7 +34,7 @@ End
 Public Sub HttpClient_Read()
      
     Dim yukiLines As String = Read #Last, Lof(Last)
-     
+    
     Me._$buffer &= yukiLines
     
 End
