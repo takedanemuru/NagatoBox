@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoTable
+
+Private Function getBaseUrl(argUrl As String) As String
+    
+    Return Split(argUrl, "/", "", True)[1]
+    
+End
+
+Public Sub _EnsureTable() ' override
+    
+    Dim yukiTable As Table
+    
+    With NagatoDBWeb
+        If Not Me._$connection.Tables.Exist(.TableFavicon) Then
+            yukiTable = Me._$connection.Tables.Add(.TableFavicon)
+            yukiTable.Fields.Add(.ColumnId, db.Serial)
+            yukiTable.Fields.Add(.ColumnUrl, db.String)
+            yukiTable.Fields.Add(.ColumnFavicon, db.Blob)
+            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Update()
+        Endif
+    End With
+
+End
+
+Public Sub SetFavicon(argUrl As String, argFavicon As Picture)
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(NagatoDBWeb.TableFavicon)
+        yukiResult[NagatoDBWeb.ColumnUrl] = getBaseUrl(argUrl)
+        yukiResult[NagatoDBWeb.ColumnFavicon] = MikuruBlob.GetBlobFromPicture(argFavicon)
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Me._$connection.Rollback()
+    
+End
+
+Public Function HasFavicon(argUrl As String) As Boolean
+    
+    Return Me._$connection.Find(NagatoDBWeb.TableFavicon, "url = &1", getBaseUrl(argUrl)).Count > 0
+    
+End
+
+Public Function GetFavicon(argUrl As String) As Picture
+    
+    Dim yukiResult As Result = Me._$connection.Find(NagatoDBWeb.TableFavicon, "url = &1", getBaseUrl(argUrl))
+    
+    Return MikuruBlob.GetPictureFromBlob(yukiResult[NagatoDBWeb.ColumnFavicon].Data)
+    
+End

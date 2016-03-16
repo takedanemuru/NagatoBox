@@ -2,6 +2,7 @@
 
 Public Enum WebHeader = 1000, WebRequestRefresh = 1001, WebLoaded = 1002, WebNew = 1003, WebNewInsert = 1004
 Public Enum WebForward = 1005, WebBack = 1006, WebProgress = 1007, WebDownload = 1008
+Public Enum WebNewTitle = 1009
 Public Enum PersonaHeader = 2000, PersonaSelect = 2001, PersonaDelete = 2002, PersonaNew = 2003
 Public Enum PersonaReorder = 2004, PersonaSetText = 2005
 Public Enum SearchHeader = 3000, SearchApiCall = 3001, SearchEngineChanged = 3002

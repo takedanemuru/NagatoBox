@@ -19,11 +19,15 @@ Public Const ColumnCategoryId As String = "category_id"
 Public Const TableHistory As String = "table_history_2"
 Public Const ColumnTimeStamp As String = "time_stamp"
 
+Public Const TableFavicon As String = "table_favicon"
+Public Const ColumnFavicon As String = "favicon"
+
 Public _$uniqueName As String = "Web"
 
 Private $tableBookmark As NagatoTableBookmark
 Private $tableCategory As NagatoTableCategory
 Private $tableHistory As NagatoTableHistory
+Private $tableFavicon As NagatoTableFavicon
 
 Public Function HasBookmarkInCategory(argCategoryName As String) As Boolean
     
@@ -63,11 +67,11 @@ Public Sub DeleteCategory(argCategoryName As String)
     
 End
 
-Public Function GetBookmarkResultFoundByCategoryName(argCategoryName As String) As Result
+Public Function GetBookmarkResultByCategoryName(argCategoryName As String) As Result
     
     Dim yukiId As Integer = $tableCategory.GetCategoryId(argCategoryName)
     
-    Return $tableBookmark.GetBookmarkResultFoundByCategoryName(yukiId)
+    Return $tableBookmark.GetBookmarkResultByCategoryName(yukiId)
     
 End
 
@@ -111,6 +115,22 @@ Public Sub AddNewCategory(argCategoryName As String)
     
 End
 
+Public Sub PushFavicon(argUrl As String, argFavicon As Picture)
+    
+    If $tableFavicon.HasFavicon()argUrl Then Return
+    
+    $tableFavicon.SetFavicon(argUrl, argFavicon)
+    
+End
+
+Public Function GetFavicon(argUrl As String) As Picture
+    
+    If Not $tableFavicon.HasFavicon(argUrl) Then Return Null
+    
+    Return $tableFavicon.GetFavicon(argUrl)
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()
@@ -118,6 +138,7 @@ Public Sub _new()
     $tableCategory = New NagatoTableCategory(Me._$connection)
     $tableBookmark = New NagatoTableBookmark(Me._$connection)
     '$tableHistory = New NagatoTableHistory(Me._$connection)
+    $tableFavicon = New NagatoTableFavicon(Me._$connection)
 
 End
 

@@ -8,11 +8,13 @@ Private $title As String
 Private Sub setBookmark(argCategory As String)
     
     Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultByCategoryName(argCategory)
+    Dim yukiFavicon As Picture
     
     For Each yukiResult
         With NagatoDBWeb
             If $treeView.Exist(yukiResult[.ColumnUrl]) Then Continue
-            $treeView.Add(yukiResult[.ColumnUrl], yukiResult[.ColumnUserDefinedPageName],, argCategory)
+            yukiFavicon = NagatoDBWeb.GetFavicon(yukiResult[.ColumnUrl])
+            $treeView.Add(yukiResult[.ColumnUrl], yukiResult[.ColumnUserDefinedPageName], yukiFavicon, argCategory)
         End With
     Next
     

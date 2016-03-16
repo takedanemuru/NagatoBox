@@ -9,6 +9,7 @@ Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.FileNew
             If $pathHandler.IsOverridable($mainContainer.Text) Then $mainContainer.SetPath("Text/Template_1")
+            Me.Title = "nagato-diagram : untitled"
         Case MikuruSignal.FileOpen
             $pathHandler.Open()
         Case MikuruSignal.FileRecent
@@ -53,6 +54,7 @@ Public Sub _new()
     Application.MainWindow = Me
     $menuBar = New NagatoMenuBar(MainVBox) As "UX"
     $mainContainer = New NagatoMainContainer(MainVBox) As "UX"
+    fileEvent(MikuruSignal.FileNew, Null)
     
 End
 

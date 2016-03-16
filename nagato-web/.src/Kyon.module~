@@ -19,16 +19,18 @@ Public Sub Main()
     
     Dim yukiUrl As String = getSartupUrl()
     
+    Debug Split("http://www.google.com/foobar/alpha/beta", "/", "", True)[1]
+    
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
         NagatoSettingsForm.Load(HaruhiMain)
         Application.MainWindow = HaruhiMain
-    ' Else If yukiUrl = "" Then
-    '     NagatoDBus.Proxy.Show()
-    ' Else
-    '     NagatoDBus.Proxy.SetUrl(yukiUrl)
+    Else If yukiUrl = "" Then
+        NagatoDBus.Proxy.Show()
+    Else
+        NagatoDBus.Proxy.SetUrl(yukiUrl)
     End If
     
 End

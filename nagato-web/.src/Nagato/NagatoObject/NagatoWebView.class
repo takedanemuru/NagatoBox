@@ -109,6 +109,22 @@ Public Sub WebView_Load()
     
 End
 
+Public Sub WebView_Title()
+    
+    If $webView.Title = "" Then Return
+    
+    Raise MenuEventWithArgs(MikuruSignal.WebNewTitle, Null)
+    
+End
+
+Public Sub WebView_Icon()
+    
+    If $webView.Icon = Null Then Return
+    
+    NagatoDBWeb.PushFavicon($webView.Url, $webView.Icon)
+    
+End
+
 Private Function WebView_Read() As WebView
 
     Return $webView

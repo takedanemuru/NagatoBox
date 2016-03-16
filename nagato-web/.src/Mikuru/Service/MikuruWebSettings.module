@@ -1,5 +1,15 @@
 ' Gambas module file
 
+Private Function getDirectory() As String
+    
+    Dim yukiPath As String = User.Home &/ ".nagato-web"
+    
+    If Not Exist(yukiPath) Then Mkdir yukiPath
+    
+    Return yukiPath
+    
+End
+
 Public Sub Initialize()
     
     With WebSettings
@@ -7,6 +17,7 @@ Public Sub Initialize()
         .[.PluginsEnabled] = True
         .[.JavascriptEnabled] = True
         .[.JavascriptCanOpenWindows] = True
+        .IconDatabase.Path = getDirectory()
     End With
     
 End

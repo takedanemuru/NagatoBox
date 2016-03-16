@@ -10,6 +10,7 @@ Private Sub setNewPath(argPath As String)
     $currentPath = argPath
     $saved = True
     MikuruSettings.SaveRecntPath(argPath)
+    HaruhiMain.Title = "nagato-diagram : " & File.Name(argPath)
     
 End
 
