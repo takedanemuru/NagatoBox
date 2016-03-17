@@ -1,19 +1,13 @@
 ' Gambas class file
 
-Inherits NagatoButtonMenu
+Inherits NagatoPullDownMenu
 
 Private Enum MenuDownloadMovie, MenuDownloadMusic
 
 Private $url As String
 Private $downloader As New NagatoYoutubeDL As "TFEI"
 
-Public Function _AbstractOnGetUniqueName() As String
-    
-    Return "DownloadMenu"
-    
-End
-
-Public Sub _InitializeCategoryMenus()
+Public Sub _OnShowRootMenu()
     
     Me._AddMenu(("Download As Video"), MenuDownloadMovie, "video")
     Me._AddMenu(("Download As Music"), MenuDownloadMusic, "music")

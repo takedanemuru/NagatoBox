@@ -9,7 +9,7 @@ Public Sub _EnsureTable()
     Try Me._$connection.Open()
     
     With NagatoDBWeb
-        If Not Me._$connection.Tables.Exist(.TableCategory) Then
+        If Not Me._$connection.Tables.Exist(.TableHistory) Then
             yukiTable = Me._$connection.Tables.Add(.TableHistory)
             yukiTable.Fields.Add(.ColumnId, db.Serial)
             yukiTable.Fields.Add(.ColumnTimeStamp, db.Date)
@@ -20,6 +20,12 @@ Public Sub _EnsureTable()
         Endif
     End With
 
+End
+
+Public Sub GetAll() As Result
+    
+    Return Me._$connection.Find(NagatoDBWeb.TableHistory, "order by time_stamp desc limit 500")
+    
 End
 
 Public Sub PushHistory(argUrl As String, argTitle As String)
@@ -35,7 +41,6 @@ Public Sub PushHistory(argUrl As String, argTitle As String)
     Me._$connection.Commit()
     
 Catch
-    Debug Error.Text
     Me._$connection.Rollback()
     
 End

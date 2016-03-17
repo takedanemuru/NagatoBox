@@ -1,0 +1,105 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $drawingArea As DrawingArea
+Private $tabs As NagatoTabs
+Private $observer As Observer
+
+Private Sub pressOnTab()
+    
+    Dim yukiTabIndex As Integer = $tabs.GetTabIndex(Mouse.X, Mouse.Y)
+    Dim yukiSignal As Integer
+    
+    If Mouse.Left Then 
+        yukiSignal = MikuruSignal.PersonaSelect
+    Else If Not Mouse.Control Then 
+        yukiSignal = MikuruSignal.PersonaDelete
+    Else
+        yukiSignal = MikuruSignal.PersonaDeleteWithoutRecord
+    End If
+    
+    Raise MenuEventWithArg(yukiSignal, yukiTabIndex)
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea, argTabs As NagatoTabs)
+    
+    $drawingArea = argDrawingArea
+    $tabs = argTabs
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    Select Case $tabs.GetTabType(Mouse.X, Mouse.Y)
+        Case NagatoTabs.TypeWebView
+            pressOnTab()
+        Case NagatoTabs.TypePlusButton
+            If Mouse.Left Then Raise MenuEvent(MikuruSignal.PersonaNew)
+    End Select
+    
+End
+
+Public Sub Asakura_MouseMove()
+    
+    $tabs.SetOnMouseIndex(Mouse.X, Mouse.Y)
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Leave()
+    
+    $tabs.ClearOnMouseIndex()
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_MouseDrag()
+    
+    If $tabs.GetTabOrder(Mouse.StartX) = ($tabs.Max + 1) Then Return
+    
+   If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then
+        Drag.Icon = MikuruIcon.Get("navigation-down", 48) 
+        $drawingArea.Drag(CStr(Mouse.StartX), "text/nagato-web")
+    Endif
+    
+End
+
+Public Sub Asakura_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Up
+            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + Mouse.Delta * 16
+            $drawingArea.Refresh()
+        Case Key.Down
+            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y - Mouse.Delta * 16
+            $drawingArea.Refresh()
+    End Select
+    
+End
+
+Public Sub Asakura_MouseWheel()
+    
+    NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + Mouse.Delta * 8
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Dim yukiOriginX As Integer
+    Dim yukiDropX As Integer
+    
+    If Drag.Format <> "text/nagato-web" Then Return
+    If $tabs.Max = 1 Then Return
+    
+    yukiOriginX = $tabs.GetTabOrder(Mouse.StartX)
+    yukiDropX = $tabs.GetTabOrder(Drag.X)
+    Drag.Hide()
+    
+    Raise MenuEventWithArgs(MikuruSignal.PersonaReorder, [yukiOriginX, yukiDropX])
+    
+End

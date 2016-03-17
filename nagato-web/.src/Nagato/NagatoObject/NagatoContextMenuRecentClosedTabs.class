@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Enum ContextNone, ContextDelete, ContextRename, ContextReload, ContextOpen, ContextEdit
+
+Public Sub _AddChildMenus()
+    
+    Me._AddContextMenu(("Reload"), Me.ContextReload, MikuruIcon.Get("button-synchronize"))
+    
+End

@@ -13,7 +13,7 @@ Private Sub addItem(argResult As Result, argCategory As String)
     With yukiMenu
         .Text = MikuruCollapsedText[yukiTitle, Int(Screen.W / 4)]
         .Tag = argResult[NagatoDBWeb.ColumnUrl]
-        .Picture = NagatoDBWeb.GetFavicon(argResult[NagatoDBWeb.ColumnUrl])
+        If NagatoSettings.ShowFavicon Then .Picture = NagatoDBWeb.GetFavicon(argResult[NagatoDBWeb.ColumnUrl])
     End With
     
 End

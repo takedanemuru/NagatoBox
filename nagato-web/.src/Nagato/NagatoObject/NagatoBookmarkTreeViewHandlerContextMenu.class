@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $treeView As TreeView
+Private $observer As Observer
+
+Event RequestRemove(argData As String)
+Event RequestRefresh
+
+Public Sub _new(argTreeView As TreeView)
+    
+    $treeView = argTreeView
+    $observer = New Observer($treeView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As Object
+    Dim yukiCategory As String
+    Dim yukiKey As String = $treeView.Key
+    
+    If MikuruUrl.IsWebPage(yukiKey) Then
+        yukiCategory = $treeView[yukiKey].ParentKey
+        yukiMenu = New NagatoContextMenuBookmark(HaruhiMain, yukiCategory, yukiKey) As "ContextMenuBookmark"
+    Else
+        yukiMenu = New NagatoContextMenuBookmarkCategory(HaruhiMain, yukiKey) As "ContextMenuBookmarkCategory"
+    Endif
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub ContextMenuBookmark_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case NagatoContextMenuBookmark.ContextDelete
+            Raise RequestRemove(argValues[1])
+            'removeBookmark(argValues[1])
+        Case NagatoContextMenuBookmark.ContextEdit
+            HaruhiEditWebBookmark.SetUrl($treeView.Key, $treeView[$treeView.Key].ParentKey) 
+            If HaruhiEditWebBookmark.ShowDialog() = 1 Then Raise RequestRefresh
+        Case NagatoContextMenuBookmark.ContextReload
+            Raise RequestRefresh
+        Case NagatoContextMenuBookmark.ContextOpen
+            Raise MenuEventWithArg(MikuruSignal.WebNew, argValues[1])
+    End Select
+    
+End
+
+Public Sub ContextMenuBookmarkCategory_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case NagatoContextMenuBookmarkCategory.ContextNewCategory
+            If HaruhiNewCategory.ShowDialog() = 0 Then Raise RequestRefresh
+        Case NagatoContextMenuBookmarkCategory.ContextDelete
+            NagatoDBWeb.DeleteCategory(argValues[0])
+            Raise RequestRefresh
+        Case NagatoContextMenuBookmarkCategory.ContextRename
+            
+        Case NagatoContextMenuBookmarkCategory.ContextReload
+            Raise RequestRefresh
+    End Select
+    
+End

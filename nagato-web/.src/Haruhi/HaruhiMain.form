@@ -10,6 +10,18 @@
     Arrangement = Arrange.Fill
     Orientation = Align.Left
     Hidden = True
+    { LeftTabStrip TabStrip
+      MoveScaled(1,20,24,24)
+      Expand = True
+      Arrangement = Arrange.Fill
+      Count = 2
+      Orientation = Align.Left
+      Index = 0
+      Text = ("Bookmarks")
+      Index = 1
+      Text = ("Recent Closed Tabs")
+      Index = 0
+    }
   }
   { MainVBox VBox
     MoveScaled(13,3,59,49)

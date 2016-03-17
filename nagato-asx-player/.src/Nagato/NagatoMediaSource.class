@@ -1,0 +1,58 @@
+' Gambas class file
+
+Property Read Path As String
+
+Private $xml As XmlDocument
+
+Private Function getPathWithDialog() As String
+    
+    Dialog.Path = User.Home
+    Dialog.Filter = ["*.asx", "asx file"]
+    
+    If Dialog.OpenFile(False) Then Return ""
+    
+    Return Dialog.Path
+    
+End
+
+Private Function getXmlPath() As String
+    
+    If MikuruArgs.Paths.Count > 0 Then
+        Return MikuruArgs.Paths[0]
+    Else
+        Return getPathWithDialog()
+    Endif
+    
+End
+
+Public Function SetXmlDocument() As Boolean
+    
+    Dim yukiFilePath As String = getXmlPath()
+    
+    If yukiFilePath = "" Then
+        Return False
+    Else
+        $xml = New XmlDocument(yukiFilePath)
+        Return True
+    End If
+    
+End
+
+Private Function getStreamPath() As String
+    
+    Dim yukiXmlElements As XmlElement[]
+    
+    yukiXmlElements = $xml.GetElementsByTagName("REF")
+
+    Return yukiXmlElements[0].Attributes["HREF"]
+    
+Catch
+    Return ""
+    
+End
+
+Private Function Path_Read() As String
+
+    Return getStreamPath()
+
+End

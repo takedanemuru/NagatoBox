@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Public Sub _OnShowRootMenu()
+    
+    Object.New("NagatoMenuItemChangePersona", [Me._$rootMenu])
+    Object.New("NagatoMenuItemShowFavicon", [Me._$rootMenu])
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    Object.New("NagatoMenuItemAbout", [Me._$rootMenu])
+    Object.New("NagatoMenuItemQuit", [Me._$rootMenu])
+    
+End

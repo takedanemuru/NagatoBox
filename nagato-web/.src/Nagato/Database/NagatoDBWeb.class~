@@ -105,7 +105,10 @@ End
 
 Public Sub PushHistory(argUrl As String, argTitle As String)
     
-    $tableHistory.PushHistory(argUrl, argTitle)
+    Debug argUrl
+    Debug argTitle
+    
+    '$tableHistory.PushHistory(argUrl, argTitle)
     
 End
 
@@ -117,7 +120,7 @@ End
 
 Public Sub PushFavicon(argUrl As String, argFavicon As Picture)
     
-    If $tableFavicon.HasFavicon()argUrl Then Return
+    If $tableFavicon.HasFavicon(argUrl) Then Return
     
     $tableFavicon.SetFavicon(argUrl, argFavicon)
     
@@ -137,7 +140,7 @@ Public Sub _new()
 
     $tableCategory = New NagatoTableCategory(Me._$connection)
     $tableBookmark = New NagatoTableBookmark(Me._$connection)
-    '$tableHistory = New NagatoTableHistory(Me._$connection)
+    $tableHistory = New NagatoTableHistory(Me._$connection)
     $tableFavicon = New NagatoTableFavicon(Me._$connection)
 
 End

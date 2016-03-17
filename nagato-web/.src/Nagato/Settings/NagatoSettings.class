@@ -4,6 +4,7 @@ Inherits NagatoSettingsCore
 
 Property HomePage As String
 Property DownloadDirectory As String
+Property ShowFavicon As Boolean
 
 Private Function HomePage_Read() As String
 
@@ -27,6 +28,19 @@ End
 Private Sub DownloadDirectory_Write(Value As String)
 
     Me._$settings["web/download_directory"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function ShowFavicon_Read() As Boolean
+
+    Return Me._$settings["web/show_favicon", True]
+
+End
+
+Private Sub ShowFavicon_Write(Value As Boolean)
+
+    Me._$settings["web/show_favicon"] = Value
     Me._$settings.Save()
 
 End

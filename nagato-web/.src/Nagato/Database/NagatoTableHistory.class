@@ -22,6 +22,12 @@ Public Sub _EnsureTable()
 
 End
 
+Public Sub GetAll() As Result
+    
+    Return Me._$connection.Find(NagatoDBWeb.TableHistory, "order by time_stamp desc limit 1000")
+    
+End
+
 Public Sub PushHistory(argUrl As String, argTitle As String)
     
     Dim yukiResult As Result
@@ -35,7 +41,6 @@ Public Sub PushHistory(argUrl As String, argTitle As String)
     Me._$connection.Commit()
     
 Catch
-    Debug Error.Text
     Me._$connection.Rollback()
     
 End

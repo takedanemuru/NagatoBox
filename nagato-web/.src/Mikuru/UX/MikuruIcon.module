@@ -5,3 +5,17 @@ Public Function Get(argIconName As String, Optional argSize As Integer = 16) As 
     Return image.Load(Subst$("pictures/icons/&1.png", argIconName)).Stretch(argSize, argSize).Picture
     
 End
+
+Public Sub _get(argIconName As String, Optional argSize As Integer = 16) As Picture
+    
+    Return image.Load(Subst$("pictures/icons/&1.png", argIconName)).Stretch(argSize, argSize).Picture
+    
+End
+
+Public Function GetCheckButton(argFlag As Boolean, Optional argSize As Integer = 16) As Picture
+    
+    If Not argFlag Then Return Null
+    
+    Return image.Load("pictures/icons/button-check.png").Stretch(argSize, argSize).Picture
+    
+End

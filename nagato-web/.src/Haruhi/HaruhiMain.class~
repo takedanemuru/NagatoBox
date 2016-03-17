@@ -7,6 +7,7 @@ Private $headerContainer As NagatoHeaderContainer
 Private $bodyCotainer As NagatoBodyContainer
 Private $downloadBar As NagatoWebdownloadsBar
 Private $bookmarkTreeView As NagatoBookmarkTreeView
+Private $recentClosedTabsTreeView As NagatoRecentClosedTabsTreeView
 
 Private Sub refreshTitle()
     
@@ -43,7 +44,9 @@ Public Sub Form_Open()
     
     $headerContainer = New NagatoHeaderContainer(PersonaDrawingArea, SearchBoxContainer) As "Header"
     $bodyCotainer = New NagatoBodyContainer(MenuHBox, WebsVBox, InPageSearchHBox) As "Body"
-    $bookmarkTreeView = New NagatoBookmarkTreeView(LeftPanel) As "BookmarkTreeView"
+    $bookmarkTreeView = New NagatoBookmarkTreeView(LeftTabStrip) As "BookmarkTreeView"
+    LeftTabStrip.Index = 1
+    $recentClosedTabsTreeView = New NagatoRecentClosedTabsTreeView(LeftTabStrip) As "BookmarkTreeView"
     $downloadBar = New NagatoWebdownloadsBar(MainVBox) As "DownloadBar"
     
     $bodyCotainer.Start()
@@ -96,8 +99,7 @@ Public Sub Body_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[]
             $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
             $bodyCotainer.HeaderCall(argEvent, argArguments)
         Case MikuruSignal.WebNewTitle
-            Debug "refresh headerContainer"
-            $headerContainer.Refresh()
+            refreshTitle()
     End Select
     
 End

@@ -1,54 +1,7 @@
 ' Gambas class file
 
-Private $xml As XmlDocument
-Private $player As New MediaPlayer
-
-Private Function getPathWithDialog() As String
-    
-    Dialog.Path = User.Home
-    Dialog.Filter = ["*.asx", "asx file"]
-    
-    If Dialog.OpenFile(False) Then Return ""
-    
-    Return Dialog.Path
-    
-End
-
-Private Function getXmlPath() As String
-    
-    If MikuruArgs.Paths.Count > 0 Then
-        Return MikuruArgs.Paths[0]
-    Else
-        Return getPathWithDialog()
-    Endif
-    
-End
-
-Private Function setXmlDocument() As Boolean
-    
-    Dim yukiFilePath As String = getXmlPath()
-    
-    If yukiFilePath = "" Then
-        Return False
-    Else
-        $xml = New XmlDocument(yukiFilePath)
-        Return True
-    End If
-    
-End
-
-Private Function getStreamPath() As String
-    
-    Dim yukiXmlElements As XmlElement[]
-    
-    yukiXmlElements = $xml.GetElementsByTagName("REF")
-
-    Return yukiXmlElements[0].Attributes["HREF"]
-    
-Catch
-    Return ""
-    
-End
+Private $player As New MediaPlayer As "Player"
+Private $source As New NagatoMediaSource
 
 Private Function play(argStreamPath As String) 
 
@@ -64,12 +17,14 @@ End
 
 Public Sub Form_Open()
 
-    If Not setXmlDocument() Then
+    If Not $source.SetXmlDocument() Then
         Me.Close()
     Else
         NagatoSettings.LoadFormSettings(Me)
-        play(getStreamPath())
+        play($source.Path)
     End If
+
+    $timer.Enabled = True
 
 End
 
@@ -79,4 +34,15 @@ Public Sub Form_Close()
 
     NagatoSettings.SaveFormSettings(Me)
 
+End
+
+Public Sub Player_Tag(argMediaTagList As MediaTagList)
+    
+    Dim yukiTag As String
+    
+    For Each yukiTag In argMediaTagList.Tags
+        If "title" = LCase(yukiTag) Then Me.Title = argMediaTagList[yukiTag]
+        Debug yukiTag;; CString(argMediaTagList[yukiTag])
+    Next
+    
 End

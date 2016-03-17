@@ -1,0 +1,97 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $observer As Observer
+Private $drawingArea As DrawingArea
+Private $tabs As NagatoTabs
+Private $painter As NagatoTabPainter
+Private $message As New NagatoMessage As "Message"
+
+Private Sub drawMessage()
+    
+    If $message.Text = "" Then Return
+    
+    Paint.Brush = Paint.Color(Color.Orange)
+    Paint.Text($message.Text, TFEI.UX.MessagePositionMargin, TFEI.UX.MessagePositionMargin)
+    Paint.Fill()
+    
+End
+
+Private Sub drawPlusButton()
+    
+    Dim yukiRect As Rect = $tabs.PlusButtonRect
+    
+    $painter.DrawNonActiveTab(yukiRect, $tabs.OnMouse($tabs.Max))
+    $painter.DrawTitle("+", yukiRect, False)
+    
+End
+
+Private Sub drawTab(argIndex As Integer)
+    
+    If argIndex = HaruhiMain.ActiveIndex Then
+        $painter.DrawActiveTab($tabs.Rects[argIndex], $tabs.OnMouse(argIndex))
+    Else
+        $painter.DrawNonActiveTab($tabs.Rects[argIndex], $tabs.OnMouse(argIndex))
+    End If
+
+    $painter.DrawTitle(HaruhiMain.Titles[argIndex], $tabs.Rects[argIndex])
+    
+End
+
+Private Sub drawTabs()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $tabs.Max - 1  'last tab of $tabs is plus button
+        drawTab(yukiCount)
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    Try $drawingArea.Refresh()
+    
+End
+
+Public Sub SetText(argText As String)
+    
+    $message.SetText(argText)
+    Try $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea, argTabs As NagatoTabs)
+    
+    $drawingArea = argDrawingArea
+    $tabs = argTabs
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+    $painter = New NagatoTabPainter(argDrawingArea)
+    
+End
+
+Public Sub Message_Stopped()
+    
+    Try $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Object.Lock($drawingArea)
+    
+    Paint.Begin($drawingArea)
+        Paint.DrawImage(MikuruPersona.Image, 0, NagatoSettingsPersona.Y)
+        drawMessage()
+        $tabs.Refresh()
+        drawTabs()
+        drawPlusButton()
+    Paint.End()
+    
+    Object.Unlock($drawingArea)
+    
+End
+
+

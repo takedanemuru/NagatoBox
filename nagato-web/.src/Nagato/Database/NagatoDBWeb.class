@@ -109,6 +109,12 @@ Public Sub PushHistory(argUrl As String, argTitle As String)
     
 End
 
+Public Function GetHistoryAll() As Result
+    
+    Return $tableHistory.GetAll()
+    
+End
+
 Public Sub AddNewCategory(argCategoryName As String)
     
     $tableCategory.AddNewCategory(argCategoryName)
@@ -137,7 +143,7 @@ Public Sub _new()
 
     $tableCategory = New NagatoTableCategory(Me._$connection)
     $tableBookmark = New NagatoTableBookmark(Me._$connection)
-    '$tableHistory = New NagatoTableHistory(Me._$connection)
+    $tableHistory = New NagatoTableHistory(Me._$connection)
     $tableFavicon = New NagatoTableFavicon(Me._$connection)
 
 End

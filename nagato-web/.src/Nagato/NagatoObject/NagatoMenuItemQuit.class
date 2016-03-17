@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Quit")
+        .Picture = MikuruIcon.Get("button-power")
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then HaruhiMain.Close()
+    
+End

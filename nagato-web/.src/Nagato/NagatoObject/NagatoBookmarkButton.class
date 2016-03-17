@@ -2,16 +2,19 @@
 
 Inherits NagatoMenuWidget
 
+Private Const UniqueName As String = "PullDownMenuBookmark"
+
 Public Sub _InitializeWidget() ' override
     
     Dim yukiButton As New MenuButton(Me._$container)
-    Dim yukiMenu As New NagatoBookmarkMenu(yukiButton) As "TFEI"
+    Dim yukiMenu As New NagatoPullDownMenuBookmark(UniqueName) As "TFEI"
     
     With yukiButton
         .Expand = False
         .Border = False
         .Width = Me._$container.Height
         .Picture = MikuruIcon.Get("book-bookmark")
+        .Menu = UniqueName
     End With
     
 End

@@ -5,6 +5,8 @@ Inherits NagatoMenuWidget
 Private $button As MenuButton
 Private $menu As NagatoDownloadMenu
 
+Private Const UniqueName As String = "PullDownMenuDownload"
+
 Public Sub SetUrl(argUrl As String)
     
     $button.Visible = MikuruUrl.IsYouTubeVideo(argUrl)
@@ -21,9 +23,10 @@ Private Sub initializeButton()
         .Border = False
         .Width = Me._$container.Height
         .Picture = MikuruIcon.Get("hard-drive-download")
+        .Menu = UniqueName
     End With    
     
-    $menu = New NagatoDownloadMenu($button) As "TFEI"
+    $menu = New NagatoDownloadMenu(UniqueName) As "TFEI"
     
 End
 

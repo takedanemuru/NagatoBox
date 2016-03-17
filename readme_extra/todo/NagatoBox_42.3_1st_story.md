@@ -4,6 +4,10 @@
 
 ## Applications
 
+### nagato-asx-player (v42.3.2)
+
++ new : play/pause fanctionality.
+
 ### nagato-calculator (v.42.3.5)
 
 + ~~code refactoring~~
@@ -59,12 +63,13 @@
 + ~~fix : api url as that was changed.~~
 + ~~new : add pixmap icon~~
 
-### nagato-web (v42.3.21)
+### nagato-web (v42.3.25)
 
 + ~~new : sub category for web bookmarks~~
 + ~~refine design of "search engine selection button"~~
 + ~~new : icon(favicon) database~~
 + ~~new : reload tab title automatically when it's changed.~~
++ ~~new : option to toggle favicons~~
 
 ### nagato-writer (v42.3.25)
 

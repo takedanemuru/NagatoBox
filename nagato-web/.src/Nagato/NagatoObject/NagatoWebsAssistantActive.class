@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read TabTitle As String
+Property Read TabUrl As String
+Property Read Index As Integer
+Property Read Web As NagatoWeb
+
+Private $webs As Collection
+Private $webOrder2 As NagatoWebOrder
+
+Public Sub Show()
+    
+    Dim yukiCount As Integer
+    
+    For yukiCount = 0 To $webOrder2.Max
+        $webs[$webOrder2[yukiCount]].Toggle($webOrder2.ActiveOrder)
+    Next
+    
+End
+
+Public Sub SetUrl(argUrl As String)
+    
+    Me.Web.SetUrl(argUrl)
+    
+End
+
+Public Sub InPageSearch(argQuery As String)
+    
+    Me.Web.InPageSearch(argQuery)
+    
+End
+
+Public Sub Forward()
+    
+    Me.Web.Forward()
+    
+End
+
+Public Sub Back()
+    
+    Me.Web.Back()
+    
+End
+
+Public Sub _new(argWebs As Collection, argWebOrder As NagatoWebOrder)
+    
+    $webs = argWebs
+    $webOrder2 = argWebOrder
+    
+End
+
+Private Function TabTitle_Read() As String
+
+    Return $webs[$webOrder2.ActiveOrder].Title
+
+End
+
+Private Function Index_Read() As Integer
+
+    Return $webOrder2.ActiveIndex
+
+End
+
+Private Function TabUrl_Read() As String
+
+    Return Me.Web.Url
+
+End
+
+Private Function Web_Read() As NagatoWeb
+
+    Return $webs[$webOrder2.ActiveOrder]
+
+End

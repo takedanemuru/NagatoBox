@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Change Persona")
+        .Picture = MikuruIcon.Get("image")
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    HaruhiImageSelect.ShowDialog()
+    
+End

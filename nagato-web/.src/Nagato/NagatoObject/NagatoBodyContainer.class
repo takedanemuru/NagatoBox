@@ -11,14 +11,14 @@ Private $inPageSearch As NagatoInPageSearch
 
 Private Sub addWeb(Optional argUrl As String = NagatoSettings.HomePage)
     
-    $webs.AddWeb(argUrl)
+    $webs.Tabs.Add(argUrl)
     $menubar.SetUrl(argUrl)
     
 End
 
 Private Sub insertWeb(argIndex As Integer, Optional argUrl As String = NagatoSettings.HomePage)
     
-    $webs.InsertWeb(argIndex, argUrl)
+    $webs.Tabs.Insert(argIndex, argUrl)
     $menubar.SetUrl(argUrl)
     
 End
@@ -32,13 +32,13 @@ End
 Public Sub AddUrl(argUrl As String)
     
     addWeb(argUrl)
-    $webs.ShowLastTab()
+    $webs.Tabs.ShowLast()
     
 End
 
 Public Sub SetUrl(argUrl As String)
     
-    $webs.SetActiveTabUrl(argUrl)
+    $webs.SetActive.TabUrl(argUrl)
     
 End
 
@@ -47,26 +47,29 @@ Public Sub HeaderCall(argEvent As Integer, argArguments As Variant[])
     Select Case argEvent
         Case MikuruSignal.PersonaNew
             addWeb()
-            $webs.ShowLastTab()
+            $webs.Tabs.ShowLast()
          Case MikuruSignal.PersonaSelect
-            $webs.ShowTab(argArguments[0])
-            $menubar.SetNavigationButton($webs.ActiveWeb.HistoryIndex, $webs.ActiveWeb.HistoryMax)
+            $webs.Tabs.ShowByIndex(argArguments[0])
+            $menubar.SetNavigationButton($webs.Active.Web.HistoryIndex, $webs.Active.Web.HistoryMax)
         Case MikuruSignal.PersonaDelete
-            $webs.RemoveTab(argArguments[0])
+            NagatoDBWeb.PushHistory($webs.Active.TabUrl, $webs.Active.TabTitle)
+            $webs.Tabs.Remove(argArguments[0])
+        Case MikuruSignal.PersonaDeleteWithoutRecord
+            $webs.Tabs.Remove(argArguments[0])
          Case MikuruSignal.SearchApiCall
             addWeb(argArguments[0])
-            $webs.ShowLastTab()
+            $webs.Tabs.ShowLast()
         Case MikuruSignal.PersonaReorder
             If argArguments[0] = argArguments[1] Then Return
-            $webs.Reorder(argArguments[0], argArguments[1])
+            $webs.Tabs.Reorder(argArguments[0], argArguments[1])
         Case MikuruSignal.WebProgress
-            If argArguments[0] <> $webs.ActiveWeb.UniqueIndex Then Return
-            $webs.ShowTab($webs.ActiveIndex)
+            If argArguments[0] <> $webs.Active.Web.UniqueIndex Then Return
+            $webs.Tabs.ShowByIndex($webs.Active.Index)
             $menubar.SetUrl(argArguments[1])
-            $menubar.SetNavigationButton($webs.ActiveWeb.HistoryIndex, $webs.ActiveWeb.HistoryMax)
+            $menubar.SetNavigationButton($webs.Active.Web.HistoryIndex, $webs.Active.Web.HistoryMax)
     End Select
     
-    $menubar.SetUrl($webs.ActiveTabUrl)
+    $menubar.SetUrl($webs.Active.TabUrl)
     
 End
 
@@ -82,15 +85,15 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
     
     Select Case argEvent
         Case MikuruSignal.WebBack
-            $webs.Back()
+            $webs.Active.Back()
         Case MikuruSignal.WebForward
-            $webs.Forward()
+            $webs.Active.Forward()
         Case MikuruSignal.UrlAddBookmark
             With HaruhiAddWebBookmark
-                .SetTitle($webs.ActiveTabTitle)
+                .SetTitle($webs.Active.TabTitle)
                 .SetList(NagatoDBWeb.CategoryNames)
                 If .ShowDialog() <> 1 Then Return
-                NagatoDBWeb.PushBookmark($webs.ActiveTabUrl, $webs.ActiveTabTitle, .UserTitle, .Category)
+                NagatoDBWeb.PushBookmark($webs.Active.TabUrl, $webs.Active.TabTitle, .UserTitle, .Category)
             End With
         Default
             Raise MenuEvent(argEvent)
@@ -102,10 +105,10 @@ Public Sub MenuBar_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     
     Select Case argEvent
         Case MikuruSignal.UrlNew
-            $webs.SetActiveTabUrl(argArgument)
+            $webs.Active.SetUrl(argArgument)
         Case MikuruSignal.WebNew
             addWeb(argArgument)
-            $webs.ShowLastTab()
+            $webs.Tabs.ShowLast()
         Default
             Raise MenuEventWithArg(argEvent, argArgument)
     End Select
@@ -128,10 +131,10 @@ Public Sub Webs_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
     Select Case argEvent
         Case MikuruSignal.WebNew
             addWeb(argArgument)
-            $webs.ShowLastTab()
+            $webs.Tabs.ShowLast()
         Case MikuruSignal.WebNewInsert
-            insertWeb($webs.ActiveIndex + 1, argArgument) ' insert new web tab next to active tab
-            $webs.ShowActiveTab()
+            insertWeb($webs.Active.Index + 1, argArgument) ' insert new web tab next to active tab
+            $webs.Active.Show()
         Default
             Raise MenuEventWithArg(argEvent, argArgument)
     End Select
@@ -148,19 +151,19 @@ Public Sub InPageSearch_MenuEventWithArg(argEvent As Integer, argArgument As Var
     
     Select Case argEvent
         Case MikuruSignal.InPageSearchQuery
-            $webs.InPageSearch(argArgument)
+            $webs.Active.InPageSearch(argArgument)
     End Select
     
 End
 
 Private Function Titles_Read() As String[]
 
-    Return $webs.Titles
+    Return $webs.Tabs.Titles
 
 End
 
 Private Function ActiveIndex_Read() As Integer
 
-    Return $webs.ActiveIndex
+    Return $webs.Active.Index
 
 End

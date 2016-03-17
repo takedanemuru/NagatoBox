@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Private $categories As NagatoSubMenuBookmark
+Private $bookmarkCurrentPageMenu As NagatoMenuItembookmarkCurrentPage
+Private $editBookmarkMenu As NagatoMenuItemEditBookmark
+
+Public Sub _OnShowRootMenu()
+    
+    $bookmarkCurrentPageMenu = New NagatoMenuItembookmarkCurrentPage(Me._$rootMenu) As "TFEI"
+    $editBookmarkMenu = New NagatoMenuItemEditBookmark(Me._$rootMenu) As "TFEI"
+        MikuruMenuSeparator.Set(Me._$rootMenu)
+    $categories.Refresh()
+    
+End
+
+Public Sub _OnInitialize()
+    
+    $categories = New NagatoSubMenuBookmark(Me._$rootMenu) As "TFEI"
+    
+End

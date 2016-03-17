@@ -1,0 +1,79 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $treeView As TreeView
+
+Private Sub addBookmarkItem(argResult As Result, argCategory As String)
+    
+    Dim yukiUrl As String = argResult[NagatoDBWeb.ColumnUrl]
+    Dim yukiUserDefienedPageName As String = argResult[NagatoDBWeb.ColumnUserDefinedPageName]
+    Dim yukiFavicon As Picture = Null
+    
+    If NagatoSettings.ShowFavicon Then yukiFavicon = NagatoDBWeb.GetFavicon(yukiUrl)
+    $treeView.Add(yukiUrl, yukiUserDefienedPageName, yukiFavicon, argCategory)
+    
+End
+
+Private Sub setBookmark(argCategory As String)
+    
+    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultByCategoryName(argCategory)
+    
+    For Each yukiResult
+        If $treeView.Exist(yukiResult[NagatoDBWeb.ColumnUrl]) Then Continue
+        addBookmarkItem(yukiResult, argCategory)
+    Next
+    
+End
+
+Private Sub setCategory(argCategory As String)
+    
+    Dim yukiSubCategory As String
+    Dim yukiTuple As New NagatoTupleString
+    
+    For Each yukiSubCategory In Split(argCategory, "/", "", True)
+        yukiTuple.Push(IIf(yukiTuple.Current = "", yukiSubCategory, yukiTuple.Current &/ yukiSubCategory))
+        If $treeView.Exist(yukiTuple.Current) Then Continue
+        $treeView.Add(argCategory, yukiSubCategory, MikuruIcon.Get("folder"), yukiTuple.Previous)
+    Next
+    
+End
+
+Private Sub setCategories()
+    
+    Dim yukiCategory As String
+    
+    For Each yukiCategory In NagatoDBWeb.CategoryNames
+        setCategory(yukiCategory)
+        setBookmark(yukiCategory)
+    Next
+    
+End
+
+Private Sub setTrashBin()
+    
+    $treeView.Add("NagatoTrashBin", "Delete", MikuruIcon.Get("bin"))
+    
+End
+
+Public Sub Reload()
+    
+    $treeView.Clear()
+    setCategories()
+    setTrashBin()
+    
+End
+
+Public Sub RemoveBookmark(argUrl As String)
+    
+    Try $treeView.Remove(argUrl)
+    If Not Error Then NagatoDBWeb.DeleteBookmark(argUrl)
+    
+End
+
+Public Sub _new(argTreeView As TreeView)
+    
+    $treeView = argTreeView
+    Me.Reload()
+    
+End

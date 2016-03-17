@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $treeView As TreeView
+
+Private Sub addItem(argResult As Result)
+    
+    Dim yukiUrl As String = argResult[NagatoDBWeb.ColumnUrl]
+    Dim yukiPageName As String = argResult[NagatoDBWeb.ColumnPageName]
+    Dim yukiFavicon As Picture = NagatoDBWeb.GetFavicon(yukiUrl)
+    
+    $treeView.Add(yukiUrl, yukiPageName, yukiFavicon)
+    
+End
+
+Private Sub refresh()
+    
+    Dim yukiResult As Result = NagatoDBWeb.GetHistoryAll()
+    
+    For Each yukiResult
+        If Not $treeView.Exist(yukiResult[NagatoDBWeb.ColumnUrl]) Then addItem(yukiResult)
+    Next
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $treeView = New TreeView(argContainer) As "TreeView"
+    $treeView.Foreground = Color.DarkCyan
+    
+    refresh()
+    
+End
+
+Public Sub TreeView_Activate()
+    
+    If $treeView.Key Not Begins "http" Then Return
+    
+    Raise MenuEventWithArg(MikuruSignal.WebNew, $treeView.Key) 
+    
+End
+
+Public Sub TreeView_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuRecentClosedTabs(HaruhiMain, "") As "ContextMenu"
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub ContextMenu_MenuEventWithArgs(argSignal As Integer, argValues As Variant[])
+    
+    $treeView.Clear()
+    
+    refresh()
+    
+End
