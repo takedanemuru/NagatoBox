@@ -6,9 +6,9 @@ Private $treeView As TreeView
 
 Private Sub addItem(argResult As Result)
     
-    Dim yukiUrl As String = argResult[NagatoDBWeb.ColumnUrl]
-    Dim yukiPageName As String = argResult[NagatoDBWeb.ColumnPageName]
-    Dim yukiFavicon As Picture = NagatoDBWeb.GetFavicon(yukiUrl)
+    Dim yukiUrl As String = argResult[NagatoDB.Column.Url]
+    Dim yukiPageName As String = argResult[NagatoDB.Column.PageName]
+    Dim yukiFavicon As Picture = NagatoDBFavicon.Get(yukiUrl)
     
     $treeView.Add(yukiUrl, yukiPageName, yukiFavicon)
     
@@ -16,10 +16,12 @@ End
 
 Private Sub refresh()
     
-    Dim yukiResult As Result = NagatoDBWeb.GetHistoryAll()
+    Dim yukiResult As Result = NagatoDBHistory.GetAll()
+    
+    $treeView.Clear()
     
     For Each yukiResult
-        If Not $treeView.Exist(yukiResult[NagatoDBWeb.ColumnUrl]) Then addItem(yukiResult)
+        If Not $treeView.Exist(yukiResult[NagatoDB.Column.Url]) Then addItem(yukiResult)
     Next
     
 End
@@ -28,7 +30,6 @@ Public Sub _new(argContainer As Container)
     
     $treeView = New TreeView(argContainer) As "TreeView"
     $treeView.Foreground = Color.DarkCyan
-    
     refresh()
     
 End
@@ -37,22 +38,34 @@ Public Sub TreeView_Activate()
     
     If $treeView.Key Not Begins "http" Then Return
     
-    Raise MenuEventWithArg(MikuruSignal.WebNew, $treeView.Key) 
+    Raise Signal(MikuruSignal.WebNew, [$treeView.Key]) 
     
 End
 
 Public Sub TreeView_Menu()
     
-    Dim yukiMenu As New NagatoContextMenuRecentClosedTabs(HaruhiMain, "") As "ContextMenu"
+    Dim yukiMenu As Object
+    
+    If $treeView.Key <> "" Then
+        yukiMenu = New NagatoContextMenuRecentClosedTabs(HaruhiMain, "") As "ContextMenu"
+    Else
+        yukiMenu = New NagatoContextMenuRecentClosedTabsOnRoot(HaruhiMain, "") As "ContextMenu"
+    End If
     
     yukiMenu.Popup()
     
 End
 
-Public Sub ContextMenu_MenuEventWithArgs(argSignal As Integer, argValues As Variant[])
+Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
     
-    $treeView.Clear()
-    
-    refresh()
+    Select Case argSignal
+        Case MikuruSignal.ContextOpen
+            Me.TreeView_Activate()
+        Case MikuruSignal.ContextDelete
+            NagatoDB.ChannelHistory.Delete($treeView.Key)
+            refresh()
+        Case MikuruSignal.ContextReload
+            refresh()
+    End Select
     
 End

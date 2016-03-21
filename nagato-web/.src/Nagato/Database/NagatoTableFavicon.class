@@ -12,13 +12,15 @@ Public Sub _EnsureTable() ' override
     
     Dim yukiTable As Table
     
-    With NagatoDBWeb
-        If Not Me._$connection.Tables.Exist(.TableFavicon) Then
-            yukiTable = Me._$connection.Tables.Add(.TableFavicon)
-            yukiTable.Fields.Add(.ColumnId, db.Serial)
-            yukiTable.Fields.Add(.ColumnUrl, db.String)
-            yukiTable.Fields.Add(.ColumnFavicon, db.Blob)
-            yukiTable.PrimaryKey = [.ColumnId]
+    If Not Me._$connection.Opened Then Me._$connection.Open()
+    
+    With NagatoDB
+        If Not Me._$connection.Tables.Exist(.Table.Favicon) Then
+            yukiTable = Me._$connection.Tables.Add(.Table.Favicon)
+            yukiTable.Fields.Add(.Column.Id, db.Serial)
+            yukiTable.Fields.Add(.Column.Url, db.String)
+            yukiTable.Fields.Add(.Column.Favicon, db.Blob)
+            yukiTable.PrimaryKey = [.Column.Id]
             yukiTable.Update()
         Endif
     End With
@@ -30,9 +32,9 @@ Public Sub SetFavicon(argUrl As String, argFavicon As Picture)
     Dim yukiResult As Result
     
     Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(NagatoDBWeb.TableFavicon)
-        yukiResult[NagatoDBWeb.ColumnUrl] = getBaseUrl(argUrl)
-        yukiResult[NagatoDBWeb.ColumnFavicon] = MikuruBlob.GetBlobFromPicture(argFavicon)
+        yukiResult = Me._$connection.Create(NagatoDB.Table.Favicon)
+        yukiResult[NagatoDB.Column.Url] = getBaseUrl(argUrl)
+        yukiResult[NagatoDB.Column.Favicon] = MikuruBlob.GetBlobFromPicture(argFavicon)
         yukiResult.Update()
     Me._$connection.Commit()
     
@@ -43,14 +45,14 @@ End
 
 Public Function HasFavicon(argUrl As String) As Boolean
     
-    Return Me._$connection.Find(NagatoDBWeb.TableFavicon, "url = &1", getBaseUrl(argUrl)).Count > 0
+    Return Me._$connection.Find(NagatoDB.Table.Favicon, "url = &1", getBaseUrl(argUrl)).Count > 0
     
 End
 
 Public Function GetFavicon(argUrl As String) As Picture
     
-    Dim yukiResult As Result = Me._$connection.Find(NagatoDBWeb.TableFavicon, "url = &1", getBaseUrl(argUrl))
+    Dim yukiResult As Result = Me._$connection.Find(NagatoDB.Table.Favicon, "url = &1", getBaseUrl(argUrl))
     
-    Return MikuruBlob.GetPictureFromBlob(yukiResult[NagatoDBWeb.ColumnFavicon].Data)
+    Return MikuruBlob.GetPictureFromBlob(yukiResult[NagatoDB.Column.Favicon].Data)
     
 End

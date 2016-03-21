@@ -5,10 +5,16 @@ Inherits NagatoObject
 Property Read TabTitle As String
 Property Read TabUrl As String
 Property Read Index As Integer
-Property Read Web As NagatoWeb
+Property Read History As NagatoWebPageHistory
 
 Private $webs As Collection
 Private $webOrder2 As NagatoWebOrder
+
+Private Function getActiveWeb() As NagatoWeb
+    
+    Return $webs[$webOrder2.ActiveOrder]
+    
+End
 
 Public Sub Show()
     
@@ -22,25 +28,25 @@ End
 
 Public Sub SetUrl(argUrl As String)
     
-    Me.Web.SetUrl(argUrl)
+    getActiveWeb().SetUrl(argUrl)
     
 End
 
 Public Sub InPageSearch(argQuery As String)
     
-    Me.Web.InPageSearch(argQuery)
+    getActiveWeb().InPageSearch(argQuery)
     
 End
 
 Public Sub Forward()
     
-    Me.Web.Forward()
+    getActiveWeb().Forward()
     
 End
 
 Public Sub Back()
     
-    Me.Web.Back()
+    getActiveWeb().Back()
     
 End
 
@@ -53,7 +59,7 @@ End
 
 Private Function TabTitle_Read() As String
 
-    Return $webs[$webOrder2.ActiveOrder].Title
+    Return getActiveWeb().Title
 
 End
 
@@ -65,12 +71,12 @@ End
 
 Private Function TabUrl_Read() As String
 
-    Return Me.Web.Url
+    Return getActiveWeb().Url
 
 End
 
-Private Function Web_Read() As NagatoWeb
+Private Function History_Read() As NagatoWebPageHistory
 
-    Return $webs[$webOrder2.ActiveOrder]
+    Return getActiveWeb().History
 
 End

@@ -5,6 +5,8 @@ Inherits NagatoObject
 Private $tabs As NagatoTabs
 Private $handlerPainter As NagatoPersonaHandlerPainter
 Private $handlerUserInput As NagatoPersonaHandlerUserInput
+Private $handlerUserInputForBackground As NagatoPersonaHandlerUserInputForBackground
+
 
 Public Sub Refresh()
     
@@ -23,5 +25,6 @@ Public Sub _new(argDrawingArea As DrawingArea)
     $tabs = New NagatoTabs(argDrawingArea)
     $handlerPainter = New NagatoPersonaHandlerPainter(argDrawingArea, $tabs) As "TFEI"
     $handlerUserInput = New NagatoPersonaHandlerUserInput(argDrawingArea, $tabs) As "TFEI"
+    $handlerUserInputForBackground = New NagatoPersonaHandlerUserInputForBackground(argDrawingArea)
     
 End

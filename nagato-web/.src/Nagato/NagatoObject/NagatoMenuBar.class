@@ -10,10 +10,10 @@ Private $downloadButton As NagatoDownloadButton
 Private $bookmarkButton As NagatoBookmarkButton
 Private $startButton As NagatoStartButton
 
-Public Sub SetNavigationButton(argHistoryIndex As Integer, argHistoryMax As Integer)
+Public Sub SetNavigationButton(argHistory As NagatoWebPageHistory)
     
-    $backButton.SetEnabled(argHistoryIndex > 0)
-    $forwardButton.SetEnabled(argHistoryIndex <> argHistoryMax)
+    $backButton.SetEnabled(argHistory.HasBack)
+    $forwardButton.SetEnabled(argHistory.HasForward)
     
 End
 

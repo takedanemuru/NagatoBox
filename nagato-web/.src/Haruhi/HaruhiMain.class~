@@ -47,6 +47,7 @@ Public Sub Form_Open()
     $bookmarkTreeView = New NagatoBookmarkTreeView(LeftTabStrip) As "BookmarkTreeView"
     LeftTabStrip.Index = 1
     $recentClosedTabsTreeView = New NagatoRecentClosedTabsTreeView(LeftTabStrip) As "BookmarkTreeView"
+    LeftTabStrip.Index = 0
     $downloadBar = New NagatoWebdownloadsBar(MainVBox) As "DownloadBar"
     
     $bodyCotainer.Start()
@@ -60,40 +61,23 @@ Public Sub Form_Close()
     
 End
 
-Public Sub BookmarkTreeView_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
+Public Sub BookmarkTreeView_Signal(argSignal As Integer, argValues As Variant[])
     
-    Select Case argEvent
-        Case MikuruSignal.WebNew
-            $bodyCotainer.AddUrl(argArgument)
-    End Select
+    If argSignal = MikuruSignal.WebNew Then $bodyCotainer.AddUrl(argValues[0])
     
 End
 
-Public Sub Body_MenuEvent(argEvent As Integer)
+Public Sub Body_Signal(argEvent As Integer, argArguments As Variant[])
     
     Select Case argEvent
         Case MikuruSignal.WebRequestRefresh
             $headerContainer.Refresh()
         Case MikuruSignal.ViewEditBookmark
             LeftPanel.Hidden = False
-    End Select
-    
-End
-
-Public Sub Body_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    Select Case argEvent
         Case MikuruSignal.WebDownload
-            $downloadBar.SetWebDownload(argArgument)
+            $downloadBar.SetWebDownload(argArguments[0])
         Case MikuruSignal.PersonaSetText
-            $headerContainer.SetText(argArgument)
-    End Select
-    
-End
-
-Public Sub Body_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
-    
-    Select Case argEvent
+            $headerContainer.SetText(argArguments[0])
         Case MikuruSignal.WebProgress
             Me.Title = argArguments[4]
             $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
@@ -104,22 +88,9 @@ Public Sub Body_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[]
     
 End
 
-Public Sub Header_MenuEvent(argEvent As Integer)
+Public Sub Header_Signal(argSignal As Integer, argValues As Variant[])
     
-    $bodyCotainer.HeaderCall(argEvent, Null)
-    
-End
-
-Public Sub Header_MenuEventWithArg(argEvent As Integer, argArgument As Variant)
-    
-    $bodyCotainer.HeaderCall(argEvent, [argArgument])
-    refreshTitle()
-    
-End
-
-Public Sub Header_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
-    
-    $bodyCotainer.HeaderCall(argEvent, argArguments)
+    $bodyCotainer.HeaderCall(argSignal, argValues)
     refreshTitle()
     
 End

@@ -12,12 +12,12 @@ Private $url As String
 
 Public Sub InitializeWithUrl(argUrl As String)
     
-    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultFoundByUrl(argUrl)
+    Dim yukiResult As Result = NagatoDBBookmark.GetBookmarkResultByUrl(argUrl)
     
-    $id = yukiResult[NagatoDBWeb.ColumnId]
-    $title = yukiResult[NagatoDBWeb.ColumnPageName]
-    $userTitle = yukiResult[NagatoDBWeb.ColumnUserDefinedPageName]
-    $url = yukiResult[NagatoDBWeb.ColumnUrl]
+    $id = yukiResult[NagatoDB.Column.Id]
+    $title = yukiResult[NagatoDB.Column.PageName]
+    $userTitle = yukiResult[NagatoDB.Column.UserDefinedPageName]
+    $url = yukiResult[NagatoDB.Column.Url]
     
 End
 

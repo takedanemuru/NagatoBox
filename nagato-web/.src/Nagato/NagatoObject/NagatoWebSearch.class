@@ -27,12 +27,14 @@ Public Sub Move(argHeight As Integer, argWidth As Integer)
     
 End
 
-Public Sub TFEI_MenuEventWithArgs(argEvent As Integer, argArguments As Variant[])
+Public Sub TFEI_Signal(argEvent As Integer, argArguments As Variant[])
     
     Select Case argEvent
         Case MikuruSignal.SearchEngineChanged
             $queryBox.SetBang(argArguments[0])
             $button.SetText(argArguments[1])
+        Default
+            Raise Signal(argEvent, argArguments)
     End Select
     
 End

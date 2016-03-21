@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnInitializeParentMenu()
+    
+    With Me._$parentMenu
+        .Text = ("Pereference")
+        .Picture = MikuruIcon["equalizer"]
+    End With
+    
+End
+
+Public Sub _OnShowParentMenu()
+    
+    Object.New("NagatoMenuItemBackground", [Me._$parentMenu])
+    Me._AddMenu((""), 0)
+    Object.New("NagatoSubMenuFontSize", [Me._$parentMenu])
+    Object.New("NagatoMenuItemFontColor", [Me._$parentMenu])
+    
+End

@@ -40,6 +40,6 @@ Public Sub YouTubeDL_Read()
     
     Read #Last, yukiLine, -256
     
-    Raise MenuEventWithArg(MikuruSignal.PersonaSetText, yukiLine)
+    Raise Signal(MikuruSignal.PersonaSetText, [yukiLine])
     
 End

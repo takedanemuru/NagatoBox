@@ -17,7 +17,7 @@ End
 
 Public Sub Asakura_Activate()
     
-    If $treeView.Key Begins "http" Then Raise MenuEventWithArg(MikuruSignal.WebNew, $treeView.Key) 
+    If $treeView.Key Begins "http" Then Raise Signal(MikuruSignal.WebNew, [$treeView.Key]) 
     
 End
 
@@ -54,7 +54,7 @@ Public Sub Asakura_Drop()
         yukiCategory = IIf(MikuruUrl.IsWebPage($treeView.Item.Key), $treeView.Item.ParentKey, $treeView.Item.Key)
         Try $treeView.Remove(Drag.Data)
         Try $treeView.Add(Drag.Data, $title,, yukiCategory)
-        If Not Error Then NagatoDBWeb.ChangeBookmarkCategory(Drag.Data, yukiCategory)
+        If Not Error Then NagatoDBBookmark.ChangeBookmarkCategory(Drag.Data, yukiCategory)
         $title = ""
     End If
     

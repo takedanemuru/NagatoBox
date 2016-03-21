@@ -6,21 +6,21 @@ Private $treeView As TreeView
 
 Private Sub addBookmarkItem(argResult As Result, argCategory As String)
     
-    Dim yukiUrl As String = argResult[NagatoDBWeb.ColumnUrl]
-    Dim yukiUserDefienedPageName As String = argResult[NagatoDBWeb.ColumnUserDefinedPageName]
+    Dim yukiUrl As String = argResult[NagatoDB.Column.Url]
+    Dim yukiUserDefienedPageName As String = argResult[NagatoDB.Column.UserDefinedPageName]
     Dim yukiFavicon As Picture = Null
     
-    If NagatoSettings.ShowFavicon Then yukiFavicon = NagatoDBWeb.GetFavicon(yukiUrl)
+    If NagatoSettings.ShowFavicon Then yukiFavicon = NagatoDBFavicon.Get(yukiUrl)
     $treeView.Add(yukiUrl, yukiUserDefienedPageName, yukiFavicon, argCategory)
     
 End
 
 Private Sub setBookmark(argCategory As String)
     
-    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultByCategoryName(argCategory)
+    Dim yukiResult As Result = NagatoDBBookmark.GetBookmarkResultByCategoryName(argCategory)
     
     For Each yukiResult
-        If $treeView.Exist(yukiResult[NagatoDBWeb.ColumnUrl]) Then Continue
+        If $treeView.Exist(yukiResult[NagatoDB.Column.Url]) Then Continue
         addBookmarkItem(yukiResult, argCategory)
     Next
     
@@ -43,7 +43,7 @@ Private Sub setCategories()
     
     Dim yukiCategory As String
     
-    For Each yukiCategory In NagatoDBWeb.CategoryNames
+    For Each yukiCategory In NagatoDBBookmark.CategoryNames
         setCategory(yukiCategory)
         setBookmark(yukiCategory)
     Next
@@ -67,7 +67,7 @@ End
 Public Sub RemoveBookmark(argUrl As String)
     
     Try $treeView.Remove(argUrl)
-    If Not Error Then NagatoDBWeb.DeleteBookmark(argUrl)
+    If Not Error Then NagatoDBBookmark.DeleteBookmark(argUrl)
     
 End
 

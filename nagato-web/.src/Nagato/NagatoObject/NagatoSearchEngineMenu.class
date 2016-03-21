@@ -44,6 +44,6 @@ End
 
 Public Sub EngineMenu_Click()
     
-    Raise MenuEventWithArgs(MikuruSignal.SearchEngineChanged, [Last.Tag, Last.Text])
+    Raise Signal(MikuruSignal.SearchEngineChanged, [Last.Tag, Last.Text])
     
 End

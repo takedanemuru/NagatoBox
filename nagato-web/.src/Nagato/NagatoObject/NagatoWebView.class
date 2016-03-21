@@ -5,8 +5,8 @@ Inherits NagatoObject
 Property Read WebView As WebView
 
 Private $webView As WebView
-Private $uniqueIndex As Integer
-Private $lastLink As String
+Private $handlerNetworkProgress As NagatoWebViewHandlerNetwork
+Private $handlerUserInput As NagatoWebViewHandlerUserInput
 
 Public Sub Forward()
     
@@ -56,72 +56,8 @@ Public Sub _new(argContainer As Container, argUrl As String, argUniqueIndex As I
         .Font = Application.Font
     End With
     
-    $uniqueIndex = argUniqueIndex
-    
-End
-
-Public Sub WebView_MouseMove()
-    
-    Dim yukiHitTest As WebHitTest = $webView.HitTest(Mouse.X, Mouse.Y)
-    Dim yukiUrl As String = yukiHitTest.Url
-    
-    If yukiUrl <> "" Then $lastLink = yukiUrl
-    
-End
-
-Public Sub WebView_NewWindow(argModal As Boolean)
-    
-    Raise MenuEventWithArg(MikuruSignal.WebNewInsert, $lastLink)
-    
-End
-
-Public Sub WebView_KeyPress()
-    
-    If Key.Alt And If Key.Code = Key.Left Then $webView.Back()
-    If Key.Alt And If Key.Code = Key.Right Then $webView.Forward()
-    If Key.Control And If Key.Code = Key["f"] Then Raise MenuEvent(MikuruSignal.InPageSearchToggle)
-    
-End
-
-Public Sub WebView_Download(argDownload As WebDownload)
-    
-    Raise MenuEventWithArg(MikuruSignal.WebDownload, argDownload)
-    
-End
-
-Public Sub WebView_Progress()
-    
-    Dim yukiValues As New Variant[]
-    
-    yukiValues.Add($uniqueIndex)
-    yukiValues.Add($webView.Url)
-    yukiValues.Add($webView.Progress)
-    yukiValues.Add($webView.History)
-    yukiValues.Add($webView.Title)
-    
-    Raise MenuEventWithArgs(MikuruSignal.WebProgress, yukiValues)
-    
-End
-
-Public Sub WebView_Load()
-    
-    Me.WebView_Progress()
-    
-End
-
-Public Sub WebView_Title()
-    
-    If $webView.Title = "" Then Return
-    
-    Raise MenuEventWithArgs(MikuruSignal.WebNewTitle, Null)
-    
-End
-
-Public Sub WebView_Icon()
-    
-    If $webView.Icon = Null Then Return
-    
-    NagatoDBWeb.PushFavicon($webView.Url, $webView.Icon)
+    $handlerNetworkProgress = New NagatoWebViewHandlerNetwork($webView, argUniqueIndex) As "TFEI"
+    $handlerUserInput = New NagatoWebViewHandlerUserInput($webView) As "TFEI"
     
 End
 

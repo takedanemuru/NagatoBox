@@ -4,8 +4,18 @@ Create Static
 
 Property FontSize As Integer
 Property Foreground As Integer
+Property Background As String
 
 Private $settings As New Settings
+
+Event Changed
+
+Private Sub saveSettings()
+    
+    $settings.Save()
+    Raise Changed
+    
+End
 
 Private Function FontSize_Read() As Integer
 
@@ -16,18 +26,34 @@ End
 Private Sub FontSize_Write(Value As Integer)
 
     $settings["font/size"] = Value
-    $settings.Save()
+    saveSettings()
 
 End
 
 Private Function Foreground_Read() As Integer
 
-    
+    Return $settings["font/color", Color.Violet]
 
 End
 
 Private Sub Foreground_Write(Value As Integer)
 
+    $settings["font/color"] = Value
+    saveSettings()
+
+End
+
+Private Function Background_Read() As String
     
+    Dim yukiPath As String = $settings["app/background", ""]
+    
+    Return IIf(Exist(yukiPath), yukiPath, "bg.png")
+    
+End
+
+Private Sub Background_Write(Value As String)
+
+    $settings["app/background"] = Value
+    saveSettings()
 
 End

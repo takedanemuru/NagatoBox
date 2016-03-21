@@ -8,7 +8,7 @@ Public _$category As String
 
 Public Sub _ClickAction()
     
-    Raise MenuEventWithArgs(Last.Tag, [Me._$category, Me._$path])
+    Raise Signal(Last.Tag, [Me._$category, Me._$path])
     
 End
 

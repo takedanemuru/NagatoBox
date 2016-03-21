@@ -2,157 +2,31 @@
 
 Inherits NagatoDB
 
-Property Read CategoryCount As Integer
-Property Read CategoryNames As String[]
+Property Read ChannelFavicon As NagatoDBWebAssistantFavion
+Property Read ChannelHistory As NagatoDBWebAssistantHistory
 
-Public Const TableCategory As String = "webpage_category"
-Public Const ColumnCategory As String = "category"
+Public _$uniqueName As String = "Web_bk"
 
-Public Const ColumnId As String = "id"
-Public Const ColumnPageName As String = "page_name"
-Public Const ColumnUrl As String = "url"
-
-Public Const TableBookmark As String = "table_bookmark"
-Public Const ColumnUserDefinedPageName As String = "user_defined_page_name"
-Public Const ColumnCategoryId As String = "category_id"
-
-Public Const TableHistory As String = "table_history_2"
-Public Const ColumnTimeStamp As String = "time_stamp"
-
-Public Const TableFavicon As String = "table_favicon"
-Public Const ColumnFavicon As String = "favicon"
-
-Public _$uniqueName As String = "Web"
-
-Private $tableBookmark As NagatoTableBookmark
-Private $tableCategory As NagatoTableCategory
-Private $tableHistory As NagatoTableHistory
-Private $tableFavicon As NagatoTableFavicon
-
-Public Function HasBookmarkInCategory(argCategoryName As String) As Boolean
-    
-    Dim yukiId As Integer = $tableCategory.GetCategoryId(argCategoryName)
-    
-    Return $tableBookmark.HasBookmarkInCategory(yukiId)
-    
-End
-
-Public Sub DeleteBookmark(argUrl As String)
-    
-    Try Me._$connection.Delete(TableBookmark, "url = &1", argUrl)
-    
-End
-
-Public Sub RenameBookmark(argUrl As String, argNewName As String)
-    
-    Dim yukiResult As Result = Me._$connection.Edit(TableBookmark, "url = &1", argUrl)
-    
-    yukiResult[ColumnUserDefinedPageName] = argNewName
-    yukiResult.Update()
-    
-End
-
-Public Sub ChangeBookmarkCategory(argUrl As String, argCategory As String)
-    
-    Dim yukiResult As Result = Me._$connection.Edit(TableBookmark, "url = &1", argUrl)
-    
-    yukiResult[ColumnCategoryId] = $tableCategory.GetCategoryId(argCategory)
-    yukiResult.Update()
-    
-End
-
-Public Sub DeleteCategory(argCategoryName As String)
-    
-    Try Me._$connection.Delete(TableCategory, "category = &1", argCategoryName)
-    
-End
-
-Public Function GetBookmarkResultByCategoryName(argCategoryName As String) As Result
-    
-    Dim yukiId As Integer = $tableCategory.GetCategoryId(argCategoryName)
-    
-    Return $tableBookmark.GetBookmarkResultByCategoryName(yukiId)
-    
-End
-
-Public Function GetBookmarkResultFoundByUrl(argUrl As String) As Result
-    
-    Return $tableBookmark.GetBookmarkResultFoundByUrl(argUrl)
-    
-End
-
-Public Sub PushBookmark(argUrl As String, argTitle As String, argUserTitle As String, argCategory As String, Optional argIcon As Picture)
-    
-    Dim yukiCategoryId As Integer = $tableCategory.GetCategoryId(argCategory)
-    Dim yukiResult As Result
-    
-    If $tableBookmark.HasBookmark(argUrl, yukiCategoryId) Then Return
-    
-    Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(TableBookmark)
-        yukiResult[ColumnUrl] = argUrl
-        yukiResult[ColumnPageName] = argTitle
-        yukiResult[ColumnUserDefinedPageName] = argUserTitle
-        yukiResult[ColumnCategoryId] = yukiCategoryId
-        yukiResult.Update()
-    Me._$connection.Commit()
-    
-Catch
-    Debug Error.Text
-    Me._$connection.Rollback()
-    
-End
-
-Public Sub PushHistory(argUrl As String, argTitle As String)
-    
-    Debug argUrl
-    Debug argTitle
-    
-    '$tableHistory.PushHistory(argUrl, argTitle)
-    
-End
-
-Public Sub AddNewCategory(argCategoryName As String)
-    
-    $tableCategory.AddNewCategory(argCategoryName)
-    
-End
-
-Public Sub PushFavicon(argUrl As String, argFavicon As Picture)
-    
-    If $tableFavicon.HasFavicon(argUrl) Then Return
-    
-    $tableFavicon.SetFavicon(argUrl, argFavicon)
-    
-End
-
-Public Function GetFavicon(argUrl As String) As Picture
-    
-    If Not $tableFavicon.HasFavicon(argUrl) Then Return Null
-    
-    Return $tableFavicon.GetFavicon(argUrl)
-    
-End
+Private $assistantFavicon As NagatoDBWebAssistantFavion
+Private $assistantHistory As NagatoDBWebAssistantHistory
 
 Public Sub _new()
     
     Me._SetConnection()
 
-    $tableCategory = New NagatoTableCategory(Me._$connection)
-    $tableBookmark = New NagatoTableBookmark(Me._$connection)
-    $tableHistory = New NagatoTableHistory(Me._$connection)
-    $tableFavicon = New NagatoTableFavicon(Me._$connection)
+    $assistantFavicon = New NagatoDBWebAssistantFavion(Me._$connection)
+    $assistantHistory = New NagatoDBWebAssistantHistory(Me._$connection)
 
 End
 
-Private Function CategoryCount_Read() As Integer
+Private Function ChannelFavicon_Read() As NagatoDBWebAssistantFavion
 
-    Return Me._$connection.Find(TableCategory).Count
+    Return $assistantFavicon
 
 End
 
-Private Function CategoryNames_Read() As String[]
+Private Function ChannelHistory_Read() As NagatoDBWebAssistantHistory
 
-    Return $tableCategory.GetCategoryNames()
+    Return $assistantHistory
 
 End

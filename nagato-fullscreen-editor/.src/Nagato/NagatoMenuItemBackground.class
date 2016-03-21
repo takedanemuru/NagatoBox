@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menu
+        .Text = ("Background Image")
+        .Picture = MikuruIcon["image"]
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    Dialog.Title = ("Select Background Image") 
+    Dialog.Path = Desktop.GetDirectory("PICTURES")
+    If Dialog.OpenFile(False) Then Return
+    NagatoSettings.Background = Dialog.Path
+    
+End

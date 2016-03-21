@@ -8,14 +8,14 @@ Public Sub _EnsureTable()
     
     Try Me._$connection.Open()
     
-    With NagatoDBWeb
-        If Not Me._$connection.Tables.Exist(.TableHistory) Then
-            yukiTable = Me._$connection.Tables.Add(.TableHistory)
-            yukiTable.Fields.Add(.ColumnId, db.Serial)
-            yukiTable.Fields.Add(.ColumnTimeStamp, db.Date)
-            yukiTable.Fields.Add(.ColumnUrl, db.String)
-            yukiTable.Fields.Add(.ColumnPageName, db.String)
-            yukiTable.PrimaryKey = [.ColumnId]
+    With NagatoDB
+        If Not Me._$connection.Tables.Exist(.Table.History) Then
+            yukiTable = Me._$connection.Tables.Add(.Table.History)
+            yukiTable.Fields.Add(.Column.Id, db.Serial)
+            yukiTable.Fields.Add(.Column.TimeStamp, db.Date)
+            yukiTable.Fields.Add(.Column.Url, db.String)
+            yukiTable.Fields.Add(.Column.PageName, db.String)
+            yukiTable.PrimaryKey = [.Column.Id]
             yukiTable.Update()
         Endif
     End With
@@ -24,7 +24,13 @@ End
 
 Public Sub GetAll() As Result
     
-    Return Me._$connection.Find(NagatoDBWeb.TableHistory, "order by time_stamp desc limit 500")
+    Return Me._$connection.Find(NagatoDB.Table.History, "order by time_stamp desc limit 1000")
+    
+End
+
+Public Sub DeleteHistory(argUrl As String)
+    
+    Me._$connection.Delete(NagatoDB.Table.History, "url = &1", argUrl)
     
 End
 
@@ -33,10 +39,10 @@ Public Sub PushHistory(argUrl As String, argTitle As String)
     Dim yukiResult As Result
     
     Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(NagatoDBWeb.TableHistory)
-        yukiResult[NagatoDBWeb.ColumnTimeStamp] = Now()
-        yukiResult[NagatoDBWeb.ColumnUrl] = argUrl
-        yukiResult[NagatoDBWeb.ColumnPageName] = argTitle
+        yukiResult = Me._$connection.Create(NagatoDB.Table.History)
+        yukiResult[NagatoDB.Column.TimeStamp] = Now()
+        yukiResult[NagatoDB.Column.Url] = argUrl
+        yukiResult[NagatoDB.Column.PageName] = argTitle
         yukiResult.Update()
     Me._$connection.Commit()
     

@@ -4,7 +4,7 @@ Private $bookmarkItem As New NagatoWebBookmarkItem
 
 Private Sub resetCategoryList()
     
-    If NagatoDBWeb.CategoryCount > 0 Then CategoryComboBox.List = NagatoDBWeb.CategoryNames
+    CategoryComboBox.List = NagatoDBBookmark.CategoryNames
     CategoryComboBox.List.Add("", 0)
     
 End
@@ -35,8 +35,8 @@ Public Sub ApplyButton_Click()
     
     If Not UserTitleTextBox.Text Then Return
     
-    NagatoDBWeb.ChangeBookmarkCategory($bookmarkItem.Url, CategoryComboBox.Text)
-    NagatoDBWeb.RenameBookmark($bookmarkItem.Url, UserTitleTextBox.Text)
+    NagatoDBBookmark.ChangeBookmarkCategory($bookmarkItem.Url, CategoryComboBox.Text)
+    NagatoDBBookmark.RenameBookmark($bookmarkItem.Url, UserTitleTextBox.Text)
     
     Me.Close(1)
     

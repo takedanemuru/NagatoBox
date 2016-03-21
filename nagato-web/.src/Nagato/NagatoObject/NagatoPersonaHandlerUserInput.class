@@ -19,7 +19,7 @@ Private Sub pressOnTab()
         yukiSignal = MikuruSignal.PersonaDeleteWithoutRecord
     End If
     
-    Raise MenuEventWithArg(yukiSignal, yukiTabIndex)
+    Raise Signal(yukiSignal, [yukiTabIndex])
     
 End
 
@@ -37,7 +37,7 @@ Public Sub Asakura_MouseDown()
         Case NagatoTabs.TypeWebView
             pressOnTab()
         Case NagatoTabs.TypePlusButton
-            If Mouse.Left Then Raise MenuEvent(MikuruSignal.PersonaNew)
+            If Mouse.Left Then Raise Signal(MikuruSignal.PersonaNew, Null)
     End Select
     
 End
@@ -67,27 +67,6 @@ Public Sub Asakura_MouseDrag()
     
 End
 
-Public Sub Asakura_KeyPress()
-    
-    Select Case Key.Code
-        Case Key.Up
-            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + Mouse.Delta * 16
-            $drawingArea.Refresh()
-        Case Key.Down
-            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y - Mouse.Delta * 16
-            $drawingArea.Refresh()
-    End Select
-    
-End
-
-Public Sub Asakura_MouseWheel()
-    
-    NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + Mouse.Delta * 8
-    
-    $drawingArea.Refresh()
-    
-End
-
 Public Sub Asakura_Drop()
     
     Dim yukiOriginX As Integer
@@ -100,6 +79,6 @@ Public Sub Asakura_Drop()
     yukiDropX = $tabs.GetTabOrder(Drag.X)
     Drag.Hide()
     
-    Raise MenuEventWithArgs(MikuruSignal.PersonaReorder, [yukiOriginX, yukiDropX])
+    Raise Signal(MikuruSignal.PersonaReorder, [yukiOriginX, yukiDropX])
     
 End

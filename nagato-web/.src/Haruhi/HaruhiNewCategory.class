@@ -19,7 +19,7 @@ Public Sub AddButton_Click()
 
     If CategoryComboBox.Text = "" Then Return
 
-    NagatoDBWeb.AddNewCategory(CategoryComboBox.Text)
+    NagatoDBBookmark.AddNewCategory(CategoryComboBox.Text)
 
     Me.Close(0)
 

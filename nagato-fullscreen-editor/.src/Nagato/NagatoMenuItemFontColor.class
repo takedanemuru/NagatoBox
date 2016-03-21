@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menu
+        .Text = ("Font Color")
+        .Picture = MikuruColorChip[NagatoSettings.Foreground]
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    Dialog.Title = ("Select Color")
+    If Dialog.SelectColor() Then Return ' Dialog returns FALSE when it's canceled.
+    NagatoSettings.Foreground = Dialog.Color
+    
+End

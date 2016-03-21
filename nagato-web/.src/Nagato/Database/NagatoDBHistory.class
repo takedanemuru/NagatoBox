@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public _$uniqueName As String = "History"
+
+Private $tableHistory As NagatoTableHistory
+
+Public Sub Delete(argUrl As String)
+    
+    $tableHistory.DeleteHistory(argUrl)
+    
+End
+
+Public Sub Push(argUrl As String, argTitle As String)
+    
+    $tableHistory.PushHistory(argUrl, argTitle)
+    
+End
+
+Public Function GetAll() As Result
+    
+    Return $tableHistory.GetAll()
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    
+    $tableHistory = New NagatoTableHistory(Me._$connection)
+    
+End

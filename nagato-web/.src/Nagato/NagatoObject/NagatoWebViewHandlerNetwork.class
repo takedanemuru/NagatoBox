@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $webView As WebView
+Private $uniqueIndex As Integer
+Private $observer As Observer
+
+Public Sub _new(argWebView As WebView, argUniqueIndex As Integer)
+    
+    $webView = argWebView
+    $uniqueIndex = argUniqueIndex
+    $observer = New Observer($webView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Download(argDownload As WebDownload)
+    
+    Raise Signal(MikuruSignal.WebDownload, [argDownload])
+    
+End
+
+Public Sub Asakura_Progress()
+    
+    Dim yukiValues As New Variant[]
+    
+    yukiValues.Add($uniqueIndex)
+    yukiValues.Add($webView.Url)
+    yukiValues.Add($webView.Progress)
+    yukiValues.Add($webView.History)
+    yukiValues.Add($webView.Title)
+    
+    Raise Signal(MikuruSignal.WebProgress, yukiValues)
+    
+End
+
+Public Sub Asakura_Load()
+    
+    Me.Asakura_Progress()
+    
+End
+
+Public Sub Asakura_Title()
+    
+    If $webView.Title = "" Then Return
+    
+    Raise Signal(MikuruSignal.WebNewTitle, Null)
+    
+End
+
+Public Sub Asakura_Icon()
+    
+    If $webView.Icon <> Null Then NagatoDBFavicon.Push($webView.Url, $webView.Icon)
+    
+End

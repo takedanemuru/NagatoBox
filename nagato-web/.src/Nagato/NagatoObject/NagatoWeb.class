@@ -5,8 +5,7 @@ Inherits NagatoObject
 Property Read UniqueIndex As Integer
 Property Read Title As String
 Property Read Url As String
-Property Read HistoryMax As Integer
-Property Read HistoryIndex As Integer
+Property Read History As NagatoWebPageHistory
 
 Private $uniqueIndex As Integer
 Private $webView2 As NagatoWebView
@@ -37,7 +36,7 @@ End
 
 Public Sub Toggle(argActiveTabIndex As Integer)
     
-    $webView2.Toggle(argActiveTabIndex = Me.UniqueIndex)
+    $webView2.Toggle(argActiveTabIndex = $uniqueIndex)
     
 End
 
@@ -72,14 +71,10 @@ Private Function Url_Read() As String
 
 End
 
-Private Function HistoryMax_Read() As Integer
+Private Function History_Read() As NagatoWebPageHistory
 
-    Return $webView2.WebView.History.Max
-
-End
-
-Private Function HistoryIndex_Read() As Integer
-
-    Return $webView2.WebView.History.Index
+    With $webView2.WebView.History
+        Return Object.New("NagatoWebPageHistory", [.Index, .Max])
+    End With
 
 End

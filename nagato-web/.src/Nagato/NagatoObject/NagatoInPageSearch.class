@@ -67,7 +67,7 @@ Public Sub SearchBox_Activate()
     
     If $searchBox.Text = "" Then Return
     
-    Raise MenuEventWithArg(MikuruSignal.InPageSearchQuery, $searchBox.Text)
+    Raise Signal(MikuruSignal.InPageSearchQuery, [$searchBox.Text])
     
 End
 

@@ -28,7 +28,7 @@ Public Sub Refresh()
     
 End
 
-Public Sub Asakura_Draw()
+Public Sub Asakura_Arrange()
 
     $searchBox.Move($drawingArea.H, $drawingArea.W)
 

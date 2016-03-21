@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $tabWidth As NagatoTabWidth
+
+Private Function getTextRectangle(argLeft As Integer, argText As String) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = argLeft
+        .Y = MikuruUxTab.Top
+        .H = MikuruUxTab.Height
+        .W = Min(MikuruUxTabText.GetWidth(argText) + 2 * MikuruUxTab.Margin, $tabWidth.Max)
+    End With
+    
+    Return yukiRect
+    
+End
+
+Public Function GetPlusButtonRectangle(argLeft As Integer) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = argLeft
+        .Y = MikuruUxTab.Top
+        .W = MikuruUxTab.Height ' plus button is square
+        .H = MikuruUxTab.Height
+    End With
+    
+    Return yukiRect
+    
+End
+
+Public Sub _get(argLeft As Integer, argText As String) As Rect
+    
+    Return getTextRectangle(argLeft, argText)
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $tabWidth = New NagatoTabWidth(argDrawingArea)
+    
+End

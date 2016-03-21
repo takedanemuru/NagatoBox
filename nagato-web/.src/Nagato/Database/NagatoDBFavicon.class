@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public _$uniqueName As String = "Favicon"
+
+Private $tableFavicon As NagatoTableFavicon
+
+Public Sub Push(argUrl As String, argFavicon As Picture)
+    
+    If $tableFavicon.HasFavicon(argUrl) Then Return
+    
+    $tableFavicon.SetFavicon(argUrl, argFavicon)
+    
+End
+
+Public Function Get(argUrl As String) As Picture
+    
+    If Not $tableFavicon.HasFavicon(argUrl) Then Return Null
+    
+    Return $tableFavicon.GetFavicon(argUrl)
+    
+End
+Public Sub _new()
+    
+    Me._SetConnection()
+    
+    $tableFavicon = New NagatoTableFavicon(Me._$connection)
+    
+End

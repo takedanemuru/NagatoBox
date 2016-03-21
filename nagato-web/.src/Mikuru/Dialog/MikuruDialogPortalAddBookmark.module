@@ -1,0 +1,12 @@
+' Gambas module file
+
+Public Sub _call(argTabTitle As String, argUrl As String)
+    
+    With HaruhiAddWebBookmark
+        .SetTitle(argTabTitle)
+        .SetList(NagatoDBBookmark.CategoryNames)
+        If .ShowDialog() <> 1 Then Return
+        NagatoDBBookmark.PushBookmark(argUrl, argTabTitle, .UserTitle, .Category)
+    End With
+    
+End

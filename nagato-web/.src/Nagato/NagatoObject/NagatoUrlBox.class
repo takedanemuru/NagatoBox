@@ -31,7 +31,7 @@ Public Sub UrlBox_Click()
     
     If $urlBox.Text = "" Then Return
     
-    Raise MenuEventWithArg(MikuruSignal.UrlNew, $urlBox.Text)
+    Raise Signal(MikuruSignal.UrlNew, [$urlBox.Text])
     
 End
 

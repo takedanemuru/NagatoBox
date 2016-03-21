@@ -20,7 +20,7 @@ End
 
 Private Sub drawPlusButton()
     
-    Dim yukiRect As Rect = $tabs.PlusButtonRect
+    Dim yukiRect As Rect = $tabs[$tabs.Max]
     
     $painter.DrawNonActiveTab(yukiRect, $tabs.OnMouse($tabs.Max))
     $painter.DrawTitle("+", yukiRect, False)
@@ -30,12 +30,12 @@ End
 Private Sub drawTab(argIndex As Integer)
     
     If argIndex = HaruhiMain.ActiveIndex Then
-        $painter.DrawActiveTab($tabs.Rects[argIndex], $tabs.OnMouse(argIndex))
+        $painter.DrawActiveTab($tabs[argIndex], $tabs.OnMouse(argIndex))
     Else
-        $painter.DrawNonActiveTab($tabs.Rects[argIndex], $tabs.OnMouse(argIndex))
+        $painter.DrawNonActiveTab($tabs[argIndex], $tabs.OnMouse(argIndex))
     End If
 
-    $painter.DrawTitle(HaruhiMain.Titles[argIndex], $tabs.Rects[argIndex])
+    $painter.DrawTitle(HaruhiMain.Titles[argIndex], $tabs[argIndex])
     
 End
 
@@ -67,7 +67,6 @@ Public Sub _new(argDrawingArea As DrawingArea, argTabs As NagatoTabs)
     $drawingArea = argDrawingArea
     $tabs = argTabs
     $observer = New Observer(argDrawingArea) As "Asakura"
-    
     $painter = New NagatoTabPainter(argDrawingArea)
     
 End
@@ -93,5 +92,3 @@ Public Sub Asakura_Draw()
     Object.Unlock($drawingArea)
     
 End
-
-

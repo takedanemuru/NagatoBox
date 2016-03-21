@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Up
+            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + (2 * TFEI.UX.Unit)
+            $drawingArea.Refresh()
+        Case Key.Down
+            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y - (2 * TFEI.UX.Unit)
+            $drawingArea.Refresh()
+    End Select
+    
+End
+
+Public Sub Asakura_MouseWheel()
+    
+    NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + Mouse.Delta * TFEI.UX.Unit
+    
+    $drawingArea.Refresh()
+    
+End

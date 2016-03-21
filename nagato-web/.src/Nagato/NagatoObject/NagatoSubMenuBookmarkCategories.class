@@ -33,8 +33,8 @@ Public Sub Refresh()
     
     Dim yukiCategory As String
     
-    For Each yukiCategory In NagatoDBWeb.CategoryNames
-        If Not NagatoDBWeb.HasBookmarkInCategory(yukiCategory) Then Continue
+    For Each yukiCategory In NagatoDBBookmark.CategoryNames
+        If Not NagatoDBBookmark.HasBookmarkInCategory(yukiCategory) Then Continue
         addBookmarkCategory(yukiCategory)
     Next
     

@@ -32,30 +32,29 @@ Public Sub Asakura_Menu()
     
 End
 
-Public Sub ContextMenuBookmark_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+Public Sub ContextMenuBookmark_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoContextMenuBookmark.ContextDelete
             Raise RequestRemove(argValues[1])
-            'removeBookmark(argValues[1])
         Case NagatoContextMenuBookmark.ContextEdit
             HaruhiEditWebBookmark.SetUrl($treeView.Key, $treeView[$treeView.Key].ParentKey) 
             If HaruhiEditWebBookmark.ShowDialog() = 1 Then Raise RequestRefresh
         Case NagatoContextMenuBookmark.ContextReload
             Raise RequestRefresh
         Case NagatoContextMenuBookmark.ContextOpen
-            Raise MenuEventWithArg(MikuruSignal.WebNew, argValues[1])
+            Raise Signal(MikuruSignal.WebNew, [argValues[1]])
     End Select
     
 End
 
-Public Sub ContextMenuBookmarkCategory_MenuEventWithArgs(argEvent As Integer, argValues As Variant[])
+Public Sub ContextMenuBookmarkCategory_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
         Case NagatoContextMenuBookmarkCategory.ContextNewCategory
             If HaruhiNewCategory.ShowDialog() = 0 Then Raise RequestRefresh
         Case NagatoContextMenuBookmarkCategory.ContextDelete
-            NagatoDBWeb.DeleteCategory(argValues[0])
+            NagatoDBBookmark.DeleteCategory(argValues[0])
             Raise RequestRefresh
         Case NagatoContextMenuBookmarkCategory.ContextRename
             

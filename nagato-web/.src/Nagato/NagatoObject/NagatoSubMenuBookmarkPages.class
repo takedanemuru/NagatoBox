@@ -8,22 +8,23 @@ Private $rootMenu As Menu
 Private Sub addItem(argResult As Result, argCategory As String)
     
     Dim yukiMenu As New Menu($categories[argCategory]) As "BookmarkItemMenu"
-    Dim yukiTitle As String = argResult[NagatoDBWeb.ColumnUserDefinedPageName]
+    Dim yukiTitle As String = argResult[NagatoDB.Column.UserDefinedPageName]
     
     With yukiMenu
         .Text = MikuruCollapsedText[yukiTitle, Int(Screen.W / 4)]
-        .Tag = argResult[NagatoDBWeb.ColumnUrl]
-        If NagatoSettings.ShowFavicon Then .Picture = NagatoDBWeb.GetFavicon(argResult[NagatoDBWeb.ColumnUrl])
+        .Tag = argResult[NagatoDB.Column.Url]
+        If Not NagatoSettings.ShowFavicon Then Return
+        .Picture = NagatoDBFavicon.Get(argResult[NagatoDB.Column.Url])
     End With
     
 End
 
 Private Sub addBookmarkItems(argCategory As String)
     
-    Dim yukiResult As Result = NagatoDBWeb.GetBookmarkResultByCategoryName(argCategory)
-    
+    Dim yukiResult As Result = NagatoDBBookmark.GetBookmarkResultByCategoryName(argCategory)
+
     For Each yukiResult
-        If yukiResult[NagatoDBWeb.ColumnUserDefinedPageName] = "" Then Continue
+        If yukiResult[NagatoDB.Column.UserDefinedPageName] = "" Then Continue
         addItem(yukiResult, argCategory)
     Next
     
@@ -33,8 +34,8 @@ Public Sub Refresh()
     
     Dim yukiCategory As String
     
-    For Each yukiCategory In NagatoDBWeb.CategoryNames
-        If Not NagatoDBWeb.HasBookmarkInCategory(yukiCategory) Then Continue
+    For Each yukiCategory In NagatoDBBookmark.CategoryNames
+        If Not NagatoDBBookmark.HasBookmarkInCategory(yukiCategory) Then Continue
         addBookmarkItems(yukiCategory)
     Next
     
@@ -49,6 +50,6 @@ End
 
 Public Sub BookmarkItemMenu_Click()
     
-    Raise MenuEventWithArg(MikuruSignal.WebNew, Last.Tag)
+    Raise Signal(MikuruSignal.WebNew, [Last.Tag])
     
 End

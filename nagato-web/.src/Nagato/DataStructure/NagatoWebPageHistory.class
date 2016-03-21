@@ -1,0 +1,26 @@
+' Gambas class file
+
+Property Read HasBack As Boolean
+Property Read HasForward As Boolean
+
+Private $index As Integer
+Private $max As Integer
+
+Public Sub _new(argIndex As Integer, argMax As Integer)
+    
+    $index = argIndex
+    $max = argMax
+    
+End
+
+Private Function HasBack_Read() As Boolean
+
+    Return ($index <> 0)
+
+End
+
+Private Function HasForward_Read() As Boolean
+
+    Return ($index <> $max)
+
+End

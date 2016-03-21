@@ -1,12 +1,18 @@
 ' Gambas class file
 
 Private $textArea As TextArea
+Private $observer As Observer
 
 Private Sub initializeTextArea()
     
     $textArea.Font.Size = NagatoSettings.FontSize
     $textArea.Background = MikuruTransparent(Color.White, 0.8)
-    $textArea.Foreground = Color.Violet
+    $textArea.Foreground = NagatoSettings.Foreground
+    $textArea.Border = False
+    $textArea.ScrollBar = Scroll.Vertical
+    $textArea.Wrap = True
+    
+    Try HaruhiMain.Picture = Picture.Load(NagatoSettings.Background)
     
 End
 
@@ -25,5 +31,13 @@ Public Sub _new(argTextArea As TextArea)
     
     initializeTextArea()
     setTextAreaSizeAndPosition()
+    
+    $observer = New Observer(NagatoSettings) As "Asakura"
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    initializeTextArea()
     
 End

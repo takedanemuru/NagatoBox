@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Function isPredefinedFontSize(argSize As Integer) As Boolean
+    
+    If argSize > 16 And If (argSize Mod 2) > 0 Then Return False
+    If argSize > 36 And If (argSize Mod 4) > 0 Then Return False
+    If argSize > 72 And If (argSize Mod 8) > 0 Then Return False
+    
+    Return True
+    
+End
+
+Private Function getIcon(argSize As Integer) As String
+    
+    Return IIf(NagatoSettings.FontSize = argSize, "button-check", Null)
+    
+End
+
+Public Sub _OnInitializeParentMenu()
+    
+    With Me._$parentMenu
+        .Text = Subst$("Font Size : &1", NagatoSettings.FontSize)
+    End With
+    
+End
+
+Public Sub _OnShowParentMenu()
+    
+    Dim yukiFontSize As Integer
+    
+    For yukiFontSize = 5 To 52
+        If Not isPredefinedFontSize(yukiFontSize) Then Continue
+        Me._AddMenu(yukiFontSize, yukiFontSize, getIcon(yukiFontSize))
+    Next
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    NagatoSettings.FontSize = Last.Tag
+    
+End

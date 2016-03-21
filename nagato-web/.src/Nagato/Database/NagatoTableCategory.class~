@@ -8,12 +8,12 @@ Public Sub _EnsureTable()
     
     Try Me._$connection.Open()
     
-    With NagatoDBWeb
-        If Not Me._$connection.Tables.Exist(.TableCategory) Then
-            yukiTable = Me._$connection.Tables.Add(.TableCategory)
-            yukiTable.Fields.Add(.ColumnId, db.Serial)
-            yukiTable.Fields.Add(.ColumnCategory, db.String)
-            yukiTable.PrimaryKey = [.ColumnId]
+    With NagatoDB
+        If Not Me._$connection.Tables.Exist(.Table.Category) Then
+            yukiTable = Me._$connection.Tables.Add(.Table.Category)
+            yukiTable.Fields.Add(.Column.Id, db.Serial)
+            yukiTable.Fields.Add(.Column.Category, db.String)
+            yukiTable.PrimaryKey = [.Column.Id]
             yukiTable.Update()
         Endif
     End With
@@ -23,10 +23,13 @@ End
 Public Function GetCategoryNames() As String[]
 
     Dim yukiNames As New String[]
-    Dim yukiResult As Result = Me._$connection.Find(NagatoDBWeb.TableCategory)
+    Dim yukiResult As Result = Me._$connection.Find(NagatoDB.Table.Category)
+    
+    Debug yukiResult.Count
+    Debug NagatoDB.Column.Category
     
     For Each yukiResult
-        yukiNames.Add(yukiResult[NagatoDBWeb.ColumnCategory])
+        yukiNames.Add(yukiResult[NagatoDB.Column.Category])
     Next
     
     Return yukiNames.Sort()
@@ -39,11 +42,11 @@ Public Sub AddNewCategory(argCategoryName As String)
     
     If argCategoryName = "" Then Return
     
-    yukiResult = Me._$connection.Find(NagatoDBWeb.TableCategory, "category = &1", argCategoryName)
+    yukiResult = Me._$connection.Find(NagatoDB.Table.Category, "category = &1", argCategoryName)
     
     If yukiResult.Count = 0 Then 
-        yukiResult = Me._$connection.Create(NagatoDBWeb.TableCategory)
-        yukiResult[NagatoDBWeb.ColumnCategory] = argCategoryName
+        yukiResult = Me._$connection.Create(NagatoDB.Table.Category)
+        yukiResult[NagatoDB.Column.Category] = argCategoryName
         yukiResult.Update()
     Endif
     
@@ -53,21 +56,18 @@ Public Function GetCategoryId(argCategoryName As String) As Integer
     
     Dim yukiResult As Result 
     
-    'If argCategoryName = "" Then argCategoryName = ("uncategorized")
+    If argCategoryName = "" Then argCategoryName = ("uncategorized")
     
-    yukiResult = Me._$connection.Find(NagatoDBWeb.TableCategory, "category = &1", argCategoryName)
+    yukiResult = Me._$connection.Find(NagatoDB.Table.Category, "category = &1", argCategoryName)
     
     If yukiResult.Count = 0 Then
-        yukiResult = Me._$connection.Create(NagatoDBWeb.TableCategory)
-        yukiResult[NagatoDBWeb.ColumnCategory] = argCategoryName
+        yukiResult = Me._$connection.Create(NagatoDB.Table.Category)
+        yukiResult[NagatoDB.Column.Category] = argCategoryName
         yukiResult.Update()
     Endif
 
-    yukiResult = Me._$connection.Find(NagatoDBWeb.TableCategory, "category = &1", argCategoryName)
+    yukiResult = Me._$connection.Find(NagatoDB.Table.Category, "category = &1", argCategoryName)
 
-    Return yukiResult[NagatoDBWeb.ColumnId]
-    
-' Catch
-'     Return -1
+    Return yukiResult[NagatoDB.Column.Id]
     
 End

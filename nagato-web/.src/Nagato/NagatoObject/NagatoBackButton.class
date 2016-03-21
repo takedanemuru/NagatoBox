@@ -20,6 +20,6 @@ End
 
 Public Sub Button_Click()
     
-    Raise MenuEvent(MikuruSignal.WebBack)
+    Raise Signal(MikuruSignal.WebBack, Null)
     
 End

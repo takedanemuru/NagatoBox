@@ -13,6 +13,6 @@ End
 
 Public Sub _OnClickMenuItem()
     
-    Raise MenuEvent(MikuruSignal.UrlAddBookmark)
+    Raise Signal(MikuruSignal.UrlAddBookmark, Null)
     
 End
