@@ -8,7 +8,7 @@ Private $forwardButton As NagatoForwardButton
 Private $urlBox As NagatoUrlBox
 Private $downloadButton As NagatoDownloadButton
 Private $bookmarkButton As NagatoBookmarkButton
-Private $startButton As NagatoStartButton
+Private $starButton As NagatoStarButton
 
 Public Sub SetNavigationButton(argHistory As NagatoWebPageHistory)
     
@@ -34,6 +34,6 @@ Public Sub _new(argContainer As Container)
     $urlBox = New NagatoUrlBox(argContainer) As "TFEI"
     $downloadButton = New NagatoDownloadButton(argContainer) As "TFEI"
     $bookmarkButton = New NagatoBookmarkButton(argContainer) As "TFEI"
-    $startButton = New NagatoStartButton(argContainer) As "TFEI"
+    $starButton = New NagatoStarButton(argContainer) As "TFEI"
     
 End

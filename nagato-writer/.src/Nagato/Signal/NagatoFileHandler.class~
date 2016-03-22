@@ -13,18 +13,6 @@ Public Function GetHeaderIndex(argLine As Integer) As Integer
     
     Return $headers.GetHeaderIndex(argLine)
     
-    ' Dim yukiLine As String
-    ' Dim yukiKey As Integer
-    ' 
-    ' For Each yukiLine In $headers.Headers
-    '     yukiKey = CInt($headers.Headers.Key) 
-    '     If argLine > yukiKey Then Continue
-    '     If argLine = yukiKey Then Return $headers.GetIndex(yukiKey) 
-    '     Return $headers.GetIndex(yukiKey) - 1
-    ' Next
-    ' 
-    ' Return -1
-    
 End
 
 Public Function SetPath(argPath As String) As String

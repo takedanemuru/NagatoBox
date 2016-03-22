@@ -4,54 +4,37 @@ Property Read Titles As String[]
 Property Read ActiveIndex As Integer
 
 Private $headerContainer As NagatoHeaderContainer
-Private $bodyCotainer As NagatoBodyContainer
-Private $downloadBar As NagatoWebdownloadsBar
-Private $bookmarkTreeView As NagatoBookmarkTreeView
-Private $recentClosedTabsTreeView As NagatoRecentClosedTabsTreeView
+Private $bodyContainer As NagatoBodyContainer
+Private $footerContainer As NagatoFooterContainer
+Private $leftPane As NagatoLeftPane
 
 Private Sub refreshTitle()
     
     $headerContainer.Refresh()
-    Me.Title = $bodyCotainer.Titles[$bodyCotainer.ActiveIndex]
+    Me.Title = $bodyContainer.Titles[$bodyContainer.ActiveIndex]
     
 End
 
 Public Sub AddUrl(argUrl As String)
     
-    $bodyCotainer.AddUrl(argUrl)
+    $bodyContainer(MikuruSignal.WebNew, [argUrl])
     
 End
 
 Public Sub SetUrl(argUrl As String)
     
-    $bodyCotainer.SetUrl(argUrl)
+    $bodyContainer(MikuruSignal.UrlNew, [argUrl])
     
-End
-
-Public Sub RefreshPersona()
-    
-    $headerContainer.Refresh()
-    
-End
-
-Public Sub _new()
-
-    MikuruWebSettings.Initialize()
-
 End
 
 Public Sub Form_Open()
     
-    $headerContainer = New NagatoHeaderContainer(PersonaDrawingArea, SearchBoxContainer) As "Header"
-    $bodyCotainer = New NagatoBodyContainer(MenuHBox, WebsVBox, InPageSearchHBox) As "Body"
-    $bookmarkTreeView = New NagatoBookmarkTreeView(LeftTabStrip) As "BookmarkTreeView"
-    LeftTabStrip.Index = 1
-    $recentClosedTabsTreeView = New NagatoRecentClosedTabsTreeView(LeftTabStrip) As "BookmarkTreeView"
-    LeftTabStrip.Index = 0
-    $downloadBar = New NagatoWebdownloadsBar(MainVBox) As "DownloadBar"
-    
-    $bodyCotainer.AddUrl()
-    
+    $headerContainer = New NagatoHeaderContainer(PersonaDrawingArea, SearchBoxContainer) As "UX"
+    $bodyContainer = New NagatoBodyContainer(MenuHBox, WebsVBox) As "Body"
+    $footerContainer = New NagatoFooterContainer(MainVBox, InPageSearchHBox) As "UX"
+    $leftPane = New NagatoLeftPane(LeftTabStrip) As "UX"
+    $bodyContainer(MikuruSignal.WebNew, [NagatoSettings.HomePage])
+
 End
 
 Public Sub Form_Close()
@@ -61,48 +44,40 @@ Public Sub Form_Close()
     
 End
 
-Public Sub BookmarkTreeView_Signal(argSignal As Integer, argValues As Variant[])
-    
-    If argSignal = MikuruSignal.WebNew Then $bodyCotainer.AddUrl(argValues[0])
-    
-End
-
 Public Sub Body_Signal(argEvent As Integer, argArguments As Variant[])
     
     Select Case argEvent
-        Case MikuruSignal.WebRequestRefresh
-            $headerContainer.Refresh()
+        Case MikuruSignal.WebRequestRefresh, MikuruSignal.WebNewTitle
+            refreshTitle()
         Case MikuruSignal.ViewEditBookmark
             LeftPanel.Hidden = False
-        Case MikuruSignal.WebDownload
-            $downloadBar.SetWebDownload(argArguments[0])
+        Case MikuruSignal.WebDownload, MikuruSignal.InPageSearchToggle
+            $footerContainer(argEvent, argArguments)
         Case MikuruSignal.PersonaSetText
             $headerContainer.SetText(argArguments[0])
         Case MikuruSignal.WebProgress
             Me.Title = argArguments[4]
             $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
-            $bodyCotainer.HeaderCall(argEvent, argArguments)
-        Case MikuruSignal.WebNewTitle
-            refreshTitle()
+            $bodyContainer(argEvent, argArguments)
     End Select
     
 End
 
-Public Sub Header_Signal(argSignal As Integer, argValues As Variant[])
+Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
     
-    $bodyCotainer.HeaderCall(argSignal, argValues)
+    $bodyContainer(argSignal, argValues)
     refreshTitle()
     
 End
 
 Private Function Titles_Read() As String[]
 
-    Return $bodyCotainer.Titles
+    Return $bodyContainer.Titles
 
 End
 
 Private Function ActiveIndex_Read() As Integer
 
-    Return $bodyCotainer.ActiveIndex
+    Return $bodyContainer.ActiveIndex
 
 End

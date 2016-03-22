@@ -33,10 +33,32 @@ Catch
     
 End
 
+Public Sub CheckCursorPosition()
+    
+    Me.Asakura_Cursor()
+    
+End
+
 Public Sub Asakura_KeyPress()
 
     If Key.Control Then keyEventWithControl()
     If Key.Code = Key.Tab And If NagatoSettingsView.TabSize <> 0 Then replaceTab()
     If Key.Code = Key.BackSpace And If NagatoSettingsView.TabSize <> 0 Then replaceBackspace()
 
+End
+
+Public Sub Asakura_Cursor()
+    
+    If Me._$widget.Line + 5 > Split(Me._$widget.Text, "\n").Count Then
+        Raise Signal(MikuruSignal.ViewMoveToBottom, Null)
+    Else
+        Raise Signal(MikuruSignal.ViewMoveCursor, [Me._$widget.Line])
+    Endif
+    
+End
+
+Public Sub Asakura_Change()
+    
+    If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    
 End

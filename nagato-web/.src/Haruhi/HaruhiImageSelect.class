@@ -18,7 +18,6 @@ Public Sub FileChooser1_Activate()
 
     NagatoSettingsPersona.Path = FileChooser1.SelectedPath
     MikuruPersona.Reset()
-    HaruhiMain.RefreshPersona()
-    Me.Close()
+    Me.Close(MikuruDialogResponse.Apply)
 
 End

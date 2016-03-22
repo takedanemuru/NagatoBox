@@ -34,6 +34,14 @@ Public Sub DeleteHistory(argUrl As String)
     
 End
 
+Public Sub DeleteRelatedHistories(argUrl As String)
+    
+    Dim yukiPattern As String = MikuruUrl.GetTopPage(argUrl) & "%"
+    
+    Me._$connection.Delete(NagatoDB.Table.History, "url LIKE &1", yukiPattern)
+    
+End
+
 Public Sub PushHistory(argUrl As String, argTitle As String)
     
     Dim yukiResult As Result

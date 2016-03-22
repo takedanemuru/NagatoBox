@@ -10,11 +10,23 @@ Public Sub Delete(argUrl As String)
     
     $tableHistory.DeleteHistory(argUrl)
     
+    Raise Update
+    
+End
+
+Public Sub DeleteRelated(argUrl As String)
+    
+    $tableHistory.DeleteRelatedHistories(argUrl)
+    
+    Raise Update
+    
 End
 
 Public Sub Push(argUrl As String, argTitle As String)
     
     $tableHistory.PushHistory(argUrl, argTitle)
+    
+    Raise Update
     
 End
 

@@ -11,3 +11,4 @@ Public Enum InPageSearchHeader = 4000, InPageSearchQuery = 4001, InPageSearchTog
 Public Enum UrlHeader = 5000, UrlNew = 5001, UrlAddBookmark = 5002
 Public Enum ViewHeader = 6000, ViewEditBookmark = 6002
 Public Enum ContextNone = 7000, ContextReload = 7001, ContextOpen = 7002, ContextDelete = 7003
+Public Enum ContextDeleteAll = 7004

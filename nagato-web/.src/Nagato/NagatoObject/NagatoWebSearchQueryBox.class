@@ -33,7 +33,7 @@ Public Sub QueryBox_Activate()
     
     If $queryBox.Text = "" Then Return
     
-    Raise Signal(MikuruSignal.SearchApiCall, [$api.GetApi($queryBox.Text)])
+    Raise Signal(MikuruSignal.WebNew, [$api.GetApi($queryBox.Text)])
     
 End
 

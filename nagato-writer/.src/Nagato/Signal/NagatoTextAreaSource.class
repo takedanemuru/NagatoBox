@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoWidgetHandler
+
+Property Read Text As String
+Property Read Line As Integer
+
+Private $textArea As TextArea
+Private $insertListHeaders As NagatoTextAreaInsertListHeaders
+Private $insertImagePath As NagatoTextAreaInsertImagePath
+
+Private Sub moveToLine(argLine As Integer)
+    
+    $textArea.SetFocus()
+    Try $textArea.Line = argLine + Int($textArea.H / $textArea.Font.H * 0.7)
+    If Not Error Then $textArea.EnsureVisible()
+    $textArea.Line = argLine
+
+Finally
+    $textArea.EnsureVisible()
+     
+End
+
+Public Sub SetTextWithNoSignal(argText As String)
+    
+    Object.Lock($textArea)
+        $textArea.Text = argText
+        $textArea.SetFocus()
+        $textArea.Line = 0
+    Object.Unlock($textArea)
+    
+End
+
+Public Sub _Initialize()
+    
+    $textArea = Me._$widget
+    $insertListHeaders = New NagatoTextAreaInsertListHeaders($textArea)
+    $insertImagePath = New NagatoTextAreaInsertImagePath($textArea) 
+    
+End
+
+Public Sub _call(argSIgnal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.EditInsertBullets
+            $insertListHeaders.InsertBullets()
+        Case MikuruSignal.EditInsertNumbers
+            $insertListHeaders.InsertNembers()
+        Case MikuruSignal.EditInsertImage
+            $insertImagePath.InsertImageAbsolute(argValues[0])
+        Case MikuruSignal.EditInsertImageRelative
+            $insertImagePath.InsertImagePathRelative(argValues[0])
+        Case MikuruSignal.EditInsertUrl
+            $textArea.Insert("[title](http://www.somewhere.com)")
+        Case MikuruSignal.EditMoveToLine
+            moveToLine(argValues[0])
+    End Select
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $textArea.Text
+
+End
+
+Private Function Line_Read() As Integer
+
+    Return $textArea.Line
+
+End

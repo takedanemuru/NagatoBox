@@ -12,11 +12,9 @@ Public Sub _AddChildMenus()
     
     Dim yukiIndex As Integer
     
-    With NagatoValueListTabSize
-        For yukiIndex = 0 To .Max
-            Me._AddMenu(.Names[yukiIndex], yukiIndex, getIconName(yukiIndex))
-        Next
-    End With
+    For yukiIndex = 0 To NagatoValueListTabSize.Max
+        Me._AddMenu(NagatoValueListTabSize.Names[yukiIndex], yukiIndex, getIconName(yukiIndex))
+    Next
     
 End
 

@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Property Read TextArea As TextArea
+Property Read Container As VBox
+
+Private $textArea As TextArea
+Private $container As VBox
+
+Private Sub initializeVBox()
+    
+    $container = New VBox(Me._$parentContainer)
+    
+    With $container
+        .H = 24
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeTextArea()
+    
+    $textArea = New TextArea($container) As "TextArea"
+    
+    With $textArea
+        .Expand = True
+        .Foreground = Color.Violet
+        .Wrap = True
+        .SetFocus()
+    End With
+    
+End
+
+Public Sub _initialize() ' override
+    
+    initializeVBox()
+    initializeTextArea()
+    
+End
+
+Private Function TextArea_Read() As TextArea
+
+    Return $textArea
+
+End
+
+Private Function Container_Read() As VBox
+
+    Return $container
+
+End

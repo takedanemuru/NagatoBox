@@ -17,3 +17,17 @@ Public Function IsYouTubeVideo(argUrl As String) As Boolean
     Return argUrl Begins "https://www.youtube.com/watch?v="
     
 End
+
+Public Sub GetTopPage(argUrl As String) As String
+    
+    Dim yukiStrings As String[] = Split(argUrl, "/", "", False)
+    Dim yukiIndex As Integer
+    Dim yukiTopPageUrl As String
+    
+    For yukiIndex = 0 To 2
+        yukiTopPageUrl &= (yukiStrings[yukiIndex] & "/")
+    Next
+    
+    Return yukiTopPageUrl
+    
+End

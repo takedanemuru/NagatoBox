@@ -6,7 +6,7 @@ Public Sub _EnsureTable()
     
     Dim yukiTable As Table
     
-    Try Me._$connection.Open()
+    If Not Me._$connection.Opened Then Me._$connection.Open()
     
     With NagatoDB
         If Not Me._$connection.Tables.Exist(.Table.History) Then
@@ -31,6 +31,12 @@ End
 Public Sub DeleteHistory(argUrl As String)
     
     Me._$connection.Delete(NagatoDB.Table.History, "url = &1", argUrl)
+    
+End
+
+Public Sub DeleteRelatedHistories(argUrl As String)
+    
+    Debug MikuruUrl.GetTopPage(argUrl)
     
 End
 

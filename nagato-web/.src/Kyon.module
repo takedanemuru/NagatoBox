@@ -22,6 +22,7 @@ Public Sub Main()
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()
+        MikuruWebSettings.Initialize()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
         NagatoSettingsForm.Load(HaruhiMain)
         Application.MainWindow = HaruhiMain

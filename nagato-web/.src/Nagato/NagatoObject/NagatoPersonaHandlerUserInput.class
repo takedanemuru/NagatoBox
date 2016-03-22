@@ -37,7 +37,7 @@ Public Sub Asakura_MouseDown()
         Case NagatoTabs.TypeWebView
             pressOnTab()
         Case NagatoTabs.TypePlusButton
-            If Mouse.Left Then Raise Signal(MikuruSignal.PersonaNew, Null)
+            If Mouse.Left Then Raise Signal(MikuruSignal.WebNew, [NagatoSettings.HomePage])
     End Select
     
 End

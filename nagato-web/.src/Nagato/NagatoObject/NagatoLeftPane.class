@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $bookmarkTreeView As NagatoBookmarkTreeView
+Private $recentClosedTabsTreeView As NagatoRecentClosedTabsTreeView
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $bookmarkTreeView = New NagatoBookmarkTreeView(argTabStrip) As "TFEI"
+    argTabStrip.Index = 1
+    $recentClosedTabsTreeView = New NagatoRecentClosedTabsTreeView(argTabStrip) As "TFEI"
+    argTabStrip.Index = 0
+    
+End

@@ -20,7 +20,7 @@ Public Sub _RefreshChildMenus() ' override
     Object.New("NagatoSubMenuCss", [Me._$parentMenu, ("CSS"), "ruler"])
     yukiSlideMenu = New NagatoSubMenuSlide(Me._$parentMenu, ("Slide Show"), "presentation") As "TFEI"
         Me._AddMenu("", 0)
-    Me._AddMenu("About", MikuruSignal.AppAbout, "star")
-    Me._AddMenu("Quit", MikuruSignal.AppQuit, "button-power")
+    Object.New("NagatoMenuItemAbout", [Me._$parentMenu])
+    Object.New("NagatoMenuItemQuit", [Me._$parentMenu])
     
 End

@@ -12,6 +12,8 @@ Public _$connection As Connection
 Private $assistantTables As New NagatoDBAssistantTables
 Private $assistantColumns As New NagatoDBAssistantColumns
 
+Event Update
+
 Private Sub checkAndCreateHost()
     
     If Not Exist(Me.HostName) Then Mkdir Me.HostName

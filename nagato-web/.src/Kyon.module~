@@ -19,8 +19,6 @@ Public Sub Main()
     
     Dim yukiUrl As String = getSartupUrl()
     
-    Debug Split("http://www.google.com/foobar/alpha/beta", "/", "", True)[1]
-    
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
         HaruhiMain.Show()

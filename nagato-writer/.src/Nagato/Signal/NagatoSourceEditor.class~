@@ -45,21 +45,13 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
 
 End
 
-Public Sub EditEvent(argEvent As Integer, Optional argValues As Variant[])
+Public Sub EditEvent(argSignal As Integer, Optional argValues As Variant[])
     
-    Select Case argEvent
-        Case MikuruSignal.EditInsertBullets
-            $textArea.InsertBullets()
-        Case MikuruSignal.EditInsertNumbers
-            $textArea.InsertNembers()
-        Case MikuruSignal.EditInsertImage
-            $textArea.InsertImageAbsolute($fileHandler.Path)
-        Case MikuruSignal.EditInsertImageRelative
-            $textArea.InsertImagePathRelative($fileHandler.Path)
-        Case MikuruSignal.EditInsertUrl
-            $textArea.InsertUrlTemplate()
-        Case MikuruSignal.EditMoveToLine
-            $textArea.MoveToLine(argValues[0])
+    Select Case argSignal
+        Case MikuruSignal.EditInsertImage, MikuruSignal.EditInsertImageRelative
+            $textArea(argSignal, [$fileHandler.Path])
+        Default
+            $textArea(argSignal, argValues)
     End Select
     
 End
@@ -75,8 +67,6 @@ End
 Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.ViewMoveCursor Then
-        Debug argValues[0]
-        Debug $fileHandler.GetHeaderIndex(argValues[0])
         Raise Signal(MikuruSignal.ViewMoveTag, [$fileHandler.GetHeaderIndex(argValues[0])])
     Else
         Raise Signal(argSignal, argValues)

@@ -3,6 +3,7 @@
 Inherits NagatoObject
 
 Private $treeView As TreeView
+Private $observer As Observer
 
 Private Sub addItem(argResult As Result)
     
@@ -30,15 +31,21 @@ Public Sub _new(argContainer As Container)
     
     $treeView = New TreeView(argContainer) As "TreeView"
     $treeView.Foreground = Color.DarkCyan
+    $observer = New Observer(NagatoDBHistory) As "Asakura"
+    
+    refresh()
+    
+End
+
+Public Sub Asakura_Update()
+    
     refresh()
     
 End
 
 Public Sub TreeView_Activate()
     
-    If $treeView.Key Not Begins "http" Then Return
-    
-    Raise Signal(MikuruSignal.WebNew, [$treeView.Key]) 
+    If $treeView.Key Begins "http" Then Raise Signal(MikuruSignal.WebNew, [$treeView.Key]) 
     
 End
 
@@ -62,8 +69,9 @@ Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.ContextOpen
             Me.TreeView_Activate()
         Case MikuruSignal.ContextDelete
-            NagatoDB.ChannelHistory.Delete($treeView.Key)
-            refresh()
+            NagatoDBHistory.Delete($treeView.Key)
+        Case MikuruSignal.ContextDeleteAll
+            NagatoDBHistory.DeleteRelated($treeView.Key)
         Case MikuruSignal.ContextReload
             refresh()
     End Select

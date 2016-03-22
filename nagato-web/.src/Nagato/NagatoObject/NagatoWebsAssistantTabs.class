@@ -60,6 +60,8 @@ End
 
 Public Sub Reorder(argOrigin As Integer, argTarget As Integer)
     
+    If argOrigin = argTarget Then Return
+    
     $webOrder2.Reorder(argOrigin, argTarget)
     
 End

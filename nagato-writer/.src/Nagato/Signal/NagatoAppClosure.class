@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoObject
 
 Public Enum ResponseHasBeenSaved, ResponseSaved, ResponseCancel, ResponseDiscard
 

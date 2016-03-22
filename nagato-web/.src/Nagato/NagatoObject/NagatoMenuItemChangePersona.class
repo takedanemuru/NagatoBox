@@ -13,6 +13,8 @@ End
 
 Public Sub _OnClickMenuItem()
     
-    HaruhiImageSelect.ShowDialog()
+    If HaruhiImageSelect.ShowDialog() <> MikuruDialogResponse.Apply Then Return
+    
+    Raise Signal(MikuruSignal.WebRequestRefresh, Null)
     
 End

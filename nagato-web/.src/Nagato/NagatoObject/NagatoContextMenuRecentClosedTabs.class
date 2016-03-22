@@ -6,6 +6,7 @@ Public Sub _AddChildMenus()
     
     Me._AddContextMenu(("Open"), MikuruSignal.ContextOpen, MikuruIcon["outbox"])
     Me._AddContextMenu(("Delete"), MikuruSignal.ContextDelete, MikuruIcon["bin"])
+    Me._AddContextMenu(("Delete Related Histories"), MikuruSignal.ContextDeleteAll)
     Me._AddContextMenu("", MikuruSignal.NullSignal)
     Me._AddContextMenu(("Reload"), MikuruSignal.ContextReload, MikuruIcon["button-synchronize"])
     

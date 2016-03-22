@@ -53,9 +53,6 @@ End
 
 Public Function GetBookmarkResultByCategoryName(argCategoryName As String) As Result
     
-    ' Debug argCategoryName
-    ' Debug getCategoryId(argCategoryName)
-    
     Return $tableBookmark.GetBookmarkResultByCategoryName(getCategoryId(argCategoryName))
     
 End
