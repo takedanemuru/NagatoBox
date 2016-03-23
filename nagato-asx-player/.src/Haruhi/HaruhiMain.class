@@ -24,8 +24,6 @@ Public Sub Form_Open()
         play($source.Path)
     End If
 
-    $timer.Enabled = True
-
 End
 
 Public Sub Form_Close()
@@ -45,4 +43,14 @@ Public Sub Player_Tag(argMediaTagList As MediaTagList)
         Debug yukiTag;; CString(argMediaTagList[yukiTag])
     Next
     
+End
+
+Public Sub TextLabel1_MouseDown()
+
+    If $player.State = Media.Playing Then
+        $player.Pause()
+    Else
+        Try $player.Play()
+    Endif
+
 End

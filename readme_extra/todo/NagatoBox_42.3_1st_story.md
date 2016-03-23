@@ -6,7 +6,7 @@
 
 ### nagato-asx-player (v42.3.2)
 
-+ new : play/pause fanctionality.
++ ~~new : play/pause fanctionality.~~
 
 ### nagato-calculator (v.42.3.5)
 
@@ -22,7 +22,7 @@
 
 + ~~merge "NagatoMenuPipe" and "NagatoSignal" into "NagatoObject"~~
 + ~~purge useless code~~
-+ new "broken file tile" to show broken path.
++ ~~new "broken file tile" to show broken path.~~
 + ~~fix : bug on "sort by extension"~~
 + new : timer functionalities for desktop-shell (?)
 
@@ -42,7 +42,7 @@
 
 ### nagato-player-x (v42.3.12)
 
-+ fix : id3tag fetching.
++ ~~fix : id3tag fetching.~~
 + refine playlist ux.
 + cui front-end ?
 + new : crop coverart image that is not square automatically.
@@ -58,6 +58,10 @@
 + ~~copy desktop entry file from global autostarts to user autostarts~~
 + about dialog for NagatoBox ?
 
+### nagato-wallpaper (v42.3.4)
+
++ ~~fix : rename render mode "full" to "fit to width", "fit" to "fit to height"~~
+
 ### nagato-weather (v42.3.10)
 
 + ~~fix : api url as that was changed.~~
@@ -70,6 +74,8 @@
 + ~~new : icon(favicon) database~~
 + ~~new : reload tab title automatically when it's changed.~~
 + ~~new : option to toggle favicons~~
++ ~~code refactoring : all \_MenuEvent, \_MenuEventWithArgs and \_MenuEventWithArgs headers port to \_Signal header.~~
++ ~~new : menu to delete history.~~
 
 ### nagato-writer (v42.3.25)
 
@@ -84,6 +90,7 @@
 + ~~fix : css files naming confusion~~
 + ~~finish epub3 metadata dialog.~~
 + ~~new : option to show columns, rows and total count of charactors.~~
++ ~~fix : css issue (it just works again. but why ?)~~
 
 ## Dataoverminds
 

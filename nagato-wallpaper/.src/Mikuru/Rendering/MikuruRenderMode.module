@@ -4,25 +4,8 @@ Property Read List As String[]
 
 Public Enum Center, Tile, Full, Fit, Fill, TopLeft, TopCenter, TopRight, Left, Right, BottomLeft, BottomCenter, BottomRight
 
-Public Function getCommandLineOption(argMode As Integer) As String
-    
-    Select Case argMode
-        Case Center
-            Return "-center"
-        Case Tile
-            Return "-tile"
-        Case Full
-            Return "-full"
-        Case Fit
-            Return "-full"
-        Case Fill
-            Return "-fill"
-    End Select
-    
-End
-
 Private Function List_Read() As String[]
 
-    Return ["Center", "Tile", "Full", "Fit", "Fill", "TopLeft", "TopCenter", "TopRight", "Left", "Right", "BottomLeft", "BottomCenter", "BottomRight"]
+    Return ["Center", "Tile", "Fit to Width", "Fit to Height", "Fill", "TopLeft", "TopCenter", "TopRight", "Left", "Right", "BottomLeft", "BottomCenter", "BottomRight"]
 
 End

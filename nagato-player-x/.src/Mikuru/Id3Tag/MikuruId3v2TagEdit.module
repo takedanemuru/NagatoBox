@@ -26,3 +26,18 @@ Public Sub NewAlbum(argFullPath As String, argNewAlbum As String)
     Shell yukiCommand Wait
     
 End
+
+Public Sub Set(argFullPath As String, argNewTitle As String, argNewArtist As String, argNewAlbum As String)
+    
+    Dim yukiCommand As String = "id3tag -2 "
+    Dim yukiPath As String = Replace$(URL.Decode(argFullPath), "file://", "")
+    
+    If argNewTitle Then yukiCommand &= Subst$("--song &1 ", Quote$(argNewTitle))
+    If argNewArtist Then yukiCommand &= Subst$("--artist &1 ", Quote$(argNewArtist))
+    If argNewAlbum Then yukiCommand &= Subst$("--album &1 ", Quote$(argNewAlbum))
+    yukiCommand &= Quote$(yukiPath)
+    
+    Shell yukiCommand Wait
+    
+End
+

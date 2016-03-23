@@ -44,13 +44,16 @@ Public Sub ShowByIndex(argIndex As Integer)
     
 End
 
-Public Sub Remove(argTabIndex As Integer)
+Public Sub Remove(argTabIndex As Integer, Optional argRecord As Boolean = False)
     
     Dim yukiNextActiveTabIndex As Integer = $webOrder2.GetNextTabOrder(argTabIndex)
+    Dim yukiWeb As NagatoWeb
     
     If $webOrder2.Max = 0 Then Return
     
-    $webs[$webOrder2[argTabIndex]].Delete()
+    yukiWeb = $webs[$webOrder2[argTabIndex]]
+    If argRecord Then NagatoDBHistory.Push(yukiWeb.Url, yukiWeb.Title)
+    yukiWeb.Delete()
     $webs.Remove($webOrder2[argTabIndex])
     $webOrder2.Remove(argTabIndex, yukiNextActiveTabIndex)
     

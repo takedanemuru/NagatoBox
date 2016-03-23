@@ -10,19 +10,31 @@ Private Function setStandaloneHtml(argPath As String) As String
     
     Return yukiHtmlDocument.Content
     
+Catch
+    Message.Error(("YUKI.N > Fatal error caused. Some links in document may be missing."), ("OK"))
+    Return ""
+    
+End
+
+Private Sub saveFile(argTargetPath As String, argData As String)
+    
+    Dim yukiSource As String = Temp$()
+    
+    File.Save(yukiSource, argData)
+    If Exist(argTargetPath) Then Kill argTargetPath
+    Copy yukiSource To argTargetPath
+    
 End
 
 Public Sub Publish(argPath As String)
     
     Dim yukiTarget As String = Me._GetPathToSave2("html", argPath)
-    Dim yukiSource As String = Temp$()
+    Dim yukiHtml As String = setStandaloneHtml(yukiTarget)
     
-    If Not yukiTarget Then Return
+    If Not yukiTarget Or If Not yukiHtml Then Return
 
-    File.Save(yukiSource, setStandaloneHtml(yukiTarget))
-    If Exist(yukiTarget) Then Kill yukiTarget
-    Copy yukiSource To yukiTarget
-    
+    saveFile(yukiTarget, yukiHtml)
+
     Me._ShowMessage(yukiTarget)
     
 End

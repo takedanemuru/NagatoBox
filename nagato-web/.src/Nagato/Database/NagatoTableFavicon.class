@@ -6,6 +6,9 @@ Private Function getBaseUrl(argUrl As String) As String
     
     Return Split(argUrl, "/", "", True)[1]
     
+Catch
+    Debug argUrl
+    
 End
 
 Public Sub _EnsureTable() ' override
@@ -30,6 +33,8 @@ End
 Public Sub SetFavicon(argUrl As String, argFavicon As Picture)
     
     Dim yukiResult As Result
+    
+    If argUrl Not Begins "http" Then Return
     
     Me._$connection.Begin()
         yukiResult = Me._$connection.Create(NagatoDB.Table.Favicon)
