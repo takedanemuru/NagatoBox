@@ -22,8 +22,15 @@ End
 
 Private Sub setNewTag()
     
+    Dim yukiTags As New NagatoTags
+    
+    yukiTags.Title = TitleTextBox.Text
+    yukiTags.Artist = ArtistTextBox.Text
+    yukiTags.Album = AlbumTextBox.Text
+    
     MikuruId3v2TagEdit.Set($targetPath, TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
-    NagatoQueue.ChannelTags.Refresh(TitleTextBox.Text, ArtistTextBox.Text, AlbumTextBox.Text)
+    NagatoDBMedia.AddTagsByNagatoTags($targetPath, yukiTags)
+    NagatoQueue.ChannelCurrent.Reload()
     
 End
 
@@ -77,7 +84,7 @@ End
 Public Sub Asakura_Select(argFullPath As String)
     
     $albumartPath = argFullPath
-    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Picture
+    AlbumArtPictureBox.Picture = MikuruCroppedImage(argFullPath, AlbumArtPictureBox.H)
     ApplyButton.Enabled = True
     
 Catch

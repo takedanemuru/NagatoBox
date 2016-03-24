@@ -10,7 +10,7 @@ Private Function getInfoText() As String
     If NagatoQueue.ChannelList.Count = 0 Then
         Return Subst$("<b>YUKI.N > Can you see this ?</b>")
     Else
-        Return Subst$("<b>&1</b>", NagatoQueue.ChannelTags.Get(MikuruTag.Title))
+        Return Subst$("<b>&1</b>", NagatoQueue.ChannelCurrent.Titile)
     Endif
     
 End
@@ -26,7 +26,7 @@ End
 Private Sub drawCoverArt()
     
     Me._PaintClipRectangle(MikuruUx.CoverArt.Rect, 1 * MikuruUx.Grid)
-    Draw.Picture(NagatoQueue.ChannelCoverArt.Picture, MikuruUx.CoverArt.X, MikuruUx.CoverArt.Y)
+    Draw.Picture(NagatoQueue.ChannelCurrent.CoverArt, MikuruUx.CoverArt.X, MikuruUx.CoverArt.Y)
     Paint.ResetClip()
     Paint.Restore()
     
@@ -42,7 +42,7 @@ End
 Public Sub Draw()
     
     Me._PaintRectangle(MikuruUx.InfoBox, Me._GetWidgetColor(MikuruUx.InfoBox), 1.5 * MikuruUx.Grid)
-    If NagatoQueue.ChannelCoverArt.Picture <> Null Then drawCoverArt()
+    If NagatoQueue.ChannelCurrent.CoverArt <> Null Then drawCoverArt()
     drawMessage()
     
     Dec $messageDuration

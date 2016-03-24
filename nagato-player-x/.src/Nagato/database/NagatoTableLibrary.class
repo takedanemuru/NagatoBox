@@ -8,8 +8,8 @@ Public Sub _EnsureTable() 'override
     
     Me._$connection.Open()
     
-    If Not Me._$connection.Tables.Exist(NagatoDBMedia.Table.Library) Then
-        yukiTable = Me._$connection.Tables.Add(NagatoDBMedia.Table.Library)
+    If Not Me._$connection.Tables.Exist(NagatoDB.Table.Library) Then
+        yukiTable = Me._$connection.Tables.Add(NagatoDB.Table.Library)
         yukiTable.Fields.Add(NagatoDBMedia.Column.Id, db.Serial)
         yukiTable.Fields.Add(NagatoDBMedia.Column.Title, db.String)
         yukiTable.Fields.Add(NagatoDBMedia.Column.Artist, db.String)
@@ -22,53 +22,20 @@ Public Sub _EnsureTable() 'override
     
 End
 
-Public Sub AddTags(argPath As String, argTags As MediaTagList)
+Public Sub AddTagsByNagatoTags(argPath As String, argTags As NagatoTags)
     
     Dim yukiResult As Result
     
     Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(NagatoDBMedia.Table.Library)
-        yukiResult[NagatoDBMedia.Column.Path] = argPath
-        yukiResult[NagatoDBMedia.Column.Title] = argTags["title"]
-        yukiResult[NagatoDBMedia.Column.Artist] = argTags["artist"]
-        yukiResult[NagatoDBMedia.Column.Album] = argTags["album"]
+        yukiResult = Me._$connection.Edit(NagatoDB.Table.Library, "path = &1", argPath)
+        If argTags.Title Then yukiResult[NagatoDBMedia.Column.Title] = argTags.Title
+        If argTags.Artist Then yukiResult[NagatoDBMedia.Column.Artist] = argTags.Artist
+        If argTags.Album Then yukiResult[NagatoDBMedia.Column.Album] = argTags.Album
         yukiResult.Update()
     Me._$connection.Commit()
     
 Catch
     Me._$connection.Rollback()
-    
-End
-
-Private Function isChanged(argResult As Result, argTags As MediaTagList) As Boolean
-    
-    If argResult[NagatoDBMedia.Column.Title] <> argTags["title"] Then Return True
-    If argResult[NagatoDBMedia.Column.Artist] <> argTags["artist"] Then Return True
-    If argResult[NagatoDBMedia.Column.Album] <> argTags["album"] Then Return True
-    
-    Return False
-    
-End
-
-Public Function FetchTags(argPath As String, argTags As MediaTagList) As Boolean 'return true when something changed
-    
-    Dim yukiResult As Result
-    Dim yukiChanged As Boolean 
-    
-    Me._$connection.Begin()
-        yukiResult = Me._$connection.Edit(NagatoDBMedia.Table.Library, "path = &1", argPath)
-        yukiChanged = isChanged(yukiResult, argTags)
-        yukiResult[NagatoDBMedia.Column.Title] = argTags["title"]
-        yukiResult[NagatoDBMedia.Column.Artist] = argTags["artist"]
-        yukiResult[NagatoDBMedia.Column.Album] = argTags["album"]
-        yukiResult.Update()
-    Me._$connection.Commit()
-    
-    Return yukiChanged
-    
-Catch
-    Me._$connection.Rollback()
-    Return False
     
 End
 
@@ -77,10 +44,12 @@ Public Function FetchDuration(argPath As String, argDuration As Float) As Boolea
     Dim yukiResult As Result
     Dim yukiFlag As Boolean = False
     
+    If argDuration = 0 Then Return
+    
     Me._$connection.Begin()
-        yukiResult = Me._$connection.Edit(NagatoDBMedia.Table.Library, "path = &1", argPath)
+        yukiResult = Me._$connection.Edit(NagatoDB.Table.Library, "path = &1", argPath)
         yukiFlag = (yukiResult[NagatoDBMedia.Column.Duration] = argDuration)
-        If Not yukiFlag And If argDuration > 0 Then yukiResult[NagatoDBMedia.Column.Duration] = argDuration
+        If Not yukiFlag Then yukiResult[NagatoDBMedia.Column.Duration] = argDuration
         yukiResult.Update()
     Me._$connection.Commit()
     
@@ -96,10 +65,10 @@ Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
     Dim yukiResult As Result
     
-    If Me._$connection.Find(NagatoDBMedia.Table.Library, "path = &1", argPath).Count > 0 Then Return
+    If Me._$connection.Find(NagatoDB.Table.Library, "path = &1", argPath).Count > 0 Then Return
     
     Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(NagatoDBMedia.Table.Library)
+        yukiResult = Me._$connection.Create(NagatoDB.Table.Library)
         yukiResult[NagatoDBMedia.Column.Title] = MikuruId3TagInfo.GetTitle(argPath)
         yukiResult[NagatoDBMedia.Column.Artist] = MikuruId3TagInfo.GetArtist(argPath)
         yukiResult[NagatoDBMedia.Column.Album] = MikuruId3TagInfo.GetAlbum(argPath)

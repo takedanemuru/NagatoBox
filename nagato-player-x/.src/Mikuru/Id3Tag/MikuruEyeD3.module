@@ -1,26 +1,19 @@
 ' Gambas module file
 
-Private Const Command As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
-Private Const Command2 As String = "eyeD3 --remove-images &1"
+Private Const CommandAdd As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
+Private Const CommandRemove As String = "eyeD3 --remove-images &1"
 
 Private $workingDirectory As New NagatoWorkingDirectoryEyeD3
 
-Private Function getPictureFormWorkingDirectory(argSize As Integer) As Picture
-    
-    Dim yukiImage As Image = Image.Load($workingDirectory[0])
-    Dim yukiRate As Float = Max(argSize / yukiImage.H, argSize / yukiImage.W)
-    
-    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
-    
-Catch
-    Return Null
-    
-End
-
 Private Sub setAlbumArtToFile(argPicturePath As String, argMusicPath As String)
     
-    Shell Subst$(Command2, Quote$(argMusicPath)) Wait
-    Shell Subst$(Command, Quote$(argPicturePath), Quote$(argMusicPath)) Wait
+    Dim yukiTempPath As String = Temp$() & ".png"
+    Dim yukiCoverArt As Picture = MikuruCroppedImage(argPicturePath, MikuruUx.CoverArt.Size)
+    
+    yukiCoverArt.Save(yukiTempPath)
+    
+    Shell Subst$(CommandRemove, Quote$(argMusicPath)) Wait
+    Shell Subst$(CommandAdd, Quote$(yukiTempPath), Quote$(argMusicPath)) Wait
     
 End
 
@@ -29,7 +22,7 @@ Private Sub setAlbumArtToCurrentPlayingFile(argPicturePath As String, argMusicPa
     NagatoQueue.ChannelPlayControl.Pause()
         setAlbumArtToFile(argPicturePath, argMusicPath)
     NagatoQueue.ChannelPlayControl.Play()
-    NagatoQueue.ChannelCoverArt.Reload()
+    NagatoQueue.ChannelCurrent.Reload()
     
 End
 
@@ -37,7 +30,7 @@ Public Function GetPicture(argPath As String, argSize As Integer) As Picture
     
     $workingDirectory.Ensure()
     Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) Wait
-    If $workingDirectory.HasFile Then Return getPictureFormWorkingDirectory(argSize)
+    If $workingDirectory.HasFile Then Return MikuruCroppedImage($workingDirectory[0], argSize)
 
 Finally
     Return Null
@@ -46,7 +39,7 @@ End
 
 Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
-    If (Media.URL(argMusicPath) = NagatoQueue.ChannelList.CurrentUrl) Then
+    If (Media.URL(argMusicPath) = NagatoQueue.ChannelCurrent.Url) Then
         setAlbumArtToCurrentPlayingFile(argPicturePath, argMusicPath)
     Else
         setAlbumArtToFile(argPicturePath, argMusicPath)

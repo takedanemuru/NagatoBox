@@ -17,10 +17,10 @@ Public Sub _call(argSignal As Integer, ...)
         Case SignalSelectionMoved
             Raise SelectionMoved(Param[0])
         Case SignalTagChanged
-            Try NagatoQueue.ChannelCoverArt.Reload()
+            Try NagatoQueue.ChannelCurrent.Reload()
             Raise TagChanged
         Case SignalMoved
-            Try NagatoQueue.ChannelCoverArt.Reload()
+            Try NagatoQueue.ChannelCurrent.Reload()
             Raise Moved
     End Select
     

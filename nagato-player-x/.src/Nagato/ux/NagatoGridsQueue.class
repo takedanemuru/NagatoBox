@@ -8,6 +8,12 @@ Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
 
+Private Sub testInsertCoverArt(argPath As String)
+    
+    Me._$grids[Me._$grids.Rows.Max, ColumnIcon].Picture = MikuruEyeD3.GetPicture(argPath, 64)
+    
+End
+
 Private Function insertRows() As Integer
     
     Dim yukiRowIndex As Integer
@@ -18,6 +24,7 @@ Private Function insertRows() As Integer
         Inc Me._$grids.Rows.Count
         If $playMark.Set(yukiRowIndex) Then yukiCurrentRow = yukiRowIndex
         yukiElement = NagatoQueue[yukiRowIndex]
+        'testInsertCoverArt(yukiElement.Path)
         Me._SetGridData(ColumnTitle, yukiElement.Title)
         Me._SetGridData(ColumnArtist, yukiElement.Artist)
         Me._SetGridData(ColumnAlbum, yukiElement.Album)
@@ -124,16 +131,14 @@ Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.ListDelete
             NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
         Case MikuruSignal.ListEdit
-            NagatoQueue.ChannelTags.EditByIndexes(Me._$grids.Rows.Selection)
+            NagatoQueue.EditByIndexes(Me._$grids.Rows.Selection)
     End Select
     
 End
 
 Public Sub _Activate() 'override
     
-    Debug NagatoQueue[Me._$grids.Row].Path
-    
-   NagatoQueue.ChannelPlayControl.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
+    NagatoQueue.ChannelPlayControl.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
     
 End
 

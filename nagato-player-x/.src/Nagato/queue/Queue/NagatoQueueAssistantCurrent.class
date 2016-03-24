@@ -1,0 +1,67 @@
+' Gambas class file
+
+Inherits NagatoQueueAssistant
+
+Property Read CoverArt As Picture
+Property Read Titile As String
+Property Read Artist As String
+Property Read Album As String
+Property Read Url As String
+
+Private $coverArt As Picture
+Private $title As String
+Private $album As String
+Private $artist As String
+Private $observer As Observer
+
+Public Sub Reload()
+    
+    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList.ChannelCurrent.Path, MikuruUx.CoverArt.Size)
+    $title = MikuruId3TagInfo.GetTitle(Me._$musicList.ChannelCurrent.Path)
+    $artist = MikuruId3TagInfo.GetArtist(Me._$musicList.ChannelCurrent.Path)
+    $album = MikuruId3TagInfo.GetAlbum(Me._$musicList.ChannelCurrent.Path)
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $observer = New Observer(Me._$player) As "Asakura"
+    Me.Reload()
+    
+End
+
+Private Function CoverArt_Read() As Picture
+
+    Return $coverArt
+
+End
+
+Private Function Titile_Read() As String
+
+    Return $title
+
+End
+
+Private Function Artist_Read() As String
+
+    Return $artist
+    
+End
+
+Private Function Album_Read() As String
+
+    Return $album
+
+End
+
+Public Sub Asakura_FetchDuration(argDuration As Float)
+    
+    NagatoDBMedia.FetchDuration(Me._$musicList.ChannelCurrent.Path, argDuration) 
+    
+End
+
+Private Function Url_Read() As String
+
+    Return Media.URL(Me._$musicList.ChannelCurrent.Path)
+
+End

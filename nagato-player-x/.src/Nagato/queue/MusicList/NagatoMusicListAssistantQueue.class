@@ -12,12 +12,12 @@ End
 
 Public Sub EnqueuePaths(argPaths As String[])
     
-    Dim yukiCount As Integer = Me._$musicElements.ChannelQueue.EnqueueByPaths(argPaths)
+    Dim yukiCount As Integer = Me._$musicElements.EnqueueByPaths(argPaths)
 
     If yukiCount = 0 Then Return
     
     If MikuruMessage.SetNewMusic(yukiCount) Then musicListChanged()
-    Me._$position.Refresh(Me._$musicElements.ChannelPaths.Count)
+    Me._$position.Refresh(Me._$musicElements.Count)
     
 End
 
@@ -36,10 +36,10 @@ End
 
 Public Function DequeueIndexes(argIndexes As Integer[]) As Boolean
     
-    If Me._$musicElements.ChannelQueue.DequeuByIndexes(argIndexes) Then musicListChanged()
-    Me._$position.Refresh(Me._$musicElements.ChannelPaths.Count)
+    If Me._$musicElements.DequeueByIndexes(argIndexes) Then musicListChanged()
+    Me._$position.Refresh(Me._$musicElements.Count)
     
-    Return (Me._$musicElements.ChannelPaths.Count > 0)
+    Return (Me._$musicElements.Count > 0)
     
 End
 
@@ -49,7 +49,7 @@ Public Function GetCollection() As Collection
     Dim yukiIndex As Integer
     Dim yukiPath As NagatoMusicElement
     
-    For yukiIndex = 0 To Me._$musicElements.ChannelPaths.Max
+    For yukiIndex = 0 To Me._$musicElements.Max
         yukiPath = Me._$musicElements[yukiIndex].Path
         yukiCollection.Add(Me._$musicElements[yukiIndex].Title, yukiPath)
     Next
@@ -64,7 +64,7 @@ Public Function GetPathsByIndexes(argIndexes As Integer[]) As String[]
     Dim yukiIndex As Integer
     
     For Each yukiIndex In argIndexes
-        If yukiIndex >= Me._$musicElements.ChannelPaths.Count Then Continue
+        If yukiIndex >= Me._$musicElements.Count Then Continue
         yukiResult.Add(Me._$musicElements[yukiIndex].Path)
     Next
     
@@ -75,7 +75,7 @@ End
 Public Sub ClearAll()
     
     Me._$position.Current = 0
-    Me._$musicElements.ChannelQueue.Clear()
+    Me._$musicElements.Clear()
     HaruhiPlayer.SetMessage(("Playlist is cleared."), 5)
     musicListChanged()
     
@@ -83,6 +83,6 @@ End
 
 Private Function Count_Read() As Integer
 
-    Return Me._$musicElements.ChannelPaths.Count
+    Return Me._$musicElements.Count
 
 End

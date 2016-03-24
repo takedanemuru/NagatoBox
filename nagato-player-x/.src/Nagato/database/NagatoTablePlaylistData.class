@@ -4,7 +4,7 @@ Inherits NagatoTable
 
 Private Sub deleteDuplicatedRecord(argPlaylistNameId As Integer)
     
-    Try Me._$connection.Delete(NagatoDBMedia.Table.PlaylistData, "playlist_name_id = &1", argPlaylistNameId)
+    Try Me._$connection.Delete(NagatoDB.Table.PlaylistData, "playlist_name_id = &1", argPlaylistNameId)
     
 End
 
@@ -13,7 +13,7 @@ Private Sub save(argPlaylistNameId As Integer, argPath As String)
     Dim yukiResult As Result
     
     Me._$connection.Begin()
-        yukiResult = Me._$connection.Create(NagatoDBMedia.Table.PlaylistData)
+        yukiResult = Me._$connection.Create(NagatoDB.Table.PlaylistData)
         yukiResult[NagatoDBMedia.Column.PlaylistNameId] = argPlaylistNameId
         yukiResult[NagatoDBMedia.Column.Path] = argPath
         yukiResult.Update()
@@ -39,9 +39,9 @@ Public Sub _EnsureTable() 'override
     
     Dim yukiTable As Table
     
-    If Me._$connection.Tables.Exist(NagatoDBMedia.Table.PlaylistData) Then Return
+    If Me._$connection.Tables.Exist(NagatoDB.Table.PlaylistData) Then Return
 
-    yukiTable = Me._$connection.Tables.Add(NagatoDBMedia.Table.PlaylistData)
+    yukiTable = Me._$connection.Tables.Add(NagatoDB.Table.PlaylistData)
     yukiTable.Fields.Add(NagatoDBMedia.Column.Id, db.Serial)
     yukiTable.Fields.Add(NagatoDBMedia.Column.PlaylistNameId, db.Integer)
     yukiTable.Fields.Add(NagatoDBMedia.Column.Path, db.String)

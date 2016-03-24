@@ -4,17 +4,15 @@ Create Static
 
 Property Read ChannelPlayControl As NagatoQueueAssistantPlayControl
 Property Read ChannelPlayState As NagatoQueueAssistantPlayState
-Property Read ChannelCoverArt As NagatoQueueAssistantCoverArt
 Property Read ChannelList As NagatoQueueAssistantList
-Property Read ChannelTags As NagatoQueueAssistantTags
+Property Read ChannelCurrent As NagatoQueueAssistantCurrent
 
 Private $player As New NagatoPlayer
 Private $musicList As NagatoMusicList 
 Private $assistantPlayControl As NagatoQueueAssistantPlayControl
 Private $assistantPlayState As NagatoQueueAssistantPlayState
-Private $assistantCoverArt As NagatoQueueAssistantCoverArt
 Private $assistantList As NagatoQueueAssistantList
-Private $assistantTags As NagatoQueueAssistantTags
+Private $assistantCurrent As NagatoQueueAssistantCurrent
 
 Public Sub AddMusics(argPaths As String[])
     
@@ -48,14 +46,22 @@ Public Sub RemoveDuplicateMusic()
     
 End
 
+Public Sub EditByIndexes(argIndexes As Integer[])
+    
+    With MikuruDialogPortalTagEdit
+        If argIndexes.Count = 1 Then .SetTag($musicList[argIndexes[0]].Path)
+        If argIndexes.Count > 0 Then .SetTagBulk($musicList.ChannelQueue.GetPathsByIndexes(argIndexes))
+    End With
+    
+End
+
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) 
     $assistantList = New NagatoQueueAssistantList($player, $musicList)
-    $assistantCoverArt = New NagatoQueueAssistantCoverArt($player, $musicList)
-    $assistantTags = New NagatoQueueAssistantTags($player, $musicList)
     $assistantPlayControl = New NagatoQueueAssistantPlayControl($player, $musicList)
     $assistantPlayState = New NagatoQueueAssistantPlayState($player, $musicList)
+    $assistantCurrent = New NagatoQueueAssistantCurrent($player, $musicList)
     
 End
 
@@ -77,20 +83,14 @@ Private Function ChannelPlayState_Read() As NagatoQueueAssistantPlayState
 
 End
 
-Private Function ChannelCoverArt_Read() As NagatoQueueAssistantCoverArt
-
-    Return $assistantCoverArt
-
-End
-
 Private Function ChannelList_Read() As NagatoQueueAssistantList
 
     Return $assistantList
 
 End
 
-Private Function ChannelTags_Read() As NagatoQueueAssistantTags
+Private Function ChannelCurrent_Read() As NagatoQueueAssistantCurrent
 
-    Return $assistantTags
+    Return $assistantCurrent
 
 End

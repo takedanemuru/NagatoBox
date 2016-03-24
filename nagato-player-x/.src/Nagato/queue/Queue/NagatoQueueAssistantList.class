@@ -5,7 +5,6 @@ Inherits NagatoQueueAssistant
 Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
-Property Read CurrentUrl As String
 Property Read Collection As Collection
 
 Public Function SetPath(argPath As String) As Boolean
@@ -29,12 +28,6 @@ End
 Public Sub MoveDown(argIndexes As Integer[])
     
     If argIndexes.Count > 0 Then Me._$musicList.ChannelMove.Down(argIndexes)
-
-End
-
-Private Function CurrentUrl_Read() As String
-
-    Return Me._$musicList.ChannelCurrent.Url
 
 End
 

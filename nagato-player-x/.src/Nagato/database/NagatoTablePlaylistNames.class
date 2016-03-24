@@ -6,7 +6,7 @@ Private Sub push(argPlaylistName As String)
     
     Dim yukiResult As Result
     
-    With NagatoDBMedia
+    With NagatoDB
         Me._$connection.Begin()
             yukiResult = Me._$connection.Create(.Table.PlaylistNames)
             yukiResult[.Column.PlaylistName] = argPlaylistName
@@ -24,7 +24,7 @@ Public Sub _EnsureTable() 'override
     
     Dim yukiTable As Table
     
-    With NagatoDBMedia
+    With NagatoDB
         If Not Me._$connection.Tables.Exist(.Table.PlaylistNames) Then
             yukiTable = Me._$connection.Tables.Add(.Table.PlaylistNames)
             yukiTable.Fields.Add(.ColumnId, db.Serial)
@@ -38,7 +38,7 @@ End
 
 Public Sub EnsurePlaylistName(argPlaylistName As String)
     
-    If Me._$connection.Find(NagatoDBMedia.Table.PlaylistNames, "playlist_name = &1", argPlaylistName).Count > 0 Then
+    If Me._$connection.Find(NagatoDB.Table.PlaylistNames, "playlist_name = &1", argPlaylistName).Count > 0 Then
         Return
     Else
         push(argPlaylistName)
@@ -50,7 +50,7 @@ Public Function GetPlaylistNameId(argPlaylistName As String) As Integer
     
     Dim yukiResult As Result
     
-    yukiResult = Me._$connection.Find(NagatoDBMedia.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
+    yukiResult = Me._$connection.Find(NagatoDB.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
     
     Return yukiResult[NagatoDBMedia.Column.Id]
     
@@ -61,13 +61,13 @@ End
 
 Public Function GetAllResult() As Result
     
-    Return Me._$connection.Find(NagatoDBMedia.Table.PlaylistNames)
+    Return Me._$connection.Find(NagatoDB.Table.PlaylistNames)
     
 End
 
 Public Function HasResult() As Boolean
     
-    If Me._$connection.Find(NagatoDBMedia.Table.PlaylistNames).Count > 0 Then
+    If Me._$connection.Find(NagatoDB.Table.PlaylistNames).Count > 0 Then
         Return True
     Else
         Return False

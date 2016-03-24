@@ -4,47 +4,15 @@ Inherits NagatoDB
 
 Create Static
 
-Property Read Column As NagatoDBColumns
-Property Read Table As NagatoDBTables
-
 Public _$uniqueName As String = "Media"
 
-Private $columns As New NagatoDBColumns
-Private $tables As New NagatoDBTables
 Private $tableLibrary As NagatoTableLibrary
 Private $tablePlaylistNames As NagatoTablePlaylistNames
 Private $tablePlaylistData As NagatoTablePlaylistData
 
-Public Function GetTitleFromPath(argPath As String) As String
-    
-    Dim yukiResult As Result
-    
-    yukiResult = Me._$connection.Find(Me.Table.Library, "path = &1", argPath)
-    
-    Return yukiResult[Me.Column.Title]
-    
-End
-
-Public Sub ClearLibrsary()
-    
-    Me._$connection.Delete(Me.Table.Library)
-    
-End
-
 Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
     $tableLibrary.EnsureLibrary(argPath)
-    
-End
-
-Public Sub FetchTags(argPath As String, argTags As MediaTagList) As Boolean ' return true when something changed
-    
-    If Me.HasLibrary(argPath) Then
-        Return $tableLibrary.FetchTags(argPath, argTags)
-    Else
-        $tableLibrary.AddTags(argPath, argTags)
-        Return True
-    Endif
     
 End
 
@@ -56,9 +24,9 @@ Public Function FetchDuration(argPath As String, argDuration As Float) As Boolea
     
 End
 
-Public Sub AddLibrary(argPath As String, argTitle As String, argArtist As String, argAlbum As String)
+Public Sub AddTagsByNagatoTags(argPath As String, argNagatoTags As NagatoTags)
     
-    $tableLibrary.AddTags(argPath, [argTitle, argArtist, argAlbum])
+    $tableLibrary.AddTagsByNagatoTags(argPath, argNagatoTags)
     
 End
 
@@ -123,16 +91,4 @@ Public Sub _new()
     $tablePlaylistNames = New NagatoTablePlaylistNames(Me._$connection)
     $tablePlaylistData = New NagatoTablePlaylistData(Me._$connection)
     
-End
-
-Private Function Column_Read() As NagatoDBColumns
-
-    Return $columns
-
-End
-
-Private Function Table_Read() As NagatoDBTables
-
-    Return $tables
-
 End

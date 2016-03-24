@@ -1,14 +1,5 @@
 ' Gambas module file
 
-Public Sub NewTitle(argFullPath As String, argNewTitle As String)
-    
-    Dim yukiPath As String = Replace$(URL.Decode(argFullPath), "file://", "")
-    Dim yukiCommand As String = Subst$("id3tag -2 --song &1 &2", Quote$(argNewTitle), Quote$(yukiPath))
-    
-    Shell yukiCommand Wait
-    
-End
-
 Public Sub NewArtist(argFullPath As String, argNewArtist As String)
     
     Dim yukiPath As String = Replace$(URL.Decode(argFullPath), "file://", "")

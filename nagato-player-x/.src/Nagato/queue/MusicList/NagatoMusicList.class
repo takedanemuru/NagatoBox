@@ -3,13 +3,11 @@
 Property Read ChannelMove As NagatoMusicListAssistantMove
 Property Read ChannelQueue As NagatoMusicListAssistantQueue
 Property Read ChannelCurrent As NagatoMusicListAssistantCurrent
-Property Read ChannelTags As NagatoMusicListAssistantTags
 Property Read ChannelIndex As NagatoMusicListAssistantIndex
 
 Private $assistantMove As NagatoMusicListAssistantMove
 Private $assistantQueue As NagatoMusicListAssistantQueue
 Private $assistantCurrent As NagatoMusicListAssistantCurrent
-Private $assistantTags As NagatoMusicListAssistantTags
 Private $assistantIndex As NagatoMusicListAssistantIndex
 
 Private $musicElements As New NagatoMusicElements
@@ -20,7 +18,6 @@ Private Sub initializeChannels()
     $assistantMove = New NagatoMusicListAssistantMove($musicElements, $position)
     $assistantQueue = New NagatoMusicListAssistantQueue($musicElements, $position)
     $assistantCurrent = New NagatoMusicListAssistantCurrent($musicElements, $position)
-    $assistantTags = New NagatoMusicListAssistantTags($musicElements, $position)
     $assistantIndex = New NagatoMusicListAssistantIndex($musicElements, $position)
     
 End
@@ -42,24 +39,24 @@ Public Sub RemoveDuplicateMusic()
     Dim yukiIndex As Integer
     Dim yukiIndexes As New Integer[]
     
-    For yukiIndex = $musicElements.ChannelPaths.Max DownTo 1
+    For yukiIndex = $musicElements.Max DownTo 1
         If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
     Next
     
-    If yukiIndexes.Count > 0 Then $musicElements.ChannelQueue.DequeuByIndexes(yukiIndexes)
+    If yukiIndexes.Count > 0 Then $musicElements.DequeueByIndexes(yukiIndexes)
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
-    NagatoSettingsMusic.SavePaths($musicElements.ChannelPaths.All)
+    NagatoSettingsMusic.SavePaths($musicElements.All)
     
 End
 
 Public Sub _new(argPaths As String[])
     
-    $musicElements.ChannelQueue.Initialize(argPaths)
+    $musicElements.Initialize(argPaths)
     initializeChannels()
-    If $musicElements.ChannelPaths.Count = 0 Then Return  
-    $position.Refresh($musicElements.ChannelPaths.Count)
+    If $musicElements.Count = 0 Then Return  
+    $position.Refresh($musicElements.Count)
     If NagatoSettingsMusic.Shuffle Then $assistantIndex.Next()
-    NagatoSettingsMusic.SavePaths($musicElements.ChannelPaths.All)
+    NagatoSettingsMusic.SavePaths($musicElements.All)
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
     
 End
@@ -85,12 +82,6 @@ End
 Private Function ChannelCurrent_Read() As NagatoMusicListAssistantCurrent
 
     Return $assistantCurrent
-
-End
-
-Private Function ChannelTags_Read() As NagatoMusicListAssistantTags
-
-    Return $assistantTags
 
 End
 

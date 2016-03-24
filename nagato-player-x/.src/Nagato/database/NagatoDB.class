@@ -4,8 +4,13 @@ Create Static
 
 Property Read HostName As String 'act as const.
 
+Property Read Column As NagatoDBColumns
+Property Read Table As NagatoDBTables
+
 Public _$uniqueName As String ' MUST BE OVERRIDDEN ! 
 Public _$connection As Connection
+Private $columns As New NagatoDBColumns
+Private $tables As New NagatoDBTables
 
 Private Sub checkAndCreateHost()
     
@@ -60,5 +65,17 @@ End
 Private Function HostName_Read() As String
 
     Return User.Home &/ ".nagato_software_compilation"
+
+End
+
+Private Function Column_Read() As NagatoDBColumns
+
+    Return $columns
+
+End
+
+Private Function Table_Read() As NagatoDBTables
+
+    Return $tables
 
 End
