@@ -24,6 +24,9 @@ Public Sub _call(argSignal As Integer, ...)
             Raise Moved
     End Select
     
+    Try Print "YUKI.N > Next Tune : " & NagatoQueue.ChannelCurrent.Titile 
+    
     Try NagatoSettingsMusic.SavePaths(NagatoQueue.ChannelList.Paths)
+    Try HaruhiPlayer.Title = NagatoQueue.ChannelCurrent.Titile
     
 End

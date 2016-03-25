@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public _$uniqueName As String = "Media"
+
+Private $tablePlaylistNames As NagatoTablePlaylistNames
+Private $tablePlaylistData As NagatoTablePlaylistData
+
+Public Function GetMusicCountInPlaylist(argPlaylistId As Integer) As Integer
+    
+    Return Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", argPlaylistId).Count
+    
+End
+
+Public Function GetMusicPathsInPlaylist(argPlaylistName As String) As String[]
+    
+    Dim yukiResultForId As Result = Me._$connection.Find(Me.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
+    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", yukiResultForId[Me.Column.Id])
+    Dim yukiPaths As New String[]
+    
+    For Each yukiResult
+        yukiPaths.Add(yukiResult[Me.Column.Path])
+    Next
+    
+    Return yukiPaths
+    
+End
+
+Public Sub SaveAsPlaylist(argPlaylistName As String, argPaths As String[])
+    
+    $tablePlaylistNames.EnsurePlaylistName(argPlaylistName)
+    $tablePlaylistData.OverwritePlaylist($tablePlaylistNames.GetPlaylistNameId(argPlaylistName), argPaths)
+    
+End
+
+Public Sub HasPlaylist() As Boolean
+    
+    Return $tablePlaylistNames.HasResult()
+    
+End
+
+Public Sub GetAllIdResult() As Result
+    
+    Return $tablePlaylistNames.GetAllResult()
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    
+    $tablePlaylistNames = New NagatoTablePlaylistNames(Me._$connection)
+    $tablePlaylistData = New NagatoTablePlaylistData(Me._$connection)
+    
+End

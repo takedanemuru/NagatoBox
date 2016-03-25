@@ -2,41 +2,52 @@
 
 Create Static
 
-Property Read ChannelPlayControl As NagatoQueueAssistantPlayControl
-Property Read ChannelPlayState As NagatoQueueAssistantPlayState
+Property Read ChannelPlayer As NagatoQueueAssistantPlayer
 Property Read ChannelList As NagatoQueueAssistantList
 Property Read ChannelCurrent As NagatoQueueAssistantCurrent
 
 Private $player As New NagatoPlayer
 Private $musicList As NagatoMusicList 
-Private $assistantPlayControl As NagatoQueueAssistantPlayControl
-Private $assistantPlayState As NagatoQueueAssistantPlayState
+Private $assistantPlayer As NagatoQueueAssistantPlayer
 Private $assistantList As NagatoQueueAssistantList
 Private $assistantCurrent As NagatoQueueAssistantCurrent
 
+Private $enumIndex As Integer = -1
+
 Public Sub AddMusics(argPaths As String[])
     
-    $musicList.ChannelQueue.EnqueuePaths(argPaths)
+    $musicList.EnqueuePaths(argPaths)
+    $assistantCurrent.Reload()
+    NagatoSettingsMusic.SavePaths($musicList.Paths)
 
 End
 
 Public Sub DeleteIndexes(argIndexes As Integer[])
     
     $player.Stop()
-    If $musicList.ChannelQueue.DequeueIndexes(argIndexes) Then $player.Play()
+    If $musicList.DequeueIndexes(argIndexes) Then $player.Play()
     
 End
 
 Public Sub Sort(argType As Integer, argAscend As Boolean)
     
-    $musicList.ChannelMove.Sort(argType, argAscend)
+    $musicList.Sort(argType, argAscend)
     
 End
 
 Public Sub ClearAll()
     
     $player.Stop()
-    $musicList.ChannelQueue.ClearAll()
+    $musicList.ClearAll()
+    $assistantCurrent.Reload()
+    
+End
+
+Public Sub SaveAsPlaylist()
+    
+    If $assistantList.Count = 0 Then Return
+    
+    NagatoDBPlaylists.SaveAsPlaylist(MikuruDialog.PlaylistName, $assistantList.Paths)
     
 End
 
@@ -50,7 +61,7 @@ Public Sub EditByIndexes(argIndexes As Integer[])
     
     With MikuruDialogPortalTagEdit
         If argIndexes.Count = 1 Then .SetTag($musicList[argIndexes[0]].Path)
-        If argIndexes.Count > 0 Then .SetTagBulk($musicList.ChannelQueue.GetPathsByIndexes(argIndexes))
+        If argIndexes.Count > 0 Then .SetTagBulk($musicList.GetPathsByIndexes(argIndexes))
     End With
     
 End
@@ -59,28 +70,21 @@ Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) 
     $assistantList = New NagatoQueueAssistantList($player, $musicList)
-    $assistantPlayControl = New NagatoQueueAssistantPlayControl($player, $musicList)
-    $assistantPlayState = New NagatoQueueAssistantPlayState($player, $musicList)
+    $assistantPlayer = New NagatoQueueAssistantPlayer($player, $musicList)
     $assistantCurrent = New NagatoQueueAssistantCurrent($player, $musicList)
     
 End
 
-Public Sub _get(argIndex As Integer) As NagatoMusicElement
+Public Sub _next() As NagatoMusicElement
     
-    Return $musicList[argIndex]
+    Inc $enumIndex
+
+    Return $musicList[$enumIndex]
     
-End
-
-Private Function ChannelPlayControl_Read() As NagatoQueueAssistantPlayControl
-
-    Return $assistantPlayControl
-
-End
-
-Private Function ChannelPlayState_Read() As NagatoQueueAssistantPlayState
-
-    Return $assistantPlayState
-
+Catch
+    $enumIndex = -1
+    Enum.Stop()
+    
 End
 
 Private Function ChannelList_Read() As NagatoQueueAssistantList
@@ -92,5 +96,11 @@ End
 Private Function ChannelCurrent_Read() As NagatoQueueAssistantCurrent
 
     Return $assistantCurrent
+
+End
+
+Private Function ChannelPlayer_Read() As NagatoQueueAssistantPlayer
+
+    Return $assistantPlayer
 
 End

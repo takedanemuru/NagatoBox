@@ -6,19 +6,18 @@ Property Album As String
 Property Title As String
 Property Read Duration As Float
 
-Private $path As String
 Private $tags As New NagatoTags
 
 Public Sub _new(argPath As String)
     
-    $path = argPath
+    NagatoDBMedia.EnsureLibrary(argPath)
     $tags.SetTag(argPath)
     
 End
 
 Private Function Path_Read() As String
 
-    Return $path
+    Return $tags.Path
 
 End
 
@@ -36,8 +35,6 @@ End
 
 Private Function Title_Read() As String
 
-    If $tags.Title = "" Then Return File.BaseName($path)
-    
     Return $tags.Title
 
 End

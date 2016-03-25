@@ -19,17 +19,20 @@ End
 
 Private Sub setAlbumArtToCurrentPlayingFile(argPicturePath As String, argMusicPath As String)
     
-    NagatoQueue.ChannelPlayControl.Pause()
+    NagatoQueue.ChannelPlayer.Pause()
         setAlbumArtToFile(argPicturePath, argMusicPath)
-    NagatoQueue.ChannelPlayControl.Play()
+    NagatoQueue.ChannelPlayer.Play()
     NagatoQueue.ChannelCurrent.Reload()
     
 End
 
 Public Function GetPicture(argPath As String, argSize As Integer) As Picture
     
+    Dim yukiOutput As String
+    
     $workingDirectory.Ensure()
-    Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) Wait
+    Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) To yukiOutput
+    If Not yukiOutput Then Return Null
     If $workingDirectory.HasFile Then Return MikuruCroppedImage($workingDirectory[0], argSize)
 
 Finally

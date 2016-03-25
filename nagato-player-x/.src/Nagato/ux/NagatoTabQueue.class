@@ -8,16 +8,6 @@ Private $queueObserver As Observer
 
 Event NewPlaylist
 
-Private Sub saveAsPlaylist()
-    
-    If $grids.GetPaths().Count = 0 Then Return
-    
-    NagatoDBMedia.SaveAsPlaylist(MikuruDialog.PlaylistName, $grids.GetPaths())
-    
-    Raise NewPlaylist
-    
-End
-
 Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
     
     $menuBar = New NagatoMenuBarQueue(argContainer) As "MenuBar"
@@ -30,7 +20,8 @@ Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.ListSaveAs
-            saveAsPlaylist()
+            NagatoQueue.SaveAsPlaylist()
+            Raise NewPlaylist
         Case MikuruSignal.ListUp
             NagatoQueue.ChannelList.MoveUp($grids.Selection)
         Case MikuruSignal.ListDown

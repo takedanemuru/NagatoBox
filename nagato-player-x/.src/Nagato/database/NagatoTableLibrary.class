@@ -22,7 +22,7 @@ Public Sub _EnsureTable() 'override
     
 End
 
-Public Sub AddTagsByNagatoTags(argPath As String, argTags As NagatoTags)
+Public Sub AddTagsByNagatoTags(argPath As String, argTags As NagatoId3TagInfo)
     
     Dim yukiResult As Result
     
@@ -64,14 +64,17 @@ End
 Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
     Dim yukiResult As Result
+    Dim yukiId3TagInfo As NagatoId3TagInfo
     
     If Me._$connection.Find(NagatoDB.Table.Library, "path = &1", argPath).Count > 0 Then Return
     
+    yukiId3TagInfo = MikuruId3TagInfo(argPath)
+    
     Me._$connection.Begin()
         yukiResult = Me._$connection.Create(NagatoDB.Table.Library)
-        yukiResult[NagatoDBMedia.Column.Title] = MikuruId3TagInfo.GetTitle(argPath)
-        yukiResult[NagatoDBMedia.Column.Artist] = MikuruId3TagInfo.GetArtist(argPath)
-        yukiResult[NagatoDBMedia.Column.Album] = MikuruId3TagInfo.GetAlbum(argPath)
+        yukiResult[NagatoDBMedia.Column.Title] = yukiId3TagInfo.Title
+        yukiResult[NagatoDBMedia.Column.Artist] = yukiId3TagInfo.Artist
+        yukiResult[NagatoDBMedia.Column.Album] = yukiId3TagInfo.Album
         yukiResult[NagatoDBMedia.Column.Duration] = MikuruDuration.GetDuration(argPath)
         yukiResult[NagatoDBMedia.Column.Path] = argPath
         yukiResult.Update()

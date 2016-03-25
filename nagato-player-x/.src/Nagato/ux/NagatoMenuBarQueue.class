@@ -26,13 +26,13 @@ Public Sub MenuButton_Click()
     
     Select Case Last.Tag
         Case MikuruSignal.QueuePlay
-            NagatoQueue.ChannelPlayControl.Play()
+            NagatoQueue.ChannelPlayer.Play()
         Case MikuruSignal.QueuePause
-            NagatoQueue.ChannelPlayControl.Pause()
+            NagatoQueue.ChannelPlayer.Pause()
         Case MikuruSignal.QueueNext
-            NagatoQueue.ChannelPlayControl.Next()
+            NagatoQueue.ChannelPlayer.Next()
         Case MikuruSignal.QueueBack
-            NagatoQueue.ChannelPlayControl.Back()
+            NagatoQueue.ChannelPlayer.Back()
         Case MikuruSignal.QueueShuffle
             NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
         Case MikuruSignal.QueueRepeat

@@ -16,14 +16,12 @@ End
 
 Private Function insertRows() As Integer
     
-    Dim yukiRowIndex As Integer
     Dim yukiElement As NagatoMusicElement
     Dim yukiCurrentRow As Integer
 
-    For yukiRowIndex = 0 To NagatoQueue.ChannelList.Count - 1
+    For Each yukiElement In NagatoQueue
         Inc Me._$grids.Rows.Count
-        If $playMark.Set(yukiRowIndex) Then yukiCurrentRow = yukiRowIndex
-        yukiElement = NagatoQueue[yukiRowIndex]
+        If $playMark.Set(Me._$grids.Rows.Max) Then yukiCurrentRow = Me._$grids.Rows.Max
         'testInsertCoverArt(yukiElement.Path)
         Me._SetGridData(ColumnTitle, yukiElement.Title)
         Me._SetGridData(ColumnArtist, yukiElement.Artist)
@@ -74,33 +72,6 @@ Public Sub _ContextMenu() ' override
     
 End
 
-Public Sub MoveTo(argUrl As String)
-    
-    Dim yukiRow As Integer
-    
-    Me._ClearIcon(ColumnIcon)
-    
-    For yukiRow = 0 To Me._$grids.Rows.Max
-        If NagatoQueue[yukiRow].Path <> argUrl Then Continue
-        Me._$grids[yukiRow, ColumnIcon].EnsureVisible()
-        $playMark.Set(yukiRow)
-    Next
-    
-End
-
-Public Function GetPaths() As String[]
-    
-    Dim yukiPaths As New String[] ' Return Value
-    Dim yukiRowIndex As Integer
-    
-    For yukiRowIndex = 0 To Me._$grids.Rows.Max
-        yukiPaths.Add(NagatoQueue[yukiRowIndex].Path)
-    Next
-    
-    Return yukiPaths
-    
-End
-
 Public Sub SetMark(argRow As Integer)
     
     $playMark.Refresh(argRow)
@@ -138,7 +109,7 @@ End
 
 Public Sub _Activate() 'override
     
-    NagatoQueue.ChannelPlayControl.SetPathAndPlay(NagatoQueue[Me._$grids.Row].Path)
+    NagatoQueue.ChannelPlayer.SetIndexAndPlay(Me._$grids.Row)
     
 End
 

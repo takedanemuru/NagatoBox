@@ -7,7 +7,7 @@ Private $message As String = ""
 
 Private Function getInfoText() As String
     
-    If NagatoQueue.ChannelList.Count = 0 Then
+    If NagatoQueue.ChannelCurrent.Titile = "" Then
         Return Subst$("<b>YUKI.N > Can you see this ?</b>")
     Else
         Return Subst$("<b>&1</b>", NagatoQueue.ChannelCurrent.Titile)

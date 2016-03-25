@@ -1,0 +1,15 @@
+' Gambas module file
+
+Private Function getDuration(argDuration As Float, Optional argRate As Float = 1) As String
+    
+    Return MikuruFloatToTime(argDuration * Min(argRate, 1))
+    
+End
+
+Public Function GetDurationTextByRate(argRate As Float, argDuration As Float) As String
+    
+    If argDuration = 0 Then Return ""
+    
+    Return Subst$("&1 / &2", getDuration(argDuration, argRate), getDuration(argDuration))
+    
+End

@@ -42,10 +42,12 @@
 
 ### nagato-player-x (v42.3.12)
 
+![image: nagat-player-x_core_diagram](/home/takedanemuru/Yandex.Disk/ドキュメント/nagat-player-x_core_diagram2.png)
+
 + ~~fix : id3tag fetching.~~
 + refine playlist ux.
 + cui front-end ?
-+ new : crop coverart image that is not square automatically.
++ ~~new : crop coverart image that is not square automatically.~~
 + ~~refactoring : separate huge size classes.~~
 + ~~fix : start-up sequence~~
 + ~~refactoring : make all NagatoPlayerAssistant* to inherit same parent class.~~

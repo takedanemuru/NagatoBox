@@ -50,12 +50,14 @@ Public Sub SetZoom(argSignal As Integer)
     
 End
 
-Public Sub Export()
+Public Sub Export(argSourcePath As String)
     
     Dialog.Title = ("Save image")
-    Dialog.Path = Desktop.GetDirectory("DOCUMENTS") &/ ("your_graph.png")
+    Dialog.Path = File.Dir(argSourcePath) &/ File.BaseName(argSourcePath) & ".png"
     
     If Dialog.SaveFile() Then Return
+    
+    If Exist(Dialog.Path) Then Kill Dialog.Path
     
     $imageView.Image.Save(Dialog.Path)
     

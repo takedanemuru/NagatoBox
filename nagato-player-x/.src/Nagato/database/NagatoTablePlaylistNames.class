@@ -24,6 +24,8 @@ Public Sub _EnsureTable() 'override
     
     Dim yukiTable As Table
     
+    If Not Me._$connection.Opened Then Me._$connection.Open()
+    
     With NagatoDB
         If Not Me._$connection.Tables.Exist(.Table.PlaylistNames) Then
             yukiTable = Me._$connection.Tables.Add(.Table.PlaylistNames)

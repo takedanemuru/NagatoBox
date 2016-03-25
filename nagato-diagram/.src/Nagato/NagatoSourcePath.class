@@ -2,6 +2,8 @@
 
 Inherits NagatoObject
 
+Property Read CurrentPath As String
+
 Private $currentPath As String
 Private $saved As Boolean = True
 
@@ -94,4 +96,10 @@ Public Sub _new()
     
     setNewPath(MikuruArguments.Path)
     
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $currentPath
+
 End

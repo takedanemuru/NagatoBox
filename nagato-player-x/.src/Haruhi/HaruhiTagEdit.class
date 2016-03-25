@@ -6,23 +6,17 @@ Private $observer As Observer
 
 Private Sub setTags()
     
-    TitleTextBox.Text = MikuruId3TagInfo.GetTitle($targetPath)
-    ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($targetPath)
-    AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($targetPath)
+    Dim yukiId3TagInfo As NagatoId3TagInfo = MikuruId3TagInfo($targetPath)
     
-End
-
-Private Sub setPicture()
-    
-    Dim yukiPicture As Picture = MikuruEyeD3.GetPicture($targetPath, AlbumArtPictureBox.H)
-    
-    If yukiPicture Then AlbumArtPictureBox.Picture = yukiPicture
+    TitleTextBox.Text = yukiId3TagInfo.Title
+    ArtistTextBox.Text = yukiId3TagInfo.Artist
+    AlbumTextBox.Text = yukiId3TagInfo.Album
     
 End
 
 Private Sub setNewTag()
     
-    Dim yukiTags As New NagatoTags
+    Dim yukiTags As New NagatoId3TagInfo
     
     yukiTags.Title = TitleTextBox.Text
     yukiTags.Artist = ArtistTextBox.Text
@@ -38,7 +32,7 @@ Public Sub SetPath(argPath As String)
     
     $targetPath = MikuruUrl.DecodeUrlToPath(argPath)
     setTags()
-    setPicture()
+    AlbumArtPictureBox.Picture = MikuruEyeD3.GetPicture($targetPath, AlbumArtPictureBox.H)
     
 End
 

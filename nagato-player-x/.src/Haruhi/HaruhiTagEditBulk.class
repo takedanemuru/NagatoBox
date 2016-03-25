@@ -8,8 +8,10 @@ Private $paths As String[]
 
 Private Sub initializeWidgets()
     
-    AlbumTextBox.Text = MikuruId3TagInfo.GetAlbum($paths[0])
-    ArtistTextBox.Text = MikuruId3TagInfo.GetArtist($paths[0])
+    Dim yukiId3TagInfo As NagatoId3TagInfo = MikuruId3TagInfo($paths[0])
+    
+    ArtistTextBox.Text = yukiId3TagInfo.Artist
+    AlbumTextBox.Text = yukiId3TagInfo.Album
     
 End
 

@@ -1,61 +1,134 @@
 ' Gambas class file
 
-Property Read ChannelMove As NagatoMusicListAssistantMove
-Property Read ChannelQueue As NagatoMusicListAssistantQueue
-Property Read ChannelCurrent As NagatoMusicListAssistantCurrent
-Property Read ChannelIndex As NagatoMusicListAssistantIndex
-
-Private $assistantMove As NagatoMusicListAssistantMove
-Private $assistantQueue As NagatoMusicListAssistantQueue
-Private $assistantCurrent As NagatoMusicListAssistantCurrent
-Private $assistantIndex As NagatoMusicListAssistantIndex
+Property Read Count As Integer
+Property Read Path As String
+Property Read Paths As String[]
+Property Read CurrentIndex As Integer
 
 Private $musicElements As New NagatoMusicElements
-Private $position As New NagatoMusicPosition As "MusicPosition"
-
-Private Sub initializeChannels()
-    
-    $assistantMove = New NagatoMusicListAssistantMove($musicElements, $position)
-    $assistantQueue = New NagatoMusicListAssistantQueue($musicElements, $position)
-    $assistantCurrent = New NagatoMusicListAssistantCurrent($musicElements, $position)
-    $assistantIndex = New NagatoMusicListAssistantIndex($musicElements, $position)
-    
-End
-
-Private Function isDuplicate(argPath As String, argIndex As Integer) As Boolean
-    
-    Dim yukiIndex As Integer
-    
-    For yukiIndex = (argIndex - 1) DownTo 0
-        If argPath = $musicElements[yukiIndex].Path Then Return True
-    Next
-    
-    Return False
-    
-End
+Private $position As New NagatoMusicPosition 
 
 Public Sub RemoveDuplicateMusic()
     
-    Dim yukiIndex As Integer
-    Dim yukiIndexes As New Integer[]
+    $musicElements.RemoveDuplicateMusic()
     
-    For yukiIndex = $musicElements.Max DownTo 1
-        If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
+End
+
+Public Sub Sort(argType As Integer, argSortAscend As Boolean)
+    
+    Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
+    Dim yukiIndex As Integer
+    
+    If $musicElements.Count = 0 Then Return
+    
+    For yukiIndex = 0 To $musicElements.Count - 1
+        yukiBuffer.Set($musicElements[yukiIndex], (yukiIndex = $position.Current))
     Next
     
-    If yukiIndexes.Count > 0 Then $musicElements.DequeueByIndexes(yukiIndexes)
+    $musicElements.Set(yukiBuffer.Elements)
+    $position.ResetOnSort(yukiBuffer.Current, $musicElements.Count)
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
-    NagatoSettingsMusic.SavePaths($musicElements.All)
+    
+End
+
+Public Sub Up(argSelection As Integer[]) 
+    
+    Dim yukiBuffer As New NagatoMoveBufferUp(argSelection, $position.Current)
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $musicElements.Count - 1
+        If argSelection.Exist(yukiIndex) Then yukiBuffer.AddSelected(yukiIndex, $musicElements[yukiIndex])
+        If Not argSelection.Exist(yukiIndex) Then yukiBuffer.AddUnselected(yukiIndex, $musicElements[yukiIndex])
+    Next
+    
+    $musicElements.Set(yukiBuffer.Buffer)
+    $position.Current = yukiBuffer.NewPosition
+    NagatoBroadCast(NagatoBroadCast.SignalSelectionMoved, yukiBuffer.NewSelection)
+    
+End
+
+Public Sub Down(argSelection As Integer[]) 
+    
+    Dim yukiBuffer As New NagatoMoveBufferDown($musicElements, $position.Current, argSelection)
+    
+    $musicElements.Set(yukiBuffer.Buffer)
+    $position.Current = yukiBuffer.NewPosition
+    NagatoBroadCast(NagatoBroadCast.SignalSelectionMoved, yukiBuffer.NewSelection)
+    
+End
+
+Public Function SetPath(argPath As String) As Boolean
+    
+    Dim yukiIndex As Integer = $musicElements.FindIndex(argPath) 
+    
+    'Array.Find()  shall retun -1 when query is not found
+    If yukiIndex = -1 Then Return False
+
+    $position.Current = yukiIndex
+    
+    Return True
+    
+End
+
+Public Sub Next()
+    
+    $position.Next($musicElements.Count)
+    
+End
+
+Public Sub Back()
+    
+    $position.Back($musicElements.Count)
+    
+End
+
+Public Sub EnqueuePaths(argPaths As String[])
+    
+    Dim yukiCount As Integer = $musicElements.EnqueueByPaths(argPaths)
+
+    If yukiCount = 0 Then Return
+    
+    If MikuruMessage.SetNewMusic(yukiCount) Then NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    $position.Refresh($musicElements.Count)
+    
+End
+
+Public Function DequeueIndexes(argIndexes As Integer[]) As Boolean
+    
+    If $musicElements.DequeueByIndexes(argIndexes) Then NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    $position.Refresh($musicElements.Count)
+    
+    Return ($musicElements.Count > 0)
+    
+End
+
+Public Function GetCollection() As Collection
+    
+    Return $musicElements.GetCollection()
+    
+End
+
+Public Function GetPathsByIndexes(argIndexes As Integer[]) As String[]
+    
+    Return $musicElements.GetPathsByIndexes(argIndexes)
+    
+End
+
+Public Sub ClearAll()
+    
+    $position.Current = 0
+    $musicElements.Clear()
+    HaruhiPlayer.SetMessage(("Playlist is cleared."), 5)
+    NagatoBroadCast(NagatoBroadCast.SignalChanged)
     
 End
 
 Public Sub _new(argPaths As String[])
     
     $musicElements.Initialize(argPaths)
-    initializeChannels()
     If $musicElements.Count = 0 Then Return  
     $position.Refresh($musicElements.Count)
-    If NagatoSettingsMusic.Shuffle Then $assistantIndex.Next()
+    If NagatoSettingsMusic.Shuffle Then Me.Next()
     NagatoSettingsMusic.SavePaths($musicElements.All)
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
     
@@ -67,26 +140,29 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Private Function ChannelMove_Read() As NagatoMusicListAssistantMove
+Private Function Count_Read() As Integer
 
-    Return $assistantMove
-
-End
-
-Private Function ChannelQueue_Read() As NagatoMusicListAssistantQueue
-
-    Return $assistantQueue
+    Return $musicElements.Count
 
 End
 
-Private Function ChannelCurrent_Read() As NagatoMusicListAssistantCurrent
+Private Function Path_Read() As String
 
-    Return $assistantCurrent
+    Return $musicElements[$position.Current].Path
+
+Catch
+    Return ""
 
 End
 
-Private Function ChannelIndex_Read() As NagatoMusicListAssistantIndex
+Private Function CurrentIndex_Read() As Integer
 
-    Return $assistantIndex
+    Return $position.Current
+
+End
+
+Private Function Paths_Read() As String[]
+
+    Return $musicElements.All
 
 End

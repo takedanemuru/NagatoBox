@@ -2,9 +2,8 @@
 
 Property Read Rate As Float
 Property Read Text As String
-Property SoftwareVolume As Float
 Property Read State As Integer
-Property Read IsPlaying As Boolean
+Property SoftwareVolume As Float
 
 Private $player As New MediaPlayer As "Player"
 Private $durationFetcher As New NagatoDurationFetcher 
@@ -12,26 +11,15 @@ Private $durationFetcher As New NagatoDurationFetcher
 Event MusicEnd
 Event FetchDuration(argDuration As Float)
 
-Private Function getDuration(Optional argRate As Float = 0) As String
-    
-    Return MikuruFloatToTime($player.Duration * argRate)
-    
-End
-
 Public Function GetTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
 
-    Return Subst$("&1 / &2", getDuration(Min(argRate, 1)), getDuration(1))
-
-Catch
-    Return ""
+    Return MikuruDurationText.GetDurationTextByRate(argRate, $player.Duration)
 
 End
 
 Public Sub SetByRate(argRate As Float) 
     
-    If argRate > 1 Then argRate = 1
-    
-    $player.Position = $player.Duration * argRate
+    $player.Position = $player.Duration * Min(argRate, 1)
     
 End
 
@@ -101,9 +89,10 @@ End
 
 Private Function Text_Read() As String
 
-    If $player.Duration = 0 Then Return ""
-    
     Return Me.GetTextByRate($player.Position / $player.Duration)
+
+Catch
+    Return ""
 
 End
 
@@ -131,8 +120,3 @@ Private Sub SoftwareVolume_Write(Value As Float)
 
 End
 
-Private Function IsPlaying_Read() As Boolean
-
-    Return $player.State = Media.Playing
-
-End

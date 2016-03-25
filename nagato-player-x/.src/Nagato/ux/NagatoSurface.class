@@ -19,13 +19,13 @@ End
 Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
 
     If MikuruUx.Button.Play.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayControl.Play()
+        NagatoQueue.ChannelPlayer.Play()
     Else If MikuruUx.Button.Pause.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayControl.Pause()
+        NagatoQueue.ChannelPlayer.Pause()
     Else If MikuruUx.Button.Next.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayControl.Next()
+        NagatoQueue.ChannelPlayer.Next()
     Else If MikuruUx.Button.Back.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayControl.Back()
+        NagatoQueue.ChannelPlayer.Back()
     Else If MikuruUx.Button.Shuffle.Contains(argMouseX, argMouseY) Then
         NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
     Else If MikuruUx.Button.Repeat.Contains(argMouseX, argMouseY) Then
@@ -34,14 +34,14 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
         HaruhiPlayList.EnsureVisible()
     Else If MikuruUx.Button.Volume.Contains(argMouseX, argMouseY) Then
         With MikuruUx.Button.Volume.Rect
-            NagatoQueue.ChannelPlayState.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
+            NagatoQueue.ChannelPlayer.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
         End With
     Else If MikuruUx.InfoBox.Contains(argMouseX, argMouseY) Then
         HaruhiTagEdit.SetPath(NagatoQueue.ChannelCurrent.Url)
         HaruhiTagEdit.ShowDialog()
     Else If MikuruUx.ProgressBar.Contains(argMouseX, argMouseY) Then
         With MikuruUx.ProgressBar
-            NagatoQueue.ChannelPlayState.SetProgress((argMouseX - .X) / (.W - .X))
+            NagatoQueue.ChannelPlayer.SetProgress((argMouseX - .X) / (.W - .X))
         End With
     Endif
 

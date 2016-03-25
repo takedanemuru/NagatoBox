@@ -1,45 +1,76 @@
 ' Gambas class file
 
 Property Read Count As Integer
-Property Read Max As Integer
 Property Read All As String[]
 
 Private $musicElements As New NagatoMusicElement[]
 
-Private Sub addElement(argPath As String)
+Private Function getAllPaths() As String[]
     
-    Dim yukiElement As NagatoMusicElement
+    Dim yukiPaths As New String[]
+    Dim yukiIndex As Integer
     
-    NagatoDBMedia.EnsureLibrary(argPath)
-    yukiElement = New NagatoMusicElement(argPath)
-    $musicElements.Add(yukiElement)
-    
-End
-
-Public Function FindIndex(argPath As String) As Integer
-    
-    Dim yukiCount As Integer
-    
-    For yukiCount = 0 To $musicElements.Max
-        If $musicElements[yukiCount].Path = argPath Then Return yukiCount
+    For yukiIndex = 0 To $musicElements.Max 
+        yukiPaths.Add($musicElements[yukiIndex].Path)
     Next
-    
-    Return -1
+
+    Return yukiPaths
     
 End
 
-Public Function EnqueueByPaths(argPaths As String[]) As Integer
+Private Function addPaths(argPaths As String[]) As Integer
     
     Dim yukiPath As String
     Dim yukiCount As Integer = 0
     
     For Each yukiPath In MikuruPath.Sanitize(argPaths)
         If Not MikuruMusicFormat.IsPlayable(yukiPath) Then Continue
-        addElement(yukiPath)
+        $musicElements.Add(Object.New("NagatoMusicElement", [yukiPath]))
         Inc yukiCount
     Next
     
+    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    
     Return yukiCount
+    
+End
+
+Private Function isDuplicate(argPath As String, argIndex As Integer) As Boolean
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = (argIndex - 1) DownTo 0
+        If argPath = $musicElements[yukiIndex].Path Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Public Sub RemoveDuplicateMusic()
+    
+    Dim yukiIndex As Integer
+    Dim yukiIndexes As New Integer[]
+    
+    For yukiIndex = $musicElements.Max DownTo 1
+        If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
+    Next
+    
+    If yukiIndexes.Count > 0 Then $musicElements.DequeueByIndexes(yukiIndexes)
+    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    NagatoSettingsMusic.SavePaths($musicElements.All)
+    
+End
+
+Public Function FindIndex(argPath As String) As Integer
+    
+    Return getAllPaths().Find(argPath)
+
+End
+
+Public Function EnqueueByPaths(argPaths As String[]) As Integer
+    
+    Return addPaths(argPaths)
     
 End 
 
@@ -58,21 +89,46 @@ Public Function DequeueByIndexes(argIndexes As Integer[]) As Boolean
     
 End
 
+Public Function GetCollection() As Collection
+    
+    Dim yukiCollection As New Collection
+    Dim yukiIndex As Integer
+    Dim yukiPath As NagatoMusicElement
+    
+    For yukiIndex = 0 To $musicElements.Max
+        yukiPath = $musicElements[yukiIndex].Path
+        yukiCollection.Add($musicElements[yukiIndex].Title, yukiPath)
+    Next
+    
+    Return yukiCollection
+    
+End
+
+Public Function GetPathsByIndexes(argIndexes As Integer[]) As String[]
+    
+    Dim yukiPaths As New String[]
+    Dim yukiIndex As Integer
+    
+    For Each yukiIndex In argIndexes
+        If yukiIndex > $musicElements.Max Then Continue
+        yukiPaths.Add($musicElements[yukiIndex].Path)
+    Next
+    
+    Return yukiPaths
+    
+End
+
 Public Sub Clear()
     
     $musicElements.Clear()
-    
     NagatoSettingsMusic.SavePaths([""])
     
 End
 
 Public Sub Initialize(argPaths As String[])
     
-    Dim yukiPath As String
-    
-    For Each yukiPath In MikuruPath.Sanitize(argPaths.Insert(NagatoSettingsMusic.LoadPaths()))
-        addElement(yukiPath)
-    Next
+    addPaths(NagatoSettingsMusic.LoadPaths())
+    addPaths(argPaths)
     
 End
 
@@ -96,19 +152,6 @@ End
 
 Private Function All_Read() As String[]
 
-    Dim yukiPaths As New String[]
-    Dim yukiCount As Integer
-    
-    For yukiCount = 0 To $musicElements.Count - 1
-        yukiPaths.Add($musicElements[yukiCount].Path)
-    Next
-
-    Return yukiPaths
-
-End
-
-Private Function Max_Read() As Integer
-
-    Return $musicElements.Max
+    Return getAllPaths()
 
 End

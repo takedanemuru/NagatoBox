@@ -2,44 +2,39 @@
 
 Inherits NagatoQueueAssistant
 
-Property Read Count As Integer
 Property Read Paths As String[]
 Property Read CurrentIndex As Integer
 Property Read Collection As Collection
 
 Public Function SetPath(argPath As String) As Boolean
     
-    Return Me._$musicList.ChannelIndex.SetPath(argPath)
+    Return Me._$musicList.SetPath(argPath)
     
 End
 
 Public Sub AddDirectory(argPath As String)
     
-    Me._$musicList.ChannelQueue.EnqueueDirectory(argPath)
+    Dim yukiPaths As String[] = MikuruMusicFiles.GetFromDirectory(argPath)
+    
+    If yukiPaths.Count > 0 Then Me._$musicList.EnqueuePaths(yukiPaths)
     
 End
 
 Public Sub MoveUp(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then Me._$musicList.ChannelMove.Up(argIndexes)
+    If argIndexes.Count > 0 Then Me._$musicList.Up(argIndexes)
     
 End
 
 Public Sub MoveDown(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then Me._$musicList.ChannelMove.Down(argIndexes)
-
-End
-
-Private Function Count_Read() As Integer
-
-    Return Me._$musicList.ChannelQueue.Count
+    If argIndexes.Count > 0 Then Me._$musicList.Down(argIndexes)
 
 End
 
 Private Function CurrentIndex_Read() As Integer
 
-    Return Me._$musicList.ChannelCurrent.Position
+    Return Me._$musicList.CurrentIndex
 
 End
 
@@ -51,6 +46,6 @@ End
 
 Private Function Collection_Read() As Collection
 
-    Return Me._$musicList.ChannelQueue.GetCollection()
+    Return Me._$musicList.GetCollection()
 
 End

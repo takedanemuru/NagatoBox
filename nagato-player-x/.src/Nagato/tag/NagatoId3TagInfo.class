@@ -1,0 +1,45 @@
+' Gambas class file
+
+Property Title As String
+Property Album As String
+Property Artist As String
+
+Private $title As String
+Private $artist As String
+Private $album As String
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Sub Title_Write(Value As String)
+
+    $title = Value
+
+End
+
+Private Function Album_Read() As String
+
+    Return $album
+    
+End
+
+Private Sub Album_Write(Value As String)
+
+    $album = Value
+
+End
+
+Private Function Artist_Read() As String
+
+    Return $artist
+
+End
+
+Private Sub Artist_Write(Value As String)
+
+    $artist = Value
+
+End

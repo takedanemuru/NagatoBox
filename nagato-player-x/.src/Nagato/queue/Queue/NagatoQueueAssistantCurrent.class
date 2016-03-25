@@ -9,17 +9,13 @@ Property Read Album As String
 Property Read Url As String
 
 Private $coverArt As Picture
-Private $title As String
-Private $album As String
-Private $artist As String
 Private $observer As Observer
+Private $id3TagInfo As NagatoId3TagInfo
 
 Public Sub Reload()
     
-    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList.ChannelCurrent.Path, MikuruUx.CoverArt.Size)
-    $title = MikuruId3TagInfo.GetTitle(Me._$musicList.ChannelCurrent.Path)
-    $artist = MikuruId3TagInfo.GetArtist(Me._$musicList.ChannelCurrent.Path)
-    $album = MikuruId3TagInfo.GetAlbum(Me._$musicList.ChannelCurrent.Path)
+    $id3TagInfo = MikuruId3TagInfo(Me._$musicList.Path)
+    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList.Path, MikuruUx.CoverArt.Size)
     
 End
 
@@ -38,30 +34,30 @@ End
 
 Private Function Titile_Read() As String
 
-    Return $title
+    Return $id3TagInfo.Title
 
 End
 
 Private Function Artist_Read() As String
 
-    Return $artist
+    Return $id3TagInfo.Artist
     
 End
 
 Private Function Album_Read() As String
 
-    Return $album
+    Return $id3TagInfo.Album
 
 End
 
 Public Sub Asakura_FetchDuration(argDuration As Float)
     
-    NagatoDBMedia.FetchDuration(Me._$musicList.ChannelCurrent.Path, argDuration) 
+    NagatoDBMedia.FetchDuration(Me._$musicList.Path, argDuration) 
     
 End
 
 Private Function Url_Read() As String
 
-    Return Media.URL(Me._$musicList.ChannelCurrent.Path)
+    Return Media.URL(Me._$musicList.Path)
 
 End

@@ -16,16 +16,16 @@ End
 
 Public Function Set(argRowIndex As Integer) As Boolean
     
-    If argRowIndex <> NagatoQueue.CurrentIndex Then
-        Return False
-    Else If NagatoQueue.ChannelPlayState.State = Media.Playing Then
+    If argRowIndex <> NagatoQueue.ChannelList.CurrentIndex Then Return False
+        
+    If NagatoQueue.ChannelPlayState.State = Media.Playing Then
         $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
-        Return True
     Else
         $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
-        Return True
     End If
     
+    Return True
+
 End
 
 Public Sub _new(argGrids As GridView)

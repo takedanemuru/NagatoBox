@@ -21,7 +21,7 @@ Public Sub Next(argCount As Integer)
     If checkCount(argCount) Then 
         $index.Next()
         If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Next()
-        TFEI(TFEI.SignalMoved)
+        NagatoBroadCast(NagatoBroadCast.SignalMoved)
     End If
     
 End
@@ -31,7 +31,7 @@ Public Sub Back(argCount As Integer)
     If checkCount(argCount) Then
         $index.Back()
         If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Back()
-        TFEI(TFEI.SignalMoved)
+        NagatoBroadCast(NagatoBroadCast.SignalMoved)
     End If
     
 End

@@ -41,9 +41,9 @@ Public Sub SetPath(argPath As String)
     
 End
 
-Public Sub Export()
+Public Sub Export(argSourcePath As String)
     
-    $previewer.Export()
+    $previewer.Export(argSourcePath)
     
 End
 

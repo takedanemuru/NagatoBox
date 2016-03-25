@@ -24,7 +24,7 @@ End
 
 Public Function Play() As Boolean
     
-    NagatoQueue.ChannelPlayControl.Play()
+    NagatoQueue.ChannelPlayer.Play()
     
     Return True
     
@@ -32,7 +32,7 @@ End
 
 Public Function Pause() As Boolean
     
-    NagatoQueue.ChannelPlayControl.Pause()
+    NagatoQueue.ChannelPlayer.Pause()
     
     Return True
     
@@ -40,7 +40,7 @@ End
 
 Public Function Back() As Boolean
     
-    NagatoQueue.ChannelPlayControl.Back()
+    NagatoQueue.ChannelPlayer.Back()
     
     Return True
     
@@ -48,7 +48,7 @@ End
 
 Public Function Next() As Boolean
     
-    NagatoQueue.ChannelPlayControl.Next()
+    NagatoQueue.ChannelPlayer.Next()
     
     Return True
     
@@ -74,7 +74,7 @@ Public Function PlayPathInQueue(argPath As String) As Boolean
     
     If Not NagatoQueue.ChannelList.Paths.Exist(argPath) Then Return False
 
-    NagatoQueue.ChannelPlayControl.SetPathAndPlay(argPath)
+    NagatoQueue.ChannelPlayer.SetPathAndPlay(argPath)
     Return True
     
 End
@@ -113,7 +113,7 @@ End
 
 Private Function ProgressInText_Read() As String
 
-    Return NagatoQueue.ChannelPlayState.ProgressText
+    Return NagatoQueue.ChannelPlayer.ProgressText
 
 End
 

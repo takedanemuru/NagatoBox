@@ -33,7 +33,7 @@ Private Sub previewEvent(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.PreviewRefresh
             $mainContainer.RefreshPreview()
         Case MikuruSignal.PreviewExport
-            $mainContainer.Export()
+            $mainContainer.Export($pathHandler.CurrentPath)
     End Select
     
 End
