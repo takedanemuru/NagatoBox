@@ -32,8 +32,6 @@ Public Sub EditByTagIndex(argIndex As Integer)
     $element = NagatoQueue[argIndex]
     setTags()
     $handlerCoverArt.Reset($element.Path)
-    ' AlbumArtPictureBox.Picture = MikuruEyeD3.GetPicture($element.Path, AlbumArtPictureBox.H)
-    ' $coverArtPath = ""
     Me.Center()
     ApplyButton.Enabled = False
     Me.ShowDialog()
@@ -55,7 +53,7 @@ End
 Public Sub ApplyButton_Click()
     
     NagatoQueue.EditTagsByTagIndexes([$index], getNewTag())
-    If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes([$index], $coverArtPath)
+    If $handlerCoverArt.CoverArtPath Then NagatoQueue.ChangeCoverArtByIndexes([$index], $handlerCoverArt.CoverArtPath)
     
     Me.Close()
     
@@ -67,32 +65,8 @@ Public Sub TextBox_Change()
 
 End
 
-' Public Sub AlbumArtPictureBox_MouseDown()
-' 
-'     ' HaruhiAlbumArtSelect.Show()
-'     ' $observer = New Observer(HaruhiAlbumArtSelect) As "Asakura"
-' 
-' End
-
-Public Sub Asakura_Selected()
+Public Sub Asakura_Change()
     
     ApplyButton.Enabled = True
     
 End
-
-' Public Sub Asakura_Select(argFullPath As String)
-'     
-'     $coverArtPath = argFullPath
-'     AlbumArtPictureBox.Picture = MikuruCroppedImage(argFullPath, AlbumArtPictureBox.H)
-'     ApplyButton.Enabled = True
-'     
-' Catch
-'     Return
-'     
-' End
-
-' Public Sub IconSelectButton_Click()
-' 
-'     AlbumArtPictureBox_MouseDown()
-' 
-' End

@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Property Read Count As Integer
 
 Private $musicElements As New NagatoMusicElement[]

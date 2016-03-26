@@ -2,7 +2,7 @@
 
 Create Static
 
-Public Enum SignalChanged, SignalMoved, SignalSelectionMoved, SignalTagChanged
+Public Enum SignalChanged, SignalMoved, SignalSelectionMoved, SignalTagChanged, IndexMoved
 
 Event Changed
 Event Moved
@@ -21,6 +21,8 @@ Public Sub _call(argSignal As Integer, ...)
             Raise TagChanged
         Case SignalMoved
             Try NagatoQueue.ChannelCurrent.Reload()
+            Raise Moved
+        Case IndexMoved
             Raise Moved
     End Select
     

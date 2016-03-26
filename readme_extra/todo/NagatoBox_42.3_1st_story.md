@@ -42,6 +42,7 @@
 
 ### nagato-player-x (v42.3.23)
 
+core diagram
 ![image: nagat-player-x_core_diagram](/home/takedanemuru/Yandex.Disk/ドキュメント/nagato-player-x_core_diagram.png)
 
 + ~~fix : id3tag fetching.~~

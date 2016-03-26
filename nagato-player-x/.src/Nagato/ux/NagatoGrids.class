@@ -18,6 +18,9 @@ Public Sub _SetBackgroundStripe(argColor As Integer)
     
     Me._$handlerBackground.SetBackgroundStripe(argColor)
     
+Catch
+    Return
+    
 End
 
 Public Sub _ClearGrids()

@@ -29,6 +29,9 @@ Private Function insertRows() As Integer
         Me._SetGridDataRight(ColumnTime, MikuruFloatToTime(yukiElement.Duration))
     Next
     
+Catch
+    Return
+    
 End
 
 Private Sub refreshData()
@@ -81,7 +84,7 @@ End
 
 Public Sub _Activate() 'override
     
-    NagatoQueue.ChannelPlayer.SetIndexAndPlay(Me._$grids.Row)
+    NagatoQueue.SetIndexAndPlay(Me._$grids.Row)
     
 End
 

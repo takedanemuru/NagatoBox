@@ -1,10 +1,12 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Property Read CurrentIndex As Integer
 Property Read HasElement As Boolean
 
-Private $musicElements As New NagatoMusicElements
-Private $position As New NagatoMusicPosition 
+Private $musicElements As New NagatoMusicElements 
+Private $position As New NagatoMusicPosition As "TFEI"
 
 Public Sub RemoveDuplicateMusic()
     

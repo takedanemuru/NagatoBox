@@ -53,7 +53,7 @@ End
 Public Sub ApplyButton_Click()
     
     NagatoQueue.EditTagsByTagIndexes([$index], getNewTag())
-    If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes([$index], $handlerCoverArt.CoverArtPath)
+    $handlerCoverArt.SetCoverArt([$index])
     
     Me.Close()
     

@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Public _$player As NagatoPlayer 
 Public _$musicList As NagatoMusicList 
 

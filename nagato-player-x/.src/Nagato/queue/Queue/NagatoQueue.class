@@ -48,6 +48,14 @@ Public Sub SaveAsPlaylist()
     
 End
 
+Public Sub SetIndexAndPlay(argIndex As Integer)
+    
+    $player.SetIndexAndPlay(argIndex)
+    $assistantCurrent.Reload()
+    NagatoBroadCast(NagatoBroadCast.IndexMoved)
+    
+End
+
 Public Sub RemoveDuplicateMusic()
     
     $musicList.RemoveDuplicateMusic()
@@ -79,7 +87,7 @@ End
 
 Public Sub Activate(Optional argPaths As String[] = [""])
     
-    $musicList = New NagatoMusicList(argPaths) 
+    $musicList = New NagatoMusicList(argPaths) As "TFEI"
     $assistantList = New NagatoQueueAssistantList($player, $musicList)
     $assistantPlayer = New NagatoQueueAssistantPlayer($player, $musicList)
     $assistantCurrent = New NagatoQueueAssistantCurrent($player, $musicList)
@@ -120,4 +128,15 @@ Private Function ChannelPlayer_Read() As NagatoQueueAssistantPlayer
 
     Return $assistantPlayer
 
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.BroadcastIndexMoved
+            $assistantCurrent.Reload()
+    End Select
+    
+    NagatoBroadCast(argSignal)
+    
 End

@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Property Current As Integer
 
 Private $randomOrder As New NagatoRandomizedOrder
@@ -7,32 +9,31 @@ Private $index As New NagatoMusicPositionIndex
 
 Private Function checkCount(argCount As Integer) As Boolean
     
-    If 1 >= argCount Then 
-        Return False
-    Else
-        If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
-        Return True
-    End If
+    If 1 >= argCount Then Return False
+
+    If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
+    Return True
     
 End
 
 Public Sub Next(argCount As Integer)
     
-    If checkCount(argCount) Then 
-        $index.Next()
-        If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Next()
-        NagatoBroadCast(NagatoBroadCast.SignalMoved)
-    End If
+    If Not checkCount(argCount) Then Return
+
+    $index.Next()
+    If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Next()
+
+    Raise Signal(MikuruSignal.BroadcastIndexMoved, Null)
     
 End
 
 Public Sub Back(argCount As Integer)
     
-    If checkCount(argCount) Then
-        $index.Back()
-        If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Back()
-        NagatoBroadCast(NagatoBroadCast.SignalMoved)
-    End If
+    If Not checkCount(argCount) Then Return
+
+    $index.Back()
+    If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Back()
+    NagatoBroadCast(NagatoBroadCast.SignalMoved)
     
 End
 
@@ -50,8 +51,6 @@ Public Sub ResetOnSort(argIndex As Integer, argCount As Integer)
 End
 
 Public Sub ResetOnDelete(argDeleteIndex As Integer)
-    
-    Debug argDeleteIndex
     
     $index.Reset($index.Max - 1)
     $index.Current = 0

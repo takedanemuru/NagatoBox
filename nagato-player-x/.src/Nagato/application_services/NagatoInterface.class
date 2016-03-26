@@ -55,7 +55,7 @@ End
 
 Public Sub PlayIndex(argIndex As Integer)
     
-    NagatoQueue.ChannelPlayer.SetIndexAndPlay(argIndex)
+    NagatoQueue.SetIndexAndPlay(argIndex)
     
 End
 

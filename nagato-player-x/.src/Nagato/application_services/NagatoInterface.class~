@@ -4,7 +4,6 @@ Inherits DBusObject
 
 Create Static
 
-Property Read Ready As String
 Property Read Title As String
 Property Read Artist As String
 Property Read Album As String
@@ -66,18 +65,6 @@ Public Sub MoveToCurrentDesktop()
     
 End
 
-Public Function GetTitle(argPath As String) As String
-    
-    Return NagatoQueue.ChannelList.Collection[argPath]
-    
-End
-
-Private Function Ready_Read() As String
-
-    Return "Can you see this ?"
-
-End
-
 Private Function GetTitles(argMaxIndex As Integer) As String[]
 
     Dim yukiIndex As Integer
@@ -94,6 +81,12 @@ End
 Private Function ProgressInText_Read() As String
 
     Return NagatoQueue.ChannelCurrent.DurationData.Text
+
+End
+
+Private Function Title_Read() As String
+
+    Return NagatoQueue.ChannelCurrent.Titile
 
 End
 

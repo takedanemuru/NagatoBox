@@ -56,12 +56,6 @@ Public Sub Back()
     
 End
 
-Public Sub SetIndexAndPlay(argIndex As Integer)
-    
-    Me._$player.SetIndexAndPlay(argIndex)
-    
-End
-
 Public Sub _OptionalOnInitialize()
     
     $observer = New Observer(Me._$player) As "Asakura"

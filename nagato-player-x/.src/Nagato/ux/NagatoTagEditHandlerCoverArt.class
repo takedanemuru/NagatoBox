@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Property Read CoverArtPath As String
-
 Private $coverArtPictureBox As PictureBox
 Private $observer As Observer
 Private $coverArtPath As String
@@ -12,6 +10,12 @@ Public Sub Reset(argMusicPath As String)
     
     $coverArtPictureBox.Picture = MikuruEyeD3.GetPicture(argMusicPath, $coverArtPictureBox.H)
     $coverArtPath = ""
+    
+End
+
+Public Sub SetCoverArt(argIndexes As String[])
+    
+   If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes(argIndexes, $coverArtPath)
     
 End
 
@@ -35,15 +39,9 @@ Public Sub Asakura_Select(argFullPath As String)
     
     $coverArtPath = argFullPath
     $coverArtPictureBox.Picture = MikuruCroppedImage(argFullPath, $coverArtPictureBox.H)
-    If Not Error Then Raise Selected
+    If Not Error Then Raise Change
     
 Catch
     Return
     
-End
-
-Private Function CoverArtPath_Read() As String
-
-    Return $coverArtPath
-
 End

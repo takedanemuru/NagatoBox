@@ -4,7 +4,7 @@ Inherits NagatoStarButton
 
 Public Sub _OnInitializeStarMenu()
     
-    Dim yukiMenu As New NagatoStarMenuPlaylists As "NagatoMenu"
+    Dim yukiMenu As New NagatoStarMenuPlaylists As "TFEI"
      
     Me._$starButton.Menu = yukiMenu.Name
     
