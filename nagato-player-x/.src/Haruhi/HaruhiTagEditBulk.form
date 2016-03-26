@@ -47,4 +47,16 @@
     MoveScaled(2,22,16,4)
     Text = ("Select Picture")
   }
+  { TextLabel1 TextLabel
+    MoveScaled(19,2,18,4)
+    Visible = False
+    Font = Font["Bold"]
+    Text = ("Title:")
+    Alignment = Align.Left
+  }
+  { TitleTextBox TextBox TextBox
+    Name = "TitleTextBox"
+    MoveScaled(38,2,35,4)
+    Visible = False
+  }
 }

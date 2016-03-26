@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoGridHandler
+
+Private Sub setBackgroundColor(argRow As Integer, argColor As Integer)
+    
+    Dim yukiColumn As Integer
+    
+    For yukiColumn = 0 To Me._$gridView.Columns.Max
+        Me._$gridView[argRow, yukiColumn].Background = argColor
+    Next
+    
+End
+
+Public Sub SetBackgroundStripe(argColor As Integer)
+    
+    Dim yukiRow As Integer
+    
+    For yukiRow = 0 To Me._$gridView.Rows.Max
+        If Odd(yukiRow) Then setBackgroundColor(yukiRow, argColor)
+    Next
+    
+End

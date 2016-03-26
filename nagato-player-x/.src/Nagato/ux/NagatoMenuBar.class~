@@ -3,7 +3,6 @@
 Inherits NagatoSignal
 
 Public _$container As Container
-'Public _$starButton As MenuButton
 
 Public Sub _AddPanel()
     
@@ -37,28 +36,7 @@ Public Sub _AddButton(argTag As Integer, Optional argIconName As String, Optiona
     
 End
 
-Public Sub _AddStarMenu() 
-    
-    'virtual
-    
-End
-
-' Public Sub _AddStarButton()
-'     
-'     Me._$starButton = New MenuButton(Me._$container) As "StarButton"
-'     
-'     With Me._$starButton
-'         .W = Me._$container.H
-'         .Picture = MikuruIcon.Get("star")
-'         .Arrow = False
-'         .Border = False
-'     End With
-'     
-'     Me._AddStarMenu()
-'     
-' End
-
-Public Sub _Initialize()
+Public Sub _OnInitialize()
     
     'virtual
     
@@ -67,7 +45,7 @@ End
 Public Sub _new(argContainer As Container)
     
     Me._$container = argContainer
-    Me._Initialize()
+    Me._OnInitialize()
     
 End
 

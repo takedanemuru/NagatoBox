@@ -1,9 +1,7 @@
 ' Gambas class file
 
-Property Read Count As Integer
-Property Read Path As String
-Property Read Paths As String[]
 Property Read CurrentIndex As Integer
+Property Read HasElement As Boolean
 
 Private $musicElements As New NagatoMusicElements
 Private $position As New NagatoMusicPosition 
@@ -57,16 +55,14 @@ Public Sub Down(argSelection As Integer[])
     
 End
 
-Public Function SetPath(argPath As String) As Boolean
+Public Function SetIndex(argIndex As Integer) As Boolean
     
-    Dim yukiIndex As Integer = $musicElements.FindIndex(argPath) 
-    
-    'Array.Find()  shall retun -1 when query is not found
-    If yukiIndex = -1 Then Return False
-
-    $position.Current = yukiIndex
-    
-    Return True
+    If argIndex >= $musicElements.Count Then
+        Return False
+    Else
+        $position.Current = argIndex
+        Return True
+    End If
     
 End
 
@@ -90,6 +86,7 @@ Public Sub EnqueuePaths(argPaths As String[])
     
     If MikuruMessage.SetNewMusic(yukiCount) Then NagatoBroadCast(NagatoBroadCast.SignalChanged)
     $position.Refresh($musicElements.Count)
+    $musicElements.SaveQueue()
     
 End
 
@@ -102,18 +99,6 @@ Public Function DequeueIndexes(argIndexes As Integer[]) As Boolean
     
 End
 
-Public Function GetCollection() As Collection
-    
-    Return $musicElements.GetCollection()
-    
-End
-
-Public Function GetPathsByIndexes(argIndexes As Integer[]) As String[]
-    
-    Return $musicElements.GetPathsByIndexes(argIndexes)
-    
-End
-
 Public Sub ClearAll()
     
     $position.Current = 0
@@ -123,13 +108,19 @@ Public Sub ClearAll()
     
 End
 
+Public Sub SaveAsPlayList(argPlaylistName As String)
+    
+    $musicElements.SaveAsPlayList(argPlaylistName)
+    
+End
+
 Public Sub _new(argPaths As String[])
     
     $musicElements.Initialize(argPaths)
     If $musicElements.Count = 0 Then Return  
     $position.Refresh($musicElements.Count)
     If NagatoSettingsMusic.Shuffle Then Me.Next()
-    NagatoSettingsMusic.SavePaths($musicElements.All)
+    $musicElements.SaveQueue()
     NagatoBroadCast(NagatoBroadCast.SignalChanged)
     
 End
@@ -140,29 +131,14 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Private Function Count_Read() As Integer
-
-    Return $musicElements.Count
-
-End
-
-Private Function Path_Read() As String
-
-    Return $musicElements[$position.Current].Path
-
-Catch
-    Return ""
-
-End
-
 Private Function CurrentIndex_Read() As Integer
 
     Return $position.Current
 
 End
 
-Private Function Paths_Read() As String[]
+Private Function HasElement_Read() As Boolean
 
-    Return $musicElements.All
+    Return ($musicElements.Count > 0)
 
 End

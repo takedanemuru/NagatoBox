@@ -6,8 +6,8 @@ Private Function getRate() As Float
     
     Dim yukiRate As Float
     
-    With MikuruUx
-        yukiRate = (MikuruMousePosition.X - .Button.Volume.X) / (.Button.Volume.W - .Button.Volume.X)
+    With MikuruUx.Button.Volume
+        yukiRate = (MikuruMousePosition.X - .X) / (.W - .X)
     End With
     
     If 0 > yukiRate Then yukiRate = 0

@@ -1,21 +1,11 @@
 ' Gambas class file
 
-Property Read Rate As Float
-Property Read Text As String
 Property Read State As Integer
 Property SoftwareVolume As Float
 
 Private $player As New MediaPlayer As "Player"
-Private $durationFetcher As New NagatoDurationFetcher 
 
 Event MusicEnd
-Event FetchDuration(argDuration As Float)
-
-Public Function GetTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
-
-    Return MikuruDurationText.GetDurationTextByRate(argRate, $player.Duration)
-
-End
 
 Public Sub SetByRate(argRate As Float) 
     
@@ -23,15 +13,17 @@ Public Sub SetByRate(argRate As Float)
     
 End
 
-Public Sub SetPathAndPlay(argPath As String)
+Public Sub SetIndexAndPlay(argIndex As Integer) As Boolean
     
-    If Not NagatoQueue.ChannelList.SetPath(argPath) Then Return
+    If Not NagatoQueue.ChannelList.SetIndex(argIndex) Then Return False
     Try $player.Stop
-    $player.URL = Media.URL(argPath)
+    $player.URL = NagatoQueue.ChannelCurrent.Url
     $player.Play()
     
+    Return True
+    
 Catch
-    Return
+    Return False
     
 End
 
@@ -70,47 +62,27 @@ Public Sub Stop()
     
 End
 
+Public Function GetDurationData() As NagatoDurationData
+    
+    Return Object.New("NagatoDurationData", [$player.Position, $player.Duration])
+    
+End
+
 Public Sub Player_End()
     
     Raise MusicEnd
     
 End
 
-Private Function Rate_Read() As Float
-
-    If $durationFetcher($player.Duration) Then Raise FetchDuration($player.Duration)
-
-    Return ($player.Position / $player.Duration)
-
-Catch
-    Return 0
-    
-End
-
-Private Function Text_Read() As String
-
-    Return Me.GetTextByRate($player.Position / $player.Duration)
-
-Catch
-    Return ""
-
-End
-
 Private Function State_Read() As Integer
 
     Return $player.State
-
-Catch
-    Return MediaPlayer.Null
 
 End
 
 Private Function SoftwareVolume_Read() As Float
 
     Return $player.Audio.Volume
-
-Catch
-    Return 0
 
 End
 

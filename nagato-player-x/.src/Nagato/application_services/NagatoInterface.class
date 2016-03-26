@@ -4,116 +4,89 @@ Inherits DBusObject
 
 Create Static
 
-Property Read Ready As String
 Property Read Title As String
 Property Read Artist As String
 Property Read Album As String
 Property Read ProgressInText As String
-Property Read Paths As String[]
-Property Read Queue As Collection
 Property Read Shuffle As Boolean
 Property Read Repeat As Boolean
 
-Public Function AddMusics(argMusics As String[]) As Boolean
+Public Sub AddMusics(argMusics As String[])
     
     NagatoQueue.AddMusics(argMusics)
     
-    Return True
-    
 End
 
-Public Function Play() As Boolean
+Public Sub Play() 
     
     NagatoQueue.ChannelPlayer.Play()
     
-    Return True
-    
 End
 
-Public Function Pause() As Boolean
+Public Sub Pause() 
     
     NagatoQueue.ChannelPlayer.Pause()
     
-    Return True
-    
 End
 
-Public Function Back() As Boolean
+Public Sub Back() 
     
     NagatoQueue.ChannelPlayer.Back()
     
-    Return True
-    
 End
 
-Public Function Next() As Boolean
+Public Sub Next() 
     
     NagatoQueue.ChannelPlayer.Next()
     
-    Return True
-    
 End
 
-Public Function ToggleShuffle() As Boolean
+Public Sub ToggleShuffle() 
     
     NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
     
-    Return True
-    
 End
 
-Public Function ToggleRepeat() As Boolean
+Public Sub ToggleRepeat()
     
     NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
     
-    Return True
+End
+
+Public Sub PlayIndex(argIndex As Integer)
+    
+    NagatoQueue.ChannelPlayer.SetIndexAndPlay(argIndex)
     
 End
 
-Public Function PlayPathInQueue(argPath As String) As Boolean
+Public Sub MoveToCurrentDesktop() 
     
-    If Not NagatoQueue.ChannelList.Paths.Exist(argPath) Then Return False
-
-    NagatoQueue.ChannelPlayer.SetPathAndPlay(argPath)
-    Return True
+    HaruhiPlayer.MoveToCurrentDesktop()
     
 End
 
-Public Function MoveToCurrentDesktop() As Boolean
+Private Function GetTitles(argMaxIndex As Integer) As String[]
+
+    Dim yukiIndex As Integer
+    Dim yukiTitles As New String[]
     
-    Dim yukiDesktopWindow As DesktopWindow
-    
-    yukiDesktopWindow = New DesktopWindow(HaruhiPlayer.Id)
-    yukiDesktopWindow.Desktop = Desktop.Current
-    
-    Return True
-    
-Catch
-    Return False
-    
+    For yukiIndex = 0 To argMaxIndex
+        yukiTitles.Add(NagatoQueue[yukiIndex].Title)
+    Next
+
+    Return yukiTitles
+
 End
 
-Public Function GetTitle(argPath As String) As String
-    
-    Return NagatoQueue.ChannelList.Collection[argPath]
-    
-End
+Private Function ProgressInText_Read() As String
 
-Private Function Ready_Read() As String
-
-    Return "Can you see this ?"
+    Return NagatoQueue.ChannelCurrent.DurationData.Text
 
 End
 
 Private Function Title_Read() As String
 
     Return NagatoQueue.ChannelCurrent.Titile
-
-End
-
-Private Function ProgressInText_Read() As String
-
-    Return NagatoQueue.ChannelPlayer.ProgressText
 
 End
 
@@ -126,18 +99,6 @@ End
 Private Function Album_Read() As String
 
     Return NagatoQueue.ChannelCurrent.Album
-
-End
-
-Private Function Paths_Read() As String[]
-
-    Return NagatoQueue.ChannelList.Paths
-
-End
-
-Private Function Queue_Read() As Collection
-
-    Return NagatoQueue.ChannelList.Collection
 
 End
 

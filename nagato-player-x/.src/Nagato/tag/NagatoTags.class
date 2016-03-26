@@ -1,9 +1,9 @@
 ' Gambas class file
 
 Property Read Path As String
-Property Title As String
-Property Artist As String
-Property Album As String
+Property Read Title As String
+Property Read Artist As String
+Property Read Album As String
 Property Read Duration As Float
 
 Private $path As String
@@ -50,33 +50,15 @@ Private Function Title_Read() As String
 
 End
 
-Private Sub Title_Write(Value As String)
-
-    $id3TagInfo.Title = Value
-
-End
-
 Private Function Artist_Read() As String
 
     Return $id3TagInfo.Artist
 
 End
 
-Private Sub Artist_Write(Value As String)
-
-   $id3TagInfo.Artist = Value
-
-End
-
 Private Function Album_Read() As String
 
     Return $id3TagInfo.Album
-
-End
-
-Private Sub Album_Write(Value As String)
-
-    $id3TagInfo.Album = Value
 
 End
 

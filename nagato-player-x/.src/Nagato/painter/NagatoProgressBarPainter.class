@@ -6,8 +6,8 @@ Private Function getRate() As Float
     
     Dim yukiRate As Float
     
-    With MikuruUx
-        yukiRate = (MikuruMousePosition.X - .ProgressBar.X) / (.ProgressBar.W - .ProgressBar.X)
+    With MikuruUx.ProgressBar
+        yukiRate = (MikuruMousePosition.X - .X) / (.W - .X)
     End With
     
     Return yukiRate
@@ -18,7 +18,7 @@ Private Sub paintProgressBarOnMouse()
     
     Dim yukiRate As Float = getRate()
     Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, yukiRate)
-    Dim yukiText As String = NagatoQueue.ChannelPlayer.GetProgressTextByRate(yukiRate)
+    Dim yukiText As String = NagatoQueue.ChannelCurrent.DurationData.GetTextByRate(yukiRate)
     
     Me._PaintClipRectangle(MikuruUx.ProgressBar, 2 * MikuruUx.Grid)
     Me._PaintRectangle(MikuruUx.ProgressBar, MikuruColor.WidgetOnMouseLight) 'frame
@@ -30,14 +30,13 @@ End
 
 Private Sub paintProgressBarNormal()
     
-    Dim yukiRate As Float = NagatoQueue.ChannelPlayer.ProgressRate
-    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, yukiRate)
-    Dim yukiText As String = Subst$("<b>&1</b>", NagatoQueue.ChannelPlayer.ProgressText)
+    Dim yukiData As NagatoDurationData = NagatoQueue.ChannelCurrent.DurationData
+    Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, yukiData.Rate)
     
     Me._PaintClipRectangle(MikuruUx.ProgressBar, 2 * MikuruUx.Grid)
     Me._PaintRectangle(MikuruUx.ProgressBar, MikuruColor.WidgetLight) 'frame
     Me._PaintRectangle(yukiBarRectangle, MikuruColor.Widget, 2 * MikuruUx.Grid) 'bar
-    Me._PaintRichText(MikuruUx.ProgressBar, yukiText)
+    Me._PaintRichText(MikuruUx.ProgressBar, Subst$("<b>&1</b>", yukiData.Text))
     Paint.Restore() 'restore clip rectangle
     
 End

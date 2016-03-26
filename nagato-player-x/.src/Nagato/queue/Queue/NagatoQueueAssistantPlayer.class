@@ -3,19 +3,11 @@
 Inherits NagatoQueueAssistant
 
 Property Read State As Integer
-Property Read ProgressRate As Float
-Property Read ProgressText As String
 Property SoftwareVolume As Float
 
 Private $observer As Observer
 
-Public Function GetProgressTextByRate(argRate As Float) As String
-    
-    Return Me._$player.GetTextByRate(argRate)
-    
-End
-
-Public Sub SetProgress(argProgress As Float) ' argFloat must be between 0 to 1
+Public Sub Seek(argProgress As Float) ' argFloat must be between 0 to 1
     
     Me._$player.SetByRate(argProgress)
     
@@ -23,7 +15,7 @@ End
 
 Public Sub Play()
     
-    If Me._$musicList.Count = 0 Then Return
+    If Not Me._$musicList.HasElement Then Return
     If Not Me._$player.State <> Media.Playing Then Me._$player.Play()
     
 End
@@ -36,7 +28,7 @@ End
 
 Public Sub Next()
     
-    If Me._$musicList.Count = 0 Then Return
+    If Not Me._$musicList.HasElement Then Return
 
     Me._$musicList.Next()
 
@@ -50,9 +42,9 @@ End
 
 Public Sub Back()
     
-    If Me._$musicList.Count = 0 Then Return
+    If Not Me._$musicList.HasElement Then Return
     
-    If Me._$player.State = Media.Playing And If Me._$player.Rate > 0.05 Then
+    If Me._$player.State = Media.Playing And If NagatoQueue.ChannelCurrent.DurationData.Rate > 0.05 Then
         Me._$player.SetByRate(0)
     Else If Me._$player.State = Media.Playing Then
         Me._$musicList.Back()
@@ -64,17 +56,9 @@ Public Sub Back()
     
 End
 
-Public Sub SetPathAndPlay(argPath As String)
-    
-    Me._$player.SetPathAndPlay(argPath)
-    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
-    
-End
-
 Public Sub SetIndexAndPlay(argIndex As Integer)
     
-    Me._$player.SetPathAndPlay(Me._$musicList[argIndex].Path)
-    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
+    Me._$player.SetIndexAndPlay(argIndex)
     
 End
 
@@ -94,18 +78,6 @@ End
 Private Function State_Read() As Integer
 
     Return Me._$player.State
-
-End
-
-Private Function ProgressRate_Read() As Float
-
-    Return Me._$player.Rate
-
-End
-
-Private Function ProgressText_Read() As String
-
-    Return Me._$player.Text
 
 End
 

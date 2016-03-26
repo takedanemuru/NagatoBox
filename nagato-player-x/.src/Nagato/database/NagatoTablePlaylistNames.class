@@ -29,9 +29,9 @@ Public Sub _EnsureTable() 'override
     With NagatoDB
         If Not Me._$connection.Tables.Exist(.Table.PlaylistNames) Then
             yukiTable = Me._$connection.Tables.Add(.Table.PlaylistNames)
-            yukiTable.Fields.Add(.ColumnId, db.Serial)
-            yukiTable.Fields.Add(.ColumnPlaylistName, db.String)
-            yukiTable.PrimaryKey = [.ColumnId]
+            yukiTable.Fields.Add(.Column.Id, db.Serial)
+            yukiTable.Fields.Add(.Column.PlaylistName, db.String)
+            yukiTable.PrimaryKey = [.Column.Id]
             yukiTable.Update()
         Endif
     End With

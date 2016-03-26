@@ -1,0 +1,23 @@
+' Gambas class file
+
+Public _$gridView As GridView
+Public _$observer As Observer
+
+Public Sub _OnRaiseMenu()
+    
+    
+    
+End
+
+Public Sub _new(argGridView As GridView)
+    
+    Me._$gridView = argGridView
+    Me._$observer = New Observer(Me._$gridView) As "Asakura"
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Me._OnRaiseMenu()
+    
+End

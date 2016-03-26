@@ -40,9 +40,9 @@
 
 + ~~fix : api url as that was changed.~~
 
-### nagato-player-x (v42.3.12)
+### nagato-player-x (v42.3.23)
 
-![image: nagat-player-x_core_diagram](/home/takedanemuru/Yandex.Disk/ドキュメント/nagat-player-x_core_diagram2.png)
+![image: nagat-player-x_core_diagram](/home/takedanemuru/Yandex.Disk/ドキュメント/nagato-player-x_core_diagram.png)
 
 + ~~fix : id3tag fetching.~~
 + refine playlist ux.

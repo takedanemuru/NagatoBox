@@ -8,15 +8,15 @@ Private Enum ColumnIcon, ColumnTitle, ColumnDescription, ColumnCount, ColumnSpac
 
 Private Sub refreshData()
     
-    Dim yukiResult As Result = NagatoDBMedia.GetAllIdResult()
+    Dim yukiResult As Result = NagatoDBPlaylists.GetAllIdResult()
     
     For Each yukiResult
         Inc Me._$grids.Rows.Count
-        Me._SetGridData(ColumnTitle, yukiResult[NagatoDBMedia.Column.PlaylistName])
-        Me._SetGridDataRight(ColumnCount, NagatoDBMedia.GetMusicCountInPlaylist(yukiResult[NagatoDBMedia.Column.Id]))
+        Me._SetGridData(ColumnTitle, yukiResult[NagatoDB.Column.PlaylistName])
+        Me._SetGridDataRight(ColumnCount, NagatoDBPlaylists.GetCountByPlaylistId(yukiResult[NagatoDB.Column.Id]))
     Next
     
-    Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
+    Me._SetBackgroundStripe(Color.Lighter(Color.Pink))
     
 End
 
@@ -30,7 +30,7 @@ Public Sub _InitializeGrids() 'override
         .Columns[ColumnCount].Text = ("Musics")
     End With
     
-    If NagatoDBMedia.HasPlaylist() Then refreshData()
+    If NagatoDBPlaylists.HasPlaylist() Then refreshData()
 
 End
 
@@ -41,20 +41,12 @@ Public Sub Refresh()
     
 End
 
-Public Sub _ContextMenu() ' override
-    
-    Dim yukiMenu As New NagatoContextMenuLibrary As "ContextMenu"
-    
-    yukiMenu.PopUp()
-    
-End
-
 Public Sub Asakura_Activate()
     
     Dim yukiPaths As String[]
     
     If Me._$grids.Rows.Selection.Count > 0 Then
-        yukiPaths = NagatoDBMedia.GetMusicPathsInPlaylist(Me._GetSelectionText(ColumnTitle)[0])
+        yukiPaths = NagatoDBPlaylists.GetMusicPathsInPlaylist(Me._GetSelectionText(ColumnTitle)[0])
         NagatoQueue.AddMusics(yukiPaths)
     Endif
     

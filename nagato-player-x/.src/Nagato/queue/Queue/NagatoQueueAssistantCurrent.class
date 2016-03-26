@@ -7,21 +7,19 @@ Property Read Titile As String
 Property Read Artist As String
 Property Read Album As String
 Property Read Url As String
+Property Read Index As Integer
+Property Read DurationData As NagatoDurationData
 
 Private $coverArt As Picture
-Private $observer As Observer
-Private $id3TagInfo As NagatoId3TagInfo
 
 Public Sub Reload()
     
-    $id3TagInfo = MikuruId3TagInfo(Me._$musicList.Path)
-    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList.Path, MikuruUx.CoverArt.Size)
+    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList[Me._$musicList.CurrentIndex].Path, MikuruUx.CoverArt.Size)
     
 End
 
 Public Sub _OptionalOnInitialize()
     
-    $observer = New Observer(Me._$player) As "Asakura"
     Me.Reload()
     
 End
@@ -34,30 +32,40 @@ End
 
 Private Function Titile_Read() As String
 
-    Return $id3TagInfo.Title
+    Return Me._$musicList[Me._$musicList.CurrentIndex].Title
 
 End
 
 Private Function Artist_Read() As String
 
-    Return $id3TagInfo.Artist
+    Return Me._$musicList[Me._$musicList.CurrentIndex].Artist
     
 End
 
 Private Function Album_Read() As String
 
-    Return $id3TagInfo.Album
+    Return Me._$musicList[Me._$musicList.CurrentIndex].Album
 
-End
-
-Public Sub Asakura_FetchDuration(argDuration As Float)
-    
-    NagatoDBMedia.FetchDuration(Me._$musicList.Path, argDuration) 
-    
 End
 
 Private Function Url_Read() As String
 
-    Return Media.URL(Me._$musicList.Path)
+    Return Media.URL(Me._$musicList[Me._$musicList.CurrentIndex].Path)
+
+End
+
+Private Function Index_Read() As Integer
+
+    Return Me._$musicList.CurrentIndex
+
+End
+
+Private Function DurationData_Read() As NagatoDurationData
+
+    Dim yukiDurationData As NagatoDurationData = Me._$player.GetDurationData()
+
+    yukiDurationData.OverrideDuration(Me._$musicList[Me._$musicList.CurrentIndex].Duration)
+
+    Return yukiDurationData
 
 End

@@ -13,10 +13,19 @@ Public Function GetMusicCountInPlaylist(argPlaylistId As Integer) As Integer
     
 End
 
-Public Function GetMusicPathsInPlaylist(argPlaylistName As String) As String[]
+Public Function GetCountByPlaylistId(argId As Integer) As Integer
+    
+    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", argId)
+    
+    Return yukiResult.Count
+    
+End
+
+Public Function GetPathsByPlaylistName(argPlaylistName As String) As String[]
     
     Dim yukiResultForId As Result = Me._$connection.Find(Me.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
-    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", yukiResultForId[Me.Column.Id])
+    Dim yukiId As Integer = yukiResultForId[NagatoDB.Column.Id]
+    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", yukiId)
     Dim yukiPaths As New String[]
     
     For Each yukiResult

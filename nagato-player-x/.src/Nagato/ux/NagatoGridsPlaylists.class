@@ -9,14 +9,16 @@ Private Enum ColumnIcon, ColumnTitle, ColumnDescription, ColumnCount, ColumnSpac
 Private Sub refreshData()
     
     Dim yukiResult As Result = NagatoDBPlaylists.GetAllIdResult()
+    Dim yukiCount As Integer
     
     For Each yukiResult
         Inc Me._$grids.Rows.Count
-        Me._SetGridData(ColumnTitle, yukiResult[NagatoDBMedia.Column.PlaylistName])
-        Me._SetGridDataRight(ColumnCount, NagatoDBPlaylists.GetMusicCountInPlaylist(yukiResult[NagatoDBMedia.Column.Id]))
+        Me._SetGridData(ColumnTitle, yukiResult[NagatoDB.Column.PlaylistName])
+        yukiCount = NagatoDBPlaylists.GetCountByPlaylistId(yukiResult[NagatoDB.Column.Id])
+        Me._SetGridDataRight(ColumnCount, yukiCount)
     Next
     
-    Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
+    Me._SetBackgroundStripe(Color.Lighter(Color.Pink))
     
 End
 
@@ -38,14 +40,6 @@ Public Sub Refresh()
     
     Me._$grids.Clear()
     Me._InitializeGrids()
-    
-End
-
-Public Sub _ContextMenu() ' override
-    
-    Dim yukiMenu As New NagatoContextMenuLibrary As "ContextMenu"
-    
-    yukiMenu.PopUp()
     
 End
 

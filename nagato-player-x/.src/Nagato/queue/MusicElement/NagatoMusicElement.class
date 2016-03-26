@@ -1,12 +1,19 @@
 ' Gambas class file
 
 Property Read Path As String
-Property Artist As String
-Property Album As String
-Property Title As String
+Property Read Artist As String
+Property Read Album As String
+Property Read Title As String
 Property Read Duration As Float
 
 Private $tags As New NagatoTags
+
+Public Sub EditTags(argTags As NagatoId3TagInfo)
+    
+    NagatoDBMedia.AddTagsByNagatoTags($tags.Path, argTags)
+    $tags.SetTag($tags.Path)
+    
+End
 
 Public Sub _new(argPath As String)
     
@@ -36,24 +43,6 @@ End
 Private Function Title_Read() As String
 
     Return $tags.Title
-
-End
-
-Private Sub Title_Write(Value As String)
-
-    $tags.Title = Value
-
-End
-
-Private Sub Album_Write(Value As String)
-
-    $tags.Album = Value
-
-End
-
-Private Sub Artist_Write(Value As String)
-
-    $tags.Artist = Value
 
 End
 

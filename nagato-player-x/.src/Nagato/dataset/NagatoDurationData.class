@@ -1,0 +1,40 @@
+' Gambas class file
+
+Property Read Text As String
+Property Read Rate As Float
+
+Private $position As Float
+Private $duration As Float
+
+Public Function GetTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
+
+    Return MikuruDurationText.GetDurationTextByRate(argRate, $duration)
+
+End
+
+Public Sub OverrideDuration(argDuration As Float)
+    
+    If $duration = 0 Then $duration = argDuration
+    
+End
+
+Public Sub _new(argPosition As Float, argDuration As Float)
+    
+    $position = argPosition
+    $duration = argDuration
+    
+End
+
+Private Function Text_Read() As String
+
+    Return MikuruDurationText.GetDurationTextByRate(Me.Rate, $duration)
+
+End
+
+Private Function Rate_Read() As Float
+
+    If $duration = 0 Then Return 0
+    
+    Return $position / $duration
+    
+End

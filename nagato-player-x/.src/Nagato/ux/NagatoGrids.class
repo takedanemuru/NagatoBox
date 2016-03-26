@@ -1,51 +1,22 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoObject
 
 Public _$grids As GridView
 Public _$observer As Observer
 Public _$sortAscend As Boolean
+Public _$handlerBackground As NagatoGridViewHandlerBackground
+Public _$handlerData As NagatoGridViewHandlerData
 
 Public Function _GetSelectionText(argColumnIndex As Integer) As String[]
     
-    Dim yukiRowIndex As Integer
-    Dim yukiResult As New String[]
-    
-    For Each yukiRowIndex In Me._$grids.Rows.Selection
-        yukiResult.Add(Me._$grids[yukiRowIndex, argColumnIndex].Text)
-    Next
-    
-    Return yukiResult
-    
-End
-
-Private Sub setBackgroundColor(argRow As Integer, argColor As Integer)
-    
-    Dim yukiColumn As Integer
-    
-    For yukiColumn = 0 To Me._$grids.Columns.Max
-        Me._$grids[argRow, yukiColumn].Background = argColor
-    Next
+    Return Me._$handlerData.GetSelectionText(argColumnIndex)
     
 End
 
 Public Sub _SetBackgroundStripe(argColor As Integer)
     
-    Dim yukiRow As Integer
-    
-    For yukiRow = 0 To Me._$grids.Rows.Max
-        If Odd(yukiRow) Then setBackgroundColor(yukiRow, argColor)
-    Next
-    
-End
-
-Public Sub _ClearIcon(argColumn As Integer)
-    
-    Dim yukiRow As Integer
-    
-    For yukiRow = 0 To Me._$grids.Rows.Max
-        Me._$grids[yukiRow, argColumn].Picture = Null
-    Next
+    Me._$handlerBackground.SetBackgroundStripe(argColor)
     
 End
 
@@ -60,32 +31,13 @@ End
 
 Public Sub _SetGridData(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
     
-    Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
-    
-    Me._$grids[Me._$grids.Rows.Max, argColumn].Text = argData
-    
-    If argExpand And If yukiWidth > Me._$grids.Columns[argColumn].W Then
-        Me._$grids.Columns[argColumn].W = yukiWidth
-    Endif
+    Me._$handlerData.SetGridData(argColumn, argData, argExpand)
     
 End
 
 Public Sub _SetGridDataRight(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
     
-    Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
-    
-    Me._$grids[Me._$grids.Rows.Max, argColumn].Text = argData
-    Me._$grids[Me._$grids.Rows.Max, argColumn].Alignment = Align.Right
-    
-    If argExpand And If yukiWidth > Me._$grids.Columns[argColumn].W Then
-        Me._$grids.Columns[argColumn].W = yukiWidth
-    Endif
-    
-End
-
-Public Sub _ContextMenu()
-    
-    
+    Me._$handlerData.SetGridDataRight(argColumn, argData, argExpand)
     
 End
 
@@ -97,9 +49,7 @@ End
 
 Public Sub _ColumnClick(argIndex As Integer)
     
-    'virtual
     
-    Debug argIndex
     
 End
 
@@ -112,14 +62,10 @@ End
 Public Sub _new(argGrids As GridView)
     
     Me._$grids = argGrids
+    Me._$handlerBackground = New NagatoGridViewHandlerBackground(Me._$grids)
+    Me._$handlerData = New NagatoGridViewHandlerData(Me._$grids)
     Me._InitializeGrids()
     Me._$observer = New Observer(Me._$grids) As "Asakura"
-    
-End
-
-Public Sub Asakura_Menu()
-    
-    Me._ContextMenu()
     
 End
 

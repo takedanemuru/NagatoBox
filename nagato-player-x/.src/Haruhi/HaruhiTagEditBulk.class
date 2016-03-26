@@ -1,70 +1,61 @@
 ' Gambas class file
 
-Private $albumartUnloaded As Boolean = True
+Private $coverArtPath As String
 Private $observer As Observer
-Private $albumartPath As String
+Private $element As NagatoMusicElement
+Private $index As Integer
+Private $handlerCoverArt As NagatoTagEditHandlerCoverArt
 
-Private $paths As String[]
-
-Private Sub initializeWidgets()
+Private Sub setTags()
     
-    Dim yukiId3TagInfo As NagatoId3TagInfo = MikuruId3TagInfo($paths[0])
-    
-    ArtistTextBox.Text = yukiId3TagInfo.Artist
-    AlbumTextBox.Text = yukiId3TagInfo.Album
+    TitleTextBox.Text = $element.Title
+    ArtistTextBox.Text = $element.Artist
+    AlbumTextBox.Text = $element.Album
     
 End
 
-Private Sub startAlbumArtSelection()
+Private Function getNewTag() As NagatoId3TagInfo
     
-    If $paths.Count = 0 Then Return
+    Dim yukiTags As New NagatoId3TagInfo
     
-    HaruhiAlbumArtSelect.Show()
-    $observer = New Observer(HaruhiAlbumArtSelect) As "Asakura"
+    yukiTags.Title = TitleTextBox.Text
+    yukiTags.Artist = ArtistTextBox.Text
+    yukiTags.Album = AlbumTextBox.Text
     
-End
-
-Private Sub setNewTag()
-    
-    Dim yukiPath As String
-    
-    For Each yukiPath In $paths
-        With MikuruId3v2TagEdit
-            If ArtistTextBox.Text <> "" Then .NewArtist(yukiPath, ArtistTextBox.Text)
-            If AlbumTextBox.Text <> "" Then .NewAlbum(yukiPath, AlbumTextBox.Text)
-            If Not $albumartUnloaded Then MikuruEyeD3.SetPicture(yukiPath, $albumartPath)
-        End With
-    Next
+    Return yukiTags
     
 End
 
-Public Sub StartEdit(argPaths As String[])
+Public Sub EditByTagIndex(argIndex As Integer)
     
-    MikuruArrayTest(argPaths)
-    
-    $paths = argPaths.Copy()
-    initializeWidgets()
-    
-End
-
-Public Sub Form_Show()
-    
+    $index = argIndex
+    $element = NagatoQueue[argIndex]
+    setTags()
+    $handlerCoverArt.Reset($element.Path)
     Me.Center()
     ApplyButton.Enabled = False
+    Me.ShowDialog()
+    
+End
+
+Public Sub _new()
+    
+    $handlerCoverArt = New NagatoTagEditHandlerCoverArt(IconSelectButton, AlbumArtPictureBox) As "Asakura"
     
 End
 
 Public Sub CancelButton_Click()
 
-    Me.Close(MikuruDialog.ResponseCancel)
+    Me.Close()
 
 End
 
 Public Sub ApplyButton_Click()
     
-    setNewTag()
-    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
-    Me.Close(MikuruDialog.ResponseApply)
+    NagatoQueue.EditTagsByTagIndexes([$index], getNewTag())
+    If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes([$index], $handlerCoverArt.CoverArtPath)
+    
+    Me.Close()
     
 End
 
@@ -74,25 +65,8 @@ Public Sub TextBox_Change()
 
 End
 
-Public Sub AlbumArtPictureBox_MouseDown()
-
-    startAlbumArtSelection()
-
-End
-
-Public Sub IconSelectButton_Click()
-
-    startAlbumArtSelection()
-
-End
-
-Public Sub Asakura_Select(argFullPath As String)
+Public Sub Asakura_Change()
     
-    AlbumArtPictureBox.Picture = Image.Load(argFullPath).Picture
-    $albumartUnloaded = False
-    $albumartPath = argFullPath
-    
-Catch
-    Return
+    ApplyButton.Enabled = True
     
 End

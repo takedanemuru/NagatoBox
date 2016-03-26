@@ -1,15 +1,17 @@
 ' Gambas module file
 
-Public Sub SetTag(argPath As String)
+Public Sub EditIndexes(argIndexes As Integer[])
     
-    HaruhiTagEdit.SetPath(argPath)
-    HaruhiTagEdit.Show()
+    If argIndexes.Count = 1 Then
+        HaruhiTagEdit.EditByTagIndex(argIndexes[0])
+    Else
+        HaruhiTagEditBulk.EditByTagIndexes(argIndexes)
+    Endif
     
 End
 
-Public Sub SetTagBulk(argPaths As String[])
+Public Sub EditCurrentIndex()
     
-    HaruhiTagEditBulk.StartEdit(argPaths)
-    HaruhiTagEditBulk.Show()
+    HaruhiTagEdit.EditByTagIndex(NagatoQueue.ChannelCurrent.Index)
     
 End

@@ -2,13 +2,9 @@
 
 Inherits NagatoQueueAssistant
 
-Property Read Paths As String[]
-Property Read CurrentIndex As Integer
-Property Read Collection As Collection
-
-Public Function SetPath(argPath As String) As Boolean
+Public Function SetIndex(argIndex As Integer) As Boolean
     
-    Return Me._$musicList.SetPath(argPath)
+    Return Me._$musicList.SetIndex(argIndex)
     
 End
 
@@ -29,23 +25,5 @@ End
 Public Sub MoveDown(argIndexes As Integer[])
     
     If argIndexes.Count > 0 Then Me._$musicList.Down(argIndexes)
-
-End
-
-Private Function CurrentIndex_Read() As Integer
-
-    Return Me._$musicList.CurrentIndex
-
-End
-
-Private Function Paths_Read() As String[]
-
-    Return Me._$musicList.Paths
-
-End
-
-Private Function Collection_Read() As Collection
-
-    Return Me._$musicList.GetCollection()
 
 End

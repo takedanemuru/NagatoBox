@@ -1,0 +1,49 @@
+' Gambas class file
+
+Property Read CoverArtPath As String
+
+Private $coverArtPictureBox As PictureBox
+Private $observer As Observer
+Private $coverArtPath As String
+
+Event Change
+
+Public Sub Reset(argMusicPath As String)
+    
+    $coverArtPictureBox.Picture = MikuruEyeD3.GetPicture(argMusicPath, $coverArtPictureBox.H)
+    $coverArtPath = ""
+    
+End
+
+Public Sub _new(argSelectButton As Button, argPictureBox As PictureBox)
+    
+    Dim yukiObserverButton As New Observer(argSelectButton) As "Asakura"
+    Dim yukiObserverPictureBox As New Observer(argPictureBox) As "Asakura"
+    
+    $coverArtPictureBox = argPictureBox
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    HaruhiAlbumArtSelect.Show()
+    $observer = New Observer(HaruhiAlbumArtSelect) As "Asakura"
+    
+End
+
+Public Sub Asakura_Select(argFullPath As String)
+    
+    $coverArtPath = argFullPath
+    $coverArtPictureBox.Picture = MikuruCroppedImage(argFullPath, $coverArtPictureBox.H)
+    If Not Error Then Raise Selected
+    
+Catch
+    Return
+    
+End
+
+Private Function CoverArtPath_Read() As String
+
+    Return $coverArtPath
+
+End

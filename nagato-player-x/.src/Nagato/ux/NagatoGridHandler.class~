@@ -1,1 +1,9 @@
 ' Gambas class file
+
+Private $observer As Observer
+
+Public Sub _new(argGrids As GridView)
+    
+    $observer = New Observer(argGrids) As "Asakura"
+    
+End

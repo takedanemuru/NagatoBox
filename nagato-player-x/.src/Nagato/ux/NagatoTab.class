@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoSignal
+Inherits NagatoObject
 
 Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
     

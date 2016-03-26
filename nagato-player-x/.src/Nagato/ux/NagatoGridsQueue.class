@@ -4,24 +4,24 @@ Inherits NagatoGrids
 
 Property Read Selection As Integer[]
 
-Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
+Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnNull, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
+Private $contextMenu As NagatoGridViewContextMenuQueue
 
 Private Sub testInsertCoverArt(argPath As String)
     
-    Me._$grids[Me._$grids.Rows.Max, ColumnIcon].Picture = MikuruEyeD3.GetPicture(argPath, 64)
+    Me._$grids[Me._$grids.Rows.Max, ColumnIcon].Picture = MikuruEyeD3.GetPicture(argPath, 16)
     
 End
 
 Private Function insertRows() As Integer
     
     Dim yukiElement As NagatoMusicElement
-    Dim yukiCurrentRow As Integer
 
     For Each yukiElement In NagatoQueue
         Inc Me._$grids.Rows.Count
-        If $playMark.Set(Me._$grids.Rows.Max) Then yukiCurrentRow = Me._$grids.Rows.Max
+        $playMark.Set(Me._$grids.Rows.Max) 
         'testInsertCoverArt(yukiElement.Path)
         Me._SetGridData(ColumnTitle, yukiElement.Title)
         Me._SetGridData(ColumnArtist, yukiElement.Artist)
@@ -29,21 +29,14 @@ Private Function insertRows() As Integer
         Me._SetGridDataRight(ColumnTime, MikuruFloatToTime(yukiElement.Duration))
     Next
     
-    Return yukiCurrentRow
-    
 End
 
 Private Sub refreshData()
     
-    Dim yukiCurrentRow As Integer
-    
     Me._ClearGrids()
-    yukiCurrentRow = insertRows()
+    insertRows()
     Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
-    If yukiCurrentRow > 0 Then Me._$grids[yukiCurrentRow, 0].EnsureVisible()
-    
-Catch
-    Return
+    Me._$grids[NagatoQueue.ChannelCurrent.Index, 0].EnsureVisible()
     
 End
 
@@ -59,16 +52,8 @@ Public Sub _InitializeGrids() 'override
     End With
     
     $playMark = New NagatoGridsPlayMark(Me._$grids)
-    
+    $contextMenu = New NagatoGridViewContextMenuQueue(Me._$grids)
     refreshData()
-    
-End
-
-Public Sub _ContextMenu() ' override
-    
-    Dim yukiMenu As New NagatoContextMenuCurrent As "ContextMenu"
-    
-    yukiMenu.PopUp()
     
 End
 
@@ -91,19 +76,6 @@ Public Sub RefreshSelection(argIndexes As Integer[])
     For Each yukiIndex In argIndexes
         Try Me._$grids.Rows[yukiIndex].Selected = True
     Next
-    
-End
-
-Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
-    
-   If Me._$grids.Rows.Selection.Count = 0 Then Return
-   
-    Select Case argSignal
-        Case MikuruSignal.ListDelete
-            NagatoQueue.DeleteIndexes(Me._$grids.Rows.Selection)
-        Case MikuruSignal.ListEdit
-            NagatoQueue.EditByIndexes(Me._$grids.Rows.Selection)
-    End Select
     
 End
 

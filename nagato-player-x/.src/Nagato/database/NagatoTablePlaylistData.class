@@ -14,8 +14,8 @@ Private Sub save(argPlaylistNameId As Integer, argPath As String)
     
     Me._$connection.Begin()
         yukiResult = Me._$connection.Create(NagatoDB.Table.PlaylistData)
-        yukiResult[NagatoDBMedia.Column.PlaylistNameId] = argPlaylistNameId
-        yukiResult[NagatoDBMedia.Column.Path] = argPath
+        yukiResult[NagatoDB.Column.PlaylistNameId] = argPlaylistNameId
+        yukiResult[NagatoDB.Column.Path] = argPath
         yukiResult.Update()
     Me._$connection.Commit()
     
@@ -42,10 +42,10 @@ Public Sub _EnsureTable() 'override
     If Me._$connection.Tables.Exist(NagatoDB.Table.PlaylistData) Then Return
 
     yukiTable = Me._$connection.Tables.Add(NagatoDB.Table.PlaylistData)
-    yukiTable.Fields.Add(NagatoDBMedia.Column.Id, db.Serial)
-    yukiTable.Fields.Add(NagatoDBMedia.Column.PlaylistNameId, db.Integer)
-    yukiTable.Fields.Add(NagatoDBMedia.Column.Path, db.String)
-    yukiTable.PrimaryKey = [NagatoDBMedia.Column.Id]
+    yukiTable.Fields.Add(NagatoDB.Column.Id, db.Serial)
+    yukiTable.Fields.Add(NagatoDB.Column.PlaylistNameId, db.Integer)
+    yukiTable.Fields.Add(NagatoDB.Column.Path, db.String)
+    yukiTable.PrimaryKey = [NagatoDB.Column.Id]
     yukiTable.Update()
     
 End

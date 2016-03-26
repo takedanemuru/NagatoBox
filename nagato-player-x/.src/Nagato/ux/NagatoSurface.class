@@ -37,11 +37,10 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
             NagatoQueue.ChannelPlayer.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
         End With
     Else If MikuruUx.InfoBox.Contains(argMouseX, argMouseY) Then
-        HaruhiTagEdit.SetPath(NagatoQueue.ChannelCurrent.Url)
-        HaruhiTagEdit.ShowDialog()
+        MikuruDialogPortalTagEdit.EditCurrentIndex()
     Else If MikuruUx.ProgressBar.Contains(argMouseX, argMouseY) Then
         With MikuruUx.ProgressBar
-            NagatoQueue.ChannelPlayer.SetProgress((argMouseX - .X) / (.W - .X))
+            NagatoQueue.ChannelPlayer.Seek((argMouseX - .X) / (.W - .X))
         End With
     Endif
 
