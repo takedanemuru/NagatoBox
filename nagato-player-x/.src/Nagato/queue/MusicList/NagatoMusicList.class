@@ -4,6 +4,7 @@ Inherits NagatoObject
 
 Property Read CurrentIndex As Integer
 Property Read HasElement As Boolean
+Property Read Max As Integer
 
 Private $musicElements As New NagatoMusicElements 
 Private $position As New NagatoMusicPosition As "TFEI"
@@ -27,7 +28,8 @@ Public Sub Sort(argType As Integer, argSortAscend As Boolean)
     
     $musicElements.Set(yukiBuffer.Elements)
     $position.ResetOnSort(yukiBuffer.Current, $musicElements.Count)
-    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+
     
 End
 
@@ -43,7 +45,7 @@ Public Sub Up(argSelection As Integer[])
     
     $musicElements.Set(yukiBuffer.Buffer)
     $position.Current = yukiBuffer.NewPosition
-    NagatoBroadCast(NagatoBroadCast.SignalSelectionMoved, yukiBuffer.NewSelection)
+    Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
     
 End
 
@@ -53,7 +55,7 @@ Public Sub Down(argSelection As Integer[])
     
     $musicElements.Set(yukiBuffer.Buffer)
     $position.Current = yukiBuffer.NewPosition
-    NagatoBroadCast(NagatoBroadCast.SignalSelectionMoved, yukiBuffer.NewSelection)
+    Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
     
 End
 
@@ -86,15 +88,16 @@ Public Sub EnqueuePaths(argPaths As String[])
 
     If yukiCount = 0 Then Return
     
-    If MikuruMessage.SetNewMusic(yukiCount) Then NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    If Not MikuruMessage.SetNewMusic(yukiCount) Then Return
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
     $position.Refresh($musicElements.Count)
-    $musicElements.SaveQueue()
     
 End
 
 Public Function DequeueIndexes(argIndexes As Integer[]) As Boolean
     
-    If $musicElements.DequeueByIndexes(argIndexes) Then NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    If Not $musicElements.DequeueByIndexes(argIndexes) Then Return False
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
     $position.Refresh($musicElements.Count)
     
     Return ($musicElements.Count > 0)
@@ -106,7 +109,7 @@ Public Sub ClearAll()
     $position.Current = 0
     $musicElements.Clear()
     HaruhiPlayer.SetMessage(("Playlist is cleared."), 5)
-    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
     
 End
 
@@ -122,8 +125,7 @@ Public Sub _new(argPaths As String[])
     If $musicElements.Count = 0 Then Return  
     $position.Refresh($musicElements.Count)
     If NagatoSettingsMusic.Shuffle Then Me.Next()
-    $musicElements.SaveQueue()
-    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
     
 End
 
@@ -142,5 +144,11 @@ End
 Private Function HasElement_Read() As Boolean
 
     Return ($musicElements.Count > 0)
+
+End
+
+Private Function Max_Read() As Integer
+
+    Return $musicElements.Count - 1
 
 End

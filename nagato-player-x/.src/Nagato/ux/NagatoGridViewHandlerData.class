@@ -2,28 +2,10 @@
 
 Inherits NagatoGridHandler
 
-Private Sub adjustWidth(argData As String, argColumn As Integer)
+Public Sub SetGridData2(argRow As Integer, argColumn As Integer, argData As String, argAlign As Integer)
     
-    Dim yukiWidth As Integer = HaruhiPlayList.Font.RichTextWidth(argData) + MikuruUx.Padding
-    
-    If yukiWidth > Me._$gridView.Columns[argColumn].W Then
-        Me._$gridView.Columns[argColumn].W = yukiWidth
-    Endif
-    
-End
-
-Public Sub SetGridData(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
-    
-    Me._$gridView[Me._$gridView.Rows.Max, argColumn].Text = argData
-    If argExpand Then adjustWidth(argData, argColumn)
-    
-End
-
-Public Sub SetGridDataRight(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
-    
-    Me._$gridView[Me._$gridView.Rows.Max, argColumn].Text = argData
-    Me._$gridView[Me._$gridView.Rows.Max, argColumn].Alignment = Align.Right
-    If argExpand Then adjustWidth(argData, argColumn)
+    Me._$gridView[argRow, argColumn].Text = argData
+    Me._$gridView[argRow, argColumn].Alignment = argAlign
     
 End
 

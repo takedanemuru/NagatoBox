@@ -5,6 +5,7 @@ Property Read Artist As String
 Property Read Album As String
 Property Read Title As String
 Property Read Duration As Float
+Property Read DurationReadable As String
 
 Private $tags As New NagatoTags
 
@@ -49,5 +50,11 @@ End
 Private Function Duration_Read() As Float
 
     Return $tags.Duration
+
+End
+
+Private Function DurationReadable_Read() As String
+
+    Return MikuruFloatToTime($tags.Duration)
 
 End

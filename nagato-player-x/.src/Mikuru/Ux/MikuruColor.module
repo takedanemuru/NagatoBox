@@ -6,8 +6,8 @@ Property Read WidgetToggled As Integer
 Property Read WidgetToggledLight As Integer
 Property Read WidgetOnMouse As Integer
 Property Read WidgetOnMouseLight As Integer
-
 Property Read GridBackgroundViolet As Integer
+Property Read GridBackgroundPink As Integer
 
 Private Function Widget_Read() As Integer
 
@@ -35,7 +35,7 @@ End
 
 Private Function WidgetOnMouse_Read() As Integer
 
-    Return (Color.Red + 16777216 * 128)
+    Return (Color.Red + Color.Transparent * 128)
 
 End
 
@@ -47,6 +47,12 @@ End
 
 Private Function GridBackgroundViolet_Read() As Integer
 
-    Return Color.Merge(Color.White, Color.Violet, 0.2)
+    Return Color.Merge(Color.White, Color.Violet, 0.15)
+
+End
+
+Private Function GridBackgroundPink_Read() As Integer
+
+    Return Color.Merge(Color.White, Color.Red, 0.15)
 
 End

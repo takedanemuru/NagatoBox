@@ -6,13 +6,11 @@ Private $menuBar As NagatoMenuBarQueue
 Private $grids As NagatoGridsQueue
 Private $queueObserver As Observer
 
-Event NewPlaylist
-
 Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
     
     $menuBar = New NagatoMenuBarQueue(argContainer) As "MenuBar"
     $grids = New NagatoGridsQueue(argGrids) As "Grids"
-    $queueObserver = New Observer(NagatoBroadCast) As "Asakura"
+    $queueObserver = New Observer(NagatoQueue) As "Asakura"
     
 End
 
@@ -21,7 +19,6 @@ Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
     Select Case argSignal
         Case MikuruSignal.ListSaveAs
             NagatoQueue.SaveAsPlaylist()
-            Raise NewPlaylist
         Case MikuruSignal.ListUp
             NagatoQueue.ChannelList.MoveUp($grids.Selection)
         Case MikuruSignal.ListDown
@@ -30,29 +27,20 @@ Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
     
 End
 
-Public Sub Asakura_Changed()
-    
-    If Object.IsValid($grids) Then $grids.Refresh()
-    
-End
-
-Public Sub Asakura_Moved()
-    
-    If Object.IsValid($grids) Then $grids.Refresh()
-    
-End
-
-Public Sub Asakura_SelectionMoved(argSelection As Integer[])
+Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     
     If Not Object.IsValid($grids) Then Return
     
-    $grids.Refresh()
-    $grids.RefreshSelection(argSelection)
-    
-End
-
-Public Sub Asakura_TagChanged()
-    
-    $grids.Refresh()
+    Select argSignal
+        Case MikuruSignal.BroadcastQueueChanged
+            $grids.Refresh()
+        Case MikuruSignal.BroadcastIndexMoved
+            $grids.RefreshPlaymark()
+        Case MikuruSignal.BroadcastId3TagChanged
+            $grids.RefreshRows(argValues)
+        Case MikuruSignal.BroadcastSelectionChanged
+            $grids.Refresh()
+            $grids.RefreshSelection(argValues)
+    End Select
     
 End

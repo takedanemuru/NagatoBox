@@ -12,6 +12,11 @@ Public Sub Refresh(argRow As Integer)
         $grids[yukiRow, ColumnIcon].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
     Next
     
+    $grids[NagatoQueue.ChannelCurrent.Index, 0].EnsureVisible()
+
+Catch
+    Debug Error.Text
+
 End
 
 Public Function Set(argRowIndex As Integer) As Boolean

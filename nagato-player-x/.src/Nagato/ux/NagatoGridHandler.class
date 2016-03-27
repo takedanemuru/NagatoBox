@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Public _$gridView As GridView
 Private $observer As Observer
 

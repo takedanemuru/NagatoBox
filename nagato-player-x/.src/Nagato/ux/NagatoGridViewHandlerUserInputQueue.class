@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoGridHandler
+
+Public Sub Hello_Signal(argSignal As Integer, argValues As Variant[])
+    
+   If Me._$gridView.Rows.Selection.Count = 0 Then Return
+   
+    Select Case argSignal
+        Case MikuruSignal.ListDelete
+            NagatoQueue.DeleteIndexes(Me._$gridView.Rows.Selection)
+        Case MikuruSignal.ListEdit
+            MikuruDialogPortalTagEdit.EditIndexes(Me._$gridView.Rows.Selection)
+    End Select
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuCurrent As "Hello"
+    
+    yukiMenu.PopUp()
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    NagatoQueue.SetIndexAndPlay(Me._$gridView.Row)
+    
+End
+
+Public Sub Asakura_ColumnClick(argIndex As Integer)
+    
+    Raise Signal(MikuruSignal.UserInputColumnClick, [argIndex])
+    
+End
+
+Public Sub Asakura_Arrange()
+    
+    Raise Signal(MikuruSignal.UserInputResize, Null)
+    
+End

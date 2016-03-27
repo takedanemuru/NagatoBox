@@ -30,7 +30,7 @@ Private Function addPaths(argPaths As String[]) As Integer
         Inc yukiCount
     Next
     
-    NagatoBroadCast(NagatoBroadCast.SignalChanged)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
     
     Return yukiCount
     
@@ -60,8 +60,7 @@ Public Sub RemoveDuplicateMusic()
     If yukiIndexes.Count = 0 Then Return
     
     Me.DequeueByIndexes(yukiIndexes)
-    NagatoBroadCast(NagatoBroadCast.SignalChanged)
-    NagatoSettingsMusic.SavePaths(getAllPaths())
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
     
 End
 

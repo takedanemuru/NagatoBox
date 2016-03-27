@@ -2,6 +2,8 @@
 
 Inherits NagatoObject
 
+Property Read Selection As Integer[]
+
 Public _$grids As GridView
 Public _$observer As Observer
 Public _$sortAscend As Boolean
@@ -18,41 +20,33 @@ Public Sub _SetBackgroundStripe(argColor As Integer)
     
     Me._$handlerBackground.SetBackgroundStripe(argColor)
     
-Catch
-    Return
+End
+
+Public Sub _SetColumns(...)
+    
+    Dim yukiIndex As Integer
+    
+    Me._$grids.Columns.Count = Param.Count
+    
+    For yukiIndex = 0 To Param.Max
+        Me._$grids.Columns[yukiIndex].Text = Param[yukiIndex]
+    Next
     
 End
 
-Public Sub _ClearGrids()
+Public Sub _ResizeColumns(...)
     
-    If Not Object.IsValid(Me._$grids) Then Return
+    Dim yukiIndex As Integer
     
-    Me._$grids.Clear()
-    Me._$grids.Rows.Count = 0
-    
-End
-
-Public Sub _SetGridData(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
-    
-    Me._$handlerData.SetGridData(argColumn, argData, argExpand)
+    For yukiIndex = 0 To Param.Max
+        Me._$grids.Columns[yukiIndex].W = Param[yukiIndex]
+    Next
     
 End
 
-Public Sub _SetGridDataRight(argColumn As Integer, argData As String, Optional argExpand As Boolean = True)
+Public Sub _SetGridData2(argRow As Integer, argColumn As Integer, argData As String, argAlign As Integer)
     
-    Me._$handlerData.SetGridDataRight(argColumn, argData, argExpand)
-    
-End
-
-Public Sub _Activate()
-    
-    
-    
-End
-
-Public Sub _ColumnClick(argIndex As Integer)
-    
-    
+    Me._$handlerData.SetGridData2(argRow, argColumn, argData, argAlign)
     
 End
 
@@ -72,14 +66,11 @@ Public Sub _new(argGrids As GridView)
     
 End
 
-Public Sub Asakura_Activate()
-    
-    Me._Activate()
-    
-End
+Private Function Selection_Read() As Integer[]
 
-Public Sub Asakura_ColumnClick(argIndex As Integer)
+    Return Me._$grids.Rows.Selection
     
-    Me._ColumnClick(argIndex)
-    
+Catch
+    Return [-1]
+
 End

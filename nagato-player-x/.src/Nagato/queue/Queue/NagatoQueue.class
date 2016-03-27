@@ -12,7 +12,7 @@ Private $assistantPlayer As NagatoQueueAssistantPlayer
 Private $assistantList As NagatoQueueAssistantList
 Private $assistantCurrent As NagatoQueueAssistantCurrent
 
-Private $enumIndex As Integer = -1
+Event Broadcast(argSignal As Integer, argValues As Variant[])
 
 Public Sub AddMusics(argPaths As String[])
     
@@ -24,7 +24,8 @@ End
 Public Sub DeleteIndexes(argIndexes As Integer[])
     
     $player.Stop()
-    If $musicList.DequeueIndexes(argIndexes) Then $player.Play()
+    If $musicList.DequeueIndexes(argIndexes) Then $assistantCurrent.Reload()
+    $player.Play()
     
 End
 
@@ -52,7 +53,7 @@ Public Sub SetIndexAndPlay(argIndex As Integer)
     
     $player.SetIndexAndPlay(argIndex)
     $assistantCurrent.Reload()
-    NagatoBroadCast(NagatoBroadCast.IndexMoved)
+    Raise Broadcast(MikuruSignal.BroadcastIndexMoved, Null)
     
 End
 
@@ -70,7 +71,7 @@ Public Sub EditTagsByTagIndexes(argIndexes As Integer[], argTags As NagatoId3Tag
         $musicList[yukiIndex].EditTags(argTags)
     Next
     
-    NagatoBroadCast(NagatoBroadCast.SignalTagChanged)
+    Raise BroadCast(MikuruSignal.BroadcastId3TagChanged, argIndexes)
     
 End
 
@@ -100,18 +101,6 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Public Sub _next() As NagatoMusicElement
-    
-    Inc $enumIndex
-
-    Return $musicList[$enumIndex]
-    
-Catch
-    $enumIndex = -1
-    Enum.Stop()
-    
-End
-
 Private Function ChannelList_Read() As NagatoQueueAssistantList
 
     Return $assistantList
@@ -135,8 +124,12 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.BroadcastIndexMoved
             $assistantCurrent.Reload()
+            Try Print "YUKI.N > Next Tune : " & NagatoQueue.ChannelCurrent.Titile 
+            Try HaruhiPlayer.Title = NagatoQueue.ChannelCurrent.Titile
+        Case MikuruSignal.BroadcastQueueChanged
+            $assistantList.SaveCurrentQueue()
     End Select
     
-    NagatoBroadCast(argSignal)
+    Raise Broadcast(argSignal, argValues)
     
 End
