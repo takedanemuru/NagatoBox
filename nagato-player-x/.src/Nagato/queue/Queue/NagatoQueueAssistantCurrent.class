@@ -2,15 +2,17 @@
 
 Inherits NagatoQueueAssistant
 
-Property Read CoverArt As Picture
-Property Read Titile As String
-Property Read Artist As String
-Property Read Album As String
-Property Read Url As String
-Property Read Index As Integer
-Property Read DurationData As NagatoDurationData
-
 Private $coverArt As Picture
+
+Private Function getDurationData() As NagatoDurationData
+    
+    Dim yukiDurationData As NagatoDurationData = Me._$player.GetDurationData()
+
+    yukiDurationData.OverrideDuration(Me._$musicList[Me._$musicList.CurrentIndex].Duration)
+
+    Return yukiDurationData
+    
+End
 
 Public Sub Reload()
     
@@ -24,48 +26,33 @@ Public Sub _OptionalOnInitialize()
     
 End
 
-Private Function CoverArt_Read() As Picture
-
-    Return $coverArt
-
-End
-
-Private Function Titile_Read() As String
-
-    Return Me._$musicList[Me._$musicList.CurrentIndex].Title
-
-End
-
-Private Function Artist_Read() As String
-
-    Return Me._$musicList[Me._$musicList.CurrentIndex].Artist
+Public Sub GetProperty(argProperty As Integer) As Variant
     
-End
-
-Private Function Album_Read() As String
-
-    Return Me._$musicList[Me._$musicList.CurrentIndex].Album
-
-End
-
-Private Function Url_Read() As String
-
-    Return Media.URL(Me._$musicList[Me._$musicList.CurrentIndex].Path)
-
-End
-
-Private Function Index_Read() As Integer
-
-    Return Me._$musicList.CurrentIndex
-
-End
-
-Private Function DurationData_Read() As NagatoDurationData
-
-    Dim yukiDurationData As NagatoDurationData = Me._$player.GetDurationData()
-
-    yukiDurationData.OverrideDuration(Me._$musicList[Me._$musicList.CurrentIndex].Duration)
-
-    Return yukiDurationData
-
+    Select Case argProperty
+        Case MikuruProperty.PlayState
+            Return Me._$player.State
+        Case MikuruProperty.SoftwareVolume
+            Return Me._$player.SoftwareVolume
+        Case MikuruProperty.CoverArt
+            Return $coverArt
+        Case MikuruProperty.CurrentTitle
+            Return Me._$musicList[Me._$musicList.CurrentIndex].Title
+        Case MikuruProperty.CurrentArtist
+            Return Me._$musicList[Me._$musicList.CurrentIndex].Artist
+        Case MikuruProperty.CurrentAlbum
+            Return Me._$musicList[Me._$musicList.CurrentIndex].Album
+        Case MikuruProperty.CurrentIndex
+            Return Me._$musicList.CurrentIndex
+        Case MikuruProperty.CurrentUrl
+            Return Media.URL(Me._$musicList[Me._$musicList.CurrentIndex].Path)
+        Case MikuruProperty.CurrentDurationData
+            Return getDurationData()
+        Case MikuruProperty.CurrentDurationText
+            Return getDurationData().Text
+        Case MikuruProperty.ListCount
+            Return Me._$musicList.Max + 1
+        Case MikuruProperty.ListMax
+            Return Me._$musicList.Max
+    End Select
+    
 End

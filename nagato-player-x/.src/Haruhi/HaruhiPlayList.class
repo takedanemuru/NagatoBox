@@ -2,6 +2,7 @@
 
 Private $nowPlayingTab As NagatoTabQueue
 Private $playlistsTab As NagatoTabPlaylists
+Private $infoArea As NagatoInfoArea
 
 Public Sub _new()
 
@@ -9,6 +10,7 @@ Public Sub _new()
     
     $nowPlayingTab = New NagatoTabQueue(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
     $playlistsTab = New NagatoTabPlaylists(MenuPanelPlaylists, PlaylistsGrid) As "PlaylistsGrids"
+    $infoArea = New NagatoInfoArea(Me)
     
 End
 

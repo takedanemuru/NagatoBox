@@ -1,6 +1,5 @@
 ' Gambas class file
 
-Private $observer As Observer
 Private $element As NagatoMusicElement
 Private $indexes As Integer[]
 Private $handlerCoverArt As NagatoTagEditHandlerCoverArt
@@ -51,7 +50,7 @@ End
 
 Public Sub ApplyButton_Click()
     
-    NagatoQueue.EditTagsByTagIndexes($indexes, getNewTag())
+    NagatoQueue(MikuruSignal.ListEdit, [$indexes, getNewTag()])
     $handlerCoverArt.SetCoverArt($indexes)
     
     Me.Close()

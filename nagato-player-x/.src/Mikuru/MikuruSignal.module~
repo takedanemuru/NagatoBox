@@ -1,12 +1,15 @@
 ' Gambas module file
 
 Public Enum None
+Public Enum QueueHeader = 1000
 Public Enum QueuePlay = 1001, QueuePause = 1002, QueueNext = 1003, QueueBack = 1004
-Public Enum QueueShuffle = 1005, QueueRepeat = 1006
+Public Enum QueueShuffle = 1005, QueueRepeat = 1006, QueueSeek = 1007, QueueSetVolume = 1008
+Public Enum QueSetIndexAndPlay = 1009
+Public Enum ListHeader = 2000
 Public Enum ListAddMusic = 2001, ListAddDirectory = 2002, ListSaveAs = 2003, ListClear = 2004
 Public Enum ListUp = 2005, ListDown = 2006, ListEdit = 2007, ListDelete = 2008
-Public Enum ListDeleteDuplicateMusic = 2009
-Public Enum UserInputNone = 3000, UserInputColumnClick = 3001
+Public Enum ListDeleteDuplicateMusic = 2009, ListSort = 2010
+Public Enum UserInputNone = 3000, UserInputColumnClick = 3001, UserInputResize = 3002
 Public Enum BroadcastNone = 8000, BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
 Public Enum BroadcastQueueChanged = 8003, BroadcastPlaylistsChanged = 8004
 Public Enum BroadcastId3TagChanged = 8005, BroadcastSelectionChanged = 8006

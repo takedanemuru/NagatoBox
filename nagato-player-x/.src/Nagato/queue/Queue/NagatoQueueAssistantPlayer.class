@@ -2,9 +2,6 @@
 
 Inherits NagatoQueueAssistant
 
-Property Read State As Integer
-Property SoftwareVolume As Float
-
 Private $observer As Observer
 
 Public Sub Seek(argProgress As Float) ' argFloat must be between 0 to 1
@@ -13,46 +10,75 @@ Public Sub Seek(argProgress As Float) ' argFloat must be between 0 to 1
     
 End
 
-Public Sub Play()
+Private Sub play()
     
-    If Not Me._$musicList.HasElement Then Return
-    If Not Me._$player.State <> Media.Playing Then Me._$player.Play()
+    If Not Me._$player.State = Media.Playing Then Return
+    Me._$player.ResetUrl()
+    Raise Signal(MikuruSignal.BroadcastStateChanged, Null)
     
 End
 
-Public Sub Pause()
+Private Sub pause()
     
+    If Not Me._$player.State = Media.Paused Then Return
     Me._$player.Pause()
+    Raise Signal(MikuruSignal.BroadcastStateChanged, Null)
     
 End
 
-Public Sub Next()
+Private Sub move(argSignal As Integer, argPlayState As Integer)
     
-    If Not Me._$musicList.HasElement Then Return
-
-    Me._$musicList.Next()
-
-    If Me._$player.State = Media.Playing Then 
-        Try Me._$player.Play(0)
-    Else
-        Me._$player.ResetUrl()
-    End If
+    Me._$player.Stop()
+    If argSignal = MikuruSignal.QueueNext Then Me._$musicList.Next()
+    If argSignal = MikuruSignal.QueueBack Then Me._$musicList.Back()
+    Me._$player.ResetUrl(argPlayState = Media.Playing)
+    
+    Raise Signal(MikuruSignal.BroadcastIndexMoved, Null)
     
 End
 
-Public Sub Back()
+Private Sub back()
     
-    If Not Me._$musicList.HasElement Then Return
+    Dim yukiPlayState As Integer = Me._$player.State
     
-    If Me._$player.State = Media.Playing And If NagatoQueue.ChannelCurrent.DurationData.Rate > 0.05 Then
+    If yukiPlayState = Media.Playing And If Me._$player.GetDurationData().Rate > 0.05 Then
         Me._$player.SetByRate(0)
-    Else If Me._$player.State = Media.Playing Then
-        Me._$musicList.Back()
-        Me._$player.Play(0)
-    Else ' when Me._$player is stopped/paused
-        Me._$musicList.Back()
-        Me._$player.ResetUrl()
+    Else
+        move(MikuruSignal.QueueBack, yukiPlayState)
     End If
+    
+End
+
+Private Sub setIndexAndPlay(argIndex As Integer)
+    
+    Me._$player.Stop()
+    Me._$musicList.SetIndex(argIndex)
+    Me._$player.ResetUrl(True)
+    
+    Raise Signal(MikuruSignal.BroadcastIndexMoved, Null)
+    
+End
+
+Public Sub _call(argSignal As Integer, argvalues As Variant[])
+    
+    If Not Me._$musicList.HasElement Then Return
+
+    Select Case argSignal
+        Case MikuruSignal.QueuePlay
+            play()
+        Case MikuruSignal.QueuePause
+            pause()
+        Case MikuruSignal.QueueBack
+            back()
+        Case MikuruSignal.QueueNext
+            move(argSignal, Me._$player.State)
+        Case MikuruSignal.QueueSetVolume
+            Me._$player.SoftwareVolume = argvalues[0]
+        Case MikuruSignal.QueueSeek
+            Me._$player.SetByRate(argvalues[0])
+        Case MikuruSignal.QueSetIndexAndPlay
+            setIndexAndPlay(argvalues[0])
+    End Select
     
 End
 
@@ -67,22 +93,4 @@ Public Sub Asakura_MusicEnd()
     If NagatoSettingsMusic.Repeat Then Me.Back()
     If Not NagatoSettingsMusic.Repeat Then Me.Next()
     
-End
-
-Private Function State_Read() As Integer
-
-    Return Me._$player.State
-
-End
-
-Private Function SoftwareVolume_Read() As Float
-
-    Return Me._$player.SoftwareVolume
-
-End
-
-Private Sub SoftwareVolume_Write(Value As Float)
-
-    Me._$player.SoftwareVolume = Value
-
 End

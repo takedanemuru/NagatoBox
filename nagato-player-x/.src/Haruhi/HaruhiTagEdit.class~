@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Private $coverArtPath As String
-Private $observer As Observer
 Private $element As NagatoMusicElement
 Private $index As Integer
 Private $handlerCoverArt As NagatoTagEditHandlerCoverArt
@@ -53,7 +51,7 @@ End
 Public Sub ApplyButton_Click()
     
     NagatoQueue.EditTagsByTagIndexes([$index], getNewTag())
-    If $handlerCoverArt.CoverArtPath Then NagatoQueue.ChangeCoverArtByIndexes([$index], $handlerCoverArt.CoverArtPath)
+    $handlerCoverArt.SetCoverArt([$index])
     
     Me.Close()
     

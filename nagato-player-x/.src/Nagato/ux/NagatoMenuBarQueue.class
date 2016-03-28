@@ -25,14 +25,6 @@ End
 Public Sub MenuButton_Click()
     
     Select Case Last.Tag
-        Case MikuruSignal.QueuePlay
-            NagatoQueue.ChannelPlayer.Play()
-        Case MikuruSignal.QueuePause
-            NagatoQueue.ChannelPlayer.Pause()
-        Case MikuruSignal.QueueNext
-            NagatoQueue.ChannelPlayer.Next()
-        Case MikuruSignal.QueueBack
-            NagatoQueue.ChannelPlayer.Back()
         Case MikuruSignal.QueueShuffle
             NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
         Case MikuruSignal.QueueRepeat
@@ -43,8 +35,8 @@ Public Sub MenuButton_Click()
             MikuruDialog.AddMusic()
         Case MikuruSignal.ListAddDirectory
             MikuruDialog.AddDirectory()
-        Case MikuruSignal.ListClear
-            NagatoQueue.ClearAll()
+        Default
+            NagatoQueue(Last.Tag, Null)
     End Select
     
 End

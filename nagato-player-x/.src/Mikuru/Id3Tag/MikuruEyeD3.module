@@ -19,10 +19,9 @@ End
 
 Private Sub setAlbumArtToCurrentPlayingFile(argPicturePath As String, argMusicPath As String)
     
-    NagatoQueue.ChannelPlayer.Pause()
+    NagatoQueue(MikuruSignal.QueuePause, Null)
         setAlbumArtToFile(argPicturePath, argMusicPath)
-    NagatoQueue.ChannelPlayer.Play()
-    NagatoQueue.ChannelCurrent.Reload()
+    NagatoQueue(MikuruSignal.QueuePlay, Null)
     
 End
 
@@ -42,7 +41,7 @@ End
 
 Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
-    If (Media.URL(argMusicPath) = NagatoQueue.ChannelCurrent.Url) Then
+    If (Media.URL(argMusicPath) = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)) Then
         setAlbumArtToCurrentPlayingFile(argPicturePath, argMusicPath)
     Else
         setAlbumArtToFile(argPicturePath, argMusicPath)

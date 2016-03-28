@@ -2,23 +2,12 @@
 
 Inherits NagatoWidgetPainter
 
-Private Function getRate() As Float
-    
-    Dim yukiRate As Float
-    
-    With MikuruUx.ProgressBar
-        yukiRate = (MikuruMousePosition.X - .X) / (.W - .X)
-    End With
-    
-    Return yukiRate
-    
-End
-
 Private Sub paintProgressBarOnMouse()
     
-    Dim yukiRate As Float = getRate()
+    Dim yukiRate As Float = MikuruMouseRate(MikuruUx.ProgressBar, MikuruMousePosition.X)
     Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, yukiRate)
-    Dim yukiText As String = NagatoQueue.ChannelCurrent.DurationData.GetTextByRate(yukiRate)
+    Dim yukiDurationData As NagatoDurationData = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationData)
+    Dim yukiText As String = yukiDurationData.GetTextByRate(yukiRate)
     
     Me._PaintClipRectangle(MikuruUx.ProgressBar, 2 * MikuruUx.Grid)
     Me._PaintRectangle(MikuruUx.ProgressBar, MikuruColor.WidgetOnMouseLight) 'frame
@@ -30,7 +19,7 @@ End
 
 Private Sub paintProgressBarNormal()
     
-    Dim yukiData As NagatoDurationData = NagatoQueue.ChannelCurrent.DurationData
+    Dim yukiData As NagatoDurationData = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationData)
     Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.ProgressBar, yukiData.Rate)
     
     Me._PaintClipRectangle(MikuruUx.ProgressBar, 2 * MikuruUx.Grid)

@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Property Read State As Integer
 Property SoftwareVolume As Float
 
@@ -13,40 +15,19 @@ Public Sub SetByRate(argRate As Float)
     
 End
 
-Public Sub SetIndexAndPlay(argIndex As Integer) As Boolean
+Public Sub Play()
     
-    If Not NagatoQueue.ChannelList.SetIndex(argIndex) Then Return False
-    Try $player.Stop
-    $player.URL = NagatoQueue.ChannelCurrent.Url
-    $player.Play()
-    
-    Return True
-    
-Catch
-    Return False
-    
-End
-
-Public Sub Play(Optional argPosition As Float)
-    
-    If $player.State <> Media.Paused Then
-        Try $player.Stop
-        Try $player.URL = NagatoQueue.ChannelCurrent.Url
-    End If
-    
-    $player.Play()
-    If argPosition Then $player.Position = argPosition
-    
-Catch
-    Return
-    
-End
-
-Public Sub ResetUrl()
-    
-    Try $player.Stop()
-    $player.URL = NagatoQueue.ChannelCurrent.Url
+    $player.URL = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)
     $player.Position = 0
+    $player.Play()
+    
+End
+
+Public Sub ResetUrl(Optional argPlay As Boolean = True)
+    
+    $player.URL = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)
+    $player.Position = 0
+    If argPlay Then $player.Play()
     
 End
 
@@ -91,4 +72,3 @@ Private Sub SoftwareVolume_Write(Value As Float)
     Try $player.Audio.Volume = Min(Value, 1)
 
 End
-

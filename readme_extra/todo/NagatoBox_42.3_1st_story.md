@@ -40,13 +40,10 @@
 
 + ~~fix : api url as that was changed.~~
 
-### nagato-player-x (v42.3.23)
-
-core diagram
-![image: nagat-player-x_core_diagram](/home/takedanemuru/Yandex.Disk/ドキュメント/nagato-player-x_core_diagram.png)
+### nagato-player-x (v42.3.28)
 
 + ~~fix : id3tag fetching.~~
-+ refine playlist ux.
++ ~~refine playlist ux.~~
 + cui front-end ?
 + ~~new : crop coverart image that is not square automatically.~~
 + ~~refactoring : separate huge size classes.~~

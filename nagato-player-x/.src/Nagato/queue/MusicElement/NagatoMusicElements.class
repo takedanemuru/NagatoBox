@@ -48,7 +48,7 @@ Private Function isDuplicate(argPath As String, argIndex As Integer) As Boolean
     
 End
 
-Public Sub RemoveDuplicateMusic()
+Public Function GetDuplicateMusics() As Integer[]
    
     Dim yukiIndex As Integer
     Dim yukiIndexes As New Integer[]
@@ -57,10 +57,7 @@ Public Sub RemoveDuplicateMusic()
         If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
     Next
     
-    If yukiIndexes.Count = 0 Then Return
-    
-    Me.DequeueByIndexes(yukiIndexes)
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+    Return yukiIndexes
     
 End
 

@@ -1,0 +1,45 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $timer As New Timer As "Timer"
+
+Public Sub _new(argContainer As Container)
+    
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    
+    With $drawingArea
+        .H = 112
+        .Background = Color.Lighter(Color.Violet)
+    End With
+    
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    If Not HaruhiPlayList.Closed Then $drawingArea.Refresh()
+    
+Catch
+    Return
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    Paint.Begin($drawingArea)
+        Try Paint.DrawPicture(NagatoQueue.GetProperty(MikuruProperty.CoverArt), 8, 8)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 16
+        Paint.DrawText(NagatoQueue.GetProperty(MikuruProperty.CurrentTitle), 120, 32)
+        Paint.Rectangle(112, 44, $drawingArea.W - (112 + 8), 1)
+        Paint.Fill()
+        Paint.Font.Size = 12
+        Paint.DrawText(NagatoQueue.GetProperty(MikuruProperty.CurrentArtist), 120, 68)
+        Paint.Fill()
+        Paint.Font.Size = 12
+        Paint.DrawText(NagatoQueue.GetProperty(MikuruProperty.CurrentAlbum), 120, 92)
+        Paint.Fill()
+    Paint.End()
+    
+End

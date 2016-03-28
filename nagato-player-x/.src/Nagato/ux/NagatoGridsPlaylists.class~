@@ -7,15 +7,16 @@ Private Enum ColumnIcon, ColumnTitle, ColumnDescription, ColumnCount, ColumnSpac
 Private Sub refreshData()
     
     Dim yukiResult As Result = NagatoDBPlaylists.GetAllIdResult()
+    Dim yukiRow As Integer
     Dim yukiCount As Integer
     
-    Debug yukiResult.Count
+    Me._$grids.Rows.Count = yukiResult.Count
     
     For Each yukiResult
-        Inc Me._$grids.Rows.Count
-        Me._SetGridData(ColumnTitle, yukiResult[NagatoDB.Column.PlaylistName])
+        Me._SetGridData2(yukiRow, ColumnTitle, yukiResult[NagatoDB.Column.PlaylistName], Align.Left)
         yukiCount = NagatoDBPlaylists.GetCountByPlaylistId(yukiResult[NagatoDB.Column.Id])
-        Me._SetGridDataRight(ColumnCount, yukiCount)
+        Me._SetGridData2(yukiRow, ColumnCount, yukiCount, Align.Right)
+        Inc yukiRow
     Next
     
     Me._SetBackgroundStripe(MikuruColor.GridBackgroundPink)
@@ -44,7 +45,7 @@ Public Sub Asakura_Activate()
     
     If Me._$grids.Rows.Selection.Count > 0 Then
         yukiPaths = NagatoDBPlaylists.GetMusicPathsInPlaylist(Me._GetSelectionText(ColumnTitle)[0])
-        NagatoQueue.AddMusics(yukiPaths)
+        NagatoQueue(MikuruSignal.ListAddMusic, yukiPaths)
     Endif
     
 End

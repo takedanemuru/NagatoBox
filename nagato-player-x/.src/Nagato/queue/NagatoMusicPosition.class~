@@ -22,7 +22,6 @@ Public Sub Next(argCount As Integer)
 
     $index.Next()
     If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Next()
-
     Raise Signal(MikuruSignal.BroadcastIndexMoved, Null)
     
 End
@@ -33,7 +32,7 @@ Public Sub Back(argCount As Integer)
 
     $index.Back()
     If NagatoSettingsMusic.Shuffle Then $index.Current = $randomOrder.Back()
-    NagatoBroadCast(NagatoBroadCast.SignalMoved)
+    Raise Signal(MikuruSignal.BroadcastIndexMoved, Null)
     
 End
 

@@ -4,8 +4,6 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
-    Debug NagatoSettingsMusic.LoadPaths().Count
-    
     If NagatoDBus.IsUnique() Then
         NagatoQueue.Activate()
         HaruhiPlayer.Show() 

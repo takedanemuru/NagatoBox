@@ -1,20 +1,13 @@
 ' Gambas module file
 
-Property PlaylistName As String
-
 Public Enum ResponseCancel = 1001, ResponseApply = 1002
-
-Private $playlistName As String
 
 Public Sub AddMusic()
     
     Dialog.Title = ("Select music")
-    'Dialog.Path = NagatoSettingsMusic.DialogLastPath
     Dialog.Path = Desktop.GetDirectory("MUSIC")
     
-    If Not Dialog.OpenFile(True) Then
-        NagatoQueue.AddMusics(Dialog.Paths)
-    Endif
+    If Not Dialog.OpenFile(True) Then NagatoQueue(MikuruSignal.ListAddMusic, Dialog.Paths)
     
 End
 
@@ -23,18 +16,6 @@ Public Sub AddDirectory()
     Dialog.Title = ("Select directory")
     Dialog.Path = User.Home
     
-    If Not Dialog.SelectDirectory() Then NagatoQueue.ChannelList.AddDirectory(Dialog.Path)
+    If Not Dialog.SelectDirectory() Then NagatoQueue(MikuruSignal.ListAddDirectory, [Dialog.Path])
     
-End
-
-Private Function PlaylistName_Read() As String
-
-    Return $playlistName
-
-End
-
-Private Sub PlaylistName_Write(Value As String)
-
-    $playlistName = Value
-
 End

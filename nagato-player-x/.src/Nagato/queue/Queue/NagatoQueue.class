@@ -2,76 +2,29 @@
 
 Create Static
 
-Property Read ChannelPlayer As NagatoQueueAssistantPlayer
-Property Read ChannelList As NagatoQueueAssistantList
-Property Read ChannelCurrent As NagatoQueueAssistantCurrent
+Private $player As New NagatoPlayer As "TFEI"
+Private $musicList As NagatoMusicList
 
-Private $player As New NagatoPlayer
-Private $musicList As NagatoMusicList 
-Private $assistantPlayer As NagatoQueueAssistantPlayer
-Private $assistantList As NagatoQueueAssistantList
-Private $assistantCurrent As NagatoQueueAssistantCurrent
+Private $handlerPlayer As NagatoQueueAssistantPlayer
+Private $handlerList As NagatoQueueAssistantList
+Private $handlerProperties As NagatoQueueAssistantCurrent
 
 Event Broadcast(argSignal As Integer, argValues As Variant[])
 
-Public Sub AddMusics(argPaths As String[])
+Public Sub _call(argSignal As Integer, argValues As Variant[])
     
-    $musicList.EnqueuePaths(argPaths)
-    $assistantCurrent.Reload()
+    Select Case argSignal
+        Case MikuruSignal.QueueHeader To MikuruSignal.QueueHeader + 999
+            $handlerPlayer(argSignal, argValues)
+        Case MikuruSignal.ListHeader To MikuruSignal.ListHeader + 999
+            $handlerList(argSignal, argValues)
+    End Select
 
 End
 
-Public Sub DeleteIndexes(argIndexes As Integer[])
+Public Function GetProperty(argProperty As Integer) As Variant
     
-    $player.Stop()
-    If $musicList.DequeueIndexes(argIndexes) Then $assistantCurrent.Reload()
-    $player.Play()
-    
-End
-
-Public Sub Sort(argType As Integer, argAscend As Boolean)
-    
-    $musicList.Sort(argType, argAscend)
-    
-End
-
-Public Sub ClearAll()
-    
-    $player.Stop()
-    $musicList.ClearAll()
-    $assistantCurrent.Reload()
-    
-End
-
-Public Sub SaveAsPlaylist()
-    
-    $musicList.SaveAsPlayList(MikuruDialog.PlaylistName)
-    
-End
-
-Public Sub SetIndexAndPlay(argIndex As Integer)
-    
-    $player.SetIndexAndPlay(argIndex)
-    $assistantCurrent.Reload()
-    Raise Broadcast(MikuruSignal.BroadcastIndexMoved, Null)
-    
-End
-
-Public Sub RemoveDuplicateMusic()
-    
-    $musicList.RemoveDuplicateMusic()
-    
-End
-
-Public Sub EditTagsByTagIndexes(argIndexes As Integer[], argTags As NagatoId3TagInfo)
-    
-    Dim yukiIndex As Integer
-    
-    For Each yukiIndex In argIndexes
-        $musicList[yukiIndex].EditTags(argTags)
-    Next
-    
-    Raise BroadCast(MikuruSignal.BroadcastId3TagChanged, argIndexes)
+    Return $handlerProperties.GetProperty(argProperty)
     
 End
 
@@ -79,9 +32,12 @@ Public Sub ChangeCoverArtByIndexes(argIndexes As Integer[], argCoverArtPath As S
     
     Dim yukiIndex As Integer
     
+    If Not Exist(argCoverArtPath) Then Return
+    Debug DesktopMime.FromFile(argCoverArtPath).Type
+    
     For Each yukiIndex In argIndexes
-        If argCoverArtPath Then MikuruEyeD3.SetPicture($musicList[yukiIndex].Path, argCoverArtPath)
-        If yukiIndex = $musicList.CurrentIndex Then $assistantCurrent.Reload()
+        MikuruEyeD3.SetPicture($musicList[yukiIndex].Path, argCoverArtPath)
+        If yukiIndex = $musicList.CurrentIndex Then $handlerProperties.Reload()
     Next
     
 End
@@ -89,9 +45,9 @@ End
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) As "TFEI"
-    $assistantList = New NagatoQueueAssistantList($player, $musicList)
-    $assistantPlayer = New NagatoQueueAssistantPlayer($player, $musicList)
-    $assistantCurrent = New NagatoQueueAssistantCurrent($player, $musicList)
+    $handlerList = New NagatoQueueAssistantList($player, $musicList) As "TFEI"
+    $handlerPlayer = New NagatoQueueAssistantPlayer($player, $musicList) As "TFEI"
+    $handlerProperties = New NagatoQueueAssistantCurrent($player, $musicList)
     
 End
 
@@ -101,33 +57,14 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Private Function ChannelList_Read() As NagatoQueueAssistantList
-
-    Return $assistantList
-
-End
-
-Private Function ChannelCurrent_Read() As NagatoQueueAssistantCurrent
-
-    Return $assistantCurrent
-
-End
-
-Private Function ChannelPlayer_Read() As NagatoQueueAssistantPlayer
-
-    Return $assistantPlayer
-
-End
-
 Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.BroadcastIndexMoved
-            $assistantCurrent.Reload()
-            Try Print "YUKI.N > Next Tune : " & NagatoQueue.ChannelCurrent.Titile 
-            Try HaruhiPlayer.Title = NagatoQueue.ChannelCurrent.Titile
+            $handlerProperties.Reload()
+            HaruhiPlayer.Title = $handlerProperties.GetProperty(MikuruProperty.CurrentTitle)
         Case MikuruSignal.BroadcastQueueChanged
-            $assistantList.SaveCurrentQueue()
+            $handlerList.SaveCurrentQueue()
     End Select
     
     Raise Broadcast(argSignal, argValues)

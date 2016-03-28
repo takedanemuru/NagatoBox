@@ -33,7 +33,7 @@ End
 
 Private Sub paintProgressBarNormal()
     
-    Dim yukiVolume As Float = NagatoQueue.ChannelPlayer.SoftwareVolume
+    Dim yukiVolume As Float = NagatoQueue.GetProperty(MikuruProperty.SoftwareVolume)
     Dim yukiBarRectangle As Rect = Me._GetBarRectangle(MikuruUx.Button.Volume.Rect, yukiVolume)
     
     Me._PaintClipRectangle(MikuruUx.Button.Volume.Rect, 2 * MikuruUx.Grid)

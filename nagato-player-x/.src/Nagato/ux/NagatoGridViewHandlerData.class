@@ -7,6 +7,9 @@ Public Sub SetGridData2(argRow As Integer, argColumn As Integer, argData As Stri
     Me._$gridView[argRow, argColumn].Text = argData
     Me._$gridView[argRow, argColumn].Alignment = argAlign
     
+Catch
+    Debug Error.Text
+    
 End
 
 Public Function GetSelectionText(argColumnIndex As Integer) As String[]

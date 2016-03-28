@@ -12,6 +12,6 @@ End
 
 Public Sub EditCurrentIndex()
     
-    HaruhiTagEdit.EditByTagIndex(NagatoQueue.ChannelCurrent.Index)
+    HaruhiTagEdit.EditByTagIndex(NagatoQueue.GetProperty(MikuruProperty.CurrentIndex))
     
 End

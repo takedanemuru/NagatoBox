@@ -17,12 +17,8 @@ End
 Public Sub MenuBar_Signal(argSignal As Integer, argVariables As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.ListSaveAs
-            NagatoQueue.SaveAsPlaylist()
-        Case MikuruSignal.ListUp
-            NagatoQueue.ChannelList.MoveUp($grids.Selection)
-        Case MikuruSignal.ListDown
-            NagatoQueue.ChannelList.MoveDown($grids.Selection)
+        Case MikuruSignal.ListUp, MikuruSignal.ListDown
+            NagatoQueue(argSignal, $grids.Selection)
     End Select
     
 End
@@ -34,7 +30,7 @@ Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     Select argSignal
         Case MikuruSignal.BroadcastQueueChanged
             $grids.Refresh()
-        Case MikuruSignal.BroadcastIndexMoved
+        Case MikuruSignal.BroadcastIndexMoved, MikuruSignal.BroadcastStateChanged
             $grids.RefreshPlaymark()
         Case MikuruSignal.BroadcastId3TagChanged
             $grids.RefreshRows(argValues)

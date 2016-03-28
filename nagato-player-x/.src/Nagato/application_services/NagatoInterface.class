@@ -11,33 +11,33 @@ Property Read ProgressInText As String
 Property Read Shuffle As Boolean
 Property Read Repeat As Boolean
 
-Public Sub AddMusics(argMusics As String[])
+Public Sub AddMusics(argPaths As String[])
     
-    NagatoQueue.AddMusics(argMusics)
+    NagatoQueue(MikuruSignal.ListAddMusic, argPaths)
     
 End
 
 Public Sub Play() 
     
-    NagatoQueue.ChannelPlayer.Play()
+    NagatoQueue(MikuruSignal.QueuePlay, Null)
     
 End
 
 Public Sub Pause() 
     
-    NagatoQueue.ChannelPlayer.Pause()
+    NagatoQueue(MikuruSignal.QueuePause, Null)
     
 End
 
 Public Sub Back() 
     
-    NagatoQueue.ChannelPlayer.Back()
+    NagatoQueue(MikuruSignal.QueueBack, Null)
     
 End
 
 Public Sub Next() 
     
-    NagatoQueue.ChannelPlayer.Next()
+    NagatoQueue(MikuruSignal.QueueNext, Null)
     
 End
 
@@ -55,7 +55,7 @@ End
 
 Public Sub PlayIndex(argIndex As Integer)
     
-    NagatoQueue.SetIndexAndPlay(argIndex)
+    NagatoQueue(MikuruSignal.QueSetIndexAndPlay, [argIndex])
     
 End
 
@@ -65,7 +65,7 @@ Public Sub MoveToCurrentDesktop()
     
 End
 
-Private Function GetTitles(argMaxIndex As Integer) As String[]
+Public Function GetTitles(argMaxIndex As Integer) As String[]
 
     Dim yukiIndex As Integer
     Dim yukiTitles As New String[]
@@ -80,25 +80,25 @@ End
 
 Private Function ProgressInText_Read() As String
 
-    Return NagatoQueue.ChannelCurrent.DurationData.Text
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentDurationText)
 
 End
 
 Private Function Title_Read() As String
 
-    Return NagatoQueue.ChannelCurrent.Titile
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
 
 End
 
 Private Function Artist_Read() As String
 
-    Return NagatoQueue.ChannelCurrent.Artist
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentArtist)
 
 End
 
 Private Function Album_Read() As String
 
-    Return NagatoQueue.ChannelCurrent.Album
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentAlbum)
 
 End
 

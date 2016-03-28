@@ -2,7 +2,7 @@
 
 Inherits NagatoGrids
 
-Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnNull, ColumnTime
+Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
 Private $handlerUserInput As NagatoGridViewHandlerUserInputQueue
@@ -22,7 +22,7 @@ Private Sub resizeColumns()
     
     Dim yukiSize As Integer = HaruhiPlayList.W * 0.28
     
-    Me._ResizeColumns(MikuruUx.Padding, yukiSize, yukiSize, yukiSize, MikuruUx.Padding)
+    Me._ResizeColumns(MikuruUx.Padding, yukiSize, yukiSize, yukiSize)
     
 End
 
@@ -30,7 +30,7 @@ Private Sub insertRows()
     
     Dim yukiRow As Integer
 
-    For yukiRow = 0 To NagatoQueue.ChannelList.Max
+    For yukiRow = 0 To NagatoQueue.GetProperty(MikuruProperty.ListMax)
         insertRow(yukiRow)
     Next
     
@@ -39,16 +39,16 @@ End
 Public Sub Refresh()
     
     Me._$grids.Clear()
-    Me._$grids.Rows.Count = NagatoQueue.ChannelList.Max + 1
+    Me._$grids.Rows.Count = NagatoQueue.GetProperty(MikuruProperty.ListCount)
     insertRows()
-    $playMark.Set(NagatoQueue.ChannelCurrent.Index) 
+    $playMark.Refresh()
     Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
     
 End
 
 Public Sub _InitializeGrids() 'override
     
-    Me._SetColumns("", ("Title"), ("Artist"), ("Album"), "", ("Duration"))
+    Me._SetColumns("", ("Title"), ("Artist"), ("Album"), ("Duration"))
     $playMark = New NagatoGridsPlayMark(Me._$grids)
     $handlerUserInput = New NagatoGridViewHandlerUserInputQueue(Me._$grids) As "UserInput"
     Me.Refresh()
@@ -77,7 +77,7 @@ End
 
 Public Sub RefreshPlaymark()
     
-    $playMark.Refresh(NagatoQueue.ChannelCurrent.Index)
+    $playMark.Refresh()
     
 End
 
@@ -86,7 +86,7 @@ Public Sub UserInput_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.UserInputColumnClick
             Me._$sortAscend = Not Me._$sortAscend
-            If argValues[0] > 0 Then NagatoQueue.Sort(argValues[0], Me._$sortAscend)
+            If argValues[0] > 0 Then NagatoQueue(MikuruSignal.ListSort, [argValues[0], Me._$sortAscend])
         Case MikuruSignal.UserInputResize
             resizeColumns()
     End Select

@@ -13,7 +13,6 @@ End
 Public Sub Form_Open()
     
     $notEntered = True
-    MikuruDialog.PlaylistName = ""
     
     Me.Center()
     setFormPicture()
@@ -32,7 +31,7 @@ Public Sub CancelButton_Click()
     PlaylistNamesComboBox.Text = ("Input or select Playlist name")
     $notEntered = True
     
-    Me.Close(MikuruDialog.ResponseCancel)
+    Me.Close()
 
 End
 
@@ -40,10 +39,10 @@ Public Sub SaveButton_Click()
 
     If PlaylistNamesComboBox.Text = "" Then Return
 
-    MikuruDialog.PlaylistName = PlaylistNamesComboBox.Text
+    NagatoQueue(MikuruSignal.ListSaveAs, [PlaylistNamesComboBox.Text])
     PlaylistNamesComboBox.Text = ("Input or select Playlist name")
     $notEntered = True
     
-    Me.Close(MikuruDialog.ResponseApply)
+    Me.Close()
 
 End

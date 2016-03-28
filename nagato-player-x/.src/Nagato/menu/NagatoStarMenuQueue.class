@@ -2,14 +2,6 @@
 
 Inherits NagatoStarMenu
 
-Private Sub saveAsPlaylist()
-    
-    If HaruhiSaveAsPlaylist.ShowDialog() = MikuruDialog.ResponseApply Then
-        Raise Signal(MikuruSignal.ListSaveAs, [""])
-    End If
-    
-End
-
 Public Function _OnGetMenuName() As String
     
     Return "StarMenuQueue"
@@ -35,11 +27,9 @@ Public Sub _OnMenuItemClick(argTag As Integer)
         Case MikuruSignal.ListAddDirectory
             MikuruDialog.AddDirectory()
         Case MikuruSignal.ListSaveAs
-            saveAsPlaylist()
-        Case MikuruSignal.ListClear
-            NagatoQueue.ClearAll()
+            HaruhiSaveAsPlaylist.ShowDialog() 
         Case MikuruSignal.ListDeleteDuplicateMusic
-            NagatoQueue.RemoveDuplicateMusic()
+            NagatoQueue(MikuruSignal.ListDeleteDuplicateMusic, Null)
     End Select
     
 End

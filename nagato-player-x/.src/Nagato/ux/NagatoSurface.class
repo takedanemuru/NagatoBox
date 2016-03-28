@@ -9,9 +9,9 @@ Public Sub Drop(argData As Variant)
             NagatoSettingsForm.SaveBackgroundPath(MikuruPath.GetImagePath(argData))
             Raise RequestRefresh
         Case MikuruPath.Music
-            NagatoQueue.AddMusics(MikuruPath.GetMusicPaths(argData))
+            NagatoQueue(MikuruSignal.ListAddMusic, MikuruPath.GetMusicPaths(argData))
         Case MikuruPath.Directory
-            NagatoQueue.ChannelList.AddDirectory(MikuruPath.GetDirecoryPath(argData))
+            NagatoQueue(MikuruSignal.ListAddDirectory, [MikuruPath.GetDirecoryPath(argData)])
     End Select
     
 End
@@ -19,13 +19,13 @@ End
 Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
 
     If MikuruUx.Button.Play.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayer.Play()
+        NagatoQueue(MikuruSignal.QueuePlay, Null)
     Else If MikuruUx.Button.Pause.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayer.Pause()
+        NagatoQueue(MikuruSignal.QueuePause, Null)
     Else If MikuruUx.Button.Next.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayer.Next()
+        NagatoQueue(MikuruSignal.QueueNext, Null)
     Else If MikuruUx.Button.Back.Contains(argMouseX, argMouseY) Then
-        NagatoQueue.ChannelPlayer.Back()
+        NagatoQueue(MikuruSignal.QueueBack, Null)
     Else If MikuruUx.Button.Shuffle.Contains(argMouseX, argMouseY) Then
         NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
     Else If MikuruUx.Button.Repeat.Contains(argMouseX, argMouseY) Then
@@ -33,15 +33,11 @@ Public Sub MouseDown(argMouseX As Integer, argMouseY As Integer)
     Else If MikuruUx.Button.Playlist.Contains(argMouseX, argMouseY) Then
         HaruhiPlayList.EnsureVisible()
     Else If MikuruUx.Button.Volume.Contains(argMouseX, argMouseY) Then
-        With MikuruUx.Button.Volume.Rect
-            NagatoQueue.ChannelPlayer.SoftwareVolume = ((argMouseX - .X) / (.W - .X))
-        End With
+        NagatoQueue(MikuruSignal.QueueSetVolume, [MikuruMouseRate(MikuruUx.Button.Volume.Rect, argMouseX)])
     Else If MikuruUx.InfoBox.Contains(argMouseX, argMouseY) Then
         MikuruDialogPortalTagEdit.EditCurrentIndex()
     Else If MikuruUx.ProgressBar.Contains(argMouseX, argMouseY) Then
-        With MikuruUx.ProgressBar
-            NagatoQueue.ChannelPlayer.Seek((argMouseX - .X) / (.W - .X))
-        End With
+        NagatoQueue(MikuruSignal.QueueSeek, [MikuruMouseRate(MikuruUx.ProgressBar, argMouseX)])
     Endif
 
 End

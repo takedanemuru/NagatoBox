@@ -2,8 +2,6 @@
 
 Inherits NagatoQueueAssistant
 
-Property Read Max As Integer
-
 Public Sub SaveCurrentQueue()
     
     Dim yukiPaths As New String[]
@@ -17,13 +15,7 @@ Public Sub SaveCurrentQueue()
     
 End
 
-Public Function SetIndex(argIndex As Integer) As Boolean
-    
-    Return Me._$musicList.SetIndex(argIndex)
-    
-End
-
-Public Sub AddDirectory(argPath As String)
+Private Sub addDirectory(argPath As String)
     
     Dim yukiPaths As String[] = MikuruMusicFiles.GetFromDirectory(argPath)
     
@@ -31,20 +23,51 @@ Public Sub AddDirectory(argPath As String)
     
 End
 
-Public Sub MoveUp(argIndexes As Integer[])
+Private Sub dequeueByIndexes(argIndexes As Integer[])
     
-    If argIndexes.Count > 0 Then Me._$musicList.Up(argIndexes)
+    Me._$player.Stop()
+    If Me._$musicList.DequeueIndexes(argIndexes) Then 
+        Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+    End If
+    Me._$player.Play()
     
 End
 
-Public Sub MoveDown(argIndexes As Integer[])
+Private Sub editTagsByTagIndexes(argIndexes As Integer[], argTags As NagatoId3TagInfo)
     
-    If argIndexes.Count > 0 Then Me._$musicList.Down(argIndexes)
-
+    Dim yukiIndex As Integer
+    
+    For Each yukiIndex In argIndexes
+        Me._$musicList[yukiIndex].EditTags(argTags)
+    Next
+    
+    Raise Signal(MikuruSignal.BroadcastId3TagChanged, argIndexes)
+    
 End
 
-Private Function Max_Read() As Integer
-
-    Return Me._$musicList.Max
-
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ListClear
+            Me._$musicList.ClearAll()
+        Case MikuruSignal.ListAddMusic
+            Me._$musicList.EnqueuePaths(argValues)
+        Case MikuruSignal.ListAddDirectory
+            addDirectory(argValues[0])
+        Case MikuruSignal.ListUp
+            If argValues.Count > 0 Then Me._$musicList.Up(argValues)
+        Case MikuruSignal.ListDown
+            If argValues.Count > 0 Then Me._$musicList.Down(argValues)
+        Case MikuruSignal.ListSort
+            Me._$musicList.Sort(argValues[0], argValues[1])
+        Case MikuruSignal.ListSaveAs
+            Me._$musicList.SaveAsPlayList(argValues[0])
+        Case MikuruSignal.ListDeleteDuplicateMusic
+            Me._$musicList.RemoveDuplicateMusic()
+        Case MikuruSignal.ListDelete
+            dequeueByIndexes(argValues)
+        Case MikuruSignal.ListEdit
+            editTagsByTagIndexes(argValues[0], argValues[1])
+    End Select
+    
 End

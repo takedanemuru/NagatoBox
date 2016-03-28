@@ -21,6 +21,9 @@ Private Sub refreshData()
     
     Me._SetBackgroundStripe(MikuruColor.GridBackgroundPink)
     
+Catch
+    Debug Error.Text
+    
 End
 
 Public Sub _InitializeGrids() 'override
@@ -45,7 +48,7 @@ Public Sub Asakura_Activate()
     
     If Me._$grids.Rows.Selection.Count > 0 Then
         yukiPaths = NagatoDBPlaylists.GetMusicPathsInPlaylist(Me._GetSelectionText(ColumnTitle)[0])
-        NagatoQueue.AddMusics(yukiPaths)
+        NagatoQueue(MikuruSignal.ListAddMusic, yukiPaths)
     Endif
     
 End

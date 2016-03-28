@@ -4,32 +4,30 @@ Private Const ColumnIcon As Integer = 0
 
 Private $grids As GridView
 
-Public Sub Refresh(argRow As Integer)
+Private Function getIcon(argIndex As Integer) As Picture
+    
+    If argIndex <> NagatoQueue.GetProperty(MikuruProperty.CurrentIndex) Then 
+        Return Null
+    Else If MikuruState.CheckState(MikuruState.Play) Then
+        Return MikuruIcon.Get("button-play")
+    Else
+        Return MikuruIcon.Get("button-pause")
+    End If
+    
+End
+
+Public Sub Refresh()
     
     Dim yukiRow As Integer
     
     For yukiRow = 0 To $grids.Rows.Max
-        $grids[yukiRow, ColumnIcon].Picture = IIf(yukiRow = argRow, MikuruIcon.Get("button-play"), Null)
+        $grids[yukiRow, 0].Picture = getIcon(yukiRow)
     Next
     
-    $grids[NagatoQueue.ChannelCurrent.Index, 0].EnsureVisible()
+    $grids[NagatoQueue.GetProperty(MikuruProperty.CurrentIndex), 0].EnsureVisible()
 
 Catch
-    Debug Error.Text
-
-End
-
-Public Function Set(argRowIndex As Integer) As Boolean
-    
-    If argRowIndex <> NagatoQueue.ChannelCurrent.Index Then Return False
-        
-    If NagatoQueue.ChannelPlayer.State = Media.Playing Then
-        $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-play")
-    Else
-        $grids[argRowIndex, ColumnIcon].Picture = MikuruIcon.Get("button-pause")
-    End If
-    
-    Return True
+    Return
 
 End
 

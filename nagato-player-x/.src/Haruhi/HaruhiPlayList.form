@@ -5,7 +5,7 @@
   Text = ("Playlist")
   Icon = Picture["nagato-player-x.png"]
   SkipTaskbar = True
-  Arrangement = Arrange.Fill
+  Arrangement = Arrange.Vertical
   { PlaylistTabStrip TabStrip
     MoveScaled(2,2,79,43)
     Expand = True
