@@ -44,6 +44,9 @@ Public Sub Refresh()
     $playMark.Refresh()
     Me._SetBackgroundStripe(MikuruColor.GridBackgroundViolet)
     
+Catch
+    Return
+    
 End
 
 Public Sub _InitializeGrids() 'override

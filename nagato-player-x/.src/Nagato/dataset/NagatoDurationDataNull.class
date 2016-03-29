@@ -1,0 +1,28 @@
+' Gambas class file
+
+Property Read Text As String
+Property Read Rate As Float
+
+Public Function GetTextByRate(argRate As Float) As String ' argRate MUST be between 0 to 1
+
+    Return ""
+
+End
+
+Public Sub Override(argElement As NagatoMusicElement) As Boolean
+    
+    Return False
+    
+End
+
+Private Function Text_Read() As String
+
+    Return ""
+
+End
+
+Private Function Rate_Read() As Float
+
+    Return 0
+    
+End

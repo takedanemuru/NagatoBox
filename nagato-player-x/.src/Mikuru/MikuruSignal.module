@@ -8,7 +8,7 @@ Public Enum QueSetIndexAndPlay = 1009
 Public Enum ListHeader = 2000
 Public Enum ListAddMusic = 2001, ListAddDirectory = 2002, ListSaveAs = 2003, ListClear = 2004
 Public Enum ListUp = 2005, ListDown = 2006, ListEdit = 2007, ListDelete = 2008
-Public Enum ListDeleteDuplicateMusic = 2009, ListSort = 2010
+Public Enum ListDeleteDuplicateMusic = 2009, ListSort = 2010, ListChangeCoverArt = 2011
 Public Enum UserInputNone = 3000, UserInputColumnClick = 3001, UserInputResize = 3002
 Public Enum BroadcastNone = 8000, BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
 Public Enum BroadcastQueueChanged = 8003, BroadcastPlaylistsChanged = 8004

@@ -49,7 +49,7 @@ Private Sub drawText()
     paint.Brush = paint.Color(Color.White)
     paint.Font.Bold = True
     With $textArea
-        paint.RichText($text, .X, .Y, .W, .H, Align.Center)
+        Paint.DrawRichText($text, .X, .Y, .W, .H, Align.Center)
     End With
     paint.Fill()
     

@@ -3,8 +3,9 @@
 Create Static
 
 Public Const BusName As String = "org.gambas.nagato-player-x"
-Public Const ObjectPath As String = "/org/nagato/player/x"
-Public Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
+Public Const ObjectPath As String = "/org/nagato/player/x/player"
+Public Const Interface As String = "org.gambas.nagato.player.x.nagatodbusinterface"
+Public Const InterfaceTest As String = "org.gambas.nagato.player.x.nagatodbusinterfaceproperty"
 
 Public Function IsUnique() As Boolean
     
@@ -23,12 +24,13 @@ End
 
 Public Sub Register()
     
-    DBus.Session.Register(NagatoInterface, Me.ObjectPath)
+    DBus.Session.Register(NagatoDBusInterface, Me.ObjectPath)
+    DBus.Session.Register(NagatoDBusInterfaceProperty, "/org/nagato/player/x/property")
     
 End
 
 Public Sub Unregister()
     
-    DBus.Session.Unregister(NagatoInterface)
+    DBus.Session.Unregister(NagatoDBusInterface)
     
 End

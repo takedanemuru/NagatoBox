@@ -1,14 +1,13 @@
 ' Gambas class file
 
-Private $element As NagatoMusicElement
 Private $indexes As Integer[]
 Private $handlerCoverArt As NagatoTagEditHandlerCoverArt
 
 Private Sub setTags()
     
-    TitleTextBox.Text = $element.Title
-    ArtistTextBox.Text = $element.Artist
-    AlbumTextBox.Text = $element.Album
+    TitleTextBox.Text = ""
+    ArtistTextBox.Text = ""
+    AlbumTextBox.Text = ""
     
 End
 
@@ -27,9 +26,8 @@ End
 Public Sub EditByTagIndexes(argIndexes As Integer[])
     
     $indexes = argIndexes
-    $element = NagatoQueue[argIndexes]
     setTags()
-    $handlerCoverArt.Reset($element.Path)
+    $handlerCoverArt.Reset("")
     Me.Center()
     ApplyButton.Enabled = False
     Me.ShowDialog()

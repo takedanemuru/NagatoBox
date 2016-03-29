@@ -43,7 +43,7 @@ Private Sub paintLabelText()
     
     paint.Brush = paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.RichText(Me._OnGetLabelText(), LabelHeight, 0, yukiWidth, LabelHeight, Align.Center)
+        Paint.DrawRichText(Me._OnGetLabelText(), LabelHeight, 0, yukiWidth, LabelHeight, Align.Center)
     Paint.Fill()
     
 End

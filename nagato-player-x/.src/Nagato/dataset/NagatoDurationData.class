@@ -12,9 +12,15 @@ Public Function GetTextByRate(argRate As Float) As String ' argRate MUST be betw
 
 End
 
-Public Sub OverrideDuration(argDuration As Float)
+Public Sub Override(argElement As NagatoMusicElement) As Boolean
     
-    If $duration = 0 Then $duration = argDuration
+    If $duration = 0 Then $duration = argElement.Duration
+    If $duration > 0 And If $duration <> argElement.Duration Then 
+        argElement.FetchDuration($duration)
+        Return True
+    End If
+    
+    Return False
     
 End
 

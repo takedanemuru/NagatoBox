@@ -39,25 +39,20 @@ Catch
     
 End
 
-Public Function FetchDuration(argPath As String, argDuration As Float) As Boolean
+Public Sub FetchDuration(argPath As String, argDuration As Float) 
     
     Dim yukiResult As Result
-    Dim yukiFlag As Boolean = False
     
     If argDuration = 0 Then Return
     
     Me._$connection.Begin()
         yukiResult = Me._$connection.Edit(NagatoDB.Table.Library, "path = &1", argPath)
-        yukiFlag = (yukiResult[NagatoDB.Column.Duration] = argDuration)
-        If Not yukiFlag Then yukiResult[NagatoDB.Column.Duration] = argDuration
+        yukiResult[NagatoDB.Column.Duration] = argDuration
         yukiResult.Update()
     Me._$connection.Commit()
     
-    Return yukiFlag
-    
 Catch
     Me._$connection.Rollback()
-    Return False
     
 End
 

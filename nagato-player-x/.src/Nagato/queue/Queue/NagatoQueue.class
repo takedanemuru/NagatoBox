@@ -32,13 +32,13 @@ Public Sub ChangeCoverArtByIndexes(argIndexes As Integer[], argCoverArtPath As S
     
     Dim yukiIndex As Integer
     
-    If Not Exist(argCoverArtPath) Then Return
-    Debug DesktopMime.FromFile(argCoverArtPath).Type
-    
     For Each yukiIndex In argIndexes
         MikuruEyeD3.SetPicture($musicList[yukiIndex].Path, argCoverArtPath)
-        If yukiIndex = $musicList.CurrentIndex Then $handlerProperties.Reload()
     Next
+    
+    If Not argIndexes.Exist($musicList.GetProerty(MikuruProperty.CurrentIndex)) Then Return
+    $handlerProperties.Reload()
+    Raise Broadcast(MikuruSignal.BroadcastStateChanged, Null)
     
 End
 
@@ -47,7 +47,7 @@ Public Sub Activate(Optional argPaths As String[] = [""])
     $musicList = New NagatoMusicList(argPaths) As "TFEI"
     $handlerList = New NagatoQueueAssistantList($player, $musicList) As "TFEI"
     $handlerPlayer = New NagatoQueueAssistantPlayer($player, $musicList) As "TFEI"
-    $handlerProperties = New NagatoQueueAssistantCurrent($player, $musicList)
+    $handlerProperties = New NagatoQueueAssistantCurrent($player, $musicList) As "TFEI"
     
 End
 
@@ -64,6 +64,7 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             $handlerProperties.Reload()
             HaruhiPlayer.Title = $handlerProperties.GetProperty(MikuruProperty.CurrentTitle)
         Case MikuruSignal.BroadcastQueueChanged
+            $handlerProperties.Reload()
             $handlerList.SaveCurrentQueue()
     End Select
     

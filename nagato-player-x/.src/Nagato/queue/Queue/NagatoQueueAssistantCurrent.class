@@ -3,12 +3,16 @@
 Inherits NagatoQueueAssistant
 
 Private $coverArt As Picture
+Private $path As String
 
 Private Function getDurationData() As NagatoDurationData
     
     Dim yukiDurationData As NagatoDurationData = Me._$player.GetDurationData()
+    Dim yukiIndex As Integer = Me._$musicList.GetProerty(MikuruProperty.CurrentIndex)
 
-    yukiDurationData.OverrideDuration(Me._$musicList[Me._$musicList.CurrentIndex].Duration)
+    If yukiDurationData.Override(Me._$musicList[yukiIndex]) Then 
+        Raise Signal(MikuruSignal.BroadcastId3TagChanged, [yukiIndex])
+    End If
 
     Return yukiDurationData
     
@@ -16,7 +20,10 @@ End
 
 Public Sub Reload()
     
-    $coverArt = MikuruEyeD3.GetPicture(Me._$musicList[Me._$musicList.CurrentIndex].Path, MikuruUx.CoverArt.Size)
+    $coverArt = Null
+    $path = MikuruEyeD3.GetPicturePath(Me._$musicList.CurrentPath)
+    If $path Then $coverArt = MikuruCroppedImage($path, MikuruUx.CoverArt.Size)
+    If Me._$musicList.GetProerty(MikuruProperty.ListCount) = 0 Then Me._$player.Stop()
     
 End
 
@@ -35,24 +42,16 @@ Public Sub GetProperty(argProperty As Integer) As Variant
             Return Me._$player.SoftwareVolume
         Case MikuruProperty.CoverArt
             Return $coverArt
-        Case MikuruProperty.CurrentTitle
-            Return Me._$musicList[Me._$musicList.CurrentIndex].Title
-        Case MikuruProperty.CurrentArtist
-            Return Me._$musicList[Me._$musicList.CurrentIndex].Artist
-        Case MikuruProperty.CurrentAlbum
-            Return Me._$musicList[Me._$musicList.CurrentIndex].Album
-        Case MikuruProperty.CurrentIndex
-            Return Me._$musicList.CurrentIndex
-        Case MikuruProperty.CurrentUrl
-            Return Media.URL(Me._$musicList[Me._$musicList.CurrentIndex].Path)
+        Case MikuruProperty.CoverArtPath
+            Return $path
         Case MikuruProperty.CurrentDurationData
+            If Me._$musicList.CurrentPath = "" Then Return Object.New("NagatoDurationDataNull", Null)
             Return getDurationData()
         Case MikuruProperty.CurrentDurationText
+            If Me._$musicList.CurrentPath = "" Then Return ""
             Return getDurationData().Text
-        Case MikuruProperty.ListCount
-            Return Me._$musicList.Max + 1
-        Case MikuruProperty.ListMax
-            Return Me._$musicList.Max
+        Default
+            Return Me._$musicList.GetProerty(argProperty)
     End Select
     
 End

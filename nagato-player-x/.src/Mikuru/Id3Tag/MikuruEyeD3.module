@@ -39,6 +39,20 @@ Finally
     
 End
 
+Public Function GetPicturePath(argPath As String) As String
+    
+    Dim yukiOutput As String
+    
+    $workingDirectory.Ensure()
+    Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) To yukiOutput
+    If Not yukiOutput Then Return ""
+    If $workingDirectory.HasFile Then Return $workingDirectory[0]
+
+Finally
+    Return ""
+    
+End
+
 Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
     
     If (Media.URL(argMusicPath) = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)) Then

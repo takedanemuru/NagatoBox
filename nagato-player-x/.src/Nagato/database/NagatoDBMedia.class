@@ -12,11 +12,9 @@ Public Sub EnsureLibrary(argPath As String) ' MUST be fullpath.
     
 End
 
-Public Function FetchDuration(argPath As String, argDuration As Float) As Boolean
+Public Sub FetchDuration(argPath As String, argDuration As Float) 
     
-    If Me.HasLibrary(argPath) Then Return $tableLibrary.FetchDuration(argPath, argDuration)
-    
-    Return False
+    If Me.HasLibrary(argPath) Then $tableLibrary.FetchDuration(argPath, argDuration)
     
 End
 

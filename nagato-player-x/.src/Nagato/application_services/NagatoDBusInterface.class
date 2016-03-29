@@ -4,13 +4,6 @@ Inherits DBusObject
 
 Create Static
 
-Property Read Title As String
-Property Read Artist As String
-Property Read Album As String
-Property Read ProgressInText As String
-Property Read Shuffle As Boolean
-Property Read Repeat As Boolean
-
 Public Sub AddMusics(argPaths As String[])
     
     NagatoQueue(MikuruSignal.ListAddMusic, argPaths)
@@ -70,8 +63,11 @@ Public Function GetTitles(argMaxIndex As Integer) As String[]
     Dim yukiIndex As Integer
     Dim yukiTitles As New String[]
     
-    For yukiIndex = 0 To argMaxIndex
-        yukiTitles.Add(NagatoQueue[yukiIndex].Title)
+    For yukiIndex = 0 To NagatoQueue.GetProperty(MikuruProperty.ListMax) - 1
+        If yukiIndex > argMaxIndex Then Break
+        ' all titles must be quoted.
+        ' because some charactors (for example "!") cause fatal error on DBus.
+        yukiTitles.Add(Quote$(NagatoQueue[yukiIndex].Title))
     Next
 
     Return yukiTitles
@@ -81,35 +77,5 @@ End
 Private Function ProgressInText_Read() As String
 
     Return NagatoQueue.GetProperty(MikuruProperty.CurrentDurationText)
-
-End
-
-Private Function Title_Read() As String
-
-    Return NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
-
-End
-
-Private Function Artist_Read() As String
-
-    Return NagatoQueue.GetProperty(MikuruProperty.CurrentArtist)
-
-End
-
-Private Function Album_Read() As String
-
-    Return NagatoQueue.GetProperty(MikuruProperty.CurrentAlbum)
-
-End
-
-Private Function Shuffle_Read() As Boolean
-
-    Return NagatoSettingsMusic.Shuffle
-
-End
-
-Private Function Repeat_Read() As Boolean
-
-    Return NagatoSettingsMusic.Repeat
 
 End

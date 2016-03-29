@@ -29,7 +29,7 @@ Private Sub setForm()
     Paint.Begin(yukiBaseImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font = Me.Font
-        Paint.RichText($fortune, MikuruUx.Grid, MikuruUx.Grid, yukiTextWidth, yukiTextHeight, Align.TopLeft)
+        Paint.DrawRichText($fortune, MikuruUx.Grid, MikuruUx.Grid, yukiTextWidth, yukiTextHeight, Align.TopLeft)
         Paint.Fill()
     Paint.End()
     

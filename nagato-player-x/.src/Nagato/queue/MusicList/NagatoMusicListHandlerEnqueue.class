@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $musicElements As NagatoMusicElements 
+Private $position As NagatoMusicPosition 
+
+Private Sub removeDuplicateMusic()
+    
+    Dim yukiIndexes As Integer[] = $musicElements.GetDuplicateMusics()
+    
+    If yukiIndexes.Count > 0 Then dequeueIndexes(yukiIndexes)
+    
+End
+
+Private Sub enqueuePaths(argPaths As String[])
+    
+    Dim yukiCount As Integer = $musicElements.EnqueueByPaths(argPaths)
+
+    If yukiCount = 0 Then Return
+    
+    MikuruMessage.SetNewMusic(yukiCount)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+    $position.Refresh($musicElements.Count)
+    
+End
+
+Private Sub dequeueIndexes(argIndexes As Integer[]) 
+    
+    $musicElements.DequeueByIndexes(argIndexes)
+    
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+    $position.Refresh($musicElements.Count)
+    
+End
+
+Private Sub clearAll()
+    
+    $position.Current = 0
+    $musicElements.Clear()
+    HaruhiPlayer.SetMessage(("</b>Playlist is cleared.</b>"), 5)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ListAddMusic
+            enqueuePaths(argValues)
+        Case MikuruSignal.ListClear
+            clearAll()
+        Case MikuruSignal.ListDeleteDuplicateMusic
+            removeDuplicateMusic()
+        Case MikuruSignal.ListDelete
+            dequeueIndexes(argValues)
+    End Select
+    
+End
+
+Public Sub _new(argElements As NagatoMusicElements, argPosition As NagatoMusicPosition)
+    
+    $musicElements = argElements
+    $position = argPosition
+    
+End

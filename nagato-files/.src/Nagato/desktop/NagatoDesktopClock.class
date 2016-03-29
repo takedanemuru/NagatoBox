@@ -15,7 +15,7 @@ Public Function getIcon() As Picture
     Paint.Begin(yukiImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Size = FontSize
-        Paint.RichText(yukiText, 0, 0, NagatoSettingsTile.Size, NagatoSettingsTile.Size, Align.Center)
+        Paint.DrawRichText(yukiText, 0, 0, NagatoSettingsTile.Size, NagatoSettingsTile.Size, Align.Center)
         Paint.Fill()
     Paint.End()
     

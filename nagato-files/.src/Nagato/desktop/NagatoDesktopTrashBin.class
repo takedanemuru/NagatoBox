@@ -12,7 +12,7 @@ Private Sub paintLabel()
     Dim yukiHeight As Integer = Application.Font.RichTextHeight($trashObserver.Text, NagatoSettingsTile.Size - 16)
     
     With NagatoSettingsTile
-        Paint.RichText($trashObserver.Text, 0, .Size - yukiHeight - 16, .Size, yukiHeight + 16, Align.Center)
+        Paint.DrawRichText($trashObserver.Text, 0, .Size - yukiHeight - 16, .Size, yukiHeight + 16, Align.Center)
     End With
     
 End

@@ -3,14 +3,25 @@
 Inherits NagatoSubMenu
 
 Private Const BusName As String = "org.gambas.nagato-player-x"
-Private Const ObjectPath As String = "/org/nagato/player/x"
-Private Const Interface As String = "org.gambas.nagato.player.x.nagatointerface"
+Private Const ObjectPath As String = "/org/nagato/player/x/player"
+Private Const Interface As String = "org.gambas.nagato.player.x.nagatodbusinterface"
 
 Private $proxy As DBusProxy
 
 Private Sub initializeProxy()
     
     $proxy = DBus[BusName][ObjectPath, Interface]
+    
+End
+
+Private Sub addMenu(argIndex As Integer, argTitle As String)
+    
+    Dim yukiMenu As Menu = New Menu(Me._$rootMenu) As "QueueMenu"
+    
+    With yukiMenu
+        .Tag = argIndex
+        .Text = MikuruCollapsedText.Get(argTitle, Application.Font, 300)
+    End With
     
 End
 
@@ -27,23 +38,20 @@ End
 
 Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overridden
     
-    Dim yukiPath As String
-    Dim yukiMenu As Menu
+    Dim yukiIndex As Integer
+    Dim yukiTitle As String
     
     initializeProxy()
     
-    For Each yukiPath In $proxy.Paths
-        yukiMenu = New Menu(Me._$rootMenu) As "QueueMenu"
-        yukiMenu.Tag = yukiPath
-        yukiMenu.Text = MikuruCollapsedText.Get($proxy.GetTitle(yukiPath), Application.Font, 300)
-        If yukiMenu.Text = $proxy.Title Then yukiMenu.Picture = MikuruIcon.Get("button-play")
-        If Me._$rootMenu.Children.Count > 60 Then Break
+    For Each yukiTitle In $proxy.GetTitles(30)
+        addMenu(yukiIndex, yukiTitle)
+        Inc yukiIndex
     Next
     
 End
 
 Public Sub QueueMenu_Click()
     
-    $proxy.PlayPathInQueue(Last.Tag)
+    $proxy.PlayIndex(Last.Tag)
     
 End

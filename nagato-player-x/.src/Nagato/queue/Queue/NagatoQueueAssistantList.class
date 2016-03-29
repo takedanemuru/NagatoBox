@@ -7,7 +7,7 @@ Public Sub SaveCurrentQueue()
     Dim yukiPaths As New String[]
     Dim yukiIndex As Integer
     
-    For yukiIndex = 0 To Me._$musicList.Max
+    For yukiIndex = 0 To Me._$musicList.GetProerty(MikuruProperty.ListMax)
         yukiPaths.Add(Me._$musicList[yukiIndex].Path)
     Next
     
@@ -26,10 +26,8 @@ End
 Private Sub dequeueByIndexes(argIndexes As Integer[])
     
     Me._$player.Stop()
-    If Me._$musicList.DequeueIndexes(argIndexes) Then 
-        Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-    End If
-    Me._$player.Play()
+    Me._$musicList.DequeueIndexes(argIndexes)
+    Me._$player.TryPlay()
     
 End
 
@@ -48,26 +46,14 @@ End
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.ListClear
-            Me._$musicList.ClearAll()
-        Case MikuruSignal.ListAddMusic
-            Me._$musicList.EnqueuePaths(argValues)
-        Case MikuruSignal.ListAddDirectory
-            addDirectory(argValues[0])
-        Case MikuruSignal.ListUp
-            If argValues.Count > 0 Then Me._$musicList.Up(argValues)
-        Case MikuruSignal.ListDown
-            If argValues.Count > 0 Then Me._$musicList.Down(argValues)
-        Case MikuruSignal.ListSort
-            Me._$musicList.Sort(argValues[0], argValues[1])
-        Case MikuruSignal.ListSaveAs
-            Me._$musicList.SaveAsPlayList(argValues[0])
-        Case MikuruSignal.ListDeleteDuplicateMusic
-            Me._$musicList.RemoveDuplicateMusic()
-        Case MikuruSignal.ListDelete
-            dequeueByIndexes(argValues)
         Case MikuruSignal.ListEdit
             editTagsByTagIndexes(argValues[0], argValues[1])
+        Case MikuruSignal.ListAddDirectory
+            addDirectory(argValues[0])
+        Case MikuruSignal.ListDelete
+            dequeueByIndexes(argValues)
+        Default
+            Me._$musicList(argSignal, argValues)
     End Select
     
 End

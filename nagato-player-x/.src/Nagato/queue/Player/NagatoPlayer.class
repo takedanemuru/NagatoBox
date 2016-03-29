@@ -15,11 +15,12 @@ Public Sub SetByRate(argRate As Float)
     
 End
 
-Public Sub Play()
+Public Sub TryPlay()
     
-    $player.URL = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)
-    $player.Position = 0
     $player.Play()
+    
+Catch
+    Me.ResetUrl(True)
     
 End
 

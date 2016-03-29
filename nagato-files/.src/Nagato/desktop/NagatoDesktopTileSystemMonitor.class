@@ -38,8 +38,8 @@ Private Sub paintText()
     setTextRectangle($systemMonitor2.Label)
     
     With $textRectangle
-        Paint.RichText($systemMonitor2.Label, .X, .Y, .W, .H, Align.Left)
-        Paint.RichText($systemMonitor2.Content, .X, .Y, .W, .H, Align.Right)
+        Paint.DrawRichText($systemMonitor2.Label, .X, .Y, .W, .H, Align.Left)
+        Paint.DrawRichText($systemMonitor2.Content, .X, .Y, .W, .H, Align.Right)
     End With
     
 End

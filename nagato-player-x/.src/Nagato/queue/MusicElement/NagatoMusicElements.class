@@ -5,19 +5,7 @@ Inherits NagatoObject
 Property Read Count As Integer
 
 Private $musicElements As New NagatoMusicElement[]
-
-Private Function getAllPaths() As String[]
-    
-    Dim yukiPaths As New String[]
-    Dim yukiIndex As Integer
-    
-    For yukiIndex = 0 To $musicElements.Max 
-        yukiPaths.Add($musicElements[yukiIndex].Path)
-    Next
-
-    Return yukiPaths
-    
-End
+Private $handlerData As NagatoMusicElementsHandlerData
 
 Private Function addPaths(argPaths As String[]) As Integer
     
@@ -36,35 +24,10 @@ Private Function addPaths(argPaths As String[]) As Integer
     
 End
 
-Private Function isDuplicate(argPath As String, argIndex As Integer) As Boolean
-    
-    Dim yukiIndex As Integer
-    
-    For yukiIndex = (argIndex - 1) DownTo 0
-        If argPath = $musicElements[yukiIndex].Path Then Return True
-    Next
-    
-    Return False
-    
-End
-
 Public Function GetDuplicateMusics() As Integer[]
    
-    Dim yukiIndex As Integer
-    Dim yukiIndexes As New Integer[]
-    
-    For yukiIndex = $musicElements.Max DownTo 1
-        If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
-    Next
-    
-    Return yukiIndexes
-    
-End
-
-Public Sub SaveQueue()
-    
-    NagatoSettingsMusic.SavePaths(getAllPaths())
-    
+    Return $handlerData.DuplicateIndexes
+   
 End
 
 Public Function EnqueueByPaths(argPaths As String[]) As Integer
@@ -73,30 +36,25 @@ Public Function EnqueueByPaths(argPaths As String[]) As Integer
     
 End 
 
-Public Function DequeueByIndexes(argIndexes As Integer[]) As Boolean
+Public Sub DequeueByIndexes(argIndexes As Integer[])
     
     Dim yukiIndex As Integer
-    Dim yukiFlag As Boolean = False
     
     For Each yukiIndex In argIndexes.Sort(gb.Descent)
-        If yukiIndex > $musicElements.Max Then Continue
         $musicElements.Remove(yukiIndex)
-        yukiFlag = True
     Next
-    
-    Return yukiFlag
     
 End
 
 Public Sub Clear()
     
     $musicElements.Clear()
-    NagatoSettingsMusic.SavePaths([""])
     
 End
 
 Public Sub Initialize(argPaths As String[])
     
+    $handlerData = New NagatoMusicElementsHandlerData($musicElements)
     addPaths(NagatoSettingsMusic.LoadPaths())
     addPaths(argPaths)
     
@@ -112,13 +70,23 @@ Public Sub SaveAsPlaylist(argPlaylistName As String)
     
     If $musicElements.Count = 0 Then Return
     
-    NagatoDBPlaylists.SaveAsPlaylist(argPlaylistName, getAllPaths())
+    NagatoDBPlaylists.SaveAsPlaylist(argPlaylistName, $handlerData.Paths)
     
 End
 
 Public Sub Set(argMusicElements As NagatoMusicElement[])
     
-    $musicElements = argMusicElements
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $musicElements.Max
+        $musicElements[yukiIndex] = argMusicElements[yukiIndex]
+    Next
+    
+End
+
+Public Function GetProperty(argProperty As Integer, argIndex As Integer) As Variant
+    
+    Return $handlerData.GetProperty(argProperty, argIndex)
     
 End
 

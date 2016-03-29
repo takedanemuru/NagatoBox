@@ -22,7 +22,7 @@ Public Sub _DrawRichText(argRichText As String, argRect As Rect, argAlign As Int
     
     Paint.Brush = Paint.Color(Color.White)
         With argRect
-            Paint.RichText(argRichText, .X, .Y, .W, .H, argAlign)
+            Paint.DrawRichText(argRichText, .X, .Y, .W, .H, argAlign)
         End With
     Paint.Fill()
     

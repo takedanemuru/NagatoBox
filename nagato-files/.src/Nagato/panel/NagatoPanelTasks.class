@@ -38,7 +38,7 @@ End
 Public Sub _PaintText(argDesktopWindow As DesktopWindow, argRect As Rect)
     
     With argRect
-        Paint.RichText(getText(argDesktopWindow, .W - 28), .X + 24, .Y, .W - 24, .H, Align.Left)
+        Paint.DrawRichText(getText(argDesktopWindow, .W - 28), .X + 24, .Y, .W - 24, .H, Align.Left)
     End With
     
 Catch

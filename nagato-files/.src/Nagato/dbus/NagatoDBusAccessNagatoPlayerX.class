@@ -5,14 +5,18 @@ Property Read Enabled As Boolean
 Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack, ActionAddMusics
 
 Private Const ServiceName As String = "org.gambas.nagato-player-x"
-Private Const ObjectPath As String = "/org/nagato/player/x"
-Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatointerface"
+Private Const ObjectPath As String = "/org/nagato/player/x/player"
+Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatodbusinterface"
+Private Const ObjectPath2 As String = "/org/nagato/player/x/property"
+Private Const InterfaceName2 As String = "org.gambas.nagato.player.x.nagatodbusinterfaceproperty"
 
 Private $player As DBusProxy
+Private $property As DBusProxy
 
 Private Sub ensureProxy()
     
     If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
+    If Not Object.IsValid($property) Then $property = DBus[ServiceName][ObjectPath2, InterfaceName2]
     
 End
 
@@ -31,10 +35,10 @@ Public Function GetText() As String
     
     If DBus.Session.Applications.Exist(ServiceName) Then
         ensureProxy()
-        yukiText &= ($player.Title & Space$(4))
-        yukiText &= ($player.Artist & Space$(4))
-        yukiText &= ($player.Album & Space$(4))
-        yukiText &= ($player.ProgressInText)
+        yukiText &= ($property.Title & Space$(4))
+        yukiText &= ($property.Artist & Space$(4))
+        yukiText &= ($property.Album & Space$(4))
+        yukiText &= ($property.ProgressInText)
         Return yukiText
     Else
         Return "YUKI.N > nagato-player-x is not activated"

@@ -19,7 +19,7 @@ End
 Private Sub paintText(argIndex As Integer)
     
     Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
-    Paint.Text(argIndex + 1, 22 * argIndex + 2, 2, 20, 20, Align.Center)
+    Paint.DrawText(argIndex + 1, 22 * argIndex + 2, 2, 20, 20, Align.Center)
     Paint.Fill()
     
 End

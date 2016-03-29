@@ -20,7 +20,7 @@ Private Sub paintText()
     Dim yukiRect As Rect = $rectangles.TextRectangle
     
     Paint.Brush = Paint.Color(Color.White)
-    Paint.RichText($message.RichText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.DrawRichText($message.RichText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
     Paint.Fill()
     
 End

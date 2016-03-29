@@ -2,132 +2,67 @@
 
 Inherits NagatoObject
 
-Property Read CurrentIndex As Integer
 Property Read HasElement As Boolean
-Property Read Max As Integer
+Property Read CurrentPath As String
 
 Private $musicElements As New NagatoMusicElements 
 Private $position As New NagatoMusicPosition As "TFEI"
 
-Public Sub RemoveDuplicateMusic()
-    
-    Dim yukiIndexes As Integer[] = $musicElements.GetDuplicateMusics()
-    
-    If yukiIndexes.Count > 0 Then Me.DequeueIndexes(yukiIndexes)
-    
-End
-
-Public Sub Sort(argType As Integer, argSortAscend As Boolean)
-    
-    Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
-    Dim yukiIndex As Integer
-    
-    If $musicElements.Count = 0 Then Return
-    
-    For yukiIndex = 0 To $musicElements.Count - 1
-        yukiBuffer.Set($musicElements[yukiIndex], (yukiIndex = $position.Current))
-    Next
-    
-    $musicElements.Set(yukiBuffer.Elements)
-    $position.ResetOnSort(yukiBuffer.Current, $musicElements.Count)
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-
-    
-End
-
-Public Sub Up(argSelection As Integer[]) 
-    
-    Dim yukiBuffer As New NagatoMoveBufferUp(argSelection, $position.Current)
-    Dim yukiIndex As Integer
-    
-    For yukiIndex = 0 To $musicElements.Count - 1
-        If argSelection.Exist(yukiIndex) Then yukiBuffer.AddSelected(yukiIndex, $musicElements[yukiIndex])
-        If Not argSelection.Exist(yukiIndex) Then yukiBuffer.AddUnselected(yukiIndex, $musicElements[yukiIndex])
-    Next
-    
-    $musicElements.Set(yukiBuffer.Buffer)
-    $position.Current = yukiBuffer.NewPosition
-    Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
-    
-End
-
-Public Sub Down(argSelection As Integer[]) 
-    
-    Dim yukiBuffer As New NagatoMoveBufferDown($musicElements, $position.Current, argSelection)
-    
-    $musicElements.Set(yukiBuffer.Buffer)
-    $position.Current = yukiBuffer.NewPosition
-    Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
-    
-End
+Private $handlerSorting As NagatoMusicListHandlerSorting
+Private $handlerEnqueue As NagatoMusicListHandlerEnqueue
 
 Public Function SetIndex(argIndex As Integer) As Boolean
     
-    If argIndex >= $musicElements.Count Then
-        Return False
-    Else
-        $position.Current = argIndex
-        Return True
-    End If
+    If argIndex >= $musicElements.Count Then Return False
+
+    $position.Current = argIndex
+    Return True
     
 End
 
-Public Sub Next()
+Public Function GetProerty(argProperty As Integer) As Variant
     
-    $position.Next($musicElements.Count)
-    
-End
-
-Public Sub Back()
-    
-    $position.Back($musicElements.Count)
-    
-End
-
-Public Sub EnqueuePaths(argPaths As String[])
-    
-    Dim yukiCount As Integer = $musicElements.EnqueueByPaths(argPaths)
-
-    If yukiCount = 0 Then Return
-    
-    If Not MikuruMessage.SetNewMusic(yukiCount) Then Return
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-    $position.Refresh($musicElements.Count)
-    
-End
-
-Public Function DequeueIndexes(argIndexes As Integer[]) As Boolean
-    
-    If Not $musicElements.DequeueByIndexes(argIndexes) Then Return False
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-    $position.Refresh($musicElements.Count)
-    
-    Return ($musicElements.Count > 0)
-    
-End
-
-Public Sub ClearAll()
-    
-    $position.Current = 0
-    $musicElements.Clear()
-    HaruhiPlayer.SetMessage(("Playlist is cleared."), 5)
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-    
-End
-
-Public Sub SaveAsPlayList(argPlaylistName As String)
-    
-    $musicElements.SaveAsPlayList(argPlaylistName)
+    Select argProperty
+        Case MikuruProperty.ListCount
+            Return $musicElements.Count
+        Case MikuruProperty.ListMax
+            Return $musicElements.Count - 1
+        Case MikuruProperty.CurrentIndex
+            Return $position.Current
+        Default
+            Return $musicElements.GetProperty(argProperty, $position.Current)
+    End Select
     
 End
 
 Public Sub _new(argPaths As String[])
     
+    $handlerSorting = New NagatoMusicListHandlerSorting($musicElements, $position) As "TFEI"
+    $handlerEnqueue = New NagatoMusicListHandlerEnqueue($musicElements, $position) As "TFEI"
+
     $musicElements.Initialize(argPaths)
     If $musicElements.Count = 0 Then Return  
     $position.Refresh($musicElements.Count)
-    If NagatoSettingsMusic.Shuffle Then Me.Next()
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
+    If NagatoSettingsMusic.Shuffle Then $position.Next($musicElements.Count)
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    With MikuruSignal
+        Select argSignal
+            Case MikuruSignal.ListSaveAs
+                $musicElements.SaveAsPlayList(argValues[0])
+            Case MikuruSignal.QueueNext
+                $position.Next($musicElements.Count)
+            Case MikuruSignal.QueueBack
+                $position.Back($musicElements.Count)
+            Case MikuruSignal.ListSort, MikuruSignal.ListDown, MikuruSignal.ListUp
+                $handlerSorting(argSignal, argValues)
+            Case .ListAddMusic, .ListClear, .ListDelete, .ListDeleteDuplicateMusic
+                $handlerEnqueue(argSignal, argValues)
+        End Select
+    End With
     
 End
 
@@ -137,20 +72,17 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Private Function CurrentIndex_Read() As Integer
-
-    Return $position.Current
-
-End
-
 Private Function HasElement_Read() As Boolean
 
     Return ($musicElements.Count > 0)
 
 End
 
-Private Function Max_Read() As Integer
+Private Function CurrentPath_Read() As String
 
-    Return $musicElements.Count - 1
+    Return $musicElements[$position.Current].Path
+
+Catch
+    Return ""
 
 End

@@ -1,0 +1,82 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Paths As String[]
+Property Read DuplicateIndexes As Integer[]
+
+Private $musicElements As NagatoMusicElement[]
+
+Private Function isDuplicate(argPath As String, argIndex As Integer) As Boolean
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = (argIndex - 1) DownTo 0
+        If argPath = $musicElements[yukiIndex].Path Then Return True
+    Next
+    
+    Return False
+    
+End
+
+Private Function getDuplicateMusics() As Integer[]
+   
+    Dim yukiIndex As Integer
+    Dim yukiIndexes As New Integer[]
+    
+    For yukiIndex = $musicElements.Max DownTo 1
+        If isDuplicate($musicElements[yukiIndex].Path, yukiIndex) Then yukiIndexes.Add(yukiIndex)
+    Next
+    
+    Return yukiIndexes
+    
+End
+
+Private Function getAllPaths() As String[]
+    
+    Dim yukiPaths As New String[]
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $musicElements.Max 
+        yukiPaths.Add($musicElements[yukiIndex].Path)
+    Next
+
+    Return yukiPaths
+    
+End
+
+
+Public Function GetProperty(argProperty As Integer, argIndex As Integer) As Variant
+    
+    If $musicElements.Count = 0 Then Return ""
+    
+    Select Case argProperty
+        Case MikuruProperty.CurrentTitle
+            Return $musicElements[argIndex].Title
+        Case MikuruProperty.CurrentArtist
+            Return $musicElements[argIndex].Artist
+        Case MikuruProperty.CurrentAlbum
+            Return $musicElements[argIndex].Album
+        Case MikuruProperty.CurrentUrl
+            Return Media.URL($musicElements[argIndex].Path)
+    End Select
+    
+End
+
+Public Sub _new(argElements As NagatoMusicElement[])
+    
+    $musicElements = argElements
+    
+End
+
+Private Function Paths_Read() As String[]
+
+    Return getAllPaths()
+
+End
+
+Private Function DuplicateIndexes_Read() As Integer[]
+
+    Return getDuplicateMusics()
+
+End

@@ -16,6 +16,12 @@ Public Sub EditTags(argTags As NagatoId3TagInfo)
     
 End
 
+Public Sub FetchDuration(argDuration As Float)
+    
+    $tags.FetchDuration(argDuration)
+    
+End
+
 Public Sub _new(argPath As String)
     
     NagatoDBMedia.EnsureLibrary(argPath)

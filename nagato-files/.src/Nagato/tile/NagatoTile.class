@@ -28,7 +28,7 @@ Private Sub paintFileName(argText As String)
     Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, Me.TextWidth)
     Dim yukiY As Integer = Me.TileSize - yukiHeight - Me.Margin
     
-    Paint.RichText(argText, Me.Margin, yukiY, Me.TextWidth, yukiHeight, Align.Center)
+    Paint.DrawRichText(argText, Me.Margin, yukiY, Me.TextWidth, yukiHeight, Align.Center)
     
 End
 

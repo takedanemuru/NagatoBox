@@ -15,7 +15,7 @@ Public Sub ClockDrawingArea_Draw()
     Paint.Begin(Me._$drawingArea)
         Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
         Paint.Font.Bold = True
-        Paint.RichText($text, 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Center)
+        Paint.DrawRichText($text, 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Center)
         Paint.Fill()
     Paint.End()
     

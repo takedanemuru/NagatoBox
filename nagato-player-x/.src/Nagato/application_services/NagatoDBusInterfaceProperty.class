@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Title As String
+Property Read Artist As String
+Property Read Album As String
+Property Read ProgressInText As String
+Property Read Shuffle As Boolean
+Property Read Repeat As Boolean
+Property Read CoverArtPath As String
+
+Private Function ProgressInText_Read() As String
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentDurationText)
+
+End
+
+Private Function Title_Read() As String
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
+
+End
+
+Private Function Artist_Read() As String
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentArtist)
+
+End
+
+Private Function Album_Read() As String
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentAlbum)
+
+End
+
+Private Function Shuffle_Read() As Boolean
+
+    Return NagatoSettingsMusic.Shuffle
+
+End
+
+Private Function Repeat_Read() As Boolean
+
+    Return NagatoSettingsMusic.Repeat
+
+End
+
+Private Function CoverArtPath_Read() As String
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CoverArtPath)
+
+End
