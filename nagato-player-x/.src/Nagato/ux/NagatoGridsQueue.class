@@ -18,14 +18,6 @@ Private Sub insertRow(argRow As Integer)
 
 End
 
-Private Sub resizeColumns()
-    
-    Dim yukiSize As Integer = HaruhiPlayList.W * 0.28
-    
-    Me._ResizeColumns(MikuruUx.Padding, yukiSize, yukiSize, yukiSize)
-    
-End
-
 Private Sub insertRows() 
     
     Dim yukiRow As Integer
@@ -90,8 +82,6 @@ Public Sub UserInput_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.UserInputColumnClick
             Me._$sortAscend = Not Me._$sortAscend
             If argValues[0] > 0 Then NagatoQueue(MikuruSignal.ListSort, [argValues[0], Me._$sortAscend])
-        Case MikuruSignal.UserInputResize
-            resizeColumns()
     End Select
     
 End

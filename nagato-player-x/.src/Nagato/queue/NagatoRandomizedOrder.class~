@@ -5,32 +5,33 @@ Property Read Count As Integer
 Private $order As New Integer[]
 Private $position As Integer = 0
 
-Private Sub setNumber(argMax As Integer)
+Private Sub setNumber(argMax As Integer, Optional argBlockedNumber As Integer)
     
     Dim yukiNumber As Integer
     
     Do
         yukiNumber = Int(Rnd(0, argMax + 1))
         If $order.Exist(yukiNumber) Then Continue
+        If argBlockedNumber And If yukiNumber = argBlockedNumber Then Continue
         $order.Add(yukiNumber)
         Break
     Loop
     
 End
 
-Private Sub setNumberBlocked(argMax As Integer, argBlocked As Integer)
-    
-    Dim yukiNumber As Integer
-    
-    Do
-        yukiNumber = Int(Rnd(0, argMax + 1))
-        If argBlocked = yukiNumber Then Continue
-        If $order.Exist(yukiNumber) Then Continue
-        $order.Add(yukiNumber)
-        Break
-    Loop
-    
-End
+' Private Sub setNumberBlocked(argMax As Integer, argBlocked As Integer)
+'     
+'     Dim yukiNumber As Integer
+'     
+'     Do
+'         yukiNumber = Int(Rnd(0, argMax + 1))
+'         If argBlocked = yukiNumber Then Continue
+'         If $order.Exist(yukiNumber) Then Continue
+'         $order.Add(yukiNumber)
+'         Break
+'     Loop
+'     
+' End
 
 Public Sub Refresh(argMax As Integer)
     
@@ -54,7 +55,7 @@ Public Sub RefreshOnSort(argFixedIndex As Integer, argMax As Integer)
     
     For yukiCount = 0 To argMax
         If yukiCount = argFixedIndex Then $order.Add(argFixedIndex)
-        If yukiCount <> argFixedIndex Then setNumberBlocked(argMax, argFixedIndex)
+        If yukiCount <> argFixedIndex Then setNumber(argMax, argFixedIndex)
     Next
     
 End
@@ -63,9 +64,6 @@ Public Function Next() As Integer
     
     Inc $position
     If $position > $order.Max Then $position = 0
-    
-    Debug $position
-    Debug $order.Count
     
     Return $order[$position]
     

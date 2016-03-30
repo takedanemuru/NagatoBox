@@ -1,6 +1,5 @@
 ' Gambas class file
 
-Private $timer As New Timer As "Timer"
 Private $painter As NagatoPainter
 Private $surface As New NagatoSurface As "Surface"
 
@@ -44,31 +43,6 @@ Public Sub Form_Drop()
     'Image data is NOT acceptable.
     If Drag.Type = Drag.Text Then $surface.Drop(Drag.Data)
     
-End
-
-Public Sub Timer_Timer()
-    
-    $painter.Refresh()
-    
-End
-
-Public Sub DrawingArea_Enter()
-
-    MikuruMousePosition.Entered = True
-    
-End
-
-Public Sub DrawingArea_Leave()
-    
-    MikuruMousePosition.Entered = False
-    
-End
-
-Public Sub DrawingArea_MouseMove()
-
-    MikuruMousePosition.SetMousePosition(Mouse.X, Mouse.Y)
-    $painter.Refresh()
-
 End
 
 Public Sub DrawingArea_MouseDown()

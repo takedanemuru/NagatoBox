@@ -1,8 +1,17 @@
 ' Gambas class file
 
-Inherits NagatoGridHandler
+Inherits NagatoGridViewHandlerUserInput
 
-Public Sub Hello_Signal(argSignal As Integer, argValues As Variant[])
+Public Sub _OnResizeColumns()
+    
+    Dim yukiColumsWidth As Integer = Me._GetColumnWidth(4)
+    Dim yukiSize As Integer = (HaruhiPlayList.W - (MikuruUx.Padding + yukiColumsWidth)) / 3
+    
+    Me._ResizeColumns(MikuruUx.Padding, yukiSize, yukiSize, yukiSize)
+    
+End
+
+Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
     
    If Me._$gridView.Rows.Selection.Count = 0 Then Return
    
@@ -17,7 +26,7 @@ End
 
 Public Sub Asakura_Menu()
     
-    Dim yukiMenu As New NagatoContextMenuCurrent As "Hello"
+    Dim yukiMenu As New NagatoContextMenuGridViewQueue As "ContextMenu"
     
     yukiMenu.PopUp()
     
@@ -32,11 +41,5 @@ End
 Public Sub Asakura_ColumnClick(argIndex As Integer)
     
     Raise Signal(MikuruSignal.UserInputColumnClick, [argIndex])
-    
-End
-
-Public Sub Asakura_Arrange()
-    
-    Raise Signal(MikuruSignal.UserInputResize, Null)
     
 End

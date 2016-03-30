@@ -2,7 +2,7 @@
 
 Inherits NagatoObject
 
-Property Current As Integer
+Property Read Current As Integer
 
 Private $randomOrder As New NagatoRandomizedOrder
 Private $index As New NagatoMusicPositionIndex
@@ -73,8 +73,11 @@ Private Function Current_Read() As Integer
 
 End
 
-Private Sub Current_Write(Value As Integer)
+Public Function SetIndex(argValue As Integer, Optional argMax As Integer) As Boolean
 
-    $index.Current = Value
+    If argMax And If (argValue > argMax) Then Return False
+
+    $index.Current = argValue
+    Return True
 
 End

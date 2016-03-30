@@ -13,10 +13,7 @@ Private $handlerEnqueue As NagatoMusicListHandlerEnqueue
 
 Public Function SetIndex(argIndex As Integer) As Boolean
     
-    If argIndex >= $musicElements.Count Then Return False
-
-    $position.Current = argIndex
-    Return True
+    Return $position.SetIndex(argIndex, $musicElements.Count)
     
 End
 

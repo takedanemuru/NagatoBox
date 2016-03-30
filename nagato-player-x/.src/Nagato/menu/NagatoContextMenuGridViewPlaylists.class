@@ -2,8 +2,6 @@
 
 Inherits NagatoContextMenu
 
-Event Delete
-
 Public Sub _InitializeRootMenu()
     
     Me._$rootMenu = New Menu(HaruhiPlayList)
@@ -13,8 +11,10 @@ End
 
 Public Sub _InitializeChildMenus()
     
-    Me._AddMenu(("Delete"), MikuruSignal.ListDelete, "bin")
-    Me._AddMenu(("Edit Tag"), MikuruSignal.ListEdit, "tag")
+    Me._AddMenu(("Delete"), MikuruSignal.ListsDataDelete, "bin")
+        Me._AddMenu("", MikuruSignal.None)
+    Me._AddMenu(("Add to queue"), MikuruSignal.ListsDataAdd)
+    Me._AddMenu(("Replace queue"), MikuruSignal.ListsDataReplace)
     
 End
 
@@ -28,5 +28,11 @@ Public Sub _new()
     
     Me._InitializeRootMenu()
     Me._InitializeChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+     Raise Signal(Last.Tag, Null)
     
 End

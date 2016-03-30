@@ -1,9 +1,5 @@
 ' Gambas class file
 
-Property Read Settings As Settings
-
-Private $settings As New Settings
-
 Private $timer As New Timer As "Timer"
 Private $painter As NagatoPainter
 Private $surface As New NagatoSurface As "Surface"
@@ -56,25 +52,6 @@ Public Sub Timer_Timer()
     
 End
 
-Public Sub DrawingArea_Enter()
-
-    MikuruMousePosition.Entered = True
-    
-End
-
-Public Sub DrawingArea_Leave()
-    
-    MikuruMousePosition.Entered = False
-    
-End
-
-Public Sub DrawingArea_MouseMove()
-
-    MikuruMousePosition.SetMousePosition(Mouse.X, Mouse.Y)
-    $painter.Refresh()
-
-End
-
 Public Sub DrawingArea_MouseDown()
 
     $surface.MouseDown(Mouse.X, Mouse.Y)
@@ -85,10 +62,4 @@ Public Sub Surface_RequestRefresh()
     
     $painter.ChangeImage()
     
-End
-
-Private Function Settings_Read() As Settings
-
-    Return $settings
-
 End

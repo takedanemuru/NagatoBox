@@ -38,9 +38,10 @@ Public Sub Pause()
    
 End
 
-Public Sub Stop()
+Public Sub Stop(Optional argClearUrl As Boolean = False)
     
     Try $player.Stop()
+    If argClearUrl Then $player.URL = ""
     
 End
 

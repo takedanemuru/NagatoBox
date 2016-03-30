@@ -5,9 +5,9 @@ Create Static
 Private $player As New NagatoPlayer As "TFEI"
 Private $musicList As NagatoMusicList
 
-Private $handlerPlayer As NagatoQueueAssistantPlayer
-Private $handlerList As NagatoQueueAssistantList
-Private $handlerProperties As NagatoQueueAssistantCurrent
+Private $handlerPlayer As NagatoQueueHandlerPlayer
+Private $handlerList As NagatoQueueHandlerList
+Private $handlerProperties As NagatoQueueHandlerProperty
 
 Event Broadcast(argSignal As Integer, argValues As Variant[])
 
@@ -45,9 +45,9 @@ End
 Public Sub Activate(Optional argPaths As String[] = [""])
     
     $musicList = New NagatoMusicList(argPaths) As "TFEI"
-    $handlerList = New NagatoQueueAssistantList($player, $musicList) As "TFEI"
-    $handlerPlayer = New NagatoQueueAssistantPlayer($player, $musicList) As "TFEI"
-    $handlerProperties = New NagatoQueueAssistantCurrent($player, $musicList) As "TFEI"
+    $handlerList = New NagatoQueueHandlerList($player, $musicList) As "TFEI"
+    $handlerPlayer = New NagatoQueueHandlerPlayer($player, $musicList) As "TFEI"
+    $handlerProperties = New NagatoQueueHandlerProperty($player, $musicList) As "TFEI"
     
 End
 

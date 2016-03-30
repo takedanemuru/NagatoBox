@@ -2,7 +2,7 @@
 
 Inherits NagatoObject
 
-'Property Read Selection As Integer[]
+Property Read Selection As Integer[]
 
 Public _$grids As GridView
 Public _$observer As Observer
@@ -66,11 +66,11 @@ Public Sub _new(argGrids As GridView)
     
 End
 
-' Private Function Selection_Read() As Integer[]
-' 
-'     Return Me._$grids.Rows.Selection
-'     
-' Catch
-'     Return [-1]
-' 
-' End
+Private Function Selection_Read() As Integer[]
+
+    Return Me._$grids.Rows.Selection
+    
+Catch
+    Return [-1]
+
+End

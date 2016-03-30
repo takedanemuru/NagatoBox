@@ -36,7 +36,7 @@ End
 
 Private Sub clearAll()
     
-    $position.Current = 0
+    $position.SetIndex(0)
     $musicElements.Clear()
     HaruhiPlayer.SetMessage(("</b>Playlist is cleared.</b>"), 5)
     Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)

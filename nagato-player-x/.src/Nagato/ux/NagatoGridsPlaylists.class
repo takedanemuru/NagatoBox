@@ -2,20 +2,29 @@
 
 Inherits NagatoGrids
 
-Private Enum ColumnIcon, ColumnTitle, ColumnDescription, ColumnCount, ColumnSpacer
+Private Enum ColumnTitle, ColumnDescription, ColumnCount
 
-Private Sub refreshData()
+Private $handlerUserInput As NagatoGridViewHandlerUserInputPlaylists
+
+Private Sub setRow(argResult As Result, argRowIndex As Integer)
+    
+    Dim yukiName As String = argResult[NagatoDB.Column.PlaylistName]
+    Dim yukiCount As Integer = NagatoDBPlaylists.GetCountByPlaylistId(argResult[NagatoDB.Column.Id])
+
+    Me._SetGridData2(argRowIndex, ColumnTitle, yukiName, Align.Left)
+    Me._SetGridData2(argRowIndex, ColumnCount, yukiCount, Align.Right)
+    
+End
+
+Private Sub setRows()
     
     Dim yukiResult As Result = NagatoDBPlaylists.GetAllIdResult()
     Dim yukiRow As Integer
-    Dim yukiCount As Integer
     
     Me._$grids.Rows.Count = yukiResult.Count
     
     For Each yukiResult
-        Me._SetGridData2(yukiRow, ColumnTitle, yukiResult[NagatoDB.Column.PlaylistName], Align.Left)
-        yukiCount = NagatoDBPlaylists.GetCountByPlaylistId(yukiResult[NagatoDB.Column.Id])
-        Me._SetGridData2(yukiRow, ColumnCount, yukiCount, Align.Right)
+        setRow(yukiResult, yukiRow)
         Inc yukiRow
     Next
     
@@ -26,29 +35,44 @@ Catch
     
 End
 
+Private Sub getPaths() As String[]
+    
+    Return NagatoDBPlaylists.GetPathsByPlaylistName(Me._GetSelectionText(ColumnTitle)[0])
+    
+End
+
 Public Sub _InitializeGrids() 'override
     
-    Me._SetColumns("", ("Name"), ("Description"), ("Musics"), "")
-    Me._ResizeColumns(MikuruUx.Padding)
-    
-    If NagatoDBPlaylists.HasPlaylist() Then refreshData()
+    Me._SetColumns(("Name"), ("Description"), ("Musics"))
+    If NagatoDBPlaylists.HasPlaylist() Then setRows()
+
+    $handlerUserInput = New NagatoGridViewHandlerUserInputPlaylists(Me._$grids) As "UserInput"
 
 End
 
 Public Sub Refresh()
     
-    Me._$grids.Clear()
-    Me._InitializeGrids()
+    setRows()
     
 End
 
-Public Sub Asakura_Activate()
+Private Sub addPaths(argReplace As Boolean)
     
-    Dim yukiPaths As String[]
+    If Me._$grids.Rows.Selection.Count = 0 Then Return
+    If argReplace Then NagatoQueue(MikuruSignal.ListClear, Null)
+    NagatoQueue(MikuruSignal.ListAddMusic, getPaths())
     
-    If Me._$grids.Rows.Selection.Count > 0 Then
-        yukiPaths = NagatoDBPlaylists.GetPathsByPlaylistName(Me._GetSelectionText(ColumnTitle)[0])
-        NagatoQueue(MikuruSignal.ListAddMusic, yukiPaths)
-    Endif
+End
+
+Public Sub UserInput_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select argSignal
+        Case MikuruSignal.ListsDataReplace
+            addPaths(True)
+        Case MikuruSignal.ListsDataAdd
+            addPaths(False)
+        Default
+            Raise Signal(argSignal, argValues)
+    End Select
     
 End

@@ -25,20 +25,6 @@ Private Sub setAlbumArtToCurrentPlayingFile(argPicturePath As String, argMusicPa
     
 End
 
-Public Function GetPicture(argPath As String, argSize As Integer) As Picture
-    
-    Dim yukiOutput As String
-    
-    $workingDirectory.Ensure()
-    Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) To yukiOutput
-    If Not yukiOutput Then Return Null
-    If $workingDirectory.HasFile Then Return MikuruCroppedImage($workingDirectory[0], argSize)
-
-Finally
-    Return Null
-    
-End
-
 Public Function GetPicturePath(argPath As String) As String
     
     Dim yukiOutput As String

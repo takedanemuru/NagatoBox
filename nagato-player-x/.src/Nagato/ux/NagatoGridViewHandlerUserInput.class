@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoGridHandler
+
+Create Private
+
+Public Sub _OnResizeColumns()
+    
+    
+    
+End
+
+Public Sub _ResizeColumns(...)
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Param.Max
+        Me._$gridView.Columns[yukiIndex].W = Param[yukiIndex]
+    Next
+    
+End
+
+Public Function _GetColumnWidth(argColumnIndex As Integer) As Integer
+    
+    Dim yukiRowIndex As Integer
+    Dim yukiWidth As Integer
+    Dim yukiText As String
+    
+    For yukiRowIndex = 0 To Me._$gridView.Rows.Max
+        yukiText = Me._$gridView[yukiRowIndex, argColumnIndex].Text
+        yukiWidth = Max(Me._$gridView.Font.RichTextWidth(yukiText), yukiWidth)
+    Next
+    
+    Return yukiWidth + (MikuruUx.Padding * 2)
+    
+End
+
+Public Sub Asakura_Arrange()
+    
+    Me._OnResizeColumns()
+    
+End

@@ -1,0 +1,22 @@
+' Gambas class file
+
+Private $buttons As New NagatoButtonPainter
+Private $volumeButton As New NagatoVolumeButtonPainter
+Private $infoBox As New NagatoInfoBoxPainter
+Private $progressBar As New NagatoProgressBarPainter
+
+Public Sub SetMessage(argMessage As String, argDuration As Integer)
+    
+    $infoBox.SetMessage(argMessage, argDuration)
+    
+End
+
+Public Sub Paint(argEntered As Boolean)
+    
+    $infoBox.Draw()
+    $progressBar.Draw()
+    If Not argEntered Then Return
+    $buttons.Draw()
+    $volumeButton.Draw()
+    
+End

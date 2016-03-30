@@ -12,24 +12,15 @@ Private $currenPath As String
 
 Public Function getData(argElement As NagatoMusicElement) As String
     
-    Select Case $type
-        Case 1
-            Return argElement.Title
-        Case 2
-            Return argElement.Artist
-        Case 3
-            Return argElement.Album
-    End Select
+    Return Choose($type, argElement.Title, argElement.Artist, argElement.Album)
     
 End
 
 Private Function isLesser(argTarget As NagatoMusicElement, argTest As NagatoMusicElement) As Boolean
     
-    If $ascend Then
-        Return (getData(argTarget) > getData(argTest))
-    Else
-        Return (getData(argTest) > getData(argTarget))
-    Endif
+    Dim yukiFlag As Boolean = (getData(argTarget) > getData(argTest))
+    
+    Return IIf($ascend, yukiFlag, Not yukiFlag)
     
 End
 
@@ -40,10 +31,9 @@ Public Sub Set(argElement As NagatoMusicElement, argCurrent As Boolean)
     If argCurrent Then $currenPath = argElement.Path
     
     For yukiCount = 0 To $sortedElements.Max
-        If isLesser(argElement, $sortedElements[yukiCount])
-            $sortedElements.Add(argElement, yukiCount)
-            Return
-        End If
+        If Not isLesser(argElement, $sortedElements[yukiCount]) Then Continue
+        $sortedElements.Add(argElement, yukiCount)
+        Return
     Next
     
     $sortedElements.Add(argElement)

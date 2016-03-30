@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _InitializeRootMenu()
+    
+    Me._$rootMenu = New Menu(HaruhiPlayList)
+    Me._$rootMenu.Visible = False
+    
+End
+
+Public Sub _InitializeChildMenus()
+    
+    Me._AddMenu(("Delete"), MikuruSignal.ListDelete, "bin")
+    Me._AddMenu(("Edit Tag"), MikuruSignal.ListEdit, "tag")
+    
+End
+
+Public Sub PopUp()
+    
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new()
+    
+    Me._InitializeRootMenu()
+    Me._InitializeChildMenus()
+    
+End

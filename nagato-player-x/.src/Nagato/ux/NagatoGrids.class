@@ -34,16 +34,6 @@ Public Sub _SetColumns(...)
     
 End
 
-Public Sub _ResizeColumns(...)
-    
-    Dim yukiIndex As Integer
-    
-    For yukiIndex = 0 To Param.Max
-        Me._$grids.Columns[yukiIndex].W = Param[yukiIndex]
-    Next
-    
-End
-
 Public Sub _SetGridData2(argRow As Integer, argColumn As Integer, argData As String, argAlign As Integer)
     
     Me._$handlerData.SetGridData2(argRow, argColumn, argData, argAlign)

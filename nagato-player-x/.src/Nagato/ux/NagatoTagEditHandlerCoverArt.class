@@ -8,7 +8,9 @@ Event Change
 
 Public Sub Reset(argMusicPath As String)
     
-    $coverArtPictureBox.Picture = MikuruEyeD3.GetPicture(argMusicPath, $coverArtPictureBox.H)
+    Dim yukiCoverArtPath As String = MikuruEyeD3.GetPicturePath(argMusicPath)
+    
+    $coverArtPictureBox.Picture = MikuruCroppedImage(yukiCoverArtPath, MikuruUx.CoverArt.H)
     $coverArtPath = ""
     
 End

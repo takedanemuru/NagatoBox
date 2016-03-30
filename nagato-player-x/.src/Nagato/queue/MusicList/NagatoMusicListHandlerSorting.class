@@ -33,7 +33,7 @@ Private Sub Up(argSelection As Integer[])
     Next
     
     $musicElements.Set(yukiBuffer.Buffer)
-    $position.Current = yukiBuffer.NewPosition
+    $position.SetIndex(yukiBuffer.NewPosition)
     Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
     
 End
@@ -43,7 +43,7 @@ Private Sub down(argSelection As Integer[])
     Dim yukiBuffer As New NagatoMoveBufferDown($musicElements, $position.Current, argSelection)
     
     $musicElements.Set(yukiBuffer.Buffer)
-    $position.Current = yukiBuffer.NewPosition
+    $position.SetIndex(yukiBuffer.NewPosition)
     Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
     
 End

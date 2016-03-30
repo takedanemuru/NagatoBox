@@ -2,15 +2,12 @@
 
 Private $drawingArea As DrawingArea
 Private $observer As Observer
+Private $painterWidget As New NagatoPainterWidgets
 Private $background As New NagatoPainterBackground
-Private $buttons As New NagatoButtonPainter
-Private $volumeButton As New NagatoVolumeButtonPainter
-Private $infoBox As New NagatoInfoBoxPainter
-Private $progressBar As New NagatoProgressBarPainter
 
 Public Sub SetMessage(argMessage As String, argDuration As Integer)
     
-    $infoBox.SetMessage(argMessage, argDuration)
+    $painterWidget.SetMessage(argMessage, argDuration)
     
 End
 
@@ -38,14 +35,28 @@ Public Sub Asakura_Draw()
     
     Paint.Begin(Draw.Device)
         $background.Draw()
-        If MikuruMousePosition.Entered Then
-            $buttons.Draw()
-            $volumeButton.Draw()
-        End If
-        $infoBox.Draw()
-        $progressBar.Draw()
+        $painterWidget.Paint(MikuruMousePosition.Entered)
     Paint.End()
 
-    HaruhiPlayer.Title = NagatoQueue.ChannelCurrent.Titile
+    HaruhiPlayer.Title = NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
     
+End
+
+Public Sub Asakura_Enter()
+
+    MikuruMousePosition.Entered = True
+    
+End
+
+Public Sub Askura_Leave()
+    
+    MikuruMousePosition.Entered = False
+    
+End
+
+Public Sub Asakura_MouseMove()
+
+    MikuruMousePosition.SetMousePosition(Mouse.X, Mouse.Y)
+    $drawingArea.Refresh()
+
 End
