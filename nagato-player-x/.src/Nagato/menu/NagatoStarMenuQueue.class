@@ -28,8 +28,8 @@ Public Sub _OnMenuItemClick(argTag As Integer)
             MikuruDialog.AddDirectory()
         Case MikuruSignal.ListSaveAs
             HaruhiSaveAsPlaylist.ShowDialog() 
-        Case MikuruSignal.ListDeleteDuplicateMusic
-            NagatoQueue(MikuruSignal.ListDeleteDuplicateMusic, Null)
+        Default
+            NagatoQueue(Last.Tag, Null)
     End Select
     
 End

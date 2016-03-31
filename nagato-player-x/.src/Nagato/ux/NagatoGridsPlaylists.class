@@ -9,9 +9,11 @@ Private $handlerUserInput As NagatoGridViewHandlerUserInputPlaylists
 Private Sub setRow(argResult As Result, argRowIndex As Integer)
     
     Dim yukiName As String = argResult[NagatoDB.Column.PlaylistName]
+    Dim yukiDescription As String = argResult[NagatoDB.Column.PlaylistDescription]
     Dim yukiCount As Integer = NagatoDBPlaylists.GetCountByPlaylistId(argResult[NagatoDB.Column.Id])
 
     Me._SetGridData2(argRowIndex, ColumnTitle, yukiName, Align.Left)
+    Me._SetGridData2(argRowIndex, ColumnDescription, yukiDescription, Align.Left)
     Me._SetGridData2(argRowIndex, ColumnCount, yukiCount, Align.Right)
     
 End

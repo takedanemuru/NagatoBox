@@ -36,9 +36,9 @@ Public Function GetPathsByPlaylistName(argPlaylistName As String) As String[]
     
 End
 
-Public Sub SaveAsPlaylist(argPlaylistName As String, argPaths As String[])
+Public Sub SaveAsPlaylist(argPlaylistName As String, argDescription As String, argPaths As String[])
     
-    $tablePlaylistNames.EnsurePlaylistName(argPlaylistName)
+    $tablePlaylistNames.EnsurePlaylistName(argPlaylistName, argDescription)
     $tablePlaylistData.OverwritePlaylist($tablePlaylistNames.GetPlaylistNameId(argPlaylistName), argPaths)
     
 End
@@ -52,6 +52,19 @@ End
 Public Sub GetAllIdResult() As Result
     
     Return $tablePlaylistNames.GetAllResult()
+    
+End
+
+Public Sub GetAllNames() As String[]
+    
+    Dim yukiResult As Result = $tablePlaylistNames.GetAllResult()
+    Dim yukiNames As New String[]
+    
+    For Each yukiResult
+        yukiNames.Add(yukiResult[NagatoDB.Column.PlaylistName])
+    Next
+    
+    Return yukiNames
     
 End
 

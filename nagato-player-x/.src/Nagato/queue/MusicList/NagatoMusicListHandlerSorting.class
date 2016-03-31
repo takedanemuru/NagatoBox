@@ -5,6 +5,9 @@ Inherits NagatoObject
 Private $musicElements As NagatoMusicElements 
 Private $position As NagatoMusicPosition 
 
+Private $up As NagatoMoveBufferUp2
+Private $down As NagatoMoveBufferDown2
+
 Private Sub sort(argType As Integer, argSortAscend As Boolean)
     
     Dim yukiBuffer As New NagatoSortBuffer(argType, argSortAscend)
@@ -18,33 +21,7 @@ Private Sub sort(argType As Integer, argSortAscend As Boolean)
     
     $musicElements.Set(yukiBuffer.Elements)
     $position.ResetOnSort(yukiBuffer.Current, $musicElements.Count)
-    Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-    
-End
-
-Private Sub Up(argSelection As Integer[]) 
-    
-    Dim yukiBuffer As New NagatoMoveBufferUp(argSelection, $position.Current)
-    Dim yukiIndex As Integer
-    
-    For yukiIndex = 0 To $musicElements.Count - 1
-        If argSelection.Exist(yukiIndex) Then yukiBuffer.AddSelected(yukiIndex, $musicElements[yukiIndex])
-        If Not argSelection.Exist(yukiIndex) Then yukiBuffer.AddUnselected(yukiIndex, $musicElements[yukiIndex])
-    Next
-    
-    $musicElements.Set(yukiBuffer.Buffer)
-    $position.SetIndex(yukiBuffer.NewPosition)
-    Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
-    
-End
-
-Private Sub down(argSelection As Integer[]) 
-    
-    Dim yukiBuffer As New NagatoMoveBufferDown($musicElements, $position.Current, argSelection)
-    
-    $musicElements.Set(yukiBuffer.Buffer)
-    $position.SetIndex(yukiBuffer.NewPosition)
-    Raise Signal(MikuruSignal.BroadcastSelectionChanged, yukiBuffer.NewSelection)
+    Raise Signal(MikuruSignal.BroadcastQueueChanged, [True])
     
 End
 
@@ -54,9 +31,9 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.ListSort
             sort(argValues[0], argValues[1])
         Case MikuruSignal.ListDown
-            down(argValues)
+            $down.Move(argValues)
         Case MikuruSignal.ListUp
-            up(argValues)
+            $up.Move(argValues)
     End Select
     
 End
@@ -65,5 +42,8 @@ Public Sub _new(argElements As NagatoMusicElements, argPosition As NagatoMusicPo
     
     $musicElements = argElements
     $position = argPosition
+    
+    $up = New NagatoMoveBufferUp2($musicElements, $position) As "TFEI"
+    $down = New NagatoMoveBufferDown2($musicElements, $position) As "TFEI"
     
 End

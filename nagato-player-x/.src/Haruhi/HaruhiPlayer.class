@@ -26,7 +26,6 @@ Public Sub Form_Open()
     NagatoSettingsForm.SetMainFormSize(Me)
     NagatoSettingsForm.SetPosition(Me)
     
-    $timer.Enabled = True
     $painter = New NagatoPainter(DrawingArea)
     
 End
@@ -45,14 +44,14 @@ Public Sub Form_Drop()
     
 End
 
-Public Sub DrawingArea_MouseDown()
-
-    $surface.MouseDown(Mouse.X, Mouse.Y)
-
-End
-
 Public Sub Surface_RequestRefresh()
     
-    $painter.ChangeImage()
+    $painter.Refresh()
+    
+End
+
+Public Sub DrawingArea_MouseDown()
+    
+    $surface.MouseDown(Mouse.X, Mouse.Y)
     
 End

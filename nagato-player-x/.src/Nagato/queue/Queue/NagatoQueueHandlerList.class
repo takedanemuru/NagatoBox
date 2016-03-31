@@ -19,15 +19,17 @@ Private Sub addDirectory(argPath As String)
     
     Dim yukiPaths As String[] = MikuruMusicFiles.GetFromDirectory(argPath)
     
-    If yukiPaths.Count > 0 Then Me._$musicList.EnqueuePaths(yukiPaths)
+    If yukiPaths.Count > 0 Then Me._$musicList(MikuruSignal.ListAddMusic, yukiPaths)
     
 End
 
 Private Sub dequeueByIndexes(argIndexes As Integer[])
     
     Me._$player.Stop()
-    Me._$musicList.DequeueIndexes(argIndexes)
-    Me._$player.TryPlay()
+    Me._$musicList(MikuruSignal.ListDelete, argIndexes)
+    Me._$player.ResetUrl(True)
+    
+    Raise Signal(MikuruSignal.BroadcastStateChanged, Null)
     
 End
 

@@ -45,12 +45,12 @@ Public Sub Asakura_Draw()
 End
 
 Public Sub Asakura_Enter()
-
+    
     MikuruMousePosition.Entered = True
     
 End
 
-Public Sub Askura_Leave()
+Public Sub Asakura_Leave()
     
     MikuruMousePosition.Entered = False
     

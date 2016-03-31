@@ -64,8 +64,10 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             $handlerProperties.Reload()
             HaruhiPlayer.Title = $handlerProperties.GetProperty(MikuruProperty.CurrentTitle)
         Case MikuruSignal.BroadcastQueueChanged
-            $handlerProperties.Reload()
+            If Not argValues Then $handlerProperties.Reload()
             $handlerList.SaveCurrentQueue()
+        Case MikuruSignal.BroadcastSelectionChanged
+            
     End Select
     
     Raise Broadcast(argSignal, argValues)

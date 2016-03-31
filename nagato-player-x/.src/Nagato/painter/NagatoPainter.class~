@@ -1,5 +1,6 @@
 ' Gambas class file
 
+Private $timer As New Timer As "Timer"
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $painterWidget As New NagatoPainterWidgets
@@ -28,6 +29,7 @@ Public Sub _new(argDrawingArea As DrawingArea)
     $background.SetBackgroundImage()
     $drawingArea = argDrawingArea
     $observer = New Observer($drawingArea) As "Asakura"
+    $timer.Enabled = True
     
 End
 
@@ -43,12 +45,12 @@ Public Sub Asakura_Draw()
 End
 
 Public Sub Asakura_Enter()
-
+    
     MikuruMousePosition.Entered = True
     
 End
 
-Public Sub Askura_Leave()
+Public Sub Asakura_Leave()
     
     MikuruMousePosition.Entered = False
     
@@ -59,4 +61,10 @@ Public Sub Asakura_MouseMove()
     MikuruMousePosition.SetMousePosition(Mouse.X, Mouse.Y)
     $drawingArea.Refresh()
 
+End
+
+Public Sub Timer_Timer()
+    
+    $drawingArea.Refresh()
+    
 End

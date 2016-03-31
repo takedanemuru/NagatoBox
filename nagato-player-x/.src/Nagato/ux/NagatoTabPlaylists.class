@@ -4,6 +4,7 @@ Inherits NagatoTab
 
 Private $menuBar As NagatoMenuBarPlaylists
 Private $grids As NagatoGridsPlaylists
+Private $queueObserver As Observer
 
 Public Sub Refresh()
     
@@ -15,5 +16,15 @@ Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
     
     $menuBar = New NagatoMenuBarPlaylists(argContainer) As "MenuBar"
     $grids = New NagatoGridsPlaylists(argGrids) As "Grids"
+    $queueObserver = New Observer(NagatoQueue) As "Asakura"
+    
+End
+
+Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
+    
+    Select argSignal
+        Case MikuruSignal.BroadcastPlaylistsChanged
+            $grids.Refresh()
+    End Select
     
 End

@@ -5,6 +5,18 @@ Inherits NagatoObject
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 
+Private Function setNewY(argUnit As Float) As Integer
+    
+    Dim yukiY As Integer = NagatoSettingsPersona.Y + argUnit * TFEI.UX.Unit
+    
+    yukiY = Min(0, yukiY)
+    yukiY = Max(yukiY, $drawingArea.H - MikuruPersona.Image.H)    
+    
+    NagatoSettingsPersona.Y = yukiY
+    $drawingArea.Refresh()
+    
+End
+
 Public Sub _new(argDrawingArea As DrawingArea)
     
     $drawingArea = argDrawingArea
@@ -16,19 +28,15 @@ Public Sub Asakura_KeyPress()
     
     Select Case Key.Code
         Case Key.Up
-            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + (2 * TFEI.UX.Unit)
-            $drawingArea.Refresh()
+            setNewY(2)
         Case Key.Down
-            NagatoSettingsPersona.Y = NagatoSettingsPersona.Y - (2 * TFEI.UX.Unit)
-            $drawingArea.Refresh()
+            setNewY(-2)
     End Select
     
 End
 
 Public Sub Asakura_MouseWheel()
     
-    NagatoSettingsPersona.Y = NagatoSettingsPersona.Y + Mouse.Delta * TFEI.UX.Unit
-    
-    $drawingArea.Refresh()
-    
+    setNewY(Mouse.Delta)
+
 End

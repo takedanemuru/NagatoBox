@@ -2,20 +2,34 @@
 
 Inherits NagatoTable
 
-Private Sub push(argPlaylistName As String)
+Private Sub push(argPlaylistName As String, argDescription As String)
     
     Dim yukiResult As Result
     
-    With NagatoDB
-        Me._$connection.Begin()
-            yukiResult = Me._$connection.Create(.Table.PlaylistNames)
-            yukiResult[.Column.PlaylistName] = argPlaylistName
-            yukiResult.Update()
-        Me._$connection.Commit()
-    End With
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(NagatoDB.Table.PlaylistNames)
+        yukiResult[NagatoDB.Column.PlaylistName] = argPlaylistName
+        yukiResult[NagatoDB.Column.PlaylistDescription] = argDescription
+        yukiResult.Update()
+    Me._$connection.Commit()
     
 Catch
-    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
+Private Sub edit(argPlaylistName As String, argDescription As String)
+    
+    Dim yukiResult As Result
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Edit(NagatoDB.Table.PlaylistNames)
+        yukiResult[NagatoDB.Column.PlaylistName] = argPlaylistName
+        yukiResult[NagatoDB.Column.PlaylistDescription] = argDescription
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
     Me._$connection.Rollback()
     
 End
@@ -26,24 +40,23 @@ Public Sub _EnsureTable() 'override
     
     If Not Me._$connection.Opened Then Me._$connection.Open()
     
-    With NagatoDB
-        If Not Me._$connection.Tables.Exist(.Table.PlaylistNames) Then
-            yukiTable = Me._$connection.Tables.Add(.Table.PlaylistNames)
-            yukiTable.Fields.Add(.Column.Id, db.Serial)
-            yukiTable.Fields.Add(.Column.PlaylistName, db.String)
-            yukiTable.PrimaryKey = [.Column.Id]
-            yukiTable.Update()
-        Endif
-    End With
+    If Me._$connection.Tables.Exist(NagatoDB.Table.PlaylistNames) Then Return
+    
+    yukiTable = Me._$connection.Tables.Add(NagatoDB.Table.PlaylistNames)
+    yukiTable.Fields.Add(NagatoDB.Column.Id, db.Serial)
+    yukiTable.Fields.Add(NagatoDB.Column.PlaylistName, db.String)
+    yukiTable.Fields.Add(NagatoDB.Column.PlaylistDescription, db.String)
+    yukiTable.PrimaryKey = [NagatoDB.Column.Id]
+    yukiTable.Update()
     
 End
 
-Public Sub EnsurePlaylistName(argPlaylistName As String)
+Public Sub EnsurePlaylistName(argPlaylistName As String, argDescription As String)
     
     If Me._$connection.Find(NagatoDB.Table.PlaylistNames, "playlist_name = &1", argPlaylistName).Count > 0 Then
-        Return
+        edit(argPlaylistName, argDescription)
     Else
-        push(argPlaylistName)
+        push(argPlaylistName, argDescription)
     End If
     
 End

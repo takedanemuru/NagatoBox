@@ -1,6 +1,5 @@
 ' Gambas class file
 
-Private $timer As New Timer As "Timer"
 Private $painter As NagatoPainter
 Private $surface As New NagatoSurface As "Surface"
 
@@ -27,7 +26,6 @@ Public Sub Form_Open()
     NagatoSettingsForm.SetMainFormSize(Me)
     NagatoSettingsForm.SetPosition(Me)
     
-    $timer.Enabled = True
     $painter = New NagatoPainter(DrawingArea)
     
 End
@@ -43,12 +41,6 @@ Public Sub Form_Drop()
     
     'Image data is NOT acceptable.
     If Drag.Type = Drag.Text Then $surface.Drop(Drag.Data)
-    
-End
-
-Public Sub Timer_Timer()
-    
-    $painter.Refresh()
     
 End
 

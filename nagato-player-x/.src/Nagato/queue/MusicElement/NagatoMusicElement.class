@@ -6,8 +6,10 @@ Property Read Album As String
 Property Read Title As String
 Property Read Duration As Float
 Property Read DurationReadable As String
+Property Read UniqueIndex As Integer
 
 Private $tags As New NagatoTags
+Private $uniqueIndex As Integer
 
 Public Sub EditTags(argTags As NagatoId3TagInfo)
     
@@ -26,6 +28,7 @@ Public Sub _new(argPath As String)
     
     NagatoDBMedia.EnsureLibrary(argPath)
     $tags.SetTag(argPath)
+    $uniqueIndex = MikuruUniqueIndex.Get()
     
 End
 
@@ -62,5 +65,11 @@ End
 Private Function DurationReadable_Read() As String
 
     Return MikuruFloatToTime($tags.Duration)
+
+End
+
+Private Function UniqueIndex_Read() As Integer
+
+    Return $uniqueIndex
 
 End

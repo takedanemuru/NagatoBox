@@ -1,10 +1,8 @@
 ' Gambas class file
 
-Private $notEntered As Boolean = True
-
 Private Sub setFormPicture()
     
-    Dim yukiImage As Image = Image.Load("Pictures/default_background.png")
+    Dim yukiImage As Image = Image.Load("Pictures/archive.jpg")
     
     Me.Picture = yukiImage.Stretch(Me.W, Me.H).Picture
     
@@ -12,25 +10,32 @@ End
 
 Public Sub Form_Open()
     
-    $notEntered = True
+    SaveButton.Enabled = False
     
     Me.Center()
     setFormPicture()
+    PlaylistNamesComboBox.List = NagatoDBPlaylists.GetAllNames()
+    PlaylistNamesComboBox.Add(("Input or select Playlist name"), 0)
+    DescriptionTextBox.Text = ""
     
 End
 
 Public Sub PlaylistNamesComboBox_Enter()
 
-    $notEntered = False
-    PlaylistNamesComboBox.Text = ""
+    Object.Lock(PlaylistNamesComboBox)
+        PlaylistNamesComboBox.Text = ""
+    Object.Unlock(PlaylistNamesComboBox)
 
+End
+
+Public Sub PlaylistNamesComboBox_Change()
+    
+    SaveButton.Enabled = True
+    
 End
 
 Public Sub CancelButton_Click()
 
-    PlaylistNamesComboBox.Text = ("Input or select Playlist name")
-    $notEntered = True
-    
     Me.Close()
 
 End
@@ -39,10 +44,7 @@ Public Sub SaveButton_Click()
 
     If PlaylistNamesComboBox.Text = "" Then Return
 
-    NagatoQueue(MikuruSignal.ListSaveAs, [PlaylistNamesComboBox.Text])
-    PlaylistNamesComboBox.Text = ("Input or select Playlist name")
-    $notEntered = True
-    
+    NagatoQueue(MikuruSignal.ListSaveAs, [PlaylistNamesComboBox.Text, DescriptionTextBox.Text])
     Me.Close()
 
 End

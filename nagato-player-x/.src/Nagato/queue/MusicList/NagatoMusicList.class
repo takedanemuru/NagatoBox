@@ -49,7 +49,7 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
     With MikuruSignal
         Select argSignal
             Case MikuruSignal.ListSaveAs
-                $musicElements.SaveAsPlayList(argValues[0])
+                $musicElements.SaveAsPlayList(argValues[0], argValues[1])
             Case MikuruSignal.QueueNext
                 $position.Next($musicElements.Count)
             Case MikuruSignal.QueueBack

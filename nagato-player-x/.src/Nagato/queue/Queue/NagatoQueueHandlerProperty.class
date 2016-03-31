@@ -23,7 +23,11 @@ Public Sub Reload()
     $coverArt = Null
     $path = MikuruEyeD3.GetPicturePath(Me._$musicList.CurrentPath)
     If $path Then $coverArt = MikuruCroppedImage($path, MikuruUx.CoverArt.Size)
-    If Me._$musicList.GetProerty(MikuruProperty.ListCount) = 0 Then Me._$player.Stop(True)
+    If Me._$musicList.HasElement Then Me._$player.ResetUrl(Me._$player.State = Media.Playing)
+    If Not Me._$musicList.HasElement Then Me._$player.Stop(True)
+    
+Catch
+    Return
     
 End
 

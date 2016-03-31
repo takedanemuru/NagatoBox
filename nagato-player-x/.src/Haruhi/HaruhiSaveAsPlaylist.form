@@ -11,8 +11,11 @@
     Text = ("Cancel")
   }
   { PlaylistNamesComboBox ComboBox
-    MoveScaled(2,32,39,4)
+    MoveScaled(2,27,39,4)
     Background = &HFFFFFF&
     Text = ("Input or select Playlist Name")
+  }
+  { DescriptionTextBox TextBox
+    MoveScaled(2,32,39,4)
   }
 }

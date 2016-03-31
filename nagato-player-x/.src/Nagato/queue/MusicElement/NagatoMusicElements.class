@@ -66,11 +66,12 @@ Public Sub _get(argIndex As Integer) As NagatoMusicElement
     
 End
 
-Public Sub SaveAsPlaylist(argPlaylistName As String)
+Public Sub SaveAsPlaylist(argPlaylistName As String, argDescription As String)
     
     If $musicElements.Count = 0 Then Return
     
-    NagatoDBPlaylists.SaveAsPlaylist(argPlaylistName, $handlerData.Paths)
+    NagatoDBPlaylists.SaveAsPlaylist(argPlaylistName, argDescription, $handlerData.Paths)
+    Raise Signal(MikuruSignal.BroadcastPlaylistsChanged, Null)
     
 End
 
