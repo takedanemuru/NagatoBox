@@ -23,6 +23,7 @@ Public Sub Next()
     If $current = $max Then
         $current = 0
     Else
+        Debug "i came here."
         Inc $current
     Endif
     
@@ -48,6 +49,12 @@ Public Sub Delete(argDeleteIndex As Integer)
     Endif
     
     Dec $max
+    
+End
+
+Public Sub Add(argCount As Integer)
+    
+    $max += argCount
     
 End
 

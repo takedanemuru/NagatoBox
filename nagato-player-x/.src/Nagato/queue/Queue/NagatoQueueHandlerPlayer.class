@@ -73,7 +73,7 @@ Public Sub _OptionalOnInitialize()
     
 End
 
-Public Sub Asakura_MusicEnd()
+Public Sub Asakura_MusicEnds()
     
     If NagatoSettingsMusic.Repeat Then Me._$player.SetByRate(0)
     If Not NagatoSettingsMusic.Repeat Then move(MikuruSignal.QueueNext, Media.Playing)

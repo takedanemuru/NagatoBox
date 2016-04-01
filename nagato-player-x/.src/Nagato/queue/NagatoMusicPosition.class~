@@ -12,7 +12,6 @@ Private Function checkCount(argCount As Integer) As Boolean
     If 1 >= argCount Then Return False
 
     If $index.Reset(argCount - 1) Then $randomOrder.Refresh(argCount - 1)
-    Debug $index.Current
     Return True
     
 End
@@ -37,7 +36,7 @@ End
 
 Public Sub Refresh(argCount As Integer)  
     
-    checkCount(argCount)
+    checkCount(argCount - 1)
     
 End
 

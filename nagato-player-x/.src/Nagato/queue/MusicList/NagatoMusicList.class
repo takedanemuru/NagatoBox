@@ -40,7 +40,7 @@ Public Sub _new(argPaths As String[])
     $musicElements.Initialize(argPaths)
     If $musicElements.Count = 0 Then Return  
     $position.Refresh($musicElements.Count)
-    If NagatoSettingsMusic.Shuffle Then $position.Next($musicElements.Count)
+    If NagatoSettingsMusic.Shuffle Then $position.SetIndex(Rand(0, $musicElements.Count - 1))
     
 End
 

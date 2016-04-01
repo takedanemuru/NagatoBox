@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoMoveBuffer
+
+Private Function getMax() As Integer
+    
+    Return (Me._$musicElements.Count - 1) 
+    
+End
+
+Private Sub insertElement(argSelected As Boolean, argIndex As Integer, argInsertPosition As Integer) As Integer
+    
+    If argSelected Then 
+        Me._$newBuffer.Add(Me._$musicElements[argIndex], argInsertPosition)
+        Me._$newSelection.Add(getMax() - argInsertPosition)
+    Else
+        Me._$newBuffer.Add(Me._$musicElements[argIndex])
+    End If
+    
+End
+
+Public Sub _Refresh(argSelection As Integer[])
+    
+    Dim yukiIndex As Integer
+    Dim yukiInsertPosition As Integer = getMax() - Min(getMax(), argSelection[argSelection.Max] + 1)
+    
+    For yukiIndex = getMax() DownTo 0
+        insertElement(argSelection.Exist(yukiIndex), yukiIndex, yukiInsertPosition)
+        If argSelection.Exist(yukiIndex) Then Inc yukiInsertPosition
+    Next
+    
+    Me._$newBuffer.Reverse()
+    
+End
+

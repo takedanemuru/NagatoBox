@@ -1,0 +1,56 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$musicElements As NagatoMusicElements 
+Public _$position As NagatoMusicPosition 
+
+Public _$newPosition As Integer
+Public _$newBuffer As New NagatoMusicElement[]
+Public _$newSelection As New Integer[]
+
+Private Sub resetBuffers()
+    
+    Me._$newBuffer.Clear()
+    Me._$newSelection.Clear()
+    
+End
+
+Public Sub _Refresh(argSelection As Integer[])
+    
+    ' virtual
+    
+End
+
+Private Sub refreshIndex() As Integer
+    
+    Dim yukiIndex As Integer
+    Dim yukiCurrentIndex As Integer = NagatoQueue.GetProperty(MikuruProperty.CurrentIndex)
+    Dim yukiUniqueIndex As Integer = Me._$musicElements[yukiCurrentIndex].UniqueIndex
+    
+    For yukiIndex = 0 To Me._$newBuffer.Max
+        If Me._$newBuffer[yukiIndex].UniqueIndex = yukiUniqueIndex Then Return yukiIndex
+    Next
+    
+    Return 0
+    
+End
+
+Public Sub Move(argSelection As Integer[])
+    
+    resetBuffers()
+    Me._Refresh(argSelection)
+    Me._$newPosition = refreshIndex()
+    
+    Me._$musicElements.Set(Me._$newBuffer)
+    Me._$position.SetIndex(Me._$newPosition)
+    Raise Signal(MikuruSignal.BroadcastSelectionChanged, Me._$newSelection)
+
+End
+
+Public Sub _new(argElements As NagatoMusicElements, argPosition As NagatoMusicPosition)
+    
+    Me._$musicElements = argElements
+    Me._$position = argPosition
+    
+End

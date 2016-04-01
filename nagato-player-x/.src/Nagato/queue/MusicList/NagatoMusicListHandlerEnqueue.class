@@ -25,12 +25,33 @@ Private Sub enqueuePaths(argPaths As String[])
     
 End
 
+Private Function getNextIndex(argIndexes As Integer[], argCurrentIndex As Integer) As Integer
+    
+    Dim yukiLowerIndexesCount As Integer
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To argIndexes.Max
+        If argCurrentIndex > argIndexes[yukiIndex] Then Inc yukiLowerIndexesCount
+    Next
+    
+    Return argCurrentIndex - yukiLowerIndexesCount
+    
+End
+
 Private Sub dequeueIndexes(argIndexes As Integer[]) 
     
+    Dim yukiCurrentIndex As Integer = NagatoQueue.GetProperty(MikuruProperty.CurrentIndex)
+    Dim yukiIncluded As Boolean = argIndexes.Exist(yukiCurrentIndex)
+    
     $musicElements.DequeueByIndexes(argIndexes)
+    $position.Refresh($musicElements.Count)
+    If yukiIncluded Then
+        $position.SetIndex(Rand(0, $musicElements.Count - 1), $musicElements.Count - 1)
+    Else
+        $position.SetIndex(getNextIndex(argIndexes, yukiCurrentIndex), $musicElements.Count - 1)
+    End If
     
     Raise Signal(MikuruSignal.BroadcastQueueChanged, Null)
-    $position.Refresh($musicElements.Count)
     
 End
 

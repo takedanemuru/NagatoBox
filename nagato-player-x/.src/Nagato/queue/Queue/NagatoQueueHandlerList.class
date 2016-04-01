@@ -25,12 +25,11 @@ End
 
 Private Sub dequeueByIndexes(argIndexes As Integer[])
     
-    Me._$player.Stop()
+    If argIndexes.Exist(NagatoQueue.GetProperty(MikuruProperty.CurrentIndex)) Then Me._$player.Stop()
     Me._$musicList(MikuruSignal.ListDelete, argIndexes)
     Me._$player.ResetUrl(True)
     
     Raise Signal(MikuruSignal.BroadcastStateChanged, Null)
-    
 End
 
 Private Sub editTagsByTagIndexes(argIndexes As Integer[], argTags As NagatoId3TagInfo)

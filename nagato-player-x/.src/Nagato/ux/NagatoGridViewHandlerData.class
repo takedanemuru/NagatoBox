@@ -8,7 +8,8 @@ Public Sub SetGridData2(argRow As Integer, argColumn As Integer, argData As Stri
     Me._$gridView[argRow, argColumn].Alignment = argAlign
     
 Catch
-    Debug Error.Text
+    'Debug Error.Text
+    Return
     
 End
 
