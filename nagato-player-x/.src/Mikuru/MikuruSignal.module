@@ -5,16 +5,27 @@ Public Enum QueueHeader = 1000
 Public Enum QueuePlay = 1001, QueuePause = 1002, QueueNext = 1003, QueueBack = 1004
 Public Enum QueueShuffle = 1005, QueueRepeat = 1006, QueueSeek = 1007, QueueSetVolume = 1008
 Public Enum QueSetIndexAndPlay = 1009
+
 Public Enum ListHeader = 2000
-Public Enum ListAddMusic = 2001, ListAddDirectory = 2002, ListSaveAs = 2003, ListClear = 2004
-Public Enum ListUp = 2005, ListDown = 2006, ListEdit = 2007, ListDelete = 2008
-Public Enum ListDeleteDuplicateMusic = 2009, ListSort = 2010, ListChangeCoverArt = 2011
-Public Enum UserInputNone = 3000, UserInputColumnClick = 3001, UserInputResize = 3002
+Public Enum ListAddDirectory = 2001, ListSaveAs = 2002, ListEdit = 2003, ListChangeCoverArt = 2004
+Public Enum ListSubHeaderSorting = 2100
+Public Enum ListUp = 2101, ListDown = 2102, ListSort = 2103
+Public Enum ListSubHeaderEnqueue = 2200
+Public Enum ListAddMusic = 2201, ListDelete = 2201, ListClear = 2202, ListDeleteDuplicateMusic = 2203
+
+Public Enum UserInputNone = 3000
+Public Enum UserInputColumnClick = 3001, UserInputResize = 3002
+
 Public Enum ListsDataHeader = 4000
 Public Enum ListsDataDelete = 4001, ListsDataAdd = 4002, ListsDataReplace = 4003
 Public Enum ListsDataEdit = 4004
-Public Enum BroadcastNone = 8000, BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
+
+Public Enum BroadcastNone = 8000
+Public Enum BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
 Public Enum BroadcastQueueChanged = 8003, BroadcastPlaylistsChanged = 8004
 Public Enum BroadcastId3TagChanged = 8005, BroadcastSelectionChanged = 8006
-Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationCloseMainWindow = 9002
+Public Enum BroadcastTimer = 8007, BroadcastSelectionUp = 8008, BroadcastSelectionDown = 8009
+
+Public Enum ApplicationNone = 9000
+Public Enum ApplicationAbout = 9001, ApplicationCloseMainWindow = 9002
 Public Enum ApplicationClosePlaylistsWindow = 9003

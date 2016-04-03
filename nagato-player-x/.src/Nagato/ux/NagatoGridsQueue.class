@@ -68,6 +68,8 @@ Public Sub RefreshSelection(argIndexes As Integer[])
         Try Me._$grids.Rows[yukiIndex].Selected = True
     Next
     
+    Me._$grids[argIndexes[argIndexes.Max], 0].EnsureVisible()
+    
 End
 
 Public Sub RefreshPlaymark()

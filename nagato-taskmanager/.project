@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.3
+# Compiled with Gambas 3.8.4
 Title=nagato-taskmanager
 Startup=Kyon
 Icon=Icons/oscilloscope.png
-Version=42.2.9
+Version=42.4.10
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -22,14 +22,14 @@ Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-taskmanager-42.2.9
+PackageName=nagato-taskmanager-42.4.10
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Monitoring"
 Categories=ubuntu:"Nagato;System"
 Groups=ubuntu:"admin"
-ExtraFiles=ubuntu:"nagato-taskmanager.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"nagato-taskmanager.png\t/usr/share/pixmaps\nnagato-taskmanager.desktop\t/usr/share/applications"
 Tags=System
 GambasVersion=3.7
 WebSite=https://github.com/takedanemuru

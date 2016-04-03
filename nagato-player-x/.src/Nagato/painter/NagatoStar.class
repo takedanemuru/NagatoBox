@@ -1,0 +1,40 @@
+' Gambas class file
+
+Private $rotate As Integer
+Private $speed As Integer
+Private $length As Integer
+
+Private Function getLength(argPointIndex As Integer) As Integer
+    
+    Return IIf(Odd(argPointIndex), $length, $length * 2) 
+    
+End
+
+Public Function getAngle(argPointIndex As Integer) As Float
+    
+    Return Rad(argPointIndex * 36 + $rotate)
+    
+End
+
+Public Sub _call(argX As Integer, argY As Integer) As Integer[]
+    
+    Dim yukiPolygon As New Integer[]
+    Dim yukiPoint As Integer
+    
+    $rotate += $speed
+
+    For yukiPoint = 0 To 10
+        yukiPolygon.Add(Cos(getAngle(yukiPoint)) * getLength(yukiPoint) + argX)
+        yukiPolygon.Add(Sin(getAngle(yukiPoint)) * getLength(yukiPoint) + argY)
+    Next
+    
+    Return yukiPolygon
+    
+End
+
+Public Sub _new(argLength As Integer, argRotateSped As Integer)
+    
+    $length = argLength
+    $speed = argRotateSped
+    
+End

@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private $painter As NagatoPainter
-Private $surface As New NagatoSurface As "Surface"
+Private $observer As Observer
 
 Public Sub SetMessage(argMessage As String, argDuration As Integer) ' argDuration as Second
     
@@ -27,6 +27,7 @@ Public Sub Form_Open()
     NagatoSettingsForm.SetPosition(Me)
     
     $painter = New NagatoPainter(DrawingArea)
+    $observer = New Observer(NagatoBroadcast) As "Asakura"
     
 End
 
@@ -37,21 +38,13 @@ Public Sub Form_Close()
     
 End
 
-Public Sub Form_Drop()
+Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     
-    'Image data is NOT acceptable.
-    If Drag.Type = Drag.Text Then $surface.Drop(Drag.Data)
-    
-End
-
-Public Sub Surface_RequestRefresh()
+    Select argSignal
+        Case MikuruSignal.BroadcastIndexMoved
+            Me.Title = NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
+    End Select
     
     $painter.Refresh()
-    
-End
-
-Public Sub DrawingArea_MouseDown()
-    
-    $surface.MouseDown(Mouse.X, Mouse.Y)
     
 End

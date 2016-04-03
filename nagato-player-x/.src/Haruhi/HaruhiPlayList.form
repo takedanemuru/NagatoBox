@@ -5,41 +5,45 @@
   Text = ("Playlist")
   Icon = Picture["nagato-player-x.png"]
   SkipTaskbar = True
-  Arrangement = Arrange.Vertical
-  { PlaylistTabStrip TabStrip
-    MoveScaled(2,2,79,43)
+  Arrangement = Arrange.Fill
+  { MainVBox VBox
+    MoveScaled(0,0,81,45)
     Expand = True
-    Arrangement = Arrange.Vertical
-    Count = 2
-    Index = 0
-    Text = ("Now playing")
-    Picture = Picture["Pictures/button-play.png"]
-    { !MenuPanelNowPlaying HBox
-      MoveScaled(2,0,74,4)
-      #Public = True
-    }
-    { NowPlayingGrid GridView
-      MoveScaled(0,5,77,31)
-      Tracking = True
-      Drop = True
+    { PlaylistTabStrip TabStrip
+      MoveScaled(0,0,79,43)
       Expand = True
-      Mode = Select.Multiple
-      Grid = False
-      Header = GridView.Horizontal
+      Arrangement = Arrange.Vertical
+      Count = 2
+      Index = 0
+      Text = ("Now playing")
+      Picture = Picture["Pictures/button-play.png"]
+      { !MenuPanelNowPlaying HBox
+        MoveScaled(2,0,74,4)
+        #Public = True
+      }
+      { NowPlayingGrid GridView
+        MoveScaled(0,5,77,31)
+        Tracking = True
+        Drop = True
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+      Index = 1
+      Text = ("Playlists")
+      Picture = Picture["Pictures/icons/music.png"]
+      { MenuPanelPlaylists HBox
+        MoveScaled(2,0,74,4)
+      }
+      { PlaylistsGrid GridView
+        MoveScaled(0,5,77,31)
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+      Index = 0
     }
-    Index = 1
-    Text = ("Playlists")
-    Picture = Picture["Pictures/icons/music.png"]
-    { MenuPanelPlaylists HBox
-      MoveScaled(2,0,74,4)
-    }
-    { PlaylistsGrid GridView
-      MoveScaled(0,5,77,31)
-      Expand = True
-      Mode = Select.Multiple
-      Grid = False
-      Header = GridView.Horizontal
-    }
-    Index = 0
   }
 }

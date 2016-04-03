@@ -1,9 +1,0 @@
-' Gambas class file
-
-Public Sub Form_Open()
-    
-    Me.Center()
-    NagatoSettingsForm.SetMainFormSize(Me)
-    AboutTextLabel.Text = Subst$(File.Load("Text/AboutText"), Application.Version)
-    
-End

@@ -5,8 +5,7 @@ Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $painterWidget As New NagatoPainterWidgets
 Private $background As New NagatoPainterBackground
-Private $observer2 As Observer
-Private $timerCount As Integer
+Private $surface As New NagatoSurface As "Surface"
 
 Public Sub SetMessage(argMessage As String, argDuration As Integer)
     
@@ -20,19 +19,12 @@ Public Sub Refresh()
     
 End
 
-Public Sub ChangeImage()
-    
-    $background.SetBackgroundImage()
-    
-End
-
 Public Sub _new(argDrawingArea As DrawingArea)
     
     $background.SetBackgroundImage()
     $drawingArea = argDrawingArea
     $drawingArea.Refresh()
     $observer = New Observer($drawingArea) As "Asakura"
-    $observer2 = New Observer(NagatoQueue) As "Kimidori"
     
     $timer.Enabled = True
     
@@ -44,8 +36,6 @@ Public Sub Asakura_Draw()
         $background.Draw()
         $painterWidget.Paint(Mouse.Inside($drawingArea))
     Paint.End()
-
-    HaruhiPlayer.Title = NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
     
 End
 
@@ -56,14 +46,23 @@ Public Sub Asakura_MouseMove()
 
 End
 
-Public Sub Timer_Timer()
+Public Sub Asakura_Drop()
     
-     $drawingArea.Refresh()
+    'Image data is NOT acceptable.
+    If Drag.Type = Drag.Text Then $surface.Drop(Drag.Data)
+    
+    $background.SetBackgroundImage()
     
 End
 
-Public Sub Kimidori_Broadcast(argBroadcast As Integer, argValues As Variant[])
+Public Sub Asakura_MouseDown()
     
-    If argBroadcast = MikuruSignal.BroadcastIndexMoved Then $drawingArea.Refresh()
+    $surface.MouseDown(Mouse.X, Mouse.Y)
+    
+End
+
+Public Sub Surface_RequestRefresh()
+    
+    $drawingArea.Refresh()
     
 End

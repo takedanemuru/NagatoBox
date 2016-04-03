@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.90
+# Compiled with Gambas 3.8.4
 Title=nagato-gif-box
 Startup=Kyon
 Icon=Pictures/button-play.png
-Version=42.2.3
+Version=42.4.4
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -20,7 +20,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=takedanemuru.github.oi
 License=S.O.S. License
-PackageName=nagato-gif-box-42.2.3
+PackageName=nagato-gif-box-42.4.4
 CreateEachDirectory=1
 MimeTypes="image/gif"
 Packager=1
@@ -28,4 +28,4 @@ Systems=ubuntu
 Menus=ubuntu:"Applications/Graphics"
 Categories=ubuntu:"Graphics;Nagato"
 Groups=ubuntu:"x11"
-ExtraFiles=ubuntu:"nagato-gif-box.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"nagato-gif-box.png\t/usr/share/pixmaps\nnagato-gif-box.desktop\t/usr/share/applications"

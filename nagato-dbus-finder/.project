@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.3
+# Compiled with Gambas 3.8.4
 Title=nagato-dbus-finder
 Startup=HaruhiMain
 Icon=pictures/icons/computer.png
-Version=42.2.5
+Version=42.4.6
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -22,11 +22,11 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@ynadex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-dbus-finder-42.2.5
+PackageName=nagato-dbus-finder-42.4.6
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Programming"
 Categories=ubuntu:"Development;Nagato;System"
 Groups=ubuntu:"devel"
-ExtraFiles=ubuntu:"nagato-dbus-finder.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"nagato-dbus-finder.png\t/usr/share/pixmaps\nnagato-dbus-finder.desktop\t/usr/share/applications"

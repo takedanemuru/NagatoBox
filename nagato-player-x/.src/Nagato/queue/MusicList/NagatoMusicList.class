@@ -46,20 +46,18 @@ End
 
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
-    With MikuruSignal
-        Select argSignal
-            Case MikuruSignal.ListSaveAs
-                $musicElements.SaveAsPlayList(argValues[0], argValues[1])
-            Case MikuruSignal.QueueNext
-                $position.Next($musicElements.Count)
-            Case MikuruSignal.QueueBack
-                $position.Back($musicElements.Count)
-            Case MikuruSignal.ListSort, MikuruSignal.ListDown, MikuruSignal.ListUp
-                $handlerSorting(argSignal, argValues)
-            Case .ListAddMusic, .ListClear, .ListDelete, .ListDeleteDuplicateMusic
-                $handlerEnqueue(argSignal, argValues)
-        End Select
-    End With
+    Select argSignal
+        Case MikuruSignal.ListSaveAs
+            $musicElements.SaveAsPlayList(argValues[0], argValues[1])
+        Case MikuruSignal.QueueNext
+            $position.Next($musicElements.Count)
+        Case MikuruSignal.QueueBack
+            $position.Back($musicElements.Count)
+        Case MikuruSignal.ListSubHeaderSorting To MikuruSignal.ListSubHeaderSorting + 99
+            $handlerSorting(argSignal, argValues)
+        Case MikuruSignal.ListSubHeaderEnqueue To MikuruSignal.ListSubHeaderEnqueue + 99
+            $handlerEnqueue(argSignal, argValues)
+    End Select
     
 End
 

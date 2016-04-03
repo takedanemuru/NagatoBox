@@ -1,0 +1,18 @@
+' Gambas class file
+
+Create Private
+
+Event Signal(argEvent As Integer, argValues As Variant[])
+
+Public Sub _RaiseSignal(argEvent As Integer, argValues As Variant[])
+    
+    Raise Signal(argEvent, argValues)
+    
+End
+
+Public Sub TFEI_Signal(argEvent As Integer, argValues As Variant[])
+    
+    Me._RaiseSignal(argEvent, argValues)
+    
+End
+

@@ -1,0 +1,55 @@
+' Gambas module file
+
+Private $parentObject As String
+
+Private Function tryGetParentObjectFromLine(argLine As String) As Boolean
+    
+    If argLine Begins "Inherits" Then $parentObject = Split(argLine, " ", "", True)[1]
+    If argLine Begins "Public" Then Return True
+    If argLine Begins "Private" Then Return True
+    
+    Return False
+    
+End
+
+Private Sub readStream(argPath As String)
+    
+    Dim yukiLine As String
+    Dim yukiStream As Stream
+    
+    yukiStream = Open argPath For Input
+    
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If tryGetParentObjectFromLine(LTrim$(yukiLine)) Then Break
+    Wend
+    
+    Close #yukiStream
+    
+End
+
+Public Function GetParentName(argPath As String) As String
+    
+    If Not Exist(argPath) Then Return "" ' for predefiened class
+    
+    $parentObject = ""
+    readStream(argPath)
+    
+    Return $parentObject
+    
+End
+
+Public Function GetParentObjectPath(argProjectDirectory As String, argName As String) As String
+    
+    Dim yukiPath As String
+    Dim yukiFullPath As String
+    
+    For Each yukiPath In RDir(argProjectDirectory)
+        yukiFullPath = argProjectDirectory &/ yukiPath
+        If File.BaseName(yukiFullPath) = argName Then Return (yukiFullPath)
+    Next
+    
+    ' some classes inherits predefiend class like DBusObject
+    Return argName
+    
+End

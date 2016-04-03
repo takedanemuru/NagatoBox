@@ -1,0 +1,25 @@
+' Gambas class file
+
+Create Static
+
+Private $timer As New Timer As "Timer"
+
+Event Broadcast(argSignal As Integer, argValues As Variant[])
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Raise Broadcast(argSignal, argValues)
+    
+End
+
+Public Sub _new()
+    
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Raise Broadcast(MikuruSignal.BroadcastTimer, Null)
+    
+End

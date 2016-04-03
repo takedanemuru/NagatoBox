@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-player-x
+Comment=a music player with gstreamer backend.
+Exec=/usr/bin/nagato-player-x
+Icon=/usr/share/pixmaps/nagato-player-x.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Audio;Music;Nagato;
+MimeType=audio/3gpp;audio/ac3;audio/flac;audio/mp4;audio/mpeg;audio/ogg;audio/x-flac;audio/x-matroska;audio/x-mp3;audio/x-mpeg;audio/x-wav;audio/x-vorbis;audio/x-vorbis+ogg

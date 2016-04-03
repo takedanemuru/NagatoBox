@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.90
+# Compiled with Gambas 3.8.4
 Title=dataovermind-disks
 Startup=Kyon
 Icon=Pictures/information-balloon.png
-Version=42.2.4
+Version=42.4.5
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
@@ -17,11 +17,11 @@ Maintainer=takedanemuru
 Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 License=S.O.S. License
-PackageName=dataovermind-disks-42.2.4
+PackageName=dataovermind-disks-42.4.5
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Hardware"
 Categories=ubuntu:"System"
 Groups=ubuntu:"admin"
-ExtraFiles=ubuntu:"dataovermind-disks.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"dataovermind-disks.png\t/usr/share/pixmaps\ndataovermind-disks.desktop\t/usr/share/applications"

@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.3
+# Compiled with Gambas 3.8.4
 Title=nagato-config-appearance
 Startup=Kyon
 Icon=Pictures/Icons/equalizer.png
-Version=42.2.5
+Version=42.4.6
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -21,11 +21,11 @@ Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 Url=takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-config-appearance-42.2.5
+PackageName=nagato-config-appearance-42.4.6
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
 Categories=ubuntu:"Nagato;Settings;System"
 Groups=ubuntu:"admin"
-ExtraFiles=ubuntu:"nagato-config-appearance.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"nagato-config-appearance.png\t/usr/share/pixmaps\nnagato-config-appearance.desktop\t/usr/share/applications"

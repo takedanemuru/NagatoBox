@@ -47,13 +47,6 @@ Public Sub ResetOnSort(argIndex As Integer, argCount As Integer)
     
 End
 
-Public Sub ResetOnDelete(argDeleteIndex As Integer)
-    
-    $index.Reset($index.Max - 1)
-    $index.Current = 0
-    
-End
-
 Public Sub ResetOnAdd(argCount As Integer)
     
     $index.Reset($index.Max + argCount)

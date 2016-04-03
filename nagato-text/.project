@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.90
+# Compiled with Gambas 3.8.4
 Title=nagato-text
 Startup=Kyon
 Icon=Pictures/nagato_icons/document-edit.png
-Version=42.2.2
+Version=42.4.3
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -23,7 +23,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.License
-PackageName=nagato-text-42.2.2
+PackageName=nagato-text-42.4.3
 CreateEachDirectory=1
 MimeTypes="text/plain","text/html","application/x-desktop"
 Packager=1
@@ -31,4 +31,4 @@ Systems=ubuntu
 Menus=ubuntu:"Applications/Text"
 Categories=ubuntu:"Nagato;Utility"
 Groups=ubuntu:"editors"
-ExtraFiles=ubuntu:"nagato-text.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"nagato-text.png\t/usr/share/pixmaps\nnagato-text.desktop\t/usr/share/applications"

@@ -1,0 +1,81 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $star As NagatoStar
+
+Private Function hasCoverArt() As Boolean
+    
+    Return NagatoQueue.GetProperty(MikuruProperty.CoverArtPath)
+    
+End
+
+Private Function getProgressBarWidth() As Integer
+    
+    Return $drawingArea.W - (getStartX())
+    
+End
+
+Private Sub paintProgressBar()
+    
+    Dim yukiX As Integer = getStartX() - 8 
+    Dim yukiDurationData As NagatoDurationData = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationData)
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Rectangle(yukiX, 44, getProgressBarWidth(), 1)
+    Paint.Fill()
+    Paint.Brush = Paint.Color(Color.Yellow)
+    Paint.Rectangle(yukiX, 44, getProgressBarWidth() * yukiDurationData.Rate, 1)
+    Paint.Polygon($star(yukiX + getProgressBarWidth() * yukiDurationData.Rate, 44))
+    Paint.Fill()
+    
+End
+
+Private Function getStartX() As Integer
+    
+    Return IIf(hasCoverArt(), $drawingArea.H + 8, 16)
+    
+End
+
+Private Sub paintClipRectangle(argRectangle As Rect, Optional argRadius As Integer = 0)
+    
+    With argRectangle
+        Paint.Save()
+        Paint.Rectangle(.X, .Y, .W, .H, argRadius)
+        Paint.Clip()
+    End With
+    
+End
+
+Private Sub paintInfo()
+    
+    Dim yukiX As Integer = getStartX()
+    Dim yukiRect As New Rect(yukiX, 0, getProgressBarWidth() - 16, $drawingArea.H)
+    
+    paintClipRectangle(yukiRect)
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Size = 16
+    Paint.DrawText(NagatoQueue.GetProperty(MikuruProperty.CurrentTitle), yukiX, 32)
+    Paint.Font.Size = 12
+    Paint.DrawText(NagatoQueue.GetProperty(MikuruProperty.CurrentArtist), yukiX, 68)
+    Paint.DrawText(NagatoQueue.GetProperty(MikuruProperty.CurrentAlbum), yukiX, 92)
+    
+    Paint.ResetClip()
+    Paint.Restore()
+    
+End
+
+Public Sub Paint()
+    
+    If hasCoverArt() Then Paint.DrawPicture(NagatoQueue.GetProperty(MikuruProperty.CoverArt), 8, 8)
+    paintInfo()
+    paintProgressBar()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $star = New NagatoStar(5, 12)
+    
+End

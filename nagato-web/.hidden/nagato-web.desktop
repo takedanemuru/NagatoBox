@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-web
+Comment=a web browser powered by Gambas3
+Exec=/usr/bin/nagato-web
+Icon=/usr/share/pixmaps/nagato-web.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Nagato;Network;
+MimeType=text/html;x-scheme-handler/http;x-scheme-handler/https

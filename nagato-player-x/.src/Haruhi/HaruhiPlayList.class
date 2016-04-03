@@ -3,24 +3,27 @@
 Private $nowPlayingTab As NagatoTabQueue
 Private $playlistsTab As NagatoTabPlaylists
 Private $infoArea As NagatoInfoArea
+Private $observer As Observer
 
 Public Sub _new()
 
     NagatoSettingsForm.Load(Me)
-    
+
     $nowPlayingTab = New NagatoTabQueue(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
     $playlistsTab = New NagatoTabPlaylists(MenuPanelPlaylists, PlaylistsGrid) As "PlaylistsGrids"
-    $infoArea = New NagatoInfoArea(Me)
+    $infoArea = New NagatoInfoArea(MainVBox)
+    $observer = New Observer(NagatoBroadcast) As "Asakura"
     
 End
 
 Public Sub EnsureVisible()
     
-    Dim yukiDesktopWindow As New DesktopWindow(Me.Id)
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    yukiDesktopWindow = New DesktopWindow(Me.Id)
+    yukiDesktopWindow.Desktop = Desktop.Current
     
     Me.Show()
-    
-    yukiDesktopWindow.Desktop = Desktop.Current
     
 End
 
@@ -30,8 +33,13 @@ Public Sub Form_Close()
     
 End
 
-Public Sub NowPlayingTab_NewPlayList()
+Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     
-    $playlistsTab.Refresh()
+    Select Case argSignal
+        Case MikuruSignal.BroadcastTimer, MikuruSignal.BroadcastIndexMoved
+            If Not Me.Closed Then $infoArea.Refresh()
+    End Select
+    
+    $nowPlayingTab(argSignal, argValues)
     
 End

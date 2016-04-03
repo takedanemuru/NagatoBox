@@ -4,6 +4,8 @@ Inherits DBusObject
 
 Create Static
 
+Property Read ProgressInText As String
+
 Public Sub AddMusics(argPaths As String[])
     
     NagatoQueue(MikuruSignal.ListAddMusic, argPaths)

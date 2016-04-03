@@ -3,7 +3,6 @@
 Property Read X As Integer
 Property Read Y As Integer
 
-Private $entered As Boolean = False
 Private $point As New Point
 
 Public Sub SetMousePosition(argX As Integer, argY As Integer)

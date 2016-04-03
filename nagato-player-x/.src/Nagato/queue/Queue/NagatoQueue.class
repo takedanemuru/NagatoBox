@@ -9,8 +9,6 @@ Private $handlerPlayer As NagatoQueueHandlerPlayer
 Private $handlerList As NagatoQueueHandlerList
 Private $handlerProperties As NagatoQueueHandlerProperty
 
-Event Broadcast(argSignal As Integer, argValues As Variant[])
-
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
@@ -62,12 +60,11 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.BroadcastIndexMoved
             $handlerProperties.Reload()
-            HaruhiPlayer.Title = $handlerProperties.GetProperty(MikuruProperty.CurrentTitle)
         Case MikuruSignal.BroadcastQueueChanged
             If Not argValues Then $handlerProperties.Reload()
             $handlerList.SaveCurrentQueue()
     End Select
     
-    Raise Broadcast(argSignal, argValues)
+    NagatoBroadcast(argSignal, argValues)
     
 End
