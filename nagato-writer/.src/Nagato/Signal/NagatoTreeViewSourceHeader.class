@@ -1,0 +1,61 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $sidePanel As SidePanel
+Private $treeView As TreeView
+
+Private Sub initializeSidePanel()
+    
+    $sidePanel = New SidePanel(Me._$parentContainer)
+    
+    With $sidePanel
+        .W = 160
+        .Expand = False
+        .Arrangement = Arrange.Fill
+        .Orientation = Align.Left
+        .Hidden = True
+    End With
+    
+End
+
+Private Sub initializeListView()
+    
+    $treeView = New ListView($sidePanel) As "TreeView"
+    
+    With $treeView
+        .Expand = True
+        .Foreground = Color.White
+        .Background = Color.Lighter(Color.Violet)
+    End With
+    
+End
+
+Public Sub _initialize() ' override
+    
+    initializeSidePanel()
+    initializeListView()
+    
+End
+
+Public Sub Refresh(argCollection As Collection)
+    
+    Dim yukiHeader As String
+    
+    $treeView.Clear()
+    
+    For Each yukiHeader In argCollection
+        Debug argCollection.Key
+        Debug yukiHeader
+        '$treeView.Add(argCollection.Key, yukiHeader)
+    Next
+    
+    $treeView.Refresh()
+    
+End
+
+Public Sub TreeView_Activate()
+    
+    Raise Signal(MikuruSignal.EditMoveToLine, [CInt(Last.Key)])
+    
+End

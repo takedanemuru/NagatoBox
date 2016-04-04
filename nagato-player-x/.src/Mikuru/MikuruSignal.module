@@ -11,7 +11,7 @@ Public Enum ListAddDirectory = 2001, ListSaveAs = 2002, ListEdit = 2003, ListCha
 Public Enum ListSubHeaderSorting = 2100
 Public Enum ListUp = 2101, ListDown = 2102, ListSort = 2103
 Public Enum ListSubHeaderEnqueue = 2200
-Public Enum ListAddMusic = 2201, ListDelete = 2201, ListClear = 2202, ListDeleteDuplicateMusic = 2203
+Public Enum ListAddMusic = 2201, ListDelete = 2202, ListClear = 2203, ListDeleteDuplicateMusic = 2204
 
 Public Enum UserInputNone = 3000
 Public Enum UserInputColumnClick = 3001, UserInputResize = 3002
@@ -23,7 +23,7 @@ Public Enum ListsDataEdit = 4004
 Public Enum BroadcastNone = 8000
 Public Enum BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
 Public Enum BroadcastQueueChanged = 8003, BroadcastPlaylistsChanged = 8004
-Public Enum BroadcastId3TagChanged = 8005, BroadcastSelectionChanged = 8006
+Public Enum BroadcastId3TagChanged = 8005, BroadcastMessage = 8006
 Public Enum BroadcastTimer = 8007, BroadcastSelectionUp = 8008, BroadcastSelectionDown = 8009
 
 Public Enum ApplicationNone = 9000

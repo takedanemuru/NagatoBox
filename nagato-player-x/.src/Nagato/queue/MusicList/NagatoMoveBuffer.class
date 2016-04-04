@@ -36,6 +36,12 @@ Private Sub refreshIndex() As Integer
     
 End
 
+Public Sub _OnRaiseSignal()
+    
+    
+    
+End
+
 Public Sub Move(argSelection As Integer[])
     
     resetBuffers()
@@ -44,7 +50,7 @@ Public Sub Move(argSelection As Integer[])
     
     Me._$musicElements.Set(Me._$newBuffer)
     Me._$position.SetIndex(Me._$newPosition)
-    Raise Signal(MikuruSignal.BroadcastSelectionChanged, Me._$newSelection)
+    Me._OnRaiseSignal()
 
 End
 

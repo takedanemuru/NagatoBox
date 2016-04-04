@@ -13,6 +13,12 @@ Private Sub insertElement(argSelected As Boolean, argIndex As Integer, argInsert
     
 End
 
+Public Sub _OnRaiseSignal()
+    
+    Raise Signal(MikuruSignal.BroadcastSelectionUp, Me._$newSelection)
+    
+End
+
 Public Sub _Refresh(argSelection As Integer[])
     
     Dim yukIndex As Integer

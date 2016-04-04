@@ -15,16 +15,11 @@ End
 Private Sub readStream(argPath As String)
     
     Dim yukiLine As String
-    Dim yukiStream As Stream
+    Dim yukiFile As String = File.Load(argPath)
     
-    yukiStream = Open argPath For Input
-    
-    While Not Eof(yukiStream)
-        Line Input #yukiStream, yukiLine
-        If tryGetParentObjectFromLine(LTrim$(yukiLine)) Then Break
-    Wend
-    
-    Close #yukiStream
+    For Each yukiLine In Split(yukiFile, "\n", "", True)
+         If tryGetParentObjectFromLine(LTrim$(yukiLine)) Then Break
+    Next
     
 End
 
@@ -45,6 +40,7 @@ Public Function GetParentObjectPath(argProjectDirectory As String, argName As St
     Dim yukiFullPath As String
     
     For Each yukiPath In RDir(argProjectDirectory)
+        If File.Ext(yukiPath) <> "class" Then Continue
         yukiFullPath = argProjectDirectory &/ yukiPath
         If File.BaseName(yukiFullPath) = argName Then Return (yukiFullPath)
     Next

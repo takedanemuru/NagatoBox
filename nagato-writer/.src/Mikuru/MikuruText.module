@@ -14,3 +14,13 @@ Public Function GetReplacementCount(argSource As String, argTarget As String) As
     Return yukiCount
     
 End
+
+Public Function GetFirstLineForSave(argText As String) As String
+    
+    Dim yukiText As String = Split(argText, "\n", "", True)[0]
+    
+    yukiText = Replace$(yukiText, "#", "")
+    
+    Return LTrim$(yukiText)
+    
+End

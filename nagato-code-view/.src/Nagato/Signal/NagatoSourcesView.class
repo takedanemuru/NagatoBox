@@ -9,8 +9,8 @@ Private $dialog As New NagatoDialogSelectDirectory
 
 Private Sub sortGrids()
     
-    $gridsHandler.Clear()
     $project.Refresh()
+    $gridsHandler.Clear()
     $gridsHandler.Fill($project.GridData)
     $gridsHandler.SetSumRow($project)
     
@@ -68,9 +68,8 @@ End
 
 Public Sub GridView_ColumnClick(argIndex As Integer)
     
-    If $project.Count > 0 Then
-        $project.SetTargetIndex(argIndex)
-        sortGrids()
-    End If
+    If $project.Count = 0 Then Return
+    $project.SetTargetIndex(argIndex)
+    sortGrids()
     
 End

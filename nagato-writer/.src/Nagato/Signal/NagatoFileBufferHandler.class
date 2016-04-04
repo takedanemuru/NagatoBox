@@ -61,7 +61,7 @@ End
 
 Public Function SaveAs(argText As String) As Boolean
     
-    Dialog.Path = Subst$("&1/your_file.md", User.Home)
+    Dialog.Path = Subst$("&1/&2.md", User.Home, MikuruText.GetFirstLineForSave(argText))
     Dialog.Title = ("Save file as ...")
     If Dialog.SaveFile() Then Return False
     

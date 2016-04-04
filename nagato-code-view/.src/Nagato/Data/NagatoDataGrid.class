@@ -25,23 +25,9 @@ Private Function getGridData(argRowIndex As Integer) As Variant
     
 End
 
-Private Function getGridDataTotalLines(argRowIndex As Integer) As Variant
-    
-    Dim yukiRowData As Collection = $gridData[argRowIndex]
-    
-    Return yukiRowData[MikuruColumn[2]]
-    
-End
-
 Private Function getRowData(argRowData As Collection) As Variant
     
     Return argRowData[MikuruColumn[$sort.TargetColumn]]
-    
-End
-
-Private Function getRowDataTotalLines(argRowData As Collection) As Variant
-    
-    Return argRowData[MikuruColumn[2]]
     
 End
 
@@ -51,7 +37,6 @@ Private Function setRowData(argRowData As Collection) As Boolean
     
     For yukiIndex = 0 To $gridData.Max
         If Not $sort.IsLesser(getGridData(yukiIndex), getRowData(argRowData)) Then Continue
-        If Not $sort.IsLesser(getGridDataTotalLines(yukiIndex), getRowDataTotalLines(argRowData)) Then Continue
         $gridData.Add(argRowData, yukiIndex)
         Return True
     Next

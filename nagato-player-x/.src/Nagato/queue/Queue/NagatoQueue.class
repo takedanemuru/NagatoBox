@@ -63,6 +63,8 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.BroadcastQueueChanged
             If Not argValues Then $handlerProperties.Reload()
             $handlerList.SaveCurrentQueue()
+        Case MikuruSignal.BroadcastSelectionUp, MikuruSignal.BroadcastSelectionDown
+            $handlerList.SaveCurrentQueue()
     End Select
     
     NagatoBroadcast(argSignal, argValues)

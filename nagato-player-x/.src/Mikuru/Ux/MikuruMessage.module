@@ -2,12 +2,20 @@
 
 Public Function SetNewMusic(argCount As Integer) As Boolean
     
-    If argCount = 1 Then
-        HaruhiPlayer.SetMessage("<b>1 music is added</b>", 5)
-    Else If argCount > 1 Then
-        HaruhiPlayer.SetMessage(Subst$("<b>&1 musics are added</b>", argCount), 5)
-    End If
+    Dim yukiMessage As String
     
-    Return (argCount > 0)
+    If argCount = 0 Then Return False
+    If argCount = 1 Then yukiMessage = "<b>1 music is added</b>"
+    If argCount > 1 Then yukiMessage = Subst$("<b>&1 musics are added</b>", argCount)
+    
+    NagatoBroadcast(MikuruSignal.BroadcastMessage, [yukiMessage, 5])
+    
+    Return True
+    
+End
+
+Public Sub Cleared()
+    
+    NagatoBroadcast(MikuruSignal.BroadcastMessage, [("</b>Playlist is cleared.</b>"), 5])
     
 End

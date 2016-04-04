@@ -30,7 +30,9 @@ Private Sub initializeChildMenus()
     With MikuruMenuEvent
         addMenu(("Open"), .MenuOpen, MikuruIcon.Get("folder"))
         addMenu(("Convert to picture file"), .MenuConvert, MikuruIcon.Get("button-synchronize"))
-        addMenu("", .None) ' menu separator
+        addMenu(("Convert to html file"), .MenuConvertToHtml, MikuruIcon.Get("button-synchronize"))
+        addMenu(("Extract text"), .MenuExtractText, Null)
+            addMenu("", .None) ' menu separator
         addMenu(("About"), .MenuAbout, MikuruIcon.Get("star"))
         addMenu(("Close"), .MenuClose, MikuruIcon.Get("button-cross"))
     End With

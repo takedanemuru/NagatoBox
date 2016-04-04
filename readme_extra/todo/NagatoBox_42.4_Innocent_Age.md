@@ -1,6 +1,6 @@
 # NagatoBox 42.4 Innocent Age
 
-+ to end of june
++ until end of june
 + ~~set ToDo file~~
 + add html based help/about file(s)
 + upload some applications before ubuntu 16.04 release.
@@ -13,6 +13,12 @@
 
 ### nagato-calc (v42.4.6)
 
++ ~~new : new desktop entry file~~
+
+### nagato-code-view (v42.4.14)
+
++ ~~new : show class inheritances~~
++ ~~do not use stream to read class file~~
 + ~~new : new desktop entry file~~
 
 ### nagato-config-appearance (v42.4.6)
@@ -56,11 +62,16 @@
 
 + ~~new : new desktop entry file~~
 
-###  nagato-player-x (v42.4.53)
+### nagato-pdf-view (v42.4.2)
+
++ ~~new : new desktop entry file~~
++ ~~new : extract text from pdf~~
+
+###  nagato-player-x (v42.4.54)
 
 + ~~new : new desktop entry file~~
 + ~~move duration fetcher to inside of NagatoPlayer~~ BAD IDEA, DurationFetcher is completely removed.
-+ reload playlists gridview with NagatoBroadcast
++ ~~reload playlists gridview with NagatoBroadcast~~
 
 ### nagato-session (v42.4.17)
 
@@ -86,10 +97,11 @@
 
 + ~~new : new desktop entry file~~
 
-### nagato-writer (v42.4.30)
+### nagato-writer (v42.4.31)
 
 + ~~new : new desktop entry file~~
-+ get file name from first line of document on the first saving.
++ ~~get file name from first line of document on the first saving.~~
++ ~~new : hidden div tag for html preview~~
 
 ## dataoverminds
 

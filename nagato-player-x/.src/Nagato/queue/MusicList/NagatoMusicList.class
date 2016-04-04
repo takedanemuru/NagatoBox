@@ -5,7 +5,7 @@ Inherits NagatoObject
 Property Read HasElement As Boolean
 Property Read CurrentPath As String
 
-Private $musicElements As New NagatoMusicElements 
+Private $musicElements As New NagatoMusicElements As "TFEI"
 Private $position As New NagatoMusicPosition As "TFEI"
 
 Private $handlerSorting As NagatoMusicListHandlerSorting

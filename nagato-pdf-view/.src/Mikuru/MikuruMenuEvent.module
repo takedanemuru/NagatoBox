@@ -12,8 +12,10 @@ Property Read PageNext As Integer
 
 Property Read MenuOpen As Integer
 Property Read MenuConvert As Integer
+Property Read MenuExtractText As Integer
 Property Read MenuAbout As Integer
 Property Read MenuClose As Integer
+Property Read MenuConvertToHtml As Integer
 
 Private $header As Integer = 1000
 
@@ -81,5 +83,17 @@ End
 Private Function MenuConvert_Read() As Integer
 
     Return $header + 10
+
+End
+
+Private Function MenuExtractText_Read() As Integer
+
+    Return $header + 11
+
+End
+
+Private Function MenuConvertToHtml_Read() As Integer
+
+    Return $header + 12
 
 End

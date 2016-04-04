@@ -3,10 +3,12 @@
 Inherits NagatoWorkingFile
 
 Property Read IDs As String[]
+Property Read TopId As String
 Property Read BottomId As String
 
 Private $htmlDocument As HtmlDocument
 Private $ids As New String[]
+Private $topId As String
 Private $bottomId As String
 
 Private Function getSafeId(argTag As String) As String
@@ -50,10 +52,19 @@ Private Sub setId(argTargetPath As String)
     
 End
 
+Private Sub setHiddenTopId()
+    
+    Dim yukiElement As New XmlElement("div")
+    
+    $topId = getSafeId("nagato-auto-tag-top-")
+    yukiElement.NewAttribute("id", $topId)
+    $htmlDocument.Body.InsertAfter($htmlDocument.Body.FirstChild, yukiElement)
+    
+End
+
 Private Sub setHiddenBottomId(argTargetPath As String)
     
     $bottomId = getSafeId("nagato-auto-tag-bottom-")
-    
     $htmlDocument.Body.NewElement("div")
     $htmlDocument.Body.LastChild.NewAttribute("id", $bottomId)
     
@@ -66,6 +77,7 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     Exec MikuruPandocCommand.GetPreviewCommand(argSourcePath, argTargetPath) Wait
     
     setId(argTargetPath)
+    setHiddenTopId()
     setHiddenBottomId(argTargetPath)
     
 End
@@ -89,5 +101,11 @@ End
 Private Function BottomId_Read() As String
 
     Return $bottomId
+
+End
+
+Private Function TopId_Read() As String
+
+    Return $topId
 
 End

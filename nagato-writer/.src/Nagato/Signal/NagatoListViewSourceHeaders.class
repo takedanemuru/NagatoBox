@@ -26,7 +26,7 @@ Private Sub initializeListView()
     With $listView
         .Expand = True
         .Foreground = Color.White
-        .Background = Color.Violet
+        .Background = Color.Lighter(Color.Violet)
     End With
     
 End

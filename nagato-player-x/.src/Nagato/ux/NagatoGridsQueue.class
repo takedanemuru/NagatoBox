@@ -60,7 +60,7 @@ Public Sub RefreshRows(argRows As Integer[])
     
 End
 
-Public Sub RefreshSelection(argIndexes As Integer[])
+Private Sub refreshSelection(argIndexes As Integer[])
     
     Dim yukiIndex As Integer
     
@@ -68,7 +68,25 @@ Public Sub RefreshSelection(argIndexes As Integer[])
         Try Me._$grids.Rows[yukiIndex].Selected = True
     Next
     
-    Me._$grids[argIndexes[argIndexes.Max], 0].EnsureVisible()
+End
+
+Public Sub SelectionUp(argIndexes As Integer[])
+    
+    Dim yukiIndexes As Integer[] = argIndexes.Sort()
+    
+    Me.Refresh()
+    refreshSelection(argIndexes)
+    Me._$grids[yukiIndexes[0], 0].EnsureVisible()
+    
+End
+
+Public Sub SelectionDown(argIndexes As Integer[])
+    
+    Dim yukiIndexes As Integer[] = argIndexes.Sort()
+
+    Me.Refresh()
+    refreshSelection(argIndexes)
+    Me._$grids[yukiIndexes[argIndexes.Max], 0].EnsureVisible()
     
 End
 

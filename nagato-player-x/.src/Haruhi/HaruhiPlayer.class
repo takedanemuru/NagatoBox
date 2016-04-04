@@ -3,21 +3,6 @@
 Private $painter As NagatoPainter
 Private $observer As Observer
 
-Public Sub SetMessage(argMessage As String, argDuration As Integer) ' argDuration as Second
-    
-    $painter.SetMessage(argMessage, argDuration)
-    
-End
-
-Public Sub MoveToCurrentDesktop()
-    
-    Dim yukiDesktopWindow As DesktopWindow
-    
-    yukiDesktopWindow = New DesktopWindow(Me.Id)
-    yukiDesktopWindow.Desktop = Desktop.Current
-    
-End
-
 Public Sub Form_Open()
     
     Application.MainWindow = Me
@@ -43,6 +28,8 @@ Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     Select argSignal
         Case MikuruSignal.BroadcastIndexMoved
             Me.Title = NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
+        Case MikuruSignal.BroadcastMessage
+            $painter.SetMessage(argValues[0], argValues[1])
     End Select
     
     $painter.Refresh()

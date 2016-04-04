@@ -7,9 +7,29 @@ Public _$uniqueName As String = "Media"
 Private $tablePlaylistNames As NagatoTablePlaylistNames
 Private $tablePlaylistData As NagatoTablePlaylistData
 
+Private Function getPlaylistNameIdByPlaylistName(argPlaylistName As String) As Integer
+    
+    Dim yukiQuery As String = "playlist_name = &1"
+    Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistNames, yukiQuery, argPlaylistName) 
+
+    Return yukiResult[NagatoDB.Column.Id]
+    
+End
+
 Public Function GetMusicCountInPlaylist(argPlaylistId As Integer) As Integer
     
     Return Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", argPlaylistId).Count
+    
+End
+
+Public Sub DeleteByName(argPlaylistName As String)
+    
+    Dim yukiId As Integer = getPlaylistNameIdByPlaylistName(argPlaylistName)
+    
+    Me._$connection.Delete(Me.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
+    Me._$connection.Delete(Me.Table.PlaylistData, "playlist_name_id = &1", yukiId)
+    
+    NagatoBroadcast(MikuruSignal.BroadcastPlaylistsChanged, Null)
     
 End
 
@@ -23,8 +43,7 @@ End
 
 Public Function GetPathsByPlaylistName(argPlaylistName As String) As String[]
     
-    Dim yukiResultForId As Result = Me._$connection.Find(Me.Table.PlaylistNames, "playlist_name = &1", argPlaylistName)
-    Dim yukiId As Integer = yukiResultForId[NagatoDB.Column.Id]
+    Dim yukiId As Integer = getPlaylistNameIdByPlaylistName(argPlaylistName)
     Dim yukiResult As Result = Me._$connection.Find(Me.Table.PlaylistData, "playlist_name_id = &1", yukiId)
     Dim yukiPaths As New String[]
     

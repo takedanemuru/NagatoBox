@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub MoveMainFormToCurrentDesktop()
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    yukiDesktopWindow = New DesktopWindow(HaruhiPlayer.Id)
+    yukiDesktopWindow.Desktop = Desktop.Current
+    
+End

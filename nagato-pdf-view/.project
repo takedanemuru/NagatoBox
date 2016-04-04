@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.4
 Title=nagato-pdf-view
 Startup=Kyon
 Icon=picture/blue/document.png
-Version=42.1.1
+Version=42.4.2
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -21,7 +21,7 @@ Vendor=The Alien and RadioNoise
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-pdf-view-42.1.1
+PackageName=nagato-pdf-view-42.4.2
 CreateEachDirectory=1
 MimeTypes="application/pdf","application/x-pdf"
 Packager=1
@@ -29,3 +29,5 @@ Systems=ubuntu
 Menus=ubuntu:"Applications/Office"
 Categories=ubuntu:"Nagato;Office"
 Groups=ubuntu:"x11"
+ExtraDependencies=ubuntu:"poppler-utils\t\t"
+ExtraFiles=ubuntu:"nagato-pdf-view.png\t/usr/share/pixmaps\nnagato-pdf-view.desktop\t/usr/share/applications"

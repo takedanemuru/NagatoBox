@@ -109,8 +109,6 @@ Public Sub SetDocument(argPath As String)
     
     $pdfPath = argPath
     $pdfDocument.Open(argPath)
-    Debug $pdfDocument.Info.Layout
-    Debug $pdfDocument.Info.Author 
     $currentPage = 1
     showCurrentPage()
     
@@ -177,6 +175,10 @@ Public Sub MenuBar_MenuEvent(argEvent As Integer)
                 zoomFit()
             Case .ZoomNormal
                 Zoom(1)
+            Case .MenuExtractText
+                Exec ["pdftotext", $pdfPath, User.Home &/ "test_test.txt"]
+            Case .MenuConvertToHtml
+                Exec ["pdftohtml", "-s", $pdfPath, User.Home &/ "test_test.html"]
         End Select
     End With
     

@@ -11,10 +11,10 @@ End
 
 Public Sub _InitializeChildMenus()
     
-    Me._AddMenu(("Delete"), MikuruSignal.ListsDataDelete, "bin")
-        Me._AddMenu("", MikuruSignal.None)
     Me._AddMenu(("Add to queue"), MikuruSignal.ListsDataAdd)
     Me._AddMenu(("Replace queue"), MikuruSignal.ListsDataReplace)
+        Me._AddMenu("", MikuruSignal.None)
+    Me._AddMenu(("Delete"), MikuruSignal.ListsDataDelete, "bin")
     
 End
 

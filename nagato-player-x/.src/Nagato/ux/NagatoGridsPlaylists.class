@@ -73,6 +73,8 @@ Public Sub UserInput_Signal(argSignal As Integer, argValues As Variant[])
             addPaths(True)
         Case MikuruSignal.ListsDataAdd
             addPaths(False)
+        Case MikuruSignal.ListsDataDelete
+            NagatoDBPlaylists.DeleteByName(Me._$grids[Me._$grids.Rows.Selection[0], 0].Text)
         Default
             Raise Signal(argSignal, argValues)
     End Select

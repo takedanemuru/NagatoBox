@@ -32,9 +32,10 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
             $grids.RefreshPlaymark()
         Case MikuruSignal.BroadcastId3TagChanged
             $grids.RefreshRows(argValues)
-        Case MikuruSignal.BroadcastSelectionChanged
-            $grids.Refresh()
-            $grids.RefreshSelection(argValues)
+        Case MikuruSignal.BroadcastSelectionUp
+            $grids.SelectionUp(argValues)
+        Case MikuruSignal.BroadcastSelectionDown
+            $grids.SelectionDown(argValues)
     End Select
     
 End

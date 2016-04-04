@@ -33,3 +33,8 @@ Public Sub _Refresh(argSelection As Integer[])
     
 End
 
+Public Sub _OnRaiseSignal()
+    
+    Raise Signal(MikuruSignal.BroadcastSelectionDown, Me._$newSelection)
+    
+End
