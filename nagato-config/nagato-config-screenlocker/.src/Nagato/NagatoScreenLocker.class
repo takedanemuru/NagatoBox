@@ -75,8 +75,7 @@ End
 
 Private Sub paintNagato()
     
-    Dim yukiPicture As Picture = Picture.Load("Pictures/nagato_yuki_render_3_by_abrufun-d6ufyvo.png")
-    'Dim yukiPicture As Picture = Picture.Load("Pictures/__yuki_nagato___by_tokito_ishida-d5zz3ft.png")
+    Dim yukiPicture As Picture = Picture.Load("Pictures/screenlocker_bg.png")
     
     Paint.DrawPicture(yukiPicture, 0, Max(0, Screen.H - yukiPicture.H))
     

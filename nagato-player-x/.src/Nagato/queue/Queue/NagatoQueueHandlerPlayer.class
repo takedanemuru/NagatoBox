@@ -16,7 +16,6 @@ Private Sub move(argSignal As Integer, argPlayState As Integer)
     
     Me._$player.Stop()
     Me._$musicList(argSignal, Null)
-    Wait 0.1
     Me._$player.ResetUrl(argPlayState = Media.Playing)
     Raise Signal(MikuruSignal.BroadcastIndexMoved, Null)
     

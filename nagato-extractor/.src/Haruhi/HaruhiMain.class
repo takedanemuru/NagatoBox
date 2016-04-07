@@ -80,3 +80,9 @@ Public Sub Asakura_Clear()
     $iconView.SetEmptyView()
     
 End
+
+Public Sub HelpButton_Click()
+
+    HaruhiAbout.ShowDialog()
+
+End

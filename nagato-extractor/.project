@@ -1,30 +1,30 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.4
 Title=nagato-extractor
 Startup=Kyon
 Icon=Pictures/Icons/hard-drive-upload.png
-Version=42.1.1
+Version=42.4.2
 Component=gb.args
 Component=gb.image
-Component=gb.qt4
+Component=gb.gui.qt
 Component=gb.form
 Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
+Component=gb.gui.qt.webkit
 Component=gb.mime
-Component=gb.qt4.ext
 Component=gb.web
-Description="an archiver."
+Description="an archived file extracting tool for NagatoBox."
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
-Language=ja
-Maintainer=takedanemuru
+Language=en
+Maintainer=takeda.nemuru
 Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-extractor-42.1.1
+PackageName=nagato-extractor-42.4.2
 CreateEachDirectory=1
 MimeTypes="application/lha","application/x-compress","application/x-lha","application/x-lha-compressed","application/x-lk-rlestream","application/x-lzh","application/x-unknown-content-type-LhasaArchive","application/x-zip-compressed","application/zip","binary/lzh","application/x-gzip","multipart/x-gzip","multipart/x-zip","application/gzip","application/x-rar-compressed","application/x-rar","application/x-tar","application/x-compressed-tar","application/x-xz-compressed-tar","application/x-bzip","application/x-bzip-compressed-tar"
 Packager=1
@@ -33,3 +33,4 @@ Menus=ubuntu:"Applications/File Management"
 Categories=ubuntu:"Nagato;Utility"
 Groups=ubuntu:"x11"
 ExtraDependencies=ubuntu:"patool\t\t"
+ExtraFiles=ubuntu:"nagato-extractor.desktop\t/usr/share/applications\nnagato-extractor.png\t/usr/share/pixmaps"

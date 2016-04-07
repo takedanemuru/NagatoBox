@@ -14,9 +14,9 @@ Private Sub addDesktopFiles(argPath As String)
     Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
     
     With yukiDesktopFile
-        If yukiDesktopFile.Path = "" Then Return
-        Try $Applications["All"].Add(yukiDesktopFile, yukiDesktopFile.Path)
-        If Not yukiDesktopFile.ShowIn Then Return
+        If .Path = "" Then Return
+        Try $Applications["All"].Add(yukiDesktopFile, .Path)
+        If Not .ShowIn Then Return
         If .HasCategory("Nagato") Then setApplication("Nagato", yukiDesktopFile)
         If .HasCategory("Settings") Then setApplication("Settings", yukiDesktopFile)
         If .HasCategory("Graphics") Then setApplication("Graphics", yukiDesktopFile)

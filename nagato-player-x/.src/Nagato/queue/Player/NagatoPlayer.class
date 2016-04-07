@@ -5,17 +5,13 @@ Inherits NagatoObject
 Property Read State As Integer
 Property SoftwareVolume As Float
 
-Private $player As New MediaPlayer As "Player"
+Private $player As MediaPlayer
 
 Event MusicEnds
 
 Public Sub SetByRate(argRate As Float) 
     
-    Dim yukiPlaying As Boolean = ($player.State = Media.Playing)
-    
-    If yukiPlaying Then $player.Pause()
-    $player.Position = $player.Duration * Min(argRate, 0.999)
-    If yukiPlaying Then $player.Play()
+    $player.Position = $player.Duration * Min(argRate, 1)
     
 End
 
@@ -29,8 +25,8 @@ Catch
 End
 
 Public Sub ResetUrl(Optional argPlay As Boolean = True)
-
-    $player.URL = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)
+    
+    Try $player.URL = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)
     If argPlay Then $player.Play()
     
 End
@@ -56,10 +52,26 @@ Public Function GetDurationData() As NagatoDurationData
     
 End
 
+Public Sub _new()
+    
+    $player = New MediaPlayer As "Player"
+    $player.Pause()
+    
+End
+
 Public Sub Player_AboutToFinish()
     
     Raise MusicEnds
     
+End
+
+Public Sub Player_State()
+    
+    If $player.State <> Media.Playing Or If $player.Duration > 0 Then Return
+    $player = New MediaPlayer As "Player"
+    $player.Stop()
+    Raise MusicEnds
+
 End
 
 Private Function State_Read() As Integer

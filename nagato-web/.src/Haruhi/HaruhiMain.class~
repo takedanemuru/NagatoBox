@@ -66,7 +66,6 @@ End
 Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
     
     $bodyContainer(argSignal, argValues)
-    If argSignal = MikuruSignal.PersonaDelete Then $leftPane(argSignal, argValues)
     refreshTitle()
     
 End

@@ -1,0 +1,9 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+
+    WebViewAbout.HTML = File.Load("Text/nagato-extractor.html")
+    WebViewLicense.HTML = File.Load("Text/SOSLicence.html")
+
+End

@@ -18,7 +18,6 @@ Public Sub _new(argPath As String)
     
 Catch
     $valide = False
-    Return
     
 End
 
@@ -70,7 +69,7 @@ End
 Private Function Path_Read() As String
 
     Return $properties.Path
-
+    
 End
 
 Private Function ShowIn_Read() As Boolean

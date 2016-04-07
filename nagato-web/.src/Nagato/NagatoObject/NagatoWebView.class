@@ -46,7 +46,7 @@ End
 
 Public Sub _new(argContainer As Container, argUrl As String, argUniqueIndex As Integer)
     
-    $webView = New WebView(argContainer) As "WebView"
+    $webView = New WebView(argContainer) 
      
     With $webView
         .Expand = True

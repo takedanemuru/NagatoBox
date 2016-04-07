@@ -8,6 +8,8 @@ Private $names As NagatoDesktopFileNames
 Private $categories2 As New NagatoDesktopFileCategories
 Private $hidden As New NagatoDesktopFileHidden
 
+Private Enum FlagNone, FlagEntry, FlagAction
+
 Public Sub setProperty(argLine As String)
     
     If argLine Begins "Categories=" Then $categories2.SetData(argLine)
@@ -18,7 +20,7 @@ End
 
 Private Sub setPropertyFromDesktopFile(argPath As String)
     
-    Dim yukiFlag As Boolean = False
+    Dim yukiFlag As Integer = FlagNone
     Dim yukiLine As String
     Dim yukiStream As Stream 
     
@@ -26,13 +28,8 @@ Private Sub setPropertyFromDesktopFile(argPath As String)
     
     Do While Not Eof(yukiStream)
         Line Input #yukiStream, yukiLine
-        If yukiLine = "[Desktop Entry]" Then
-            yukiFlag = True
-        Else If yukiLine Begins "[" Then
-            Break
-        Else
-            If yukiFlag Then setProperty(yukiLine)
-        Endif 
+        If yukiLine = "[Desktop Entry]" Then yukiFlag = FlagEntry
+        If yukiFlag = FlagEntry And If yukiLine Not Begins "[" Then setProperty(yukiLine)
     Loop
     
    Close #yukiStream

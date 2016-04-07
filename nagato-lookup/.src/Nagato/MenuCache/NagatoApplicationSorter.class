@@ -7,7 +7,7 @@ Private $collection As New Collection
 
 Private Sub refresh(argCategory As String)
     
-    Dim yukiDesktopFile As Variant
+    Dim yukiDesktopFile As NagatoDesktopFile
     Dim yukiName As String
     
     For Each yukiDesktopFile In NagatoMenuCache3.GetApplications(argCategory)

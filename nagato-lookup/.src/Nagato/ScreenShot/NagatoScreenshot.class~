@@ -19,45 +19,22 @@ Private Sub hasActiveWindow() As Boolean
     
 End
 
-Private Function getScreenshot() As Picture
-    
-    ' very simple, but very unstable...
-    
-    ' Dim yukiActiveWindow As New DesktopWindow(Desktop.ActiveWindow)
-    ' 
-    ' Return yukiActiveWindow.GetScreenshot()
-    
-    Dim yukiRect As New Rect
-    Dim yukiPicture As Picture
-     
-    With MikuruActiveWindow
-        yukiRect.X = .Rectangle.X
-        yukiRect.Y = .Rectangle.Y - .Relative.Y
-        yukiRect.H = .Rectangle.H + .Relative.Y
-        yukiRect.W = .Rectangle.W + 2 * .Relative.X
-    End With
-    ' 
-    yukiPicture = Desktop.Screenshot(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
-    
-    Return yukiPicture
-    
-End
-
 Public Sub Get() 
     
-    If NagatoSettings.OnlyActiveWindow Then
-        If Not hasActiveWindow() Then Return
-        MikuruActiveWindow.Set()
-        With MikuruActiveWindow
-            $screenshot = getScreenshot()
-        End With
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    If NagatoSettingsScreenShooter.OnlyActiveWindow Then
+        yukiDesktopWindow = New DesktopWindow(Desktop.ActiveWindow)
+        $screenshot = yukiDesktopWindow.GetScreenshot(False)
     Else
         $screenshot = Desktop.Screenshot()
     End If
     
-Finally
-    If Error Then $screenshot = Desktop.Screenshot()
-    Raise Ready
+' Finally
+'     If Error Then $screenshot = Desktop.Screenshot()
+'     Raise Ready
+    
+Raise Ready
     
 End
 

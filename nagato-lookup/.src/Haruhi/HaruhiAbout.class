@@ -15,7 +15,7 @@ Public Sub LicenseButton_Click()
         AboutTextLabel.Alignment = Align.Left
     Else
         IconPictureBox.Visible = True
-        AboutTextLabel.Text = Subst$(File.Load("text/SOSLicence"), Application.Version)
+        AboutTextLabel.Text = Subst$(File.Load("text/AboutText"), Application.Version)
         AboutTextLabel.Alignment = Align.Center
     Endif
 

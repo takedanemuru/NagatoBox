@@ -7,6 +7,7 @@ Private Sub initializeButtons()
     
     OpenFilesButton.Picture = MikuruIcon["folder"]
     ClearButton.Picture = MikuruIcon["bin"]
+    HelpButton.Picture = MikuruIcon["question-balloon"]
     
 End
 

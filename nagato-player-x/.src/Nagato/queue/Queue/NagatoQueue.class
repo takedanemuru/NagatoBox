@@ -60,6 +60,7 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.BroadcastIndexMoved
             $handlerProperties.Reload()
+            Print "YUKI.N > Next tune is ... " & $musicList.GetProerty(MikuruProperty.CurrentTitle)
         Case MikuruSignal.BroadcastQueueChanged
             If Not argValues Then $handlerProperties.Reload()
             $handlerList.SaveCurrentQueue()

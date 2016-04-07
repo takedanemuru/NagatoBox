@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.4
 Title=nagato-config-screenlocker
 Startup=Kyon
-Icon=Pictures/shield.png
-Version=42.1.1
+Icon=Pictures/Icons/equalizer.png
+Version=42.4.3
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -25,7 +25,7 @@ Maintainer=takedanemuru
 Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 License=S.O.S. License
-PackageName=nagato-config-screenlocker-42.1.1
+PackageName=nagato-config-screenlocker-42.4.3
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
@@ -33,4 +33,4 @@ Menus=ubuntu:"Screen/Saving"
 Categories=ubuntu:"Nagato;System"
 Groups=ubuntu:"x11"
 ExtraDependencies=ubuntu:"xautolock\t\t\ni3lock\t\t"
-ExtraFiles=ubuntu:"nagato-screenlock-now.desktop\t/usr/share/applications"
+ExtraFiles=ubuntu:"nagato-config-screenlocker.desktop\t/usr/share/applications\nnagato-config-screenlocker.png\t/usr/share/pixmaps\nnagato-screenlocker.desktop\t/usr/share/applications\nnagato-screenlocker.png\t/usr/share/pixmaps"

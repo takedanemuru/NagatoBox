@@ -1,0 +1,24 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,57.1429,64)
+  Arrangement = Arrange.Fill
+  { TabStrip1 TabStrip
+    MoveScaled(0,18,47,43)
+    Expand = True
+    Arrangement = Arrange.Fill
+    Count = 2
+    Index = 0
+    Text = ("About")
+    { WebViewAbout WebView
+      MoveScaled(0,0,45,32)
+      Expand = True
+    }
+    Index = 1
+    Text = ("License")
+    { WebViewLicense WebView
+      MoveScaled(2,4,39,31)
+    }
+    Index = 0
+  }
+}

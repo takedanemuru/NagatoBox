@@ -44,6 +44,9 @@ Public Sub _call(argEvent As Integer, argArguments As Variant[])
             If argArguments[0] <> $webs.Active.Index Then Return
             $webs.Tabs.ShowByIndex($webs.Active.Index)
             $menubar.SetUrl(argArguments[1])
+            $menubar.SetNavigationButton(argArguments[3])
+        Case MikuruSignal.WebLoaded
+            $webs.Tabs.ShowByIndex($webs.Active.Index)
             $menubar.SetNavigationButton($webs.Active.History)
         Case MikuruSignal.InPageSearchQuery
             $webs.Active.InPageSearch(argArguments[0])

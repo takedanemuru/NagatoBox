@@ -36,7 +36,7 @@ End
 
 Public Sub Asakura_Load()
     
-    Me.Asakura_Progress()
+    Raise Signal(MikuruSignal.WebLoaded, Null)
     
 End
 

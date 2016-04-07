@@ -25,6 +25,11 @@
 
 + ~~new : new desktop entry file~~
 
+### nagato-config-screenlocker (v42.4.3)
+
++ ~~new : new desktop entry file~~
++ ~~new : new icons~~
+
 ### nagato-dbus-finder (v42.4.6)
 
 + ~~new : new desktop entry file~~
