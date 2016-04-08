@@ -6,7 +6,6 @@ Property Read WorkingFileAbsolute As String
 Property Read WorkingFileWebpage As String
 Property Read WorkingFileStandAloneHtml As String
 Property Read IDs As String[]
-Property Read TopId As String
 Property Read BottomId As String
 
 Private $sourceText As String
@@ -69,11 +68,5 @@ Private Function WorkingFileStandAloneHtml_Read() As String
     $workingPathStandAloneHtml.Set($sourceText)
     
     Return $workingPathStandAloneHtml.WorkingPath
-
-End
-
-Private Function TopId_Read() As String
-
-    Return $workingPathAbsolute.TopId
 
 End

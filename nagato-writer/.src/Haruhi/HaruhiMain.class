@@ -55,7 +55,7 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
         Case MikuruSignal.ViewMoveToBottom
             $previewer.MoveToTag(MikuruHtmlConverter.BottomId)
         Case MikuruSignal.ViewMoveTag
-            If argArgs[0] = -1 Then $previewer.MoveToTag(MikuruHtmlConverter.TopId)
+            If argArgs[0] = -1 Then $previewer.MoveToTag("<body>") ' move to top of page.
             If argArgs[0] >= 0 Then Try $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
         Case MikuruSignal.EditNone To MikuruSignal.EditNone + 999
             $sourceEditor.EditEvent(argEvent, argArgs)

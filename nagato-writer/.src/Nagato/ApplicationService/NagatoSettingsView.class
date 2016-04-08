@@ -36,7 +36,7 @@ End
 
 Private Function CssIndex_Read() As Integer
 
-    Return Me._$settings["preview/css", NagatoValueListCssPreview.StyleLight] 
+    Return Me._$settings["preview/css", 1] 
 
 End
 

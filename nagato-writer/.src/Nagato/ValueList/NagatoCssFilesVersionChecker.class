@@ -1,0 +1,33 @@
+' Gambas class file
+
+Private Const FileName As String = "version.txt"
+
+Private $directory As String
+
+Private Sub clearAll()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir($directory)
+        Kill $directory &/ yukiPath
+    Next
+    
+End
+
+Public Sub Check()
+    
+    If Not Exist($directory &/ FileName) Then 
+        clearAll()
+    Else If File.Load($directory &/ FileName) Then
+        clearAll()
+    End If
+    
+    File.Save($directory &/ FileName, Application.Version)
+    
+End
+
+Public Sub _new(argDirectory As String)
+    
+    $directory = argDirectory
+    
+End

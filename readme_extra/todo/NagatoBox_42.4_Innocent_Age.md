@@ -102,11 +102,12 @@
 
 + ~~new : new desktop entry file~~
 
-### nagato-writer (v42.4.31)
+### nagato-writer (v42.4.32)
 
 + ~~new : new desktop entry file~~
 + ~~get file name from first line of document on the first saving.~~
 + ~~new : hidden div tag for html preview~~
++ ~~new : new css themes~~
 
 ## dataoverminds
 

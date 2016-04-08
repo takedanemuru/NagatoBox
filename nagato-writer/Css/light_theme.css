@@ -5,7 +5,7 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: white;
-	color: #9953DF;
+  color: #9953DF;
   padding: 30px; }
 
 body > *:first-child {
@@ -36,7 +36,6 @@ h1, h2, h3, h4, h5, h6 {
   position: relative; }
 
 h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
-  background: url("images/para.png") no-repeat 10px center;
   text-decoration: none; }
 
 h1 tt, h1 code {

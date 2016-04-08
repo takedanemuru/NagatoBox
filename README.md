@@ -1,5 +1,7 @@
 # NagatoBox
 
+a software suite for Openbox3.
+
 ## What is this ?
 
 a software suite for openbox3.

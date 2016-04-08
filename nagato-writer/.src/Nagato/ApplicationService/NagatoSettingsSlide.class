@@ -9,7 +9,7 @@ Property Engine As Integer
 
 Private Function Theme_Read() As Integer
 
-    Return Me._$settings["slide/theme", NagatoValueListCssPreview.StyleLight]
+    Return Me._$settings["slide/theme", 1]
 
 End
 

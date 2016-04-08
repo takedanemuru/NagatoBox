@@ -2,7 +2,7 @@
 
 Inherits NagatoSubMenu
 
-Private Function getIconName(argTag As Integer) As Variant
+Private Function getIcon(argTag As Integer) As Variant
     
     Return IIf(argTag = NagatoSettingsView.CssIndex, "button-check", Null)
     
@@ -10,11 +10,11 @@ End
 
 Public Sub _AddChildMenus()
     
-    With NagatoValueListCssPreview
-        Me._AddMenu("GitHub Style", .StyleGitHub, getIconName(.StyleGitHub))
-        Me._AddMenu("Dark Theme", .StyleDark, getIconName(.StyleDark))
-        Me._AddMenu("Light Theme", .StyleLight, getIconName(.StyleLight))
-    End With
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To NagatoValueListCssPreview.Max
+        Me._AddMenu(NagatoValueListCssPreview.Names[yukiIndex], yukiIndex, getIcon(yukiIndex))
+    Next
     
 End
 

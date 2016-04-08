@@ -3,12 +3,11 @@
 Inherits NagatoValueList
 
 Property Read Directory As String
-Property Read ImageDirectory As String
 Property Read Current As String
 
-Public Enum StyleGitHub, StyleLight, StyleDark
-
 Public _$themes As String[]
+
+Private $checker As NagatoCssFilesVersionChecker
 
 Private Sub ensureFile(argDirectory As String, argFile As String)
     
@@ -48,10 +47,8 @@ End
 Public Sub EnsureCssData()
     
     ensureDirectory(Me.Directory)
-    ensureDirectory(Me.ImageDirectory)
-    
-    Try Copy "Css/para.png" To Me.ImageDirectory &/ "para.png"
-    Try Copy "Css/dirty-shade.png" To Me.ImageDirectory &/ "dirty-shade.png"
+    $checker = New NagatoCssFilesVersionChecker(Me.Directory)
+    $checker.Check()
     
     NagatoValueListCssPreview.EnsureCssData()
     NagatoValueListCssSlide.EnsureCssData()
@@ -62,12 +59,6 @@ End
 Private Function Directory_Read() As String
 
     Return User.Home &/ ".nagato-writer"
-
-End
-
-Private Function ImageDirectory_Read() As String
-
-    Return Me.Directory &/ "images"
 
 End
 
