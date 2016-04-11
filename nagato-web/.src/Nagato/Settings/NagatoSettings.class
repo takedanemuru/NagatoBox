@@ -5,6 +5,8 @@ Inherits NagatoSettingsCore
 Property HomePage As String
 Property DownloadDirectory As String
 Property ShowFavicon As Boolean
+Property PluginsEnabled As Boolean
+Property JavaScriptEnabled As Boolean
 
 Private Function HomePage_Read() As String
 
@@ -41,6 +43,32 @@ End
 Private Sub ShowFavicon_Write(Value As Boolean)
 
     Me._$settings["web/show_favicon"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function PluginsEnabled_Read() As Boolean
+
+    Return Me._$settings["web/plugins_enabled", True]
+
+End
+
+Private Sub PluginsEnabled_Write(Value As Boolean)
+
+    Me._$settings["web/plugins_enabled"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function JavaScriptEnabled_Read() As Boolean
+
+    Return Me._$settings["web/javascript_enabled", True]
+
+End
+
+Private Sub JavaScriptEnabled_Write(Value As Boolean)
+
+    Me._$settings["web/javascript_enabled"] = Value
     Me._$settings.Save()
 
 End

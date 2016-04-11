@@ -8,6 +8,7 @@ Property Read Path As String
 
 Private $headers As New NagatoSourceHeaders
 Private $buffer As New NagatoFileBufferHandler
+Private $appClosure As New NagatoAppClosure As "TFEI"
 
 Public Function GetHeaderIndex(argLine As Integer) As Integer
     
@@ -35,12 +36,10 @@ End
 
 Public Function Open() As Boolean
     
-    If $buffer.Open() Then
-        $headers.Refresh($buffer.Text)
-        Return True
-    Else
-        Return False
-    Endif
+    If Not $buffer.Open() Then Return False
+
+    $headers.Refresh($buffer.Text)
+    Return True
     
 End
 
@@ -63,15 +62,7 @@ Public Function EnsureSaved(argText As String) As Boolean
     
     If argText = $buffer.Text Then Return True
     
-    Select Case HaruhiDialogClose.ShowDialog()
-        Case HaruhiDialogClose.ResponseCancel
-            Return False
-        Case HaruhiDialogClose.ResponseDiscard
-            Return True
-        Case HaruhiDialogClose.ResponseSave
-            Raise Signal(MikuruSignal.FileSave, Null)
-            Return True
-    End Select
+    Return IIf($appClosure.GetStatus() <> HaruhiDialogClose.ResponseCancel, True, False)
     
 End
 

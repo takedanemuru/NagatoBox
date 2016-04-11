@@ -4,12 +4,14 @@ body {
   line-height: 1.6;
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: white;
-  color: #FF7FFF;
-  padding: 30px; }
+    background-color: #403F3B;
+  color: #F1F1F1;
+  padding: 30px; 
+ }
 
 body > *:first-child {
   margin-top: 0 !important; }
+
 body > *:last-child {
   margin-bottom: 0 !important; }
 
@@ -57,55 +59,44 @@ h6 tt, h6 code {
   font-size: inherit; }
 
 h1 {
-    font-size: 28px;
-    color: #FF9FFF; 
-    border-bottom: 1px solid #cccccc;
-  /*background-color: #FF9FFF;*/
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  /*border: 1px solid #000;*/
-    padding: 10px;
-  }
+  font-size: 28px;
+  border-bottom: 1px solid #FF4FFF;
+  color: #FF7FFF; }
 
 h2 {
   font-size: 24px;
-  color: white; 
-  background-color: #FF9FFF;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  /*border: 1px solid #000;*/
-  padding: 10px;
-  }
+  border-bottom: 1px solid #FF4FFF;
+  color: #FF7FFF; }
 
 h3 {
-  color: yellow;
+  color: #FF7FFF;
   font-size: 18px; }
 
 h4 {
-  color: yellow;
+  color: #FF7FFF;
   font-size: 16px; }
 
 h5 {
-  color: yellow;
+  color: #FF7FFF;
   font-size: 14px; }
 
 h6 {
-    color: #777777;
+    color: #FF7FFF;
     font-size: 14px; }
 
 p, blockquote, ul, ol, dl, li {
-    color: #F1F1F0;
+    color: #BBBCBF;
     margin: 15px 0; }
 
 table, pre, code {
-    color: #403F3B;
+    color: #BBBCBF;
     margin: 15px 0; }
-    
+
 hr{
     border:none;
-    border-top:solid 1px #CCC;
+    border-top:solid 1px #FF4FFF;
     height:1px;
-    color:yellow;
+    color:#FF4FFF;
     margin: 0 6 0 6;
 }
 
@@ -179,15 +170,17 @@ table {
   
 table tr {
     border-top: 1px solid #cccccc;
-    color: white;
-    background-color: #DFD861;
+    background-color: white;
     margin: 0;
     padding: 0; }
     
+    table tr:nth-child(2n) {
+		background-color: #FFDFFF; }
+		
     table tr th {
       font-weight: bold;
-      background-color: #716E31;
-      color: yellow;
+      background-color: #FF7FFF;
+      color: white;
       border: 1px solid #cccccc;
       text-align: left;
       margin: 0;

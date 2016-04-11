@@ -12,6 +12,16 @@ Property ShowStatusPanel As Boolean
 Event RequestReload
 Event ToggleStatusPanel
 
+Private Sub resetProperty(argProperty As String, Value As Variant)
+    
+    If Me._$settings[argProperty] = Value Then Return
+
+    Me._$settings[argProperty] = Value
+    Me._$settings.Save()
+    Raise RequestReload
+    
+End
+
 Private Function Syntax_Read() As String
 
     Return NagatoValueListSyntax.Values[Me.SyntaxIndex]
@@ -26,27 +36,19 @@ End
 
 Private Sub SyntaxIndex_Write(Value As Integer)
 
-    If Me._$settings["markdown/syntax_index"] <> Value Then
-        Me._$settings["markdown/syntax_index"] = Value
-        Me._$settings.Save()
-        Raise RequestReload
-    End If
+    resetProperty("markdown/syntax_index", Value)
 
 End
 
 Private Function CssIndex_Read() As Integer
 
-    Return Me._$settings["preview/css", 1] 
+    Return Me._$settings["preview/css", 1] ' 1 means LightTheme.Css
 
 End
 
 Private Sub CssIndex_Write(Value As Integer)
 
-    If Me._$settings["preview/css"] <> Value Then
-        Me._$settings["preview/css"] = Value
-        Me._$settings.Save()
-        Raise RequestReload
-    End If
+    resetProperty("preview/css", Value)
 
 End
 
@@ -58,11 +60,7 @@ End
 
 Private Sub TabSizeIndex_Write(Value As Integer)
 
-    If Me._$settings["editor/tab_size_index"] <> Value Then
-        Me._$settings["editor/tab_size_index"] = Value
-        Me._$settings.Save()
-        Raise RequestReload
-    End If
+    resetProperty("editor/tab_size_index", Value)
 
 End
 
@@ -80,10 +78,10 @@ End
 
 Private Sub ShowStatusPanel_Write(Value As Boolean)
 
-    If Me._$settings["editor/show_statuspanel"] <> Value Then
-        Me._$settings["editor/show_statuspanel"] = Value
-        Me._$settings.Save()
-        Raise ToggleStatusPanel
-    End If
+    If Me._$settings["editor/show_statuspanel"] = Value Then Return
+
+    Me._$settings["editor/show_statuspanel"] = Value
+    Me._$settings.Save()
+    Raise ToggleStatusPanel
 
 End

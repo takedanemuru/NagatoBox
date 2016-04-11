@@ -1,0 +1,65 @@
+' Gambas class file
+
+Property Read Ids As String[]
+Property Read BottomId As String
+
+Private $ids As New String[]
+Private $bottomId As String
+
+Private Function getSafeId(argTag As String) As String
+    
+    Dim yukiNumber As Integer = 0
+    Dim yukiTag As String
+    
+    If Not $ids.Exist(argTag) And If argTag Then Return argTag
+    
+    Do
+        yukiTag = IIf(argTag, argTag, "nagato-auto-tag-") & CString(yukiNumber)
+        If Not $ids.Exist(yukiTag) Then Return CString(yukiTag)
+        Inc yukiNumber
+    Loop
+    
+End
+
+Private Sub parseIds(argXmlElements As XmlElement[])
+    
+    Dim yukiIndex As Integer
+    Dim yukiId As String
+    
+    For yukiIndex = 0 To argXmlElements.Count - 1
+        yukiId = getSafeId(argXmlElements[yukiIndex].GetAttribute("id"))
+        argXmlElements[yukiIndex].SetAttribute("id", yukiId)
+        $ids.Add(yukiId)
+    Next
+    
+End
+
+Private Sub parseDocument(argHtmlDocument As HtmlDocument)
+    
+    Dim yukiTag As String
+    
+    For Each yukiTag In ["h1", "h2", "h3", "h4", "h5", "h6"]
+        parseIds(argHtmlDocument.GetElementsByTagName(yukiTag))
+    Next
+
+End
+
+Public Sub Refresh(argHtmlDocument As HtmlDocument)
+    
+    $ids.Clear()
+    parseDocument(argHtmlDocument)
+    $bottomId = getSafeId("nagato-auto-tag-bottom-")
+    
+End
+
+Private Function Ids_Read() As String[]
+
+    Return $ids
+
+End
+
+Private Function BottomId_Read() As String
+
+    Return $bottomId
+
+End

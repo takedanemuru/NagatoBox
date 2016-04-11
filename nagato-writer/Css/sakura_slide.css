@@ -1,3 +1,7 @@
+<style>
+html {background-color:#403F3B;
+}
+
 body {
     font-family: Helvetica, arial, sans-serif;
     font-size: 14px;
@@ -5,20 +9,13 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #403F3B;
-    color: white;
-    width: 640px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 30px;
-}
+    color: #F1F1F1;
+    padding: 30px; }
 
 body > *:first-child {
-    margin-top: 0 !important; 
-}
-
+  margin-top: 0 !important; }
 body > *:last-child {
-  margin-bottom: 0 !important;
-}
+  margin-bottom: 0 !important; }
 
 a {
   color: #4183C4; }
@@ -35,13 +32,12 @@ a.anchor {
   bottom: 0; }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 20px 0 10px;
-    padding: 0;
-    font-weight: bold;
-    -webkit-font-smoothing: antialiased;
-    cursor: text;
-    position: relative; 
-}
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
 
 h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
   text-decoration: none; }
@@ -66,45 +62,42 @@ h6 tt, h6 code {
 
 h1 {
   font-size: 28px;
-  border-bottom: 1px solid #cccccc;
-  color: yellow; }
+  border-bottom: 1px solid #FF4FFF;
+  color: #FF7FFF; }
 
 h2 {
   font-size: 24px;
-  border-bottom: 1px solid #cccccc;
-  color: #AF5FFF; }
+  border-bottom: 1px solid #FF4FFF;
+  color: #FF7FFF; }
 
 h3 {
-  color: #AF5FFF;
+  color: #FF7FFF;
   font-size: 18px; }
 
 h4 {
-  color: #AF5FFF;
+  color: #FF7FFF;
   font-size: 16px; }
 
 h5 {
-  color: #AF5FFF;
+  color: #FF7FFF;
   font-size: 14px; }
 
 h6 {
-    color: #777777;
-    font-size: 14px; }
+  color: #777777;
+  font-size: 14px; }
 
 p, blockquote, ul, ol, dl, li {
-    color: #F1F1F0;
+    color: #BBBCBF;
     margin: 15px 0; }
 
 table, pre, code {
-    color: #403F3B;
-    margin: 15px 0; }
+  color: #BBBCBF;
+  margin: 15px 0; }
 
-hr{
-    border:none;
-    border-top:solid 1px #CCC;
-    height:1px;
-    color:#FFFFFF;
-    margin: 0 6 0 6;
-}
+hr {
+  color: #FF4FFF;
+  border-bottom: 4px solid #FF4FFF;
+  padding: 0; }
 
 body > h2:first-child {
   margin-top: 0;
@@ -130,7 +123,9 @@ li p.first {
   display: inline-block; }
 
 ul, ol {
-  padding-left: 30px; }
+  margin: 0 0 0 1em;
+  padding-left: 30px; 
+  }
 
 ul :first-child, ol :first-child {
   margin-top: 0; }
@@ -164,7 +159,6 @@ blockquote {
   border-left: 4px solid #dddddd;
   padding: 0 15px;
   color: #AF5FFF;}
-
   blockquote > :first-child {
     margin-top: 0; }
   blockquote > :last-child {
@@ -172,36 +166,45 @@ blockquote {
 
 table {
   border-collapse: collapse;
+  width: 100%;
   padding: 0; }
-  
-table tr {
+  table tr {
     border-top: 1px solid #cccccc;
     background-color: white;
     margin: 0;
     padding: 0; }
-    
+
     table tr:nth-child(2n) {
-      background-color: #DFD861; }
-		
-    table tr th {
+      background-color: #FFDFFF; 
+    }
+    
+  table tr th {
       font-weight: bold;
-      background-color: #DFD861;
+      background-color: #FF7FFF;
       color: white;
       border: 1px solid #cccccc;
       text-align: left;
       margin: 0;
-      padding: 6px 13px; }
+      padding: 6px 13px;
+      }
+    
     table tr td {
       border: 1px solid #cccccc;
       text-align: left;
       margin: 0;
-      padding: 6px 13px; }
+      padding: 6px 13px; 
+    }
+    
     table tr th :first-child, table tr td :first-child {
       margin-top: 0; }
     table tr th :last-child, table tr td :last-child {
       margin-bottom: 0; }
 
 img {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 75%;
   max-width: 100%; }
 
 span.frame {
@@ -300,3 +303,4 @@ pre {
   pre code, pre tt {
     background-color: transparent;
     border: none; }
+</style>

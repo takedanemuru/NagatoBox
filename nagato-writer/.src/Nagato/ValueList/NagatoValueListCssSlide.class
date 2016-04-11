@@ -2,13 +2,13 @@
 
 Inherits NagatoValueListCss
 
-Public _$count As Integer = 4
+Public _$count As Integer = 6
 Public _$values As Variant[] 
-Public _$names As String[] = [("GitHub Style"), ("Light Theme"), ("Dark Theme"), 
-                                                ("Nagato Theme")]
+Public _$names As String[] = [("GitHub Style"), ("Light Theme"), ("Ocean"),
+                                                ("Dark Theme"), ("Nagato Theme"), ("Sakura")]
 
-Public _$themes As String[] = ["github_slide.css", "light_slide.css", "dark_slide.css", 
-                                                "nagato_slide.css"]
+Public _$themes As String[] = ["github_slide.css", "light_slide.css", "ocean_slide.css",
+                                                "dark_slide.css", "nagato_slide.css", "sakura_slide.css"]
 
 Public Sub EnsureCssData()
     

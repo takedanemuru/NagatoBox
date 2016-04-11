@@ -6,56 +6,19 @@ Property Read IDs As String[]
 Property Read BottomId As String
 
 Private $htmlDocument As HtmlDocument
-Private $ids As New String[]
-Private $bottomId As String
+Private $tags As New NagatoHtmlTags
 
-Private Function getSafeId(argTag As String) As String
-    
-    Dim yukiNumber As Integer = 0
-    Dim yukiTag As String
-    
-    If Not $ids.Exist(argTag) And If argTag Then Return argTag
-    
-    Do
-        yukiTag = IIf(argTag, argTag, "nagato-auto-tag-") & CString(yukiNumber)
-        If Not $ids.Exist(yukiTag) Then Return CString(yukiTag)
-        Inc yukiNumber
-    Loop
-    
-End
-
-Private Sub parseIds(argXmlElements As XmlElement[])
-    
-    Dim yukiIndex As Integer
-    Dim yukiId As String
-    
-    For yukiIndex = 0 To argXmlElements.Count - 1
-        yukiId = getSafeId(argXmlElements[yukiIndex].GetAttribute("id"))
-        argXmlElements[yukiIndex].SetAttribute("id", yukiId)
-        $ids.Add(yukiId)
-    Next
-    
-End
-
-Private Sub setId(argTargetPath As String)
-    
-    Dim yukiTag As String
+Private Sub setIds(argTargetPath As String)
     
     $htmlDocument = New HtmlDocument(argTargetPath)
-    $ids.Clear()
-    
-    For Each yukiTag In ["h1", "h2", "h3", "h4", "h5", "h6"]
-        parseIds($htmlDocument.GetElementsByTagName(yukiTag))
-    Next
+    $tags.Refresh($htmlDocument)
     
 End
 
 Private Sub setHiddenBottomId(argTargetPath As String)
     
-    $bottomId = getSafeId("nagato-auto-tag-bottom-")
     $htmlDocument.Body.NewElement("div")
-    $htmlDocument.Body.LastChild.NewAttribute("id", $bottomId)
-    
+    $htmlDocument.Body.LastChild.NewAttribute("id", $tags.BottomId)
     File.Save(argTargetPath, $htmlDocument.Content)
     
 End
@@ -64,7 +27,7 @@ Private Sub convert(argSourcePath As String, argTargetPath As String)
     
     Exec MikuruPandocCommand.GetPreviewCommand(argSourcePath, argTargetPath) Wait
     
-    setId(argTargetPath)
+    setIds(argTargetPath)
     setHiddenBottomId(argTargetPath)
     
 End
@@ -81,12 +44,12 @@ End
 
 Private Function IDs_Read() As String[]
 
-    Return $ids
+    Return $tags.Ids
 
 End
 
 Private Function BottomId_Read() As String
 
-    Return $bottomId
+    Return $tags.BottomId
 
 End
