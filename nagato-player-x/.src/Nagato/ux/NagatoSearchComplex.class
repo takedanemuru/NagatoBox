@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $comboBox As ComboBox
+Private $buttonBox As ButtonBox
+
+Private Sub initializeComboBox(argContainer As Container)
+    
+    $comboBox = New ComboBox(argContainer)
+    
+    With $comboBox
+        .List = [("Title"), ("Artist"), ("Album")]
+        .Border = False
+        .ReadOnly = True
+        .Index = 0
+        .W = 120
+    End With
+    
+End
+
+Private Sub initializeButtonBox(argContainer As Container)
+    
+    $buttonBox = New ButtonBox(argContainer) As "ButtonBox"
+    
+    With $buttonBox
+        .W = 240
+        .Border = True
+        .Picture = MikuruIcon.Get("search")
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeComboBox(argContainer)
+    initializeButtonBox(argContainer)
+    
+End
+
+Public Sub ButtonBox_Click()
+    
+    Me.ButtonBox_Activate()
+    
+End
+
+Public Sub ButtonBox_Activate()
+    
+    Raise Signal(MikuruSignal.LibrarySearch, [$comboBox.Index, $buttonBox.Text])
+    
+End

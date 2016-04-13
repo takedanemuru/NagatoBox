@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $rootMenu As Menu
+Private $primaryPath As String
+Private $paths As String[]
+
+Private Sub addMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon[argIconName]
+    End With
+    
+End
+
+Private Sub initializeChildMenus()
+    
+    Object.New("NagatoMenuFile", [$rootMenu, $primaryPath])
+        addMenuItem("", 0) ' as spacer
+    addMenuItem(("Rename"), 0, "button-rotate-cw")
+        addMenuItem("", 0) ' as spacer
+    addMenuItem(("Delete"), 0, "bin")
+    
+End
+
+Public Sub PopUp(argPrimaryPath As String, argPaths As String[])
+    
+    $primaryPath = argPrimaryPath
+    $paths = argPaths
+    $rootMenu.Children.Clear()
+    initializeChildMenus()
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new()
+    
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    
+    MikuruMenuDummy($rootMenu)
+    
+End

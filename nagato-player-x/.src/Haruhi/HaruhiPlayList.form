@@ -13,7 +13,7 @@
       MoveScaled(0,0,79,43)
       Expand = True
       Arrangement = Arrange.Vertical
-      Count = 2
+      Count = 3
       Index = 0
       Text = ("Now playing")
       Picture = Picture["Pictures/button-play.png"]
@@ -37,6 +37,19 @@
         MoveScaled(2,0,74,4)
       }
       { PlaylistsGrid GridView
+        MoveScaled(0,5,77,31)
+        Expand = True
+        Mode = Select.Multiple
+        Grid = False
+        Header = GridView.Horizontal
+      }
+      Index = 2
+      Text = ("Library")
+      Picture = Picture["Pictures/icons/database.png"]
+      { MenuPanelLibrary HBox
+        MoveScaled(2,0,74,4)
+      }
+      { LibraryGrid GridView
         MoveScaled(0,5,77,31)
         Expand = True
         Mode = Select.Multiple

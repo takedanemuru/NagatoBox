@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoPulldownMenu
+
+Public Sub _OnRefreshChildMenus()
+    
+    Me._AddMenuItem(("Toggle Extra"), MikuruSignal.AppToggleExtra)
+        Me._AddMenuItem("", 0)
+    Me._AddMenuItem(("About"), 0, MikuruIcon["star"])
+    Me._AddMenuItem(("Quit"), 0, MikuruIcon["button-power"])
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    Select Case Last.Tag
+        Case MikuruSignal.AppToggleExtra
+            Raise Signal(Last.Tag, Null)
+    End Select
+    
+End

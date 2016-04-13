@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoMenuBar
+
+Private Sub addSearchComplex()
+    
+    Dim yukiSearchComplex As NagatoSearchComplex
+    
+    yukiSearchComplex = New NagatoSearchComplex(Me._$container) As "TFEI"
+    
+End
+
+Public Sub _OnInitialize() 'override
+
+        Me._AddPanel()
+    addSearchComplex()    
+    Object.New("NagatoStarButtonPlaylists", [Me._$container])
+    
+End

@@ -1,0 +1,28 @@
+' Gambas class file
+
+Private $path As New String[]
+
+Public Sub Clear()
+    
+    $path.Clear()
+    
+End
+
+Public Sub Add(argPath As String)
+    
+    $path.Add(argPath)
+    
+End
+
+Public Sub GetPaths(argIndexes As Integer[]) As String[]
+    
+    Dim yukiIndex As Integer
+    Dim yukiPaths As New String[]
+    
+    For Each yukiIndex In argIndexes.Sort(gb.Natural)
+        yukiPaths.Add($path[yukiIndex])
+    Next
+    
+    Return yukiPaths
+    
+End

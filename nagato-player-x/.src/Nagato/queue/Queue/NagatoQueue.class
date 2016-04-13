@@ -36,7 +36,7 @@ Public Sub ChangeCoverArtByIndexes(argIndexes As Integer[], argCoverArtPath As S
     
     If Not argIndexes.Exist($musicList.GetProerty(MikuruProperty.CurrentIndex)) Then Return
     $handlerProperties.Reload()
-    Raise Broadcast(MikuruSignal.BroadcastStateChanged, Null)
+    NagatoBroadcast(MikuruSignal.BroadcastStateChanged, Null)
     
 End
 

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$button As MenuButton
+
+Public Sub _OnInitializeButton()
+    
+    
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    
+    
+End
+
+Public Sub _OnClickMenuButton()
+    
+    
+    
+End
+
+Public Sub _OnInitialize(argContainer As Container)
+    
+    Me._$button = New MenuButton(argContainer) As "MenuButton"
+    
+    With Me._$button
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+    End With
+    
+    Me._OnInitializeButton()
+    Me._OptionalOnInitializePulldownMenu()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Me._OnClickMenuButton()
+    
+End

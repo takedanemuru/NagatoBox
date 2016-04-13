@@ -20,6 +20,9 @@ Public Enum ListsDataHeader = 4000
 Public Enum ListsDataDelete = 4001, ListsDataAdd = 4002, ListsDataReplace = 4003
 Public Enum ListsDataEdit = 4004
 
+Public Enum LibraryHeader = 5000
+Public Enum LibrarySearch = 5001
+
 Public Enum BroadcastNone = 8000
 Public Enum BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
 Public Enum BroadcastQueueChanged = 8003, BroadcastPlaylistsChanged = 8004

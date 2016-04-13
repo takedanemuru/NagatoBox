@@ -1,0 +1,71 @@
+' Gambas class file
+
+Inherits NagatoGrids
+
+Private $handlerUserInput As NagatoGridViewHandlerUserInputLibrary
+Private $paths As NagatoLibraryPaths
+
+Private Sub setRow(argResult As Result)
+    
+    If Not Exist(argResult[NagatoDBMedia.Column.Path]) Then Return
+    Inc Me._$grids.Rows.Count
+    $paths.Add(argResult[NagatoDBMedia.Column.Path])
+    Me._$grids[Me._$grids.Rows.Max, 1].Text = argResult[NagatoDB.Column.Title]
+    Me._$grids[Me._$grids.Rows.Max, 2].Text = argResult[NagatoDB.Column.Artist]
+    Me._$grids[Me._$grids.Rows.Max, 3].Text = argResult[NagatoDB.Column.Album]
+    Me._$grids[Me._$grids.Rows.Max, 4].Text = MikuruFloatToTime(argResult[NagatoDB.Column.Duration])
+    Me._$grids[Me._$grids.Rows.Max, 4].Alignment = Align.Right
+    
+End
+
+Private Sub setRows(argResult As Result)
+    
+    'Dim yukiResult As Result = 
+    
+    $paths.Clear()
+    Me._$grids.Clear()
+    Me._$grids.Rows.Count = 0
+    
+    For Each argResult
+        setRow(argResult)
+    Next
+    
+    Me._SetBackgroundStripe(16763778)
+    
+End
+
+Private Sub ensurelibrary() ' for test only
+    
+    Dim yukiDirectory As String = Desktop.GetDirectory("MUSIC")
+    Dim yukiPath As String
+    Dim yukiCount As Integer
+    
+    For Each yukiPath In RDir(yukiDirectory)
+        If DesktopMime.FromFile(yukiDirectory &/ yukiPath).Type Not Begins "audio" Then Continue
+        NagatoDBMedia.EnsureLibrary(yukiDirectory &/ yukiPath)
+    Next
+    
+End
+
+Public Sub RefreshWithQuery(argResult As Result)
+    
+    setRows(argResult)
+    
+End
+
+Public Sub _InitializeGrids()
+    
+    'ensurelibrary()
+    
+    Me._SetColumns("", ("Name"), ("Artist"), ("Album"), ("Duration"))
+    $paths = New NagatoLibraryPaths
+    setRows(NagatoDBMedia.GetAllResult())
+    $handlerUserInput = New NagatoGridViewHandlerUserInputLibrary(Me._$grids) As "UserInput"
+
+End
+
+Public Sub UserInput_Signal(argSignal As Integer, argValues As Variant[])
+    
+    NagatoQueue(MikuruSignal.ListAddMusic, $paths.GetPaths(argValues))
+    
+End

@@ -1,0 +1,12 @@
+' Gambas module file
+
+Property Read Bookmarks As String[]
+
+Private $bookmarks As String[] = ["DESKTOP", "DOCUMENTS", "DOWNLOAD", "MUSIC",
+                                                        "PICTURES", "PUBLICSHARE", "TEMPLATES", "VIDEOS"]
+
+Private Function Bookmarks_Read() As String[]
+
+    Return $bookmarks
+
+End

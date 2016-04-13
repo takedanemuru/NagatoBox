@@ -65,15 +65,6 @@ Public Sub Player_AboutToFinish()
     
 End
 
-Public Sub Player_State()
-    
-    If $player.State <> Media.Playing Or If $player.Duration > 0 Then Return
-    $player = New MediaPlayer As "Player"
-    $player.Stop()
-    Raise MusicEnds
-
-End
-
 Private Function State_Read() As Integer
 
     Return $player.State

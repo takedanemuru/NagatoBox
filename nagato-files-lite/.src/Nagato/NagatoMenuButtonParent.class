@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeButton()
+    
+    With Me._$button
+        .Picture = MikuruIcon["arrow-up"]
+        .Tooltip = ("To Parent Directory")
+        .Menu = "do not append pulldown menu"
+    End With
+    
+End
+
+Public Sub _OnClickMenuButton()
+    
+    Raise Signal(MikuruSignal.UserInputMoveToParent, Null)
+    
+End

@@ -1,0 +1,9 @@
+' Gambas module file
+
+Property Read gridViewStripe As Integer
+
+Private Function gridViewStripe_Read() As Integer
+
+    Return Color.Merge(Color.Violet, Color.White, 0.8)
+
+End

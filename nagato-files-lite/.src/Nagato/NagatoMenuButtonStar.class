@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private MenuName As String = "StarMenu"
+
+Public Sub _OnInitializeButton()
+    
+    With Me._$button
+        .Picture = MikuruIcon["star"]
+        .Tooltip = ("Main Menu")
+        .Menu = MenuName
+    End With
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    Dim yukiMenu As NagatoPulldownMenuStar
+    
+    yukiMenu = New NagatoPulldownMenuStar(MenuName) As "TFEI"
+    
+End

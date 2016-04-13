@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoUserControl
+
+Public _$gridView As GridView
+Public _$observer As Observer
+
+Public Sub _new(arggridView As GridView)
+    
+    Me._$gridView = arggridView
+    Me._$observer = New Observer(arggridView) As "Asakura"
+    
+End

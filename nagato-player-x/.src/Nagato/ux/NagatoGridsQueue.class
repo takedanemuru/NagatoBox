@@ -6,6 +6,7 @@ Private Enum ColumnIcon, ColumnTitle, ColumnArtist, ColumnAlbum, ColumnTime
 
 Private $playMark As NagatoGridsPlayMark
 Private $handlerUserInput As NagatoGridViewHandlerUserInputQueue
+Private $selection As NagatoGridViewHandlerSelection
 
 Private Sub insertRow(argRow As Integer)
     
@@ -46,6 +47,7 @@ Public Sub _InitializeGrids() 'override
     Me._SetColumns("", ("Title"), ("Artist"), ("Album"), ("Duration"))
     $playMark = New NagatoGridsPlayMark(Me._$grids)
     $handlerUserInput = New NagatoGridViewHandlerUserInputQueue(Me._$grids) As "UserInput"
+    $selection = New NagatoGridViewHandlerSelection(Me._$grids)
     Me.Refresh()
     
 End
@@ -60,33 +62,9 @@ Public Sub RefreshRows(argRows As Integer[])
     
 End
 
-Private Sub refreshSelection(argIndexes As Integer[])
+Public Sub SelectionMove(argSignal As Integer, argIndexes As Integer[])
     
-    Dim yukiIndex As Integer
-    
-    For Each yukiIndex In argIndexes
-        Try Me._$grids.Rows[yukiIndex].Selected = True
-    Next
-    
-End
-
-Public Sub SelectionUp(argIndexes As Integer[])
-    
-    Dim yukiIndexes As Integer[] = argIndexes.Sort()
-    
-    Me.Refresh()
-    refreshSelection(argIndexes)
-    Me._$grids[yukiIndexes[0], 0].EnsureVisible()
-    
-End
-
-Public Sub SelectionDown(argIndexes As Integer[])
-    
-    Dim yukiIndexes As Integer[] = argIndexes.Sort()
-
-    Me.Refresh()
-    refreshSelection(argIndexes)
-    Me._$grids[yukiIndexes[argIndexes.Max], 0].EnsureVisible()
+    $selection.Move(argSignal, argIndexes)
     
 End
 

@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private $paneAlpha As NagatoFiler
+Private $paneBravo As NagatoFiler
+
+Public Sub Form_Open()
+
+    Application.Theme = "Numix-Circle"
+
+    $paneAlpha = New NagatoFiler(Me, "Alpha") As "TFEI"
+    $paneBravo = New NagatoFiler(Me, "Bravo") As "TFEI"
+
+    NagatoSettingsForm.Load(Me)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsForm.Save(Me)
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.AppToggleExtra
+            $paneAlpha.Toggle(argValues[0])
+            $paneBravo.Toggle(argValues[0])
+    End Select
+    
+End

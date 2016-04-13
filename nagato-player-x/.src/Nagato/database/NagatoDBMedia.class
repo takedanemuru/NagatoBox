@@ -38,6 +38,23 @@ Public Function GetMusicResultByPath(argPath As String) As Result
     
 End
 
+Public Function GetAllResult() As Result
+    
+    Return Me._$connection.Find(Me.Table.Library)
+    
+End
+
+Public Sub Search(argColumn As Integer, argQuery As String) As Result
+    
+    Dim yukiColumn As String = Choose(argColumn + 1, "title", "artist", "album") 
+    Dim yukiQuery As String = Quote$(Subst$("%&1%", argQuery))
+    Dim yukiExecBase As String = "SELECT * FROM library WHERE &1 LIKE &2"
+    Dim yukiExec As String = Subst$(yukiExecBase, yukiColumn, yukiQuery)
+    
+    Return Me._$connection.Exec(yukiExec)
+    
+End
+
 Public Sub _new()
     
     Me._SetConnection()

@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoTab
+
+Private $menuBar As NagatoMenuBarLibrary
+Private $grids As NagatoGridsLibrary
+
+Public Sub Refresh()
+    
+    $grids.Refresh()
+    
+End
+
+Public Sub _OnInitialize(argContainer As Container, argGrids As GridView)
+    
+    $menuBar = New NagatoMenuBarLibrary(argContainer) As "MenuBar"
+    $grids = New NagatoGridsLibrary(argGrids) As "Grids"
+    
+End
+
+Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Dim yukiResult As Result = NagatoDBMedia.Search(argValues[0], argValues[1])
+    
+    If yukiResult.Count > 0 Then $grids.RefreshWithQuery(yukiResult)
+    
+End

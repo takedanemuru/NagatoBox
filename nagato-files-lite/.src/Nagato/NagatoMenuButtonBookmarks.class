@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "BookmarkMenu"
+
+Public Sub _OnInitializeButton()
+    
+    With Me._$button
+        .Picture = MikuruIcon["book-open-bookmark"]
+        .Tooltip = ("Bookmarks")
+        .Menu = MenuName
+    End With
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    Dim yukiMenu As NagatoPulldownMenuBookmark
+    
+    yukiMenu = New NagatoPulldownMenuBookmark(MenuName) As "TFEI"
+    
+End

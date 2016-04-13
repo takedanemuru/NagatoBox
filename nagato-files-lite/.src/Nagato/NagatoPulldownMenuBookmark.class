@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoPulldownMenu
+
+Public Sub _OnRefreshChildMenus()
+    
+    Dim yukiDirectory As String
+    Dim yukiIcon As Picture
+    
+    For Each yukiDirectory In MikuruDirectory.Bookmarks
+        yukiIcon = MikuruIcon.GetDirectoryIcon(yukiDirectory)
+        Me._AddMenuItem(yukiDirectory, Desktop.GetDirectory(yukiDirectory), yukiIcon)
+    Next
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    Raise Signal(MikuruSignal.UserInputMoveToDirectory, [Last.Tag])
+    
+End

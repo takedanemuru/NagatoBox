@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoGridViewHandlerUserInput
+
+Public Sub _OnResizeColumns()
+    
+    Dim yukiColumsWidth As Integer = Me._GetColumnWidth(4)
+    Dim yukiSize As Integer = (HaruhiPlayList.W - (MikuruUx.Padding + yukiColumsWidth)) / 3
+    
+    Me._ResizeColumns(MikuruUx.Padding, yukiSize, yukiSize, yukiSize)
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    If Me._$gridView.Rows.Selection.Count = 0 Then Return
+    Raise Signal(MikuruSignal.ListAddMusic, Me._$gridView.Rows.Selection)
+    
+End

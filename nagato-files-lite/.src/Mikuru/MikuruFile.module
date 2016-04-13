@@ -1,0 +1,26 @@
+' Gambas module file
+
+Public Sub GetMimeType(argPath As String) As String
+    
+    If IsDir(argPath) Then Return "inode/directory"
+    
+    Return DesktopMime.FromFile(argPath).Type
+    
+End
+
+Public Sub GetSize(argPath As String) As String
+    
+    If IsDir(argPath) Then Return ""
+    
+    Return Format$(Stat(argPath).Size, "###,###,###,###,###,##0")
+    
+End
+
+Public Sub IsValidDirecroty(argPath As String) As Boolean
+    
+    If Not IsDir(argPath) Then Return False
+    If Not Exist(argPath) Then Return False
+    
+    Return True
+    
+End

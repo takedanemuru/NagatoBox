@@ -45,7 +45,6 @@ Private Function getAllPaths() As String[]
     
 End
 
-
 Public Function GetProperty(argProperty As Integer, argIndex As Integer) As Variant
     
     If $musicElements.Count = 0 Then Return ""

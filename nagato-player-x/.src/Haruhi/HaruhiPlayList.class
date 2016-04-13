@@ -2,6 +2,7 @@
 
 Private $nowPlayingTab As NagatoTabQueue
 Private $playlistsTab As NagatoTabPlaylists
+Private $libraryTab As NagatoTabLibrary
 Private $infoArea As NagatoInfoArea
 Private $observer As Observer
 
@@ -11,6 +12,7 @@ Public Sub _new()
 
     $nowPlayingTab = New NagatoTabQueue(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
     $playlistsTab = New NagatoTabPlaylists(MenuPanelPlaylists, PlaylistsGrid) As "PlaylistsGrids"
+    $libraryTab = New NagatoTabLibrary(MenuPanelLibrary, LibraryGrid) As "LibraryGrids"
     $infoArea = New NagatoInfoArea(MainVBox)
     $observer = New Observer(NagatoBroadcast) As "Asakura"
     

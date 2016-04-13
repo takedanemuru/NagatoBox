@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Private Function getDefault(argProperty As Integer) As Variant
+    
+    Select Case argProperty
+        Case MikuruProperty.ViewShowPane
+            Return True
+    End Select
+    
+End
+
+Public Sub _get(argUniqueName As String, argProperty As Integer) As Variant
+    
+    Dim yukiKey As String = Subst$("&1/&2", argUniqueName, CStr(argProperty))
+    Dim yukiProperty As Variant = Me._$settings[yukiKey, Null]
+    
+    If yukiProperty <> Null Then Return yukiProperty
+    
+    Return getDefault(argProperty)
+    
+End
+
+Public Sub Set(argUniqueName As String, argProperty As Integer, argValue As Variant)
+    
+    Dim yukiKey As String = Subst$("&1/&2", argUniqueName, CStr(argProperty))
+
+    Me._$settings[yukiKey] = argValue
+    Me._$settings.Save()
+    
+End

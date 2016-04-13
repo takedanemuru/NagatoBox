@@ -1,0 +1,89 @@
+' Gambas class file
+
+Inherits NagatogridViewHandler
+
+Private $paths As New String[]
+Private $contextMenuFile As New NagatoContextMenuFile
+
+Private Sub setRow(argPath As String)
+    
+    Inc Me._$gridView.Rows.Count
+    Me._$gridView[Me._$gridView.Rows.Max, 0].Picture = MikuruIcon.GetFileIcon(argPath)
+    Me._$gridView[Me._$gridView.Rows.Max, 1].Text = File.Name(argPath)
+    Me._$gridView[Me._$gridView.Rows.Max, 2].Text = MikuruFile.GetMimeType(argPath)
+    Me._$gridView[Me._$gridView.Rows.Max, 3].Text = MikuruFile.GetSize(argPath)
+    Me._$gridView[Me._$gridView.Rows.Max, 3].Alignment = Align.Right
+    
+    $paths.Add(argPath)
+    
+End
+
+Private Sub setRows(argDirectory As String, argPattern As Integer, Optional argFilter As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory, "[^.]*", argPattern).Sort(gb.Natural + gb.IgnoreCase)
+        If argFilter And If yukiPath Not Like Subst$("*&1*", argFilter) Then Continue
+        setRow(argDirectory &/ yukiPath)
+    Next
+    
+End
+
+Private Sub clearGridView()
+    
+    $paths.Clear()
+    Me._$gridView.Clear()
+    Me._$gridView.Rows.Count = 0
+    
+End
+
+Public Sub Refresh(argDirectory As String)
+    
+    clearGridView()
+    setRows(argDirectory, gb.Directory)
+    setRows(argDirectory, gb.File)
+    
+End
+
+Public Sub Filter(argQuery As String)
+    
+    clearGridView()
+    setRows(File.Dir(argQuery), gb.Directory, File.Name(argQuery))
+    setRows(File.Dir(argQuery), gb.File, File.Name(argQuery))
+    
+End
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Return $paths[argIndex]
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    Dim yukiPath As String = $paths[Me._$gridView.Row]
+    
+    If Not yukiPath Then 
+        Return
+    Else If IsDir(yukiPath) Then 
+        Raise Signal(MikuruSignal.UserInputMoveToDirectory, [yukiPath])
+    Else
+        HaruhiFileProperties.ShowProperty(yukiPath)
+        HaruhiFileProperties.ShowDialog()
+    End If
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiPath As String = $paths[Me._$gridView.Row]
+    
+    If Not yukiPath Then 
+        Return
+    Else If IsDir(yukiPath) Then 
+        ' show directory menu
+    Else
+        $contextMenuFile.PopUp(yukiPath, $paths)
+    End If
+    
+End

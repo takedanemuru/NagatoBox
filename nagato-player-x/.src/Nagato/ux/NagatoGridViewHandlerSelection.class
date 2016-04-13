@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoGridHandler
+
+Private Sub refreshSelection(argIndexes As Integer[])
+    
+    Dim yukiIndex As Integer
+    
+    For Each yukiIndex In argIndexes
+        Try Me._$grids.Rows[yukiIndex].Selected = True
+    Next
+    
+End
+
+Private Function ensureVisible(argSignal As Integer, argIndexes As Integer[]) As Integer
+    
+    If argSignal = MikuruSignal.BroadcastSelectionUp Then
+        Me._$grids[argIndexes[0], 0].EnsureVisible()
+    Else ' If MikuruSignal.BroadcastSelectionDown
+        Me._$grids[argIndexes[argIndexes.Max], 0].EnsureVisible()
+    Endif
+    
+End
+
+Public Sub Move(argSignal As Integer, argIndexes As Integer[])
+    
+    Dim yukiIndexes As Integer[] = argIndexes.Sort()
+    
+    Me.Refresh()
+    refreshSelection(argIndexes)
+    ensureVisible(argSignal, yukiIndexes)
+    
+End
