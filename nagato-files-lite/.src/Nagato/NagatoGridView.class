@@ -42,7 +42,7 @@ Public Sub _OnInitialize(argContainer As Container)
     
     initializeGridView(argContainer)
     
-    $handlerSurface = New NagatoGridViewHandlerSurface($gridView) As "TFEI"
-    $handlerData = New NagatoGridViewHandlerData($gridView) As "TFEI"
+    $handlerSurface = New NagatoGridViewHandlerSurface($gridView, Me._$uniqueName) As "TFEI"
+    $handlerData = New NagatoGridViewHandlerData($gridView, Me._$uniqueName) As "TFEI"
     
 End

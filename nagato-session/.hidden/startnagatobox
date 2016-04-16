@@ -2,7 +2,7 @@
 
 # This script is licensed under S.O.S. License
 # Enjoy!
-# copyright (c) takeda.nemuru 2013-2015 <takeda.nemuru@yandex.com>
+# copyright (c) takeda.nemuru 2013-2016 <takeda.nemuru@yandex.com>
 
 NAGATO_CONFIG_DIR="${XDG_CONFIG_HOME:-"$HOME/.config"}/NagatoBox"
 
@@ -11,6 +11,9 @@ if [ ! -f "${NAGATO_CONFIG_DIR}/nagatobox-rc.xml" ]; then
     mkdir -p "${NAGATO_CONFIG_DIR}"
     cp /etc/xdg/nagatobox-rc.xml "${NAGATO_CONFIG_DIR}/nagatobox-rc.xml"
 fi
+
+# Unify Qt5 theme to GTK+2/3
+export QT_STYLE_OVERRIDE=GTK+
 
 # Run Openbox, and have it run the autostart stuff
 NAGATO_CONFIG_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/NagatoBox/nagatobox-rc.xml"

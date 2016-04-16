@@ -4,9 +4,11 @@ Inherits NagatoUserControl
 
 Public _$gridView As GridView
 Public _$observer As Observer
+Public _$uniqueName As String
 
-Public Sub _new(arggridView As GridView)
+Public Sub _new(argGridView As GridView, argUniqueName As String)
     
+    Me._$uniqueName = argUniqueName
     Me._$gridView = arggridView
     Me._$observer = New Observer(arggridView) As "Asakura"
     

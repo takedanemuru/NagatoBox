@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoFileManuever
+
+Public Sub MoveToDirectory(argPaths As String[], argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiTargetPath As String
+    
+    For Each yukiPath In argPaths
+        yukiTargetPath = MikuruSafePath(argDirectory &/ File.Name(yukiPath))
+        Try Move yukiPath To yukiTargetPath
+    Next
+    
+End
+
+Public Sub MoveTo(argPaths As String[], Optional argDirectory As String = "")
+    
+    Dim yukiDirectory As String = argDirectory
+    
+    If Not Exist(yukiDirectory) Then yukiDirectory = Me._GetTargetDirectory(("Move To..."), argPaths[0])
+
+    If yukiDirectory Then Me.MoveToDirectory(argPaths, yukiDirectory)
+    
+End

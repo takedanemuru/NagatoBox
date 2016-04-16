@@ -4,11 +4,17 @@ Inherits NagatoMenu
 
 Private $menu As Menu
 
+Private Function getMimeType() As String
+    
+    If IsDir(Me._$path) Then Return "inode/directory"
+    
+    Return DesktopMime.FromFile(Me._$path).Type
+    
+End
+
 Private Function getDesktopFilesWithMimeType() As String[]
     
-    Dim yukiMimeType As String = DesktopMime.FromFile(Me._$path).Type
-    
-    Return MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, yukiMimeType).Sort(gb.Natural)
+    Return MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, getMimeType()).Sort(gb.Natural)
     
 End
 
@@ -41,8 +47,7 @@ Public Sub _SetMenu() 'override
     $menu = New Menu(Me._$parentMenu) As "FileMenu"
     
     With $menu
-        .Text = File.Name(Me._$path)
-        .Picture = Desktop.GetFileIcon(Me._$path, 24)
+        .Text = ("Open With...")
     End With
     
     MikuruMenuDummy($menu)

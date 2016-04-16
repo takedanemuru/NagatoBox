@@ -9,17 +9,15 @@ Private $observer As Observer
 Private Sub pressOnTab()
     
     Dim yukiTabIndex As Integer = $tabs.GetTabIndex(Mouse.X, Mouse.Y)
-    Dim yukiSignal As Integer
     
     If Mouse.Left Then 
-        yukiSignal = MikuruSignal.PersonaSelect
-    Else If Not Mouse.Control Then 
-        yukiSignal = MikuruSignal.PersonaDelete
+        Raise Signal(MikuruSignal.PersonaSelect, [yukiTabIndex])
+    Else If Not Mouse.Control And If NagatoSettings.RecordHistory Then 
+        Raise Signal(MikuruSignal.PersonaDelete, [yukiTabIndex])
     Else
-        yukiSignal = MikuruSignal.PersonaDeleteWithoutRecord
+        Raise Signal(MikuruSignal.PersonaDeleteWithoutRecord, [yukiTabIndex])
     End If
     
-    Raise Signal(yukiSignal, [yukiTabIndex])
     
 End
 

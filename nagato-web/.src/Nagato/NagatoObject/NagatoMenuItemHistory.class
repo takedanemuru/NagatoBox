@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Record Closed Tab")
+        .Picture = MikuruIcon.GetCheckButton(NagatoSettings.RecordHistory)
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    NagatoSettings.RecordHistory = Not NagatoSettings.RecordHistory
+    
+End

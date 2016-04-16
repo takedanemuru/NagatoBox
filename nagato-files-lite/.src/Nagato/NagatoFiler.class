@@ -53,6 +53,9 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             If Exist(File.Dir($currentPath)) Then moveDirectory(File.Dir($currentPath))
         Case MikuruSignal.UserInputFilter
             $gridView.Filter(argValues[0])
+        Case MikuruSignal.UserInputToggleHidden
+            NagatoSettingsView.Toggle(Me._$uniqueName, MikuruProperty.ViewShowHidden)
+            $gridView.SetPath($currentPath)
         Case MikuruSignal.AppToggleExtra
             Raise Signal(argSignal, [Me._$uniqueName])
         Default

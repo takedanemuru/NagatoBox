@@ -3,6 +3,7 @@
 Inherits NagatoUserControl
 
 Public _$rootMenu As Menu
+Public _$uniqueName As String
 
 Public Sub _AddMenuItem(argText As String, argTag As Variant, Optional argIcon As Picture)
     
@@ -28,8 +29,9 @@ Public Sub _OnClickMenuItem()
     
 End
 
-Public Sub _new(argMenuName As String)
+Public Sub _new(argMenuName As String, argUniqueName As String)
     
+    Me._$uniqueName = argUniqueName
     Me._$rootMenu = New Menu(HaruhiMain) As "RootMenu"
     
     With Me._$rootMenu

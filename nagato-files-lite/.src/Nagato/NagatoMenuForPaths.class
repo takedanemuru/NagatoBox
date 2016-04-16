@@ -1,0 +1,31 @@
+' Gambas class file
+
+Public _$parentMenu As Menu
+Public _$paths As String[]
+
+Public Sub _OptionalOnInitializeParentMenu()
+    
+    
+    
+End
+
+Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    Me._OptionalOnInitializeParentMenu()
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    
+    
+End
+ 
+Public Sub _new(argRootMenu As Menu, argPaths As String[])
+    
+    Me._$paths = argPaths
+    Me._OnInitializeParentMenu(argRootMenu)
+    Me._OnInitializeChildMenus()
+    
+End

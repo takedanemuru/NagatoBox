@@ -24,7 +24,7 @@ End
 Private Sub initializeLegend()
     
     If isOpenbox() Then
-        $legend = ("[Esc] Cancel [E] Exit [R] Reboot [S] Shutdown")
+        $legend = ("[Esc] Cancel [L] Logout [R] Reboot [S] Shutdown")
     Else
         $legend = ("[Esc] Cancel [R] Reboot [S] Shutdown")
     Endif

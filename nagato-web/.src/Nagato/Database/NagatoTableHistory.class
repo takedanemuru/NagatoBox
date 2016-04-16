@@ -24,7 +24,7 @@ End
 
 Public Sub GetAll() As Result
     
-    Return Me._$connection.Find(NagatoDB.Table.History, "order by time_stamp desc limit 1000")
+    Return Me._$connection.Find(NagatoDB.Table.History, "order by time_stamp desc limit 200")
     
 End
 

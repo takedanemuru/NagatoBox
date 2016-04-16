@@ -36,9 +36,11 @@ Public Sub Logout(argType As Integer)
         Case NagatoMessage.ModeLogout
             Shell Subst$("loginctl kill-user &1", User.Id)
         Case NagatoMessage.ModeReboot
-            $logind.Reboot()
+            ' $logind.Reboot()
+            Shell "/sbin/reboot"
         Case NagatoMessage.ModeShutdown
-            $logind.PowerOff()
+            ' $logind.PowerOff()
+            Shell "/sbin/poweroff"
     End Select
     
 End

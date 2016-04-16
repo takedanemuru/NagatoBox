@@ -3,7 +3,7 @@
 Inherits NagatogridViewHandler
 
 Private $paths As New String[]
-Private $contextMenuFile As New NagatoContextMenuFile
+Private $contextMenu As New NagatoContextMenu
 
 Private Sub setRow(argPath As String)
     
@@ -18,11 +18,21 @@ Private Sub setRow(argPath As String)
     
 End
 
-Private Sub setRows(argDirectory As String, argPattern As Integer, Optional argFilter As String)
+Private Sub getFilteringPattern() As String
+    
+    If NagatoSettingsView[Me._$uniqueName, MikuruProperty.ViewShowHidden] Then
+        Return "*"
+    Else
+        Return "[^.]*"
+    Endif
+    
+End
+
+Private Sub setRows(argDirectory As String, argType As Integer, Optional argFilter As String)
     
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(argDirectory, "[^.]*", argPattern).Sort(gb.Natural + gb.IgnoreCase)
+    For Each yukiPath In Dir(argDirectory, getFilteringPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
         If argFilter And If yukiPath Not Like Subst$("*&1*", argFilter) Then Continue
         setRow(argDirectory &/ yukiPath)
     Next
@@ -78,12 +88,6 @@ Public Sub Asakura_Menu()
     
     Dim yukiPath As String = $paths[Me._$gridView.Row]
     
-    If Not yukiPath Then 
-        Return
-    Else If IsDir(yukiPath) Then 
-        ' show directory menu
-    Else
-        $contextMenuFile.PopUp(yukiPath, $paths)
-    End If
+    If yukiPath Then $contextMenu.PopUp(yukiPath, $paths)
     
 End

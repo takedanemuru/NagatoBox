@@ -2,14 +2,20 @@
 
 Inherits NagatoMenuButton
 
-Private MenuName As String = "StarMenu"
+Private MenuName As String = "StarMenu_"
+
+Private Function getMenuName() As String
+    
+    Return MenuName & Me._$uniqueName
+    
+End
 
 Public Sub _OnInitializeButton()
     
     With Me._$button
         .Picture = MikuruIcon["star"]
         .Tooltip = ("Main Menu")
-        .Menu = MenuName
+        .Menu = getMenuName()
     End With
     
 End
@@ -18,6 +24,6 @@ Public Sub _OptionalOnInitializePulldownMenu()
     
     Dim yukiMenu As NagatoPulldownMenuStar
     
-    yukiMenu = New NagatoPulldownMenuStar(MenuName) As "TFEI"
+    yukiMenu = New NagatoPulldownMenuStar(getMenuName(), Me._$uniqueName) As "TFEI"
     
 End

@@ -3,6 +3,7 @@
 Inherits NagatoSettingsCore
 
 Property HomePage As String
+Property RecordHistory As Boolean
 Property DownloadDirectory As String
 Property ShowFavicon As Boolean
 Property PluginsEnabled As Boolean
@@ -69,6 +70,19 @@ End
 Private Sub JavaScriptEnabled_Write(Value As Boolean)
 
     Me._$settings["web/javascript_enabled"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function RecordHistory_Read() As Boolean
+
+    Return Me._$settings["web/record_history", True]
+
+End
+
+Private Sub RecordHistory_Write(Value As Boolean)
+
+    Me._$settings["web/record_history"] = Value
     Me._$settings.Save()
 
 End

@@ -24,7 +24,9 @@ End
 
 Public Sub GetAll() As Result
     
-    Return Me._$connection.Find(NagatoDB.Table.History, "order by time_stamp desc limit 1000")
+    Debug Me._$connection.Find(NagatoDB.Table.History).Count
+    
+    Return Me._$connection.Find(NagatoDB.Table.History, "order by time_stamp desc limit 200")
     
 End
 
@@ -36,7 +38,9 @@ End
 
 Public Sub DeleteRelatedHistories(argUrl As String)
     
-    Debug MikuruUrl.GetTopPage(argUrl)
+    Dim yukiPattern As String = MikuruUrl.GetTopPage(argUrl) & "%"
+    
+    Me._$connection.Delete(NagatoDB.Table.History, "url LIKE &1", yukiPattern)
     
 End
 
