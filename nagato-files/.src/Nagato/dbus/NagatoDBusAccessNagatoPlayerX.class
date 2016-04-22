@@ -46,6 +46,32 @@ Public Function GetText() As String
     
 End
 
+Public Sub GetTextProgress() As String
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        Return ($property.ProgressInText)
+    Else
+        Return "YUKI.N > nagato-player-x is not activated"
+    End If
+    
+End
+
+Public Sub GetTextMain() As String
+    
+    Dim yukiText As String 
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        yukiText &= ($property.Title & Space$(4))
+        yukiText &= ($property.Artist & Space$(4))
+        yukiText &= ($property.Album & Space$(4))
+        Return yukiText
+    Else
+        Return ""
+    End If
+    
+End
 
 Public Sub Action(argAction As Integer)
     

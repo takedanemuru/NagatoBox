@@ -1,0 +1,21 @@
+' Gambas class file
+
+Property Read Data As String[]
+
+Private $data As New String[]
+
+Public Sub Add(argData As String[])
+    
+    Dim yukiData As String
+    
+    For Each yukiData In argData
+        If Not $data.Exist(yukiData) Then $data.Add(yukiData)
+    Next
+    
+End
+
+Private Function Data_Read() As String[]
+
+    Return $data
+
+End

@@ -3,7 +3,6 @@
 Inherits NagatoTable
 
 Private $headerTitles As New NagatoTableHeadersAutostarts
-Private $autostartFiles As New NagatoAutostartFile[]
 
 Private Sub initializeGrid(argGrid As TableView)
     
@@ -56,7 +55,6 @@ Private Sub setData(argData As NagatoAutostarts)
     
     For Each yukiAutostartFile In argData.All
         Inc Me._$table.Rows.Count
-        $autostartFiles.Add(yukiAutostartFile)
         setProperties(yukiAutostartFile)
     Next
 End
@@ -65,12 +63,6 @@ Public Sub _new(argGridView As GridView, argAutostarts As NagatoAutostarts)
     
     initializeGrid(argGridView)
     setData(argAutostarts)
-    
-End
-
-Public Sub _get(argIndex As Integer) As NagatoAutostartFile
-    
-    Return $autostartFiles[argIndex]
     
 End
 

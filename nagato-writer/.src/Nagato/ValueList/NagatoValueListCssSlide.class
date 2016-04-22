@@ -19,6 +19,6 @@ End
 
 Public Function _GetCurrent() As String
     
-    Return Me._$values[NagatoSettingsSlide.Theme]
+    Return Me._$values[NagatoSettingsView.CssIndex]
     
 End

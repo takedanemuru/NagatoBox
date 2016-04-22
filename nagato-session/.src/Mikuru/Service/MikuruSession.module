@@ -1,7 +1,5 @@
 ' Gambas module file
 
-Private $logind As New NagatoLogind
-
 Private Function getDesktopSession() As String
     
     Dim yukiOutput As String
@@ -16,11 +14,10 @@ Public Function IsOpenbox() As Boolean
     
     Dim yukiDesktop As String = getDesktopSession()
     
-    If (yukiDesktop Ends "openbox") Or If (yukiDesktop Ends "NagatoBox") Then
-        Return True
-    Else
-        Return False
-    Endif
+    If (yukiDesktop Ends "openbox") Then Return True
+    If (yukiDesktop Ends "NagatoBox") Then Return True
+
+    Return False
     
 End
 
@@ -34,13 +31,13 @@ Public Sub Logout(argType As Integer)
     
     Select Case argType
         Case NagatoMessage.ModeLogout
-            Shell Subst$("loginctl kill-user &1", User.Id)
+            Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
         Case NagatoMessage.ModeReboot
-            ' $logind.Reboot()
-            Shell "/sbin/reboot"
+            Shell "systemctl reboot"
+            'Shell Subst$("systemctl reboot && loginctl kill-user &1", User.Id)
         Case NagatoMessage.ModeShutdown
-            ' $logind.PowerOff()
-            Shell "/sbin/poweroff"
+            Shell "systemctl poweroff"
+            'Shell Subst$("systemctl poweroff && loginctl kill-user &1", User.Id)
     End Select
     
 End

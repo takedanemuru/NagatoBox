@@ -30,15 +30,19 @@ Public Sub TableView_Activate()
     
     ' ShowDetail($tableView.RowAt(Mouse.Y))
     
+    Debug NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].Path
+    
 End
 
 Public Sub TableView_Menu()
     
     Dim yukiContextMenu As NagatoContextMenuUserAutostarts
+    Dim yukiAutostartFile As NagatoAutostartFile
     
     If $tableView.Rows.Selection.Count = 0 Then Return
     
-    yukiContextMenu = New NagatoContextMenuUserAutostarts($tableViewHandler[$tableView.Row]) As "TFEI"
+    yukiAutostartFile = NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row]
+    yukiContextMenu = New NagatoContextMenuUserAutostarts(yukiAutostartFile) As "TFEI"
     yukiContextMenu.Popup()
     
 End
@@ -58,20 +62,8 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             HaruhiDialogProperties.SetProperties(argValues[0])
             HaruhiDialogProperties.ShowDialog()
         Case MikuruSignal.AutostartsDelete
-            If Message.Question("YUKI.N > Are you sure ?", ("Cancel"), ("OK")) = 2 Then
-                Kill argValues[0].Path
-            Endif
+            MikuruDialogPortalDeleteAutostart(argValues[0].Path)
     End Select
     
 End
 
-Public Sub TFEI_Click()
-    
-    Select Case $tableView.Column
-        Case NagatoTableHeadersAutostarts.ColumnExec
-            $tableView.Edit()
-        Case NagatoTableHeadersAutostarts.ColumnTryExec
-            $tableView.Edit()
-    End Select
-    
-End

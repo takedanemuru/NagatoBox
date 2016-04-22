@@ -1,7 +1,0 @@
-' Gambas module file
-
-Public Enum UserInputHeader = 7000
-Public Enum UserInputMoveToDirectory = 7001, UserInputMoveToParent = 7002
-Public Enum UserInputFilter = 7003, UserInputToggleHidden = 7004
-Public Enum AppHeader = 9000
-Public Enum AppToggleExtra = 9001

@@ -1,0 +1,13 @@
+' Gambas module file
+
+Private Function getMessage(argPath As String) As String
+    
+    Return Subst$("YUKI.N > Are you sure to kill &1 ?", argPath)
+    
+End
+
+Public Sub _call(argPath As String)
+    
+    If Message.Question(getMessage(argPath), ("Cancel"), ("OK")) = 2 Then Kill argPath
+    
+End

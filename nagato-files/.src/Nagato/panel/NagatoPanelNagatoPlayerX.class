@@ -4,6 +4,7 @@ Inherits NagatoDesktopPanelContent
 
 Private $buttons As NagatoPanelButtonsNagatoPlayerX
 Private $access As NagatoDBusAccessNagatoPlayerX
+Private $painter As NagatoPanelPainterNagatoPlayerX
 
 Private Sub showContextMenu()
     
@@ -34,6 +35,7 @@ End
 Public Sub _new(argContainer As Container, argExpand As Boolean)
     
     $access = New NagatoDBusAccessNagatoPlayerX
+    $painter = New NagatoPanelPainterNagatoPlayerX
     
     Me._Initialize(argContainer, argExpand)
     
@@ -45,12 +47,9 @@ End
 Public Sub ClockDrawingArea_Draw()
 
     Paint.Begin(Me._$drawingArea)
-        Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
-        Paint.Font.Bold = True
-        Paint.DrawText($access.GetText(), 0, 0, Me._$drawingArea.W, Me._$drawingArea.H, Align.Left)
-        Paint.Fill()
+        $painter.Refresh(Me._$drawingArea, $access.GetTextMain(), $access.GetTextProgress())
     Paint.End()
-    
+    ' 
 End
 
 Public Sub ClockDrawingArea_MouseDown()

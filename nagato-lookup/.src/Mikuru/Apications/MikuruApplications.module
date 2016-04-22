@@ -60,27 +60,8 @@ Public Function GetDefaultDesktopFiles(argPath As String) As String[]
     
 End
 
-Private Sub callMessage(argPath As String)
-    
-    With HaruhiDialogUseGksu
-        Select Case .ShowDialog()
-            Case .NormalUser
-                execute(argPath, False)
-            Case .SuperUser
-                execute(argPath, True)
-        End Select
-    End With
-
-End
-
 Public Sub Launch(argPath As String)
     
-    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
-    
-    If yukiDesktopFile.HasCategory("Settings") Then
-        callMessage(argPath)
-    Else
-        execute(argPath)
-    End If
+    execute(argPath)
     
 End

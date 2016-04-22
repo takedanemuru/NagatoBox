@@ -8,6 +8,7 @@ Public Sub _Initialize() ' override
     
     Me._AddMenuButton(("New"), MikuruSignal.AutostartsNew, "magic-wand")
     Object.New("NagatoWidgetPanelSpacer", [Me._$container])
+    Object.New("NagatoWidgetSelectDesktopType", [Me._$container])
     $menuButton = New NagatoWidgetMenuButtonStarUserAutostart(Me._$container) As "TFEI"
     
 End

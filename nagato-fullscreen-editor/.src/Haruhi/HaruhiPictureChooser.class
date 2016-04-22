@@ -1,0 +1,18 @@
+' Gambas class file
+
+Public Sub Form_Open()
+    
+    FileChooser1.Filter = ["*.png;*.jpg;*.jpeg", "Picture Files"]
+    FileChooser1.ShowPreview = True
+    FileChooser1.FileView.IconSize = 128
+    FileChooser1.Root = Desktop.GetDirectory("PICTURES")
+    
+End
+
+Public Sub FileChooser1_Activate()
+    
+    Try NagatoSettings.Background = FileChooser1.SelectedPath
+    
+    Me.Close(1)
+    
+End

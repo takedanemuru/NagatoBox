@@ -5,13 +5,11 @@ Inherits NagatoSubMenu
 Public Sub _AddChildMenus()
     
     Dim yukiEngineMenu As NagatoSubMenuSlideEngine
-    Dim yukiThemeMenu As NagatoSubMenuSlideTheme
     Dim yukiLevelMenu As NagatoSubMenuSlideLevel
     
     Me._AddMenu(("Start Slide Show"), MikuruSignal.PublishDzslidePreview, "button-play")
        Me._AddMenu("", MikuruSignal.None)
     yukiEngineMenu = New NagatoSubMenuSlideEngine(Me._$parentMenu, ("Silde Engine"), "gear")
-    yukiThemeMenu = New NagatoSubMenuSlideTheme(Me._$parentMenu, ("Theme"), "color-palette")
     yukiLevelMenu = New NagatoSubMenuSlideLevel(Me._$parentMenu, ("Section Level"))
 
 End

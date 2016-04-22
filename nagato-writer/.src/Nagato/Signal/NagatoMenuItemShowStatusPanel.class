@@ -1,19 +1,17 @@
 ' Gambas class file
 
+Inherits NagatoMenuItem
 
-
-Public Sub _new(argRootMenu As Menu)
+Public Sub _OnInitializeMenuItem()
     
-    Dim yukiMenu As New Menu(argRootMenu) As "MenuItem"
-    
-    With yukiMenu
+    With Me._$menuItem
         .Text = ("Show Status Panel")
         .Picture = IIf(NagatoSettingsView.ShowStatusPanel, MikuruIcon["button-check"], Null)
     End With
     
 End
 
-Public Sub MenuItem_Click()
+Public Sub _OnClickMenuItem()
     
     NagatoSettingsView.ShowStatusPanel = Not NagatoSettingsView.ShowStatusPanel
     

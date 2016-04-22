@@ -4,9 +4,11 @@ Create Static
 
 Property Read GlobalAutoStarts As NagatoAutostarts
 Property Read UserAutoStarts As NagatoAutostarts
+Property Read AllTypes As String[]
 
 Private $userAutoStarts As NagatoAutoStarts
 Private $globalAutoStarts As NagatoAutoStarts
+Private $autoStartFilesObserver As NagatoAutostartFilesObserver
 
 Public Sub Execute()
     
@@ -21,6 +23,7 @@ Public Sub Initialize()
     
     $userAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.User)
     $globalAutoStarts = New NagatoAutoStarts(MikuruAutostartDirectory.Global)
+    $autoStartFilesObserver = New NagatoAutostartFilesObserver As "Asakura"
     
 End
 
@@ -34,4 +37,15 @@ Private Function UserAutoStarts_Read() As NagatoAutostarts
 
     Return $userAutoStarts
 
+End
+
+Private Function AllTypes_Read() As String[]
+    
+    Dim yukiData As New NagatoUniqueArray
+    
+    yukiData.Add($userAutoStarts.DesktopTypes)
+    yukiData.Add($globalAutoStarts.DesktopTypes)
+    
+    Return yukiData.Data.Sort(gb.Natural + gb.IgnoreCase)
+    
 End

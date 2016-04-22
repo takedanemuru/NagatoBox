@@ -37,3 +37,10 @@ Public Sub Form_Close()
     $player.Kill()
 
 End
+
+Public Sub RandomButton_Click()
+
+    $player.Random()
+    setIcon()
+
+End

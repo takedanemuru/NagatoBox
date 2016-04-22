@@ -45,10 +45,12 @@ End
 Public Sub TableView_Menu()
     
     Dim yukiContextMenu As NagatoContextMenu
+    Dim yukiAutostartFile As NagatoAutostartFile
     
     If $gridView.Rows.Selection.Count = 0 Then Return
     
-    yukiContextMenu = New NagatoContextMenuGlobalAutostarts($gridviewHandler[$gridView.Row])
+    yukiAutostartFile = NagatoXdgAutostarts.GlobalAutoStarts.All[$gridView.Row]
+    yukiContextMenu = New NagatoContextMenuGlobalAutostarts(yukiAutostartFile)
     yukiContextMenu.Popup()
     
 End

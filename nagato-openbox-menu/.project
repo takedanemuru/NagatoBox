@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.1
+# Compiled with Gambas 3.8.4
 Title=nagato-openbox-menu
 Startup=Kyon
 Icon=Picture/database.png
-Version=42.1.9
+Version=42.4.11
 Component=gb.args
 Component=gb.image
 Component=gb.gui.qt
@@ -20,10 +20,11 @@ Maintainer=takeda.nemuru
 Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 License=S.O.S. License
-PackageName=nagato-openbox-menu-42.1.9
+PackageName=nagato-openbox-menu-42.4.11
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
 Categories=ubuntu:"Nagato;System"
 Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"nagato-openbox-menu.desktop\t/usr/share/applications\nnagato-openbox-menu.png\t/usr/share/pixmaps"

@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Source Editor Foreground")
+        .Picture = MikuruColorChip(NagatoSettingsEditor.Foreground)
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    If Not Dialog.SelectColor() Then NagatoSettingsEditor.Foreground = Dialog.Color
+    
+End

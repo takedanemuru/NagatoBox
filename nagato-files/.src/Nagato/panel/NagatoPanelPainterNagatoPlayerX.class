@@ -1,0 +1,46 @@
+' Gambas class file
+
+Private $position As Integer
+Private $previousText As String
+
+Private Sub paintClipRectangle(argX As Integer, argY As Integer, argW As Integer, argH As Integer)
+    
+    Paint.Save()
+    Paint.Rectangle(argX, argY, argW, argH)
+    Paint.Clip()
+    
+End
+
+Private Sub checkPosition(argText As String, argWidth As Integer)
+    
+    If $previousText <> argText Then
+        $position = 0
+    Else If Paint.Font.TextWidth(argText) > argWidth Then
+        $position -= 4
+    Else
+        $position = 0
+    Endif
+    
+    $previousText = argText
+    
+End
+
+Public Sub Refresh(argDrawingArea As DrawingArea, argText As String, argProgress As String)
+    
+    Dim yukiWidth As Integer
+    
+    Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
+    Paint.Font.Bold = True
+    yukiWidth = argDrawingArea.W - (Paint.Font.TextWidth(argProgress) + 16)
+    checkPosition(argText, yukiWidth)
+    Paint.DrawText(argProgress, yukiWidth, 0, argDrawingArea.W - yukiWidth, argDrawingArea.H, Align.Right)
+    paintClipRectangle(0, 0, yukiWidth, argDrawingArea.H)
+    Paint.DrawText(argText, $position, 0, argDrawingArea.W, argDrawingArea.H, Align.Left)
+    If 0 > $position Then
+    Paint.DrawText(argText, yukiWidth + $position + 16, 0, argDrawingArea.W, argDrawingArea.H, Align.Left)
+    End If
+    Paint.ResetClip()
+    Paint.Restore()
+    Paint.Fill()
+    
+End

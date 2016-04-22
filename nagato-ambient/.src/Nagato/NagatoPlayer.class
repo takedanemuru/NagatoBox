@@ -28,6 +28,19 @@ Private Sub backIndex()
     
 End
 
+Private Sub randomIndex()
+    
+    Dim yukiIndexCache As Integer 
+    
+    Do
+        yukiIndexCache = Rand(0, $soundPaths.Max)
+        If yukiIndexCache = $currentIndex Then Continue
+        $currentIndex = yukiIndexCache
+        Break
+    Loop
+    
+End
+
 Private Function getUrl() As String
     
     Return Media.URL(NagatoSounds.SoundsDirectory &/ $soundPaths[$currentIndex])
@@ -61,6 +74,13 @@ End
 Public Sub Back()
     
     backIndex()
+    playCurrent()
+    
+End
+
+Public Sub Random()
+    
+    randomIndex()
     playCurrent()
     
 End

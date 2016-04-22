@@ -12,15 +12,22 @@
   { HBox1 HBox
     MoveScaled(0,36,33,4)
     { BackButton ToolButton
-      MoveScaled(0,0,15,4)
+      MoveScaled(0,0,13,4)
       Background = &HF7DFFF&
       NoTabFocus = True
       Expand = True
       Text = ("Back")
       Border = True
     }
+    { RandomButton ToolButton
+      MoveScaled(13,0,10,4)
+      NoTabFocus = True
+      Expand = True
+      Text = ("Random")
+      Border = True
+    }
     { NextButton ToolButton
-      MoveScaled(18,0,15,4)
+      MoveScaled(23,0,10,4)
       NoTabFocus = True
       Expand = True
       Text = ("Next")

@@ -16,8 +16,10 @@ End
 Public Function Get(argDesktopFile As DesktopFile) As String
     
     Dim yukiXml As String = File.Load("Text/MenuItemTemplate")
+    Dim yukiLabel As String = Quote$(argDesktopFile.Name)
+    Dim yukiExecute As String = removeArgumentFromExec(argDesktopFile.Exec)
     
-    yukiXml = Subst$(yukiXml, Quote$(argDesktopFile.Name), removeArgumentFromExec(argDesktopFile.Exec))
+    yukiXml = Subst$(yukiXml, yukiLabel, yukiExecute)
     
     Return Replace$(yukiXml, "&", "and")
     

@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private $sizes As Integer[] = [5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 56]
+
+Private Sub addMenuItem(argSize As Integer)
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argSize
+        .Tag = argSize
+        If argSize = NagatoSettingsEditor.FontSize Then .Picture = MikuruIcon["button-check"]
+    End With
+    
+End
+
+Public Sub _AddChildMenus()
+    
+    Dim yukiSize As Integer
+    
+    For Each yukiSize In $sizes
+        addMenuItem(yukiSize)
+    Next
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsEditor.FontSize = Last.Tag
+    
+End

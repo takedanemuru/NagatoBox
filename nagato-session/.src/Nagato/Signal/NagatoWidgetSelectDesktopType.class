@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $comboBox As ComboBox
+
+Public Sub _OnInitializeWidget()
+    
+    $comboBox = New ComboBox(Me._$container)
+    
+    With $comboBox
+        .Expand = False
+        .ReadOnly = True
+        .W = 120
+        .List = NagatoXdgAutostarts.AllTypes
+        Try .Index = NagatoXdgAutostarts.AllTypes.Find("NagatoBox")
+    End With
+    
+End

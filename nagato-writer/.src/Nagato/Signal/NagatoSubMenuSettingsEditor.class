@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _AddChildMenus()
+    
+    Object.New("NagatoMenuItemSourceEditorForeground", [Me._$parentMenu])
+    Object.New("NagatoMenuItemSourceEditorBackground", [Me._$parentMenu])
+    Object.New("NagatoMenuItemShowStatusPanel", [Me._$parentMenu])
+    Object.New("NagatoSubMenuFontSize", [Me._$parentMenu, ("Font Size")])
+
+End

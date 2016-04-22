@@ -19,7 +19,8 @@ End
 Private Sub checkClosable()
     
     If Not $closable Then Return
-    If String.Len($message) + 7 > $position Then Return
+    ' timer.Delay = 150
+    If String.Len($message) + 40 > $position Then Return
     If Not DBus.Session.Applications.Exist("org.gambas.nagato-files") Then Return
     
     Raise RequestClose

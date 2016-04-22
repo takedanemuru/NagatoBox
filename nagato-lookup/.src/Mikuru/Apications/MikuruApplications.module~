@@ -24,9 +24,7 @@ Private Sub execute(argPath As String, Optional argAsSuperUser As Boolean = Fals
         Try Shell File.BaseName(argPath)
     End If
     
-    If Not Error Then NagatoSettings.PushApplicationPath(argPath)
-    
-    'Debug Error.Text
+    If Not Error Then NagatoSettingsRecentApplications.Push(argPath)
     
 End
 

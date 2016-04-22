@@ -13,9 +13,6 @@ End
 
 Public Sub _OnClickMenuItem()
     
-    Dialog.Title = ("Select Background Image") 
-    Dialog.Path = Desktop.GetDirectory("PICTURES")
-    If Dialog.OpenFile(False) Then Return
-    NagatoSettings.Background = Dialog.Path
+    HaruhiPictureChooser.ShowDialog()
     
 End

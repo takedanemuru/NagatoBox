@@ -1,8 +1,10 @@
 ' Gambas class file
 
 Property Read All As NagatoAutostartFile[]
+Property Read DesktopTypes As String[]
 
 Private $autostartFiles As New NagatoAutostartFile[]
+Private $directory As String
 
 Private Sub execute(argAutostartFile As NagatoAutostartFile)
     
@@ -24,13 +26,20 @@ Public Function ExecuteAll()
     
 End
 
-Public Sub _new(argDirectory As String)
+Private Sub reloadData()
     
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(argDirectory)
-        $autostartFiles.Add(Object.New("NagatoAutostartFile", [argDirectory &/ yukiPath]))
+    For Each yukiPath In Dir($directory).Sort(gb.Natural + gb.IgnoreCase)
+        $autostartFiles.Add(Object.New("NagatoAutostartFile", [$directory &/ yukiPath]))
     Next
+    
+End
+
+Public Sub _new(argDirectory As String)
+    
+    $directory = argDirectory
+    reloadData()
     
 End
 
@@ -38,4 +47,18 @@ Private Function All_Read() As NagatoAutostartFile[]
 
     Return $autostartFiles
 
+End
+
+Private Function DesktopTypes_Read() As String[]
+
+    Dim yukiAutostartFile As NagatoAutostartFile
+    Dim yukiData As New NagatoUniqueArray
+    
+    For Each yukiAutostartFile In $autostartFiles
+        yukiData.Add(yukiAutostartFile.NotShowIn)
+        yukiData.Add(yukiAutostartFile.OnlyShowIn)
+    Next
+    
+    Return yukiData.Data
+    
 End

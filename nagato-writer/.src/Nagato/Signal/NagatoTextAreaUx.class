@@ -5,6 +5,7 @@ Inherits NagatoUxContainer
 Property Read TextArea As TextArea
 Property Read Container As VBox
 
+Private $observer As Observer
 Private $textArea As TextArea
 Private $container As VBox
 
@@ -25,8 +26,10 @@ Private Sub initializeTextArea()
     
     With $textArea
         .Expand = True
-        .Foreground = Color.Violet
+        .Foreground = NagatoSettingsEditor.Foreground
+        .Background = NagatoSettingsEditor.Background
         .Wrap = True
+        .Font.Size = NagatoSettingsEditor.FontSize
         .SetFocus()
     End With
     
@@ -36,6 +39,7 @@ Public Sub _initialize() ' override
     
     initializeVBox()
     initializeTextArea()
+    $observer = New Observer(NagatoSettingsEditor) As "Asakura"
     
 End
 
@@ -49,4 +53,14 @@ Private Function Container_Read() As VBox
 
     Return $container
 
+End
+
+Public Sub Asakura_SettingsChanged()
+    
+    With $textArea
+        .Foreground = NagatoSettingsEditor.Foreground
+        .Background = NagatoSettingsEditor.Background
+        .Font.Size = NagatoSettingsEditor.FontSize
+    End With
+    
 End
