@@ -1,41 +1,17 @@
 ' Gambas module file
 
-Private $startUpPath As String = ""
-Private $stickyMode As Boolean = False
-
-Private Sub parsingApplicationArguments()
-    
-    Dim yukiPath As String
-    Dim yukiOtherOptions As String[]
-    
-    Args.Begin(("Usage"))
-        yukiPath = Args.Get("o", "open", ("Open a file"), ("Path to open"))
-        $stickyMode = Args.Has("s", "sticky", ("Sticky mode"))
-    yukiOtherOptions = Args.End()
-    
-    If yukiPath <> "" Then
-        $startUpPath = yukiPath
-    Else If yukiOtherOptions.Count <> 0 Then
-        $startUpPath = yukiOtherOptions[0]
-    End If
-
-End
+Private $args As New NagatoArguments
 
 Public Sub Main()
     
-    parsingApplicationArguments()
+    $args.Parse()
     
-    If $stickyMode Then
-        'Debug "sticky"
-        MikuruStickies.ShowAll()
-    Else If NagatoDBus.IsUnique() Then
-        'Debug "unique"
+    If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
-        HaruhiMain.OpenWithPath($startUpPath)
+        HaruhiMain.OpenWithPath($args.StartupPath)
         HaruhiMain.InitializeRecentIconView()
     Else
-        Debug "non unique"
-        Try DBus["org.gambas.nagato.text"]["/org/nagato/text", "org.gambas.nagato.text.nagatointerface"].SetFilePath($startUpPath)
+        Try DBus["org.gambas.nagato.text"]["/org/nagato/text", "org.gambas.nagato.text.nagatointerface"].SetFilePath($args.StartupPath)
     End If
     
 End

@@ -3,7 +3,6 @@
 Private $container As HBox
 Private $starButton As NagatoMenuDesktopPanelButton
 Private $main As NagatoDesktopPanelContainer
-'Private $systray As NagatoPanelSystray
 Private $pager As NagatoPanelPager
 Private $clock As NagatoPanelClock
 
@@ -11,7 +10,6 @@ Private Sub setPanelItems()
     
     $starButton = New NagatoMenuDesktopPanelButton($container) As "StarMenu"
     $main = New NagatoDesktopPanelContainer($container)
-    '$systray = New NagatoPanelSystray($container, False)
     $pager = New NagatoPanelPager($container, False)
     $clock = New NagatoPanelClock($container, False)
     
@@ -19,7 +17,7 @@ End
 
 Private Sub initializeContainer(argForm As Form)
     
-    $container = New HBox(argForm)
+    $container = New HBox(argForm) As "Container"
     
     With $container
         .Expand = False
@@ -33,6 +31,10 @@ Public Sub _new(argForm As Form)
     
     initializeContainer(argForm)
     setPanelItems()
+    ' HaruhiSystray.Visible = False
+    ' HaruhiSystray.Start()
+    ' MikuruX11.SetAsDock(HaruhiSystray.Id)
+    ' MikuruX11.ReservePanelHeightOnScreen(HaruhiSystray.Id)
     
 End
 
@@ -48,5 +50,13 @@ Public Sub StarMenu_Signal(argEvent As Integer, argValues As Variant[])
     $main.ForceReload()
     $pager.ForceReload()
     $clock.ForceReload()
+    
+End
+
+Public Sub Container_Arrange()
+    
+    ' HaruhiSystray.Y = $container.ScreenY
+    ' HaruhiSystray.H = $container.H
+    ' HaruhiSystray.Visible = True
     
 End

@@ -27,6 +27,8 @@
 
 + ~~adopt new dbus interfaces~~
 + ~~new : scroll music data that longer than drawing-area width.~~
++ new : systray (?)
++ new : context menu to "open as new tab" for treeview.
 
 ### nagato-fullscreen-editor (v42.4.6)
 
@@ -36,6 +38,10 @@
 ### nagato-lookup
 
 + ~~remove useless gksu functionalities.~~
+
+### nagato-map
+
++ fix : solve crash on v3.9
 
 ### nagato-pdf-view (v42.4.2)
 
@@ -52,6 +58,11 @@
 
 + ~~fix : get path from "for user" grid correctlly~~
 + new : "for which de" menu
++ new : refine desktop entry file property view.
+
+### nagato-taskmanager (v42.4.11)
+
++ ~~new : now can kill admin process through polkit.~~
 
 ### nagato-text
 
@@ -68,4 +79,4 @@
 + ~~new : new css themes~~
 + ~~new : font config for source editor.~~
 + ~~remove menu to select css for presentation.~~
-
++ fix : restructuring complicated star menu structure.

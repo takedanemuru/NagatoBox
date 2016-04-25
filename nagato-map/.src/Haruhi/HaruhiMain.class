@@ -49,6 +49,7 @@ Public Sub TFEI_MenuEvent(argEvent As Integer)
             $leftPanel.Toggle()
         Case NagatoMenuPipe.MenuInformation, NagatoMenuPipe.MenuRefreshWikipediaArticles
             $leftPanel.Request($mapView.MapPoint.Lat, $mapView.MapPoint.Lon)
+            Debug "done ?"
         Case NagatoMenuPipe.MenuBookmark
             HaruhiAddBookmark.SetLocation($mapView.MapPoint.Lat, $mapView.MapPoint.Lon)
             If HaruhiAddBookmark.ShowDialog() = HaruhiAddBookmark.Added Then $leftPanel.AddBookmark()

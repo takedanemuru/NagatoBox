@@ -36,7 +36,7 @@ Public Sub Draw(argMapView As MapView)
     Dim yukiScale As Float = getScale(argMapView.Map.Zoom, argMapView.Map.Center.Lat)
     Dim yukiMaxSteps As Integer = getMaxSteps(yukiScale, argMapView.W)
     Dim yukiIndex As Integer
-
+    
     Paint.Begin(Draw.Device)
         Paint.Brush = Paint.Color(Color.White + 16777216 * 128)
         Paint.Rectangle(0, argMapView.H - 40, yukiScale * yukiMaxSteps + 20, 40)

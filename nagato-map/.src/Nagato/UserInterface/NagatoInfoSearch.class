@@ -22,5 +22,6 @@ End
 Public Sub SearchBox_NewData(argData As Collection)
     
     $searchGrid.RefreshSearchGridData(argData)
+    Wait 1
     
 End

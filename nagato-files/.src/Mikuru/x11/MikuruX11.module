@@ -2,11 +2,22 @@
 
 Private Const Type As String = "_NET_WM_WINDOW_TYPE"
 Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
+Private Const TypeDock As String = "_NET_WM_WINDOW_TYPE_DOCK"
 Private Const TypeStrut As String = "_NET_WM_STRUT"
 
 Public Function SetAsRoot(argWindowId As Integer) As Boolean
     
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", argWindowId, Type, TypeDesktop) Wait
+    
+    If Error Then Return False
+    
+    Return True
+    
+End
+
+Public Function SetAsDock(argWindowId As Integer) As Boolean
+    
+    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", argWindowId, Type, TypeDock) Wait
     
     If Error Then Return False
     

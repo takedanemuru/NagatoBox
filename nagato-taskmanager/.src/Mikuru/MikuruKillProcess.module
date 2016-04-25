@@ -28,7 +28,9 @@ Private Sub killRootProcess()
     Dim yukiWarning1 As String = ("WARNING : THIS IS NOT A USER PROCESS.\n") 
     Dim yukiWarning2 As String = ("You need root privileges to kill this process.\n") 
     
-    Message.Warning(yukiWarning1 & yukiWarning2, ("OK"))
+    If Message.Warning(yukiWarning1 & yukiWarning2, ("Cancel"), ("OK")) = 1 Then Return
+    
+    Try Shell Subst$("pkexec kill &1", $id)
     
 End
 

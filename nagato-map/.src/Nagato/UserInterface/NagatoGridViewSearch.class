@@ -19,7 +19,7 @@ Private Sub setData(argCollection As Collection)
     
     For Each yukiGeoElement In argCollection
         With Me._$gridView
-            Inc .Rows.Count
+            Inc Me._$gridView.Rows.Count
             Me._$gridView[.Rows.Max, 0].Text = yukiGeoElement.VisibleName
             Me._$gridView[.Rows.Max, 0].Alignment = Align.Left
             Me._$gridView[.Rows.Max, 1].Text = yukiGeoElement.Latitude
@@ -35,6 +35,7 @@ End
 Public Sub _Activate(argLatitude As Float, argLongitude As Float)
     
     HaruhiMain.SetLocation(argLatitude, argLongitude, 12)
+    
     Raise MenuEvent(NagatoMenuPipe.MenuRefreshWikipediaArticles)
     
 End
@@ -43,5 +44,6 @@ Public Sub RefreshSearchGridData(argCollection As Collection)
     
     clearGrid()
     setData(argCollection)
+    Me._$gridView.Refresh()
     
 End
