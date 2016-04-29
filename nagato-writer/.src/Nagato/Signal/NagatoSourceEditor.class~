@@ -38,7 +38,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     
     If Not NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
     NagatoSettings.PushRecentPath($fileHandler.Path)
-    $headersList.Refresh($fileHandler.Headers)
+    $headersList.Refresh($fileHandler.Headers, $textArea.Line)
     If $fileHandler.Path Then HaruhiMain.Title = File.Name($fileHandler.Path)
     Raise Signal(MikuruSignal.ViewMoveTag, [$fileHandler.GetHeaderIndex($textArea.Line)])
     $textArea.CheckCursorPosition()
@@ -67,7 +67,6 @@ End
 Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.ViewMoveCursor Then
-        Debug $fileHandler.GetHeaderIndex(argValues[0])
         Raise Signal(MikuruSignal.ViewMoveTag, [$fileHandler.GetHeaderIndex(argValues[0])])
     Else
         Raise Signal(argSignal, argValues)

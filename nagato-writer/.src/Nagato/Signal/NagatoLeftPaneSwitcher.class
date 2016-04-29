@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Public Enum IndexList, IndexTree
+
+Private $comboBox As ComboBox
+
+Event Changed(argIndex As Integer)
+
+Public Sub _Initialize()
+    
+    $comboBox = New ComboBox(Me._$parentContainer) As "ComboBox"
+    
+    With $comboBox
+        .H = 32
+        .List = [("List"), ("Tree")]
+        .ReadOnly = True
+        .Index = 0
+    End With
+    
+End
+
+Public Sub ComboBox_Click()
+    
+    Raise Changed($comboBox.Index)
+    
+End

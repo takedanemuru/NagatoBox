@@ -3,3 +3,15 @@
 Create Static
 
 Public _$settings As New Settings
+
+Event SettingsChanged
+
+Public Sub _ChangeSettings(argKey As String, Value As Integer)
+    
+    If Me._$settings[argKey] = Value Then Return
+    Me._$settings[argKey] = Value
+    Me._$settings.Save()
+    
+    Raise SettingsChanged
+    
+End

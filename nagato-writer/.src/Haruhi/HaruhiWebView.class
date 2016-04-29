@@ -1,0 +1,35 @@
+' Gambas class file
+
+Private $previewer As NagatoPreviewer
+
+Public Sub RefreshView(argSource As String)
+    
+    Me.Show()
+    $previewer.Refresh(argSource)
+    
+End
+
+Public Sub MoveToTag(argID As String)
+    
+    $previewer.MoveToTag(argID)
+    
+End
+
+Public Sub _new()
+    
+    $previewer = New NagatoPreviewer(VBox1)
+    
+End
+
+Public Sub Form_Open()
+
+    NagatoSettings.LoadFormSettings(Me)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+

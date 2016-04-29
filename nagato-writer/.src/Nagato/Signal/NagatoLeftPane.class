@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Private $sidePanel As SidePanel
+Private $switcher As NagatoLeftPaneSwitcher
+Private $listView As NagatoListViewSourceHeaders
+Private $treeView As NagatoTreeViewSourceHeaders
+
+Private Sub initializeSidePanel()
+    
+    $sidePanel = New SidePanel(Me._$parentContainer)
+    
+    With $sidePanel
+        .W = 160
+        .Expand = False
+        .Arrangement = Arrange.Vertical
+        .Orientation = Align.Left
+        .Hidden = True
+    End With
+    
+End
+
+Public Sub _initialize() ' override
+    
+    initializeSidePanel()
+    $switcher = New NagatoLeftPaneSwitcher($sidePanel) As "Switcher"
+    $listView = New NagatoListViewSourceHeaders($sidePanel) As "TFEI"
+    $treeView = New NagatoTreeViewSourceHeaders($sidePanel) As "TFEI"
+    
+End
+
+Public Sub Refresh(argCollection As Collection, argLine As Integer)
+    
+    $listView.Refresh(argCollection, argLine)
+    $treeView.Refresh(argCollection, argLine)
+    
+End
+
+Public Sub Switcher_Changed(argIndex As Integer)
+    
+    If argIndex = NagatoLeftPaneSwitcher.IndexList Then
+        $listView.SetVisible(True)
+        $treeView.SetVisible(False)
+    Else
+        $listView.SetVisible(False)
+        $treeView.SetVisible(True)
+    Endif
+    
+End

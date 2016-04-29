@@ -1,0 +1,67 @@
+' Gambas class file
+
+Inherits NagatoUxContainerSourceHeaders
+
+Private $treeView As TreeView
+Private $fetcher As New NagatoHeaderRootFetcher
+
+Public Sub _OnInitialize()
+    
+    $treeView = New TreeView(Me._$parentContainer) As "Widget"
+    
+    With $treeView
+        .Expand = True
+        .Foreground = Color.White
+        .Background = Color.DarkBlue
+        .Font.Bold = True
+        .Visible = False
+    End With
+    
+End
+
+Private Sub setTreeViewItem(argHeader As String, argKey As Integer)
+    
+    Dim yukiParentKey As String = $fetcher.GetParentKey(argHeader, argKey)
+    
+    $treeView.Add(argKey, argHeader,, yukiParentKey)
+    
+End
+
+Private Function setTreeViewItems(argCollection As Collection, argLine As Integer) As Integer ' returns currentKey
+    
+    Dim yukiHeader As String
+    Dim yukiCurrentKey As Integer
+    
+    For Each yukiHeader In argCollection
+        setTreeViewItem(yukiHeader, argCollection.Key)
+        If argLine >= CInt(argCollection.Key) Then yukiCurrentKey = CInt(argCollection.Key)
+    Next
+    
+    Return yukiCurrentKey
+    
+End
+
+Private Sub ensureVisible(argCurrentKey As Integer)
+    
+    Try $treeView[$treeView[argCurrentKey].ParentKey].Expanded = True
+    Try $treeView[argCurrentKey].Expanded = True
+    Try $treeView.Key = argCurrentKey
+    
+End
+
+Public Sub _OnRefresh(argCollection As Collection, argLine As Integer)
+    
+    Dim yukiCurrentKey As Integer
+    
+    $treeView.Clear()
+    $fetcher.Clear()
+    yukiCurrentKey = setTreeViewItems(argCollection, argLine)
+    If yukiCurrentKey > 0 Then ensureVisible(yukiCurrentKey)
+    
+End
+
+Public Sub _OnSetVisible(argVisible As Boolean)
+    
+    $treeView.Visible = argVisible
+    
+End

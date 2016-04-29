@@ -1,0 +1,40 @@
+' Gambas class file
+
+Private $data As String[]
+
+Private Sub getValidParentKey(argLevel As Integer) As String
+    
+    Dim yukiKey As String
+    Dim yukiShift As Integer = 1
+    
+    Do
+        yukiKey = $data[argLevel - yukiShift]
+        If yukiKey Then Return yukiKey
+        Inc yukiShift
+    Loop
+    
+Catch ' for out of bounds
+    Return ""
+    
+End
+
+Public Sub Clear()
+    
+    $data = ["", "", "", "", "", "", ""]
+    
+End
+
+Public Function GetParentKey(argHeader As String, argKey As Integer) As String
+    
+    Dim yukiLevel As Integer
+    
+    For yukiLevel = 6 DownTo 1
+        $data[yukiLevel] = ""
+        If argHeader Not Begins String(yukiLevel, "#") Then Continue
+        $data[yukiLevel] = argKey
+        Return getValidParentKey(yukiLevel)
+    Next
+    
+    Return ""
+    
+End

@@ -24,9 +24,21 @@ Private Sub addUseMathjaxMenu()
     
 End
 
+Private Sub addUseSeparatePreviewFormMenu()
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItemUseSeparatePreview"
+    
+    With yukiMenu
+        .Text = ("Use Separate Preview  Form")
+        .Picture = IIf(NagatoSettings.UseSeparatePreviewForm, MikuruIcon["button-check"], Null)
+    End With
+    
+End
+
 Public Sub _AddChildMenus()
     
     addLivePreviewMenu()
+    addUseSeparatePreviewFormMenu()
     addUseMathjaxMenu()
     
 End
@@ -40,5 +52,11 @@ End
 Public Sub MenuItemUseMathjax_Click()
     
     NagatoSettings.UseMathjax = Not NagatoSettings.UseMathjax
+    
+End
+
+Public Sub MenuItemUseSeparatePreview_Click()
+    
+    NagatoSettings.UseSeparatePreviewForm = Not NagatoSettings.UseSeparatePreviewForm
     
 End

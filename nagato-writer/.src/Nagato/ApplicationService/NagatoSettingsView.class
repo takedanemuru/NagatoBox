@@ -9,18 +9,7 @@ Property Read TabSize As Integer
 Property TabSizeIndex As Integer
 Property ShowStatusPanel As Boolean
 
-Event RequestReload
 Event ToggleStatusPanel
-
-Private Sub resetProperty(argProperty As String, Value As Variant)
-    
-    If Me._$settings[argProperty] = Value Then Return
-
-    Me._$settings[argProperty] = Value
-    Me._$settings.Save()
-    Raise RequestReload
-    
-End
 
 Private Function Syntax_Read() As String
 
@@ -36,7 +25,7 @@ End
 
 Private Sub SyntaxIndex_Write(Value As Integer)
 
-    resetProperty("markdown/syntax_index", Value)
+    Me._ChangeSettings("markdown/syntax_index", Value)
 
 End
 
@@ -48,7 +37,7 @@ End
 
 Private Sub CssIndex_Write(Value As Integer)
 
-    resetProperty("preview/css", Value)
+    Me._ChangeSettings("preview/css", Value)
 
 End
 
@@ -60,7 +49,7 @@ End
 
 Private Sub TabSizeIndex_Write(Value As Integer)
 
-    resetProperty("editor/tab_size_index", Value)
+    Me._ChangeSettings("editor/tab_size_index", Value)
 
 End
 

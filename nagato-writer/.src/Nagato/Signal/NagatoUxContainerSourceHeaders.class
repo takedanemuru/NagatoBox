@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoUxContainer
+
+Public Sub _OnInitialize()
+    
+    
+    
+End
+
+Public Sub _Initialize()
+    
+    Me._OnInitialize()
+    
+End
+
+Public Sub _OnRefresh(argCollection As Collection, argLine As Integer)
+    
+    
+    
+End
+
+Public Sub Refresh(argCollection As Collection, argLine As Integer)
+    
+    Me._OnRefresh(argCollection, argLine)
+    
+End
+
+Public Sub _OnSetVisible(argVisible As Boolean)
+    
+    
+    
+End
+
+Public Sub SetVisible(argVisible As Boolean)
+    
+    Me._OnSetVisible(argVisible)
+    
+End
+
+Public Sub Widget_Activate()
+    
+    Raise Signal(MikuruSignal.EditMoveToLine, [CInt(Last.Key)])
+    
+End

@@ -23,7 +23,7 @@ Public Sub _OnClick()
     
 End
 
-Public Sub Asakura_RequestReload()
+Public Sub Asakura_SettingsChanged()
     
     Me._$comboBox.Index = NagatoSettingsView.CssIndex
     

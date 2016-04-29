@@ -6,6 +6,39 @@ Private $previewer As NagatoPreviewer
 Private $publisher As New NagatoPublisherFacade
 Private $observer As Observer
 
+Private Sub reloadPreview(argEvent As Integer, argArgs As Variant[])
+    
+    If Not HaruhiWebView.Closed Then MainContainer.Layout = [1, 1]
+    If Not HaruhiWebView.Closed Then HaruhiWebView.Close()
+    
+    Select Case argEvent
+        Case MikuruSignal.ViewPreview
+            $previewer.Refresh($sourceEditor.Text)
+        Case MikuruSignal.ViewMoveToBottom
+            $previewer.MoveToTag(MikuruHtmlConverter.BottomId)
+        Case MikuruSignal.ViewMoveTag
+            If argArgs[0] = -1 Then $previewer.MoveToTag("<body>") ' move to top of page.
+            If argArgs[0] >= 0 Then Try $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
+    End Select
+    
+End
+
+Private Sub reloadStandAlonePreview(argEvent As Integer, argArgs As Variant[])
+    
+    MainContainer.Layout = [1, 0]
+    
+    Select Case argEvent
+        Case MikuruSignal.ViewPreview
+            HaruhiWebView.RefreshView($sourceEditor.Text)
+        Case MikuruSignal.ViewMoveToBottom
+            HaruhiWebView.MoveToTag(MikuruHtmlConverter.BottomId)
+        Case MikuruSignal.ViewMoveTag
+            If argArgs[0] = -1 Then HaruhiWebView.MoveToTag("<body>") ' move to top of page.
+            If argArgs[0] >= 0 Then Try HaruhiWebView.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
+    End Select
+    
+End
+
 Public Sub SetPath(argPath As String)
     
     Me.Title = File.Name(argPath)
@@ -16,7 +49,6 @@ End
 Public Sub _new()
 
     Application.MainWindow = Me
-    $observer = New Observer(NagatoSettingsView) As "Asakura"
 
 End
 
@@ -25,6 +57,9 @@ Public Sub Form_Open()
     $menuPanel = New NagatoMenuPanel(MenuPanelContainer) As "TFEI"
     $sourceEditor = New NagatoSourceEditor(MainContainer) As "TFEI"
     $previewer = New NagatoPreviewer(MainContainer) ' has no user control
+    $observer = New Observer(NagatoSettingsView) As "Asakura"
+
+    If NagatoSettings.UseSeparatePreviewForm Then MainContainer.Layout = [1, 0]
 
 End
 
@@ -50,20 +85,16 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
             $sourceEditor.FileEvent(argEvent, argArgs)
         Case MikuruSignal.PublishNone To MikuruSignal.PublishNone + 999
             $publisher(argEvent, $sourceEditor.Path)
-        Case MikuruSignal.ViewPreview
-            $previewer.Refresh($sourceEditor.Text)
-        Case MikuruSignal.ViewMoveToBottom
-            $previewer.MoveToTag(MikuruHtmlConverter.BottomId)
-        Case MikuruSignal.ViewMoveTag
-            If argArgs[0] = -1 Then $previewer.MoveToTag("<body>") ' move to top of page.
-            If argArgs[0] >= 0 Then Try $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
+        Case MikuruSignal.ViewNone To MikuruSignal.ViewNone + 999
+            If NagatoSettings.UseSeparatePreviewForm Then reloadStandAlonePreview(argEvent, argArgs)
+            If Not NagatoSettings.UseSeparatePreviewForm Then reloadPreview(argEvent, argArgs)
         Case MikuruSignal.EditNone To MikuruSignal.EditNone + 999
             $sourceEditor.EditEvent(argEvent, argArgs)
     End Select
     
 End
 
-Public Sub Asakura_RequestReload()
+Public Sub Asakura_SettingsChanged()
     
     $sourceEditor.FileEvent(MikuruSignal.FileSave, Null)
     

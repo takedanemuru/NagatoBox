@@ -4,7 +4,8 @@ body {
   line-height: 1.6;
   padding-top: 10px;
   padding-bottom: 10px;
-    background-color: #403F3B;
+  background-color: white;
+  width: 640px;
   color: #F1F1F1;
   padding: 30px; 
  }
@@ -16,9 +17,7 @@ body > *:last-child {
   margin-bottom: 0 !important; }
 
 a {
-  color:#FF5FAF;
-}
-
+  color: #97BB94; }
 a.absent {
   color: #cc0000; }
 a.anchor {
@@ -30,7 +29,7 @@ a.anchor {
   top: 0;
   left: 0;
   bottom: 0; }
-  
+
 h1, h2, h3, h4, h5, h6 {
   margin: 20px 0 10px;
   padding: 0;
@@ -62,43 +61,43 @@ h6 tt, h6 code {
 
 h1 {
   font-size: 28px;
-  border-bottom: 1px solid #FF4FFF;
-  color: #FF7FFF; }
+  border-bottom: 1px solid #CCCCCC;
+  color: #97BB94; }
 
 h2 {
   font-size: 24px;
-  border-bottom: 1px solid #FF4FFF;
-  color: #FF7FFF; }
+  border-bottom: 1px solid #CCCCCC;
+  color: #97BB94; }
 
 h3 {
-  color: #FF7FFF;
+  color: #97BB94;
   font-size: 18px; }
 
 h4 {
-  color: #FF7FFF;
+  color: #97BB94;
   font-size: 16px; }
 
 h5 {
-  color: #FF7FFF;
+  color: #97BB94;
   font-size: 14px; }
 
 h6 {
-    color: #FF7FFF;
+    color: #4078C0;
     font-size: 14px; }
 
 p, blockquote, ul, ol, dl, li {
-    color: #BBBCBF;
+    color: #9F9F9F;
     margin: 15px 0; }
 
 table, pre, code {
-    color: #BBBCBF;
+    color: #9F9F9F;
     margin: 15px 0; }
 
 hr{
     border:none;
-    border-top:solid 1px #FF4FFF;
+    border-top:solid 1px #CCCCCC;
     height:1px;
-    color:#FF4FFF;
+    color:#CCCCCC;
     margin: 0 6 0 6;
 }
 
@@ -159,7 +158,7 @@ dl {
 blockquote {
   border-left: 4px solid #dddddd;
   padding: 0 15px;
-  color: #AF5FFF;}
+  color: #CCCCCC;}
 
   blockquote > :first-child {
     margin-top: 0; }
@@ -171,24 +170,24 @@ table {
   padding: 0; }
   
 table tr {
-    border-top: 1px solid #cccccc;
+    border-top: 1px solid #CCCCCC;
     background-color: white;
     margin: 0;
     padding: 0; }
     
     table tr:nth-child(2n) {
-		background-color: #FFDFFF; }
+		background-color: #EFFFDF; }
 		
     table tr th {
       font-weight: bold;
-      background-color: #FF7FFF;
+      background-color: #97BB94;
       color: white;
-      border: 1px solid #cccccc;
+      border: 1px solid #CCCCCC;
       text-align: left;
       margin: 0;
       padding: 6px 13px; }
     table tr td {
-      border: 1px solid #cccccc;
+      border: 1px solid #CCCCCC;
       text-align: left;
       margin: 0;
       padding: 6px 13px; }
@@ -267,7 +266,7 @@ code, tt {
   white-space: nowrap;
   border: 1px solid #eaeaea;
   background-color: #f8f8f8;
-  color: #FF5FAF;
+  color: #FF007F;
   border-radius: 3px; }
 
 pre code {
@@ -275,8 +274,7 @@ pre code {
   padding: 0;
   white-space: pre;
   border: none;
-  background: transparent; 
-}
+  background: transparent; }
 
 .highlight pre {
   background-color: #f8f8f8;
@@ -285,8 +283,7 @@ pre code {
   line-height: 19px;
   overflow: auto;
   padding: 6px 10px;
-  border-radius: 3px; 
-}
+  border-radius: 3px; }
 
 pre {
   background-color: #f8f8f8;
@@ -295,9 +292,7 @@ pre {
   line-height: 19px;
   overflow: auto;
   padding: 6px 10px;
-  border-radius: 3px; 
-}
-  
+  border-radius: 3px; }
   pre code, pre tt {
     background-color: transparent;
     border: none; }

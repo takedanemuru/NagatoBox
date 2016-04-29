@@ -1,44 +1,23 @@
 ' Gambas class file
 
-Inherits NagatoUxContainer
+Inherits NagatoUxContainerSOurceHeaders
 
-Private $sidePanel As SidePanel
 Private $listView As ListView
 
-Private Sub initializeSidePanel()
+Public Sub _OnInitialize()
     
-    $sidePanel = New SidePanel(Me._$parentContainer)
-    
-    With $sidePanel
-        .W = 160
-        .Expand = False
-        .Arrangement = Arrange.Fill
-        .Orientation = Align.Left
-        .Hidden = True
-    End With
-    
-End
-
-Private Sub initializeListView()
-    
-    $listView = New ListView($sidePanel) As "ListView"
+    $listView = New ListView(Me._$parentContainer) As "Widget"
     
     With $listView
         .Expand = True
         .Foreground = Color.White
         .Background = Color.Lighter(Color.Violet)
+        .Font.Bold = True
     End With
     
 End
 
-Public Sub _initialize() ' override
-    
-    initializeSidePanel()
-    initializeListView()
-    
-End
-
-Public Sub Refresh(argCollection As Collection)
+Public Sub _OnRefresh(argCollection As Collection, argLine As Integer)
     
     Dim yukiHeader As String
     
@@ -46,14 +25,15 @@ Public Sub Refresh(argCollection As Collection)
     
     For Each yukiHeader In argCollection
         $listView.Add(argCollection.Key, yukiHeader)
+        If argLine >= CInt(argCollection.Key) Then $listView.Key = argCollection.Key
     Next
     
     $listView.Refresh()
     
 End
 
-Public Sub ListView_Activate()
+Public Sub _OnSetVisible(argVisible As Boolean)
     
-    Raise Signal(MikuruSignal.EditMoveToLine, [CInt(Last.Key)])
+    $listView.Visible = argVisible
     
 End

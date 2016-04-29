@@ -13,6 +13,7 @@
     Expand = True
     { IconPictureBox PictureBox
       MoveScaled(14,1,14,14)
+      Picture = Picture["nagato-writer.png"]
       Alignment = Align.Center
     }
     { AboutTextLabel TextLabel

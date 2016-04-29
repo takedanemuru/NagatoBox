@@ -6,18 +6,6 @@ Property Foreground As Integer
 Property Background As Integer
 Property FontSize As Integer
 
-Event SettingsChanged
-
-Private Sub changeSettings(argKey As String, Value As Integer)
-    
-    If Me._$settings[argKey] = Value Then Return
-    Me._$settings[argKey] = Value
-    Me._$settings.Save()
-    
-    Raise SettingsChanged
-    
-End
-
 Private Function Foreground_Read() As Integer
 
     Return Me._$settings["editor/foreground", Color.Violet]
@@ -26,7 +14,7 @@ End
 
 Private Sub Foreground_Write(Value As Integer)
 
-    changeSettings("editor/foreground", Value)
+    Me._ChangeSettings("editor/foreground", Value)
 
 End
 
@@ -38,7 +26,7 @@ End
 
 Private Sub Background_Write(Value As Integer)
 
-    changeSettings("editor/background", Value)
+    Me._ChangeSettings("editor/background", Value)
 
 End
 
@@ -50,6 +38,6 @@ End
 
 Private Sub FontSize_Write(Value As Integer)
 
-    changeSettings("editor/font_size", Value)
+    Me._ChangeSettings("editor/font_size", Value)
 
 End

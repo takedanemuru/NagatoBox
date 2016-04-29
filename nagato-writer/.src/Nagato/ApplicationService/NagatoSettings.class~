@@ -5,25 +5,20 @@ Inherits NagatoSettingsCore
 Property LivePreview As Boolean
 Property Read RecentFiles As String[]
 Property UseMathjax As Boolean
+Property UseSeparatePreviewForm As Boolean
 
 Public Sub LoadFormSettings(argForm As Form)
     
-    If Me._$settings[Subst$("&1/maximized", argForm.Name), False] Then
-        With argForm
-            .X = Me._$settings[Subst$("&1/x", argForm.Name), Screen.H * 0.125]
-            .Y = Me._$settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
-            .H = Me._$settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
-            .W = Me._$settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
-        End With
-    Else
-        argForm.Maximized = True
-    End If
+    With argForm
+        .X = Me._$settings[Subst$("&1/x", argForm.Name), Screen.H * 0.125]
+        .Y = Me._$settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
+        .H = Me._$settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
+        .W = Me._$settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
+    End With
     
 End
 
 Public Sub SaveFormSettings(argForm As Form)
-    
-    Me._$settings[Subst$("&1/maximized", argForm.Name)] = argForm.Maximized
     
     With argForm
         Me._$settings[Subst$("&1/x", argForm.Name)] = .X
@@ -81,6 +76,19 @@ End
 Private Sub UseMathjax_Write(Value As Boolean)
 
     Me._$settings["mathjax/use"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function UseSeparatePreviewForm_Read() As Boolean
+
+    Return Me._$settings["preview/separate", False]
+
+End
+
+Private Sub UseSeparatePreviewForm_Write(Value As Boolean)
+
+    Me._$settings["preview/separate"] = Value
     Me._$settings.Save()
 
 End

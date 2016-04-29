@@ -5,5 +5,7 @@ Inherits NagatoValueList
 Public Enum Pandoc, Strict, PhpExtra, GitHub
 
 Public _$count As Integer = 4
-Public _$values As Variant[] = ["markdown", "markdown_strict", "markdown_phpextra", "markdown_github"]
-Public _$names As String[] = [("Pandoc's Extended"), ("Original Unextended"), ("PHP Markdown Extra"), ("GitHub Extended")]
+Public _$values As Variant[] = ["markdown", "markdown_strict", "markdown_phpextra", 
+                                                "markdown_github", "commonmark"]
+Public _$names As String[] = [("Pandoc's Extended"), ("Original Unextended"), ("PHP Markdown Extra"), 
+                                                ("GitHub Extended"), ("CommonMark")]

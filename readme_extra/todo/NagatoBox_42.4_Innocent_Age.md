@@ -66,7 +66,7 @@
 
 ### nagato-text
 
-+ fix : solve out-of-bounds error in command line arguments
++ ~~fix : solve out-of-bounds error in command line arguments~~
 
 ### nagato-web (v.42.4.35)
 
@@ -79,4 +79,12 @@
 + ~~new : new css themes~~
 + ~~new : font config for source editor.~~
 + ~~remove menu to select css for presentation.~~
-+ fix : restructuring complicated star menu structure.
++ ~~new : treeview for headers.~~
++ ~~fix : restructuring complicated star menu structure.~~
++ ~~new :  convert `CommonMark` format.~~
++ ~~new : separated preview form.~~
++ ~~new : mint theme~~
+
+### ohana-clock
+
++ ~~fix : date of Bonbori Matsuri.~~ 
