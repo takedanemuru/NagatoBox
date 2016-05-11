@@ -41,13 +41,16 @@
     MoveScaled(2,23,79,1)
   }
   { ConsoleTextArea TextEdit
-    MoveScaled(1,29,86,29)
+    MoveScaled(1,29,43,29)
     Font = Font["+2"]
     Background = &HD4D4F3&
     Foreground = &HFFFFFF&
     Expand = True
     ReadOnly = True
     Wrap = True
-    ScrollBar = Scroll.Vertical
+    ScrollBar = Scroll.None
+  }
+  { TerminalView1 TerminalView
+    MoveScaled(48,29,39,30)
   }
 }

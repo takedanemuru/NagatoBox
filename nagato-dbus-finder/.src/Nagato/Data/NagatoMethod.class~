@@ -2,17 +2,9 @@
 
 Inherits NagatoSymbol
 
-' Public Sub _new(argParentKey As String, argElement As XmlElement)
-'     
-'     Dim yukiArgs As New NagatoArgumentsMethod(argElement)
-'     
-'     With yukiArgs
-'         Try HaruhiMain.TreeView1.Add(argParentKey & "_" & .Name, .Text, MikuruIcon["gear"], argParentKey)
-'     End With
-'     
-' End
-
 Public Sub _OnInitializeArgsHandler(argElement As XmlElement)
+    
+    Debug argElement.TextContent
     
     Me._$args = New NagatoArgumentsMethod(argElement)
     

@@ -26,6 +26,18 @@ Public Sub SaveSettings()
     
 End
 
+Public Sub TableView_Click()
+    
+    Dim yukiList As String[]
+    
+    Select Case $tableView.Column
+        Case 4, 5
+            yukiList = NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].OnlyShowIn
+            HaruhiDialogOnlyShowIn.Set(yukiList)
+    End Select
+    
+End
+
 Public Sub TableView_Activate()
     
     ' ShowDetail($tableView.RowAt(Mouse.Y))
@@ -57,13 +69,9 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.AutostartsNew
-            Debug HaruhiDialogProperties.ShowDialog()
-        Case MikuruSignal.AutostartsShowSourceReadOnly
-            HaruhiDialogProperties.SetProperties(argValues[0])
-            HaruhiDialogProperties.ShowDialog()
+            HaruhiApplications.ShowDialog()
         Case MikuruSignal.AutostartsDelete
             MikuruDialogPortalDeleteAutostart(argValues[0].Path)
     End Select
     
 End
-

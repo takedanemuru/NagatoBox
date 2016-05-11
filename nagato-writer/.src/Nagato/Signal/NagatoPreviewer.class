@@ -23,6 +23,20 @@ Public Sub MoveToTag(argID As String)
     
 End
 
+Public Sub _call(argSignal As Integer, argValues As Variant[], argBufferText As String)
+    
+    Select Case argSignal
+        Case MikuruSignal.ViewPreview
+            Me.Refresh(argBufferText)
+        Case MikuruSignal.ViewMoveToBottom
+            Me.MoveToTag(MikuruHtmlConverter.BottomId)
+        Case MikuruSignal.ViewMoveTag
+            If argValues[0] = -1 Then Me.MoveToTag("<body>") ' move to top of page.
+            If argValues[0] >= 0 Then Try Me.MoveToTag(MikuruHtmlConverter.IDs[argValues[0]])
+    End Select
+    
+End
+
 Public Sub _Initialize()
     
     $webview = New WebView(Me._$parentContainer) As "WebView"

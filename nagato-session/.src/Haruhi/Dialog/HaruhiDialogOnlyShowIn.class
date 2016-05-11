@@ -1,0 +1,16 @@
+' Gambas class file
+
+Public Sub Set(argList As String[])
+    
+    MainListEditor.List.Clear()
+    MainListEditor.List = argList
+    ApplyButton.Enabled = False
+    Me.ShowDialog()
+    
+End
+
+Public Sub MainListEditor_Change()
+
+    ApplyButton.Enabled = True
+
+End

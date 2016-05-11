@@ -13,8 +13,6 @@ End
 
 Public Sub Update(argStream As String)
     
-    If InStr(argStream, gb.NewLine) > 0 Then Debug "new line"
-    
     $output &= argStream
     
     $textArea.RichText = NagatoText.GetRichText($output)

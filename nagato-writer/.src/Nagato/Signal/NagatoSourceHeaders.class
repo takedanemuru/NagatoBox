@@ -8,16 +8,22 @@ Private $headers As New Collection
 Private $headerLines As New NagatoHeaderLines
 Private $textBuffer As New NagatoTextBuffer
 
+Private Sub addHeader(argHeaderLevel As Integer, argLine As Integer)
+    
+    If argHeaderLevel = 0 Then Return
+    $headerLines.Add(argHeaderLevel, argLine)
+    $headers.Add($textBuffer[argLine], CString(argLine))
+    
+End
+
 Private Sub parseHeaderData()
     
     Dim yukiLine As Integer
-    Dim yukiHeaderLevel As Integer
+    Dim yukiLock As Boolean = False
     
     For yukiLine = 0 To $textBuffer.Max
-        yukiHeaderLevel = $textBuffer.GetHeaderLevel(yukiLine)
-        If yukiHeaderLevel = 0 Then Continue
-        $headerLines.Add(yukiHeaderLevel, yukiLine)
-        $headers.Add($textBuffer[yukiLine], CString(yukiLine))
+        If $textBuffer[yukiLine] Begins "```" Then yukiLock = Not yukiLock
+        If Not yukiLock Then addHeader($textBuffer.GetHeaderLevel(yukiLine), yukiLine)
     Next
     
 End

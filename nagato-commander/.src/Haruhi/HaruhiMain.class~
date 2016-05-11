@@ -51,7 +51,6 @@ End
 Public Sub Process_Read()
 
     Dim yukiStream As String
-    Dim yukiLine As String
     
     While Not Eof($process)
         Read #$process, yukiStream, -256
@@ -84,6 +83,7 @@ Public Sub CommandTextArea_Activate()
     End If
     
     $consoleView.Clear()
+    TerminalView1.Shell(CommandTextArea.Text & gb.NewLine)
     
     Print #$process, yukiCommand;
   

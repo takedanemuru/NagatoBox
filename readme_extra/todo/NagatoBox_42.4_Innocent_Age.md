@@ -41,7 +41,7 @@
 
 ### nagato-map
 
-+ fix : solve crash on v3.9
++ ~~fix : solve crash on v3.9~~
 
 ### nagato-pdf-view (v42.4.2)
 

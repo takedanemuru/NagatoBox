@@ -19,7 +19,7 @@ Public Sub MoveToTag(argID As String)
     
     If $webview.Url = yukiUrl Then Return
     $webview.Url = yukiUrl
-    '$webview.Refresh()
+    $webview.Refresh()
     
 End
 

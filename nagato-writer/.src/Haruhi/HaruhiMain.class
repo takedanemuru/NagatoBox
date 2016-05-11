@@ -10,32 +10,14 @@ Private Sub reloadPreview(argEvent As Integer, argArgs As Variant[])
     
     If Not HaruhiWebView.Closed Then MainContainer.Layout = [1, 1]
     If Not HaruhiWebView.Closed Then HaruhiWebView.Close()
-    
-    Select Case argEvent
-        Case MikuruSignal.ViewPreview
-            $previewer.Refresh($sourceEditor.Text)
-        Case MikuruSignal.ViewMoveToBottom
-            $previewer.MoveToTag(MikuruHtmlConverter.BottomId)
-        Case MikuruSignal.ViewMoveTag
-            If argArgs[0] = -1 Then $previewer.MoveToTag("<body>") ' move to top of page.
-            If argArgs[0] >= 0 Then Try $previewer.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
-    End Select
+    $previewer(argEvent, argArgs, $sourceEditor.Text)
     
 End
 
 Private Sub reloadStandAlonePreview(argEvent As Integer, argArgs As Variant[])
     
     MainContainer.Layout = [1, 0]
-    
-    Select Case argEvent
-        Case MikuruSignal.ViewPreview
-            HaruhiWebView.RefreshView($sourceEditor.Text)
-        Case MikuruSignal.ViewMoveToBottom
-            HaruhiWebView.MoveToTag(MikuruHtmlConverter.BottomId)
-        Case MikuruSignal.ViewMoveTag
-            If argArgs[0] = -1 Then HaruhiWebView.MoveToTag("<body>") ' move to top of page.
-            If argArgs[0] >= 0 Then Try HaruhiWebView.MoveToTag(MikuruHtmlConverter.IDs[argArgs[0]])
-    End Select
+    HaruhiWebView(argEvent, argArgs, $sourceEditor.Text)
     
 End
 
@@ -67,10 +49,10 @@ Public Sub Form_Close()
     
     Select Case $sourceEditor.GetSaveStatus()
         Case NagatoAppClosure.ResponseHasBeenSaved, NagatoAppClosure.ResponseDiscard
-            NagatoSettings.SaveFormSettings(Me)
+            NagatoSettingsForm.Save(Me)
             Message.Info(("YUKI.N > I as indivisual also desire you to return... "), ("OK"))
         Case NagatoAppClosure.ResponseSaved
-            NagatoSettings.SaveFormSettings(Me)
+            NagatoSettingsForm.Save(Me)
             Message.Info(("YUKI.N > Document successfully saved."), ("OK"))
         Case NagatoAppClosure.ResponseCancel
             Stop Event

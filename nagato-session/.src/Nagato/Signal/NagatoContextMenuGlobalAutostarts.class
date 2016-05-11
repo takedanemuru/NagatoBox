@@ -6,7 +6,6 @@ Public Sub _AbstractOnInitialize()
     
     With MikuruSignal
         Me._AddMenuItem("Create Blocker", .AutostartsNewBlocker, "construction", Not Me._$autostart.Overridden)
-        Me._AddMenuItem("Show Detail", .AutostartsShowSourceReadOnly, "search")
     End With
     
     Object.New("NagatoMenuItemCopyToUserAutostarts", [Me._$rootMenu, Me._$autostart])
@@ -17,10 +16,7 @@ Public Sub MenuItem_Click()
     
     Select Case Last.Tag
         Case MikuruSignal.AutostartsNewBlocker
-            Debug "new block"
             MikuruBlocker.Create(Me._$autostart.Name)
-        Case MikuruSignal.AutostartsShowSourceReadOnly
-            Debug "show detail read-only"
     End Select
     
 End

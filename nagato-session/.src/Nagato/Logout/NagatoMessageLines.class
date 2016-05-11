@@ -42,7 +42,7 @@ End
 Public Sub FinalMessage()
     
     $messages.Clear()
-    $messages.Add("Another visit to the library would.")
+    $messages.Add(("Another visit to the library would."))
     $line = 0
     
 End

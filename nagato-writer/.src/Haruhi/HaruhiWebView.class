@@ -2,16 +2,30 @@
 
 Private $previewer As NagatoPreviewer
 
-Public Sub RefreshView(argSource As String)
+Private Sub refreshView(argSource As String)
     
     Me.Show()
     $previewer.Refresh(argSource)
     
 End
 
-Public Sub MoveToTag(argID As String)
+Private Sub moveToTag(argID As String)
     
     $previewer.MoveToTag(argID)
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[], argBufferText As String)
+    
+    Select Case argSignal
+        Case MikuruSignal.ViewPreview
+            refreshView(argBufferText)
+        Case MikuruSignal.ViewMoveToBottom
+            moveToTag(MikuruHtmlConverter.BottomId)
+        Case MikuruSignal.ViewMoveTag
+            If argValues[0] = -1 Then moveToTag("<body>") ' move to top of page.
+            If argValues[0] >= 0 Then Try moveToTag(MikuruHtmlConverter.IDs[argValues[0]])
+    End Select
     
 End
 
@@ -23,13 +37,12 @@ End
 
 Public Sub Form_Open()
 
-    NagatoSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
 
 End
 
 Public Sub Form_Close()
     
-    NagatoSettings.SaveFormSettings(Me)
+    NagatoSettingsForm.Save(Me)
     
 End
-

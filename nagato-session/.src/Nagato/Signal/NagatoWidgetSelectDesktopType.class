@@ -6,7 +6,7 @@ Private $comboBox As ComboBox
 
 Public Sub _OnInitializeWidget()
     
-    $comboBox = New ComboBox(Me._$container)
+    $comboBox = New ComboBox(Me._$container) As "ComboBox"
     
     With $comboBox
         .Expand = False
@@ -15,5 +15,11 @@ Public Sub _OnInitializeWidget()
         .List = NagatoXdgAutostarts.AllTypes
         Try .Index = NagatoXdgAutostarts.AllTypes.Find("NagatoBox")
     End With
+    
+End
+
+Public Sub ComboBox_Click()
+    
+    Debug $comboBox.Index
     
 End
