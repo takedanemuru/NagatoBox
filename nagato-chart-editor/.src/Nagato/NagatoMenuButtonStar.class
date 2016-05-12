@@ -1,0 +1,24 @@
+' Gambas class file
+
+Inherits NagatoUx
+
+Private Const MenuName As String = "StarMenu"
+
+Private $menuButton As MenuButton
+Private $menu As NagatoPullDownMenuStar
+
+Public Sub _OnInitialize()
+    
+    $menuButton = New MenuButton(Me._$container)
+    
+    With $menuButton
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+        .Picture = MikuruIcon["star"]
+        .Menu = MenuName
+    End With
+    
+    $menu = New NagatoPullDownMenuStar(MenuName)
+    
+End

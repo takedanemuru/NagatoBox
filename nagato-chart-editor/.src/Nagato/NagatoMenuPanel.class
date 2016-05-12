@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoUx
+
+Private $hBox As HBox
+Private $spacer As NagatoPanelSpacer
+Private $buttonStar As NagatoMenuButtonStar
+
+Public Sub _onInitialize()
+    
+    $hBox = New HBox(Me._$container)
+    $hBox.H = 24
+    $spacer = New NagatoPanelSpacer($hBox)
+    $buttonStar = New NagatoMenuButtonStar($hBox) As "TFEI"
+    
+End

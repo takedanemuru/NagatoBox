@@ -13,6 +13,12 @@
 + ~~remove too short sound file(s)~~
 + ~~new : randmize button~~
 
+### nagato-chart-editor
+
++ rename : rename nagato-data-table to nagato-chart-editor
++ new : save and load a csv file.
++ new : edit header.
+
 ### nagato-code-view (v42.4.14)
 
 + ~~new : show class inheritances~~
@@ -21,7 +27,7 @@
 ### nagato-config-screenlocker (v42.4.3)
 
 + ~~new : new icons~~
-+ fix : fix desktop entry title for nagato-screenlock
++ ~~fix : fix desktop entry title for nagato-screenlock~~ BAD IDEA.
 
 ### nagato-files (v42.4.78)
 
@@ -29,6 +35,7 @@
 + ~~new : scroll music data that longer than drawing-area width.~~
 + new : systray (?)
 + new : context menu to "open as new tab" for treeview.
++ new : call calendar from desktop-shell taskbar
 
 ### nagato-fullscreen-editor (v42.4.6)
 
@@ -72,7 +79,7 @@
 
 + new : menu to clear whole history.
 
-### nagato-writer (v42.4.32)
+### nagato-writer (v42.4.41)
 
 + ~~get file name from first line of document on the first saving.~~
 + ~~new : hidden div tag for html preview~~
@@ -84,7 +91,12 @@
 + ~~new :  convert `CommonMark` format.~~
 + ~~new : separated preview form.~~
 + ~~new : mint theme~~
++ ~~fix : avoid to recognize shebang as header in code block~~
 
 ### ohana-clock
 
 + ~~fix : date of Bonbori Matsuri.~~ 
+
+## dataoverminds (daemon)
+
++ new : weather forecast daeon ?

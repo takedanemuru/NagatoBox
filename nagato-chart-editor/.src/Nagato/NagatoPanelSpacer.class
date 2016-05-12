@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoUx
+
+Private $panel As Panel
+
+Public Sub _OnInitialize()
+    
+    $panel = New Panel(Me._$container)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End

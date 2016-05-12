@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $panel As NagatoMenuPanel
+Private $tableView As NagatoTableView
+
+Public Sub _new()
+    
+    $panel = New NagatoMenuPanel(MainVBox) As "TFEI"
+    $tableView = New NagatoTableView(MainVBox) As "TFEI"
+    
+End
+
+Public Sub Form_Open()
+    
+    NagatoSettingsForm.Load(Me)
+    
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsForm.Save(Me)
+    
+End

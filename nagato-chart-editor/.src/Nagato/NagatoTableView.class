@@ -1,0 +1,55 @@
+' Gambas class file
+
+Inherits NagatoUx
+
+Private $tableView As TableView
+
+Private Sub paintRow()
+    
+    Dim yukiColumnIndex As Integer
+    
+    For yukiColumnIndex = 0 To $tableView.Columns.Max
+        $tableView[$tableView.Rows.Max, yukiColumnIndex].Background = MikuruColor.GridBackground
+    Next
+    
+End
+
+Public Sub _OnInitialize()
+    
+    $tableView = New TableView(Me._$container) As "TableView"
+    
+    With $tableView
+        .Header = GridView.Horizontal
+        .Rows.Count = 1
+        .Columns.Count = 5
+        .Expand = True
+    End With
+    
+End
+
+Public Sub TableView_Click()
+    
+    $tableView.Edit()
+    
+End
+
+Public Sub TableView_Save(argRow As Integer, argColumn As Integer, argValue As String)
+    
+    $tableView[argRow, argColumn].Text = argValue
+    
+    If IsNumber(argValue) Then $tableView[argRow, argColumn].Alignment = Align.Right
+    
+    If $tableView.Font.TextWidth(argValue) + 16 > $tableView.Columns[argColumn].W Then
+        $tableView.Columns[argColumn].W = $tableView.Font.TextWidth(argValue) + 16
+    Endif
+    
+End
+
+Public Sub TableView_Insert()
+    
+    Inc $tableView.Rows.Count
+    If Odd($tableView.Rows.Max) Then paintRow()
+    $tableView.MoveTo($tableView.Rows.Max, 0)
+    Me.TableView_Click()
+    
+End
