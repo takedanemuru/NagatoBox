@@ -3,6 +3,7 @@
 Private $autostartTabGlobal As NagatoTabHandlerGlobalAutostarts
 Private $autostartTabUser As NagatoTabHandlerUserAutostarts
 Private $autoStartFilesObserver As NagatoAutostartFilesObserver
+Private $settingsObserver As Observer
 
 Private Sub initializeTabStrip()
     
@@ -21,6 +22,7 @@ Public Sub _new()
     NagatoTabLoginSound.Activate()
     
     $autoStartFilesObserver = New NagatoAutostartFilesObserver As "Asakura"
+    $settingsObserver = New Observer(NagatoSettingsSession) As "Asakura"
     
 End
 

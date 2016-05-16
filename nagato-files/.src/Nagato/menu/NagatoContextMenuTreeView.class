@@ -64,9 +64,9 @@ Public Sub _AddChildMenus()
     Else
         If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then addExecuteMenu()
         If Not IsDir(Last.Key) Then addOpenWithMenu()
-        
-        addRenameMenu()
-        addDeleteMenu()
+        If IsDir(Last.Key) Then Me._AddContextMenu(("Open New Tab"), 0)
+        If Not NagatoXdg.IsUserDir(Last.Key) Then addRenameMenu()
+        If Not NagatoXdg.IsUserDir(Last.Key) Then addDeleteMenu()
         Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
     End If
     
@@ -82,6 +82,12 @@ Public Sub DeleteMenu_Click()
     
     NagatoTrash.Delete([Me._$path])
     
-    Raise SIgnal(Me.ContextRefresh, [Me._$path])
+    Raise Signal(Me.ContextRefresh, [Me._$path])
+    
+End
+
+Public Sub ContextMenu_Click()
+    
+    TFEI.AddNewDirectory(Me._$path)
     
 End

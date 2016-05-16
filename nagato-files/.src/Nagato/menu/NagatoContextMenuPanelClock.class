@@ -6,6 +6,7 @@ Public Sub _AddChildMenus()
     
     With NagatoObject
         Object.New("NagatoMenuItemEditPanelClockFormat", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemCallCalendar", [Me._$rootMenu, ""])
     End With
     
 End

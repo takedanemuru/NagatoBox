@@ -34,10 +34,8 @@ Public Sub Logout(argType As Integer)
             Shell Subst$("openbox --exit && loginctl kill-user &1", User.Id)
         Case NagatoMessage.ModeReboot
             Shell "systemctl reboot"
-            'Shell Subst$("systemctl reboot && loginctl kill-user &1", User.Id)
         Case NagatoMessage.ModeShutdown
             Shell "systemctl poweroff"
-            'Shell Subst$("systemctl poweroff && loginctl kill-user &1", User.Id)
     End Select
     
 End

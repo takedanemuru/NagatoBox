@@ -5,10 +5,22 @@ Create Static
 Property Read GlobalAutoStarts As NagatoAutostarts
 Property Read UserAutoStarts As NagatoAutostarts
 Property Read AllTypes As String[]
+Property Read MaxWidth As Integer
 
 Private $userAutoStarts As NagatoAutoStarts
 Private $globalAutoStarts As NagatoAutoStarts
 Private $autoStartFilesObserver As NagatoAutostartFilesObserver
+
+Private Function getData() As NagatoUniqueArray
+    
+    Dim yukiData As New NagatoUniqueArray
+    
+    yukiData.Add($userAutoStarts.DesktopTypes)
+    yukiData.Add($globalAutoStarts.DesktopTypes)
+    
+    Return yukiData
+    
+End
 
 Public Sub Execute()
     
@@ -41,11 +53,12 @@ End
 
 Private Function AllTypes_Read() As String[]
     
-    Dim yukiData As New NagatoUniqueArray
+    Return getData().Data.Sort(gb.Natural + gb.IgnoreCase)
     
-    yukiData.Add($userAutoStarts.DesktopTypes)
-    yukiData.Add($globalAutoStarts.DesktopTypes)
-    
-    Return yukiData.Data.Sort(gb.Natural + gb.IgnoreCase)
-    
+End
+
+Private Function MaxWidth_Read() As Integer
+
+    Return getData().MaxWidth
+
 End

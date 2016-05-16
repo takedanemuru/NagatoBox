@@ -11,15 +11,15 @@ Public Sub _OnInitializeWidget()
     With $comboBox
         .Expand = False
         .ReadOnly = True
-        .W = 120
+        .W = NagatoXdgAutostarts.MaxWidth
         .List = NagatoXdgAutostarts.AllTypes
-        Try .Index = NagatoXdgAutostarts.AllTypes.Find("NagatoBox")
+        Try .Index = NagatoXdgAutostarts.AllTypes.Find(NagatoSettingsSession.TargetDE)
     End With
     
 End
 
 Public Sub ComboBox_Click()
     
-    Debug $comboBox.Index
+    NagatoSettingsSession.TargetDE = $comboBox[$comboBox.Index].Text
     
 End

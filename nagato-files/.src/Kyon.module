@@ -35,6 +35,7 @@ Public Sub Main()
     setIconTheme()
     
      NagatoClipBoard.Activate()
+    System.FirstDayOfWeek = gb.Sunday
 
     'Only For Testing
     'activateDesktop()

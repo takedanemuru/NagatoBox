@@ -4,6 +4,8 @@ Public Sub Main()
     
     NagatoArguments.Parsing()
     
+    Debug NagatoSettingsSession.TargetDE
+    
     If NagatoArguments.Autostart Then
         HaruhiLogin.Show()
         NagatoLoginSound.PlayDefault()

@@ -40,8 +40,6 @@ End
 
 Public Sub TableView_Activate()
     
-    ' ShowDetail($tableView.RowAt(Mouse.Y))
-    
     Debug NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].Path
     
 End

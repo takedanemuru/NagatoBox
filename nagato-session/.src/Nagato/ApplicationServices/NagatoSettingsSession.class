@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property TargetDE As String
+
+Event Changed
+
+Private Function getDesktopSession() As String
+    
+    Dim yukiOutput As String
+    
+    Shell "printenv | grep DESKTOP_SESSION" To yukiOutput
+    
+    yukiOutput = Replace$(yukiOutput, "DESKTOP_SESSION=", "")
+    
+    Return Replace(yukiOutput, "\n", "")
+    
+End
+
+Private Function TargetDE_Read() As String
+
+    Return Me._$settings["session/TargetDesktopEnvironment", getDesktopSession()]
+
+End
+
+Private Sub TargetDE_Write(Value As String)
+
+    If Me.TargetDE = Value Then Return
+    
+    Me._$settings["session/TargetDesktopEnvironment"] = Value
+    
+    Raise Changed
+    
+End

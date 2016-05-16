@@ -34,8 +34,8 @@
 + ~~adopt new dbus interfaces~~
 + ~~new : scroll music data that longer than drawing-area width.~~
 + new : systray (?)
-+ new : context menu to "open as new tab" for treeview.
-+ new : call calendar from desktop-shell taskbar
++ ~~new : context menu to "open as new tab" for treeview.~~
++ ~~new : call calendar from desktop-shell taskbar~~
 
 ### nagato-fullscreen-editor (v42.4.6)
 
@@ -64,7 +64,7 @@
 ### nagato-session
 
 + ~~fix : get path from "for user" grid correctlly~~
-+ new : "for which de" menu
++ ~~new : "for which de" menu~~
 + new : refine desktop entry file property view.
 
 ### nagato-taskmanager (v42.4.11)

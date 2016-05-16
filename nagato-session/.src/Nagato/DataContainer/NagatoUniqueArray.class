@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Property Read Data As String[]
+Property Read MaxWidth As Integer
 
 Private $data As New String[]
 
@@ -18,4 +19,17 @@ Private Function Data_Read() As String[]
 
     Return $data
 
+End
+
+Private Function MaxWidth_Read() As Integer
+
+    Dim yukiWidth As Integer
+    Dim yukiString As String
+    
+    For Each yukiString In $data
+        yukiWidth = Max(yukiWidth, HaruhiMain.Font.TextWidth(yukiString) + 16)
+    Next
+    
+    Return yukiWidth
+    
 End

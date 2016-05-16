@@ -36,8 +36,8 @@ End
 Private Function Required_Read() As Boolean
 
     If $hide Then Return False
-    If $onlyShowInList.Count > 0 And If Not $onlyShowInList.Exist("NagatoBox") Then Return False
-    If $notShowInList.Exist("NagatoBox") Then Return False
+    If $onlyShowInList.Count > 0 And If Not $onlyShowInList.Exist(NagatoSettingsSession.TargetDE) Then Return False
+    If $notShowInList.Exist(NagatoSettingsSession.TargetDE) Then Return False
     
     Return True
 
