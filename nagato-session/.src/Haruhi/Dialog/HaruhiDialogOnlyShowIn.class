@@ -1,6 +1,12 @@
 ' Gambas class file
 
-Public Sub Set(argList As String[])
+Private $column As Integer
+Private $row As Integer
+
+Public Sub Set(argList As String[], argColumn As Integer, argRow As Integer)
+    
+    $column = argColumn
+    $row = argRow
     
     MainListEditor.List.Clear()
     MainListEditor.List = argList
@@ -12,5 +18,22 @@ End
 Public Sub MainListEditor_Change()
 
     ApplyButton.Enabled = True
+
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close()
+
+End
+
+Public Sub ApplyButton_Click()
+
+    Dim yukiData As String = MainListEditor.List.Join(";")
+
+    If MainListEditor.List.Count > 0 Then yukiData &= ";"
+    NagatoEventBridgeOnlyShowIn(yukiData, $column, $row)
+
+    Me.Close()
 
 End

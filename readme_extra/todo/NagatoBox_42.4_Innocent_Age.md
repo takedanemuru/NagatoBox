@@ -65,7 +65,7 @@
 
 + ~~fix : get path from "for user" grid correctlly~~
 + ~~new : "for which de" menu~~
-+ new : refine desktop entry file property view.
++ ~~new : refine desktop entry file property view.~~
 
 ### nagato-taskmanager (v42.4.11)
 

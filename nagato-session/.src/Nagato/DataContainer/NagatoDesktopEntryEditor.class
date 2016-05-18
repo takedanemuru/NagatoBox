@@ -1,0 +1,28 @@
+' Gambas class file
+
+Private $path As String
+Private $data As String[]
+
+Public Sub SetString(argHeader As String, argValue As String)
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $data.Max
+        If $data[yukiIndex] Not Begins argHeader Then Continue
+        $data[yukiIndex] = Subst$("&1=&2", argHeader, argValue)
+        Debug $data[yukiIndex]
+        Return
+    Next
+    
+    $data.Add(Subst$("&1=&2", argHeader, argValue))
+    
+End
+
+Public Sub _new(argPath As String)
+    
+    If Not Exist(argPath) Then Return
+    
+    $path = argPath
+    $data = Split(File.Load(argPath), "\n", "", True)
+    
+End

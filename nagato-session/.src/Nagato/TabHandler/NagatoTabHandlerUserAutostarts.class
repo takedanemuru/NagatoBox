@@ -5,10 +5,29 @@ Inherits NagatoTabHandler
 Private $panel As NagatoMenuPanelUserAutostarts
 Private $tableView As TableView
 Private $tableViewHandler As NagatoTableAutostarts
+Private $observer As Observer
+
+Private Function getHeader(argColumn As Integer) As String
+    
+    Select Case argColumn
+        Case 2
+            Return "Exec"
+        Case 3
+            Return "TryExec"
+        Case 4
+            Return "NotShowIn"
+        Case 5
+            Return "OnlyShowIn"
+        Default
+            Return ""
+    End Select
+    
+End
 
 Public Sub _InitializePanel()
     
     $panel = New NagatoMenuPanelUserAutostarts(Me._$container) As "TFEI"
+    $observer = New Observer(NagatoEventBridgeOnlyShowIn) As "Asakura"
     
 End
 
@@ -31,16 +50,25 @@ Public Sub TableView_Click()
     Dim yukiList As String[]
     
     Select Case $tableView.Column
-        Case 4, 5
+        Case 2, 3
+            $tableView.Edit()
+        Case 4
+            yukiList = NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].NotShowIn
+            HaruhiDialogOnlyShowIn.Set(yukiList, $tableView.Column, $tableView.Row)
+        Case 5
             yukiList = NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].OnlyShowIn
-            HaruhiDialogOnlyShowIn.Set(yukiList)
+            HaruhiDialogOnlyShowIn.Set(yukiList, $tableView.Column, $tableView.Row)
     End Select
     
 End
 
-Public Sub TableView_Activate()
+Public Sub TableView_Save(argRow As Integer, argColumn As Integer, argValue As String)
     
-    Debug NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].Path
+    Dim yukiPath As String = NagatoXdgAutostarts.UserAutoStarts.All[$tableView.Row].Path
+    Dim yukiEditor As New NagatoDesktopEntryEditor(yukiPath)
+    
+    yukiEditor.SetString(getHeader(argColumn), argValue)
+    $tableView[argRow, argColumn].Text = Replace$(argValue, ";", ", ")
     
 End
 
@@ -71,5 +99,11 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.AutostartsDelete
             MikuruDialogPortalDeleteAutostart(argValues[0].Path)
     End Select
+    
+End
+
+Public Sub Asakura_DataChanged(argData As String, argColumn As Integer, argRow As Integer)
+    
+    Me.TableView_Save(argRow, argColumn, argData)
     
 End

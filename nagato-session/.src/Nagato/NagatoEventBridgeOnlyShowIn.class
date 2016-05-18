@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Event DataChanged(argData As String, argColumn As Integer, argRow As Integer)
+
+Public Sub _call(argData As String, argColumn As Integer, argRow As Integer)
+    
+    Raise DataChanged(argData, argColumn, argRow)
+    
+End
