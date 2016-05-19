@@ -19,7 +19,7 @@ Public Sub _OnInitialize()
     $tableView = New TableView(Me._$container) As "TableView"
     
     With $tableView
-        .Header = GridView.Horizontal
+        .Header = GridView.Both
         .Rows.Count = 1
         .Columns.Count = 5
         .Expand = True

@@ -3,18 +3,37 @@
 Private $path As String
 Private $data As String[]
 
+Private Sub saveData()
+    
+    File.Save($path, $data.Join("\n", ""))
+    
+End
+
+Private Sub replaceLine(argIndex As Integer, argHeader As String, argValue As String)
+    
+    $data[argIndex] = Subst$("&1=&2", argHeader, argValue)
+    saveData()
+    
+End
+
+Private Sub addLine(argHeader As String, argValue As String)
+    
+    $data.Add(Subst$("&1=&2", argHeader, argValue))
+    saveData()
+    
+End
+
 Public Sub SetString(argHeader As String, argValue As String)
     
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To $data.Max
         If $data[yukiIndex] Not Begins argHeader Then Continue
-        $data[yukiIndex] = Subst$("&1=&2", argHeader, argValue)
-        Debug $data[yukiIndex]
+        replaceLine(yukiIndex, argHeader, argValue)
         Return
     Next
     
-    $data.Add(Subst$("&1=&2", argHeader, argValue))
+    addLine(argHeader, argValue)
     
 End
 

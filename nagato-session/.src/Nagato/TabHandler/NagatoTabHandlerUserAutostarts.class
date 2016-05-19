@@ -68,7 +68,11 @@ Public Sub TableView_Save(argRow As Integer, argColumn As Integer, argValue As S
     Dim yukiEditor As New NagatoDesktopEntryEditor(yukiPath)
     
     yukiEditor.SetString(getHeader(argColumn), argValue)
-    $tableView[argRow, argColumn].Text = Replace$(argValue, ";", ", ")
+    $tableView[argRow, argColumn].Text = argValue
+    
+Catch
+    Debug argRow
+    Debug argColumn
     
 End
 
