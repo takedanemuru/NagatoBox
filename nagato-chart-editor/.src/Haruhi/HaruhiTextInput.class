@@ -1,2 +1,9 @@
 ' Gambas class file
 
+Public Sub TextBox1_Activate()
+
+    MikuruDialogPortalTextInput.SetText(TextBox1.Text)
+
+    Me.Close(MikuruResponse.ResponseApply)
+
+End

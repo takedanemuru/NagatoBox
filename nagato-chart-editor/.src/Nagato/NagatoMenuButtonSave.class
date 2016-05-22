@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .AutoResize = True
+        .Border = False
+        .Arrow = False
+        .Text = ("Save")
+        .Picture = MikuruIcon["hard-drive-download"]
+        .Tag = MikuruSignal.FileSave
+    End With
+    
+End

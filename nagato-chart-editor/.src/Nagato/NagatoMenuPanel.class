@@ -3,6 +3,7 @@
 Inherits NagatoUx
 
 Private $hBox As HBox
+Private $saveButton As NagatoMenuButtonSave
 Private $spacer As NagatoPanelSpacer
 Private $buttonStar As NagatoMenuButtonStar
 
@@ -10,6 +11,7 @@ Public Sub _onInitialize()
     
     $hBox = New HBox(Me._$container)
     $hBox.H = 24
+    $saveButton = New NagatoMenuButtonSave($hBox) As "TFEI"
     $spacer = New NagatoPanelSpacer($hBox)
     $buttonStar = New NagatoMenuButtonStar($hBox) As "TFEI"
     

@@ -56,9 +56,11 @@ Public Function GetRichText(argOutput As String) As String
     yukiOutput = Replace$(yukiOutput, ColorCodeHeader & "0m", "</i></u>")
     yukiOutput = Replace$(yukiOutput, ColorCodeHeader, "<u><i>")
     
-    ' If String.InStr(yukiOutput, "<u><i>") > 0 Then
-    '     yukiOutput = stripColorProperty(yukiOutput)
-    ' End If
+    If String.InStr(yukiOutput, "<u><i>") > 0 Then
+        yukiOutput = stripColorProperty(yukiOutput)
+    End If
+    
+    yukiOutput = Replace(yukiOutput, "\n\n", "\n")
     
     Return "<font color=white>" & yukiOutput & "</font>"
     

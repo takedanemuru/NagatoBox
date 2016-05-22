@@ -1,14 +1,15 @@
 # Gambas Project File 3.0
 # Compiled with Gambas 3.8.4
-Title=nagato-data-table-study
+Title=nagato-chart-editor
 Startup=Kyon
-Icon=Icons/database.png
+Icon=Icons/chart-area-up.png
 Version=0.0.1
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
+Component=gb.chart
 Component=gb.settings
-Description="csv"
+Description="csv editor."
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1

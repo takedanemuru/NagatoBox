@@ -35,8 +35,8 @@ Public Sub MessageScreen_Draw()
     With Paint
         .Begin(MessageScreen)
         .Brush = .Color(Color.White)
-        .Font.Bold = True
-        .Text($message.Get(), 120, Screen.H / 2)
+        .Font.Bold = False
+        .DrawText($message.Get(), 120, Screen.H / 2)
         .Fill()
         .End()
     End With

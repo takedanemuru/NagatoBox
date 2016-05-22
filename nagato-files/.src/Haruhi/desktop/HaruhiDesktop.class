@@ -1,8 +1,11 @@
 ' Gambas class file
 
+Property Read Ready As Boolean
+
 Private $desktop As NagatoDesktop
 Private $panel As NagatoDesktopPanel
 Private $timer As New Timer As "DesktopTimer"
+Private $ready As Boolean = False
 
 Event Timer
 
@@ -35,6 +38,7 @@ Public Sub Form_Open()
         MikuruX11.ReservePanelHeightOnScreen(Me.Id)
         $timer.Enabled = True
         HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
+        $ready = True
     Else
         Message.Error("YUKI.N > Fail to activate nagato-desktop", ("OK"))
         Me.Close()
@@ -53,4 +57,10 @@ Public Sub DesktopTimer_Timer()
     
     Raise Timer
     
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return $ready
+
 End

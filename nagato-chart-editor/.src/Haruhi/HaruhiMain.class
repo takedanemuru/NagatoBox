@@ -21,3 +21,12 @@ Public Sub Form_Close()
     NagatoSettingsForm.Save(Me)
     
 End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileSave
+            $tableView.DataSave()
+    End Select
+    
+End

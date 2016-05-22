@@ -75,6 +75,11 @@
 
 + ~~fix : solve out-of-bounds error in command line arguments~~
 
+### nagato-weather
+
++ ~~new : daemon mode~~
++ new : save weather icons in `./nagato-weather/weather-icons`
+
 ### nagato-web (v.42.4.35)
 
 + new : menu to clear whole history.
@@ -99,4 +104,5 @@
 
 ## dataoverminds (daemon)
 
-+ new : weather forecast daeon ?
++ ~~new : weather forecast daeon ?~~ (daemon mode for nagato-weather)
+

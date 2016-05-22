@@ -3,16 +3,9 @@
 Inherits NagatoUx
 
 Private $tableView As TableView
-
-Private Sub paintRow()
-    
-    Dim yukiColumnIndex As Integer
-    
-    For yukiColumnIndex = 0 To $tableView.Columns.Max
-        $tableView[$tableView.Rows.Max, yukiColumnIndex].Background = MikuruColor.GridBackground
-    Next
-    
-End
+Private $headers As NagatoTableViewHandlerHeaders
+Private $dataInput As NagatoTableViewHandlerDataInput
+Private $dataSave As NagatoTableViewHandlerDataSave
 
 Public Sub _OnInitialize()
     
@@ -25,31 +18,14 @@ Public Sub _OnInitialize()
         .Expand = True
     End With
     
-End
-
-Public Sub TableView_Click()
-    
-    $tableView.Edit()
+    $headers = New NagatoTableViewHandlerHeaders($tableView)
+    $dataInput = New NagatoTableViewHandlerDataInput($tableView)
+    $dataSave = New NagatoTableViewHandlerDataSave($tableView)
     
 End
 
-Public Sub TableView_Save(argRow As Integer, argColumn As Integer, argValue As String)
+Public Sub DataSave()
     
-    $tableView[argRow, argColumn].Text = argValue
-    
-    If IsNumber(argValue) Then $tableView[argRow, argColumn].Alignment = Align.Right
-    
-    If $tableView.Font.TextWidth(argValue) + 16 > $tableView.Columns[argColumn].W Then
-        $tableView.Columns[argColumn].W = $tableView.Font.TextWidth(argValue) + 16
-    Endif
-    
-End
-
-Public Sub TableView_Insert()
-    
-    Inc $tableView.Rows.Count
-    If Odd($tableView.Rows.Max) Then paintRow()
-    $tableView.MoveTo($tableView.Rows.Max, 0)
-    Me.TableView_Click()
+    $dataSave.DataSave()
     
 End

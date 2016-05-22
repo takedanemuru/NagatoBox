@@ -1,0 +1,56 @@
+' Gambas class file
+
+Create Static
+
+Inherits DBusObject
+
+Private $conditions As New NagatoWeatherCondition
+
+Property Read WeatherElement As NagatoWeatherElement
+Property Read Ready As Boolean
+Property Read Temperature As Float
+Property Read IconId As Integer
+Property Read Condition As String
+Property Read BackgroundColor As Integer
+
+Public Sub Reload()
+    
+    Debug "?"
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return NagatoWeatherCache.IsReady
+
+End
+
+Private Function Temperature_Read() As Float
+
+    Return Me.WeatherElement[MikuruWeatherKey.Temperature]
+
+End
+
+Private Function IconId_Read() As Integer
+
+    Return Me.WeatherElement[MikuruWeatherKey.IconId]
+
+End
+
+Private Function Condition_Read() As String
+
+    Return $conditions[Me.WeatherElement[MikuruWeatherKey.IconId]]
+
+End
+
+Private Function WeatherElement_Read() As NagatoWeatherElement
+
+    Return NagatoWeatherCache.GetWeatherElementMostRecent()
+
+End
+
+Private Function BackgroundColor_Read() As Integer
+
+    Return MikuruWeatherColor(Me.WeatherElement[MikuruWeatherKey.IconId], True)
+
+End

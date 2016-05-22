@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoTableViewHandler
+
+Private Sub callColumnContextMenu(argColumn As Integer)
+    
+    Dim yukiContextMenu As New NagatoContextMenuColumn([argColumn]) As "ContextMenu"
+    
+    yukiContextMenu.PopUp()
+    
+End
+
+Public Sub Asakura_ColumnClick(argColumn As Integer)
+    
+    If Mouse.Right Then callColumnContextMenu(argColumn)
+    
+End
+
+Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ColumnEdit
+            Me._$tableView.Columns[argValues[0]].Text = argValues[1]
+    End Select
+    
+End

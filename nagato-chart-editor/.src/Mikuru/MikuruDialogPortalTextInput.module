@@ -1,0 +1,25 @@
+' Gambas module file
+
+Property Read LastText As String
+
+Private $lastText As String
+
+Public Sub SetText(argText As String)
+    
+    $lastText = argText
+    
+End
+
+Public Sub _call() As Boolean
+    
+    $lastText = ""
+    
+    Return (HaruhiTextInput.ShowDialog() = MikuruResponse.ResponseApply)
+    
+End
+
+Private Function LastText_Read() As String
+    
+    Return $lastText
+    
+End

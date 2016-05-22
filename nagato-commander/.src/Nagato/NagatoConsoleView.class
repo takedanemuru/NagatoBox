@@ -3,6 +3,7 @@
 Property Read IsWaiting As Boolean
 
 Private $textArea As TextEdit
+Private $lastLine As String
 Private $output As String
 
 Public Sub PushOutput(argOutput As String)
@@ -13,9 +14,12 @@ End
 
 Public Sub Update(argStream As String)
     
-    $output &= argStream
-    
-    $textArea.RichText = NagatoText.GetRichText($output)
+    If InStr(argStream, gb.CrLf) = 0 And argStream Not Ends "$ " Then 
+        $textArea.RichText = NagatoText.GetRichText($output & argStream)
+    Else
+        $output &= argStream
+        $textArea.RichText = NagatoText.GetRichText($output)
+    End If
     
 End
 

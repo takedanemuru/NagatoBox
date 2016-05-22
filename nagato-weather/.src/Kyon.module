@@ -1,11 +1,26 @@
 ' Gambas module file
 
+Private $daemon As New NagatoDaemon
+Private $daemonMode As Boolean = False
+
+Private Sub parseArguments()
+    
+    Args.Begin("Usage")
+        $daemonMode = Args.Has("d", "--daemon-mode", "launch as daemon")
+    Args.End()
+    
+End
+
 Public Sub Main()
     
-    If Not Desktop.NetworkAvailable Then
-        Message.Warning(("YUKI.N > Network unavailable."))
-    Else
-        HaruhiMain.Show()
-    End If
+    $daemon.Start()
+    
+    ' If Not Desktop.NetworkAvailable Then
+    '     Message.Warning(("YUKI.N > Network unavailable."))
+    ' Else If $daemonMode Then
+    '     $daemon.Start()
+    ' Else
+    '     HaruhiMain.Show()
+    ' End If
     
 End
