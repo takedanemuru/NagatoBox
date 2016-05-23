@@ -1,0 +1,6 @@
+' Gambas module file
+
+Public Enum FileHeader = 1000, FileNew = 1001, FileLoad = 1002, FileSave = 1003, FileSaveAs = 1004
+Public Enum ChartHeader = 2000
+Public Enum ColumnHeader = 7000, ColumnEdit = 7001
+Public Enum AppHeader = 9000, AppAbout = 9001, AppQuit = 9002

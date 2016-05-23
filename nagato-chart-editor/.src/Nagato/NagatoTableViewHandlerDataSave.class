@@ -46,3 +46,12 @@ Public Sub DataSave()
     File.Save(User.Home &/ "chart_test.csv", $csv)
     
 End
+
+Public Sub DataSaveTo(argPath As String)
+    
+    $csv = ""
+    parseHeaders()
+    parseRows()
+    File.Save(argPath, $csv)
+    
+End

@@ -1,0 +1,28 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Arrangement = Arrange.Vertical
+  { HeadersListEditor ListEditor
+    MoveScaled(2,3,58,33)
+    Expand = True
+  }
+  { Separator1 Separator
+    MoveScaled(8,43,51,1)
+  }
+  { HBox1 HBox
+    MoveScaled(4,47,56,5)
+    { Panel1 Panel
+      MoveScaled(0,0,22,5)
+      Expand = True
+    }
+    { CancelButton Button
+      MoveScaled(25,1,16,4)
+      Text = ("Cancel")
+    }
+    { ApplyButton Button
+      MoveScaled(41,1,16,4)
+      Text = ("Apply")
+    }
+  }
+}

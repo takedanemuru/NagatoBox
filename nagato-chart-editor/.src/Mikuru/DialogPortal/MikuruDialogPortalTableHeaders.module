@@ -1,0 +1,27 @@
+' Gambas module file
+
+Property Read Headers As String[]
+
+Private $headers As New String[]
+
+Public Sub SetHeaders(argHeaders As String[])
+    
+    $headers = argHeaders.Copy()
+    
+End
+
+Public Sub _call() As Boolean
+    
+    $headers.Clear()
+    
+    If HaruhiTableHeaders.ShowDialog() = MikuruResponse.ResponseApply Then Return True
+    
+    Return False
+    
+End
+
+Private Function Headers_Read() As String[]
+
+    Return $headers
+
+End

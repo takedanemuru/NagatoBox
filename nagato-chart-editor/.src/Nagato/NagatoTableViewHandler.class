@@ -5,9 +5,16 @@ Inherits NagatoObject
 Public _$tableView As TableView
 Public _$observer As Observer
 
+Public Sub _OptionalOnInitialize()
+    
+    
+    
+End
+
 Public Sub _new(argTableView As TableView)
     
     Me._$tableView = argTableView
     Me._$observer = New Observer(argTableView) As "Asakura"
+    Me._OptionalOnInitialize()
     
 End

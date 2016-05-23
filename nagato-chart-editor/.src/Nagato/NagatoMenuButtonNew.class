@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .AutoResize = True
+        .Border = False
+        .Arrow = False
+        .Text = ("New")
+        .Picture = MikuruIcon["magic-wand"]
+        .Tag = MikuruSignal.FileNew
+    End With
+    
+End

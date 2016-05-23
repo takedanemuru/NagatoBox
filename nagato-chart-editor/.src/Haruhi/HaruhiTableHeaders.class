@@ -1,0 +1,25 @@
+' Gambas class file
+
+Public Sub Form_Open()
+    
+    ApplyButton.Enabled = False
+    
+End
+
+Public Sub ApplyButton_Click()
+    
+    MikuruDialogPortalTableHeaders.SetHeaders(HeadersListEditor.List)
+    
+    Me.Close(MikuruResponse.ResponseApply)
+    
+End
+
+Public Sub HeadersListEditor_Change()
+
+    If HeadersListEditor.List.Count = 0 Then
+        ApplyButton.Enabled = False
+    Else
+        ApplyButton.Enabled = True
+    Endif
+
+End

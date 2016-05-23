@@ -5,9 +5,10 @@ Inherits NagatoUx
 Private $tableView As TableView
 Private $headers As NagatoTableViewHandlerHeaders
 Private $dataInput As NagatoTableViewHandlerDataInput
-Private $dataSave As NagatoTableViewHandlerDataSave
+Private $dataLoad As NagatoTableViewHandlerDataLoad
+Private $dataSave As NagatoTableViewHandlerFileStatus
 
-Public Sub _OnInitialize()
+Private Sub initializeTableView()
     
     $tableView = New TableView(Me._$container) As "TableView"
     
@@ -18,14 +19,37 @@ Public Sub _OnInitialize()
         .Expand = True
     End With
     
+End
+
+Public Sub _OnInitialize()
+    
+    initializeTableView()
     $headers = New NagatoTableViewHandlerHeaders($tableView)
     $dataInput = New NagatoTableViewHandlerDataInput($tableView)
-    $dataSave = New NagatoTableViewHandlerDataSave($tableView)
+    $dataLoad = New NagatoTableViewHandlerDataLoad($tableView)
+    $dataSave = New NagatoTableViewHandlerFileStatus($tableView)
     
 End
 
-Public Sub DataSave()
+Public Sub IsClosable() As Boolean
     
-    $dataSave.DataSave()
+    Return $dataSave.IsClosable()
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant)
+    
+    Select Case argSignal
+        Case MikuruSignal.FileNew
+            If $dataSave.IsClosable() Then $dataLoad.New()
+        Case MikuruSignal.FileLoad
+            If $dataSave.IsClosable() Then $dataLoad.OpenFile()
+        Case MikuruSignal.FileSave
+            $dataSave.Save()
+        Case MikuruSignal.FileSaveAs
+            $dataSave.SaveAs()
+        Case MikuruSignal.ChartHeader
+            Debug "create chart"
+    End Select
     
 End

@@ -18,6 +18,8 @@ End
 
 Public Sub Form_Close()
     
+    If Not $tableView.IsClosable() Then Stop Event
+    
     NagatoSettingsForm.Save(Me)
     
 End
@@ -25,8 +27,8 @@ End
 Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.FileSave
-            $tableView.DataSave()
+        Default
+            $tableView(argSignal, argValues)
     End Select
     
 End

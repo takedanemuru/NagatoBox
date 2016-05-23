@@ -3,15 +3,29 @@
 Inherits NagatoUx
 
 Private $hBox As HBox
+Private $newButtn As NagatoMenuButtonNew
+Private $loadButton As NagatoMenuButtonLoad
 Private $saveButton As NagatoMenuButtonSave
+Private $saveAsButton As NagatoMenuButtonSaveAs
+Private $chartButton As NagatoMenuButtonCreateChart
 Private $spacer As NagatoPanelSpacer
 Private $buttonStar As NagatoMenuButtonStar
 
-Public Sub _onInitialize()
+Private Sub initializeMenuPanel()
     
     $hBox = New HBox(Me._$container)
-    $hBox.H = 24
+    $hBox.H = 32
+    
+End
+
+Public Sub _onInitialize()
+    
+    initializeMenuPanel()
+    $newButtn = New NagatoMenuButtonNew($hBox) As "TFEI"
+    $loadButton = New NagatoMenuButtonLoad($hBox) As "TFEI"
     $saveButton = New NagatoMenuButtonSave($hBox) As "TFEI"
+    $saveAsButton = New NagatoMenuButtonSaveAs($hBox) As "TFEI"
+    $chartButton = New NagatoMenuButtonCreateChart($hBox) As "TFEI"
     $spacer = New NagatoPanelSpacer($hBox)
     $buttonStar = New NagatoMenuButtonStar($hBox) As "TFEI"
     
