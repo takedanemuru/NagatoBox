@@ -5,6 +5,7 @@ Inherits NagatoObject
 Property Read TabTitle As String
 Property Read TabUrl As String
 Property Read Index As Integer
+Property Read UniqueIndex As Integer
 Property Read History As NagatoWebPageHistory
 
 Private $webs As Collection
@@ -64,7 +65,7 @@ Private Function TabTitle_Read() As String
 End
 
 Private Function Index_Read() As Integer
-
+    
     Return $webOrder2.ActiveIndex
 
 End
@@ -78,5 +79,11 @@ End
 Private Function History_Read() As NagatoWebPageHistory
 
     Return getActiveWeb().History
+
+End
+
+Private Function UniqueIndex_Read() As Integer
+
+    Return getActiveWeb().UniqueIndex
 
 End

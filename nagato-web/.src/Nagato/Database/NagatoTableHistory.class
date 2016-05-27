@@ -42,6 +42,12 @@ Public Sub DeleteRelatedHistories(argUrl As String)
     
 End
 
+Public Sub ClearAll()
+    
+    Me._$connection.Delete(NagatoDB.Table.History)
+    
+End
+
 Public Sub PushHistory(argUrl As String, argTitle As String)
     
     Dim yukiResult As Result

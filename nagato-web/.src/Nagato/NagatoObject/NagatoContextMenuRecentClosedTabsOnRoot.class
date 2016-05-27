@@ -4,6 +4,6 @@ Inherits NagatoContextMenu
 
 Public Sub _AddChildMenus()
     
-    Me._AddContextMenu(("Reload"), MikuruSignal.ContextReload, MikuruIcon.Get("button-synchronize"))
+    Me._AddContextMenu(("Reload"), MikuruSignal.ContextReload, MikuruIcon["button-synchronize"])
     
 End

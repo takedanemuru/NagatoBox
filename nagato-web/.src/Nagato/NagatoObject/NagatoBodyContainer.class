@@ -41,12 +41,8 @@ Public Sub _call(argEvent As Integer, argArguments As Variant[])
         Case MikuruSignal.PersonaReorder
             $webs.Tabs.Reorder(argArguments[0], argArguments[1])
         Case MikuruSignal.WebProgress
-            If argArguments[0] <> $webs.Active.Index Then Return
-            $webs.Tabs.ShowByIndex($webs.Active.Index)
+            If argArguments[0] <> $webs.Active.UniqueIndex Then Return
             $menubar.SetUrl(argArguments[1])
-            $menubar.SetNavigationButton($webs.Active.History)
-        Case MikuruSignal.WebLoaded
-            $webs.Tabs.ShowByIndex($webs.Active.Index)
             $menubar.SetNavigationButton($webs.Active.History)
         Case MikuruSignal.InPageSearchQuery
             $webs.Active.InPageSearch(argArguments[0])

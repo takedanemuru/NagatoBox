@@ -22,6 +22,14 @@ Public Sub DeleteRelated(argUrl As String)
     
 End
 
+Public Sub ClearAll()
+    
+    $tableHistory.ClearAll()
+    
+    Raise Update
+    
+End
+
 Public Sub Push(argUrl As String, argTitle As String)
     
     $tableHistory.PushHistory(argUrl, argTitle)

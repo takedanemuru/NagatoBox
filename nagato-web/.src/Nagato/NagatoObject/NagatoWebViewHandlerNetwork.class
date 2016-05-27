@@ -34,12 +34,6 @@ Public Sub Asakura_Progress()
     
 End
 
-Public Sub Asakura_Load()
-    
-    Raise Signal(MikuruSignal.WebLoaded, Null)
-    
-End
-
 Public Sub Asakura_Title()
     
     If $webView.Title = "" Then Return

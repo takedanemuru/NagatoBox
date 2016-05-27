@@ -15,9 +15,9 @@
 
 ### nagato-chart-editor
 
-+ rename : rename nagato-data-table to nagato-chart-editor
-+ new : save and load a csv file.
-+ new : edit header.
++ ~~rename : rename nagato-data-table to nagato-chart-editor~~
++ ~~new : save and load a csv file.~~
++ ~~new : edit header.~~
 
 ### nagato-code-view (v42.4.14)
 
@@ -80,9 +80,9 @@
 + ~~new : daemon mode~~
 + new : save weather icons in `./nagato-weather/weather-icons`
 
-### nagato-web (v.42.4.35)
+### nagato-web (v.42.4.41)
 
-+ new : menu to clear whole history.
++ ~~new : menu to clear whole history.~~
 
 ### nagato-writer (v42.4.41)
 

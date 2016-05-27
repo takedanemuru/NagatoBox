@@ -9,6 +9,7 @@ Public Sub _OnShowRootMenu()
     yukiMenu = New NagatoMenuItemChangePersona(Me._$rootMenu) As "TFEI"
     
         MikuruMenuSeparator.Set(Me._$rootMenu)
+    Object.New("NagatoMenuItemClearHistory", [Me._$rootMenu])
     Object.New("NagatoMenuItemHistory", [Me._$rootMenu])
     Object.New("NagatoMenuItemShowFavicon", [Me._$rootMenu])
     Object.New("NagatoMenuItemPluginsEnabled", [Me._$rootMenu])
