@@ -15,6 +15,9 @@ fi
 # Unify Qt5 theme to GTK+2/3
 export QT_STYLE_OVERRIDE=GTK+
 
+# set XDG_CURRENT_DESKTOP
+export XDG_CURRENT_DESKTOP=NagatoBox
+
 # Run Openbox, and have it run the autostart stuff
 NAGATO_CONFIG_FILE="${XDG_CONFIG_HOME:-"$HOME/.config"}/NagatoBox/nagatobox-rc.xml"
 nagato-session -a &

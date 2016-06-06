@@ -2,12 +2,6 @@
 
 Private $message As New NagatoMessageLogin As "Message"
 
-Public Sub RequestClose()
-    
-    $message.Close()
-    
-End
-
 Public Sub Form_Open()
 
     Me.H = Screen.H
@@ -37,7 +31,6 @@ Public Sub MessageScreen_Draw()
         .Brush = .Color(Color.White)
         .Font.Bold = False
         .DrawText($message.Get(), 120, Screen.H / 2)
-        .Fill()
         .End()
     End With
     

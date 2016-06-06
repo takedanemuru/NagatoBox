@@ -1,5 +1,6 @@
 ' Gambas module file
 
 Public Enum FileNone = 1000, FileNew = 1001, FileOpen = 1002, FileSave = 1003, FileSaveAs = 1004
+Public Enum FileRecent = 1004
 Public Enum ApplicationNone = 9000, ApplicationPreference = 9001, ApplicationAbout = 9002
 Public Enum ApplicationQuit = 9003

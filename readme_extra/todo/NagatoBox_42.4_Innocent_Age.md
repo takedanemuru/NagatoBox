@@ -37,10 +37,10 @@
 + ~~new : context menu to "open as new tab" for treeview.~~
 + ~~new : call calendar from desktop-shell taskbar~~
 
-### nagato-fullscreen-editor (v42.4.6)
+### nagato-fullscreen-editor (v42.4.9)
 
-+ finish to imply essential functionalities.
-+ new : show thumbnails on image chooser dialog.
++ ~~finish to imply essential functionalities.~~
++ ~~new : show thumbnails on image chooser dialog.~~
 
 ### nagato-lookup
 

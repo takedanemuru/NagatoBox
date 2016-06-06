@@ -1,0 +1,94 @@
+' Gambas module file
+
+Private Const IconDirectory As String = "/usr/share/icons/nagato-weather/weather_icons/"
+
+Public Function _get(argId As Integer) As String
+    
+    Select Case argId
+        Case 1 'Sun
+            Return IconDirectory & "sunny_night.png"
+        Case 2 'LightCloud
+            Return IconDirectory & "cloudy1_night.png"
+        Case 3 'PartlyCloud
+            Return IconDirectory & "cloudy2_night.png"
+        Case 4 'Cloud
+            Return IconDirectory & "cloudy5.png"
+        Case 5 'LightRainSun
+            Return IconDirectory & "shower1_night.png"
+        Case 6 'LightRainThunderSun
+            Return IconDirectory & "tstorm1_night.png"
+        Case 7 'SleetSun
+            Return IconDirectory & "snow1_night.png"
+        Case 8 'SnowSun
+            Return IconDirectory & "snow2_night.png"
+        Case 9 'LightRain
+            Return IconDirectory & "light_rain.png"
+        Case 10 'Rain
+            Return IconDirectory & "shower3.png"
+        Case 11 'RainThunder
+            Return IconDirectory & "tstorm3.png"
+        Case 12 'Sleet
+            Return IconDirectory & "sleet.png"
+        Case 13 'Snow
+            Return IconDirectory & "snow4.png"
+        Case 14 'SnowThunder
+            Return IconDirectory & "snow5.png"
+        Case 15 'Fog
+            Return IconDirectory & "fog_night.png"
+        Case 20 'SleetSunThunder
+            Return IconDirectory & "sleet.png"
+        Case 21 'SnowSunThunder
+            Return IconDirectory & "snow3_night.png"
+        Case 22 'LightRainThunder
+            Return IconDirectory & "tstorm1_night.png"
+        Case 23 'SleetThunder
+            Return IconDirectory & "sleet.png"
+        Case 24 'DrizzleThunderSun
+            Return IconDirectory & "tstorm1_night.png"
+        Case 25 'RainThunderSun
+            Return IconDirectory & "tstorm3.png"
+        Case 26 'LightSleetThunderSun
+            Return IconDirectory & "sleet.png"
+        Case 27 'HeavySleetThunderSun
+            Return IconDirectory & "sleet.png"
+        Case 28 'LightSnowThunderSun
+            Return IconDirectory & "snow4.png"
+        Case 29 'HeavySnowThunderSun
+            Return IconDirectory & "snow5.png"
+        Case 30 'DrizzleThunder
+            Return IconDirectory & "tstorm1_night.png"
+        Case 31 'LightSleetThunder
+            Return IconDirectory & "sleet.png"
+        Case 32 'HeavySleetThunder
+            Return IconDirectory & "sleet.png"
+        Case 33 'LightSnowThunder
+            Return IconDirectory & "snow4.png"
+        Case 34 'HeavySnowThunder
+            Return IconDirectory & "snow5.png"
+        Case 40 'DrizzleSun
+            Return IconDirectory & "shower1_night.png"
+        Case 41 'RainSun
+            Return IconDirectory & "shower2_night.png"
+        Case 42 'LightSleetSun
+            Return IconDirectory & "sleet.png"
+        Case 43 'HeavySleetSun
+            Return IconDirectory & "sleet.png"
+        Case 44 'LightSnowSun
+            Return IconDirectory & "snow1_night.png"
+        Case 45 'HeavysnowSun
+            Return IconDirectory & "snow3.png"
+        Case 46 'Drizzle
+            Return IconDirectory & "shower1_night.png"
+        Case 47 'LightSleet
+            Return IconDirectory & "sleet.png"
+        Case 48 'HeavySleet
+            Return IconDirectory & "sleet.png"
+        Case 49 'LightSnow
+            Return IconDirectory & "snow3_night.png"
+        Case 50 'HeavySnow
+            Return IconDirectory & "snow5.png"
+        Default
+            Return IconDirectory & "dunno.png"
+    End Select
+    
+End

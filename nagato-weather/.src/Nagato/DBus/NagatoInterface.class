@@ -4,18 +4,21 @@ Create Static
 
 Inherits DBusObject
 
+Private Const IconDIrectory As String = "/usr/share/icons/nagato-weather/weather_icons"
+
 Private $conditions As New NagatoWeatherCondition
 
 Property Read WeatherElement As NagatoWeatherElement
 Property Read Ready As Boolean
 Property Read Temperature As Float
 Property Read IconId As Integer
+Property Read IconPath As String
 Property Read Condition As String
 Property Read BackgroundColor As Integer
 
 Public Sub Reload()
     
-    Debug "?"
+    Try NagatoWeatherCache.Reload()
     
 End
 
@@ -52,5 +55,11 @@ End
 Private Function BackgroundColor_Read() As Integer
 
     Return MikuruWeatherColor(Me.WeatherElement[MikuruWeatherKey.IconId], True)
+
+End
+
+Private Function IconPath_Read() As String
+
+    Return MikuruWeatherIcon.GetPath(True, Me.IconId)
 
 End

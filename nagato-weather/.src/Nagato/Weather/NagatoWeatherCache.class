@@ -18,6 +18,13 @@ Public Sub Activate(argLatitude As Float, argLongtude As Float)
     
 End
 
+Public Sub Reload()
+    
+    $ready = False
+    $htmlClient(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
+    
+End
+
 Public Function GetWeatherElementMostRecent() As NagatoWeatherElement
     
     Dim yukiWeatherElement As NagatoWeatherElement

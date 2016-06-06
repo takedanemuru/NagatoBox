@@ -57,7 +57,6 @@ Public Sub MessageScreen_Draw()
         .Font.Bold = False
         .DrawText($message.Get(), 120, Screen.H / 2)
         .DrawText($legend.Legend, (Screen.W - Paint.Font.TextWidth($legend.Legend)) / 2, Screen.H - 36)
-        .Fill()
         .End()
     End With
     

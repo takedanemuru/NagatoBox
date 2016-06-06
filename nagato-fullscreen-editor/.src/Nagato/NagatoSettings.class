@@ -1,51 +1,40 @@
 ' Gambas class file
 
-Create Static
+Inherits NagatoSettingsCore
 
 Property FontSize As Integer
 Property Foreground As Integer
 Property Background As String
 
-Private $settings As New Settings
-
-Event Changed
-
-Private Sub saveSettings()
-    
-    $settings.Save()
-    Raise Changed
-    
-End
-
 Private Function FontSize_Read() As Integer
 
-    Return $settings["font/size", 14]
+    Return Me._$settings["font/size", 14]
 
 End
 
 Private Sub FontSize_Write(Value As Integer)
 
-    $settings["font/size"] = Value
-    saveSettings()
+    Me._$settings["font/size"] = Value
+    Me._SaveSettings()
 
 End
 
 Private Function Foreground_Read() As Integer
 
-    Return $settings["font/color", Color.Violet]
+    Return Me._$settings["font/color", Color.Violet]
 
 End
 
 Private Sub Foreground_Write(Value As Integer)
 
-    $settings["font/color"] = Value
-    saveSettings()
+    Me._$settings["font/color"] = Value
+    Me._SaveSettings()
 
 End
 
 Private Function Background_Read() As String
     
-    Dim yukiPath As String = $settings["app/background", ""]
+    Dim yukiPath As String = Me._$settings["app/background", ""]
     
     Return IIf(Exist(yukiPath), yukiPath, "bg.png")
     
@@ -53,7 +42,7 @@ End
 
 Private Sub Background_Write(Value As String)
 
-    $settings["app/background"] = Value
-    saveSettings()
+    Me._$settings["app/background"] = Value
+    Me._SaveSettings()
 
 End

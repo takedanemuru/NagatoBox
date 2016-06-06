@@ -9,7 +9,6 @@ Public Sub Main()
         NagatoLoginSound.PlayDefault()
         NagatoXdgAutostarts.Execute()
         NagatoDBus.Register()
-        HaruhiLogin.RequestClose()
     Else If NagatoArguments.Logout Then
         HaruhiLogout.Show()
     Else

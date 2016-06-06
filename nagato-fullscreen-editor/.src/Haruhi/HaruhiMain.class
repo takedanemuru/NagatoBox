@@ -30,9 +30,10 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             $fileHandler.Save()
         Case MikuruSignal.FileOpen
             $fileHandler.Open()
+        Case MikuruSignal.FileRecent
+            $fileHandler.OpenRecent(argValues[0])
         Case MikuruSignal.ApplicationQuit
-            $fileHandler.Save()
-            Me.Close()
+            If $fileHandler.CloseApp() Then Me.Close()
     End Select
     
 End

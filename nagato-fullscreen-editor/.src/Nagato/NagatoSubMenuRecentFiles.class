@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Sub addNullMenu()
+    
+    Me._AddMenu(("Not Found"), 0)
+    
+End
+
+Private Sub addPathMenu(argPath As String)
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "PathMenu"
+    
+    With yukiMenu
+        .Text = File.Name(argPath)
+        .Tag = argPath
+    End With
+    
+End
+
+Private Sub addChildMenus(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        addPathMenu(yukiPath)
+    Next
+    
+End
+
+Public Sub _OnInitializeParentMenu()
+    
+    With Me._$parentMenu
+        .Text = ("Recent")
+        .Picture = MikuruIcon["alarm-clock"]
+    End With
+    
+End
+
+Public Sub _OnShowParentMenu()
+    
+    Dim yukiPaths As String[] = NagatoSettingsFile.RecentFiles
+    
+    Me._$parentMenu.Children.Clear()
+    
+    If Not Object.IsValid(yukiPaths) Then 
+        addNullMenu()
+    Else 
+        addChildMenus(yukiPaths)
+    End If
+    
+End
+
+Public Sub PathMenu_Click()
+    
+    Raise Signal(MikuruSignal.FileRecent, [Last.Tag])
+    
+End

@@ -16,6 +16,14 @@ Private Sub addMenu(argText As String, argTag As Integer, Optional argIconName A
     
 End
 
+Private Sub addRecentMenu()
+    
+    Dim yukiRecentMenu As NagatoSubMenuRecentFiles
+    
+    yukiRecentMenu = New NagatoSubMenuRecentFiles($rootMenu) As "TFEI"
+    
+End
+
 Public Sub PopUp()
     
     $rootMenu.Popup()
@@ -28,7 +36,7 @@ Public Sub _new()
     
     addMenu(("New"), MikuruSignal.FileNew, "document")
     addMenu(("Open"), MikuruSignal.FileOpen, "folder")
-    addMenu(("Recent"), MikuruSignal.FileNone, "alarm-clock")
+    addRecentMenu()
     addMenu(("Save"), MikuruSignal.FileSave, "hard-drive-download")
     addMenu(("Save As"), MikuruSignal.FileSaveAs, "documents")
         addMenu("", 0)

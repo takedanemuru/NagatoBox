@@ -1,9 +1,7 @@
 ' Gambas class file
 
-Property Read Saved As Boolean
-
 Private $path As String
-Private $saved As Boolean = False
+Private $saved As Boolean = True
 Private $observer As Observer
 
 Public Function GetPathToSave() As String
@@ -28,7 +26,23 @@ End
 Public Sub New()
     
     $path = ""
-    $saved = False
+    $saved = True
+    
+End
+
+Public Function IsClosable() As Boolean
+    
+    If $saved = True Then Return True
+    
+    Select Case MikuruDialogEnsureSaved()
+        Case MikuruDialogEnsureSaved.ResponseCancel
+            Return False
+        Case MikuruDialogEnsureSaved.ResponseDiscard
+            Return True
+        Case MikuruDialogEnsureSaved.ResponseSave
+            $path = MikuruDialog.GetPathToSave()
+            Return ($path <> "")
+    End Select
     
 End
 
@@ -38,14 +52,8 @@ Public Sub _new(argTextArea As TextArea)
     
 End
 
-Public Sub Asakura_Changed()
+Public Sub Asakura_Change()
     
     $saved = False
     
-End
-
-Private Function Saved_Read() As Boolean
-
-    Return $saved
-
 End

@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Enum ResponseNull, ResponseSave, ResponseDiscard, ResponseCancel
+
+Public Sub _call() As Integer
+    
+    Dim yukiMessage As String = ("YUKI.N > Your changes not saved.")
+    
+    Return Message.Warning(yukiMessage, ("Save"), ("Discard"), ("Cancel"))
+    
+End

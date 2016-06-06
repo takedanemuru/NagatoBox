@@ -8,7 +8,7 @@ Public Sub RootMenu_Show()
     
     Me._$rootMenu.Children.Clear()
     
-    Me._AddMenu(("Set User Location"), MenuSetLocation, "user")
+    Me._AddMenu(("Set User Location"), MenuSetLocation, "web")
     Me._AddMenu(("Forecast"), MenuShowForecast, "information-balloon")
         Me._AddMenu("", MenuNone)
     Me._AddMenu(("About"), MenuAbout, "star")

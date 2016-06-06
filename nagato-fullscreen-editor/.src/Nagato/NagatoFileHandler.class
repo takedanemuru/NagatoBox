@@ -8,12 +8,13 @@ Private Sub saveFileToPath(argPath As String, Optional argReload As Boolean)
     If Not $saveStatus.SaveToPath(argPath) Then Return
     If argReload Then $textArea.Text = File.Load(argPath)
     File.Save(argPath, $textArea.Text)
+    NagatoSettingsFile.PushPath(argPath)
     
 End
 
 Public Sub New()
     
-    If Not $saveStatus.Saved And If Not $textArea.Text = "" Then Me.Save()
+    If Not $saveStatus.IsClosable() Then Return
     $saveStatus.New()
     $textArea.Text = ""
     
@@ -21,20 +22,36 @@ End
 
 Public Sub Open()
     
-    If Not $saveStatus.Saved And If Not $textArea.Text = "" Then Me.Save()
+    If Not $saveStatus.IsClosable() Then Return
     saveFileToPath(MikuruDialog.GetPathToOpen(), True)
+    
+End
+
+Public Function CloseApp() As Boolean
+    
+    Return $saveStatus.IsClosable()
+    
+End
+
+Public Sub OpenRecent(argPath As String)
+    
+    If Not $saveStatus.IsClosable() Then Return
+    saveFileToPath(argPath, True)
     
 End
 
 Public Sub Save()
     
-    If $textArea.Text Then saveFileToPath($saveStatus.GetPathToSave())
+    If Not $textArea.Text Then Return
+    If Not $saveStatus.IsClosable() Then Return
+    saveFileToPath($saveStatus.GetPathToSave())
     
 End
 
 Public Sub SaveAs()
     
-    If Not $textArea.Text Then saveFileToPath(MikuruDialog.GetPathToSave())
+    If Not $textArea.Text Then Return
+    saveFileToPath(MikuruDialog.GetPathToSave())
     
 End
 

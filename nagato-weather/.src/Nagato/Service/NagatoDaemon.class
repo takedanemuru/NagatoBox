@@ -1,11 +1,14 @@
 ' Gambas class file
 
+Private Const ObjectPath As String = "/org/nagato/weather"
+Private Const Interface As String = "org.gambas.nagato.weather.nagatointerface"
+
 Private $timer As New Timer As "Timer"
 
 Public Sub Start()
     
     NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
-    DBus.Register(NagatoInterface, "/org/nagato/weather", ["org.gambas.nagato.weather.nagatointerface"])
+    DBus.Register(NagatoInterface, ObjectPath, [Interface])
     
     $timer.Delay = 10000
     $timer.Enabled = True
@@ -15,9 +18,7 @@ End
 Public Sub Timer_Timer()
     
     If NagatoInterface.Ready Then 
-        Debug NagatoInterface.Condition
-        Debug NagatoInterface.IconId
-        Debug NagatoInterface.Temperature
+        If Minute(Now()) = 0 And If Second(Now()) Div 10 = 0 Then NagatoWeatherCache.Reload()
     Else
         Debug "Not Ready"
     End If

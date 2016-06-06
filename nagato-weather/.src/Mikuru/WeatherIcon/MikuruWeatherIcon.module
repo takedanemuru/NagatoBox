@@ -10,3 +10,8 @@ Public Sub _call(argDay As Boolean, argWeatherId As Integer, argSize As Integer)
     
 End
 
+Public Function GetPath(argDay As Boolean, argWeatherId As Integer) As String
+    
+    Return IIf(argDay, MikuruWeatherIconPathDay[argWeatherId], MikuruWeatherIconPathNight[argWeatherId])
+    
+End

@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Read RecentFiles As String[]
+
+Private Function getRecentFiles() As String[]
+    
+    Dim yukiRecentFiles As String[] = Me._$settings["files/recent", Null]
+    Dim yukiIndex As Integer
+    
+    If Not Object.IsValid(yukiRecentFiles) Then Return Null
+    
+    For yukiIndex = yukiRecentFiles.Max DownTo 0
+        If Not Exist(yukiRecentFiles[yukiIndex]) Then yukiRecentFiles.Extract(yukiIndex)
+    Next
+    
+    Return yukiRecentFiles
+    
+End
+
+Private Function removeInvalid(argPaths As String[]) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiResult As New String[]
+    
+    If Not argPaths Then Return Null
+    
+    For Each yukiPath In argPaths
+        If Exist(yukiPath) Then yukiResult.Add(yukiPath)
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Sub PushPath(argPath As String)
+    
+    Dim yukiRecentPaths As String[] = removeInvalid(getRecentFiles())
+    
+    If Not Exist(argPath) Then Return
+    
+    If Not yukiRecentPaths Then yukiRecentPaths = New String[]
+    
+    If yukiRecentPaths.Exist(argPath) Then yukiRecentPaths.Remove(yukiRecentPaths.Find(argPath))
+    yukiRecentPaths.Add(argPath, 0)
+    yukiRecentPaths.Resize(30)
+    
+    Me._$settings["files/recent"] = yukiRecentPaths
+    Me._$settings.Save()
+    
+End
+
+Private Function RecentFiles_Read() As String[]
+
+    Return getRecentFiles()
+
+End

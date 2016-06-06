@@ -1,29 +1,25 @@
 ' Gambas class file
 
+Private Const BusName As String = "org.gambas.nagato-files"
+Private Const ObjectPath As String = "/org/nagato/files"
 Private Const Interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
 
 Private $message As String
 Private $position As Integer
-Private $closable As Boolean = False
 
 Event RequestClose
 
 Private Function getCursor() As String
     
-    If $position > String.Len($message) And If Odd($position Div 2) Then
-        Return ""
-    Else
-        Return "_"
-    Endif
+    Return IIf(Odd($position Div 2), "", "_")
     
 End
 
 Private Sub checkClosable()
     
-    If Not $closable Then Return
     If String.Len($message) + 40 > $position Then Return
-    If Not DBus.Session.Applications.Exist("org.gambas.nagato-files") Then Return
-    If Not DBus["org.gambas.nagato-files"]["/org/nagato/files", Interface].Ready Then Return
+    If Not DBus.Session.Applications.Exist(BusName) Then Return
+    If Not DBus[BusName][ObjectPath, Interface].Ready Then Return
     
     Raise RequestClose
     
@@ -37,12 +33,6 @@ Public Function Get() As String
     checkClosable()
     
     Return yukiMessage
-    
-End
-
-Public Sub Close()
-    
-    $closable = True
     
 End
 
