@@ -4,8 +4,9 @@ Create Static
 
 Inherits NagatoSettings
 
-Property Read BackgroundHeight As Integer
-Property Read BackgroundWidth As Integer
+Public Enum HPlayer, HPlayList
+
+Property Main As Integer
 
 Public Sub Load(argForm As Form)
     
@@ -48,32 +49,15 @@ Public Sub SetMainFormSize(argForm As Form)
 
 End
 
-Public Function GetBackgroundPath() As String
+Private Function Main_Read() As Integer
 
-    Dim yukiPath As String = Me._$settings["bg/last_path", "foo"]
-    
-    If Not Exist(yukiPath) Then yukiPath = "Pictures/nagato_window_side.png"
-
-    Return yukiPath
+    Return Me._$settings["form/main", HPlayer]
 
 End
 
-Public Sub SaveBackgroundPath(Value As String)
+Private Sub Main_Write(Value As Integer)
 
-    Me._$settings["bg/last_path"] = Value
+    Me._$settings["form/main"] = Value
     Me._$settings.Save()
-
-End
-
-Private Function BackgroundHeight_Read() As Integer
-
-    'Return 48 * MikuruUx.Grid
-    Return 52 * MikuruUx.Grid
-
-End
-
-Private Function BackgroundWidth_Read() As Integer
-
-    Return 36 * MikuruUx.Grid
 
 End

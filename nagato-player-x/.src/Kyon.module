@@ -1,12 +1,27 @@
 ' Gambas module file
 
+Private Sub openForm()
+    
+    Select Case NagatoSettingsForm.Main
+        Case NagatoSettingsForm.HPlayer
+            HaruhiPlayer.Show() 
+            Application.MainWindow = HaruhiPlayer
+        Case NagatoSettingsForm.HPlayList
+            HaruhiPlayList.Show()
+            Application.MainWindow = HaruhiPlayList
+    End Select
+    
+    NagatoDBus.Register()
+    
+End
+
 Public Sub Main()
     
     NagatoArguments.Parsing()
     
     If NagatoDBus.IsUnique() Then
         NagatoQueue.Activate()
-        HaruhiPlayer.Show() 
+        openForm()
         If NagatoArguments.Paths Then NagatoQueue(MikuruSignal.ListAddMusic, NagatoArguments.Paths)
     Else
         NagatoDBus.NotUniqueSequence()

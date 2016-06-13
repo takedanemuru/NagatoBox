@@ -1,0 +1,63 @@
+' Gambas class file
+
+Private $parentMenu As Menu
+
+Private Function getCheckButtonIcon(argFlag As Boolean) As Variant
+    
+    Return IIf(argFlag, "button-check", Null)
+    
+End
+
+Private Sub addChildMenu(argText As String, argTag As Integer, Optional argIconName As String)
+    
+    Dim yukiMenu As New Menu($parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
+    End With
+    
+End
+
+Private Sub refreshChildMenus()
+    
+    With NagatoSettingsForm
+        addChildMenu("Main", .HPlayer, getCheckButtonIcon(.Main = .HPlayer))
+        addChildMenu("List", .HPlayList, getCheckButtonIcon(.Main = .HPlayList))
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    $parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With $parentMenu
+        .Text = ("Main Form")
+    End With
+    
+    addChildMenu("", 0)
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    $parentMenu.Children.Clear()
+    refreshChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsForm.Main = Last.Tag
+    
+    Select Case Last.Tag
+        Case NagatoSettingsForm.HPlayer
+            Application.MainWindow = HaruhiPlayer
+            HaruhiPlayer.Show()
+        Case NagatoSettingsForm.HPlayList
+            Application.MainWindow = HaruhiPlayList
+    End Select
+    
+End

@@ -2,6 +2,7 @@
 
 Private $drawingArea As DrawingArea
 Private $painter As NagatoInfoAreaPainter
+Private $controlBar As NagatoInfoAreaControlBar
 
 Public Sub _new(argContainer As Container)
     
@@ -13,12 +14,14 @@ Public Sub _new(argContainer As Container)
     End With
     
     $painter = New NagatoInfoAreaPainter($drawingArea)
+    $controlBar = New NagatoInfoAreaControlBar(argContainer) As "ControlBar"
     
 End
 
 Public Sub Refresh()
     
     $drawingArea.Refresh()
+    $controlBar.Refresh()
     
 End
 

@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoMenuBarWidget
+
+Private $slider As Slider
+Private $label As Label
+
+Private Sub addSlider(argContainer As Container)
+    
+    $slider = New Slider(argContainer) As "Slider"
+    
+    With $slider
+        .Expand = True
+        .NoTabFocus = True
+    End With
+    
+End
+
+Private Sub addLabel(argContainer As Container)
+    
+    $label = New Label(argContainer)
+    
+    With $label
+        .AutoResize = True
+        .NoTabFocus = True
+    End With
+    
+End
+
+Public Sub _OnInitializeWidget(argContainer As Container)
+    
+    addSlider(argContainer)
+    addLabel(argContainer)
+    
+End
+
+Public Sub Refresh()
+    
+    Dim yukiDurationData As NagatoDurationData = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationData)
+
+    Object.Lock($slider)
+        $slider.Value = yukiDurationData.Rate * 100
+        $label.Text = " " & NagatoQueue.GetProperty(MikuruProperty.CurrentDurationText) & " "
+    Object.Unlock($slider)
+    
+End
+
+Public Sub Slider_Change()
+    
+    NagatoQueue(MikuruSignal.QueueSeek, [$slider.Value / 100])
+    
+End

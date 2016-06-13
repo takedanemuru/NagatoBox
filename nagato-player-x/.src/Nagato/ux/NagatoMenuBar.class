@@ -4,22 +4,6 @@ Inherits NagatoObject
 
 Public _$container As Container
 
-Public Sub _AddPanel()
-    
-    Dim yukiPanel As New Panel(Me._$container)
-    
-    yukiPanel.Expand = True
-    
-End
-
-Public Sub _AddSeparator()
-    
-    Dim yukiSeparator As Separator
-    
-    yukiSeparator = New Separator(Me._$container)
-    
-End
-
 Public Sub _AddButton(argTag As Integer, Optional argIconName As String, Optional argText As String)
     
     Dim yukiButton As New MenuButton(Me._$container) As "MenuButton"
@@ -31,7 +15,6 @@ Public Sub _AddButton(argTag As Integer, Optional argIconName As String, Optiona
         .Border = False
         If argIconName Then .Picture = MikuruIcon.Get(argIconName)
         If argText Then .Tooltip = argText
-        .Foreground = Color.DarkCyan
     End With
     
 End

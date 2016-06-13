@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menuItem
+        .Text = ("Add Music")
+        .Picture = MikuruIcon.Get("music")
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    MikuruDialog.AddMusic()
+    
+End

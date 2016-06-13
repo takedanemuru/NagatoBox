@@ -76,6 +76,7 @@ Public Function GetMusicPaths(argData As String) As String[]
     Dim yukiPaths As New String[]
     
     For Each yukiUrl In Split(argData, gb.CrLf, "", True)
+        If yukiUrl Not Begins "file:///" Then Continue
         yukiPath = MikuruUrl.DecodeUrlToPath(yukiUrl)
         If DesktopMime.FromFile(yukiPath).Type Begins "audio" Then yukiPaths.Add(yukiPath)
     Next

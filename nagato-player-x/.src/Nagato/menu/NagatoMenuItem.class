@@ -1,0 +1,34 @@
+' Gambas class file
+
+Public _$menuItem As Menu
+
+Private Sub initializeMenu(argRootMenu As Menu)
+    
+    Me._$menuItem = New Menu(argRootMenu) As "MenuITem"
+    
+End
+
+Public Sub _OnInitializeMenu()
+    
+    
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    initializeMenu(argRootMenu)
+    Me._OnInitializeMenu()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._OnClickMenuItem()
+    
+End

@@ -4,7 +4,7 @@ Inherits NagatoMenuBar
 
 Public Sub _OnInitialize() 'override
     
-        Me._AddPanel()
+        Object.New("NagatoMenuBarSpacer", [Me._$container])
     Object.New("NagatoStarButtonPlaylists", [Me._$container])
     
 End

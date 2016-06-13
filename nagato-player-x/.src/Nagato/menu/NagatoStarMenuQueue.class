@@ -10,26 +10,12 @@ End
 
 Public Sub _OptionalOnInitializeChildMenus()
     
-    Me._AddMenuItem(("Add music"), MikuruSignal.ListAddMusic, "music")
-    Me._AddMenuItem(("Add directory"), MikuruSignal.ListAddDirectory, "folder")
-    Me._AddMenuItem(("Save as playlist"), MikuruSignal.ListSaveAs, "hard-drive-download")
-    Me._AddMenuItem(("Remove Duplicate Music"), MikuruSignal.ListDeleteDuplicateMusic)
-        Me._AddMenuItem("", MikuruSignal.None)
-    Me._AddMenuItem(("Clear queue"), MikuruSignal.ListClear, "bin")
-    
-End
-
-Public Sub _OnMenuItemClick(argTag As Integer)
-    
-    Select Case argTag
-        Case MikuruSignal.ListAddMusic
-            MikuruDialog.AddMusic()
-        Case MikuruSignal.ListAddDirectory
-            MikuruDialog.AddDirectory()
-        Case MikuruSignal.ListSaveAs
-            HaruhiSaveAsPlaylist.ShowDialog() 
-        Default
-            NagatoQueue(Last.Tag, Null)
-    End Select
+    Object.New("NagatoMenuItemListAddMusic", [Me._$rootMenu])
+    Object.New("NagatoMenuItemListAddDirectory", [Me._$rootMenu])
+    Object.New("NagatoMenuItemListSaveAs", [Me._$rootMenu])
+    Object.New("NagatoMenuItemListRemoveDuprecate", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    Object.New("NagatoMenuItemListClear", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
     
 End

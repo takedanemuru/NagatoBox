@@ -13,7 +13,7 @@ End
 
 Public Sub SetBackgroundImage()
     
-    Dim yukiImage As Image = Image.Load(NagatoSettingsForm.GetBackgroundPath())
+    Dim yukiImage As Image = Image.Load(NagatoSettingsBackground.Path)
     Dim yukiRate As Float = Max(HaruhiPlayer.H / yukiImage.H, HaruhiPlayer.W / yukiImage.W)
     
     $backgroundImage = yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)

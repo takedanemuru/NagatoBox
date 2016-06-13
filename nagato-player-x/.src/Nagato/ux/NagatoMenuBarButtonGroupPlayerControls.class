@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoMenuBarWidget
+
+Public Sub _OnInitializeWidget(argContainer As Container)
+    
+    Object.New("NagatoMenuButtonBack", [argContainer])
+    Object.New("NagatoMenuButtonPlay", [argContainer])
+    Object.New("NagatoMenuButtonPause", [argContainer])
+    Object.New("NagatoMenuButtonNext", [argContainer])
+        Object.New("NagatoMenuBarSeparator", [argContainer])
+    Object.New("NagatoMenuButtonShuffle", [argContainer])
+    Object.New("NagatoMenuButtonRepeat", [argContainer])
+        Object.New("NagatoMenuBarSeparator", [argContainer])
+    
+End

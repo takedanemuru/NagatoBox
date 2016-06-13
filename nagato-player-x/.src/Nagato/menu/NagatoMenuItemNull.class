@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menuItem
+        .Text = ""
+    End With
+    
+End

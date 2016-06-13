@@ -20,8 +20,6 @@ End
 
 Private Sub setRows(argResult As Result)
     
-    'Dim yukiResult As Result = 
-    
     $paths.Clear()
     Me._$grids.Clear()
     Me._$grids.Rows.Count = 0
@@ -55,7 +53,7 @@ End
 
 Public Sub _InitializeGrids()
     
-    'ensurelibrary()
+    'ensurelibrary() ' for testing only
     
     Me._SetColumns("", ("Name"), ("Artist"), ("Album"), ("Duration"))
     $paths = New NagatoLibraryPaths

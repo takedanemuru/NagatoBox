@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoMenuBarWidget
+
+Public Sub _OnInitializeWidget(argContainer As Container)
+    
+    Dim yukiPanel As New Panel(argContainer)
+    
+    yukiPanel.Expand = True
+    
+End

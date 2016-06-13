@@ -1,0 +1,36 @@
+' Gambas class file
+
+Private $hBox As HBox
+Private $seekbar As NagatoMenuBarWidgetSeekBar
+
+Private Sub initializeControls()
+    
+    Object.New("NagatoMenuBarButtonGroupPlayerControls", [$hBox])
+    $seekbar = New NagatoMenuBarWidgetSeekBar($hBox)
+    Object.New("NagatoStarButtonQueue", [$hBox])
+    
+End
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .H = 3 * MikuruUx.Grid
+        .Background = Color.Lighter(Color.Lighter(Color.Violet))
+     End With
+    
+End
+
+Public Sub Refresh()
+    
+    $seekbar.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeHBox(argContainer)
+    initializeControls()
+    
+End

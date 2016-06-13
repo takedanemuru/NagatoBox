@@ -29,45 +29,15 @@ Public Sub _OptionalOnInitializeChildMenus()
     
 End
 
-Public Sub _OnMenuItemClick(argSignal As Integer)
-    
-    
-    
-End
-
-Public Sub _AddMenuItem(argText As String, argTag As Integer, Optional argIconName As String)
-    
-    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
-    
-    With yukiMenu
-        .Text = argText
-        .Tag = argTag
-        If argIconName Then .Picture = MikuruIcon.Get(argIconName)
-    End With
-    
-End
-
 Public Sub _new()
     
     Me._OnInitializeRootMenu()
     Me._OptionalOnInitializeChildMenus()
-        Me._AddMenuItem("", MikuruSignal.None)
-    Me._AddMenuItem(("About"), MikuruSignal.ApplicationAbout, "star")
-        Me._AddMenuItem("", MikuruSignal.None)
-    Me._AddMenuItem(("Close This Window"), MikuruSignal.ApplicationAbout, "button-cross")
-    
-End
-
-Public Sub MenuItem_Click()
-    
-    Select Case Last.Tag
-        Case MikuruSignal.ApplicationAbout
-            HaruhiAbout.ShowDialog()
-        Case MikuruSignal.ApplicationClosePlaylistsWindow
-            HaruhiPlayList.Close()
-        Default
-            Me._OnMenuItemClick(Last.Tag)
-    End Select
+    Object.New("NagatoSubMenu", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    Object.New("NagatoMenuItemAbout", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    Object.New("NagatoMenuItemClosePlayListsWindow", [Me._$rootMenu])
     
 End
 

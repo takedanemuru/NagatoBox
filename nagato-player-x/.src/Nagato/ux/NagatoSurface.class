@@ -6,7 +6,7 @@ Public Sub Drop(argData As Variant)
     
     Select Case MikuruPath.GetDragDataType(argData)
         Case MikuruPath.Image
-            NagatoSettingsForm.SaveBackgroundPath(MikuruPath.GetImagePath(argData))
+            NagatoSettingsBackground.Path = MikuruPath.GetImagePath(argData)
             Raise RequestRefresh
         Case MikuruPath.Music
             NagatoQueue(MikuruSignal.ListAddMusic, MikuruPath.GetMusicPaths(argData))

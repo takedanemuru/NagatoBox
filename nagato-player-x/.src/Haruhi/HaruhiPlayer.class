@@ -5,9 +5,6 @@ Private $observer As Observer
 
 Public Sub Form_Open()
     
-    Application.MainWindow = Me
-    NagatoDBus.Register()
-    
     NagatoSettingsForm.SetMainFormSize(Me)
     NagatoSettingsForm.SetPosition(Me)
     
@@ -18,7 +15,7 @@ End
 
 Public Sub Form_Close()
     
-    NagatoDBus.Unregister()
+    If NagatoSettingsForm.Main = NagatoSettingsForm.HPlayer Then NagatoDBus.Unregister()
     NagatoSettingsForm.SavePosition(Me)
     
 End

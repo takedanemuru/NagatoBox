@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .Tooltip = ("Shuffle")
+        .Picture = MikuruIcon.Get("button-shuffle")
+    End With
+    
+End
+
+Public Sub _OnClickMenuButton()
+    
+    NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
+    
+End

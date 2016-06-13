@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoMenuBarWidget
+
+Public Sub _OnInitializeWidget(argContainer As Container)
+    
+    Dim yukiSeparator As Separator
+    
+    yukiSeparator = New Separator(argContainer)
+    
+End

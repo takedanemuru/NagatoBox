@@ -4,20 +4,13 @@ Inherits NagatoMenuBar
 
 Public Sub _OnInitialize() 'override
     
-    Me._AddButton(MikuruSignal.QueueBack, "button-rew", ("Back"))
-    Me._AddButton(MikuruSignal.QueuePlay, "button-play", ("Play"))
-    Me._AddButton(MikuruSignal.QueuePause, "button-pause", ("Pause"))
-    Me._AddButton(MikuruSignal.QueueNext, "button-ff", ("Forward"))
-        Me._AddSeparator()
-    Me._AddButton(MikuruSignal.QueueShuffle, "button-shuffle", ("Shuffle"))
-    Me._AddButton(MikuruSignal.QueueRepeat, "button-synchronize", ("Repeat"))
-        Me._AddSeparator()
+    Object.New("NagatoMenuBarButtonGroupPlayerControls", [Me._$container])
     Me._AddButton(MikuruSignal.ListDown, "arrow-down", ("Down"))
     Me._AddButton(MikuruSignal.ListUp, "arrow-up", ("Up"))
-    Me._AddButton(MikuruSignal.ListAddMusic, "music", ("Add Music"))
-    Me._AddButton(MikuruSignal.ListAddDirectory, "folder", ("Add Folder"))
+    Object.New("NagatoMenuButtonAddMusic", [Me._$container])
+    Object.New("NagatoMenuButtonAddDirectory", [Me._$container])
     Me._AddButton(MikuruSignal.ListClear, "bin", ("Clear"))
-        Me._AddPanel()
+        Object.New("NagatoMenuBarSpacer", [Me._$container])
     Object.New("NagatoStarButtonQueue", [Me._$container])
     
 End
@@ -25,16 +18,8 @@ End
 Public Sub MenuButton_Click()
     
     Select Case Last.Tag
-        Case MikuruSignal.QueueShuffle
-            NagatoSettingsMusic.Shuffle = Not NagatoSettingsMusic.Shuffle
-        Case MikuruSignal.QueueRepeat
-            NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
         Case MikuruSignal.ListDown, MikuruSignal.ListUp
             Raise Signal(Last.Tag, [""])
-        Case MikuruSignal.ListAddMusic
-            MikuruDialog.AddMusic()
-        Case MikuruSignal.ListAddDirectory
-            MikuruDialog.AddDirectory()
         Default
             NagatoQueue(Last.Tag, Null)
     End Select

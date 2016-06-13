@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Path As String
+
+Private Function Path_Read() As String
+
+    Dim yukiPath As String = Me._$settings["bg/last_path", "foo"]
+    
+    If Not Exist(yukiPath) Then yukiPath = "Pictures/nagato_window_side.png"
+
+    Return yukiPath
+
+End
+
+Private Sub Path_Write(Value As String)
+
+    Me._$settings["bg/last_path"] = Value
+    Me._$settings.Save()
+
+End

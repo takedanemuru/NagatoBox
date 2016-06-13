@@ -1,0 +1,52 @@
+' Gambas class file
+
+Public _$menuButton As MenuButton
+
+Private Sub initializeButton(argContainer As Container)
+    
+    Me._$menuButton = New MenuButton(argContainer) As "MenuButton"
+    
+    With Me._$menuButton
+        .AutoResize = True
+        .Arrow = False
+        .Border = False
+    End With
+    
+End
+
+Public Sub _OnInitializeMenuButton()
+    
+    
+    
+End
+
+Public Sub _OnClickMenuButton()
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeButton(argContainer)
+    Me._OnInitializeMenuButton()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Me._OnClickMenuButton()
+    
+End
+
+Public Sub MenuButton_Enter()
+    
+    Try Swap Last.Text, Last.Tooltip
+    
+End
+
+Public Sub MenuButton_Leave()
+    
+    Try Swap Last.Tooltip, Last.Text
+    
+End

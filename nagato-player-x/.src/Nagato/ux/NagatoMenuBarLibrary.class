@@ -12,7 +12,7 @@ End
 
 Public Sub _OnInitialize() 'override
 
-        Me._AddPanel()
+        Object.New("NagatoMenuBarSpacer", [Me._$container])
     addSearchComplex()    
     Object.New("NagatoStarButtonPlaylists", [Me._$container])
     

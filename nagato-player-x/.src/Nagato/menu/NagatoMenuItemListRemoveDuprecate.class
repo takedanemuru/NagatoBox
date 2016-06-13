@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menuItem
+        .Text = ("Remove Duprecate Musics")
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    NagatoQueue(MikuruSignal.ListDeleteDuplicateMusic, Null)
+    
+End

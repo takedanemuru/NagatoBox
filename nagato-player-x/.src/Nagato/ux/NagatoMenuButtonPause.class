@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .Tooltip = ("Pause")
+        .Picture = MikuruIcon.Get("button-pause")
+    End With
+    
+End
+
+Public Sub _OnClickMenuButton()
+    
+    NagatoQueue(MikuruSignal.QueuePause, Null)
+    
+End
