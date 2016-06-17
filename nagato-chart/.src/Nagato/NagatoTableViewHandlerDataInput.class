@@ -2,16 +2,6 @@
 
 Inherits NagatoTableViewHandler
 
-Private Sub paintRow()
-    
-    Dim yukiColumnIndex As Integer
-    
-    For yukiColumnIndex = 0 To Me._$tableView.Columns.Max
-        Me._$tableView[Me._$tableView.Rows.Max, yukiColumnIndex].Background = MikuruColor.GridBackground
-    Next
-    
-End
-
 Public Sub Asakura_Click()
     
     Me._$tableView.Edit()
@@ -33,7 +23,7 @@ End
 Public Sub Asakura_Insert()
     
     Inc Me._$tableView.Rows.Count
-    If Odd(Me._$tableView.Rows.Max) Then paintRow()
+    If Odd(Me._$tableView.Rows.Max) Then Me._PaintRow(Me._$tableView.Rows.Max)
     Me._$tableView.MoveTo(Me._$tableView.Rows.Max, 0)
     Me._$tableView.Edit()
     

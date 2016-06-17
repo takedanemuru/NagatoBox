@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private $chart As New Chart
+Private $csv As CsvFile
+
+Private Sub getData(argCollection As Collection, argFieldIndex As Integer) As Float
+    
+    Dim yukiData As String = UnQuote$(argCollection[$csv.Fields[argFieldIndex]])
+    
+    Return CFloat(yukiData)
+    
+Catch
+    Return 0
+    
+End
+
+Private Sub setLine(argCollection As Collection) 
+    
+    Dim yukiHeader As String = UnQuote$(argCollection[$csv.Fields[1]]) 
+
+    If yukiHeader = "" Then Return
+
+    $chart.Headers.Values.Add(yukiHeader, $chart.Headers.Values.Max + 1)
+    $chart[0].Text = yukiHeader
+    $chart[0].Values.Add(getData(argCollection, 4), $chart[0].Values.Max + 1)
+
+End
+
+Private Sub setData()
+    
+    While Not $csv.Eof
+        setLine($csv.Read()) 
+    Wend
+    
+End
+
+Public Sub CreateChart(argCsvFilePath As String, argHeaderColumn As Integer, ...)
+    
+    $csv = New CsvFile(argCsvFilePath, ",", "")
+    
+    Me.Show()
+    
+    With $chart
+        .Proportionnal = True
+        .Title.Text = "debian packages"
+        .Legend.Visible = True
+        .Legend.Title = "legend"
+        .Type = ChartType.Areas
+        .Style = ChartStyle.Default
+        .CountDataSets = 1
+        $chart.YAxe.MaxValue = 50000
+        $chart.YAxe.Step = 5000
+    End With
+    
+    setData()
+    
+End
+
+Public Sub ChartDrawingArea_Draw()
+    
+    $chart.Width = ChartDrawingArea.W
+    $chart.Height = ChartDrawingArea.Height
+    $chart.Draw()
+    
+End

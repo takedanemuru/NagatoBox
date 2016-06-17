@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoTableViewHandlerData
+
+Public Sub DataSave(Optional argFileName As String = "chart_test.csv")
+    
+    File.Save(User.Home &/ argFileName, Me._GetCsv())
+    
+End
+
+Public Sub DataSaveTo(argPath As String)
+    
+    File.Save(argPath, Me._GetCsv())
+    
+End

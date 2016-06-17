@@ -12,6 +12,8 @@ End
 
 Public Sub Form_Open()
     
+    Application.MainWindow = Me
+    
     NagatoSettingsForm.Load(Me)
     
 End

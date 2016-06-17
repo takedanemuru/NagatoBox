@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoMenuItemDynamic
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menuItem
+        .Text = ("Compact Mode")
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    NagatoSettingsForm.Resizable = Not NagatoSettingsForm.Resizable
+    
+End
+
+Public Sub _OnRootMenuShow()
+    
+    If Not NagatoSettingsForm.Resizable Then
+        Me._$menuItem.Picture = MikuruIcon.Get("button-check")
+    Else
+        Me._$menuItem.Picture = Null
+    End If
+    
+End

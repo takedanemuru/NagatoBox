@@ -38,20 +38,12 @@ Private Sub parseRows()
     
 End
 
-Public Sub DataSave()
+Public Function _GetCsv() As String
     
     $csv = ""
     parseHeaders()
     parseRows()
-    File.Save(User.Home &/ "chart_test.csv", $csv)
     
-End
-
-Public Sub DataSaveTo(argPath As String)
-    
-    $csv = ""
-    parseHeaders()
-    parseRows()
-    File.Save(argPath, $csv)
+    Return $csv
     
 End

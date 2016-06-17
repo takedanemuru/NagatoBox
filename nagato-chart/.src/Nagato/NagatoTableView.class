@@ -7,6 +7,7 @@ Private $headers As NagatoTableViewHandlerHeaders
 Private $dataInput As NagatoTableViewHandlerDataInput
 Private $dataLoad As NagatoTableViewHandlerDataLoad
 Private $dataSave As NagatoTableViewHandlerFileStatus
+Private $dataChart As NagatoTableViewHandlerDataChart
 
 Private Sub initializeTableView()
     
@@ -28,6 +29,7 @@ Public Sub _OnInitialize()
     $dataInput = New NagatoTableViewHandlerDataInput($tableView)
     $dataLoad = New NagatoTableViewHandlerDataLoad($tableView)
     $dataSave = New NagatoTableViewHandlerFileStatus($tableView)
+    $dataChart = New NagatoTableViewHandlerDataChart($tableView)
     
 End
 
@@ -49,7 +51,7 @@ Public Sub _call(argSignal As Integer, argValues As Variant)
         Case MikuruSignal.FileSaveAs
             $dataSave.SaveAs()
         Case MikuruSignal.ChartHeader
-            Debug "create chart"
+            $dataChart.CreateChart()
     End Select
     
 End

@@ -42,6 +42,7 @@ Private Sub setRows()
     Do
         Inc Me._$tableView.Rows.Count
         setRow($csv.Read())
+        If Odd(Me._$tableView.Rows.Max) Then Me._PaintRow(Me._$tableView.Rows.Max)
     Loop Until $csv.Eof
     
 End

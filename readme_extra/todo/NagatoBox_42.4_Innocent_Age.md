@@ -13,12 +13,12 @@
 + ~~remove too short sound file(s)~~
 + ~~new : randmize button~~
 
-### nagato-chart-editor
+### nagato-chart
 
 + ~~rename : rename nagato-data-table to nagato-chart-editor~~
 + ~~new : save and load a csv file.~~
 + ~~new : edit header.~~
-+ new : chart painter by gb.chart (interim)
++ ~~new : chart painter by gb.chart (interim)~~
 
 ### nagato-code-view (v42.4.14)
 
@@ -59,8 +59,8 @@
 
 + ~~move duration fetcher to inside of NagatoPlayer~~ (BAD IDEA, DurationFetcher is completely removed.)
 + ~~reload playlists gridview with NagatoBroadcast~~
-+ new : main window switching functionality and settings.
-+ new :slime mode for `HaruhiPlaylists`
++ ~~new : main window switching functionality and settings.~~
++ ~~new :slime mode for `HaruhiPlaylists`~~
 + new : daemon mode.
 
 ### nagato-session

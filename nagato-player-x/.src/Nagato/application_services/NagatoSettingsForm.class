@@ -7,23 +7,19 @@ Inherits NagatoSettings
 Public Enum HPlayer, HPlayList
 
 Property Main As Integer
+Property Resizable As Boolean
 
 Public Sub Load(argForm As Form)
     
-    argForm.X = Me._$settings[Subst$("&1/x", argForm.Name), argForm.X]
-    argForm.Y = Me._$settings[Subst$("&1/y", argForm.Name), argForm.Y]
-    argForm.H = Me._$settings[Subst$("&1/h", argForm.Name), argForm.H]
-    argForm.W = Me._$settings[Subst$("&1/w", argForm.Name), argForm.W]
+    Me.SetPosition(argForm)
+    Me.SetSize(argForm)
     
 End
 
 Public Sub Save(argForm As Form)
     
-    Me._$settings[Subst$("&1/x", argForm.Name)] = argForm.X
-    Me._$settings[Subst$("&1/y", argForm.Name)] = argForm.Y
-    Me._$settings[Subst$("&1/h", argForm.Name)] = argForm.H
-    Me._$settings[Subst$("&1/w", argForm.Name)] = argForm.W
-    Me._$settings.Save()
+    Me.SavePosition(argForm)
+    Me.SaveSize(argForm)
     
 End
 
@@ -38,6 +34,21 @@ Public Sub SavePosition(argForm As Form)
     
     Me._$settings[Subst$("&1/x", argForm.Name)] = argForm.X
     Me._$settings[Subst$("&1/y", argForm.Name)] = argForm.Y
+    Me._$settings.Save()
+    
+End
+
+Public Sub SetSize(argForm As Form)
+    
+    argForm.W = Me._$settings[Subst$("&1/w", argForm.Name), argForm.W]
+    argForm.H = Me._$settings[Subst$("&1/h", argForm.Name), argForm.H]
+    
+End
+
+Public Sub SaveSize(argForm As Form)
+    
+    Me._$settings[Subst$("&1/h", argForm.Name)] = argForm.H
+    Me._$settings[Subst$("&1/w", argForm.Name)] = argForm.W
     Me._$settings.Save()
     
 End
@@ -59,5 +70,20 @@ Private Sub Main_Write(Value As Integer)
 
     Me._$settings["form/main"] = Value
     Me._$settings.Save()
+
+End
+
+Private Function Resizable_Read() As Boolean
+
+    Return Me._$settings["form/resizable", True]
+
+End
+
+Private Sub Resizable_Write(Value As Boolean)
+
+    Me._$settings["form/resizable"] = Value
+    Me._$settings.Save()
+
+    HaruhiPlayList.SetFormSize()
 
 End

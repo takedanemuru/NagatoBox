@@ -5,6 +5,16 @@ Inherits NagatoObject
 Public _$tableView As TableView
 Public _$observer As Observer
 
+Public Sub _PaintRow(argRow As Integer)
+    
+    Dim yukiColumnIndex As Integer
+    
+    For yukiColumnIndex = 0 To Me._$tableView.Columns.Max
+        Me._$tableView[argRow, yukiColumnIndex].Background = MikuruColor.GridBackground
+    Next
+    
+End
+
 Public Sub _OptionalOnInitialize()
     
     

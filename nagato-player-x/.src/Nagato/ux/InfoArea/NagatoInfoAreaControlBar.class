@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Property Read H As Integer
+
 Private $hBox As HBox
 Private $seekbar As NagatoMenuBarWidgetSeekBar
 
@@ -33,4 +35,10 @@ Public Sub _new(argContainer As Container)
     initializeHBox(argContainer)
     initializeControls()
     
+End
+
+Private Function H_Read() As Integer
+
+    Return $hBox.H
+
 End

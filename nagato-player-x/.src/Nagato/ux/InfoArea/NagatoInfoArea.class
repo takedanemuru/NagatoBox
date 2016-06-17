@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Property Read H As Integer
+
 Private $drawingArea As DrawingArea
 Private $painter As NagatoInfoAreaPainter
 Private $controlBar As NagatoInfoAreaControlBar
@@ -31,4 +33,10 @@ Public Sub DrawingArea_Draw()
         $painter.Paint()
     Paint.End()
     
+End
+
+Private Function H_Read() As Integer
+
+    Return $drawingArea.H + $controlBar.H
+
 End

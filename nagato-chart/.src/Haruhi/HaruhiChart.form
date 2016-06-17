@@ -1,0 +1,10 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,114.2857,64)
+  Icon = Picture["Icons/chart-area-up.png"]
+  Arrangement = Arrange.Fill
+  { ChartDrawingArea DrawingArea
+    MoveScaled(8,6,46,44)
+  }
+}

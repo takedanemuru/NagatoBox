@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoTableViewHandlerData
+
+Public Sub CreateChart()
+    
+    Dim yukiPath As String = Temp$() & ".csv"
+    
+    File.Save(yukiPath, Me._GetCsv())
+    HaruhiChart.CreateChart(yukiPath, 0)
+    
+End
