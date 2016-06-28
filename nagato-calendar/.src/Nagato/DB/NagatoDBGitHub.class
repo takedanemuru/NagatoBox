@@ -15,6 +15,8 @@ Private Sub ensureTable()
     
     Dim yukiTable As Table
     
+    Me._$connection.Open()
+    
     If Not Me._$connection.Tables.Exist(TableGitHub) Then
         yukiTable = Me._$connection.Tables.Add(TableGitHub)
         yukiTable.Fields.Add(ColumnId, db.Serial)

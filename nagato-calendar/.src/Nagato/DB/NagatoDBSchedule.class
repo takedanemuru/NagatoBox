@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Public _$uniqueName As String = "NagatoDBSchedule" ' override
+
+Public Const TableSchedule As String = "schedule"
+Public Const ColumnId As String = "id"
+Public Const ColumnEvent As String = "event"
+Public Const ColumnDate As String = "date"
+Public Const ColumnTag As String = "tag"
+
+Private Sub ensureTable()
+    
+    Dim yukiTable As Table
+    
+    If Not Me._$connection.Opened Then Me._$connection.Open()
+    
+    If Not Me._$connection.Tables.Exist() Then
+        yukiTable = Me._$connection.Tables.Add(Me.TableSchedule)
+        yukiTable.Fields.Add(Me.ColumnId, db.Serial)
+        yukiTable.Fields.Add(Me.ColumnDate, db.Date)
+        yukiTable.Fields.Add(Me.ColumnTag, db.String)
+        yukiTable.Fields.Add(Me.ColumnEvent, db.String)
+        yukiTable.PrimaryKey = [ColumnId]
+        yukiTable.Update()
+    End If
+    
+End

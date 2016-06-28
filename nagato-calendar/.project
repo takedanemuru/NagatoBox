@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
+# Compiled with Gambas 3.8.4
 Title=nagato-calendar
 Startup=Kyon
 Icon=pictures/icons/calendar.png
-Version=0.6.0
+Version=42.4.2
 Component=gb.args
 Component=gb.image
 Component=gb.qt4
@@ -25,7 +25,7 @@ Vendor=The Alien and RadioNoise
 Address=takeda.nemuru@gmail.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-calendar-0.6.0
+PackageName=nagato-calendar-42.4.2
 CreateEachDirectory=1
 Packager=1
 Systems=ubuntu
@@ -33,3 +33,4 @@ Menus=ubuntu:"Applications/Project Management"
 Categories=ubuntu:"Nagato;ProjectManagement;Utility"
 Groups=ubuntu:"x11"
 ExtraDependencies=ubuntu:"curl\t\t"
+ExtraFiles=ubuntu:"nagato-calendar.desktop\t/usr/share/applications\nnagato-calendar.png\t/usr/share/pixmaps"

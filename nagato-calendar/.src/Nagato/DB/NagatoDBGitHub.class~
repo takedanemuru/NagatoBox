@@ -26,6 +26,12 @@ Private Sub ensureTable()
     
 End
 
+Public Sub GetAllResult() As Result
+    
+    Return Me._$connection.Find(TableGitHub)
+    
+End
+
 Public Sub Push(argRepository As String, argUserName As String)
     
     Dim yukiResult As Result
