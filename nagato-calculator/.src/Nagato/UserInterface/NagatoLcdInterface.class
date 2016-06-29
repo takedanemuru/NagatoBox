@@ -21,6 +21,13 @@ Public Sub ShowResultState(argNumber As Float)
         
 End
 
+Public Sub ShowMemoryState(argNumber As Float)
+        
+    $lcdLabel.Visible = True
+    $lcdLabel.Text = $header.GetTextWithHeader2(argNumber)
+    
+End
+
 Public Sub ShowBufferState2(argText As String)
     
     $lcdLabel.Text = argText

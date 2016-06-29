@@ -2,5 +2,7 @@
 
 Public Enum KeyPressHeader = 4000, KeyPressNumber = 4001, KeyPressFunction = 4002, KeyPressSpecial = 4003
 Public Enum CalcHeader = 6000, CalcBufferChanged = 6001, CalcResultChanged = 6002
+Public Enum MemoryHandler = 7000, MemoryPlus = 7001, MemoryMinus = 7002, MemoryMulti = 7003
+Public Enum MenoryDevide = 7004, MemoryClear = 7005
 Public Enum ErrorHeader = 8000, ErrorDivisionByZero = 8001
 

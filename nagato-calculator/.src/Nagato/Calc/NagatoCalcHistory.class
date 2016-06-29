@@ -35,6 +35,12 @@ Public Sub Add(argElement As NagatoCalcElement)
     
 End
 
+Public Function GetLast() As Float
+    
+    Return getCurrentResult()
+    
+End
+
 Public Sub Clear()
     
     $history.Clear()

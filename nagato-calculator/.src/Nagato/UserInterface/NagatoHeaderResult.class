@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private Const Header As String = "result:"
+Private Const Header2 As String = "memory:"
 Private Const HeaderLength As Integer = 6
 
 Private Function getSpace(argUsedLength As Integer) As String
@@ -23,5 +24,13 @@ Public Sub GetTextWithHeader(argNumber As Float) As String
     Dim yukiSpace As String = getSpace(HeaderLength + MikuruNumber.GetValidLength(argNumber))
     
     Return Header & yukiSpace & argNumber
+    
+End
+
+Public Sub GetTextWithHeader2(argNumber As Float) As String
+    
+    Dim yukiSpace As String = getSpace(HeaderLength + MikuruNumber.GetValidLength(argNumber))
+    
+    Return Header2 & yukiSpace & argNumber
     
 End

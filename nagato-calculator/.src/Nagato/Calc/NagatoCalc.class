@@ -76,6 +76,16 @@ Public Sub Back()
     
 End
 
+Public Function CallMemory() As Float
+    
+    Dim yukiBuffer As Float = $history.GetLast()
+    
+    Me.ClearAll()
+    
+    Return yukiBuffer
+    
+End
+
 Public Sub _new()
     
     setNewBuffer(MikuruFunctionType.Start)

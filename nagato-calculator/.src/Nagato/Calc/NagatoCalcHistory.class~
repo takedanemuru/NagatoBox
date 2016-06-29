@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Private $history As New NagatoCalcElement[]
 
 Private Function getCurrentResult() As Float

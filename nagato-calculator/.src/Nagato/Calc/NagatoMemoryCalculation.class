@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $lcd As NagatoLcdInterface
+Private $buffer As Float
+
+Private Sub clear()
+    
+    $lcd.ShowBufferState2("")
+    $lcd.SetVisible(False)
+    $buffer = 0
+    
+End
+
+Private Sub calc(argSignal As Integer, argNumber As Float)
+    
+    Select Case argSignal
+        Case MikuruSignal.MemoryPlus
+            $buffer += argNumber
+        Case MikuruSignal.MemoryMinus
+            $buffer -= argNumber
+        Case MikuruSignal.MemoryMulti
+            $buffer *= argNumber
+        Case MikuruSignal.MenoryDevide
+            If argNumber = 0 Then Return
+            $buffer /= argNumber
+    End Select
+    
+    $lcd.ShowMemoryState($buffer)
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.MemoryClear Then
+        clear()
+    Else
+        calc(argSignal, argValues[0])
+    End If
+    
+End
+
+Public Sub _new(argLcd As LCDLabel)
+    
+    $lcd = New NagatoLcdInterface(argLcd)
+    $lcd.SetVisible(False)
+    
+End

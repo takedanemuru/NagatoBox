@@ -6,7 +6,9 @@ Private Const MenuName As String = "StarMenu"
 
 Public Sub _OptionalOnInitializeMenuButton()
     
-    Dim yukiMenu As New NagatoPullDownMenuStar(MenuName)
+    Dim yukiMenu As NagatoPullDownMenuStar
+    
+    yukiMenu = New NagatoPullDownMenuStar(MenuName)
     
     Me._$menuButton.Picture = MikuruIcon["star"]
     Me._$menuButton.Menu = MenuName

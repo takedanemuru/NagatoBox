@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Inherits NagatoObject
-
 Private $lcdLabel As LCDLabel
 Private $header As New NagatoHeaderResult
 

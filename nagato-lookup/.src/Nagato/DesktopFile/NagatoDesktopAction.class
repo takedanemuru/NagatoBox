@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private $locale As String
+Private $name As String
+Private $nameLocale As String
+Private $icon As String
+Private $exec As String
+
+Public Sub _new()
+    
+    $locale = Replace$(System.Language, "." & System.Charset, "")
+    
+End
+
+Public Sub Set(argLine As String)
+    
+    If argLine Begins "Name=" Then $name = Replace$(argLine, "Name=", "")
+    If argLine Begins "Exec=" Then $exec = Replace$(argLine, "Exec=", "")
+    
+End

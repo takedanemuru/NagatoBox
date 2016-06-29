@@ -1,0 +1,35 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private $actions As New NagatoDesktopAction[]
+Private $action As NagatoDesktopAction
+
+Public Sub Set(argLine As String)
+    
+    If argLine Begins "[Desktop Action" Then
+        If Object.IsValid($action) Then $actions.Add($action)
+        $action = New NagatoDesktopAction
+    Else
+        $action.Set(argLine)
+    Endif
+    
+End
+
+Public Sub Finish()
+    
+    If Object.IsValid($action) Then $actions.Add($action)
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoDesktopAction
+    
+    Return $actions[argIndex]
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $actions.Count
+
+End

@@ -8,8 +8,13 @@ Private $locker As New NagatoLocker
 
 Private Sub setNewBuffer(argFunctionType As Integer)
     
+    ' TECHNICAL INFORMATION:
+    ' any signal can rise from _new() function. 
+    ' so DO NOT set function in _new()
+    
     $currentElement = New NagatoCalcElement As "TFEI"
     $currentElement.SetFunction(argFunctionType)
+    
     $locker.Lock = False
     
 End
@@ -68,6 +73,14 @@ End
 Public Sub Back()
     
     $currentElement.Back()
+    
+End
+
+Public Function CallMemory() As Float
+    
+    Me.ClearAll()
+    
+    Return $history.GetLast()
     
 End
 

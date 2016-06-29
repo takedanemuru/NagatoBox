@@ -4,33 +4,44 @@
   MoveScaled(0,0,64.2857,51.4286)
   Icon = Picture["picture/calculator.png"]
   Picture = Picture["picture/121017-bigthumbnail.jpg"]
-  { MemoryRunButton Button
+  { MemoryClearButton Button MemoryKey
+    Name = "MemoryClearButton"
     MoveScaled(43,33,6,3)
     Background = &HFF7F00&
+    Tag = "7005"
     NoTabFocus = True
-    Text = ("MR")
+    ToolTip = ("Clear Memory")
+    Text = ("MC")
   }
-  { MemoryDevideButton Button
+  { MemoryDevideButton Button MemoryKey
+    Name = "MemoryDevideButton"
     MoveScaled(36,33,6,3)
     Background = &HFF7F00&
+    Tag = "7004"
     NoTabFocus = True
     Text = ("M/")
   }
-  { MemoryMultiButton Button
+  { MemoryMultiButton Button MemoryKey
+    Name = "MemoryMultiButton"
     MoveScaled(29,33,6,3)
     Background = &HFF7F00&
+    Tag = "7003"
     NoTabFocus = True
     Text = ("M*")
   }
-  { MemoryMinusButton Button
+  { MemoryMinusButton Button MemoryKey
+    Name = "MemoryMinusButton"
     MoveScaled(22,33,6,3)
     Background = &HFF7F00&
+    Tag = "7002"
     NoTabFocus = True
     Text = ("M-")
   }
-  { MemoryPlusButton Button
+  { MemoryPlusButton Button MemoryKey
+    Name = "MemoryPlusButton"
     MoveScaled(15,33,6,3)
     Background = &HFF7F00&
+    Tag = "7001"
     NoTabFocus = True
     Text = ("M+")
   }

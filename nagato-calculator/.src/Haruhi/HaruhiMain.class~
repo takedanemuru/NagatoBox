@@ -1,8 +1,10 @@
 ' Gambas class file
 
 Private $calc As NagatoCalc 
+Private $memoryCalc As NagatoMemoryCalculation
 Private $formHandler As NagatoFormHandler
 Private $lcdHandler As NagatoLCDHandler
+Private $starButton As NagatoMenuButtonStar
 
 Private Sub specialKeysEvents(argType As Integer)
     
@@ -29,7 +31,9 @@ Public Sub Form_Open()
     $formHandler = New NagatoFormHandler(Me) As "FormHandler"
     $calc = New NagatoCalc As "Calc"
     $lcdHandler = New NagatoLCDHandler(ErrorLCD, ResultLCD, BufferLCD)
+    $memoryCalc = New NagatoMemoryCalculation(ErrorLCD)
     BackButton.Text = String.Chr$(8594) 'back arrow
+    $starButton = New NagatoMenuButtonStar(StarButton) As "StarButton"
     
 End
 
@@ -48,6 +52,19 @@ End
 Public Sub SpecialKeys_Click()
     
     specialKeysEvents(Last.Tag)
+    
+End
+
+Public Sub MemoryKey_Click()
+    
+    If Last.Tag = "MemoryClear" Then
+        Debug "clear memory"
+        $lcdHandler.ClearMemory()
+        $memoryCalc(Last.Tag, Null)
+    Else
+        $lcdHandler.SendToMemory()
+        $memoryCalc(Last.Tag, [$calc.CallMemory()])
+    Endif
     
 End
 

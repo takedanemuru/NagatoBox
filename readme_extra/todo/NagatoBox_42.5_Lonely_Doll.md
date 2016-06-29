@@ -6,9 +6,9 @@ until end of September
 
 ToDo for Applications
 
-### nagato-calculator
+### nagato-calculator (v42.5.7)
 
-+ finish `M+` , `M-` and `MC` functionalities.
++ ~~finish `M+` , `M-` , `M*` , `M/` and `MC` functionalities.~~
 
 ### nagato-calender
 
@@ -18,6 +18,8 @@ ToDo for Applications
 
 + integrate weather forecast functionalities
 
-### nagato-lookup
+### nagato-lookup (v42.5.27)
 
 + parse additional actions in desktop entry files.
++ ~~[Desktop Action] data should be stored in NagatoDesktopFile.~~
++ show actions as SubMenu

@@ -21,6 +21,18 @@ Public Sub ClearAll()
 
 End
 
+Public Sub SendToMemory()
+
+    $resultLcd.ShowMessage("send to the momory")
+
+End
+
+Public Sub ClearMemory()
+    
+    $resultLcd.ShowMessage("clear momory")
+    
+End
+
 Public Sub SetResult(argText As String)
     
     $resultLcd.ShowResultState(argText)
