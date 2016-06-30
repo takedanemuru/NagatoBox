@@ -3,12 +3,12 @@
 Property Read ShowIn As Boolean
 Property Read Exec As String
 Property Read Path As String 
-Property Read HasAction As Boolean
+Property Read Actions As NagatoDesktopAction[]
 
 Private $names As NagatoDesktopFileNames
 Private $categories2 As New NagatoDesktopFileCategories
 Private $hidden As New NagatoDesktopFileHidden
-Private $actions As NagatoDesktopActions
+Private $actions As New NagatoDesktopActions
 
 Private Enum FlagNone, FlagEntry, FlagAction
 
@@ -30,7 +30,7 @@ Private Sub setPropertyFromDesktopFile(argPath As String)
     
     Do While Not Eof(yukiStream)
         Line Input #yukiStream, yukiLine
-        If yukiLine Begins "[Desktop Action" Then $actions = New NagatoDesktopActions
+        'If yukiLine Begins "[Desktop Action" Then $actions = New NagatoDesktopActions
         If yukiFlag = FlagEntry And If yukiLine Begins "[Desktop Action" Then yukiFlag = FlagAction
         If yukiLine = "[Desktop Entry]" Then yukiFlag = FlagEntry
         If yukiFlag = FlagEntry Then setProperty(yukiLine)
@@ -96,8 +96,8 @@ Private Function Exec_Read() As String
 
 End
 
-Private Function HasAction_Read() As Boolean
+Private Function Actions_Read() As NagatoDesktopAction[]
 
-    Return $actions.Count > 0
+    Return $actions.Actions
 
 End

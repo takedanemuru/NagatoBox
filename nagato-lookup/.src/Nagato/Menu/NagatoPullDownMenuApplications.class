@@ -6,7 +6,7 @@ Create Private
 
 Private Const IconSize As Integer = 64
 
-Public Sub _AddApplicationMenu(argDesktopFile As NagatoDesktopFile)
+Private Sub addSingletonMenu(argDesktopFile As NagatoDesktopFile)
     
     Dim yukiMenu As New Menu(Me._$rootMenu) As "ApplicationMenu"
     
@@ -18,9 +18,64 @@ Public Sub _AddApplicationMenu(argDesktopFile As NagatoDesktopFile)
     
 End
 
+Private Sub addLaunchMenu(argParentMenu As Menu, argDesktopFile As NagatoDesktopFile)
+    
+    Dim yukiMenu As New Menu(argParentMenu) As "ApplicationMenu"
+    
+    With yukiMenu
+        .Text = ("Launch")
+        .Tag = argDesktopFile.Path
+        .Picture = argDesktopFile.GetIcon(IconSize)
+    End With
+    
+End
+
+Private Sub addActionMenus(argParentMenu As Menu, argDesktopFile As NagatoDesktopFile)
+    
+    Dim yukiAction As NagatoDesktopAction
+    Dim yukiMenu As Menu
+    
+    For Each yukiAction In argDesktopFile.Actions
+        yukiMenu = New Menu(argParentMenu) As "ActionMenu"
+        yukiMenu.Text = yukiAction.Name
+        yukiMenu.Tag = yukiAction.Exec
+    Next
+    
+End
+
+Private Sub addActionsTree(argDesktopFile As NagatoDesktopFile)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) 
+    
+    With yukiMenu
+        .Text = argDesktopFile.GetName(True)
+        .Picture = argDesktopFile.GetIcon(IconSize)
+    End With
+    
+    addLaunchMenu(yukiMenu, argDesktopFile)
+    addActionMenus(yukiMenu, argDesktopFile)
+    
+End
+
+Public Sub _AddApplicationMenu(argDesktopFile As NagatoDesktopFile)
+    
+    If argDesktopFile.Actions.Count = 0 Then
+        addSingletonMenu(argDesktopFile)
+    Else
+        addActionsTree(argDesktopFile)
+    Endif
+    
+End
+
 Public Sub ApplicationMenu_Click()
     
     MikuruApplications.Launch(Last.Tag)
     NagatoSettingsRecentApplications.Push(Last.Tag)
+    
+End
+
+Public Sub ActionMenu_Click()
+    
+    Shell Last.Tag
     
 End

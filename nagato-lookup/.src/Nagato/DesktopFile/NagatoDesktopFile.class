@@ -4,6 +4,7 @@ Property Read ShowIn As Boolean
 Property Read Valide As Boolean
 Property Read Exec As String
 Property Read Path As String
+Property Read Actions As NagatoDesktopAction[]
 
 Private $valide As Boolean = True
 Private $icon As NagatoDesktopFileIcon
@@ -81,5 +82,11 @@ End
 Private Function Exec_Read() As String
 
     Return $properties.Exec
+
+End
+
+Private Function Actions_Read() As NagatoDesktopAction[]
+
+    Return $properties.Actions
 
 End

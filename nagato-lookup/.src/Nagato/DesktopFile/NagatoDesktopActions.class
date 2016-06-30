@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Property Read Count As Integer
+Property Read Actions As NagatoDesktopAction[]
 
 Private $actions As New NagatoDesktopAction[]
 Private $action As NagatoDesktopAction
@@ -31,5 +32,11 @@ End
 Private Function Count_Read() As Integer
 
     Return $actions.Count
+
+End
+
+Private Function Actions_Read() As NagatoDesktopAction[]
+
+    Return $actions
 
 End

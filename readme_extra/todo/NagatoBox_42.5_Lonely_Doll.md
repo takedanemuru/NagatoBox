@@ -18,8 +18,8 @@ ToDo for Applications
 
 + integrate weather forecast functionalities
 
-### nagato-lookup (v42.5.27)
+### nagato-lookup (v42.5.28)
 
-+ parse additional actions in desktop entry files.
++ ~~parse additional actions in desktop entry files.~~
 + ~~[Desktop Action] data should be stored in NagatoDesktopFile.~~
-+ show actions as SubMenu
++ ~~show actions as SubMenu~~

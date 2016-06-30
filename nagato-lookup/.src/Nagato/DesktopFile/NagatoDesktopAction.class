@@ -1,5 +1,8 @@
 ' Gambas class file
 
+Property Read Name As String
+Property Read Exec As String
+
 Private $locale As String
 Private $name As String
 Private $nameLocale As String
@@ -17,4 +20,16 @@ Public Sub Set(argLine As String)
     If argLine Begins "Name=" Then $name = Replace$(argLine, "Name=", "")
     If argLine Begins "Exec=" Then $exec = Replace$(argLine, "Exec=", "")
     
+End
+
+Private Function Name_Read() As String
+
+    Return $name
+
+End
+
+Private Function Exec_Read() As String
+
+    Return $exec
+
 End
