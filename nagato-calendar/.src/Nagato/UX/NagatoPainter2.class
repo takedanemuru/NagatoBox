@@ -1,0 +1,30 @@
+' Gambas class file
+
+Public _$drawingArea As DrawingArea
+Public _$ux As NagatoUx 
+
+Public Sub _OnDrawingAreaRefresh()
+    
+    
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    Me._$drawingArea = argDrawingArea
+    Me._$ux = New NagatoUx(argDrawingArea)
+    Me._OptionalOnInitialize()
+    
+End
+
+Public Sub Refresh()
+    
+    Me._OnDrawingAreaRefresh()
+    
+End

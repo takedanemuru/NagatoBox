@@ -40,8 +40,6 @@ End
 
 Public Sub GitHubRepo_ApiReady(argRepository As NagatoGitHubRepository)
     
-    Debug "one down"
-    
     $repositories.Add(argRepository)
     
 End

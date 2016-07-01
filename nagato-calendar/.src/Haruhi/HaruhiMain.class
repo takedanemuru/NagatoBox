@@ -1,19 +1,13 @@
 ' Gambas class file
 
 Private $starButton As NagatoStarButton
-Private $painter As NagatoPainter
-
-Public Sub Refresh()
-    
-    $painter.Refresh()
-    
-End
+Private $painter As NagatoDrawingAreaHandler
 
 Public Sub _new()
 
     Application.MainWindow = Me
 
-    $painter = New NagatoPainterMonth(MainDrawingArea)
+    $painter = New NagatoDrawingAreaHandler(MainDrawingArea)
     $starButton = New NagatoStarButton(Me)
 
 End
@@ -23,4 +17,10 @@ Public Sub Form_Open()
     MainDrawingArea.SetFocus()
     Me.Center()
 
+End
+
+Public Sub Form_Close()
+    
+    NagatoDBus.Unregister()
+    
 End

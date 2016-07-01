@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoPainter2
+
+Private Function getTaskText() As String
+    
+    Return "Today's Task:<br><br>" & NagatoSettings.TodaysTask
+    
+End
+
+Private Sub paintTask()
+    
+    Paint.Brush = Paint.Color(Color.Orange)
+        Paint.RichText(getTaskText(), 32, 32, Me._$drawingArea.W - 64, 200)
+    Paint.Fill()
+    
+End
+
+Public Sub _OnDrawingAreaRefresh()
+    
+    Paint.Font.Size = Me._$ux.FontSizeM
+    Paint.Font.Bold = False
+    If NagatoSettings.TodaysTask <> "" Then paintTask()
+    
+End

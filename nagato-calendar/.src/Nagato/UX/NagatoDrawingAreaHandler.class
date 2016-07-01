@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+Private $background As NagatoPainter2Background
+Private $todaysTask As NagatoPainter2TodaysTask
+Private $calendar As NagatoPainter2Calendar
+Private $tracker As NagatoMouseTracker
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    $background = New NagatoPainter2Background(argDrawingArea)
+    $todaysTask = New NagatoPainter2TodaysTask(argDrawingArea)
+    $calendar = New NagatoPainter2Calendar(argDrawingArea)
+    $tracker = New NagatoMouseTracker(argDrawingArea) As "Tracker"
+
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin($drawingArea)
+        $background.Refresh()
+        $todaysTask.Refresh()
+        $calendar.Refresh()
+    Paint.End()
+    
+End

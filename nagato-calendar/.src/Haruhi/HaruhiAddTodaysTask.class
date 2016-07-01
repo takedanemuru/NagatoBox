@@ -25,7 +25,6 @@ Public Sub ApplyButton_Click()
 
     If $valide And If TaskTextBox.Text <> "" Then
         NagatoSettings.TodaysTask = TaskTextBox.Text
-        HaruhiMain.Refresh()
         Me.Close()
     Endif
 

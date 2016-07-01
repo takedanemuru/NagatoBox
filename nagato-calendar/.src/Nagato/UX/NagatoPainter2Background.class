@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoPainter2
+
+Private $image As Image
+
+Public Sub _OnDrawingAreaRefresh()
+    
+    Dim yukiRate As Float = Max(Me._$drawingArea.W / $image.W, Me._$drawingArea.H / $image.H)
+    Dim yukiImage As Image = $image.Stretch($image.W * yukiRate, $image.H * yukiRate)
+    Dim yukiX As Float = -1 * (yukiImage.W - Me._$drawingArea.W) / 2
+    Dim yukiY As Float = -1 * (yukiImage.H - Me._$drawingArea.H) / 2
+    
+    Paint.DrawImage(yukiImage, yukiX, yukiY)
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $image = Image.Load("pictures/default_bg.jpg")
+    
+End

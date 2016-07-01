@@ -1,0 +1,85 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+
+Property Read TopOffset As Integer
+Property Read LeftOffset As Integer
+Property Read FontSizeL As Float
+Property Read FontSizeM As Float
+
+Private Const BoxSize As Integer = 40
+Private Const Margine As Integer = 1
+Public Const Padding As Integer = 4
+
+Private Function getX(argColumn As Integer) As Integer
+    
+    Return Me.LeftOffset + argColumn * (BoxSize + Margine)
+    
+End
+
+Private Function getY(argRow As Integer) As Integer
+    
+    Return Me.TopOffset + argRow * (BoxSize + Margine)
+    
+End
+
+Public Function GetXColumn(argX As Integer) As Integer
+    
+    If Me.LeftOffset > argX Then Return -1
+    
+    Return (argX - Me.LeftOffset) Div (BoxSize + Margine)
+    
+End
+
+Public Function GetYRow(argY As Integer) As Integer
+    
+    If Me.TopOffset > argY Then Return -1
+    
+    Return (argY - Me.TopOffset) Div (BoxSize + Margine) - 1
+    
+End
+
+Public Function GetRectangle(argColumn As Integer, argRow As Integer) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = getX(argColumn)
+        .Y = getY(argRow)
+        .H = BoxSize
+        .W = BoxSize
+    End With
+    
+    Return yukiRect
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    
+End
+
+Private Function LeftOffset_Read() As Integer
+
+    Return $drawingArea.W - ((BoxSize + Margine) * 7 + Me.Padding)
+
+End
+
+Private Function TopOffset_Read() As Integer
+
+    Return $drawingArea.H - ((BoxSize + Margine) * 7 + Me.Padding) 
+
+End
+
+Private Function FontSizeL_Read() As Float
+
+    Return BoxSize * 0.5
+
+End
+
+Private Function FontSizeM_Read() As Float
+
+    Return BoxSize * 0.4
+
+End

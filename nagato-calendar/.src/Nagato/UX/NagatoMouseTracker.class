@@ -1,0 +1,33 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $observer As Observer
+Private $ux As NagatoUx
+
+Private Function getGridNumber(argX As Integer, argY As Integer) As Integer
+    
+    Dim yukiColumn As Integer = $ux.GetXColumn(argX)
+    Dim yukiRow As Integer = $ux.GetYRow(argY)
+    
+    Return yukiRow * 7 + yukiColumn - MikuruDate.FirstWeekDay + 1
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $ux = New NagatoUx(argDrawingArea)
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_MouseMove()
+    
+    Dim yukiDate As Integer = getGridNumber(Mouse.X, Mouse.Y)
+    
+    If 0 >= yukiDate Then Return
+    If yukiDate > MikuruDate.LastDayOfMonth Then Return
+    
+    $drawingArea.Tooltip = ("YUKI.N > " & yukiDate)
+    
+End

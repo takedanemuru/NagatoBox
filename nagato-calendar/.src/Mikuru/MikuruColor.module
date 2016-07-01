@@ -1,6 +1,7 @@
 ' Gambas module file
 
 Property Read BoxHeader As Integer
+Property Read BoxSunday As Integer
 Property Read BoxHighlight As Integer
 Property Read BoxNormal As Integer
 Property Read BoxVoid As Integer
@@ -38,5 +39,11 @@ End
 Private Function BoxHeader_Read() As Integer
 
     Return Color.Violet + 16777216 * 80
+
+End
+
+Private Function BoxSunday_Read() As Integer
+
+    Return Color.Pink + 16777216 * 64
 
 End

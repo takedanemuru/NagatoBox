@@ -21,7 +21,7 @@ Public Sub TaskTextBox_Change()
 End
 
 
-Public Sub Button1_Click()
+Public Sub ApplyButton_Click()
 
     If $valide And If TaskTextBox.Text <> "" Then
         NagatoSettings.TodaysTask = TaskTextBox.Text
