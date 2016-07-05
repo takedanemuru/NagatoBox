@@ -17,6 +17,9 @@ Public Sub Initialize()
         .[.PluginsEnabled] = NagatoSettings.PluginsEnabled
         .[.JavascriptEnabled] = NagatoSettings.JavaScriptEnabled
         .[.JavascriptCanOpenWindows] = True
+        .[.JavascriptCanAccessClipboard] = False
+        .[.JavaEnabled] = False
+        .[.DeveloperExtrasEnabled] = False
         .[.PrivateBrowsingEnabled] = True
         .IconDatabase.Path = getDirectory()
     End With

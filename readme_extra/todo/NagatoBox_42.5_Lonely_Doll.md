@@ -17,6 +17,7 @@ ToDo for Applications
 ### nagato-files (as nagato-desktop)
 
 + integrate weather forecast functionalities
++ avoid crash when launching as root user.
 
 ### nagato-lookup (v42.5.28)
 

@@ -1,0 +1,26 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,61,64)
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(2,6,56,54)
+    Expand = True
+    { ButtonBox1 ButtonBox
+      MoveScaled(8,3,45,4)
+      Picture = Picture["pictures/icons/calendar.png"]
+      ReadOnly = True
+    }
+    { Separator1 Separator
+      MoveScaled(13,12,38,2)
+    }
+    { TextArea1 TextArea
+      MoveScaled(8,12,42,16)
+      Expand = True
+    }
+    { ApplyButton Button
+      MoveScaled(16,38,26,4)
+      Text = ("Apply")
+    }
+  }
+}

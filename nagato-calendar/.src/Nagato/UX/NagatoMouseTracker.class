@@ -31,3 +31,14 @@ Public Sub Asakura_MouseMove()
     $drawingArea.Tooltip = ("YUKI.N > " & yukiDate)
     
 End
+
+Public Sub Asakura_MouseDown()
+    
+    Dim yukiDate As Integer = getGridNumber(Mouse.X, Mouse.Y)
+    
+    If 0 >= yukiDate Then Return
+    If yukiDate > MikuruDate.LastDayOfMonth Then Return
+    
+    HaruhiScheduleInput.ShowDialog()
+    
+End
