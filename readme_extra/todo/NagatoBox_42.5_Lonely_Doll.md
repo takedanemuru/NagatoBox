@@ -14,13 +14,18 @@ ToDo for Applications
 
 + scheduling functionalities (until 7.11)
 
-### nagato-files (as nagato-desktop)
+### nagato-files (v42.5.85)
 
 + integrate weather forecast functionalities
-+ avoid crash when launching as root user.
++ ~~avoid crash when launching as root user.~~
 
 ### nagato-lookup (v42.5.28)
 
 + ~~parse additional actions in desktop entry files.~~
 + ~~[Desktop Action] data should be stored in NagatoDesktopFile.~~
-+ ~~show actions as SubMenu~~
++ ~~show actions as SubMenu~~ 
+
+### nagato-player-x
+
++ do not skip taskbar when listview asigned as main form.
+

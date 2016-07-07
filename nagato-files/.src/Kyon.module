@@ -34,7 +34,7 @@ Public Sub Main()
     NagatoArguments.Parsing()
     setIconTheme()
     
-     NagatoClipBoard.Activate()
+    NagatoClipBoard.Activate()
     System.FirstDayOfWeek = gb.Sunday
 
     'Only For Testing

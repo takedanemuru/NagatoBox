@@ -32,6 +32,20 @@ Private Sub ininializeModeComboBox()
     
 End
 
+Private Sub setContainerForRoot(argContainer As Container)
+    
+    Dim yukiLabel As New TextLabel(argContainer)
+    
+    With yukiLabel
+        .Alignment = Align.Center
+        .Text = ("Navigation controls are disabled.")
+        .Background = Color.Orange
+        .Foreground = Color.White
+        .Font.Bold = True
+    End With
+    
+End
+
 Public Sub RefreshTreeView()
     
     $treeView.Refresh()
@@ -47,11 +61,15 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    initializeContainer(argContainer)
-    ininializeModeComboBox()
-    $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
-    $treeView = New NagatoTreeView($container) As "TFEI"
-    $fileSearch = New NagatoFileSearch($container) As "TFEI"
+    If Not MikuruAccountChecker.IsRoot() Then 
+        initializeContainer(argContainer)
+        ininializeModeComboBox()
+        $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
+        $treeView = New NagatoTreeView($container) As "TFEI"
+        $fileSearch = New NagatoFileSearch($container) As "TFEI"
+    Else
+        setContainerForRoot(argContainer)
+    End If
     
 End
 

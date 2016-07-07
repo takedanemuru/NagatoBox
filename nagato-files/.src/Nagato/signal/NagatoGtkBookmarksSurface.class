@@ -16,7 +16,7 @@ End
 Public Sub AddBookmarkItems()
     
     addListItems([User.Home, NagatoXdg.UserDirs.Desktop])
-    addListItems(NagatoXdg.UserDirs.All)
+    If Not MikuruAccountChecker.IsRoot() Then addListItems(NagatoXdg.UserDirs.All)
         Me._$listView.Add(NagatoGtkBookmarks.SeparatorKey & "1", "")
     addListItems(NagatoBookmarksArray.List)
         Me._$listView.Add(NagatoGtkBookmarks.SeparatorKey & "2", "")

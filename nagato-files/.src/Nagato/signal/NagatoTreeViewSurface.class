@@ -50,7 +50,7 @@ Private Sub setHomeDirectory(argDirectory As String)
     Dim yukiDirectoryName As String = File.Name(argDirectory)
     
     If Not Me._$treeView.Exist(argDirectory) Then
-        Me._$treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", TreeViewIconSize))
+        Try Me._$treeView.Add(argDirectory, yukiDirectoryName, MikuruIcon.Get("home", TreeViewIconSize))
     Endif
     
 End
