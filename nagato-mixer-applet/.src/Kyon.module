@@ -1,0 +1,11 @@
+' Gambas module file
+
+Private $icon As NagatoTrayIcon
+
+Public Sub Main()
+    
+    MikuruAlsaState.Activate()
+    
+    $icon = New NagatoTrayIcon
+    
+End

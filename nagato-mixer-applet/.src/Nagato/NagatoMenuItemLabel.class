@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = Subst$("&1 :  &2%", MikuruAlsaState.Channel, MikuruAlsaState.Volume)
+        .Picture = MikuruIcon["speaker"]
+    End With
+    
+End

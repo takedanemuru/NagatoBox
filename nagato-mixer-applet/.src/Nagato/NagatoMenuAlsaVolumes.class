@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private Sub addAlsaVolumeMenu(argRootMenu As Menu, argVolume As Integer)
+    
+    Dim yukiMenu As New Menu(argRootMenu) As "AlsaVolumeMenu"
+    
+    With yukiMenu
+        If argVolume = MikuruAlsaState.Volume Then .Picture = MikuruIcon["button-check"]
+        .Text = argVolume
+        .Tag = argVolume
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Dim yukiVolume As Integer
+    
+    For yukiVolume = 100 DownTo 0 Step 10
+        addAlsaVolumeMenu(argRootMenu, yukiVolume)
+    Next
+    
+End
+
+Public Sub AlsaVolumeMenu_Click()
+    
+    Dim yukiOutput As String ' to avoid redirect to standard output.
+    
+    Try Shell Subst$("amixer sset &1 &2%", MikuruAlsaState.Channel, Last.Tag) To yukiOutput
+    
+End

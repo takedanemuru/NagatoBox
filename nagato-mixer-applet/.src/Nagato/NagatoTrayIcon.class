@@ -1,0 +1,35 @@
+' Gambas class file
+
+Private $trayIcon As TrayIcon
+Private $popupMenu As New NagatoPopupMenu
+
+Public Sub _new()
+    
+    $trayIcon = New TrayIcon As "TrayIcon"
+    
+    With $trayIcon
+        .Icon = MikuruIcon["speaker"]
+        .Tooltip = MikuruAlsaState.Channel
+        .PopupMenu = "PopupMenu"
+        .Show()
+    End With
+    
+End
+
+Public Sub TrayIcon_Click()
+    
+    $popupMenu.Popup()
+    
+End
+
+Public Sub TrayIcon_MiddleClick()
+    
+    Quit 0
+    
+End
+
+Public Sub TrayIcon_Scroll(argDelta As Float, argOrientation As Integer)
+    
+    Debug "scroll"
+    
+End

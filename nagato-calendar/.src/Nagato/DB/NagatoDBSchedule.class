@@ -27,3 +27,22 @@ Private Sub ensureTable()
     End If
     
 End
+
+Public Sub Add(argDate As Date, argText As String)
+    
+    
+    
+End
+
+Public Sub Remove(argId As Integer)
+    
+    
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    ensureTable()
+    
+End

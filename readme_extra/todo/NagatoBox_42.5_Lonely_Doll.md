@@ -25,6 +25,12 @@ ToDo for Applications
 + ~~[Desktop Action] data should be stored in NagatoDesktopFile.~~
 + ~~show actions as SubMenu~~ 
 
+### nagato-mixer-applet (v42.5.6)
+
+a simple alsa mixer applet for systray
+
++ ~~initial release~~
+
 ### nagato-player-x
 
 + do not skip taskbar when listview asigned as main form.

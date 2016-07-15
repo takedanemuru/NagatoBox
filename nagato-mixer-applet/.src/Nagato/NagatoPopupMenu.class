@@ -1,0 +1,31 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Private Sub initializeChildMenus()
+    
+    Object.New("NagatoMenuItemLabel", [$rootMenu])
+    Object.New("NagatoMenuItemSpacer", [$rootMenu])
+    Object.New("NagatoMenuAlsaVolumes", [$rootMenu])
+    Object.New("NagatoMenuItemSpacer", [$rootMenu])
+    Object.New("NagatoMenuItemAbout", [$rootMenu])
+    Object.New("NagatoMenuItemQuit", [$rootMenu])
+    
+End
+
+Public Sub Popup()
+    
+    $rootMenu.Children.Clear()
+    initializeChildMenus()
+    
+    $rootMenu.Popup
+    
+End
+
+Public Sub _new()
+    
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    $rootMenu.Name = "PopupMenu"
+    Object.New("NagatoMenuItemSpacer", [$rootMenu])
+    
+End
