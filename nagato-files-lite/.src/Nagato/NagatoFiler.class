@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoPathWidget
+
+Private $factory As NagatoTableViewFactory
+Private $data As NagatoTableViewData
+Private $userInput As NagatoTableViewUserInput
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.TableViewActivate
+            $data.SetNewPath(argValues[0])
+    End Select
+    
+End
+
+Public Sub _OnInitializeWidgets(argPath As String)
+    
+    $factory = New NagatoTableViewFactory(Me._$container)
+    $userInput = New NagatoTableViewUserInput($factory.TableView) As "TFEI"
+    $data = New NagatoTableViewData($factory.TableView)
+    $data.SetNewPath(argPath)
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.TableViewActivate
+            If Not IsDir($data.GetFilePathWithRowIndex(argValues[0])) Then Return
+            Raise Signal(MikuruSignal.TableViewActivate, [$data.GetFilePathWithRowIndex(argValues[0])])
+        Default
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End

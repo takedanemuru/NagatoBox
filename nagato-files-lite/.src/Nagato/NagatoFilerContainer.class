@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoPathWidget
+
+Private $headerBar As NagatoHeaderBar
+Private $filer As NagatoFiler
+
+Private Sub moveTo(argDirectory As String)
+    
+    $headerBar(MikuruSignal.TableViewActivate, [argDirectory])
+    $filer(MikuruSignal.TableViewActivate, [argDirectory])
+    
+End
+
+Public Sub _OptionalOnInitializeContainer(argContainer As Container)
+    
+    Me._$container = New VBox(argContainer)
+    Me._$container.Expand = True
+    
+End
+
+Public Sub _OnInitializeWidgets(argPath As String)
+    
+    $headerBar = New NagatoHeaderBar(Me._$container, argPath) As "HeaderBar"
+    $filer = New NagatoFiler(Me._$container, argPath) As "Filer"
+    
+End
+
+Public Sub Filer_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.TableViewActivate
+            moveTo(argValues[0])
+    End Select
+    
+End

@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoTableView
+
+Public Sub Asakura_Activate()
+    
+    Dim yukiActiveRow As Integer = Me._$tableView.Rows.Selection[0]
+    
+    Raise Signal(MikuruSignal.TableViewActivate, [yukiActiveRow])
+    
+End

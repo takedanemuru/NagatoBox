@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoPathWidget
+
+Private $pathBox As ButtonBox
+Private $completion As FileCompletion
+
+Private Sub initializePathBox(argPath As String)
+    
+    $pathBox = New ButtonBox(Me._$container) As "PathBox"
+    
+    With $pathBox
+        .Expand = True
+        .Text = argPath
+        .Picture = Stock["small/refresh"]
+    End With
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Object.Lock($pathBox)
+        $pathBox.Text = argPath
+    Object.Unlock($pathBox)
+    
+End
+
+Public Sub _OnInitializeWidgets(argPath As String)
+    
+    initializePathBox(argPath)
+    $completion = New FileCompletion($pathBox.Editor) As "FileCompletion"
+    
+End
+
+Public Sub PathBox_Activate()
+    
+    Debug $pathBox.Text
+    
+End
+
+Public Sub FileCompletion_Activate()
+    
+    Debug $pathBox.Text
+    
+End

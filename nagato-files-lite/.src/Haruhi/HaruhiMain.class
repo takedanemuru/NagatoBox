@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private $left As NagatoFilerContainer
+Private $right As NagatoFilerContainer
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    NagatoSettingsForm.Load(Me)
+
+    $left = New NagatoFilerContainer(Me, User.Home)
+    $right = New NagatoFilerContainer(Me, User.Home)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsForm.Save(Me)
+    
+End

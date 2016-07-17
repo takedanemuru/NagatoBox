@@ -1,0 +1,31 @@
+' Gambas class file
+
+Property Read TableView As TableView
+
+Private $tableView As TableView
+
+Public Sub _new(argContainer As Container)
+    
+    $tableView = New TableView(argContainer) As "TableView"
+    
+    With $tableView
+        .Header = GridView.Horizontal
+        .Columns.Count = 5
+        .Columns[0].W = 24
+        .Columns[1].W = HaruhiMain.W / 4
+        .Columns[1].Text = ("Name")
+        .Columns[2].Alignment = Align.Right
+        .Columns[2].Text = ("Size")
+        .Columns[3].Text = ("MimeType")
+        .Expand = True
+        .Grid = False
+        .Mode = Select.Single
+    End With
+    
+End
+
+Private Function TableView_Read() As TableView
+
+    Return $tableView
+
+End

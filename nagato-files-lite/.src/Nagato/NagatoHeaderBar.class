@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoPathWidget
+
+Private $pathBox As NagatoPathBox
+
+Public Sub _OptionalOnInitializeContainer(argContainer As Container) 
+    
+    Me._$container = New HBox(argContainer)
+    
+    With Me._$container
+        Me._$container.H = 24
+    End With
+    
+End
+
+Public Sub _OnInitializeWidgets(argPath As String)
+    
+    $pathBox = New NagatoPathBox(Me._$container, argPath) As "PathBox"
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.TableViewActivate
+            $pathBox.SetPath(argValues[0])
+    End Select
+    
+End

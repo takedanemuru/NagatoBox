@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$path As String
+Public _$container As Container
+
+Public Sub _OptionalOnInitializeContainer(argContainer As Container)
+    
+    Me._$container = argContainer
+    
+End
+
+Public Sub _OnInitializeWidgets(argPath As String)
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container, argPath As String)
+    
+    Me._$path = argPath
+    Me._OptionalOnInitializeContainer(argContainer)
+    Me._OnInitializeWidgets(argPath)
+    
+End

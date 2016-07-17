@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    Application.Theme = "Numix-Circle"
+    
+    HaruhiMain.Show()
+    
+End

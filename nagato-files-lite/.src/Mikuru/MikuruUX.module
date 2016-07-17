@@ -1,0 +1,18 @@
+' Gambas module file
+
+Property Read IconSize As Integer
+Property Read Margin As Integer
+
+Private Const Unit As Integer = 8
+
+Private Function IconSize_Read() As Integer
+
+    Return 2 * Unit
+
+End
+
+Private Function Margin_Read() As Integer
+
+    Return 2 * Unit
+
+End

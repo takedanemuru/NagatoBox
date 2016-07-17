@@ -1,0 +1,36 @@
+' Gambas class file
+
+Inherits NagatoTableView
+
+Public Sub PaintRow(argRowIndex As Integer)
+    
+    Dim yukiColumnIndex As Integer
+    
+    For yukiColumnIndex = 0 To Me._$tableView.Columns.Max
+        Me._$tableView[argRowIndex, yukiColumnIndex].Background = MikuruColor.TableBackground
+   Next
+    
+End
+
+Public Sub SetRowBackToParentDirectory()
+    
+    With Me._$tableView
+        Inc .Rows.Count
+        .[.Rows.Max, 0].Picture = Stock["small/up"]
+        .[.Rows.Max, 1].Text = "..."
+        If Odd(.Rows.Max) Then Me.PaintRow(.Rows.Max)
+    End With
+    
+End
+
+Public Sub SetTextAdjustWidth(argColumnIndex As Integer, argText As String)
+    
+    Dim yukiTextWidth As Integer = HaruhiMain.Font.TextWidth(argText) + MikuruUX.Margin
+    
+    With Me._$tableView
+        .[.Rows.Max, argColumnIndex].Text = argText
+        If Not yukiTextWidth > .Columns[argColumnIndex].W Then Return
+        .Columns[argColumnIndex].W = yukiTextWidth
+    End With
+    
+End

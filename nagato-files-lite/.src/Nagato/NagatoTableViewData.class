@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits NagatoTableView
+
+Private $directoryPath As String
+Private $surface As NagatoTableViewSurface
+
+Private Sub setRow(argPath As String)
+    
+    With Me._$tableView
+        Inc .Rows.Count
+        .[.Rows.Max, 0].Picture = Desktop.GetFileIcon(argPath, MikuruUX.IconSize)
+        .[.Rows.Max, 1].Text = File.Name(argPath)
+        $surface.SetTextAdjustWidth(2, MikuruFile.GetSizeText(argPath))
+        $surface.SetTextAdjustWidth(3, MikuruFile.GetMimeTypeText(argPath))
+        If Odd(.Rows.Max) Then $surface.PaintRow(.Rows.Max)
+    End With
+    
+End
+
+Private Sub setRows(argDirectory As String, argFilter As Integer)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory, "*", argFilter).Sort(gb.Natural)
+        If yukiPath Begins "." Then Continue
+        setRow(argDirectory &/ yukiPath)
+    Next
+    
+End
+
+Private Sub refreshTableView()
+    
+    Me._$tableView.Rows.Count = 0
+    If $directoryPath <> "/" Then $surface.SetRowBackToParentDirectory()
+    setRows($directoryPath, gb.Directory)
+    setRows($directoryPath, gb.File)
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $surface = New NagatoTableViewSurface(Me._$tableView)
+    
+End
+
+Public Sub SetNewPath(argPath As String)
+    
+    If Not IsDir(argPath) Then Return
+    
+    $directoryPath = argPath
+    refreshTableView()
+    
+End
+
+Public Sub GetFilePathWithRowIndex(argRowIndex As Integer) As String
+    
+    If $directoryPath <> "/" And If argRowIndex = 0 Then Return File.Dir($directoryPath)
+    
+    Return $directoryPath &/ Me._$tableView[argRowIndex, 1].Text
+    
+End
