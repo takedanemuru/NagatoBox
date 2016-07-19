@@ -1,0 +1,32 @@
+' Gambas module file
+
+Private $proxy As DBusProxy
+Private $devices As New NagatoDevices
+
+Private Const Bus As String = "System://org.freedesktop.UPower"
+Private Const ObjectPath As String = "/org/freedesktop/UPower"
+Private Const Interface As String = "org.freedesktop.UPower"
+
+Private Sub initializeDevices()
+    
+    Dim yukiObjectPath As String
+    
+    For Each yukiObjectPath In $proxy.EnumerateDevices()
+        $devices.Add(yukiObjectPath)
+    Next
+    
+End
+
+Public Sub Activate()
+    
+    $proxy = DBus[Bus][ObjectPath, Interface]
+    
+    Debug $proxy.DaemonVersion
+    Debug $proxy.GetCriticalAction()
+    
+    initializeDevices()
+    
+    $devices.GetTimeToEmpty()
+    
+End
+

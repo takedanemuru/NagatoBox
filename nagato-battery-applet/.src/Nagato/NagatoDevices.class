@@ -1,0 +1,51 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private $proxies As New DBusProxy[]
+Private $proxies2 As New DBusProxy[]
+
+Private Const Bus As String = "system://org.freedesktop.UPower"
+Private Const Interface As String = "org.freedesktop.UPower.Device"
+Private Const Interface2 As String = "org.freedesktop.DBus.Properties"
+
+Public Sub GetTimeToEmpty() As Float
+    
+    Dim yukiProxy As DBusProxy
+    Dim yukiProxy2 As DBusProxy
+    
+    For Each yukiProxy In $proxies
+        ' Debug yukiProxy.State
+        ' Debug yukiProxy.Model
+        ' Debug yukiProxy.Percentage
+        ' Debug yukiProxy.PowerSupply
+        ' Debug yukiProxy.Voltage
+        ' Debug yukiProxy.IsRechargeable
+    Next
+    
+    For Each yukiProxy2 In $proxies2
+        Debug yukiProxy2.Get(Interface, "Type")
+    Next
+    
+    Return 0
+    
+End
+
+Public Sub Add(argObjectPath As String)
+    
+    Dim yukiProxy As DBusProxy
+    Dim yukiProxy2 As DBusProxy
+    
+    yukiProxy = DBus[Bus][argObjectPath, Interface]
+    $proxies.Add(yukiProxy)
+    
+    yukiProxy2 = DBus[Bus][argObjectPath, Interface2]
+    $proxies2.Add(yukiProxy2)
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return $proxies.Count
+
+End

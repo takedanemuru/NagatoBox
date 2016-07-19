@@ -1,0 +1,11 @@
+' Gambas module file
+
+Private $trayIcon As NagatoTrayIcon
+
+Public Sub Main()
+    
+    MikuruPowerManager.Activate()
+    
+    $trayIcon = New NagatoTrayIcon
+    
+End

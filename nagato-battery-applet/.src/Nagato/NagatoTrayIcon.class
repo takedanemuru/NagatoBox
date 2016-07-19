@@ -1,0 +1,14 @@
+' Gambas class file
+
+Private $trayIcon As TrayIcon
+
+Public Sub _new()
+    
+    $trayIcon = New TrayIcon As "TrayIcon"
+    
+    With $trayIcon
+        .Icon = MikuruIcon["battery"]
+        .Show()
+    End With
+    
+End
