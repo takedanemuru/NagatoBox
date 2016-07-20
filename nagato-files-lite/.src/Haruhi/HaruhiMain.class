@@ -8,8 +8,8 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     NagatoSettingsForm.Load(Me)
 
-    $left = New NagatoFilerContainer(Me, User.Home)
-    $right = New NagatoFilerContainer(Me, User.Home)
+    $left = New NagatoFilerContainer(HSplit1, User.Home, "LeftPane")
+    $right = New NagatoFilerContainer(HSplit1, User.Home, "RightPane")
 
 End
 

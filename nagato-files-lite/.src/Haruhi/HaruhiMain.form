@@ -2,5 +2,10 @@
 
 { Form Form
   MoveScaled(0,0,114.2857,64)
-  Arrangement = Arrange.Horizontal
+  Icon = Picture["Pictures/Icons/information-balloon.png"]
+  Arrangement = Arrange.Fill
+  { HSplit1 HSplit
+    MoveScaled(4,5,80,33)
+    Expand = True
+  }
 }

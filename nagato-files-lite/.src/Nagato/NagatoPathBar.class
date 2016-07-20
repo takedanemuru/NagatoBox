@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoPathWidget
+
+Private $completion As FileCompletion
+Private $buttonBox As NagatoPathBarButtonBox
+
+Public Sub SetPath(argPath As String)
+    
+    If Not Exist(argPath) Then Return
+    
+    Object.Lock($completion)
+        $buttonBox.SetPathWithNoEvent(argPath)
+    Object.Unlock($completion)
+    
+End
+
+Public Sub _OnInitializeWidgets(argPath As String)
+    
+    $buttonBox = New NagatoPathBarButtonBox(Me._$container, argPath, Me._$groupName) As "ButtonBox"
+    $completion = New FileCompletion($buttonBox.Editor) As "FileCompletion"
+    
+End
+
+Public Sub FileCompletion_Activate()
+    
+    'Debug $pathBox.Text
+    
+End

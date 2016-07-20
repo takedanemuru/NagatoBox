@@ -1,3 +1,6 @@
 ' Gambas module file
 
-Public Enum TableViewHeader = 5000, TableViewActivate = 5001
+Public Enum DirectoryHeader = 4000, DirectoryMoveTo = 4001, DirectoryFilesChanged = 4002
+
+Public Enum TableViewHeader = 5000, TableViewActivate = 5001, TableViewSelect = 5002
+Public Enum TableViewContext = 5003

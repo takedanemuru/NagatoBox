@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "BookmarkMenu"
+
+Private Function getMenuName() As String
+    
+    Return Me._$gropuName & MenuName
+    
+End
+
+Public Sub _OnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .Picture = MikuruIcon["book-bookmark"]
+        .Menu = getMenuName()
+    End With
+    
+End
+
+Public Sub _OnInitializePullDownMenu()
+    
+    Dim yukiMenu As NagatoPullDownMenuBookmark
+    
+    yukiMenu = New NagatoPullDownMenuBookmark(getMenuName()) As "TFEI"
+    
+End

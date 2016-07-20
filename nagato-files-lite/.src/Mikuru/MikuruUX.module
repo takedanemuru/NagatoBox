@@ -2,6 +2,8 @@
 
 Property Read IconSize As Integer
 Property Read Margin As Integer
+Property Read HeaderHeight As Integer
+Property Read IconGridSize As Integer
 
 Private Const Unit As Integer = 8
 
@@ -14,5 +16,17 @@ End
 Private Function Margin_Read() As Integer
 
     Return 2 * Unit
+
+End
+
+Private Function HeaderHeight_Read() As Integer
+
+    Return 4 * Unit
+
+End
+
+Private Function IconGridSize_Read() As Integer
+
+    Return 3 * Unit
 
 End

@@ -2,10 +2,30 @@
 
 Inherits NagatoTableView
 
-Public Sub Asakura_Activate()
+Private Sub getSelected() As Variant[]
     
     Dim yukiActiveRow As Integer = Me._$tableView.Rows.Selection[0]
     
-    Raise Signal(MikuruSignal.TableViewActivate, [yukiActiveRow])
+    Return [yukiActiveRow]
     
+End
+
+Public Sub Asakura_Activate()
+    
+    Raise Signal(MikuruSignal.TableViewActivate, getSelected())
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    If Mouse.Right Then Return
+    
+    Raise Signal(MikuruSignal.TableViewSelect, getSelected())
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Raise Signal(MikuruSignal.TableViewContext, getSelected())
+
 End

@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Public Sub _OnRefreshChildMenus()
+    
+    Object.New("NagatoMenuItemAbout", [Me._$rootMenu])
+    Object.New("NagatoMenuItemQuit", [Me._$rootMenu])
+    
+End

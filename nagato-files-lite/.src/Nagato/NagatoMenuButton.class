@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$menuButton As MenuButton
+
+Public Sub _OnInitializeMenuButton()
+    
+    
+    
+End
+
+Public Sub _OnInitializePullDownMenu()
+    
+    
+    
+End
+
+Public Sub _OnInitializeWidget(argContainer As Container)
+    
+    Me._$menuButton = New MenuButton(argContainer) As "MenuButton"
+    
+    With Me._$menuButton
+        .Arrow = False
+        .Border = False
+        .W = MikuruUX.HeaderHeight
+        .Expand = False
+    End With
+    
+    Me._OnInitializeMenuButton()
+    Me._OnInitializePullDownMenu()
+    
+End

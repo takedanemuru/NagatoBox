@@ -9,7 +9,7 @@ Private $userInput As NagatoTableViewUserInput
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.TableViewActivate
+        Case MikuruSignal.DirectoryMoveTo
             $data.SetNewPath(argValues[0])
     End Select
     
@@ -29,7 +29,7 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.TableViewActivate
             If Not IsDir($data.GetFilePathWithRowIndex(argValues[0])) Then Return
-            Raise Signal(MikuruSignal.TableViewActivate, [$data.GetFilePathWithRowIndex(argValues[0])])
+            Raise Signal(MikuruSignal.DirectoryMoveTo, [$data.GetFilePathWithRowIndex(argValues[0])])
         Default
             Raise Signal(argSignal, argValues)
     End Select

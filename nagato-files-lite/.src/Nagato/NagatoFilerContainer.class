@@ -2,13 +2,13 @@
 
 Inherits NagatoPathWidget
 
-Private $headerBar As NagatoHeaderBar
+Private $headerBar As NagatoHeaderContainer
 Private $filer As NagatoFiler
 
 Private Sub moveTo(argDirectory As String)
     
-    $headerBar(MikuruSignal.TableViewActivate, [argDirectory])
-    $filer(MikuruSignal.TableViewActivate, [argDirectory])
+    $headerBar(MikuruSignal.DirectoryMoveTo, [argDirectory])
+    $filer(MikuruSignal.DirectoryMoveTo, [argDirectory])
     
 End
 
@@ -21,15 +21,24 @@ End
 
 Public Sub _OnInitializeWidgets(argPath As String)
     
-    $headerBar = New NagatoHeaderBar(Me._$container, argPath) As "HeaderBar"
-    $filer = New NagatoFiler(Me._$container, argPath) As "Filer"
+    $headerBar = New NagatoHeaderContainer(Me._$container, argPath, Me._$groupName) As "HeaderBar"
+    $filer = New NagatoFiler(Me._$container, argPath, Me._$groupName) As "Filer"
+    
+End
+
+Public Sub HeaderBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.DirectoryMoveTo
+            moveTo(argValues[0])
+    End Select
     
 End
 
 Public Sub Filer_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.TableViewActivate
+        Case MikuruSignal.DirectoryMoveTo
             moveTo(argValues[0])
     End Select
     
