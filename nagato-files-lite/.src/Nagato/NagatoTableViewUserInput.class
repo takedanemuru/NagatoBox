@@ -29,3 +29,21 @@ Public Sub Asakura_Menu()
     Raise Signal(MikuruSignal.TableViewContext, getSelected())
 
 End
+
+Public Sub Asakura_MouseMove()
+    
+    If Not Mouse.Left Then Return
+    
+    Drag.Icon = MikuruIcon["balloon", 64]
+    Try Me._$tableView.Drag("yuki.n", "text/plain")
+
+     Try Me._$tableView.Select(Me._$tableView.RowAt(Drag.Y), 1)
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Debug Me._$tableView[Me._$tableView.RowAt(Drag.Y), 1].Text
+    Debug Drag.Data
+    
+End

@@ -13,6 +13,7 @@ Private Sub setTableViewProperties()
         .Expand = True
         .Grid = False
         .Mode = Select.Single
+        .Drop = True
     End With
     
 End
