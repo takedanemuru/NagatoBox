@@ -1,15 +1,31 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.7.1
+# Compiled with Gambas 3.8.4
 Title=dataovermind-menucache
 Startup=Kyon
-Version=0.0.1
+Icon=Picture/database.png
+Version=42.4.11
+Component=gb.args
 Component=gb.image
-Component=gb.qt4
+Component=gb.gui.qt
+Component=gb.form
 Component=gb.dbus
 Component=gb.desktop.x11
 Component=gb.desktop
-Component=gb.settings
+Component=gb.form.stock
+Component=gb.xml
+Description="A menu generator for Openbox3"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
-Translate=1
 Language=ja
+Maintainer=takeda.nemuru
+Vendor=IntegratedDataThoughtEntity
+Address=takeda.nemuru@yandex.com
+License=S.O.S. License
+PackageName=nagato-openbox-menu-42.4.11
+CreateEachDirectory=1
 Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"nagato-openbox-menu.desktop\t/usr/share/applications\nnagato-openbox-menu.png\t/usr/share/pixmaps"

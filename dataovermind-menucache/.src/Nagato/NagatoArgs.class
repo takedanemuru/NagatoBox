@@ -1,0 +1,39 @@
+' Gambas class file
+
+Create Static
+
+Property Read Category As String
+Property Read Available As Boolean
+Property Read Force As Boolean
+
+Private $category As String = ""
+Private $available As Boolean = False
+Private $force As Boolean = False
+
+Public Sub Parsing()
+    
+    Args.Begin("Usage:")
+        $category = Args.Get("c", "category", "get specified category's root menu", "category name")
+        $available = Args.Has("a", "availables", "show all available categories")
+        $force = Args.Has("f", "force-reload", "force reload")
+    Args.End()
+    
+End
+
+Private Function Category_Read() As String
+
+    Return $category
+
+End
+
+Private Function Available_Read() As Boolean
+
+    Return $available
+
+End
+
+Private Function Force_Read() As Boolean
+
+    Return $force
+
+End

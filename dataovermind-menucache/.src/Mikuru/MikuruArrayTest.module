@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Sub _call(argArray As String[])
+    
+    Dim yukiString As String
+    
+    For Each yukiString In argArray
+        Print yukiString
+    Next
+    
+Catch
+    Debug "Error ";; Error.Text
+    Return
+    
+End
+
