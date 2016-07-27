@@ -8,8 +8,6 @@ Property Read Ready As String
 
 Public Function GetCategoryMenu(argCategory As String) As String
     
-    NagatoMenuCache.Refresh()
-    
     Return NagatoMenuCache.Get(argCategory)
     
 End

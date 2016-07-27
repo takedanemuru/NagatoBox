@@ -31,6 +31,10 @@ a simple alsa mixer applet for systray
 
 + ~~initial release~~
 
+### nagato-openbox-menu -> dataovermind-menucache (v42.5.19)
+
++ launch as dbus service
+
 ### nagato-player-x
 
 + do not skip taskbar when listview asigned as main form.

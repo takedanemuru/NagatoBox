@@ -1,29 +1,18 @@
 ' Gambas module file
 
-Private Sub printPipeMenu()
-    
-    If Exist(MikuruPath.MenuFileDirectory &/ NagatoArgs.Category) Then
-        Print File.Load(MikuruPath.MenuFileDirectory &/ NagatoArgs.Category)
-    Else
-        Print NagatoMenuCache.Get(NagatoArgs.Category)
-    End If
-    
-End
+Private $args As New NagatoArgs
+Private $dbus As New NagatoDBus
 
 Public Sub Main()
     
-    DBus.Session.Register(TFEI, "/org/dataovermind/menucache")
+    $args.Parsing()
     
-    'MikuruPath.EnsureMenuFileDirectory()
-    NagatoArgs.Parsing()
-    
-    ' If NagatoArgs.Category <> "" Then
-    '     If NagatoArgs.Force Then NagatoMenuCache.Refresh()
-    '     printPipeMenu()
-    ' Else If NagatoArgs.Available Then
-    '     MikuruArrayTest(NagatoMenuCache.Categories)
-    ' Else
-    '     NagatoMenuCache.Refresh()
-    ' End If
+    If $args.Start Or If Args.Max = 0 Then
+        $dbus.EnsureService()
+    Else If $args.Category <> "" Then
+        $dbus.PrintCategoryMenu($args.Category)
+    Else If $args.Available Then
+        MikuruArrayTest(NagatoMenuCache.Categories)
+    Endif
     
 End

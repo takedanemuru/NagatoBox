@@ -1,0 +1,30 @@
+' Gambas module file
+
+Private Const ServiceNotifications As String = "org.freedesktop.Notifications"
+
+Private $proxy As DBusProxy
+Private $timer As New Timer As "Timer"
+
+Public Sub Main()
+    
+    $proxy = DBus["org.freedesktop.DBus"]["/", "org.freedesktop.DBus"]
+    $proxy.StartServiceByName(ServiceNotifications, 0)
+    Debug $proxy.GetId()
+    
+    HaruhiNotifyer.Show()
+
+    $timer.Enabled = True
+
+End
+
+Public Sub Timer_Timer()
+    
+    Dim yukiValues As Variant[]
+    Dim yukiProxy As DBusProxy = DBus["org.freedesktop.Notifications"]["/org/freedesktop/Notifications", "org.freedesktop.Notifications"]
+    
+    yukiValues = yukiProxy.GetServerInformation()
+    Debug yukiValues[2]
+    
+    Debug yukiProxy.GetCapabilities()[0]
+    
+End

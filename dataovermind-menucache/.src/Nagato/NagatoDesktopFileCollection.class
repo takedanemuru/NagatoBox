@@ -74,6 +74,8 @@ Public Sub Refresh()
     
     Dim yukiPath As String
     
+    Try $collecion.Clear()
+    
     For Each yukiPath In RDir(ApplicationDirectory)
         If File.Ext(ApplicationDirectory &/ yukiPath) <> "desktop" Then Continue
         setDesktopFile(ApplicationDirectory &/ yukiPath)

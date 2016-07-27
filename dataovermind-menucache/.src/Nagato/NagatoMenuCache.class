@@ -7,6 +7,7 @@ Property Read Categories As String[]
 Private $collecion As New NagatoDesktopFileCollection
 Private $desktopFileXml As New NagatoDesktopFileXml
 Private $categories As New NagatoCategories
+Private $observer As NagatoDirectoryObserver
 
 Private Function getPipeMenuXml(argCategory As String) As String
     
@@ -31,6 +32,14 @@ Private Sub saveCategoryMenuFile()
 
 End
 
+Public Sub Activate()
+    
+    Me.Refresh()
+    
+    $observer = New NagatoDirectoryObserver("/usr/share/applications") As "Asakura"
+    
+End
+
 Public Sub Refresh()
     
     $collecion.Refresh()
@@ -45,6 +54,18 @@ Public Sub Get(argCategory As String) As String
     Else
         Return getPipeMenuXml(argCategory)
     End If
+    
+End
+
+Public Sub Asakura_Modefied(argFileName As String)
+    
+    Me.Refresh()
+    
+End
+
+Public Sub Asakura_Deleted(argFileName As String)
+    
+    Me.Refresh()
     
 End
 

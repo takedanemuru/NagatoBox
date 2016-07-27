@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private $directory As String
+Private $timer As New Timer As "Timer"
+Private $lastObserved As Date
+Private $previousPaths As String[]
+
+Private Const Interval As Integer = 5
+
+Event Deleted(argFileName As String)
+Event Modefied(argFileName As String)
+
+Private Sub checkDeletedPath(argCurrentPaths As String[])
+    
+    Dim yukiPath As String
+    
+    If Not Object.IsValid($previousPaths) Then Return
+
+    For Each yukiPath In $previousPaths
+        If Not argCurrentPaths.Exist(yukiPath) Then Raise Deleted($directory &/ yukiPath)
+    Next
+    
+End
+
+Private Sub checkModefiedPath(argCurrentPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argCurrentPaths
+        If Not Exist($directory &/ yukiPath) Then Continue
+        If DateDiff(Stat($directory &/ yukiPath).LastChange, $lastObserved, gb.Second) > Interval Then Continue
+        Raise Modefied($directory &/ yukiPath)
+    Next
+    
+End
+
+Public Sub ChangeDirectory(argDirectory As String)
+    
+    $directory = argDirectory
+    
+End
+
+Public Sub _new(Optional argDirectory As String = User.Home)
+
+    $directory = argDirectory
+    $lastObserved = Now
+    $timer.Delay = Interval * 1000
+    $timer.Start()
+
+End
+
+Public Sub Timer_Timer()
+    
+    Dim yukiCurrentPaths As String[] = Dir($directory)
+    
+    checkDeletedPath(yukiCurrentPaths)
+    checkModefiedPath(yukiCurrentPaths)
+    
+    $lastObserved = Now()
+    $previousPaths = yukiCurrentPaths
+    
+Catch 'to avoid error when ~/.local/share/applications/foobar not existed
+    Return
+    
+End

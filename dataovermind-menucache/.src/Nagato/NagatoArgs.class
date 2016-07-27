@@ -1,21 +1,19 @@
 ' Gambas class file
 
-Create Static
-
 Property Read Category As String
 Property Read Available As Boolean
-Property Read Force As Boolean
+Property Read Start As Boolean
 
 Private $category As String = ""
 Private $available As Boolean = False
-Private $force As Boolean = False
+Private $start As Boolean = False
 
 Public Sub Parsing()
     
     Args.Begin("Usage:")
         $category = Args.Get("c", "category", "get specified category's root menu", "category name")
         $available = Args.Has("a", "availables", "show all available categories")
-        $force = Args.Has("f", "force-reload", "force reload")
+        $start = Args.Has("s", "start", "start dataovermind-menucache as daemon")
     Args.End()
     
 End
@@ -32,8 +30,8 @@ Private Function Available_Read() As Boolean
 
 End
 
-Private Function Force_Read() As Boolean
+Private Function Start_Read() As Boolean
 
-    Return $force
+    Return $start
 
 End
