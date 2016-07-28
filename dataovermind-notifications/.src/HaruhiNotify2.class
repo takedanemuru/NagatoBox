@@ -1,0 +1,29 @@
+' Gambas class file
+
+Public Sub Form_Open()
+
+    With TextLabel1
+        .Text &= NagatoArgs.Summary
+        .Text &= "<br><br>"
+        .Text &= NagatoArgs.Body
+    End With
+    
+    Me.Form_Move()
+
+End
+
+Public Sub Form_Move()
+
+    Me.X = 0
+    Me.Y = 0
+    Me.W = Screen.W
+    Me.H = TextLabel1.Font.RichTextHeight(TextLabel1.Text) + 64
+    Me.Stacking = Window.Above
+    
+End
+
+Public Sub TextLabel1_DblClick()
+
+    Me.Close()
+
+End

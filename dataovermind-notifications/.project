@@ -1,13 +1,28 @@
 # Gambas Project File 3.0
 # Compiled with Gambas 3.8.4
-Title=390-test
+Title=dataovermind-notifications
 Startup=Kyon
-Version=0.0.1
+Icon=Image/information-balloon.png
+Version=42.5.14
+Component=gb.args
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
 Component=gb.dbus
 Component=gb.gui.qt.webkit
+Description="notification daemon"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Language=en
+Maintainer=takeda.nemuru
+Vendor=IntegratedDataThoughtEntity
+Address=takeda.nemuru@yandex.com
+License=S.O.S. License
+PackageName=dataovermind-notifications-42.5.14
+CreateEachDirectory=1
 Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"System"
+Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"org.nagato.notifications.service\t/usr/share/dbus-1/services\nNagatoNotifications.py\t/usr/bin"

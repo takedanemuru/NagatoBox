@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,85,11)
+  Background = Color.Violet
+  Border = False
+  Arrangement = Arrange.Fill
+  Padding = 16
+  { TextLabel1 TextLabel
+    MoveScaled(8,26,42,36)
+    Font = Font["Bold,+1"]
+    Background = Color.Violet
+    Foreground = &HFFFFFF&
+    Alignment = Align.Left
+  }
+}

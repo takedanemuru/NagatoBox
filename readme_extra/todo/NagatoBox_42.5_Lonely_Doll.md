@@ -6,6 +6,13 @@ until end of September
 
 ToDo for Applications
 
+### dataovermind-notifications (v42.5.14)
+
+new package : notification server for NagatoBox.
+
++ ~~new : essential functionalities.~~
++ new : redirect to nagato-desktop if it's possible.
+
 ### nagato-calculator (v42.5.7)
 
 + ~~finish `M+` , `M-` , `M*` , `M/` and `MC` functionalities.~~
@@ -27,15 +34,20 @@ ToDo for Applications
 
 ### nagato-mixer-applet (v42.5.6)
 
-a simple alsa mixer applet for systray
+new package : a simple alsa mixer applet for systray
 
 + ~~initial release~~
 
 ### nagato-openbox-menu -> dataovermind-menucache (v42.5.19)
 
-+ launch as dbus service
++ ~~launch as dbus service~~
 
 ### nagato-player-x
 
 + do not skip taskbar when listview asigned as main form.
+
+### nagato-weather
+
++ new : reload menu.
+
 
