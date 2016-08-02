@@ -11,7 +11,10 @@ ToDo for Applications
 new package : notification server for NagatoBox.
 
 + ~~new : essential functionalities.~~
-+ new : redirect to nagato-desktop if it's possible.
++ ~~new : redirect to nagato-desktop when nagato-desktop's dbus channel activated.~~
++ ~~new : skip taskbar~~
++ ~~new : pixmap icon~~
++ ~~new : make panel thin.~~
 
 ### nagato-calculator (v42.5.7)
 

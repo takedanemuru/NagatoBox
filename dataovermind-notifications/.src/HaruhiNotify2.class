@@ -1,15 +1,22 @@
 ' Gambas class file
 
+Private $timer As New Timer As "Timer"
+Private $count As Integer = 0
+
 Public Sub Form_Open()
 
-    With TextLabel1
-        .Text &= NagatoArgs.Summary
-        .Text &= "<br><br>"
-        .Text &= NagatoArgs.Body
-    End With
-    
+    $timer.Enabled = True
+    $count = 0
+
     Me.Form_Move()
 
+End
+
+Public Sub Form_Close()
+    
+    $timer.Enabled = False
+    $count = 0
+    
 End
 
 Public Sub Form_Move()
@@ -17,13 +24,39 @@ Public Sub Form_Move()
     Me.X = 0
     Me.Y = 0
     Me.W = Screen.W
-    Me.H = TextLabel1.Font.RichTextHeight(TextLabel1.Text) + 64
-    Me.Stacking = Window.Above
+    Me.H = 64
     
 End
 
-Public Sub TextLabel1_DblClick()
+Public Sub DrawingArea1_DblClick()
 
     Me.Close()
 
+End
+
+Public Sub DrawingArea1_Draw()
+    
+    Inc $count
+    
+    Paint.Begin(DrawingArea1)
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.Font.Size = 12
+    
+    Select Case $count
+        Case 0 To 4
+            Paint.DrawRichText("YUKI.N > " & NagatoArgs.Summary, 72, 0, Me.W - 72, 64, Align.Left)
+        Case 5 To 8
+            Paint.DrawRichText("YUKI.N > " & NagatoArgs.Body, 72, 0, Me.W - 72, 64, Align.Left)
+        Default
+            Me.Close()
+    End Select
+    
+    Paint.End()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    DrawingArea1.Refresh()
+    
 End

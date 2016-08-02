@@ -2,6 +2,26 @@
 
 Private $dbus As New NagatoDBus
 
+Private Const Service As String = "org.gambas.nagato-files"
+Private Const ObjectPath As String = "/org/nagato/files"
+Private Const Interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
+
+Private Sub getNotifyText() As String
+    
+    Return Subst$("&1<br><br>&2", NagatoArgs.Summary, NagatoArgs.Body)
+    
+End
+
+Private Sub callNotify()
+    
+    If DBus.Session.Applications.Exist(Service) Then
+        DBus[Service][ObjectPath, Interface].SetTextToPersona(getNotifyText())
+    Else
+        HaruhiNotify2.Show()
+    Endif
+    
+End
+
 Public Sub Main()
     
     NagatoArgs.Parsing()
@@ -9,7 +29,7 @@ Public Sub Main()
     If Args.Max = 0 Then
         $dbus.EnsureService()
     Else If NagatoArgs.Notify Then
-        HaruhiNotify2.Show()
+        callNotify()
     End If
 
 End
