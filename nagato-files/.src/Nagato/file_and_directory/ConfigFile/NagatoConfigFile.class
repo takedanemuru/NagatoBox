@@ -22,8 +22,8 @@ End
 Private Function setQuoted(argKey As String, argValue As String) As String
     
     Dim yukiValue As String = Trim(argValue)
-    
-    ' NOTE: Chr$(34) is ascii code for double quotation.
+
+    ' NOTE : Chr$(34) is ascii code for double quotation.
     
     If yukiValue Begins Chr$(34) And If yukiValue Ends Chr$(34) Then
         $quoted.Add(argValue, argKey)

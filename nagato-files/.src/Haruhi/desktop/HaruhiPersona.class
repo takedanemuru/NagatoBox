@@ -1,65 +1,49 @@
 ' Gambas class file
 
-Private $persona As Picture
+Private $persona As NagatoPersona
 
-Private Sub setPersona()
+Public Sub _new()
     
-    Select Case Month(Now)
-        Case 1, 2, 3, 10, 11, 12
-            $persona = Picture.Load("pictures/nagato_1.png")
-        Case Else
-            $persona = Picture.Load("pictures/nagato_2.png")
-    End Select
-    
-    Me.Picture = $persona
+    $persona = New NagatoPersona(Me)
     
 End
 
-Private Sub setPosition()
+Public Sub Fortune()
     
-    With Me
-        .H = $persona.H
-        .W = $persona.W
-        .Y = Screen.H - $persona.H
-        .X = 100
-    End With
-    
-End
+    MikuruWindow.EnsureVisible(Me)
 
-Public Sub ChangePersona()
-    
-    setPersona()
-    
-End
-
-Public Sub EnsureVisible()
-    
-    Dim yukiWindow As New DesktopWindow(Me.Id)
-    
-    Me.Show()
-    yukiWindow.Desktop = Desktop.Current
-    
-    HaruhiBalloon.NewFortune()
+    HaruhiBalloon.SetText(MikuruFortune.Get())
     HaruhiBalloon.X = Me.X
+    
+End
+
+Public Sub Notify(argSummary As String, argBody As String)
+    
+    
     
 End
 
 Public Sub SetText(argText As String)
     
-    Dim yukiWindow As New DesktopWindow(Me.Id)
-    
-    Me.Show()
-    yukiWindow.Desktop = Desktop.Current
+    MikuruWindow.EnsureVisible(Me)
     
     HaruhiBalloon.SetText(argText)
     HaruhiBalloon.X = Me.X
     
 End
 
+Public Sub Welcome()
+    
+    MikuruWindow.EnsureVisible(Me)
+    
+    HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
+    HaruhiBalloon.X = Me.X
+    
+End
+
 Public Sub Form_Open()
     
-    setPersona()
-    setPosition()
+    $persona.Activate()
     
     Me.X = 50
     
@@ -68,25 +52,7 @@ End
 Public Sub Form_DblClick()
     
     HaruhiBalloon.Close()
-   ' NagatoSettings.PersonaX = Me.X
     
     Me.Close()
-    
-End
-
-Public Sub Form_Move()
-
-    Me.Y = Max(Screen.H - $persona.H, Screen.H * 0.3)
-
-End
-
-Public Sub Form_KeyPress()
-    
-    Select Case Key.Code
-        Case Key.Left
-            Me.X -= 16
-        Case Key.Right
-            Me.X += 16
-    End Select
     
 End

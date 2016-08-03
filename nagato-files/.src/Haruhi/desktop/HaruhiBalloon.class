@@ -1,77 +1,26 @@
 ' Gambas class file
 
-Private $fortune As String
-
-Private Function getBalloonImage(argHeight As Integer, argWidth As Integer) As Image
+Private Sub setForm(argText As String)
     
-    Dim yukiBaseImage As New Image(argWidth + 2 * MikuruUx.Grid, argHeight + 8 * MikuruUx.Grid, Color.Transparent)
-    Dim yukiBaseLine As Integer = argHeight + 2 * MikuruUx.Grid
-    
-    Paint.Begin(yukiBaseImage)
-        With MikuruUx
-            Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
-            Paint.Rectangle(0, 0, yukiBaseImage.W, argHeight + 2 * MikuruUx.Grid, 2 * MikuruUx.Grid)
-            Paint.Polygon([4 * .Grid, yukiBaseLine, 6 * .Grid, yukiBaseLine, 8 * .Grid, yukiBaseImage.H, 4 * .Grid, yukiBaseLine])
-            Paint.Fill()
-        End With
-    Paint.End()
-    
-    Return yukiBaseImage
-    
-End
-
-Private Sub setForm()
-    
-    Dim yukiTextWidth As Integer = Min(Me.Font.RichTextWidth($fortune), 40 * MikuruUx.Grid)
-    Dim yukiTextHeight As Integer = Me.Font.RichTextHeight($fortune, yukiTextWidth) 
-    Dim yukiBaseImage As Image = getBalloonImage(yukiTextHeight, yukiTextWidth)
+    Dim yukiTextW As Integer = Min(Me.Font.RichTextWidth(argText), 40 * MikuruUx.Grid)
+    Dim yukiTextH As Integer = Me.Font.RichTextHeight(argText, yukiTextW) 
+    Dim yukiBaseImage As Image = MikuruBalloonImage.Get(argText)
     
     Paint.Begin(yukiBaseImage)
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font = Me.Font
-        Paint.DrawRichText($fortune, MikuruUx.Grid, MikuruUx.Grid, yukiTextWidth, yukiTextHeight, Align.TopLeft)
+        Paint.DrawRichText(argText, MikuruUx.Grid, MikuruUx.Grid, yukiTextW, yukiTextH, Align.TopLeft)
         Paint.Fill()
     Paint.End()
     
-    Me.Width = yukiBaseImage.Width
-    Me.Height = yukiBaseImage.Height
-    Me.Picture = yukiBaseImage.Picture
-    
-End
-
-Private Sub setFortune()
-    
-    Dim yukiFortune As String
-    
-    Shell "fortune" To yukiFortune 
-    
-    yukiFortune = Replace$(yukiFortune, gb.Cr, "<br>")
-    $fortune = "YUKI.N > ...<br><br>" & Replace$(yukiFortune, gb.Lf, "<br>")
-    
-End
-
-Private Sub ensureVisible()
-    
-    Dim yukiWindow As New DesktopWindow(Me.Id)
-    
-    Me.Show()
-    yukiWindow.Desktop = Desktop.Current
-    
-End
-
-Public Sub NewFortune()
-    
-    ensureVisible
-    setFortune()
-    setForm()
+    MikuruWindow.AdjustWindowToImage(Me, yukiBaseImage)
     
 End
 
 Public Sub SetText(argText As String)
     
-    ensureVisible()
-    $fortune = argText
-    setForm()
+    MikuruWindow.EnsureVisible(Me)
+    setForm(argText)
     
 End
 

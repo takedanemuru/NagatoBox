@@ -71,7 +71,7 @@ Public Sub MenuItem_Click()
     
     Select Case Last.Tag
         Case MenuPersona
-            HaruhiPersona.EnsureVisible()
+            HaruhiPersona.Fortune()
         Default
             Raise ChangeMode(Last.Tag)
     End Select

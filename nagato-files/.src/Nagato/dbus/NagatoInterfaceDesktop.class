@@ -6,12 +6,16 @@ Create Static
 
 Property Read Ready As Boolean
 
-Public Sub SetTextToPersona(argText As String) As Boolean
+Public Sub Notify(argSummary As String, argBody As String) 
+    
+    HaruhiPersona.Notify(argSummary, argBody)
+    
+End
+
+Public Sub SetTextToPersona(argText As String) 
     
     HaruhiPersona.SetText(argText)
-    
-    Return True
-    
+
 End
 
 Public Sub Show() As Boolean

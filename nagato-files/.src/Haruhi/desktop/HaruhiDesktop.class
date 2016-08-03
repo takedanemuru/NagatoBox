@@ -37,7 +37,7 @@ Public Sub Form_Open()
         $panel = New NagatoDesktopPanel(Me)
         MikuruX11.ReservePanelHeightOnScreen(Me.Id)
         $timer.Enabled = True
-        HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
+        HaruhiPersona.Welcome()
         $ready = True
     Else
         Message.Error("YUKI.N > Fail to activate nagato-desktop", ("OK"))
