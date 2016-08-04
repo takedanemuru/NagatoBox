@@ -9,6 +9,7 @@ Property Read Body As String
 Private $notify As Boolean = False
 Private $summary As String
 Private $body As String
+Private $urgency As Integer
 Private $options As New String[]
 
 Public Sub Parsing()

@@ -1,10 +1,16 @@
-' Gambas module file
+' Gambas class file
+
+Create Static
 
 Property Read Channel As String
 Property Read Volume As Integer
+Property Read Text As String
 
 Private $channel As String
 Private $volume As Integer
+
+Event Changed(argVolume As Integer)
+Event Changed2
 
 Private Function getAlsaVolume(argChannel As String) As Integer[] ' as percentage
         
@@ -34,6 +40,19 @@ Private Sub setChannel()
     
 End
 
+Public Sub SetVolume(argVolume As Integer, Optional argShowDialog As Boolean = True)
+    
+    Dim yukiOutput As String ' NOTE : to avoid redirect to standard output.
+    
+    Try Shell Subst$("amixer sset &1 &2%", NagatoAlsaState.Channel, argVolume) To yukiOutput
+    
+    If argShowDialog Then HaruhiVolumeDialog.Show()
+    If argShowDialog Then Raise Changed2
+    
+    Raise Changed($volume)
+    
+End
+
 Public Sub Activate()
     
     setChannel()
@@ -52,5 +71,11 @@ Private Function Volume_Read() As Integer
     $volume = getAlsaVolume($channel)[0]
 
     Return $volume
+
+End
+
+Private Function Text_Read() As String
+
+    Return Subst$("&1 : &2%", $channel, $volume)
 
 End

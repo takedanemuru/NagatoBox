@@ -4,7 +4,8 @@ Private $icon As NagatoTrayIcon
 
 Public Sub Main()
     
-    MikuruAlsaState.Activate()
+    NagatoAlsaState.Activate()
+    HaruhiVolumeDialog.Activate()
     
     $icon = New NagatoTrayIcon
     

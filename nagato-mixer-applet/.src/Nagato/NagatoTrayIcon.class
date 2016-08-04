@@ -2,17 +2,25 @@
 
 Private $trayIcon As TrayIcon
 Private $popupMenu As New NagatoPopupMenu
+Private $observer As Observer
 
-Public Sub _new()
+Private Sub initializeTrayIcon()
     
     $trayIcon = New TrayIcon As "TrayIcon"
     
     With $trayIcon
         .Icon = MikuruIcon["speaker"]
-        .Tooltip = MikuruAlsaState.Channel
+        .Tooltip = NagatoAlsaState.Text
         .PopupMenu = "PopupMenu"
         .Show()
     End With
+    
+End
+
+Public Sub _new()
+    
+    initializeTrayIcon()
+    $observer = New Observer(NagatoAlsaState) As "Asakura"
     
 End
 
@@ -22,14 +30,14 @@ Public Sub TrayIcon_Click()
     
 End
 
-Public Sub TrayIcon_MiddleClick()
+Public Sub TrayIcon_Scroll(argDelta As Float, argOrientation As Integer)
     
-    Quit 0
+    NagatoAlsaState.SetVolume(NagatoAlsaState.Volume + CInteger(argDelta * 10))
     
 End
 
-Public Sub TrayIcon_Scroll(argDelta As Float, argOrientation As Integer)
+Public Sub Asakura_Changed(argVolume As Integer)
     
-    Debug "scroll"
+    $trayIcon.Tooltip = NagatoAlsaState.Text
     
 End
