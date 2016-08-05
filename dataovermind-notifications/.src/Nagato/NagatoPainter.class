@@ -1,0 +1,48 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $count As Integer
+
+Event Finished
+
+Private Sub paintText(argText As String)
+    
+    Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Size = 12
+        Paint.DrawRichText(argText, 72, 0, $drawingArea.W - 72, 64, Align.Left)
+    Paint.End()
+    
+End
+
+Private Sub selectPhasePainting()
+    
+    Select Case $count
+        Case 0 To 4
+            paintText("YUKI.N > " & NagatoArgs.Summary)
+        Case 5 To 8
+            paintText("YUKI.N > " & NagatoArgs.Body)
+        Default
+            Raise Finished
+    End Select
+    
+End
+
+Public Sub Reset()
+    
+    $count = 0
+    
+End
+
+Public Sub DrawSurface()
+    
+    Inc $count
+    selectPhasePainting()
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    
+End

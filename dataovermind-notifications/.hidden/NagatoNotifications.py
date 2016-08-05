@@ -1,53 +1,58 @@
 #!/usr/bin/env python3
 
-import gi.repository.GLib
+# (c) takeda.nemuru <takeda.nemuru@yandex.com> 2016-
+# this script is licensed under S.O.S. License
+
+import subprocess
 import dbus
 import dbus.service
-import dbus.mainloop.glib
-import subprocess
+from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import GLib
 
-NOTIF_BUS_NAME    =  'org.freedesktop.Notifications'
-NOTIF_OBJECT_PATH = '/org/freedesktop/Notifications'
-NOTIF_INTERFACE   =  'org.freedesktop.Notifications'
+DBusService = "org.freedesktop.Notifications"
+DBusObjectPath = "/org/freedesktop/Notifications"
+DBusInterface = "org.freedesktop.Notifications"
 
 class NotificationServer(dbus.service.Object):
     _id = 0
 	
-    @dbus.service.method(NOTIF_INTERFACE, in_signature='susssasa{sv}i', out_signature='u')
+    @dbus.service.method(DBusInterface, in_signature='susssasa{sv}i', out_signature='u')
     def Notify(self, app_name, replace_id, app_icon, summary, body, actions, hints, expire_timeout):
         yuki_command = ["dataovermind-notifications","--notify"]
-        if not replace_id:
-            self._id += 1
-            notification_id = self._id
-        if summary : yuki_command.extend(["--summary",summary])
-        if body : yuki_command.extend(["--body",body])
+        if app_name: yuki_command.extend(["--app", app_name])
+        if not replace_id: self._id += 1
+        yuki_id = replace_id if replace_id else self._id
+        #yuki_command.extend(["--id", str(yuki_id)])
+        if summary: yuki_command.extend(["--summary", summary])
+        if body: yuki_command.extend(["--body", body])
+        for yuki_key, yuki_value in hints.items():
+            if yuki_key == "urgency": yuki_command.extend(["--urgency", str(int(yuki_value))])
+        #if expire_timeout: yuki_command.extend(["--timeout", str(expire_timeout)])
         subprocess.call(yuki_command)
-        return notification_id
+        return yuki_id
 
-    @dbus.service.method(NOTIF_INTERFACE, in_signature='', out_signature='as')
+    @dbus.service.method(DBusInterface, in_signature='', out_signature='as')
     def GetCapabilities(self):
-        return ("yuki.n > ...can you see this ? ", )
+        return (["body", "persistence"])
 
-    @dbus.service.signal(NOTIF_INTERFACE, signature='uu')
+    @dbus.service.signal(DBusInterface, signature='uu')
     def NotificationClosed(self, id_in, reason_in):
+        #Gambas3's dbus implementation cannot raise signal...
         pass
 
-    @dbus.service.method(NOTIF_INTERFACE, in_signature='u', out_signature='')
+    @dbus.service.method(DBusInterface, in_signature='u', out_signature='')
     def CloseNotification(self, id):
-        pass
+        yuki_command = ["dataovermind-notifications", "--close"]
+        subprocess.call(yuki_command)
 
-    @dbus.service.method(NOTIF_INTERFACE, in_signature='', out_signature='ssss')
+    @dbus.service.method(DBusInterface, in_signature='', out_signature='ssss')
     def GetServerInformation(self):
-        return ('developping', 'http://takedanemuru.github.io', '42.5.14', '1.2') 
+        return ("do not try it yourself", "https://takedanemuru.github.io", "42.5.24", "1.2") 
 
 if __name__ == '__main__':
-    import argparse
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
+    DBusGMainLoop(set_as_default=True)
+    nagato_service = dbus.service.BusName(DBusService, dbus.SessionBus(), do_not_queue=True) 
+    nagato_server = NotificationServer(dbus.SessionBus(), DBusObjectPath)
+    nagato_loop = GLib.MainLoop()
+    nagato_loop.run() # parsistent loop
 
-    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
-    bus = dbus.SessionBus()
-    name = dbus.service.BusName(NOTIF_BUS_NAME, bus, do_not_queue=True) 
-    NotificationServer(bus, NOTIF_OBJECT_PATH)
-    mainloop = gi.repository.GLib.MainLoop()
-    mainloop.run() # parsistent loop.

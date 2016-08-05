@@ -1,0 +1,73 @@
+' Gambas class file
+
+Private $timer As New Timer As "Timer"
+Private $painter As NagatoPainter
+
+Private Sub setBackgroundColor()
+    
+    Select Case NagatoArgs.Urgency
+        Case MikuruUrgencyLevel.Critical
+            DrawingArea1.Background = Color.Red
+        Case MikuruUrgencyLevel.Normal
+            DrawingArea1.Background = Color.Violet
+        Case MikuruUrgencyLevel.Low
+            DrawingArea1.Background = Color.Blue
+    End Select
+    
+End
+
+Public Sub _new()
+    
+    $painter = New NagatoPainter(DrawingArea1) As "Painter"
+    
+End
+
+Public Sub Form_Open()
+
+    setBackgroundColor()
+    $timer.Enabled = True
+    $painter.Reset()
+
+    Me.Form_Move()
+
+End
+
+Public Sub Form_Close()
+    
+    $timer.Enabled = False
+    $painter.Reset()
+    
+End
+
+Public Sub Form_Move()
+
+    Me.X = 0
+    Me.Y = 0
+    Me.W = Screen.W
+    Me.H = 64
+    
+End
+
+Public Sub DrawingArea1_DblClick()
+
+    Me.Close()
+
+End
+
+Public Sub DrawingArea1_Draw()
+    
+    $painter.DrawSurface()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    DrawingArea1.Refresh()
+    
+End
+
+Public Sub Painter_Finished()
+    
+    Me.Close()
+    
+End

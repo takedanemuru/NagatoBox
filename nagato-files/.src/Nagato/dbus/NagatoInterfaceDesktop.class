@@ -6,7 +6,7 @@ Create Static
 
 Property Read Ready As Boolean
 
-Public Sub Notify(argSummary As String, argBody As String) 
+Public Sub Notify(argApp As String, argSummary As String, argBody As String, argUrgency As Integer)
     
     HaruhiPersona.Notify(argSummary, argBody)
     

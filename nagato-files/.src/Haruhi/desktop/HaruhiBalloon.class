@@ -2,7 +2,7 @@
 
 Private Sub setForm(argText As String)
     
-    Dim yukiTextW As Integer = Min(Me.Font.RichTextWidth(argText), 40 * MikuruUx.Grid)
+    Dim yukiTextW As Integer = Max(Me.Font.RichTextWidth(argText), 30 * MikuruUx.Grid)
     Dim yukiTextH As Integer = Me.Font.RichTextHeight(argText, yukiTextW) 
     Dim yukiBaseImage As Image = MikuruBalloonImage.Get(argText)
     

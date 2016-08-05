@@ -20,7 +20,7 @@ End
 
 Public Sub Get(argText As String) As Image
     
-    Dim yukiTextWidth As Integer = Min(HaruhiBalloon.Font.RichTextWidth(argText), 40 * MikuruUx.Grid)
+    Dim yukiTextWidth As Integer = Max(HaruhiBalloon.Font.RichTextWidth(argText), 30 * MikuruUx.Grid)
     Dim yukiTextHeight As Integer = HaruhiBalloon.Font.RichTextHeight(argText, yukiTextWidth) 
     
     Return getBalloonImage(yukiTextHeight, yukiTextWidth)
