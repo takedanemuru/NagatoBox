@@ -24,6 +24,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     NagatoSettingsForm.Load(Me)
     Me.Title = NagatoSettingsLocation.UserLocationName
+
     NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
 
 End

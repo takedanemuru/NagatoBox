@@ -22,12 +22,6 @@ Public Sub _new(argContainer As Container)
     
 End
 
-' Public Sub ChangeLongitude(argLongitude As Float)
-'     
-'     $painterCurrentWeather.ChangeLongitude(argLongitude)
-'     
-' End
-
 Public Sub MainDrawingArea_Draw()
     
     Dim yukiBackground As Integer

@@ -1,5 +1,6 @@
 ' Gambas module file
 
+Property Read ParentDirectory As String
 Property Read Path As String
 Property Read PathOriginalImage As String
 Property Read PathModefiedImage As String
@@ -30,6 +31,7 @@ Public Sub Ensure()
     
     setDesktopType()
     
+    If Not Exist(Me.ParentDirectory) Then Mkdir Me.ParentDirectory
     If Not Exist(Me.Path) Then Mkdir Me.Path
     If Not Exist(Me.PathOriginalImage) Then saveImage(Me.PathOriginalImage)
     If Not Exist(Me.PathModefiedImage) Then saveImage(Me.PathModefiedImage)
@@ -57,5 +59,11 @@ End
 Private Function DesktopType_Read() As String
 
     Return $desktopType
+
+End
+
+Private Function ParentDirectory_Read() As String
+
+    Return User.Home &/ ".nagato-wallpaper"
 
 End
