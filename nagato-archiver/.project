@@ -1,18 +1,18 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.4
 Title=nagato-archiver
 Startup=Kyon
 Icon=Pictures/Icons/hard-drive-download.png
-Version=42.1.2
+Version=42.5.5
 Component=gb.args
 Component=gb.image
-Component=gb.qt4
+Component=gb.qt5
 Component=gb.form
 Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.mime
-Component=gb.qt4.ext
+Component=gb.qt5.webkit
 Component=gb.web
 Description="an archiver."
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
@@ -24,8 +24,7 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-archiver-42.1.2
-CreateEachDirectory=1
+PackageName=nagato-archiver-42.5.5
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/File Management"

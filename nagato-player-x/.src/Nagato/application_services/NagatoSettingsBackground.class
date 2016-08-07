@@ -8,7 +8,7 @@ Private Function Path_Read() As String
 
     Dim yukiPath As String = Me._$settings["bg/last_path", "foo"]
     
-    If Not Exist(yukiPath) Then yukiPath = "Pictures/nagato_window_side.png"
+    If Not Exist(yukiPath) Then yukiPath = "Pictures/default_background.png"
 
     Return yukiPath
 

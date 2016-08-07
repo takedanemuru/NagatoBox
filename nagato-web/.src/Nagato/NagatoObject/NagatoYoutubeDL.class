@@ -40,6 +40,8 @@ Public Sub YouTubeDL_Read()
     
     Read #Last, yukiLine, -256
     
+    Debug yukiLine
+    
     Raise Signal(MikuruSignal.PersonaSetText, [yukiLine])
     
 End

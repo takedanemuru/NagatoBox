@@ -28,6 +28,9 @@ Private Sub paintProgressBar()
     Paint.Polygon($star(yukiX + getProgressBarWidth() * yukiDurationData.Rate, 44))
     Paint.Fill()
     
+Catch
+    Debug Error.Text
+    
 End
 
 Private Function getStartX() As Integer

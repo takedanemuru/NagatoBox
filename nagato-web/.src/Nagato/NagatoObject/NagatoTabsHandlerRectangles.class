@@ -4,6 +4,7 @@ Inherits NagatoObject
 
 Property Read Max As Integer
 
+Private $drawingArea As DrawingArea
 Private $tabs As New Rect[]
 Private $rectangles As NagatoRectangles
 
@@ -58,6 +59,7 @@ End
 
 Public Sub _new(argDrawingArea As DrawingArea)
     
+    $drawingArea = argDrawingArea
     $rectangles = New NagatoRectangles(argDrawingArea)
     
 End

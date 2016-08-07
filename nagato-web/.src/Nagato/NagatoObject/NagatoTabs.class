@@ -10,6 +10,7 @@ Private Const MouseMissing As Integer = -1
 
 Private $onMouseIndex As Integer = MouseMissing
 Private $handlerRectangles As NagatoTabsHandlerRectangles
+Private $drawingArea As DrawingArea
 
 Public Function GetTabOrder(argMouseX As Integer) As Integer
     

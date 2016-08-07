@@ -16,17 +16,17 @@ Private Function getActiveTabPolygon(argRect As Rect) As Float[]
         yukiPolygon.Add(0)
         yukiPolygon.Add($drawingArea.H)
         yukiPolygon.Add(0)
-        yukiPolygon.Add(MikuruUxTab.Bottom)
+        yukiPolygon.Add($drawingArea.H - (1 * MikuruUxTab.Margin))
         yukiPolygon.Add(.X)
-        yukiPolygon.Add(MikuruUxTab.Bottom)
+        yukiPolygon.Add($drawingArea.H - (1 * MikuruUxTab.Margin))
         yukiPolygon.Add(.X)
-        yukiPolygon.Add(MikuruUxTab.Top)
+        yukiPolygon.Add($drawingArea.H - (MikuruUxTab.Height + 2 * MikuruUxTab.Margin))
         yukiPolygon.Add(.X + .W)
-        yukiPolygon.Add(MikuruUxTab.Top)
+        yukiPolygon.Add($drawingArea.H - (MikuruUxTab.Height + 2 * MikuruUxTab.Margin))
         yukiPolygon.Add(.X + .W)
-        yukiPolygon.Add(MikuruUxTab.Bottom)
+        yukiPolygon.Add($drawingArea.H - (1 * MikuruUxTab.Margin))
         yukiPolygon.Add($drawingArea.W)
-        yukiPolygon.Add(MikuruUxTab.Bottom)
+        yukiPolygon.Add($drawingArea.H - (1 * MikuruUxTab.Margin))
         yukiPolygon.Add($drawingArea.W)
         yukiPolygon.Add($drawingArea.H)
         yukiPolygon.Add(0)
@@ -49,6 +49,9 @@ Public Sub DrawNonActiveTab(argRectangle As Rect, argOnMouse As Boolean)
     
     Paint.Brush = Paint.Color(IIf(argOnMouse, MikuruColor.Highlight, MikuruColor.NonActiveTab))
     With argRectangle
+        Debug $drawingArea.H
+        Debug argRectangle.H
+        Debug argRectangle.Y
         Paint.Rectangle(.X, .Y, .W, .H)
     End With
     Paint.Fill()
@@ -57,7 +60,7 @@ End
 
 Public Sub DrawTitle(argTitle As String, argRectangle As Rect, Optional argCollapse As Boolean = True)
     
-    Dim yukiTitle As String 
+    Dim yukiTitle As String = MikuruUxTabText.GetCollapsedTitle(argTitle, argRectangle)
     
     Paint.Brush = Paint.Color(Color.White)
     With argRectangle

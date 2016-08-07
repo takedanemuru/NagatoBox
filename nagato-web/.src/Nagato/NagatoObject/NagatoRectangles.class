@@ -2,6 +2,7 @@
 
 Inherits NagatoObject
 
+Private $drawingArea As DrawingArea
 Private $tabWidth As NagatoTabWidth
 
 Private Function getTextRectangle(argLeft As Integer, argText As String) As Rect
@@ -10,7 +11,7 @@ Private Function getTextRectangle(argLeft As Integer, argText As String) As Rect
     
     With yukiRect
         .X = argLeft
-        .Y = MikuruUxTab.Top
+        .Y = $drawingArea.H - (MikuruUxTab.Height + 2 * MikuruUxTab.Margin)
         .H = MikuruUxTab.Height
         .W = Min(MikuruUxTabText.GetWidth(argText) + 2 * MikuruUxTab.Margin, $tabWidth.Max)
     End With
@@ -25,7 +26,7 @@ Public Function GetPlusButtonRectangle(argLeft As Integer) As Rect
     
     With yukiRect
         .X = argLeft
-        .Y = MikuruUxTab.Top
+        .Y = $drawingArea.H - (MikuruUxTab.Height + 2 * MikuruUxTab.Margin)
         .W = MikuruUxTab.Height ' plus button is square
         .H = MikuruUxTab.Height
     End With
@@ -42,6 +43,7 @@ End
 
 Public Sub _new(argDrawingArea As DrawingArea)
     
+    $drawingArea = argDrawingArea
     $tabWidth = New NagatoTabWidth(argDrawingArea)
     
 End

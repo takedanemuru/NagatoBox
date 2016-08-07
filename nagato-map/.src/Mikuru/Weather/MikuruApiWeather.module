@@ -1,5 +1,7 @@
 ' Gambas module file
 
+'deprecated api
+'Private Const WeatherApi As String = "http://api.met.no/weatherapi/locationforecastlts/1.2/?lat=&1;lon=&2"
 Private Const WeatherApi As String = "http://api.met.no/weatherapi/locationforecastlts/1.2/?lat=&1;lon=&2"
 
 Public Sub _get(argLatitude As Float, argLongitude As Float) As String
