@@ -7,11 +7,13 @@ Private Function getConvertedUri(argSource As String) As String
     Dim yukiResult As String = URL.Decode(Replace$(argSource, "file://", ""))
     Dim yukiCount As Integer
     
+    Debug yukiResult
+    
     Do
         If Exist(yukiResult) Then Return yukiResult
         Inc yukiCount
-        Debug String.Right(yukiResult)
-        Debug Asc(yukiResult)
+        ' Debug String.Right(yukiResult)
+        ' Debug Asc(yukiResult)
         yukiResult = String.Left(yukiResult, String.Len(yukiResult) - 1)
         If yukiCount > 5 Then Return argSource
     Loop

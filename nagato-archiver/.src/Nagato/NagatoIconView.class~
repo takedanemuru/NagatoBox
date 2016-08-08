@@ -22,7 +22,7 @@ Public Sub SetEmptyView()
     
 End
 
-Public Sub ShiftToNormalMode()
+Private Sub shiftToNormalMode()
     
     If Me.IsEmpty Then $iconView.Clear()
     $iconView.Font.Size = HaruhiMain.Font.Size
@@ -34,7 +34,7 @@ Public Sub Add(argPaths As String[])
     Dim yukiPath As String 
     
     For Each yukiPath In argPaths
-        Me.ShiftToNormalMode()
+        shiftToNormalMode()
         $iconView.Add(yukiPath, File.Name(yukiPath), Desktop.GetFileIcon(yukiPath, IconSize))
     Next
     
@@ -45,7 +45,7 @@ Public Sub Remove(argPaths As String[])
     Dim yukiPath As String 
     
     For Each yukiPath In argPaths
-        Me.ShiftToNormalMode()
+        shiftToNormalMode()
         Try $iconView.Remove(yukiPath)
     Next
     
@@ -62,7 +62,8 @@ End
 
 Public Sub Asakura_Drop()
     
-    If Drag.Format <> "text/uri-list" Then Return
+    'If Drag.Format <> "text/uri-list" Then Return
+    If Not Drag.Formats.Exist("text/uri-list") Then Return
     
     Raise Drop(NagatoDrag2.GetPaths(Drag.Data))
     

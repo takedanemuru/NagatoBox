@@ -25,8 +25,6 @@ Public Sub Get(argService As String, argObjectPath As String) As XmlDocument
     
     Try Exec ["gdbus", "introspect", getModeText(), "--dest", argService, "--object-path", argObjectPath, "--xml"] To yukiOutput 
     
-    Debug yukiOutput
-    
     yukiXmlDocument.FromString(yukiOutput)
     
     Return yukiXmlDocument
