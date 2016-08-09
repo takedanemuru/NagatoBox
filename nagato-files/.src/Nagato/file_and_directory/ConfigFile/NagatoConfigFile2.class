@@ -11,6 +11,8 @@ Private Sub parsingData()
     Dim yukiLine As String
     Dim yukiGroup As New NagatoConfigFileGroup("")
     
+    Debug $path
+    
     yukiStream = Open $path For Input
     
     While Not Eof(yukiStream)

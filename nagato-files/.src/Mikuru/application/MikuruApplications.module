@@ -39,7 +39,11 @@ End
 
 Private Function LocalDefaultList_Read() As String
 
-    Return User.Home &/ ".local/share/applications/mimeapps.list"
+    Dim yukiPath As String = User.Home &/ ".config/mimeapps.list"
+
+    If Not Exist(yukiPath) Then File.Save(yukiPath, "[Default Applications]\n")
+
+    Return yukiPath
 
 End
 

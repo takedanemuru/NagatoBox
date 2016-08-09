@@ -20,8 +20,6 @@ End
 
 Public Sub FilesObserver_Modefied(argPath As String)
     
-    Debug argPath
-    
     Raise Change
     
 End

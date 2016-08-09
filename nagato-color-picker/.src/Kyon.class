@@ -6,10 +6,18 @@ End
 
 Public Sub Form_Open()
 
+    NagatoSettingsForm.Load(Me)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettingsForm.Save(Me)
+    
 End
 
 Public Sub ColorChooser1_Change()
         
-        TextBox1.Text = ColorChooser1.Value
+    TextBox1.Text = ColorChooser1.Value
         
 End

@@ -27,7 +27,7 @@ End
 Private Sub ensureConfigFile()
     
     If Not Object.IsValid($config) Then 
-        $config = New NagatoConfigFile2(Desktop.DataDir &/ "applications/mimeapps.list")
+        $config = New NagatoConfigFile2(MikuruApplications.LocalDefaultList)
     End If
     
 End

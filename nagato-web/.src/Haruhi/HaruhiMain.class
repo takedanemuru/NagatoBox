@@ -35,6 +35,8 @@ Public Sub Form_Open()
     $leftPane = New NagatoLeftPane(LeftTabStrip) As "UX"
     $bodyContainer(MikuruSignal.WebNew, [NagatoSettings.HomePage])
 
+    NagatoSettingsForm.Load(Me)
+
 End
 
 Public Sub Form_Close()

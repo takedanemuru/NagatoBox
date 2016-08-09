@@ -24,7 +24,6 @@ Public Sub Main()
         HaruhiMain.Show()
         MikuruWebSettings.Initialize()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
-        NagatoSettingsForm.Load(HaruhiMain)
         Application.MainWindow = HaruhiMain
     Else If yukiUrl = "" Then
         NagatoDBus.Proxy.Show()

@@ -1,27 +1,27 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.2
+# Compiled with Gambas 3.8.4
 Title=nagato-color-picker
 Startup=Kyon
 Icon=picture/pipette.png
-Version=0.0.2
+Version=42.5.4
 Component=gb.image
-Component=gb.qt4
+Component=gb.qt5
 Component=gb.form
 Component=gb.settings
-Component=gb.qt4.ext
 Description="pick color number from anywhere."
-Authors="takeda.nemuru <takeda.nemuru@gmail.com>"
-TabSize=8
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
 Translate=1
-Language=ja
+Language=en
 Maintainer=takedanemuru
 Vendor=The Alien and RadioNoise
 Address=takeda.nemuru@gmail.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-color-picker-0.0.2
+PackageName=nagato-color-picker-42.5.4
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Graphics"
 Categories=ubuntu:"Graphics;Nagato;Utility"
 Groups=ubuntu:"graphics"
+ExtraFiles=ubuntu:"nagato-color-picker.desktop\t/usr/share/applications\nnagato-color-picker.png\t/usr/share/pixmaps"

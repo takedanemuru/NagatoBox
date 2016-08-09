@@ -1,9 +1,0 @@
-' Gambas module file
-
-Property Read Gtk3Settings As String
-
-Private Function Gtk3Settings_Read() As String
-    
-    Return Desktop.ConfigDir &/ "gtk-3.0/settings.ini"
-    
-End

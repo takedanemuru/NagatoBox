@@ -61,7 +61,11 @@ End
 
 Private Function PathGtk3Bookmarks_Read() As String
 
-    Return Desktop.ConfigDir &/ "gtk-3.0/bookmarks"
+    Dim yukiPath As String = Desktop.ConfigDir &/ "gtk-3.0/bookmarks"
+
+    If Not Exist(yukiPath) Then File.Save(yukiPath, "")
+    
+    Return yukiPath
 
 End
 

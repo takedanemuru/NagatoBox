@@ -37,7 +37,7 @@ Public Sub Call()
     
     $screenshot.Set()
     initializePreview()
-    MikuruShutterSound.Play()
+    Sound.Load("sound/camera-snap.wav").Play()
     Me.Center()
     Me.Show()
     Application.MainWindow = Me

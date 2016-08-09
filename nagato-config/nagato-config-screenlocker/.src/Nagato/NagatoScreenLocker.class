@@ -46,7 +46,6 @@ Private Sub initializeImage()
     
     $image = Desktop.Screenshot().Image
     $image = $image.Blur(5)
-    '$image = $image.Blur(1)
     
 End
 

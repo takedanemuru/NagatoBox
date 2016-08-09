@@ -1,14 +1,13 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.90
+# Compiled with Gambas 3.8.4
 Title=nagato-text-converter
 Startup=Kyon
 Icon=nagato-text-converter.png
-Version=42.1.0
+Version=42.5.2
 Component=gb.image
-Component=gb.qt4
+Component=gb.qt5
 Component=gb.form
 Component=gb.settings
-Component=gb.qt4.ext
 Description="charactor code conversion tool"
 Authors="takeda.nemuru@yandex.com"
 TabSize=4
@@ -19,11 +18,11 @@ Vendor=IntegratedDataThoughtEntity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-text-converter-42.1.0
-CreateEachDirectory=1
+PackageName=nagato-text-converter-42.5.2
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Text"
 Categories=ubuntu:"Nagato"
 Groups=ubuntu:"text"
 ExtraDependencies=ubuntu:"nkf\t\t"
+ExtraFiles=ubuntu:"nagato-text-converter.desktop\t/usr/share/applications\nnagato-text-converter.png\t/usr/share/pixmaps"
