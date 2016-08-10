@@ -55,7 +55,7 @@ Private Function Container_Read() As VBox
 
 End
 
-Public Sub Asakura_SettingsChanged()
+Public Sub Asakura_SettingsChanged(argKey As String)
     
     With $textArea
         .Foreground = NagatoSettingsEditor.Foreground

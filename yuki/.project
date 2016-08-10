@@ -1,12 +1,12 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.0
+# Compiled with Gambas 3.8.4
 Title=yuki
 Startup=Kyon
 Icon=Pictures/question-balloon.png
-Version=42.1.48
+Version=42.5.50
 Component=gb.args
 Component=gb.image
-Component=gb.qt4
+Component=gb.qt5
 Component=gb.db
 Component=gb.db.sqlite3
 Component=gb.desktop.x11
@@ -26,10 +26,10 @@ Vendor=Integrated Data Thought Entity
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io
 License=S.O.S. License
-PackageName=yuki-42.1.48
-CreateEachDirectory=1
+PackageName=yuki-42.5.50
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Shells"
 Categories=ubuntu:"ConsoleOnly"
 Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"yuki.desktop\t/usr/share/applications\nyuki.png\t/usr/share/pixmaps"

@@ -9,6 +9,7 @@ Public Sub Load(argForm As Form)
         .Y = Me._$settings[Subst$("&1/y", argForm.Name), Screen.W * 0.125]
         .H = Me._$settings[Subst$("&1/h", argForm.Name), Screen.H * 0.75]
         .W = Me._$settings[Subst$("&1/w", argForm.Name), Screen.W * 0.75]
+        .Maximized = Me._$settings[Subst$("&1/maximized", argForm.Name), .Maximized]
     End With
     
 End
@@ -20,6 +21,7 @@ Public Sub Save(argForm As Form)
         Me._$settings[Subst$("&1/y", argForm.Name)] = .Y
         Me._$settings[Subst$("&1/h", argForm.Name)] = .H
         Me._$settings[Subst$("&1/w", argForm.Name)] = .W
+        Me._$settings[Subst$("&1/maximized", argForm.Name)] = .Maximized
     End With
     
     Me._$settings.Save()

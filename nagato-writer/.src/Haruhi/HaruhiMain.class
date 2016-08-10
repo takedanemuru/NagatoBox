@@ -76,8 +76,13 @@ Public Sub TFEI_Signal(argEvent As Integer, argArgs As Variant[])
     
 End
 
-Public Sub Asakura_SettingsChanged()
+Public Sub Asakura_SettingsChanged(argKey As String)
     
     $sourceEditor.FileEvent(MikuruSignal.FileSave, Null)
+    
+    ' TODO : use const or enum instead of literal string values.
+    
+    If argKey = "preview/css" Then $previewer.Refresh($sourceEditor.Text) 
+    If argKey = "markdown/syntax_index" Then $previewer.Refresh($sourceEditor.Text) 
     
 End

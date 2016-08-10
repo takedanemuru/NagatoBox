@@ -6,7 +6,7 @@ Property LastDirectory As String
 Property Fit As Boolean
 
 Private $settings As New Settings
-Private $fit As Boolean = False
+Private $fit As Boolean = True
 
 Public Sub LoadFormSettings(argForm As Form)
     
@@ -15,6 +15,7 @@ Public Sub LoadFormSettings(argForm As Form)
         .Y = $settings[Subst$("&1/y", .Name), .Y]
         .H = $settings[Subst$("&1/h", .Name), .H]
         .W = $settings[Subst$("&1/w", .Name), .W]
+        .Maximized = $settings[Subst$("&1/maximized", .Name), .Maximized]
     End With
     
 End
@@ -26,8 +27,9 @@ Public Sub SaveFormSettings(argForm As Form)
         $settings[Subst$("&1/y", .Name)] = .Y
         $settings[Subst$("&1/h", .Name)] = .H
         $settings[Subst$("&1/w", .Name)] = .W
+        $settings[Subst$("&1/maximized", .Maximized)] = .Maximized
     End With
-    
+
     $settings.Save()
     
 End

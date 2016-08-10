@@ -4,7 +4,7 @@ Create Static
 
 Public _$settings As New Settings
 
-Event SettingsChanged
+Event SettingsChanged(argKey As String)
 
 Public Sub _ChangeSettings(argKey As String, Value As Integer)
     
@@ -12,6 +12,6 @@ Public Sub _ChangeSettings(argKey As String, Value As Integer)
     Me._$settings[argKey] = Value
     Me._$settings.Save()
     
-    Raise SettingsChanged
+    Raise SettingsChanged(argKey)
     
 End
