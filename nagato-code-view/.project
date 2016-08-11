@@ -3,12 +3,14 @@
 Title=nagato-code-view
 Startup=Kyon
 Icon=Pictures/Icons/search.png
-Version=42.4.15
+Version=42.5.16
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
+Component=gb.eval
+Component=gb.eval.highlight
+Component=gb.form.editor
 Component=gb.settings
-Component=gb.qt4.ext
 Description="count lines of Gambas3 source codes."
 Authors="takeda.nemuru@yandex.com"
 TabSize=4

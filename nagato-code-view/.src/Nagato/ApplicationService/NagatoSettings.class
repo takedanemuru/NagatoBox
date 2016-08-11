@@ -37,7 +37,7 @@ Public Sub PushDirectory(argDirectory As String)
     
     NagatoSettings.LastDirectory = File.Dir(argDirectory)
     
-    If Me.RecentDirectories.Count = 0 Then 
+    If Not Object.IsValid(Me.RecentDirectories) Then 
         $settings["directory/recent"] = [argDirectory]
     Else
         $settings["directory/recent"] = MikuruPath.GetRecents(Me.RecentDirectories, argDirectory)

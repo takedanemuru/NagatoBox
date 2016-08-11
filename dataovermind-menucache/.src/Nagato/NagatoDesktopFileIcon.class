@@ -1,0 +1,60 @@
+' Gambas class file
+
+Create Static
+
+Private Const HicolorScalableIcons As String = "/usr/share/icons/hicolor/scalable/apps"
+Private Const HicolorIcons As String = "/usr/share/icons/hicolor/&1x&1/apps"
+Private Const PixmapIcons As String = "/usr/share/pixmaps"
+
+Private $sizes As Integer[] = [512, 256, 192, 128, 96, 72, 64, 48, 36, 32, 24, 16]
+Private $desktopFile As DesktopFile
+Private $path As String
+
+Private Function getIconPath(argDirectory As String) As String
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In RDir(argDirectory).Sort()
+        If File.BaseName(yukiPath) <> File.BaseName($desktopFile.Icon) Then Continue
+        Return (argDirectory &/ yukiPath)
+    Next
+    
+    Return ""
+    
+End
+
+Private Function getIconPathFormDesktopFileData(argPath As String) As String
+    
+    Dim yukiPath As String = PixmapIcons &/ File.BaseName(argPath) & ".png"
+
+    If Exist(yukiPath) Then Return yukiPath
+    If Exist(argPath) Then Return argPath
+    
+    Return ""
+    
+End
+
+Private Function setPath()
+    
+    Dim yukiSize As Integer
+    
+    If $desktopFile.Icon Begins "/" Then $path = getIconPathFormDesktopFileData($desktopFile.Icon)
+    If Not $path Then $path = getIconPath(PixmapIcons)
+    If Not $path Then $path = getIconPath(HicolorScalableIcons)
+    
+    For Each yukiSize In $sizes
+        If $path Then Break
+        $path = getIconPath(Subst$(HicolorIcons, yukiSize))
+    Next
+    
+End
+
+Public Sub _get(argDesktopFile As DesktopFile) As String
+    
+    $path = ""
+    $desktopFile = argDesktopFile
+    setPath()
+    
+    Return Quote$($path)
+    
+End

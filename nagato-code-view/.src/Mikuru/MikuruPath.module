@@ -11,6 +11,9 @@ Public Sub Sanitize(argPaths As String[]) As String[]
     
     Return yukiPaths.Copy()
     
+Catch
+    Return Null
+    
 End
 
 Public Function GetRecents(argPaths As String[], argDirectory As String) As String[]

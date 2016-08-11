@@ -10,14 +10,14 @@ End
 
 Private Sub setEditor(argPath As String)
     
-    Dim yukiEditor As New Editor(MainTabStrip)
+    Dim yukiEditor As New TextEditor(MainTabStrip)
     
     With yukiEditor
         .TabSize = 4
-        .Flags[Editor.ShowLineNumbers] = True
-        .Flags[Editor.ShowLimits] = True
+        .ShowLineNumber = True
+        .ShowLimit = True
         .Text = File.Load(argPath)
-        .Highlight = Highlight.Gambas
+        .Highlight = "gambas"
         .Font.Size = 12
         .Expand = True
     End With
