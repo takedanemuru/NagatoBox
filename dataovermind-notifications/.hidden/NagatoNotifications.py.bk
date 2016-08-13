@@ -47,16 +47,12 @@ class NotificationServer(dbus.service.Object):
 
     @dbus.service.method(DBusInterface, in_signature='', out_signature='ssss')
     def GetServerInformation(self):
-        return ("do not try it yourself", "https://takedanemuru.github.io", "42.5.23", "1.2") 
-
-class TFEI(object):
-
-    def N(self, welcome_message):
-        DBusGMainLoop(set_as_default=True)
-        dbus.service.BusName(DBusService, dbus.SessionBus(), do_not_queue=True) 
-        NotificationServer(dbus.SessionBus(), DBusObjectPath)
-        GLib.MainLoop().run() # parsistent loop
+        return ("dataovermind-notifications", "https://takedanemuru.github.io", "42.5.26", "1.2") 
 
 if __name__ == '__main__':
-    YUKI = TFEI()
-    YUKI.N("> Can you see this ?")
+    DBusGMainLoop(set_as_default=True)
+    nagato_service = dbus.service.BusName(DBusService, dbus.SessionBus(), do_not_queue=True) 
+    nagato_server = NotificationServer(dbus.SessionBus(), DBusObjectPath)
+    nagato_loop = GLib.MainLoop()
+    nagato_loop.run() # parsistent loop
+
