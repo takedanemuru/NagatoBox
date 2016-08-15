@@ -1,28 +1,26 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.2
+# Compiled with Gambas 3.8.4
 Title=nagato-font-view
 Startup=Kyon
 Icon=pictures/font-icon.png
-Version=0.0.2
+Version=42.5.3
 Component=gb.image
-Component=gb.qt4
+Component=gb.qt5
 Component=gb.form
 Component=gb.settings
-Component=gb.qt4.ext
 Description="view fonts."
-Authors="takeda.nemuru<takeda.nemuru@gmail.com>"
+Authors="takeda.nemuru<takeda.nemuru@yandex.com>"
 TabSize=8
 Translate=1
 Language=ja
 Maintainer=takedanemuru
-Vendor=The Alien and RadioNoise
-Address=takeda.nemuru@gmail.com
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-font-view-0.0.2
-CreateEachDirectory=1
+PackageName=nagato-font-view-42.5.3
 Packager=1
-Systems=fedora,ubuntu
+Systems=ubuntu
 Menus=fedora:"Graphics/Viewer"
 Categories=fedora:"Graphics;Nagato;Viewer"
 Groups=fedora:"Applications/System"

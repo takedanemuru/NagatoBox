@@ -24,8 +24,8 @@ Private Sub addVisualizer()
     Dim yukiVisualizer As MediaControl
         
     For Each yukiName In $visualizerNames
-        yukiVisualizer = New MediaContainer($mediaPlayer, yukiName)
-        $visualizers.Add(yukiVisualizer)
+        Try yukiVisualizer = New MediaContainer($mediaPlayer, yukiName)
+        If Not Error Then $visualizers.Add(yukiVisualizer)
     Next
         
 End

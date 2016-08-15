@@ -4,3 +4,4 @@ Public Enum LeftSearch = 101, LeftRefresh = 102
 Public Enum TrashRestore = 201, TrashDelete = 202, TrashEmpty = 203
 Public Enum PathbarSettingsChanged = 301
 Public Enum DialogApply = 401, DialogCancel = 402, DialogChanged = 403
+Public Enum ContextRefresh = 501

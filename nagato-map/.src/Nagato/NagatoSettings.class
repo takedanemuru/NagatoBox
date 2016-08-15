@@ -10,6 +10,7 @@ Public Sub LoadFormSettings(argForm As Form)
     argForm.Y = Me._$settings["form/y", argForm.Y]
     argForm.Height = Me._$settings["form/height", argForm.Height]
     argForm.Width = Me._$settings["form/width", argForm.Width]
+    argForm.Maximized = Me._$settings["form/maximized", argForm.Maximized]
     
 End
 
@@ -19,6 +20,7 @@ Public Sub SaveFormSettings(argForm As Form)
     Me._$settings["form/y"] = argForm.Y
     Me._$settings["form/height"] = argForm.Height
     Me._$settings["form/width"] = argForm.Width
+    Me._$settings["form/maximized"] = argForm.Maximized
     
 End
 

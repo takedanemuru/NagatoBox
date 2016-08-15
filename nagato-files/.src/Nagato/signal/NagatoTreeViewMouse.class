@@ -60,7 +60,7 @@ End
 Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
-        Case NagatoContextMenuTreeView.ContextRefresh
+        Case MikuruSignal.ContextRefresh
             Raise RequestRefresh
     End Select
     

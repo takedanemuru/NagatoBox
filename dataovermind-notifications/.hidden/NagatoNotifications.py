@@ -61,3 +61,4 @@ class NagatoNotifications(Service.Object):
 if __name__ == "__main__":
     YUKI = NagatoNotifications()
     YUKI.N("> Can you see this ?")
+

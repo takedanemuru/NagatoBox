@@ -2,8 +2,6 @@
 
 Inherits NagatoContextMenu
 
-Public Enum ContextNone, ContextExecute, ContextRefresh
-
 Private Sub addExecuteMenu()
     
     Dim yukiMenu As NagatoMenuItemExecute
@@ -60,21 +58,22 @@ End
 Public Sub _AddChildMenus()
     
     If Not Exist(Last.Key) Then
-        Me._AddContextMenu(("File or Directory is Missing"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
+        Me._AddContextMenu(("File or Directory is Missing"), MikuruSignal.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
     Else
         If DesktopMime.FromFile(Last.Key).Type = "application/x-desktop" Then addExecuteMenu()
         If Not IsDir(Last.Key) Then addOpenWithMenu()
-        If IsDir(Last.Key) Then Me._AddContextMenu(("Open New Tab"), 0)
+        'If IsDir(Last.Key) Then Me._AddContextMenu(("Open New Tab"), 0)
+        If IsDir(Last.Key) Then Object.New("NagatoMenuItemOpenInNewTab", [Me._$rootMenu, Last.Key])
         If Not NagatoXdg.IsUserDir(Last.Key) Then addRenameMenu()
         If Not NagatoXdg.IsUserDir(Last.Key) Then addDeleteMenu()
-        Me._AddContextMenu(("Refresh"), Me.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
+        Me._AddContextMenu(("Refresh"), MikuruSignal.ContextRefresh, MikuruIcon.Get("button-rotate-cw"))
     End If
     
 End
 
 Public Sub RenameMenu_Click()
     
-    If rename(Me._$path) Then Raise Signal(Me.ContextRefresh, [Me._$path])
+    If rename(Me._$path) Then Raise Signal(MikuruSignal.ContextRefresh, [Me._$path])
     
 End
 
@@ -82,12 +81,6 @@ Public Sub DeleteMenu_Click()
     
     NagatoTrash.Delete([Me._$path])
     
-    Raise Signal(Me.ContextRefresh, [Me._$path])
-    
-End
-
-Public Sub ContextMenu_Click()
-    
-    TFEI.AddNewDirectory(Me._$path)
+    Raise Signal(MikuruSignal.ContextRefresh, [Me._$path])
     
 End

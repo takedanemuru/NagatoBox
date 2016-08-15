@@ -29,7 +29,6 @@ Public Sub SetCode(argPath As String)
     setTabStrip(argPath)
     setEditor(argPath)
     Me.Title = File.Name(argPath)
-
     Me.Show()
 
 End

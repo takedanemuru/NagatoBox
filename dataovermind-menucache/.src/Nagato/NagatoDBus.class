@@ -6,6 +6,15 @@ Private Const Interface As String = "org.gambas.dataovermind.menucache.tfei"
 
 Private $proxy As DBusProxy
 
+Public Sub Test()
+    
+    MikuruPath.EnsureMenuFileDirectory()
+    NagatoMenuCache.Activate()
+    
+    Debug NagatoMenuCache.Get("Game")
+    
+End
+
 Public Sub EnsureService()
     
     If DBus.Session.Applications.Exist(Service) Then

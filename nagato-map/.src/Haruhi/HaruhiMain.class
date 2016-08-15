@@ -22,6 +22,8 @@ Public Sub Form_Open()
 
     Application.MainWindow = Me
 
+    NagatoSettings.LoadFormSettings(Me)
+
     $menuBar = New NagatoMenuBar(MenuHBox) As "TFEI"
     $leftPanel = New NagatoLeftPanel(MainHBox) As "TFEI"
     $mapView = New NagatoMapView(MainHBox) As "TFEI"

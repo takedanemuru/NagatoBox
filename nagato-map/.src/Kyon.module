@@ -4,7 +4,6 @@ Public Sub Main()
     
     If Desktop.NetworkAvailable Then
         HaruhiMain.Show()
-        NagatoSettings.LoadFormSettings(HaruhiMain)
     Else
         Message.Warning(("Network Unavailable"), ("OK"))
     End If
