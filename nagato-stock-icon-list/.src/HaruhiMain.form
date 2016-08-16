@@ -21,11 +21,6 @@
         ReadOnly = True
         List = [("Huge"), ("Large"), ("Medium"), ("Small")]
       }
-      { Button1 Button
-        MoveScaled(64,1,5,4)
-        ToolTip = ("Refresh")
-        Picture = Picture["icon:/medium/refresh"]
-      }
     }
     { TabStrip1 TabStrip
       MoveScaled(0,9,69,45)

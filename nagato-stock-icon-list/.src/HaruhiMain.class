@@ -3,14 +3,14 @@
 Private $iconSizes As String[] = ["huge", "large", "medium", "small"]
 
 Private Sub refreshIconView(argIconSizeIndex As Integer)
-        
-        Dim yukiItemName As String
-        
-        IconView1.Clear()
-        
-        For Each yukiItemName In Stock.Icons
-                IconView1.Add(yukiItemName, yukiItemName, Stock[Subst$("&1/&2", $iconSizes[argIconSizeIndex], yukiItemName)])
-        Next
+    
+    Dim yukiItemName As String
+    
+    IconView1.Clear()
+    
+    For Each yukiItemName In Stock.Icons
+            IconView1.Add(yukiItemName, yukiItemName, Stock[Subst$("&1/&2", $iconSizes[argIconSizeIndex], yukiItemName)])
+    Next
         
 End
 
@@ -20,16 +20,10 @@ Private Sub refreshNagatoIconView(argIconSizeIndex As Integer)
     
     NagatoIconView.Clear()
     
-    Debug $iconSizes[argIconSizeIndex]
-    
     For Each yukiName In MikuruIcon.List
         NagatoIconView.Add(yukiName, yukiName, MikuruIcon.Get(yukiName, 48))
     Next
     
-End
-
-Public Sub _new()
-
 End
 
 Public Sub Form_Open()
@@ -43,15 +37,13 @@ End
 
 Public Sub Form_Close()
         
-        NagatoSettings.SaveFormSettings(Me)
+    NagatoSettings.SaveFormSettings(Me)
         
 End
 
-Public Sub Button1_Click()
+Public Sub ComboBox1_Click()
 
-        Debug ComboBox1.Index
-        
-        refreshIconView(ComboBox1.Index)
-        NagatoSettings.SaveIconSizeSettings(ComboBox1)
+    refreshIconView(ComboBox1.Index)
+    NagatoSettings.SaveIconSizeSettings(ComboBox1)
 
 End
