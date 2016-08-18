@@ -2,6 +2,10 @@
 
 until end of September
 
+## Project wide objective
+
++ remove Qt4 dependencies.
+
 ## Applications
 
 ToDo for Applications

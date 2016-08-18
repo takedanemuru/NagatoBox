@@ -36,7 +36,7 @@ End
 
 Private Function Background_Read() As Integer
 
-    Return Me._$settings["panel/background", Color.White]
+    Return Me._$settings["panel/background", 12418293]
 
 End
 
@@ -49,7 +49,7 @@ End
 
 Private Function Foreground_Read() As Integer
 
-    Return Me._$settings["panel/foreground", Color.Violet]
+    Return Me._$settings["panel/foreground", 16777215]
 
 End
 
@@ -62,7 +62,7 @@ End
 
 Private Function Highlight_Read() As Integer
 
-    Return Me._$settings["panel/highlight", Color.Red]
+    Return Me._$settings["panel/highlight", 16776960]
 
 End
 

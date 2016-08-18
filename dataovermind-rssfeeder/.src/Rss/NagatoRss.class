@@ -21,8 +21,6 @@ Private Sub setFeeds()
     
     For Each yukiLine In NagatoSettings.FeedLines
         yukiFeed = New NagatoRssFeed2(yukiLine) As "RssFeed"
-        Debug yukiFeed.Title
-        Debug yukiFeed.Items.Count
     Next
     
 End

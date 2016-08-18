@@ -41,10 +41,6 @@ Public Sub Asakura_Drop()
     
     Dim yukiPath As String
     
-    Debug "dropped."
-    Debug Drag.Data
-    Debug Drag.Format
-    
     If Drag.Format <> MikuruMimeType.UriList Then Return 
     
     If $iconView.Item.Key = NagatoDesktopSpecialKey.TrashBin Then
