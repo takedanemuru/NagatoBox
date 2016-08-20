@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-lookup
+Comment=a simple application launcher.
+Exec=/usr/bin/nagato-lookup
+Icon=/usr/share/pixmaps/nagato-lookup.png
+Terminal=false
+Type=Application
+StartupNotify=true
+OnlyShowIn=NagatoBox;
+Categories=Nagato;System;

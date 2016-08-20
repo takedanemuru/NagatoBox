@@ -9,8 +9,8 @@ Private $pixmapIconPath As New NagatoDesktopEntryIconPixmap
 Private Function setPath()
     
     If $desktopFile.Icon Begins "/" Then $path = $absoluteIconPath[$desktopFile.Icon]
-    If Not $path Then $path = $hicolorIconPath[$desktopFile.Icon]
-    If Not $path Then $path = $pixmapIconPath[$desktopFile.Icon]
+    If $path = "" Then $path = $hicolorIconPath.GetPath($desktopFile.Icon)
+    If $path = "" Then $path = $pixmapIconPath[$desktopFile.Icon]
     
 End
 
@@ -41,6 +41,7 @@ End
 
 Public Sub _get(argPath As String, Optional argSize As Integer = 16) As Picture
     
+    $path = ""
     $desktopFile = New DesktopFile(argPath)
     setPath()
     

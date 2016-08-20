@@ -2,7 +2,7 @@
 
 until end of September
 
-## Project wide objective
+## Project wide objectives
 
 + remove Qt4 dependencies.
 
@@ -48,13 +48,22 @@ new package : a simple alsa mixer applet for systray
 ### nagato-openbox-menu -> dataovermind-menucache (v42.5.19)
 
 + ~~launch as dbus service~~
++ ~~new : handle `Desktop Action`~~
 
 ### nagato-player-x
 
-+ do not skip taskbar when listview asigned as main form.
++ fix : do not skip taskbar when listview asigned as main form.
+
+### nagato-session (v42.5.26-2)
+
++ ~~improve startup script~~
++ ~~new : set NagatoBox required desktop entry files as global startup with OnlyShowIn=NagatoBox property.~~
++ ~~fix : get svg icon paths more correctly.~~
 
 ### nagato-weather
 
 + new : reload menu.
 
+### nagato-writer
 
++ fix : live mode preview.

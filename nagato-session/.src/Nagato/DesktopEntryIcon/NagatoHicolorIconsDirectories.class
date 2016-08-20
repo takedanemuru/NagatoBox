@@ -4,15 +4,19 @@ Property Read Directories As String[]
 
 Private Const Template As String = "/usr/share/icons/hicolor/&1x&1/apps"
 
-Private $iconSizes As String[] = ["256", "192", "128", "96", "72", "64", "48", "36", "32", "24"]
+Private $iconSizes As String[] = ["512", "256", "192", "128", "96", "72", "64", "48", "36", "32", "24"]
 
 Private Function Directories_Read() As String[]
 
     Dim yukiDirectories As New String[]
     Dim yukiSize As String
+    Dim yukiPath As String
+    
+    yukiDirectories.Add("/usr/share/icons/hicolor/scalable/apps")
     
     For Each yukiSize In $iconSizes
-        If Exist(Subst(Template, yukiSize)) Then yukiDirectories.Add(yukiSize)
+        yukiPath = Subst(Template, yukiSize)
+        If Exist(yukiPath) Then yukiDirectories.Add(yukiPath)
     Next
 
     Return yukiDirectories

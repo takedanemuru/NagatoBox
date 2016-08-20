@@ -17,6 +17,7 @@ Private Function getData() As NagatoUniqueArray
     
     yukiData.Add($userAutoStarts.DesktopTypes)
     yukiData.Add($globalAutoStarts.DesktopTypes)
+    yukiData.Add(["NagatoBox", "OPENBOX"])
     
     Return yukiData
     

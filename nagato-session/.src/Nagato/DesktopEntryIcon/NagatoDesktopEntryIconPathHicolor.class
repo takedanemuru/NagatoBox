@@ -2,7 +2,7 @@
 
 Inherits NagatoDesktopEntryIcon
 
-Private $directories As NagatoHicolorIconsDirectories
+Private $directories As New NagatoHicolorIconsDirectories
 
 Private Function _OnGetIconPath() As String
     
@@ -12,6 +12,25 @@ Private Function _OnGetIconPath() As String
     For Each yukiDirectory In $directories.Directories
         yukiPath = Me._GetIconPath(yukiDirectory)
         If yukiPath Then Return yukiPath
+    Next
+    
+    Return ""
+    
+End
+
+Public Function GetPath(argIconName As String) As String
+    
+    Dim yukiDirectory As String
+    Dim yukiPath As String
+    
+    If argIconName = "" Then Return ""
+    
+    For Each yukiDirectory In $directories.Directories
+        yukiPath = yukiDirectory &/ argIconName
+        If Exist(yukiPath) Then Return yukiPath
+        If Exist(yukiPath & ".svg") Then Return yukiPath & ".svg"
+        If Exist(yukiPath & ".png") Then Return yukiPath & ".png"
+        If Exist(yukiPath & ".jpg") Then Return yukiPath & ".jpg"
     Next
     
     Return ""

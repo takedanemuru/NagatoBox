@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-desktop
+Comment=desktop manager for NagatoBox
+Exec=/usr/bin/nagato-files -d
+Icon=/usr/share/pixmaps/nagato-desktop.png
+Terminal=false
+Type=Application
+StartupNotify=true
+OnlyShowIn=NagatoBox;
+Categories=Nagato;System;

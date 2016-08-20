@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=dataovermind-notifications
+Comment=notification daemon
+Exec=/usr/bin/dataovermind-notifications
+Icon=/usr/share/pixmaps/dataovermind-notifications.png
+Terminal=false
+Type=Application
+OnlyShowIn=NagatoBox;
+StartupNotify=true
+Categories=System;

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+!/usr/bin/env python3
 
 # (c) takeda.nemuru <takeda.nemuru@yandex.com> 2016-
 # This script is licensed under S.O.S. License
@@ -25,7 +25,7 @@ class NagatoNotifications(Service.Object):
         Service.Object.__init__(self, yuki_name, DBusObjectPath)
         self._persistent_loop = GLib.MainLoop()
         self._persistent_loop.run()
-	
+
     @Service.method(DBusInterface, in_signature="susssasa{sv}i", out_signature="u")
     def Notify(self, app_name, replace_id, app_icon, summary, body, actions, hints, expire_timeout):
         yuki_command = ["dataovermind-notifications","--notify"]
@@ -36,8 +36,8 @@ class NagatoNotifications(Service.Object):
         if summary: yuki_command.extend(["--summary", summary])
         if body: yuki_command.extend(["--body", body])
         for yuki_key, yuki_value in hints.items():
-            if yuki_key == "urgency": yuki_command.extend(["--urgency", str(int(yuki_value))])
-        #if expire_timeout: yuki_command.extend(["--timeout", str(expire_timeout)])
+           if yuki_key == "urgency": yuki_command.extend(["--urgency", str(int(yuki_value))])
+       	#if expire_timeout: yuki_command.extend(["--timeout", str(expire_timeout)])
         subprocess.call(yuki_command)
         return yuki_id
 
@@ -61,4 +61,3 @@ class NagatoNotifications(Service.Object):
 if __name__ == "__main__":
     YUKI = NagatoNotifications()
     YUKI.N("> Can you see this ?")
-

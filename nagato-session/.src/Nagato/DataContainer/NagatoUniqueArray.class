@@ -27,7 +27,7 @@ Private Function MaxWidth_Read() As Integer
     Dim yukiString As String
     
     For Each yukiString In $data
-        yukiWidth = Max(yukiWidth, HaruhiMain.Font.TextWidth(yukiString) + 16)
+        yukiWidth = Max(yukiWidth, HaruhiMain.Font.TextWidth(yukiString) + HaruhiMain.Font.Size * 4)
     Next
     
     Return yukiWidth
