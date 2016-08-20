@@ -5,10 +5,10 @@ Private Sub showMain(argPath As String)
     If Not Exist(argPath) Then
         Message.Warning(("YUKI.N > Path not found"), ("OK"))
     Else
-        NagatoSettings.LoadFormSettings(HaruhiImageView)
-        Application.MainWindow = HaruhiImageView
         HaruhiImageView.Show()
         HaruhiImageView.SetImage(argPath)
+        NagatoSettings.LoadFormSettings(HaruhiImageView)
+        Application.MainWindow = HaruhiImageView
     End If
     
 End
@@ -26,6 +26,8 @@ End
 Public Sub Main()
     
     NagatoArguments.Parse()
+    
+    Message.Info(NagatoArguments.Path, ("Okay"))
     
     If NagatoArguments.Path Then
         showMain(NagatoArguments.Path)

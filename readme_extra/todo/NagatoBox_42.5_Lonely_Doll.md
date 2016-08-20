@@ -54,11 +54,12 @@ new package : a simple alsa mixer applet for systray
 
 + fix : do not skip taskbar when listview asigned as main form.
 
-### nagato-session (v42.5.26-2)
+### nagato-session (v42.5.27)
 
 + ~~improve startup script~~
 + ~~new : set NagatoBox required desktop entry files as global startup with OnlyShowIn=NagatoBox property.~~
 + ~~fix : get svg icon paths more correctly.~~
++ fix : use Desktop.Type to get `TargetDE` more correctly.
 
 ### nagato-weather
 

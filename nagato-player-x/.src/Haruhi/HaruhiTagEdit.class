@@ -50,8 +50,11 @@ End
 
 Public Sub ApplyButton_Click()
     
-    NagatoQueue(MikuruSignal.ListEdit, [[$index], getNewTag()])
+    Dim yukiTags As NagatoId3TagInfo = getNewTag()
+    
+    MikuruId3v2TagEdit.Set($element.Path, yukiTags.Title, yukiTags.Artist, yukiTags.Album)
     $handlerCoverArt.SetCoverArt([$index])
+    NagatoQueue(MikuruSignal.ListEdit, [[$index], yukiTags])
     
     Me.Close()
     
