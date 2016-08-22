@@ -14,7 +14,7 @@ Public Sub Show()
     If Not DBus.Session.Applications.Exist(BusNameShort) Then Return
     
     $proxy = DBus[BusNameFull][ObjectPath, Interface]
-    $proxy.Notify("nagato-lookup", Null, Null, "nagato-lookup", "nagato-lookup is activated.", Null, Null, 20)
+    $proxy.Notify("nagato-lookup", 0, Null, "nagato-lookup", "nagato-lookup is activated.", Null, Null, -1)
 
 Catch
     Return

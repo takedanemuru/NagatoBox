@@ -8,20 +8,24 @@ Property Read Body As String
 Property Read Urgency As Integer
 
 Private $notify As Boolean = False
+Private $close As Integer
 Private $app As String
 Private $summary As String 
 Private $body As String 
 Private $urgency As Integer
+Private $id As Integer
 Private $options As New String[]
 
 Public Sub Parsing()
     
     Args.Begin("usage:")
         $notify = Args.Has("n", "notify", "show notification")
+        $close = Args.GetInteger("c", "close", "close specified id notification")
         $app = Args.Get("a", "app", "application name")
         $summary = Args.Get("s", "summary", "summary text")
         $body = Args.Get("b", "body", "body text")
         $urgency = Args.GetInteger("u", "urgency", "urgency level")
+        $id = Args.GetInteger("i", "id", "id")
     $options = Args.End()
     
 End

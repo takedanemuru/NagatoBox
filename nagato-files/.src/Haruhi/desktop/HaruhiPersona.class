@@ -17,9 +17,15 @@ Public Sub Fortune()
     
 End
 
-Public Sub Notify(argSummary As String, argBody As String)
+Public Sub Notify(argSummary As String, argBody As String, argUrgency As Integer)
     
+    'Sound.Load("sound/negative-warning.wav").Play()
+    Sound.Load("sound/effect-notify.wav").Play()
     
+    MikuruWindow.EnsureVisible(Me)
+    
+    HaruhiBalloon.SetText(argSummary & "<br>" & argBody)
+    HaruhiBalloon.X = Me.X
     
 End
 
@@ -34,6 +40,7 @@ End
 
 Public Sub Welcome()
     
+    Sound.Load("sound/notification2.wav").Play()
     MikuruWindow.EnsureVisible(Me)
     
     HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))

@@ -3,6 +3,7 @@
 Private $coverArtPictureBox As PictureBox
 Private $observer As Observer
 Private $coverArtPath As String
+Private $hasChanged As Boolean = False
 
 Event Change
 
@@ -17,7 +18,7 @@ End
 
 Public Sub SetCoverArt(argIndexes As String[])
     
-   If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes(argIndexes, $coverArtPath)
+    If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes(argIndexes, $coverArtPath)
     
 End
 

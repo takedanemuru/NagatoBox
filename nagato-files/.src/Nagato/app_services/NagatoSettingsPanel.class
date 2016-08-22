@@ -10,7 +10,7 @@ Property Highlight As Integer
 
 Private Function ClockFormat_Read() As String
 
-    Return Me._$settings["panel/clock_format", ("dd/mm/yyyy hh:nn:ss")]
+    Return Me._$settings["panel/clock_format", ("d/m/yyyy hh:nn:ss")]
 
 End
 
