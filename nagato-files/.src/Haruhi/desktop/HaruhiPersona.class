@@ -1,51 +1,46 @@
 ' Gambas class file
 
 Private $persona As NagatoPersona
+Private $notifyQueue As NagatoNotifyQueue
+Private $observer As Observer
 
 Public Sub _new()
     
     $persona = New NagatoPersona(Me)
+    $notifyQueue = New NagatoNotifyQueue
+    $observer = New Observer(HaruhiBalloon) As "Asakura"
     
 End
 
 Public Sub Fortune()
     
-    MikuruWindow.EnsureVisible(Me)
-
-    HaruhiBalloon.SetText(MikuruFortune.Get())
-    HaruhiBalloon.X = Me.X
+    $notifyQueue.EnqueueMessage(NagatoNotifyQueue.PriorityNone, [MikuruFortune.Get()])
     
 End
 
-Public Sub Notify(argSummary As String, argBody As String, argUrgency As Integer)
+Public Sub Notify(argApp As String, argSummary As String, argBody As String, argUrgency As Integer)
     
-    'Sound.Load("sound/negative-warning.wav").Play()
-    Sound.Load("sound/effect-notify.wav").Play()
+    Dim yukiMessage As String[] = [argSummary, argBody]
+    Dim yukiAppName As String = Subst$(("YUKI.N > <br>We got a message from &1."), argApp)
     
-    MikuruWindow.EnsureVisible(Me)
+    If argApp Then yukiMessage.Add(yukiAppName, 0)
     
-    HaruhiBalloon.SetText(argSummary & "<br>" & argBody)
-    HaruhiBalloon.X = Me.X
-    
+    $notifyQueue.EnqueueMessage(argUrgency, yukiMessage)
+
 End
 
 Public Sub SetText(argText As String)
     
-    MikuruWindow.EnsureVisible(Me)
-    
-    HaruhiBalloon.SetText(argText)
-    HaruhiBalloon.X = Me.X
+    $notifyQueue.EnqueueMessage(NagatoNotifyQueue.PriorityNone, [argText])
     
 End
 
 Public Sub Welcome()
     
-    Sound.Load("sound/notification2.wav").Play()
-    MikuruWindow.EnsureVisible(Me)
+    Dim yukiMessage As String = Subst$(("YUKI.N > Welcome back, &1"), System.User.Name)
     
-    HaruhiPersona.SetText(Subst$(("YUKI.N > Welcome back, &1"), System.User.Name))
-    HaruhiBalloon.X = Me.X
-    
+    $notifyQueue.EnqueueMessage(NagatoNotifyQueue.PriorityHello, [yukiMessage])
+
 End
 
 Public Sub Form_Open()
@@ -56,10 +51,20 @@ Public Sub Form_Open()
     
 End
 
-Public Sub Form_DblClick()
+Public Sub Form_Close()
     
     HaruhiBalloon.Close()
     
+End
+
+Public Sub Form_DblClick()
+    
     Me.Close()
+    
+End
+
+Public Sub Asakura_Close()
+    
+    $notifyQueue.CancelMessage()
     
 End

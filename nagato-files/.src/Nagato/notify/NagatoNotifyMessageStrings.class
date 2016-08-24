@@ -1,0 +1,32 @@
+' Gambas class file
+
+Property Read CurrentMessage As String
+
+Private $message As String[]
+Private $index As Integer
+Private $count As Integer
+
+Public Sub _new(argMessage As String[])
+    
+    $message = argMessage
+    
+End
+
+Public Function Step() As Boolean ' returns false if it has no next step.
+    
+    If $count > Max(String.Len($message[$index]) / 5, 8) Then
+        $count = 0
+        Inc $index
+    Endif
+    
+    Inc $count
+    
+    Return ($message.Max >= $index)
+    
+End
+
+Private Function CurrentMessage_Read() As String
+
+    Return $message[$index]
+
+End

@@ -1,0 +1,58 @@
+' Gambas class file
+
+Private $priority As Integer
+Private $messageStrings As NagatoNotifyMessageStrings
+Private $timer As New Timer As "Timer"
+
+Event Dequeued
+
+Private Sub playSound()
+    
+    Select Case $priority
+        Case NagatoNotifyQueue.PriorityHello
+            Sound.Load("sound/notification2.wav").Play()
+        Case NagatoNotifyQueue.PriorityCritical
+            Sound.Load("sound/negative-warning.wav").Play()
+        Case NagatoNotifyQueue.PriorityNornal
+            Sound.Load("sound/effect-notify.wav").Play()
+        Case NagatoNotifyQueue.PriorityLow
+            Sound.Load("sound/effect-notify.wav").Play()
+        Case NagatoNotifyQueue.PriorityNone
+            Sound.Load("sound/effect-notify.wav").Play()
+    End Select
+    
+End
+
+Public Sub Cancel()
+    
+    $timer.Enabled = False
+    Raise Dequeued
+    
+End
+
+Public Sub Show()
+    
+    playSound()
+    $timer.Start()
+    
+End
+
+Public Sub _new(argPriority As Integer, argMessage As String[])
+    
+    $priority = argPriority
+    $messageStrings = New NagatoNotifyMessageStrings(argMessage)
+    
+End
+
+Public Sub Timer_Timer()
+    
+    If $messageStrings.Step() Then
+        MikuruWindow.EnsureVisible(HaruhiPersona)
+        HaruhiBalloon.SetText($messageStrings.CurrentMessage)
+        HaruhiBalloon.X = HaruhiPersona.X
+    Else
+        Raise Dequeued
+        $timer.Stop()
+    Endif
+    
+End

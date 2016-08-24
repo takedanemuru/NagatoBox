@@ -8,7 +8,7 @@ Property Read Ready As Boolean
 
 Public Sub Notify(argApp As String, argSummary As String, argBody As String, argUrgency As Integer)
     
-    HaruhiPersona.Notify(argSummary, argBody, argUrgency)
+    HaruhiPersona.Notify(argApp, argSummary, argBody, argUrgency)
     
 End
 
