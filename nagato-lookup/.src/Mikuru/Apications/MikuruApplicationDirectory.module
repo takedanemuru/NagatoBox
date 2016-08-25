@@ -33,7 +33,7 @@ End
 
 Private Function LocalDefaultList_Read() As String
 
-    Return User.Home &/ ".local/share/applications/mimeapps.list"
+    Return Desktop.ConfigDir &/ "mimeapps.list"
 
 End
 
