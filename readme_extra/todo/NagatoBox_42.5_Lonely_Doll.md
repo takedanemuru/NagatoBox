@@ -59,7 +59,7 @@ new package : a simple alsa mixer applet for systray
 + ~~improve startup script~~
 + ~~new : set NagatoBox required desktop entry files as global startup with OnlyShowIn=NagatoBox property.~~
 + ~~fix : get svg icon paths more correctly.~~
-+ fix : use Desktop.Type to get `TargetDE` more correctly.
++ ~~fix : use Desktop.Type to get `TargetDE` more correctly.~~
 
 ### nagato-weather
 

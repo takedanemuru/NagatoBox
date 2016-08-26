@@ -17,7 +17,7 @@ Private Sub setForm(argText As String)
     
 End
 
-Public Sub SetText(argText As String)
+Public Sub SetText(argText As String, Optional argPriority As Integer)
     
     MikuruWindow.EnsureVisible(Me)
     setForm(argText)

@@ -1,17 +1,32 @@
 ' Gambas module file
 
+Private Function getPolygon(argBaseLine As Integer, argHeight As Integer) As Integer[]
+    
+    Dim yukiPolygon As New Integer[]
+    
+    yukiPolygon.Add(4 * MikuruUx.Grid)
+    yukiPolygon.Add(argBaseLine)
+    yukiPolygon.Add(6 * MikuruUx.Grid)
+    yukiPolygon.Add(argBaseLine)
+    yukiPolygon.Add(8 * MikuruUx.Grid)
+    yukiPolygon.Add(argHeight)
+    yukiPolygon.Add(4 * MikuruUx.Grid)
+    yukiPolygon.Add(argBaseLine)
+    
+    Return yukiPolygon
+    
+End
+
 Private Function getBalloonImage(argHeight As Integer, argWidth As Integer) As Image
     
     Dim yukiBaseImage As New Image(argWidth + 2 * MikuruUx.Grid, argHeight + 8 * MikuruUx.Grid, Color.Transparent)
     Dim yukiBaseLine As Integer = argHeight + 2 * MikuruUx.Grid
     
     Paint.Begin(yukiBaseImage)
-        With MikuruUx
-            Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
-            Paint.Rectangle(0, 0, yukiBaseImage.W, argHeight + 2 * MikuruUx.Grid, 2 * MikuruUx.Grid)
-            Paint.Polygon([4 * .Grid, yukiBaseLine, 6 * .Grid, yukiBaseLine, 8 * .Grid, yukiBaseImage.H, 4 * .Grid, yukiBaseLine])
-            Paint.Fill()
-        End With
+        Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
+        Paint.Rectangle(0, 0, yukiBaseImage.W, argHeight + 2 * MikuruUx.Grid, 2 * MikuruUx.Grid)
+        Paint.Polygon(getPolygon(yukiBaseLine, yukiBaseImage.H))
+        Paint.Fill()
     Paint.End()
     
     Return yukiBaseImage

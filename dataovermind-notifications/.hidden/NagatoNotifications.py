@@ -54,7 +54,7 @@ class NagatoNotifications(Service.Object):
 
     @Service.method(DBusInterface, in_signature="", out_signature="ssss")
     def GetServerInformation(self):
-        return ("dataovermind-notifications", "https://takedanemuru.github.io", "42.5.26", "1.2") 
+        return ("dataovermind-notifications", "https://takedanemuru.github.io", "42.5.30", "1.2") 
 
     @Service.signal(DBusInterface, signature="uu")
     def NotificationClosed(self, id_in, reason_in):

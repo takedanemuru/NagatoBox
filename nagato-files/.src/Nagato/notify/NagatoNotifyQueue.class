@@ -19,7 +19,7 @@ End
 
 Public Sub CancelMessage()
     
-    $currentMessage.Cancel()
+    Try $currentMessage.Cancel()
     
 End
 

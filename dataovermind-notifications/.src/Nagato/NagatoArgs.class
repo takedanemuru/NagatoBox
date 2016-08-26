@@ -3,9 +3,11 @@
 Create Static
 
 Property Read Notify As Boolean
+Property Read App As String
 Property Read Summary As String
 Property Read Body As String
 Property Read Urgency As Integer
+Property Read Close As Integer
 
 Private $notify As Boolean = False
 Private $close As Integer
@@ -51,5 +53,17 @@ End
 Private Function Urgency_Read() As Integer
 
     Return $urgency
+
+End
+
+Private Function App_Read() As String
+
+    Return $app
+
+End
+
+Private Function Close_Read() As Integer
+
+    Return $close
 
 End

@@ -11,6 +11,7 @@ Public Sub LoadFormSettings(argForm As Form)
         .Y = $settings[Subst$("&1/y", .Name), .Y]
         .H = $settings[Subst$("&1/h", .Name), .H]
         .W = $settings[Subst$("&1/w", .Name), .W]
+        .Maximized = $settings[Subst$("&1/maximized", .Name), .Maximized]
     End With
     
 End
@@ -22,6 +23,7 @@ Public Sub SaveFormSettings(argForm As Form)
         $settings[Subst$("&1/y", .Name)] = .Y
         $settings[Subst$("&1/h", .Name)] = .H
         $settings[Subst$("&1/w", .Name)] = .W
+        $settings[Subst$("&1/maximized", .Name)] = .Maximized
     End With
     
     $settings.Save()

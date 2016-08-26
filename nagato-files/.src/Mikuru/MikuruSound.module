@@ -1,0 +1,18 @@
+' Gambas module file
+
+Public Sub Notify(argPriority As Integer)
+    
+    Select Case argPriority
+        Case NagatoNotifyQueue.PriorityHello
+            Sound.Load("sound/notification2.wav").Play()
+        Case NagatoNotifyQueue.PriorityCritical
+            Sound.Load("sound/negative-warning.wav").Play()
+        Case NagatoNotifyQueue.PriorityNornal
+            Sound.Load("sound/effect-notify.wav").Play()
+        Case NagatoNotifyQueue.PriorityLow
+            Sound.Load("sound/effect-notify.wav").Play()
+        Case NagatoNotifyQueue.PriorityNone
+            Sound.Load("sound/effect-notify.wav").Play()
+    End Select
+    
+End
