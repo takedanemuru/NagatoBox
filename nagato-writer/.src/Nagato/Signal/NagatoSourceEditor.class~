@@ -7,14 +7,14 @@ Property Read Path As String
 
 Private $hBox As HBox
 Private $fileHandler As New NagatoFileHandler As "TFEI"
-Private $headersList As NagatoListViewSourceHeaders
+Private $headersList As NagatoLeftPane
 Private $textArea As NagatoTextArea 
 Private $appClosure As New NagatoAppClosure As "TFEI"
 
 Public Sub _Initialize()
     
     $hBox = New HBox(Me._$parentContainer)
-    $headersList = New NagatoListViewSourceHeaders($hBox) As "TFEI"
+    $headersList = New NagatoLeftPane($hBox) As "TFEI"
     $textArea = New NagatoTextArea($hBox) As "TFEI"
 
 End

@@ -21,7 +21,7 @@ Public Sub _new()
     $nowPlayingTab = New NagatoTabQueue(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
     $playlistsTab = New NagatoTabPlaylists(MenuPanelPlaylists, PlaylistsGrid) As "PlaylistsGrids"
     $libraryTab = New NagatoTabLibrary(MenuPanelLibrary, LibraryGrid) As "LibraryGrids"
-    '$infoArea = New NagatoInfoArea(MainVBox)
+    $infoArea = New NagatoInfoArea(MainVBox)
     $observer = New Observer(NagatoBroadcast) As "Asakura"
     
     setSize()
@@ -46,7 +46,7 @@ Public Sub SetFormSize()
     If NagatoSettingsForm.Resizable Then
         NagatoSettingsForm.SetSize(Me)
     Else
-        'Me.H = $infoArea.H
+        Me.H = $infoArea.H
     Endif
     
 End
@@ -69,7 +69,7 @@ Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.BroadcastTimer, MikuruSignal.BroadcastIndexMoved
-            'If Not Me.Closed Then $infoArea.Refresh()
+            If Not Me.Closed Then $infoArea.Refresh()
         Case MikuruSignal.BroadcastPlaylistsChanged
             $playlistsTab.Refresh()
     End Select

@@ -69,6 +69,7 @@ End
 Private Sub Main_Write(Value As Integer)
 
     Me._$settings["form/main"] = Value
+    HaruhiPlayList.SkipTaskbar = (Value <> HPlayList)
     Me._$settings.Save()
 
 End

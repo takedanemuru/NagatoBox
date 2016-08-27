@@ -57,6 +57,7 @@ End
 
 Private Sub clearAll()
     
+    NagatoQueue(MikuruSignal.QueuePause, Null)
     $position.SetIndex(0)
     $musicElements.Clear()
     MikuruMessage.Cleared()

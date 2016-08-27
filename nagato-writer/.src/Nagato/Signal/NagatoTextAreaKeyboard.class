@@ -56,9 +56,3 @@ Public Sub Asakura_Cursor()
     Endif
     
 End
-
-Public Sub Asakura_Change()
-    
-    If NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
-    
-End

@@ -39,6 +39,13 @@ Public Sub Asakura_Draw()
     
 End
 
+Public Sub Asakura_Leave()
+    
+    MikuruMousePosition.SetMousePosition(0, 0)
+    $drawingArea.Refresh()
+    
+End
+
 Public Sub Asakura_MouseMove()
 
     MikuruMousePosition.SetMousePosition(Mouse.X, Mouse.Y)

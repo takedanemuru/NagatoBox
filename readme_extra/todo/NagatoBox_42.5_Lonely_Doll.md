@@ -52,7 +52,8 @@ new package : a simple alsa mixer applet for systray
 
 ### nagato-player-x
 
-+ fix : do not skip taskbar when listview asigned as main form.
++ ~~fix : do not skip taskbar when listview asigned as main form.~~
++ ~~fix : revive InfoArea~~
 
 ### nagato-session (v42.5.27)
 
@@ -64,7 +65,8 @@ new package : a simple alsa mixer applet for systray
 ### nagato-weather
 
 + new : reload menu.
++ new :  get altitude from google map api.
 
 ### nagato-writer
 
-+ fix : live mode preview.
++ ~~fix : live mode preview.~~

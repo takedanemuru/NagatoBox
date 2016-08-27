@@ -2,7 +2,6 @@
 
 Inherits NagatoSettingsCore
 
-Property LivePreview As Boolean
 Property Read RecentFiles As String[]
 Property UseMathjax As Boolean
 Property UseSeparatePreviewForm As Boolean
@@ -22,19 +21,6 @@ Public Sub PushRecentPath(argPath As String)
     Me._$settings["file/recent"] = yukiRecentPaths
     Me._$settings.Save()
     
-End
-
-Private Function LivePreview_Read() As Boolean
-
-    Return Me._$settings["preview/live", True]
-
-End
-
-Private Sub LivePreview_Write(Value As Boolean)
-
-    Me._$settings["preview/live"] = Value
-    Me._$settings.Save()
-
 End
 
 Private Function RecentFiles_Read() As String[]

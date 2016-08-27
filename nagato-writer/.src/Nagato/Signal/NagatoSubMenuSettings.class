@@ -2,17 +2,6 @@
 
 Inherits NagatoSubMenu
 
-Private Sub addLivePreviewMenu()
-    
-    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItemLivePreview"
-    
-    With yukiMenu
-        .Text = ("Live Preview")
-        .Picture = IIf(NagatoSettings.LivePreview, MikuruIcon["button-check"], Null)
-    End With
-    
-End
-
 Private Sub addUseMathjaxMenu()
     
     Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItemUseMathJax"
@@ -37,15 +26,8 @@ End
 
 Public Sub _AddChildMenus()
     
-    addLivePreviewMenu()
     addUseSeparatePreviewFormMenu()
     addUseMathjaxMenu()
-    
-End
-
-Public Sub MenuItemLivePreview_Click()
-    
-    NagatoSettings.LivePreview = Not NagatoSettings.LivePreview
     
 End
 

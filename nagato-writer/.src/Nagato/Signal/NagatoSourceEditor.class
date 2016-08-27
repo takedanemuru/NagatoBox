@@ -36,7 +36,7 @@ Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
             $fileHandler.SaveAs($textArea.Text)
     End Select
     
-    If Not NagatoSettings.LivePreview Then Raise Signal(MikuruSignal.ViewPreview, Null)
+    Raise Signal(MikuruSignal.ViewPreview, Null)
     NagatoSettings.PushRecentPath($fileHandler.Path)
     $headersList.Refresh($fileHandler.Headers, $textArea.Line)
     If $fileHandler.Path Then HaruhiMain.Title = File.Name($fileHandler.Path)

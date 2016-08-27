@@ -43,6 +43,12 @@ Public Sub Refresh()
         $label.Text = " " & NagatoQueue.GetProperty(MikuruProperty.CurrentDurationText) & " "
     Object.Unlock($slider)
     
+Catch
+    Object.Lock($slider)
+        $slider.Value = 0
+        $label.Text = "No Music"
+    Object.Unlock($slider)
+    
 End
 
 Public Sub Slider_Change()

@@ -29,6 +29,10 @@ Public Sub ResetUrl(Optional argPlay As Boolean = True)
     Try $player.URL = NagatoQueue.GetProperty(MikuruProperty.CurrentUrl)
     If argPlay Then $player.Play()
     
+Catch
+    Debug Error.Text
+    $player.Stop()
+    
 End
 
 Public Sub Pause()
