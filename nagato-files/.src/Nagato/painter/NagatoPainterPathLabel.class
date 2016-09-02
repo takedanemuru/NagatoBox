@@ -35,7 +35,6 @@ End
 
 Private Sub drawMaskArea(argColor As Integer)
     
-    'Dim yukiOpacity As Integer = 192
     Dim yukiOpacity As Integer = 128
     
     Paint.Brush = Paint.Color(argColor + 16777216 * yukiOpacity)

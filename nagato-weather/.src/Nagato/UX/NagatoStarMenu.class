@@ -2,13 +2,14 @@
 
 Inherits NagatoButtonMenu
 
-Enum MenuNone, MenuSetLocation, MenuShowForecast, MenuToggleBorder, MenuAbout, MenuQuit
+Enum MenuNone, MenuReload, MenuSetLocation, MenuShowForecast, MenuToggleBorder, MenuAbout, MenuQuit
 
 Public Sub RootMenu_Show()
     
     Me._$rootMenu.Children.Clear()
     
     Me._AddMenu(("Set User Location"), MenuSetLocation, "web")
+    Me._AddMenu(("Reload"), MenuReload, "button-rotate-cw")
     Me._AddMenu(("Forecast"), MenuShowForecast, "information-balloon")
         Me._AddMenu("", MenuNone)
     Me._AddMenu(("About"), MenuAbout, "star")
@@ -22,7 +23,9 @@ Public Sub MenuItem_Click()
         Case MenuSetLocation
             Try HaruhiWeatherForecast.Close()
             If HaruhiUserLocation.ShowDialog() <> MikuruDialog.ResponseApply Then Return
-            NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
+            NagatoWeatherCache.Reload()
+        Case MenuReload
+            NagatoWeatherCache.Reload()
         Case MenuShowForecast
             HaruhiWeatherForecast.Show()
         Case MenuAbout

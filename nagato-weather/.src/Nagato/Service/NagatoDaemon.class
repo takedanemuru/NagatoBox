@@ -7,7 +7,9 @@ Private $timer As New Timer As "Timer"
 
 Public Sub Start()
     
-    NagatoWeatherCache.Activate(NagatoSettingsLocation.UserLatitude, NagatoSettingsLocation.UserLongitude)
+    If DBus.Session.Applications.Exist("org.gambas.nagato-weather") Then Return
+    
+    NagatoWeatherCache.Reload()
     DBus.Register(NagatoInterface, ObjectPath, [Interface])
     
     $timer.Delay = 10000
@@ -17,10 +19,7 @@ End
 
 Public Sub Timer_Timer()
     
-    If NagatoInterface.Ready Then 
-        If Minute(Now()) = 0 And If Second(Now()) Div 10 = 0 Then NagatoWeatherCache.Reload()
-    Else
-        Debug "Not Ready"
-    End If
+    If Not NagatoInterface.Ready Then Return
+    If Minute(Now()) = 0 And If Second(Now()) Div 10 = 0 Then NagatoWeatherCache.Reload()
     
 End

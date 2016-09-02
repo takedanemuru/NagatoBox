@@ -6,7 +6,7 @@ Private $daemonMode As Boolean = False
 Private Sub parseArguments()
     
     Args.Begin("Usage")
-        $daemonMode = Args.Has("d", "--daemon-mode", "launch as daemon")
+        $daemonMode = Args.Has("d", "daemon-mode", "launch as daemon")
     Args.End()
     
 End

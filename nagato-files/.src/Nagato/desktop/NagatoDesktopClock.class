@@ -42,6 +42,6 @@ Public Sub Asakura_Timer()
     
     If Not $iconView.Exist(NagatoDesktopSpecialKey.Clock) Then Return
     
-    $iconView[NagatoDesktopSpecialKey.Clock].Picture = getIcon()
+    Try $iconView[NagatoDesktopSpecialKey.Clock].Picture = getIcon()
     
 End

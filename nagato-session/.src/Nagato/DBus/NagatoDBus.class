@@ -4,7 +4,7 @@ Create Static
 
 Property Read Proxy As DBusProxy
 
-Public Const Service As String = "org.gambas.nagato.session"
+Public Const Service As String = "org.gambas.nagato-session"
 Public Const ObjectPath As String = "/org/nagato/session"
 Public Const Interface As String = "org.gambas.nagato.session.nagatointerface"
 
@@ -28,6 +28,7 @@ End
 
 Public Sub Register()
     
+    DBus.Name = Service
     DBus.Session.Register(NagatoInterface, Me.ObjectPath)
     
 End

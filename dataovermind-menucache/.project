@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
+# Compiled with Gambas 3.9.90
 Title=dataovermind-menucache
 Startup=Kyon
 Icon=Picture/information-balloon.png
-Version=42.5.20
+Version=42.5.22
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -14,13 +14,13 @@ Component=gb.xml
 Description="A menu generator for Openbox3"
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
-Language=ja
+Language=en
 Maintainer=takeda.nemuru
-Vendor=IntegratedDataThoughtEntity
+Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://takedanemuru.github.io
 License=S.O.S. License
-PackageName=dataovermind-menucache-42.5.20
+PackageName=dataovermind-menucache-42.5.22
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"

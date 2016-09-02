@@ -18,6 +18,8 @@ End
 
 Public Sub Activate()
     
+    Debug "Activate!!"
+    
     $ready = False
         $applications = New NagatoApplicationCollection
         $observer = New NagatoApplicationDirectoriesObserver As "ApplicationObserver"

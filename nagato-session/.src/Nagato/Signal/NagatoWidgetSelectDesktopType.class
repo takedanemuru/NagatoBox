@@ -13,7 +13,7 @@ Public Sub _OnInitializeWidget()
         .ReadOnly = True
         .W = NagatoXdgAutostarts.MaxWidth
         .List = NagatoXdgAutostarts.AllTypes
-        Try .Index = NagatoXdgAutostarts.AllTypes.Find(Desktop.Type)
+        Try .Index = NagatoXdgAutostarts.AllTypes.Find(MikuruSession.DesktopType)
     End With
     
 End

@@ -5,7 +5,7 @@ Public Sub Main()
     NagatoArguments.Parsing()
     
     If NagatoArguments.Autostart Then
-        NagatoSettingsSession.TargetDE = Desktop.Type
+        NagatoSettingsSession.TargetDE = MikuruSession.DesktopType
         HaruhiLogin.Show()
         NagatoLoginSound.PlayDefault()
         NagatoXdgAutostarts.Execute()

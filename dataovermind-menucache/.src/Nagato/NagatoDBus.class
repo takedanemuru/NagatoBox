@@ -20,7 +20,8 @@ Public Sub EnsureService()
     If DBus.Session.Applications.Exist(Service) Then
         Message.Info(("YUKI.N > dataovermind-menucache has been activated"), ("OK"))
     Else 
-        DBus.Session.Register(TFEI, ObjectPath)
+        DBus.Name = Service
+        DBus.Session.Registe(TFEI, ObjectPath)
         MikuruPath.EnsureMenuFileDirectory()
         NagatoMenuCache.Activate()
     End If

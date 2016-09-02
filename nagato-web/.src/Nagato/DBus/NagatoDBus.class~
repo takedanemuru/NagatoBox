@@ -4,13 +4,13 @@ Create Static
 
 Property Read Proxy As DBusProxy
 
-Public Const Service As String = "org.gambas.nagato-web"
+Public Const BusName As String = "org.gambas.nagato-web"
 Public Const ObjectPath As String = "/org/nagato/web"
 Public Const Interface As String = "org.gambas.nagato.web.nagatointerface"
 
 Public Function IsUnique() As Boolean
     
-    Return Not DBus.Session.Applications.Exist(Me.Service)
+    Return Not DBus.Session.Applications.Exist(Me.BusName)
     
 End
 
@@ -28,6 +28,6 @@ End
 
 Private Function Proxy_Read() As DBusProxy
 
-    Return DBus[Me.Service][Me.ObjectPath, Me.Interface]
+    Return DBus[Me.BusName][Me.ObjectPath, Me.Interface]
 
 End

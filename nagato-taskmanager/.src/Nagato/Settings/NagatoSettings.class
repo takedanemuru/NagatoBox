@@ -25,10 +25,12 @@ End
 Public Sub LoadGridsSettings(argGrids As GridView)
     
     Dim yukiCount As Integer
+    Dim yukiWidth As Integer
     
     For yukiCount = 0 To argGrids.Columns.Max - 1
         With argGrids.Columns[yukiCount]
-            .Width = $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
+            yukiWidth = $settings[Subst$("&1/column&2width", argGrids.Name, yukiCount), .Width]
+            .W = Min(yukiWidth, HaruhiMain.W * 0.75)
         End With
     Next
     

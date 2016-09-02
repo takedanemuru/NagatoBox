@@ -1,0 +1,77 @@
+' Gambas class file
+
+Inherits NagatoDesktopTile
+
+Private $iconView As IconView
+Private $observer As Observer
+Private $proxy As New NagatoDBusAccessWeather
+
+Private Function getBaseImage() As Image
+
+    Dim yukiColor As Integer = IIf($proxy.Activated, $proxy.BackgroundColor, Color.Blue)
+    Dim yukiBaseImage As Image = MikuruTileBaseImage[yukiColor, 192]
+    
+    Paint.Begin(yukiBaseImage)
+        'NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialSystems)
+    Paint.End()
+    
+    Return yukiBaseImage
+    
+End
+
+Private Sub getWeatherIcon() As Image
+    
+    Dim yukiWeatherIcon As Image = Image.Load($proxy.IconPath)
+    
+    Return yukiWeatherIcon.Stretch(96, 96)
+    
+End
+
+Private Sub paintLabel()
+    
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight($proxy.Condition, 112) + 16
+    Dim yukiRect As New Rect(0, 128 - (yukiHeight), 128, yukiHeight)
+    
+    Paint.Brush = Paint.Color($proxy.BackgroundColor + Color.Transparent * 128)
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.DrawRichText($proxy.Condition, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Function getIcon() As Picture
+    
+    Dim yukiImage As Image = getBaseImage()
+    
+    Paint.Begin(yukiImage)
+        Paint.Font.Bold = True
+        Paint.DrawImage(getWeatherIcon(), 16, 16)
+        If $proxy.Activated Then paintLabel()
+    Paint.End()
+
+    Return yukiImage.Picture
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    $proxy.Activate()
+
+    $iconView = argIconView
+    $iconView.Add(NagatoDesktopSpecialKey.Weather, "", getBaseImage().Picture)
+    
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    If Not $iconView.Exist(NagatoDesktopSpecialKey.Weather) Then Return
+    If Not $proxy.Activated Then Return
+    
+    $iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
+    
+End
+

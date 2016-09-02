@@ -11,6 +11,8 @@ Private $proxy As DBusProxy
 
 Public Sub Show()
     
+    Return
+    
     If Not DBus.Session.Applications.Exist(BusNameShort) Then Return
     
     $proxy = DBus[BusNameFull][ObjectPath, Interface]

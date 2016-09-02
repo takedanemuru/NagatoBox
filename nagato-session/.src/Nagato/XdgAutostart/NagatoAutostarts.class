@@ -14,6 +14,18 @@ Private Sub execute(argAutostartFile As NagatoAutostartFile)
     
 End
 
+Public Function TestAll() 
+    
+    Dim yukiAutostartFile As NagatoAutostartFile
+    
+    For Each yukiAutostartFile In $autostartFiles
+        If yukiAutostartFile.Overridden Then Continue
+        If Not yukiAutostartFile.Required Then Continue
+        Debug yukiAutostartFile.Exec
+    Next
+    
+End
+
 Public Function ExecuteAll() 
     
     Dim yukiAutostartFile As NagatoAutostartFile

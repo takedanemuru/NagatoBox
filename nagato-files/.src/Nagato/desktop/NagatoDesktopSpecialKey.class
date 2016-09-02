@@ -5,6 +5,7 @@ Create Static
 Public Const Clock As String = "DesktopClock"
 Public Const RssFeeder As String = "DesktopRssFeeder"
 Public Const SystemMonitor As String = "DesktopSystemMonitor"
+Public Const Weather As String = "DesktopWeather"
 Public Const TrashBin As String = "DesktopTrashBin"
 
 Static Public Function IsSpecialKey(argKey As String) As Boolean
@@ -13,6 +14,7 @@ Static Public Function IsSpecialKey(argKey As String) As Boolean
     If argKey = Me.TrashBin Then Return True
     If argKey = Me.SystemMonitor Then Return True
     If argKey = Me.RssFeeder Then Return True
+    If argKey = Me.Weather Then Return True
     
     Return False
     

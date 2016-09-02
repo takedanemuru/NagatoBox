@@ -2,7 +2,7 @@
 
 Create Static
 
-Public Const BusName As String = "org.gambas.dataovermind.systemmonitor"
+Public Const BusName As String = "org.gambas.dataovermind-systemmonitor"
 Public Const ObjectPath As String = "/org/dataovermind/systemmonitor"
 Public Const Interface As String = "org.gambas.dataovermind.systemmonitor.tfei"
 
@@ -20,6 +20,7 @@ End
 
 Public Sub Register()
     
+    DBus.Name = Me.BusName
     DBus.Session.Register(TFEI, Me.ObjectPath)
     
 End

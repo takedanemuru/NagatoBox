@@ -22,6 +22,7 @@ End
 
 Public Sub Register()
     
+    DBus.Name = Service
     DBus.Session.Register(NagatoInterfaceDesktop, Me.ObjectPath)
     
 End

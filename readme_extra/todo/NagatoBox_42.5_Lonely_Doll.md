@@ -64,8 +64,7 @@ new package : a simple alsa mixer applet for systray
 
 ### nagato-weather
 
-+ new : reload menu.
-+ new :  get altitude from google map api.
++ ~~new : reload menu.~~
 
 ### nagato-writer
 

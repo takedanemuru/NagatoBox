@@ -1,13 +1,17 @@
 ' Gambas module file
 
+Property Read DesktopType As String
+
 Private Function getDesktopSession() As String
     
     Dim yukiOutput As String
     
     Shell "printenv | grep DESKTOP_SESSION" To yukiOutput
     
-    Return Replace(yukiOutput, "\n", "")
+    yukiOutput = Replace$(yukiOutput, "DESKTOP_SESSION=", "")
     
+    Return Replace(yukiOutput, "\n", "")
+
 End
 
 Public Function IsOpenbox() As Boolean
@@ -38,4 +42,10 @@ Public Sub Logout(argType As Integer)
             Shell "systemctl poweroff"
     End Select
     
+End
+
+Private Function DesktopType_Read() As String
+
+    Return getDesktopSession()
+
 End

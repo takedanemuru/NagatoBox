@@ -15,6 +15,11 @@ Property Read IconId As Integer
 Property Read IconPath As String
 Property Read Condition As String
 Property Read BackgroundColor As Integer
+Property Read Location As String
+Property Read WindSpeed As Float
+Property Read WindDirection As String
+Property Read Humidity As Float
+Property Read Cloudiness As Float
 
 Public Sub Reload()
     
@@ -61,5 +66,35 @@ End
 Private Function IconPath_Read() As String
 
     Return MikuruWeatherIcon.GetPath(True, Me.IconId)
+
+End
+
+Private Function Location_Read() As String
+
+    Return NagatoSettingsLocation.UserLocationName
+
+End
+
+Private Function WindSpeed_Read() As Float
+
+    Return Me.WeatherElement[MikuruWeatherKey.WindSpeed]
+
+End
+
+Private Function WindDirection_Read() As String
+
+    Return Me.WeatherElement[MikuruWeatherKey.WindDirection]
+
+End
+
+Private Function Humidity_Read() As Float
+
+    Return Me.WeatherElement[MikuruWeatherKey.Humidity]
+
+End
+
+Private Function Cloudiness_Read() As Float
+
+    Return Me.WeatherElement[MikuruWeatherKey.Cloudiness]
 
 End

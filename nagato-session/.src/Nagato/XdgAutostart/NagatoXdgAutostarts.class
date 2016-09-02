@@ -23,6 +23,15 @@ Private Function getData() As NagatoUniqueArray
     
 End
 
+Public Sub Test()
+    
+    Me.Initialize()
+    
+    $userAutoStarts.TestAll()
+    $globalAutoStarts.TestAll()
+
+End
+
 Public Sub Execute()
     
     Me.Initialize()
