@@ -25,17 +25,6 @@ Private Sub setChildMenu(argClassName As String, argFilter As Integer)
     
 End
 
-Public Sub setNotFound()
-    
-    Dim yukiMenu As New Menu($menu) 
-    
-    With yukiMenu
-        .Text = "files not found"
-        .Picture = MikuruIcons("question")
-    End With
-    
-End
-
 Public Sub _SetMenu() 'override
     
     $menu = New Menu(Me._$parentMenu) As "DirectoryMenu"
@@ -58,12 +47,14 @@ End
     setChildMenu("NagatoMenuDirectory", gb.Directory)
     setChildMenu("NagatoMenuFile", gb.File)
     
-    If $menu.Children.Count = 2 Then setNotFound()
+    If $menu.Children.Count = 2 Then MikuruMenuDummy.SetNotFound($menu)
     
 End
 
 Public Sub OpenDirectoryMenu_Click()
     
-    Desktop.Open(Me._$path)
+    Try Exec ["nagato-files", Me._$path]
+    
+    'Desktop.Open(Me._$path)
     
 End

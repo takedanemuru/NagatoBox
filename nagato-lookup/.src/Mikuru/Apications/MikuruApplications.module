@@ -50,13 +50,10 @@ Public Function GetDefaultDesktopFiles(argPath As String) As String[]
     Dim yukiDefaultGlobal As String[] = getSanitizedDesktopFiles(MikuruApplicationDirectory.GlobalDefaultList, argPath)
     Dim yukiNonDefaultGlobal As String[] = getSanitizedDesktopFiles(MikuruApplicationDirectory.GlobalMimeList, argPath)
     
-    If yukiDefaultLocal.Count > 0 Then
-        Return yukiDefaultLocal
-    Else If yukiDefaultGlobal.Count > 0 Then
-        Return yukiDefaultGlobal
-    Else
-        Return yukiNonDefaultGlobal
-    Endif
+    If yukiDefaultLocal.Count > 0 Then Return yukiDefaultLocal
+    If yukiDefaultGlobal.Count > 0 Then Return yukiDefaultGlobal
+
+    Return yukiNonDefaultGlobal
     
 End
 

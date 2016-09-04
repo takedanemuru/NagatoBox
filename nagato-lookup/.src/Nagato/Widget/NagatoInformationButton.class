@@ -16,6 +16,6 @@ Public Sub _InitializeWidget() 'override
         .Menu = MenuName
     End With
     
-    yukiMenu = New NagatoPullDownMenuStar(MenuName)
+    yukiMenu = New NagatoPullDownMenuStar(MenuName) As "TFEI"
     
 End

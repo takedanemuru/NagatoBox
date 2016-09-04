@@ -50,6 +50,10 @@ Public Function GetDefaultDesktopFiles(argPath As String) As String[]
     Dim yukiDefaultGlobal As String[] = getSanitizedDesktopFiles(MikuruApplicationDirectory.GlobalDefaultList, argPath)
     Dim yukiNonDefaultGlobal As String[] = getSanitizedDesktopFiles(MikuruApplicationDirectory.GlobalMimeList, argPath)
     
+    Debug argPath
+    Debug yukiDefaultLocal.Count
+    If yukiDefaultLocal.Count > 0 Then Debug yukiDefaultLocal[0]
+    
     If yukiDefaultLocal.Count > 0 Then
         Return yukiDefaultLocal
     Else If yukiDefaultGlobal.Count > 0 Then
@@ -60,27 +64,8 @@ Public Function GetDefaultDesktopFiles(argPath As String) As String[]
     
 End
 
-Private Sub callMessage(argPath As String)
-    
-    With HaruhiDialogUseGksu
-        Select Case .ShowDialog()
-            Case .NormalUser
-                execute(argPath, False)
-            Case .SuperUser
-                execute(argPath, True)
-        End Select
-    End With
-
-End
-
 Public Sub Launch(argPath As String)
     
-    Dim yukiDesktopFile As New NagatoDesktopFile(argPath)
-    
-    If yukiDesktopFile.HasCategory("Settings") Then
-        callMessage(argPath)
-    Else
-        execute(argPath)
-    End If
+    execute(argPath)
     
 End

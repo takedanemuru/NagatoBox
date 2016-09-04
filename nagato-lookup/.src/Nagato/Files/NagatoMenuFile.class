@@ -6,9 +6,17 @@ Private $menu As Menu
 
 Private Function getDesktopFilesWithMimeType() As String[]
     
+    Dim yukiDefaults As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
     Dim yukiMimeType As String = DesktopMime.FromFile(Me._$path).Type
+    Dim yukiNonDefaults As String[] = MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, yukiMimeType)
+    Dim yukiApplication As String
     
-    Return MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, yukiMimeType).Sort(gb.Natural)
+    For Each yukiApplication In yukiNonDefaults.Sort(gb.Natural)
+        If yukiDefaults.Exist(yukiApplication) Then Continue
+        yukiDefaults.Add(yukiApplication)
+    Next
+    
+    Return yukiDefaults
     
 End
 

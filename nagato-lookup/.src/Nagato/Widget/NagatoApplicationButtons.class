@@ -18,13 +18,13 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
         .Menu = argCategory
     End With
 
-    yukiMenu = New NagatoPullDownMenuCategory(argCategory)
+    yukiMenu = New NagatoPullDownMenuCategory(argCategory) As "TFEI"
     
 End
 
 Public Sub _InitializeWidget()
     
-    $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container)
+    $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container) As "TFEI"
 
     addMenuButton(("Nagato"), "Nagato", MikuruIcons.Get("star"))
     addMenuButton(("Develop"), "Developments", MikuruIcons.Get("wrench"))

@@ -23,7 +23,7 @@ Private Sub initializePullDownMenu()
     
     Dim yukiMenu As NagatoPullDownMenuRecent
     
-    yukiMenu = New NagatoPullDownMenuRecent(MenuName)
+    yukiMenu = New NagatoPullDownMenuRecent(MenuName) As "TFEI"
     
 End
 

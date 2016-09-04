@@ -16,16 +16,15 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
         If argIcon Then .Picture = argIcon
         .Border = False
         .Menu = argCategory
-        .Foreground = Color.White
     End With
 
-    yukiMenu = New NagatoPullDownMenuCategory(argCategory)
+    yukiMenu = New NagatoPullDownMenuCategory(argCategory) As "TFEI"
     
 End
 
 Public Sub _InitializeWidget()
     
-    $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container)
+    $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container) As "TFEI"
 
     addMenuButton(("Nagato"), "Nagato", MikuruIcons.Get("star"))
     addMenuButton(("Develop"), "Developments", MikuruIcons.Get("wrench"))
@@ -39,5 +38,11 @@ Public Sub _InitializeWidget()
     addMenuButton(("System"), "Systems", MikuruIcons.Get("computer"))
     addMenuButton(("Utility"), "Utilities", MikuruIcons.Get("scissors"))
     'addMenuButton(("KDE"), "Kde4", MikuruIcons.Get("gear"))
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Debug argSignal
     
 End

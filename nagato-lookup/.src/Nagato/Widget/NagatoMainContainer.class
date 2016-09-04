@@ -1,9 +1,11 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Private $applicationButtons As NagatoApplicationButtons
 Private $spacer As NagatoSpacer
 Private $searchBox As NagatoSearchBox
-Private $infomationButton As NagatoInfomationButton
+Private $infomationButton As NagatoInformationButton
 
 Public Sub ClearSearchQuery()
     
@@ -13,9 +15,9 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $applicationButtons = New NagatoApplicationButtons(argContainer)
+    $applicationButtons = New NagatoApplicationButtons(argContainer) As "TFEI"
     $spacer = New NagatoSpacer(argContainer)
     $searchBox = New NagatoSearchBox(argContainer)
-    $infomationButton = New NagatoInfomationButton(argContainer)
+    $infomationButton = New NagatoInformationButton(argContainer) As "TFEI"
     
 End

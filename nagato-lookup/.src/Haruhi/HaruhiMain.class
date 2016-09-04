@@ -5,6 +5,7 @@ Private Const HeightShow As Integer = 28
 
 Private $mainContainer As NagatoMainContainer
 Private $netWm As NagatoNetWm
+Private $lock As New NagatoLock
 
 Private Sub initializeForm()
     
@@ -21,7 +22,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     $netWm = New NagatoNetWm(Me.Id)
     initializeForm()
-    $mainContainer = New NagatoMainContainer(MainHBox)
+    $mainContainer = New NagatoMainContainer(MainHBox) As "MainContainer"
     NagatoNotification.Show()
     
 End
@@ -41,6 +42,8 @@ End
 
 Public Sub Form_Leave()
     
+    If $lock.Locked Then Return
+    
     Me.Height = HeightHide
     $netWm.SetHeight(0)
     $mainContainer.ClearSearchQuery()
@@ -51,5 +54,13 @@ Public Sub Form_Move()
     
     Me.X = 0
     Me.Y = 0
+    
+End
+
+Public Sub MainContainer_Signal(argSignal As Integer, argValues As Variant[])
+    
+    $lock(argSignal, argValues[0])
+    'If argSignal = MikuruSignal.WidgetShow Then Form_Enter()
+    If argSignal = MikuruSignal.WidgetHide And If Mouse.ScreenX > HeightShow Then Form_Leave()
     
 End

@@ -25,9 +25,8 @@ End
 
 Private Sub ensureConfigFile()
     
-    If Not Object.IsValid($config) Then 
-        $config = New NagatoConfigFile2(Desktop.ConfigDir &/ "mimeapps.list")
-    End If
+    If Object.IsValid($config) Then Return
+    $config = New NagatoConfigFile2(Desktop.ConfigDir &/ "mimeapps.list")
     
 End
 

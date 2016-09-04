@@ -53,6 +53,6 @@ End
 
 Public Sub OpenDirectoryMenu_Click()
     
-    Desktop.Open(Me._$path)
+    Try Exec ["nagato-files", Me._$path]
     
 End

@@ -1,0 +1,23 @@
+' Gambas class file
+
+Property Read Locked As Boolean
+
+Private $locks As New String[]
+
+Public Sub _call(argSignal As Integer, argLock As String)
+    
+    Select Case argSignal
+        Case MikuruSignal.WidgetShow
+            If Not $locks.Exist(argLock) Then $locks.Add(argLock)
+        Case MikuruSignal.WidgetHide
+            ' NOTE : Array.Find(argIndex) returns -1 when query's not found.
+            If $locks.Find(argLock) > -1 Then $locks.Remove($locks.Find(argLock))
+    End Select
+    
+End
+
+Private Function Locked_Read() As Boolean
+
+    Return IIf($locks.Count > 0, True, False)
+
+End

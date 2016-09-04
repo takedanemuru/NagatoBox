@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Public _$rootMenu As Menu
 
 Public Sub _InitializeRootMenu(argMenuName As String)
@@ -38,9 +40,17 @@ Public Sub _new(argMenuName As String)
     
 End
 
-Public Sub RootMenu_Show()
+Public Sub RootMenu_Hide()
     
+    Raise Signal(MikuruSignal.WidgetHide, [Me._$rootMenu.Name])
+    
+End
+
+Public Sub RootMenu_Show()
+
     Me._$rootMenu.Children.Clear()
     Me._OnRefreshChildMenus()
+    
+    Raise Signal(MikuruSignal.WidgetShow, [Me._$rootMenu.Name])
     
 End

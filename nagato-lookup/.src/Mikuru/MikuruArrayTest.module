@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub _call(argArray As String[])
+    
+    Dim yukiTest As String
+    
+    For Each yukiTest In argArray
+        Debug yukiTest
+    Next
+    
+End

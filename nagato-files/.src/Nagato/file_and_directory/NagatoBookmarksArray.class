@@ -20,7 +20,10 @@ Private Sub addBookmarkList(argPath As String)
     While Not Eof(yukiFile)
         Line Input #yukiFile, yukiLine
         yukiLine = MikuruPath.UrlToPath(yukiLine)
-        If Exist(yukiLine) And If Not $bookmarkList.Exist(yukiLine) Then $bookmarkList.Add(yukiLine)
+        yukiLine = Replace(yukiLine, gb.Cr, "")
+        If Not Exist(yukiLine) Then Continue
+        If $bookmarkList.Exist(yukiLine) Then Continue
+        $bookmarkList.Add(yukiLine)
     Wend
     
     Close #yukiFile

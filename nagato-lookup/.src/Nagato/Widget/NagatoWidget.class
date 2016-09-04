@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Public _$container As Container
 
 Public Sub _InitializeWidget() 'virtual
