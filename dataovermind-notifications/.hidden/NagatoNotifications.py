@@ -13,7 +13,8 @@ DBusService = "org.freedesktop.Notifications"
 DBusObjectPath = "/org/freedesktop/Notifications"
 DBusInterface = "org.freedesktop.Notifications"
 
-class NagatoNotifications(Service.Object):
+
+class YukiNotifications(Service.Object):
     _persistent_id = 1000
 
     def __init__(self):
@@ -27,7 +28,7 @@ class NagatoNotifications(Service.Object):
         self._persistent_loop.run()
 
     @Service.method(DBusInterface, in_signature="susssasa{sv}i", out_signature="u")
-    def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, expire_timeout):
+    def Notify(self, app_name, replaces_id, app_icon, summary, body,actions, hints, expire_timeout):
         yuki_command = ["dataovermind-notifications","--notify"]
         if app_name: yuki_command.extend(["--app", app_name])
         # NOTE : replaces_id == 0 means `do not replace id`
@@ -40,27 +41,38 @@ class NagatoNotifications(Service.Object):
             pass
         for yuki_key, yuki_value in hints.items():
             if yuki_key == "urgency": yuki_command.extend(["--urgency", str(int(yuki_value))])
+            # if yuki_key == "category": yuki_command.extend(["--category",str(yuki_value)]
         subprocess.call(yuki_command)
+
         return yuki_id
 
     @Service.method(DBusInterface, in_signature="", out_signature="as")
     def GetCapabilities(self):
-        return (["body", "persistence"])
+        return (["body", "body-markup", "persistence"])
 
     @Service.method(DBusInterface, in_signature="u", out_signature="")
     def CloseNotification(self, id):
         yuki_command = ["dataovermind-notifications", "--close", id]
         subprocess.call(yuki_command)
+        self.NotificationClosed(id, 3)
 
     @Service.method(DBusInterface, in_signature="", out_signature="ssss")
     def GetServerInformation(self):
-        return ("dataovermind-notifications", "https://takedanemuru.github.io", "42.5.30", "1.2") 
+        return ("dataovermind-notifications", "https://takedanemuru.github.io", "42.5.31", "1.2")
 
     @Service.signal(DBusInterface, signature="uu")
-    def NotificationClosed(self, id_in, reason_in):
-        print(id_in, "is closed, because of", reason_in)
+    def NotificationClosed(self, id, reason):
+        # NOTE : reason MUST be 1, 2, 3 or 4. See below.
+        if reason == 1: print("Notification id:", id, "expired.")
+        if reason == 2: print("Notification id:", id, "was dismissed by the user.")
+        if reason == 3: print("Notification id:", id, "was closed by a call to CloseNotification.")
+        if reason == 4: print("Notification id:", id, "was closed by undefined/reserved reasons.")
+
+    @Service.signal(DBusInterface, signature="us")
+    def ActionInvoked(self, id, action):
+        # Who cares ?
+        pass
 
 if __name__ == "__main__":
-    YUKI = NagatoNotifications()
+    YUKI = YukiNotifications()
     YUKI.N("> Can you see this ?")
-

@@ -17,9 +17,10 @@ Private Sub execute(argPath As String, Optional argAsSuperUser As Boolean = Fals
     
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiCommand As String = getCommand(yukiDesktopFile.Exec, argAsSuperUser)
+    Dim yukiOutput As String
     
     If yukiCommand Then
-        Try Shell yukiCommand
+        Try Shell yukiCommand 
     Else
         Try Shell File.BaseName(argPath)
     End If

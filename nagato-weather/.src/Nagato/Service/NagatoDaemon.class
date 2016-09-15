@@ -1,14 +1,27 @@
 ' Gambas class file
 
+Private Const Service As String = "org.gambas.nagato-weather"
 Private Const ObjectPath As String = "/org/nagato/weather"
 Private Const Interface As String = "org.gambas.nagato.weather.nagatointerface"
 
 Private $timer As New Timer As "Timer"
 
+Private Sub isReloadNeeded() As Boolean
+    
+    Dim yukiDateTime As Date = Now()
+    
+    If Minute(yukiDateTime) > 0 Then Return False
+    If Second(yukiDateTime) Div 10 > 0 Then Return False
+    
+    Return True
+    
+End
+
 Public Sub Start()
     
-    If DBus.Session.Applications.Exist("org.gambas.nagato-weather") Then Return
+    If DBus.Session.Applications.Exist(Service) Then Return
     
+    DBus.Name = Service
     NagatoWeatherCache.Reload()
     DBus.Register(NagatoInterface, ObjectPath, [Interface])
     
@@ -20,6 +33,6 @@ End
 Public Sub Timer_Timer()
     
     If Not NagatoInterface.Ready Then Return
-    If Minute(Now()) = 0 And If Second(Now()) Div 10 = 0 Then NagatoWeatherCache.Reload()
+    If isReloadNeeded() Then NagatoWeatherCache.Reload()
     
 End

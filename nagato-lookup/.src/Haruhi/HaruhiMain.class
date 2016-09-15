@@ -60,7 +60,6 @@ End
 Public Sub MainContainer_Signal(argSignal As Integer, argValues As Variant[])
     
     $lock(argSignal, argValues[0])
-    'If argSignal = MikuruSignal.WidgetShow Then Form_Enter()
     If argSignal = MikuruSignal.WidgetHide And If Mouse.ScreenX > HeightShow Then Form_Leave()
     
 End

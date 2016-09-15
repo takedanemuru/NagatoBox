@@ -4,32 +4,36 @@ Inherits NagatoWidget
 
 Private Const MenuName As String = "RecentApplications"
 
-Private Sub initializeMenuButton()
-    
-    Dim yukiButton As New MenuButton(Me._$container)
-    
-    With yukiButton
-        .Text = ("Recent")
-        .AutoResize = True
-        .Arrow = False
-        .Picture = MikuruIcons.Get("alarm-clock")
-        .Border = False
-        .Menu = MenuName
-    End With
-    
-End
+Private $menuButton As NagatoMenuButton
+
+' Private Sub initializeMenuButton()
+'     
+'     Dim yukiButton As New MenuButton(Me._$container) As "MenuButton"
+'     
+'     With yukiButton
+'         .Text = ("Recent")
+'         .AutoResize = True
+'         .Arrow = False
+'         .Picture = MikuruIcons.Get("alarm-clock")
+'         .Border = False
+'         .Menu = MenuName
+'         .Foreground = Color.White
+'         .Font.Bold = True
+'     End With
+'     
+' End
 
 Private Sub initializePullDownMenu()
     
     Dim yukiMenu As NagatoPullDownMenuRecent
     
-    yukiMenu = New NagatoPullDownMenuRecent(MenuName)
+    yukiMenu = New NagatoPullDownMenuRecent(MenuName) As "TFEI"
     
 End
 
 Public Sub _InitializeWidget() 'override
     
-    initializeMenuButton()
+    $menuButton = New NagatoMenuButton(Me._$container, ("Recent"), "alarm-clock", MenuName)
     initializePullDownMenu()
     
 End

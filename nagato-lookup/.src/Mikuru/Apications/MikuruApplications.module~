@@ -17,11 +17,12 @@ Private Sub execute(argPath As String, Optional argAsSuperUser As Boolean = Fals
     
     Dim yukiDesktopFile As New DesktopFile(argPath)
     Dim yukiCommand As String = getCommand(yukiDesktopFile.Exec, argAsSuperUser)
+    Dim yukiOutput As String
     
     If yukiCommand Then
-        Try Shell yukiCommand
+        Try Shell yukiCommand To yukiOutput
     Else
-        Try Shell File.BaseName(argPath)
+        Try Shell File.BaseName(argPath) To yukiOutput
     End If
     
     If Not Error Then NagatoSettingsRecentApplications.Push(argPath)
@@ -50,17 +51,10 @@ Public Function GetDefaultDesktopFiles(argPath As String) As String[]
     Dim yukiDefaultGlobal As String[] = getSanitizedDesktopFiles(MikuruApplicationDirectory.GlobalDefaultList, argPath)
     Dim yukiNonDefaultGlobal As String[] = getSanitizedDesktopFiles(MikuruApplicationDirectory.GlobalMimeList, argPath)
     
-    Debug argPath
-    Debug yukiDefaultLocal.Count
-    If yukiDefaultLocal.Count > 0 Then Debug yukiDefaultLocal[0]
-    
-    If yukiDefaultLocal.Count > 0 Then
-        Return yukiDefaultLocal
-    Else If yukiDefaultGlobal.Count > 0 Then
-        Return yukiDefaultGlobal
-    Else
-        Return yukiNonDefaultGlobal
-    Endif
+    If yukiDefaultLocal.Count > 0 Then Return yukiDefaultLocal
+    If yukiDefaultGlobal.Count > 0 Then Return yukiDefaultGlobal
+
+    Return yukiNonDefaultGlobal
     
 End
 

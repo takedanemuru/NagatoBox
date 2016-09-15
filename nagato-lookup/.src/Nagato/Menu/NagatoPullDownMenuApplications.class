@@ -72,10 +72,14 @@ Public Sub ApplicationMenu_Click()
     MikuruApplications.Launch(Last.Tag)
     NagatoSettingsRecentApplications.Push(Last.Tag)
     
+     Raise Signal(MikuruSignal.WidgetHide, [Me._$rootMenu.Name])
+    
 End
 
 Public Sub ActionMenu_Click()
     
     Shell Last.Tag
+    
+    Raise Signal(MikuruSignal.WidgetHide, [Me._$rootMenu.Name])
     
 End

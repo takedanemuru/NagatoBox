@@ -1,0 +1,32 @@
+' Gambas class file
+
+Public Sub _new(argContainer As Container, argText As String, argIcon As String, argMenu As String)
+    
+    Dim yukiButton As New MenuButton(argContainer) As "MenuButton"
+    
+    With yukiButton
+        .Text = argText
+        .AutoResize = True
+        .Arrow = False
+        .Picture = MikuruIcons.Get(argIcon)
+        .Border = False
+        .Menu = argMenu
+        .Foreground = Color.White
+        .Font.Bold = True
+    End With
+    
+End
+
+Public Sub MenuButton_Enter()
+    
+    Try Last.Foreground = Color.Gray
+    If Not Error Then Last.Font.Bold = False
+    
+End
+
+Public Sub MenuButton_Leave()
+    
+    Try Last.Foreground = Color.White
+    If Not Error Then Last.Font.Bold = True
+    
+End

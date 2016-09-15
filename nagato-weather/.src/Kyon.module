@@ -15,12 +15,14 @@ Public Sub Main()
     
     parseArguments()
     
-    If Not Desktop.NetworkAvailable Then
-        Message.Warning(("YUKI.N > Network unavailable."))
-    Else If $daemonMode Then
-        $daemon.Start()
-    Else
-        HaruhiMain.Show()
-    End If
+    ' If Not Desktop.NetworkAvailable Then
+    '     Message.Warning(("YUKI.N > Network unavailable."))
+    ' Else If $daemonMode Then
+    '     $daemon.Start()
+    ' Else
+    '     HaruhiMain.Show()
+    ' End If
+    
+    $daemon.Start()
     
 End
