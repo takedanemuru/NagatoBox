@@ -1,0 +1,11 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,80,64)
+  Icon = Picture["pictures/icons/television.png"]
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(5,5,69,43)
+    Expand = True
+  }
+}

@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$menuButton As MenuButton
+
+Private Sub initializeMenuButton()
+    
+    Me._$menuButton = New MenuButton(Me._$container) As "MenuButton"
+    
+    With Me._$menuButton
+        .Arrow = False
+        .Border = False
+        .AutoResize = True
+        .Tag = MikuruSignal.UserReqestNone
+        .Menu = Me._OptionalOnGetMenuName()
+    End With
+    
+End
+
+Public Function _OptionalOnGetMenuName() As String
+    
+    Return "Don't Look At Me."
+    
+End
+
+Public Sub _OptionalOnInitializeMenuButton()
+    
+    
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    
+    
+End
+
+Public Sub _OnInitialize()
+    
+    initializeMenuButton()
+    
+    Me._OptionalOnInitializeMenuButton()
+    Me._OptionalOnInitializePulldownMenu()
+    
+End
+
+Public Sub MenuButton_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

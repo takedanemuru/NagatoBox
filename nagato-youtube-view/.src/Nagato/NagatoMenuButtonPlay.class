@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnCall(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.WebViewLoaded
+            Me._$menuButton.Visible = argValues[0]
+    End Select
+    
+End
+
+Public Sub _OptionalOnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .Picture = MikuruIcon["button-play"]
+        .Tooltip = ("Play with SMPlayer")
+        .Visible = False
+        .Tag = MikuruSignal.UserRequestPlayWithSMPlayer
+    End With
+    
+End

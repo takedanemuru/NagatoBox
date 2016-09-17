@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Function Remove(argSource As String, ...) As String
+    
+    Dim yukiIndex As Integer
+    Dim yukiReturnValue As String = argSource
+    
+    For yukiIndex = 0 To Param.Max
+        yukiReturnValue = Replace(yukiReturnValue, Param[yukiIndex], "")
+    Next
+    
+    Return yukiReturnValue
+    
+End

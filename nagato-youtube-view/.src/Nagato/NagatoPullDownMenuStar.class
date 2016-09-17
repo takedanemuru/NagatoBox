@@ -1,0 +1,10 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Public Sub _OnInitializeChildMenus()
+    
+    Me._AddMenuItem(("About"), 0)
+    Me._AddMenuItem(("Quit"), 0)
+    
+End

@@ -1,0 +1,13 @@
+' Gambas module file
+
+Public Function GetDirectoryPath(argDefault As String) As String
+    
+    Dialog.Title = "Select Directory"
+    Dialog.Path = Desktop.GetDirectory(argDefault)
+    
+    If Not Dialog.SelectDirectory() Then Return Dialog.Path
+    
+Finally
+    Return ""
+    
+End

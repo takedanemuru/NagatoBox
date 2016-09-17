@@ -1,0 +1,23 @@
+' Gambas class file
+
+Create Private
+
+Event Signal(argSignal As Integer, argValues As Variant[])
+
+Public Sub _OnCall(argSignal As Integer, argValues As Variant[])
+    
+    ' NOTE : This method just define _call() as an common interface
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Me._OnCall(argSignal, argValues)
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Raise Signal(argSignal, argValues)
+    
+End

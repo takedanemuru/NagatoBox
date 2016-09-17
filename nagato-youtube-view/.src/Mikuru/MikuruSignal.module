@@ -1,0 +1,15 @@
+' Gambas module file
+
+Public Enum WebViewNone = 2000, WebViewLoaded = 2001
+Public Enum UserReqestNone = 3000, UserRequestPlayWithSMPlayer = 3001
+Public Enum UserRequestDownloadAsMusic = 3002, UserRequestDownloadAsVideo = 3003
+Public Enum DownloaderNone = 4000, DownloaderStart = 4001, DownloaderOngoing = 4002
+Public Enum DownloaderEncoding = 4003, DownloaderFinished = 4004, DownloaderErrorOccurred = 4005
+
+Public Function IsDownloaderSignal(argSignal As Integer) As Boolean
+    
+    If argSignal >= 4000 And If 4999 >= argSignal Then Return True
+    
+    Return False
+    
+End

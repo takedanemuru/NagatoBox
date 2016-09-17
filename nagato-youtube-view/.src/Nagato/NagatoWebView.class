@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read IsVideoUrl As Boolean
+Property Read Url As String
+
+Private $webView As WebView
+
+Public Sub _OnInitialize()
+    
+    $webView = New WebView(Me._$container) As "WebView"
+    
+    With $webView
+        .Expand = True
+        .Url = MikuruUrl.Startup
+    End With
+    
+End
+
+Public Sub WebView_Load()
+    
+    Raise Signal(MikuruSignal.WebViewLoaded, [MikuruUrl.IsVideoUrl($webView.Url)])
+    
+End
+
+Private Function IsVideoUrl_Read() As Boolean
+
+    Return MikuruUrl.IsVideoUrl($webView.Url)
+
+End
+
+Private Function Url_Read() As String
+
+    Return IIf(Me.IsVideoUrl, MikuruUrl.GetYoutubeUrl($webView.Url), $webView.Url)
+
+End

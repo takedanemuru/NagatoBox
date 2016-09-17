@@ -4,12 +4,16 @@ Count=0
 [DebugWindow]
 Count=0
 
+[DebugWindow/Object]
+Geometry=[528,248,224,280]
+
 [OpenFile]
-Count=3
-File[1]="data/television.png"
-File[2]=".src/HaruhiMain.form"
+Count=4
+File[1]=".src/Haruhi/HaruhiMain.class:41.21"
+File[2]=".src/Nagato/NagatoYouTubeDL.class:4.11"
 Active=3
-File[3]=".src/HaruhiMain.class:0.9"
+File[3]=".src/Nagato/NagatoWebView.class:37.32"
+File[4]=".src/Haruhi/HaruhiMain.form"
 
 [Watches]
 Count=0

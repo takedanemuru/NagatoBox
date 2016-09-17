@@ -1,0 +1,9 @@
+' Gambas module file
+
+Property Read ToolBarHeight As Integer
+
+Private Function ToolBarHeight_Read() As Integer
+
+    Return 32
+
+End
