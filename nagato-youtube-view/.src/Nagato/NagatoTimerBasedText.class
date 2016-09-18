@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $needsDotDeco As Boolean
+Private $count As Integer
+Private $baseText As String
+Private $explictTimeout As Integer
+Private $timer As New Timer As "Timer"
+
+Private Function getText() As String
+    
+    If Not $needsDotDeco Then Return $baseText
+    Return $baseText & String$($count Mod 5 + 1, ".")
+    
+End
+
+Public Sub SetText(argBaseText As String, argNeedDotDeco As Boolean, argExplictTimeout As Integer)
+    
+    $baseText = argBaseText
+    $needsDotDeco = argNeedDotDeco
+    $explictTimeout = argExplictTimeout
+    $count = 0
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Raise Signal(MikuruSignal.TimerBasedTextChanged, [getText()])
+    
+    Inc $count
+    If $explictTimeout = 0 Then Return
+    If $explictTimeout > $count Then Return
+    $timer.Enabled = False
+    Raise Signal(MikuruSignal.TimerBasedTextTimeout, Null)
+    
+End

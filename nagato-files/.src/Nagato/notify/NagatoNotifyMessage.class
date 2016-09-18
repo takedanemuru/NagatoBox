@@ -23,15 +23,15 @@ End
 Public Sub _new(argPriority As Integer, argMessage As String[])
     
     $priority = argPriority
-    $messageStrings = New NagatoNotifyMessageStrings(argMessage)
+    $messageStrings = New NagatoNotifyMessageStrings(argMessage, argPriority)
     
 End
 
 Public Sub Timer_Timer()
     
     If $messageStrings.Step() Then
+        HaruhiBalloon.SetText($messageStrings.CurrentMessage, $priority)
         MikuruWindow.EnsureVisible(HaruhiPersona)
-        HaruhiBalloon.SetText($messageStrings.CurrentMessage)
         HaruhiBalloon.X = HaruhiPersona.X
     Else
         Raise Dequeued

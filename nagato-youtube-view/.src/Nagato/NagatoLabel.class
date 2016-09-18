@@ -3,20 +3,22 @@
 Inherits NagatoWidget
 
 Private $label As Label
+Private $timerBasedText As New NagatoTimerBasedText As "TimerBasedText"
+
 
 Public Sub _OnCall(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.DownloaderStart
-            $label.Text = ("Start Downloading.")
+            $timerBasedText.SetText("Please wait", True, 0)
         Case MikuruSignal.DownloaderOngoing
-            $label.Text = ("Now Downloading...")
+            $timerBasedText.SetText("Now Downloading", True, 0)
         Case MikuruSignal.DownloaderEncoding
-            $label.Text = ("Now Encoding...")
+            $timerBasedText.SetText("Now Encoding", True, 0)
         Case MikuruSignal.DownloaderErrorOccurred
-            $label.Text = ("Error occurred : " & argValues[0])
+            $timerBasedText.SetText("Error occurred : " & argValues[0], False, 10)
         Case MikuruSignal.DownloaderFinished
-            $label.Text = ("Finished")
+            $timerBasedText.SetText("Finished", False, 10)
     End Select
     
 End
@@ -28,5 +30,16 @@ Public Sub _OnInitialize()
     With $label
         .Expand = True
     End With
+    
+End
+
+Public Sub TimerBasedText_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.TimerBasedTextChanged
+            $label.Text = argValues[0]
+        Case MikuruSignal.TimerBasedTextTimeout
+            $label.Text = ""
+    End Select
     
 End

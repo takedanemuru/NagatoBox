@@ -5,11 +5,6 @@ Public Enum UserReqestNone = 3000, UserRequestPlayWithSMPlayer = 3001
 Public Enum UserRequestDownloadAsMusic = 3002, UserRequestDownloadAsVideo = 3003
 Public Enum DownloaderNone = 4000, DownloaderStart = 4001, DownloaderOngoing = 4002
 Public Enum DownloaderEncoding = 4003, DownloaderFinished = 4004, DownloaderErrorOccurred = 4005
-
-Public Function IsDownloaderSignal(argSignal As Integer) As Boolean
-    
-    If argSignal >= 4000 And If 4999 >= argSignal Then Return True
-    
-    Return False
-    
-End
+Public Enum TimerBasedTextNone = 5000, TimerBasedTextChanged = 5001
+Public Enum TimerBasedTextTimeout = 5002
+Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationQuit = 9002

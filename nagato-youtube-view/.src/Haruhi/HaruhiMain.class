@@ -4,6 +4,21 @@ Private $downloader As New NagatoYoutubeDL As "Downloader"
 Private $webView As NagatoWebView
 Private $toolBar As NagatoToolBar
 
+Public Sub Form_Open()
+    
+    NagatoSettings.LoadFormSettings(Me)
+    
+End
+
+Public Sub Form_Close()
+    
+    Dim yukiMessage As String = ("YUKI.N > Are you sure to close application ?")
+    
+    If Message.Question(yukiMessage, ("Cancel"), ("Yes")) <> 2 Then Stop Event
+    NagatoSettings.SaveFormSettings(Me)
+    
+End
+
 Public Sub _new()
     
     $webView = New NagatoWebView(VBox1) As "WebView"
@@ -20,6 +35,10 @@ Public Sub ToolBar_Signal(argSignal As Integer, argValues As Variant[])
             $downloader.DownloadAsMusic($webView.Url)
         Case MikuruSignal.UserRequestDownloadAsVideo
             $downloader.DownloadAsMovie($webView.Url)
+        Case MikuruSignal.ApplicationAbout
+            HaruhiAbout.ShowDialog()
+        Case MikuruSignal.ApplicationQuit
+            Me.Close()
     End Select
     
 End

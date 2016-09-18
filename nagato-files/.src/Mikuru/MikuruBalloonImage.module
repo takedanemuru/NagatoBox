@@ -17,13 +17,14 @@ Private Function getPolygon(argBaseLine As Integer, argHeight As Integer) As Int
     
 End
 
-Private Function getBalloonImage(argHeight As Integer, argWidth As Integer) As Image
+Private Function getBalloonImage(argHeight As Integer, argWidth As Integer, argPriority As Integer) As Image
     
-    Dim yukiBaseImage As New Image(argWidth + 2 * MikuruUx.Grid, argHeight + 8 * MikuruUx.Grid, Color.Transparent)
+    Dim yukiBaseImage As New Image(argWidth + 4 * MikuruUx.Grid, argHeight + 8 * MikuruUx.Grid, Color.Transparent)
     Dim yukiBaseLine As Integer = argHeight + 2 * MikuruUx.Grid
+    Dim yukiColor As Integer = IIf(argPriority = NagatoNotifyQueue.PriorityCritical, Color.Red, NagatoSettingsPanel.Background)
     
     Paint.Begin(yukiBaseImage)
-        Paint.Brush = Paint.Color(NagatoSettingsPanel.Background)
+        Paint.Brush = Paint.Color(yukiColor)
         Paint.Rectangle(0, 0, yukiBaseImage.W, argHeight + 2 * MikuruUx.Grid, 2 * MikuruUx.Grid)
         Paint.Polygon(getPolygon(yukiBaseLine, yukiBaseImage.H))
         Paint.Fill()
@@ -33,11 +34,8 @@ Private Function getBalloonImage(argHeight As Integer, argWidth As Integer) As I
     
 End
 
-Public Sub Get(argText As String) As Image
+Public Sub Get(argHeight As Integer, argWidth As Integer, argPriority As Integer) As Image
     
-    Dim yukiTextWidth As Integer = Max(HaruhiBalloon.Font.RichTextWidth(argText), 30 * MikuruUx.Grid)
-    Dim yukiTextHeight As Integer = HaruhiBalloon.Font.RichTextHeight(argText, yukiTextWidth) 
-    
-    Return getBalloonImage(yukiTextHeight, yukiTextWidth)
+    Return getBalloonImage(argHeight, argWidth, argPriority)
     
 End

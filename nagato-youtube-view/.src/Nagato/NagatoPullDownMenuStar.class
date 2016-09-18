@@ -4,7 +4,7 @@ Inherits NagatoPullDownMenu
 
 Public Sub _OnInitializeChildMenus()
     
-    Me._AddMenuItem(("About"), 0)
-    Me._AddMenuItem(("Quit"), 0)
+    Me._AddMenuItem(("About"), MikuruSignal.ApplicationAbout, "star")
+    Me._AddMenuItem(("Quit"), MikuruSignal.ApplicationQuit, "button-power")
     
 End

@@ -20,12 +20,14 @@ End
 
 Public Sub Notify(argApp As String, argSummary As String, argBody As String, argUrgency As Integer)
     
-    Dim yukiMessage As String[] = [argSummary, argBody]
-    Dim yukiAppName As String = Subst$(("YUKI.N > <br>We got a message from &1."), argApp)
-    
-    If argApp Then yukiMessage.Add(yukiAppName, 0)
-    
-    $notifyQueue.EnqueueMessage(argUrgency, yukiMessage)
+    Dim yukiAppName As String = Subst$(("YUKI.N > We got a message from &1."), argApp)
+    Dim yukiMessage As String = IIf(argApp, yukiAppName, "")
+
+    If argUrgency = NagatoNotifyQueue.PriorityCritical Then yukiMessage &= "<br>" & ("This is critical message. Please read carefully.")
+    If argSummary Then yukiMessage &= "<br><br>" & argSummary
+    If argBody Then yukiMessage &= "<br><br>" & argBody
+
+    $notifyQueue.EnqueueMessage(argUrgency, [yukiMessage])
 
 End
 
