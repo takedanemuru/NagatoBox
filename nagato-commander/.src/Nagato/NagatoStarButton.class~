@@ -1,1 +1,10 @@
 ' Gambas class file
+
+Public Sub _new(argMenuButton As MenuButton)
+    
+    Dim yukiMenu As NagatoStarMenu
+    
+    argMenuButton.Picture = MikuruIcon.Get("star", 20)
+    yukiMenu = New NagatoStarMenu(argMenuButton) 
+    
+End

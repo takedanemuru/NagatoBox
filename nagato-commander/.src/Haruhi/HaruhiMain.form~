@@ -24,33 +24,15 @@
       Alignment = Align.Left
     }
   }
-  { HBox1 HBox
-    MoveScaled(0,17,85,5)
-    { CommandTextArea MaskBox
-      MoveScaled(35,1,32,4)
-      Font = Font["+2"]
-      Foreground = &HB6B6F3&
-      Expand = True
-    }
-    { StarButton MenuButton
-      MoveScaled(80,0,5,4)
-      Arrow = False
-    }
-  }
   { Panel1 Panel
     MoveScaled(2,23,79,1)
   }
-  { ConsoleTextArea TextEdit
-    MoveScaled(1,29,43,29)
-    Font = Font["+2"]
-    Background = &HD4D4F3&
-    Foreground = &HFFFFFF&
+  { TabStrip1 TabStrip
+    MoveScaled(2,26,74,32)
     Expand = True
-    ReadOnly = True
-    Wrap = True
-    ScrollBar = Scroll.None
-  }
-  { TerminalView1 TerminalView
-    MoveScaled(48,29,39,30)
+    Arrangement = Arrange.Fill
+    Index = 0
+    Text = ("")
+    Index = 0
   }
 }

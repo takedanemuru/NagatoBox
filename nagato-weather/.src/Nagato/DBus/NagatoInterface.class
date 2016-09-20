@@ -20,6 +20,7 @@ Property Read WindSpeed As Float
 Property Read WindDirection As String
 Property Read Humidity As Float
 Property Read Cloudiness As Float
+Property Read Precipitation As Float
 
 Public Sub Reload()
     
@@ -96,5 +97,11 @@ End
 Private Function Cloudiness_Read() As Float
 
     Return Me.WeatherElement[MikuruWeatherKey.Cloudiness]
+
+End
+
+Private Function Precipitation_Read() As Float
+
+    Return Me.WeatherElement[MikuruWeatherKey.Precipitation]
 
 End

@@ -15,16 +15,9 @@ End
 Public Sub Update(argStream As String)
     
     If InStr(argStream, gb.CrLf) = 0 And argStream Not Ends "$ " Then 
-        If Replace(argStream, "\n", "") <> " " Then $lastLine = argStream
         $textArea.RichText = NagatoText.GetRichText($output & argStream)
     Else
-        If argStream Not Ends "$ " Then 
-            $output &= argStream
-        Else 
-            Debug $lastLine
-            $output &= ($lastLine & argStream)
-            $lastLine = ""
-        End If
+        $output &= argStream
         $textArea.RichText = NagatoText.GetRichText($output)
     End If
     

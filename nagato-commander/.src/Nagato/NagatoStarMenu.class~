@@ -27,8 +27,6 @@ End
 Public Sub _new(argMenuButton As MenuButton)
     
     initializeRootMenu(argMenuButton)
-    ' addMenu(("History"), MenuHistory)
-    '     addMenu("", MenuNone)
     addMenu(("About"), MenuAbout, "information-balloon")
     addMenu(("Quit"), MenuQuit, "button-power")
     

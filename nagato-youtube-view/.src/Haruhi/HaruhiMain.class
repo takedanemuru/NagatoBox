@@ -14,7 +14,7 @@ Public Sub Form_Close()
     
     Dim yukiMessage As String = ("YUKI.N > Are you sure to close application ?")
     
-    If Message.Question(yukiMessage, ("Cancel"), ("Yes")) <> 2 Then Stop Event
+    If Message.Question(yukiMessage, ("Cancel"), ("Close")) <> 2 Then Stop Event
     NagatoSettings.SaveFormSettings(Me)
     
 End

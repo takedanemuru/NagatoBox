@@ -2,11 +2,27 @@
 
 Private $textLabel As TextLabel
 
-Public Sub Set(argMessage As String)
+Private Sub setMessage(argMessage As String)
     
     If Not NagatoSettings.HasHistory Then Return
     
     $textLabel.Text = "YUKI.N > " & argMessage
+    
+End
+
+Public Sub SetDoneMessage()
+    
+    If Not NagatoSettings.HasHistory Then Return
+    
+    setMessage(Subst$(("command <h2>&1</h2> has been done."), NagatoSettings.LastCommand))
+    
+End
+
+Public Sub SetGoingOnMessage()
+    
+    If Not NagatoSettings.HasHistory Then Return
+    
+    setMessage(Subst$(("command <h2>&1</h2> is now going on."), NagatoSettings.LastCommand))
     
 End
 

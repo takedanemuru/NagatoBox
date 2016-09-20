@@ -4,7 +4,7 @@ Create Static
 
 Property Read Proxy As DBusProxy
 
-Public Const Service As String = "org.gambas.dataovermind.rssfeeder"
+Public Const Service As String = "org.gambas.dataovermind-rssfeeder"
 Public Const ObjectPath As String = "/org/dataovermind/rssfeeder"
 Public Const Interface As String = "org.gambas.dataovermind.rssfeeder.tfei"
 
@@ -28,6 +28,7 @@ End
 
 Public Sub Register()
     
+    DBus.Name = Me.Service
     DBus.Session.Register(TFEI, Me.ObjectPath)
     
 End

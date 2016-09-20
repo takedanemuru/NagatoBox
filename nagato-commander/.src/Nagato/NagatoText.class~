@@ -60,8 +60,6 @@ Public Function GetRichText(argOutput As String) As String
         yukiOutput = stripColorProperty(yukiOutput)
     End If
     
-    yukiOutput = Replace(yukiOutput, "\n\n", "\n")
-    
     Return "<font color=white>" & yukiOutput & "</font>"
     
 End

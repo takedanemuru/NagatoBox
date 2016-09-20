@@ -6,7 +6,7 @@ Private $iconView As IconView
 Private $clock As NagatoDesktopClock
 Private $rss As NagatoDesktopTileRssFeeds
 Private $systemMonitor As NagatoDesktopTileSystemMonitor
-'Private $weather As NagatoDesktopTileWeather
+Private $weather As NagatoDesktopTileWeather
 Private $trashBin As NagatoDesktopTrashBin 
 
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
@@ -25,7 +25,7 @@ Private Sub initializeIcons(argSelectedPaths As String[])
     If NagatoSettingsDesktopTile.ShowClock Then $clock = New NagatoDesktopClock($iconView)
     If NagatoSettingsDesktopTile.ShowRss Then $rss = New NagatoDesktopTileRssFeeds($iconView)
     If NagatoSettingsDesktopTile.ShowSystemMonitor Then $systemMonitor = New NagatoDesktopTileSystemMonitor($iconView)
-   ' $weather = New NagatoDesktopTileWeather($iconView)
+    If NagatoSettingsDesktopTile.ShowWeather Then $weather = New NagatoDesktopTileWeather($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)

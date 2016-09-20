@@ -18,6 +18,7 @@ Public Sub _InitializeMenu() ' this method is protected/virtual. MUST be overrid
     Object.New("NagatoMenuItemShowClock", [Me._$rootMenu, ""])
     Object.New("NagatoMenuItemShowRss", [Me._$rootMenu, ""])
     Object.New("NagatoMenuItemShowSystemMonitor", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemShowWeather", [Me._$rootMenu, ""])
     Object.New("NagatoMenuItemShowTrashBin", [Me._$rootMenu, ""])
     Object.New("NagatoMenuItemShowHiddenDesktop", [Me._$rootMenu, ""])
     

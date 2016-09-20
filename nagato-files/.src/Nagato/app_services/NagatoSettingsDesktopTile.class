@@ -6,6 +6,7 @@ Property ClockFormat As String
 Property ShowClock As Boolean
 Property ShowRss As Boolean
 Property ShowSystemMonitor As Boolean
+Property ShowWeather As Boolean
 Property ShowTrashBin As Boolean
 
 Event Changed
@@ -78,5 +79,17 @@ End
 Private Sub ShowSystemMonitor_Write(Value As Boolean)
 
     changeSetting(Value, "desktop_view/show_system_monitor")
+
+End
+
+Private Function ShowWeather_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_weather", True]
+    
+End
+
+Private Sub ShowWeather_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_weather")
 
 End

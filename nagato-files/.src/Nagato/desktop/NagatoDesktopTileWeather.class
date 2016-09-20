@@ -7,47 +7,52 @@ Private $observer As Observer
 Private $proxy As New NagatoDBusAccessWeather
 
 Private Function getBaseImage() As Image
-
-    Dim yukiColor As Integer = IIf($proxy.Activated, $proxy.BackgroundColor, Color.Blue)
-    Dim yukiBaseImage As Image = MikuruTileBaseImage[yukiColor, 192]
     
-    Paint.Begin(yukiBaseImage)
-        'NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialSystems)
-    Paint.End()
-    
-    Return yukiBaseImage
+    Return MikuruTileBaseImage[$proxy.BackgroundColor, 192]
     
 End
 
-Private Sub getWeatherIcon() As Image
+Private Sub getThumbnail() As Image
     
-    Dim yukiWeatherIcon As Image = Image.Load($proxy.IconPath)
+    Dim yukiThumbnail As Image = MikuruWeatherImage[$proxy.IconId]
     
-    Return yukiWeatherIcon.Stretch(96, 96)
+    Return yukiThumbnail.Stretch(128, 128)
+    
+End
+
+Public Function getLabelText() As String
+    
+    Select Case Second(Now())
+        Case 0 To 14
+            Return $proxy.Condition
+        Case 15 To 29
+            Return Subst("Temp. : &1 °C", $proxy.Temperature)
+        Case 30 To 44
+            Return Subst("Wind : &1 &2 m", String.Upper($proxy.WindDirection), $proxy.WindSpeed)
+        Case 45 To 59
+            Return Format$($proxy.Precipitation, "Rain : ##0.0 mm")
+    End Select
     
 End
 
 Private Sub paintLabel()
     
-    Dim yukiHeight As Integer = Paint.Font.RichTextHeight($proxy.Condition, 112) + 16
+    Dim yukiLabelText As String = getLabelText()
+    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(yukiLabelText, 112) + 16
     Dim yukiRect As New Rect(0, 128 - (yukiHeight), 128, yukiHeight)
     
-    Paint.Brush = Paint.Color($proxy.BackgroundColor + Color.Transparent * 128)
-    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
-    Paint.Fill()
     Paint.Brush = Paint.Color(Color.White)
-    Paint.DrawRichText($proxy.Condition, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.DrawRichText(yukiLabelText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
     Paint.Fill()
     
 End
 
 Private Function getIcon() As Picture
     
-    Dim yukiImage As Image = getBaseImage()
+    Dim yukiImage As Image = IIf($proxy.Activated, getThumbnail(), getBaseImage())
     
     Paint.Begin(yukiImage)
         Paint.Font.Bold = True
-        Paint.DrawImage(getWeatherIcon(), 16, 16)
         If $proxy.Activated Then paintLabel()
     Paint.End()
 
@@ -74,4 +79,3 @@ Public Sub Asakura_Timer()
     $iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
     
 End
-

@@ -63,9 +63,17 @@ Public Sub _new()
     
 End
 
-Public Sub Player_AboutToFinish()
+Public Sub Player_End()
+    
+    Wait 1
     
     Raise MusicEnds
+    
+End
+
+Public Sub Player_AboutToFinish()
+    
+    ' Debug "about to finish"
     
 End
 

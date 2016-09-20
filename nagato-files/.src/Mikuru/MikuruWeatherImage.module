@@ -1,0 +1,94 @@
+' Gambas module file
+
+Public Function _get(argId As Integer) As Image
+    
+    Select Case argId
+        Case 1 'Sun
+            Return Image.Load("pictures/weather_images/fine_fair.png")
+        Case 2 'LightCloud
+            Return Image.Load("pictures/weather_images/fine_fair.png")
+        Case 3 'PartlyCloud
+            Return Image.Load("pictures/weather_images/partly_cloudy.png")
+        Case 4 'Cloud
+            Return Image.Load("pictures/weather_images/cloudy.png")
+        Case 5 'LightRainSun
+            Return Image.Load("pictures/weather_images/partly_cloudy.png")
+        Case 6 'LightRainThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 7 'SleetSun
+            Return Image.Load("pictures/weather_images/snow.png")
+        Case 8 'SnowSun
+            Return Image.Load("pictures/weather_images/snow.png")
+        Case 9 'LightRain
+            Return Image.Load("pictures/weather_images/rain.png")
+        Case 10 'Rain
+            Return Image.Load("pictures/weather_images/rain.png")
+        Case 11 'RainThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 12 'Sleet
+            Return Image.Load("pictures/weather_images/snow.png")
+        Case 13 'Snow
+            Return Image.Load("pictures/weather_images/snow.png")
+        Case 14 'SnowThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 15 'Fog
+            Return Image.Load("pictures/weather_images/fog.png")
+        Case 20 'SleetSunThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 21 'SnowSunThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 22 'LightRainThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 23 'SleetThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 24 'DrizzleThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 25 'RainThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 26 'LightSleetThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 27 'HeavySleetThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 28 'LightSnowThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 29 'HeavySnowThunderSun
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 30 'DrizzleThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 31 'LightSleetThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 32 'HeavySleetThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 33 'LightSnowThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 34 'HeavySnowThunder
+            Return Image.Load("pictures/weather_images/thunder_storm.png")
+        Case 40 'DrizzleSun
+            Return Image.Load("pictures/weather_images/drizzle.png")
+        Case 41 'RainSun
+            Return Image.Load("pictures/weather_images/rain.png")
+        Case 42 'LightSleetSun
+            Return Image.Load("pictures/weather_images/sleet.png")
+        Case 43 'HeavySleetSun
+            Return Image.Load("pictures/weather_images/sleet.png")
+        Case 44 'LightSnowSun
+            Return Image.Load("pictures/weather_images/snow.png")
+        Case 45 'HeavysnowSun
+            Return Image.Load("pictures/weather_images/heavy_snow.png")
+        Case 46 'Drizzle
+            Return Image.Load("pictures/weather_images/drizzle.png")
+        Case 47 'LightSleet
+            Return Image.Load("pictures/weather_images/sleet.png")
+        Case 48 'HeavySleet
+            Return Image.Load("pictures/weather_images/sleet.png")
+        Case 49 'LightSnow
+            Return Image.Load("pictures/weather_images/snow.png")
+        Case 50 'HeavySnow
+            Return Image.Load("pictures/weather_images/heavy_snow.png")
+        Case 100 To 199 ' for polar night
+            Return Me._get(argId - 100)
+        Default
+            Return Image.Load("pictures/weather_images/null.png")
+    End Select
+    
+End
