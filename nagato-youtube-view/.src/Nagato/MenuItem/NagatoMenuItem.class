@@ -1,0 +1,39 @@
+' Gambas class file
+
+Public _$menuItem As Menu
+Public _$iconName As String
+
+Public Sub _OnMenuItemClicked()
+    
+    
+    
+End
+
+Public Function _OnGetText() As String
+    
+    Return ""
+    
+End
+
+Public Function _OptionalOnGetIconName() As String
+    
+    Return ""
+    
+End
+
+Public Sub _new(argParentMenu As Menu)
+    
+    Me._$menuItem = New Menu(argParentMenu) As "MenuItem"
+    
+    With Me._$menuItem
+        .Text = Me._OnGetText()
+        .Picture = MikuruIcon[Me._OptionalOnGetIconName()]
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._OnMenuItemClicked()
+    
+End

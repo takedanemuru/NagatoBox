@@ -7,4 +7,7 @@ Public Sub _get(argIconName As String, Optional argSize As Integer = 16) As Pict
     
     Return yukiImage.Stretch(argSize, argSize).Picture
     
+Catch
+    Return Null
+    
 End

@@ -3,8 +3,8 @@
 Public Enum WebViewNone = 2000, WebViewLoaded = 2001
 Public Enum UserReqestNone = 3000, UserRequestPlayWithSMPlayer = 3001
 Public Enum UserRequestDownloadAsMusic = 3002, UserRequestDownloadAsVideo = 3003
+Public Enum UserRequestSetUrl = 3004, UserReqestClearHistory = 3005
 Public Enum DownloaderNone = 4000, DownloaderStart = 4001, DownloaderOngoing = 4002
 Public Enum DownloaderEncoding = 4003, DownloaderFinished = 4004, DownloaderErrorOccurred = 4005
 Public Enum TimerBasedTextNone = 5000, TimerBasedTextChanged = 5001
-Public Enum TimerBasedTextTimeout = 5002
-Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationQuit = 9002
+Public Enum TimerBasedTextTimeout = 5002, TimerCount = 5003, TimerTimeout = 5004

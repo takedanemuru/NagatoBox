@@ -1,23 +1,59 @@
 ' Gambas class file
 
-Private $process As Process
+Private $processes As New NagatoProcesses
+
+Private Sub incrementTab()
+    
+    Inc TabStrip1.Count
+    TabStrip1.Index = TabStrip1.Count - 1
+    
+End
+
+Private Sub insertTerminal()
+    
+    Dim yukiTerminal As New NagatoTerminal(TabStrip1)
+    
+    $processes.Add(yukiTerminal.ProcessId)
+    TabStrip1[TabStrip1.Count - 1].Text = "Terminal-#" & yukiTerminal.ProcessId
+    
+End
+
+Private Sub addTerminal(Optional argInitial As Boolean = False)
+    
+    If Not argInitial Then incrementTab()
+    insertTerminal()
+    
+End
 
 Public Sub Form_Open()
     
     NagatoSettings.LoadFormSettings(Me)
     Application.MainWindow = Me
+    addTerminal(True)
     
 End
 
 Public Sub Form_Close()
     
-    Exec ["kill", $process.Id]
+    $processes.KillAll()
     NagatoSettings.SaveFormSettings(Me)
     
 End
 
-Public Sub _new()
+Public Sub TabStrip1_Close(argIndex As Integer)
+
+    $processes.Kill(argIndex)
+
+    TabStrip1[argIndex].Children[0].Delete()
+    TabStrip1[argIndex].Delete()
+
+End
+
+Public Sub TabStrip1_Menu()
     
-    $process = Exec ["xterm", "-into", TabStrip1.Id] For Read
+    Dim yukiMenu As New Menu(HaruhiMain) As "ContextMenu"
+    
+    yukiMenu.Text = "New Tab"
+    yukiMenu.Popup()
     
 End

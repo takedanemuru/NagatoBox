@@ -23,8 +23,8 @@ End
 Private Sub initializeIcons(argSelectedPaths As String[])
     
     If NagatoSettingsDesktopTile.ShowClock Then $clock = New NagatoDesktopClock($iconView)
-    If NagatoSettingsDesktopTile.ShowRss Then $rss = New NagatoDesktopTileRssFeeds($iconView)
     If NagatoSettingsDesktopTile.ShowSystemMonitor Then $systemMonitor = New NagatoDesktopTileSystemMonitor($iconView)
+    If NagatoSettingsDesktopTile.ShowRss Then $rss = New NagatoDesktopTileRssFeeds($iconView)
     If NagatoSettingsDesktopTile.ShowWeather Then $weather = New NagatoDesktopTileWeather($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)

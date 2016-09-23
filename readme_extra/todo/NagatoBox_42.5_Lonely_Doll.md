@@ -28,9 +28,15 @@ new package : notification server for NagatoBox.
 
 + scheduling functionalities (until 7.11)
 
+### nagato-commander
+
++ new : "add tab" menu
++ new : "about" menu and dialog
++ new : "quit" menu
+
 ### nagato-files (v42.5.85)
 
-+ integrate weather forecast functionalities
++ ~~integrate weather forecast functionalities~~
 + ~~avoid crash when launching as root user.~~
 
 ### nagato-lookup (v42.5.28)
@@ -69,3 +75,11 @@ new package : a simple alsa mixer applet for systray
 ### nagato-writer
 
 + ~~fix : live mode preview.~~
+
+### nagato-youtube-view
+
+    brand bew application.
+
++ ~~new : history menu~~
++ new : bookmark menu
+

@@ -1,0 +1,17 @@
+' Gambas class file
+
+Public _$connection As Connection
+
+Public Sub _OnInitializeTable() 
+    
+    ' NOTE : Abstruct method
+    
+End
+
+Public Sub _new(argConnection As Connection)
+    
+    Me._$connection = argConnection
+    If Not Me._$connection.Opened Then Me._$connection.Open()
+    Me._OnInitializeTable()
+    
+End

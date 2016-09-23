@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $downloader As New NagatoYoutubeDL As "Downloader"
+Private $webView As NagatoWebView
+Private $toolBar As NagatoToolBar
+
+Public Sub _OnInitialize()
+    
+    $toolBar = New NagatoToolBar(Me._$container) As "ToolBar"
+    $webView = New NagatoWebView(Me._$container) As "WebView"
+    
+End
+
+Public Sub ToolBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.UserRequestPlayWithSMPlayer
+            Try Exec ["smplayer", $webView.Url]
+        Case MikuruSignal.UserRequestDownloadAsMusic
+            $downloader.DownloadAsMusic($webView.Url)
+        Case MikuruSignal.UserRequestDownloadAsVideo
+            $downloader.DownloadAsMovie($webView.Url)
+        Case MikuruSignal.UserRequestSetUrl
+            $webView(argSignal, argValues)
+    End Select
+    
+End
+
+Public Sub WebView_Signal(argSignal As Integer, argValues As Variant[])
+    
+    $toolBar(argSignal, argValues)
+    
+End
+
+Public Sub Downloader_Signal(argSignal As Integer, argValues As Variant[])
+    
+    $toolBar(argSignal, argValues)
+    
+End

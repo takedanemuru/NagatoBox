@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "MenuNameHistory"
+
+Public Sub _OptionalOnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .Picture = MikuruIcon["alarm-clock"]
+        .Tooltip = ("Recent")
+        .Menu = Me._OptionalOnGetMenuName()
+    End With
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    Dim yukiMenu As NagatoPullDownMenuHistory
+    
+    yukiMenu = New NagatoPullDownMenuHistory(MenuName) As "TFEI"
+    
+End
+
+Public Function _OptionalOnGetMenuName() As String
+    
+    Return MenuName
+    
+End

@@ -18,7 +18,18 @@ Public Sub _OnInitialize()
     
 End
 
+Public Sub _OnCall(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.UserRequestSetUrl
+            $webView.Url = argValues[0]
+    End Select
+    
+End
+
 Public Sub WebView_Load()
+    
+    If Me.IsVideoUrl Then NagatoDBHistory.Push($webView.Url, $webView.Title)
     
     Raise Signal(MikuruSignal.WebViewLoaded, [MikuruUrl.IsVideoUrl($webView.Url)])
     

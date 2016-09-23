@@ -27,8 +27,13 @@
   { Panel1 Panel
     MoveScaled(2,23,79,1)
   }
-  { Embedder1 Embedder
-    MoveScaled(4,27,69,26)
+  { TabStrip1 TabStrip
+    MoveScaled(2,29,75,29)
     Expand = True
+    Arrangement = Arrange.Fill
+    Closable = True
+    Index = 0
+    Text = ("")
+    Index = 0
   }
 }

@@ -1,0 +1,15 @@
+' Gambas module file
+
+Property Read HostName As String
+
+Public Sub EnsureHostDirectory()
+    
+    If Not Exist(Me.HostName) Then Mkdir Me.HostName
+    
+End
+
+Private Function HostName_Read() As String
+
+    Return User.Home &/ ".nagato_software_compilation"
+
+End

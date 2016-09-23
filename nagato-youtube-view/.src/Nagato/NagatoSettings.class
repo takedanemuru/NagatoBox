@@ -2,24 +2,4 @@
 
 Create Static
 
-Private $settings As New Settings
-
-Public Sub LoadFormSettings(argForm As Form)
-    
-    argForm.X = $settings[Subst("Form_&1/x", argForm.Name), argForm.X]
-    argForm.Y = $settings[Subst("Form_&1/y", argForm.Name), argForm.Y]
-    argForm.H = $settings[Subst("Form_&1/h", argForm.Name), argForm.H]
-    argForm.W = $settings[Subst("Form_&1/w", argForm.Name), argForm.W]
-    argForm.Maximized = $settings[Subst("Form_&1/maximized", argForm.Name), argForm.Maximized]
-    
-End
-
-Public Sub SaveFormSettings(argForm As Form)
-    
-    $settings[Subst("Form_&1/x", argForm.Name)] = argForm.X
-    $settings[Subst("Form_&1/y", argForm.Name)] = argForm.Y
-    $settings[Subst("Form_&1/h", argForm.Name)] = argForm.H
-    $settings[Subst("Form_&1/w", argForm.Name)] = argForm.W
-    $settings[Subst("Form_&1/maximized", argForm.Name)] = argForm.Maximized
-    
-End
+Public _$settings As New Settings

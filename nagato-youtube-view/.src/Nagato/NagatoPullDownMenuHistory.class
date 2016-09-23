@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenuDynamic
+
+Private Sub addHistoryMenu(argResult As Result)
+    
+    Dim yukiHistoryMenu As New Menu(Me._$rootMenu) As "HistoryMenu"
+    
+    With yukiHistoryMenu
+        .Text = argResult[NagatoDB.Column.PageName]
+        .Tag = argResult[NagatoDB.Column.Url]
+    End With
+    
+End
+
+Private Sub addHistoryMenus()
+    
+    Dim yukiResult As Result = NagatoDBHistory.GetAll()
+    
+    For Each yukiResult
+        addHistoryMenu(yukiResult)
+    Next
+    
+End
+
+Private Sub setChildMenus()
+    
+    Object.New("NagatoMenuItemClearHistory", [Me._$rootMenu])
+        Me._AddMenuItem((""), 0)
+    addHistoryMenus()
+    
+End
+
+Public Sub _OnRefreshChildMenu()
+    
+    If NagatoDBHistory.GetAll().Count = 0 Then 
+        Object.New("NagatoMenuItemNotFound", [Me._$rootMenu])
+    Else
+        setChildMenus()
+    End If
+    
+End
+
+Public Sub HistoryMenu_Click()
+    
+    Raise Signal(MikuruSignal.UserRequestSetUrl, [Last.Tag])
+    
+End

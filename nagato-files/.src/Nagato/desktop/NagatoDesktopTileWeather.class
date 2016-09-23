@@ -73,6 +73,8 @@ End
 
 Public Sub Asakura_Timer()
     
+    Debug $proxy.Activated
+    
     If Not $iconView.Exist(NagatoDesktopSpecialKey.Weather) Then Return
     If Not $proxy.Activated Then Return
     

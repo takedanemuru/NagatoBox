@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $count As Integer
+Private $explictTimeout As Integer
+Private $timer As New Timer As "Timer"
+
+Public Sub Reset(argExplictTimeout As Integer)
+    
+    $count = 0
+    $explictTimeout = argExplictTimeout
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Raise Signal(MikuruSignal.TimerCount, [$count])
+    
+    Inc $count
+    If $explictTimeout = 0 Then Return
+    If $explictTimeout > $count Then Return
+    $timer.Enabled = False
+    
+    Raise Signal(MikuruSignal.TimerTimeout, Null)
+    
+End

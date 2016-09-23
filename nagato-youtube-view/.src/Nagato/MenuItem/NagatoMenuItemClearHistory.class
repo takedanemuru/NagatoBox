@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnMenuItemClicked()
+    
+    NagatoDBHistory.ClearAll()
+    
+End
+
+Public Function _OnGetText() As String
+    
+    Return ("Clear Histroy")
+    
+End
+
+Public Function _OptionalOnGetIconName() As String
+    
+    Return "alarm-clock"
+    
+End

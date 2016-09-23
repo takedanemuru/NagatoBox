@@ -5,6 +5,7 @@ Inherits NagatoWidget
 Private $hBox As NagatoHBox
 Private $playButton As NagatoMenuButtonPlay
 Private $textArea As NagatoLabel
+Private $historyButton As NagatoMenuButtonHistory
 Private $downloadButton As NagatoMenuButtonDownload
 Private $starButton As NagatoMenuButtonStar
 
@@ -25,6 +26,7 @@ Public Sub _OnInitialize()
     $hBox = New NagatoHBox(Me._$container)
     $playButton = New NagatoMenuButtonPlay($hBox.Container) As "TFEI"
     $textArea = New NagatoLabel($hBox.Container) 
+    $historyButton = New NagatoMenuButtonHistory($hBox.Container) As "TFEI"
     $downloadButton = New NagatoMenuButtonDownload($hBox.Container) As "TFEI"
     $starButton = New NagatoMenuButtonStar($hBox.Container) As "TFEI"
     

@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Public Sub _OnRefreshChildMenu()
+    
+    ' NOTE : Abstruct Method.
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    ' NOTE : At least one child menu to raise RootMenu_Show()
+    Me._AddMenuItem("", 0)
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    Me._$rootMenu.Children.Clear()
+    Me._OnRefreshChildMenu()
+    
+End
