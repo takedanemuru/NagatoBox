@@ -1,0 +1,4 @@
+' Gambas module file
+
+Public Enum TerminalNone = 2000, TarminalAdd = 2001
+Public Enum ApplicationNone = 9000, ApplicationAbout = 9001, ApplicationQuit = 9002

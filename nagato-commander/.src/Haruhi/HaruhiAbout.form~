@@ -4,7 +4,7 @@
   MoveScaled(0,0,50,77)
   Text = ("About nagato-commander")
   Icon = Picture["pictures/icons/star.png"]
-  Picture = Picture["pictures/about.png"]
+  Picture = Picture["Pictures/about.png"]
   SkipTaskbar = True
   Arrangement = Arrange.Vertical
   Padding = 16
@@ -13,6 +13,8 @@
     Expand = True
     { IconPictureBox PictureBox
       MoveScaled(14,1,14,14)
+      Picture = Picture["commander.jpg"]
+      Stretch = True
       Alignment = Align.Center
     }
     { AboutTextLabel TextLabel

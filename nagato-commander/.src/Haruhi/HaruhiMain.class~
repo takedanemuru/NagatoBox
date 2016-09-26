@@ -1,27 +1,12 @@
 ' Gambas class file
 
-Private $processes As New NagatoProcesses
+Private $menuButton As NagatoMenuButton
+Private $mainContainer As NagatoMainContainer
 
-Private Sub incrementTab()
+Public Sub _new()
     
-    Inc TabStrip1.Count
-    TabStrip1.Index = TabStrip1.Count - 1
-    
-End
-
-Private Sub insertTerminal()
-    
-    Dim yukiTerminal As New NagatoTerminal(TabStrip1)
-    
-    $processes.Add(yukiTerminal.ProcessId)
-    TabStrip1[TabStrip1.Count - 1].Text = "Terminal-#" & yukiTerminal.ProcessId
-    
-End
-
-Private Sub addTerminal(Optional argInitial As Boolean = False)
-    
-    If Not argInitial Then incrementTab()
-    insertTerminal()
+    $menuButton = New NagatoMenuButton(VBox2) As "MenuButton"
+    $mainContainer = New NagatoMainContainer(Me)
     
 End
 
@@ -29,31 +14,30 @@ Public Sub Form_Open()
     
     NagatoSettings.LoadFormSettings(Me)
     Application.MainWindow = Me
-    addTerminal(True)
     
 End
 
 Public Sub Form_Close()
     
-    $processes.KillAll()
+    Dim yukiMessage As String = ("YUKI.N > We are going to kill All Tabs. Are you sure ?")
+    
+    If Message.Question(yukiMessage, ("Cancel"), ("Close")) <> 2 Then
+        Stop Event
+        Return
+    Endif
+    
+    $mainContainer.KillAll()
     NagatoSettings.SaveFormSettings(Me)
     
 End
 
-Public Sub TabStrip1_Close(argIndex As Integer)
-
-    $processes.Kill(argIndex)
-
-    TabStrip1[argIndex].Children[0].Delete()
-    TabStrip1[argIndex].Delete()
-
-End
-
-Public Sub TabStrip1_Menu()
+Public Sub MenuButton_Signal(argSignal As Integer, argValues As Variant[])
     
-    Dim yukiMenu As New Menu(HaruhiMain) As "ContextMenu"
-    
-    yukiMenu.Text = "New Tab"
-    yukiMenu.Popup()
+    Select Case argSignal
+        Case MikuruSignal.TarminalAdd
+            $mainContainer.AddTerminal()
+        Case MikuruSignal.ApplicationQuit
+            Me.Close()
+    End Select
     
 End

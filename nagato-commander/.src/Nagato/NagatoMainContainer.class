@@ -1,0 +1,75 @@
+' Gambas class file
+
+Private $tabstrip As TabStrip
+Private $processes As New NagatoProcesses
+
+Private Sub incrementTab()
+    
+    Inc $tabStrip.Count
+    $tabStrip.Index = $tabStrip.Count - 1
+    
+End
+
+Private Sub insertTerminal()
+    
+    Dim yukiTerminal As New NagatoTerminal($tabStrip)
+    
+    $processes.Add(yukiTerminal.ProcessId)
+    $tabStrip[$tabStrip.Count - 1].Text = "Terminal-#" & yukiTerminal.ProcessId
+    
+End
+
+Private Sub killTerminal(argIndex As Integer)
+    
+    $processes.Kill(argIndex)
+
+    $tabStrip[argIndex].Children[0].Delete()
+    $tabStrip[argIndex].Delete()
+    
+End
+
+Private Sub isConfirmed(argIndex As Integer) As Boolean
+    
+    Dim yukiMessage As String = Subst(("YUKI.N > We are going to close &1. Are you sure ?"), $tabstrip[argIndex].Text)
+    
+    Return Message.Question(yukiMessage, ("Cancel"), ("Close")) = 2
+    
+End
+
+Public Sub AddTerminal()
+    
+    incrementTab()
+    insertTerminal()
+    
+End
+
+Public Sub KillAll()
+    
+    $processes.KillAll()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $tabstrip = New TabStrip(argContainer) As "TabStrip"
+    
+    With $tabstrip
+        .Expand = True
+        .Count = 1
+        .Arrangement = Arrange.Fill
+        .Closable = True
+    End With
+    
+    insertTerminal()
+    
+End
+
+Public Sub TabStrip_Close(argIndex As Integer)
+
+    If $tabstrip.Count = 1 Then 
+        Stop Event
+    Else If isConfirmed(argIndex) Then
+        killTerminal(argIndex)
+    End If
+
+End

@@ -11,6 +11,7 @@ Public Const Interface As String = "org.gambas.dataovermind.disks.tfei"
 
 Public Sub Register()
     
+    DBus.Name = Me.Service
     DBus.Session.Register(TFEI, Me.ObjectPath)
     
 End

@@ -36,3 +36,9 @@ Public Sub _new(argMenuMenu As String)
     addChildMenu("Quit", MikuruSignal.ApplicationQuit, "button-power")
     
 End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End
