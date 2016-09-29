@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Public Sub _OnCall(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.MpvStarted, MikuruSignal.MpvPlaying
+            Me._$menuButton.Visible = True
+        Case MikuruSignal.MpvKilled
+            Me._$menuButton.Visible = False
+    End Select
+    
+Catch
+    Return ' to avoid raise error to change .visible property when it's not existed.
+    
+End
+
+Public Sub _OptionalOnInitializeMenuButton()
+    
+    With Me._$menuButton
+        .Picture = MikuruIcon["button-stop"]
+        .Tooltip = ("Stop mpv")
+        .Visible = False
+        .Tag = MikuruSignal.UserRequestStopMpv
+    End With
+    
+End

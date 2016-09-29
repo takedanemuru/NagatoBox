@@ -2,6 +2,8 @@
 
 Inherits NagatoMenuButton
 
+Private Const MenuName As String = "MenuPlayWithMpv"
+
 Public Sub _OnCall(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
@@ -15,9 +17,17 @@ Public Sub _OptionalOnInitializeMenuButton()
     
     With Me._$menuButton
         .Picture = MikuruIcon["button-play"]
-        .Tooltip = ("Play with SMPlayer")
+        .Tooltip = ("Play with mpv")
         .Visible = False
-        .Tag = MikuruSignal.UserRequestPlayWithSMPlayer
+        .Menu = MenuName
     End With
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu()
+    
+    Dim yukiMenu As NagatoPullDownMenuPlayWithMpv
+    
+    yukiMenu = New NagatoPullDownMenuPlayWithMpv(MenuName) As "TFEI"
     
 End

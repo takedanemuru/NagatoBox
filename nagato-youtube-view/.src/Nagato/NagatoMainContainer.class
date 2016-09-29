@@ -3,6 +3,7 @@
 Inherits NagatoWidget
 
 Private $downloader As New NagatoYoutubeDL As "Downloader"
+Private $mpv As New NagatoMpv As "MPV"
 Private $webView As NagatoWebView
 Private $toolBar As NagatoToolBar
 
@@ -13,11 +14,23 @@ Public Sub _OnInitialize()
     
 End
 
+Public Sub Kill()
+    
+    $mpv.Stop()
+    
+End
+
 Public Sub ToolBar_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.UserRequestPlayWithSMPlayer
-            Try Exec ["smplayer", $webView.Url]
+            Exec ["smplayer", $webView.Url]
+        Case MikuruSignal.UserRequestPlayVideo
+            $mpv.Play($webView.Url)
+        Case MikuruSignal.UserRequestPlayAudio
+            $mpv.PlayNoVideo($webView.Url)
+        Case MikuruSignal.UserRequestStopMpv
+            $mpv.Stop()
         Case MikuruSignal.UserRequestDownloadAsMusic
             $downloader.DownloadAsMusic($webView.Url)
         Case MikuruSignal.UserRequestDownloadAsVideo
@@ -35,6 +48,12 @@ Public Sub WebView_Signal(argSignal As Integer, argValues As Variant[])
 End
 
 Public Sub Downloader_Signal(argSignal As Integer, argValues As Variant[])
+    
+    $toolBar(argSignal, argValues)
+    
+End
+
+Public Sub MPV_Signal(argSignal As Integer, argValues As Variant[])
     
     $toolBar(argSignal, argValues)
     

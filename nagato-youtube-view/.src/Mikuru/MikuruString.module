@@ -12,3 +12,20 @@ Public Function Remove(argSource As String, ...) As String
     Return yukiReturnValue
     
 End
+
+Public Sub Elipse(argSource As String) As String
+    
+    Dim yukiFont As Font = HaruhiMain.Font
+    Dim yukiReturnValue As String
+    Dim yukiLength As Integer
+    
+    If (Screen.W / 4) >= yukiFont.TextWidth(argSource) Then Return argSource
+    
+    For yukiLength = String.Len(argSource) - 1 DownTo 1
+        yukiReturnValue = String.Left(argSource, yukiLength) & "..."
+        If (Screen.W / 4) >= yukiFont.TextWidth(yukiReturnValue) Then Return yukiReturnValue
+    Next
+    
+    Return "" ' shouldn't be used, just a fail-safe.
+    
+End

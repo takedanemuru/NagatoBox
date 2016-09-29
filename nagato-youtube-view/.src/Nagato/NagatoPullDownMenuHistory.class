@@ -7,7 +7,7 @@ Private Sub addHistoryMenu(argResult As Result)
     Dim yukiHistoryMenu As New Menu(Me._$rootMenu) As "HistoryMenu"
     
     With yukiHistoryMenu
-        .Text = argResult[NagatoDB.Column.PageName]
+        .Text = MikuruString.Elipse(argResult[NagatoDB.Column.PageName])
         .Tag = argResult[NagatoDB.Column.Url]
     End With
     
