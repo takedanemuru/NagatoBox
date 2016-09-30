@@ -11,6 +11,7 @@ Private Function hasThemeIndex(argPath As String) As Boolean
         If yukiPath = "theme.cache" Then Return True
     Next
     
+Finally
     Return False
     
 End

@@ -1,0 +1,33 @@
+' Gambas class file
+
+Create Static
+
+Property Read All As NagatoProject[]
+
+Private $projects As New NagatoProject[]
+
+Private Sub readDirectory(argDirectory As String)
+    
+    Dim yukiProject As String
+    
+    For Each yukiProject In Dir(argDirectory, "*", gb.Directory).Sort()
+        If Not Dir(argDirectory &/ yukiProject).Exist(".project") Then Continue
+        $projects.Add(Object.New("NagatoProject", [argDirectory &/ yukiProject &/ ".project"]))
+    Next
+    
+End
+
+Public Sub Refresh()
+    
+    $projects.Clear()
+    
+    readDirectory(User.Home &/ "NagatoBox")
+    readDirectory(User.Home &/ "MiscProject")
+    
+End
+
+Private Function All_Read() As NagatoProject[]
+
+    Return $projects
+
+End

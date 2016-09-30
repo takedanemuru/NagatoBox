@@ -1,0 +1,13 @@
+' Gambas class file
+
+Private $toolbar As NagatoToolbar
+Private $gridview As NagatoGridView
+
+Public Sub Form_Show()
+
+    If Object.IsValid($gridview) Then Return
+
+    $toolbar = New NagatoToolbar(Me)
+    $gridview = New NagatoGridView(Me)
+
+End

@@ -15,6 +15,7 @@ Public Function _IsCursorDirectory(argPath As String) As Boolean
         If yukiPath = "cursors" Then Return True
     Next
     
+Finally
     Return False
     
 End

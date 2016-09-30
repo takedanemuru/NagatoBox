@@ -7,14 +7,21 @@ Private Const GlobalThemeDirectory As String = "/usr/share/themes"
 
 Private $list As New String[]
 
-Public Sub _new()
+Private Sub addThemes(argDirectory As String)
     
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(GlobalThemeDirectory)
-        If Not MikuruThemeChecker.Check(GlobalThemeDirectory &/ yukiPath) Then Continue
+    For Each yukiPath In Dir(argDirectory)
+        If Not MikuruThemeChecker.Check(argDirectory &/ yukiPath) Then Continue
         $list.Add(yukiPath)
     Next
+    
+End
+
+Public Sub _new()
+    
+    addThemes(User.Home &/ ".themes")
+    addThemes(GlobalThemeDirectory)
     
 End
 

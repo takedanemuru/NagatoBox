@@ -1,0 +1,56 @@
+' Gambas class file
+
+Property Read Title As String
+Property Read Version As String
+Property Read Description As String
+Property Read LastModified As Date
+
+Private $lastModefied As Date
+Private $title As String
+Private $version As String
+Private $description As String
+
+Private Function removeHeader(argSource As String, argHeader As String) As String
+    
+    Return Replace(argSource, argHeader, "")
+    
+End
+
+Public Sub _new(argProjectFilePath As String)
+    
+    Dim yukiData As String = File.Load(argProjectFilePath)
+    Dim yukiLine As String
+    
+    $lastModefied = Stat(argProjectFilePath).LastModified
+    
+    For Each yukiLine In Split(yukiData, "\n", "", True)
+        If yukiLine Begins "Title=" Then $title = removeHeader(yukiLine, "Title=")
+        If yukiLine Begins "Version=" Then $version = removeHeader(yukiLine, "Version=")
+        If yukiLine Begins "Description=" Then $description = removeHeader(yukiLine, "Description=")
+    Next
+    
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Function Version_Read() As String
+
+    Return $version
+
+End
+
+Private Function Description_Read() As String
+
+    Return $description
+
+End
+
+Private Function LastModified_Read() As Date
+
+    Return $lastModefied
+
+End

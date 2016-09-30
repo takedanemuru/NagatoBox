@@ -1,0 +1,8 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoProjectList.Refresh()
+    HaruhiMain.Show()
+    
+End

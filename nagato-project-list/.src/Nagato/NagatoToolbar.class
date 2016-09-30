@@ -1,0 +1,57 @@
+' Gambas class file
+
+Private $hBox As HBox
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .H = 32
+    End With
+    
+End
+
+Private Sub initializeSpacer()
+    
+    Dim yukiTextArea As New TextLabel($hBox)
+    
+    With yukiTextArea
+        .Expand = True
+        .Text = Subst("YUKI.N > &1 projects found.", NagatoProjectList.All.Count)
+        .Alignment = Align.Left
+        .Padding = 8
+    End With
+    
+End
+
+Private Sub initializeStarButton()
+    
+    Dim yukiMenuButton As New MenuButton($hBox)
+    
+    With yukiMenuButton
+        .W = $hBox.H
+        .Border = False
+        .Arrow = False
+        .Picture = MikuruIcon["star"]
+        .Menu = "StarMenu"
+    End With
+    
+End
+
+Private Sub initializeMenu()
+    
+    Dim yukiMenu As NagatoStarMenu
+    
+    yukiMenu = New NagatoStarMenu("StarMenu")
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeHBox(argContainer)
+    initializeSpacer()
+    initializeStarButton()
+    initializeMenu()
+    
+End

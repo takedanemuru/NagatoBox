@@ -1,0 +1,59 @@
+' Gambas class file
+
+Private $gridview As GridView
+
+Public Sub initializeGridView(argContainer As Container)
+    
+    $gridview = New GridView(argContainer)
+    
+    Debug "?"
+    
+    With $gridview
+        .Expand = True
+        .Rows.Count = 0
+        .Header = GridView.Horizontal
+        .Columns.Count = 5
+        .Columns[0].Text = "#"
+        .Columns[0].W = $gridview.W / 24
+        .Columns[0].Alignment = Align.Right
+        .Columns[1].Text = "Name"
+        .Columns[1].W = $gridview.W / 3
+        .Columns[2].Text = "Version"
+        .Columns[2].W = $gridview.W / 12
+        .Columns[2].Alignment = Align.Right
+        .Columns[3].Text = "Last Modefied"
+        .Columns[3].W = $gridview.W / 6
+        .Columns[3].Alignment = Align.Right
+        .Columns[4].Text = "Description"
+        .Columns[4].W = $gridview.W / 3
+    End With
+    
+End
+
+Private Sub setRowData(argProject As NagatoProject)
+    
+    $gridView[$gridView.Rows.Max, 0].Text = $gridview.Rows.Count
+    $gridView[$gridView.Rows.Max, 1].Text = argProject.Title
+    $gridView[$gridView.Rows.Max, 2].Text = argProject.Version
+    $gridView[$gridView.Rows.Max, 3].Text = Format(argProject.LastModified, "yyyy-mm-dd")
+    $gridView[$gridView.Rows.Max, 4].Text = UnQuote(argProject.Description)
+    
+End
+
+Private Sub setData()
+    
+    Dim yukiProject As NagatoProject
+    
+    For Each yukiProject In NagatoProjectList.All
+        Inc $gridview.Rows.Count
+        setRowData(yukiProject)
+    Next
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeGridView(argContainer)
+    setData()
+    
+End
