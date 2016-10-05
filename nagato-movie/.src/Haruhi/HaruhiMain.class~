@@ -4,18 +4,6 @@ Private $menuBar As NagatoMenuBar
 Private $player As NagatoPlayer
 Private $drawingArea As NagatoDrawingArea
 
-' Private Sub openFile()
-'     
-'     Dialog.Title = ("Open file")
-'     Dialog.Path = NagatoSettings.LastDirectory &/ ""
-'     
-'     If Dialog.OpenFile(False) Then Return
-'     $player.SetPathAndPlay(Dialog.Path)
-'     NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
-'     Me.Title = File.BaseName(Dialog.Path)
-'     
-' End
-
 Public Sub SetPathAndPlay(argPath As String)
     
     $player.SetPathAndPlay(argPath)
@@ -24,8 +12,8 @@ End
 
 Public Sub _new()
 
-    $menuBar = New NagatoMenuBar(MenuHBox) As "MenuBar"
     $drawingArea = New NagatoDrawingArea(Me)
+    $menuBar = New NagatoMenuBar() As "MenuBar"
     $player = New NagatoPlayer($drawingArea.DrawingArea) As "Player"
 
 End
@@ -44,14 +32,7 @@ End
 
 Public Sub MenuBar_Signal(argEvent As Integer, argValues As Variant[])
     
-    ' With MikuruMenuEvent
-    '     Select Case argEvent
-    '        Case .MediaPlay, .MediaPause, .MediaProgress
-               $player.SignalReceiver(argEvent, argValues)
-    '         Case .FileOpen
-    '             openFile()
-    '     End Select
-    ' End With
+    $player.SignalReceiver(argEvent, argValues)
     
 End
 
@@ -63,12 +44,12 @@ End
 
 Public Sub Form_Enter()
     
-    MenuHBox.Visible = True
+    'MenuHBox.Visible = True
     
 End
 
 Public Sub Form_Leave()
     
-    MenuHBox.Visible = False
+    'MenuHBox.Visible = False
     
 End

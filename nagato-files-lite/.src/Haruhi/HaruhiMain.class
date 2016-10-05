@@ -17,4 +17,6 @@ Public Sub Form_Close()
     
     NagatoSettingsForm.Save(Me)
     
+    Quit 0 ' to kill file completion
+    
 End

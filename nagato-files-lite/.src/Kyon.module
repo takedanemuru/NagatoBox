@@ -3,6 +3,7 @@
 Public Sub Main()
     
     Application.Theme = "Numix-Circle"
+    Application.MainWindow = HaruhiMain
     
     HaruhiMain.Show()
     

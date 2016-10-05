@@ -1,12 +1,12 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
+# Compiled with Gambas 3.9.0
 Title=nagato-movie
 Startup=Kyon
 Icon=pictures/blue/video.png
-Version=42.5.5
+Version=42.6.6
 Component=gb.args
 Component=gb.image
-Component=gb.qt4
+Component=gb.qt5
 Component=gb.form
 Component=gb.desktop.x11
 Component=gb.desktop
@@ -19,11 +19,11 @@ TabSize=4
 Translate=1
 Language=ja
 Maintainer=takedanemuru
-Vendor=IntegratedDataThoughtEntity
+Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://github.com/takedanemuru
 License=S.O.S. License
-PackageName=nagato-movie-42.5.5
+PackageName=nagato-movie-42.6.6
 MimeTypes="audio/ogg","audio/mpeg","audio/wav","video/mpeg","video/ogg","video/mp4","video/avi","video/webm"
 Packager=1
 Systems=ubuntu

@@ -18,7 +18,7 @@ End
 
 Public Sub _OnInitializeWidgets(argPath As String)
     
-    $pathBox = New NagatoPathBar(Me._$container, argPath, Me._$groupName) As "PathBox"
+    $pathBox = New NagatoPathBar(Me._$container, argPath, Me._$groupName) As "TFEI"
     $bookmarkButton = New NagatoMenuButtonBookmark(Me._$container, Me._$groupName) As "TFEI"
     $starButton = New NagatoMenuButtonStar(Me._$container, Me._$groupName) As "TFEI"
     

@@ -31,6 +31,8 @@ Public Sub HeaderBar_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.DirectoryMoveTo
             moveTo(argValues[0])
+        Case MikuruSignal.ToolsNewAddress
+            $filer(argSignal, argValues)
     End Select
     
 End

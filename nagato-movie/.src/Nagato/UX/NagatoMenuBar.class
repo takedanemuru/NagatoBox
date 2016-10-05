@@ -15,9 +15,13 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $playButton = New NagatoMenuButtonPlay(argContainer) As "TFEI"
-    $pauseButton = New NagatoMenuButtonPause(argContainer) As "TFEI"
-    $progressIndicator = New NagatoProgressIndicator(argContainer) As "TFEI"
-    $starButton = New NagatoMenuButtonStar(argContainer) As "TFEI"
+    Dim yukiHbox As New HBox(argContainer)
+    
+    yukiHbox.H = 24
+    
+    $playButton = New NagatoMenuButtonPlay(yukiHbox) As "TFEI"
+    $pauseButton = New NagatoMenuButtonPause(yukiHbox) As "TFEI"
+    $progressIndicator = New NagatoProgressIndicator(yukiHbox) As "TFEI"
+    $starButton = New NagatoMenuButtonStar(yukiHbox) As "TFEI"
     
 End

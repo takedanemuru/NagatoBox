@@ -30,24 +30,13 @@ End
 
 Public Sub ButtonBox_Activate()
     
-    ' Dim yukiData As New Variant[]
-    ' 
-    ' yukiData.Add(MikuruPathBarAddress.GetDirectory($buttonBox.Text))
-    ' yukiData.Add(MikuruPathBarAddress.GetFileName($buttonBox.Text))
-    ' 
-    ' Raise Signal(NagatoObject.ViewFiltering, yukiData)
+    Raise Signal(MikuruSignal.ToolsNewAddress, [$buttonBox.Text])
     
 End
 
 Public Sub ButtonBox_Click()
     
     Me.ButtonBox_Activate()
-    
-End
-
-Public Sub ButtonBox_Change()
-    
-    'Raise Signal(NagatoObject.ControlChanged, Null)
     
 End
 

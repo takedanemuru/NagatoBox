@@ -4,10 +4,6 @@
   MoveScaled(0,0,50,50)
   Icon = Picture["pictures/blue/video.png"]
   Arrangement = Arrange.Vertical
-  { MenuHBox HBox
-    MoveScaled(6,5,38,4)
-    Visible = False
-  }
   { MediaTimer #Timer
     #MoveScaled(32,12)
     Enabled = True

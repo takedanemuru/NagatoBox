@@ -1,5 +1,7 @@
 ' Gambas module file
 
+Public Enum ToolsHeader = 3001, ToolsNewAddress = 3002
+
 Public Enum DirectoryHeader = 4000, DirectoryMoveTo = 4001, DirectoryFilesModefied = 4002
 Public Enum DirectoryFilesDeleted = 4003, DirectoryLost = 4004
 

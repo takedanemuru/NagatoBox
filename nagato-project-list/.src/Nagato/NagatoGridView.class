@@ -2,41 +2,54 @@
 
 Private $gridview As GridView
 
+Private Sub setColumn(argColumn As Integer, argText As String, argWidth As Integer, argAlign As Integer)
+    
+    With $gridView.Columns[argColumn]
+       .Text = argText
+       .W = argWidth
+       .Alignment = argAlign
+    End With
+    
+End
+
+Private Sub setColumns()
+    
+    With $gridView
+        setColumn(0, "#", .W / 24, Align.Right)
+        setColumn(1, "", 24, Align.Center)
+        setColumn(2, "Name", .w / 3, Align.Left)
+        setColumn(3, "Version", .w / 12, Align.Right)
+        setColumn(4, "Last Modefied", .w / 6, Align.Right)
+        setColumn(5, "Description", .w / 3, Align.Left)
+    End With
+    
+End
+
 Public Sub initializeGridView(argContainer As Container)
     
     $gridview = New GridView(argContainer)
-    
-    Debug "?"
     
     With $gridview
         .Expand = True
         .Rows.Count = 0
         .Header = GridView.Horizontal
-        .Columns.Count = 5
-        .Columns[0].Text = "#"
-        .Columns[0].W = $gridview.W / 24
-        .Columns[0].Alignment = Align.Right
-        .Columns[1].Text = "Name"
-        .Columns[1].W = $gridview.W / 3
-        .Columns[2].Text = "Version"
-        .Columns[2].W = $gridview.W / 12
-        .Columns[2].Alignment = Align.Right
-        .Columns[3].Text = "Last Modefied"
-        .Columns[3].W = $gridview.W / 6
-        .Columns[3].Alignment = Align.Right
-        .Columns[4].Text = "Description"
-        .Columns[4].W = $gridview.W / 3
+        .Columns.Count = 6
     End With
+    
+    setColumns()
     
 End
 
 Private Sub setRowData(argProject As NagatoProject)
     
+    Print argProject.Title & " : " & DateDiff(argProject.LastModified, Now, gb.Day)
+    
     $gridView[$gridView.Rows.Max, 0].Text = $gridview.Rows.Count
-    $gridView[$gridView.Rows.Max, 1].Text = argProject.Title
-    $gridView[$gridView.Rows.Max, 2].Text = argProject.Version
-    $gridView[$gridView.Rows.Max, 3].Text = Format(argProject.LastModified, "yyyy-mm-dd")
-    $gridView[$gridView.Rows.Max, 4].Text = UnQuote(argProject.Description)
+    Try $gridView[$gridView.Rows.Max, 1].Picture = argProject.Icon
+    $gridView[$gridView.Rows.Max, 2].Text = argProject.Title
+    $gridView[$gridView.Rows.Max, 3].Text = argProject.Version
+    $gridView[$gridView.Rows.Max, 4].Text = Format(argProject.LastModified, "yyyy-mm-dd")
+    $gridView[$gridView.Rows.Max, 5].Text = UnQuote(argProject.Description)
     
 End
 

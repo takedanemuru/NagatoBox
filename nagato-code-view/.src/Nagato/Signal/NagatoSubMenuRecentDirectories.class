@@ -2,17 +2,13 @@
 
 Inherits NagatoButtonMenu
 
-Private Sub getProjectIcon(argDirectory As String) As Picture
+Private Function getProjectIcon2(argDirectory As String) As Picture
     
-    Dim yukiTargetPath As String = argDirectory &/ File.Name(argDirectory) & ".png"
-    Dim yukiTargetPath1 As String = argDirectory &/ ".hidden" &/ File.Name(argDirectory) & ".png"
-    Dim yukiTargetPath2 As String = argDirectory &/ File.Name(argDirectory) & ".xpm"
+    Dim yukiPath As String = MikuruDataFile[argDirectory &/ ".project", "Icon"]
     
-    If Exist(yukiTargetPath) Then Return Picture.Load(yukiTargetPath)
-    If Exist(yukiTargetPath1) Then Return Picture.Load(yukiTargetPath1)
-    If Exist(yukiTargetPath2) Then Return Picture.Load(yukiTargetPath2)
+    Return Picture.Load(argDirectory &/ yukiPath)
     
-Finally
+Catch
     Return Null
     
 End
@@ -37,7 +33,7 @@ Private Sub setRecents()
         With yukiMenu
             .Text = File.Name(yukiDirectory)
             .Tag = yukiDirectory
-            .Picture = getProjectIcon(yukiDirectory)
+            .Picture = getProjectIcon2(yukiDirectory)
         End With
     Next
     

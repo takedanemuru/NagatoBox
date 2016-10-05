@@ -6,11 +6,23 @@ Private $factory As NagatoTableViewFactory
 Private $data As NagatoTableViewData
 Private $userInput As NagatoTableViewUserInput
 
+Private Sub setNewAddress(argNewAddress As String)
+    
+    If IsDir(argNewAddress) And If Exist(argNewAddress) Then
+        $data.SetNewPath(argNewAddress)
+    Else If Exist(File.Dir(argNewAddress)) Then
+        $data.Filter(File.Dir(argNewAddress), File.Name(argNewAddress))
+    Endif
+    
+End
+
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.DirectoryMoveTo
             $data.SetNewPath(argValues[0])
+        Case MikuruSignal.ToolsNewAddress
+            setNewAddress(argValues[0])
     End Select
     
 End

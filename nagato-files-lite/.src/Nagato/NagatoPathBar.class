@@ -17,13 +17,13 @@ End
 
 Public Sub _OnInitializeWidgets(argPath As String)
     
-    $buttonBox = New NagatoPathBarButtonBox(Me._$container, argPath, Me._$groupName) As "ButtonBox"
+    $buttonBox = New NagatoPathBarButtonBox(Me._$container, argPath, Me._$groupName) As "TFEI"
     $completion = New FileCompletion($buttonBox.Editor) As "FileCompletion"
     
 End
 
 Public Sub FileCompletion_Activate()
     
-    'Debug $pathBox.Text
+    Raise Signal(MikuruSignal.ToolsNewAddress, [$buttonBox.Path])
     
 End

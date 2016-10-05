@@ -32,8 +32,8 @@ Public Sub _new(argMenuName As String)
     addChildMenu("Export markdown (Table)", MenuMarkdownTable)
     addChildMenu("Export markdown (List)", MenuMarkdownList)
     addChildMenu("", MenuNone)
-    addChildMenu("About", MenuAbout)
-    addChildMenu("Quit", MenuQuit)
+    addChildMenu("About", MenuAbout, "star")
+    addChildMenu("Quit", MenuQuit, "button-power")
     
 End
 
