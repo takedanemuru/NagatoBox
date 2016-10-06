@@ -1,5 +1,32 @@
 ' Gambas class file
 
+Private Function getTriangleTaggedTile(argPicture As Picture, argText As String, argColor As Integer) As Picture
+    
+    Dim yukiImage As Image = argPicture.Image
+    Dim yukiHeight As Integer
+    Dim yukiWidth As Integer = Sqr(2 * NagatoTile.TileSize ^ 2)
+    Dim yukiRect As New Rect
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(argColor)
+        Paint.Polygon([0, 0, NagatoTile.TileSize * 0.5, 0, 0, NagatoTile.TileSize * 0.5, 0, 0])
+        Paint.Fill()
+        Paint.Rotate(Rad(45))
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        yukiHeight = Paint.Font.RichTextHeight(argText)
+        yukiRect.X = -0.5 * yukiWidth
+        yukiRect.Y = (NagatoTile.TileSize * 0.5) - 2 * yukiHeight
+        yukiRect.W = yukiWidth
+        yukiRect.H = yukiHeight
+        Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
+
 Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
     
     Dim yukiImage As Image = argPicture.Image
@@ -17,7 +44,7 @@ Public Sub _call(argTile As Picture, argPath As String) As Picture
     Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
     
     If Stat(argPath).Link Then
-        Return getSymbolizedTile(argTile, "link")
+        Return getTriangleTaggedTile(argTile, "symlink", MikuruColor.Transparent(Color.Orange, 128))
     Else If yukiSymbol <> "" Then
         Return getSymbolizedTile(argTile, yukiSymbol)
     Else

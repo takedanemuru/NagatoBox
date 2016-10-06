@@ -11,8 +11,6 @@ Public Const Margin As Integer = 8
 
 Public _$baseColor As Integer = Color.White
 
-Private $symbolSetter As New NagatoSymbolSetter
-
 Private Sub paintIcon(argIcon As Picture)
     
     If Object.IsValid(argIcon)
@@ -65,12 +63,6 @@ Public Function _GetTile2(argBaseImage As Image, argIcon As Picture, argText As 
     End With
     
     Return argBaseImage.Picture
-    
-End
-
-Public Sub _SetSymbol(argTile As Picture, argPath As String) As Picture
-    
-    Return $symbolSetter(argTile, argPath)
     
 End
 

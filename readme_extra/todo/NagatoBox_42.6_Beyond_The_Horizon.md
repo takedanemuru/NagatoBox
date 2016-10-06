@@ -16,9 +16,13 @@ new package : qt5 front-end for `sox`
 
 + ~~fix : project icon data is read from .project. does not depend on icon file itself.~~
 
+### nagato-files
+
++ ~~new : redesign symlink tag~~
+
 ### nagato-desktop
 
-+ fix : avoid error on clock tile when new tiles are added.
++ ~~fix : avoid error on clock tile when new tiles are added.~~
 
 ### nagato-movie
 

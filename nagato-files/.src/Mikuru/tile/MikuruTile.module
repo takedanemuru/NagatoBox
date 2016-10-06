@@ -6,35 +6,30 @@ Private $fileTile As New NagatoTileFile
 Private $voidTile As New NagatoTileVoid
 Private $brokenTile As New NagatoTileBroken
 Private $lostDirectoryTile As New NagatoTileLostDirectory
-
-Private Function getThumbnailImage(argPath As String, argSelected As Boolean) As Picture
-    
-    Dim yukiPicture As Picture = NagatoThumbnailImage.Get(argPath, argSelected)
-    
-    Return yukiPicture
-    
-End
+Private $symbolSetter As New NagatoSymbolSetter
 
 Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     
+    Dim yukiTile As Picture
+    
     If Not Access(argPath) Then Return $brokenTile(argPath, argSelected)
     
-    With MikuruMimeType
-        Select Case .GetType(argPath)
-            Case .TypeDirectory
-                Return $directoryTile(argPath, argSelected)
-            Case .TypeImage
-                Return getThumbnailImage(argPath, argSelected)
-            Case .TypePdf
-                Return NagatoThumbnailPdf.Get(argPath, argSelected)
-            Case .TypeApplication
-                Return $applicationTile(argPath, argSelected)
-            Case .TypeVideo
-                Return NagatoThumbnailVideo.Get(argPath, argSelected)
-            Default
-                Return $fileTile(argPath, argSelected)
-        End Select
-    End With
+    Select Case MikuruMimeType.GetType(argPath)
+        Case MikuruMimeType.TypeDirectory
+            yukiTile = $directoryTile(argPath, argSelected)
+        Case MikuruMimeType.TypeImage
+            yukiTile = NagatoThumbnailImage.Get(argPath, argSelected)
+        Case MikuruMimeType.TypePdf
+            yukiTile = NagatoThumbnailPdf.Get(argPath, argSelected)
+        Case MikuruMimeType.TypeApplication
+            yukiTile = $applicationTile(argPath, argSelected)
+        Case MikuruMimeType.TypeVideo
+            yukiTile = NagatoThumbnailVideo.Get(argPath, argSelected)
+        Default
+            yukiTile = $fileTile(argPath, argSelected)
+    End Select
+    
+    Return $symbolSetter(yukiTile, argPath)
     
 End
 

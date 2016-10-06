@@ -36,6 +36,9 @@ Public Sub _new(argIconView As IconView)
     
     $observer = New Observer(HaruhiDesktop) As "Asakura"
     
+Catch
+    Return
+    
 End
 
 Public Sub Asakura_Timer()
