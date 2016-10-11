@@ -61,7 +61,7 @@ End
 Public Sub Paint()
     
     paintRectangle()
-    Paint.DrawPicture(MikuruIcon.Get(Me._OnGetIconName()), 4, 4)
+    If Me._OnGetIconName() <> "" Then Paint.DrawPicture(MikuruIcon.Get(Me._OnGetIconName()), 4, 4)
     paintLabelText()
     paintLabelBorder()
     

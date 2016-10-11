@@ -1,10 +1,8 @@
 ' Gambas class file
 
-Inherits NagatoDesktopTile
+Inherits NagatoDesktopTile2
 
-Private $iconView As IconView
-Private $observer As Observer
-Private $proxy As New NagatoDBusAccessWeather
+Private $proxy As NagatoDBusAccessWeather
 
 Private Function getBaseImage() As Image
     
@@ -30,7 +28,7 @@ Public Function getLabelText() As String
         Case 30 To 44
             Return Subst("Wind : &1 &2 m", String.Upper($proxy.WindDirection), $proxy.WindSpeed)
         Case 45 To 59
-            Return Format$($proxy.Precipitation, "Rain : ##0.0 mm")
+            Return Format$($proxy.Precipitation, "Rainfall : ##0.0 mm")
     End Select
     
 End
@@ -41,13 +39,17 @@ Private Sub paintLabel()
     Dim yukiHeight As Integer = Paint.Font.RichTextHeight(yukiLabelText, 112) + 16
     Dim yukiRect As New Rect(0, 128 - (yukiHeight), 128, yukiHeight)
     
+    NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialWeather, "Weather")
+    Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Gray, 192))
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
     Paint.Brush = Paint.Color(Color.White)
     Paint.DrawRichText(yukiLabelText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
     Paint.Fill()
     
 End
 
-Private Function getIcon() As Picture
+Public Function getIcon() As Picture
     
     Dim yukiImage As Image = IIf($proxy.Activated, getThumbnail(), getBaseImage())
     
@@ -60,24 +62,28 @@ Private Function getIcon() As Picture
     
 End
 
-Public Sub _new(argIconView As IconView)
+Public Sub _OnReload()
     
-    $proxy.Activate()
-
-    $iconView = argIconView
-    $iconView.Add(NagatoDesktopSpecialKey.Weather, "", getBaseImage().Picture)
+    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Weather)
     
-    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    If Not NagatoSettingsDesktopTile.ShowWeather Then Return
+    
+    Me._$iconView.Add(NagatoDesktopSpecialKey.Weather, "", getBaseImage().Picture)
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub _OnTimer() ' override
     
-    Debug $proxy.Activated
-    
-    If Not $iconView.Exist(NagatoDesktopSpecialKey.Weather) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Weather) Then Return
     If Not $proxy.Activated Then Return
     
-    $iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
+    Me._$iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $proxy = New NagatoDBusAccessWeather
+    $proxy.Activate()
     
 End

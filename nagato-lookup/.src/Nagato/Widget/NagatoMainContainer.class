@@ -7,9 +7,13 @@ Private $spacer As NagatoSpacer
 Private $searchBox As NagatoSearchBox
 Private $infomationButton As NagatoInformationButton
 
-Public Sub ClearSearchQuery()
+Public Sub Toggle(argClearSearchQuery As Boolean)
     
-    $searchBox.Clear()
+    If argClearSearchQuery Then $searchBox.Clear()
+    
+    $applicationButtons.Toggle()
+    $searchBox.Toggle()
+    $infomationButton.Toggle()
     
 End
 

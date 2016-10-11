@@ -9,7 +9,7 @@ Public Sub _InitializeWidget() 'override
     $searchBox = New ButtonBox(Me._$container) As "SearchBox"
     
     With $searchBox
-        .Width = 160
+        .Width = 1
         .Picture = MikuruIcons.Get("search")
     End With
     
@@ -18,6 +18,16 @@ End
 Public Sub Clear()
     
     $searchBox.Clear()
+    
+End
+
+Public Sub Toggle()
+    
+    If $searchBox.H = 1 Then
+        $searchBox.W = 1
+    Else
+        $searchBox.W = 160
+    Endif
     
 End
 

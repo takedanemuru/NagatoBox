@@ -4,13 +4,15 @@ Inherits NagatoWidget
 
 Private Const MenuName As String = "StarMenu"
 
+Private $menuButton As MenuButton
+
 Public Sub _InitializeWidget() 'override
     
-    Dim yukiButton As New MenuButton(Me._$container)
     Dim yukiMenu As NagatoPullDownMenuStar
     
-    With yukiButton
-        .Picture = MikuruIcons.Get("star")
+    $menuButton = New MenuButton(Me._$container)
+    
+    With $menuButton
         .Width = Me._$container.Height
         .Border = False
         .Menu = MenuName
@@ -19,3 +21,14 @@ Public Sub _InitializeWidget() 'override
     yukiMenu = New NagatoPullDownMenuStar(MenuName) As "TFEI"
     
 End
+
+Public Sub Toggle()
+    
+    If $menuButton.H = 1 Then
+        $menuButton.Picture = Null
+    Else
+        $menuButton.Picture = MikuruIcons.Get("star")
+    Endif
+    
+End
+

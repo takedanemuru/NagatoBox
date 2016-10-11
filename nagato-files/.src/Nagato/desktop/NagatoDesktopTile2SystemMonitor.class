@@ -1,11 +1,8 @@
 ' Gambas class file
 
-Inherits NagatoDesktopTile
+Inherits NagatoDesktopTile2
 
-Private $iconView As IconView
-Private $observer As Observer
 Private $textRectangle As New Rect
-
 Private $systemMonitor2 As New NagatoDesktopSystemMonitorContent
 
 Private Function getBaseImage() As Image
@@ -60,26 +57,21 @@ Public Function getIcon() As Picture
     
 End
 
-Public Sub Stop()
+Public Sub _onReload()
     
-    Object.Lock($observer)
+    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.SystemMonitor)
     
-End
-
-Public Sub _new(argIconView As IconView)
+    If Not NagatoSettingsDesktopTile.ShowSystemMonitor Then Return
     
-    $iconView = argIconView
-    $iconView.Add(NagatoDesktopSpecialKey.SystemMonitor, "", getBaseImage().Picture)
-    
-    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    Me._$iconView.Add(NagatoDesktopSpecialKey.SystemMonitor, "", getBaseImage().Picture)
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub _OnTimer() ' override
     
-    If Not $iconView.Exist(NagatoDesktopSpecialKey.SystemMonitor) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.SystemMonitor) Then Return
     If Not $systemMonitor2.EnsureActivation() Then Return
-    
-    $iconView[NagatoDesktopSpecialKey.SystemMonitor].Picture = getIcon()
+
+    Try Me._$iconView[NagatoDesktopSpecialKey.SystemMonitor].Picture = getIcon()
     
 End

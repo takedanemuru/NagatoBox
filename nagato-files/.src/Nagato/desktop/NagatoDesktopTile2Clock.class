@@ -1,11 +1,8 @@
 ' Gambas class file
 
-Inherits NagatoDesktopTile
+Inherits NagatoDesktopTile2
 
 Private Const FontSize As Integer = 16
-
-Private $iconView As IconView
-Private $observer As Observer
 
 Public Function getIcon() As Picture
     
@@ -23,28 +20,20 @@ Public Function getIcon() As Picture
     
 End
 
-Public Sub Stop()
+Public Sub _onReload()
     
+    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Clock)
     
+    If Not NagatoSettingsDesktopTile.ShowClock Then Return
     
-End
-
-Public Sub _new(argIconView As IconView)
-    
-    $iconView = argIconView
-    $iconView.Add(NagatoDesktopSpecialKey.Clock, "", getIcon())
-    
-    $observer = New Observer(HaruhiDesktop) As "Asakura"
-    
-Catch
-    Return
+    Me._$iconView.Add(NagatoDesktopSpecialKey.Clock, "", getIcon())
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub _OnTimer() ' override
     
-    If Not $iconView.Exist(NagatoDesktopSpecialKey.Clock) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Clock) Then Return
     
-    Try $iconView[NagatoDesktopSpecialKey.Clock].Picture = getIcon()
+    Try Me._$iconView[NagatoDesktopSpecialKey.Clock].Picture = getIcon()
     
 End

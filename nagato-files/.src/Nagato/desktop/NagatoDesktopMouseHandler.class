@@ -5,7 +5,7 @@ Inherits NagatoDesktopHandler
 Private $iconView As IconView
 Private $observer As Observer
 Private $selection As NagatoSelection
-Private $contextMenu As New NagatoContextMenuDesktop As "ContextMenu"
+Private $contextMenu As New NagatoContextMenuDesktop2 As "ContextMenu"
 
 Public Sub _new(argIconView As IconView, argSelection As NagatoSelection)
     
@@ -42,6 +42,7 @@ Public Sub Asakura_MouseDown()
         $iconView.Current.Selected = False
     Else If Not NagatoDesktopSpecialKey.IsSpecialKey($iconView.Key) Then
         $selection.Push($iconView.Key, Mouse.Left)
+        If $iconView.Key = MikuruLastRenamed.Path Then MikuruLastRenamed.Clear()
         $iconView[$iconView.Key].Picture = MikuruTile($iconView.Key, $selection.Exist($iconView.Key))
     End If
     
@@ -49,9 +50,9 @@ End
 
 Public Sub Asakura_Menu()
     
-    Dim yukiRoot As Boolean = $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) 
+    Dim yukiPointAtRoot As Boolean = $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) 
 
-    $contextMenu.PopUp($iconView.Key, yukiRoot, $selection.Count)
+    $contextMenu.PopUp($iconView.Key, yukiPointAtRoot, $selection.Count)
 
 End
 
@@ -72,8 +73,8 @@ Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
             NagatoDBSymbol.RemovePaths($selection.Paths)
         Case NagatoObject.ViewChangeThumbnail
             HaruhiThumbnailSelector.SetThumbnails(argValues[0])
+        Default
+            Raise Signal(argEvent, argValues)
     End Select
-    
-    Raise Signal(argEvent, argValues)
     
 End

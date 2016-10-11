@@ -3,11 +3,11 @@
 Inherits NagatoDesktopHandler
 
 Private $iconView As IconView
-Private $clock As NagatoDesktopClock
-Private $rss As NagatoDesktopTileRssFeeds
-Private $systemMonitor As NagatoDesktopTileSystemMonitor
-Private $weather As NagatoDesktopTileWeather
-Private $trashBin As NagatoDesktopTrashBin 
+Private $clock As NagatoDesktopTile2Clock
+Private $rss As NagatoDesktopTile2RssFeeds
+Private $systemMonitor As NagatoDesktopTile2SystemMonitor
+Private $weather As NagatoDesktopTile2Weather
+Private $trashBin As NagatoDesktopTile2TrashBin
 
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
     
@@ -22,38 +22,22 @@ End
 
 Private Sub initializeIcons(argSelectedPaths As String[])
     
-    If NagatoSettingsDesktopTile.ShowClock Then $clock = New NagatoDesktopClock($iconView)
-    If NagatoSettingsDesktopTile.ShowSystemMonitor Then $systemMonitor = New NagatoDesktopTileSystemMonitor($iconView)
-    If NagatoSettingsDesktopTile.ShowRss Then $rss = New NagatoDesktopTileRssFeeds($iconView)
-    If NagatoSettingsDesktopTile.ShowWeather Then $weather = New NagatoDesktopTileWeather($iconView)
+    $clock.Reload()
+    $systemMonitor.Reload()
+    $rss.Reload()
+    $weather.Reload()
+    'If NagatoSettingsDesktopTile.ShowWeather Then $weather = New NagatoDesktopTileWeather($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)
     
-    If NagatoSettingsDesktopTile.ShowTrashBin Then $trashBin = New NagatoDesktopTrashBin($iconView)
-    
-End
-
-Private Sub detachObject(argObject As Object)
-    
-    If Object.IsValid(argObject) Then
-        argObject.Stop()
-        Object.Detach(argObject)
-    End If
-    
-End
-
-Private Sub clearAll()
-    
-    Try detachObject($clock)
-    Try detachObject($trashBin)
-    Try $iconView.Clear()
+    $trashBin.Reload()
     
 End
 
 Public Sub Refresh(argSelectedPaths As String[])
     
-    clearAll()
+    $iconView.Clear()
     initializeIcons(argSelectedPaths)
     $iconView.Refresh()
 
@@ -62,6 +46,11 @@ End
 Public Sub _new(argIconView As IconView)
     
     $iconView = argIconView
+    $clock = New NagatoDesktopTile2Clock($iconView)
+    $systemMonitor = New NagatoDesktopTile2SystemMonitor($iconView)
+    $rss = New NagatoDesktopTile2RssFeeds($iconView)
+    $weather = New NagatoDesktopTile2Weather($iconView)
+    $trashBin = New NagatoDesktopTile2TrashBin($iconView)
     
     initializeIcons([""])
         

@@ -18,19 +18,30 @@ Public Sub _new(argContainer As Container)
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView.IconView)
     $icons = New NagatoDesktopIconsHandler($iconView.IconView)
     $userInput = New NagatoDesktopUserInput($iconView.IconView) As "Handler"
-    $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Handler"
+    $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Observer"
 
 End
 
 Public Sub Handler_Signal(argEvent As Integer, argValues As Variant[])
     
     Select Case argEvent
-        Case NagatoObject.ObserverDelete
-            $userInput.Delete(Desktop.Path &/ argValues[0])
-        Case NagatoObject.ObserverModefy, NagatoObject.ViewForceReload, NagatoObject.ViewReload
+        Case NagatoObject.ViewForceReload, NagatoObject.ViewReload
             $userInput.Clear()
     End Select
 
     $icons.Refresh($userInput.Selection)
     
+End
+
+Public Sub Observer_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case NagatoObject.ObserverDelete
+            $userInput.Delete(Desktop.Path &/ argValues[0])
+        Case NagatoObject.ObserverModefy
+            $userInput.Clear()
+    End Select
+    
+    $icons.Refresh($userInput.Selection)
+
 End

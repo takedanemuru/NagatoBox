@@ -1,19 +1,24 @@
 ' Gambas class file
 
+Private $menuButton As MenuButton
+Private $text As String
+Private $iconName As String
+
 Public Sub _new(argContainer As Container, argText As String, argIcon As String, argMenu As String)
     
-    Dim yukiButton As New MenuButton(argContainer) As "MenuButton"
+    $menuButton = New MenuButton(argContainer) As "MenuButton"
     
-    With yukiButton
-        .Text = argText
+    With $menuButton
         .AutoResize = True
         .Arrow = False
-        .Picture = MikuruIcons.Get(argIcon)
         .Border = False
         .Menu = argMenu
         .Foreground = Color.White
         .Font.Bold = True
     End With
+    
+    $iconName = argIcon
+    $text = argText
     
 End
 
@@ -28,5 +33,17 @@ Public Sub MenuButton_Leave()
     
     Try Last.Foreground = Color.White
     If Not Error Then Last.Font.Bold = True
+    
+End
+
+Public Sub Toggle()
+    
+    If $menuButton.H = 1 Then
+        $menuButton.Text = ""
+        $menuButton.Picture = Null
+    Else 
+        $menuButton.Text = $text
+        $menuButton.Picture = MikuruIcons.Get($iconName)
+    End If
     
 End

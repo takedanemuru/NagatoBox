@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoMenuConstructor
+
+Private Sub addCopyToMenu(argPath As String)
+    
+    Dim yukiMenu As NagatoSubMenuCopyTo
+    
+    yukiMenu = New NagatoSubMenuCopyTo(Me._$rootMenu, argPath) As "TFEI"
+    
+End
+
+Private Sub addMoveToMenu(argPath As String)
+    
+    Dim yukiMenu As NagatoSubMenuMoveTo
+    
+    yukiMenu = New NagatoSubMenuMoveTo(Me._$rootMenu, argPath) As "TFEI"
+    
+End
+
+Public Sub _call(argPath As String)
+    
+    Me._$rootMenu.Children.Clear()
+    
+    With NagatoObject
+        Object.New("NagatoDefaultActionMenuDirectory", [Me._$rootMenu, argPath])
+            If Me._$rootMenu.Children.Count > 0 Then Me._AddContextMenu("", 0) ' As Spacer
+        Object.New("NagatoOpenWithApplicationMenu", [Me._$rootMenu, argPath])
+        Object.New("NagatoMenuItemRename", [Me._$rootMenu, argPath])
+        Object.New("NagatoMenuItemCopyFilePath", [Me._$rootMenu, argPath])
+        Object.New("NagatoMenuItemCreateLink", [Me._$rootMenu, argPath])
+        Object.New("NagatoMenuItemShowProperty", [Me._$rootMenu, argPath])
+            Me._AddContextMenu("", 0) ' As Spacer
+        Me._AddContextMenu(("Archive"), .CreateArchive, MikuruIcon.Get("hard-drive-download"))
+        addCopyToMenu(argPath)
+        If Access(argPath, gb.Write) Then addMoveToMenu(argPath)
+        Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
+        Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
+        Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("button-remove"))
+    End With
+
+End

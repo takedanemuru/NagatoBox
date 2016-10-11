@@ -4,6 +4,8 @@ Inherits NagatoWidget
 
 Private $recentApplicationsButton As NagatoRecentApplicationsButton
 
+Private $buttons As NagatoMenuButton[]
+
 Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As String)
     
     Dim yukiButton As NagatoMenuButton
@@ -12,11 +14,15 @@ Private Sub addMenuButton(argTitle As String, argCategory As String, argIcon As 
     yukiButton = New NagatoMenuButton(Me._$container, argTitle, argIcon, argCategory)
     yukiMenu = New NagatoPullDownMenuCategory(argCategory) As "TFEI"
     
+    $buttons.Add(yukiButton)
+    
 End
 
 Public Sub _InitializeWidget()
     
     $recentApplicationsButton = New NagatoRecentApplicationsButton(Me._$container) As "TFEI"
+
+    $buttons = New NagatoMenuButton[]
 
     addMenuButton(("Nagato"), "Nagato", "star")
     addMenuButton(("Develop"), "Developments", "wrench")
@@ -29,6 +35,17 @@ Public Sub _InitializeWidget()
     addMenuButton(("Settings"), "Settings", "equalizer")
     addMenuButton(("System"), "Systems", "computer")
     addMenuButton(("Utility"), "Utilities", "scissors")
-    'addMenuButton(("KDE"), "Kde4", MikuruIcons.Get("gear"))
+    
+End
+
+Public Sub Toggle()
+    
+    Dim yukiButton As NagatoMenuButton
+    
+    For Each yukiButton In $buttons
+        yukiButton.Toggle()
+    Next
+    
+    $recentApplicationsButton.Toggle()
     
 End

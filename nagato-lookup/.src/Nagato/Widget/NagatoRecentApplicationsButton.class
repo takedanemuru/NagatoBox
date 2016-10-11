@@ -13,3 +13,9 @@ Public Sub _InitializeWidget() 'override
     $pulldownMenu = New NagatoPullDownMenuRecent(MenuName) As "TFEI"
     
 End
+
+Public Sub Toggle()
+    
+    $menuButton.Toggle()
+    
+End

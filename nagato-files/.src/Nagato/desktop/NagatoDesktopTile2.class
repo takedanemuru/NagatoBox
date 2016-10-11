@@ -1,0 +1,44 @@
+' Gambas class file
+
+Create Private
+
+Public _$iconView As IconView
+Public _$observer As Observer
+
+Public Sub _OnTimer()
+    
+    
+    
+End
+
+Public Sub _OnReload()
+    
+    
+    
+End
+
+Public Sub Reload()
+    
+    Me._onReload()
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    
+    
+End
+
+Public Sub _new(argIconView As IconView)
+    
+    Me._$iconView = argIconView
+    Me._$observer = New Observer(HaruhiDesktop) As "Asakura"
+    Me._OptionalOnInitialize()
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    Me._OnTimer()
+    
+End

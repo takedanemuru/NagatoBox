@@ -37,6 +37,7 @@ Public Sub Form_Enter()
     
     Me.Height = HeightShow
     $netWm.SetHeight(Me.H)
+    $mainContainer.Toggle(False)
     
 End
 
@@ -45,8 +46,8 @@ Public Sub Form_Leave()
     If $lock.Locked Then Return
     
     Me.Height = HeightHide
-    $netWm.SetHeight(0)
-    $mainContainer.ClearSearchQuery()
+    $netWm.SetHeight(HeightHide)
+    $mainContainer.Toggle(True)
     
 End
 

@@ -1,10 +1,8 @@
 ' Gambas class file
 
-Inherits NagatoDesktopTile
+Inherits NagatoDesktopTile2
 
 Private Const FontSize As Integer = 10
-
-Private $iconView As IconView
 Private $trashObserver As NagatoDesktopTrashObserver
 
 Private Sub paintLabel()
@@ -17,7 +15,7 @@ Private Sub paintLabel()
     
 End
 
-Private Sub initializeIcon()
+Public Function getIcon() As Picture
     
     Dim yukiImage As Image = MikuruTileBaseImage[Color.DarkGreen, 128]
     
@@ -30,28 +28,38 @@ Private Sub initializeIcon()
         Paint.Fill()
     Paint.End()
     
-    Try $iconView[NagatoDesktopSpecialKey.TrashBin].Picture = yukiImage.Picture 
+    Return yukiImage.Picture
     
 End
 
-Public Sub Stop()
+Private Sub refreshIcon()
     
-    $trashObserver.Stop()
+    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.TrashBin)
+    If Not NagatoSettingsDesktopTile.ShowTrashBin Then Return
+    Me._$iconView.Add(NagatoDesktopSpecialKey.TrashBin, "", getIcon())
     
 End
 
-Public Sub _new(argIconView As IconView)
+Public Sub _OnReload()
     
-    $iconView = argIconView
-    $iconView.Add(NagatoDesktopSpecialKey.TrashBin, "")
+    refreshIcon()
+    
+End
+
+Public Sub _OptionalOnInitialize()
     
     $trashObserver = New NagatoDesktopTrashObserver As "TrashObserver"
-    initializeIcon()
+    
+End
+
+Public Sub _OnTimer() ' override
+    
+    'ignore
     
 End
 
 Public Sub TrashObserver_Changed()
     
-    initializeIcon()
+    refreshIcon()
     
 End

@@ -9,6 +9,7 @@ Private $renamedLabelPainter As New NagatoLabelPainterRenamed
 Private $copiedLabelPainter As New NagatoLabelPainterCopied
 Private $systemMonitorLabelPainter As New NagatoLabelPainterSystemMonitor
 Private $rssLabelPainter As New NagatoLabelPainterRss
+Private $weatherPainter As New NagatoLabelPainterWeather
 
 Public Sub _call(argMode As Integer)
     
@@ -34,6 +35,8 @@ Public Sub Paint(argMode As Integer, Optional argText As String)
                     $systemMonitorLabelPainter.Paint()
                 Case .SpecialRssText
                     $rssLabelPainter.Paint()
+                Case .SpecialWeather
+                    $weatherPainter.Paint()
                 Case .ModeNull
                     ' ignore
             End Select

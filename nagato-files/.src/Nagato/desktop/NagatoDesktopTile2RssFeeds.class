@@ -1,12 +1,10 @@
 ' Gambas class file
 
-Inherits NagatoDesktopTile
+Inherits NagatoDesktopTile2
 
 Private Const TextWidth As Integer = 112 ' TileSize - Margin * 2
 Private Const Margin As Integer = 8
 
-Private $iconView As IconView
-Private $observer As Observer
 Private $labelPainter As New NagatoPainterPathLabel
 Private $rssFeeds As New NagatoDesktopTileContentRssFeeds
 
@@ -32,7 +30,7 @@ Private Sub paintDescriptionShade(argText As String)
     
     Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TextWidth) + Margin * 2
     
-    Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Gray, 128))
+    Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Gray, 192))
     Paint.Rectangle(0, NagatoSettingsTile.Size - yukiHeight, NagatoSettingsTile.Size, yukiHeight)
     Paint.Fill()
     
@@ -71,26 +69,22 @@ Catch
     
 End
 
-Public Sub Stop()
+Public Sub _onReload()
     
+    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.RssFeeder)
     
+    If Not NagatoSettingsDesktopTile.ShowRss Then Return
     
-End
-
-Public Sub _new(argIconView As IconView)
-    
-    $iconView = argIconView
-    $iconView.Add(NagatoDesktopSpecialKey.RssFeeder, "", MikuruTileBaseImage[Color.Orange, 128].Picture)
-    
-    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    Me._$iconView.Add(NagatoDesktopSpecialKey.RssFeeder, "", getIcon())
     
 End
 
-Public Sub Asakura_Timer()
+Public Sub _OnTimer() ' override
     
-    If Not $iconView.Exist(NagatoDesktopSpecialKey.RssFeeder) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.RssFeeder) Then Return
     If Not $rssFeeds.EnsureActivation() Then Return
     
-    $iconView[NagatoDesktopSpecialKey.RssFeeder].Picture = getIcon()
+    Me._$iconView[NagatoDesktopSpecialKey.RssFeeder].Picture = getIcon()
+
     
 End
