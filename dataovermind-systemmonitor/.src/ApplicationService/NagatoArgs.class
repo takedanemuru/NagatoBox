@@ -1,0 +1,46 @@
+' Gambas class file
+
+Property Read All As Boolean
+Property Read SystemStatus As Boolean
+Property Read NetworkStatus As Boolean
+Property Read HardwareStatus As Boolean
+
+Private $all As Boolean = False
+Private $system As Boolean = False
+Private $network As Boolean = False
+Private $hardware As Boolean = False
+
+Public Sub Parse()
+    
+    Args.Begin("Usage")
+        $all = Args.Has("a", "all", "all")
+        $system = Args.Has("s", "system", "system")
+        $network = Args.Has("n", "network", "network")
+        $hardware = Args.Has("H", "hardware", "hardware")
+    Args.End()
+    
+End
+
+Private Function All_Read() As Boolean
+
+    Return $all
+
+End
+
+Private Function SystemStatus_Read() As Boolean
+
+    Return IIf($all, False, $system)
+
+End
+
+Private Function NetworkStatus_Read() As Boolean
+
+    Return IIf($all, False, $network)
+    
+End
+
+Private Function HardwareStatus_Read() As Boolean
+
+    Return IIf($all, False, $hardware)
+
+End

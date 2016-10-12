@@ -1,9 +1,10 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.9.90
+# Compiled with Gambas 3.9.0
 Title=dataovermind-systemmonitor
 Startup=Kyon
 Icon=pictures/information-balloon.png
-Version=42.5.15
+Version=42.6.18
+Component=gb.args
 Component=gb.data
 Component=gb.dbus
 Component=gb.settings
@@ -17,7 +18,7 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex
 Url=takedanemuru.github.io
 License=S.O.S. License
-PackageName=dataovermind-systemmonitor-42.5.15
+PackageName=dataovermind-systemmonitor-42.6.18
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"

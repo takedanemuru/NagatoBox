@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Property Read Enabled As Boolean
+
 Private $timer As Timer
 Private $observationStep As Integer = 0
 
@@ -29,4 +31,10 @@ Public Sub Timer_Timer()
         Raise Step
     End If
     
+End
+
+Private Function Enabled_Read() As Boolean
+
+    Return $timer.Enabled
+
 End

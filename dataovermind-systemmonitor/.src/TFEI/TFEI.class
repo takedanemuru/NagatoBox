@@ -92,25 +92,25 @@ End
 
 Private Function NetworkTransmitTotal_Read() As Integer
 
-    Return NagatoObserverFacadeNetwork.NetworkLoadTransmitTotal
+    Return NagatoObserverFacadeNetwork.TransmitTotal
 
 End
 
 Private Function NetworkTransmitBps_Read() As Float
 
-    Return NagatoObserverFacadeNetwork.NetworkLoadTransmitBps
+    Return NagatoObserverFacadeNetwork.TransmitBps
 
 End
 
 Private Function NetworkReceiveTotal_Read() As Integer
 
-    Return NagatoObserverFacadeNetwork.NetworkLoadReceiveTotal
+    Return NagatoObserverFacadeNetwork.ReceiveTotal
 
 End
 
 Private Function NetworkReceiveBps_Read() As Float
 
-    Return NagatoObserverFacadeNetwork.NetworkLoadReceiveBps
+    Return NagatoObserverFacadeNetwork.ReceiveBps
 
 End
 

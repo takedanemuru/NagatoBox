@@ -20,13 +20,12 @@ Private Sub setIcon(argDirectory As String, argSelection As String[], argType As
     
 End
 
-Private Sub initializeIcons(argSelectedPaths As String[])
+Private Sub refreshTiles(argSelectedPaths As String[])
     
     $clock.Reload()
     $systemMonitor.Reload()
     $rss.Reload()
     $weather.Reload()
-    'If NagatoSettingsDesktopTile.ShowWeather Then $weather = New NagatoDesktopTileWeather($iconView)
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)
@@ -38,7 +37,7 @@ End
 Public Sub Refresh(argSelectedPaths As String[])
     
     $iconView.Clear()
-    initializeIcons(argSelectedPaths)
+    refreshTiles(argSelectedPaths)
     $iconView.Refresh()
 
 End
@@ -52,6 +51,6 @@ Public Sub _new(argIconView As IconView)
     $weather = New NagatoDesktopTile2Weather($iconView)
     $trashBin = New NagatoDesktopTile2TrashBin($iconView)
     
-    initializeIcons([""])
+    refreshTiles([""])
         
 End

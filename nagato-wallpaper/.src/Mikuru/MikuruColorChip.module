@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub _get(argColor As Integer, argHeight As Integer, argWidth As Integer) As Picture
+    
+    Dim yukiImage As New Image(argWidth, argHeight, argColor)
+    
+    Return yukiImage.Picture
+    
+End

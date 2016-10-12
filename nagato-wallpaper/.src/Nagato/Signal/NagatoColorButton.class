@@ -2,21 +2,27 @@
 
 Inherits NagatoSignal
 
-Private $colorButton As ColorButton
+Private $colorButton As Button
 
 Public Sub _new(argContainer As Container)
     
-    $colorButton = New ColorButton(argContainer) As "ColorButton"
+    $colorButton = New Button(argContainer) As "ColorButton"
     
     With $colorButton
-        .Color = NagatoSettings.LastColor
+        .Picture = MikuruColorChip[NagatoSettings.LastColor, 16, 26]
         .W = 42
+        .Tooltip = ("Select Background Color")
     End With
     
 End
 
-Public Sub ColorButton_Change()
+Public Sub ColorButton_Click()
     
-    Raise Signal(MikuruSignal.PropertyColorChanged, [$colorButton.Value])
+    If Dialog.SelectColor() Then Return
+    
+    NagatoSettings.LastColor = Dialog.Color
+    $colorButton.Picture = MikuruColorChip[NagatoSettings.LastColor, 16, 26]
+    
+    Raise Signal(MikuruSignal.PropertyColorChanged, [NagatoSettings.LastColor])
     
 End

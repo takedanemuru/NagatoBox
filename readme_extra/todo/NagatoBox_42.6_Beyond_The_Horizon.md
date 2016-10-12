@@ -4,6 +4,10 @@ until end of 2016
 
 ## Applications
 
+### dataovermind-systemmonitor
+
++ cli interface
+
 ### nagato-audio-editor
 
 new package : qt5 front-end for `sox`
