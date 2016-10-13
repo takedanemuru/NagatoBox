@@ -6,7 +6,9 @@ a software suite for Openbox3.
 
 a software suite for openbox3.
 
-![screenshot_002](./readme_extra/screenshot_002.png)
+![screenshot_002](./readme_extra/images/screenshot_desktop.png)
+![screenshot_002](./readme_extra/images/screenshot_notify.png)
+![screenshot_002](./readme_extra/images/screenshot_menu.png)
 
 ## Important Notice
 
@@ -14,7 +16,7 @@ Only watch this git from a distance in a well-lit room.
 
 ## Dependency
 
-Gambas3 3.8 or later varsion
+Gambas3 3.9 or later varsion
 
 ## Ubuntu and its variants
 
@@ -53,4 +55,4 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 ## To Do
 
-[TODO](./readme_extra/todo/NagatoBox_42.5_Lonely_Doll.md)
+[TODO](./readme_extra/todo/NagatoBox_42.6_Beyond_The_Horizon.md)
