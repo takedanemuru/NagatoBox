@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $trayIcon As TrayIcon
+Private $timer As New Timer As "Timer"
 
 Public Sub _new()
     
@@ -10,5 +11,13 @@ Public Sub _new()
         .Icon = MikuruIcon["battery"]
         .Show()
     End With
+    
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    $trayIcon.Tooltip = "foo"
     
 End

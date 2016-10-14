@@ -29,6 +29,7 @@ End
 Public Sub Register()
     
     DBus.Name = Me.Service
+    DBus.Unique = True
     DBus.Session.Register(TFEI, Me.ObjectPath)
     
 End

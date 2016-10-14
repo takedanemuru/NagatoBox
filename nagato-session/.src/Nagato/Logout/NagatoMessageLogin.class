@@ -17,11 +17,15 @@ End
 
 Private Sub checkClosable()
     
+    If $position > 160 Then Raise RequestClose
     If String.Len($message) + 40 > $position Then Return
     If Not DBus.Session.Applications.Exist(BusName) Then Return
-    If Not DBus[BusName][ObjectPath, Interface].Ready Then Return
+    'If Not DBus[BusName][ObjectPath, Interface].Ready Then Return
     
     Raise RequestClose
+    
+Catch
+    Return
     
 End
 

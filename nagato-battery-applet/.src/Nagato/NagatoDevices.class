@@ -8,8 +8,6 @@ Private Const Service As String = "system://org.freedesktop.UPower"
 Private Const InterfaceUPowerDevice As String = "org.freedesktop.UPower.Device"
 Private Const InterfaceDbusProperties As String = "org.freedesktop.DBus.Properties"
 
-
-
 Public Sub GetTimeToEmpty() As Float
     
     Dim yukiProxy As DBusProxy
@@ -24,6 +22,8 @@ Public Sub GetTimeToEmpty() As Float
         Debug yukiProxy.Get(InterfaceUPowerDevice, "EnergyFullDesign")
         Debug yukiProxy.Get(InterfaceUPowerDevice, "Capacity")
         Debug yukiProxy.Get(InterfaceUPowerDevice, "NativePath")
+        Debug yukiProxy.Get(InterfaceUPowerDevice, "Online")
+        Debug yukiProxy.Get(InterfaceUPowerDevice, "PowerSupply")
     Next
     
     Return 0

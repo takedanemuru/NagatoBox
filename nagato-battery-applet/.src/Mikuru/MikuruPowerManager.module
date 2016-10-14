@@ -21,8 +21,8 @@ Public Sub Activate()
     
     $proxy = DBus[Bus][ObjectPath, Interface]
     
-    Debug $proxy.DaemonVersion
-    Debug $proxy.GetCriticalAction()
+    ' Debug $proxy.DaemonVersion
+    ' Debug $proxy.GetCriticalAction()
     
     initializeDevices()
     

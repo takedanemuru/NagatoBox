@@ -22,6 +22,7 @@ Public Sub Start()
     If DBus.Session.Applications.Exist(Service) Then Return
     
     DBus.Name = Service
+    DBus.Unique = True
     NagatoWeatherCache.Reload()
     DBus.Register(NagatoInterface, ObjectPath, [Interface])
     
