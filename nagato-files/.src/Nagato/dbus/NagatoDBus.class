@@ -5,8 +5,7 @@ Create Static
 Property Read Proxy As DBusProxy
 
 Public Const Service As String = "org.gambas.nagato-files"
-'Public Const ObjectPath As String = "/org/nagato/files"
-Public Const ObjectPath As String = "/"
+Public Const ObjectPath As String = "/org/nagato/files"
 Public Const Interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
 
 Public Function DesktopActivated() As Boolean
