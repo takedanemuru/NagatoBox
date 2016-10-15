@@ -2,54 +2,26 @@
 
 Inherits NagatoDesktopTile2
 
-Private Const TextWidth As Integer = 112 ' TileSize - Margin * 2
-Private Const Margin As Integer = 8
+Private $descriptionPainter As NagatoTilePainterDescription
+Private $rssFeeds As NagatoDesktopTileContentRssFeeds
 
-Private $labelPainter As New NagatoPainterPathLabel
-Private $rssFeeds As New NagatoDesktopTileContentRssFeeds
-
-Private Function getBaseImageText() As Image
+Private Sub setBackgroundColor()
     
-    Dim yukiBaseImage As Image = MikuruTileBaseImage[Color.Orange, 192]
-    
-    Paint.Begin(yukiBaseImage)
-        NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialRssText)
-    Paint.End()
-    
-    Return yukiBaseImage
+    If $rssFeeds.HasThumbnail Then
+        $descriptionPainter.BackgroundColor = MikuruColor.Transparent(Color.Gray, 192)
+    Else
+        $descriptionPainter.BackgroundColor = Color.Transparent
+    Endif
     
 End
 
 Private Function getBaseImage(argTitle As String) As Image
     
-    Return IIf($rssFeeds.HasThumbnail, $rssFeeds.GetThumbnail(argTitle), getBaseImageText())
-    
-End
-
-Private Sub paintDescriptionShade(argText As String)
-    
-    Dim yukiHeight As Integer = Paint.Font.RichTextHeight(argText, TextWidth) + Margin * 2
-    
-    Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Gray, 192))
-    Paint.Rectangle(0, NagatoSettingsTile.Size - yukiHeight, NagatoSettingsTile.Size, yukiHeight)
-    Paint.Fill()
-    
-    Paint.DrawPicture(MikuruIcon("feed-alt"), 4, 4)
-    
-End
-
-Private Sub paintDescription(argText As String)
-    
-    Dim yukiHeight As Integer 
-    Dim yukiY As Integer 
-    
-    Paint.Font.Size = Application.Font.Size
-    Paint.Font.Bold = True
-    yukiHeight = Paint.Font.RichTextHeight(argText, TextWidth)
-    yukiY = NagatoSettingsTile.Size - yukiHeight - Margin
-    Paint.Brush = Paint.Color(Color.White)
-    Paint.DrawRichText(argText, Margin, yukiY, TextWidth, yukiHeight, Align.Center)
-    Paint.Fill()
+    If $rssFeeds.HasThumbnail Then
+        Return $rssFeeds.GetThumbnail(argTitle)
+    Else
+        Return MikuruTileBaseImage[Color.Orange, 192]
+    Endif
     
 End
 
@@ -58,8 +30,9 @@ Public Function getIcon() As Picture
     Dim yukiImage As Image = getBaseImage($rssFeeds.Title)
     
     Paint.Begin(yukiImage)
-        If $rssFeeds.HasThumbnail Then paintDescriptionShade($rssFeeds.Title)
-        paintDescription($rssFeeds.Title)
+        setBackgroundColor()
+        $descriptionPainter.Paint($rssFeeds.Title)
+        NagatoLabelPainterFacade(MikuruTileMode.SpecialRssText)
     Paint.End()
     
     Return yukiImage.Picture
@@ -85,6 +58,13 @@ Public Sub _OnTimer() ' override
     If Not $rssFeeds.EnsureActivation() Then Return
     
     Me._$iconView[NagatoDesktopSpecialKey.RssFeeder].Picture = getIcon()
+    
+End
 
+Public Sub _OptionalOnInitialize()
+    
+    $descriptionPainter = New NagatoTilePainterDescription(Color.Transparent)
+    $rssFeeds = New NagatoDesktopTileContentRssFeeds
+    $rssFeeds.ClearThumbnails()
     
 End

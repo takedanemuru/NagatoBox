@@ -21,23 +21,14 @@ Catch
     
 End
 
-Private Sub increaseFeedIndex()
-    
-    $itemIndex = 0
-    
-    Inc $feedIndex
-    
-    If $proxy.FeedCount = $feedIndex Then $feedIndex = 0
-    
-    $proxy.GetFeedTitle($feedIndex)
-    
-End
-
 Public Sub Next()
     
-    Inc $itemIndex
-    
-    If $proxy.GetFeedItemsCount($feedIndex) = $itemIndex Then increaseFeedIndex()
+    $itemIndex = IIf($proxy.GetFeedItemsCount($feedIndex) = $itemIndex + 1, 0, $itemIndex + 1)
+
+    If $itemIndex = 0 Then 
+        $feedIndex = IIf($proxy.FeedCount = $feedIndex + 1, 0, $feedIndex + 1)
+        $proxy.GetFeedTitle($feedIndex)
+    End If
     
 End
 
@@ -60,6 +51,23 @@ Public Function GetFeedItem() As String[]
     If Not Object.IsValid($proxy) Then Return ["", "", "", ""]
     
     Return $proxy.GetFeedItem($feedIndex, $itemIndex)
+    
+End
+
+Public Function GetNextFeedItem() As String[]
+    
+    Dim yukiFeedIndex As Integer = $feedIndex
+    Dim yukiItemIndex As Integer = $itemIndex
+    
+    yukiItemIndex = IIf($proxy.GetFeedItemsCount($feedIndex) = yukiItemIndex + 1, 0, yukiItemIndex + 1)
+    If yukiItemIndex = 0 Then
+        yukiFeedIndex = IIf($proxy.FeedCount = yukiFeedIndex + 1, 0, yukiFeedIndex + 1)
+    Endif
+    
+    Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)
+    
+Catch
+    Return ["", "", "", ""]
     
 End
 

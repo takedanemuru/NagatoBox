@@ -1,11 +1,13 @@
 ' Gambas class file
 
 Property Read Ready As Boolean
+Property Read Second As Integer
 
 Private $desktop As NagatoDesktop
 Private $panel As NagatoDesktopPanel
 Private $timer As New Timer As "DesktopTimer"
 Private $ready As Boolean = False
+Private $second As Integer
 
 Event Timer
 
@@ -55,6 +57,8 @@ End
 
 Public Sub DesktopTimer_Timer()
     
+    $second = Second(Now())
+    
     Raise Timer
     
 End
@@ -62,5 +66,11 @@ End
 Private Function Ready_Read() As Boolean
 
     Return $ready
+
+End
+
+Private Function Second_Read() As Integer
+
+    Return $second
 
 End

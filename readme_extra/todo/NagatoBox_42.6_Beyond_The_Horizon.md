@@ -27,7 +27,10 @@ new package : qt5 front-end for `sox`
 ### nagato-desktop (nagato-files -d)
 
 + ~~fix : avoid error on clock tile when new tiles are added.~~
-+ refine rss tile. use standard label and limit over height text.
++ ~~refine rss tile. use standard label and limit over height text.~~
++ ~~refine symlink tag.~~
+
+![image: screenshot_2016年10月15日_14：29：10](../images/screenshot_2016年10月15日_14：29：10.png)
 
 ### nagato-lookup (v42.6.38)
 

@@ -7,7 +7,7 @@ Private $url As String
 
 Private Sub ensureWorkingDirectory()
     
-    If Not Exist(Me.WOrkingDirectory) Then Mkdir Me.WorkingDirectory
+    If Not Exist(Me.WorkingDirectory) Then Mkdir Me.WorkingDirectory
     
 End
 
@@ -53,7 +53,7 @@ End
 
 Public Sub HttpClient_Finished()
     
-    
+    'Debug "Finished"
     
 End
 

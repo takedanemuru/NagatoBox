@@ -6,6 +6,16 @@ Property Read HasThumbnail As Boolean
 Private $feeder As New NagatoDBusAccessRssFeeder
 Private $thumbnailer As New NagatoDesktopRssThumbnail
 
+Public Sub ClearThumbnails()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir($thumbnailer.WorkingDirectory)
+        Try Kill yukiPath
+    Next
+    
+End
+
 Public Function GetThumbnail(argTitle As String) As Image
     
     Return $thumbnailer.GetThumbnail(argTitle)
@@ -17,10 +27,8 @@ Public Function EnsureActivation() As Boolean
     If Not $feeder.Activated Then $feeder.Activate()
     If Not $feeder.Activated Then Return False
     
-    If Second(Now()) Mod 15 = 0 Then 
-        $feeder.Next()
-        $thumbnailer.SetUrl($feeder.GetFeedItem())
-    End If
+    If (HaruhiDesktop.Second - 5) Mod 15 = 0 Then $thumbnailer.SetUrl($feeder.GetNextFeedItem())
+    If HaruhiDesktop.Second Mod 15 = 0 Then $feeder.Next()
     
     Return True
     
