@@ -3,10 +3,9 @@
 Public Sub _get(argColor As Integer, Optional argTransparency As Integer = 256) As Image
     
     Dim yukiColor As Integer = MikuruColor.Transparent(argColor, argTransparency)
-    Dim yukiSize As Integer = NagatoSettingsTile.Size
+    Dim yukiSize As Integer = MikuruUxTile.TileSize
     Dim yukiImage As New Image(yukiSize, yukiSize, yukiColor)
     
     Return yukiImage
     
 End
-

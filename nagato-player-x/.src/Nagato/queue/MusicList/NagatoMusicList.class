@@ -11,6 +11,17 @@ Private $position As New NagatoMusicPosition As "TFEI"
 Private $handlerSorting As NagatoMusicListHandlerSorting
 Private $handlerEnqueue As NagatoMusicListHandlerEnqueue
 
+Private Sub move(argSignal As Integer)
+    
+    If argSignal = MikuruSignal.QueueNext Then $position.Next($musicElements.Count)
+    If argSignal = MikuruSignal.QueueBack Then $position.Back($musicElements.Count)
+    If Exist($musicElements[$position.Current].Path) Then Return
+    Print Subst("YUKI.N > I coudn't find &1, skip it.", $musicElements[$position.Current].Title)
+    Me._call(argSignal, Null)
+    
+End
+
+
 Public Function SetIndex(argIndex As Integer) As Boolean
     
     Return $position.SetIndex(argIndex, $musicElements.Count)
@@ -49,10 +60,8 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
     Select argSignal
         Case MikuruSignal.ListSaveAs
             $musicElements.SaveAsPlayList(argValues[0], argValues[1])
-        Case MikuruSignal.QueueNext
-            $position.Next($musicElements.Count)
-        Case MikuruSignal.QueueBack
-            $position.Back($musicElements.Count)
+        Case MikuruSignal.QueueBack, MikuruSignal.QueueNext
+            move(argSignal)
         Case MikuruSignal.ListSubHeaderSorting To MikuruSignal.ListSubHeaderSorting + 99
             $handlerSorting(argSignal, argValues)
         Case MikuruSignal.ListSubHeaderEnqueue To MikuruSignal.ListSubHeaderEnqueue + 99

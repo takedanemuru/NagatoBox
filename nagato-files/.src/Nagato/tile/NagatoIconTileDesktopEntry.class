@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoIconTile
+
+Private $descriptionPainter As New NagatoDescriptionPainterStandard
+
+Public Sub _OnDrawIcon(argPath As String)
+    
+    Dim yukiIcon As Picture = MikuruIconDesktopEntry[argPath, MikuruUxTile.IconSize]
+
+    Me._PaintIcon(yukiIcon)
+    
+End
+
+Public Sub _OnDrawDescription(argPath As String)
+    
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+
+    $descriptionPainter.Paint(yukiDesktopFile.Name)
+    
+End
+
+Public Sub _OnGetBackgroundColor() As Integer
+    
+    Return MikuruColor.Transparent(Color.Violet, 128)
+    
+End

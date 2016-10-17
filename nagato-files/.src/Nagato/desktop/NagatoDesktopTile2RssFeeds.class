@@ -2,7 +2,7 @@
 
 Inherits NagatoDesktopTile2
 
-Private $descriptionPainter As NagatoTilePainterDescription
+Private $descriptionPainter As NagatoDescriptionPainterStandard
 Private $rssFeeds As NagatoDesktopTileContentRssFeeds
 
 Private Sub setBackgroundColor()
@@ -63,7 +63,7 @@ End
 
 Public Sub _OptionalOnInitialize()
     
-    $descriptionPainter = New NagatoTilePainterDescription(Color.Transparent)
+    $descriptionPainter = New NagatoDescriptionPainterStandard(Color.Transparent)
     $rssFeeds = New NagatoDesktopTileContentRssFeeds
     $rssFeeds.ClearThumbnails()
     

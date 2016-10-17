@@ -64,6 +64,7 @@ End
 
 Public Sub SelectionMove(argSignal As Integer, argIndexes As Integer[])
     
+    Me.Refresh()
     $selection.Move(argSignal, argIndexes)
     
 End

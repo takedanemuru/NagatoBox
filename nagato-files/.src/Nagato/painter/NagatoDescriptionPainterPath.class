@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoDescriptionPainter
+
+Public Function _OnGetDescription(argText As String) As String
+    
+    Dim yukiText As String = File.Name(argText)
+    Dim yukiLength As Integer
+    
+    If Me._IsLowerThanLimit(yukiText) Then Return yukiText
+    
+    For yukiLength = String.Len(yukiText) - 1 DownTo 1 
+        yukiText = String.Left(File.BaseName(yukiText), yukiLength) & "..." & File.Ext(yukiText)
+        If Me._IsLowerThanLimit(yukiText) Then Return yukiText
+    Next
+    
+    Return ""
+    
+End

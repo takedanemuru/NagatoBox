@@ -40,7 +40,9 @@ Public Sub Refresh(Optional argLastSelected As String)
     
     If argLastSelected Then ensureVisible(argLastSelected)
     
-    If $iconView.IconView.Count = 0 Then $iconView.IconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+    If $iconView.IconView.Count > 0 Then Return
+    
+    $iconView.IconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
     
 End
 
@@ -78,7 +80,8 @@ Public Sub Filter(argQuery As String)
     $iconView.IconView.Clear()
     setIcons(gb.Directory, argQuery)
     setIcons(gb.File, argQuery)
-    If $iconView.IconView.Count = 0 Then $iconView.IconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+    If $iconView.IconView.Count > 0 Then Return
+    $iconView.IconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
 
 End
 

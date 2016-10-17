@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoIconTile
+
+Private $descriptionPainter As New NagatoDescriptionPainterStandard
+
+Private Function getFolderDescription(argPath As String) As String
+    
+    Dim yukiText As String = (File.Name(argPath))
+    Dim yukiFolders As String = Subst$("folder:&1", Dir(argPath, "*", gb.Directory).Count)
+    Dim yukiFiles As String = Subst$("file:&1", Dir(argPath, "*", gb.File).Count)
+    
+    Return yukiText & "<br>" & yukiFolders & " " & yukiFiles
+    
+End
+
+Public Sub _OnDrawIcon(argPath As String)
+    
+    Me._PaintIcon(MikuruIcon.GetDirectory(argPath, MikuruUxTile.IconSize))
+    
+End
+
+Public Sub _OnDrawDescription(argPath As String)
+    
+    $descriptionPainter.Paint(getFolderDescription(argPath))
+    
+End
+
+Public Sub _OnGetBackgroundColor() As Integer
+    
+    Return MikuruColor.Transparent(Color.Blue, 192)
+    
+End

@@ -4,7 +4,7 @@ Inherits NagatoIconViewHandler
 
 Private Sub setNotFound()
     
-    Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetNotFoundTile())
+    Me._$iconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
     
 End
 
@@ -72,7 +72,7 @@ End
 Public Sub ShowLostDirectory()
     
     Me._$iconView.Clear()
-    Me._$iconView.Add("NOTFOUND", "", MikuruTile.GetLostDirectoryTile())
+    Me._$iconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
     
 Catch
     Debug Error.Text

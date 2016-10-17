@@ -7,7 +7,7 @@ Private Sub refreshSelection(argIndexes As Integer[])
     Dim yukiIndex As Integer
     
     For Each yukiIndex In argIndexes
-        Try Me._$grids.Rows[yukiIndex].Selected = True
+        Try Me._$gridView.Rows[yukiIndex].Selected = True
     Next
     
 End
@@ -15,9 +15,9 @@ End
 Private Function ensureVisible(argSignal As Integer, argIndexes As Integer[]) As Integer
     
     If argSignal = MikuruSignal.BroadcastSelectionUp Then
-        Me._$grids[argIndexes[0], 0].EnsureVisible()
+        Me._$gridView[argIndexes[0], 0].EnsureVisible()
     Else ' If MikuruSignal.BroadcastSelectionDown
-        Me._$grids[argIndexes[argIndexes.Max], 0].EnsureVisible()
+        Me._$gridView[argIndexes[argIndexes.Max], 0].EnsureVisible()
     Endif
     
 End
@@ -26,7 +26,6 @@ Public Sub Move(argSignal As Integer, argIndexes As Integer[])
     
     Dim yukiIndexes As Integer[] = argIndexes.Sort()
     
-    Me.Refresh()
     refreshSelection(argIndexes)
     ensureVisible(argSignal, yukiIndexes)
     

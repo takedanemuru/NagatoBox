@@ -3,6 +3,7 @@
 Inherits NagatoObject
 
 Property Read Current As Integer
+Property Read NextIndex As Integer
 
 Private $randomOrder As New NagatoRandomizedOrder
 Private $index As New NagatoMusicPositionIndex
@@ -72,5 +73,18 @@ Public Function SetIndex(argValue As Integer, Optional argMax As Integer) As Boo
 
     $index.Current = argValue
     Return True
+
+End
+
+Private Function NextIndex_Read() As Integer
+
+    Dim yukiIndex As Integer = IIf($index.Current + 1 > $index.Max, 0, $index + 1)
+    
+    If NagatoSettingsMusic.Shuffle Then
+        Return $randomOrder[yukiIndex]
+    Else
+        Return yukiIndex
+    Endif
+    
 
 End

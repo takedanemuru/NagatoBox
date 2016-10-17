@@ -11,6 +11,7 @@ Public Sub Form_Open()
     $pictureSelector = New FileChooser(Me) As "PictureSelector"
 
     With $pictureSelector
+        .Dir = Desktop.GetDirectory("PICTURES")
         .Expand = True
         .ShowPreview = True
         .FileView.IconSize = 128

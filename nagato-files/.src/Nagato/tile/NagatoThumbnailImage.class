@@ -2,26 +2,12 @@
 
 Inherits NagatoThumbnail
 
-Private $labelPainter As New NagatoLabelPainterBroken
-
-Private Function getBrokenImage() As Image
-    
-    Dim yukiImage As Image = MikuruTile.GetBrokenTile().Image
-    
-    Paint.Begin(yukiImage)
-        $labelPainter.Paint()
-    Paint.End()
-    
-    Return yukiImage
-    
-End
-
 Public Function _GetIconImage(argPath As String) As Image
     
     Return Image.Load(argPath)
     
 Catch
-    Return getBrokenImage()
+    Return NagatoIconTileBrokenFile.Get(argPath)
     
 End
 

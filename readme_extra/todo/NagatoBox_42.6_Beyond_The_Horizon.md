@@ -1,12 +1,15 @@
 # NagatoBox 42.6 "Beyond The Horizon"
 
-until end of 2016
++ until end of 2016
++ ~~use DBus.Unique property~~
++ get more weather images from "pixabey"
++ check double-j-design new web site.
 
 ## Applications
 
 ### dataovermind-systemmonitor
 
-+ cli interface
++ ~~cli interface~~
 
 ### nagato-audio-editor
 
@@ -43,7 +46,8 @@ new package : qt5 front-end for `sox`
 
 ### nagato-player-x
 
-+ record last used directory for Choose Dialogs
++ ~~record last used directory for Choose Dialogs~~
++ ~~fix : avoid crash when move index to unexisted path.~~
 
 ### nagato-web
 

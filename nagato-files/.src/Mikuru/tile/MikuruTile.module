@@ -1,52 +1,36 @@
 ' Gambas module file
 
-Private $directoryTile As New NagatoTileDirectory
-Private $applicationTile As New NagatoTileApplication
-Private $fileTile As New NagatoTileFile
-Private $voidTile As New NagatoTileVoid
-Private $brokenTile As New NagatoTileBroken
-Private $lostDirectoryTile As New NagatoTileLostDirectory
+Private $headerSetter As New NagatoHeaderSetter
 Private $symbolSetter As New NagatoSymbolSetter
+
+Private Function getBaseTile(argPath As String) As Picture
+    
+    Select Case MikuruMimeType.GetType(argPath)
+        Case MikuruMimeType.TypeDirectory
+            Return NagatoIconTileDirectory.Get(argPath)
+        Case MikuruMimeType.TypeImage
+            Return NagatoThumbnailImage.Get(argPath)
+        Case MikuruMimeType.TypePdf
+            Return NagatoThumbnailPdf.Get(argPath)
+        Case MikuruMimeType.TypeApplication
+            Return NagatoIconTileDesktopEntry.Get(argPath)
+        Case MikuruMimeType.TypeVideo
+            Return NagatoThumbnailVideo.Get(argPath)
+        Default
+            Return NagatoIconTileOtherFile.Get(argPath)
+    End Select
+    
+End
 
 Public Sub _call(argPath As String, argSelected As Boolean) As Picture
     
     Dim yukiTile As Picture
     
-    If Not Access(argPath) Then Return $brokenTile(argPath, argSelected)
+    If Not Access(argPath) Then Return NagatoIconTileBrokenFile.Get(argPath)
     
-    Select Case MikuruMimeType.GetType(argPath)
-        Case MikuruMimeType.TypeDirectory
-            yukiTile = $directoryTile(argPath, argSelected)
-        Case MikuruMimeType.TypeImage
-            yukiTile = NagatoThumbnailImage.Get(argPath, argSelected)
-        Case MikuruMimeType.TypePdf
-            yukiTile = NagatoThumbnailPdf.Get(argPath, argSelected)
-        Case MikuruMimeType.TypeApplication
-            yukiTile = $applicationTile(argPath, argSelected)
-        Case MikuruMimeType.TypeVideo
-            yukiTile = NagatoThumbnailVideo.Get(argPath, argSelected)
-        Default
-            yukiTile = $fileTile(argPath, argSelected)
-    End Select
+    yukiTile = getBaseTile(argPath)
+    yukiTile = $headerSetter(yukiTile, MikuruTileMode(argPath, argSelected))
     
     Return $symbolSetter(yukiTile, argPath)
-    
-End
-
-Public Function GetNotFoundTile() As Picture
-    
-    Return $voidTile("", False)
-    
-End
-
-Public Function GetLostDirectoryTile() As Picture
-    
-    Return $lostDirectoryTile("", False)
-    
-End
-
-Public Function GetBrokenTile() As Picture
-    
-    Return $brokenTile("", False)
     
 End
