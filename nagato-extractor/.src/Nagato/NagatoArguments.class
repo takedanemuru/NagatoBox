@@ -26,6 +26,6 @@ End
 
 Private Function OutDir_Read() As String
 
-    Return $outDir
+    Return IIf(Exist($outDir), $outDir, "")
 
 End

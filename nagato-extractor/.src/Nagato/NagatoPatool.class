@@ -2,17 +2,49 @@
 
 Create Static
 
-Public Sub Extract(argPathsLine As String)
+Private Function getDestinationDirectory() As String
     
     Dialog.Title = ("Select directory")
     Dialog.Path = User.Home
     
-    If NagatoArguments.OutDir <> "" And If Exist(NagatoArguments.OutDir) Then
-        Shell Subst$("patool extract --outdir &1 &2", NagatoArguments.OutDir, argPathsLine) Wait
-        Message.Info(Subst$("YUKI.N > Files has been extracted to &1", NagatoArguments.OutDir))
-    Else If Not Dialog.SelectDirectory() Then
-        Shell Subst$("patool extract --outdir &1 &2", Dialog.Path, argPathsLine) Wait
-        Message.Info(Subst$("YUKI.N > Files has been extracted to &1", Dialog.Path))
-    Endif
+    If NagatoArguments.OutDir <> "" Then Return NagatoArguments.OutDir
+    If Not Dialog.SelectDirectory() Then Return Dialog.Path
+
+    Return ""
+    
+End
+
+Private Sub doesViolatePath(argDirectory As String, argPathsLine As String) As Boolean
+    
+    Dim yukiOutput As String
+    Dim yukiLine As String
+    Dim yukiFlag As Boolean = False
+    
+    Shell Subst$("patool list &1", argPathsLine) To yukiOutput
+    
+    For Each yukiLine In Split(yukiOutput, "\n", "", True)
+        If yukiLine Begins "----------" Then 
+            yukiFlag = Not yukiFlag
+        Else If yukiFlag Then
+             If Exist(argDirectory &/ Split(yukiLine, " ", "", True)[5]) Then Return True
+        End If
+    Next
+    
+    Return False
+    
+End
+
+Public Sub Extract(argPathsLine As String)
+    
+    Dim yukiDestinationDirectory As String = getDestinationDirectory()
+    
+    If Not Exist(yukiDestinationDirectory) Then
+        Message.Error("YUKI.N > Destination directory does not exist")
+    Else If doesViolatePath(yukiDestinationDirectory, argPathsLine) Then 
+        Message.Error("YUKI.N > Exracted file(s) may violate existed path. Change destination directory.")
+    Else
+        Shell Subst$("patool extract --outdir &1 &2", yukiDestinationDirectory, argPathsLine) 
+        Message.Info(Subst$("YUKI.N > Files has been extracted to &1", yukiDestinationDirectory))
+    End If
     
 End

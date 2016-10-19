@@ -11,6 +11,10 @@
 
 + ~~cli interface~~
 
+### nagato-archiver (v42.6.7)
+
++ ~~fix : check destination paths~~
+
 ### nagato-audio-editor
 
 new package : qt5 front-end for `sox`
@@ -23,6 +27,10 @@ new package : qt5 front-end for `sox`
 
 + ~~fix : project icon data is read from .project. does not depend on icon file itself.~~
 
+### nagato-extractor (v42.6.4)
+
++ ~~fix  : check path violation.~~
+
 ### nagato-files (v42.6.104)
 
 + ~~new : redesign symlink tag~~
@@ -32,6 +40,8 @@ new package : qt5 front-end for `sox`
 + ~~fix : avoid error on clock tile when new tiles are added.~~
 + ~~refine rss tile. use standard label and limit over height text.~~
 + ~~refine symlink tag.~~
+
+### happy halloween !!
 
 ![image: screenshot_2016年10月15日_14：29：10](../images/screenshot_2016年10月15日_14：29：10.png)
 

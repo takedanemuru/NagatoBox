@@ -2,10 +2,14 @@
 
 Create Static
 
-Public Sub Create(argPathsLine As String, argPath As String)
+Public Sub Create(argPathsLine As String, argDestinationPath As String)
     
-    Shell Subst$("patool --verbose create &1 &2", argPath, argPathsLine) Wait
+    Shell Subst$("patool --verbose create &1 &2", argDestinationPath, argPathsLine) Wait
     
-    Message.Info(Subst$("YUKI.N > &1 has been created.", File.Name(argPath)))
+    If Exist(argDestinationPath) Then
+        Message.Info(Subst$("YUKI.N > &1 has been created.", File.Name(argDestinationPath)))
+    Else
+        Message.Error("YUKI.N > Some error occurred. Failed to create archive file.")
+    End If
     
 End

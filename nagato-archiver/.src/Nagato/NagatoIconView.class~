@@ -65,6 +65,8 @@ Public Sub Asakura_Drop()
     'If Drag.Format <> "text/uri-list" Then Return
     If Not Drag.Formats.Exist("text/uri-list") Then Return
     
+    Debug Drag.Data
+    
     Raise Drop(NagatoDrag2.GetPaths(Drag.Data))
     
 End

@@ -5,22 +5,9 @@ Inherits NagatoObject
 Private $selection As New NagatoSelection
 Private $iconView As NagatoIconViewInitializerTrashBin
 Private $lastSelected As String
+Private $tileSetter As NagatoIconViewTileSetter
 
 Event Selected(argCount As Integer)
-
-Private Sub setIcons(argType As Integer, Optional argQuery As String)
-    
-    Dim yukiPath As String
-    Dim yukiFullPath As String
-    
-    For Each yukiPath In Dir(MikuruTrashPath.Files, "*", argType).Sort(gb.IgnoreCase)
-        yukiFullPath = MikuruTrashPath.Files &/ yukiPath
-        If Not Exist(yukiFullPath) Then Continue
-        If argQuery And If (yukiPath Not Like "*" & argQuery & "*") Then Continue
-        $iconView.IconView.Add(yukiFullPath, "", MikuruTile(yukiFullPath, $selection.Exist(yukiFullPath)))
-    Next
-    
-End
 
 Private Sub ensureVisible(argPath As String)
     
@@ -32,14 +19,9 @@ End
 
 Public Sub Refresh(Optional argLastSelected As String)
     
-    $iconView.IconView.Clear()
-    
-    setIcons(gb.Directory)
-    setIcons(gb.File)
+    $tileSetter.Refresh()
     NagatoDBThumbnailer.CleanUp(MikuruTrashPath.Files)
-    
     If argLastSelected Then ensureVisible(argLastSelected)
-    
     If $iconView.IconView.Count > 0 Then Return
     
     $iconView.IconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
@@ -48,17 +30,13 @@ End
 
 Public Sub Delete()
     
-    If $selection.Count = 0 Then Return
-    
-    NagatoTrash.DeleteFromTrashBin($selection.Paths)
+    If $selection.Count > 0 Then NagatoTrash.DeleteFromTrashBin($selection.Paths)
     
 End
 
 Public Sub Restore()
     
-    If $selection.Count = 0 Then Return
-    
-    NagatoTrash.Restore($selection.Paths)
+    If $selection.Count > 0 Then NagatoTrash.Restore($selection.Paths)
     
 End
 
@@ -77,9 +55,7 @@ End
 
 Public Sub Filter(argQuery As String)
     
-    $iconView.IconView.Clear()
-    setIcons(gb.Directory, argQuery)
-    setIcons(gb.File, argQuery)
+    $tileSetter.Filter(argQuery)
     If $iconView.IconView.Count > 0 Then Return
     $iconView.IconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
 
@@ -88,6 +64,8 @@ End
 Public Sub _new(argTabStrip As TabStrip)
     
     $iconView = New NagatoIconViewInitializerTrashBin(argTabStrip) As "TrashBinIconView"
+    $tileSetter = New NagatoIconViewTileSetter($iconView.IconView, $selection)
+    $tileSetter.Directory = MikuruTrashPath.Files
     Me.Refresh()
     
 End

@@ -15,8 +15,6 @@ Private Function isAcceptable(argPath As String) As Boolean
     
     Dim yukiType As String = DesktopMime.FromFile(argPath).Type
     
-    Debug yukiType
-    
     If yukiType = "application/x-compress" Then Return True
     If yukiType = "application/zip" Then Return True
     If yukiType = "application/lha" Then Return True
