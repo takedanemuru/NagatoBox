@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoSubMenuColors
+
+Public Sub _OnGetParentMenuName() As String
+    
+    Return ("Color")
+    
+End
+
+Public Sub _OnGetTag(argColor As String) As String
+    
+    Return Subst("color = &1", Quote(argColor))
+    
+End

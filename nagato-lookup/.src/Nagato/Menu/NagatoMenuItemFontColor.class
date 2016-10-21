@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+     Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruColorChip.Get(NagatoSettingsForm.FontColor)
+        .Text = ("Change Font Color")
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    HaruhiColorChooser.Title = ("Select Font Color")
+    HaruhiColorChooser.SetColor(NagatoSettingsForm.FontColor)
+    
+    If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
+        NagatoSettingsForm.FontColor = MikuruDialog.Color
+    Endif
+    
+End

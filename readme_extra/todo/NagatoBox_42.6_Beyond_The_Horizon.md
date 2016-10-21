@@ -27,6 +27,18 @@ new package : qt5 front-end for `sox`
 
 + ~~fix : project icon data is read from .project. does not depend on icon file itself.~~
 
+### nagato-diagram (42.6.15)
+
++ ~~add essential attributes insertation menu.~~
+
++ **must to restructure menu positions...**
+
+![image: screenshot_2016年10月21日_19：15：10](../screenshot_2016年10月21日_19：15：10.png)
+
++ **color chips on menus !!**
+
+![image: screenshot_2016年10月21日_19：16：10](../screenshot_2016年10月21日_19：16：10.png)
+
 ### nagato-extractor (v42.6.4)
 
 + ~~fix  : check path violation.~~
@@ -48,6 +60,7 @@ new package : qt5 front-end for `sox`
 ### nagato-lookup (v42.6.38)
 
 + ~~new : clean thin mode view.~~
++ ~~revive : font color preference.~~
 
 ### nagato-movie (v42.6.6)
 

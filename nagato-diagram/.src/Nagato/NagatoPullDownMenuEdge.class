@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Private $style As NagatoSubMenuEdgeStyle
+Private $direction As NagatoSubMenuEdgeDirection
+Private $color As NagatoSubMenuColor
+
+Public Sub _OnRootMenuShow()
+    
+    $style = New NagatoSubMenuEdgeStyle(Me._$rootMenu) As "TFEI"
+    $direction = New NagatoSubMenuEdgeDirection(Me._$rootMenu) As "TFEI"
+    $color = New NagatoSubMenuColor(Me._$rootMenu) As "TFEI"
+    
+End

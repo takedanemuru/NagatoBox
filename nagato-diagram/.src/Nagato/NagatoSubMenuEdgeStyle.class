@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnGetParentMenuName() As String
+    
+    Return ("Styles")
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    Dim yukiStyle As String
+    
+    For Each yukiStyle In ["solid", "dashed", "dotted", "bold", "invis"].sort()
+        Me._AddMenuItem(yukiStyle, "style = " & Quote(yukiStyle))
+    Next
+    
+End

@@ -4,7 +4,7 @@ Private $menuButton As MenuButton
 Private $text As String
 Private $iconName As String
 
-Public Sub _new(argContainer As Container, argText As String, argIcon As String, argMenu As String)
+Private Sub initializeMenuButton(argContainer As Container, argMenu As String)
     
     $menuButton = New MenuButton(argContainer) As "MenuButton"
     
@@ -12,13 +12,19 @@ Public Sub _new(argContainer As Container, argText As String, argIcon As String,
         .AutoResize = True
         .Arrow = False
         .Border = False
-        .Menu = argMenu
-        .Foreground = Color.White
+        .Foreground = NagatoSettingsForm.FontColor
         .Font.Bold = True
+        .Menu = argMenu
     End With
     
+End
+
+Public Sub _new(argContainer As Container, argText As String, argIcon As String, argMenu As String)
+    
+    initializeMenuButton(argContainer, argMenu)
     $iconName = argIcon
     $text = argText
+    $menuButton.Refresh()
     
 End
 
@@ -31,7 +37,7 @@ End
 
 Public Sub MenuButton_Leave()
     
-    Try Last.Foreground = Color.White
+    Try Last.Foreground = NagatoSettingsForm.FontColor
     If Not Error Then Last.Font.Bold = True
     
 End

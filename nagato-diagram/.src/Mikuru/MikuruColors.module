@@ -1,0 +1,32 @@
+' Gambas module file
+
+Private Function convertToInteger(argSource As String) As Integer
+    
+    Dim yukiValue As String = Replace(argSource, "#", "")
+    
+    Return Val("&" & yukiValue & "&")
+    
+End
+
+Public Function GetChip(argColor As Integer, Optional argSize As Integer = 16) As Picture
+    
+    Dim yukiImage As New Image(argSize, argSize, argColor)
+    
+    Return yukiImage.Picture
+    
+End
+
+Public Function GetCollection() As Collection
+    
+    Dim yukiLine As String
+    Dim yukiData As String[]
+    Dim yukiColors As New Collection
+    
+    For Each yukiLine In Split(File.Load("Text/Colors"), "\n", "", True)
+        yukiData = Split(yukiLine, "\t", "", True)
+        yukiColors.Add(yukiData[0], convertToInteger(yukiData[1]))
+    Next
+    
+    Return yukiColors
+    
+End

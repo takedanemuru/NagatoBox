@@ -4,6 +4,8 @@ Inherits NagatoWidget
 
 Property Read Text As String
 
+Private $vBox As VBox
+Private $menuBar As NagatoWidgetSourceEditorMenuBar
 Private $editor As TextEditor
 
 Private Sub initializeHighlightProperties()
@@ -34,6 +36,7 @@ Private Sub initializeEditorProperties()
         .LineNumberOffset = True
         .ShowSpaces = True
         .ShowModified = True
+        .Expand = True
     End With
     
 End
@@ -52,7 +55,9 @@ End
 
 Public Sub _OnInitializeWidget()
     
-    $editor = New TextEditor(Me._$container) As "TextEditor"
+    $vBox = New VBox(Me._$container)
+    $menuBar = New NagatoWidgetSourceEditorMenuBar($vBox) As "MenuBar"
+    $editor = New TextEditor($vBox) As "TextEditor"
     
     initializeEditorProperties()
     initializeHighlightProperties()
@@ -87,3 +92,8 @@ Public Sub TextEditor_Change()
     
 End
 
+Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    $editor.Insert(argValues[0])
+    
+End

@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Private $container As NagatoWidgetPanelContainer
+Private $nodeButton As NagatoMenuButtonNode
+Private $edgeButton As NagatoMenuButtonEdge
+
+Public Sub _OnInitializeWidget()
+    
+    $container = New NagatoWidgetPanelContainer(Me._$container)
+    
+    $nodeButton = New NagatoMenuButtonNode($container.Container) As "TFEI"
+    $edgeButton = New NagatoMenuButtonEdge($container.Container) As "TFEI"
+    
+End

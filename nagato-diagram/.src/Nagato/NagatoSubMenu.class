@@ -1,0 +1,52 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$parentMenu As Menu
+
+Public Sub _onGetParentMenuName() As String
+    
+    Return ""
+    
+End
+
+Public Sub _AddMenuItem(argText As String, argTag As String, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Private Sub initializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu)
+    
+    With Me._$parentMenu
+        .Text = Me._onGetParentMenuName()
+    End With
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    ' virtual
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    initializeParentMenu(argRootMenu)
+    Me._OnInitializeChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(MikuruSignal.SourceInsert, [Last.Tag])
+    
+End

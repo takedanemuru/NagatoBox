@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnGetTag(argColor As String) As String
+    
+    Return ""
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    Dim yukiCollection As Collection = MikuruColors.GetCollection()
+    Dim yukiColor As String
+    Dim yukiIcon As Picture
+    
+    For Each yukiColor In yukiCollection
+        yukiIcon = MikuruColors.GetChip(yukiCollection.Key)
+        Me._AddMenuItem(yukiColor, Me._OnGetTag(yukiColor), yukiIcon)
+    Next
+    
+End

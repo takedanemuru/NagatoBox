@@ -16,6 +16,7 @@ End
 Public Sub _OnRefreshChildMenus()
     
     Object.New("NagatoMenuItemForegroundColor", [Me._$parentMenu])
+    Object.New("NagatoMenuItemFontColor", [Me._$parentMenu])
     Object.New("NagatoSubMenuRecentApplications", [Me._$parentMenu])
     
 End

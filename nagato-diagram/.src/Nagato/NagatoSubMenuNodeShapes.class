@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnGetParentMenuName() As String
+    
+    Return ("Shapes")
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    Dim yukiShape As String
+    
+    For Each yukiShape In Split(File.Load("Text/Shapes"), "\n", "", True).Sort(gb.Natural)
+        Me._addMenuItem(yukiShape, Subst("shape = &1", Quote(yukiShape)))
+    Next
+    
+End
