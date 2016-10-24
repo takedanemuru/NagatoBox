@@ -22,7 +22,7 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
-Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
+Public Sub SetSearchResult(argQuery As String, argRecursive As Boolean)
     
     Debug "ignore";; argRecursive
     

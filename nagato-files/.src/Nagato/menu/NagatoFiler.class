@@ -30,7 +30,7 @@ Private Sub filtering(argDirectory As String, argQuery As String)
     
     Object.Lock($menuBar)
         Me.SetNewDirectory(argDirectory)
-        Me.SetSeachResult(argQuery, False)
+        Me.SetSearchResult(argQuery, False)
         $menuBar.SetUnexistPath(argDirectory &/ argQuery)
     Object.Unlock($menuBar)
     
@@ -42,11 +42,11 @@ Public Sub SetNewDirectory(argDirectory As String)
     
 End
 
-Public Sub SetSeachResult(argQuery As String, argRecursive As Boolean)
+Public Sub SetSearchResult(argQuery As String, argRecursive As Boolean)
     
     Dim yukiSearchResult As String[] = MikuruFileSearch[$log.Current, argQuery, argRecursive]
     
-    $surface.SetSeachResult(yukiSearchResult)
+    $surface.SetSearchResult(yukiSearchResult)
     
 End
 

@@ -31,7 +31,7 @@ Public Sub SurfaceDelete(argDirectory As String, argPath As String)
     
 End
 
-Public Sub SetSeachResult(argSearchResult As String[])
+Public Sub SetSearchResult(argSearchResult As String[])
     
     $iconView.RefreshWithSearchResult(argSearchResult, $userInput.Selection)
     

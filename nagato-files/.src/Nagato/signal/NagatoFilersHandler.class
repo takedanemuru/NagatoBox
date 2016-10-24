@@ -40,7 +40,7 @@ End
 
 Public Sub SearchQuery(argIndex As Integer, argQuery As String, argRecursive As Boolean)
     
-    $filers[argIndex].SetSeachResult(argQuery, argRecursive)
+    $filers[argIndex].SetSearchResult(argQuery, argRecursive)
     
 End
 

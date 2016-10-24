@@ -16,30 +16,29 @@ End
 Private Sub setResult(argPath As String, argQuery As String, ByRef refPaths As String[])
     
     If File.Name(argPath) Like getQuery(argQuery) Then 
-        If Not NagatoSettings.ShowHidden And If File.Name(argPath) Begins "." Then Return
+        'If Not NagatoSettings.ShowHidden And If File.Name(argPath) Begins "." Then Return
         refPaths.Add(argPath)
     Endif
     
 End
 
-Public Function Seach(argDirectory As String, argQuery As String) As String[]
+Public Function Search(argDirectory As String, argQuery As String) As String[]
     
     Dim yukiPath As String
     Dim yukiPaths As New String[]
     
     For Each yukiPath In RDir(argDirectory).Sort(gb.IgnoreCase)
         setResult(argDirectory &/ yukiPath, argQuery, ByRef yukiPaths)
-        If yukiPaths.Count >= 200 Then
-            Message.Info(("YUKI.N > Your query is too generic. I do not show all result."), ("OK"))
-            Break
-        End If
+        If 200 > yukiPaths.Count Then Continue
+        Message.Info(("YUKI.N > Your query is too generic. I do not show all result."), ("OK"))
+        Break
     Next
     
     Return yukiPaths
     
 End
 
-Public Function SeachNonRecursive(argDirectory As String, argQuery As String) As String[]
+Public Function SearchNonRecursive(argDirectory As String, argQuery As String) As String[]
     
     Dim yukiPath As String
     Dim yukiPaths As New String[]
@@ -58,12 +57,12 @@ Private Function getTagetPath(argDirectory As String, argRecursive As Boolean) A
     If argRecursive Then
         Return RDir(argDirectory).Sort(gb.IgnoreCase)
     Else
-        Return Dir(argDirectory).Sort(gb.IgnoreCase)
+        Return Dir(argDirectory, IIf(NagatoSettings.ShowHidden, "*", "[^.]*")).Sort(gb.IgnoreCase)
     Endif
     
 End
 
-Public Function SeachQuery(argDirectory As String, argQuery As String, argRecursive As Boolean) As String[]
+Public Function SearchQuery(argDirectory As String, argQuery As String, argRecursive As Boolean) As String[]
     
     Dim yukiPath As String
     Dim yukiTarget As String[]
@@ -80,6 +79,6 @@ End
 
 Public Sub _get(argDirectory As String, argQuery As String, argRecursive As Boolean) As String[]
     
-    Return Me.SeachQuery(argDirectory, argQuery, argRecursive)
+    Return Me.SearchQuery(argDirectory, argQuery, argRecursive)
     
 End
