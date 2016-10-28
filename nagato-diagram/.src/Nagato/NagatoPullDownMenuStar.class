@@ -1,11 +1,11 @@
 ' Gambas class file
 
-Inherits NagatoPulldownMenu
+Inherits NagatoPullDownMenu
 
 Public Sub _OnRootMenuShow()
     
-    Me._addMenuItem("Help", MikuruSignal.ApplicationHelp, "information-balloon")
-    Me._addMenuItem("About", MikuruSignal.ApplicationAbout, "star")
-    Me._addMenuItem("Quit", MikuruSignal.ApplicationQuit, "button-power")
+    Object.New("NagatoMenuItemHelp", [Me._$rootMenu])
+    Object.New("NagatoMenuItemAbout", [Me._$rootMenu])
+    Object.New("NagatoMenuItemQuit", [Me._$rootMenu])
     
 End

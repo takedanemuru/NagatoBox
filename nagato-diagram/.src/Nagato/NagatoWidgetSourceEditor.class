@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read Text As String
+
+Private $editor As TextEditor
+Private $properties As NagatoSourceEditorHandlerProperties
+Private $userInput As NagatoSourceEditorHandlerUserInput
+
+Public Sub _OnInitializeWidget()
+    
+    $editor = New TextEditor(Me._$container) 
+    $properties = New NagatoSourceEditorHandlerProperties($editor)
+    $userInput = New NagatoSourceEditorHandlerUserInput($editor) As "TFEI"
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Try $editor.Text = File.Load(argPath)
+    
+End
+
+Public Sub Insert(argText As String)
+    
+    $editor.Insert(argText)
+    
+End
+
+Private Function Text_Read() As String
+
+    Return $editor.Text
+
+End

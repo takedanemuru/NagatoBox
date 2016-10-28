@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Private $recent As NagatoSubMenuRecentFiles
+
+Public Sub _OnRootMenuShow()
+    
+    Me._addMenuItem("New", MikuruSignal.FileNew, "document")
+    Me._addMenuItem("Open", MikuruSignal.FileOpen, "folder")
+    $recent = New NagatoSubMenuRecentFiles(Me._$rootMenu) As "TFEI"
+    Me._addMenuItem("Save", MikuruSignal.FileSave, "hard-drive-download")
+    Me._addMenuItem("Save As", MikuruSignal.FileSaveAs, "documents")
+    
+End

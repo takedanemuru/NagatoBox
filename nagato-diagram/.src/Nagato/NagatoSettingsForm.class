@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Layout As Integer[]
+
+Public Sub Load(argForm As Form)
+    
+    With argForm
+        .X = Me._$settings["form/x", .X]
+        .Y = Me._$settings["form/y", .Y]
+        .W = Me._$settings["form/w", .W]
+        .H = Me._$settings["form/h", .H]
+    End With
+    
+End
+
+Public Sub Save(argForm As Form)
+    
+    With argForm
+        Me._$settings["form/x"] = .X
+        Me._$settings["form/y"] = .Y
+        Me._$settings["form/w"] = .W
+        Me._$settings["form/h"] = .H
+    End With
+    
+    Me._$settings.Save()
+    
+End
+
+Private Function Layout_Read() As Integer[]
+
+    Return Me._$settings["layout/width", [1, 1]]
+
+End
+
+Private Sub Layout_Write(Value As Integer[])
+
+    Me._$settings["layout/width"] = Value
+    Me._$settings.Save()
+
+End

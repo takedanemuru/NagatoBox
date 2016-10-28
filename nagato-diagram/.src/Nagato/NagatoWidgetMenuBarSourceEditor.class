@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoWidgetMenuBar
+
+Private $fileButton As NagatoMenuButtonFile
+Private $graphButton As NagatoMenuButtonGraph
+Private $nodeButton As NagatoMenuButtonNode
+Private $edgeButton As NagatoMenuButtonEdge
+
+Public Sub _OnInitializeSubWidgets()
+    
+    $fileButton = New NagatoMenuButtonFile(Me._$panelContainer) As "TFEI"
+        Object.New("NagatoWidgetSeparator", [Me._$panelContainer])
+    $graphButton = New NagatoMenuButtonGraph(Me._$panelContainer) As "TFEI"
+    $nodeButton = New NagatoMenuButtonNode(Me._$panelContainer) As "TFEI"
+    $edgeButton = New NagatoMenuButtonEdge(Me._$panelContainer) As "TFEI"
+    
+End

@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnGetText() As String
+    
+    Return ("Help")
+    
+End
+
+Public Sub _OnGetIcon() As Picture
+    
+    Return MikuruIcon["question-balloon"]
+    
+End
+
+Public Sub _OnClickMenu()
+    
+    If Desktop.NetworkAvailable Then
+        HaruhiHelp.Show()
+    Else
+        Message.Warning(("YUKI.N > Network unavailable."), ("OK"))
+    Endif
+    
+End

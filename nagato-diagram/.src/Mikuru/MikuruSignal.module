@@ -2,9 +2,9 @@
 
 Public Enum Void = 0
 Public Enum FileHeader = 1000, FileNew = 1001, FileRecent = 1002, FileOpen = 1003
-Public Enum FileSave = 1004, FileSaveAs = 1005, FileRecentClear = 1006
+Public Enum FileSave = 1004, FileSaveAs = 1005
 Public Enum PreviewHeader = 2000, PreviewRefresh = 2001, PreviewExport = 2002
-Public Enum ZoomHeader = 3000, ZoomIn = 3001, ZoomOut = 3002, ZoomFit = 3004, ZoomNormal = 3005
+Public Enum ZoomHeader = 3000, ZoomIn = 3001, ZoomOut = 3002, ZoomFit = 3004
+Public Enum ZoomNormal = 3005
 Public Enum SourceHeader = 4000, SourceNew = 4001, SourceChanged = 4002
 Public Enum SourceInsert = 4003
-Public Enum ApplicationHeader = 9000, ApplicationHelp, ApplicationAbout = 9002, ApplicationQuit = 9003

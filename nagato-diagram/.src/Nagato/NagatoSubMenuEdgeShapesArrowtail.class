@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoSubMenuEdgeShapes
+
+Public Sub _OnGetParentMenuName() As String
+    
+    Return ("Arrowtail Shape")
+    
+End
+
+Public Sub _OnGetTag() As String
+    
+    Return "arrowtail = "
+    
+End

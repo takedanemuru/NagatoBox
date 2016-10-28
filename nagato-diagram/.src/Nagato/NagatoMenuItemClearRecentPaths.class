@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnGetText() As String
+    
+    Return ("Clear")
+    
+End
+
+Public Sub _OnGetIcon() As Picture
+    
+    Return MikuruIcon["bin"]
+    
+End
+
+Public Sub _OnClickMenu()
+    
+    NagatoSettings.ClearRecntPaths()
+    
+End

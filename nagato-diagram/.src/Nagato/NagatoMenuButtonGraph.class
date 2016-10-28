@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "GraphMenu"
+
+Private $pulldownMenu As NagatoPullDownMenuGraph
+
+Public Sub _OnInitializeButton()
+    
+    Me._AddButton("Graph Attributes", MikuruSignal.Void, "chart-area-up")
+    
+End
+
+Public Sub _OptionalOnInitializePullDownMenu()
+    
+    Me._$button.Menu = MenuName
+    $pulldownMenu = New NagatoPullDownMenuGraph(MenuName) As "TFEI"
+    
+End

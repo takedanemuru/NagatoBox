@@ -11,7 +11,7 @@ Private Sub setNewPath(argPath As String)
     
     $currentPath = argPath
     $saved = True
-    MikuruSettings.SaveRecntPath(argPath)
+    NagatoSettings.SaveRecntPath(argPath)
     HaruhiMain.Title = "nagato-diagram : " & File.Name(argPath)
     
 End
@@ -29,9 +29,7 @@ Public Sub Open()
     Dialog.Filter = ["*.gv;*.dot", "dot file"]
     
     If Dialog.OpenFile(False) Then Return
-    
     Raise Signal(MikuruSignal.SourceNew, [Dialog.Path])
-    
     setNewPath(Dialog.Path)
     
 End
@@ -53,9 +51,7 @@ Public Sub SaveAs(argSource As String)
     Dialog.Path = Desktop.GetDirectory("DOCUMENTS") &/ ("your_file.gv")
     
     If Dialog.SaveFile() Then Return
-
     File.Save(Dialog.Path, argSource)
-    
     setNewPath(Dialog.Path)
     
 End
@@ -76,17 +72,7 @@ Public Function IsClosable(argSource As String) As Boolean
     
 End
 
-Public Sub IsOverridable(argSource As String) As Boolean
-    
-    Dim yukiIsOverridable As Boolean = Me.IsClosable(argSource)
-    
-    If yukiIsOverridable Then $currentPath = ""
-    
-    Return yukiIsOverridable
-    
-End
-
-Public Sub OpenNewRecentFile(argPath As String)
+Public Sub SetPath(argPath As String)
     
     setNewPath(argPath)
     

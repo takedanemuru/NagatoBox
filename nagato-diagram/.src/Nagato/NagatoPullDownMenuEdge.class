@@ -3,12 +3,16 @@
 Inherits NagatoPullDownMenu
 
 Private $style As NagatoSubMenuEdgeStyle
+Private $arrowhead As NagatoSubMenuEdgeShapesArrowhead
+Private $arrowtail As NagatoSubMenuEdgeShapesArrowtail
 Private $direction As NagatoSubMenuEdgeDirection
 Private $color As NagatoSubMenuColor
 
 Public Sub _OnRootMenuShow()
     
     $style = New NagatoSubMenuEdgeStyle(Me._$rootMenu) As "TFEI"
+    $arrowhead = New NagatoSubMenuEdgeShapesArrowhead(Me._$rootMenu) As "TFEI"
+    $arrowtail = New NagatoSubMenuEdgeShapesArrowtail(Me._$rootMenu) As "TFEI"
     $direction = New NagatoSubMenuEdgeDirection(Me._$rootMenu) As "TFEI"
     $color = New NagatoSubMenuColor(Me._$rootMenu) As "TFEI"
     

@@ -1,0 +1,51 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Type As Integer
+Property Rate As Float
+
+Public Enum ZoomFit, ZoomNormal, ZoomRating
+
+Public Sub Save(argSignal As Integer)
+    
+    Select Case argSignal
+        Case MikuruSignal.ZoomIn
+            NagatoSettingsZoom.Type = NagatoSettingsZoom.ZoomRating
+            NagatoSettingsZoom.Rate *= 1.2
+        Case MikuruSignal.ZoomOut
+            NagatoSettingsZoom.Type = NagatoSettingsZoom.ZoomRating
+            NagatoSettingsZoom.Rate *= 0.8
+        Case MikuruSignal.ZoomFit
+            NagatoSettingsZoom.Type = NagatoSettingsZoom.ZoomFit
+        Case MikuruSignal.ZoomNormal
+            NagatoSettingsZoom.Type = NagatoSettingsZoom.ZoomNormal
+    End Select
+    
+End
+
+Private Function Type_Read() As Integer
+
+    Return Me._$settings["zoom/type", ZoomNormal]
+
+End
+
+Private Sub Type_Write(Value As Integer)
+
+    Me._$settings["zoom/type"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Rate_Read() As Float
+
+    Return Me._$settings["zoom/rate", 1] 
+
+End
+
+Private Sub Rate_Write(Value As Float)
+    
+    Me._$settings["zoom/rate"] = Value
+    Me._$settings.Save()
+    
+End

@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits NagatoWidgetSubContainer
+
+Private $menubar As NagatoWidgetMenuBarPreviewer
+Private $graphGenerator As NagatoGraphGenerator
+Private $imageView As ImageView
+
+Private Sub zoom()
+    
+    Select Case NagatoSettingsZoom.Type
+        Case NagatoSettingsZoom.ZoomFit
+            $imageView.ZoomFit()
+        Case NagatoSettingsZoom.ZoomNormal
+            $imageView.Zoom = 1
+        Case NagatoSettingsZoom.ZoomRating
+            $imageView.Zoom = NagatoSettingsZoom.Rate
+    End Select
+    
+End
+
+Public Sub ShowPreview(argSourceText As String)
+    
+    $graphGenerator.Refresh(argSourceText)
+    $imageView.Image = $graphGenerator.Image
+    zoom()
+    
+End
+
+Private Sub export()
+    
+    Dialog.Title = ("Save image")
+    Dialog.Path = User.Home &/ "your_file.png"
+    
+    If Dialog.SaveFile() Then Return
+    If Exist(Dialog.Path) Then Kill Dialog.Path
+    $imageView.Image.Save(Dialog.Path)
+    
+End
+
+Public Sub _OnInitializeSubWidgets()
+    
+    $menubar = New NagatoWidgetMenuBarPreviewer(Me._$vBox) As "MenuBar"
+    $graphGenerator = New NagatoGraphGenerator
+    $imageView = New ImageView(Me._$vBox) 
+    $imageView.Expand = True
+    
+End
+
+Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ZoomHeader To MikuruSignal.ZoomHeader + 999
+            NagatoSettingsZoom.Save(argSignal)
+            zoom()
+        Case MikuruSignal.PreviewExport
+            export()
+        Default
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End

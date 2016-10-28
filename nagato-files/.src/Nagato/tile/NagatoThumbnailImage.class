@@ -7,7 +7,7 @@ Public Function _GetIconImage(argPath As String) As Image
     Return Image.Load(argPath)
     
 Catch
-    Return NagatoIconTileBrokenFile.Get(argPath)
+    Return NagatoIconTileBrokenFile.Get(argPath).Image
     
 End
 

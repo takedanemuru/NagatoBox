@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnGetTag() As String
+    
+    Return ""
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    Dim yukiStyle As String
+    
+    For Each yukiStyle In Split(File.Load("Text/EdgeShapes"), "\n", "", True)
+        Me._AddMenuItem(yukiStyle, Me._OnGetTag() & Quote(yukiStyle))
+    Next
+    
+End

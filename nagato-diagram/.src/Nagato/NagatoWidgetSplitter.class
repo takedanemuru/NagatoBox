@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Property Read Container As Container
+
+Private $hSplit As HSplit
+
+Public Sub _OnInitializeWidget()
+    
+    $hSplit = New HSplit(Me._$container) As "HSplit"
+    
+    With $hSplit
+        .Expand = True
+    End With
+    
+End
+
+Public Sub RestoreLayout()
+    
+    $hSplit.Layout = NagatoSettingsForm.Layout
+    
+End
+
+Public Sub HSplit_Arrange()
+    
+    NagatoSettingsForm.Layout = $hSplit.Layout
+    
+End
+
+Private Function Container_Read() As Container
+
+    Return $hSplit
+
+End

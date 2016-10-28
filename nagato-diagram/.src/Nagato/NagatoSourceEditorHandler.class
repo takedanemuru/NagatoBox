@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$editor As TextEditor
+
+Public Sub _OptionalOnInitialize()
+    
+    
+    
+End
+
+Public Sub _new(argTextEditor As TextEditor)
+    
+    Me._$editor = argTextEditor
+    Me._OptionalOnInitialize()
+    
+End

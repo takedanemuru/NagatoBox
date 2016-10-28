@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Private $rankdir As NagatoSubMenuGraphRankDir
+
+Public Sub _OnRootMenuShow()
+    
+    $rankdir = New NagatoSubMenuGraphRankDir(Me._$rootMenu) As "TFEI"
+    
+End

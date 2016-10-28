@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoMenuButton
-
-Public Sub _OnInitializeButton()
-    
-    Me._AddButton(("Open"), MikuruSignal.FileOpen, "folder")
-    
-End

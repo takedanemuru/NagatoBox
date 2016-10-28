@@ -1,96 +1,26 @@
 ' Gambas class file
 
-Private $menuBar As NagatoMenuBar
 Private $mainContainer As NagatoMainContainer
-Private $pathHandler As New NagatoSourcePath As "UX"
-
-Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
-    
-    Select Case argSignal
-        Case MikuruSignal.FileNew
-            If $pathHandler.IsOverridable($mainContainer.Text) Then $mainContainer.SetPath("Text/Template_1")
-            Me.Title = "nagato-diagram : untitled"
-        Case MikuruSignal.FileOpen
-            $pathHandler.Open()
-        Case MikuruSignal.FileRecent
-            $mainContainer.SetPath(argValues[0])
-            $pathHandler.OpenNewRecentFile(argValues[0])
-        Case MikuruSignal.FileRecentClear
-            MikuruSettings.ClearRecntPaths()
-        Case MikuruSignal.FileSave
-            $pathHandler.Save($mainContainer.Text)
-            $mainContainer.RefreshPreview()
-        Case MikuruSignal.FileSaveAs
-            $pathHandler.SaveAs($mainContainer.Text)
-            $mainContainer.RefreshPreview()
-    End Select
-    
-End
-
-Private Sub previewEvent(argSignal As Integer, argValues As Variant[])
-    
-    Select Case argSignal
-        Case MikuruSignal.PreviewRefresh
-            $mainContainer.RefreshPreview()
-        Case MikuruSignal.PreviewExport
-            $mainContainer.Export($pathHandler.CurrentPath)
-    End Select
-    
-End
-
-Private Sub sourceEvent(argSignal As Integer, argValues As Variant[])
-    
-    Select Case argSignal
-        Case MikuruSignal.SourceNew
-            $mainContainer.SetPath(argValues[0])
-        Case MikuruSignal.SourceChanged
-            $pathHandler.SourceChanged()
-    End Select
-    
-End
 
 Public Sub _new()
     
     Application.MainWindow = Me
-    $menuBar = New NagatoMenuBar(MainVBox) As "UX"
-    $mainContainer = New NagatoMainContainer(MainVBox) As "UX"
-    fileEvent(MikuruSignal.FileNew, Null)
+    $mainContainer = New NagatoMainContainer(MainVBox) 
     
 End
 
 Public Sub Form_Open()
     
-    MikuruSettings.LoadFormSettings(Me)
+    NagatoSettingsForm.Load(Me)
     
 End
 
 Public Sub Form_Close()
     
-    If $pathHandler.IsClosable($mainContainer.Text) Then
-        MikuruSettings.SaveFormSettings(Me)
+    If $mainContainer.Closable Then
+        NagatoSettingsForm.Save(Me)
     Else
         Stop Event
     End If
-    
-End
-
-Public Sub UX_Signal(argSignal As Integer, argValues As Variant[])
-
-    Select Case argSignal
-        Case MikuruSignal.FileHeader To MikuruSignal.FileHeader + 999
-            fileEvent(argSignal, argValues)
-        Case MikuruSignal.PreviewHeader To MikuruSignal.PreviewHeader + 999
-            previewEvent(argSignal, argValues)
-        Case MikuruSignal.ZoomHeader To MikuruSignal.ZoomHeader + 999
-            $mainContainer.SetZoom(argSignal)
-        Case MikuruSignal.SourceHeader To MikuruSignal.SourceHeader + 999
-            sourceEvent(argSignal, argValues)
-        Case MikuruSignal.ApplicationHelp
-            HaruhiHelp.Show()
-        Case MikuruSignal.ApplicationAbout
-            HaruhiAbout.ShowDialog()
-        Case MikuruSignal.ApplicationQuit
-            Me.Close()
-    End Select
     
 End

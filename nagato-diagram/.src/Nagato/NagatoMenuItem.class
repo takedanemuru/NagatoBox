@@ -1,0 +1,36 @@
+' Gambas class file
+
+Public Sub _OnGetText() As String
+    
+    Return ""
+    
+End
+
+Public Sub _OnGetIcon() As Picture
+    
+    Return Null
+    
+End
+
+Public Sub _OnClickMenu()
+    
+    
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Dim yukiMenu As New Menu(argRootMenu) As "Menu"
+    
+    With yukiMenu
+        .Text = Me._OnGetText()
+        .Picture = Me._OnGetIcon()
+    End With
+    
+End
+
+Public Sub Menu_Click()
+    
+    Me._OnClickMenu()
+    
+End

@@ -2,75 +2,32 @@
 
 Inherits NagatoObject
 
-Property Read Text As String
+Property Read Closable As String
 
-Private $hSplit As HSplit
-Private $sourceEditor As NagatoSourceEditor
-Private $previewer As NagatoPreviewer
-
-Private Sub initializeHSplit(argContainer As Container)
-    
-    $hSplit = New HSplit(argContainer) As "HSplit"
-    
-    With $hSplit
-        .Expand = True
-    End With
-    
-End
-
-Private Sub setSource()
-    
-    If MikuruArguments.Path = "" Then
-        Me.RefreshPreview()
-    Else
-        Me.SetPath(MikuruArguments.Path)
-    End If
-    
-End
-
-Public Sub RefreshPreview()
-    
-    If $sourceEditor.Text Then $previewer.ShowPreview($sourceEditor.Text)
-    
-End
-
-Public Sub SetPath(argPath As String)
-    
-    $sourceEditor.SetPath(argPath) 
-    $previewer.ShowPreview($sourceEditor.Text)
-    
-End
-
-Public Sub Export(argSourcePath As String)
-    
-    $previewer.Export(argSourcePath)
-    
-End
-
-Public Sub SetZoom(argSignal As Integer)
-    
-    $previewer.SetZoom(argSignal)
-    
-End
+Private $hSplit As NagatoWidgetSplitter
+Private $sourceEditor As NagatoWidgetSubContainerSourceEditor
+Private $previewer As NagatoWidgetSubContainerPreviewer
 
 Public Sub _new(argContainer As Container)
     
-    initializeHSplit(argContainer)
-    $sourceEditor = New NagatoSourceEditor($hSplit) As "TFEI"
-    $previewer = New NagatoPreviewer($hSplit) As "TFEI"
-    $hSplit.Layout = MikuruSettings.Layout
-    setSource()
+    $hSplit = New NagatoWidgetSplitter(argContainer)
+    $sourceEditor = New NagatoWidgetSubContainerSourceEditor($hSplit.Container) As "SubContainer"
+    $previewer = New NagatoWidgetSubContainerPreviewer($hSplit.Container) As "SubContainer"
+    $hSplit.RestoreLayout()
     
 End
 
-Public Sub HSplit_Arrange()
+Public Sub SubContainer_Signal(argSignal As Integer, argValues As Variant[])
     
-    MikuruSettings.Layout = $hSplit.Layout
+    Select Case argSignal
+        Case MikuruSignal.PreviewRefresh
+            If argValues Then $previewer.ShowPreview(argValues[0])
+    End Select
     
 End
 
-Private Function Text_Read() As String
+Private Function Closable_Read() As String
 
-    Return $sourceEditor.Text
+    Return $sourceEditor.Closable
 
 End

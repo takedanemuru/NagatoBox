@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "FileMenu"
+
+Private $pulldownMenu As NagatoPullDownMenuFile
+
+Public Sub _OnInitializeButton()
+    
+    Me._AddButton("File", MikuruSignal.Void, "folder")
+    
+End
+
+Public Sub _OptionalOnInitializePullDownMenu()
+    
+    Me._$button.Menu = MenuName
+    $pulldownMenu = New NagatoPullDownMenuFile(MenuName) As "TFEI"
+    
+End

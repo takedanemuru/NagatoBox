@@ -1,0 +1,25 @@
+' Gambas class file
+
+Create Static
+
+Public _$settings As New Settings
+
+Public Function LoadRecentPaths() As String[]
+    
+    Return MikuruPath.Sanitize(Me._$settings["file/recent", [""]])
+    
+End
+
+Public Sub SaveRecntPath(argPath As String)
+    
+    Me._$settings["file/recent"] = MikuruPath.Push(argPath, Me._$settings["file/recent", [""]])
+    Me._$settings.Save()
+    
+End
+
+Public Sub ClearRecntPaths()
+    
+    Me._$settings["file/recent"] = [""]
+    Me._$settings.Save()
+    
+End

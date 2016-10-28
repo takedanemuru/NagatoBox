@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$vBox As VBox
+
+Public Sub _OnInitializeSubWidgets()
+    
+    
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    Me._$vBox = New VBox(Me._$container)
+    Me._OnInitializeSubWidgets()
+    
+End

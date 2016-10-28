@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnGetParentMenuName() As String
+    
+    Return ("Direction")
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    Dim yukiStyle As String
+    
+    For Each yukiStyle In ["TB", "BT", "LR", "RL"]
+        Me._AddMenuItem(yukiStyle, "rankdir = " & Quote(yukiStyle))
+    Next
+    
+End

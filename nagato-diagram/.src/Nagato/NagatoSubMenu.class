@@ -24,7 +24,7 @@ End
 
 Private Sub initializeParentMenu(argRootMenu As Menu)
     
-    Me._$parentMenu = New Menu(argRootMenu)
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
     
     With Me._$parentMenu
         .Text = Me._onGetParentMenuName()
@@ -38,10 +38,16 @@ Public Sub _OnInitializeChildMenus()
     
 End
 
-Public Sub _new(argRootMenu As Menu)
+Public Sub _OnInitialize(argRootMenu As Menu)
     
     initializeParentMenu(argRootMenu)
     Me._OnInitializeChildMenus()
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._OnInitialize(argRootMenu)
     
 End
 

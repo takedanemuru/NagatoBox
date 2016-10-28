@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$panelContainer As Container
+Public _$starButton As NagatoMenuButtonStar
+
+Public Sub _OnInitializeSubWidgets()
+    
+    
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    Dim yukiPanelContainer As New NagatoWidgetPanelContainer(Me._$container)
+    
+    Me._$panelContainer = yukiPanelContainer.Container
+    Me._OnInitializeSubWidgets()
+        Object.New("NagatoWidgetSpacer", [Me._$panelContainer])
+    Me._$starButton = New NagatoMenuButtonStar(Me._$panelContainer) As "TFEI"
+    
+End

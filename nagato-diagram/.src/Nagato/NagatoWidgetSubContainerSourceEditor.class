@@ -1,0 +1,77 @@
+' Gambas class file
+
+Inherits NagatoWidgetSubContainer
+
+Property Read Closable As Boolean
+
+Private $menuBar As NagatoWidgetMenuBarSourceEditor
+Private $editor As NagatoWidgetSourceEditor
+Private $pathHandler As New NagatoSourcePath As "PathHandler"
+
+Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileNew
+            If Not $pathHandler.IsClosable($editor.Text) Then Return
+            Application.MainWindow.Title = "nagato-diagram : untitled"
+            $editor.SetPath("Text/Template_1")
+        Case MikuruSignal.FileOpen
+            $pathHandler.Open()
+            Return
+        Case MikuruSignal.FileRecent
+            $editor.SetPath(argValues[0])
+            $pathHandler.SetPath(argValues[0])
+        Case MikuruSignal.FileSave
+            $pathHandler.Save($editor.Text)
+        Case MikuruSignal.FileSaveAs
+            $pathHandler.SaveAs($editor.Text)
+    End Select
+    
+    Raise Signal(MikuruSignal.PreviewRefresh, Null)
+    
+End
+
+Public Sub _OnInitializeSubWidgets()
+    
+    $menuBar = New NagatoWidgetMenuBarSourceEditor(Me._$vBox) As "MenuBar"
+    $editor = New NagatoWidgetSourceEditor(Me._$vBox) As "SourceEditor"
+    If MikuruArguments.Path Then fileEvent(MikuruSignal.FileRecent, [MikuruArguments.Path])
+
+End
+
+Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileHeader To MikuruSignal.FileHeader + 999
+            fileEvent(argSignal, argValues)
+        Default
+            $editor.Insert(argValues[0])
+    End Select
+    
+End
+
+Public Sub SourceEditor_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileHeader To MikuruSignal.FileHeader + 999
+            fileEvent(argSignal, argValues)
+        Case MikuruSignal.SourceChanged
+            $pathHandler.SourceChanged()
+    End Select
+    
+End
+
+Public Sub PathHandler_Signal(argSignal As Integer, argValues As Variant[])
+    
+    If argSignal = MikuruSignal.SourceNew Then
+        $editor.SetPath($pathHandler.CurrentPath)
+        Raise Signal(MikuruSignal.PreviewRefresh, [$editor.Text])
+    Endif
+    
+End
+
+Private Function Closable_Read() As Boolean
+
+    Return $pathHandler.IsClosable($editor.Text)
+
+End

@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoWidgetMenuBar
+
+Private $previewButton As NagatoMenuButtonPreview
+Private $buttonGroupZoom As NagatoButtonGroupZoom
+Private $exportButton As NagatoMenuButtonExport
+
+Public Sub _OnInitializeSubWidgets()
+    
+    $previewButton = New NagatoMenuButtonPreview(Me._$panelContainer) As "TFEI"
+    $buttonGroupZoom = New NagatoButtonGroupZoom(Me._$panelContainer) As "TFEI"
+    $exportButton = New NagatoMenuButtonExport(Me._$panelContainer) As "TFEI"
+    
+End

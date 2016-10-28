@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoSourceEditorHandler
+
+Private $observer As Observer
+
+Public Sub _OptionalOnInitialize()
+    
+    $observer = New Observer(Me._$editor) As "Asakura"
+    
+End
+
+Public Sub Asakura_KeyPress()
+    
+    If Key.Control And If Key.Shift Then 
+        If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSaveAs, Null)
+    Else If Key.Control Then
+        If Key.Code = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null)
+    Endif
+    
+End
+
+Public Sub Asakura_Change()
+    
+    Raise Signal(MikuruSignal.SourceChanged, Null)
+    
+End

@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnGetParentMenuName() As String
+    
+    Return ("Recent")
+    
+End
+
+Private Sub addRecentFiles()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoSettings.LoadRecentPaths()
+        Me._AddMenuItem(File.Name(yukiPath), yukiPath)
+    Next
+    
+End
+
+Public Sub _OnInitializeChildMenus()
+    
+    Object.New("NagatoMenuItemClearRecentPaths", [Me._$parentMenu])
+        Me._AddMenuItem("", 0)
+    addRecentFiles()
+    
+End
+
+Private Sub initializeParentMenu(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    With Me._$parentMenu
+        .Text = ("Recent")
+        .Picture = MikuruIcon["alarm-clock"]
+    End With
+    
+End
+
+Public Sub _OnInitialize(argRootMenu As Menu)
+    
+    initializeParentMenu(argRootMenu)
+    Me._AddMenuItem("don't look at me", 0)
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    Me._$parentMenu.Children.Clear()
+    Me._OnInitializeChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(MikuruSignal.FileRecent, [Last.Tag])
+    
+End
