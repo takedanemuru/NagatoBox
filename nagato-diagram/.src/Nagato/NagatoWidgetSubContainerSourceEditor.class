@@ -3,6 +3,7 @@
 Inherits NagatoWidgetSubContainer
 
 Property Read Closable As Boolean
+Property Read Text As String
 
 Private $menuBar As NagatoWidgetMenuBarSourceEditor
 Private $editor As NagatoWidgetSourceEditor
@@ -15,6 +16,7 @@ Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
             If Not $pathHandler.IsClosable($editor.Text) Then Return
             Application.MainWindow.Title = "nagato-diagram : untitled"
             $editor.SetPath("Text/Template_1")
+            $pathHandler.SetPath("")
         Case MikuruSignal.FileOpen
             $pathHandler.Open()
             Return
@@ -65,7 +67,7 @@ Public Sub PathHandler_Signal(argSignal As Integer, argValues As Variant[])
     
     If argSignal = MikuruSignal.SourceNew Then
         $editor.SetPath($pathHandler.CurrentPath)
-        Raise Signal(MikuruSignal.PreviewRefresh, [$editor.Text])
+        Raise Signal(MikuruSignal.PreviewRefresh, Null)
     Endif
     
 End
@@ -73,5 +75,11 @@ End
 Private Function Closable_Read() As Boolean
 
     Return $pathHandler.IsClosable($editor.Text)
+
+End
+
+Private Function Text_Read() As String
+
+    Return $editor.Text
 
 End

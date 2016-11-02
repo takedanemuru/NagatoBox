@@ -21,7 +21,7 @@ Public Sub SubContainer_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
         Case MikuruSignal.PreviewRefresh
-            If argValues Then $previewer.ShowPreview(argValues[0])
+            If $sourceEditor.Text Then $previewer.ShowPreview($sourceEditor.Text)
     End Select
     
 End
