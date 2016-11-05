@@ -5,8 +5,6 @@ Public Sub _call()
     Dim yukiMarkdown As String = "# Applications List\n\n"
     Dim yukiProject As NagatoProjectForGithub
     
-    Debug NagatoProjectListForGithub.All.Count
-    
     For Each yukiProject In NagatoProjectListForGithub.All
         yukiMarkdown &= Subst("## &1 (v&2)\n\n", yukiProject.TitleHeader, yukiProject.Version)
         yukiMarkdown &= Subst("+ Description : &1\n", UnQuote(yukiProject.Description))
