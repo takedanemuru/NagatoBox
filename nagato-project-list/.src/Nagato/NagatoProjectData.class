@@ -1,0 +1,76 @@
+' Gambas class file
+
+Property Read Title As String
+Property Read TitleHeader As String
+Property Read IconPath As String
+Property Read Version As String
+Property Read Description As String
+Property Read Icon As Picture
+
+Private $dir As String
+Private $iconPath As String
+Private $title As String
+Private $version As String
+Private $description As String
+
+Private Function removeHeader(argSource As String, argHeader As String) As String
+    
+    Return Replace(argSource, argHeader, "")
+    
+End
+
+Public Sub _new(argProjectFilePath As String)
+    
+    Dim yukiData As String = File.Load(argProjectFilePath)
+    Dim yukiLine As String
+    
+    $dir = File.Dir(argProjectFilePath)
+    
+    For Each yukiLine In Split(yukiData, "\n", "", True)
+        If yukiLine Begins "Title=" Then $title = removeHeader(yukiLine, "Title=")
+        If yukiLine Begins "Icon=" Then $iconPath = removeHeader(yukiLine, "Icon=")
+        If yukiLine Begins "Version=" Then $version = removeHeader(yukiLine, "Version=")
+        If yukiLine Begins "Description=" Then $description = removeHeader(yukiLine, "Description=")
+    Next
+    
+End
+
+Private Function Title_Read() As String
+
+    Return $title
+
+End
+
+Private Function Version_Read() As String
+
+    Return $version
+
+End
+
+Private Function Description_Read() As String
+
+    Return $description
+
+End
+
+Private Function IconPath_Read() As String
+
+    Return $dir &/ $iconPath
+
+End
+
+Private Function Icon_Read() As Picture
+
+    Return Image.Load(Me.IconPath).Stretch(16, 16).Picture
+
+End
+
+Private Function TitleHeader_Read() As String
+
+    Dim yukiTemplate As String = "![image: &2](&1) &3"
+
+    If Not Exist($dir &/ $iconPath) Then Return $title
+
+    Return Subst(yukiTemplate, $dir &/ $iconPath, File.Name($iconPath), $title)
+
+End

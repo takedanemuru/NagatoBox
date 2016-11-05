@@ -2,7 +2,7 @@
 
 Private $rootMenu As Menu
 
-Private Enum MenuMarkdownTable, MenuMarkdownList, MenuNone, MenuAbout, MenuQuit
+Private Enum MenuMarkdownGithub, MenuMarkdownTable, MenuMarkdownList, MenuNone, MenuAbout, MenuQuit
 
 Private Sub initializeRootMenu(argMenuName As String)
     
@@ -31,6 +31,7 @@ Public Sub _new(argMenuName As String)
     initializeRootMenu(argMenuName)
     addChildMenu("Export markdown (Table)", MenuMarkdownTable)
     addChildMenu("Export markdown (List)", MenuMarkdownList)
+    addChildMenu("Export markdown (GitHub)", MenuMarkdownGithub)
     addChildMenu("", MenuNone)
     addChildMenu("About", MenuAbout, "star")
     addChildMenu("Quit", MenuQuit, "button-power")
@@ -44,6 +45,8 @@ Public Sub MenuItem_Click()
             MikuruMarkdownTable()
         Case MenuMarkdownList
             MikuruMarkdownList()
+        Case MenuMarkdownGithub
+            MikuruMarkdownListForGithub()
         Case MenuAbout
             HaruhiAbout.ShowDialog()
         Case MenuQuit

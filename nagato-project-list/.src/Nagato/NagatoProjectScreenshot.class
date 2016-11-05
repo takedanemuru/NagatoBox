@@ -1,0 +1,28 @@
+' Gambas class file
+
+Property Read Count As Integer
+
+Private $dir As String
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Dim yukiPaths As String[] = Dir($dir)
+    Dim yukiTemplate As String = "![image: &2](&1)\n\n"
+    
+    Return Subst(yukiTemplate, $dir &/ yukiPaths[0], yukiPaths[0])
+    
+End
+
+Public Sub _new(argDirectory As String)
+    
+    $dir = argDirectory &/ "doc/screenshots"
+    
+End
+
+Private Function Count_Read() As Integer
+
+    If Not Exist($dir) Then Return 0
+    
+    Return Dir($dir).Count
+
+End

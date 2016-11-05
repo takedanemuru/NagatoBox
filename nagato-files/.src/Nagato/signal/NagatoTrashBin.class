@@ -77,12 +77,14 @@ End
 
 Public Sub DirectoryObserver_Deleted(argPath As String)
     
-    $iconView.Refresh()
+    $iconView.UnselectAll()
+    $menuPanel.SetLabel(0)
     
 End
 
 Public Sub DirectoryObserver_Modefied(argPath As String)
     
-    $iconView.Refresh()
+    $iconView.UnselectAll()
+    $menuPanel.SetLabel(0)
     
 End

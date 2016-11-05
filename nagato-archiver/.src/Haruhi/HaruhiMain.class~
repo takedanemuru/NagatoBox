@@ -40,6 +40,7 @@ Public Sub Form_Open()
     Me.Center()
     OpenFilesButton.Picture = MikuruIcon["folder"]
     ClearButton.Picture = MikuruIcon["bin"]
+    AboutButton.Picture = MikuruIcon["information-balloon"]
     TypeComboBox.Index = 0
     $iconView.SetEmptyView()
     

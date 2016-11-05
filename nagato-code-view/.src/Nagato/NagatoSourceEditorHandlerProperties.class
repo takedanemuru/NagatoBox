@@ -1,0 +1,40 @@
+' Gambas class file
+
+Private Sub initializeHighlightProperties(argEditor As TextEditor)
+    
+    With argEditor.Styles
+        .[Highlight.Background].Color = 16247
+        .[Highlight.String].Color = Color.Orange
+        .[Highlight.Number].Color = Color.Red
+        .[Highlight.Keyword].Color = Color.LightGray
+        .[Highlight.Normal].Color = Color.White
+        .[Highlight.Symbol].Color = Color.White
+        .[Highlight.Function].Color = Color.White
+        .[Highlight.Operator].Color = Color.Yellow
+        .[Highlight.Comment].Color = 6274911
+        .[Highlight.DataType].Color = 10485663
+    End With
+    
+End
+
+Private Sub initializeEditorProperties(argEditor As TextEditor)
+    
+    With argEditor
+        .Highlight = "gambas"
+        .TabSize = 4
+        .Font.Size = 14
+        .Font.Name = "Bitstream Charter"
+        .ShowLineNumber = True
+        .ShowSpaces = True
+        .ShowModified = True
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _new(argEditor As TextEditor)
+    
+    initializeEditorProperties(argEditor)
+    initializeHighlightProperties(argEditor)
+    
+End

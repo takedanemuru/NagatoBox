@@ -99,3 +99,9 @@ Public Sub FileStore_Clear()
     $iconView.SetEmptyView()
     
 End
+
+Public Sub AboutButton_Click()
+
+    HaruhiAbout.ShowDialog()
+
+End

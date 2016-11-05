@@ -33,11 +33,11 @@ new package : qt5 front-end for `sox`
 
 + **must to restructure menu positions...**
 
-![image: screenshot_2016年10月21日_19：15：10](../screenshot_2016年10月21日_19：15：10.png)
+![image: screenshot_2016年10月21日_19：15：10](../images/screenshot_2016年10月21日_19：15：10.png)
 
 + **color chips on menus !!**
 
-![image: screenshot_2016年10月21日_19：16：10](../screenshot_2016年10月21日_19：16：10.png)
+![image: screenshot_2016年10月21日_19：16：10](../images/screenshot_2016年10月21日_19：16：10.png)
 
 ### nagato-extractor (v42.6.4)
 
@@ -46,6 +46,11 @@ new package : qt5 front-end for `sox`
 ### nagato-files (v42.6.104)
 
 + ~~new : redesign symlink tag~~
++ ~~new : show xdg-user-dirs tag~~
++ ~~fix : avoid crash when rename fie/directory twice.~~
++ ~~fix : now can show symbol on symlink tile.~~
++ ~~fix : count selection on trash bin iconview correctlly.~~
++ ~~new : show "templates not found" on context menu for "create from template", when there are no files in xdg template dir.~~
 
 ### nagato-desktop (nagato-files -d)
 
@@ -72,6 +77,13 @@ new package : qt5 front-end for `sox`
 + ~~record last used directory for Choose Dialogs~~
 + ~~fix : avoid crash when move index to unexisted path.~~
 
+### nagato-taskmanager
+
++ new : show net load.
+
 ### nagato-web
 
 + check _loaded sequence
++ ~~fix : now can open local html file again.~~
+
+![image: screenshot_2016年11月03日_21：18：11](../images/screenshot_2016年11月03日_21：18：11.png)

@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Private $properties As NagatoSourceEditorHandlerProperties
+
 Private Sub setTabStrip(argPath As String)
     
     If MainTabStrip[0].Children.Count > 0 Then Inc MainTabStrip.Count
@@ -12,15 +14,8 @@ Private Sub setEditor(argPath As String)
     
     Dim yukiEditor As New TextEditor(MainTabStrip)
     
-    With yukiEditor
-        .TabSize = 4
-        .ShowLineNumber = True
-        .ShowLimit = True
-        .Text = File.Load(argPath)
-        .Highlight = "gambas"
-        .Font.Size = 12
-        .Expand = True
-    End With
+    $properties = New NagatoSourceEditorHandlerProperties(yukiEditor)
+    yukiEditor.Text = File.Load(argPath)
     
 End
 

@@ -9,9 +9,9 @@ Private Function getSartupUrl() As String
         yukiUrl = Args.Get("u", "url", "open specific url", "url to open")
     yukiArgs = Args.End()
     
-    If yukiUrl = "" And If Args.Count > 1 Then yukiUrl = Args[1]
+    If yukiUrl = "" And If yukiArgs.Count > 0 Then yukiUrl = yukiArgs[0]
     
-    Return yukiUrl
+    Return IIf(yukiUrl = "", "", "file://" & yukiUrl)
     
 End
 
@@ -24,11 +24,11 @@ Public Sub Main()
         HaruhiMain.Show()
         MikuruWebSettings.Initialize()
         If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
-        'NagatoSettingsForm.Load(HaruhiMain)
         Application.MainWindow = HaruhiMain
     Else If yukiUrl = "" Then
         NagatoDBus.Proxy.Show()
     Else
+        Debug "i came here"
         NagatoDBus.Proxy.SetUrl(yukiUrl)
     End If
     

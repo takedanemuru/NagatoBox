@@ -9,7 +9,8 @@ Private Function getSartupUrl() As String
         yukiUrl = Args.Get("u", "url", "open specific url", "url to open")
     yukiArgs = Args.End()
     
-    If yukiUrl = "" And If Args.Count > 1 Then yukiUrl = Args[1]
+    If yukiUrl = "" And If yukiArgs.Count > 0 Then yukiUrl = yukiArgs[0]
+    If yukiUrl Begins "/" Then yukiUrl = "file://" & yukiUrl
     
     Return yukiUrl
     
@@ -28,6 +29,7 @@ Public Sub Main()
     Else If yukiUrl = "" Then
         NagatoDBus.Proxy.Show()
     Else
+        Debug "i came here"
         NagatoDBus.Proxy.SetUrl(yukiUrl)
     End If
     

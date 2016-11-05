@@ -27,6 +27,18 @@ Private Function getTriangleTaggedTile(argPicture As Picture, argText As String,
     
 End
 
+Private Function getSymlinkTag(argPicture As Picture) As Picture
+    
+    Return getTriangleTaggedTile(argPicture, "symlink", MikuruColor.Transparent(Color.Orange, 128))
+    
+End
+
+Private Function getXdgUserDirTag(argPicture As Picture) As Picture
+    
+    Return getTriangleTaggedTile(argPicture, "xdg-dir", MikuruColor.Transparent(Color.Violet, 128))
+    
+End
+
 Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
     
     Dim yukiImage As Image = argPicture.Image
@@ -43,13 +55,11 @@ Public Sub _call(argTile As Picture, argPath As String) As Picture
     
     Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
     
-    If Stat(argPath).Link Then
-        Return getTriangleTaggedTile(argTile, "symlink", MikuruColor.Transparent(Color.Orange, 128))
-    Else If yukiSymbol <> "" Then
-        Return getSymbolizedTile(argTile, yukiSymbol)
-    Else
-        Return argTile
-    Endif
+    If yukiSymbol <> "" Then argTile = getSymbolizedTile(argTile, yukiSymbol)
+    If Stat(argPath).Link Then argTile = getSymlinkTag(argTile)
+    If NagatoXdg.IsUserDir(argPath) Then argTile = getXdgUserDirTag(argTile)
+    
+    Return argTile
     
 End
 

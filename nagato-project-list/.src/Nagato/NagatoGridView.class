@@ -42,7 +42,7 @@ End
 
 Private Sub setRowData(argProject As NagatoProject)
     
-    Print argProject.Title & " : " & DateDiff(argProject.LastModified, Now, gb.Day)
+    'Print argProject.Title & " : " & DateDiff(argProject.LastModified, Now, gb.Day)
     
     $gridView[$gridView.Rows.Max, 0].Text = $gridview.Rows.Count
     Try $gridView[$gridView.Rows.Max, 1].Picture = argProject.Icon

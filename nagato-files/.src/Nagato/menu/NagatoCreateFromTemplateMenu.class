@@ -65,14 +65,18 @@ End
 
 Public Sub _InitializeMenu() ' override
     
-    addDirectory(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
+    If Dir(NagatoXdg.UserDirs.Templates).Count = 0 Then
+        Me._AddMenu(("Templates not found"), 0, "exclamation")
+    Else
+        addDirectory(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
         Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
-    addCreateFileMenu(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
+        addCreateFileMenu(NagatoXdg.UserDirs.Templates, Me._$rootMenu)
+    End If
     
 End
 
 Public Sub CopyDirectoryMenu_Click()
-        
+    
     MikuruFileManuever.CopyToDirectory([Last.Tag], Me._$path)
     
 End

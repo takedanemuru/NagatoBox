@@ -2,13 +2,15 @@
 
 Public Sub _call()
     
-    Dim yukiMarkdown As String 
+    Dim yukiMarkdown As String = "# Applications List\n\n"
     Dim yukiProject As NagatoProject
     
     For Each yukiProject In NagatoProjectList.All
-        yukiMarkdown &= Subst("## &1 (v&2)\n\n", yukiProject.Title, yukiProject.Version)
+        yukiMarkdown &= Subst("## &1 (v&2)\n\n", yukiProject.TitleHeader, yukiProject.Version)
         yukiMarkdown &= Subst("Description : &1\n", UnQuote(yukiProject.Description))
         yukiMarkdown &= Subst("Last Modefied : &1\n\n", Format(yukiProject.LastModified, "yyyy-mm-dd"))
+        If yukiProject.ScreenshotsCount > 0 Then yukiMarkdown &= yukiProject.GetScreenShot(0)
+        yukiMarkdown &= yukiProject.Document
     Next
     
     Clipboard.Copy(yukiMarkdown, "text/plain")
