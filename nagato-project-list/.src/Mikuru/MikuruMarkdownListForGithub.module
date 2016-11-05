@@ -9,8 +9,8 @@ Public Sub _call()
     
     For Each yukiProject In NagatoProjectListForGithub.All
         yukiMarkdown &= Subst("## &1 (v&2)\n\n", yukiProject.TitleHeader, yukiProject.Version)
-        yukiMarkdown &= Subst("Description : &1\n", UnQuote(yukiProject.Description))
-        yukiMarkdown &= Subst("Last Modefied : &1\n\n", Format(yukiProject.LastModified, "yyyy-mm-dd"))
+        yukiMarkdown &= Subst("+ Description : &1\n", UnQuote(yukiProject.Description))
+        yukiMarkdown &= Subst("+ Last Modefied : &1\n\n", Format(yukiProject.LastModified, "yyyy-mm-dd"))
         If yukiProject.ScreenshotsCount > 0 Then yukiMarkdown &= yukiProject.GetScreenShot(0)
         yukiMarkdown &= yukiProject.Document
     Next
