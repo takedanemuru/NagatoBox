@@ -69,7 +69,7 @@ End
 
 Private Function TitleHeader_Read() As String
 
-    Return $data.TitleHeader
+    Return Replace($data.TitleHeader, User.Home &/ "NagatoBox", "..")
 
 End
 
