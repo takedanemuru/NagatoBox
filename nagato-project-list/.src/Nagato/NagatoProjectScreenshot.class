@@ -9,7 +9,7 @@ Public Sub _get(argIndex As Integer) As String
     Dim yukiPaths As String[] = Dir($dir)
     Dim yukiTemplate As String = "![image: &2](&1)\n\n"
     
-    Return Subst(yukiTemplate, $dir &/ yukiPaths[0], yukiPaths[0])
+    Return Subst(yukiTemplate, $dir &/ yukiPaths[argIndex], yukiPaths[argIndex])
     
 End
 

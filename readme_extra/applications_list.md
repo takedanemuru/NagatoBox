@@ -37,6 +37,11 @@
 
 ![image: screenshot_001.png](../nagato-archiver/doc/screenshots/screenshot_001.png)
 
+### archive types nagato-archiver can create
+
+.tar, .zip, .bz2, .gz, .rar, .lzh, .xz, .tar.gz, .tar.xz, and .tar.bz2 
+
+
 ## ![image: button-play.png](../nagato-asx-player/icons/button-play.png) nagato-asx-player (v42.5.5)
 
 + Description : asx file player
@@ -97,10 +102,18 @@
 + Description : dbus explorer
 + Last Modefied : 2016-08-08
 
-## ![image: ruler.png](../nagato-diagram/Pictures/Icons/ruler.png) nagato-diagram (v42.6.17)
+## ![image: ruler.png](../nagato-diagram/Pictures/Icons/ruler.png) nagato-diagram (v42.6.18)
 
 + Description : gui front-end for graphviz.
-+ Last Modefied : 2016-10-28
++ Last Modefied : 2016-11-06
+
+![image: screenshot_001.png](../nagato-diagram/doc/screenshots/screenshot_001.png)
+
+graphical front end for graphviz.
+
+ease to edit .gv files with preview. and export it as an image file.
+
+
 
 ## ![image: book-open-bookmark.png](../nagato-dictionary/pictures/mono_icons/book-open-bookmark.png) nagato-dictionary (v42.5.10)
 
@@ -182,10 +195,10 @@
 + Description : a music player with gstreamer backend.
 + Last Modefied : 2016-10-16
 
-## ![image: database.png](../nagato-project-list/Pictures/Icons/database.png) nagato-project-list (v42.6.2)
+## ![image: database.png](../nagato-project-list/Pictures/Icons/database.png) nagato-project-list (v42.6.3)
 
 + Description : project listing tool for Gambas3
-+ Last Modefied : 2016-10-04
++ Last Modefied : 2016-11-05
 
 ![image: screenshot_001.png](../nagato-project-list/doc/screenshots/screenshot_001.png)
 
@@ -193,6 +206,11 @@
 
 + list projects up on gridview.
 + generate markdown document(s) for local and github.
+
+### parsing destinations
+
++ `/PROJECT/doc/screenshots/*.png` for screenshot
++ `/PROJECT/doc/document.md` for document
 
 
 ## ![image: camera.png](../nagato-screenshooter/picture/camera.png) nagato-screenshooter (v42.5.4)
@@ -205,10 +223,14 @@
 + Description : manage autostart
 + Last Modefied : 2016-10-14
 
-## ![image: give-me-megane-back.jpg](../nagato-stock-icon-list/pictures/give-me-megane-back.jpg) nagato-stock-icon-list (v42.5.3)
+## ![image: give-me-megane-back.jpg](../nagato-stock-icon-list/pictures/give-me-megane-back.jpg) nagato-stock-icon-list (v42.6.4)
 
 + Description : nagato shows you all stock icons for gambas3
-+ Last Modefied : 2016-08-16
++ Last Modefied : 2016-11-06
+
+![image: screenshot_001.png](../nagato-stock-icon-list/doc/screenshots/screenshot_001.png)
+
+show all of gambas3 and NagatoBox stock icons.
 
 ## ![image: oscilloscope.png](../nagato-taskmanager/Icons/oscilloscope.png) nagato-taskmanager (v42.5.14)
 

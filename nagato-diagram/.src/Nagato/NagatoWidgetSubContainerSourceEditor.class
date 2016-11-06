@@ -7,7 +7,7 @@ Property Read Text As String
 
 Private $menuBar As NagatoWidgetMenuBarSourceEditor
 Private $editor As NagatoWidgetSourceEditor
-Private $pathHandler As New NagatoSourcePath As "PathHandler"
+Private $pathHandler As NagatoSourcePath 
 
 Private Sub fileEvent(argSignal As Integer, argValues As Variant[])
     
@@ -35,6 +35,7 @@ End
 
 Public Sub _OnInitializeSubWidgets()
     
+    $pathHandler = New NagatoSourcePath As "PathHandler"
     $menuBar = New NagatoWidgetMenuBarSourceEditor(Me._$vBox) As "MenuBar"
     $editor = New NagatoWidgetSourceEditor(Me._$vBox) As "SourceEditor"
     If MikuruArguments.Path Then fileEvent(MikuruSignal.FileRecent, [MikuruArguments.Path])

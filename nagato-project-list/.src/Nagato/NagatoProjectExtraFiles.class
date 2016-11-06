@@ -1,0 +1,55 @@
+' Gambas class file
+
+Property Read UserSpecificIcon As String
+
+Private $applicationName As String
+Private $userSpecificIconPath As String = ""
+Private $collection As New Collection
+
+Private Sub setToCollection(argLine As String)
+    
+    Dim yukiData As String[] = Split(argLine, "\t", "", True)
+    
+    $collection.Add(yukiData[1], yukiData[0]) 'destination path,  sourcefile 
+    
+End
+
+Private Sub parseSourceLine(argSourceLine As String)
+    
+    Dim yukiLine As String
+    
+    argSourceLine = UnQuote(Replace(argSourceLine, "ubuntu:", ""))
+    
+    For Each yukiLine In Split(argSourceLine, "\n", "", True)
+        setToCollection(yukiLine)
+    Next
+    
+End
+
+Private Sub checkUserSpecifiedIconPath()
+    
+    Dim yukiValue As Variant
+    
+    For Each yukiValue In $collection
+        If yukiValue <> "/usr/share/pixmaps" Then Continue
+        If File.BaseName($collection.Key) <> $applicationName Then Continue
+        $userSpecificIconPath = $collection.Key
+    Next
+    
+End
+
+Public Sub _new(argSourceLine As String, argTitle As String)
+    
+    $applicationName = argTitle
+    
+    If argSourceLine Not Begins "ubuntu:" Then Return
+    parseSourceLine(argSourceLine)
+    checkUserSpecifiedIconPath()
+    
+End
+
+Private Function UserSpecificIcon_Read() As String
+
+    Return $userSpecificIconPath
+
+End

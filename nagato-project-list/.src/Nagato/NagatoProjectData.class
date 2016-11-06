@@ -12,6 +12,7 @@ Private $iconPath As String
 Private $title As String
 Private $version As String
 Private $description As String
+Private $extraFiles As NagatoProjectExtraFiles
 
 Private Function removeHeader(argSource As String, argHeader As String) As String
     
@@ -31,6 +32,8 @@ Public Sub _new(argProjectFilePath As String)
         If yukiLine Begins "Icon=" Then $iconPath = removeHeader(yukiLine, "Icon=")
         If yukiLine Begins "Version=" Then $version = removeHeader(yukiLine, "Version=")
         If yukiLine Begins "Description=" Then $description = removeHeader(yukiLine, "Description=")
+        If yukiLine Not Begins "ExtraFiles=" Then Continue
+        $extraFiles = New NagatoProjectExtraFiles(removeHeader(yukiLine, "ExtraFiles="), $title)
     Next
     
 End
@@ -55,7 +58,11 @@ End
 
 Private Function IconPath_Read() As String
 
-    Return $dir &/ $iconPath
+    If Not Object.IsValid($extraFiles) Then Return $dir &/ $iconPath
+    If $extraFiles.UserSpecificIcon = "" Then Return $dir &/ $iconPath
+    If Not Exist($dir &/ $extraFiles.UserSpecificIcon) Then Return $dir &/ $iconPath
+    
+    Return $dir &/ $extraFiles.UserSpecificIcon
 
 End
 
@@ -69,8 +76,10 @@ Private Function TitleHeader_Read() As String
 
     Dim yukiTemplate As String = "![image: &2](&1) &3"
 
-    If Not Exist($dir &/ $iconPath) Then Return $title
-
-    Return Subst(yukiTemplate, $dir &/ $iconPath, File.Name($iconPath), $title)
+    If Not Exist(Me.IconPath) Then 
+        Return $title
+    Else
+        Return Subst(yukiTemplate, Me.IconPath, File.Name(Me.IconPath), $title)
+    End If
 
 End

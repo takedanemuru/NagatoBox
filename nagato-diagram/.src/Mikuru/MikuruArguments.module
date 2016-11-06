@@ -16,6 +16,9 @@ Private Function Path_Read() As String
 
     Dim yukiPath As String
     
+    ' for test
+    ' Return "/home/takedanemuru/nagato-youtube-view.gv"
+    
     For Each yukiPath In $paths
         If Not Exist(yukiPath) Then Continue
         If DesktopMime.FromFile(yukiPath).Type = "text/vnd.graphviz" Then Return yukiPath
