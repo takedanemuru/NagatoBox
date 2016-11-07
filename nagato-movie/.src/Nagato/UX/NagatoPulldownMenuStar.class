@@ -5,6 +5,7 @@ Inherits NagatoPulldownMenu
 Public Sub _OnInitializeChildMenus()
     
     Me._AddMenuItem(("Open"), MikuruMenuEvent.FileOpen, MikuruIcon.Get("folder"))
+    Me._AddMenuItem(("Screenshot"), MikuruMenuEvent.MediaScreenShot, MikuruIcon.Get("camera"))
         Me._AddMenuItem("", MikuruMenuEvent.None) ' separator
     Object.New("NagatoMenuItemAbout", [Me._$rootMenu, ("About"), "star"])
     Object.New("NagatoMenuItemQuit", [Me._$rootMenu, ("Quit"), "button-power"])

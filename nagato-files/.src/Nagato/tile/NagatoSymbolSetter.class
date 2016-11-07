@@ -1,26 +1,42 @@
 ' Gambas class file
 
+Private Sub paintTriangle(argColor As Integer)
+    
+    Dim yukiRect As New Rect
+    
+    yukiRect.X = MikuruUxTile.TileSize * -0.5
+    yukiRect.Y = 0
+    yukiRect.W = MikuruUxTile.TileSize
+    yukiRect.H = MikuruUxTile.TileSize * 0.4
+    Paint.Brush = Paint.Color(argColor)
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
+    
+End
+
+Private Sub paintText(argText As String)
+    
+    Dim yukiRect As New Rect
+    
+    yukiRect.X = MikuruUxTile.TileSize * -0.5
+    yukiRect.Y = MikuruUxTile.TileSize * 0.24
+    yukiRect.W = MikuruUxTile.TileSize
+    yukiRect.H = MikuruUxTile.TileSize * 0.16
+    Paint.Font.Bold = True
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+End
+
 Private Function getTriangleTaggedTile(argPicture As Picture, argText As String, argColor As Integer) As Picture
     
     Dim yukiImage As Image = argPicture.Image
-    Dim yukiHeight As Integer
-    Dim yukiWidth As Integer = Sqr(2 * MikuruUxTile.TileSize ^ 2)
-    Dim yukiRect As New Rect
     
     Paint.Begin(yukiImage)
-        Paint.Brush = Paint.Color(argColor)
-        Paint.Polygon([0, 0, MikuruUxTile.TileSize * 0.5, 0, 0, MikuruUxTile.TileSize * 0.5, 0, 0])
-        Paint.Fill()
         Paint.Rotate(Rad(45))
-        Paint.Brush = Paint.Color(Color.White)
-        Paint.Font.Bold = True
-        yukiHeight = Paint.Font.RichTextHeight(argText)
-        yukiRect.X = -0.5 * yukiWidth
-        yukiRect.Y = (MikuruUxTile.TileSize * 0.5) - 2 * yukiHeight
-        yukiRect.W = yukiWidth
-        yukiRect.H = yukiHeight
-        Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
-        Paint.Fill()
+        paintTriangle(argColor)
+        paintText(argText)
     Paint.End()
     
     Return yukiImage.Picture

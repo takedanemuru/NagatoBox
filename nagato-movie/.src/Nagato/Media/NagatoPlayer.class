@@ -7,8 +7,11 @@ Private $mediaPlayer As MediaPlayer
 Private $mediaControl As MediaControl
 Private $visualizers As NagatoVisualizers
 Private $drawingArea As DrawingArea
+Private $currentPath As String ' this is path, not url.
 
 Private Sub playPath(argPath As String)
+    
+    $currentPath = argPath
     
     Try $mediaPlayer.Stop()
     initializeMediaPlayerAndControl()
@@ -50,6 +53,9 @@ Public Sub SignalReceiver(argSignal As Integer, argValues As Variant[])
             $mediaPlayer.Position = $mediaPlayer.Duration * (argValues[0] / 100)
         Case MikuruMenuEvent.FileOpen
             If MikuruDialog.OpenFile() Then Me.SetPathAndPlay(MikuruDialog.Path)
+        Case MikuruMenuEvent.MediaScreenShot
+            If $currentPath = "" Then Return
+            MikuruThumbnailer($currentPath, $mediaPlayer.Position, $mediaPlayer.Duration)
     End Select
     
 End

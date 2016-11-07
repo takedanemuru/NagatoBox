@@ -175,10 +175,15 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : simple mixer applet for trayicon
 + Last Modefied : 2016-08-11
 
-## ![image: video.png](../nagato-movie/pictures/blue/video.png) nagato-movie (v42.6.6)
+## ![image: video.png](../nagato-movie/pictures/blue/video.png) nagato-movie (v42.6.7)
 
 + Description : movie player
-+ Last Modefied : 2016-10-04
++ Last Modefied : 2016-11-07
+
+![image: screenshot_001.png](../nagato-movie/doc/screenshots/screenshot_001.png)
+
+a simple movie player. no more, no less.
+
 
 ## ![image: button-power.png](../nagato-openbox-logout/Pictures/button-power.png) nagato-openbox-logout (v42.5.4)
 

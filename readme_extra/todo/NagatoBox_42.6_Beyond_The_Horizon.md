@@ -58,9 +58,14 @@ new package : qt5 front-end for `sox`
 + ~~refine rss tile. use standard label and limit over height text.~~
 + ~~refine symlink tag.~~
 
-### happy halloween !!
+#### happy halloween !!
 
 ![image: screenshot_2016年10月15日_14：29：10](../images/screenshot_2016年10月15日_14：29：10.png)
+
+### nagato-image-view
+
++ fix : resizing linkage.
++ simplify saving sequence.
 
 ### nagato-lookup (v42.6.38)
 
@@ -71,6 +76,8 @@ new package : qt5 front-end for `sox`
 
 + ~~fix under panel~~
 + ~~drop qt4 dependencies completely~~
++ ~~new : screenshot functionality~~
++ new : add preview into screenshot saving dialog
 
 ### nagato-player-x
 

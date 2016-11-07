@@ -1,0 +1,28 @@
+' Gambas module file
+
+Private Const Command As String = "ffmpegthumbnailer -i &1 -o &2 -t &3 -s %4"
+
+Private Sub saveScreenshot(argSourcePath As String)
+    
+    Dialog.Path = User.Home &/ "your_screenshot.png"
+    
+    If Not Dialog.SaveFile() Then Try Copy argSourcePath To Dialog.Path
+    
+End
+
+Public Sub _call(argSourcePath As String, argPosition As Float, argDuration As Float)
+    
+    Dim yukiSource As String = Quote(argSourcePath)
+    Dim yukiDestination As String = Temp() & ".png"
+    Dim yukiPosition As Float = argPosition / argDuration * 100 ' needs percentage
+    Dim yukiOutput As String
+    
+    Shell Subst(Command, yukiSource, yukiDestination, yukiPosition, 0) To yukiOutput
+    
+    If yukiOutput Then
+        Message.Error(yukiOutput, ("OK"))
+    Else
+        saveScreenshot(yukiDestination)
+    End If
+    
+End

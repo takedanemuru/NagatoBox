@@ -9,7 +9,7 @@ Private Function getText(argPosition As Float, argDuration As Float) As String
     Dim yukiPosition As String = MikuruTimeFormat[argPosition]
     Dim yukiDuration As String = MikuruTimeFormat[argDuration]
     
-    Return Subst$((" <b>&1</b> / &2 "), yukiPosition, yukiDuration)
+    Return Subst$((" &1 / &2 "), yukiPosition, yukiDuration)
     
 End
 
@@ -27,7 +27,7 @@ Public Sub _new(argContainer As Container)
     With $progressLabel
         .Text = ""
         .AutoResize = True
-        .Alignment = Align.Center
+        .Alignment = Align.Right
     End With
     
 End
