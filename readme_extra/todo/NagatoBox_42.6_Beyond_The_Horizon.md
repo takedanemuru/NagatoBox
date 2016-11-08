@@ -64,7 +64,7 @@ new package : qt5 front-end for `sox`
 
 ### nagato-image-view
 
-+ fix : resizing linkage.
++ ~~fix : resizing linkage.~~
 + simplify saving sequence.
 
 ### nagato-lookup (v42.6.38)
@@ -83,6 +83,13 @@ new package : qt5 front-end for `sox`
 
 + ~~record last used directory for Choose Dialogs~~
 + ~~fix : avoid crash when move index to unexisted path.~~
+
+### nagato-project-list
+
++ ~~new : create project list markdown doc automatically~~
++ ~~new : show project status by color.~~
+
+![image: screenshot_2016年11月08日_10：07：11](../images/screenshot_2016年11月08日_10：07：11.png)
 
 ### nagato-taskmanager
 

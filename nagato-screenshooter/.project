@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
+# Compiled with Gambas 3.9.1
 Title=nagato-screenshooter
 Startup=Kyon
 Icon=picture/camera.png
-Version=42.5.4
+Version=42.6.5
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -19,15 +19,14 @@ TabSize=4
 Translate=1
 Language=ja
 Maintainer=takedanemuru
-Vendor=integrated-data-thought-entity
+Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@andex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.License
-PackageName=nagato-screenshooter-42.5.4
+PackageName=nagato-screenshooter-42.6.5
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Graphics"
 Categories=ubuntu:"Graphics;Nagato;System"
 Groups=ubuntu:"graphics"
 ExtraDependencies=ubuntu:"\t\t"
-ExtraFiles=ubuntu:"nagato-screenshooter.desktop\t/usr/share/applications\nnagato-screenshooter.png\t/usr/share/pixmaps"

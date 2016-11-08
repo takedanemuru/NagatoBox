@@ -42,14 +42,27 @@ End
 
 Private Sub setRowData(argProject As NagatoProject)
     
-    'Print argProject.Title & " : " & DateDiff(argProject.LastModified, Now, gb.Day)
-    
     $gridView[$gridView.Rows.Max, 0].Text = $gridview.Rows.Count
     Try $gridView[$gridView.Rows.Max, 1].Picture = argProject.Icon
     $gridView[$gridView.Rows.Max, 2].Text = argProject.Title
     $gridView[$gridView.Rows.Max, 3].Text = argProject.Version
     $gridView[$gridView.Rows.Max, 4].Text = Format(argProject.LastModified, "yyyy-mm-dd")
     $gridView[$gridView.Rows.Max, 5].Text = UnQuote(argProject.Description)
+    
+End
+
+Private Sub paintGrids(argStatus As Integer)
+    
+    Dim yukiColor As Integer
+    Dim yukiColumn As Integer
+    
+    If argStatus = MikuruDate.CurrentCours Then Return
+    If argStatus = MikuruDate.OldCours Then yukiColor = Color.Lighter(Color.Pink)
+    If argStatus = MikuruDate.Unmaintained Then yukiColor = Color.Red
+    
+    For yukiColumn = 0 To $gridView.Columns.Max
+        $gridView[$gridView.Rows.Max, yukiColumn].Background = yukiColor
+    Next
     
 End
 
@@ -60,6 +73,7 @@ Private Sub setData()
     For Each yukiProject In NagatoProjectList.All
         Inc $gridview.Rows.Count
         setRowData(yukiProject)
+        paintGrids(yukiProject.Status)
     Next
     
 End

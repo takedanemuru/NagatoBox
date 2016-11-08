@@ -1,0 +1,38 @@
+' Gambas class file
+
+Private $config As New NagatoConfigReader
+Private $gridView As GridView
+
+Public Sub _new()
+
+    $gridView = New GridView(MainContainer)
+    
+    With $gridView
+        .Expand = True
+        .Columns.Count = 3
+        .Columns[0].Text = "keybind"
+        .Columns[0].W = Me.W / 3
+        .Columns[1].Text = "action"
+        .Columns[1].W = Me.W / 3
+        .Columns[2].Text = "command"
+        .Columns[2].W = Me.W / 3
+        .Header = GridView.Horizontal
+        .ScrollBar = Scroll.Vertical
+    End With
+
+End
+
+Public Sub Form_Open()
+
+    Dim yukiIndex As Integer
+    Dim yukiKeybind As NagatoKeybind
+    
+    For yukiIndex = 0 To $config.Max
+        yukiKeybind = $config[yukiIndex]
+        Inc $gridView.Rows.Count
+        $gridView[$gridView.Rows.Max, 0].Text = yukiKeybind.KeyBind
+        $gridView[$gridView.Rows.Max, 1].Text = yukiKeybind.ActionType
+        $gridView[$gridView.Rows.Max, 2].Text = yukiKeybind.Command
+    Next
+    
+End

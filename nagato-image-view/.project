@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
+# Compiled with Gambas 3.9.1
 Title=nagato-image-view
 Startup=Kyon
 Icon=pictures/nagato_icons/presentation.png
-Version=42.5.3
+Version=42.6.4
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -20,11 +20,10 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-image-view-42.5.3
+PackageName=nagato-image-view-42.6.4
 MimeTypes="image/jpeg","image/png","image/gif"
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Viewers"
 Categories=ubuntu:"Graphics;ImageProcessing;Nagato"
 Groups=ubuntu:"x11"
-ExtraFiles=ubuntu:"nagato-image-view.desktop\t/usr/share/applications\nnagato-image-view.png\t/usr/share/pixmaps"

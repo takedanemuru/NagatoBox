@@ -18,7 +18,7 @@ Private Sub initializeSpacer()
     
     With yukiTextArea
         .Expand = True
-        .Text = Subst("YUKI.N > &1 projects found.", NagatoProjectList.All.Count)
+        .Text = NagatoProjectList.Label
         .Alignment = Align.Left
         .Padding = 8
     End With

@@ -7,7 +7,7 @@ Private Function getSafePath(argFileName As String) As String
     
     Do
         Inc yukiIndex
-        yukiPath = Subst$("&1(&2).png", argFileName, yukiIndex)
+        yukiPath = Subst$("&1(&2).png", File.BaseName(argFileName), yukiIndex)
         If Not Exist(yukiPath) Then Return yukiPath 
     Loop
     
@@ -15,8 +15,8 @@ End
 
 Public Function Get(argFileName As String) As String
     
-    If Not Exist(argFileName & ".png") Then
-        Return argFileName & ".png"
+    If Not Exist(argFileName) Then
+        Return argFileName
     Else
         Return getSafePath(argFileName)
     End If
@@ -25,8 +25,8 @@ End
 
 Public Sub _call(argFileName As String) As String
     
-    If Not Exist(argFileName & ".png") Then
-        Return argFileName & ".png"
+    If Not Exist(argFileName) Then
+        Return argFileName 
     Else
         Return getSafePath(argFileName)
     End If

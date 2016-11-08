@@ -1,0 +1,44 @@
+' Gambas class file
+
+Property Read KeyBind As String
+Property Read ActionType As String
+Property Read Command As String
+
+Private $keyBind As String
+Private $actionType As String
+Private $command As String
+
+Private Sub readActionElements(argXmlElement As XmlElement)
+    
+    $actionType = argXmlElement.Attributes["name"]
+    If $actionType = "Execute" Then
+        $command = argXmlElement.GetChildrenByTagName("command")[0].Value
+    Endif
+    
+End
+
+Public Sub _new(argElement As XmlElement)
+    
+    If argElement.GetChildrenByTagName("action").Count = 0 Then Return
+    $keyBind = argElement.Attributes["key"]
+    readActionElements(argElement.GetChildrenByTagName("action")[0])
+    
+End
+
+Private Function KeyBind_Read() As String
+
+    Return $keyBind
+
+End
+
+Private Function ActionType_Read() As String
+
+    Return $actionType
+
+End
+
+Private Function Command_Read() As String
+
+    Return $command
+
+End

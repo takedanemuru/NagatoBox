@@ -27,7 +27,10 @@ Private Sub initializeFileNameTextBox()
     
     Dim yukiTimeStamp As String = Format$(Now, ("yyyy/mm/dd_hh:nn:mm"))
     
-    FileNameTextBox.Text = Subst$("screenshot_&1", yukiTimeStamp)
+    With FileNameTextBox
+        .Text = Subst$("screenshot_&1.png", yukiTimeStamp)
+        .Select(0, String.Len(.Text) - String.Len(".png"))
+    End With
     
 End
 

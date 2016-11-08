@@ -25,6 +25,18 @@ Public Sub GetAll() As Result
     
 End
 
+Public Sub Reduce()
+    
+    Dim yukiResult As Result = Me._$connection.Find(NagatoDB.Table.History)
+    Dim yukiDayDiff As Integer
+    
+    For Each yukiResult
+        yukiDayDiff = DateDiff(yukiResult[NagatoDBAssistantColumns.TimeStamp], Now(), gb.Day)
+        If yukiDayDiff > 365 Then yukiResult.Delete()
+    Next
+    
+End
+
 Public Sub DeleteHistory(argUrl As String)
     
     Me._$connection.Delete(NagatoDB.Table.History, "url = &1", argUrl)

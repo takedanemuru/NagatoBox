@@ -4,8 +4,8 @@ Inherits NagatoPullDownMenu
 
 Public Sub _OnInitializeChildMenus()
     
-    Me._AddMenuItem(("Play Video with SMPlayer"), MikuruSignal.UserRequestPlayWithSMPlayer, "button-play")
-    Me._AddMenuItem("", 0)
+    ' Me._AddMenuItem(("Play Video with SMPlayer"), MikuruSignal.UserRequestPlayWithSMPlayer, "button-play")
+    ' Me._AddMenuItem("", 0)
     Me._AddMenuItem(("Play Video with mpv"), MikuruSignal.UserRequestPlayVideo, "video")
     Me._AddMenuItem(("Play Audio with mpv"), MikuruSignal.UserRequestPlayAudio, "music")
     

@@ -14,14 +14,6 @@ Public Sub Delete(argUrl As String)
     
 End
 
-Public Sub DeleteRelated(argUrl As String)
-    
-    $tableHistory.DeleteRelatedHistories(argUrl)
-    
-    Raise Update
-    
-End
-
 Public Sub ClearAll()
     
     $tableHistory.ClearAll()
@@ -48,5 +40,6 @@ End
 Public Sub _OnSetTable()
     
     $tableHistory = New NagatoTableHistory(Me._$connection)
+    $tableHistory.Reduce()
     
 End

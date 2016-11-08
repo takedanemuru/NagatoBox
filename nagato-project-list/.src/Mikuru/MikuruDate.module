@@ -1,0 +1,19 @@
+' Gambas module file
+
+Public Enum CurrentCours, OldCours, Unmaintained
+
+Private Function getCour(argDate As Date) As Integer
+    
+    Return Ceil(Month(argDate) / 3)
+    
+End
+
+Public Sub IsCurrentCours(argLastModefied As Date) As Integer
+    
+    If -3 > DateDiff(Now(), argLastModefied, gb.Month) Then Return Me.Unmaintained
+    
+    If (getCour(Now()) <> getCour(argLastModefied)) Then Return Me.OldCours
+    
+    Return Me.CurrentCours
+    
+End

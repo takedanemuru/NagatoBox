@@ -9,6 +9,7 @@ Property Read LastModified As Date
 Property Read Icon As Picture
 Property Read ScreenshotsCount As Integer
 Property Read Document As String
+Property Read Status As Integer
 
 Private $lastModefied As Date
 Private $data As NagatoProjectData
@@ -81,5 +82,11 @@ End
 Private Function Document_Read() As String
 
     Return $document.Text
+
+End
+
+Private Function Status_Read() As Integer
+
+    Return MikuruDate.IsCurrentCours($lastModefied)
 
 End

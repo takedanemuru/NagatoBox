@@ -61,7 +61,7 @@ Public Sub HeightSpinbox_ChangeValue(argNewValue As Integer)
     
 End
 
-Public Sub WidthSlider_ChangeValue(argNewValue As Integer)
+Public Sub WidthSpinbox_ChangeValue(argNewValue As Integer)
     
     If Not $linkCheckbox.Value Then Return
 

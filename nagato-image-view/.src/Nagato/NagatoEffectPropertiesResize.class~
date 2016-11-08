@@ -5,35 +5,24 @@ Inherits NagatoEffectProperties
 Property Read Values As Variant[]
 
 Private $container As Container
-Private $heightSlider As SpinBox
-Private $widthSlider As SpinBox
+Private $heightSlider As NagatoImageEffectSpinBox
+Private $widthSlider As NagatoImageEffectSpinBox
 Private $linkCheckbox As CheckBox
 
 Private Sub addHeightSliderBox()
     
-    $heightSlider = New SpinBox($container) As "HeightSlider"
+    Dim yukiDefaultValue As Integer = HaruhiImageView.BeforeImage.H
     
-    With $heightSlider
-        .MinValue = 1
-        .MaxValue = HaruhiImageView.BeforeImage.H * 2
-        .H = 32
-        .Value = HaruhiImageView.BeforeImage.H
-        .Step = 1
-    End With
+    $heightSlider = New NagatoImageEffectSpinBox($container, yukiDefaultValue) As "HeightSpinBox"
     
 End
 
 Private Sub addWidthSliderBox()
     
-    $widthSlider = New SpinBox($container) As "WidthSlider"
+    Dim yukiDefaultValue As Integer = HaruhiImageView.BeforeImage.W
     
-    With $widthSlider
-        .MinValue = 1
-        .MaxValue = HaruhiImageView.BeforeImage.W * 2
-        .H = 32
-        .Value = HaruhiImageView.BeforeImage.W
-        .Step = 1
-    End With
+    $widthSlider = New NagatoImageEffectSpinBox($container, yukiDefaultValue) As "WidthSpinBox"
+    
     
 End
 
@@ -62,26 +51,22 @@ Public Sub _new(argContainer As Container)
     
 End
 
-Public Sub HeightSlider_Change()
+Public Sub HeightSpinbox_ChangeValue(argNewValue As Integer)
     
     If Not $linkCheckbox.Value Then Return
 
     With HaruhiImageView
-        Object.Lock($widthSlider)
-            $widthSlider.Value = CInt(.BeforeImage.W * ($heightSlider.Value / .BeforeImage.H))
-        Object.Unlock($widthSlider)
+        $widthSlider.SetValueWithoutEvent(CInt(.BeforeImage.W * (argNewValue / .BeforeImage.H)))
     End With
     
 End
 
-Public Sub WidthSlider_Change()
+Public Sub WidthSlider_ChangeValue(argNewValue As Integer)
     
     If Not $linkCheckbox.Value Then Return
 
     With HaruhiImageView
-        Object.Lock($heightSlider)
-            $heightSlider.Value = CInt(.BeforeImage.H * ($widthSlider.Value / .BeforeImage.W))
-        Object.Unlock($heightSlider)
+        $heightSlider.SetValueWithoutEvent(CInt(.BeforeImage.H * (argNewValue / .BeforeImage.W)))
     End With
     
 End

@@ -29,9 +29,15 @@ End
 
 Public Sub WebView_Load()
     
+    Dim yukiArgs As New Variant[]
+    
     If Me.IsVideoUrl Then NagatoDBHistory.Push($webView.Url, $webView.Title)
     
-    Raise Signal(MikuruSignal.WebViewLoaded, [MikuruUrl.IsVideoUrl($webView.Url)])
+    yukiArgs.Add(MikuruUrl.IsVideoUrl($webView.Url))
+    ' yukiArgs.Add($webView.History.Index)
+    ' yukiArgs.Add($webView.History.Max)
+    
+    Raise Signal(MikuruSignal.WebViewLoaded, yukiArgs)
     
 End
 
