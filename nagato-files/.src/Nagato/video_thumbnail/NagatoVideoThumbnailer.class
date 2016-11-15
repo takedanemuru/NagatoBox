@@ -14,7 +14,6 @@ Public Sub Push(argSourcePath As String, argSelectedPath As String)
     
     Dim yukiNewThumbnail As Picture = getThumbnailImageForDB(Image.Load(argSelectedPath))
     
-    NagatoDBThumbnailer.Delete(argSourcePath)
     NagatoDBThumbnailer.Push(argSourcePath, 128, yukiNewThumbnail)
     
 End
@@ -28,7 +27,7 @@ Public Sub GenerateThumbnails(argWorkingDirectory As String, argPath As String)
     Do
         yukiTargetPath = argWorkingDirectory &/ yukiPosition & ".png"
         Shell Subst$(Command, yukiPosition, Quote$(argPath), yukiTargetPath) To yukiResult
-        Print yukiResult
+        'Print yukiResult
         yukiPosition += 5
         If yukiPosition > 100 Then Break
     Loop

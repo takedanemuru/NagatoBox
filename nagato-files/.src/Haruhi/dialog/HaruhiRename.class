@@ -55,6 +55,10 @@ Public Sub ApplyButton_Click()
     Else If Exist($targetPath.FullPath) Then
         Message.Warning(("YUKI.N > The file path has been existed. Please use another name."), ("OK"))
     Else
+        If MikuruMimeType.GetType($sourcePath.FullPath) = MikuruMimeType.TypeVideo Then
+            Debug "its video !!"
+            NagatoDBThumbnailer.Rename($sourcePath.FullPath, $targetPath.FullPath, 128)
+        Endif
         yukiTargetPath = MikuruSafePath($targetPath.FullPath)
         MikuruLastRenamed.Path = yukiTargetPath
         Move $sourcePath.FullPath To yukiTargetPath

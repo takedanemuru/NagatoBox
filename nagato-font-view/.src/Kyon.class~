@@ -1,17 +1,23 @@
 ' Gambas class file
 
+Private $gridView As NagatoGridView
+
 Public Sub _new()
+
+    Application.MainWindow = Me
+
 
 End
 
 Public Sub Form_Open()
 
-        NagatoSettings.LoadFormSettings(Me)
+    $gridView = New NagatoGridView(VBox1)
+    NagatoSettings.LoadFormSettings(Me)
 
 End
 
 Public Sub Form_Close()
-        
-        NagatoSettings.SaveFormSettings(Me)
-        
+    
+    NagatoSettings.SaveFormSettings(Me)
+    
 End

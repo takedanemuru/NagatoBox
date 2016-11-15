@@ -1,22 +1,26 @@
 ' Gambas class file
 
+Inherits NagatoWidget
+
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $screen As NagatoPainterScreen
 Private $lines As NagatoPainterHistoryLines
 
-Public Sub Refresh()
+Public Sub _OnInitializeWidget()
     
-    $drawingArea.Refresh()
+    $drawingArea = New DrawingArea(Me._$container)
+    $drawingArea.H = 120
+    
+    $observer = New Observer($drawingArea) As "Asakura"
+    $screen = New NagatoPainterScreen($drawingArea)
+    $lines = New NagatoPainterHistoryLines($drawingArea)
     
 End
 
-Public Sub _new(argDrawingArea As DrawingArea)
+Public Sub Refresh()
     
-    $drawingArea = argDrawingArea
-    $observer = New Observer($drawingArea) As "Asakura"
-    $screen = New NagatoPainterScreen(argDrawingArea)
-    $lines = New NagatoPainterHistoryLines(argDrawingArea)
+    $drawingArea.Refresh()
     
 End
 

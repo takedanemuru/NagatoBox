@@ -4,7 +4,7 @@ Inherits NagatoObject
 
 Public _$rootMenu As Menu
 
-Public Enum MenuPersona
+Public Enum MenuPersona = 10001, MenuShowDesktop = 10002
 
 Event ChangeMode(argMode As Integer)
 
@@ -42,6 +42,7 @@ Private Sub refreshChildMenus()
     Me._AddMenu(("YUKI.N > ..."), MenuPersona, MikuruIcon.Get("question-balloon"))
         Me._AddMenu("", 0)
     addConfigSubMenu()
+    Me._AddMenu(("Show Desktop"), MenuShowDesktop, MikuruIcon.Get("desktop"))
         Me._AddMenu("", 0)
     With NagatoDesktopPanelContainer
         Me._AddMenu(("Tasks (TypeA)"), .ModeTasksTypeA, MikuruIcon.Get("gear"))
@@ -72,6 +73,8 @@ Public Sub MenuItem_Click()
     Select Case Last.Tag
         Case MenuPersona
             HaruhiPersona.Fortune()
+        Case MenuShowDesktop
+            HaruhiDesktop.ShowDesktop()
         Default
             Raise ChangeMode(Last.Tag)
     End Select

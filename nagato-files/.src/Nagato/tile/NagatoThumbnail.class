@@ -46,7 +46,7 @@ End
 
 Public Function Get(argPath As String) As Picture
     
-    Dim yukiBaseImage As Image = MikuruTileBaseImage[Color.Transparent]
+    Dim yukiBaseImage As New Image(128, 128, Color.Transparent)
     
     Paint.Begin(yukiBaseImage)
         drawThumbnail(argPath)

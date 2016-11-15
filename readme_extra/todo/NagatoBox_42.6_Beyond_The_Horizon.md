@@ -97,7 +97,8 @@ new package : qt5 front-end for `sox`
 
 ### nagato-web
 
-+ check _loaded sequence
++ new : per page settings and db. 
++ ~~check \_loaded sequence~~
 + ~~fix : now can open local html file again.~~
 
 ![image: screenshot_2016年11月03日_21：18：11](../images/screenshot_2016年11月03日_21：18：11.png)

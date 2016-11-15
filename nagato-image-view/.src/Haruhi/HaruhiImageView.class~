@@ -42,9 +42,6 @@ Public Sub Form_Open()
     $twinView = New NagatoTwinView(MainView, MainViewAfter) As "TwinView"
     $editorPane = New NagatoEditorPane(SidePanel1) As "EditorPane"
     
-    NagatoSettings.LoadFormSettings(Me)
-    Application.MainWindow = Me
-    
 End
 
 Public Sub Form_Close()

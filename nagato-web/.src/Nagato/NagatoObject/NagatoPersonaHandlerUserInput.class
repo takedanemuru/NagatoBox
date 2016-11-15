@@ -21,6 +21,22 @@ Private Sub pressOnTab()
     
 End
 
+Private Function getDropIcon() As Picture
+    
+    Dim yukiImage As New Image(192, 64, Color.Pink)
+    
+    Paint.Begin(yukiImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font.Bold = True
+        Paint.DrawImage(Image.Load("pictures/icons/navigation-down.png"), 8, 8)
+        Paint.RichText("Drop to move", 64, 0, 128, 64, Align.Center)
+        Paint.Fill()
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
+
 Public Sub _new(argDrawingArea As DrawingArea, argTabs As NagatoTabs)
     
     $drawingArea = argDrawingArea
@@ -59,7 +75,7 @@ Public Sub Asakura_MouseDrag()
     If $tabs.GetTabOrder(Mouse.StartX) = ($tabs.Max + 1) Then Return
     
    If $tabs.GetTabType(Mouse.StartX, Mouse.StartY) = NagatoTabs.TypeWebView Then
-        Drag.Icon = MikuruIcon["navigation-down-button", 32]
+        Drag.Icon = getDropIcon()
         $drawingArea.Drag(CStr(Mouse.StartX), "text/nagato-web")
     Endif
     

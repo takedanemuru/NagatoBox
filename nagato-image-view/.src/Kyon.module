@@ -15,11 +15,19 @@ End
 
 Private Sub selectPicturePath()
     
-    Dialog.Path = User.Home
-    Dialog.Title = ("Select Picture")
-    Dialog.Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture Files"]
+    If HaruhiFileChooser.ShowDialog() = MikuruDialog.ResponseSelected Then
+        NagatoSettings1.PushToRecentPaths(MikuruDialog.Path)
+        showMain(MikuruDialog.Path)
+    Else
+        ' ToDo
+        Debug "Not Selected"
+    Endif
     
-    If Not Dialog.OpenFile(False) Then showMain(Dialog.Path)
+    ' Dialog.Path = User.Home
+    ' Dialog.Title = ("Select Picture")
+    ' Dialog.Filter = ["*.png;*.jpg;*.jpeg;*.bmp", "Picture Files"]
+    ' 
+    ' If Not Dialog.OpenFile(False) Then showMain(Dialog.Path)
     
 End
 

@@ -9,10 +9,21 @@ Public Sub _OnInitializeButton()
     With Me._$menuButton
         .Arrow = False
         .AutoResize = True
-        .Text = ("Play")
         .Border = False
         .Picture = MikuruIcon["button-play"]
         .Tag = MikuruMenuEvent.MediaPlay
     End With
+    
+End
+
+Public Sub MenuButton_Enter()
+    
+    Me._$menuButton.Text = ("Play")
+    
+End
+
+Public Sub MenuButton_Leave()
+    
+    Me._$menuButton.Text = ""
     
 End

@@ -15,3 +15,15 @@ Public Sub _OnInitializeButton()
     End With
     
 End
+
+Public Sub MenuButton_Enter()
+    
+    Me._$menuButton.Text = ("Pause")
+    
+End
+
+Public Sub MenuButton_Leave()
+    
+    Me._$menuButton.Text = ""
+    
+End

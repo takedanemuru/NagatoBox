@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoWidget
+
 Private $label As Label
 
 Private Function getText() As String
@@ -21,8 +23,14 @@ Public Sub Refresh()
     
 End
 
-Public Sub _new(argLabel As Label)
+Public Sub _OnInitializeWidget()
     
-    $label = argLabel
+    $label = New Label(Me._$container)
+    
+    With $label
+        .Expand = True
+        .Background = Me._$container.Background
+        .Foreground = Color.White
+    End With
     
 End

@@ -13,19 +13,17 @@ End
 
 Private Sub addProcessMenu()
     
-    Me._AddMenu(("Unselect"), MikuruSignal.ProcessUnselect)
-    Me._AddMenu(("Kill selected process"), MikuruSignal.ProcessKill, "exclamation")
+    Object.New("NagatoMenuItemUnselectProcess", [Me._$rootMenu])
+    Object.New("NagatoMenuItemKillSelectedProcess", [Me._$rootMenu])
     Me._AddMenu((""), MikuruSignal.None)
     
 End
 
 Private Sub initializeChildMenus()
 
-    If HaruhiMain.IsSelected Then addProcessMenu()
-    Me._AddMenu(("Filter"), MikuruSignal.ApplicationShowFilter, "search")
-        Me._AddMenu((""), MikuruSignal.None)
-    Me._AddMenu(("About"), MikuruSignal.ApplicationAbout, "star")
-    Me._AddMenu(("Quit"), MikuruSignal.ApplicationQuit, "button-power")
+    If MikuruProcessTemporaryVariables.HasSelectedProcess() Then addProcessMenu()
+    Object.New("NagatoMenuItemAbout", [Me._$rootMenu])
+    Object.New("NagatoMenuItemQuit", [Me._$rootMenu])
     
 End
 

@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Private $hBox As HBox
+Private $systemLabel As NagatoWidgetSystemLabel
+Private $filter As NagatoFilter
+Private $starButton As NagatoStarButton
+
+Public Sub _OnInitializeContainer()
+    
+    $hBox = New HBox(Me._$parentContainer)
+    
+    With $hBox
+        .H = 28
+        .Background = 12570623
+    End With
+    
+End
+
+Public Sub _OnInitializeChildren()
+    
+    $systemLabel = New NagatoWidgetSystemLabel($hBox)
+    $filter = New NagatoFilter($hBox)
+    $starButton = New NagatoStarButton($hBox) 
+    
+End
+
+Public Sub Refresh()
+    
+    $systemLabel.Refresh()
+    
+End

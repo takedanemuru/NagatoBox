@@ -2,16 +2,27 @@
 
 Create Private
 
-Inherits NagatoGridViewHandler
+Inherits NagatoWidget
 
-' Public _$gridView As GridView
-' Public _$observer As Observer
+Public _$gridView As GridView
 
 Private $scrollY As Integer
 
-Public Sub _InitializeGridView() ' virtual interface
+Public Sub _InitializeGridView()
     
-   
+    
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    Me._$gridView = New GridView(Me._$container) As "GridView"
+    
+    With Me._$gridView
+        .Header = GridView.Horizontal
+    End With
+    
+    Me._InitializeGridView()
     
 End
 
@@ -71,14 +82,5 @@ End
 Public Sub _Restore()
     
     Try Me._$gridView.ScrollY = $scrollY
-    
-End
-
-Public Sub _new(argGridView As GridView)
-    
-    ' Me._$gridView = argGridView
-    ' Me._$observer = New Observer(Me._$gridView) As "Asakura"
-    Me._Initialize(argGridView)
-    Me._InitializeGridView()
     
 End

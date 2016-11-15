@@ -8,10 +8,11 @@ Public Sub Main()
     
     If NagatoDBus.IsUnique() Then
         NagatoDBus.Register()
-        HaruhiMain.OpenWithPath($args.StartupPath)
+        'HaruhiMain.OpenWithPath($args.StartupPath)
+        HaruhiMain.OpenWithPath("/home/takedanemuru/blank(1).text")
         HaruhiMain.InitializeRecentIconView()
     Else
-        Try DBus["org.gambas.nagato.text"]["/org/nagato/text", "org.gambas.nagato.text.nagatointerface"].SetFilePath($startUpPath)
+        Try DBus["org.gambas.nagato.text"]["/org/nagato/text", "org.gambas.nagato.text.nagatointerface"].SetFilePath($args.StartupPath)
     End If
     
 End

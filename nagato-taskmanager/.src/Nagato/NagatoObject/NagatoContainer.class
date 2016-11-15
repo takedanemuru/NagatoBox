@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$parentContainer As Container
+
+Public Sub _OnInitializeContainer()
+    
+    ' virtual
+    
+End
+
+Public Sub _OnInitializeChildren()
+    
+    
+    
+End
+
+Public Sub _new(argParentContainer As Container)
+    
+    Me._$parentContainer = argParentContainer
+    Me._OnInitializeContainer()
+    Me._OnInitializeChildren()
+    
+End

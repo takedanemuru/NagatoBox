@@ -13,6 +13,7 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case NagatoObject.ViewChangeThumbnail
             HaruhiThumbnailSelector.SetThumbnails(argValues[0])
+            If HaruhiThumbnailSelector.ShowDialog() <> 1 Then Return
             Raise Request(NagatoFilerEvent.RequestRefresh, [Me._$log.Current])
         Case NagatoObject.ViewNewTab
             TFEI.AddNewDirectory(User.Home)

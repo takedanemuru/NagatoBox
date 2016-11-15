@@ -1,0 +1,43 @@
+' Gambas class file
+
+Private $gridView As GridView
+
+Private Sub setFonts()
+    
+    Dim yukiFontName As String
+    
+    For Each yukiFontName In Fonts
+        Inc $gridView.Rows.Count
+        $gridView[$gridView.Rows.Max, 0].Text = yukiFontName
+        $gridView[$gridView.Rows.Max, 0].Font.Name = yukiFontName
+        $gridView[$gridView.Rows.Max, 1].Text = ("ABCDE qwerty 1234 いろは 日本語")
+        $gridView[$gridView.Rows.Max, 1].Font.Name = yukiFontName
+    Next
+    
+End
+
+Private Sub initializeFontGridView()
+    
+    With $gridView
+        .Font.Size = 12
+        .Expand = True
+        .Header = GridView.Horizontal
+        .Columns.Count = 2
+        .Columns[0].W = Application.MainWindow.W
+        .Columns[0].Text = "Font"
+        .Columns[1].Text = "Preview"
+        .Rows.H = .Font.Size * 2
+        .Mode = Select.Single
+    End With
+    
+    setFonts()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $gridView = New GridView(argContainer) As "GridView"
+    
+    initializeFontGridView()
+    
+End

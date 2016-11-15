@@ -1,17 +1,6 @@
 ' Gambas class file
 
-Property Read Filter As String
-
 Private $serchBox As ButtonBox
-
-Public Sub Toggle()
-    
-    $serchBox.Visible = Not $serchBox.Visible
-    
-    If $serchBox.Visible Then $serchBox.SetFocus()
-    If Not $serchBox.Visible Then $serchBox.Clear()
-    
-End
 
 Public Sub _new(argContainer As Container)
     
@@ -21,13 +10,14 @@ Public Sub _new(argContainer As Container)
         .Border = False
         .W = 200
        .Picture = MikuruIcon.Get("search")
-       .Visible = False
+       .Visible = True
+       .Text = ""
     End With
     
 End
 
-Private Function Filter_Read() As String
-
-    Return $serchBox.Text
-
+Public Sub SearchBox_Change()
+    
+    MikuruProcessTemporaryVariables.ChangeFilter($serchBox.Text)
+    
 End

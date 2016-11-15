@@ -43,7 +43,7 @@ Public Sub _call(argEvent As Integer, argArguments As Variant[])
         Case MikuruSignal.WebProgress
             If argArguments[0] <> $webs.Active.UniqueIndex Then Return
             $menubar.SetUrl(argArguments[1])
-            $menubar.SetNavigationButton($webs.Active.History)
+            $menubar.SetNavigationButton(argArguments[3])
         Case MikuruSignal.InPageSearchQuery
             $webs.Active.InPageSearch(argArguments[0])
     End Select

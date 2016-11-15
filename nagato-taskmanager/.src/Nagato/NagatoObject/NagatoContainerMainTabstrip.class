@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Private $tabstrip As TabStrip
+
+Public Sub _OnInitializeContainer()
+    
+    $tabstrip = New TabStrip(Me._$parentContainer)
+    
+    With $tabstrip
+        .Count = 2
+        .Expand = True
+        .Arrangement = Arrange.Vertical
+        $tabstrip[0].Text = ("Process")
+        $tabstrip[1].Text = ("Network")
+    End With
+    
+End
+
+Public Sub _OnInitializeChildren()
+    
+    
+    
+End

@@ -18,14 +18,13 @@ Private Sub show()
         ThumbnailsIconView.Add(yukiPath, "", MikuruTileImage.Justify(yukiImage).Picture)
     Next
     
-    Me.ShowDialog()
-    
 End
 
 Public Sub SetThumbnails(argPath As String)
     
     If DesktopMime.FromFile(argPath).Type Not Begins "video" Then Return
     
+    ThumbnailsIconView.Clear()
     $sourcePath = argPath
     $workingDirectory.Clear()
     $thumbnailer.GenerateThumbnails($workingDirectory.Directory, argPath)

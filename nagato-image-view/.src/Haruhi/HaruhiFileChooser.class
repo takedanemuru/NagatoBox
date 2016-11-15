@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private Sub initializeRecentIcons()
+    
+    Dim yukiPath As String
+    
+    RecentIcons.Clear()
+    
+    For Each yukiPath In NagatoSettings1.RecentPath
+        If Not Exist(yukiPath) Then Continue
+        If DesktopMime.FromFile(yukiPath).Type Not Begins "image" Then Continue
+        RecentIcons.Add(yukiPath, File.Name(yukiPath), MikuruThumbnailer.Get(yukiPath))
+    Next
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.Center()
+    
+    initializeRecentIcons()
+    
+    With FileChooser1
+        .Filter = ["*.png;*.jpg;*.jpeg", "Picture Files"]
+        .ShowPreview = True
+        .FileView.IconSize = 128
+        .Root = NagatoSettings1.LastDirectory
+    End With
+    
+End
+
+Public Sub RecentIcons_Activate()
+    
+    MikuruDialog.Path = RecentIcons.Key
+
+    Me.Close(MikuruDialog.ResponseSelected)
+    
+End
+
+Public Sub FileChooser1_Activate()
+
+    MikuruDialog.Path = FileChooser1.SelectedPath
+    NagatoSettings1.LastDirectory = File.Dir(MikuruDialog.Path)
+    
+    Me.Close(MikuruDialog.ResponseSelected)
+
+End

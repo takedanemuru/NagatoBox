@@ -6,6 +6,27 @@ Private $webView As WebView
 Private $uniqueIndex As Integer
 Private $observer As Observer
 
+Private Function getProgressValues() As Variant[]
+    
+    Dim yukiValues As New Variant[]
+    Dim yukiHistory As New NagatoWebPageHistory($webView.History.Index, $webView.History.Max)
+    
+    yukiValues.Add($uniqueIndex)
+    yukiValues.Add($webView.Url)
+    yukiValues.Add($webView.Progress)
+    yukiValues.Add(yukiHistory)
+    yukiValues.Add($webView.Title)
+    
+    Return yukiValues
+    
+End
+
+Public Sub ForceRaiseProgress()
+    
+    Raise Signal(MikuruSignal.WebProgress, getProgressValues())
+    
+End
+
 Public Sub _new(argWebView As WebView, argUniqueIndex As Integer)
     
     $webView = argWebView
@@ -22,15 +43,7 @@ End
 
 Public Sub Asakura_Progress()
     
-    Dim yukiValues As New Variant[]
-    
-    yukiValues.Add($uniqueIndex)
-    yukiValues.Add($webView.Url)
-    yukiValues.Add($webView.Progress)
-    yukiValues.Add($webView.History)
-    yukiValues.Add($webView.Title)
-    
-    Raise Signal(MikuruSignal.WebProgress, yukiValues)
+    Raise Signal(MikuruSignal.WebProgress, getProgressValues())
     
 End
 

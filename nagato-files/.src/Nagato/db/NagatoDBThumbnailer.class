@@ -48,6 +48,15 @@ Public Function Get(argPath As String, argSize As Integer) As Picture
     
 End
 
+Public Sub Rename(argSourcePath As String, argDestinationPath As String, argSize As Integer)
+    
+    Dim yukiPicture As Picture = Me.Get(argSourcePath, argSize)
+    
+    Me.Push(argDestinationPath, argSize, yukiPicture)
+    Me.Delete(argSourcePath)
+    
+End
+
 Public Sub Delete(argPath As String)
     
     Try Me._$connection.Delete(TableThumbnail, "path = &1", argPath)
@@ -57,6 +66,8 @@ End
 Public Sub Push(argPath As String, argSize As Integer, argPicture As Picture)
     
     Dim yukiResult As Result
+    
+    Me.Delete(argPath)
     
     Me._$connection.Begin()
         yukiResult = Me._$connection.Create(TableThumbnail)

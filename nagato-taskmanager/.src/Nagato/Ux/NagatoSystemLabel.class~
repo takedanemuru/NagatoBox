@@ -6,10 +6,10 @@ Private Function getText() As String
     
     Dim yukiText As String = Space$(2)
     
-    yukiText &= Format$(NagatoSystemObserver.CpuUsage, " CPU: ##0.00%,   ")
-    yukiText &= Format$(NagatoSystemObserver.MemoryUsage, " Memory: ##0.00%,   ")
-    yukiText &= Format$(NagatoSystemObserver.SwapUsage, " Swap: ##0.00%,   ")
-    yukiText &= Format$(NagatoSystemObserver.ProcessCount, " Processes: ###0")
+    yukiText &= Format$(NagatoObserverFacade.CpuUsage, " CPU: ##0.00%,   ")
+    yukiText &= Format$(NagatoObserverFacade.MemoryUsage, " Memory: ##0.00%,   ")
+    yukiText &= Format$(NagatoObserverFacade.SwapUsage, " Swap: ##0.00%,   ")
+    yukiText &= Format$(NagatoObserverFacade.ProcessCount, " Processes: ###0")
     
     Return yukiText
     

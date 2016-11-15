@@ -135,10 +135,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : a light-weight filer
 + Last Modefied : 2016-10-04
 
-## ![image: nagato-font-view.png](../nagato-font-view/nagato-font-view.png) nagato-font-view (v42.5.4)
+## ![image: icon.png](../nagato-font-view/pictures/icon.png) nagato-font-view (v42.5.4)
 
 + Description : view fonts.
-+ Last Modefied : 2016-08-16
++ Last Modefied : 2016-11-09
 
 ## ![image: document-edit.png](../nagato-fullscreen-editor/Picture/icons/document-edit.png) nagato-fullscreen-editor (v42.5.10)
 
@@ -272,20 +272,22 @@ show all of gambas3 and NagatoBox stock icons.
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.48)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.49)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2016-11-03
++ Last Modefied : 2016-11-10
+
+![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 
 ## ![image: nagato-writer.png](../nagato-writer/nagato-writer.png) nagato-writer (v42.5.44)
 
 + Description : a markdown editor
 + Last Modefied : 2016-09-08
 
-## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.5.9)
+## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.6.10)
 
 + Description : youtube viewer
-+ Last Modefied : 2016-09-29
++ Last Modefied : 2016-11-08
 
 ## ![image: yuki.png](../yuki/yuki.png) yuki (v42.5.50)
 

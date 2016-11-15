@@ -18,7 +18,7 @@ Public Sub SetPath(argPath As String)
     If Not Exist(argPath) Then
         Message.Warning(("YUKI.N > File not exist."))
     Else
-        MikuruStringCode.Check(argPath)
+        'MikuruStringCode.Check(argPath)
         activateMe()
         $tabStrip.NewTab(argPath)
     End If
@@ -32,7 +32,7 @@ Public Sub OpenWithPath(Optional argPath As String = "")
         Return
     Endif
     
-    If argPath Then MikuruStringCode.Check(argPath)
+    'If argPath Then MikuruStringCode.Check(argPath)
 
     $tabStrip.NewTab(argPath)
     

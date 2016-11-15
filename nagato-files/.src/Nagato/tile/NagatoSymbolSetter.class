@@ -14,7 +14,7 @@ Private Sub paintTriangle(argColor As Integer)
     
 End
 
-Private Sub paintText(argText As String)
+Private Sub paintText(argText As String, Optional argColor As Integer = Color.White)
     
     Dim yukiRect As New Rect
     
@@ -23,7 +23,7 @@ Private Sub paintText(argText As String)
     yukiRect.W = MikuruUxTile.TileSize
     yukiRect.H = MikuruUxTile.TileSize * 0.16
     Paint.Font.Bold = True
-    Paint.Brush = Paint.Color(Color.White)
+    Paint.Brush = Paint.Color(argColor)
     Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
     Paint.Fill()
     
@@ -55,6 +55,12 @@ Private Function getXdgUserDirTag(argPicture As Picture) As Picture
     
 End
 
+Private Function getApplicationTag(argPicture As Picture) As Picture
+    
+    Return getTriangleTaggedTile(argPicture, "launcher", MikuruColor.Transparent(Color.DarkCyan, 128))
+    
+End
+
 Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
     
     Dim yukiImage As Image = argPicture.Image
@@ -72,6 +78,8 @@ Public Sub _call(argTile As Picture, argPath As String) As Picture
     Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
     
     If yukiSymbol <> "" Then argTile = getSymbolizedTile(argTile, yukiSymbol)
+    
+    'If File.Ext(argPath) = "desktop" Then argTile = getApplicationTag(argTile)
     If Stat(argPath).Link Then argTile = getSymlinkTag(argTile)
     If NagatoXdg.IsUserDir(argPath) Then argTile = getXdgUserDirTag(argTile)
     

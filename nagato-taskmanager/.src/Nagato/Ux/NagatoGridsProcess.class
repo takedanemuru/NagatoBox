@@ -2,9 +2,6 @@
 
 Inherits NagatoGrids
 
-Property Read LastSelectedId As String
-Property Read LastSelectedName As String
-
 Private $columnTitles As NagatoSystemGridsColumnTitles
 Private $mouseHandler As NagatoGridViewHandlerMouse
 Private $data As NagatoSystemGridsData
@@ -20,16 +17,10 @@ Private Sub setRowData(argProcessData As NagatoProcessData)
         Me._SetText(4, argProcessData.Rss, True)
         Me._SetText(5, argProcessData.Virtual, True)
         If Odd(.Rows.Max) Then Me._SetBackGroundColor()
-        If .[.Rows.Max, 0].Text = $mouseHandler.LastSelectedId Then .Select(.Rows.Max, 1)
+        If MikuruProcessTemporaryVariables.IsSelectedProcessId(.[.Rows.Max, 0].Text) Then
+            .Select(.Rows.Max, 1)
+        End If
     End With
-    
-End
-
-Private Function isFiltered(argProcessName As String) As Boolean
-    
-    If HaruhiMain.Filter = "" Then Return False
-    
-    Return argProcessName Not Like Subst$("*&1*", HaruhiMain.Filter)
     
 End
 
@@ -38,7 +29,7 @@ Private Sub setRows()
     Dim yukiIndex As Integer
     
     For yukiIndex = 0 To $data.Max
-        If isFiltered($data[yukiIndex].Name) Then Continue
+        If MikuruProcessTemporaryVariables.IsFiltered($data[yukiIndex].Name) Then Continue
         setRowData($data[yukiIndex])
     Next
     
@@ -73,27 +64,9 @@ Public Sub Refresh()
     
 End
 
-Public Sub Unselect()
-    
-    $mouseHandler.Unselect()
-    
-End
-
 Public Sub TFEI_ColumnClick(argColumnIndex As Integer)
     
     $data.SwitchSort(argColumnIndex)
     setGridView()
     
-End
-
-Private Function LastSelectedId_Read() As String
-
-    Return $mouseHandler.LastSelectedId
-
-End
-
-Private Function LastSelectedName_Read() As String
-
-    Return $mouseHandler.LastSelectedName
-
 End

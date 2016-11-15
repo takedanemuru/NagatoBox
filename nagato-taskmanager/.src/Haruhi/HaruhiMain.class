@@ -1,22 +1,15 @@
 ' Gambas class file
 
-Property Read IsSelected As Boolean
-Property Read Filter As String
-
 Private $timer As New Timer As "Timer"
-Private $filter As NagatoFilter
-Private $starButton As NagatoStarButton
+Private $menuPanel As NagatoContainerSystemMenuPanel
 Private $systemGraph As NagatoSystemGraph
-Private $systemLabel As NagatoSystemLabel
 Private $systemGrids As NagatoGridsProcess
 
 Private Sub initializeUserInterface()
     
-    $systemGrids = New NagatoGridsProcess(SystemMonitorGrid) As "UserInterface"
-    $filter = New NagatoFilter(HBox1)
-    $starButton = New NagatoStarButton(HBox1) As "UserInterface"
-    $systemGraph = New NagatoSystemGraph(GraphArea)
-    $systemLabel = New NagatoSystemLabel(SystemLabel)
+    $systemGraph = New NagatoSystemGraph(MainContainer)
+    $menuPanel = New NagatoContainerSystemMenuPanel(MainContainer)
+    $systemGrids = New NagatoGridsProcess(MainContainer)
     
 End
 
@@ -39,36 +32,7 @@ End
 Public Sub Timer_Timer()
     
     $systemGraph.Refresh()
-    $systemLabel.Refresh()
+    $menuPanel.Refresh()
     $systemGrids.Refresh()
     
-End
-
-Public Sub UserInterface_Signal(argSignal As Integer, argValues As Variant[])
-    
-    Select Case argSignal
-        Case MikuruSignal.ProcessUnselect
-            $systemGrids.Unselect()
-        Case MikuruSignal.ProcessKill
-            MikuruKillProcess($systemGrids.LastSelectedId, $systemGrids.LastSelectedName)
-        Case MikuruSignal.ApplicationShowFilter
-            $filter.Toggle()
-        Case MikuruSignal.ApplicationAbout
-            HaruhiAbout.ShowDialog()
-        Case MikuruSignal.ApplicationQuit
-            Me.Close()
-    End Select
-    
-End
-
-Private Function IsSelected_Read() As Boolean
-
-    Return IIf($systemGrids.LastSelectedId = "", False, True)
-
-End
-
-Private Function Filter_Read() As String
-
-    Return $filter.Filter
-
 End

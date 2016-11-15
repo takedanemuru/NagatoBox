@@ -29,6 +29,7 @@ End
 Public Sub Toggle(argVisible As Boolean)
     
     $webView.Visible = argVisible
+    $handlerNetworkProgress.ForceRaiseProgress()
     
 End
 

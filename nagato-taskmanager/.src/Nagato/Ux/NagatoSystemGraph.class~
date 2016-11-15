@@ -1,34 +1,20 @@
 ' Gambas class file
 
-Private Const StepPerSecond As Integer = 4
-Private Const BottomMargin As Integer = 10
+Inherits NagatoWidget
 
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 Private $screen As NagatoPainterScreen
+Private $lines As NagatoPainterHistoryLines
 
-Private Sub setLineProperties(argColor As Integer, argWidth As Float)
+Public Sub _OnInitializeWidget()
     
-    Paint.Brush = Paint.Color(argColor)
-    Paint.LineJoin = Paint.LineJoinRound
-    Paint.LineWidth = argWidth
+    $drawingArea = argDrawingArea
+    $drawingArea.H = 120
     
-End
-
-Private Sub paintLine(argColor As Integer, argHistory As Float[])
-    
-    Dim yukiCount As Integer
-    Dim yukiX As Integer
-    
-    If 3 > argHistory.Count Then Return
-    
-    setLineProperties(argColor, 1)
-        For yukiCount = 0 To argHistory.Max - 2
-            yukiX = $drawingArea.W - (yukiCount * StepPerSecond)
-            Paint.MoveTo(yukiX, 100 - argHistory[argHistory.Max - yukiCount] * 100 + BottomMargin)
-            Paint.LineTo(yukiX - StepPerSecond, 100 - argHistory[argHistory.Max - yukiCount - 1] * 100 + BottomMargin)
-        Next
-    Paint.Stroke()
+    $observer = New Observer($drawingArea) As "Asakura"
+    $screen = New NagatoPainterScreen(argDrawingArea)
+    $lines = New NagatoPainterHistoryLines(argDrawingArea)
     
 End
 
@@ -38,21 +24,11 @@ Public Sub Refresh()
     
 End
 
-Public Sub _new(argDrawingArea As DrawingArea)
-    
-    $drawingArea = argDrawingArea
-    $observer = New Observer($drawingArea) As "Asakura"
-    $screen = New NagatoPainterScreen(argDrawingArea)
-    
-End
-
 Public Sub Asakura_Draw()
     
     Paint.Begin($drawingArea)
         $screen.Paint()
-        paintLine(Color.Red, NagatoSystemObserver.CpuHistory)
-        paintLine(Color.Blue, NagatoSystemObserver.MemoryHistory)
-        paintLine(Color.Green, NagatoSystemObserver.SwapHistory)
+        $lines.Paint()
     Paint.End()
     
 End

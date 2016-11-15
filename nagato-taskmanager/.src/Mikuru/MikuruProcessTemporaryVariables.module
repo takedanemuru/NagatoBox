@@ -1,0 +1,48 @@
+' Gambas module file
+
+' Gambas module fil
+
+Private $filter As String = ""
+Private $processId As String = ""
+Private $processName As String = ""
+
+Public Sub ChangeFilter(argNewFilter As String)
+    
+    $filter = argNewFilter
+    
+End
+
+Public Function IsFiltered(argProcessName As String) As Boolean
+    
+    If $filter = "" Then Return False
+    
+    Return argProcessName Not Like Subst$("*&1*", $filter)
+    
+End
+
+Public Sub SetSelectedProcess(argId As String, argName As String)
+    
+    $processId = argId
+    $processName = argName
+    
+End
+
+Public Function HasSelectedProcess() As Boolean
+    
+    Return IIf($processId = "", False, True)
+    
+End
+
+Public Function IsSelectedProcessId(argId As Integer) As Boolean
+    
+    Return argId = $processId
+    
+End
+
+Public Sub KillSelectedProcess()
+    
+    If Not Me.HasSelectedProcess() Then Return
+    
+    MikuruKillProcess(CInteger($processId), $processName)
+    
+End

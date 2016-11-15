@@ -2,8 +2,8 @@
 # Compiled with Gambas 3.9.1
 Title=nagato-project-list
 Startup=Kyon
-Icon=Pictures/Icons/database.png
-Version=42.6.4
+Icon=nagato-project-list.png
+Version=42.6.5
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -18,9 +18,11 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-project-list-42.6.4
+PackageName=nagato-project-list-42.6.5
+PackageVersion=2
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Programming"
 Categories=ubuntu:"Development;Nagato"
 Groups=ubuntu:"devel"
+ExtraFiles=ubuntu:"nagato-project-list.desktop\t/usr/share/applications\nnagato-project-list.png\t/usr/share/pixmaps"

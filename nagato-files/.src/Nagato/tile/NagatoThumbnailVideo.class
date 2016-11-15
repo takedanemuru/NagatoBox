@@ -2,13 +2,16 @@
 
 Inherits NagatoThumbnail
 
+Private Const Command As String = "ffmpegthumbnailer -s 512 -i &1 -o &2"
+
 Public Function _GetIconImage(argPath As String) As Image
     
     Dim yukiImage As Image 
+    Dim yukiResult As String ' just for waiting command execution.
     Dim yukiPath As String = Temp$() & ".png"
     
-    Exec ["ffmpegthumbnailer", "-i", argPath, "-o", yukiPath, "-s", "512"] Wait
-    
+    Shell Subst$(Command, Quote$(argPath), yukiPath) To yukiResult
+
     yukiImage = Image.Load(yukiPath)
     
     Return yukiImage

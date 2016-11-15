@@ -29,6 +29,7 @@ End
 Private Sub setSubMenu()
     
     addMenuItem(("Edit"), MikuruEvent.StarEdit, "brush")
+    addMenuItem(("Try \& Error"), MikuruEvent.StarEdit, "brush")
         addMenuItem("", 0)
     addMenuItem(("About nagato-image-view"), MikuruEvent.StarAbout, "star")
     addMenuItem(("Quit"), MikuruEvent.StarQuit, "button-power")

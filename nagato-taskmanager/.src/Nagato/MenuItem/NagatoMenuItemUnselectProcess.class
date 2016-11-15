@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnMenuItemClick()
+    
+    MikuruProcessTemporaryVariables.SetSelectedProcess("", "")
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Return ("Unselect")
+    
+End
