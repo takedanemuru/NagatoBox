@@ -2,6 +2,8 @@
 
 Public Sub Main()
     
+    NagatoArgs.Parse()
+    
     HaruhiMain.Show()
     
 End

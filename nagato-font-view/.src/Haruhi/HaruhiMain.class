@@ -1,5 +1,6 @@
 ' Gambas class file
 
+Private $menuBar As NagatoMenuBar
 Private $gridView As NagatoGridView
 
 Public Sub _new()
@@ -10,6 +11,7 @@ End
 
 Public Sub Form_Open()
 
+    $menuBar = New NagatoMenuBar(VBox1) 
     $gridView = New NagatoGridView(VBox1)
     NagatoSettings.LoadFormSettings(Me)
 

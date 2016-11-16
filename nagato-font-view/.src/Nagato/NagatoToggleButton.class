@@ -1,0 +1,46 @@
+' Gambas class file
+
+Create Private
+
+Public _$toggleButton As ToggleButton
+
+Public Function _OnGetButtonText() As String
+    
+    Return "Don't look at me"
+    
+End
+
+Public Sub _OnToggleButtonClick()
+    
+    ' virtual
+    
+End
+
+Public Sub _OnGetValue() As Boolean
+    
+    Return False
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$toggleButton = New ToggleButton(argContainer) As "ToggleButton"
+    
+    Object.Lock(Me._$toggleButton)
+    
+    With Me._$toggleButton
+        .AutoResize = True
+        .Value = False
+        .Text = Me._OnGetButtonText()
+        .Value = Me._OnGetValue()
+    End With
+    
+    Object.Unlock(Me._$toggleButton)
+    
+End
+
+Public Sub ToggleButton_Click()
+    
+    Me._OnToggleButtonClick()
+    
+End

@@ -125,35 +125,37 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.6.118)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.6.119)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2016-11-07
++ Last Modefied : 2016-11-10
 
-## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v42.6.3)
+## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v0.6.3)
 
 + Description : a light-weight filer
-+ Last Modefied : 2016-10-04
++ Last Modefied : 2016-11-15
 
-## ![image: icon.png](../nagato-font-view/pictures/icon.png) nagato-font-view (v42.5.4)
+## ![image: icon.png](../nagato-font-view/pictures/icon.png) nagato-font-view (v42.6.5)
 
 + Description : view fonts.
-+ Last Modefied : 2016-11-09
++ Last Modefied : 2016-11-16
 
-## ![image: document-edit.png](../nagato-fullscreen-editor/Picture/icons/document-edit.png) nagato-fullscreen-editor (v42.5.10)
+## ![image: document-edit.png](../nagato-fullscreen-editor/Picture/icons/document-edit.png) nagato-fullscreen-editor (v42.6.12)
 
 + Description : a dead copy of FocusWriter :)
-+ Last Modefied : 2016-08-17
++ Last Modefied : 2016-11-16
+
+![image: screenshot_001.png](../nagato-fullscreen-editor/doc/screenshots/screenshot_001.png)
 
 ## ![image: nagato-gif-box.png](../nagato-gif-box/nagato-gif-box.png) nagato-gif-box (v42.5.5)
 
 + Description : a simple movie box for gif animation
 + Last Modefied : 2016-08-16
 
-## ![image: presentation.png](../nagato-image-view/pictures/nagato_icons/presentation.png) nagato-image-view (v42.6.4)
+## ![image: presentation.png](../nagato-image-view/pictures/nagato_icons/presentation.png) nagato-image-view (v42.6.5)
 
 + Description : a simple image viewer.
-+ Last Modefied : 2016-11-08
++ Last Modefied : 2016-11-13
 
 ![image: screenshot_001.png](../nagato-image-view/doc/screenshots/screenshot_001.png)
 
@@ -177,10 +179,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : simple mixer applet for trayicon
 + Last Modefied : 2016-08-11
 
-## ![image: video.png](../nagato-movie/pictures/blue/video.png) nagato-movie (v42.6.7)
+## ![image: nagato-movie.png](../nagato-movie/nagato-movie.png) nagato-movie (v42.6.8)
 
 + Description : movie player
-+ Last Modefied : 2016-11-07
++ Last Modefied : 2016-11-15
 
 ![image: screenshot_001.png](../nagato-movie/doc/screenshots/screenshot_001.png)
 
@@ -202,10 +204,10 @@ a simple movie player. no more, no less.
 + Description : a music player with gstreamer backend.
 + Last Modefied : 2016-10-16
 
-## ![image: database.png](../nagato-project-list/Pictures/Icons/database.png) nagato-project-list (v42.6.4)
+## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.5)
 
 + Description : project listing tool for Gambas3
-+ Last Modefied : 2016-11-08
++ Last Modefied : 2016-11-10
 
 ![image: screenshot_001.png](../nagato-project-list/doc/screenshots/screenshot_001.png)
 
@@ -221,10 +223,10 @@ a simple movie player. no more, no less.
 + `/PROJECT/doc/document.md` for document
 
 
-## ![image: camera.png](../nagato-screenshooter/picture/camera.png) nagato-screenshooter (v42.6.5)
+## ![image: nagato-screenshooter.png](../nagato-screenshooter/nagato-screenshooter.png) nagato-screenshooter (v42.6.7)
 
 + Description : simple screenshooter
-+ Last Modefied : 2016-11-08
++ Last Modefied : 2016-11-15
 
 ![image: screenshot_001.png~](../nagato-screenshooter/doc/screenshots/screenshot_001.png~)
 
@@ -242,15 +244,15 @@ a simple movie player. no more, no less.
 
 show all of gambas3 and NagatoBox stock icons.
 
-## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.5.14)
+## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.6.15)
 
 + Description : a task manager for NagatoBox
-+ Last Modefied : 2016-08-30
++ Last Modefied : 2016-11-15
 
-## ![image: nagato-text.png](../nagato-text/nagato-text.png) nagato-text (v42.5.5)
+## ![image: nagato-text.png](../nagato-text/nagato-text.png) nagato-text (v42.6.6)
 
 + Description : a simple text editor
-+ Last Modefied : 2016-08-15
++ Last Modefied : 2016-11-15
 
 ## ![image: nagato-text-converter.png](../nagato-text-converter/nagato-text-converter.png) nagato-text-converter (v42.5.2)
 
@@ -272,10 +274,10 @@ show all of gambas3 and NagatoBox stock icons.
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.49)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.51)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2016-11-10
++ Last Modefied : 2016-11-13
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 
@@ -284,10 +286,10 @@ show all of gambas3 and NagatoBox stock icons.
 + Description : a markdown editor
 + Last Modefied : 2016-09-08
 
-## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.6.10)
+## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.6.11)
 
 + Description : youtube viewer
-+ Last Modefied : 2016-11-08
++ Last Modefied : 2016-11-15
 
 ## ![image: yuki.png](../yuki/yuki.png) yuki (v42.5.50)
 

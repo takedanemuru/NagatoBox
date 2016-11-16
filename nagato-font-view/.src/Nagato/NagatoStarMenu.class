@@ -1,0 +1,13 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Public Sub _new(argMenuName As String)
+    
+    $rootMenu = New Menu(Application.MainWindow)
+    $rootMenu.Name = argMenuName
+    
+    Object.New("NagatoMenuItemAbout", [$rootMenu])
+    Object.New("NagatoMenuItemQuit", [$rootMenu])
+    
+End

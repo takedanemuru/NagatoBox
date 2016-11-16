@@ -1,0 +1,22 @@
+' Gambas class file
+
+Private $menuButton As MenuButton
+Private $starMenu As NagatoStarMenu
+
+Public Sub _new(argContainer As Container)
+    
+    $menuButton = New MenuButton(argContainer)
+    
+    With $menuButton
+        .Border = False
+        .Picture = MikuruIcon["star"]
+        .Arrow = False
+        .W = argContainer.H
+        .Text = ""
+        .Expand = False
+        .Menu = "StarMenu"
+    End With
+    
+    $starMenu = New NagatoStarMenu($menuButton.Menu)
+    
+End

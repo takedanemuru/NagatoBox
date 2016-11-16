@@ -1,0 +1,108 @@
+' Gambas class file
+
+Private $textArea As TextArea
+Private $observer As Observer
+Private $path As String
+Private $saved As Boolean
+
+Private Sub openFileFrom(argPath As String)
+    
+    $path = argPath
+    $saved = True
+    $textArea.Text = File.Load(argPath)
+    
+End
+
+Private Sub saveFileTo(argPath As String)
+    
+    $path = argPath
+    $saved = True
+    File.Save($path, $textArea.Text)
+    
+End
+
+Public Sub New()
+    
+    If Not Me.Quit() Then Return
+    
+    $path = ""
+    $saved = True
+    $textArea.Text = ""
+    
+End
+
+Public Sub Open()
+    
+    If Not Me.Quit() Then Return
+    
+    Dialog.Path = User.Home
+    Dialog.Title = ("Open File")
+    If Dialog.OpenFile(False) Then Return
+    openFileFrom(Dialog.Path)
+    
+End
+
+Public Sub OpenRecent(argPath As String)
+    
+    If Not Me.Quit() Then Return
+    
+    openFileFrom(argPath)
+    
+End
+
+Public Sub Save() As Boolean
+    
+    If $saved Then
+        ' do nothing
+    Else If $path Then 
+        saveFileTo($path)
+    Else
+        Dialog.Path = User.Home
+        Dialog.Title = ("Save File")
+        If Not Dialog.SaveFile() Then saveFileTo(Dialog.Path)
+    Endif
+    
+    Return $saved
+    
+End
+
+Public Sub SaveAs()
+    
+    If Not Me.Quit() Then Return
+    
+    Dialog.Path = User.Home
+    Dialog.Title = ("Save File As ...")
+    If Not Dialog.SaveFile() Then saveFileTo(Dialog.Path)
+    
+End
+
+Public Sub Quit() As Boolean
+    
+    If $saved Then Return True
+    
+    Select Case Message.Question("YUKI.N > Your changes not saved", ("Save"), ("Discard"), ("Cancel"))
+        Case 1
+            Return Me.Save()
+        Case 2
+            Return True
+        Case 3
+            Return False
+    End Select
+    
+End
+
+Public Sub _new(argTextArea As TextArea)
+    
+    $textArea = argTextArea
+    $path = NagatoArgs.Path
+    $saved = True
+    If NagatoArgs.Path Then $textArea.Text = File.Load(NagatoArgs.Path)
+    $observer = New Observer($textArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_Change()
+    
+   $saved = False
+    
+End

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoToggleButton
+
+Public Function _OnGetButtonText() As String
+    
+    Return ("Italic")
+    
+End
+
+Public Sub _OnToggleButtonClick()
+    
+    NagatoSettings.Italic = Me._$toggleButton.Value
+    
+End
+
+Public Sub _OnGetValue() As Boolean
+    
+    Return NagatoSettings.Italic
+    
+End

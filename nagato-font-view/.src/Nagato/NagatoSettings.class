@@ -2,26 +2,74 @@
 
 Create Static
 
+Property Italic As Boolean
+Property Bold As Boolean
+Property Text As String
+
 Private $settings As New Settings
 
+Event Change
+
 Public Sub LoadFormSettings(argForm As Form)
-        
-        With argForm
-                .X = $settings["form/x", .X]
-                .Y = $settings["form/y", .Y]
-                .Width = $settings["form/width", .Width]
-                .Height = $settings["form/height", .Height]
-        End With
-        
+    
+    With argForm
+        .X = $settings["form/x", .X]
+        .Y = $settings["form/y", .Y]
+        .Width = $settings["form/width", .Width]
+        .Height = $settings["form/height", .Height]
+    End With
+    
 End
 
 Public Sub SaveFormSettings(argForm As Form)
         
-        With argForm
-                $settings["form/x"] = .X
-                $settings["form/y"] = .Y
-                $settings["form/width"] = .Width
-                $settings["form/height"] = .Height
-        End With
+    With argForm
+        $settings["form/x"] = .X
+        $settings["form/y"] = .Y
+        $settings["form/width"] = .Width
+        $settings["form/height"] = .Height
+    End With
         
+End
+
+Private Function Italic_Read() As Boolean
+
+    Return $settings["font/italic", False]
+
+End
+
+Private Sub Italic_Write(Value As Boolean)
+
+    $settings["font/italic"] = Value
+    
+    Raise Change
+    
+End
+
+Private Function Bold_Read() As Boolean
+
+    Return $settings["font/bold", False]
+
+End
+
+Private Sub Bold_Write(Value As Boolean)
+
+    $settings["font/bold"] = Value
+
+    Raise Change
+
+End
+
+Private Function Text_Read() As String
+
+    Return $settings["font/text", False]
+
+End
+
+Private Sub Text_Write(Value As String)
+
+    $settings["font/text"] = Value
+
+    Raise Change
+
 End

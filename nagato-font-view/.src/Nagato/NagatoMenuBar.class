@@ -1,0 +1,45 @@
+' Gambas class file
+
+Private $hBox As HBox
+Private $boldButton As NagatoToggleButtonBold
+Private $italicButton As NagatoToggleButtonItalic
+Private $textBox As ButtonBox
+Private $starButton As NagatoStarButton
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $hBox = New HBox(argContainer)
+    
+    With $hBox
+        .h = 32
+    End With
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    
+    $boldButton = New NagatoToggleButtonBold($hBox)
+    $italicButton = New NagatoToggleButtonItalic($hBox)
+    
+    $textBox = New ButtonBox($hBox) As "TextBox"
+    $textBox.Expand = True
+    $textBox.Text = NagatoSettings.Text
+    $textBox.Picture = MikuruIcon["button-rotate-cw"]
+    
+    $starButton = New NagatoStarButton($hBox)
+    
+End
+
+Public Sub TextBox_Click()
+    
+    TextBox_Activate()
+    
+End
+
+Public Sub TextBox_Activate()
+    
+   If $textBox.Text Then NagatoSettings.Text = $textBox.Text
+    
+End
