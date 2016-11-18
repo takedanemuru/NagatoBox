@@ -1,0 +1,9 @@
+' Gambas module file
+
+Public Sub Add()
+
+    Dialog.Path = User.Home
+    Dialog.Title = ("Select Project Directory")
+    If Not Dialog.SelectDirectory() Then NagatoSettings.AddProject(Dialog.Path)
+    
+End

@@ -3,11 +3,29 @@
 Private $toolbar As NagatoToolbar
 Private $gridview As NagatoGridView
 
+Public Sub Reload()
+    
+    NagatoProjectList.Refresh()
+    $toolbar.Reload()
+    $gridview.Reload()
+    
+End
+
 Public Sub Form_Show()
 
     If Object.IsValid($gridview) Then Return
 
+    Application.MainWindow = Me
+    
     $toolbar = New NagatoToolbar(Me)
     $gridview = New NagatoGridView(Me)
 
+    NagatoSettings.LoadForm(Me)
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoSettings.SaveForm(Me)
+    
 End

@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnGetText() As String
+    
+    Return ("Add Watching Project")
+    
+End
+
+Public Sub _OnMenuItemClick()
+    
+    MikuruProject.Add()
+    HaruhiMain.Reload()
+    
+End

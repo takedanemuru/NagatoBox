@@ -18,7 +18,7 @@ End
 Private Sub initializeDirectoryButtonBox()
     
     With DirectoryButtonBox
-        .Text = NagatoSettings.Directory
+        .Text = NagatosettingsScreenShooter.Directory
         .Picture = Stock["small/home"]
     End With
     
@@ -28,20 +28,23 @@ Private Sub initializeFileNameTextBox()
     
     Dim yukiTimeStamp As String = Format$(Now, ("yyyy/mm/dd_hh:nn:mm"))
     
-    FileNameTextBox.Text = Subst$("screenshot_&1", yukiTimeStamp)
+    FileNameTextBox.Text = Subst$("screenshot_&1.png", yukiTimeStamp)
+    FileNameTextBox.Select(0, String.Len(FileNameTextBox.Text) - 4)
     
 End
 
 Private Function getPath() As String
     
     Dim yukiPath As String = DirectoryButtonBox.Text &/ FileNameTextBox.Text 
+    Dim yukiBaseName As String = DirectoryButtonBox.Text &/ File.BaseName(FileNameTextBox.Text)
     Dim yukiCount As Integer = 0
     
-    If Not Exist(yukiPath & ".png") Then Return yukiPath & ".png"
+    If Not Exist(yukiPath) Then Return yukiPath 
     
     Do
         Inc yukiCount
-        If Not Exist(Subst$("&1(&2).png", yukiPath, yukiCount)) Then Return Subst$("&1(&2).png", yukiPath, yukiCount)
+        If Exist(Subst$("&1(&2).png", yukiBaseName, yukiCount)) Then Continue
+        Return Subst$("&1(&2).png", yukiBaseName, yukiCount)
     Loop
     
 End
@@ -81,7 +84,7 @@ End
 Public Sub SaveButton_Click()
 
     $screenshooter.Save(getPath())
-    If CheckBox1.Value Then NagatoSettings.Directory = DirectoryButtonBox.Text 
+    If CheckBox1.Value Then NagatosettingsScreenShooter.Directory = DirectoryButtonBox.Text 
     Me.Close()
 
 End

@@ -1,8 +1,8 @@
 [Desktop Entry]
 Version=1.0
-Name=nagato-config-screenlocker
+Name=nagato-screenlocker config
 Comment=a screen saver for NagatoBox
-Exec=/usr/bin/nagato-config-screenlocker
+Exec=/usr/bin/nagato-screenlocker -c
 Icon=/usr/share/pixmaps/nagato-config-screenlocker.png
 Terminal=false
 Type=Application

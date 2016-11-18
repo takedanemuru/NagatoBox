@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Private
+
+Public _$menuItem As Menu
+
+Public Sub _OnGetText() As String
+    
+    Return "Don't look at me"
+    
+End
+
+Public Sub _OnGetIcon() As Picture
+    
+    Return Null
+    
+End
+
+Public Sub _OnMenuItemClick()
+    
+    ' virtual
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$menuItem = New Menu(argRootMenu) As "MenuItem"
+    
+    With Me._$menuItem
+        .Text = Me._OnGetText()
+        .Picture = Me._OnGetIcon()
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._OnMenuItemClick()
+    
+End
+

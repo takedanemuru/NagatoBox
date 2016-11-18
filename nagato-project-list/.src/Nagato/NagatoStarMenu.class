@@ -2,7 +2,7 @@
 
 Private $rootMenu As Menu
 
-Private Enum MenuMarkdownGithub, MenuMarkdownTable, MenuMarkdownList, MenuNone, MenuAbout, MenuQuit
+Private Enum MenuMarkdownTable, MenuMarkdownList, MenuNone, MenuQuit
 
 Private Sub initializeRootMenu(argMenuName As String)
     
@@ -29,12 +29,15 @@ End
 Public Sub _new(argMenuName As String)
     
     initializeRootMenu(argMenuName)
+    Object.New("NagatoMenuItemAdd", [$rootMenu])
+    Object.New("NagatoMenuItemReload", [$rootMenu])
+        Object.New("NagatoMenuItemVoid", [$rootMenu])
+    Object.New("NagatoSubMenuExportGithubDoc", [$rootMenu])
     addChildMenu("Export markdown (Table)", MenuMarkdownTable)
     addChildMenu("Export markdown (List)", MenuMarkdownList)
-    addChildMenu("Export markdown (GitHub)", MenuMarkdownGithub)
-    addChildMenu("", MenuNone)
-    addChildMenu("About", MenuAbout, "star")
-    addChildMenu("Quit", MenuQuit, "button-power")
+        Object.New("NagatoMenuItemVoid", [$rootMenu])
+    Object.New("NagatoMenuItemAbout", [$rootMenu])
+    Object.New("NagatoMenuItemQuit", [$rootMenu])
     
 End
 
@@ -45,12 +48,6 @@ Public Sub MenuItem_Click()
             MikuruMarkdownTable()
         Case MenuMarkdownList
             MikuruMarkdownList()
-        Case MenuMarkdownGithub
-            MikuruMarkdownListForGithub()
-        Case MenuAbout
-            HaruhiAbout.ShowDialog()
-        Case MenuQuit
-            HaruhiMain.Close()
     End Select
     
 End

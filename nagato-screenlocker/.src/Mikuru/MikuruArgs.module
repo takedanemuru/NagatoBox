@@ -3,11 +3,11 @@
 Property Read StartIdle As Boolean
 Property Read Disable As Boolean
 Property Read Enable As Boolean
-Property Read LockNow As Boolean
+Property Read Config As Boolean
 
 Private $disable As Boolean
 Private $enable As Boolean
-Private $show As Boolean = False
+Private $config As Boolean = False
 Private $start As Boolean
 
 Public Sub Parsing()
@@ -16,7 +16,7 @@ Public Sub Parsing()
         $start = Args.Has("i", "idle", "start idling nagato-screensaver")
         $disable = Args.Has("d", "disable")
         $enable = Args.Has("e", "enable")
-        $show = Args.Has("l", "lock", "lock screen now")
+        $config = Args.Has("c", "config", "config")
     Args.End()
     
 End
@@ -33,9 +33,9 @@ Private Function Enable_Read() As Boolean
 
 End
 
-Private Function LockNow_Read() As Boolean
+Private Function Config_Read() As Boolean
 
-    Return $show
+    Return $config
 
 End
 

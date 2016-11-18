@@ -51,6 +51,7 @@ Public Sub _InitializeGridView()
     $columnTitles = New NagatoSystemGridsColumnTitles
     Me._InitializeColumnTitles($columnTitles.All)
     Me._$gridView.ScrollBar = Scroll.Both
+    Me._$gridView.Mode = Select.Single
     NagatoSettings.LoadGridsSettings(Me._$gridView)
     $mouseHandler = New NagatoGridViewHandlerMouse(Me._$gridView) As "TFEI"
     $data = New NagatoSystemGridsData

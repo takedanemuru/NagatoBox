@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
-Title=nagato-config-screenlocker
+# Compiled with Gambas 3.9.1
+Title=nagato-screenlocker
 Startup=Kyon
-Icon=Pictures/Icons/equalizer.png
-Version=42.5.4
+Icon=Pictures/Icons/lock.png
+Version=42.6.7
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -18,11 +18,11 @@ TabSize=4
 Translate=1
 Language=en
 Maintainer=takedanemuru
-Vendor=Integrated Data Thought Entity
+Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-config-screenlocker-42.5.4
+PackageName=nagato-screenlocker-42.6.7
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Screen/Saving"

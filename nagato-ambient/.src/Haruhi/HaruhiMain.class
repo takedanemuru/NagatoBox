@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $player As New NagatoPlayer
+Private $player As NagatoPlayer
 
 Private Sub setIcon()
     
@@ -13,6 +13,7 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     Me.Center()
 
+    $player = New NagatoPlayer
     $player.Play()
     setIcon()
 

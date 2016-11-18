@@ -78,6 +78,14 @@ Private Sub setData()
     
 End
 
+Public Sub Reload()
+    
+    $gridView.Clear()
+    $gridView.Rows.Count = 0
+    setData()
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     initializeGridView(argContainer)

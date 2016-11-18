@@ -15,10 +15,10 @@ Public Sub Main()
         Try Exec ["xautolock", "-disable"]
     Else If MikuruArgs.Enable Then
         Try Exec ["xautolock", "-enable"]
-    Else If MikuruArgs.LockNow Then
-        NagatoScreenLocker.Show()
-    Else 'no options 
+    Else If MikuruArgs.Config Then
         HaruhiMain.Show()
+    Else 'no options 
+        NagatoScreenLocker.Show()
     End If
     
 End

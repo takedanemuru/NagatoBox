@@ -26,10 +26,13 @@ End
 
 Public Sub Refresh()
     
+    Dim yukiDirecroty As String
+    
     $projects.Clear()
     
-    readDirectory(User.Home &/ "NagatoBox")
-    readDirectory(User.Home &/ "MiscProject")
+    For Each yukiDirecroty In NagatoSettings.ProjectPaths
+        readDirectory(yukiDirecroty)
+    Next
     
 End
 

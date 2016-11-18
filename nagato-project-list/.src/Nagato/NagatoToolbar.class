@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $hBox As HBox
+Private $textArea As TextLabel
 
 Private Sub initializeHBox(argContainer As Container)
     
@@ -14,9 +15,9 @@ End
 
 Private Sub initializeSpacer()
     
-    Dim yukiTextArea As New TextLabel($hBox)
+    $textArea = New TextLabel($hBox)
     
-    With yukiTextArea
+    With $textArea
         .Expand = True
         .Text = NagatoProjectList.Label
         .Alignment = Align.Left
@@ -44,6 +45,12 @@ Private Sub initializeMenu()
     Dim yukiMenu As NagatoStarMenu
     
     yukiMenu = New NagatoStarMenu("StarMenu")
+    
+End
+
+Public Sub Reload()
+    
+    $textArea.Text = NagatoProjectList.Label
     
 End
 

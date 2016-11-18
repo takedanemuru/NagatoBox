@@ -41,3 +41,9 @@ Public Sub _call()
     Next
     
 End
+
+Public Sub Export(argPath As String)
+    
+     saveDocument(argPath)
+    
+End

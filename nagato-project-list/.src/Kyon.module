@@ -1,6 +1,18 @@
 ' Gambas module file
 
+Private Sub checkProjects()
+    
+    If NagatoSettings.ProjectPaths.Count > 0 Then Return
+    
+    MikuruProject.Add()
+    
+    If NagatoSettings.ProjectPaths.Count > 0 Then Return
+    
+End
+
 Public Sub Main()
+    
+    checkProjects()
     
     NagatoProjectList.Refresh()
     HaruhiMain.Show()

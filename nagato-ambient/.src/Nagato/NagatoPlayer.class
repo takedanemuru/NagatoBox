@@ -2,9 +2,12 @@
 
 Property Read Name As String
 
-Private $player As New MediaPlayer As "Player"
+Private $drawingArea As DrawingArea
+Private $player As MediaPlayer
+Private $mediaControl As MediaControl
 Private $soundPaths As String[]
 Private $currentIndex As Integer
+Private $visualizers As NagatoVisualizers
 
 Private Sub ramdomizeIndex()
     
@@ -93,15 +96,26 @@ End
 
 Public Sub _new()
     
+    '$drawingArea = argDrawingArea
+    $player = New MediaPlayer As "Player"
+    ' $mediaControl = New MediaControl($player, "ximagesink") As "MediaControl"
+    ' $mediaControl.SetWindow($drawingArea)
+    ' $player.Video.Output = $mediaControl
+    $player.Audio.Volume = 0.5
+    ' $player.Buffering = True
+    ' $visualizers = New NagatoVisualizers($player)
+    
     $soundPaths = Dir(NagatoSounds.SoundsDirectory)
     
 End
 
 Public Sub Player_End()
     
-    Try $player.Stop()
-    $player.Position = 0
-    $player.Play()
+    playCurrent()
+    
+    ' Try $player.Stop()
+    ' $player.Position = 0
+    ' $player.Play()
     
 End
 

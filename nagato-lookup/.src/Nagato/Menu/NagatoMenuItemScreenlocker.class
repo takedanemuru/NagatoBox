@@ -15,6 +15,6 @@ End
 
 Public Sub _AbstractOnMenuClicked()
     
-    Try Shell "nagato-config-screenlocker -l"
+    Try Shell "nagato-screenlocker"
     
 End

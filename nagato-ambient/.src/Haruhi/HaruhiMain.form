@@ -5,8 +5,8 @@
   Background = &H1FFFC7&
   Icon = Picture["icons/weather-rain.png"]
   Arrangement = Arrange.Vertical
-  { Panel1 Panel
-    MoveScaled(2,10,36,18)
+  { GraphicArea DrawingArea
+    MoveScaled(3,5,24,24)
     Expand = True
   }
   { HBox1 HBox

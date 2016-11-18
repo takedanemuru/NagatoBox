@@ -8,3 +8,9 @@ Public Sub _new(argForm As Form)
     Me._AddMenu(("Kill"), MikuruSignal.ProcessKill, "exclamation")
     
 End
+
+Public Sub MenuItem_Click()
+    
+    MikuruProcessTemporaryVariables.KillSelectedProcess()
+    
+End
