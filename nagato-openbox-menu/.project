@@ -1,0 +1,30 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.1
+Title=nagato-openbox-menu
+Startup=Kyon
+Icon=Picture/information-balloon.png
+Version=42.6.26
+Component=gb.args
+Component=gb.image
+Component=gb.qt5
+Component=gb.dbus
+Component=gb.desktop.x11
+Component=gb.desktop
+Component=gb.xml
+Description="A menu generator for Openbox3"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Language=en
+Maintainer=takeda.nemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-openbox-menu-42.6.26
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"admin"
+ExtraDependencies=ubuntu:"\t\t"
+ExtraFiles=ubuntu:"nagato-openbox-menu.desktop\t/usr/share/applications\nnagato-openbox-menu.png\t/usr/share/pixmaps"

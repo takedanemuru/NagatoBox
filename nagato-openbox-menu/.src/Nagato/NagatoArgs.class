@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read Category As String
+Property Read Available As Boolean
+Property Read Start As Boolean
+
+Private $category As String = ""
+Private $available As Boolean = False
+Private $start As Boolean = False
+
+Public Sub Parsing()
+    
+    Args.Begin("Usage:")
+        $category = Args.Get("c", "category", "get specified category's root menu", "category name")
+        $available = Args.Has("a", "availables", "show all available categories")
+        $start = Args.Has("s", "start", "start nagato-openbox-menu as daemon")
+    Args.End()
+    
+End
+
+Private Function Category_Read() As String
+
+    Return $category
+
+End
+
+Private Function Available_Read() As Boolean
+
+    Return $available
+
+End
+
+Private Function Start_Read() As Boolean
+
+    Return $start
+
+End

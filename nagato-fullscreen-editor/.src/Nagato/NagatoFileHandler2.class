@@ -5,11 +5,19 @@ Private $observer As Observer
 Private $path As String
 Private $saved As Boolean
 
+Private Sub setText(argText As String)
+    
+    Object.Lock($textArea)
+        $textArea.Text = argText
+    Object.Unlock($textArea)
+    
+End
+
 Private Sub openFileFrom(argPath As String)
     
     $path = argPath
     $saved = True
-    $textArea.Text = File.Load(argPath)
+    setText(File.Load(argPath))
     
 End
 
@@ -27,7 +35,7 @@ Public Sub New()
     
     $path = ""
     $saved = True
-    $textArea.Text = ""
+    setText("")
     
 End
 

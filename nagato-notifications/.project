@@ -1,0 +1,27 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.1
+Title=nagato-notifications
+Startup=Kyon
+Icon=Image/information-balloon.png
+Version=42.6.33
+Component=gb.args
+Component=gb.image
+Component=gb.qt5
+Component=gb.form
+Component=gb.dbus
+Description="notification daemon"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Language=en
+Maintainer=takeda.nemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-notifications-42.6.33
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"System"
+Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"org.nagato.notifications.service\t/usr/share/dbus-1/services\nNagatoNotifications.py\t/usr/bin\nnagato-notifications.png\t/usr/share/pixmaps\nnagato-notifications.desktop\t/usr/share/applications"

@@ -1,0 +1,71 @@
+' Gambas class file
+
+Private Const SourcePath As String = "/home/takedanemuru/Anne_Happy.mp3"
+Private $player As New NagatoPlayer
+Private $inputPath As String
+Private $outputPath As String
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+
+    'Exec ["sox", SourcePath, "/home/takedanemuru/Anne_Happy_Karaoke.mp3", "oops"] Wait
+
+    'Message.Info(("YUKI.N > Done"), ("OK"))
+
+End
+
+Public Sub Form_Show()
+    
+    
+    
+End
+
+Public Sub FileOpen_Click()
+
+    Dialog.Title = ("Select Audio File")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return
+    $player.Stop()
+    $inputPath = Dialog.Path
+
+End
+
+Public Sub InputPreviewButton_Click()
+
+    If Not Exist($inputPath) Then Return
+    
+    If $player.State = Media.Playing Then
+        InputPreviewButton.Text = ("Preview")
+        $player.Stop()
+    Else
+        InputPreviewButton.Text = ("Stop")
+        $player.Play($inputPath)
+    End If
+
+End
+
+Public Sub ExecuteButton_Click()
+
+    If Not Exist($inputPath) Then Return
+
+    Select Case EffectsComboBox.Index
+        Case 0
+            $outputPath = MikuruEffects.Karaoke($inputPath)
+    End Select
+
+End
+
+Public Sub OutputPreviewButton_Click()
+
+    If Not Exist($outputPath) Then Return
+    
+    If $player.State = Media.Playing Then
+        InputPreviewButton.Text = ("Preview")
+        $player.Stop()
+    Else
+        InputPreviewButton.Text = ("Stop")
+        $player.Play($outputPath)
+    End If
+
+End

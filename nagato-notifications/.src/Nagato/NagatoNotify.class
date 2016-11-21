@@ -1,0 +1,37 @@
+' Gambas class file
+
+Create Static
+
+Property Read Exist As Boolean
+
+Private Const Service As String = "org.gambas.nagato-notifications"
+Private Const ObjectPath As String = "/org/nagato/notifications"
+Private Const Interface As String = "org.gambas.nagato.notifications.tfei"
+
+Private Sub callThroughDBus()
+    
+    Dim yukiProxy As DBusProxy
+    
+    yukiProxy = DBus[Service][ObjectPath, Interface]
+    yukiProxy.PushNotification(NagatoArgs.App, NagatoArgs.Summary, NagatoArgs.Body, NagatoArgs.Urgency)
+    
+End
+
+Public Sub _call()
+    
+    If DBus.Session.Applications.Exist(Service) Then
+        callThroughDBus()
+    Else
+        DBus.Name = Service
+        DBus.Unique = True
+        DBus.Session.Register(TFEI, ObjectPath)
+        TFEI.PushNotification(NagatoArgs.App, NagatoArgs.Summary, NagatoArgs.Body, NagatoArgs.Urgency)
+    End If
+    
+End
+
+Private Function Exist_Read() As Boolean
+
+    Return DBus.Session.Applications.Exist(Service)
+
+End

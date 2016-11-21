@@ -5,16 +5,6 @@
 + Description : volume monitor for NagatoBox
 + Last Modefied : 2016-09-26
 
-## ![image: information-balloon.png](../dataovermind-menucache/Picture/information-balloon.png) dataovermind-menucache (v42.6.24)
-
-+ Description : A menu generator for Openbox3
-+ Last Modefied : 2016-10-14
-
-## ![image: information-balloon.png](../dataovermind-notifications/Image/information-balloon.png) dataovermind-notifications (v42.5.31)
-
-+ Description : notification daemon
-+ Last Modefied : 2016-09-15
-
 ## ![image: dataovermind-rssfeeder.png](../dataovermind-rssfeeder/dataovermind-rssfeeder.png) dataovermind-rssfeeder (v42.6.9)
 
 + Description : TFEI for rss feed
@@ -25,10 +15,10 @@
 + Description : tfei for system monitoring
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.5.3)
+## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.6.4)
 
 + Description : play ambient sounds
-+ Last Modefied : 2016-08-10
++ Last Modefied : 2016-11-18
 
 ## ![image: nagato-archiver.png](../nagato-archiver/nagato-archiver.png) nagato-archiver (v42.6.8)
 
@@ -47,6 +37,11 @@
 + Description : asx file player
 + Last Modefied : 2016-08-16
 
+## ![image: nagato-audio-editor](../nagato-audio-editor) nagato-audio-editor (v0.6.1)
+
++ Description : audio file editor
++ Last Modefied : 2016-11-19
+
 ## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.5.1)
 
 + Description : 
@@ -62,10 +57,10 @@
 + Description : a calendar software.
 + Last Modefied : 2016-08-17
 
-## ![image: chart-area-up.png](../nagato-chart/Icons/chart-area-up.png) nagato-chart-editor (v42.6.2)
+## ![image: chart-area-up.png](../nagato-chart/Icons/chart-area-up.png) nagato-chart (v0.6.2)
 
 + Description : csv editor.
-+ Last Modefied : 2016-10-04
++ Last Modefied : 2016-11-17
 
 ## ![image: nagato-code-view.png](../nagato-code-view/nagato-code-view.png) nagato-code-view (v42.6.18)
 
@@ -77,20 +72,15 @@
 + Description : pick color number from anywhere.
 + Last Modefied : 2016-08-09
 
-## ![image: commander.jpg](../nagato-commander/commander.jpg) nagato-commander (v42.5.6)
+## ![image: commander.jpg](../nagato-commander/commander.jpg) nagato-commander (v42.6.7)
 
 + Description : a terminal emulator
-+ Last Modefied : 2016-09-26
++ Last Modefied : 2016-11-20
 
 ## ![image: nagato-config-appearance.png](../nagato-config-appearance/nagato-config-appearance.png) nagato-config-appearance (v42.5.7)
 
 + Description : appearance configuration tool for NagatoBox
 + Last Modefied : 2016-09-30
-
-## ![image: equalizer.png](../nagato-config-screenlocker/Pictures/Icons/equalizer.png) nagato-config-screenlocker (v42.5.4)
-
-+ Description : a screen saver for NagatoBox
-+ Last Modefied : 2016-08-09
 
 ## ![image: equalizer.png](../nagato-config-shortcutkey/pictures/Icons/equalizer.png) nagato-config-shortcutkey (v0.6.2)
 
@@ -164,10 +154,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : check keycode.
 + Last Modefied : 2016-08-10
 
-## ![image: nagato-lookup.png](../nagato-lookup/nagato-lookup.png) nagato-lookup (v42.6.40)
+## ![image: nagato-lookup.png](../nagato-lookup/nagato-lookup.png) nagato-lookup (v42.6.41)
 
 + Description : a simple application launcher.
-+ Last Modefied : 2016-10-21
++ Last Modefied : 2016-11-18
 
 ## ![image: nagato-map.png](../nagato-map/nagato-map.png) nagato-map (v42.6.14)
 
@@ -189,10 +179,22 @@ ease to edit .gv files with preview. and export it as an image file.
 a simple movie player. no more, no less.
 
 
+## ![image: information-balloon.png](../nagato-notifications/Image/information-balloon.png) nagato-notifications (v42.6.33)
+
++ Description : notification daemon
++ Last Modefied : 2016-11-21
+
 ## ![image: nagato-openbox-logout.png](../nagato-openbox-logout/nagato-openbox-logout.png) nagato-openbox-logout (v42.5.4)
 
 + Description : logout dialog for Openbox3
 + Last Modefied : 2016-08-09
+
+## ![image: information-balloon.png](../nagato-openbox-menu/Picture/information-balloon.png) nagato-openbox-menu (v42.6.26)
+
++ Description : A menu generator for Openbox3
++ Last Modefied : 2016-11-21
+
+![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
 ## ![image: nagato-pdf-view.png](../nagato-pdf-view/nagato-pdf-view.png) nagato-pdf-view (v42.5.4)
 
@@ -204,10 +206,10 @@ a simple movie player. no more, no less.
 + Description : a music player with gstreamer backend.
 + Last Modefied : 2016-10-16
 
-## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.5)
+## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.6)
 
 + Description : project listing tool for Gambas3
-+ Last Modefied : 2016-11-10
++ Last Modefied : 2016-11-18
 
 ![image: screenshot_001.png](../nagato-project-list/doc/screenshots/screenshot_001.png)
 
@@ -222,6 +224,11 @@ a simple movie player. no more, no less.
 + `/PROJECT/doc/screenshots/*.png` for screenshot
 + `/PROJECT/doc/document.md` for document
 
+
+## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.6.7)
+
++ Description : a screen saver for NagatoBox
++ Last Modefied : 2016-11-18
 
 ## ![image: nagato-screenshooter.png](../nagato-screenshooter/nagato-screenshooter.png) nagato-screenshooter (v42.6.7)
 
@@ -244,10 +251,10 @@ a simple movie player. no more, no less.
 
 show all of gambas3 and NagatoBox stock icons.
 
-## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.6.15)
+## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.6.16)
 
 + Description : a task manager for NagatoBox
-+ Last Modefied : 2016-11-15
++ Last Modefied : 2016-11-18
 
 ## ![image: nagato-text.png](../nagato-text/nagato-text.png) nagato-text (v42.6.6)
 

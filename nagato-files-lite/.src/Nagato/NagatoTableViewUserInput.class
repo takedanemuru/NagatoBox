@@ -8,8 +8,8 @@ Private Sub getSelected() As Variant[]
     
     Return [yukiActiveRow]
     
-' Catch
-'     Debug yukiActiveRow
+Catch
+    Debug yukiActiveRow
     
 End
 

@@ -42,6 +42,8 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.TableViewActivate
             If Not IsDir($data.GetFilePathWithRowIndex(argValues[0])) Then Return
             Raise Signal(MikuruSignal.DirectoryMoveTo, [$data.GetFilePathWithRowIndex(argValues[0])])
+        Case MikuruSignal.TableViewSelect
+            Debug argValues[0]
         Default
             Raise Signal(argSignal, argValues)
     End Select

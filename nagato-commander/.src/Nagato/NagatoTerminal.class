@@ -7,10 +7,10 @@ Private $embedder As Embedder
 
 Public Sub _new(argContainer As Container)
     
-    $embedder = New Embedder(argContainer)
+    $embedder = New Embedder(argContainer) 
     $embedder.Expand = True
     
-    $process = Exec ["xterm", "-into", $embedder.Id, "-fg", "green", "-bg", "black"]
+    $process = Exec ["xterm", "-into", $embedder.Id, "-fg", "green", "-bg", "black"] 
     
 End
 

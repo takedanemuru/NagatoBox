@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Sub Karaoke(argSourcePath As String) As String
+    
+    Dim yukiOutputPath As String = Temp() & "." & File.Ext(argSourcePath)
+    
+    Exec ["sox", argSourcePath, yukiOutputPath, "oops"] Wait
+    
+    Message.Info("YUKI.N > Done.", ("OK"))
+    
+    Return yukiOutputPath
+    
+Catch
+    Return ""
+    
+End

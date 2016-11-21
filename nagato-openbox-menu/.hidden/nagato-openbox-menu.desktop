@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-openbox-menu
+Comment=A menu generator for Openbox3
+Exec=/usr/bin/nagato-openbox-menu
+Icon=/usr/share/pixmaps/nagato-openbox-menu.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System;
+OnlyShowIn=NagatoBox;openbox;

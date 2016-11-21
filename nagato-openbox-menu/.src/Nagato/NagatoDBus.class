@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private Const Service As String = "org.gambas.nagato-openbox-menu"
+Private Const ObjectPath As String = "/org/nagato/openbox/menu"
+Private Const Interface As String = "org.gambas.nagato.openbox.menu.tfei"
+
+Private $proxy As DBusProxy
+
+Public Sub Test()
+    
+    MikuruPath.EnsureMenuFileDirectory()
+    NagatoMenuCache.Activate()
+    
+    'Debug NagatoMenuCache.Get("Game")
+    
+End
+
+Public Sub EnsureService()
+    
+    If DBus.Session.Applications.Exist(Service) Then
+        Message.Info(("YUKI.N > nagato-openbox-menu has been activated"), ("OK"))
+    Else 
+        DBus.Name = Service
+        DBus.Unique = True
+        DBus.Session.Register(TFEI, ObjectPath)
+        MikuruPath.EnsureMenuFileDirectory()
+        NagatoMenuCache.Activate()
+    End If
+
+End
+
+Public Sub PrintCategoryMenu(argCategory As String)
+    
+    If DBus.Session.Applications.Exist(Service) Then
+        $proxy = DBus[Service][ObjectPath, Interface]
+        Print $proxy.GetCategoryMenu(argCategory)
+    Else
+        Print File.Load("Text/DummyMenuItem")
+    End If
+    
+End
