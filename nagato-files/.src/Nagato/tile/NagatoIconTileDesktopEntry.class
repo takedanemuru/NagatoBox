@@ -22,8 +22,8 @@ End
 
 Public Sub _OnGetBackgroundColor() As Integer
     
-    Return MikuruColor.Transparent(Color.Cyan, 192)
+    'Return MikuruColor.Transparent(Color.Cyan, 192)
     
-    'Return MikuruColor.Transparent(Color.Violet, 128)
+    Return MikuruColor.Transparent(Color.Violet, 128)
     
 End

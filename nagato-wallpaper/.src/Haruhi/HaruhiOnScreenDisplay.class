@@ -1,0 +1,51 @@
+' Gambas class file
+
+Private $timer As New Timer As "Timer"
+Private $background As Image
+Private $clock As New NagatoPainterClock
+Private $playerX As New NagatoPainterPlayerX
+
+Private Sub initializeForm()
+    
+    With Me
+        .X = 0
+        .Y = 0
+    End With
+    
+End
+
+Private Sub initializeDrawingArea()
+    
+    With MainDrawingArea
+        .X = 0
+        .Y = 0
+        .H = Me.H
+        .W = Me.W
+    End With
+    
+End
+
+Public Sub Form_Show()
+
+    initializeForm()
+    initializeDrawingArea()
+    $background = Image.Load(MikuruHidden.PathModefiedImage)
+    $timer.Enabled = True
+    
+End
+
+Public Sub MainDrawingArea_Draw()
+     
+    Paint.Begin(MainDrawingArea)
+        Paint.DrawImage($background, -1 * Me.ScreenX, -1 * Me.ScreenY)
+        $clock()
+        $playerX()
+    Paint.End()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    MainDrawingArea.Refresh()
+    
+End

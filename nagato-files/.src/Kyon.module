@@ -10,6 +10,16 @@ Private Sub activateDesktop()
     
 End
 
+Private Sub showDesktop()
+    
+    If Not NagatoDBus.DesktopActivated() Then
+        Message(("YUKI.N > nagato-desktop has not been activated."), ("OK"))
+    Else
+        HaruhiDesktop.ShowDesktop()
+    End If
+    
+End
+
 Public Sub Main()
 
     ' NOTE : this call activate NagatoDBSymbol, so do not delete.
@@ -27,6 +37,8 @@ Public Sub Main()
     
     If NagatoArguments.DesktopIcons Then
         activateDesktop()
+    Else If NagatoArguments.ShowDesktop Then
+        showDesktop()
     Else If NagatoArguments.XdgUserDirs Then
         HaruhiXdgConfig.Show()
     Else If NagatoArguments.OpenTrashBin Then

@@ -42,10 +42,10 @@
 + Description : audio file editor
 + Last Modefied : 2016-11-19
 
-## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.5.1)
+## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.6.2)
 
-+ Description : 
-+ Last Modefied : 2016-08-06
++ Description : battery status icon for systray
++ Last Modefied : 2016-11-28
 
 ## ![image: nagato-calculator.png](../nagato-calculator/nagato-calculator.png) nagato-calculator (v42.5.8)
 
@@ -115,10 +115,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.6.119)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.6.121)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2016-11-10
++ Last Modefied : 2016-11-28
 
 ## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v0.6.3)
 

@@ -11,8 +11,6 @@ Public Sub Test()
     MikuruPath.EnsureMenuFileDirectory()
     NagatoMenuCache.Activate()
     
-    'Debug NagatoMenuCache.Get("Game")
-    
 End
 
 Public Sub EnsureService()

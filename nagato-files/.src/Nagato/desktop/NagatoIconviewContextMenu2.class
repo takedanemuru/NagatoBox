@@ -70,6 +70,7 @@ Public Sub _AddChildMenus()
         Me._AddContextMenu(("Archive"), .CreateArchive, MikuruIcon.Get("hard-drive-download"))
         addCopyToMenu()
         If Access(Me._$path, gb.Write) Then addMoveToMenu()
+        If NagatoXdg.IsUserDir(Me._$path) Then Return
         Me._AddContextMenu(("Delete"), .FileDelete, MikuruIcon.Get("bin"))
         Me._AddContextMenu(("Tagging"), .TagAdd, MikuruIcon.Get("tag"))
         Me._AddContextMenu(("Remove Tag"), .TagRemove, MikuruIcon.Get("button-remove"))

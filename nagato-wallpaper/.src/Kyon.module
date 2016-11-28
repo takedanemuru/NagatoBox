@@ -1,10 +1,8 @@
 ' Gambas module file
 
-Public Sub Main()
+Private Sub startApplication()
     
     Dim yukiArguments As New NagatoArguments
-    
-    MikuruHidden.Ensure()
     
     If yukiArguments.SetLast Then
         NagatoWallpaperSetter.SetLast()
@@ -12,5 +10,15 @@ Public Sub Main()
         HaruhiMain.Show()
         If yukiArguments.Options.Count > 0 Then HaruhiMain.SetPath(yukiArguments.Options[0])
     End If
+    
+End
+
+Public Sub Main()
+    
+    MikuruHidden.Ensure()
+    'startApplication()
+    
+    ' NOW Testing
+    HaruhiOnScreenDisplay.Show()
     
 End

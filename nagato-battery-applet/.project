@@ -1,16 +1,28 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
+# Compiled with Gambas 3.9.1
 Title=nagato-battery-applet
 Startup=Kyon
 Icon=Pictures/icons/battery.png
-Version=42.5.1
+Version=42.6.2
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
 Component=gb.dbus
 Component=gb.gui.trayicon
+Description="battery status icon for systray"
 Authors="takeda.nemuru"
 TabSize=4
 Translate=1
 Language=en
+Maintainer=takedanemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-battery-applet-42.6.2
+CreateEachDirectory=1
 Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Hardware"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"admin"

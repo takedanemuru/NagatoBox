@@ -1,45 +1,41 @@
 ' Gambas class file
 
-Property Read Count As Integer
+Property Read Online As Boolean
+Property Read Percentage As String
 
-Private $proxies As New DBusProxy[]
+Private Const PowerSupplyClassDirectory As String = "/sys/class/power_supply"
 
-Private Const Service As String = "system://org.freedesktop.UPower"
-Private Const InterfaceUPowerDevice As String = "org.freedesktop.UPower.Device"
-Private Const InterfaceDbusProperties As String = "org.freedesktop.DBus.Properties"
+Private Function Online_Read() As Boolean
 
-Public Sub GetTimeToEmpty() As Float
+    Dim yukiDeviceDirectory As String
+    Dim yukiPath As String
     
-    Dim yukiProxy As DBusProxy
-    
-    For Each yukiProxy In $proxies
-        If yukiProxy.Get(InterfaceUPowerDevice, "Type") <> MikuruDevice.TypeBattery Then Continue
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "Temperature")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "TimeToEmpty")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "TimeToFull")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "Percentage")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "EnergyFull")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "EnergyFullDesign")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "Capacity")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "NativePath")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "Online")
-        Debug yukiProxy.Get(InterfaceUPowerDevice, "PowerSupply")
+    For Each yukiDeviceDirectory In Dir(PowerSupplyClassDirectory)
+        yukiPath = PowerSupplyClassDirectory &/ yukiDeviceDirectory 
+        If File.Load(yukiPath &/ "type") <> "Mains\n" Then Continue
+        If File.Load(yukiPath &/ "online") = "1\n" Then Return True
     Next
-    
-    Return 0
-    
+
+    Return False
+
 End
 
-Public Sub Add(argObjectPath As String)
-    
-    Dim yukiProxy As DBusProxy = DBus[Service][argObjectPath, InterfaceDbusProperties]
-    
-    $proxies.Add(yukiProxy)
-    
-End
+Private Function Percentage_Read() As String
 
-Private Function Count_Read() As Integer
+    Dim yukiDeviceDirectory As String
+    Dim yukiPath As String
+    Dim yukiChargeFull As Integer = 0
+    Dim yukiChargeNow As Integer = 0
+    
+    For Each yukiDeviceDirectory In Dir(PowerSupplyClassDirectory)
+        yukiPath = PowerSupplyClassDirectory &/ yukiDeviceDirectory 
+        If File.Load(yukiPath &/ "type") <> "Battery\n" Then Continue
+        yukiChargeFull += CInteger(Replace(File.Load(yukiPath &/ "charge_full"), "\n", ""))
+        yukiChargeNow += CInteger(Replace(File.Load(yukiPath &/ "charge_now"), "\n", ""))
+    Next
 
-    Return $proxies.Count
+    If yukiChargeFull = 0 Then Return "0.00%"
+
+    Return Format(yukiChargeNow / yukiChargeFull, "0.00%")
 
 End

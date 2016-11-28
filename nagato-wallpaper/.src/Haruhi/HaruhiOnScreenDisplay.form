@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,34.2857,114.2857)
+  Border = False
+  Stacking = Window.Below
+  Sticky = True
+  SkipTaskbar = True
+  Arrangement = Arrange.Fill
+  { MainDrawingArea DrawingArea
+    MoveScaled(22,19,24,24)
+    Expand = True
+  }
+}

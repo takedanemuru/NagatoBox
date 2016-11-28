@@ -1,0 +1,19 @@
+' Gambas class file
+
+Private Function getText() As String
+    
+    Dim yukiNow As Date = Now()
+    
+    Return Format(Hour(yukiNow), "0#") & ":" & Format(Minute(yukiNow), "0#")
+    
+End
+
+Public Sub _call()
+    
+    Paint.Brush = Paint.Color(11591910)
+    Paint.Font.Name = "Impact"
+    Paint.Font.Size = 56
+    Paint.DrawRichText(getText(), 0, 0, 4 * NagatoUx.BLOCK, 2 * NagatoUx.BLOCK, Align.Center)
+    Paint.Fill()
+    
+End

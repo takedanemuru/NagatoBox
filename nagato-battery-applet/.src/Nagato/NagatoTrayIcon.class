@@ -8,7 +8,7 @@ Public Sub _new()
     $trayIcon = New TrayIcon As "TrayIcon"
     
     With $trayIcon
-        .Icon = MikuruIcon["battery"]
+        .Icon = MikuruPowerManager.GetIcon()
         .Show()
     End With
     
@@ -18,6 +18,6 @@ End
 
 Public Sub Timer_Timer()
     
-    $trayIcon.Tooltip = "foo"
+    $trayIcon.Tooltip = MikuruPowerManager.GetStatus()
     
 End

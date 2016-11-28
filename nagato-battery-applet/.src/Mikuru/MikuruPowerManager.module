@@ -1,32 +1,28 @@
 ' Gambas module file
 
-Private $proxy As DBusProxy
 Private $devices As New NagatoDevices
 
-Private Const Bus As String = "System://org.freedesktop.UPower"
-Private Const ObjectPath As String = "/org/freedesktop/UPower"
-Private Const Interface As String = "org.freedesktop.UPower"
+Public Sub GetStatus() As String
+    
+    Debug $devices.Percentage
+    
+    Return $devices.Percentage
+    
+End
 
-Private Sub initializeDevices()
+Public Function GetIcon() As Picture
     
-    Dim yukiObjectPath As String
-    
-    For Each yukiObjectPath In $proxy.EnumerateDevices()
-        $devices.Add(yukiObjectPath)
-    Next
+    If $devices.Online Then
+        Return MikuruIcon["plug"]
+    Else
+        Return MikuruIcon["battery"]
+    Endif
     
 End
 
 Public Sub Activate()
     
-    $proxy = DBus[Bus][ObjectPath, Interface]
     
-    ' Debug $proxy.DaemonVersion
-    ' Debug $proxy.GetCriticalAction()
-    
-    initializeDevices()
-    
-    $devices.GetTimeToEmpty()
     
 End
 
