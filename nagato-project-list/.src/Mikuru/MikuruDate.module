@@ -10,7 +10,7 @@ End
 
 Public Sub IsCurrentCours(argLastModefied As Date) As Integer
     
-    If -3 > DateDiff(Now(), argLastModefied, gb.Month) Then Return Me.Unmaintained
+    If DateDiff(argLastModefied, Now(), gb.Month) > 4 Then Return Me.Unmaintained
     
     If (getCour(Now()) <> getCour(argLastModefied)) Then Return Me.OldCours
     

@@ -9,26 +9,6 @@ Public Sub Form_Open()
 
     Application.MainWindow = Me
 
-    'Exec ["sox", SourcePath, "/home/takedanemuru/Anne_Happy_Karaoke.mp3", "oops"] Wait
-
-    'Message.Info(("YUKI.N > Done"), ("OK"))
-
-End
-
-Public Sub Form_Show()
-    
-    
-    
-End
-
-Public Sub FileOpen_Click()
-
-    Dialog.Title = ("Select Audio File")
-    Dialog.Path = User.Home
-    If Dialog.OpenFile(False) Then Return
-    $player.Stop()
-    $inputPath = Dialog.Path
-
 End
 
 Public Sub InputPreviewButton_Click()
@@ -52,6 +32,10 @@ Public Sub ExecuteButton_Click()
     Select Case EffectsComboBox.Index
         Case 0
             $outputPath = MikuruEffects.Karaoke($inputPath)
+        Case 1
+            $outputPath = MikuruEffects.Silence($inputPath)
+        Case 2
+            $outputPath = MikuruEffects.Loudness($inputPath)
     End Select
 
 End
@@ -67,5 +51,29 @@ Public Sub OutputPreviewButton_Click()
         InputPreviewButton.Text = ("Stop")
         $player.Play($outputPath)
     End If
+
+End
+
+Public Sub InputPreviewButton2_Click()
+
+    Dialog.Title = ("Select Audio File")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return
+    $player.Stop()
+    $inputPath = Dialog.Path
+
+End
+
+Public Sub SaveButton_Click()
+
+    If Not Exist($outputPath) Then Return
+    
+    Try $player.Stop()
+    
+    Dialog.Title = ("Save File")
+    Dialog.Path = $inputPath
+    If Dialog.SaveFile() Then Return
+
+    Copy $outputPath To Dialog.Path
 
 End

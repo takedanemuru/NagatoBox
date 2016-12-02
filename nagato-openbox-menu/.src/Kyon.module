@@ -7,14 +7,14 @@ Public Sub Main()
     
     $args.Parsing()
     
-    If $args.Start Or If Args.Max = 0 Then
-        $dbus.EnsureService()
-    Else If $args.Category <> "" Then
-        $dbus.PrintCategoryMenu($args.Category)
-    Else If $args.Available Then
-        MikuruArrayTest(NagatoMenuCache.Categories)
-    Endif
-    
-    '$dbus.Test()
+    ' If $args.Start Or If Args.Max = 0 Then
+    '     $dbus.EnsureService()
+    ' Else If $args.Category <> "" Then
+    '     $dbus.PrintCategoryMenu($args.Category)
+    ' Else If $args.Available Then
+    '     MikuruArrayTest(NagatoMenuCache.Categories)
+    ' Endif
+    ' 
+    $dbus.Test()
     
 End

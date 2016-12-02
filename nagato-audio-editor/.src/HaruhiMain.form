@@ -1,17 +1,14 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,60,27)
+  MoveScaled(0,0,60,23)
+  Icon = Picture["pictures/icons/music.png"]
   Resizable = False
-  { File Menu
-    Text = ("File")
-    { FileOpen Menu
-      Text = ("Open")
-    }
-  }
   { PictureBox1 PictureBox
     MoveScaled(1,1,16,16)
     Background = Color.Violet
+    Picture = Picture["pictures/icons/question.png"]
+    Alignment = Align.Center
     Border = Border.Plain
   }
   { PictureBox2 PictureBox
@@ -20,20 +17,28 @@
     Border = Border.Plain
   }
   { InputPreviewButton Button
-    MoveScaled(1,18,16,4)
+    MoveScaled(9,18,8,4)
     Text = ("Preview")
   }
   { OutputPreviewButton Button
-    MoveScaled(43,18,16,4)
+    MoveScaled(51,18,8,4)
     Text = ("Preview")
   }
   { EffectsComboBox ComboBox
     MoveScaled(18,18,24,4)
     ReadOnly = True
-    List = [("Karaoke")]
+    List = [("Karaoke"), ("Cut Silence"), ("Loudness")]
   }
   { ExecuteButton Button
-    MoveScaled(26,6,8,7)
+    MoveScaled(26,5,8,7)
     Picture = Picture["icon:/32/next"]
+  }
+  { InputPreviewButton2 Button
+    MoveScaled(1,18,8,4)
+    Text = ("Open")
+  }
+  { SaveButton Button
+    MoveScaled(43,18,8,4)
+    Text = ("Save")
   }
 }

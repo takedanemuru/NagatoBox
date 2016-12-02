@@ -1,5 +1,6 @@
 ' Gambas module file
 
+Public Enum None = 0
 Public Enum FileHeader = 1000, FileOpen = 1001, FileSave = 1002, FileSaveAs = 1003, FileNewPath = 1004
 Public Enum EditHeader = 2000, EditUndo = 2001, EditRedo = 2002, EditCut = 2003, EditCopy = 2004
 Public Enum EditPaste = 2005, EditChange = 2006, EditSearch = 2007, EditQuery = 2008, EditReplace = 2009

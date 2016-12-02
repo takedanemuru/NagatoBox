@@ -2,7 +2,8 @@
 # Compiled with Gambas 3.9.1
 Title=nagato-audio-editor
 Startup=Kyon
-Version=0.6.1
+Icon=pictures/icons/music.png
+Version=42.6.2
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
@@ -12,5 +13,15 @@ Authors="takeda.nemuru@yandex.com"
 TabSize=4
 Translate=1
 Language=en
+Maintainer=takedanemuru
 Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-audio-editor-42.6.2
 Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Sound"
+Categories=ubuntu:"AudioVideo;Nagato"
+Groups=ubuntu:"sound"
+ExtraDependencies=ubuntu:"sox\t\t"

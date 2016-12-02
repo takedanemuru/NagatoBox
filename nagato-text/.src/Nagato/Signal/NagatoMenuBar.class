@@ -6,7 +6,6 @@ Private Const BarHeight As Integer = 32
 
 Private $container As HBox
 Private $fileButtons As NagatoFileButtons
-Private $editButtons As NagatoEditButtons
 Private $searchBox As NagatoSearchBox
 Private $starButton As NagatoMenuButton
 
@@ -21,20 +20,11 @@ Private Sub initializeContainer(argContainer As Container)
     
 End
 
-Public Sub SetFocusOnSearchBox()
-    
-    $searchBox.SetFocus()
-    
-End
-
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
     $fileButtons = New NagatoFileButtons($container) As "NagatoMenu"
-        'MikuruSeparator.Set($container)
-    '$editButtons = New NagatoEditButtons($container) As "NagatoMenu"
         MikuruSpacer.Set($container)
-    $searchBox = New NagatoSearchBox($container) As "NagatoMenu"
     $starButton = New NagatoStarButton($container, "", 0, "star")
     
 End

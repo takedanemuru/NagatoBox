@@ -37,10 +37,10 @@
 + Description : asx file player
 + Last Modefied : 2016-08-16
 
-## ![image: nagato-audio-editor](../nagato-audio-editor) nagato-audio-editor (v0.6.1)
+## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.6.2)
 
 + Description : audio file editor
-+ Last Modefied : 2016-11-19
++ Last Modefied : 2016-12-02
 
 ## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.6.2)
 
@@ -256,10 +256,10 @@ show all of gambas3 and NagatoBox stock icons.
 + Description : a task manager for NagatoBox
 + Last Modefied : 2016-11-18
 
-## ![image: nagato-text.png](../nagato-text/nagato-text.png) nagato-text (v42.6.6)
+## ![image: nagato-text.png](../nagato-text/nagato-text.png) nagato-text (v42.6.7)
 
 + Description : a simple text editor
-+ Last Modefied : 2016-11-15
++ Last Modefied : 2016-11-29
 
 ## ![image: nagato-text-converter.png](../nagato-text-converter/nagato-text-converter.png) nagato-text-converter (v42.5.2)
 

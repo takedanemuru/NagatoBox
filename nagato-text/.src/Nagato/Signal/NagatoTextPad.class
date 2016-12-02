@@ -87,10 +87,10 @@ Public Sub NagatoMenu_Signal(argSignal As Integer, argValues As Variant[])
             setTitle(File.Name($status.Path))
         Case MikuruSignal.EditChange
             $status.Change()
-        Case MikuruSignal.EditSearch
-            $menuBar.SetFocusOnSearchBox()
-        Case MikuruSignal.EditQuery 
-            $textArea.SearchText(argValues[0])
+        Case MikuruSignal.EditQuery
+            $textArea.Search(argSignal, argValues)
+        Case MikuruSignal.EditShowSearchAndReplaceDialog
+            HaruhiReplacement.ShowDialog()
     End Select
     
 End

@@ -19,6 +19,8 @@
 
 new package : qt5 front-end for `sox`
 
++ ~~new : imply essential features.~~
+
 ### nagato-chart-editor
 
 + new :  finish all essential functionalities.
@@ -31,7 +33,7 @@ new package : qt5 front-end for `sox`
 
 + ~~add essential attributes insertation menu.~~
 
-+ **must to restructure menu positions...**
++ ~~**must to restructure menu positions...**~~
 
 ![image: screenshot_2016年10月21日_19：15：10](../images/screenshot_2016年10月21日_19：15：10.png)
 

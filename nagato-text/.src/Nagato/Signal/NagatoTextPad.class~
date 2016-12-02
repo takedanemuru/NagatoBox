@@ -54,17 +54,6 @@ Public Sub Search(argType As String, argValues As Variant[])
     
     $textArea.Search(argType, argValues)
     
-    ' Select Case argTag
-    '     Case "Next"
-    '         $textArea.SearchText(argValues[0])
-    '     Case "Previous"
-    '         $textArea.SearchTextBack(argValues[0])
-    '     Case "Replace"
-    '         $textArea.ReplaceOne(argValues[0], argValues[1])
-    '     Case "ReplaceAll"
-    '         $textArea.ReplaceAll(argValues[0], argValues[1])
-    ' End Select
-    
 End
 
 Public Sub _new(argTabstrip As TabStrip, Optional argPath As String = "")
@@ -100,8 +89,10 @@ Public Sub NagatoMenu_Signal(argSignal As Integer, argValues As Variant[])
             $status.Change()
         Case MikuruSignal.EditSearch
             $menuBar.SetFocusOnSearchBox()
-        Case MikuruSignal.EditQuery 
-            $textArea.SearchText(argValues[0])
+        Case MikuruSignal.EditQuery
+            $textArea.Search(argSignal, argValues)
+        Case MikuruSignal.EditShowSearchAndReplaceDialog
+            HaruhiReplacement.ShowDialog()
     End Select
     
 End

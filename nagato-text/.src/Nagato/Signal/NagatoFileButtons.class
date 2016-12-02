@@ -11,6 +11,7 @@ Public Sub _InitializeButtons()
         yukiButton = New NagatoMenuButton(Me._$container, "Open", .FileOpen, "folder") As "NagatoMenu"
         yukiButton = New NagatoMenuButton(Me._$container, "Save", .FileSave, "hard-drive-download") As "NagatoMenu"
         yukiButton = New NagatoMenuButton(Me._$container, "Save As", .FileSaveAs) As "NagatoMenu"
+        yukiButton = New NagatoMenuButton(Me._$container, "Search and Replace", .EditShowSearchAndReplaceDialog, "search") As "NagatoMenu"
     End With
     
 End
