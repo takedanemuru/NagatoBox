@@ -1,0 +1,76 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$box As VBox
+Public _$pictureBox As NagatoCoverArtBox
+Public _$button As Button
+Public _$observer As Observer
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    Me._$box = New VBox(argContainer)
+    
+    With Me._$box
+        .W = 2 * MikuruUX.Block + MikuruUX.CoverArtSize
+        .Padding = MikuruUX.Block
+    End With
+    
+End
+
+Private Sub initializeButton()
+    
+    Me._$button = New Button(Me._$box) As "Button"
+    
+    With Me._$button
+        .Expand = False
+        .H = MikuruUX.BarHeight
+        .Text = ("Preview")
+        .Enabled = False
+    End With
+    
+End
+
+Public Sub _OnInitializeWidgets()
+    
+    ' virtual
+    
+End
+
+Public Sub _OnClickButton()
+    
+    
+    
+End
+
+' Public Sub SetPath(argPath As String)
+'     
+'     If Not Exist(argPath) Then Return
+'     
+'     Me._$path = argPath
+'     Me._$pictureBox.SetPath(argPath)
+'     Me._$button.Enabled = True
+'     
+' End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    Me._$pictureBox = New NagatoCoverArtBox(Me._$box) As "TFEI"
+    initializeButton()
+    Me._OnInitializeWidgets()
+    Me._$observer = New Observer(NagatoPlayer) As "Asakura"
+    
+End
+
+Public Sub Button_Click()
+    
+    Me._OnClickButton()
+    
+End
+
+Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant)
+    
+    
+    
+End

@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $rootMenu As Menu
+
+Private Sub initializeRootMenu(argMenuName As String)
+    
+    $rootMenu = New Menu(Application.MainWindow) As "RootMenu"
+    $rootMenu.Name = argMenuName
+    
+End
+
+Public Sub _new(argMenuName As String)
+    
+    initializeRootMenu(argMenuName)
+    Object.New("NagatoMenuItemQuit", [$rootMenu])
+    
+End

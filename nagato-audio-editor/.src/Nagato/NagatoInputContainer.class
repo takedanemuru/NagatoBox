@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoAudioSourceContainer
+
+Public Sub _OnInitializeWidgets()
+    
+    
+    
+End
+
+Public Sub _OnClickButton()
+    
+    NagatoPlayer.PlayInput()
+    
+End

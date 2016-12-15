@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private $player As New NagatoPlayer
+Private $menubar As NagatoMenuBar
+Private $mainContainer As NagatoMainContainer
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+
+    $menubar = New NagatoMenuBar(MainVBox) As "Menubar"
+    $mainContainer = New NagatoMainContainer(MainVBox) As "MainContainer"
+
+End
+
+Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
+    
+    
+    
+End

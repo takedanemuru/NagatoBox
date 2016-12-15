@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $pictureBox As PictureBox
+Private $spacer As Panel
+
+Private Sub setCoverArt(argPath As String)
+    
+    $pictureBox.Stretch = True
+    $pictureBox.Picture = Picture.Load(argPath)
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    Dim yukiPath As String = MikuruEyeD3.GetPicturePath(argPath)
+    
+    If Not Exist(yukiPath) Then
+        $pictureBox.Stretch = False
+        $pictureBox.Picture = MikuruIcon["music", 48]
+    Else
+        setCoverArt(yukiPath)
+    Endif
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $pictureBox = New PictureBox(argContainer) As "PictureBox"
+    
+    With $pictureBox
+        .Expand = False
+        .Alignment = Align.Center
+        .Stretch = False
+        .W = MikuruUX.CoverArtSize
+        .H = MikuruUX.CoverArtSize
+        .Picture = MikuruIcon["question-balloon", 48]
+    End With
+    
+    $spacer = New Panel(argContainer)
+    
+    $spacer.Expand = True
+    
+End

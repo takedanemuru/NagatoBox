@@ -1,0 +1,84 @@
+' Gambas class file
+
+Create Static
+
+Property Read State As Integer
+
+Private $player As New MediaPlayer As "MediaPlayer"
+Private $inputPath As String
+Private $targetPath As String
+
+Event SourceFileNew
+Event SourceFilePlay
+Event SourceFileStop
+Event TargetFileNew
+Event TargetFilePlay
+Event TargetFileStop
+
+Public Sub OpenFile()
+    
+    Dialog.Title = ("Select Audio File")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return
+    
+    NagatoPlayer.Stop()
+    $inputPath = Dialog.Path
+    
+    Raise SourceFileNew
+    
+End
+
+Public Sub PlaySourceFile()
+    
+    Try $player.Stop()
+    $player.URL = Media.URL($inputPath)
+    $player.Play()
+    
+    Raise SourceFilePlay
+    
+End
+
+Public Sub SetEffect(argEffectType As Integer)
+    
+    
+    
+End
+
+Public Sub PlayTargetFile()
+    
+    
+    
+End
+
+Public Sub SetTargetFileAsSourceFile()
+    
+    
+    
+End
+
+Public Sub SaveTargetFile()
+    
+    
+    
+End
+
+Public Sub Play(argPath As String)
+    
+    Try $player.Stop()
+    $player.URL = Media.URL(argPath)
+    $player.Play()
+    
+End
+
+
+Public Sub Stop()
+    
+    Try $player.Stop()
+    
+End
+
+Private Function State_Read() As Integer
+
+    Return $player.State
+
+End

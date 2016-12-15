@@ -1,0 +1,30 @@
+' Gambas module file
+
+Property Read Block As Integer
+Property Read BarHeight As Integer
+Property Read IconSize As Integer
+Property Read CoverArtSize As Integer
+
+Private Function BarHeight_Read() As Integer
+
+    Return 4 * Me.Block
+
+End
+
+Private Function Block_Read() As Integer
+
+    Return 8
+
+End
+
+Private Function IconSize_Read() As Integer
+
+    Return 2 * Me.Block
+
+End
+
+Private Function CoverArtSize_Read() As Integer
+
+    Return 13 * Me.Block
+
+End

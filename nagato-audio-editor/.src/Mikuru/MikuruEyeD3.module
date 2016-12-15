@@ -1,0 +1,39 @@
+' Gambas module file
+
+Private Const CommandAdd As String = "eyeD3 --add-image=&1:FRONT_COVER &2"
+Private Const CommandRemove As String = "eyeD3 --remove-images &1"
+
+Private $workingDirectory As New NagatoWorkingDirectoryEyeD3
+
+Private Sub setAlbumArtToFile(argPicturePath As String, argMusicPath As String)
+    
+    Dim yukiTempPath As String = Temp$() & ".png"
+    Dim yukiCoverArt As Picture = MikuruCroppedImage(argPicturePath, MikuruUx.CoverArt.Size)
+    Dim yukiOutputBin As String ' avoid to show stdout
+    
+    yukiCoverArt.Save(yukiTempPath)
+    
+    Shell Subst$(CommandRemove, Quote$(argMusicPath)) To yukiOutputBin
+    Shell Subst$(CommandAdd, Quote$(yukiTempPath), Quote$(argMusicPath)) To yukiOutputBin
+    
+End
+
+Public Function GetPicturePath(argPath As String) As String
+    
+    Dim yukiOutput As String
+    
+    $workingDirectory.Ensure()
+    Try Shell Subst$("eyeD3 -i &1 &2", $workingDirectory.Path, Quote$(argPath)) To yukiOutput
+    If Not yukiOutput Then Return ""
+    If $workingDirectory.HasFile Then Return $workingDirectory[0]
+
+Finally
+    Return ""
+    
+End
+
+Public Sub SetPicture(argMusicPath As String, argPicturePath As String)
+    
+    setAlbumArtToFile(argPicturePath, argMusicPath)
+    
+End

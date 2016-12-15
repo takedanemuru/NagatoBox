@@ -1,0 +1,47 @@
+' Gambas class file
+
+Property Read Path As String
+Property Read HasFile As Boolean
+
+Private $path As String
+
+Private Sub clearAll()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir($path)
+        Kill $path &/ yukiPath
+    Next
+    
+End
+
+Public Sub Ensure()
+    
+    If Not Exist($path) Then Mkdir $path
+    clearAll()
+    
+End
+
+Public Sub _new()
+    
+    $path = User.Home &/ ".nagatobox-eyeD3-working-directory-2"
+    
+End
+
+Public Sub _get(argIndex As Integer) As String
+    
+    Return $path &/ Dir($path)[argIndex]
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $path
+
+End
+
+Private Function HasFile_Read() As Boolean
+
+    Return (Dir($path).Count > 0)
+
+End

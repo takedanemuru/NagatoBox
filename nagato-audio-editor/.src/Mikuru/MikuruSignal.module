@@ -1,0 +1,4 @@
+' Gambas module file
+
+Public Enum FileNone = 1000, FileOpen = 1001
+Public Enum MusicNone = 2000, MusicOpen = 2001, MusicSave = 2002, MusicPlay = 2003, MusicStop = 2004

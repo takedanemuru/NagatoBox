@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $hBox As HBox
+Private $inputContainer As NagatoInputContainer
+Private $effectsContainer As NagatoEffectsContainer
+Private $outputContainer As NagatoOutputContainer
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $hBox = New HBox(argContainer) As "Container"
+    
+    With $hBox
+        .Expand = True
+    End With
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileOpen
+            $inputContainer.SetPath(argValues[0])
+    End Select
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    
+    $inputContainer = New NagatoInputContainer($hBox) As "TFEI"
+    $effectsContainer = New NagatoEffectsContainer($hBox) As "TFEI"
+    $outputContainer = New NagatoOutputContainer($hBox) As "TFEI"
+    
+End
