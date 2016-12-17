@@ -31,6 +31,26 @@ Private Sub initializeButton()
     
 End
 
+Public Sub _SetButtonPlay()
+    
+    With Me._$button
+        .Enabled = True
+        .Picture = MikuruIcon["button-play"]
+        .Text = ("Play")
+    End With
+    
+End
+
+Public Sub _SetButtonStop()
+    
+    With Me._$button
+        .Enabled = True
+        .Picture = MikuruIcon["button-stop"]
+        .Text = ("Stop")
+    End With
+    
+End
+
 Public Sub _OnInitializeWidgets()
     
     ' virtual
@@ -43,15 +63,11 @@ Public Sub _OnClickButton()
     
 End
 
-' Public Sub SetPath(argPath As String)
-'     
-'     If Not Exist(argPath) Then Return
-'     
-'     Me._$path = argPath
-'     Me._$pictureBox.SetPath(argPath)
-'     Me._$button.Enabled = True
-'     
-' End
+Public Sub _OnCatchSignal(argSignal As Integer, argValues As Variant[])
+    
+    ' virtual
+    
+End
 
 Public Sub _new(argContainer As Container)
     
@@ -69,8 +85,8 @@ Public Sub Button_Click()
     
 End
 
-Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant)
+Public Sub Asakura_Signal(argSignal As Integer, argValues As Variant[])
     
-    
+    Me._OnCatchSignal(argSignal, argValues)
     
 End

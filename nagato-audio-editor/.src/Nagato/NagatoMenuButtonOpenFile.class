@@ -6,13 +6,12 @@ Public Sub _OnInitializeMenuButton(argContainer As Container)
     
     With Me._$menuButton
         .Picture = MikuruIcon["folder"]
-        .Tag = MikuruSignal.FileOpen
     End With
     
 End
 
 Public Sub _OnMenuButtonClick()
     
-    NagatoPlayer.OpenFile()
+    NagatoPlayer(MikuruSignal.SourceFileNew, Null)
     
 End

@@ -17,21 +17,12 @@ Private Sub initializeContainer(argContainer As Container)
     
 End
 
-Public Sub _call(argSignal As Integer, argValues As Variant[])
-    
-    Select Case argSignal
-        Case MikuruSignal.FileOpen
-            $inputContainer.SetPath(argValues[0])
-    End Select
-    
-End
-
 Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
     
-    $inputContainer = New NagatoInputContainer($hBox) As "TFEI"
-    $effectsContainer = New NagatoEffectsContainer($hBox) As "TFEI"
-    $outputContainer = New NagatoOutputContainer($hBox) As "TFEI"
+    $inputContainer = New NagatoInputContainer($hBox)
+    $effectsContainer = New NagatoEffectsContainer($hBox)
+    $outputContainer = New NagatoOutputContainer($hBox) 
     
 End

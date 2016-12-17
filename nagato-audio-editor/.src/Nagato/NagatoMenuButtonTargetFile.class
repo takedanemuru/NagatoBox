@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoMenuButton
+
+Private Const MenuName As String = "TargetFileMenu"
+
+Private $pulldownMenu As NagatoPullDownMenuTargetFile
+
+Public Sub _OnInitializeMenuButton(argContainer As Container)
+    
+    With Me._$menuButton
+        .Picture = MikuruIcon["hard-drive-download"]
+        .Menu = MenuName
+    End With
+    
+End
+
+Public Sub _OptionalOnInitializePulldownMenu(argContainer As Container)
+    
+    $pulldownMenu = New NagatoPullDownMenuTargetFile(MenuName)
+    
+End

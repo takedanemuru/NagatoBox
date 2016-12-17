@@ -1,0 +1,11 @@
+' Gambas class file
+
+Inherits NagatoPullDownMenu
+
+Public Sub _OnInitializeChildMenus()
+    
+    Object.New("NagatoMenuItemTargetFileSave", [Me._$rootMenu])
+    Object.New("NagatoMenuItemTargetFileReplace", [Me._$rootMenu])
+    Object.New("NagatoMenuItemTargetFileSaveAsSourceFile", [Me._$rootMenu])
+    
+End

@@ -4,6 +4,8 @@ Inherits NagatoObject
 
 Private $hBox As HBox
 Private $openButton As NagatoMenuButtonOpenFile
+Private $effectsButton As NagatoMenuButtonEffects
+Private $targetFileButton As NagatoMenuButtonTargetFile
 Private $textLabel As NagatoTextLabel
 Private $starButton As NagatoMenuButtonStar
 
@@ -23,8 +25,10 @@ Public Sub _new(argContainer As Container)
     
     initializeContainer(argContainer)
     
-    $openButton = New NagatoMenuButtonOpenFile($hBox) As "TFEI"
-    $textLabel = New NagatoTextLabel($hBox) As "TFEI"
-    $starButton = New NagatoMenuButtonStar($hBox) As "TFEI"
+    $openButton = New NagatoMenuButtonOpenFile($hBox) 
+    $effectsButton = New NagatoMenuButtonEffects($hBox)
+    $targetFileButton = New NagatoMenuButtonTargetFile($hBox)
+    $textLabel = New NagatoTextLabel($hBox) 
+    $starButton = New NagatoMenuButtonStar($hBox) 
     
 End

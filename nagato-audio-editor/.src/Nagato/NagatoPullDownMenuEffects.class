@@ -4,6 +4,6 @@ Inherits NagatoPullDownMenu
 
 Public Sub _OnInitializeChildMenus()
     
-    Object.New("NagatoMenuItemQuit", [Me._$rootMenu])
+    Object.New("NagatoMenuItemEffectsKaraoke", [Me._$rootMenu])
     
 End

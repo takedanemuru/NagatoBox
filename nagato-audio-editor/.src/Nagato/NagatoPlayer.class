@@ -2,67 +2,15 @@
 
 Create Static
 
+Inherits NagatoObject
+
 Property Read State As Integer
 
 Private $player As New MediaPlayer As "MediaPlayer"
 Private $inputPath As String
 Private $targetPath As String
 
-Event SourceFileNew
-Event SourceFilePlay
-Event SourceFileStop
-Event TargetFileNew
-Event TargetFilePlay
-Event TargetFileStop
-
-Public Sub OpenFile()
-    
-    Dialog.Title = ("Select Audio File")
-    Dialog.Path = User.Home
-    If Dialog.OpenFile(False) Then Return
-    
-    NagatoPlayer.Stop()
-    $inputPath = Dialog.Path
-    
-    Raise SourceFileNew
-    
-End
-
-Public Sub PlaySourceFile()
-    
-    Try $player.Stop()
-    $player.URL = Media.URL($inputPath)
-    $player.Play()
-    
-    Raise SourceFilePlay
-    
-End
-
-Public Sub SetEffect(argEffectType As Integer)
-    
-    
-    
-End
-
-Public Sub PlayTargetFile()
-    
-    
-    
-End
-
-Public Sub SetTargetFileAsSourceFile()
-    
-    
-    
-End
-
-Public Sub SaveTargetFile()
-    
-    
-    
-End
-
-Public Sub Play(argPath As String)
+Private Sub play(argPath As String)
     
     Try $player.Stop()
     $player.URL = Media.URL(argPath)
@@ -70,10 +18,62 @@ Public Sub Play(argPath As String)
     
 End
 
-
-Public Sub Stop()
+Public Sub openFile()
+    
+    Dialog.Title = ("Select Audio File")
+    Dialog.Path = User.Home
+    If Dialog.OpenFile(False) Then Return
     
     Try $player.Stop()
+    $inputPath = Dialog.Path
+    
+    Raise Signal(MikuruSignal.SourceFileNew, [Dialog.Path])
+    
+End
+
+Public Sub save()
+    
+    Dialog.Title = ("Save File")
+    Dialog.Path = User.Home &/ "your_file.mp3"
+    If Dialog.SaveFile() Then Return
+    
+    Copy $targetPath To Dialog.Path
+    
+End
+
+Public Sub SetEffect(argEffectType As Integer)
+    
+    If Not Exist($inputPath) Then Return
+    
+    Select Case argEffectType
+        Case MikuruSignal.EffectKaraoke
+            $targetPath = MikuruEffects.Karaoke($inputPath)
+    End Select
+    
+    If Exist($targetPath) Then Raise Signal(MikuruSignal.TargetFileNew, [$targetPath])
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.SourceFileNew
+            openFile()
+        Case MikuruSignal.SourceFilePlay
+            play($inputPath)
+            Raise Signal(MikuruSignal.SourceFilePlay, Null)
+        Case MikuruSignal.SourceFileStop
+            Try $player.Stop()
+            Raise Signal(MikuruSignal.SourceFileStop, Null)
+        Case MikuruSignal.TargetFilePlay
+            play($targetPath)
+            Raise Signal(MikuruSignal.TargetFilePlay, Null)
+        Case MikuruSignal.TargetFileStop
+            Try $player.Stop()
+            Raise Signal(MikuruSignal.TargetFileStop, Null)
+        Case MikuruSignal.TargetFileSave
+            If Exist($targetPath) Then save()
+    End Select
     
 End
 

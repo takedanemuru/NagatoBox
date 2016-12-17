@@ -4,12 +4,28 @@ Inherits NagatoAudioSourceContainer
 
 Public Sub _OnInitializeWidgets()
     
-    
+    Me._$button.Tag = MikuruSignal.SourceFilePlay
     
 End
 
 Public Sub _OnClickButton()
     
-    NagatoPlayer.PlayInput()
+    NagatoPlayer(Me._$button.Tag, Null)
+    
+End
+
+Public Sub _OnCatchSignal(argSignal As Integer, argValues As Variant[])
+
+    Select Case argSignal
+        Case MikuruSignal.SourceFileNew
+            Me._$pictureBox.SetPath(argValues[0])
+            Me._SetButtonPlay()
+        Case MikuruSignal.SourceFilePlay
+            Me._$button.Tag = MikuruSignal.SourceFileStop
+            Me._SetButtonStop()
+        Case MikuruSignal.SourceFileStop
+            Me._$button.Tag = MikuruSignal.SourceFilePlay
+            Me._SetButtonPlay()
+    End Select
     
 End

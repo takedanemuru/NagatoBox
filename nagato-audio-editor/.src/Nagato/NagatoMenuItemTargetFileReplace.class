@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoMenuItemTargetFile
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Replace")
+        .Tag = MikuruSignal.TargetFileReplaceSourceFile
+    End With
+    
+End
