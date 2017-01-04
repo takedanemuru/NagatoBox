@@ -37,6 +37,6 @@ End
 
 Public Sub Asakura_MouseWheel()
     
-    setNewY(Mouse.Delta)
+    If Not NagatoSettingsPersona.Lock Then setNewY(Mouse.Delta)
 
 End

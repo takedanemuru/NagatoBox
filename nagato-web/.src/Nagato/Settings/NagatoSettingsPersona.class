@@ -4,6 +4,7 @@ Inherits NagatoSettingsCore
 
 Property Path As String
 Property Y As Integer
+Property Lock As Boolean
 
 Private Function Path_Read() As String
 
@@ -30,5 +31,18 @@ Private Sub Y_Write(Value As Integer)
     Me._$settings.Save()
 
     If Not Error Then MikuruPersona.Reset()
+
+End
+
+Private Function Lock_Read() As Boolean
+
+    Return Me._$settings["persona/lock", False]
+
+End
+
+Private Sub Lock_Write(Value As Boolean)
+
+    Me._$settings["persona/lock"] = Value
+    Me._$settings.Save()
 
 End

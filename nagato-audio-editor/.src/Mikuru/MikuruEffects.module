@@ -50,3 +50,18 @@ Catch
     Return ""
     
 End
+
+Public Sub BassBoost(argSourcePath As String) As String
+    
+    Dim yukiOutputPath As String = getOutputPath(argSourcePath)
+    
+    Exec ["sox", "-S", argSourcePath, yukiOutputPath, "bass", "+3"] Wait
+    
+    Message.Info("YUKI.N > Done.", ("OK"))
+    
+    Return yukiOutputPath
+    
+Catch
+    Return ""
+    
+End

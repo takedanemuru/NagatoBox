@@ -48,6 +48,12 @@ Public Sub SetEffect(argEffectType As Integer)
     Select Case argEffectType
         Case MikuruSignal.EffectKaraoke
             $targetPath = MikuruEffects.Karaoke($inputPath)
+        Case MikuruSignal.EffectLoudness
+            $targetPath = MikuruEffects.Loudness($inputPath)
+        Case MikuruSignal.EffectSilence
+            $targetPath = MikuruEffects.Silence($inputPath)
+        Case MikuruSignal.EffectBass
+            $targetPath = MikuruEffects.BassBoost($inputPath)
     End Select
     
     If Exist($targetPath) Then Raise Signal(MikuruSignal.TargetFileNew, [$targetPath])

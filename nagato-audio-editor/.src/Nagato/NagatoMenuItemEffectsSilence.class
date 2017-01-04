@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoMenuItemEffects
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Cut Silence")
+        .Tag = MikuruSignal.EffectSilence
+    End With
+    
+End
