@@ -51,12 +51,17 @@ End
 
 Public Sub Call()
     
-    $shutterSound.Play()
     $screenshooter.Get()
-    Me.Center()
-    Me.Show()
-    initializeDirectoryButtonBox()
-    initializeFileNameTextBox()
+    
+    If $screenshooter.Thumbnail Then
+        $shutterSound.Play()
+        Me.Center()
+        Me.Show()
+        initializeDirectoryButtonBox()
+        initializeFileNameTextBox()
+    Else
+        Message.Error(("YUKI.N > Active Screen Not Found."), ("OK"))
+    End If
     
 End
 

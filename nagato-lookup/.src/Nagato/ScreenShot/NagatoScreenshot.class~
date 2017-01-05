@@ -9,17 +9,7 @@ Private $screenshot As Picture
 
 Event Ready
 
-Private Sub hasActiveWindow() As Boolean
-    
-    If Desktop.ActiveWindow > 0 Then Return True
-    
-    Message.Warning("YUKI.N > There's no active window...")
-    
-    Return False
-    
-End
-
-Public Sub Get() 
+Public Sub Get() As Boolean
     
     Dim yukiDesktopWindow As DesktopWindow
     
@@ -30,11 +20,9 @@ Public Sub Get()
         $screenshot = Desktop.Screenshot()
     End If
     
-' Finally
-'     If Error Then $screenshot = Desktop.Screenshot()
-'     Raise Ready
+    If Object.IsValid($screenshot) Then Raise Ready
     
-Raise Ready
+    Return Object.IsValid($screenshot)
     
 End
 
@@ -57,5 +45,8 @@ Private Function Thumbnail_Read() As Picture
     With $screenshot
         Return .Image.Stretch(.W * yukiRate, .H * yukiRate).Picture
     End With
+
+Catch
+    Return Null
 
 End

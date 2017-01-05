@@ -55,7 +55,7 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 ## To Do
 
-[TODO](./readme_extra/todo/NagatoBox_42.6_Beyond_The_Horizon.md)
+[TODO](./readme_extra/todo/NagatoBox_42.7_Awakening_The_World.md)
 
 ## Applications
 

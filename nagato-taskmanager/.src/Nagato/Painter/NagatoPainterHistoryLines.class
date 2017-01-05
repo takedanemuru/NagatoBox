@@ -2,7 +2,7 @@
 
 Inherits NagatoPainter
 
-Private Const StepPerSecond As Integer = 4
+Private Const StepPerSecond As Integer = 10
 
 Private Function getY(argUsage As Float) As Integer
     
@@ -21,13 +21,36 @@ Private Sub paintStep(argHistory As Float[], argIndex As Integer)
     
 End
 
+Private Sub paintStep2(argHistory As Float[], argIndex As Integer)
+
+    Dim yukiX As Integer = Me._$drawingArea.W - (argIndex * StepPerSecond)
+    Dim yukiY1 As Integer = getY(argHistory[argHistory.Max - argIndex])
+    Dim yukiY2 As Integer = getY(argHistory[argHistory.Max - argIndex - 1])
+    
+    Paint.MoveTo(yukiX, yukiY1)
+    Paint.LineTo(yukiX - StepPerSecond, yukiY1)
+    Paint.MoveTo(yukiX - StepPerSecond, yukiY1)
+    Paint.LineTo(yukiX - StepPerSecond, yukiY2)
+
+End
+
+Private Sub paintStep3(argHistory As Float[], argIndex As Integer)
+
+    Dim yukiX As Integer = Me._$drawingArea.W - (argIndex * StepPerSecond)
+    Dim yukiUsage As Float = argHistory[argHistory.Max - argIndex]
+    Dim yukiY1 As Integer = getY(yukiUsage)
+    
+    Paint.Rectangle(yukiX, yukiY1, StepPerSecond, yukiY1)
+    
+End
+
 Private Sub paintLine(argColor As Integer, argHistory As Float[])
     
     Dim yukiIndex As Integer
     
     Me._SetLineProperties(argColor, 1)
         For yukiIndex = 0 To argHistory.Max - 2
-            paintStep(argHistory, yukiIndex)
+            paintStep2(argHistory, yukiIndex)
         Next
     Paint.Stroke()
     

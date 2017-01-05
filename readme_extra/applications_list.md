@@ -37,20 +37,20 @@
 + Description : asx file player
 + Last Modefied : 2016-08-16
 
-## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.6.2)
+## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.6.4)
 
 + Description : audio file editor
-+ Last Modefied : 2016-12-02
++ Last Modefied : 2017-01-04
 
 ## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.6.2)
 
 + Description : battery status icon for systray
 + Last Modefied : 2016-11-28
 
-## ![image: nagato-calculator.png](../nagato-calculator/nagato-calculator.png) nagato-calculator (v42.5.8)
+## ![image: nagato-calculator.png](../nagato-calculator/nagato-calculator.png) nagato-calculator (v42.7.9)
 
 + Description : calc it !
-+ Last Modefied : 2016-08-09
++ Last Modefied : 2017-01-05
 
 ## ![image: nagato-calendar.png](../nagato-calendar/nagato-calendar.png) nagato-calendar (v42.5.4)
 
@@ -62,10 +62,10 @@
 + Description : csv editor.
 + Last Modefied : 2016-11-17
 
-## ![image: nagato-code-view.png](../nagato-code-view/nagato-code-view.png) nagato-code-view (v42.6.18)
+## ![image: nagato-code-view.png](../nagato-code-view/nagato-code-view.png) nagato-code-view (v42.7.19)
 
 + Description : count lines of Gambas3 source codes.
-+ Last Modefied : 2016-11-04
++ Last Modefied : 2017-01-05
 
 ## ![image: nagato-color-picker.png](../nagato-color-picker/nagato-color-picker.png) nagato-color-picker (v42.5.4)
 
@@ -154,10 +154,12 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : check keycode.
 + Last Modefied : 2016-08-10
 
-## ![image: nagato-lookup.png](../nagato-lookup/nagato-lookup.png) nagato-lookup (v42.6.41)
+## ![image: nagato-lookup.png](../nagato-lookup/nagato-lookup.png) nagato-lookup (v42.7.42)
 
 + Description : a simple application launcher.
-+ Last Modefied : 2016-11-18
++ Last Modefied : 2017-01-05
+
+![image: screenshot_001.png](../nagato-lookup/doc/screenshots/screenshot_001.png)
 
 ## ![image: nagato-map.png](../nagato-map/nagato-map.png) nagato-map (v42.6.14)
 
@@ -206,10 +208,10 @@ a simple movie player. no more, no less.
 + Description : a music player with gstreamer backend.
 + Last Modefied : 2016-10-16
 
-## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.6)
+## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.8)
 
 + Description : project listing tool for Gambas3
-+ Last Modefied : 2016-11-18
++ Last Modefied : 2016-12-02
 
 ![image: screenshot_001.png](../nagato-project-list/doc/screenshots/screenshot_001.png)
 
@@ -251,10 +253,15 @@ a simple movie player. no more, no less.
 
 show all of gambas3 and NagatoBox stock icons.
 
-## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.6.16)
+## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.7.17)
 
 + Description : a task manager for NagatoBox
-+ Last Modefied : 2016-11-18
++ Last Modefied : 2017-01-05
+
+![image: screenshot_001.png](../nagato-taskmanager/doc/screenshots/screenshot_001.png)
+
+taskmanager for NagatoBox
+
 
 ## ![image: nagato-text.png](../nagato-text/nagato-text.png) nagato-text (v42.6.7)
 
@@ -281,10 +288,10 @@ show all of gambas3 and NagatoBox stock icons.
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.51)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.52)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2016-11-13
++ Last Modefied : 2016-12-20
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 

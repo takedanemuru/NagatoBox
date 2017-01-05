@@ -9,18 +9,25 @@ Private $screenshot As Picture
 
 Event Ready
 
-Public Sub Get() 
+Private Function getActiveScreenScreenshot() As Picture
     
-    Dim yukiDesktopWindow As DesktopWindow
+    Dim yukiDesktopWindow As New DesktopWindow(Desktop.ActiveWindow)
+    
+    Return yukiDesktopWindow.GetScreenshot(False)
+    
+End
+
+Public Sub Get() As Boolean
     
     If NagatoSettingsScreenShooter.OnlyActiveWindow Then
-        yukiDesktopWindow = New DesktopWindow(Desktop.ActiveWindow)
-        $screenshot = yukiDesktopWindow.GetScreenshot(False)
+        $screenshot = getActiveScreenScreenshot()
     Else
         $screenshot = Desktop.Screenshot()
     End If
     
-    Raise Ready
+    If Object.IsValid($screenshot) Then Raise Ready
+    
+    Return Object.IsValid($screenshot)
     
 End
 
@@ -43,5 +50,8 @@ Private Function Thumbnail_Read() As Picture
     With $screenshot
         Return .Image.Stretch(.W * yukiRate, .H * yukiRate).Picture
     End With
+
+Catch
+    Return Null
 
 End
