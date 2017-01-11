@@ -1,0 +1,68 @@
+' Gambas class file
+
+Property PointClock As Integer
+Property PointPager As Integer
+Property PointMain As Integer
+
+Public Enum ClickMain, ClickPager, ClickClock
+
+Private $pointClock As Integer
+Private $pointPager As Integer
+Private $pointMain As Integer
+Private $observer As Observer
+
+Event Clicked(argType As Integer, argLeft As Boolean)
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    If Mouse.X >= $pointClock Then
+        Raise Clicked(ClickClock, Mouse.Left)
+    Else If Mouse.X >= $pointPager Then
+        Raise Clicked(ClickPager, Mouse.Left)
+    Else If Mouse.X >= $pointMain Then
+        Raise Clicked(ClickMain, Mouse.Left)
+    Endif
+    
+End
+
+Private Function PointClock_Read() As Integer
+
+    Return $pointClock
+
+End
+
+Private Sub PointClock_Write(Value As Integer)
+
+    $pointClock = Value
+
+End
+
+Private Function PointPager_Read() As Integer
+
+    Return $pointPager
+
+End
+
+Private Sub PointPager_Write(Value As Integer)
+
+    $pointPager = Value
+
+End
+
+Private Function PointMain_Read() As Integer
+
+    Return $pointMain
+
+End
+
+Private Sub PointMain_Write(Value As Integer)
+
+    $pointMain = Value
+
+End

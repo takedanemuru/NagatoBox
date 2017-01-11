@@ -1,0 +1,76 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $painterBackground As NagatoPanel2PainterBackground
+Private $painterClock As NagatoPanel2PainterClock
+Private $painterPager As NagatoPanel2PainterPager
+Private $painterTasks As NagatoPanel2PainterTasksTypeAlpha
+Private $desktopObserver As Observer
+Private $timerObserver As Observer
+Private $mouseClickDispatcher As NagatoPanel2MouseClickDispatcher
+
+Private Sub initializeDrawingArea(argForm As Form)
+    
+    $drawingArea = New DrawingArea(argForm) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = False
+        .H = NagatoSettingsPanel.Height
+    End With
+    
+End
+
+Public Sub _new(argForm As Form)
+    
+    MikuruHidden.Ensure()
+    initializeDrawingArea(argForm)
+    $mouseClickDispatcher = New NagatoPanel2MouseClickDispatcher($drawingArea) As "Mouse"
+    $painterBackground = New NagatoPanel2PainterBackground($drawingArea)
+    $painterClock = New NagatoPanel2PainterClock($drawingArea)
+    $painterPager = New NagatoPanel2PainterPager($drawingArea)
+    $painterTasks = New NagatoPanel2PainterTasksTypeAlpha($drawingArea)
+    $drawingArea.Refresh()
+    
+    $desktopObserver = New Observer(NagatoDesktopWatcher2) As "Asakura"
+    $timerObserver = New Observer(HaruhiDesktop) As "Kimidori"
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    Paint.Begin($drawingArea)
+        $painterBackground.Paint(0)
+        $mouseClickDispatcher.PointClock = $painterClock.Paint(0)
+        $mouseClickDispatcher.PointPager = $painterPager.Paint($mouseClickDispatcher.PointClock)
+        $mouseClickDispatcher.PointMain = $painterTasks.Paint($mouseClickDispatcher.PointPager)
+    Paint.End()
+    
+Catch
+    Return ' avoid drawing during drawing.
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Kimidori_Timer()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub Mouse_Clicked(argType As Integer, argLeft As Boolean)
+    
+    Select Case argType
+        Case NagatoPanel2MouseClickDispatcher.ClickMain
+            $painterTasks.Click(Mouse.X, argLeft)
+        Case NagatoPanel2MouseClickDispatcher.ClickPager
+            $painterPager.Click(Mouse.X, argLeft)
+        Case NagatoPanel2MouseClickDispatcher.ClickClock
+            $painterClock.Click(Mouse.X, argLeft)
+    End Select
+    
+End

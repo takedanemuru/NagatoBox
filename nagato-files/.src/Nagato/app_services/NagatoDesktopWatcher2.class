@@ -63,6 +63,8 @@ End
 
 Private Function Max_Read() As Integer
 
+    $windows.Refresh()
+
     Return $windows.Max
 
 End

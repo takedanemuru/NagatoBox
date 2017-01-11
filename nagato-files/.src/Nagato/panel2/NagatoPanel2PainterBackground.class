@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoPanel2Painter
+
+Private $background As Image
+
+Public Sub _OnInitialize()
+    
+    Dim yukiImage As Image = Image.Load(MikuruHidden.PathModefiedImage)
+    Dim yukiY As Integer = Screen.H - NagatoSettingsPanel.Height
+    
+    $background = yukiImage.Copy(0, yukiY, Screen.W, NagatoSettingsPanel.Height)  
+    
+End
+
+Public Sub Paint(Optional argX As Integer) As Integer ' returns right margin, if needed.
+    
+    Paint.DrawImage($background, 0, 0)
+    ' Paint.Brush = Paint.Color(NagatoSettingsPanel.Background + Color.Transparent * 128)
+    Paint.Brush = Paint.Color(Color.Gray + Color.Transparent * 128)
+    Paint.Rectangle(0, 0, Me._$drawingArea.W, Me._$drawingArea.H)
+    Paint.Fill()
+    
+    Return 0
+    
+End

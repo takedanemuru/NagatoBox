@@ -5,6 +5,7 @@ Property Read Second As Integer
 
 Private $desktop As NagatoDesktop
 Private $panel As NagatoDesktopPanel
+Private $panel2 As NagatoPanel2
 Private $timer As New Timer As "DesktopTimer"
 Private $ready As Boolean = False
 Private $second As Integer
@@ -49,7 +50,8 @@ Public Sub Form_Open()
     If MikuruX11.SetAsRoot(Me.Id) Then 
         NagatoDBus.Register()
         $desktop = New NagatoDesktop(Me)
-        $panel = New NagatoDesktopPanel(Me)
+        '$panel = New NagatoDesktopPanel(Me)
+        $panel2 = New NagatoPanel2(Me)
         MikuruX11.ReservePanelHeightOnScreen(Me.Id)
         $timer.Enabled = True
         HaruhiPersona.Welcome()

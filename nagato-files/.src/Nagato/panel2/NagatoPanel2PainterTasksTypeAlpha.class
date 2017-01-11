@@ -1,0 +1,124 @@
+' Gambas class file
+
+Inherits NagatoPanel2Painter
+
+Private Const Margin As Integer = 22
+
+Private $windows As NagatoDesktopWindowsTypeAlpha
+
+Private Function getText(argDesktopWindow As DesktopWindow, argWidth As Integer) As String
+    
+    Return MikuruCollapsedText.Get(argDesktopWindow.Name, Paint.Font, argWidth)
+    
+End
+
+Private Function getDesktopWindowFromPositionX(argX As Integer) As DesktopWindow
+    
+    Dim yukiIndex As Integer = (argX + Margin) Div $windows.Width
+    
+    Return $windows[yukiIndex]
+    
+End
+
+Private Sub popUpContextMenu(argDesktopWindow As DesktopWindow)
+    
+    Dim yukiMenu As New NagatoContextMenuPanelTask(HaruhiDesktop, "", argDesktopWindow)
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub _OnInitialize()
+    
+    $windows = New NagatoDesktopWindowsTypeAlpha
+    
+End
+
+Private Function getTaskRect(argWindowIndex As Integer) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .X = $windows.Width * argWindowIndex + Margin
+        .Y = 0
+        .H = Me._$drawingArea.H
+        .W = $windows.Width
+    End With
+    
+    Return yukiRect
+    
+End
+
+Public Sub _PaintText(argDesktopWindow As DesktopWindow, argRect As Rect)
+    
+    With argRect
+        Paint.DrawRichText(getText(argDesktopWindow, .W - 28), .X + 24, .Y, .W - 24, .H, Align.Left)
+    End With
+    
+Catch
+    Return
+    
+End
+
+Public Sub _PaintIcon(argDesktopWindow As DesktopWindow, argRect As Rect)
+    
+    If argDesktopWindow.Icon Then
+        Paint.DrawImage(argDesktopWindow.Icon.Stretch(16, 16), argRect.X + 4, argRect.Y + 4)
+    Else
+        Paint.DrawPicture(MikuruIcon.Get("question-balloon"), argRect.X + 4, argRect.Y + 4)
+    End If
+     
+Catch
+    Return
+     
+End
+
+Private Sub paintTask(argWindowIndex As Integer)
+    
+    Dim yukiRect As Rect = getTaskRect(argWindowIndex)
+    Dim yukiDesktopWindow As DesktopWindow = $windows[argWindowIndex]
+
+    Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
+    Me._PaintIcon(yukiDesktopWindow, yukiRect)
+    Me._PaintText(yukiDesktopWindow, yukiRect)
+    Paint.Fill()
+    
+End
+
+Public Sub _OnLeftClick(argX As Integer)
+    
+    Dim yukiDesktopWindow As DesktopWindow
+    
+    If 0 > $windows.Max Then Return
+    
+    yukiDesktopWindow = getDesktopWindowFromPositionX(argX)
+    
+    Desktop.Current = yukiDesktopWindow.Desktop
+    Try yukiDesktopWindow.Activate()
+    
+End
+
+Public Sub _OnRightClick(argX As Integer)
+    
+    Dim yukiDesktopWindow As DesktopWindow 
+    
+    If 0 > $windows.Max Then Return
+    
+    yukiDesktopWindow = getDesktopWindowFromPositionX(argX)
+    popUpContextMenu(yukiDesktopWindow)
+    
+End
+
+Public Sub Paint(Optional argX As Integer) As Integer
+    
+    Dim yukiIndex As Integer
+
+    $windows.Refresh(argX - Margin)
+
+    For yukiIndex = 0 To $windows.Max
+        paintTask(yukiIndex)
+    Next
+    
+    Return Margin ' dummy, should return right margin. 
+    
+End
