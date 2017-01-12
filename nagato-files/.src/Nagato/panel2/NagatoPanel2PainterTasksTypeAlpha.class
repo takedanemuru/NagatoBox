@@ -16,7 +16,7 @@ Private Function getDesktopWindowFromPositionX(argX As Integer) As DesktopWindow
     
     Dim yukiIndex As Integer = (argX + Margin) Div $windows.Width
     
-    Return $windows[yukiIndex]
+    Return $windows[Min(yukiIndex, $windows.Max)]
     
 End
 

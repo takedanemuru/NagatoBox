@@ -5,8 +5,7 @@ Private $painterBackground As NagatoPanel2PainterBackground
 Private $painterClock As NagatoPanel2PainterClock
 Private $painterPager As NagatoPanel2PainterPager
 Private $painterTasks As NagatoPanel2PainterTasksTypeAlpha
-Private $desktopObserver As Observer
-Private $timerObserver As Observer
+Private $observer As NagatoPanel2Observer
 Private $mouseClickDispatcher As NagatoPanel2MouseClickDispatcher
 
 Private Sub initializeDrawingArea(argForm As Form)
@@ -17,6 +16,12 @@ Private Sub initializeDrawingArea(argForm As Form)
         .Expand = False
         .H = NagatoSettingsPanel.Height
     End With
+    
+End
+
+Public Sub ReloadDesktopWallpaper()
+    
+    $painterBackground.ReloadDesktopWallpaper()
     
 End
 
@@ -31,8 +36,7 @@ Public Sub _new(argForm As Form)
     $painterTasks = New NagatoPanel2PainterTasksTypeAlpha($drawingArea)
     $drawingArea.Refresh()
     
-    $desktopObserver = New Observer(NagatoDesktopWatcher2) As "Asakura"
-    $timerObserver = New Observer(HaruhiDesktop) As "Kimidori"
+    $observer = New NagatoPanel2Observer As "Observer"
     
 End
 
@@ -50,15 +54,12 @@ Catch
     
 End
 
-Public Sub Asakura_Changed()
+Public Sub Observer_RequestRefresh()
     
     $drawingArea.Refresh()
     
-End
-
-Public Sub Kimidori_Timer()
-    
-    $drawingArea.Refresh()
+Catch
+    Return ' avoid error when catch signal during closing app.
     
 End
 

@@ -32,6 +32,9 @@ Public Sub Asakura_MouseDrag()
     Drag.Icon = $iconView.Current.Picture
     $iconView.Drag(NagatoDrag2.GetUriList($selection.Paths), MikuruMimeType.UriList)
     
+Catch
+    Return ' avoid error when some object unexpectedlly vanished.
+    
 End
 
 Public Sub Asakura_MouseDown()
