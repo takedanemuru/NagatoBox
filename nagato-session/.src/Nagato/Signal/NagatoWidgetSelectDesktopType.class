@@ -3,8 +3,9 @@
 Inherits NagatoWidget
 
 Private $comboBox As ComboBox
+Private $observer As Observer
 
-Public Sub _OnInitializeWidget()
+Private Sub initializeComboBox()
     
     $comboBox = New ComboBox(Me._$container) As "ComboBox"
     
@@ -18,8 +19,29 @@ Public Sub _OnInitializeWidget()
     
 End
 
+Private Function getNewTargetDEIndex() As Integer
+    
+    Return NagatoXdgAutostarts.AllTypes.Find(NagatoSettingsSession.TargetDE)
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    initializeComboBox()
+    $observer = New Observer(NagatoSettingsSession) As "Asakura"
+    
+End
+
 Public Sub ComboBox_Click()
     
     NagatoSettingsSession.TargetDE = $comboBox[$comboBox.Index].Text
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    Object.Lock($comboBox)
+        Try $comboBox.Index = getNewTargetDEIndex()
+    Object.Unlock($comboBox)
     
 End

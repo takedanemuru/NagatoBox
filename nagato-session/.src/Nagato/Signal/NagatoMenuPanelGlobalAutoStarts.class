@@ -7,6 +7,7 @@ Private $menuButton As NagatoWidgetMenuButtonStarGlobalAutostart
 Public Sub _Initialize() ' override
     
     Object.New("NagatoWidgetPanelSpacer", [Me._$container])
+    Object.New("NagatoWidgetSelectDesktopType", [Me._$container])
     $menuButton = New NagatoWidgetMenuButtonStarGlobalAutostart(Me._$container) As "TFEI"
     
 End

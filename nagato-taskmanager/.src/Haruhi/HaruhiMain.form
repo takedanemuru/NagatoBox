@@ -5,8 +5,26 @@
   Visible = False
   Icon = Picture["Icons/oscilloscope.png"]
   Arrangement = Arrange.Vertical
-  { MainContainer VBox
-    MoveScaled(3,4,58,45)
+  { MainTabStrip TabStrip
+    MoveScaled(2,2,60,51)
     Expand = True
+    Arrangement = Arrange.Fill
+    Count = 2
+    Orientation = Align.Left
+    Index = 0
+    Text = ("Processes")
+    Picture = Picture["Icons/oscilloscope.png"]
+    { ProcessesContainer VBox
+      MoveScaled(0,0,58,45)
+      Expand = True
+    }
+    Index = 1
+    Text = ("Network")
+    Picture = Picture["Icons/wireless-router.png"]
+    { NetworkContainer VBox
+      MoveScaled(0,0,58,45)
+      Expand = True
+    }
+    Index = 0
   }
 }

@@ -1,0 +1,15 @@
+' Gambas class file
+
+Private $panel As NagatoContainerMenuPanelNetwork
+
+Public Sub Tick()
+    
+    $panel.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $panel = New NagatoContainerMenuPanelNetwork(argContainer)
+    
+End

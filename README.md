@@ -6,9 +6,7 @@ a software suite for Openbox3.
 
 a software suite for openbox3.
 
-![screenshot_002](./readme_extra/images/screenshot_desktop.png)
-![screenshot_002](./readme_extra/images/screenshot_notify.png)
-![screenshot_002](./readme_extra/images/screenshot_menu.png)
+![image: screenshot_2017年01月14日_12：42：01](./readme_extra/screenshot_2017年01月14日_12：42：01.png)
 
 ## Important Notice
 

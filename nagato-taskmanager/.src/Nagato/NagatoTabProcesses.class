@@ -1,0 +1,21 @@
+' Gambas class file
+
+Private $menuPanel As NagatoContainerSystemMenuPanel
+Private $systemGraph As NagatoSystemGraph
+Private $systemGrids As NagatoGridsProcess
+
+Public Sub Tick()
+    
+    $systemGraph.Refresh()
+    $menuPanel.Refresh()
+    $systemGrids.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $systemGraph = New NagatoSystemGraph(argContainer)
+    $menuPanel = New NagatoContainerSystemMenuPanel(argContainer)
+    $systemGrids = New NagatoGridsProcess(argContainer)
+    
+End

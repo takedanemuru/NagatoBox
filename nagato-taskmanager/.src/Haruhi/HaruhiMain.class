@@ -1,22 +1,15 @@
 ' Gambas class file
 
 Private $timer As New Timer As "Timer"
-Private $menuPanel As NagatoContainerSystemMenuPanel
-Private $systemGraph As NagatoSystemGraph
-Private $systemGrids As NagatoGridsProcess
-
-Private Sub initializeUserInterface()
-    
-    $systemGraph = New NagatoSystemGraph(MainContainer)
-    $menuPanel = New NagatoContainerSystemMenuPanel(MainContainer)
-    $systemGrids = New NagatoGridsProcess(MainContainer)
-    
-End
+Private $tabProcesses As NagatoTabProcesses
+Private $tabNetwork As NagatoTabNetwork
 
 Public Sub Form_Open()
     
     NagatoObserverFacade.Activated = True
-    initializeUserInterface()
+    NagatoNetworkLoad.Start()
+    $tabProcesses = New NagatoTabProcesses(ProcessesContainer)
+    $tabNetwork = New NagatoTabNetwork(NetworkContainer)
     
     $timer.Start()
     
@@ -31,8 +24,11 @@ End
 
 Public Sub Timer_Timer()
     
-    $systemGraph.Refresh()
-    $menuPanel.Refresh()
-    $systemGrids.Refresh()
+    Select Case MainTabStrip.Index
+        Case 0
+            $tabProcesses.Tick()
+        Case 1
+            $tabNetwork.Tick()
+    End Select
     
 End

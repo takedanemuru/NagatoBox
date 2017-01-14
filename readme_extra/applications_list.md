@@ -37,10 +37,10 @@
 + Description : asx file player
 + Last Modefied : 2016-08-16
 
-## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.6.4)
+## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.7.5)
 
 + Description : audio file editor
-+ Last Modefied : 2017-01-04
++ Last Modefied : 2017-01-11
 
 ## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.6.2)
 
@@ -115,10 +115,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.6.121)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.124)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2016-11-28
++ Last Modefied : 2017-01-12
 
 ## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v0.6.3)
 
@@ -237,12 +237,12 @@ a simple movie player. no more, no less.
 + Description : simple screenshooter
 + Last Modefied : 2016-11-15
 
-![image: screenshot_001.png~](../nagato-screenshooter/doc/screenshots/screenshot_001.png~)
+![image: screenshot_001.png](../nagato-screenshooter/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-session.png](../nagato-session/nagato-session.png) nagato-session (v42.6.32)
+## ![image: nagato-session.png](../nagato-session/nagato-session.png) nagato-session (v42.7.33)
 
 + Description : manage autostart
-+ Last Modefied : 2016-10-14
++ Last Modefied : 2017-01-14
 
 ## ![image: nagato-stock-icon-list.png](../nagato-stock-icon-list/nagato-stock-icon-list.png) nagato-stock-icon-list (v42.6.4)
 
