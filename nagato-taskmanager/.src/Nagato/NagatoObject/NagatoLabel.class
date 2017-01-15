@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$label As Label
+
+Public Sub _OnGetText() As String
+    
+    Return "" ' dummy
+    
+End
+
+Public Sub Refresh()
+    
+    Me._$label.Text = Me._OnGetText()
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    Me._$label = New Label(Me._$container)
+    
+    With Me._$label
+        .Expand = True
+        .Background = Me._$container.Background
+        .Foreground = Color.White
+    End With
+    
+End

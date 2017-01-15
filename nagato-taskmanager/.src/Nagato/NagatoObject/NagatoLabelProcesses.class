@@ -1,10 +1,8 @@
 ' Gambas class file
 
-Inherits NagatoWidget
+Inherits NagatoLabel
 
-Private $label As Label
-
-Private Function getText() As String
+Public Sub _OnGetText() As String
     
     Dim yukiText As String = Space$(2)
     
@@ -14,23 +12,5 @@ Private Function getText() As String
     yukiText &= Format$(NagatoObserverFacade.ProcessCount, " Processes: ###0")
     
     Return yukiText
-    
-End
-
-Public Sub Refresh()
-    
-    $label.Text = getText()
-    
-End
-
-Public Sub _OnInitializeWidget()
-    
-    $label = New Label(Me._$container)
-    
-    With $label
-        .Expand = True
-        .Background = Me._$container.Background
-        .Foreground = Color.White
-    End With
     
 End

@@ -1,12 +1,15 @@
 ' Gambas class file
 
 Property Read History As Float[]
+Property Read Max As Float
 
 Private $length As Integer
 Private $history As Float[]
+Private $max As Float
 
 Public Sub Push(argData As Float)
     
+    If $history.Max > 1 Then $max = Max($max, argData)
     $history.Add(argData)
     If $history.Count > $length Then $history.Remove(0)
     
@@ -23,4 +26,10 @@ Private Function History_Read() As Float[]
 
     Return $history
 
+End
+
+Private Function Max_Read() As Float
+
+    Return $max
+    
 End

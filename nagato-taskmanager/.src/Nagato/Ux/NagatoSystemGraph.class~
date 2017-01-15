@@ -9,12 +9,12 @@ Private $lines As NagatoPainterHistoryLines
 
 Public Sub _OnInitializeWidget()
     
-    $drawingArea = argDrawingArea
+    $drawingArea = New DrawingArea(Me._$container)
     $drawingArea.H = 120
     
     $observer = New Observer($drawingArea) As "Asakura"
-    $screen = New NagatoPainterScreen(argDrawingArea)
-    $lines = New NagatoPainterHistoryLines(argDrawingArea)
+    $screen = New NagatoPainterScreen($drawingArea)
+    $lines = New NagatoPainterHistoryLines($drawingArea)
     
 End
 

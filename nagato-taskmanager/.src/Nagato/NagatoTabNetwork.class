@@ -1,15 +1,18 @@
 ' Gambas class file
 
 Private $panel As NagatoContainerMenuPanelNetwork
+Private $graph As NagatoGraphNetwork
 
 Public Sub Tick()
     
+    $graph.Refresh()
     $panel.Refresh()
     
 End
 
 Public Sub _new(argContainer As Container)
     
+    $graph = New NagatoGraphNetwork(argContainer)
     $panel = New NagatoContainerMenuPanelNetwork(argContainer)
     
 End

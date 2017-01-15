@@ -3,7 +3,7 @@
 Inherits NagatoContainer
 
 Private $hBox As HBox
-Private $systemLabel As NagatoWidgetLabelNetwork
+Private $systemLabel As NagatoLabelNetwork
 Private $starButton As NagatoStarButton
 
 Public Sub _OnInitializeContainer()
@@ -19,7 +19,7 @@ End
 
 Public Sub _OnInitializeChildren()
     
-    $systemLabel = New NagatoWidgetLabelNetwork($hBox)
+    $systemLabel = New NagatoLabelNetwork($hBox)
     $starButton = New NagatoStarButton($hBox) 
     
 End

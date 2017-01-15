@@ -3,7 +3,7 @@
 Inherits NagatoContainer
 
 Private $hBox As HBox
-Private $systemLabel As NagatoWidgetSystemLabel
+Private $systemLabel As NagatoLabelProcesses
 Private $filter As NagatoFilter
 Private $starButton As NagatoStarButton
 
@@ -20,7 +20,7 @@ End
 
 Public Sub _OnInitializeChildren()
     
-    $systemLabel = New NagatoWidgetSystemLabel($hBox)
+    $systemLabel = New NagatoLabelProcesses($hBox)
     $filter = New NagatoFilter($hBox)
     $starButton = New NagatoStarButton($hBox) 
     

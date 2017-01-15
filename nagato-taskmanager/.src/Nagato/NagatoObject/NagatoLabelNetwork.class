@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits NagatoLabel
+
+Private Function getByteString(argByte As Integer) As String
+    
+    If argByte >= 2 ^ 30 Then
+        Return Format$(argByte / (2 ^ 30), "#0.00 GiB")
+    Else If argByte >= 2 ^ 20 Then
+        Return Format$(argByte / (2 ^ 20), "#0.00 MiB")
+    Else If argByte >= 2 ^ 10 Then
+        Return Format$(argByte / (2 ^ 10), "#0.00 KiB")
+    Else
+        Return Format$(argByte, "#0 Byte")
+    Endif
+    
+End
+
+Private Function getBps(argBit As Integer) As String
+    
+    If argBit >= 2 ^ 30 Then
+        Return Format$(argBit / (2 ^ 30), "#0.00 Gbps")
+    Else If argBit >= 2 ^ 20 Then
+        Return Format$(argBit / (2 ^ 20), "#0.00 Mbps")
+    Else If argBit >= 2 ^ 10 Then
+        Return Format$(argBit / (2 ^ 10), "#0.00 Kbps")
+    Else
+        Return Format$(argBit, "#0 bps")
+    Endif
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Dim yukiText As String = Space$(2)
+    
+    yukiText &= Subst("Up : &1,   ", getBps(NagatoNetworkLoad.TransmitBps))
+    yukiText &= Subst("Up Total: &1,   ", getByteString(NagatoNetworkLoad.TransmitTotal))
+    yukiText &= Subst("Down : &1,   ", getBps(NagatoNetworkLoad.ReceiveBps))
+    yukiText &= Subst("Down Total: &1,   ", getByteString(NagatoNetworkLoad.ReceiveTotal))
+    
+    Return yukiText
+    
+End

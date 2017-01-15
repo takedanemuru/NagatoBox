@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoWidget
+
+Public _$drawingArea As DrawingArea
+Public _$observer As Observer
+
+Public Sub _OnInitializeDrawingArea()
+    
+    Me._$drawingArea = New DrawingArea(Me._$container)
+    Me._$drawingArea.H = 120
+    
+    Me._$observer = New Observer(Me._$drawingArea) As "Asakura"
+    
+End
+
+Public Sub _OnInitializePainters()
+    
+    
+    
+End
+
+Public Sub _OnInitializeWidget()
+    
+    Me._OnInitializeDrawingArea()
+    Me._OnInitializePainters()
+    
+End
+
+Public Sub _OnRefreshDrawingArea()
+    
+    
+    
+End
+
+Public Sub Refresh()
+    
+    Me._$drawingArea.Refresh()
+    
+End
+
+Public Sub Asakura_Draw()
+    
+    Paint.Begin(Me._$drawingArea)
+        Me._OnRefreshDrawingArea()
+    Paint.End()
+    
+End

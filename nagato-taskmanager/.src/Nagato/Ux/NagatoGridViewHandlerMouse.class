@@ -59,6 +59,8 @@ End
 
 Public Sub Asakura_ColumnResize(argColumnIndex As Integer)
     
+    Debug argColumnIndex & " is not used."
+    
     NagatoSettings.SaveGridsSettings(Me._$gridView)
     
 End
