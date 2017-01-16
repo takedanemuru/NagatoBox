@@ -2,65 +2,20 @@
 
 Property Read Name As String
 
-Private $drawingArea As DrawingArea
 Private $player As MediaPlayer
-Private $mediaControl As MediaControl
-Private $soundPaths As String[]
-Private $currentIndex As Integer
-Private $visualizers As NagatoVisualizers
-
-Private Sub ramdomizeIndex()
-    
-    $currentIndex = Rand(0, $soundPaths.Max)
-    
-End
-
-Private Sub forwardIndex()
-    
-    Inc $currentIndex
-    
-    If $currentIndex > $soundPaths.Max Then $currentIndex = 0
-    
-End
-
-Private Sub backIndex()
-    
-    Dec $currentIndex
-    
-    If 0 > $currentIndex Then $currentIndex = $soundPaths.Max
-    
-End
-
-Private Sub randomIndex()
-    
-    Dim yukiIndexCache As Integer 
-    
-    Do
-        yukiIndexCache = Rand(0, $soundPaths.Max)
-        If yukiIndexCache = $currentIndex Then Continue
-        $currentIndex = yukiIndexCache
-        Break
-    Loop
-    
-End
-
-Private Function getUrl() As String
-    
-    Return Media.URL(NagatoSounds.SoundsDirectory &/ $soundPaths[$currentIndex])
-    
-End
+Private $sounds As New NagatoAmbientSounds
 
 Private Sub playCurrent()
     
     Try $player.Stop()
-    $player.URL = getUrl()
+    $player.URL = $sounds.CurrentUrl
     $player.Play()
     
 End
 
 Public Sub Play()
     
-    ramdomizeIndex()
+    $sounds.RandomIndex
     playCurrent()
     
     $player.Audio.SoftwareVolume = True
@@ -69,21 +24,21 @@ End
 
 Public Sub Next()
     
-    forwardIndex()
+    $sounds.ForwardIndex
     playCurrent()
     
 End
 
 Public Sub Back()
     
-    backIndex()
+    $sounds.BackIndex
     playCurrent()
     
 End
 
 Public Sub Random()
     
-    randomIndex()
+    $sounds.RandomIndex
     playCurrent()
     
 End
@@ -96,16 +51,8 @@ End
 
 Public Sub _new()
     
-    '$drawingArea = argDrawingArea
     $player = New MediaPlayer As "Player"
-    ' $mediaControl = New MediaControl($player, "ximagesink") As "MediaControl"
-    ' $mediaControl.SetWindow($drawingArea)
-    ' $player.Video.Output = $mediaControl
     $player.Audio.Volume = 0.5
-    ' $player.Buffering = True
-    ' $visualizers = New NagatoVisualizers($player)
-    
-    $soundPaths = Dir(NagatoSounds.SoundsDirectory)
     
 End
 
@@ -113,14 +60,10 @@ Public Sub Player_End()
     
     playCurrent()
     
-    ' Try $player.Stop()
-    ' $player.Position = 0
-    ' $player.Play()
-    
 End
 
 Private Function Name_Read() As String
 
-    Return File.BaseName($soundPaths[$currentIndex]) 
+    Return $sounds.Name
 
 End

@@ -15,10 +15,10 @@
 + Description : tfei for system monitoring
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.6.4)
+## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.7.6)
 
 + Description : play ambient sounds
-+ Last Modefied : 2016-11-18
++ Last Modefied : 2017-01-16
 
 ## ![image: nagato-archiver.png](../nagato-archiver/nagato-archiver.png) nagato-archiver (v42.6.8)
 
@@ -115,10 +115,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.124)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.125)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-01-12
++ Last Modefied : 2017-01-16
 
 ## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v0.6.3)
 
@@ -203,10 +203,10 @@ a simple movie player. no more, no less.
 + Description : pdf viewer
 + Last Modefied : 2016-08-10
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.6.72)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.73)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2016-10-16
++ Last Modefied : 2017-01-16
 
 ## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.8)
 
@@ -232,10 +232,10 @@ a simple movie player. no more, no less.
 + Description : a screen saver for NagatoBox
 + Last Modefied : 2016-11-18
 
-## ![image: nagato-screenshooter.png](../nagato-screenshooter/nagato-screenshooter.png) nagato-screenshooter (v42.6.7)
+## ![image: nagato-screenshooter.png](../nagato-screenshooter/nagato-screenshooter.png) nagato-screenshooter (v42.7.8)
 
 + Description : simple screenshooter
-+ Last Modefied : 2016-11-15
++ Last Modefied : 2017-01-16
 
 ![image: screenshot_001.png](../nagato-screenshooter/doc/screenshots/screenshot_001.png)
 
@@ -253,10 +253,10 @@ a simple movie player. no more, no less.
 
 show all of gambas3 and NagatoBox stock icons.
 
-## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.7.17)
+## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.7.21)
 
 + Description : a task manager for NagatoBox
-+ Last Modefied : 2017-01-05
++ Last Modefied : 2017-01-15
 
 ![image: screenshot_001.png](../nagato-taskmanager/doc/screenshots/screenshot_001.png)
 

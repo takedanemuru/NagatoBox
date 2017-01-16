@@ -1,0 +1,56 @@
+' Gambas class file
+
+Property Read CurrentUrl As String
+Property Read Name As String
+
+Private Const Directory As String = "/usr/share/sounds/nagato-ambient"
+
+Private $soundPaths As String[]
+Private $currentIndex As Integer
+
+Public Sub ForwardIndex()
+    
+    Inc $currentIndex
+    
+    If $currentIndex > $soundPaths.Max Then $currentIndex = 0
+    
+End
+
+Public Sub BackIndex()
+    
+    Dec $currentIndex
+    
+    If 0 > $currentIndex Then $currentIndex = $soundPaths.Max
+    
+End
+
+Public Sub RandomIndex()
+    
+    Dim yukiIndexCache As Integer 
+    
+    Do
+        yukiIndexCache = Rand(0, $soundPaths.Max)
+        If yukiIndexCache = $currentIndex Then Continue
+        $currentIndex = yukiIndexCache
+        Break
+    Loop
+    
+End
+
+Public Sub _new()
+    
+    $soundPaths = Dir(Directory)
+    
+End
+
+Private Function CurrentUrl_Read() As String
+
+    Return Media.URL(Directory &/ $soundPaths[$currentIndex])
+
+End
+
+Private Function Name_Read() As String
+
+    Return File.BaseName($soundPaths[$currentIndex]) 
+
+End

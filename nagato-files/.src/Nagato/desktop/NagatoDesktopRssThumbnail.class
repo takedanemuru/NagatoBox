@@ -7,6 +7,9 @@ Private $url As String
 
 Private Sub ensureWorkingDirectory()
     
+    Dim yukiDirectoryAppCache As String = Desktop.CacheDir &/ Application.Name
+    
+    If Not Exist(yukiDirectoryAppCache) Then Mkdir (yukiDirectoryAppCache) 
     If Not Exist(Me.WorkingDirectory) Then Mkdir Me.WorkingDirectory
     
 End
@@ -42,12 +45,16 @@ End
 
 Public Sub SetUrl(argFeedItem As String[])
     
-    ensureWorkingDirectory()
-    
     If $url <> argFeedItem[3] Then
         $url = argFeedItem[3]
         If $url Then startDownload(argFeedItem)
     Endif
+    
+End
+
+Public Sub _new()
+    
+    ensureWorkingDirectory()
     
 End
 
@@ -59,6 +66,6 @@ End
 
 Private Function WorkingDirectory_Read() As String
 
-    Return User.Home &/ ".nagato-files-rss-working-directory"
+    Return Desktop.CacheDir &/ Application.Name &/ "rss.thumbnail"
 
 End
