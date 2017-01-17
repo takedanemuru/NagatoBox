@@ -19,8 +19,7 @@ Public Sub _new()
     
     $tempDir = Desktop.CacheDir &/ Application.Name &/ "video.thumbnail"
     
-    Try Mkdir Desktop.CacheDir &/ Application.Name
-    Try Mkdir $tempDir
+    MikuruDirectory.Ensure($tempDir)
     
     Me.Clear()
     

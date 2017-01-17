@@ -23,8 +23,6 @@ End
 Public Sub ToolBar_Signal(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.UserRequestPlayWithSMPlayer
-            Exec ["smplayer", $webView.Url]
         Case MikuruSignal.UserRequestPlayVideo
             $mpv.Play($webView.Url)
         Case MikuruSignal.UserRequestPlayAudio

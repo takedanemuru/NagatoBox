@@ -2,14 +2,23 @@
 
 Property Read HostName As String
 
+Private Sub ensure(argPath As String)
+    
+    Dim yukiParentDirectory As String = File.Dir(argPath)
+    
+    If Not Exist(yukiParentDirectory) Then ensure(yukiParentDirectory)
+    If Not Exist(argPath) Then Mkdir argPath
+    
+End
+
 Public Sub EnsureHostDirectory()
     
-    If Not Exist(Me.HostName) Then Mkdir Me.HostName
+    ensure(Me.HostName)
     
 End
 
 Private Function HostName_Read() As String
 
-    Return User.Home &/ ".nagato_software_compilation"
+    Return Desktop.DataDir &/ "NagatoBox/database"
 
 End

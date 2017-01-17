@@ -38,6 +38,9 @@ Private Sub refreshIcon()
     If Not NagatoSettingsDesktopTile.ShowTrashBin Then Return
     Me._$iconView.Add(NagatoDesktopSpecialKey.TrashBin, "", getIcon())
     
+Catch
+    Debug Error.Text
+    
 End
 
 Public Sub _OnReload()

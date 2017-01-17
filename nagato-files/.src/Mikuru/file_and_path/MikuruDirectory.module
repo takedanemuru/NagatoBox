@@ -1,5 +1,15 @@
 ' Gambas module file
 
+Public Function Ensure(argPath As String)
+    
+    Dim yukiParentDirectory As String = File.Dir(argPath)
+    
+    If Not Exist(yukiParentDirectory) Then Me.Ensure(yukiParentDirectory)
+    
+    If Not Exist(argPath) Then Mkdir argPath
+    
+End
+
 Public Function GetParents(argDirectory As String) As String[]
     
     Dim yukiDirectory As String = argDirectory

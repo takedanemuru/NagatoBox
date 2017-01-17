@@ -24,7 +24,7 @@ End
 
 Public Sub _new()
     
-    $path = User.Home &/ ".nagatobox-eyeD3-working-directory-2"
+    $path = Desktop.CacheDir &/ Application.Name
     
 End
 

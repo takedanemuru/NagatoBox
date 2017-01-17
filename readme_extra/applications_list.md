@@ -37,10 +37,26 @@
 + Description : asx file player
 + Last Modefied : 2016-08-16
 
-## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.7.5)
+## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.7.6)
 
 + Description : audio file editor
-+ Last Modefied : 2017-01-11
++ Last Modefied : 2017-01-17
+
+#### Dependency
+
++ sox
+
+#### Functionalities
+
++ loudness
++ cut silence
++ bass boost
+
+#### Cache Directory
+
+CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
+
+
 
 ## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.6.2)
 
@@ -115,10 +131,17 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.125)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.127)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-01-16
++ Last Modefied : 2017-01-17
+
+![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
+
+### Database
+
+Symbols : `~/.local/share/NagatoBox/database/Symbol`
+Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
 ## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v0.6.3)
 
@@ -207,6 +230,46 @@ a simple movie player. no more, no less.
 
 + Description : a music player with gstreamer backend.
 + Last Modefied : 2017-01-16
+
+### Cache Directory
+
+CoverArtFile : `$XDG_CACHE_HOME/nagato-player-x`
+
+### Database
+
+Host : `$XDG_DATA_HOME/NagatoBox/database/Media`
+
+#### Tables
+
+##### NagatoTableLibrary
+
+Column		|DataType	|Note
+----		|----		|----
+id		|integer		|PrimaryKey
+title		|string		|-
+artist		|string		|-
+album		|string		|-
+path		|string		|full path of each music file
+duration		|float		|in seconds
+
+##### NagatoTablePlaylistNames
+
+Column		|DataType	|Note
+----		|----		|----
+id		|integer		|PrimaryKey
+playlist_name	|string		|-
+playlist_description	|string		|-
+
+
+##### NagatoTablePlaylistData
+
+Column		|DataType	|Note
+----		|----		|----
+id		|integer		|PrimaryKey
+playlist_name_id	|integer		|( TablePlaylistNames.id )
+path		|string		|fullpath of each music file
+
+
 
 ## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.8)
 

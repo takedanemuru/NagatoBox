@@ -3,10 +3,12 @@
 Title=nagato-audio-editor
 Startup=Kyon
 Icon=pictures/icons/music.png
-Version=42.7.5
+Version=42.7.6
 Component=gb.image
 Component=gb.qt5
 Component=gb.form
+Component=gb.desktop.x11
+Component=gb.desktop
 Component=gb.media
 Description="audio file editor"
 Authors="takeda.nemuru@yandex.com"

@@ -8,7 +8,7 @@ Private $workingDirectory As New NagatoWorkingDirectoryEyeD3
 Private Sub setAlbumArtToFile(argPicturePath As String, argMusicPath As String)
     
     Dim yukiTempPath As String = Temp$() & ".png"
-    Dim yukiCoverArt As Picture = MikuruCroppedImage(argPicturePath, MikuruUx.CoverArt.Size)
+    Dim yukiCoverArt As Picture = MikuruCroppedImage(argPicturePath, 300)
     Dim yukiOutputBin As String ' avoid to show stdout
     
     yukiCoverArt.Save(yukiTempPath)

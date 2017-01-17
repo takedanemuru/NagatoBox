@@ -17,7 +17,7 @@ End
 
 Public Sub Ensure()
     
-    If Not Exist($path) Then Mkdir $path
+    MikuruDirectory.Ensure($path)
     clearAll()
     
 End
@@ -25,6 +25,7 @@ End
 Public Sub _new()
     
     $path = Desktop.CacheDir &/ Application.Name
+    MikuruDirectory.Ensure($path)
     
 End
 

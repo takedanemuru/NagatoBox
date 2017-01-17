@@ -23,7 +23,7 @@ Private Sub checkAndCreateDatabase()
     $connection.Open()
     
     If Not $connection.Databases.Exist($uniqueName) Then
-        Me._$connection.Databases.Add($uniqueName)
+        $connection.Databases.Add($uniqueName)
         Wait 0.5
     Endif
     

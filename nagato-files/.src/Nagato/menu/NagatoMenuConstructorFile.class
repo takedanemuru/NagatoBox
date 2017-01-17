@@ -49,3 +49,9 @@ Public Sub _call(argPath As String)
     End With
 
 End
+
+Public Sub ContextMenu_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

@@ -20,20 +20,15 @@ Private Sub showDesktop()
     
 End
 
-Public Sub Main()
-
-    ' NOTE : this call activate NagatoDBSymbol, so do not delete.
-    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate nagato-files..." 
+Private Sub startTestSequence()
     
-    NagatoArguments.Parsing()
-    MikuruIconTheme.Activate()
-    
-    NagatoClipBoard.Activate()
-    System.FirstDayOfWeek = gb.Sunday
-
     'Only For Testing
-    'activateDesktop()
+    activateDesktop()
     'HaruhiXdgConfig.ShowDialog()
+    
+End
+
+Private Sub startNormalSequence()
     
     If NagatoArguments.DesktopIcons Then
         activateDesktop()
@@ -47,5 +42,21 @@ Public Sub Main()
     Else
         HaruhiMain.Show()
     End If
+
+End
+
+Public Sub Main()
+
+    ' NOTE : this call activate NagatoDBSymbol, so do not delete.
+    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate nagato-files..." 
+    
+    NagatoArguments.Parsing()
+    MikuruIconTheme.Activate()
+    
+    NagatoClipBoard.Activate()
+    System.FirstDayOfWeek = gb.Sunday
+
+    'startTestSequence()
+    startNormalSequence()
 
 End

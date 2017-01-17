@@ -11,7 +11,7 @@ Public Sub Form_Open()
     $pictureSelector = New FileChooser(Me) As "PictureSelector"
 
     With $pictureSelector
-        .Dir = Desktop.GetDirectory("PICTURES")
+        .Dir = NagatoSettingsMusic.LastDirectoryCoverArt
         .Expand = True
         .ShowPreview = True
         .FileView.IconSize = 128
@@ -29,6 +29,7 @@ End
 
 Public Sub PictureSelector_Activate()
     
+    NagatoSettingsMusic.LastDirectoryCoverArt = File.Dir($pictureSelector.SelectedPath)
     Raise Select($pictureSelector.SelectedPath)
     Me.Close(1)
     
