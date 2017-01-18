@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.8.4
+# Compiled with Gambas 3.9.2
 Title=nagato-calendar
 Startup=Kyon
 Icon=pictures/icons/calendar.png
-Version=42.5.4
+Version=42.7.5
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -11,6 +11,8 @@ Component=gb.form
 Component=gb.db
 Component=gb.db.form
 Component=gb.dbus
+Component=gb.desktop.x11
+Component=gb.desktop
 Component=gb.settings
 Component=gb.image.effect
 Component=gb.web
@@ -24,7 +26,7 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-calendar-42.5.4
+PackageName=nagato-calendar-42.7.5
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Project Management"

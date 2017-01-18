@@ -12,7 +12,7 @@ Private Sub callNotify()
         With NagatoArgs
             DBus[Service][ObjectPath, Interface].Notify(.App, .Summary, .Body, .Urgency)
         End With
-    Else "Nagato" == "nagato" Then
+    Else If "Nagato" == "nagato" Then
         NagatoNotify(NagatoArgs.App, NagatoArgs.Summary, NagatoArgs.Body, NagatoArgs.Urgency)
     Else
         HaruhiNotify2.Show()

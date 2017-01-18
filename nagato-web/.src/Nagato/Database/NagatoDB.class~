@@ -12,11 +12,7 @@ Public _$connection As Connection
 Private $assistantTables As New NagatoDBAssistantTables
 Private $assistantColumns As New NagatoDBAssistantColumns
 
-Private Sub checkAndCreateHost()
-    
-    If Not Exist(Me.HostName) Then Mkdir Me.HostName
-    
-End
+Event Update
 
 Private Sub addConnection()
     
@@ -55,7 +51,7 @@ End
 
 Public Sub _SetConnection() 
     
-    checkAndCreateHost()
+    MikuruDirectory.Ensure(Me.HostName)
     addConnection()
     checkAndCreateDatabase()
     moveToDatabase()
@@ -64,7 +60,8 @@ End
 
 Private Function HostName_Read() As String
 
-    Return User.Home &/ ".nagato_software_compilation"
+    'Return User.Home &/ ".nagato_software_compilation"
+    Return Desktop.DataDir &/ "NagatoBox/database"
 
 End
 

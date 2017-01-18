@@ -59,6 +59,6 @@ End
 
 Private Function HostName_Read() As String
 
-    Return User.Home &/ ".nagato_software_compilation"
+    Return Desktop.
 
 End

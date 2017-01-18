@@ -2,7 +2,7 @@
 
 Private Function getDirectory() As String
     
-    Dim yukiPath As String = User.Home &/ ".nagato-web"
+    Dim yukiPath As String = Desktop.CacheDir &/ Application.Name
     
     If Not Exist(yukiPath) Then Mkdir yukiPath
     
