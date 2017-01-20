@@ -1,0 +1,38 @@
+' Gambas class file
+
+Property Read Path As String
+Property Read Name As String
+
+Private $pdfPath As String = "sample/hanairo_bento.pdf"
+
+Public Sub Open() As Boolean
+    
+    Dialog.Title = ("Open PDF file")
+    Dialog.Path = NagatoSettings.LastDirectory
+    Dialog.Filter = ["*.pdf", " PDF file"]
+    
+    If Dialog.OpenFile(False) Then Return False
+    NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
+    $pdfPath = Dialog.Path
+   
+   Return True
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $pdfPath = argPath
+    
+End
+
+Private Function Name_Read() As String
+
+    Return File.Name($pdfPath)
+
+End
+
+Private Function Path_Read() As String
+
+    Return $pdfPath
+
+End

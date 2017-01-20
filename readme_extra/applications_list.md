@@ -68,10 +68,10 @@ CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
 + Description : calc it !
 + Last Modefied : 2017-01-05
 
-## ![image: nagato-calendar.png](../nagato-calendar/nagato-calendar.png) nagato-calendar (v42.5.4)
+## ![image: nagato-calendar.png](../nagato-calendar/nagato-calendar.png) nagato-calendar (v42.7.5)
 
 + Description : a calendar software.
-+ Last Modefied : 2016-08-17
++ Last Modefied : 2017-01-18
 
 ## ![image: chart-area-up.png](../nagato-chart/Icons/chart-area-up.png) nagato-chart (v0.6.2)
 
@@ -184,10 +184,10 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
 ![image: screenshot_001.png](../nagato-lookup/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-map.png](../nagato-map/nagato-map.png) nagato-map (v42.6.14)
+## ![image: nagato-map.png](../nagato-map/nagato-map.png) nagato-map (v42.7.15)
 
 + Description : map viewer.
-+ Last Modefied : 2016-10-24
++ Last Modefied : 2017-01-18
 
 ## ![image: speaker.png](../nagato-mixer-applet/Pictures/icons/speaker.png) nagato-mixer-applet (v42.5.9)
 
@@ -207,7 +207,7 @@ a simple movie player. no more, no less.
 ## ![image: information-balloon.png](../nagato-notifications/Image/information-balloon.png) nagato-notifications (v42.6.33)
 
 + Description : notification daemon
-+ Last Modefied : 2016-11-21
++ Last Modefied : 2017-01-18
 
 ## ![image: nagato-openbox-logout.png](../nagato-openbox-logout/nagato-openbox-logout.png) nagato-openbox-logout (v42.5.4)
 
@@ -221,15 +221,15 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-pdf-view.png](../nagato-pdf-view/nagato-pdf-view.png) nagato-pdf-view (v42.5.4)
+## ![image: nagato-pdf-view.png](../nagato-pdf-view/nagato-pdf-view.png) nagato-pdf-view (v42.7.6)
 
 + Description : pdf viewer
-+ Last Modefied : 2016-08-10
++ Last Modefied : 2017-01-20
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.73)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.74)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2017-01-16
++ Last Modefied : 2017-01-17
 
 ### Cache Directory
 
@@ -351,22 +351,22 @@ taskmanager for NagatoBox
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.6.52)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.53)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2016-12-20
++ Last Modefied : 2017-01-17
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-writer.png](../nagato-writer/nagato-writer.png) nagato-writer (v42.5.44)
+## ![image: nagato-writer.png](../nagato-writer/nagato-writer.png) nagato-writer (v42.7.45)
 
 + Description : a markdown editor
-+ Last Modefied : 2016-09-08
++ Last Modefied : 2017-01-20
 
-## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.6.11)
+## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.7.14)
 
 + Description : youtube viewer
-+ Last Modefied : 2016-11-15
++ Last Modefied : 2017-01-17
 
 ## ![image: yuki.png](../yuki/yuki.png) yuki (v42.5.50)
 

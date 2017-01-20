@@ -1,5 +1,26 @@
 ' Gambas module file
 
+Private Function test(argSourcePath As String, argLevel As Integer) As String
+    
+    If argLevel = 0 Then Return ""
+    
+    Return test(File.Dir(argSourcePath), argLevel - 1) &/ File.BaseName(argSourcePath)
+    
+End
+
+Public Function GetDistinguishableFileName(argPath As String, argPaths As String[]) As String
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths 
+        If yukiPath = argPath Then Continue
+        If File.Name(yukiPath) = File.Name(argPath) Then Return test(argPath, 3)
+    Next
+    
+    Return File.Name(argPath)
+    
+End
+ 
 Public Function RemoveInvalid(argPaths As String[]) As String[]
     
     Dim yukiPath As String

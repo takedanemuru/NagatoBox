@@ -1,0 +1,30 @@
+' Gambas class file
+
+Private $pdfDocument As PdfDocument
+
+Private Sub setZoom(argZoom As Float)
+    
+    $pdfDocument.Zoom = argZoom
+    
+End
+
+Public Sub _call(argSignal As Integer)
+    
+    Select Case argSignal
+        Case MikuruMenuEvent.ZoomFit
+            NagatoSettings.Fit = Not NagatoSettings.Fit
+        Case MikuruMenuEvent.ZoomNormal
+            setZoom(1)
+        Case MikuruMenuEvent.ZoomIn
+            setZoom($pdfDocument.Zoom * 1.2)
+        Case MikuruMenuEvent.ZoomOut
+            setZoom($pdfDocument.Zoom * 0.8)
+    End Select
+    
+End
+
+Public Sub _new(argPdfDocument As PdfDocument)
+    
+    $pdfDocument = argPdfDocument
+    
+End

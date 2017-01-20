@@ -1,8 +1,8 @@
 ' Gambas module file
 
-Public Function SetOpacity(argColor As Integer, argOpacity As Float) As Integer
+Public Function SetOpacity(argColor As Integer, argOpacity As Integer) As Integer
     
-    Return argColor + (16777216) * (256 * argOpacity)
+    Return argColor + (16777216) * argOpacity
     
 End
 

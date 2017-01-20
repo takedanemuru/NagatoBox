@@ -31,12 +31,21 @@ Private Sub convertPages()
     
 End
 
-Public Sub BulkConvert(argDirectory As String, argPdf As PdfDocument, argName As String)
+Private Sub bulkConvert(argDirectory As String, argPdf As PdfDocument, argName As String)
     
     If argPdf.Count = 0 Then Return
 
     $pdf = argPdf
     safeMakeDirectory(argDirectory, argName)
     convertPages()
+    
+End
+
+Public Sub _call(argDocument As PdfDocument, argPath As String)
+    
+    Dialog.Title = ("SelectDirectory")
+    Dialog.Path = User.Home
+    
+    If Not Dialog.SelectDirectory() Then bulkConvert(Dialog.Path, argDocument, argPath)
     
 End

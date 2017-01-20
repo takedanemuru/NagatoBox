@@ -6,10 +6,12 @@ Private Sub addRecentFileMenus()
     
     Dim yukiPath As String
     Dim yukiMenu As Menu
+    Dim yukiRecentFiles As String[] = NagatoSettings.RecentFiles.Copy()
     
-    For Each yukiPath In NagatoSettings.RecentFiles
+    For Each yukiPath In yukiRecentFiles
         yukiMenu = New Menu(Me._$parentMenu) As "RecentFileMenu"
-        yukiMenu.Text = File.Name(yukiPath)
+        'yukiMenu.Text = File.Name(yukiPath)
+        yukiMenu.Text = MikuruPaths.GetDistinguishableFileName(yukiPath, yukiRecentFiles)
         yukiMenu.Tag = yukiPath
     Next
     

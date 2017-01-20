@@ -1,0 +1,126 @@
+' Gambas class file
+
+Private $pdfDocument As New PdfDocument
+Private $currentPage As Integer = 1 'pdf document's page index starts from 1 not 0.
+
+Private $zoom As NagatoZoomHandler
+Private $pah As New NagatoPathHandler
+
+Event Refresh(argImage As Image, argTitle As String, argPageCurrent As Integer, argPageMax As Integer)
+Event NewPage(argImage As Image, argTitle As String, argPageCurrent As Integer, argPageMax As Integer)
+
+Private Function getWindowTitle() As String
+
+    Dim yukiTitle As String = IIf($pdfDocument.Info.Title = "", $pah.Name, $pdfDocument.Info.Title)
+    
+    Return Subst$("&1 - page &2/&3", yukiTitle, $currentPage, $pdfDocument.Count)
+
+End
+
+Private Function getPageImage() As Image
+
+    Dim yukiImage As Image = $pdfDocument[$currentPage].Image
+    
+    Return yukiImage.Stretch(yukiImage.W * $pdfDocument.Zoom, yukiImage.H * $pdfDocument.Zoom)
+    
+End
+
+Private Sub reload()
+    
+    $currentPage = 1
+    $pdfDocument.Open($pah.Path)
+    
+    Raise NewPage(getPageImage(), getWindowTitle(), $currentPage, $pdfDocument.Count)
+    
+End
+
+Private Sub setHighlight()
+    
+    Dim yukiCount As Integer
+    Dim yukiImage As Image = $pdfDocument[$currentPage].Image
+    Dim yukiRect As PdfRect
+    
+    Paint.Begin(yukiImage)
+        For yukiCount = 0 To $pdfDocument[$currentPage].Result.Count - 1
+            yukiRect = $pdfDocument[$currentPage].Result[yukiCount]
+            Paint.FillRect(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, MikuruColor.Highlight)
+        Next
+    Paint.End()
+    
+    Raise Refresh(yukiImage, getWindowTitle(), $currentPage, $pdfDocument.Count)
+    
+End
+
+Public Sub MovePage(argPage As Integer)
+    
+    If 0 >= argPage Then Return
+    If argPage > $pdfDocument.Count Then Return
+    If $currentPage = argPage Then Return
+    
+    $currentPage = argPage
+    
+    Raise NewPage(getPageImage(), getWindowTitle(), $currentPage, $pdfDocument.Count)
+    
+End
+
+Public Sub Zoom(argEvent As Integer)
+    
+    $zoom(argEvent)
+    
+    Raise Refresh(getPageImage(), getWindowTitle(), $currentPage, $pdfDocument.Count)
+    
+End
+
+Public Sub Open()
+    
+    If $pah.Open() Then reload()
+    
+End
+
+Public Sub SetPath(argPath As String)
+    
+    $pah.SetPath(argPath)
+    
+    reload()
+    
+End
+
+Public Sub Search(argQuery As String)
+    
+    $pdfDocument[$currentPage].Find(argQuery)
+    
+    If $pdfDocument[$currentPage].Result.Count = 0 Then
+        ' to remove highlight
+        Raise Refresh(getPageImage(), getWindowTitle(), $currentPage, $pdfDocument.Count)
+    Else
+        setHighlight()
+    End If
+    
+End
+
+Public Sub _call(argSignal As Integer, Optional argValues As Variant[])
+    
+    With MikuruMenuEvent
+        Select Case argSignal
+            Case .MenuOpen
+                Me.Open()
+            Case .PageBack
+                Me.MovePage($currentPage - 1)
+            Case .PageNext
+                Me.MovePage($currentPage + 1)
+            Case .ZoomIn, .ZoomFit, .ZoomOut, .ZoomOut
+                Me.Zoom(argSignal)
+            Case .MenuConvert
+                MikuruPdfToPictures($pdfDocument, $pah.Path)
+            Case .MenuExtractText
+                MikuruPdfToText($pah.Path)
+        End Select
+    End With
+    
+End
+
+Public Sub _new()
+    
+    $zoom = New NagatoZoomHandler($pdfDocument) 
+    
+End

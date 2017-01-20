@@ -1,8 +1,16 @@
 ' Gambas module file
 
+Property Read Highlight As Integer
+
 Public Function SetOpacity(argColor As Integer, argOpacity As Integer) As Integer
     
     Return argColor + (16777216) * argOpacity
     
 End
 
+
+Private Function Highlight_Read() As Integer
+
+    Return Color.Pink + Color.Transparent * 128
+
+End

@@ -2,7 +2,8 @@
 
 + until end of march 2017
 + add more doc files and screenshots
-+ remove all the "working-directories"
++ ~~remove all the "working-directories"~~
++ ~~remove `~/.nagato_software_compilation` usage~~
 
 ## Applications
 
@@ -31,7 +32,7 @@
 
 ### nagato-pdf-view
 
-+ text extraction
++ ~~text extraction~~
 
 ### nagato-player-x
 
@@ -47,7 +48,7 @@
 
 ### nagato-web
 
-+ mod : move db host to `$XDG_DATA_DIR/NagatoBox/database`
++ ~~mod : move db host to `$XDG_DATA_DIR/NagatoBox/database`~~
 
 ### nagato-youtube-view
 

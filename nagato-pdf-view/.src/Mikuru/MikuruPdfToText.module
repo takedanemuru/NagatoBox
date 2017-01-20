@@ -1,0 +1,20 @@
+' Gambas module file
+
+Private Function getDestinationPath(argSourcePath As String) As String
+    
+    Dialog.Path = User.Home &/ File.BaseName(argSourcePath) & ".txt"
+    
+    If Dialog.SaveFile() Then Return ""
+    
+    Return Dialog.Path
+    
+End
+
+Public Sub _call(argSourcePath As String)
+    
+    Dim yukiDestinationPath As String = getDestinationPath(argSourcePath)
+    
+    If yukiDestinationPath Then Exec ["pdftotext", argSourcePath, yukiDestinationPath]
+
+    
+End

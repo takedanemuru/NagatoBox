@@ -1,116 +1,41 @@
 ' Gambas class file
 
-Property Read CurrentPath As String
-
-Private $pdfPath As String = "sample/hanairo_bento.pdf"
-Private $pdfDocument As New PdfDocument
-Private $currentPage As Integer = 1 'pdf document's page index starts from 1 not 0.
+Private $document As New NagatoPdfDocument As "PdfDocument"
 Private $menuBar As NagatoMenuBar
 
-Private Function getTitle() As String
+Private Sub refresh(argImage As Image, argTitle As String, argPageCurrent As Integer, argPageMax As Integer)
     
-    If $pdfDocument.Info.Title = "" Then
-        Return file.Name($pdfPath)
-    Else
-        Return $pdfDocument.Info.Title
-    Endif
+    Me.Title = argTitle
+    PdfView.Image = argImage
+    $menuBar.SetButtonProperty(argPageCurrent, argPageMax)
     
-End
-
-Private Sub setWindowTitle()
-    
-    Me.Title = Subst$("&1 - page &2/&3", getTitle(), $currentPage, $pdfDocument.Count)
-    
-End
-
-Private Sub showCurrentPage()
-    
-    Dim yukiImage As Image
-    
-    setWindowTitle()
-    yukiImage = $pdfDocument[$currentPage].Image
-    With yukiImage
-        PdfView.Image = .Stretch(.W * $pdfDocument.Zoom, .H * $pdfDocument.Zoom)
-    End With
-    If NagatoSettings.Fit Then PdfView.ZoomFit()
-    $menuBar.SetButtonProperty($currentPage, $pdfDocument.Count)
-    
-End
-
-Private Sub openFile()
-    
-    Dialog.Title = ("Open PDF file")
-    Dialog.Path = NagatoSettings.LastDirectory
-    Dialog.Filter = ["*.pdf", " PDF file"]
-    
-    If Not Dialog.OpenFile(False) Then
-        NagatoSettings.LastDirectory = File.Dir(Dialog.Path)
-        $pdfPath = Dialog.Path
-        $currentPage = 1
-        $pdfDocument.Open($pdfPath)
-        showCurrentPage()
-    Endif
-    
-End
-
-Private Sub convertFile()
-    
-    Dialog.Title = ("SelectDirectory")
-    Dialog.Path = User.Home
-    
-    If Not Dialog.SelectDirectory() Then
-        MikuruPdf.BulkConvert(Dialog.Path, $pdfDocument, file.BaseName($pdfPath))
-    Endif
-    
-End
-
-Private Sub movePage(argPage As Integer)
-    
-    $currentPage = argPage
-    PdfView.Scroll(0, 0)
-    showCurrentPage()
-
-End
-
-Private Sub zoom(argZoom As Float)
-    
-    $pdfDocument.Zoom = argZoom
-    showCurrentPage()
-    
-End
-
-Private Sub zoomFit()
-    
-    NagatoSettings.Fit = Not NagatoSettings.Fit
-    showCurrentPage()
-
 End
 
 Private Sub setHighlight()
     
-    Dim yukiCount As Integer
-    Dim yukiImage As Image = $pdfDocument[$currentPage].Image
-    Dim yukiPdfRect As PdfRect
-
-    With Paint
-        .Begin(yukiImage)
-        For yukiCount = 0 To $pdfDocument[$currentPage].Result.Count - 1
-            yukiPdfRect = $pdfDocument[$currentPage].Result[yukiCount]
-            .FillRect(yukiPdfRect.X, yukiPdfRect.Y, yukiPdfRect.W, yukiPdfRect.H, MikuruColor.SetOpacity(Color.Pink, 128))
-        Next
-        .End()
-    End With
-    
-    PdfView.Image = yukiImage
+    ' Dim yukiCount As Integer
+    ' Dim yukiImage As Image = $pdfDocument[$currentPage].Image
+    ' Dim yukiPdfRect As PdfRect
+    ' 
+    ' Paint.Begin(yukiImage)
+    '     For yukiCount = 0 To $pdfDocument[$currentPage].Result.Count - 1
+    '         yukiPdfRect = $pdfDocument[$currentPage].Result[yukiCount]
+    '         .FillRect(yukiPdfRect.X, yukiPdfRect.Y, yukiPdfRect.W, yukiPdfRect.H, MikuruColor.SetOpacity(Color.Pink, 128))
+    '     Next
+    ' Paint.End()
+    ' 
+    ' PdfView.Image = yukiImage
     
 End
 
 Public Sub SetDocument(argPath As String)
     
-    $pdfPath = argPath
-    $pdfDocument.Open(argPath)
-    $currentPage = 1
-    showCurrentPage()
+    $document.SetPath(argPath)
+    
+    ' $pdfPath = argPath
+    ' $pdfDocument.Open(argPath)
+    '$currentPage = 1
+    'showCurrentPage()
     
 End
 
@@ -125,8 +50,9 @@ Public Sub Form_Open()
     Application.MainWindow = Me
     NagatoSettings.LoadFormSettings(Me)
     PdfView.SetFocus()
-    $pdfDocument.Open($pdfPath)
-    showCurrentPage()
+    
+    ' $pdfDocument.Open($pdfPath)
+    ' showCurrentPage()
 
 End
 
@@ -138,60 +64,43 @@ End
 
 Public Sub MenuBar_NewPage(argPage As Integer)
     
-    $currentPage = argPage
-    showCurrentPage()
+    $document.MovePage(argPage)
     
 End
 
 Public Sub MenuBar_Search(argQuery As String)
     
-    $pdfDocument[$currentPage].Find(argQuery)
-    
-    If $pdfDocument[$currentPage].Result.Count = 0 Then
-        PdfView.Image = $pdfDocument[$currentPage].GetImage() ' to remove highlight
-    Else
-        setHighlight()
-    End If
+    ' $pdfDocument[$currentPage].Find(argQuery)
+    ' 
+    ' If $pdfDocument[$currentPage].Result.Count = 0 Then
+    '     PdfView.Image = $pdfDocument[$currentPage].GetImage() ' to remove highlight
+    ' Else
+    '     setHighlight()
+    ' End If
     
 End
 
 Public Sub MenuBar_MenuEvent(argEvent As Integer)
     
-    With MikuruMenuEvent
-        Select Case argEvent
-            Case .MenuOpen
-                openFile()
-            Case .MenuConvert
-                convertFile()
-            Case .PageBack
-                If $currentPage <> 1 Then movePage($currentPage - 1)
-            Case .PageNext
-                If $currentPage <> $pdfDocument.Count Then movePage($currentPage + 1)
-            Case .ZoomIn
-                zoom($pdfDocument.Zoom * 1.2)
-            Case .ZoomOut
-                zoom($pdfDocument.Zoom * 0.8)
-            Case .ZoomFit
-                zoomFit()
-            Case .ZoomNormal
-                Zoom(1)
-            Case .MenuExtractText
-                Exec ["pdftotext", $pdfPath, User.Home &/ "test_test.txt"]
-            Case .MenuConvertToHtml
-                Exec ["pdftohtml", "-s", $pdfPath, User.Home &/ "test_test.html"]
-        End Select
-    End With
+    $document(argEvent, Null)
     
 End
 
 Public Sub PdfView_DblClick()
 
-    If $currentPage <> $pdfDocument.Count Then movePage($currentPage + 1)
+    $document(MikuruMenuEvent.PageNext, Null)
 
 End
 
-Private Function CurrentPath_Read() As String
+Public Sub PdfDocument_Refresh(argImage As Image, argTitle As String, argPageCurrent As Integer, argPageMax As Integer)
+    
+    refresh(argImage, argTitle, argPageCurrent, argPageMax)
+    
+End
 
-    Return $pdfPath
-
+Public Sub PdfDocument_NewPage(argImage As Image, argTitle As String, argPageCurrent As Integer, argPageMax As Integer)
+    
+    PdfView.Scroll(0, 0)
+    refresh(argImage, argTitle, argPageCurrent, argPageMax)
+    
 End
