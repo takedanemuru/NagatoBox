@@ -29,6 +29,14 @@ Private Sub addMusics()
     
 End
 
+Public Function GetCoverArtPath() As String
+    
+    ensureProxy()
+    
+    Return $property.CoverArtPath
+    
+End
+
 Public Function GetText() As String
     
     Dim yukiText As String 

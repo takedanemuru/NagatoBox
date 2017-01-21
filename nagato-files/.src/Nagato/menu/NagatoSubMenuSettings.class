@@ -19,5 +19,6 @@ Public Sub _InitializeMenu() ' override
     
     Object.New("NagatoMenuItemSelectBackground", [Me._$rootMenu, ""])
     yukiMenu = New NagatoSubMenuSelectIconTheme(Me._$rootMenu, "")
+    Object.New("NagatoSubMenuTileColor", [Me._$rootMenu, ""])
     
 End

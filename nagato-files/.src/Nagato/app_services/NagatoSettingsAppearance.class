@@ -5,8 +5,6 @@ Inherits NagatoSettingsCore
 Property IconTheme As String
 Property Background As String
 
-Event Changed
-
 Private Function IconTheme_Read() As String
 
     Return Me._$settings["appearance/icon_theme", "Numix-Circle"]
@@ -15,11 +13,7 @@ End
 
 Private Sub IconTheme_Write(Value As String)
 
-    If Me._$settings["appearance/icon_theme"] <> Value Then
-        Me._$settings["appearance/icon_theme"] = Value
-        Me._$settings.Save()
-        Raise Changed
-    End If
+    Me._ChangeSettings("appearance/icon_theme", Value)
 
 End
 
@@ -42,10 +36,6 @@ End
 
 Private Sub Background_Write(Value As String)
 
-    If Me._$settings["appearance/background"] <> Value Then
-        Me._$settings["appearance/background"] = Value
-        Me._$settings.Save()
-        Raise Changed
-    End If
+    Me._ChangeSettings("appearance/background", Value)
 
 End

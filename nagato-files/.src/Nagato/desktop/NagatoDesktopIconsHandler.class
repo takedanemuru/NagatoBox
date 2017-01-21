@@ -8,6 +8,7 @@ Private $rss As NagatoDesktopTile2RssFeeds
 Private $systemMonitor As NagatoDesktopTile2SystemMonitor
 Private $weather As NagatoDesktopTile2Weather
 Private $trashBin As NagatoDesktopTile2TrashBin
+'Private $music As NagatoDesktopTile2Music
 
 Private Sub setIcon(argDirectory As String, argSelection As String[], argType As Integer)
     
@@ -26,6 +27,7 @@ Private Sub refreshTiles(argSelectedPaths As String[])
     $systemMonitor.Reload()
     $rss.Reload()
     $weather.Reload()
+    '$music.Reload()
     
     setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
     setIcon(Desktop.Path, argSelectedPaths, gb.File)
@@ -50,6 +52,7 @@ Public Sub _new(argIconView As IconView)
     $rss = New NagatoDesktopTile2RssFeeds($iconView)
     $weather = New NagatoDesktopTile2Weather($iconView)
     $trashBin = New NagatoDesktopTile2TrashBin($iconView)
+    '$music = New NagatoDesktopTile2Music($iconView)
     
     refreshTiles([""])
         

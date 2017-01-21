@@ -24,6 +24,6 @@ End
 
 Public Function _GetLabelColor() As Integer 'override
     
-    Return Color.Green
+    Return NagatoSettingsTileColor.Video
     
 End

@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoDesktopTile2
+
+Private $proxy As NagatoDBusAccessNagatoPlayerX
+
+Private Function getBaseImage() As Image
+    
+    Return MikuruTileBaseImage[Color.Red, 192]
+    
+End
+
+Private Sub getThumbnail() As Image
+    
+    Dim yukiThumbnail As Image = Image.Load($proxy.GetCoverArtPath())
+    
+    Return yukiThumbnail.Stretch(128, 128)
+    
+Catch
+    Debug $proxy.GetCoverArtPath()
+    Debug Error.Text
+    Return getBaseImage()
+    
+End
+
+Public Function getLabelText() As String
+    
+   Return ""
+    
+End
+
+Private Sub paintLabel()
+    
+    
+    
+End
+
+Public Function getIcon() As Picture
+    
+    
+    
+End
+
+Public Sub _OnReload()
+    
+    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Music)
+    
+    Me._$iconView.Add(NagatoDesktopSpecialKey.Music, "", getBaseImage().Picture)
+    
+End
+
+Public Sub _OnTimer() ' override
+    
+    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Music) Then Return
+    'If Not $proxy.Activated Then Return
+    
+    Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnail().Picture
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $proxy = New NagatoDBusAccessNagatoPlayerX
+    '$proxy.Activate()
+    
+End

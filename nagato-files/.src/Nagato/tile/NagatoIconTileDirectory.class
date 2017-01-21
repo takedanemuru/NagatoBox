@@ -28,6 +28,6 @@ End
 
 Public Sub _OnGetBackgroundColor() As Integer
     
-    Return MikuruColor.Transparent(Color.Blue, 192)
+    Return MikuruColor.Transparent(NagatoSettingsTileColor.Directory, 192)
     
 End

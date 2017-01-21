@@ -1,0 +1,14 @@
+' Gambas class file
+
+Public Sub _call(argY As Integer, argPath As String, argWidth As Integer, argHeight As Integer) As Integer
+    
+    Dim yukiImage As Image = Image.Load(argPath).Stretch(argWidth, argHeight)
+    
+    Paint.DrawImage(yukiImage, (HaruhiMain.W - argWidth) / 2, argY)
+    
+    Return argY + argHeight + 8
+    
+Catch
+    Return argY
+    
+End

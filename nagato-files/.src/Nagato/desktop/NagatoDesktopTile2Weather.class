@@ -14,7 +14,7 @@ Private Sub getThumbnail() As Image
     
     Dim yukiThumbnail As Image = MikuruWeatherImage[$proxy.IconId]
     
-    Return yukiThumbnail.Stretch(128, 128)
+    Return yukiThumbnail.Stretch(MikuruUxTile.TileSize, MikuruUxTile.TileSize)
     
 End
 
@@ -37,7 +37,7 @@ Private Sub paintLabel()
     
     Dim yukiLabelText As String = getLabelText()
     Dim yukiHeight As Integer = Paint.Font.RichTextHeight(yukiLabelText, 112) + 16
-    Dim yukiRect As New Rect(0, 128 - (yukiHeight), 128, yukiHeight)
+    Dim yukiRect As New Rect(0, MikuruUxTile.TileSize - (yukiHeight), MikuruUxTile.TileSize, yukiHeight)
     
     NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialWeather, "Weather")
     Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Gray, 192))

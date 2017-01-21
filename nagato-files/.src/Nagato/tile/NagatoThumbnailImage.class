@@ -13,6 +13,6 @@ End
 
 Public Function _GetLabelColor() As Integer 'override
     
-    Return Color.Violet
+    Return NagatoSettingsTileColor.Image
     
 End

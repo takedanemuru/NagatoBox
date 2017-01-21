@@ -1,0 +1,18 @@
+' Gambas class file
+
+Create Static
+
+Property Read BaseColor As Integer
+Property Read ShadeColor As Integer
+
+Private Function BaseColor_Read() As Integer
+
+    Return 11591910
+
+End
+
+Private Function ShadeColor_Read() As Integer
+
+    Return Color.White
+
+End

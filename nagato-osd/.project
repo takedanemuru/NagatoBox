@@ -1,0 +1,28 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.2
+Title=nagato-osd
+Startup=Kyon
+Icon=pictures/monitor.png
+Version=42.7.3
+Component=gb.image
+Component=gb.gui.qt
+Component=gb.form
+Component=gb.dbus
+Component=gb.desktop.x11
+Component=gb.desktop
+Description="on screen display for openbox3"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=takedanemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-osd-42.7.3
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Monitoring"
+Categories=ubuntu:"Nagato;System"
+Groups=ubuntu:"utils"

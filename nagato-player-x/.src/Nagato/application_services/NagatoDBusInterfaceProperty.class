@@ -11,6 +11,7 @@ Property Read ProgressInText As String
 Property Read Shuffle As Boolean
 Property Read Repeat As Boolean
 Property Read CoverArtPath As String
+Property Read CurrentPath As String
 
 Private Function ProgressInText_Read() As String
 
@@ -51,5 +52,11 @@ End
 Private Function CoverArtPath_Read() As String
 
     Return NagatoQueue.GetProperty(MikuruProperty.CoverArtPath)
+
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentPath)
 
 End

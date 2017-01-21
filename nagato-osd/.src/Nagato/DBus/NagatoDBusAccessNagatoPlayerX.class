@@ -1,0 +1,120 @@
+' Gambas class file
+
+Property Read Enabled As Boolean
+
+Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack, ActionAddMusics
+
+Private Const ServiceName As String = "org.gambas.nagato-player-x"
+Private Const ObjectPath As String = "/org/nagato/player/x/player"
+Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatodbusinterface"
+Private Const ObjectPath2 As String = "/org/nagato/player/x/property"
+Private Const InterfaceName2 As String = "org.gambas.nagato.player.x.nagatodbusinterfaceproperty"
+
+Private $player As DBusProxy
+Private $property As DBusProxy
+
+Private Sub ensureProxy()
+    
+    If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
+    If Not Object.IsValid($property) Then $property = DBus[ServiceName][ObjectPath2, InterfaceName2]
+    
+End
+
+Private Sub addMusics()
+    
+    Dialog.Path = Desktop.GetDirectory("MUSIC")
+    If Dialog.OpenFile(True) Then Return
+    
+    $player.AddMusics(Dialog.Paths)
+    
+End
+
+Public Function GetCoverArtPath() As String
+    
+    Return $property.CoverArtPath
+    
+End
+
+Public Sub GetTitle() As String
+    
+    Return $property.Title
+    
+End
+
+Public Function GetText() As String
+    
+    Dim yukiText As String 
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        yukiText &= ($property.Title & Space$(4) & "<br>") 
+        yukiText &= ($property.Artist & Space$(4) & "<br>")
+        yukiText &= ($property.Album & Space$(4) & "<br><br>")
+        yukiText &= ($property.ProgressInText)
+        Return yukiText
+    Else
+        Return "YUKI.N > nagato-player-x is not activated"
+    End If
+    
+Catch
+    Return "YUKI.N > nagato-player-x is not activated"
+    
+End
+
+Public Sub GetTextProgress() As String
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        Return ($property.ProgressInText)
+    Else
+        Return "YUKI.N > nagato-player-x is not activated"
+    End If
+    
+End
+
+Public Sub GetTextMain() As String
+    
+    Dim yukiText As String 
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        yukiText &= ($property.Title & Space$(4))
+        yukiText &= ($property.Artist & Space$(4))
+        yukiText &= ($property.Album & Space$(4))
+        Return yukiText
+    Else
+        Return ""
+    End If
+    
+End
+
+Public Sub Action(argAction As Integer)
+    
+    ensureProxy()
+    
+    Select Case argAction
+        Case ActionPlay
+            $player.Play()
+        Case ActionPause
+            $player.Pause()
+        Case ActionNext
+            $player.Next()
+        Case ActionBack
+            $player.Back()
+        Case ActionAddMusics
+            addMusics()
+    End Select
+    
+End
+
+Public Sub _new()
+    
+    ensureProxy()
+    
+End
+
+Private Function Enabled_Read() As Boolean
+
+    Return DBus.Session.Applications.Exist(ServiceName)
+
+End

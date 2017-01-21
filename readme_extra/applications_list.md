@@ -131,10 +131,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.127)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.128)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-01-17
++ Last Modefied : 2017-01-21
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -221,15 +221,27 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
+## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v0.0.1)
+
++ Description : on screen display for openbox3
++ Last Modefied : 2017-01-21
+
+![image: screenshot_001.png](../nagato-osd/doc/screenshots/screenshot_001.png)
+
+### Note
+
+now under heavy construction.
+
+
 ## ![image: nagato-pdf-view.png](../nagato-pdf-view/nagato-pdf-view.png) nagato-pdf-view (v42.7.6)
 
 + Description : pdf viewer
 + Last Modefied : 2017-01-20
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.74)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.75)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2017-01-17
++ Last Modefied : 2017-01-21
 
 ### Cache Directory
 
@@ -361,7 +373,7 @@ taskmanager for NagatoBox
 ## ![image: nagato-writer.png](../nagato-writer/nagato-writer.png) nagato-writer (v42.7.45)
 
 + Description : a markdown editor
-+ Last Modefied : 2017-01-20
++ Last Modefied : 2017-01-21
 
 ## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.7.14)
 

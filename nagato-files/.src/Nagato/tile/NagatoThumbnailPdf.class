@@ -10,12 +10,12 @@ Public Function _GetIconImage(argPath As String) As Image
     Return yukiImage
     
 Catch
-    Return MikuruTileBaseImage[Me._GetLabelColor()]
+    Return MikuruTileBaseImage[NagatoSettingsTileColor.Pdf]
 
 End
 
 Public Function _GetLabelColor() As Integer 'override
     
-    Return Color.Orange
+    Return NagatoSettingsTileColor.Pdf
     
 End

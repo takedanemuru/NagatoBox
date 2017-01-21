@@ -1,0 +1,41 @@
+' Gambas class file
+
+Private Const Type As String = "_NET_WM_WINDOW_TYPE"
+Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
+
+Private $timer As New Timer As "Timer"
+Private $painter As New NagatoPainter
+Private $desktopType As String
+
+Public Function SetAsRoot(argWindowId As Integer) As Boolean
+    
+    Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", argWindowId, Type, TypeDesktop) Wait
+    
+    If Error Then Return False
+    
+    Return True
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.W = 200
+    Me.H = Screen.H
+    Me.X = Screen.W - Me.W
+    Me.Y = 0
+    Me.SetAsRoot(Me.Id)
+    $timer.Enabled = True
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Me.Picture = $painter()
+    
+End
+
+Public Sub Form_MouseDown()
+
+    If $desktopType = "openbox" Then Shell "xdotool key super+space"
+
+End
