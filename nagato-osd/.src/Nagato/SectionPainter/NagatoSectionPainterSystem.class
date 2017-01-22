@@ -1,0 +1,34 @@
+' Gambas class file
+
+Private $painterHeader As New NagatoPainterHeader
+Private $painterTextElement As New NagatoPainterTextElement
+Private $painterText As New NagatoPainterText
+Private $proxySystem As New NagatoDBusAccessSystemMonitor
+
+Public Sub _call(argY As Integer) As Integer
+    
+    Dim yukiY As Integer = argY
+    
+    Paint.Font.Size = 11
+    yukiY = $painterHeader(yukiY, "System")
+    Paint.Font.Size = 9
+    If $proxySystem.Activated Then
+        yukiY = $painterTextElement(yukiY, "CPU : ", Format($proxySystem.CpuUsage, "#0.00 %"))
+        yukiY = $painterTextElement(yukiY, "Memory : ", Format($proxySystem.MemoryUsage, "#0.00 %"))
+        yukiY = $painterTextElement(yukiY, "Swap : ", Format($proxySystem.SwapUsage, "#0.00 %"))
+        yukiY = $painterTextElement(yukiY, "Processes : ", $proxySystem.ProcessCount)
+        yukiY = $painterTextElement(yukiY, "Thermal : ", $proxySystem.Thermal & " °C")
+    Else
+        yukiY = $painterText(yukiY, "please wait ...")
+        Try $proxySystem.Activate()
+    End If
+    
+    Return yukiY + 8
+    
+End
+
+Public Sub _new()
+    
+    $proxySystem.Activate()
+    
+End

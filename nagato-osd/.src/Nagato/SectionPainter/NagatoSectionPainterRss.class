@@ -1,0 +1,46 @@
+' Gambas class file
+
+Private $painterText As New NagatoPainterText
+Private $painterHeader As New NagatoPainterHeader
+Private $painterImage As New NagatoPainterImage2
+Private $proxyRss As New NagatoDBusAccessRssFeeder
+Private $thumbnail As New NagatoRssThumbnail
+
+Private Sub paintNews(argY As Integer) As Integer
+    
+    Dim yukiY As Integer = argY
+    Dim yukiFeedItem As String[]
+    
+    yukiFeedItem = $proxyRss.GetFeedItem()
+    ' If $thumbnail.HasThumbnail(yukiFeedItem[0]) Then
+    '     yukiY = $painterImage(yukiY, $thumbnail.GetThumbnailPath(yukiFeedItem[0]), 150)
+    ' Endif
+    ' If (Second(Now()) + 10) Mod 15 = 0 Then $thumbnail.SetUrl($proxyRss.GetNextFeedItem())
+    yukiY = $painterText(yukiY, yukiFeedItem[1])
+    yukiY = $painterText(yukiY + 8, "----")
+    yukiY = $painterText(yukiY + 8, $proxyRss.GetNextFeedItem()[1])
+    yukiY = $painterText(yukiY + 8, "----")
+    yukiY = $painterText(yukiY + 8, $proxyRss.GetAfterNextFeedItem()[1])
+    If (Second(Now()) + 1) Mod 15 = 0 Then $proxyRss.Next()
+    
+    Return yukiY
+    
+End
+
+Public Sub _call(argY As Integer) As Integer
+    
+    Dim yukiY As Integer = argY
+    
+    Paint.Font.Size = 11
+    yukiY = $painterHeader(yukiY, "News")
+    Paint.Font.Size = 9
+    If $proxyRss.Activated Then
+        yukiY = paintNews(yukiY)
+    Else
+        yukiY = $painterText(yukiY, "please wait ...")
+        Try $proxyRss.Activate()
+    End If
+
+    Return yukiY
+    
+End

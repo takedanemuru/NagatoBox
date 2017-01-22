@@ -1,0 +1,27 @@
+' Gambas class file
+
+Private Function getImage(argPath As String, argWidthLimit As Integer) As Image
+    
+    Dim yukiImage As Image = Image.Load(argPath)
+    Dim yukiRate As Float
+    
+    If argWidthLimit >= yukiImage.W Then Return yukiImage
+    
+    yukiRate = argWidthLimit / yukiImage.W
+    
+    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)
+    
+End
+
+Public Sub _call(argY As Integer, argPath As String, argWidthLimit As Integer) As Integer
+    
+    Dim yukiImage As Image = getImage(argPath, argWidthLimit)
+    
+    Paint.DrawImage(yukiImage, (HaruhiMain.W - yukiImage.W) / 2, argY)
+    
+    Return argY + yukiImage.H + 8
+    
+Catch
+    Return argY
+    
+End

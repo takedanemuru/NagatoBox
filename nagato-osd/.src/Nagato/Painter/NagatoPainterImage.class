@@ -6,7 +6,7 @@ Public Sub _call(argY As Integer, argPath As String, argWidth As Integer, argHei
     
     Paint.DrawImage(yukiImage, (HaruhiMain.W - argWidth) / 2, argY)
     
-    Return argY + argHeight + 8
+    Return argY + argHeight + 4
     
 Catch
     Return argY

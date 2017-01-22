@@ -30,6 +30,12 @@
 
 + prohibit to launch app itself as super user (check policy per action.)
 
+### nagato-osd
+
+new application : show informations on root window like conky
+
+![image: screenshot_2017年01月22日_13：30：01](../images/screenshot_2017年01月22日_13：30：01.png)
+
 ### nagato-pdf-view
 
 + ~~text extraction~~

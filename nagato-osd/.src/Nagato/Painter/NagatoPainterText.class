@@ -3,7 +3,7 @@
 Public Sub _call(argStartY As Integer, argText As String) As Integer
     
     Dim yukiTextHeight As Integer = Paint.Font.RichTextHeight(argText, HaruhiMain.W)
-    Dim yukiRect As New Rect(0, argStartY, HaruhiMain.W, yukiTextHeight)
+    Dim yukiRect As New Rect(0, argStartY + 8, HaruhiMain.W - 16, yukiTextHeight)
     
     Paint.Brush = Paint.Color(NagatoSettings.ShadeColor + Color.Transparent * 192)
     Paint.DrawRichText(argText, yukiRect.X + 1, yukiRect.Y + 1, yukiRect.W, yukiRect.H, Align.Center)
@@ -12,6 +12,6 @@ Public Sub _call(argStartY As Integer, argText As String) As Integer
     Paint.DrawRichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
     Paint.Fill()
     
-    Return argStartY + yukiTextHeight
+    Return argStartY + yukiTextHeight 
     
 End

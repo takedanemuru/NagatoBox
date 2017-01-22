@@ -1,0 +1,38 @@
+' Gambas class file
+
+Private $painterText As New NagatoPainterText
+Private $week As String[] = ["Sunday", "Monday", "Thursday", "Wednesday", "Tuesday", "Friday", "Saturday"]
+
+Private Function getCalendarText() As String
+    
+    Dim yukiNow As Date = Now()
+    Dim yukiYear As Integer = Year(yukiNow)
+    Dim yukiMonth As String = Format(Month(yukiNow), "00")
+    Dim yukiDay As String = Format(Day(yukiNow), "00")
+    Dim yukiWeekday As String = $week[WeekDay(yukiNow)]
+    
+    Return Subst("&1/&2/&3 &4", yukiYear, yukiMonth, yukiDay, yukiWeekday)
+    
+End
+
+Private Function getClockText() As String
+    
+    Dim yukiNow As Date = Now()
+    Dim yukiText As String = Hour(yukiNow) & ":" & Format(Minute(yukiNow), "0#") 
+    
+    Return yukiText
+    
+End
+
+Public Sub _call(argY As Integer) As Integer
+    
+    Dim yukiY As Integer = argY
+    
+    Paint.Font.Size = 9
+    yukiY = $painterText(yukiY + 4, getCalendarText())
+    Paint.Font.Size = 24
+    yukiY = $painterText(yukiY, getClockText())
+    
+    Return yukiY + 8
+    
+End

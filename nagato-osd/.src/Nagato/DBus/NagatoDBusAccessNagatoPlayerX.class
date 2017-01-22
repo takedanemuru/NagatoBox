@@ -49,7 +49,7 @@ Public Function GetText() As String
         ensureProxy()
         yukiText &= ($property.Title & Space$(4) & "<br>") 
         yukiText &= ($property.Artist & Space$(4) & "<br>")
-        yukiText &= ($property.Album & Space$(4) & "<br><br>")
+        yukiText &= ($property.Album & Space$(4) & "<br>")
         yukiText &= ($property.ProgressInText)
         Return yukiText
     Else

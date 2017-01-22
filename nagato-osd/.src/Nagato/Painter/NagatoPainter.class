@@ -1,71 +1,38 @@
 ' Gambas class file
 
-Private $background As Image
-Private $painterText As New NagatoPainterText
-Private $painterTextElement As New NagatoPainterTextElement
-Private $painterHeader As New NagatoPainterHeader
-Private $painterImage As New NagatoPainterImage
-Private $proxyPlayerX As NagatoDBusAccessNagatoPlayerX
-Private $proxySystem As New NagatoDBusAccessSystemMonitor
+Private $painterBackground As New NagatoPainterBackground
+Private $painterClock As New NagatoSectionPainterClock
+Private $painterSystem As New NagatoSectionPainterSystem
+Private $painterMusic As New NagatoSectionPainterMusic
+Private $painterRss As New NagatoSectionPainterRss
 
-Private Function getClockText() As String
+Private $drawingArea As DrawingArea
+
+Public Sub _new(argContainer As Container)
     
-    Dim yukiNow As Date = Now()
-    Dim yukiText As String = Hour(yukiNow) & ":" & Format(Minute(yukiNow), "0#") 
-    
-    Return yukiText
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
     
 End
 
-Public Sub _new()
+Public Sub _call()
     
-    If Desktop.Type == "NagatoBox" Then
-        $background = Image.Load("/home/takedanemuru/.nagato-wallpaper/NagatoBox/modefied.png")
-    Else 
-        $background = Image.Load("/home/takedanemuru/.nagato-wallpaper/openbox/modefied.png")
-    End If 
-    
-    $proxySystem.Activate()
+    $drawingArea.Refresh()
     
 End
 
-Public Sub _call() As Picture
+Public Sub DrawingArea_Draw()
     
-    Dim yukiY As Integer = 16
-    Dim yukiImage As New Image(HaruhiMain.W, HaruhiMain.H)
+    Dim yukiY As Integer = 8
     
-    Paint.Begin(yukiImage)
-        Paint.DrawImage($background, -1 * HaruhiMain.X, -1 * HaruhiMain.Y)
+    Paint.Begin($drawingArea)
         Paint.AntiAlias = True
-        Paint.Font.Bold = True
-        Paint.Font.Name = "Times New Roman"
-        Paint.Font.Size = 11
-        yukiY = $painterHeader(yukiY, "Clock")
-        Paint.Font.Size = 24
-        yukiY = $painterText(yukiY, getClockText())
-        Paint.Font.Size = 11
-        yukiY = $painterHeader(yukiY, "System")
-        Paint.Font.Size = 11
-        If $proxySystem.Activated Then
-            yukiY = $painterTextElement(yukiY, "CPU : ", Format($proxySystem.CpuUsage, "#0.00 %"))
-            yukiY = $painterTextElement(yukiY, "Memory : ", Format($proxySystem.MemoryUsage, "#0.00 %"))
-            yukiY = $painterTextElement(yukiY, "Swap : ", Format($proxySystem.SwapUsage, "#0.00 %"))
-            yukiY = $painterTextElement(yukiY, "Processes : ", $proxySystem.ProcessCount)
-            yukiY = $painterTextElement(yukiY, "Thermal : ", $proxySystem.Thermal & " °C")
-        Else
-            yukiY = $painterText(yukiY, "please wait ...")
-            Try $proxySystem.Activate()
-        End If
-        Paint.Font.Size = 11
-        If DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
-            If Not Object.IsValid($proxyPlayerX) Then $proxyPlayerX = New NagatoDBusAccessNagatoPlayerX
-            yukiY = $painterHeader(yukiY + 8, "Now Playing")
-            yukiY = $painterImage(yukiY + 8, $proxyPlayerX.GetCoverArtPath(), 150, 150)
-            Paint.Font.Size = 9
-            yukiY = $painterText(yukiY, $proxyPlayerX.GetText())
-        End If
+        'Paint.Font.Bold = True
+        'Paint.Font.Name = "Times New Roman"
+        $painterBackground()
+        yukiY = $painterClock(yukiY)
+        yukiY = $painterSystem(yukiY)
+        yukiY = $painterMusic(yukiY)
+        yukiY = $painterRss(yukiY)
     Paint.End()
-    
-    Return yukiImage.Picture
     
 End
