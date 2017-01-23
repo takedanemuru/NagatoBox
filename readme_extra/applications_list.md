@@ -221,10 +221,10 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
-## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v0.0.1)
+## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.6)
 
 + Description : on screen display for openbox3
-+ Last Modefied : 2017-01-21
++ Last Modefied : 2017-01-23
 
 ![image: screenshot_001.png](../nagato-osd/doc/screenshots/screenshot_001.png)
 
@@ -348,10 +348,10 @@ taskmanager for NagatoBox
 + Description : charactor code conversion tool
 + Last Modefied : 2016-08-09
 
-## ![image: nagato-wallpaper.png](../nagato-wallpaper/nagato-wallpaper.png) nagato-wallpaper (v42.6.16)
+## ![image: nagato-wallpaper.png](../nagato-wallpaper/nagato-wallpaper.png) nagato-wallpaper (v42.7.17)
 
 + Description : a wallpaper setter for *box window managers.
-+ Last Modefied : 2016-10-11
++ Last Modefied : 2017-01-23
 
 ## ![image: nagato-wareki.png](../nagato-wareki/nagato-wareki.png) nagato-wareki (v42.5.2)
 

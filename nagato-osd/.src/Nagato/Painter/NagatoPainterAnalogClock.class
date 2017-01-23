@@ -1,0 +1,74 @@
+' Gambas class file
+
+Private $offset As New Point
+
+Private Function getX(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Cos(Rad(argDegree)) * argLength + $offset.X
+    
+End
+
+Private Function getY(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Sin(Rad(argDegree)) * argLength + $offset.Y
+    
+End
+
+Private Sub paintClockHand(argDegree As Integer, argLength As Integer, argWidth As Integer, argColor As Integer)
+    
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 64)
+    Paint.LineWidth = argWidth
+    Paint.LineCap = Paint.LineCapRound
+    Paint.MoveTo(getX(argDegree, 10), getY(argDegree, 10))
+    Paint.LineTo(getX(argDegree, argLength), getY(argDegree, argLength))
+    Paint.Stroke()
+    
+End
+
+Private Sub paintClockFace(argColor As Integer)
+    
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 128)
+        Paint.Ellipse($offset.X - 90, $offset.Y - 90, 180, 180)
+    Paint.Fill()
+    
+End
+
+Private Sub paintPoints(argColor As Integer)
+    
+    Dim yukiPoint As Integer
+    
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 128)
+        Paint.Ellipse($offset.X - 2, $offset.Y - 2, 4, 4)
+        For yukiPoint = 0 To 11
+            Paint.Ellipse(getX(yukiPoint * 30, 80) - 2, getY(yukiPoint * 30, 80) - 2, 4, 4)
+        Next
+    Paint.Fill()
+    
+End
+
+Private Sub paintClockHands(argColor As Integer)
+    
+    paintClockHand(Hour(Now) * 30 + Minute(Now) * 0.5 - 90, 65, 6, argColor)
+    paintClockHand(Minute(Now) * 6 - 90, 75, 3, argColor)
+    paintClockHand(Second(Now) * 6 - 90, 80, 1, argColor)
+    
+End
+
+Private Sub setOffset(argY As Integer)
+    
+    $offset.X = HaruhiMain.W / 2
+    $offset.Y = HaruhiMain.W / 2 + argY
+    
+End
+
+Public Sub _call(argY As Integer) As Integer
+    
+    setOffset(argY)
+    
+    paintClockFace(Color.White)
+    paintPoints(Color.White)
+    paintClockHands(Color.Violet)
+    
+    Return argY + 200
+    
+End

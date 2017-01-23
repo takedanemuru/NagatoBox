@@ -2,6 +2,7 @@
 
 Private $painterBackground As New NagatoPainterBackground
 Private $painterClock As New NagatoSectionPainterClock
+Private $painterAnalogClock As New NagatoPainterAnalogClock
 Private $painterSystem As New NagatoSectionPainterSystem
 Private $painterMusic As New NagatoSectionPainterMusic
 Private $painterRss As New NagatoSectionPainterRss
@@ -22,7 +23,7 @@ End
 
 Public Sub DrawingArea_Draw()
     
-    Dim yukiY As Integer = 8
+    Dim yukiY As Integer = 32
     
     Paint.Begin($drawingArea)
         Paint.AntiAlias = True
@@ -30,6 +31,7 @@ Public Sub DrawingArea_Draw()
         'Paint.Font.Name = "Times New Roman"
         $painterBackground()
         yukiY = $painterClock(yukiY)
+        'yukiY = $painterAnalogClock(yukiY)
         yukiY = $painterSystem(yukiY)
         yukiY = $painterMusic(yukiY)
         yukiY = $painterRss(yukiY)

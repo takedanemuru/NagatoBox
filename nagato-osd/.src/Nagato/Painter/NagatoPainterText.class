@@ -1,15 +1,17 @@
 ' Gambas class file
 
-Public Sub _call(argStartY As Integer, argText As String) As Integer
+Public Sub _call(argStartY As Integer, argText As String, Optional argAlign As Integer = Align.Center) As Integer
     
-    Dim yukiTextHeight As Integer = Paint.Font.RichTextHeight(argText, HaruhiMain.W)
-    Dim yukiRect As New Rect(0, argStartY + 8, HaruhiMain.W - 16, yukiTextHeight)
+    Dim yukiTextHeight As Integer = Paint.Font.RichTextHeight(argText, HaruhiMain.W - 16)
+    Dim yukiRect As New Rect(8, argStartY, HaruhiMain.W - 16, yukiTextHeight)
+    
+    If argStartY + yukiTextHeight + 8 >= HaruhiMain.H Then Return argStartY + yukiTextHeight
     
     Paint.Brush = Paint.Color(NagatoSettings.ShadeColor + Color.Transparent * 192)
-    Paint.DrawRichText(argText, yukiRect.X + 1, yukiRect.Y + 1, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.DrawRichText(argText, yukiRect.X + 1, yukiRect.Y + 1, yukiRect.W, yukiRect.H, argAlign)
     Paint.Fill()
     Paint.Brush = Paint.Color(NagatoSettings.BaseColor + Color.Transparent * 192)
-    Paint.DrawRichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.DrawRichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, argAlign)
     Paint.Fill()
     
     Return argStartY + yukiTextHeight 

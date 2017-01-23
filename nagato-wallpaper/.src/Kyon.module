@@ -16,9 +16,6 @@ End
 Public Sub Main()
     
     MikuruHidden.Ensure()
-    'startApplication()
-    
-    ' NOW Testing
-    HaruhiOnScreenDisplay.Show()
+    startApplication()
     
 End

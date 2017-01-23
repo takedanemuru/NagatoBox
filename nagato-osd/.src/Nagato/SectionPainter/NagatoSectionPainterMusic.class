@@ -3,6 +3,7 @@
 Private $painterText As New NagatoPainterText
 Private $painterHeader As New NagatoPainterHeader
 Private $painterImage As New NagatoPainterImage2
+Private $painterTextOnShade As New NagatoPainterTextOnShade
 Private $proxyPlayerX As NagatoDBusAccessNagatoPlayerX
 
 Private $path As String = ""
@@ -12,13 +13,14 @@ Public Sub _call(argY As Integer) As Integer
     
     Dim yukiY As Integer = argY
     
-    Paint.Font.Size = 11
     If DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
         If Not Object.IsValid($proxyPlayerX) Then $proxyPlayerX = New NagatoDBusAccessNagatoPlayerX
-        yukiY = $painterHeader(yukiY + 8, "Now Playing")
-        yukiY = $painterImage(yukiY + 8, $proxyPlayerX.GetCoverArtPath(), 150)
+        Paint.Font.Size = 11
+        yukiY = $painterHeader(yukiY + 4, "Now Playing")
         Paint.Font.Size = 9
-        yukiY = $painterText(yukiY, $proxyPlayerX.GetText())
+        yukiY = $painterImage(yukiY + 4, $proxyPlayerX.GetCoverArtPath(), 150)
+        yukiY = $painterText(yukiY + 8, $proxyPlayerX.GetText())
+        yukiY = $painterText(yukiY + 4, $proxyPlayerX.GetTextProgress())
     End If
     
     Return yukiY + 4

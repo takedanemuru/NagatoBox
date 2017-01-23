@@ -36,6 +36,10 @@ new application : show informations on root window like conky
 
 ![image: screenshot_2017年01月22日_13：30：01](../images/screenshot_2017年01月22日_13：30：01.png)
 
+~~new : analog clock mode~~
+
+![image: screenshot_2017年01月23日_20：05：01](../images/screenshot_2017年01月23日_20：05：01.png)
+
 ### nagato-pdf-view
 
 + ~~text extraction~~
@@ -51,6 +55,10 @@ new application : show informations on root window like conky
 
 + ~~network tab~~
 + rename to nagato-system-monitor (?)
+
+### nagato-wallpaper
+
++ ~~mod : purge osd codes~~
 
 ### nagato-web
 

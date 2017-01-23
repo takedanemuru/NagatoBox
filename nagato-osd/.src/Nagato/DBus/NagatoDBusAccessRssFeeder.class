@@ -12,6 +12,8 @@ Private $feedTitle As String
 Private $feedIndex As Integer = 0
 Private $itemIndex As Integer = 0
 
+Public Enum RssTitle, RssDescription, RssThumbnailUrl, RssUrl
+
 Private Sub ensureTitle()
     
     If $feedTitle = "" Then $feedTitle = $proxy.GetFeedTitle($feedIndex) & " : "
@@ -32,65 +34,26 @@ Public Sub Next()
     
 End
 
-Public Function GetDescription() As String
+Public Sub _get(argOffset As Integer, Optional argItemType As Integer = 1) As String
     
-    Dim yukiItem As String[] = $proxy.GetFeedItem($feedIndex, $itemIndex)
-    
-    ensureTitle()
-    
-    Return $feedTitle & yukiItem[0]
-   
-Catch
-    Debug Error.Text
-    Return "YUKI.N > Please wait ..."
-    
-End
-
-Public Function GetFeedItem() As String[]
+    Dim yukiOffset As Integer = argOffset
+    Dim yukiFeedIndex As Integer = $feedIndex
+    Dim yukiItemIndex As Integer = $itemIndex
     
     If Not Object.IsValid($proxy) Then Return ["", "", "", ""]
     
-    Return $proxy.GetFeedItem($feedIndex, $itemIndex)
+    Do
+        If yukiOffset = 0 Then Break
+        Inc yukiItemIndex
+        If yukiItemIndex >= $proxy.GetFeedItemsCount(yukiFeedIndex) Then
+            yukiItemIndex = 0
+            Inc yukiFeedIndex
+        Endif
+        If yukiFeedIndex >= $proxy.FeedCount Then yukiFeedIndex = 0
+        Dec yukiOffset
+    Loop
     
-End
-
-Public Function GetNextFeedItem() As String[]
-    
-    Dim yukiFeedIndex As Integer = $feedIndex
-    Dim yukiItemIndex As Integer = $itemIndex
-    
-    yukiItemIndex = IIf($proxy.GetFeedItemsCount($feedIndex) = yukiItemIndex + 1, 0, yukiItemIndex + 1)
-    If yukiItemIndex = 0 Then
-        yukiFeedIndex = IIf($proxy.FeedCount = yukiFeedIndex + 1, 0, yukiFeedIndex + 1)
-    Endif
-    
-    Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)
-    
-Catch
-    Return ["", "", "", ""]
-    
-End
-
-Public Function GetAfterNextFeedItem() As String[]
-    
-    Dim yukiFeedIndex As Integer = $feedIndex
-    Dim yukiItemIndex As Integer = $itemIndex
-    Dim yukiFeedItemsCount As Integer = $proxy.GetFeedItemsCount($feedIndex)
-    
-    If yukiFeedItemsCount = yukiItemIndex + 2 Then
-        Inc yukiFeedIndex
-        yukiItemIndex = 0
-    Else If yukiFeedItemsCount = yukiItemIndex + 1 Then
-        Inc yukiFeedIndex
-        yukiItemIndex = 1
-    Else
-        yukiItemIndex = yukiItemIndex + 2
-    Endif
-    
-    Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)
-    
-Catch
-    Return ["", "", "", ""]
+    Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)[argItemType]
     
 End
 

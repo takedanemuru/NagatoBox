@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.9.0
+# Compiled with Gambas 3.9.2
 Title=nagato-wallpaper
 Startup=Kyon
 Icon=Pictures/image.png
-Version=42.6.16
+Version=42.7.17
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -25,13 +25,12 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S.LICENSE
-PackageName=nagato-wallpaper-42.6.16
-PackageVersion=3
+PackageName=nagato-wallpaper-42.7.17
 MimeTypes="image/jpeg","image/jpg","image/png"
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
-Categories=ubuntu:"Nagato;System;Utility"
+Categories=ubuntu:"Nagato;Settings;System"
 Groups=ubuntu:"admin"
 ExtraDependencies=ubuntu:"hsetroot\t\t"
 ExtraFiles=ubuntu:"nagato-wallpaper.png\t/usr/share/pixmaps\nnagato-wallpaper.desktop\t/usr/share/applications"
