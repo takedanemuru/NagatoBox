@@ -24,11 +24,19 @@ Private Sub readDirectory(argDirectory As String)
     
 End
 
+Private Sub clearVariables()
+    
+    $projects.Clear()
+    $oldCours = 0
+    $unmaintained = 0
+    
+End
+
 Public Sub Refresh()
     
     Dim yukiDirecroty As String
     
-    $projects.Clear()
+    clearVariables()
     
     For Each yukiDirecroty In NagatoSettings.ProjectPaths
         readDirectory(yukiDirecroty)

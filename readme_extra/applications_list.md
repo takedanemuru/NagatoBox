@@ -283,10 +283,10 @@ path		|string		|fullpath of each music file
 
 
 
-## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.6.8)
+## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.7.9)
 
 + Description : project listing tool for Gambas3
-+ Last Modefied : 2016-12-02
++ Last Modefied : 2017-01-24
 
 ![image: screenshot_001.png](../nagato-project-list/doc/screenshots/screenshot_001.png)
 
@@ -302,10 +302,12 @@ path		|string		|fullpath of each music file
 + `/PROJECT/doc/document.md` for document
 
 
-## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.6.7)
+## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.7.8)
 
 + Description : a screen saver for NagatoBox
-+ Last Modefied : 2016-11-18
++ Last Modefied : 2017-01-24
+
+![image: screenshot_001.png](../nagato-screenlocker/doc/screenshots/screenshot_001.png)
 
 ## ![image: nagato-screenshooter.png](../nagato-screenshooter/nagato-screenshooter.png) nagato-screenshooter (v42.7.8)
 

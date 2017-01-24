@@ -43,4 +43,6 @@ Public Sub ExportMenu_Click()
     
     MikuruMarkdownListForGithub.Export(Last.Tag)
     
+    Message.Info(("YUKI.N > It's done."), ("OK"))
+    
 End

@@ -75,7 +75,7 @@ End
 Private Function TitleHeader_Read() As String
 
     Dim yukiTemplate As String = "![image: &2](&1) &3"
-
+    
     If Not Exist(Me.IconPath) Then 
         Return $title
     Else
