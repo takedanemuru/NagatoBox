@@ -1,0 +1,26 @@
+' Gambas class file
+
+Private $painter As NagatoPainterGloobus
+Private $observer As Observer
+
+Public Sub Form_Open()
+    
+    Me.Resizable = False
+    
+    $painter = New NagatoPainterGloobus(Me)
+    $observer = New Observer(NagatoBroadcast) As "Asakura"
+    
+End
+
+Public Sub Form_Close()
+    
+    If NagatoSettingsForm.Main = NagatoSettingsForm.HPlayer Then NagatoDBus.Unregister()
+    NagatoSettingsForm.SavePosition(Me)
+    
+End
+
+Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
+    
+    $painter(argSignal, argValues)
+    
+End

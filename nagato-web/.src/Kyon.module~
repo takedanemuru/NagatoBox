@@ -10,25 +10,42 @@ Private Function getSartupUrl() As String
     yukiArgs = Args.End()
     
     If yukiUrl = "" And If yukiArgs.Count > 0 Then yukiUrl = yukiArgs[0]
+    If yukiUrl Begins "/" Then yukiUrl = "file://" & yukiUrl
     
-    Return IIf(yukiUrl = "", "", "file://" & yukiUrl)
+    Return yukiUrl
+    
+End
+
+Private Sub showMain()
+    
+    Dim yukiUrl As String = getSartupUrl()
+    
+    NagatoDBus.Register()
+    HaruhiMain.Show()
+    MikuruWebSettings.Initialize()
+    If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
+    Application.MainWindow = HaruhiMain
+    
+End
+
+Private Sub tryOpen()
+    
+    If Object.IsValid(NagatoDBus.Proxy) Then 
+        NagatoDBus.Proxy.Show()
+    Else
+        NagatoDBus.Unregister()
+        showMain()
+    End If
     
 End
 
 Public Sub Main()
     
-    Dim yukiUrl As String = getSartupUrl()
-    
     If NagatoDBus.IsUnique() Then
-        NagatoDBus.Register()
-        HaruhiMain.Show()
-        MikuruWebSettings.Initialize()
-        If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
-        Application.MainWindow = HaruhiMain
+        showMain()
     Else If yukiUrl = "" Then
-        NagatoDBus.Proxy.Show()
+        tryOpen()
     Else
-        Debug "i came here"
         NagatoDBus.Proxy.SetUrl(yukiUrl)
     End If
     

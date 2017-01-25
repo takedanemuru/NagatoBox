@@ -9,6 +9,9 @@ Private Sub openForm()
         Case NagatoSettingsForm.HPlayList
             HaruhiPlayList.Show()
             Application.MainWindow = HaruhiPlayList
+        Case NagatoSettingsForm.HCoverArt
+            HaruhiCovergloobus.Show() 
+            Application.MainWindow = HaruhiCovergloobus
     End Select
     
     NagatoDBus.Register()

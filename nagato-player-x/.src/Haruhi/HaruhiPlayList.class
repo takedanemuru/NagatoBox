@@ -9,13 +9,11 @@ Private $observer As Observer
 Private Sub setSize()
     
     NagatoSettingsForm.SetSize(Me)
-    'If Not NagatoSettingsForm.Resizable Then Me.H = $infoArea.H
     
 End
 
 Public Sub _new()
 
-    Me.Resizable = NagatoSettingsForm.Resizable
     NagatoSettingsForm.SetPosition(Me)
 
     $nowPlayingTab = New NagatoTabQueue(MenuPanelNowPlaying, NowPlayingGrid) As "NowPlayingTab"
@@ -41,13 +39,7 @@ End
 
 Public Sub SetFormSize()
     
-    Me.Resizable = NagatoSettingsForm.Resizable
-    
-    If NagatoSettingsForm.Resizable Then
-        NagatoSettingsForm.SetSize(Me)
-    Else
-        Me.H = $infoArea.H
-    Endif
+    NagatoSettingsForm.SetSize(Me)
     
 End
 
@@ -55,13 +47,12 @@ Public Sub Form_Close()
     
     If NagatoSettingsForm.Main = NagatoSettingsForm.HPlayList Then NagatoDBus.Unregister()
     NagatoSettingsForm.SavePosition(Me)
-    If NagatoSettingsForm.Resizable Then NagatoSettingsForm.SaveSize(Me)
     
 End
 
 Public Sub Form_Resize()
     
-    If NagatoSettingsForm.Resizable Then NagatoSettingsForm.SaveSize(Me)
+    NagatoSettingsForm.SaveSize(Me)
     
 End
 

@@ -17,6 +17,7 @@ End
 Public Sub Register()
     
     DBus.Name = BusName
+    DBus.Unique = True
     DBus.Session.Register(NagatoInterface, Me.ObjectPath)
     
 End

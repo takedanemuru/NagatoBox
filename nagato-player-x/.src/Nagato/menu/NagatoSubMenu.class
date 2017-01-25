@@ -25,6 +25,7 @@ Private Sub refreshChildMenus()
     With NagatoSettingsForm
         addChildMenu("Main", .HPlayer, getCheckButtonIcon(.Main = .HPlayer))
         addChildMenu("List", .HPlayList, getCheckButtonIcon(.Main = .HPlayList))
+        addChildMenu("Mini", .HCoverArt, getCheckButtonIcon(.Main = .HCoverArt))
     End With
     
 End

@@ -57,6 +57,8 @@ End
 
 Private Function CurrentPath_Read() As String
 
-    Return NagatoQueue.GetProperty(MikuruProperty.CurrentPath)
+    Dim yukiPath As String = NagatoQueue.GetProperty(MikuruProperty.CurrentPath)
+
+    Return yukiPath
 
 End

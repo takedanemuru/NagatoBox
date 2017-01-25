@@ -50,6 +50,9 @@ new application : show informations on root window like conky
 + ~~fix : remove working-directory~~
 + ~~mod : move DB to `$XDG_DATA_HOME/NagatoBox/database/media`~~
 + ~~cover art maximum size up to 300x300~~
++ ~~new : coverart mode~~
+
+![image: screenshot_2017年01月25日_19：53：01](../images/screenshot_2017年01月25日_19：53：01.png)
 
 ### nagato-taskmanager
 

@@ -4,10 +4,9 @@ Create Static
 
 Inherits NagatoSettings
 
-Public Enum HPlayer, HPlayList
+Public Enum HPlayer, HPlayList, HCoverArt
 
 Property Main As Integer
-Property Resizable As Boolean
 
 Public Sub Load(argForm As Form)
     
@@ -69,22 +68,19 @@ End
 Private Sub Main_Write(Value As Integer)
 
     Me._$settings["form/main"] = Value
-    HaruhiPlayList.SkipTaskbar = (Value <> HPlayList)
     Me._$settings.Save()
 
-End
-
-Private Function Resizable_Read() As Boolean
-
-    Return Me._$settings["form/resizable", True]
-
-End
-
-Private Sub Resizable_Write(Value As Boolean)
-
-    Me._$settings["form/resizable"] = Value
-    Me._$settings.Save()
-
-    HaruhiPlayList.SetFormSize()
+    Select Case Value
+        Case HPlayer
+            Application.MainWindow = HaruhiPlayer
+            HaruhiPlayer.Show()
+            HaruhiCovergloobus.Close()
+        Case HPlayList
+            Application.MainWindow = HaruhiPlayList
+        Case HCoverArt
+            Application.MainWindow = HaruhiCovergloobus
+            HaruhiPlayer.Close()
+            HaruhiCovergloobus.Show()
+    End Select
 
 End
