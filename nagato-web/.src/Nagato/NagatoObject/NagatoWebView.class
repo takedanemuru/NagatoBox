@@ -52,7 +52,7 @@ Public Sub _new(argContainer As Container, argUrl As String, argUniqueIndex As I
     With $webView
         .Expand = True
         .Url = argUrl
-        .UserAgent = "NagatoWeb"
+        .UserAgent = "YUKI.N >...can you see this ?"
         .Tracking = True
         .Font = Application.Font
     End With

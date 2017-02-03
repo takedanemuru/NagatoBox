@@ -3,23 +3,50 @@
 Inherits NagatoDesktopTile2
 
 Private $proxy As NagatoDBusAccessNagatoPlayerX
+Private $descriptionPainter As NagatoDescriptionPainterStandard
 
-Private Function getBaseImage() As Image
+Private Sub getBaseImage() As Image
     
-    Return MikuruTileBaseImage[Color.Red, 192]
+    Dim yukiBaseImage As Image
+    
+    If Exist($proxy.GetCoverArtPath()) Then
+        yukiBaseImage = Image.Load($proxy.GetCoverArtPath())
+        yukiBaseImage = yukiBaseImage.Stretch(MikuruUxTile.TileSize, MikuruUxTile.TileSize)
+    Else
+        yukiBaseImage = New Image(MikuruUxTile.TileSize, MikuruUxTile.TileSize, Color.Red)
+    Endif
+    
+    Return yukiBaseImage
+    
+End
+
+Private Sub paintProgress()
+    
+    Paint.Brush = Paint.Color(Color.Orange)
+        Paint.Rectangle(0, MikuruUxTile.TileSize - 2, MikuruUxTile.TileSize * $proxy.GetRate(), 2)
+    Paint.Fill()
     
 End
 
 Private Sub getThumbnail() As Image
     
-    Dim yukiThumbnail As Image = Image.Load($proxy.GetCoverArtPath())
+    Dim yukiBaseImage As Image = getBaseImage()
     
-    Return yukiThumbnail.Stretch(128, 128)
+    Paint.Begin(yukiBaseImage)
+        NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialPlayerX, "")
+        $descriptionPainter.Paint($proxy.GetTextTile())
+        paintProgress()
+    Paint.End()
     
-Catch
-    Debug $proxy.GetCoverArtPath()
-    Debug Error.Text
-    Return getBaseImage()
+    Return yukiBaseImage
+    
+End
+
+Private Sub getThumbnailNotActivated() As Image
+    
+    Dim yukiBaseImage As New Image(128, 128, Color.Red + Color.Transparent * 128)
+    
+    Return yukiBaseImage
     
 End
 
@@ -51,16 +78,17 @@ End
 
 Public Sub _OnTimer() ' override
     
-    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Music) Then Return
-    'If Not $proxy.Activated Then Return
-    
-    Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnail().Picture
+    If Not DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
+        Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnailNotActivated().Picture
+    Else 
+        Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnail().Picture
+    End If
     
 End
 
 Public Sub _OptionalOnInitialize()
     
+    $descriptionPainter = New NagatoDescriptionPainterStandard(Color.Gray + Color.Transparent * 64)
     $proxy = New NagatoDBusAccessNagatoPlayerX
-    '$proxy.Activate()
     
 End

@@ -3,7 +3,6 @@
 Private $coverArtPictureBox As PictureBox
 Private $observer As Observer
 Private $coverArtPath As String
-Private $hasChanged As Boolean = False
 
 Event Change
 

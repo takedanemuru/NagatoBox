@@ -1,0 +1,8 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    Application.MainWindow = HaruhiMain
+    HaruhiMain.Show()
+    
+End

@@ -1,0 +1,36 @@
+' Gambas class file
+
+Public _$menu As Menu
+
+Public Sub _OnInitializeChildMenus()
+    
+    
+    
+End
+
+Public Sub _OnShow()
+    
+    
+    
+End
+
+Public Sub _OnInitializeMenu()
+    
+    
+    
+End
+
+Public Sub _new(argParentMenu As Menu)
+    
+    Me._$menu = New Menu(argParentMenu) As "Menu"
+    
+    Me._OnInitializeMenu()
+    Me._OnInitializeChildMenus()
+    
+End
+
+Public Sub Menu_Show()
+    
+    Me._OnShow()
+    
+End

@@ -1,0 +1,53 @@
+' Gambas class file
+
+Property Read OnMouse As Boolean
+Property Read Point As Point
+
+Private $observer As Observer
+Private $point As New Point 
+Private $onMouse As Boolean
+
+Event MouseMove
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    argDrawingArea.Tracking = True
+    
+    $observer = New Observer(argDrawingArea) As "Asakura"
+    
+End
+
+Public Sub Asakura_Enter()
+    
+    $onMouse = True
+    
+End
+
+Public Sub Asakura_Leave()
+    
+    $onMouse = False
+    
+    Raise MouseMove
+    
+End
+
+Public Sub Asakura_MouseMove()
+    
+    $point.X = Mouse.X
+    $point.Y = Mouse.Y
+    
+    Raise MouseMove
+    
+End
+
+Private Function OnMouse_Read() As Boolean
+
+    Return $onMouse
+
+End
+
+Private Function Point_Read() As Point
+
+    Return $point
+
+End

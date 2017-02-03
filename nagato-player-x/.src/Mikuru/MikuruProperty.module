@@ -3,7 +3,7 @@
 Public Enum SoftwareVolume = 101, PlayState = 102, CoverArt = 103, CoverArtPath = 104
 Public Enum CurrentHeader = 200, CurrentTitle = 201, CurrentArtist = 202, CurrentAlbum = 203
 Public Enum CurrentUrl = 204, CurrentIndex = 205, CurrentDurationData = 206, CurrentDurationText = 207
-Public Enum CurrentPath = 208
+Public Enum CurrentPath = 208, CurrentDurationRate = 209
 Public Enum ListMax = 301, ListCount = 302
 
 

@@ -36,10 +36,8 @@ End
 
 Public Sub Refresh()
     
-    Dim yukiDurationData As NagatoDurationData = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationData)
-
     Object.Lock($slider)
-        $slider.Value = yukiDurationData.Rate * 100
+        $slider.Value = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationRate) * 100
         $label.Text = " " & NagatoQueue.GetProperty(MikuruProperty.CurrentDurationText) & " "
     Object.Unlock($slider)
     

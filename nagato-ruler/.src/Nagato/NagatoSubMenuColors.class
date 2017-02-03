@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnInitializeChildMenus()
+    
+    Object.New("NagatoMenuItemColorConfigBody", [Me._$menu])
+    Object.New("NagatoMenuItemColorConfigScale", [Me._$menu])
+    
+End
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menu
+        .Text = ("Color")
+    End With
+    
+End
+
+Public Sub _OnShow()
+    
+    Me._$menu.Children.Clear()
+    Me._OnInitializeChildMenus()
+    
+End

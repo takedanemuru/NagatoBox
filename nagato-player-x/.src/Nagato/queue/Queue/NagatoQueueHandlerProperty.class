@@ -53,6 +53,9 @@ Public Sub GetProperty(argProperty As Integer) As Variant
         Case MikuruProperty.CurrentDurationText
             If Me._$musicList.CurrentPath = "" Then Return ""
             Return getDurationData().Text
+        Case MikuruProperty.CurrentDurationRate
+            If Me._$musicList.CurrentPath = "" Then Return 0
+            Return getDurationData().Rate
         Case MikuruProperty.CurrentPath
             Return Me._$musicList.CurrentPath
         Default

@@ -2,7 +2,7 @@
 
 Public Enum ModeReadOnly, ModeCut, ModeCopied, ModeSelected, ModeRenamed, ModeNull
 Public Enum Special = 1000, SpecialSystems = 1001, SpecialRssText = 1002, SpecialRssThumbnail = 1003
-Public Enum SpecialWeather = 1004
+Public Enum SpecialWeather = 1004, SpecialPlayerX = 1005
 
 Public Sub _call(argPath As String, argSelected As Boolean) As Integer
     

@@ -53,12 +53,4 @@ Public Sub MenuItem_Click()
     
     NagatoSettingsForm.Main = Last.Tag
     
-    Select Case Last.Tag
-        Case NagatoSettingsForm.HPlayer
-            Application.MainWindow = HaruhiPlayer
-            HaruhiPlayer.Show()
-        Case NagatoSettingsForm.HPlayList
-            Application.MainWindow = HaruhiPlayList
-    End Select
-    
 End

@@ -1,0 +1,62 @@
+' Gambas class file
+
+Private $point As New Point
+Private $progress As New NagatoPainterGloobusTextProgress
+
+Private Sub paintCircle(argX As Integer, argY As Integer, argSize As Integer)
+    
+    Dim yukiRect As New Rect(argX, argY, argSize, argSize)
+    Dim yukiOnMouse As Boolean = yukiRect.Contains($point.X, $point.Y)
+    Dim yukiColor As Integer = IIf(yukiOnMouse, Color.Orange, Color.Gray)
+    
+    Paint.Brush = Paint.Color(yukiColor + Color.Transparent * 192)
+        Paint.Ellipse(argX, argY, argSize, argSize)
+    Paint.Fill()
+    
+End
+
+Private Sub paintPolygon(argPolygon As Integer[])
+    
+    Paint.Brush = Paint.Color(Color.White + Color.Transparent * 192)
+        Paint.Polygon(argPolygon)
+    Paint.Fill()
+    
+End
+
+Private Sub paintToggleButton()
+    
+    paintCircle(60, 60, 80)
+    If NagatoQueue.GetProperty(MikuruProperty.PlayState) <> Media.Playing Then
+        paintPolygon([80, 75, 80, 125, 125, 100, 80, 75])
+    Else
+        paintPolygon([95, 75, 95, 125, 80, 125, 80, 75, 95, 75])
+        paintPolygon([120, 75, 120, 125, 105, 125, 105, 75, 120, 75])
+    End If
+    
+End
+
+Private Sub paintRewindButton()
+    
+    paintCircle(10, 80, 40)
+    paintPolygon([20, 100, 30, 90, 30, 100, 40, 90, 40, 110, 30, 100, 30, 110, 20, 100])
+    
+End
+
+Private Sub paintForwardButton()
+    
+    paintCircle(150, 80, 40)
+    paintPolygon([180, 100, 170, 110, 170, 100, 160, 110, 160, 90, 170, 100, 170, 90, 180, 100])
+    
+End
+
+Public Sub _call(argX As Integer, argY As Integer)
+    
+    $point.X = argX
+    $point.Y = argY
+    
+    paintRewindButton()
+    paintForwardButton()
+    paintToggleButton()
+    $progress($point.X, $point.Y)
+    
+End

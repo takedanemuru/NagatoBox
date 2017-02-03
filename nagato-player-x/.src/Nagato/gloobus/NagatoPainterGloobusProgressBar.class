@@ -1,0 +1,11 @@
+' Gambas class file
+
+Public Sub _call()
+    
+    Dim yukiRate As Float = NagatoQueue.GetProperty(MikuruProperty.CurrentDurationData).Rate
+    
+    Paint.Brush = Paint.Color(Color.Orange)
+    Paint.Rectangle(0, 198, 200 * yukiRate, 2)
+    Paint.Fill()
+    
+End

@@ -1,0 +1,64 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $coverArt As New NagatoPainterGloobusCoverArt
+Private $textMain As New NagatoPainterGloobusTextMain
+Private $widgets As New NagatoPainterGloobusWidgets
+Private $progressBar As New NagatoPainterGloobusProgressBar
+Private $mouseTracker As NagatoGloobusMouseTracker
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select argSignal
+        Case MikuruSignal.BroadcastIndexMoved
+            $coverArt.ResetCoverArt()
+    End Select
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $coverArt.ResetCoverArt()
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    $mouseTracker = New NagatoGloobusMouseTracker($drawingArea) As "MouseTracker"
+    
+End
+
+Public Sub DrawingArea_MouseDown()
+    
+    If Mouse.Right Then 
+        HaruhiPlayList.Show()
+    Else If Mouse.Y > 150 Then
+        NagatoQueue(MikuruSignal.QueueSeek, [Mouse.X / 200])
+    Else If Mouse.X > 150 Then
+        NagatoQueue(MikuruSignal.QueueNext, Null)
+    Else If 50 > Mouse.X Then
+        NagatoQueue(MikuruSignal.QueueBack, Null)
+    Else
+        If NagatoQueue.GetProperty(MikuruProperty.PlayState) <> Media.Playing Then
+            NagatoQueue(MikuruSignal.QueuePlay, Null)
+        Else
+            NagatoQueue(MikuruSignal.QueuePause, Null)
+        End If
+    End If
+    
+End
+
+Public Sub MouseTracker_MouseMove()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    Draw.Begin($drawingArea)
+        $coverArt()
+        If $mouseTracker.OnMouse Then $widgets($mouseTracker.Point.X, $mouseTracker.Point.Y)
+        If Not $mouseTracker.OnMouse Then $textMain()
+        $progressBar()
+    Draw.End()
+    
+End

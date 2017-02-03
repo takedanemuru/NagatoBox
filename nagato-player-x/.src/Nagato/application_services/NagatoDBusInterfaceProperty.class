@@ -8,6 +8,7 @@ Property Read Title As String
 Property Read Artist As String
 Property Read Album As String
 Property Read ProgressInText As String
+Property Read ProgressInRate As Float
 Property Read Shuffle As Boolean
 Property Read Repeat As Boolean
 Property Read CoverArtPath As String
@@ -60,5 +61,11 @@ Private Function CurrentPath_Read() As String
     Dim yukiPath As String = NagatoQueue.GetProperty(MikuruProperty.CurrentPath)
 
     Return yukiPath
+
+End
+
+Private Function ProgressInRate_Read() As Float
+
+    Return NagatoQueue.GetProperty(MikuruProperty.CurrentDurationRate)
 
 End

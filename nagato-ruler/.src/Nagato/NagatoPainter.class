@@ -1,0 +1,59 @@
+' Gambas class file
+
+Private $scaleMillimetre As New NagatoScalePainterMillimetre
+Private $scalePainterInch As New NagatoScalePainterInch
+Private $scalePainterDot As New NagatoScalePainterDot
+
+Private Sub paintRectangle()
+    
+    Dim yukiY As Integer = IIf(NagatoSettingsScale.Angle > -45, 0, -1 * NagatoSettings.Height)
+    
+    Paint.Brush = Paint.Color(NagatoSettingsScale.Background)
+    Paint.Rotate(Rad(NagatoSettingsScale.Angle))
+    Paint.Rectangle(NagatoSettings.Height, yukiY, NagatoSettings.Width, NagatoSettings.Height)
+    Paint.Fill()
+    
+End
+
+Private Sub paintUpside()
+    
+    Select Case NagatoSettingsScale.Upside
+        Case MikuruScaleType.Dot
+            $scalePainterDot(NagatoScalePainter.SideUp)
+        Case MikuruScaleType.Inch
+            $scalePainterInch(NagatoScalePainter.SideUp)
+        Case MikuruScaleType.Millimeter
+            $scaleMillimetre(NagatoScalePainter.SideUp)
+    End Select
+    
+End
+
+Private Sub paintDownside()
+    
+    Select Case NagatoSettingsScale.DownSide
+        Case MikuruScaleType.Dot
+            $scalePainterDot(NagatoScalePainter.SideDown)
+        Case MikuruScaleType.Inch
+            $scalePainterInch(NagatoScalePainter.SideDown)
+        Case MikuruScaleType.Millimeter
+            $scaleMillimetre(NagatoScalePainter.SideDown)
+    End Select
+    
+End
+
+Public Function GetPicture() As Picture
+    
+    Dim yukiImage As New Image(NagatoSettings.PaletteSize, NagatoSettings.PaletteSize, Color.Transparent)
+    
+    Paint.Begin(yukiImage)
+        paintRectangle()
+        paintUpside()
+        paintDownSide()
+        '$scalePainterInch(NagatoScalePainter.SideUp)
+        ' $scaleMillimetre(NagatoScalePainter.SideDown)
+        ' $scalePainterDot(NagatoScalePainter.SideUp)
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End

@@ -1,0 +1,78 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Foreground As Integer
+Property Background As Integer
+Property Upside As Integer
+Property DownSide As Integer
+Property Angle As Float
+
+Private Sub changeSetting(argKey As String, argValue As Variant)
+    
+    Me._$settings[argKey] = argValue
+    Me._$settings.Save()
+
+    HaruhiMain.Reload()
+    
+End
+
+Private Function Background_Read() As Integer
+
+    Return Me._$settings["form/background", Color.Lighter(Color.Yellow)]
+
+End
+
+Private Sub Background_Write(Value As Integer)
+
+    changeSetting("form/background", Value)
+
+End
+
+Private Function Foreground_Read() As Integer
+
+    Return Me._$settings["form/foreground", Color.Lighter(Color.Black)]
+
+End
+
+Private Sub Foreground_Write(Value As Integer)
+
+    changeSetting("form/foreground", Value)
+
+End
+
+Private Function Angle_Read() As Float
+
+    Return Me._$settings["scale/angle", -60]
+
+End
+
+Private Sub Angle_Write(Value As Float)
+
+    changeSetting("scale/angle", Value)
+
+End
+
+Private Function Upside_Read() As Integer
+
+    Return Me._$settings["scale/upside", MikuruScaleType.Dot]
+
+End
+
+Private Sub Upside_Write(Value As Integer)
+
+    changeSetting("scale/upside", Value)
+
+End
+
+Private Function DownSide_Read() As Integer
+
+    Return Me._$settings["scale/downside", MikuruScaleType.Millimeter]
+
+End
+
+Private Sub DownSide_Write(Value As Integer)
+
+    changeSetting("scale/downside", Value)
+
+End

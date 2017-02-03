@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnClickMenu()
+    
+   HaruhiAngleConfig.ShowDialog()
+    
+End
+
+Public Sub _OnInitialize()
+    
+    With Me._$menuItem
+        .Text = ("Config By Ratio")
+    End With
+    
+End

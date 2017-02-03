@@ -1,0 +1,21 @@
+' Gambas class file
+
+Private $rootMenu As Menu
+
+Public Sub Popup()
+    
+    $rootMenu.Popup()
+    
+End
+
+Public Sub _new()
+    
+    $rootMenu = New Menu(HaruhiMain) As "RootMenu"
+    
+    Object.New("NagatoSubMenuAngle", [$rootMenu])
+    Object.New("NagatoSubMenuColors", [$rootMenu])
+    Object.New("NagatoSubMenuType", [$rootMenu])
+    Object.New("NagatoMenuItem", [$rootMenu]) ' as spacer
+    Object.New("NagatoMenuItemClose", [$rootMenu])
+    
+End

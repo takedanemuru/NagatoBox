@@ -1,0 +1,18 @@
+' Gambas module file
+
+Public Enum Dot, Inch, Millimeter
+
+Public Sub _get(argType As Integer) As String
+    
+    Select Case argType
+        Case Me.Dot
+            Return "Dot"
+        Case Me.Inch
+            Return "Inch"
+        Case Me.Millimeter
+            Return "Millimeter"
+        Default
+            Return ""
+    End Select
+    
+End

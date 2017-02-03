@@ -1,0 +1,20 @@
+' Gambas class file
+
+Private $coverArt As Image
+
+Public Sub ResetCoverArt()
+    
+    If NagatoDBusInterfaceProperty.CoverArtPath Then
+        $coverArt = Image.Load(NagatoDBusInterfaceProperty.CoverArtPath)
+        $coverArt = $coverArt.Stretch(200, 200)
+    Else
+        $coverArt = New Image(200, 200, Color.Lighter(Color.Violet))
+    End If
+    
+End
+
+Public Sub _call()
+    
+    Paint.DrawImage($coverArt, 0, 0)
+    
+End

@@ -1,0 +1,26 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.2
+Title=nagato-ruler
+Startup=Kyon
+Icon=pictures/icons/ruler.png
+Version=42.7.2
+Component=gb.image
+Component=gb.gui.qt
+Component=gb.form
+Component=gb.settings
+Description="desktop ruler"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=takedanemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-ruler-42.7.2
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Monitoring"
+Categories=ubuntu:"Nagato;Utility"
+Groups=ubuntu:"utils"

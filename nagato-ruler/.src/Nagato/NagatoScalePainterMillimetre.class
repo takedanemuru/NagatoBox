@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoScalePainter
+
+Public Function _OnGetScaleHeight(argStep As Integer) As Integer
+    
+    If argStep Mod 10 = 0 Then
+        Return Me._$height * 0.35
+    Else If argStep Mod 5 = 0 Then
+        Return Me._$height * 0.25
+    Else
+        Return Me._$height * 0.15
+    End If
+    
+End
+
+Public Function _OnGetStep() As Integer
+    
+    Return Desktop.Resolution / 25.4 * Me.UpScaleRate
+    
+End

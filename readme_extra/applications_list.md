@@ -15,10 +15,10 @@
 + Description : tfei for system monitoring
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.7.6)
+## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.7.7)
 
 + Description : play ambient sounds
-+ Last Modefied : 2017-01-16
++ Last Modefied : 2017-01-25
 
 ## ![image: nagato-archiver.png](../nagato-archiver/nagato-archiver.png) nagato-archiver (v42.6.8)
 
@@ -108,10 +108,10 @@ CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
 + Description : dbus explorer
 + Last Modefied : 2016-08-08
 
-## ![image: ruler.png](../nagato-diagram/Pictures/Icons/ruler.png) nagato-diagram (v42.6.18)
+## ![image: shapes.png](../nagato-diagram/Pictures/Icons/shapes.png) nagato-diagram (v42.7.19)
 
 + Description : gui front-end for graphviz.
-+ Last Modefied : 2016-11-06
++ Last Modefied : 2017-02-02
 
 ![image: screenshot_001.png](../nagato-diagram/doc/screenshots/screenshot_001.png)
 
@@ -131,10 +131,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.128)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.129)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-01-21
++ Last Modefied : 2017-02-03
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -238,10 +238,10 @@ now under heavy construction.
 + Description : pdf viewer
 + Last Modefied : 2017-01-20
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.75)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.78)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2017-01-21
++ Last Modefied : 2017-02-03
 
 ### Cache Directory
 
@@ -301,6 +301,11 @@ path		|string		|fullpath of each music file
 + `/PROJECT/doc/screenshots/*.png` for screenshot
 + `/PROJECT/doc/document.md` for document
 
+
+## ![image: ruler.png](../nagato-ruler/pictures/icons/ruler.png) nagato-ruler (v42.7.2)
+
++ Description : desktop ruler
++ Last Modefied : 2017-01-27
 
 ## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.7.8)
 

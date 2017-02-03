@@ -29,10 +29,18 @@ Private Sub refreshTiles(argSelectedPaths As String[])
     $weather.Reload()
     '$music.Reload()
     
-    setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
-    setIcon(Desktop.Path, argSelectedPaths, gb.File)
+    If NagatoSettingsDesktopTile.ShowFiles Then
+        setIcon(Desktop.Path, argSelectedPaths, gb.Directory)
+        setIcon(Desktop.Path, argSelectedPaths, gb.File)
+    End If
     
     $trashBin.Reload()
+    
+    If $iconView.Count = 0 Then
+        $iconView.Add("dummy_tile", "", Null)
+    Else
+        Try $iconView.Remove("dummy_tile")
+    Endif
     
 End
 

@@ -8,6 +8,8 @@ Property ShowRss As Boolean
 Property ShowSystemMonitor As Boolean
 Property ShowWeather As Boolean
 Property ShowTrashBin As Boolean
+Property ShowDirectories As Boolean
+Property ShowFiles As Boolean
 
 Event Changed
 
@@ -91,5 +93,29 @@ End
 Private Sub ShowWeather_Write(Value As Boolean)
 
     changeSetting(Value, "desktop_view/show_weather")
+
+End
+
+Private Function ShowDirectories_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_directories", True]
+
+End
+
+Private Sub ShowDirectories_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_directories")
+
+End
+
+Private Function ShowFiles_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_files", True]
+
+End
+
+Private Sub ShowFiles_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_files")
 
 End

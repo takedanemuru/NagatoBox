@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Height As Integer
+Property Width As Integer
+Property Read PaletteSize As Integer
+
+Private Function Height_Read() As Integer
+
+    Return Me._$settings["form/height", 40]
+    
+End
+
+Private Sub Height_Write(Value As Integer)
+
+    Me._$settings["form/height"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Width_Read() As Integer
+
+    Return Me._$settings["form/width", 600]
+
+End
+
+Private Sub Width_Write(Value As Integer)
+
+    Me._$settings["form/width"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function PaletteSize_Read() As Integer
+
+    Return Me.Height + Me.Width
+
+End

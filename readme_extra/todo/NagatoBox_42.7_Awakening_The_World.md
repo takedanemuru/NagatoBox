@@ -46,7 +46,7 @@ new application : show informations on root window like conky
 
 ### nagato-player-x
 
-+ fix form papercuts
++ ~~fix form papercuts~~
 + ~~fix : remove working-directory~~
 + ~~mod : move DB to `$XDG_DATA_HOME/NagatoBox/database/media`~~
 + ~~cover art maximum size up to 300x300~~

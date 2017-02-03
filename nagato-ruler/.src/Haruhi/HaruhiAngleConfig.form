@@ -1,0 +1,12 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,45,15)
+  { SliderBox1 SliderBox
+    MoveScaled(8,2,32,4)
+    MaxValue = 90
+  }
+  { ApplyButton Button
+    MoveScaled(25,8,16,4)
+  }
+}

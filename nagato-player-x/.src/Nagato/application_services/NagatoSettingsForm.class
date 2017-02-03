@@ -70,17 +70,6 @@ Private Sub Main_Write(Value As Integer)
     Me._$settings["form/main"] = Value
     Me._$settings.Save()
 
-    Select Case Value
-        Case HPlayer
-            Application.MainWindow = HaruhiPlayer
-            HaruhiPlayer.Show()
-            HaruhiCovergloobus.Close()
-        Case HPlayList
-            Application.MainWindow = HaruhiPlayList
-        Case HCoverArt
-            Application.MainWindow = HaruhiCovergloobus
-            HaruhiPlayer.Close()
-            HaruhiCovergloobus.Show()
-    End Select
+    MikuruMainWindows.ChangeMain(Value)
 
 End

@@ -1,0 +1,41 @@
+' Gambas module file
+
+Private Sub setMainForm(argValue As Integer)
+    
+    Select Case argValue
+        Case NagatoSettingsForm.HPlayer
+            Application.MainWindow = HaruhiPlayer
+            HaruhiPlayer.Show()
+            HaruhiCovergloobus.Close()
+        Case NagatoSettingsForm.HPlayList
+            Application.MainWindow = HaruhiPlayList
+            HaruhiPlayer.Close()
+            HaruhiCovergloobus.Close()
+        Case NagatoSettingsForm.HCoverArt
+            Application.MainWindow = HaruhiCovergloobus
+            HaruhiPlayer.Close()
+            HaruhiCovergloobus.Show()
+    End Select
+    
+End
+
+Private Sub setPlayListsFormProperty(argValue As Integer)
+    
+    If argValue = NagatoSettingsForm.HPlayList Then
+        HaruhiPlayList.SkipTaskbar = False
+        HaruhiPlayList.Icon = MikuruIcon.Get("headphone")
+        HaruhiPlayList.Title = "nagato-player-x"
+    Else
+        HaruhiPlayList.SkipTaskbar = True
+        HaruhiPlayList.Icon = MikuruIcon.Get("database")
+        HaruhiPlayList.Title = "Playlists"
+    Endif
+    
+End
+
+Public Sub ChangeMain(argValue As Integer)
+    
+    setMainForm(argValue)
+    setPlayListsFormProperty(argValue)
+    
+End

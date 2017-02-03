@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnInitializeChildMenus()
+    
+    Object.New("NagatoMenuItemAngleConfigByDegree", [Me._$menu])
+    Object.New("NagatoMenuItemAngleConfigByRatio", [Me._$menu])
+    
+End
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menu
+        .Text = ("Angle")
+    End With
+    
+End

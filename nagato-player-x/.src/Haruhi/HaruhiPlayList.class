@@ -43,6 +43,20 @@ Public Sub SetFormSize()
     
 End
 
+Public Sub Form_Open()
+    
+    If NagatoSettingsForm.Main = NagatoSettingsForm.HPlayList Then
+        Me.SkipTaskbar = False
+        Me.Icon = MikuruIcon.Get("headphone")
+        Me.Title = "nagato-player-x"
+    Else
+        Me.SkipTaskbar = True
+        Me.Icon = MikuruIcon.Get("database")
+        Me.Title = "playlists"
+    Endif
+    
+End
+
 Public Sub Form_Close()
     
     If NagatoSettingsForm.Main = NagatoSettingsForm.HPlayList Then NagatoDBus.Unregister()
@@ -61,6 +75,9 @@ Public Sub Asakura_Broadcast(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.BroadcastTimer, MikuruSignal.BroadcastIndexMoved
             If Not Me.Closed Then $infoArea.Refresh()
+            If NagatoSettingsForm.Main = NagatoSettingsForm.HPlayList Then
+                Me.Title = NagatoQueue.GetProperty(MikuruProperty.CurrentTitle)
+            End If
         Case MikuruSignal.BroadcastPlaylistsChanged
             $playlistsTab.Refresh()
     End Select
