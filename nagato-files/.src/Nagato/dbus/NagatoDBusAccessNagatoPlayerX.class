@@ -60,6 +60,9 @@ Public Function GetTextTile() As String
         Return "YUKI.N > nagato-player-x is not activated"
     End If
     
+Catch
+    Return ""
+    
 End
 
 Public Sub GetTextProgress() As String

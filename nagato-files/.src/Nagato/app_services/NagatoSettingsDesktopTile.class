@@ -10,6 +10,7 @@ Property ShowWeather As Boolean
 Property ShowTrashBin As Boolean
 Property ShowDirectories As Boolean
 Property ShowFiles As Boolean
+Property ShowMusic As Boolean
 
 Event Changed
 
@@ -117,5 +118,17 @@ End
 Private Sub ShowFiles_Write(Value As Boolean)
 
     changeSetting(Value, "desktop_view/show_files")
+
+End
+
+Private Function ShowMusic_Read() As Boolean
+
+    Return Me._$settings["desktop_view/show_music", True]
+
+End
+
+Private Sub ShowMusic_Write(Value As Boolean)
+
+    changeSetting(Value, "desktop_view/show_music")
 
 End

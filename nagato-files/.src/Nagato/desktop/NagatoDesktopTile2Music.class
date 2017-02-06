@@ -5,6 +5,8 @@ Inherits NagatoDesktopTile2
 Private $proxy As NagatoDBusAccessNagatoPlayerX
 Private $descriptionPainter As NagatoDescriptionPainterStandard
 
+Event RequestRefresh
+
 Private Sub getBaseImage() As Image
     
     Dim yukiBaseImage As Image
@@ -16,6 +18,10 @@ Private Sub getBaseImage() As Image
         yukiBaseImage = New Image(MikuruUxTile.TileSize, MikuruUxTile.TileSize, Color.Red)
     Endif
     
+    Return yukiBaseImage
+    
+Catch
+    yukiBaseImage = New Image(MikuruUxTile.TileSize, MikuruUxTile.TileSize, Color.Red)
     Return yukiBaseImage
     
 End
@@ -42,35 +48,11 @@ Private Sub getThumbnail() As Image
     
 End
 
-Private Sub getThumbnailNotActivated() As Image
-    
-    Dim yukiBaseImage As New Image(128, 128, Color.Red + Color.Transparent * 128)
-    
-    Return yukiBaseImage
-    
-End
-
-Public Function getLabelText() As String
-    
-   Return ""
-    
-End
-
-Private Sub paintLabel()
-    
-    
-    
-End
-
-Public Function getIcon() As Picture
-    
-    
-    
-End
-
 Public Sub _OnReload()
     
     Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Music)
+    
+    If Not NagatoSettingsDesktopTile.ShowMusic Then Return
     
     Me._$iconView.Add(NagatoDesktopSpecialKey.Music, "", getBaseImage().Picture)
     
@@ -79,8 +61,12 @@ End
 Public Sub _OnTimer() ' override
     
     If Not DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
-        Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnailNotActivated().Picture
-    Else 
+        Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Music)
+        If Not Error Then Me._$iconView.Refresh()
+    Else If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Music) Then
+        Raise RequestRefresh
+    Else
+        If Not Object.IsValid($proxy) Then $proxy = New NagatoDBusAccessNagatoPlayerX
         Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnail().Picture
     End If
     
@@ -89,6 +75,5 @@ End
 Public Sub _OptionalOnInitialize()
     
     $descriptionPainter = New NagatoDescriptionPainterStandard(Color.Gray + Color.Transparent * 64)
-    $proxy = New NagatoDBusAccessNagatoPlayerX
     
 End

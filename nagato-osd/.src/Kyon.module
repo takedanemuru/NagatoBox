@@ -2,7 +2,12 @@
 
 Public Sub Main()
     
-    MikuruHidden.Ensure()
-    HaruhiMain.Show()
+    If DBus.Session.Applications.Exist("org.gambas.nagato-osd") Then
+        Message.Error(("YUKI.N > nagato-osd has been executed."), ("OK"))
+    Else
+        NagatoDBus.Register()
+        MikuruHidden.Ensure()
+        HaruhiMain.Show()
+    End If
     
 End

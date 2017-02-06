@@ -16,7 +16,7 @@ Public Sub _call(argY As Integer) As Integer
     If DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
         If Not Object.IsValid($proxyPlayerX) Then $proxyPlayerX = New NagatoDBusAccessNagatoPlayerX
         Paint.Font.Size = 11
-        yukiY = $painterHeader(yukiY + 4, "Now Playing")
+        yukiY = $painterHeader(yukiY + 4, ("Now Playing"))
         Paint.Font.Size = 9
         yukiY = $painterImage(yukiY + 4, $proxyPlayerX.GetCoverArtPath(), 150)
         yukiY = $painterText(yukiY + 8, $proxyPlayerX.GetText())

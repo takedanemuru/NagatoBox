@@ -1,0 +1,39 @@
+' Gambas class file
+
+Create Static
+
+Property Read Proxy As DBusProxy
+
+Public Const BusName As String = "org.gambas.nagato-osd"
+Public Const ObjectPath As String = "/org/nagato/osd"
+Public Const Interface As String = "org.gambas.nagato.osd.nagatointerface"
+
+Public Function IsUnique() As Boolean
+    
+    Return Not DBus.Session.Applications.Exist(Me.BusName)
+    
+End
+
+Public Sub Register()
+    
+    DBus.Name = BusName
+    DBus.Unique = True
+    DBus.Session.Register(NagatoInterface, Me.ObjectPath)
+    
+End
+
+Public Sub Unregister()
+    
+    DBus.Session.Unregister(NagatoInterface)
+    
+End
+
+Private Function Proxy_Read() As DBusProxy
+
+    Return DBus[Me.BusName][Me.ObjectPath, Me.Interface]
+
+Catch
+    Debug "cannot access"
+    Return Null
+
+End
