@@ -24,6 +24,18 @@ Public Sub ContextMenu_Signal(argSignal As Integer, argValues As Variant[])
     
 End
 
+Public Sub Asakura_Enter()
+    
+    Me._$gridView.ScrollBar = Scroll.Vertical
+    
+End
+
+Public Sub Asakura_Leave()
+    
+    Me._$gridView.ScrollBar = Scroll.None
+    
+End
+
 Public Sub Asakura_Menu()
     
     Dim yukiMenu As New NagatoContextMenuGridViewQueue As "ContextMenu"

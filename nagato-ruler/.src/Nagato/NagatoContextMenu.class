@@ -16,6 +16,7 @@ Public Sub _new()
     Object.New("NagatoSubMenuColors", [$rootMenu])
     Object.New("NagatoSubMenuType", [$rootMenu])
     Object.New("NagatoMenuItem", [$rootMenu]) ' as spacer
+    Object.New("NagatoMenuItemAbout", [$rootMenu])
     Object.New("NagatoMenuItemClose", [$rootMenu])
     
 End

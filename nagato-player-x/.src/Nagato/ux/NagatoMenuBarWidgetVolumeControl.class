@@ -1,0 +1,74 @@
+' Gambas class file
+
+Inherits NagatoMenuBarWidget
+
+Private $button As MenuButton
+Private $slider As Slider
+
+Private Sub addSlider(argContainer As Container)
+    
+    $slider = New Slider(argContainer) As "Slider"
+    
+    With $slider
+        .Expand = True
+        .NoTabFocus = True
+        .Visible = False
+        .Value = NagatoQueue.GetProperty(MikuruProperty.SoftwareVolume) * 100
+    End With
+    
+End
+
+Private Sub addButton(argContainer As Container)
+    
+    $button = New MenuButton(argContainer) As "Button"
+    
+    With $button
+        .Picture = MikuruIcon.Get("speaker")
+        .Text = ""
+        .W = argContainer.H
+        .Border = False
+        .Arrow = False
+    End With
+    
+End
+
+Private Sub addSpacer(argContainer As Container)
+    
+    Dim yukiSpacer As Separator
+    
+    yukiSpacer = New Separator(argContainer)
+    
+End
+
+Public Sub _OnInitializeWidget(argContainer As Container)
+    
+    addButton(argContainer)
+    addSlider(argContainer)
+    addSpacer(argContainer)
+    
+End
+
+Public Sub Refresh()
+    
+    Object.Lock($slider)
+        $slider.Value = NagatoQueue.GetProperty(MikuruProperty.SoftwareVolume) * 100
+    Object.Unlock($slider)
+    
+Catch
+    Object.Lock($slider)
+        $slider.Value = 0
+    Object.Unlock($slider)
+    
+End
+
+Public Sub Slider_Change()
+    
+    NagatoQueue(MikuruSignal.QueueSetVolume, [$slider.Value / 100])
+    
+End
+
+Public Sub Button_Click()
+    
+    $slider.Visible = Not $slider.Visible
+    
+End

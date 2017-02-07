@@ -44,6 +44,7 @@ End
 
 Public Sub _InitializeGrids() 'override
     
+    Me._$grids.ScrollBar = Scroll.None
     Me._SetColumns("", ("Title"), ("Artist"), ("Album"), ("Duration"))
     $playMark = New NagatoGridsPlayMark(Me._$grids)
     $handlerUserInput = New NagatoGridViewHandlerUserInputQueue(Me._$grids) As "UserInput"

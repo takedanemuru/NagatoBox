@@ -3,11 +3,13 @@
 Property Read H As Integer
 
 Private $hBox As HBox
+Private $volumeControl As NagatoMenuBarWidgetVolumeControl
 Private $seekbar As NagatoMenuBarWidgetSeekBar
 
 Private Sub initializeControls()
     
     Object.New("NagatoMenuBarButtonGroupPlayerControls", [$hBox])
+    $volumeControl = New NagatoMenuBarWidgetVolumeControl($hBox)
     $seekbar = New NagatoMenuBarWidgetSeekBar($hBox)
     Object.New("NagatoStarButtonQueue", [$hBox])
     
@@ -26,6 +28,7 @@ End
 
 Public Sub Refresh()
     
+    $volumeControl.Refresh()
     $seekbar.Refresh()
     
 End
