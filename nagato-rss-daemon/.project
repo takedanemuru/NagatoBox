@@ -1,0 +1,30 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.2
+Title=nagato-rss-daemon
+Startup=Kyon
+Icon=pictures/feed-alt.png
+Version=42.7.14
+Component=gb.args
+Component=gb.image
+Component=gb.dbus
+Component=gb.settings
+Component=gb.net
+Component=gb.net.curl
+Component=gb.xml
+Description="rss feeder daemon"
+Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=ja
+Maintainer=takeda.nemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex
+Url=takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-rss-daemon-42.7.14
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"System"
+Groups=ubuntu:"admin"
+ExtraFiles=ubuntu:"nagato-rss-daemon.png\t/usr/share/pixmaps\nnagato-rss-daemon.desktop\t/usr/share/applications"

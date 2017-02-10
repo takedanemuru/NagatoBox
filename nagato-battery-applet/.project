@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.9.1
+# Compiled with Gambas 3.9.2
 Title=nagato-battery-applet
 Startup=Kyon
 Icon=Pictures/icons/battery.png
-Version=42.6.2
+Version=42.7.3
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
@@ -19,8 +19,7 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-battery-applet-42.6.2
-CreateEachDirectory=1
+PackageName=nagato-battery-applet-42.7.3
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Hardware"

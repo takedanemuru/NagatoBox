@@ -9,6 +9,16 @@ Private $onMouse As Boolean
 
 Event MouseMove
 
+Private Sub toggleQueue()
+    
+    If NagatoQueue.GetProperty(MikuruProperty.PlayState) <> Media.Playing Then
+        NagatoQueue(MikuruSignal.QueuePlay, Null)
+    Else
+        NagatoQueue(MikuruSignal.QueuePause, Null)
+    End If
+    
+End
+
 Public Sub _new(argDrawingArea As DrawingArea)
     
     argDrawingArea.Tracking = True
@@ -28,6 +38,24 @@ Public Sub Asakura_Leave()
     $onMouse = False
     
     Raise MouseMove
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    If Mouse.Right Then 
+        HaruhiPlayList.Show()
+    Else If Mouse.Y > 150 Then
+        NagatoQueue(MikuruSignal.QueueSeek, [Mouse.X / 200])
+    Else If 50 > Mouse.Y Then
+        ' ignore
+    Else If Mouse.X > 150 Then
+        NagatoQueue(MikuruSignal.QueueNext, Null)
+    Else If 50 > Mouse.X Then
+        NagatoQueue(MikuruSignal.QueueBack, Null)
+    Else
+        toggleQueue()
+    End If
     
 End
 

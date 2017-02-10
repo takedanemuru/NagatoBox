@@ -4,8 +4,11 @@ Private $trayIcon As NagatoTrayIcon
 
 Public Sub Main()
     
-    MikuruPowerManager.Activate()
-    
-    $trayIcon = New NagatoTrayIcon
+    If Desktop.HasSystemTray Then
+        MikuruPowerManager.Activate()
+        $trayIcon = New NagatoTrayIcon
+    Else
+        Message.Error(("YUKI.N > No systray."), ("OK"))
+    End If
     
 End

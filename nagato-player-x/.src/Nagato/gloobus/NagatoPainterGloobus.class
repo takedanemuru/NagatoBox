@@ -28,21 +28,6 @@ End
 
 Public Sub DrawingArea_MouseDown()
     
-    If Mouse.Right Then 
-        HaruhiPlayList.Show()
-    Else If Mouse.Y > 150 Then
-        NagatoQueue(MikuruSignal.QueueSeek, [Mouse.X / 200])
-    Else If Mouse.X > 150 Then
-        NagatoQueue(MikuruSignal.QueueNext, Null)
-    Else If 50 > Mouse.X Then
-        NagatoQueue(MikuruSignal.QueueBack, Null)
-    Else
-        If NagatoQueue.GetProperty(MikuruProperty.PlayState) <> Media.Playing Then
-            NagatoQueue(MikuruSignal.QueuePlay, Null)
-        Else
-            NagatoQueue(MikuruSignal.QueuePause, Null)
-        End If
-    End If
     
 End
 

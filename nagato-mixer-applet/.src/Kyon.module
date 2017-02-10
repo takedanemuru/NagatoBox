@@ -4,9 +4,12 @@ Private $icon As NagatoTrayIcon
 
 Public Sub Main()
     
-    NagatoAlsaState.Activate()
-    HaruhiVolumeDialog.Activate()
-    
-    $icon = New NagatoTrayIcon
+    If Desktop.HasSystemTray Then
+        NagatoAlsaState.Activate()
+        HaruhiVolumeDialog.Activate()
+        $icon = New NagatoTrayIcon
+    Else
+        Message.Error(("YUKI.N > No systray"), ("OK"))
+    End If
     
 End

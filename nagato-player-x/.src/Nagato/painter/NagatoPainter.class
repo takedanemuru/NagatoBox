@@ -30,6 +30,12 @@ Public Sub _new(argDrawingArea As DrawingArea)
     
 End
 
+Public Sub Asakura_Menu()
+    
+    Try HaruhiPlayList.EnsureVisible()
+    
+End
+
 Public Sub Asakura_Draw()
     
     Paint.Begin(Draw.Device)

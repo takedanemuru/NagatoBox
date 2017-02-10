@@ -5,11 +5,6 @@
 + Description : volume monitor for NagatoBox
 + Last Modefied : 2016-09-26
 
-## ![image: dataovermind-rssfeeder.png](../dataovermind-rssfeeder/dataovermind-rssfeeder.png) dataovermind-rssfeeder (v42.6.9)
-
-+ Description : TFEI for rss feed
-+ Last Modefied : 2016-10-14
-
 ## ![image: dataovermind-systemmonitor.png](../dataovermind-systemmonitor/dataovermind-systemmonitor.png) dataovermind-systemmonitor (v42.6.19)
 
 + Description : tfei for system monitoring
@@ -131,10 +126,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.129)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.131)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-02-03
++ Last Modefied : 2017-02-10
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -221,10 +216,10 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
-## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.6)
+## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.9)
 
 + Description : on screen display for openbox3
-+ Last Modefied : 2017-01-23
++ Last Modefied : 2017-02-10
 
 ![image: screenshot_001.png](../nagato-osd/doc/screenshots/screenshot_001.png)
 
@@ -238,10 +233,10 @@ now under heavy construction.
 + Description : pdf viewer
 + Last Modefied : 2017-01-20
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.78)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.79)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2017-02-03
++ Last Modefied : 2017-02-08
 
 ### Cache Directory
 
@@ -302,10 +297,15 @@ path		|string		|fullpath of each music file
 + `/PROJECT/doc/document.md` for document
 
 
-## ![image: ruler.png](../nagato-ruler/pictures/icons/ruler.png) nagato-ruler (v42.7.2)
+## ![image: feed-alt.png](../nagato-rss-daemon/pictures/feed-alt.png) nagato-rss-daemon (v42.7.14)
+
++ Description : rss feeder daemon
++ Last Modefied : 2017-02-09
+
+## ![image: ruler.png](../nagato-ruler/pictures/icons/ruler.png) nagato-ruler (v42.7.4)
 
 + Description : desktop ruler
-+ Last Modefied : 2017-01-27
++ Last Modefied : 2017-02-07
 
 ## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.7.8)
 

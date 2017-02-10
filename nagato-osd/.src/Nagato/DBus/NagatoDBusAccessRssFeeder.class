@@ -3,9 +3,9 @@
 Property Read Activated As Boolean
 Property Read TitleLength As Integer
 
-Private Const ServiceName As String = "org.gambas.dataovermind-rssfeeder"
-Private Const ObjectPath As String = "/org/dataovermind/rssfeeder"
-Private Const InterfaceName As String = "org.gambas.dataovermind.rssfeeder.tfei"
+Private Const ServiceName As String = "org.gambas.nagato-rss-daemon"
+Private Const ObjectPath As String = "/org/nagato/rss/daemon"
+Private Const InterfaceName As String = "org.gambas.nagato.rss.daemon.tfei"
 
 Private $proxy As DBusProxy
 Private $feedTitle As String
@@ -40,7 +40,7 @@ Public Sub _get(argOffset As Integer, Optional argItemType As Integer = 1) As St
     Dim yukiFeedIndex As Integer = $feedIndex
     Dim yukiItemIndex As Integer = $itemIndex
     
-    If Not Object.IsValid($proxy) Then Return ["", "", "", ""]
+    If Not Object.IsValid($proxy) Then Return ""
     
     Do
         If yukiOffset = 0 Then Break
@@ -55,11 +55,15 @@ Public Sub _get(argOffset As Integer, Optional argItemType As Integer = 1) As St
     
     Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)[argItemType]
     
+Catch
+    Return ""
+    
 End
 
 Public Sub Activate()
     
-    If Not DBus.Session.Applications.Exist(ServiceName) Then Shell "dataovermind-rssfeeder"
+    'If Not DBus.Session.Applications.Exist(ServiceName) Then Shell "dataovermind-rssfeeder"
+    Shell "nagato-rss-daemon --check-in nagato-osd"
     
     If DBus.Session.Applications.Exist(ServiceName) Then 
         If Not Object.IsValid($proxy) Then $proxy = DBus[ServiceName][ObjectPath, InterfaceName]
@@ -71,6 +75,7 @@ Private Function Activated_Read() As Boolean
 
     If Not DBus.Session.Applications.Exist(ServiceName) Then Return False
     If Not Object.IsValid($proxy) Then Return False 
+    If $proxy.FeedCount = 0 Then Return False
 
     Return True
 

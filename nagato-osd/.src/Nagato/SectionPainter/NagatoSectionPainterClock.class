@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private $painterText As New NagatoPainterText
-Private $week As String[] = ["Sunday", "Monday", "Thursday", "Wednesday", "Tuesday", "Friday", "Saturday"]
+Private $week As String[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 Private Function getCalendarText() As String
     

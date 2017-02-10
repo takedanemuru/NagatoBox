@@ -1,0 +1,58 @@
+' Gambas module file
+
+Private $arguments As New NagatoArguments
+Private $timer As New Timer As "Timer"
+Private $feedIndex As Integer = 0
+Private $itemIndex As Integer = 0
+
+Private Sub checkIn(argId As String)
+    
+    If NagatoDBus.IsUnique() Then 
+        NagatoDBus.Register()
+        TFEI.CheckIn(argId)
+    Else
+        NagatoDBus.Proxy.CheckIn(argId)
+    End If
+
+End
+
+Private Sub checkOut(argId As String)
+    
+    If NagatoDBus.IsUnique() Then Return
+    
+    NagatoDBus.Proxy.CheckOut(argId)
+    
+End
+
+Public Sub Main()
+
+    $arguments.Parse()
+    
+    If $arguments.CheckIn <> "" Then
+        checkIn($arguments.CheckIn)
+    Else If $arguments.CheckOut <> "" Then
+        checkOut($arguments.CheckOut)
+    Else
+        $timer.Enabled = True
+        checkIn("nagato-rss-daemon")
+    Endif
+
+End
+
+Public Sub Timer_Timer()
+    
+    If NagatoRss.Feeds.Count = 0 Then Return
+    
+    With NagatoRss[$feedIndex].Items
+        Print $itemIndex + 1;; .Count;; .[$itemIndex].Title
+    End With
+    
+    Inc $itemIndex
+    
+    If NagatoRss[$feedIndex].Items.Count = $itemIndex Then
+        $itemIndex = 0
+        Inc $feedIndex
+        If NagatoRss.Feeds.Count = $feedIndex Then $feedIndex = 0
+    Endif
+    
+End
