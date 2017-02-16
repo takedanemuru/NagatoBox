@@ -1,0 +1,100 @@
+' Gambas class file
+
+Inherits NagatoFunction
+
+Private Const Service As String = "org.gambas.nagato-rss-daemon"
+Private Const ObjectPath As String = "/org/nagato/rss/daemon"
+Private Const Interface As String = "org.gambas.nagato.rss.daemon.tfei"
+
+Private $proxy As DBusProxy
+
+Private Sub initializeProxy()
+    
+    If Object.IsValid($proxy) Then Return
+    
+    $proxy = DBus[Service][ObjectPath, Interface]
+    
+End
+
+Private Function showFeedTitles() As Integer
+    
+    Dim yukiCount As Integer
+    Dim yukiMax As Integer = $proxy.FeedCount
+    
+    For yukiCount = 1 To yukiMax
+        Print yukiCount & " : " & $proxy.GetFeedTitle(yukiCount - 1)
+    Next
+    
+    Return yukiMax
+    
+End
+
+Private Sub catchCommandForItem(argFeedIndex As Integer, argItemMax As Integer) 
+    
+    NagatoUserInput.Catch("YUKI.N > Select Item Index")
+    
+    With NagatoUserInput
+        If .IsValidIndex(argItemMax) Then
+            Print $proxy.GetFeedItem(argFeedIndex - 1, .Index - 1)[1]
+        Endif
+    End With
+    
+End
+
+Private Sub showItems(argFeedIndex As Integer)
+    
+    Dim yukiCount As Integer
+    Dim yukiItemMax As Integer = $proxy.GetFeedItemsCount(argFeedIndex - 1)
+    
+    For yukiCount = 1 To yukiItemMax
+        Print yukiCount & " : " & $proxy.GetFeedItem(argFeedIndex - 1, yukiCount - 1)[0]
+    Next
+    
+    catchCommandForItem(argFeedIndex, yukiItemMax)
+    
+End
+
+Private Function catchCommand(argMax As Integer) As Boolean
+    
+    NagatoUserInput.Catch("YUKI.N > Select feed index.")
+    
+    With NagatoUserInput
+        If .IsValidIndex(argMax) Then
+            showItems(.Index)
+        Else If .Include(["esc", "end", "q", "quit"]) Then
+            Print "YUKI.N > Back to home."
+            Return True
+        Endif
+    End With
+    
+    Return False
+    
+End
+
+Private Sub endlessEight()
+    
+    Do
+        If Not DBus.Session.Applications.Exist("org.gambas.nagato-rss-daemon") Then
+            Print "YUKI.N > Please wait..."
+            Wait 1
+        Else
+            initializeProxy()
+            If catchCommand(showFeedTitles()) Then
+                Exec ["nagato-rss-daemon", "--check-out", "yuki"]
+                Break
+            End If
+        End If
+    Loop
+    
+End
+
+Public Sub Show(Optional argValues As Variant[])
+    
+    If Desktop.NetworkAvailable Then
+        Exec ["nagato-rss-daemon", "--check-in", "yuki"]
+        endlessEight()
+    Else
+        Print "YUKI.N > Network unavailable."
+    End If
+    
+End

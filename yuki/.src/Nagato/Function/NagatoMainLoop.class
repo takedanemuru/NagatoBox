@@ -2,12 +2,13 @@
 
 Create Static
 
-Public Enum HookNone, HookFiles, HookApplications, HookDictionary
+Public Enum HookNone, HookFiles, HookApplications, HookDictionary, HookRss
 
 Private $apps As New NagatoApps
 Private $dictionary As New NagatoDictionary
 Private $files As New NagatoMove
 Private $misc As New NagatoMisc
+Private $rss As New NagatoRss
 
 Private Sub catchCommand()
     
@@ -19,6 +20,8 @@ Private Sub catchCommand()
         $apps.Show()
     Else If NagatoUserInput.Include(["dic", "dict", "dictionary"]) Then
         $dictionary.Show()
+    Else If NagatoUserInput.Include(["rss", "news"]) Then
+        $rss.Show()
     Else
         $misc.Show()
     End If
