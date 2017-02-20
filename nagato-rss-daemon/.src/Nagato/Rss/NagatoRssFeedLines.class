@@ -23,7 +23,7 @@ Public Function GetDefault() As Collection
         .Add(LinuxComAll, "Linux.com All")
         .Add(LinuxComCommunityBlog, "Linux.com Community Blog")
         .Add(LinuxComDesktop, "Linux.com Desktop")
-        .Add(LinuxComTutorials, "Linux.com Tutorials")
+        '.Add(LinuxComTutorials, "Linux.com Tutorials")
         .Add(Phoronix, "Phoronix")
         .Add(ReutersTechnology, "Reuters Technology")
         .Add(ReutersOddlyEnough, "Reuters Oddly Enough")

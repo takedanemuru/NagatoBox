@@ -1,0 +1,43 @@
+' Gambas module file
+
+Private $name As String
+Private $url As String
+Private $feed As NagatoRssFeed2
+
+Private Sub saveUrl(argUrl As String, Optional argName As String = "Unknown")
+    
+    Dim yukiName As String = IIf($name <> "", $name, argName)
+    
+    NagatoSettings.AddFeed(yukiName, argUrl)
+    
+End
+
+Public Sub _call(argUrl As String, argName As String)
+    
+    If NagatoSettings.FeedLines.Exist(argUrl) Then
+        Print "YUKI.N > This url has been registered."
+    Else
+        Print "YUKI.N > We are going to check url validation."
+        $name = argName
+        $url = argUrl
+        $feed = New NagatoRssFeed2(argUrl) As "Feed"
+    End If
+    
+End
+
+Public Sub Feed_Error()
+    
+    Print "YUKI.N > Some error occured. We couldn't add this feed."
+    
+End
+
+Public Sub Feed_Finished(argFeed As NagatoRssFeed2)
+    
+    If argFeed.Items.Count > 0 Then
+        Print "YUKI.N > Validation confirmed."
+        saveUrl($url, argFeed.Title)
+    Else
+        Me.Feed_Error()
+    Endif
+    
+End

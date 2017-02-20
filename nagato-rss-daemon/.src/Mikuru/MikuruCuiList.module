@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Sub _call()
+    
+    Dim yukiCollection As Collection = NagatoSettings.FeedLines.Copy()
+    Dim yukiValue As String
+    Dim yukiIndex As Integer
+    
+    Print "[registered list]"
+    
+    For Each yukiValue In yukiCollection
+        Inc yukiIndex
+        Print yukiIndex & " " & yukiCollection.Key & " : " & yukiValue
+    Next
+    
+End

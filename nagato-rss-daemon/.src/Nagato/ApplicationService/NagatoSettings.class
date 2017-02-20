@@ -15,14 +15,21 @@ Public Sub AddFeed(argTitle As String, argUrl As String)
     yukiCollection.Add(argUrl, argTitle)
     Me.FeedLines = yukiCollection
     
+    Print "YUKI.N > New RSS feed successfully saved."
+    
 End
 
-Public Sub RemoveFeed(argTitle As String)
+Public Sub RemoveFeed(argUrl As String)
     
     Dim yukiCollection As Collection = Me.FeedLines.Copy()
     
-    yukiCollection.Remove(argTitle)
-    Me.FeedLines = yukiCollection
+    If yukiCollection.Exist(argUrl) Then
+        yukiCollection.Remove(argUrl)
+        Me.FeedLines = yukiCollection
+        Print "YUKI.N > RSS Feed successfully unregistered."
+    Else
+        Print "YUKI.N > Url hasn't been registered."
+    End If
     
 End
 

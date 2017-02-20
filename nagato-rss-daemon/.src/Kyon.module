@@ -1,9 +1,6 @@
 ' Gambas module file
 
 Private $arguments As New NagatoArguments
-Private $timer As New Timer As "Timer"
-Private $feedIndex As Integer = 0
-Private $itemIndex As Integer = 0
 
 Private Sub checkIn(argId As String)
     
@@ -24,35 +21,32 @@ Private Sub checkOut(argId As String)
     
 End
 
-Public Sub Main()
-
-    $arguments.Parse()
+Private Sub normalSequence()
     
     If $arguments.CheckIn <> "" Then
         checkIn($arguments.CheckIn)
     Else If $arguments.CheckOut <> "" Then
         checkOut($arguments.CheckOut)
+    Else If $arguments.List Then
+        MikuruCuiList()
+    Else If $arguments.Add <> "" Then
+        MikuruAddNewFeed($arguments.Add, $arguments.Name)
+    Else If $arguments.Remove <> "" Then
+        NagatoSettings.RemoveFeed($arguments.Remove)
     Else
-        $timer.Enabled = True
         checkIn("nagato-rss-daemon")
+        MikuruCuiTicker()
     Endif
-
+    
 End
 
-Public Sub Timer_Timer()
+Public Sub Main()
+
+    $arguments.Parse()
+    normalSequence()
     
-    If NagatoRss.Feeds.Count = 0 Then Return
-    
-    With NagatoRss[$feedIndex].Items
-        Print $itemIndex + 1;; .Count;; .[$itemIndex].Title
-    End With
-    
-    Inc $itemIndex
-    
-    If NagatoRss[$feedIndex].Items.Count = $itemIndex Then
-        $itemIndex = 0
-        Inc $feedIndex
-        If NagatoRss.Feeds.Count = $feedIndex Then $feedIndex = 0
-    Endif
+    ' For Testing.
+    'MikuruCuiList()
+    'MikuruAddNewFeed("http://rss.cnn.com/rss/edition_technology.rss", "CNN Technology News")
     
 End

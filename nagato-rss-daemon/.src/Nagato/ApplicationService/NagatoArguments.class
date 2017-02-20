@@ -5,18 +5,23 @@ Property Read CheckOut As String
 Property Read List As Boolean
 Property Read Add As String
 Property Read Remove As String
+Property Read Name As String
 
 Private $checkIn As String
 Private $checkOut As String
 Private $list As Boolean
 Private $add As String
 Private $remove As String
+Private $name As String
 
 Public Sub Parse()
     
     Args.Begin("usage : ")
-        $checkIn = Args.Get("i", "check-in", "start service by id", "id")
-        $checkOut = Args.Get("o", "check-out", "stop service by id", "id")
+        $checkIn = Args.Get("i", "check-in", "start service by id", "id as String")
+        $checkOut = Args.Get("o", "check-out", "stop service by id", "id as String")
+        $remove = Args.Get("r", "--remove-url", "remove rss url", "url as String")
+        $add = Args.Get("a", "--add-url", "add rss url", "url as String")
+        $name = Args.Get("n", "--define-name", "define rss name, must use with --add-url option", "name as String")
     Args.End()
     
 End
@@ -48,5 +53,11 @@ End
 Private Function Remove_Read() As String
 
     Return $remove
+
+End
+
+Private Function Name_Read() As String
+
+    Return $name
 
 End
