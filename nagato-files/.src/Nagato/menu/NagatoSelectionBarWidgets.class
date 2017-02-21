@@ -24,12 +24,7 @@ End
 Public Sub SetCount(argCount As Integer)
     
     $container.Visible = (argCount <> 0)
-    
-    If argCount = 0 Then
-        $label.SetText(0)
-    Else 
-        $label.SetText(IIf(NagatoSettings.MultipleSelection, argCount, 1))
-    Endif
+    $label.SetText(argCount)
     
 End
 

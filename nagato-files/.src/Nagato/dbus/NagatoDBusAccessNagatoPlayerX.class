@@ -76,6 +76,12 @@ Public Sub GetTextProgress() As String
     
 End
 
+Public Function GetCurrentPath() As String
+    
+    Return $property.CurrentPath
+    
+End
+
 Public Sub GetTextMain() As String
     
     Dim yukiText As String 

@@ -75,15 +75,16 @@ End
 Public Sub _OnTimer() ' override
     
     If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Weather) Then Return
-    If Not $proxy.Activated Then Return
-    
-    Me._$iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
+    If Not $proxy.Activated Then 
+        $proxy.Activate()
+    Else
+        Me._$iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
+    End If
     
 End
 
 Public Sub _OptionalOnInitialize()
     
     $proxy = New NagatoDBusAccessWeather
-    $proxy.Activate()
     
 End

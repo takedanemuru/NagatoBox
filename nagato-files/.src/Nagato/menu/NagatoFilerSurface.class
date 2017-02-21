@@ -57,7 +57,6 @@ End
 
 Public Sub NewSelection(argDirectory As String, argSelection As String[])
     
-    NagatoSettings.MultipleSelection = True
     $userInput.SetPaths(argSelection)
     $iconView.Refresh(argDirectory, $userInput.Selection, $userInput.LastSelected)
     
@@ -66,7 +65,6 @@ End
 Public Sub MouseDown(argPath As String, argMouseLeft As Boolean)
     
     $userInput.Push(argPath, argMouseLeft)
-    If Not NagatoSettings.MultipleSelection Then surfaceClearSelection()
     $iconView.ResetIcon(argPath, $userInput.Exist(argPath))
     TFEI.SetFileProperty($userInput.LastSelected)
     

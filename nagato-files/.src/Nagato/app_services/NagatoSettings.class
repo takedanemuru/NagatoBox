@@ -3,7 +3,6 @@
 Inherits NagatoSettingsCore
 
 Property ShowHidden As Boolean
-Property MultipleSelection As Boolean
 Property SortBy As Integer
 Property SortAscent As Boolean
 Property PathbarAutomaticSearch As Boolean
@@ -12,7 +11,6 @@ Property SearchMode As Integer
 Public Enum SearchInclude, SearchBegins, SearchEnds
 
 Event ShowHiddenChanged
-Event MultipleSelectionChanged
 
 Private Function ShowHidden_Read() As Boolean
 
@@ -27,21 +25,6 @@ Private Sub ShowHidden_Write(Value As Boolean)
         Raise ShowHiddenChanged
     End If
     
-End
-
-Private Function MultipleSelection_Read() As Boolean
-
-    Return Me._$settings["view/multiple_selection", False]
-
-End
-
-Private Sub MultipleSelection_Write(Value As Boolean)
-
-    If Value <> Me._$settings["view/multiple_selection"] Then
-        Me._$settings["view/multiple_selection"] = Value
-        Raise MultipleSelectionChanged
-    End If
-
 End
 
 Private Function SortBy_Read() As Integer

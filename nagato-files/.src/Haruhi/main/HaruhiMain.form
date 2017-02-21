@@ -5,14 +5,6 @@
   Drop = True
   Icon = Picture["folder.png"]
   Arrangement = Arrange.Vertical
-  { RootLabel TextLabel
-    MoveScaled(3,1,66,4)
-    Visible = False
-    Font = Font["Bold"]
-    Background = &HFF007F&
-    Foreground = &HFFFFFF&
-    Alignment = Align.Center
-  }
   { MainHBox HBox
     MoveScaled(2,6,68,43)
     Expand = True

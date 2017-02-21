@@ -2,18 +2,33 @@
 
 Create Static
 
-Property Read BaseColor As Integer
-Property Read ShadeColor As Integer
+Property BaseColor As Integer
+Property ShadeColor As Integer
+
+Private $settings As New Settings
 
 Private Function BaseColor_Read() As Integer
 
-    'Return 11591910
-    Return Color.Violet
+    Return $settings["font/foreground_color", Color.Violet]
+
+End
+
+Private Sub BaseColor_Write(Value As Integer)
+
+    $settings["font/foreground_color"] = Value
+    $settings.Save()
 
 End
 
 Private Function ShadeColor_Read() As Integer
 
-    Return Color.White
+    Return $settings["font/shade_color", Color.White]
+
+End
+
+Private Sub ShadeColor_Write(Value As Integer)
+
+    $settings["font/shade_color"] = Value
+    $settings.Save()
 
 End

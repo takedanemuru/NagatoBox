@@ -5,7 +5,6 @@ Inherits NagatoObject
 Property Read Path As String
 
 Private $container As NagatoPanelContainer
-Private $selectionButton As NagatoMenuPanelSelectionButton
 Private $buttonSuite As NagatoMenuPanelButtonSuit
 Private $pathBar As NagatoPathBar
 Private $starButton As NagatoMenuPanelStarButton
@@ -31,7 +30,6 @@ End
 Public Sub _new(argContainer As Container)
     
     $container = New NagatoPanelContainer(argContainer)
-    $selectionButton = New NagatoMenuPanelSelectionButton($container.HBox)
     $buttonSuite = New NagatoMenuPanelButtonSuit($container.HBox) As "TFEI"
     $pathBar = New NagatoPathBar($container.HBox) As "TFEI"
     $starButton = New NagatoMenuPanelStarButton($container.HBox) As "TFEI"

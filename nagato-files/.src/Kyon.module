@@ -30,7 +30,9 @@ End
 
 Private Sub startNormalSequence()
     
-    If NagatoArguments.DesktopIcons Then
+    If MikuruAccountChecker.IsRoot() Then 
+        Message.Warning("YUKI.N > Launch with root privilege is prohibited.", ("OK"))
+    Else If NagatoArguments.DesktopIcons Then
         activateDesktop()
     Else If NagatoArguments.ShowDesktop Then
         showDesktop()
