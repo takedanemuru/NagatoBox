@@ -23,7 +23,7 @@ End
 
 Public Sub DrawingArea_Draw()
     
-    Dim yukiY As Integer = 32
+    Dim yukiY As Integer = NagatoSettingsForm.TopMargin
     
     Paint.Begin($drawingArea)
         Paint.AntiAlias = True

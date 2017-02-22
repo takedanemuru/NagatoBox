@@ -1,10 +1,5 @@
 # Applications List
 
-## ![image: information-balloon.png](../dataovermind-disks/Pictures/information-balloon.png) dataovermind-disks (v42.5.7)
-
-+ Description : volume monitor for NagatoBox
-+ Last Modefied : 2016-09-26
-
 ## ![image: dataovermind-systemmonitor.png](../dataovermind-systemmonitor/dataovermind-systemmonitor.png) dataovermind-systemmonitor (v42.6.19)
 
 + Description : tfei for system monitoring
@@ -53,10 +48,10 @@ CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
 
 
 
-## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.6.2)
+## ![image: battery.png](../nagato-battery-applet/Pictures/icons/battery.png) nagato-battery-applet (v42.7.3)
 
 + Description : battery status icon for systray
-+ Last Modefied : 2016-11-28
++ Last Modefied : 2017-02-10
 
 ## ![image: nagato-calculator.png](../nagato-calculator/nagato-calculator.png) nagato-calculator (v42.7.9)
 
@@ -126,10 +121,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.131)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.132)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-02-10
++ Last Modefied : 2017-02-21
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -184,10 +179,10 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 + Description : map viewer.
 + Last Modefied : 2017-01-18
 
-## ![image: speaker.png](../nagato-mixer-applet/Pictures/icons/speaker.png) nagato-mixer-applet (v42.5.9)
+## ![image: speaker.png](../nagato-mixer-applet/Pictures/icons/speaker.png) nagato-mixer-applet (v42.7.10)
 
 + Description : simple mixer applet for trayicon
-+ Last Modefied : 2016-08-11
++ Last Modefied : 2017-02-10
 
 ## ![image: nagato-movie.png](../nagato-movie/nagato-movie.png) nagato-movie (v42.6.8)
 
@@ -216,10 +211,10 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
-## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.9)
+## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.10)
 
 + Description : on screen display for openbox3
-+ Last Modefied : 2017-02-10
++ Last Modefied : 2017-02-22
 
 ![image: screenshot_001.png](../nagato-osd/doc/screenshots/screenshot_001.png)
 
@@ -297,10 +292,10 @@ path		|string		|fullpath of each music file
 + `/PROJECT/doc/document.md` for document
 
 
-## ![image: feed-alt.png](../nagato-rss-daemon/pictures/feed-alt.png) nagato-rss-daemon (v42.7.14)
+## ![image: feed-alt.png](../nagato-rss-daemon/pictures/feed-alt.png) nagato-rss-daemon (v42.7.15)
 
 + Description : rss feeder daemon
-+ Last Modefied : 2017-02-09
++ Last Modefied : 2017-02-20
 
 ## ![image: ruler.png](../nagato-ruler/pictures/icons/ruler.png) nagato-ruler (v42.7.4)
 
@@ -370,10 +365,10 @@ taskmanager for NagatoBox
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.53)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.54)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2017-01-17
++ Last Modefied : 2017-02-22
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 
@@ -387,8 +382,8 @@ taskmanager for NagatoBox
 + Description : youtube viewer
 + Last Modefied : 2017-01-17
 
-## ![image: yuki.png](../yuki/yuki.png) yuki (v42.5.50)
+## ![image: yuki.png](../yuki/yuki.png) yuki (v42.7.51)
 
 + Description : command line interface for humanoid interface.
-+ Last Modefied : 2016-08-10
++ Last Modefied : 2017-02-16
 

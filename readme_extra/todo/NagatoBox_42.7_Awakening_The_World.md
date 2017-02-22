@@ -21,14 +21,15 @@
 
 ### nagato-files
 
-+ tile color settings
++ ~~tile color settings~~
 + ~~fix : remove working directories, use Desktop.CacheDir instead.~~
 + ~~mod : move DB to `$XDG_DATA_HOME/NagatoBox/database/foobar`~~
 
 ![image: screenshot_2017年01月11日_17：39：01](../images/screenshot_2017年01月11日_17：39：01.png)
-+ ~~desktop panel transparency~~ (experimental)
-
-+ prohibit to launch app itself as super user (check policy per action.)
++ ~~desktop panel transparency~~ 
++ ~~prohibit to launch app itself as super user (check policy per action.)~~
++ ~~remove single selection mode~~
++ ~~nagato-player-x tile for desktop~~
 
 ### nagato-osd
 
@@ -54,6 +55,12 @@ new application : show informations on root window like conky
 
 ![image: screenshot_2017年01月25日_19：53：01](../images/screenshot_2017年01月25日_19：53：01.png)
 
+### nagato-rss-daemon
+
++ ~~rename dataovermind-rssfeeder to nagato-rss-daemon~~
++ ~~new : add `--check-in` `--check-out` options~~
++ ~~finish long over due `--add` `--remove` `--list` options~~ (cui only)
+
 ### nagato-taskmanager
 
 + ~~network tab~~
@@ -66,6 +73,7 @@ new application : show informations on root window like conky
 ### nagato-web
 
 + ~~mod : move db host to `$XDG_DATA_DIR/NagatoBox/database`~~
++ ~~fix : do not set window title when non-active webview is reloaded.~~
 
 ### nagato-youtube-view
 

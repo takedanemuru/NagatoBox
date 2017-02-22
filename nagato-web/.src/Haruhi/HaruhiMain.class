@@ -58,7 +58,7 @@ Public Sub Body_Signal(argEvent As Integer, argArguments As Variant[])
         Case MikuruSignal.PersonaSetText
             $headerContainer.SetText(argArguments[0])
         Case MikuruSignal.WebProgress
-            Me.Title = argArguments[4]
+            If Me.ActiveIndex = argArguments[0] Then Me.Title = argArguments[4]
             $headerContainer.SetText(Subst$("&1:&2%", argArguments[1], argArguments[2] * 100))
             $bodyContainer(argEvent, argArguments)
     End Select

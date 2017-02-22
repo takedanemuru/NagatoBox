@@ -7,10 +7,10 @@ Public Sub _call(argStartY As Integer, argText As String, Optional argAlign As I
     
     If argStartY + yukiTextHeight + 8 >= HaruhiMain.H Then Return argStartY + yukiTextHeight
     
-    Paint.Brush = Paint.Color(NagatoSettings.ShadeColor + Color.Transparent * 192)
+    Paint.Brush = Paint.Color(NagatoSettingsFonts.ShadeColor + Color.Transparent * 192)
     Paint.DrawRichText(argText, yukiRect.X + 1, yukiRect.Y + 1, yukiRect.W, yukiRect.H, argAlign)
     Paint.Fill()
-    Paint.Brush = Paint.Color(NagatoSettings.BaseColor + Color.Transparent * 192)
+    Paint.Brush = Paint.Color(NagatoSettingsFonts.BaseColor + Color.Transparent * 192)
     Paint.DrawRichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, argAlign)
     Paint.Fill()
     

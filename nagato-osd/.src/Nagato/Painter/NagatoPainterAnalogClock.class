@@ -65,7 +65,7 @@ Public Sub _call(argY As Integer) As Integer
     
     setOffset(argY)
     
-    paintClockFace(Color.Orange)
+    paintClockFace(Color.Lighter(Color.Violet))
     paintPoints(Color.White)
     paintClockHands(Color.Violet)
     

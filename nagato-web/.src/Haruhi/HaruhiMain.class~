@@ -42,7 +42,6 @@ End
 Public Sub Form_Close()
     
     NagatoSettingsForm.Save(Me)
-    Debug Me.Maximized
     NagatoDBus.Unregister()
     
 End

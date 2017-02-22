@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Width As Integer
+Property TopMargin As Integer
+
+Private Function Width_Read() As Integer
+
+    Return Me._$settings["form/width", 200]
+
+End
+
+Private Sub Width_Write(Value As Integer)
+
+    Me._$settings["form/width"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function TopMargin_Read() As Integer
+
+    Return Me._$settings["form/top_margin", 32]
+
+End
+
+Private Sub TopMargin_Write(Value As Integer)
+
+    Me._$settings["form/top_margin"] = Value
+    Me._$settings.Save()
+
+End

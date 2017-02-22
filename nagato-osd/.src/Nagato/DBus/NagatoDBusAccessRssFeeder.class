@@ -1,7 +1,8 @@
 ' Gambas class file
 
 Property Read Activated As Boolean
-Property Read TitleLength As Integer
+'Property Read TitleLength As Integer
+Property Read FeedTitle As String
 
 Private Const ServiceName As String = "org.gambas.nagato-rss-daemon"
 Private Const ObjectPath As String = "/org/nagato/rss/daemon"
@@ -16,7 +17,7 @@ Public Enum RssTitle, RssDescription, RssThumbnailUrl, RssUrl
 
 Private Sub ensureTitle()
     
-    If $feedTitle = "" Then $feedTitle = $proxy.GetFeedTitle($feedIndex) & " : "
+    If $feedTitle = "" Then $feedTitle = $proxy.GetFeedTitle($feedIndex) 
     
 Catch
     Return
@@ -62,7 +63,6 @@ End
 
 Public Sub Activate()
     
-    'If Not DBus.Session.Applications.Exist(ServiceName) Then Shell "dataovermind-rssfeeder"
     Shell "nagato-rss-daemon --check-in nagato-osd"
     
     If DBus.Session.Applications.Exist(ServiceName) Then 
@@ -81,8 +81,17 @@ Private Function Activated_Read() As Boolean
 
 End
 
-Private Function TitleLength_Read() As Integer
+' Private Function TitleLength_Read() As Integer
+' 
+'     Return String.Len($feedTitle)
+' 
+' End
 
-    Return String.Len($feedTitle)
+Private Function FeedTitle_Read() As String
+
+    Return $proxy.GetFeedTitle($feedIndex) 
+
+Catch
+    Return "News"
 
 End

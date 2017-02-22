@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property BaseColor As Integer
+Property ShadeColor As Integer
+
+Private Function BaseColor_Read() As Integer
+
+    Return Me._$settings["font/foreground_color", Color.Violet]
+
+End
+
+Private Sub BaseColor_Write(Value As Integer)
+
+    Me._$settings["font/foreground_color"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function ShadeColor_Read() As Integer
+
+    Return Me._$settings["font/shade_color", Color.White]
+
+End
+
+Private Sub ShadeColor_Write(Value As Integer)
+
+    Me._$settings["font/shade_color"] = Value
+    Me._$settings.Save()
+
+End
