@@ -25,7 +25,7 @@ End
 
 Public Sub SetTabTextAndPicture(argTitle As String, argPicture As Picture)
     
-    $tabStrip.Text = argTitle
+    $tabStrip.Text = IIf(argTitle = "", "Root Directory", argTitle)
     $tabStrip.Picture = argPicture
     
 End

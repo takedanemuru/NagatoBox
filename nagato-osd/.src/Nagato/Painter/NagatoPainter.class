@@ -31,10 +31,10 @@ Public Sub DrawingArea_Draw()
         'Paint.Font.Name = "Times New Roman"
         $painterBackground()
         yukiY = $painterClock(yukiY)
-        'yukiY = $painterAnalogClock(yukiY)
+        yukiY = $painterAnalogClock(yukiY)
         yukiY = $painterSystem(yukiY)
         yukiY = $painterMusic(yukiY)
-        yukiY = $painterRss(yukiY)
+        'yukiY = $painterRss(yukiY)
     Paint.End()
     
 End

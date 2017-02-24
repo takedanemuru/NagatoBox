@@ -1,60 +1,54 @@
 ' Gambas class file
 
 Property Read Activated As Boolean
-'Property Read TitleLength As Integer
-Property Read FeedTitle As String
 
 Private Const ServiceName As String = "org.gambas.nagato-rss-daemon"
 Private Const ObjectPath As String = "/org/nagato/rss/daemon"
 Private Const InterfaceName As String = "org.gambas.nagato.rss.daemon.tfei"
 
 Private $proxy As DBusProxy
-Private $feedTitle As String
 Private $feedIndex As Integer = 0
 Private $itemIndex As Integer = 0
 
 Public Enum RssTitle, RssDescription, RssThumbnailUrl, RssUrl
 
-Private Sub ensureTitle()
+Private Sub getFeedItemOffset(argOffset As Integer) As String[]
     
-    If $feedTitle = "" Then $feedTitle = $proxy.GetFeedTitle($feedIndex) 
+    Dim yukiFeedIndex As Integer = $feedIndex
+    Dim yukiItemIndex As Integer = $itemIndex
     
-Catch
-    Return
+    Do While argOffset > 0 
+        Dec argOffset
+        yukiItemIndex = IIf($proxy.GetFeedItemsCount(yukiFeedIndex) = yukiItemIndex + 1, 0, yukiItemIndex + 1)
+        If yukiItemIndex > 0 Then Continue
+        yukiFeedIndex = IIf($proxy.FeedCount = yukiFeedIndex + 1, 0, yukiFeedIndex + 1)
+    Loop
+    
+    Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)
     
 End
 
 Public Sub Next()
     
     $itemIndex = IIf($proxy.GetFeedItemsCount($feedIndex) = $itemIndex + 1, 0, $itemIndex + 1)
+    If $itemIndex > 0 Then Return
+    $feedIndex = IIf($proxy.FeedCount = $feedIndex + 1, 0, $feedIndex + 1)
+    
+End
 
-    If $itemIndex = 0 Then 
-        $feedIndex = IIf($proxy.FeedCount = $feedIndex + 1, 0, $feedIndex + 1)
-        $proxy.GetFeedTitle($feedIndex)
-    End If
+Public Function GetFeedItem(argOffset As Integer) As String[]
+    
+    If Not Object.IsValid($proxy) Then Return Null
+    
+    Return getFeedItemOffset(argOffset)
     
 End
 
 Public Sub _get(argOffset As Integer, Optional argItemType As Integer = 1) As String
     
-    Dim yukiOffset As Integer = argOffset
-    Dim yukiFeedIndex As Integer = $feedIndex
-    Dim yukiItemIndex As Integer = $itemIndex
-    
     If Not Object.IsValid($proxy) Then Return ""
     
-    Do
-        If yukiOffset = 0 Then Break
-        Inc yukiItemIndex
-        If yukiItemIndex >= $proxy.GetFeedItemsCount(yukiFeedIndex) Then
-            yukiItemIndex = 0
-            Inc yukiFeedIndex
-        Endif
-        If yukiFeedIndex >= $proxy.FeedCount Then yukiFeedIndex = 0
-        Dec yukiOffset
-    Loop
-    
-    Return $proxy.GetFeedItem(yukiFeedIndex, yukiItemIndex)[argItemType]
+    Return getFeedItemOffset(argOffset)[argItemType]
     
 Catch
     Return ""
@@ -65,9 +59,8 @@ Public Sub Activate()
     
     Shell "nagato-rss-daemon --check-in nagato-osd"
     
-    If DBus.Session.Applications.Exist(ServiceName) Then 
-        If Not Object.IsValid($proxy) Then $proxy = DBus[ServiceName][ObjectPath, InterfaceName]
-    End If
+    If Not DBus.Session.Applications.Exist(ServiceName) Then Return
+    If Not Object.IsValid($proxy) Then $proxy = DBus[ServiceName][ObjectPath, InterfaceName]
     
 End
 
@@ -78,20 +71,5 @@ Private Function Activated_Read() As Boolean
     If $proxy.FeedCount = 0 Then Return False
 
     Return True
-
-End
-
-' Private Function TitleLength_Read() As Integer
-' 
-'     Return String.Len($feedTitle)
-' 
-' End
-
-Private Function FeedTitle_Read() As String
-
-    Return $proxy.GetFeedTitle($feedIndex) 
-
-Catch
-    Return "News"
 
 End

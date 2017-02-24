@@ -8,14 +8,15 @@ Private $thumbnail As New NagatoRssThumbnail
 
 Private Sub showThumbnail(argY As Integer, argTitle As String) As Integer
     
-    Dim yukiY As Integer = argY
+    Dim yukiY As Integer = argY + 4
     
     If $thumbnail.HasThumbnail(argTitle) Then
         yukiY = $painterImage(yukiY, $thumbnail.GetThumbnailPath(argTitle), 150)
     Endif
-    If (Second(Now()) + 10) Mod 15 = 0 Then $thumbnail.SetUrl($proxyRss[1, NagatoDBusAccessRssFeeder.RssThumbnailUrl])
     
-    Return yukiY
+    If (Second(Now()) + 10) Mod 15 = 0 Then $thumbnail.SetUrl($proxyRss.GetFeedItem(1))
+    
+    Return yukiY + 4
     
 End
 
@@ -25,7 +26,7 @@ Private Sub paintNews(argY As Integer) As Integer
     Dim yukiItemNumber As Integer = 0
     Dim yukiItemType As Integer = NagatoDBusAccessRssFeeder.RssDescription
     
-    Do
+    Do 
         yukiY = $painterText(yukiY, $proxyRss[yukiItemNumber, yukiItemType], Align.TopLeft)
         If yukiY > HaruhiMain.H Then Break
         yukiY = $painterText(yukiY, " ---- ", Align.Top)
@@ -45,6 +46,7 @@ Public Sub _call(argY As Integer) As Integer
     yukiY = $painterHeader(yukiY + 4, "News")
     Paint.Font.Size = 9
     If $proxyRss.Activated Then
+        yukiY = showThumbnail(yukiY, $proxyRss[0, 0])
         yukiY = paintNews(yukiY)
     Else
         yukiY = $painterText(yukiY, "please wait ...")

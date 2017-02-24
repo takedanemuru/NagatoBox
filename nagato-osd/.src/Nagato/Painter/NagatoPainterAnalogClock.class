@@ -16,7 +16,7 @@ End
 
 Private Sub paintClockHand(argDegree As Integer, argLength As Integer, argWidth As Integer, argColor As Integer)
     
-    Paint.Brush = Paint.Color(argColor + Color.Transparent * 64)
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 250)
     Paint.LineWidth = argWidth
     Paint.LineCap = Paint.LineCapRound
     Paint.MoveTo(getX(argDegree, 10), getY(argDegree, 10))
@@ -37,7 +37,7 @@ Private Sub paintPoints(argColor As Integer)
     
     Dim yukiPoint As Integer
     
-    Paint.Brush = Paint.Color(argColor + Color.Transparent * 128)
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 250)
         Paint.Ellipse($offset.X - 2, $offset.Y - 2, 4, 4)
         For yukiPoint = 0 To 11
             Paint.Ellipse(getX(yukiPoint * 30, 80) - 2, getY(yukiPoint * 30, 80) - 2, 4, 4)
@@ -67,7 +67,7 @@ Public Sub _call(argY As Integer) As Integer
     
     paintClockFace(Color.Lighter(Color.Violet))
     paintPoints(Color.White)
-    paintClockHands(Color.Violet)
+    paintClockHands(Color.White)
     
     Return argY + 200
     

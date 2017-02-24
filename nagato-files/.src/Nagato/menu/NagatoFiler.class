@@ -20,7 +20,7 @@ Private Sub move(argDirectory As String)
     If Not Exist(argDirectory) Then Return
     TFEI.SetMainTabStrip(File.Name(argDirectory), MikuruIcon.GetDirectoryMono(argDirectory))
     $log.Move(argDirectory)
-    $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), True, $log.HasForward)
+    $menuBar.SetEnable($log.HasBack, Not ($log.Current = User.Home), argDirectory <> "/", $log.HasForward)
     refresh(argDirectory)
     $directoryObserver.Directory = argDirectory
     

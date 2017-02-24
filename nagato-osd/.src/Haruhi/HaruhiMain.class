@@ -5,15 +5,10 @@ Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 
 Private $timer As New Timer As "Timer"
 Private $painter As NagatoPainter
-Private $desktopType As String
 
-Public Function SetAsRoot(argWindowId As Integer) As Boolean
+Private Sub setAsRoot(argWindowId As Integer) 
     
     Try Shell Subst("xprop -id &1 -f &2 32a -set &2 &3", argWindowId, Type, TypeDesktop) Wait
-    
-    If Error Then Return False
-    
-    Return True
     
 End
 
@@ -23,7 +18,7 @@ Public Sub Form_Open()
     Me.H = Screen.AvailableHeight
     Me.X = Screen.W - Me.W
     Me.Y = 0
-    Me.SetAsRoot(Me.Id)
+    setAsRoot(Me.Id)
     Me.Arrangement = Arrange.Fill
     $painter = New NagatoPainter(Me)
     $timer.Enabled = True
@@ -38,6 +33,6 @@ End
 
 Public Sub Form_Menu()
 
-    If $desktopType = "openbox" Then Shell "xdotool key super+space"
+    If MikuruHidden.DesktopType = "openbox" Then Shell "xdotool key super+space"
 
 End

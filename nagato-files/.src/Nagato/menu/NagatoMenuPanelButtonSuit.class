@@ -2,41 +2,17 @@
 
 Inherits NagatoMenuPanelWidget
 
-Private $backButton As Button
-Private $homeButton As Button
-Private $upButton As Button
-Private $forwardButton As Button
-
-Private Sub addButton(argButton As Button, argText As String, argTag As Integer, Optional argIcon As Picture)
-    
-    With argButton
-        .Text = argText
-        .Tag = argTag
-        .AutoResize = True
-        If argIcon Then .Picture = argIcon
-    End With
-    
-End
-
-Private Sub setButtonProperty()
-    
-    With NagatoObject
-        addButton($backButton, "", .MoveBack, MikuruIcon.Get("arrow-left"))
-        addButton($homeButton, "", .MoveHome, MikuruIcon.Get("home"))
-        addButton($upButton, "Parent directory", .MoveUp, MikuruIcon.Get("arrow-up"))
-        addButton($forwardButton, "", .MoveForward, MikuruIcon.Get("arrow-right"))
-    End With
-    
-End
+Private $backButton As NagatoActiveTextButtonBack
+Private $homeButton As NagatoActiveTextButtonHome
+Private $upButton As NagatoActiveTextButtonUp
+Private $forwardButton As NagatoActiveTextButtonForward
 
 Public Sub _Initialize()
     
-    $backButton = New Button(Me._$container) As "MenuButton"
-    $homeButton = New Button(Me._$container) As "MenuButton"
-    $upButton = New Button(Me._$container) As "MenuButton"
-    $forwardButton = New Button(Me._$container) As "MenuButton"
-    
-    setButtonProperty()
+    $backButton = New NagatoActiveTextButtonBack(Me._$container) As "TFEI"
+    $homeButton = New NagatoActiveTextButtonHome(Me._$container) As "TFEI"
+    $upButton = New NagatoActiveTextButtonUp(Me._$container) As "TFEI"
+    $forwardButton = New NagatoActiveTextButtonForward(Me._$container) As "TFEI"
     
 End
 
@@ -46,11 +22,5 @@ Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, a
     $homeButton.Enabled = argHome
     $upButton.Enabled = argUp
     $forwardButton.Enabled = argForward
-    
-End
-
-Public Sub MenuButton_Click()
-    
-    Raise Signal(Last.Tag, Null)
     
 End

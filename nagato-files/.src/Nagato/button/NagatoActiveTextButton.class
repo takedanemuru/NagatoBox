@@ -1,0 +1,67 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Enabled As Boolean
+
+Public _$button As Button
+
+Public Sub _OnGetText() As String
+    
+    Return ""
+    
+End
+
+Public Sub _OnGetTag() As Integer
+    
+    Return 0
+    
+End
+
+Public Sub _OptionalOnGetIcon() As Picture
+    
+    Return Null
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$button = New Button(argContainer) As "Button"
+    
+    With Me._$button
+        .AutoResize = True
+        .Tag = Me._OnGetTag()
+        .Picture = Me._OptionalOnGetIcon()
+    End With
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End
+
+Public Sub Button_Enter()
+    
+    Me._$button.Text = Me._OnGetText()
+    
+End
+
+Public Sub Button_Leave()
+    
+    Me._$button.Text = ""
+    
+End
+
+Private Function Enabled_Read() As Boolean
+
+    Return Me._$button.Enabled
+
+End
+
+Private Sub Enabled_Write(Value As Boolean)
+
+    Me._$button.Enabled = Value
+
+End
