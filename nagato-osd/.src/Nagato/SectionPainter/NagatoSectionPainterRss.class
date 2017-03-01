@@ -24,10 +24,12 @@ Private Sub paintNews(argY As Integer) As Integer
     
     Dim yukiY As Integer = argY + 4
     Dim yukiItemNumber As Integer = 0
+    Dim yukiText As String
     Dim yukiItemType As Integer = NagatoDBusAccessRssFeeder.RssDescription
     
     Do 
-        yukiY = $painterText(yukiY, $proxyRss[yukiItemNumber, yukiItemType], Align.TopLeft)
+        yukiText = $proxyRss[yukiItemNumber, yukiItemType]
+        yukiY = $painterText(yukiY, MikuruXml(yukiText), Align.TopLeft)
         If yukiY > HaruhiMain.H Then Break
         yukiY = $painterText(yukiY, " ---- ", Align.Top)
         If yukiY > HaruhiMain.H Then Break
@@ -46,7 +48,7 @@ Public Sub _call(argY As Integer) As Integer
     yukiY = $painterHeader(yukiY + 4, "News")
     Paint.Font.Size = 9
     If $proxyRss.Activated Then
-        yukiY = showThumbnail(yukiY, $proxyRss[0, 0])
+        'yukiY = showThumbnail(yukiY, $proxyRss[0, 0])
         yukiY = paintNews(yukiY)
     Else
         yukiY = $painterText(yukiY, "please wait ...")

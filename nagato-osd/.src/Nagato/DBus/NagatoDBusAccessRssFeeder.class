@@ -30,6 +30,10 @@ End
 
 Public Sub Next()
     
+    ' FOR TESTING
+    ' $itemIndex = 0
+    ' $feedIndex = IIf($proxy.FeedCount = $feedIndex + 1, 0, $feedIndex + 1)
+    
     $itemIndex = IIf($proxy.GetFeedItemsCount($feedIndex) = $itemIndex + 1, 0, $itemIndex + 1)
     If $itemIndex > 0 Then Return
     $feedIndex = IIf($proxy.FeedCount = $feedIndex + 1, 0, $feedIndex + 1)

@@ -10,6 +10,6 @@ End
 
 Private Function MenuFileDirectory_Read() As String
 
-    Return User.Home &/ ".nagato-openbox-menu"
+    Return Desktop.CacheDir &/ "nagato-openbox-menu"
 
 End

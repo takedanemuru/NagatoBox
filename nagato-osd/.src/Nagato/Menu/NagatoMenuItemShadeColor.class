@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnMenuItemClick()
+    
+    If Not Dialog.SelectColor() Then NagatoSettingsFonts.ShadeColor = Dialog.Color
+    
+End
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Shade Color")
+    End With
+    
+End

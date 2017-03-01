@@ -5,6 +5,7 @@ Private Const TypeDesktop As String = "_NET_WM_WINDOW_TYPE_DESKTOP"
 
 Private $timer As New Timer As "Timer"
 Private $painter As NagatoPainter
+Private $contextMenu As New NagatoContextMenu As "ContextMenu"
 
 Private Sub setAsRoot(argWindowId As Integer) 
     
@@ -23,6 +24,8 @@ Public Sub Form_Open()
     $painter = New NagatoPainter(Me)
     $timer.Enabled = True
     
+    Application.MainWindow = Me
+    
 End
 
 Public Sub Timer_Timer()
@@ -31,8 +34,20 @@ Public Sub Timer_Timer()
     
 End
 
+Public Sub Form_Close()
+    
+    $timer.Enabled = False
+    
+    Try Shell "nagato-rss-daemon --check-out nagato-osd"
+    
+    NagatoDBus.Unregister()
+    
+End
+
 Public Sub Form_Menu()
 
-    If MikuruHidden.DesktopType = "openbox" Then Shell "xdotool key super+space"
+    $contextMenu.PopUp()
+
+    'If MikuruHidden.DesktopType = "openbox" Then Shell "xdotool key super+space"
 
 End

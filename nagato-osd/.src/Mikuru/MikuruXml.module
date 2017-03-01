@@ -1,0 +1,39 @@
+' Gambas module file
+
+Private $xmlDocument As New XmlDocument
+
+Private Sub extractImagePaths()
+    
+    Dim yukiXmlElement As XmlElement
+    
+    For Each yukiXmlElement In $xmlDocument.GetElementsByTagName("img")
+        Debug "can you see this ?"
+        Debug yukiXmlElement.GetAttribute("src")
+    Next
+    
+End
+
+Private Function extract(argSource As String) As String
+    
+    Dim yukiText As String
+    
+    $xmlDocument.FromString(argSource)
+        
+    If $xmlDocument.GetElementsByTagName("dummy").Count = 1 Then
+        yukiText = $xmlDocument.GetElementsByTagName("dummy")[0].TextContent
+        Return Replace(yukiText, "\n", "")
+    Endif
+    
+    Return argSource
+    
+End
+
+Public Sub _call(argSource As String) As String
+    
+    If InStr(argSource, "<") > 0 And If argSource Not Begins "<" Then 
+        Return extract("<dummy>" & argSource & "</dummy>")
+    End If
+    
+    Return argSource
+    
+End

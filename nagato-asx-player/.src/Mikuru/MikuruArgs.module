@@ -1,8 +1,10 @@
 ' Gambas module file
 
 Property Read Paths As String[]
+Property Read About As Boolean
 
 Private $paths As New String[]
+Private $about As Boolean
 
 Private Sub sanitize(argPaths As String[])
     
@@ -19,7 +21,7 @@ Public Sub Parsing()
     Dim yukiPaths As String[]
     
     Args.Begin("Usage")
-        
+        $about = Args.Has("a", "about", "show about dialog")
     yukiPaths = Args.End()
     
     sanitize(yukiPaths)
@@ -29,5 +31,11 @@ End
 Private Function Paths_Read() As String[]
 
     Return $paths
+
+End
+
+Private Function About_Read() As Boolean
+
+    Return $about
 
 End

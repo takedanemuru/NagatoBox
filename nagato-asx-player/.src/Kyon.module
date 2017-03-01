@@ -3,6 +3,11 @@
 Public Sub Main()
     
     MikuruArgs.Parsing()
-    HaruhiMain.Show()
+    
+    If MikuruArgs.About Then
+        HaruhiAbout.ShowDialog()
+    Else
+        HaruhiMain.Show()
+    Endif
     
 End

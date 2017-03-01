@@ -87,6 +87,6 @@ End
 
 Private Function Status_Read() As Integer
 
-    Return MikuruDate.IsCurrentCours($lastModefied)
+    Return MikuruDate.GetMaintainStatus($lastModefied)
 
 End

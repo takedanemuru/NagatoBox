@@ -2,18 +2,22 @@
 
 Public Enum CurrentCours, OldCours, Unmaintained
 
-Private Function getCour(argDate As Date) As Integer
+Private Function getCours(argDate As Date) As Integer
     
-    Return Ceil(Month(argDate) / 3)
+    Dim yukiCours As Integer = (Month(argDate) - 1) Div 3
+    
+    Return yukiCours + Year(argDate) * 4
     
 End
 
-Public Sub IsCurrentCours(argLastModefied As Date) As Integer
+Public Sub GetMaintainStatus(argLastModefied As Date) As Integer
     
-    If DateDiff(argLastModefied, Now(), gb.Month) > 4 Then Return Me.Unmaintained
+    Dim yukiCurrentCours As Integer = getCours(Now())
+    Dim yukiModefiedCours As Integer = getCours(argLastModefied)
     
-    If (getCour(Now()) <> getCour(argLastModefied)) Then Return Me.OldCours
+    If yukiCurrentCours = yukiModefiedCours Then Return Me.CurrentCours
+    If yukiCurrentCours = yukiModefiedCours + 1 Then Return Me.OldCours
     
-    Return Me.CurrentCours
+    Return Me.Unmaintained
     
 End
