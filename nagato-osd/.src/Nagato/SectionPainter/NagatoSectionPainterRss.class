@@ -44,11 +44,9 @@ Public Sub _call(argY As Integer) As Integer
     
     Dim yukiY As Integer = argY
     
-    Paint.Font.Size = 11
     yukiY = $painterHeader(yukiY + 4, "News")
-    Paint.Font.Size = 9
+    Paint.Font.Size = NagatoSettingsFonts.SizeContent
     If $proxyRss.Activated Then
-        'yukiY = showThumbnail(yukiY, $proxyRss[0, 0])
         yukiY = paintNews(yukiY)
     Else
         yukiY = $painterText(yukiY, "please wait ...")

@@ -17,7 +17,7 @@ Public Sub _call(argY As Integer, argPath As String, argWidthLimit As Integer) A
     
     Dim yukiImage As Image = getImage(argPath, argWidthLimit)
     
-    Paint.DrawImage(yukiImage, (HaruhiMain.W - yukiImage.W) / 2, argY)
+    Paint.DrawImage(yukiImage, (NagatoSettingsForm.Width - yukiImage.W) / 2, argY)
     
     Return argY + yukiImage.H 
     

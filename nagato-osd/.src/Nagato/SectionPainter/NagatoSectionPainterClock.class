@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $painterText As New NagatoPainterText
+Private $painterTextClock As New NagatoPainterTextClock
 Private $week As String[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 Private Function getCalendarText() As String
@@ -28,10 +29,8 @@ Public Sub _call(argY As Integer) As Integer
     
     Dim yukiY As Integer = argY
     
-    Paint.Font.Size = 9
     yukiY = $painterText(yukiY + 4, getCalendarText())
-    Paint.Font.Size = 24
-    yukiY = $painterText(yukiY, getClockText())
+    yukiY = $painterTextClock(yukiY, getClockText())
     
     Return yukiY + 8
     

@@ -4,7 +4,10 @@ Inherits NagatoMenuItem
 
 Public Sub _OnMenuItemClick()
     
-    If Not Dialog.SelectColor() Then NagatoSettingsFonts.BaseColor = Dialog.Color
+    If Dialog.SelectColor() Then Return
+
+    NagatoSettingsFonts.BaseColor = Dialog.Color
+    Me._$menuItem.Picture = MikuruColorChip[Dialog.Color]
     
 End
 
@@ -12,6 +15,7 @@ Public Sub _OnInitializeMenuItem()
     
     With Me._$menuItem
         .Text = ("Font Color")
+        .Picture = MikuruColorChip[NagatoSettingsFonts.BaseColor]
     End With
     
 End

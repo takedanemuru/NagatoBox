@@ -2,7 +2,7 @@
 
 Public Sub Main()
     
-    Application.Font.Size = 9
+    Application.Font.Size = NagatoSettingsFonts.SizeContent
     
     If DBus.Session.Applications.Exist("org.gambas.nagato-osd") Then
         Message.Error(("YUKI.N > nagato-osd has been executed."), ("OK"))

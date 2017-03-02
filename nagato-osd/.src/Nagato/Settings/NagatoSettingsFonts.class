@@ -4,6 +4,9 @@ Inherits NagatoSettings
 
 Property BaseColor As Integer
 Property ShadeColor As Integer
+Property SizeContent As Integer
+Property SizeHeader As Integer
+Property Transparency As Integer
 
 Private Function BaseColor_Read() As Integer
 
@@ -27,6 +30,45 @@ End
 Private Sub ShadeColor_Write(Value As Integer)
 
     Me._$settings["font/shade_color"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function SizeContent_Read() As Integer
+
+    Return Me._$settings["font/size_content", 9]
+
+End
+
+Private Sub SizeContent_Write(Value As Integer)
+
+    Me._$settings["font/size_content"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function SizeHeader_Read() As Integer
+
+    Return Me._$settings["font/size_header", 11]
+
+End
+
+Private Sub SizeHeader_Write(Value As Integer)
+
+    Me._$settings["font/size_header"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Transparency_Read() As Integer
+
+    Return Me._$settings["font/transparency", Color.Transparent * 192]
+
+End
+
+Private Sub Transparency_Write(Value As Integer)
+
+    Me._$settings["font/transparency"] = Value
     Me._$settings.Save()
 
 End

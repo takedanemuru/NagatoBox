@@ -1,19 +1,30 @@
 ' Gambas class file
 
+Private $textHeight As Integer
+Private $textRect As Rect
+
+Private Sub resetTextData(argStartY As Integer, argText As String) 
+    
+    Paint.Font.Size = NagatoSettingsFonts.SizeHeader
+    
+    $textHeight = Paint.Font.RichTextHeight(argText, HaruhiMain.W)
+    $textRect = New Rect(0, argStartY, HaruhiMain.W, $textHeight)
+    
+End
+
 Public Sub _call(argStartY As Integer, argText As String) As Integer
     
-    Dim yukiTextHeight As Integer = Paint.Font.RichTextHeight(argText, HaruhiMain.W)
-    Dim yukiRect As New Rect(0, argStartY, HaruhiMain.W, yukiTextHeight)
+    resetTextData(argStartY, argText)
     
     Paint.Brush = Paint.Color(NagatoSettingsFonts.ShadeColor + Color.Transparent * 192)
-    Paint.DrawRichText(argText, yukiRect.X + 1, yukiRect.Y + 1, yukiRect.W, yukiRect.H, Align.Left)
-    Paint.Rectangle(1, argStartY + yukiTextHeight + 1, HaruhiMain.W, 1)
+    Paint.DrawRichText(argText, $textRect.X + 1, $textRect.Y + 1, $textRect.W, $textRect.H, Align.Left)
+    Paint.Rectangle(1, argStartY + $textHeight + 1, HaruhiMain.W, 1)
     Paint.Fill()
     Paint.Brush = Paint.Color(NagatoSettingsFonts.BaseColor + Color.Transparent * 192)
-    Paint.DrawRichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Left)
-    Paint.Rectangle(0, argStartY + yukiTextHeight, HaruhiMain.W, 1)
+    Paint.DrawRichText(argText, $textRect.X, $textRect.Y, $textRect.W, $textRect.H, Align.Left)
+    Paint.Rectangle(0, argStartY + $textHeight, HaruhiMain.W, 1)
     Paint.Fill()
     
-    Return argStartY + yukiTextHeight + 8
+    Return argStartY + $textHeight + 8
     
 End

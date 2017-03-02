@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub _get(argColor As Integer) As Picture
+    
+    Dim yukiSize As Integer = NagatoSettingsFonts.SizeContent * 2
+    Dim yukiImage As New Image(yukiSize, yukiSize, argColor)
+    
+    Return yukiImage.Picture
+    
+End

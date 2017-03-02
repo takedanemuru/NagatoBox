@@ -1,0 +1,34 @@
+' Gambas class file
+
+Private $textHeight As Integer
+Private $textRect As Rect
+
+Private Sub resetTextData(argStartY As Integer, argText As String) 
+    
+    Paint.Font.Size = 24
+    
+    $textHeight = Paint.Font.RichTextHeight(argText, HaruhiMain.W - 16)
+    $textRect = New Rect(8, argStartY, HaruhiMain.W - 16, $textHeight)
+    
+End
+
+Private Sub paintText(argText As String, argColor As Integer, argAlign As Integer, argShift As Integer)
+    
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 192)
+    Paint.DrawRichText(argText, $textRect.X + argShift, $textRect.Y + argShift, $textRect.W, $textRect.H, argAlign)
+    Paint.Fill()
+    
+End
+
+Public Sub _call(argStartY As Integer, argText As String, Optional argAlign As Integer = Align.Center) As Integer
+    
+    resetTextData(argStartY, argText)
+    
+    If argStartY + $textHeight + 8 >= HaruhiMain.H Then Return argStartY + $textHeight
+    
+    paintText(argText, NagatoSettingsFonts.ShadeColor, argAlign, 1)
+    paintText(argText, NagatoSettingsFonts.BaseColor, argAlign, 0)
+    
+    Return argStartY + $textHeight 
+    
+End

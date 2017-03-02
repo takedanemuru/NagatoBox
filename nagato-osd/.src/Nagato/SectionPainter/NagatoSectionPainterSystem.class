@@ -9,9 +9,7 @@ Public Sub _call(argY As Integer) As Integer
     
     Dim yukiY As Integer = argY
     
-    Paint.Font.Size = 11
     yukiY = $painterHeader(yukiY, "System")
-    Paint.Font.Size = 9
     If $proxySystem.Activated Then
         yukiY = $painterTextElement(yukiY, "CPU : ", Format($proxySystem.CpuUsage, "#0.00 %"))
         yukiY = $painterTextElement(yukiY, "Memory : ", Format($proxySystem.MemoryUsage, "#0.00 %"))
