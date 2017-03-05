@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property Type As Integer
+
+Public Enum TypeAnalog, TypeText
+
+Private Function Type_Read() As Integer
+
+    Return Me._$settings["clock/type", Me.TypeText]
+
+End
+
+Private Sub Type_Write(Value As Integer)
+
+    Me._$settings["clock/type"] = Value
+    Me._$settings.Save()
+
+End

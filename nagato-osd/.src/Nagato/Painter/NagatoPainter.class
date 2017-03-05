@@ -1,8 +1,7 @@
 ' Gambas class file
 
 Private $painterBackground As New NagatoPainterBackground
-Private $painterClock As New NagatoSectionPainterClock
-Private $painterAnalogClock As New NagatoPainterAnalogClock
+Private $painterClocks As New NagatoPainterClocks
 Private $painterSystem As New NagatoSectionPainterSystem
 Private $painterMusic As New NagatoSectionPainterMusic
 Private $painterRss As New NagatoSectionPainterRss
@@ -27,11 +26,8 @@ Public Sub DrawingArea_Draw()
     
     Paint.Begin($drawingArea)
         Paint.AntiAlias = True
-        'Paint.Font.Bold = True
-        'Paint.Font.Name = "Times New Roman"
         $painterBackground()
-        'yukiY = $painterClock(yukiY)
-        yukiY = $painterAnalogClock(yukiY)
+        yukiY = $painterClocks(yukiY)
         yukiY = $painterSystem(yukiY)
         yukiY = $painterMusic(yukiY)
         yukiY = $painterRss(yukiY)

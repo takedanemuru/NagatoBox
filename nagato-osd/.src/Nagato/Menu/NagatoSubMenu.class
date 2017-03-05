@@ -1,0 +1,32 @@
+' Gambas class file
+
+Public _$parentMenu As Menu
+
+Public Sub _OnParentMenuShow()
+    
+    
+    
+End
+
+Public Sub _OnInitialize()
+    
+    
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
+    
+    Me._OnInitialize()
+    
+    Object.New("NagatoMenuItemBlank", [Me._$parentMenu])
+    
+End
+
+Public Sub ParentMenu_Show()
+    
+    Me._$parentMenu.Children.Clear()
+    Me._OnParentMenuShow()
+    
+End

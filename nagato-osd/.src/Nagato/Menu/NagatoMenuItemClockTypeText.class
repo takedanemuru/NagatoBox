@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnMenuItemClick()
+    
+    NagatoSettingsClock.Type = NagatoSettingsClock.TypeText
+    
+End
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Type : Text")
+        .Picture = MikuruCheckButton(NagatoSettingsClock.Type = NagatoSettingsClock.TypeText)
+    End With
+    
+End

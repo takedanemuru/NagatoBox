@@ -14,7 +14,9 @@ Public Sub _new()
     
     Object.New("NagatoMenuItemForegroundColor", [$rootMenu])
     Object.New("NagatoMenuItemShadeColor", [$rootMenu])
-    Object.New("NagatoMenuItemBlank", [$rootMenu])
+        Object.New("NagatoMenuItemBlank", [$rootMenu])
+    Object.New("NagatoSubMenuClock", [$rootMenu])
+        Object.New("NagatoMenuItemBlank", [$rootMenu])
     Object.New("NagatoMenuItemAbout", [$rootMenu])
     Object.New("NagatoMenuItemQuit", [$rootMenu])
     

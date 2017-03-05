@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public Sub _call(argTest As Boolean) As Picture
+    
+    If argTest Then Return Picture.Load("pictures/button-check.png")
+    
+Finally
+    Return Null
+    
+End

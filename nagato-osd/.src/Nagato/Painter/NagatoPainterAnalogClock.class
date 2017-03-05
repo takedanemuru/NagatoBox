@@ -48,9 +48,11 @@ End
 
 Private Sub paintClockHands(argColor As Integer)
     
-    paintClockHand(Hour(Now) * 30 + Minute(Now) * 0.5 - 90, 65, 6, argColor)
-    paintClockHand(Minute(Now) * 6 - 90, 75, 3, argColor)
-    paintClockHand(Second(Now) * 6 - 90, 80, 1, argColor)
+    Dim yukiNow As Date = Now()
+    
+    paintClockHand(Hour(yukiNow) * 30 + Minute(yukiNow) * 0.5 - 90, 65, 6, argColor)
+    paintClockHand(Minute(yukiNow) * 6 - 90, 75, 3, argColor)
+    paintClockHand(Second(yukiNow) * 6 - 90, 80, 1, argColor)
     
 End
 
@@ -65,9 +67,9 @@ Public Sub _call(argY As Integer) As Integer
     
     setOffset(argY)
     
-    paintClockFace(Color.Lighter(Color.Violet))
-    paintPoints(Color.White)
-    paintClockHands(Color.White)
+    paintClockFace(Color.Lighter(NagatoSettingsFonts.BaseColor))
+    paintPoints(NagatoSettingsFonts.ShadeColor)
+    paintClockHands(NagatoSettingsFonts.ShadeColor)
     
     Return argY + 200
     

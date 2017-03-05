@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnParentMenuShow()
+    
+    Object.New("NagatoMenuItemClockTypeAnalog", [Me._$parentMenu])
+    Object.New("NagatoMenuItemClockTypeText", [Me._$parentMenu])
+    
+End
+
+Public Sub _OnInitialize()
+    
+    With Me._$parentMenu
+        .Text = "Clock"
+    End With
+    
+End
