@@ -7,9 +7,13 @@ Property Read SwapUsage As Float
 Property Read ProcessCount As Integer
 Property Read Thermal As Float
 
-Private Const ServiceName As String = "org.gambas.dataovermind-systemmonitor"
-Private Const ObjectPath As String = "/org/dataovermind/systemmonitor"
-Private Const InterfaceName As String = "org.gambas.dataovermind.systemmonitor.tfei"
+Private Const ServiceName As String = "org.gambas.nagato-systemmonitor-daemon"
+Private Const ObjectPath As String = "/org/nagato/systemmonitor/daemon"
+Private Const InterfaceName As String = "org.gambas.nagato.systemmonitor.daemon.tfei"
+
+' Private Const ServiceName As String = "org.gambas.dataovermind-systemmonitor"
+' Private Const ObjectPath As String = "/org/dataovermind/systemmonitor"
+' Private Const InterfaceName As String = "org.gambas.dataovermind.systemmonitor.tfei"
 
 Private $proxy As DBusProxy
 
@@ -30,7 +34,7 @@ End
 
 Public Sub Activate()
     
-    If Not DBus.Session.Applications.Exist(ServiceName) Then Try Shell "dataovermind-systemmonitor"
+    Shell "nagato-systemmonitor-daemon --check-in nagato-osd"
 
     If DBus.Session.Applications.Exist(ServiceName) Then 
         If Not Object.IsValid($proxy) Then $proxy = DBus[ServiceName][ObjectPath, InterfaceName]

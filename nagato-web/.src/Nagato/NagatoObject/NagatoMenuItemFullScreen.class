@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Fullscreen")
+        .Picture = MikuruIcon.GetCheckButton(NagatoSettingsForm.FullScreen)
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    NagatoSettingsForm.FullScreen = Not NagatoSettingsForm.FullScreen
+    HaruhiMain.ToggleFullscreen()
+    
+End

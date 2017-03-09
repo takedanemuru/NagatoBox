@@ -19,10 +19,48 @@ Property Read NetworkReceiveTotal As Integer
 Property Read NetworkReceiveBps As Float
 Property Read ThermalCount As Integer
 
+Private $reservations As New String[]
+
+Private Sub activateAll()
+    
+    NagatoObserverFacadeSystem.Start()
+    NagatoObserverFacadeNetwork.Start()
+    NagatoObserverFacadeHardware.Start()
+    
+End
+
+Public Sub CheckIn(argId As String) As Boolean
+    
+    If $reservations.Exist(argId) Then Return False
+    
+    $reservations.Add(argId)
+    activateAll()
+    
+    Return True
+    
+End
+
+Public Sub CheckOut(argId As String) As Boolean
+    
+    Dim yukiIndex As Integer = $reservations.Find(argId)
+    
+    If yukiIndex = -1 Then Return 'False
+    
+    $reservations.Remove(yukiIndex)
+    
+    If $reservations.Count = 0 Then Me.Stop()
+    
+    Return True
+    
+End
+
 Public Sub Stop() As Boolean
     
     Try NagatoObserverFacadeSystem.Stop()
-    Try NagatoObserverFacadeNetwork.Start()
+    Try NagatoObserverFacadeNetwork.Stop()
+    Try NagatoObserverFacadeHardware.Stop()
+    
+    Try NagatoDBus.Unregister()
     
     Return (Not Error )
     

@@ -1,10 +1,5 @@
 # Applications List
 
-## ![image: dataovermind-systemmonitor.png](../dataovermind-systemmonitor/dataovermind-systemmonitor.png) dataovermind-systemmonitor (v42.6.19)
-
-+ Description : tfei for system monitoring
-+ Last Modefied : 2016-10-14
-
 ## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.7.7)
 
 + Description : play ambient sounds
@@ -22,10 +17,10 @@
 .tar, .zip, .bz2, .gz, .rar, .lzh, .xz, .tar.gz, .tar.xz, and .tar.bz2 
 
 
-## ![image: nagato-asx-player.png](../nagato-asx-player/nagato-asx-player.png) nagato-asx-player (v42.5.5)
+## ![image: nagato-asx-player.png](../nagato-asx-player/nagato-asx-player.png) nagato-asx-player (v42.7.6)
 
 + Description : asx file player
-+ Last Modefied : 2016-08-16
++ Last Modefied : 2017-03-01
 
 ## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.7.6)
 
@@ -121,10 +116,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2016-10-19
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.132)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.133)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-02-21
++ Last Modefied : 2017-02-24
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -143,10 +138,10 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 + Description : view fonts.
 + Last Modefied : 2016-11-16
 
-## ![image: document-edit.png](../nagato-fullscreen-editor/Picture/icons/document-edit.png) nagato-fullscreen-editor (v42.6.12)
+## ![image: document-edit.png](../nagato-fullscreen-editor/Picture/icons/document-edit.png) nagato-fullscreen-editor (v42.7.14)
 
 + Description : a dead copy of FocusWriter :)
-+ Last Modefied : 2016-11-16
++ Last Modefied : 2017-03-09
 
 ![image: screenshot_001.png](../nagato-fullscreen-editor/doc/screenshots/screenshot_001.png)
 
@@ -199,22 +194,22 @@ a simple movie player. no more, no less.
 + Description : notification daemon
 + Last Modefied : 2017-01-18
 
-## ![image: nagato-openbox-logout.png](../nagato-openbox-logout/nagato-openbox-logout.png) nagato-openbox-logout (v42.5.4)
+## ![image: nagato-openbox-logout.png](../nagato-openbox-logout/nagato-openbox-logout.png) nagato-openbox-logout (v42.7.5)
 
 + Description : logout dialog for Openbox3
-+ Last Modefied : 2016-08-09
++ Last Modefied : 2017-02-22
 
-## ![image: information-balloon.png](../nagato-openbox-menu/Picture/information-balloon.png) nagato-openbox-menu (v42.6.26)
+## ![image: information-balloon.png](../nagato-openbox-menu/Picture/information-balloon.png) nagato-openbox-menu (v42.7.28)
 
 + Description : A menu generator for Openbox3
-+ Last Modefied : 2016-11-21
++ Last Modefied : 2017-03-01
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
-## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.10)
+## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.15)
 
 + Description : on screen display for openbox3
-+ Last Modefied : 2017-02-22
++ Last Modefied : 2017-03-05
 
 ![image: screenshot_001.png](../nagato-osd/doc/screenshots/screenshot_001.png)
 
@@ -273,10 +268,10 @@ path		|string		|fullpath of each music file
 
 
 
-## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.7.9)
+## ![image: nagato-project-list.png](../nagato-project-list/nagato-project-list.png) nagato-project-list (v42.7.10)
 
 + Description : project listing tool for Gambas3
-+ Last Modefied : 2017-01-24
++ Last Modefied : 2017-03-01
 
 ![image: screenshot_001.png](../nagato-project-list/doc/screenshots/screenshot_001.png)
 
@@ -330,6 +325,11 @@ path		|string		|fullpath of each music file
 
 show all of gambas3 and NagatoBox stock icons.
 
+## ![image: nagato-systemmonitor-daemon.png](../nagato-systemmonitor-daemon/nagato-systemmonitor-daemon.png) nagato-systemmonitor-daemon (v42.7.22)
+
++ Description : system monitoring daemon
++ Last Modefied : 2017-03-07
+
 ## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.7.21)
 
 + Description : a task manager for NagatoBox
@@ -365,10 +365,10 @@ taskmanager for NagatoBox
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2016-10-14
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.54)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.55)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2017-02-22
++ Last Modefied : 2017-03-06
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 

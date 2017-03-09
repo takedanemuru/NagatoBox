@@ -2,9 +2,11 @@
 
 Create Static
 
-Public Const BusName As String = "org.gambas.dataovermind-systemmonitor"
-Public Const ObjectPath As String = "/org/dataovermind/systemmonitor"
-Public Const Interface As String = "org.gambas.dataovermind.systemmonitor.tfei"
+Property Read Proxy As DBusProxy
+
+Public Const BusName As String = "org.gambas.nagato-systemmonitor-daemon"
+Public Const ObjectPath As String = "/org/nagato/systemmonitor/daemon"
+Public Const Interface As String = "org.gambas.nagato.systemmonitor.daemon.tfei"
 
 Public Function Activated() As Boolean
     
@@ -30,4 +32,10 @@ Public Sub Unregister()
     
     DBus.Session.Unregister(TFEI)
     
+End
+
+Private Function Proxy_Read() As DBusProxy
+
+    Return DBus[Me.BusName][Me.ObjectPath, Me.Interface]
+
 End

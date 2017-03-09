@@ -45,6 +45,15 @@ Private Sub setCategories()
     
     For Each yukiCategory In NagatoDBBookmark.CategoryNames
         setCategory(yukiCategory)
+    Next
+    
+End
+
+Private Sub setBookmarks()
+    
+    Dim yukiCategory As String
+    
+    For Each yukiCategory In NagatoDBBookmark.CategoryNames
         setBookmark(yukiCategory)
     Next
     
@@ -60,6 +69,7 @@ Public Sub Reload()
     
     $treeView.Clear()
     setCategories()
+    setBookmarks()
     setTrashBin()
     
 End

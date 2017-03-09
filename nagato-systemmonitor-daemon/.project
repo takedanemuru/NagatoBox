@@ -1,14 +1,14 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.9.1
-Title=dataovermind-systemmonitor
+# Compiled with Gambas 3.9.2
+Title=nagato-systemmonitor-daemon
 Startup=Kyon
 Icon=pictures/information-balloon.png
-Version=42.6.19
+Version=42.7.25
 Component=gb.args
 Component=gb.data
 Component=gb.dbus
 Component=gb.settings
-Description="tfei for system monitoring"
+Description="system monitoring daemon"
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
@@ -18,10 +18,10 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex
 Url=takedanemuru.github.io
 License=S.O.S. License
-PackageName=dataovermind-systemmonitor-42.6.19
+PackageName=nagato-systemmonitor-daemon-42.7.25
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
 Categories=ubuntu:"System"
 Groups=ubuntu:"admin"
-ExtraFiles=ubuntu:"dataovermind-systemmonitor.png\t/usr/share/pixmaps\ndataovermind-systemmonitor.desktop\t/usr/share/applications"
+ExtraFiles=ubuntu:"nagato-systemmonitor-daemon.desktop\t/usr/share/applications\nnagato-systemmonitor-daemon.png\t/usr/share/pixmaps"

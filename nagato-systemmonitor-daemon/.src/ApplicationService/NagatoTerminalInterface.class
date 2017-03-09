@@ -1,8 +1,10 @@
 ' Gambas class file
 
-Private Const Service As String = "org.gambas.dataovermind-systemmonitor"
-Private Const ObjectPath As String = "/org/dataovermind/systemmonitor"
-Private Const Interface As String = "org.gambas.dataovermind.systemmonitor.tfei"
+Create Static
+
+Public Const Service As String = "org.gambas.nagato-systemmonitor-daemon"
+Public Const ObjectPath As String = "/org/nagato/systemmonitor/daemon"
+Public Const Interface As String = "org.gambas.nagato.systemmonitor.daemon.tfei"
 
 Private $proxy As DBusProxy
 
@@ -20,21 +22,25 @@ End
 
 Public Sub EnsureProxy() As Boolean
     
-    Dim yukiInput As String[]
+    'Dim yukiInput As String[]
+    
+    Exec ["nagato-systemmonitor-daemon", "--check-in", "nagato-self"]
+    
+    Wait 3
     
     If DBus.Session.Applications.Exist(Service) Then 
         $proxy = DBus[Service][ObjectPath, Interface]
         Return True
     End If
     
-    yukiInput = getUserInputs(("YUKI.N > do you activate daemon ? [y/n]"))
-    If yukiInput[0] = "y" Then 
-        $proxy = DBus[Service][ObjectPath, Interface]
-        Return True
-    End If
-    
+'     yukiInput = getUserInputs(("YUKI.N > do you activate daemon ? [y/n]"))
+'     If yukiInput[0] = "y" Then 
+'         $proxy = DBus[Service][ObjectPath, Interface]
+'         Return True
+'     End If
+'     
 Finally
-    Return False
+    Return True
     
 End
 
@@ -72,5 +78,9 @@ Public Sub ShowAll()
     Me.ShowSystem()
     Me.ShowNetwork()
     Me.ShowHardware()
+    
+    Exec ["nagato-systemmonitor-daemon", "--check-out", "nagato-self"]
+    
+    Quit 0
     
 End

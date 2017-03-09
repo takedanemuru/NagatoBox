@@ -39,8 +39,11 @@ Public Sub Form_Close()
     $timer.Enabled = False
     
     Try Shell "nagato-rss-daemon --check-out nagato-osd"
+    Try Shell "nagato-systemmonitor-daemon --check-out nagato-osd"
     
     NagatoDBus.Unregister()
+    
+    Quit 0
     
 End
 

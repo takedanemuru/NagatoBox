@@ -65,7 +65,7 @@ Public Sub Save() As Boolean
     Else If $path Then 
         saveFileTo($path)
     Else
-        Dialog.Path = User.Home
+        Dialog.Path = MikuruSafePath(User.Home &/ "text.txt")
         Dialog.Title = ("Save File")
         If Not Dialog.SaveFile() Then saveFileTo(Dialog.Path)
     Endif
