@@ -26,11 +26,6 @@ Public Sub _new(argContainer As Container)
     
 End
 
-Public Sub DrawingArea_MouseDown()
-    
-    
-End
-
 Public Sub MouseTracker_MouseMove()
     
     $drawingArea.Refresh()

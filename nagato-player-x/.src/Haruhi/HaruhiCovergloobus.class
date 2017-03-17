@@ -2,6 +2,13 @@
 
 Private $painter As NagatoPainterGloobus
 Private $observer As Observer
+Private $contextMenu As NagatoContextMenuFormCoverArtMode
+
+Public Sub _new()
+    
+    $contextMenu = New NagatoContextMenuFormCoverArtMode(Me)
+    
+End
 
 Public Sub Form_Open()
     
@@ -18,6 +25,12 @@ Public Sub Form_Close()
     
     If NagatoSettingsForm.Main = NagatoSettingsForm.HCoverArt Then NagatoDBus.Unregister()
     NagatoSettingsForm.SavePosition(Me)
+    
+End
+
+Public Sub Form_Menu()
+    
+    $contextMenu.PopUp()
     
 End
 

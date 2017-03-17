@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnMenuItemClick()
+    
+    NagatoSettingsClock.ShowSeconds = Not NagatoSettingsClock.ShowSeconds
+    
+End
+
+Public Sub _OnInitializeMenuItem()
+    
+    With Me._$menuItem
+        .Text = ("Show Seconds")
+        .Picture = MikuruCheckButton(NagatoSettingsClock.ShowSeconds)
+    End With
+    
+End

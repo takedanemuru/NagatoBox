@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menuItem
+        .Text = ("Repeat")
+        .Picture = MikuruCheckButtonIcon[NagatoSettingsMusic.Repeat]
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    NagatoSettingsMusic.Repeat = Not NagatoSettingsMusic.Repeat
+    
+End

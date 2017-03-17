@@ -1,0 +1,30 @@
+' Gambas class file
+
+Public _$rootMenu As Menu
+
+Public Sub _OnRefreshMenus()
+    
+    
+    
+End
+
+Public Sub PopUp()
+    
+    Me._$rootMenu.Popup()
+    
+End
+
+Public Sub _new(argForm As Form)
+    
+    Me._$rootMenu = New Menu(argForm) As "RootMenu"
+    
+    Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    Me._$rootMenu.Children.Clear()
+    Me._OnRefreshMenus()
+    
+End

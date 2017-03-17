@@ -1,0 +1,8 @@
+' Gambas module file
+
+Public Sub _get(argFlag As Boolean) As Variant
+    
+    Return IIf(argFlag, MikuruIcon.Get("button-check"), Null)
+    
+End
+

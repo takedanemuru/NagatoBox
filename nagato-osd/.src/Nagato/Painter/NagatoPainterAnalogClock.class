@@ -52,6 +52,7 @@ Private Sub paintClockHands()
     
     paintClockHand(Hour(yukiNow) * 30 + Minute(yukiNow) * 0.5 - 90, 65, 6)
     paintClockHand(Minute(yukiNow) * 6 - 90, 75, 3)
+    If Not NagatoSettingsClock.ShowSeconds Then Return
     paintClockHand(Second(yukiNow) * 6 - 90, 80, 1)
     
 End

@@ -35,11 +35,11 @@
 
 new application : show informations on root window like conky
 
-![image: screenshot_2017年01月22日_13：30：01](../images/screenshot_2017年01月22日_13：30：01.png)
-
 ~~new : analog clock mode~~
 
 ![image: screenshot_2017年01月23日_20：05：01](../images/screenshot_2017年01月23日_20：05：01.png)
+
+~~new : context menus~~
 
 ### nagato-pdf-view
 
@@ -60,6 +60,11 @@ new application : show informations on root window like conky
 + ~~rename dataovermind-rssfeeder to nagato-rss-daemon~~
 + ~~new : add `--check-in` `--check-out` options~~
 + ~~finish long over due `--add` `--remove` `--list` options~~ (cui only)
+
+### nagato-systemmonitor-daemon
+
++ ~~named `dataovermiond-systemmonitor` to `nagato-systemmonitor-daemon`~~
++ ~~new : `--check-in` and `--check-out` option~~
 
 ### nagato-taskmanager
 

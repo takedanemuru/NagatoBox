@@ -44,7 +44,7 @@ End
 Public Sub Asakura_MouseDown()
     
     If Mouse.Right Then 
-        HaruhiPlayList.Show()
+        'HaruhiPlayList.Show()
     Else If Mouse.Y > 150 Then
         NagatoQueue(MikuruSignal.QueueSeek, [Mouse.X / 200])
     Else If 50 > Mouse.Y Then

@@ -3,9 +3,6 @@
 Property Read Activated As Boolean
 Property Read TitleLength As Integer
 
-' Private Const ServiceName As String = "org.gambas.dataovermind-rssfeeder"
-' Private Const ObjectPath As String = "/org/dataovermind/rssfeeder"
-' Private Const InterfaceName As String = "org.gambas.dataovermind.rssfeeder.tfei"
 Private Const ServiceName As String = "org.gambas.nagato-rss-daemon"
 Private Const ObjectPath As String = "/org/nagato/rss/daemon"
 Private Const InterfaceName As String = "org.gambas.nagato.rss.daemon.tfei"
@@ -76,7 +73,6 @@ End
 
 Public Sub Activate()
     
-    'If Not DBus.Session.Applications.Exist(ServiceName) Then Shell "dataovermind-rssfeeder"
     Shell "nagato-rss-daemon --check-in nagato-desktop"
     
     If DBus.Session.Applications.Exist(ServiceName) Then 

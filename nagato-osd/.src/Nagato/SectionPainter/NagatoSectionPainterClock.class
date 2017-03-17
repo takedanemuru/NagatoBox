@@ -21,6 +21,8 @@ Private Function getClockText() As String
     Dim yukiNow As Date = Now()
     Dim yukiText As String = Hour(yukiNow) & ":" & Format(Minute(yukiNow), "0#") 
     
+    If NagatoSettingsClock.ShowSeconds Then yukiText &= (":" & Format(Second(yukiNow), "0#"))
+    
     Return yukiText
     
 End

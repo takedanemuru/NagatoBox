@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _OnInitializeMenu()
+    
+    With Me._$menuItem
+        .Text = ("Sticky")
+        .Picture = MikuruCheckButtonIcon[HaruhiCovergloobus.Sticky]
+    End With
+    
+End
+
+Public Sub _OnClickMenuItem()
+    
+    HaruhiCovergloobus.Sticky = Not HaruhiCovergloobus.Sticky
+    
+End

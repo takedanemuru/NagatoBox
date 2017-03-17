@@ -4,6 +4,23 @@ Private $persona As NagatoPersona
 Private $notifyQueue As NagatoNotifyQueue
 Private $observer As Observer
 
+Private Function getWelcomeMessage() As String
+    
+    Dim yukiMonth As Integer = Month(Now())
+    Dim yukiDay As Integer = Day(Now())
+    
+    If yukiMonth = 10 And If yukiDay = 31 Then
+        Return Subst$(("YUKI.N > Happy Halloween, &1"), System.User.Name)
+    Else If yukiMonth = 12 And If yukiDay = 25 Then
+        Return Subst$(("YUKI.N > Merry Christmas, &1"), System.User.Name)
+    Else If yukiMonth = 1 And If yukiDay = 1 Then
+        Return Subst$(("YUKI.N > Happy New Year, &1"), System.User.Name)
+    Else
+        Return Subst$(("YUKI.N > Welcome back, &1"), System.User.Name)
+    Endif
+    
+End
+
 Public Sub _new()
     
     $persona = New NagatoPersona(Me)
@@ -39,9 +56,7 @@ End
 
 Public Sub Welcome()
     
-    Dim yukiMessage As String = Subst$(("YUKI.N > Welcome back, &1"), System.User.Name)
-    
-    $notifyQueue.EnqueueMessage(NagatoNotifyQueue.PriorityHello, [yukiMessage])
+    $notifyQueue.EnqueueMessage(NagatoNotifyQueue.PriorityHello, [getWelcomeMessage()])
 
 End
 

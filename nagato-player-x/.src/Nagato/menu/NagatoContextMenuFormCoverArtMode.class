@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoContextMenuForm
+
+Public Sub _OnRefreshMenus()
+    
+    Object.New("NagatoMenuItemPlay", [Me._$rootMenu])
+    Object.New("NagatoMenuItemPause", [Me._$rootMenu])
+    Object.New("NagatoMenuItemBack", [Me._$rootMenu])
+    Object.New("NagatoMenuItemNext", [Me._$rootMenu])
+    Object.New("NagatoMenuItemRepeat", [Me._$rootMenu])
+    Object.New("NagatoMenuItemShuffle", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    Object.New("NagatoMenuItemSticky", [Me._$rootMenu])
+    Object.New("NagatoMenuItemSkipTaskbar", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    Object.New("NagatoMenuItemShowPlayListForm", [Me._$rootMenu])
+    Object.New("NagatoSubMenuSelectMainForm", [Me._$rootMenu])
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    Object.New("NagatoMenuItemAbout", [Me._$rootMenu])
+    Object.New("NagatoMenuItemQuit", [Me._$rootMenu])
+    
+End
