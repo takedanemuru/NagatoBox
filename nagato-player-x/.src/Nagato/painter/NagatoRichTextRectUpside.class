@@ -1,0 +1,48 @@
+' Gambas class file
+
+Property Read Text As String
+Property Read TextRect As Rect
+Property Read ShadeRect As Rect
+
+Private $text As String
+Private $padding As Integer
+Private $shadeRect As New Rect
+Private $textRect As New Rect
+
+Public Sub SetText(argText As String, argFont As Font)
+    
+    Dim yukiTextHeight As Integer = argFont.RichTextHeight(argText, $textRect.W)
+    
+    $text = argText
+    $shadeRect.H = yukiTextHeight + ($padding * 2)
+    $shadeRect.Y = 0
+    $textRect.H = $shadeRect.H
+    $textRect.Y = 0
+    
+End
+
+Public Sub _new(argWidthLimit As Integer, argPadding As Integer)
+    
+    $padding = argPadding
+    $shadeRect = New Rect(0, 0, argWidthLimit, 0)
+    $textRect = New Rect(0, 0, argWidthLimit, 0)
+    
+End
+
+Private Function TextRect_Read() As Rect
+
+    Return $textRect
+
+End
+
+Private Function Text_Read() As String
+
+    Return $text
+
+End
+
+Private Function ShadeRect_Read() As Rect
+
+    Return $shadeRect
+
+End

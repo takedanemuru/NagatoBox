@@ -6,6 +6,7 @@ Private $textMain As New NagatoPainterGloobusTextMain
 Private $widgets As New NagatoPainterGloobusWidgets
 Private $progressBar As New NagatoPainterGloobusProgressBar
 Private $mouseTracker As NagatoGloobusMouseTracker
+Private $softwareVolume As New NagatoPainterGloobusSoftwareVolume
 
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
@@ -37,6 +38,7 @@ Public Sub DrawingArea_Draw()
     Draw.Begin($drawingArea)
         $coverArt()
         If $mouseTracker.OnMouse Then $widgets($mouseTracker.Point.X, $mouseTracker.Point.Y)
+        If $mouseTracker.OnMouse Then $softwareVolume($mouseTracker.Point.X, $mouseTracker.Point.Y)
         If Not $mouseTracker.OnMouse Then $textMain()
         $progressBar()
     Draw.End()

@@ -1,0 +1,71 @@
+' Gambas class file
+
+Private $textRect As NagatoRichTextRectUpside
+
+Private Function getCurrentText() As String
+    
+    Return Format(NagatoQueue.GetProperty(MikuruProperty.SoftwareVolume), "Software Volume : ##0%")
+    
+End
+
+Private Sub paintShade()
+    
+    Paint.Brush = Paint.Color(Color.Gray + Color.Transparent * 128)
+        With $textRect.ShadeRect
+            Paint.Rectangle(.X, .Y, .W, .H)
+        End With
+    Paint.Fill()
+    
+End
+
+Private Sub paintShadeProgres(argMouseX As Integer)
+    
+    Paint.Brush = Paint.Color(Color.Orange + Color.Transparent * 128)
+        With $textRect.ShadeRect
+            Paint.Rectangle(.X, .Y, .W * (argMouseX / 200), .H)
+        End With
+    Paint.Fill()
+    
+End
+
+Private Sub paintText()
+    
+    Paint.Brush = Paint.Color(Color.White)
+        With $textRect.TextRect
+            Paint.DrawRichText($textRect.Text, .X, .Y, .W, .H, Align.Center)
+        End With
+    Paint.Fill()
+    
+End
+
+Private Sub paintTextOnMouse(argMouseX As Integer)
+    
+    Dim yukiText As String = Subst("Software Volume : &1%", CInt(argMouseX / 200 * 100))
+    
+    Paint.Brush = Paint.Color(Color.White)
+        With $textRect.TextRect
+            Paint.DrawRichText(yukiText, .X, .Y, .W, .H, Align.Center)
+        End With
+    Paint.Fill()
+
+End
+
+Public Sub _call(argMouseX As Integer, argMouseY As Integer)
+    
+    Paint.Font.Size = 9
+    $textRect.SetText(getCurrentText(), Paint.Font)
+    paintShade()
+    If ($textRect.ShadeRect.H) >= argMouseY Then 
+        paintShadeProgres(argMouseX)
+        paintTextOnMouse(argMouseX)
+    Else
+        paintText()
+    End If
+    
+End
+
+Public Sub _new()
+    
+    $textRect = New NagatoRichTextRectUpside(200, 10)
+    
+End

@@ -49,6 +49,8 @@ Public Sub SetVolume(argVolume As Integer, Optional argShowDialog As Boolean = T
     If argShowDialog Then HaruhiVolumeDialog.Show()
     If argShowDialog Then Raise Changed2
     
+    $volume = argVolume
+    
     Raise Changed($volume)
     
 End
