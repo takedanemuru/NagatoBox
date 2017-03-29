@@ -3,7 +3,6 @@
 Inherits NagatoDesktopTile2
 
 Private $textRectangle As New Rect
-Private $systemMonitor2 As New NagatoDesktopSystemMonitorContent
 
 Private Function getBaseImage() As Image
     
@@ -32,11 +31,11 @@ End
 
 Private Sub paintText()
     
-    setTextRectangle($systemMonitor2.Label)
+    setTextRectangle(NagatoSystemMonitorFacade.Label)
     
     With $textRectangle
-        Paint.DrawRichText($systemMonitor2.Label, .X, .Y, .W, .H, Align.Left)
-        Paint.DrawRichText($systemMonitor2.Content, .X, .Y, .W, .H, Align.Right)
+        Paint.DrawRichText(NagatoSystemMonitorFacade.Label, .X, .Y, .W, .H, Align.Left)
+        Paint.DrawRichText(NagatoSystemMonitorFacade.Content, .X, .Y, .W, .H, Align.Right)
     End With
     
 End
@@ -59,19 +58,18 @@ End
 
 Public Sub _onReload()
     
-    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.SystemMonitor)
+    Try Me._$iconView.Remove(NagatoDesktopKey.SystemMonitor)
+    If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.SystemMonitor) Then Return
     
-    If Not NagatoSettingsDesktopTile.ShowSystemMonitor Then Return
-    
-    Me._$iconView.Add(NagatoDesktopSpecialKey.SystemMonitor, "", getBaseImage().Picture)
+    Me._$iconView.Add(NagatoDesktopKey.SystemMonitor, "", getBaseImage().Picture)
     
 End
 
 Public Sub _OnTimer() ' override
     
-    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.SystemMonitor) Then Return
-    If Not $systemMonitor2.EnsureActivation() Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopKey.SystemMonitor) Then Return
+    If Not NagatoSystemMonitorFacade.EnsureActivation("nagato-desktop") Then Return
 
-    Try Me._$iconView[NagatoDesktopSpecialKey.SystemMonitor].Picture = getIcon()
+    Try Me._$iconView[NagatoDesktopKey.SystemMonitor].Picture = getIcon()
     
 End

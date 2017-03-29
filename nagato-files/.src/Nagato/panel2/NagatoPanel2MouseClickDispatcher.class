@@ -3,12 +3,14 @@
 Property PointClock As Integer
 Property PointPager As Integer
 Property PointMain As Integer
+Property PointMiniTasks As Integer
 
-Public Enum ClickMain, ClickPager, ClickClock
+Public Enum ClickStar, ClickMiniTasks, ClickMain, ClickPager, ClickClock
 
 Private $pointClock As Integer
 Private $pointPager As Integer
 Private $pointMain As Integer
+Private $pointMiniTasks As Integer
 Private $observer As Observer
 
 Event Clicked(argType As Integer, argLeft As Boolean)
@@ -27,6 +29,10 @@ Public Sub Asakura_MouseDown()
         Raise Clicked(ClickPager, Mouse.Left)
     Else If Mouse.X >= $pointMain Then
         Raise Clicked(ClickMain, Mouse.Left)
+    Else If Mouse.X >= $pointMiniTasks And If $pointMiniTasks > 0 Then
+        Raise Clicked(ClickMiniTasks, Mouse.Left)
+    Else
+        Raise Clicked(ClickStar, Mouse.Left)
     Endif
     
 End
@@ -64,5 +70,17 @@ End
 Private Sub PointMain_Write(Value As Integer)
 
     $pointMain = Value
+
+End
+
+Private Function PointMiniTasks_Read() As Integer
+
+    Return $pointMiniTasks
+
+End
+
+Private Sub PointMiniTasks_Write(Value As Integer)
+
+    $pointMiniTasks = Value
 
 End

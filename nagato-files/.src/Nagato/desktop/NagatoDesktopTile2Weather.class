@@ -64,21 +64,20 @@ End
 
 Public Sub _OnReload()
     
-    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Weather)
+    Try Me._$iconView.Remove(NagatoDesktopKey.Weather)
+    If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.Weather) Then Return
     
-    If Not NagatoSettingsDesktopTile.ShowWeather Then Return
-    
-    Me._$iconView.Add(NagatoDesktopSpecialKey.Weather, "", getBaseImage().Picture)
+    Me._$iconView.Add(NagatoDesktopKey.Weather, "", getBaseImage().Picture)
     
 End
 
 Public Sub _OnTimer() ' override
     
-    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Weather) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopKey.Weather) Then Return
     If Not $proxy.Activated Then 
         $proxy.Activate()
     Else
-        Me._$iconView[NagatoDesktopSpecialKey.Weather].Picture = getIcon()
+        Me._$iconView[NagatoDesktopKey.Weather].Picture = getIcon()
     End If
     
 End

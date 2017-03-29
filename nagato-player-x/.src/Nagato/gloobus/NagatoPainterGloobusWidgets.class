@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $point As New Point
+Private $softwareVolume As New NagatoPainterGloobusSoftwareVolume
 Private $progress As New NagatoPainterGloobusTextProgress
 
 Private Sub paintCircle(argX As Integer, argY As Integer, argSize As Integer)
@@ -54,6 +55,7 @@ Public Sub _call(argX As Integer, argY As Integer)
     $point.X = argX
     $point.Y = argY
     
+    $softwareVolume($point.X, $point.Y)
     paintRewindButton()
     paintForwardButton()
     paintToggleButton()

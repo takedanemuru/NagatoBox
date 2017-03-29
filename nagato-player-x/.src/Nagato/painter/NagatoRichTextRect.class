@@ -3,6 +3,8 @@
 Property Read Text As String
 Property Read TextRect As Rect
 Property Read ShadeRect As Rect
+Property Read TextRectDownside As Rect
+Property Read ShadeRectDownside As Rect
 
 Private $text As String
 Private $padding As Integer
@@ -46,5 +48,25 @@ End
 Private Function ShadeRect_Read() As Rect
 
     Return $shadeRect
+
+End
+
+Private Function TextRectDownside_Read() As Rect
+
+    Dim yukiRect As Rect = $textRect.Copy()
+
+    yukiRect.Y = yukiRect.Y + $shadeRect.H
+
+    Return yukiRect
+
+End
+
+Private Function ShadeRectDownside_Read() As Rect
+
+    Dim yukiRect As Rect = $shadeRect.Copy()
+
+    yukiRect.Y = yukiRect.Y + $shadeRect.H
+
+    Return yukiRect
 
 End

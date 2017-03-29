@@ -30,11 +30,11 @@ Public Sub PopUp(argPath As String, argPointAtRoot As Boolean, argCount As Integ
 
     If argPointAtRoot Then 
         $menuConstructorRootDesktop()
-    Else If argPath = NagatoDesktopSpecialKey.Clock Then
+    Else If argPath = NagatoDesktopKey.Clock Then
         $menuConstructorClock()
-    Else If argPath = NagatoDesktopSpecialKey.TrashBin Then
+    Else If argPath = NagatoDesktopKey.TrashBin Then
         $menuConstructorTrashBin()
-    Else If NagatoDesktopSpecialKey.IsSpecialKey(argPath) Then
+    Else If NagatoDesktopKey.IsSpecialKey(argPath) Then
         ' pass
     Else If argPath = "" Or If argCount = 0 Then 
         ' pass

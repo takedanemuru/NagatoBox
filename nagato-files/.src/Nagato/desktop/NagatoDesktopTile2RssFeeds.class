@@ -44,20 +44,19 @@ End
 
 Public Sub _onReload()
     
-    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.RssFeeder)
+    Try Me._$iconView.Remove(NagatoDesktopKey.RssFeeder)
+    If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.RssFeeder) Then Return
     
-    If Not NagatoSettingsDesktopTile.ShowRss Then Return
-    
-    Me._$iconView.Add(NagatoDesktopSpecialKey.RssFeeder, "", getIcon())
+    Me._$iconView.Add(NagatoDesktopKey.RssFeeder, "", getIcon())
     
 End
 
 Public Sub _OnTimer() ' override
     
-    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.RssFeeder) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopKey.RssFeeder) Then Return
     If Not $rssFeeds.EnsureActivation() Then Return
     
-    Me._$iconView[NagatoDesktopSpecialKey.RssFeeder].Picture = getIcon()
+    Me._$iconView[NagatoDesktopKey.RssFeeder].Picture = getIcon()
     
 End
 

@@ -1,13 +1,16 @@
 ' Gambas class file
 
+Create Static
+
 Property Read Label As String
 Property Read Content As String
+Property Read Text As String
 
 Private $systemMonitor As New NagatoDBusAccessSystemMonitor
 
-Public Function EnsureActivation() As Boolean
+Public Function EnsureActivation(argId As String) As Boolean
     
-    If Not $systemMonitor.Activated Then $systemMonitor.Activate()
+    If Not $systemMonitor.Activated Then $systemMonitor.Activate(argId)
     
     Return $systemMonitor.Activated
     
@@ -38,5 +41,11 @@ Private Function Content_Read() As String
     yukiText &= Format$($systemMonitor.Thermal, "##0.00°C")
     
     Return yukiText
+
+End
+
+Private Function Text_Read() As String
+
+    Return $systemMonitor.GetText()
 
 End

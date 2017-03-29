@@ -43,7 +43,7 @@ Public Sub Asakura_Drop()
     
     If Drag.Format <> MikuruMimeType.UriList Then Return 
     
-    If $iconView.Item.Key = NagatoDesktopSpecialKey.TrashBin Then
+    If $iconView.Item.Key = NagatoDesktopKey.TrashBin Then
         NagatoTrash.Delete(NagatoDrag2.GetPaths(Drag.Data))
         Return
     Endif

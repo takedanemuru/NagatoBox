@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+
+Private $painterClock As NagatoPanel2PainterClock
+Private $painterPager As NagatoPanel2PainterPager
+Private $painterSystemMonitor As NagatoPanel2PainterSystemMonitor
+Private $tasks As NagatoPanel2PainterTasksMini
+
+Private $mouseClickDispatcher As NagatoPanel2MouseClickDispatcher
+
+Public Sub _call()
+    
+    $mouseClickDispatcher.PointClock = $painterClock.Paint(0)
+    $mouseClickDispatcher.PointPager = $painterPager.Paint($mouseClickDispatcher.PointClock)
+    $mouseClickDispatcher.PointMain = $painterSystemMonitor.Paint($mouseClickDispatcher.PointPager)
+    $mouseClickDispatcher.PointMiniTasks = $tasks.Paint($mouseClickDispatcher.PointMain)
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    $drawingArea = argDrawingArea
+    $mouseClickDispatcher = New NagatoPanel2MouseClickDispatcher($drawingArea) As "Mouse"
+    $painterClock = New NagatoPanel2PainterClock($drawingArea)
+    $painterPager = New NagatoPanel2PainterPager($drawingArea)
+    $painterSystemMonitor = New NagatoPanel2PainterSystemMonitor($drawingArea)
+    $tasks = New NagatoPanel2PainterTasksMini($drawingArea)
+
+End
+
+Public Sub Mouse_Clicked(argType As Integer, argLeft As Boolean)
+    
+    Select Case argType
+        Case NagatoPanel2MouseClickDispatcher.ClickStar
+            If argLeft Then HaruhiPersona.Fortune()
+        Case NagatoPanel2MouseClickDispatcher.ClickMiniTasks
+            $tasks.Click(Mouse.X, argLeft)
+        Case NagatoPanel2MouseClickDispatcher.ClickMain
+            ' ignore
+        Case NagatoPanel2MouseClickDispatcher.ClickPager
+            $painterPager.Click(Mouse.X, argLeft)
+        Case NagatoPanel2MouseClickDispatcher.ClickClock
+            $painterClock.Click(Mouse.X, argLeft)
+    End Select
+    
+End

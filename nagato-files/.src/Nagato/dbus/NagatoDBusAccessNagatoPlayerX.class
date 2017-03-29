@@ -5,27 +5,14 @@ Property Read Enabled As Boolean
 Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack, ActionAddMusics
 
 Private Const ServiceName As String = "org.gambas.nagato-player-x"
-Private Const ObjectPath As String = "/org/nagato/player/x/player"
-Private Const InterfaceName As String = "org.gambas.nagato.player.x.nagatodbusinterface"
-Private Const ObjectPath2 As String = "/org/nagato/player/x/property"
-Private Const InterfaceName2 As String = "org.gambas.nagato.player.x.nagatodbusinterfaceproperty"
 
-Private $player As DBusProxy
-Private $property As DBusProxy
+Private $player As New NagatoDBusProxyNagatoPlayerXPlayer
+Private $property As New NagatoDBusProxyNagatoPlayerXProperty
 
 Private Sub ensureProxy()
     
-    If Not Object.IsValid($player) Then $player = DBus[ServiceName][ObjectPath, InterfaceName]
-    If Not Object.IsValid($property) Then $property = DBus[ServiceName][ObjectPath2, InterfaceName2]
-    
-End
-
-Private Sub addMusics()
-    
-    Dialog.Path = Desktop.GetDirectory("MUSIC")
-    If Dialog.OpenFile(True) Then Return
-    
-    $player.AddMusics(Dialog.Paths)
+    $player.Ensure()
+    $property.Ensure()
     
 End
 
@@ -33,7 +20,7 @@ Public Function GetCoverArtPath() As String
     
     ensureProxy()
     
-    Return $property.CoverArtPath
+    Return $property.GetCoverArtPath()
     
 End
 
@@ -41,21 +28,15 @@ Public Function GetRate() As Float
     
     ensureProxy()
     
-    Return $property.ProgressInRate
+    Return $property.GetRate()
     
 End
 
 Public Function GetTextTile() As String
     
-    Dim yukiText As String 
-    
     If DBus.Session.Applications.Exist(ServiceName) Then
         ensureProxy()
-        yukiText &= ($property.Title)
-        'yukiText &= ($property.Artist & Space$(4))
-        'yukiText &= ($property.Album & Space$(4))
-        'yukiText &= ($property.ProgressInText)
-        Return yukiText
+        Return $property.GetTextTile()
     Else
         Return "YUKI.N > nagato-player-x is not activated"
     End If
@@ -69,7 +50,7 @@ Public Sub GetTextProgress() As String
     
     If DBus.Session.Applications.Exist(ServiceName) Then
         ensureProxy()
-        Return ($property.ProgressInText)
+        Return $property.GetTextProgress()
     Else
         Return "YUKI.N > nagato-player-x is not activated"
     End If
@@ -78,20 +59,15 @@ End
 
 Public Function GetCurrentPath() As String
     
-    Return $property.CurrentPath
+    Return $property.GetCurrentPath()
     
 End
 
 Public Sub GetTextMain() As String
     
-    Dim yukiText As String 
-    
     If DBus.Session.Applications.Exist(ServiceName) Then
         ensureProxy()
-        yukiText &= ($property.Title & Space$(4))
-        yukiText &= ($property.Artist & Space$(4))
-        yukiText &= ($property.Album & Space$(4))
-        Return yukiText
+        Return $property.GetTextMain()
     Else
         Return ""
     End If
@@ -101,19 +77,7 @@ End
 Public Sub Action(argAction As Integer)
     
     ensureProxy()
-    
-    Select Case argAction
-        Case ActionPlay
-            $player.Play()
-        Case ActionPause
-            $player.Pause()
-        Case ActionNext
-            $player.Next()
-        Case ActionBack
-            $player.Back()
-        Case ActionAddMusics
-            addMusics()
-    End Select
+    $player(argAction)
     
 End
 

@@ -4,11 +4,11 @@ Property Read Ready As Boolean
 Property Read Second As Integer
 
 Private $desktop As NagatoDesktop
-Private $panel As NagatoDesktopPanel
 Private $panel2 As NagatoPanel2
 Private $timer As New Timer As "DesktopTimer"
 Private $ready As Boolean = False
 Private $second As Integer
+Private $timerCount As Integer
 
 Event Timer
 
@@ -51,9 +51,9 @@ Public Sub Form_Open()
     If MikuruX11.SetAsRoot(Me.Id) Then 
         NagatoDBus.Register()
         $desktop = New NagatoDesktop(Me)
-        '$panel = New NagatoDesktopPanel(Me)
         $panel2 = New NagatoPanel2(Me)
         MikuruX11.ReservePanelHeightOnScreen(Me.Id)
+        $timer.Delay = 5000
         $timer.Enabled = True
         HaruhiPersona.Welcome()
         $ready = True
@@ -77,10 +77,12 @@ End
 
 Public Sub DesktopTimer_Timer()
     
+    If 5 > $timerCount Then Inc $timerCount
+    If $timerCount = 5 Then $timer.Delay = 1000
+    
     $second = Second(Now())
-    
     Raise Timer
-    
+
 End
 
 Private Function Ready_Read() As Boolean

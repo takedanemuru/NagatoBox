@@ -58,7 +58,7 @@ Public Sub Main()
     NagatoClipBoard.Activate()
     System.FirstDayOfWeek = gb.Sunday
 
-    'startTestSequence()
-    startNormalSequence()
+    startTestSequence()
+    'startNormalSequence()
 
 End

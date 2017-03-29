@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Private $textRect As NagatoRichTextRectUpside
+Private $textRect As NagatoRichTextRect
 
 Private Function getCurrentText() As String
     
@@ -11,7 +11,7 @@ End
 Private Sub paintShade()
     
     Paint.Brush = Paint.Color(Color.Gray + Color.Transparent * 128)
-        With $textRect.ShadeRect
+        With $textRect.ShadeRectDownside
             Paint.Rectangle(.X, .Y, .W, .H)
         End With
     Paint.Fill()
@@ -21,7 +21,7 @@ End
 Private Sub paintShadeProgres(argMouseX As Integer)
     
     Paint.Brush = Paint.Color(Color.Orange + Color.Transparent * 128)
-        With $textRect.ShadeRect
+        With $textRect.ShadeRectDownside
             Paint.Rectangle(.X, .Y, .W * (argMouseX / 200), .H)
         End With
     Paint.Fill()
@@ -31,7 +31,7 @@ End
 Private Sub paintText()
     
     Paint.Brush = Paint.Color(Color.White)
-        With $textRect.TextRect
+        With $textRect.TextRectDownside
             Paint.DrawRichText($textRect.Text, .X, .Y, .W, .H, Align.Center)
         End With
     Paint.Fill()
@@ -43,7 +43,7 @@ Private Sub paintTextOnMouse(argMouseX As Integer)
     Dim yukiText As String = Subst("Software Volume : &1%", CInt(argMouseX / 200 * 100))
     
     Paint.Brush = Paint.Color(Color.White)
-        With $textRect.TextRect
+        With $textRect.TextRectDownside
             Paint.DrawRichText(yukiText, .X, .Y, .W, .H, Align.Center)
         End With
     Paint.Fill()
@@ -66,6 +66,6 @@ End
 
 Public Sub _new()
     
-    $textRect = New NagatoRichTextRectUpside(200, 10)
+    $textRect = New NagatoRichTextRect(200, 0, 10)
     
 End

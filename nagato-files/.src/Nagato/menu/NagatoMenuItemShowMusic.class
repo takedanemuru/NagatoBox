@@ -5,10 +5,11 @@ Inherits NagatoMenuItem
 Public Sub _InitializeItem() 'override
     
     Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    Dim yukiShown As Boolean = NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.Music)
     
     With yukiMenu
         .Text = ("Show Music")
-        .Picture = MikuruIcon.GetCheckButton(NagatoSettingsDesktopTile.ShowMusic)
+        .Picture = MikuruIcon.GetCheckButton(yukiShown)
         .Tag = Me._$path
     End With
     
@@ -16,6 +17,6 @@ End
 
 Public Sub MenuItem_Click()
     
-    NagatoSettingsDesktopTile.ShowMusic = Not NagatoSettingsDesktopTile.ShowMusic
+    NagatoSettingsDesktopTile.ToggleVisible(NagatoDesktopKey.Music)
     
 End

@@ -3,24 +3,33 @@
 Inherits NagatoSettingsCore
 
 Property ClockFormat As String
-Property ShowClock As Boolean
-Property ShowRss As Boolean
-Property ShowSystemMonitor As Boolean
-Property ShowWeather As Boolean
-Property ShowTrashBin As Boolean
 Property ShowDirectories As Boolean
 Property ShowFiles As Boolean
-Property ShowMusic As Boolean
 
-Event Changed
-
-Private Sub changeSetting(argValue As Variant, argKey As String)
+Private Function getDefault(argNagatoDesktopKey As String) As Boolean
     
-    If argValue <> Me._$settings[argKey]
-        Me._$settings[argKey] = argValue
-        Me._$settings.Save()
-        Raise Changed
-    End If
+    Select Case argNagatoDesktopKey
+        Case NagatoDesktopKey.RssFeeder, NagatoDesktopKey.Weather
+            Return False
+        Default
+            Return True
+    End Select
+    
+End
+
+Public Sub ToggleVisible(argNagatoDesktopKey As String)
+    
+    Dim yukiValue As Boolean = Not Me.GetVisible(argNagatoDesktopKey)
+    
+    Me._ChangeSettings(Subst("desktoptile_visible/&1", argNagatoDesktopKey), yukiValue)
+    
+End
+
+Public Function GetVisible(argNagatoDesktopKey As String) As Boolean
+    
+    Dim yukiKey As String = Subst("desktoptile_visible/&1", argNagatoDesktopKey)
+    
+    Return Me._$settings[yukiKey, getDefault(argNagatoDesktopKey)]
     
 End
 
@@ -37,66 +46,6 @@ Private Sub ClockFormat_Write(Value As String)
 
 End
 
-Private Function ShowClock_Read() As Boolean
-    
-    Return Me._$settings["desktop_view/show_clock", True]
-    
-End
-
-Private Sub ShowClock_Write(Value As Boolean)
-
-    changeSetting(Value, "desktop_view/show_clock")
-
-End
-
-Private Function ShowTrashBin_Read() As Boolean
-
-    Return Me._$settings["desktop_view/show_trash_bin", True]
-
-End
-
-Private Sub ShowTrashBin_Write(Value As Boolean)
-
-    changeSetting(Value, "desktop_view/show_trash_bin")
-
-End
-
-Private Function ShowRss_Read() As Boolean
-
-    Return Me._$settings["desktop_view/show_rss", True]
-
-End
-
-Private Sub ShowRss_Write(Value As Boolean)
-
-    changeSetting(Value, "desktop_view/show_rss")
-
-End
-
-Private Function ShowSystemMonitor_Read() As Boolean
-
-    Return Me._$settings["desktop_view/show_system_monitor", True]
-
-End
-
-Private Sub ShowSystemMonitor_Write(Value As Boolean)
-
-    changeSetting(Value, "desktop_view/show_system_monitor")
-
-End
-
-Private Function ShowWeather_Read() As Boolean
-
-    Return Me._$settings["desktop_view/show_weather", True]
-    
-End
-
-Private Sub ShowWeather_Write(Value As Boolean)
-
-    changeSetting(Value, "desktop_view/show_weather")
-
-End
-
 Private Function ShowDirectories_Read() As Boolean
 
     Return Me._$settings["desktop_view/show_directories", True]
@@ -105,7 +54,7 @@ End
 
 Private Sub ShowDirectories_Write(Value As Boolean)
 
-    changeSetting(Value, "desktop_view/show_directories")
+    Me._ChangeSettings("desktop_view/show_directories", Value)
 
 End
 
@@ -117,18 +66,6 @@ End
 
 Private Sub ShowFiles_Write(Value As Boolean)
 
-    changeSetting(Value, "desktop_view/show_files")
-
-End
-
-Private Function ShowMusic_Read() As Boolean
-
-    Return Me._$settings["desktop_view/show_music", True]
-
-End
-
-Private Sub ShowMusic_Write(Value As Boolean)
-
-    changeSetting(Value, "desktop_view/show_music")
+    Me._ChangeSettings("desktop_view/show_files", Value)
 
 End

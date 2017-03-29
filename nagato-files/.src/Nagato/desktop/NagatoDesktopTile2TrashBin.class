@@ -34,9 +34,9 @@ End
 
 Private Sub refreshIcon()
     
-    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.TrashBin)
-    If Not NagatoSettingsDesktopTile.ShowTrashBin Then Return
-    Me._$iconView.Add(NagatoDesktopSpecialKey.TrashBin, "", getIcon())
+    Try Me._$iconView.Remove(NagatoDesktopKey.TrashBin)
+    If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.TrashBin) Then Return
+    Me._$iconView.Add(NagatoDesktopKey.TrashBin, "", getIcon())
     
 Catch
     Debug Error.Text

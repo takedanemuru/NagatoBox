@@ -22,18 +22,18 @@ End
 
 Public Sub _onReload()
     
-    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Clock)
+    Try Me._$iconView.Remove(NagatoDesktopKey.Clock)
     
-    If Not NagatoSettingsDesktopTile.ShowClock Then Return
+    If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.Clock) Then Return
     
-    Me._$iconView.Add(NagatoDesktopSpecialKey.Clock, "", getIcon())
+    Me._$iconView.Add(NagatoDesktopKey.Clock, "", getIcon())
     
 End
 
 Public Sub _OnTimer() ' override
     
-    If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Clock) Then Return
+    If Not Me._$iconView.Exist(NagatoDesktopKey.Clock) Then Return
     
-    Try Me._$iconView[NagatoDesktopSpecialKey.Clock].Picture = getIcon()
+    Try Me._$iconView[NagatoDesktopKey.Clock].Picture = getIcon()
     
 End

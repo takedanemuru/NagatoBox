@@ -10,13 +10,13 @@ Public Function GetType(argIconView As IconView) As Integer
         Return Me.TypeDirectory
     Else If MikuruMimeType.GetType(argIconView.Item.Key) = MikuruMimeType.TypeApplication Then
         Return Me.TypeApplication
-    Else If argIconView.Item.Key = NagatoDesktopSpecialKey.Clock Then
+    Else If argIconView.Item.Key = NagatoDesktopKey.Clock Then
         Return Me.TypeClock
-    Else If argIconView.Item.Key = NagatoDesktopSpecialKey.SystemMonitor Then
+    Else If argIconView.Item.Key = NagatoDesktopKey.SystemMonitor Then
         Return Me.TypeSysmon
-    Else If argIconView.Item.Key = NagatoDesktopSpecialKey.RssFeeder Then
+    Else If argIconView.Item.Key = NagatoDesktopKey.RssFeeder Then
         Return Me.TypeRss
-    Else If argIconView.Item.Key = NagatoDesktopSpecialKey.TrashBin Then
+    Else If argIconView.Item.Key = NagatoDesktopKey.TrashBin Then
         Return Me.TypeTrashBin
     Else
         Return Me.TypeFile

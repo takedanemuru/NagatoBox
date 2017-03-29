@@ -50,24 +50,23 @@ End
 
 Public Sub _OnReload()
     
-    Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Music)
+    Try Me._$iconView.Remove(NagatoDesktopKey.Music)
+    If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.Music) Then Return
     
-    If Not NagatoSettingsDesktopTile.ShowMusic Then Return
-    
-    Me._$iconView.Add(NagatoDesktopSpecialKey.Music, "", getBaseImage().Picture)
+    Me._$iconView.Add(NagatoDesktopKey.Music, "", getBaseImage().Picture)
     
 End
 
 Public Sub _OnTimer() ' override
     
     If Not DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
-        Try Me._$iconView.Remove(NagatoDesktopSpecialKey.Music)
+        Try Me._$iconView.Remove(NagatoDesktopKey.Music)
         If Not Error Then Me._$iconView.Refresh()
-    Else If Not Me._$iconView.Exist(NagatoDesktopSpecialKey.Music) Then
+    Else If Not Me._$iconView.Exist(NagatoDesktopKey.Music) Then
         Raise RequestRefresh
     Else
         If Not Object.IsValid($proxy) Then $proxy = New NagatoDBusAccessNagatoPlayerX
-        Me._$iconView[NagatoDesktopSpecialKey.Music].Picture = getThumbnail().Picture
+        Me._$iconView[NagatoDesktopKey.Music].Picture = getThumbnail().Picture
     End If
     
 End

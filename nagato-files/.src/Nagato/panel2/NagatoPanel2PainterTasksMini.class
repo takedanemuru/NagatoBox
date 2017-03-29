@@ -1,0 +1,53 @@
+' Gambas class file
+
+Inherits NagatoPanel2Painter
+
+Private Const Margin As Integer = 22
+
+Private Sub paintTask(argIndex As Integer)
+    
+    Dim yukiDesktopWindow As DesktopWindow = NagatoDesktopWatcher2[argIndex]
+    Dim yukiIcon As Picture 
+
+    If yukiDesktopWindow.Icon Then
+        yukiIcon = yukiDesktopWindow.Icon.Stretch(16, 16).Picture
+    Else
+        yukiIcon = MikuruIcon.Get("question-balloon")
+    End If
+
+    Paint.DrawPicture(yukiIcon, Margin * 2 + Margin * argIndex, 4)
+
+End
+
+Public Sub _OnLeftClick(argX As Integer)
+    
+    Dim yukiIndex As Integer = Max(0, argX Div Margin - 2)
+    Dim yukiDesktopWindow As DesktopWindow = NagatoDesktopWatcher2[yukiIndex]
+    
+    Desktop.Current = yukiDesktopWindow.Desktop
+    yukiDesktopWindow.Activate()
+    
+Catch
+    Return
+    
+End
+
+Public Sub _OnRightClick(argX As Integer)
+    
+    
+    
+End
+
+Public Sub Paint(Optional argX As Integer) As Integer
+    
+    Dim yukiIndex As Integer
+
+    For yukiIndex = 0 To NagatoDesktopWatcher2.Max
+        paintTask(yukiIndex)
+    Next
+    
+    Paint.Fill()
+    
+    Return Margin ' dummy, should return right margin. 
+    
+End

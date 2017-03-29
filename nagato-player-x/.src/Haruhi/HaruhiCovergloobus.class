@@ -13,18 +13,19 @@ End
 Public Sub Form_Open()
     
     Me.Title = " "
-    Me.Sticky = True
     Me.Resizable = False
     
     $painter = New NagatoPainterGloobus(Me)
     $observer = New Observer(NagatoBroadcast) As "Asakura"
+    
+    NagatoSettingsForm.LoadGloobusForm(Me)
     
 End
 
 Public Sub Form_Close()
     
     If NagatoSettingsForm.Main = NagatoSettingsForm.HCoverArt Then NagatoDBus.Unregister()
-    NagatoSettingsForm.SavePosition(Me)
+    NagatoSettingsForm.SaveGloobusForm(Me)
     
 End
 

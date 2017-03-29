@@ -27,7 +27,7 @@ End
 
 Public Sub Asakura_MouseDrag()
     
-    If NagatoDesktopSpecialKey.IsSpecialKey($iconView.Key) Then Return
+    If NagatoDesktopKey.IsSpecialKey($iconView.Key) Then Return
     If $selection.Count = 0 Then Return
     Drag.Icon = $iconView.Current.Picture
     $iconView.Drag(NagatoDrag2.GetUriList($selection.Paths), MikuruMimeType.UriList)
@@ -43,7 +43,7 @@ Public Sub Asakura_MouseDown()
         Return
     Else If $iconView.FindAt(Mouse.ScreenX, Mouse.ScreenY) Then
         $iconView.Current.Selected = False
-    Else If Not NagatoDesktopSpecialKey.IsSpecialKey($iconView.Key) Then
+    Else If Not NagatoDesktopKey.IsSpecialKey($iconView.Key) Then
         $selection.Push($iconView.Key, Mouse.Left)
         If $iconView.Key = MikuruLastRenamed.Path Then MikuruLastRenamed.Clear()
         $iconView[$iconView.Key].Picture = MikuruTile($iconView.Key, $selection.Exist($iconView.Key))

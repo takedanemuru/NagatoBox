@@ -55,12 +55,6 @@ Private Function getXdgUserDirTag(argPicture As Picture) As Picture
     
 End
 
-Private Function getApplicationTag(argPicture As Picture) As Picture
-    
-    Return getTriangleTaggedTile(argPicture, "launcher", MikuruColor.Transparent(Color.DarkCyan, 128))
-    
-End
-
 Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
     
     Dim yukiImage As Image = argPicture.Image

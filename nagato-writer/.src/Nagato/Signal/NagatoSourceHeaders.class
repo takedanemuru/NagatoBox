@@ -8,11 +8,30 @@ Private $headers As New Collection
 Private $headerLines As New NagatoHeaderLines
 Private $textBuffer As New NagatoTextBuffer
 
+Private Sub removeMeta(argText As String) As String
+    
+    Dim yukiStart As Integer = String.InStr(argText, "![image:") 
+    Dim yukiEnd As Integer = String.InStr(argText, ")", yukiStart)
+    Dim yukiMeta As String 
+    
+    If yukiStart >= yukiEnd Then Return argText
+    
+    yukiMeta = String.Mid(argText, yukiStart, yukiEnd - yukiStart + 1)
+    
+    Return Replace(argText, yukiMeta, "")
+    
+End
+
 Private Sub addHeader(argHeaderLevel As Integer, argLine As Integer)
     
+    Dim yukiText As String
+    
     If argHeaderLevel = 0 Then Return
+    
+    yukiText = $textBuffer[argLine]
+    If String.InStr(yukiText, "![image:") > 0 Then yukiText = removeMeta(yukiText)
     $headerLines.Add(argHeaderLevel, argLine)
-    $headers.Add($textBuffer[argLine], CString(argLine))
+    $headers.Add(yukiText, CString(argLine))
     
 End
 
