@@ -22,7 +22,7 @@ End
 Public Sub Paint(Optional argX As Integer) As Integer ' returns right margin, if needed.
     
     Paint.DrawImage($background, 0, 0)
-    Paint.Brush = Paint.Color(Color.Gray + Color.Transparent * 128)
+    Paint.Brush = Paint.Color(NagatoSettingsPanel.Background + Color.Transparent * 128)
     Paint.Rectangle(0, 0, Me._$drawingArea.W, Me._$drawingArea.H)
     Paint.Fill()
     

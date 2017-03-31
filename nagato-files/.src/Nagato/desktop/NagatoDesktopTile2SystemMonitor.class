@@ -56,7 +56,7 @@ Public Function getIcon() As Picture
     
 End
 
-Public Sub _onReload()
+Public Sub _OnReload()
     
     Try Me._$iconView.Remove(NagatoDesktopKey.SystemMonitor)
     If Not NagatoSettingsDesktopTile.GetVisible(NagatoDesktopKey.SystemMonitor) Then Return

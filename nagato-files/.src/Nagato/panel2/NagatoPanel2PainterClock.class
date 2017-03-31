@@ -15,7 +15,7 @@ Public Sub Paint(Optional argX As Integer) As Integer
     Dim yukiText As String = Format$(Now(), NagatoSettingsPanel.ClockFormat)
     Dim yukiW As Integer = Application.Font.RichTextWidth(yukiText) + 16
     
-    Paint.Brush = Paint.Color(Color.White)
+    Paint.Brush = Paint.Color(NagatoSettingsPanel.Foreground)
     Paint.DrawRichText(yukiText, Screen.W - yukiW, 0, yukiW, Me._$drawingArea.H, Align.Center)
     Paint.Fill()
     

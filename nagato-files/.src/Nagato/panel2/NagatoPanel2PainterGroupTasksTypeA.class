@@ -7,6 +7,7 @@ Private $painterPager As NagatoPanel2PainterPager
 Private $painterTasks As NagatoPanel2PainterTasksTypeAlpha
 
 Private $mouseClickDispatcher As NagatoPanel2MouseClickDispatcher
+Private $starMenu As New NagatoContextMenuDesktopPanelStar
 
 Public Sub _call()
     
@@ -30,7 +31,8 @@ Public Sub Mouse_Clicked(argType As Integer, argLeft As Boolean)
     
     Select Case argType
         Case NagatoPanel2MouseClickDispatcher.ClickStar
-            If argLeft Then HaruhiPersona.Fortune()
+            If argLeft And If HaruhiPersona.Closed Then HaruhiPersona.Fortune()
+            If Not argLeft Then $starMenu.PopUp()
         Case NagatoPanel2MouseClickDispatcher.ClickMain
             $painterTasks.Click(Mouse.X, argLeft)
         Case NagatoPanel2MouseClickDispatcher.ClickPager

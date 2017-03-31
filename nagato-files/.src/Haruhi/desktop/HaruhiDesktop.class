@@ -5,12 +5,10 @@ Property Read Second As Integer
 
 Private $desktop As NagatoDesktop
 Private $panel2 As NagatoPanel2
-Private $timer As New Timer As "DesktopTimer"
-Private $ready As Boolean = False
-Private $second As Integer
-Private $timerCount As Integer
+Private $desktopTimer As New NagatoDesktopTimer As "DesktopTimer"
 
 Event Timer
+Event SystemTimer
 
 Private Sub initializeForm()
     
@@ -53,10 +51,8 @@ Public Sub Form_Open()
         $desktop = New NagatoDesktop(Me)
         $panel2 = New NagatoPanel2(Me)
         MikuruX11.ReservePanelHeightOnScreen(Me.Id)
-        $timer.Delay = 5000
-        $timer.Enabled = True
+        $desktopTimer = New NagatoDesktopTimer As "DesktopTimer"
         HaruhiPersona.Welcome()
-        $ready = True
     Else
         Message.Error("YUKI.N > Fail to activate nagato-desktop", ("OK"))
         Me.Close()
@@ -66,8 +62,8 @@ End
 
 Public Sub Form_Close()
     
-    $timer.Enabled = False
-
+    $desktopTimer.Kill()
+    
     Shell "nagato-rss-daemon --check-out nagato-desktop"
     Shell "nagato-systemmonitor-daemon --check-out nagato-desktop"
     
@@ -75,24 +71,26 @@ Public Sub Form_Close()
     
 End
 
-Public Sub DesktopTimer_Timer()
+Public Sub DesktopTimer_SystemTiming()
     
-    If 5 > $timerCount Then Inc $timerCount
-    If $timerCount = 5 Then $timer.Delay = 1000
+    Raise SystemTimer
     
-    $second = Second(Now())
-    Raise Timer
+End
 
+Public Sub DesktopTimer_RefreshTiming()
+    
+    Raise Timer
+    
 End
 
 Private Function Ready_Read() As Boolean
 
-    Return $ready
+    Return $desktopTimer.Ready
 
 End
 
 Private Function Second_Read() As Integer
 
-    Return $second
+    Return $desktopTimer.Second
 
 End

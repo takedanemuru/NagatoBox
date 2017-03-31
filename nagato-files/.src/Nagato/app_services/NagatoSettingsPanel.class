@@ -29,8 +29,7 @@ End
 
 Private Sub Height_Write(Value As Integer)
 
-    Me._$settings["panel/height"] = Value
-    Me._$settings.Save()
+    Me._ChangeSettings("panel/height", Value)
 
 End
 
@@ -42,8 +41,7 @@ End
 
 Private Sub Background_Write(Value As Integer)
 
-    Me._$settings["panel/background"] = Value
-    Me._$settings.Save()
+    Me._ChangeSettings("panel/background", Value)
 
 End
 
@@ -55,8 +53,7 @@ End
 
 Private Sub Foreground_Write(Value As Integer)
 
-    Me._$settings["panel/foreground"] = Value
-    Me._$settings.Save()
+    Me._ChangeSettings("panel/foreground", Value)
 
 End
 
@@ -68,7 +65,6 @@ End
 
 Private Sub Highlight_Write(Value As Integer)
 
-    Me._$settings["panel/highlight"] = Value
-    Me._$settings.Save()
+    Me._ChangeSettings("panel/highlight", Value)
 
 End

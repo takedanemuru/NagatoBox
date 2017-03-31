@@ -7,10 +7,13 @@ Property Read Content As String
 Property Read Text As String
 
 Private $systemMonitor As New NagatoDBusAccessSystemMonitor
+Private $observer As Observer
+Private $buffer As New NagatoSystemStatusBuffer
 
 Public Function EnsureActivation(argId As String) As Boolean
     
     If Not $systemMonitor.Activated Then $systemMonitor.Activate(argId)
+    If Not Object.IsValid($observer) Then $observer = New Observer(HaruhiDesktop) As "Asakura"
     
     Return $systemMonitor.Activated
     
@@ -32,20 +35,22 @@ End
 
 Private Function Content_Read() As String
 
-    Dim yukiText As String
-    
-    yukiText &= Format$($systemMonitor.CpuUsage, "##0.00%") & "<br>"
-    yukiText &= Format$($systemMonitor.MemoryUsage, "##0.00%") & "<br>"
-    yukiText &= Format$($systemMonitor.SwapUsage, "##0.00%") & "<br>"
-    yukiText &= $systemMonitor.ProcessCount & "<br>"
-    yukiText &= Format$($systemMonitor.Thermal, "##0.00°C")
-    
-    Return yukiText
+    Return $buffer.List
 
 End
 
 Private Function Text_Read() As String
 
-    Return $systemMonitor.GetText()
+    Return $buffer.Inline
 
+End
+
+Public Sub Asakura_SystemTimer()
+    
+    If Not $systemMonitor.Activated Then Return
+    
+    With $systemMonitor
+        $buffer.SetStatus(.CpuUsage, .MemoryUsage, .SwapUsage, .ProcessCount, .Thermal)
+    End With
+    
 End

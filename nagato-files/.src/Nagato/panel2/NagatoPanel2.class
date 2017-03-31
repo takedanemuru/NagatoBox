@@ -5,7 +5,7 @@ Private $painterBackground As NagatoPanel2PainterBackground
 Private $observer As NagatoPanel2Observer
 
 Private $tasksTypeA As NagatoPanel2PainterGroupTasksTypeA
-'Private $systemMonitor As NagatoPanel2PainerGroupSystemMonitor
+Private $systemMonitor As NagatoPanel2PainerGroupSystemMonitor
 
 Private Sub initializeDrawingArea(argForm As Form)
     
