@@ -1,0 +1,66 @@
+' Gambas class file
+
+Inherits NagatoPainter
+
+Private Function getPdfIcon() As Picture
+    
+    Dim yukiDocument As New PdfDocument(Me._$currentPath)
+    Dim yukiImage As Image = yukiDocument[1].Image
+    Dim yukiRate As Float = Min(Me.IconSize / yukiImage.H, Me.IconSize / yukiImage.W)
+    
+    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
+    
+End
+
+Private Function getVideoIcon() As Picture
+    
+    Dim yukiImage As Image
+    Dim yukiRate As Float
+    
+    If Not NagatoDBThumbnailer.HasThumbnail(Me._$currentPath, 128) Then Return getIcon()
+    
+    yukiImage = NagatoDBThumbnailer.Get(Me._$currentPath, 128).Image
+    yukiRate = Min(Me.IconSize / yukiImage.H, Me.IconSize / yukiImage.W)
+    
+    Return yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate).Picture
+    
+End
+
+Private Function getIcon() As Picture
+    
+    Dim yukiImage As Image
+    Dim yukiRate As Float
+    
+    If DesktopMime.FromFile(Me._$currentPath).Type Begins "image" Then
+        yukiImage = Image.Load(Me._$currentPath)
+        yukiRate = Min(Me.IconSize / yukiImage.H, Me.IconSize / yukiImage.W)
+        yukiImage = yukiImage.Stretch(yukiImage.W * yukiRate, yukiImage.H * yukiRate)
+        Return yukiImage.Picture
+    Else
+        Return Desktop.GetFileIcon(Me._$currentPath, Me.IconSize / 2)
+    Endif
+    
+Catch
+    Return MikuruIcon.Get("question", 32)
+    
+End
+
+Public Function Paint(argPath As String) As Integer
+    
+    Dim yukiIcon As Picture 
+    
+    Me._$currentPath = argPath
+    
+    If DesktopMime.FromFile(argPath).Type = "application/pdf"
+        yukiIcon = getPdfIcon()
+    Else If DesktopMime.FromFile(argPath).Type Begins "video" Then
+        yukiIcon = getVideoIcon()
+    Else
+        yukiIcon = getIcon()
+    End If
+    
+    Paint.DrawPicture(yukiIcon, (Me._$drawingArea.W - yukiIcon.W) / 2, 16)
+    
+    Return yukiIcon.H + Me.MarginDouble
+    
+End

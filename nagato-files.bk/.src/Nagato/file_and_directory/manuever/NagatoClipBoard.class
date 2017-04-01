@@ -1,0 +1,63 @@
+' Gambas class file
+
+Create Static
+
+Property Read PathsCut As String[]
+Property Read PathCopy As String[]
+
+Private $timer As New Timer As "Timer"
+Private $pathsCopy As NagatoPathsHandlerClipboard
+Private $pathsCut As NagatoPathsHandlerClipboard
+
+Event Changed
+
+Public Sub Activate()
+    
+    $pathsCopy = New NagatoPathsHandlerClipboard("text/uri-list")
+    $pathsCut = New NagatoPathsHandlerClipboard("text/nagato-selection-cut")
+    $timer.Enabled = True
+    
+End
+
+Public Function Paste(argDirectory As String)
+    
+    If Clipboard.Formats.Exist("text/uri-list") Then 
+        MikuruUriList.Copy(argDirectory, Clipboard.Paste("text/uri-list"))
+    Else If Clipboard.Format = "text/nagato-selection-cut" Then
+        MikuruUriList.Cut(argDirectory, Clipboard.Paste("text/nagato-selection-cut"))
+    End If
+    
+End
+
+Public Sub Copy(argSelection As String[])
+    
+    If argSelection.Count = 0 Then Return
+    Clipboard.Copy(NagatoDrag2.GetUriListCopy(argSelection), "text/uri-list")
+
+    
+End
+
+Public Sub Cut(argSelection As String[])
+    
+    If argSelection.Count = 0 Then Return
+    Clipboard.Copy(NagatoDrag2.GetUriListCopy(argSelection), "text/nagato-selection-cut")   
+End
+
+Public Sub Timer_Timer()
+    
+    If $pathsCopy.CheckModefied() Then Raise Changed
+    If $pathsCut.CheckModefied() Then Raise Changed
+    
+End
+
+Private Function PathsCut_Read() As String[]
+
+    Return $pathsCut.Paths
+
+End
+
+Private Function PathCopy_Read() As String[]
+
+    Return $pathsCopy.Paths
+
+End

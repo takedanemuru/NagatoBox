@@ -1,0 +1,65 @@
+' Gambas class file
+
+Public Enum ResponseCancel, ResponseDelete
+
+Private $rectangles As NagatoDialogMessageRectangles
+Private $message As New NagatoDialogMessageDeletingPaths
+
+Private Sub paintLabel()
+    
+    Dim yukiRect As Rect = $rectangles.LabelRectangle
+    
+    Paint.Brush = Paint.Color(MikuruColor.Transparent(Color.Violet, 128))
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
+    
+End
+
+Private Sub paintText()
+    
+    Dim yukiRect As Rect = $rectangles.TextRectangle
+    
+    Paint.Brush = Paint.Color(Color.White)
+    Paint.DrawRichText($message.RichText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Function getBackground() As Image
+    
+    Return Image.Load("pictures/persona.jpg").Stretch(MainDrawingArea.W, MainDrawingArea.H)
+    
+End
+
+Public Sub SetMessage(argPaths As String[])
+    
+    $message.SetMessage(argPaths)
+    MainDrawingArea.Refresh()
+    
+End
+
+Public Sub Form_Open()
+
+    With MainDrawingArea
+        $rectangles = New NagatoDialogMessageRectangles(0, 0, Me.W, Me.H - HBox1.H)
+    End With
+
+End
+
+Public Sub MainDrawingArea_Draw()
+    
+    Paint.Begin(MainDrawingArea)
+        Paint.DrawImage(getBackground(), 0, 0)
+        Paint.Font.Bold = True
+        $rectangles.SetRichText(Paint.Font, $message.RichText)
+        paintLabel()
+        paintText()
+    Paint.End()
+    
+End
+
+Public Sub Buttons_Click()
+
+    Me.Close(Last.Tag)
+
+End

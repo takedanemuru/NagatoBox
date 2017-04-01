@@ -1,0 +1,88 @@
+' Gambas class file
+
+Property Read Enabled As Boolean
+
+Public Enum ActionNone, ActionPlay, ActionPause, ActionNext, ActionBack, ActionAddMusics
+
+Private Const ServiceName As String = "org.gambas.nagato-player-x"
+
+Private $player As New NagatoDBusProxyNagatoPlayerXPlayer
+Private $property As New NagatoDBusProxyNagatoPlayerXProperty
+
+Private Sub ensureProxy()
+    
+    $player.Ensure()
+    $property.Ensure()
+    
+End
+
+Public Function GetCoverArtPath() As String
+    
+    ensureProxy()
+    
+    Return $property.GetCoverArtPath()
+    
+End
+
+Public Function GetRate() As Float
+    
+    ensureProxy()
+    
+    Return $property.GetRate()
+    
+End
+
+Public Function GetTextTile() As String
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        Return $property.GetTextTile()
+    Else
+        Return "YUKI.N > nagato-player-x is not activated"
+    End If
+    
+Catch
+    Return ""
+    
+End
+
+Public Sub GetTextProgress() As String
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        Return $property.GetTextProgress()
+    Else
+        Return "YUKI.N > nagato-player-x is not activated"
+    End If
+    
+End
+
+Public Function GetCurrentPath() As String
+    
+    Return $property.GetCurrentPath()
+    
+End
+
+Public Sub GetTextMain() As String
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then
+        ensureProxy()
+        Return $property.GetTextMain()
+    Else
+        Return ""
+    End If
+    
+End
+
+Public Sub Action(argAction As Integer)
+    
+    ensureProxy()
+    $player(argAction)
+    
+End
+
+Private Function Enabled_Read() As Boolean
+
+    Return DBus.Session.Applications.Exist(ServiceName)
+
+End

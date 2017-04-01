@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $propertyPainter As NagatoPropertyPainterFacade
+
+Public Sub SetProperty(argPath As String)
+    
+    $propertyPainter.SetProperty(argPath)
+    
+End
+' 
+Public Sub SetTrashProperty(argTrashName As String)
+    
+    ' ignore
+    
+    Debug argTrashName
+    
+End
+
+Public Sub _new()
+    
+    $propertyPainter = New NagatoPropertyPainterFacade(Me, Color.Orange)
+
+End

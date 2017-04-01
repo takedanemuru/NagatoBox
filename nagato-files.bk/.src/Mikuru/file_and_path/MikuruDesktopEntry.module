@@ -1,0 +1,43 @@
+' Gambas module file
+
+Private Function getCommand(argExec As String, argAsSuperUser As Boolean) As String
+    
+    Dim yukiReturn As String = IIf(argAsSuperUser, "gksu", "")
+    Dim yukiCommand As String
+    
+    For Each yukiCommand In Split(argExec, " ", "")
+        If yukiCommand Begins "%" Then Continue
+        yukiReturn &= (" " & yukiCommand)
+    Next
+        
+    Return yukiReturn
+    
+End
+
+Public Sub Execute(argPath As String, Optional argAsSuperUser As Boolean = False)
+    
+    Dim yukiDesktopFile As New DesktopFile(argPath)
+    Dim yukiCommand As String = getCommand(yukiDesktopFile.Exec, argAsSuperUser)
+    
+    Try Shell yukiCommand
+    
+End
+
+Public Sub ExecuteWithFile(argDesktopEntryPath As String, argFilePath As String)
+    
+    Dim yukiDesktopFileIndex As DesktopFile
+    Dim yukiDesktopFile As New DesktopFile(argDesktopEntryPath)
+    
+    For Each yukiDesktopFileIndex In DesktopMime.FromFile(argFilePath).GetApplications()
+        Debug yukiDesktopFileIndex.Name
+        ' If yukiDesktopFileIndex.Name = yukiDesktopFile.Name Then
+        '     Debug "match"
+        '     Break
+        ' Endif
+        ' Debug "NOT mached"
+    Next
+    
+    'Try yukiDesktopFile.Run(argFilePath)
+    
+End
+

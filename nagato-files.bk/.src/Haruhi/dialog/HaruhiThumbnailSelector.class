@@ -1,0 +1,49 @@
+' Gambas class file
+
+Property Read SelectedPath As String
+
+Private $sourcePath As String
+Private $selectedPath As String
+Private $workingDirectory As New NagatoVideoThumbnailWorkingDirectory
+Private $thumbnailer As New NagatoVideoThumbnailer
+
+Private Sub show()
+    
+    Dim yukiPath As String
+    Dim yukiImage As Image
+    
+    For Each yukiPath In $workingDirectory.Paths
+        Try yukiImage = Image.Load(yukiPath)
+        If Error Then Break
+        ThumbnailsIconView.Add(yukiPath, "", MikuruTileImage.Justify(yukiImage).Picture)
+    Next
+    
+End
+
+Public Sub SetThumbnails(argPath As String)
+    
+    If DesktopMime.FromFile(argPath).Type Not Begins "video" Then Return
+    
+    ThumbnailsIconView.Clear()
+    $sourcePath = argPath
+    $workingDirectory.Clear()
+    $thumbnailer.GenerateThumbnails($workingDirectory.Directory, argPath)
+    
+    show()
+    
+End
+
+Public Sub ThumbnailsIconView_Activate()
+
+    $selectedPath = ThumbnailsIconView.Key
+    $thumbnailer.Push($sourcePath, $selectedPath)
+
+    Me.Close(1)
+
+End
+
+Private Function SelectedPath_Read() As String
+
+    Return $selectedPath
+
+End

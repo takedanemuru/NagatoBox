@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoSubPainter
+
+Public Function Draw(argTopOffset As Integer, argPath As String) As Integer
+    
+    Dim yukiImage As Image = Image.Load(argPath)
+    Dim yukiTemplate As String = "<br>Height:<br>Width:"
+    Dim yukiProperties As String = Subst$("<br>&1<br>&2", yukiImage.H, yukiImage.W)
+    
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiProperties)
+    
+Catch
+    Return argTopOffset
+    
+End

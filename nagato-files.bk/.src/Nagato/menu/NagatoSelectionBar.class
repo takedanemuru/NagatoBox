@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $selection As NagatoSelection 
+Private $widgets As NagatoSelectionBarWidgets
+Private $observer As Observer
+
+Public Sub _new(argContainer As TabStrip, argSelection As NagatoSelection)
+    
+    $widgets = New NagatoSelectionBarWidgets(argContainer) As "Widgets"
+    $selection = argSelection
+    $observer = New Observer($selection) As "Asakura"
+    
+End
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return $selection.Exist(argPath)
+    
+End
+
+Public Sub ClearAll()
+    
+    Clipboard.Clear()
+    $selection.ClearAll()
+    
+End
+
+Public Sub ClearWithoutLastSelected()
+    
+    $selection.ClearWithoutLastSelection()
+    
+End
+
+Public Sub Remove(argPath As String)
+    
+    $selection.RemovePath(argPath)
+    
+End
+
+Public Sub Push(argPath As String, argLeftClick As Boolean)
+    
+    $selection.Push(argPath, argLeftClick)
+    
+End
+
+Public Sub SetPaths(argPaths As String[])
+    
+    $selection.SetPaths(argPaths)
+    
+End
+
+Public Sub Widgets_ButtonAction(argAction As Integer)
+    
+    Select Case argAction
+        Case NagatoSelectionBarWidgets.ButtonAll
+            Raise Signal(NagatoObject.ViewUnselectAll, Null)
+        Case NagatoSelectionBarWidgets.ButtonCopyTo
+            MikuruFileManuever.CopyTo($selection.Paths)
+        Case NagatoSelectionBarWidgets.ButtonMoveTo
+            MikuruFileManuever.MoveTo($selection.Paths)
+        Case NagatoSelectionBarWidgets.ButtonDelete
+            NagatoTrash.Delete($selection.Paths)
+    End Select
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    $widgets.SetCount($selection.Count)
+    
+End

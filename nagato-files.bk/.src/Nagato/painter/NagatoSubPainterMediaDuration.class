@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoSubPainter
+
+Private Function getDuration(argPath As String) As String
+    
+    Dim yukiOutput As String
+    Dim yukiDebug As String
+    
+    Shell Subst$("ffprobe &1 -hide_banner -show_entries format=duration | grep duration", argPath) To yukiDebug
+    
+    Debug yukiDebug
+    
+    Shell Subst$("ffmpeg -i &1 2>&2 | grep Duration", argPath, "&1") To yukiOutput
+    
+    Debug yukiOutput
+    
+    Return Split(Split(yukiOutput, ",", "", True)[0], " ", "", True)[1]
+    
+Catch
+    Return "?"
+    
+End
+
+Public Function Draw(argTopOffset As Integer, argPath As String) As Integer
+    
+    Dim yukiTemplate As String = "<br>Duration:<br>"
+    Dim yukiDuration As String = getDuration(argPath)
+    
+    Return Me._DrawProperties(argTopOffset, yukiTemplate, yukiDuration)
+    
+End

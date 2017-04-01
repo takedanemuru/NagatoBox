@@ -1,0 +1,66 @@
+' Gambas class file
+
+Property Read Text As String
+
+Private $path As String
+Private $groups As New NagatoConfigFileGroup[]
+
+Private Sub parsingData()
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    Dim yukiGroup As New NagatoConfigFileGroup("")
+    
+    Debug $path
+    
+    yukiStream = Open $path For Input
+    
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine Begins "#" Then Continue
+        If yukiLine Begins "[" Then
+            If yukiGroup.Count > 0 Then $groups.Add(yukiGroup)
+            yukiGroup = New NagatoConfigFileGroup(yukiLine)
+        Else If yukiLine <> "" Then
+            yukiGroup.AddLine(yukiLine)
+        End If
+    Wend
+    
+    If yukiGroup.Count > 0 Then $groups.Add(yukiGroup)
+    
+    Close #yukiStream
+    
+End
+
+Public Sub Replace(argGroup As String, argKey As String, argValue As String)
+    
+    Dim yukiGroup As NagatoConfigFileGroup
+    
+    For Each yukiGroup In $groups
+        If yukiGroup.Name <> argGroup Then Continue
+        yukiGroup.Replace(argKey, argValue)
+    Next
+    
+    File.Save($path, Me.Text)
+    
+End
+
+Public Sub _new(argPath As String)
+    
+    $path = argPath
+    parsingData()
+    
+End
+
+Private Function Text_Read() As String
+
+    Dim yukiText As String
+    Dim yukiGroup As NagatoConfigFileGroup
+    
+    For Each yukiGroup In $groups
+        yukiText &= yukiGroup.Text
+    Next
+
+    Return yukiText
+
+End

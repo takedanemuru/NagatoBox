@@ -1,0 +1,84 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $container As VBox
+Private $modeComboBox As ComboBox
+Private $gtkBookmarks As NagatoGtkBookmarks
+Private $treeView As NagatoTreeView
+Private $fileSearch As NagatoFileSearch
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $container = New VBox(argContainer)
+    
+    With $container
+        .Expand = True
+    End With
+    
+End
+
+Private Sub ininializeModeComboBox()
+    
+    $modeComboBox = New ComboBox($container) As "ModeComboBox"
+    
+    With $modeComboBox
+        .Expand = False
+        .Height = 32
+        .List = [("Bookmarks"), ("Tree View"), ("File Search")]
+        .ReadOnly = True
+        .Index = 0
+    End With
+    
+End
+
+Private Sub setContainerForRoot(argContainer As Container)
+    
+    Dim yukiLabel As New TextLabel(argContainer)
+    
+    With yukiLabel
+        .Alignment = Align.Center
+        .Text = ("Navigation controls are disabled.")
+        .Background = Color.Orange
+        .Foreground = Color.White
+        .Font.Bold = True
+    End With
+    
+End
+
+Public Sub RefreshTreeView()
+    
+    $treeView.Refresh()
+    
+End
+
+Public Sub SetSearch(argRecursive As Boolean)
+    
+    $modeComboBox.Index = 2
+    $fileSearch.SetRecursive(argRecursive)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    If Not MikuruAccountChecker.IsRoot() Then 
+        initializeContainer(argContainer)
+        ininializeModeComboBox()
+        $gtkBookmarks = New NagatoGtkBookmarks($container) As "TFEI"
+        $treeView = New NagatoTreeView($container) As "TFEI"
+        $fileSearch = New NagatoFileSearch($container) As "TFEI"
+    Else
+        setContainerForRoot(argContainer)
+    End If
+    
+End
+
+Public Sub ModeComboBox_Click()
+    
+    $gtkBookmarks.Visible = ($modeComboBox.Index = 0)
+    $treeView.Visible = ($modeComboBox.Index = 1)
+    $fileSearch.Visible = ($modeComboBox.Index = 2)
+    
+    If $modeComboBox.Index = 2 Then $fileSearch.SetFocus()
+    
+End

@@ -1,0 +1,60 @@
+' Gambas class file
+
+Private $persona As Picture
+Private $form As Form
+Private $observer As Observer
+
+Private Sub setPersona()
+    
+    Select Case Month(Now)
+        Case 1, 2, 3, 10, 11, 12
+            $persona = Picture.Load("pictures/nagato_1.png")
+        Case Else
+            $persona = Picture.Load("pictures/nagato_2.png")
+    End Select
+    
+    $form.Picture = $persona
+    
+End
+
+Private Sub setPosition()
+    
+    With $form
+        .H = $persona.H
+        .W = $persona.W
+        .Y = Screen.H - $persona.H
+        .X = 100
+    End With
+    
+End
+
+Public Sub Activate()
+    
+    setPersona()
+    setPosition()
+    
+End
+
+Public Sub _new(argForm As Form)
+    
+    $form = argForm
+    $observer = New Observer(argForm) As "Asakura"
+    
+End
+
+Public Sub Asakura_Move()
+
+    $form.Y = Max(Screen.H - $persona.H, Screen.H * 0.3)
+
+End
+
+Public Sub Asakura_KeyPress()
+    
+    Select Case Key.Code
+        Case Key.Left
+            $form.X -= 2 * MikuruUx.Grid
+        Case Key.Right
+            $form.X += 2 * MikuruUx.Grid
+    End Select
+    
+End

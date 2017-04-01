@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoActiveTextButton
+
+Public Sub _OnGetText() As String
+    
+    Return ("Home")
+    
+End
+
+Public Sub _OnGetTag() As Integer
+    
+    Return NagatoObject.MoveHome
+    
+End
+
+Public Sub _OptionalOnGetIcon() As Picture
+    
+    Return MikuruIcon.Get("home")
+    
+End

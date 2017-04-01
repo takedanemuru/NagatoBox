@@ -1,0 +1,11 @@
+' Gambas class file
+
+Create Static
+
+Public Sub PopUp(argDirectory As String)
+    
+    Dim yukiMenu As New NagatoContextMenuIconViewFiler(HaruhiMain, argDirectory)
+    
+    yukiMenu.PopUp()
+    
+End

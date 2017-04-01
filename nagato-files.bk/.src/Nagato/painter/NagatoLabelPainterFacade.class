@@ -1,0 +1,48 @@
+' Gambas class file
+
+Create Static
+
+Private $selectedLabelPainter As New NagatoLabelPainterSelected
+Private $readOnlyLabelPainter As New NagatoLabelPainterReadOnly
+Private $cutLabelPainter As New NagatoLabelPainterCut
+Private $renamedLabelPainter As New NagatoLabelPainterRenamed
+Private $copiedLabelPainter As New NagatoLabelPainterCopied
+Private $systemMonitorLabelPainter As New NagatoLabelPainterSystemMonitor
+Private $rssLabelPainter As New NagatoLabelPainterRss
+Private $weatherPainter As New NagatoLabelPainterWeather
+Private $playerXPainter As New NagatoLabelPainterNagatoPlayerX
+
+Public Sub _call(argMode As Integer)
+    
+    Me.Paint(argMode)
+    
+End
+
+Public Sub Paint(argMode As Integer, Optional argText As String)
+    
+    With MikuruTileMode
+            Select Case argMode
+                Case .ModeReadOnly
+                    $readOnlyLabelPainter.Paint()
+                Case .ModeCut
+                    $cutLabelPainter.Paint()
+                Case .ModeCopied
+                    $copiedLabelPainter.Paint()
+                Case .ModeSelected
+                    $selectedLabelPainter.Paint()
+                Case .ModeRenamed 
+                    $renamedLabelPainter.Paint()
+                Case .SpecialSystems
+                    $systemMonitorLabelPainter.Paint()
+                Case .SpecialRssText
+                    $rssLabelPainter.Paint()
+                Case .SpecialWeather
+                    $weatherPainter.Paint()
+                Case .SpecialPlayerX
+                    $playerXPainter.Paint()
+                Case .ModeNull
+                    ' ignore
+            End Select
+        End With
+    
+End

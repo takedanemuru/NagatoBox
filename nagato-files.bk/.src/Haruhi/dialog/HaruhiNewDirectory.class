@@ -1,0 +1,50 @@
+' Gambas class file
+
+Public Enum ResponseCancel = 1001, ResponsCreate = 1002
+
+Private $parentDirectory As String
+
+Public Sub SetPath(argPath As String)
+    
+    $parentDirectory = File.Dir(argPath)
+    
+    DirectoryNameBox.Text = File.Name(argPath)
+    DirectoryNameBox.Select()
+    
+End
+
+Public Sub Form_Show()
+    
+    Dim yukiPicture As Picture = Image.Load("pictures/yukichan_34.jpg").Stretch(Me.W, Me.H).Picture
+
+    Me.Picture = yukiPicture
+    Me.Center()
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(Me.ResponseCancel)
+
+End
+
+Public Sub CreateButton_Click()
+
+    If Not Exist($parentDirectory) Then
+        Message.Error(("YUKI.N > This directory has been deleted."), ("OK"))
+    Else If Not Exist($parentDirectory &/ DirectoryNameBox.Text) Then
+        Mkdir $parentDirectory &/ DirectoryNameBox.Text
+        Me.Close(Me.ResponsCreate)
+    Else
+        Message.Error(("YUKI.N > Same name directory or file has been existed"), ("OK"))
+    Endif
+
+End
+
+Public Sub DirectoryNameBox_Activate()
+
+    If DirectoryNameBox.Text = "" Then Return
+    
+    CreateButton_Click()
+
+End

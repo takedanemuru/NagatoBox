@@ -1,0 +1,61 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $painterBackground As NagatoPanel2PainterBackground
+Private $observer As NagatoPanel2Observer
+
+Private $tasksTypeA As NagatoPanel2PainterGroupTasksTypeA
+Private $systemMonitor As NagatoPanel2PainerGroupSystemMonitor
+
+Private Sub initializeDrawingArea(argForm As Form)
+    
+    $drawingArea = New DrawingArea(argForm) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = False
+        .H = NagatoSettingsPanel.Height
+    End With
+    
+End
+
+Public Sub ReloadDesktopWallpaper()
+    
+    $painterBackground.ReloadDesktopWallpaper()
+    
+End
+
+Public Sub _new(argForm As Form)
+    
+    MikuruHidden.Ensure()
+
+    initializeDrawingArea(argForm)
+    $tasksTypeA = New NagatoPanel2PainterGroupTasksTypeA($drawingArea)
+    '$systemMonitor = New NagatoPanel2PainerGroupSystemMonitor($drawingArea)
+    $painterBackground = New NagatoPanel2PainterBackground($drawingArea)
+    $drawingArea.Refresh()
+    
+    $observer = New NagatoPanel2Observer As "Observer"
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    Paint.Begin($drawingArea)
+        $painterBackground.Paint(0)
+        $tasksTypeA()
+        '$systemMonitor()
+    Paint.End()
+    
+Catch
+    Return ' avoid drawing during drawing.
+    
+End
+
+Public Sub Observer_RequestRefresh()
+    
+    $drawingArea.Refresh()
+    
+Catch
+    Return ' avoid error when catch signal during closing app.
+    
+End

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoLabelPainter
+
+Public Sub _OnGetLabelColor() As Integer
+    
+    Return MikuruColor.Transparent(Color.Cyan, 192)
+    
+End
+
+Public Sub _OnGetIconName() As String
+    
+    Return ""
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Weather"
+    
+End

@@ -1,0 +1,44 @@
+' Gambas class file
+
+Inherits DBusObject
+
+Create Static
+
+Property Read Ready As Boolean
+
+Public Sub Notify(argApp As String, argSummary As String, argBody As String, argUrgency As Integer)
+    
+    HaruhiPersona.Notify(argApp, argSummary, argBody, argUrgency)
+    
+End
+
+Public Sub SetTextToPersona(argText As String) 
+    
+    HaruhiPersona.SetText(argText)
+
+End
+
+Public Sub Show() As Boolean
+    
+    Try HaruhiDesktop.Show()
+    
+    If Not Error Then Return True
+    
+Finally
+    Return False
+    
+End
+
+Public Sub ReloadDesktopWallpaper() As Boolean
+    
+    HaruhiDesktop.RealodDesktopWallpaper()
+    
+    Return True
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return HaruhiDesktop.Ready
+
+End

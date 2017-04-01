@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoGtkBookmarksHandler
+
+Private Sub setNewTrashBin()
+    
+    If Exist(MikuruTrashPath.Files) Then
+        TFEI.SetNewTrashBin()
+    Else
+        Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
+    End If
+    
+End
+
+Private Sub setNewTab()
+    
+    If Exist(Me._$listView.Key) Then
+        TFEI.SetNewDirectory(Me._$listView.Key)
+    Else
+        Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
+    End If
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    Select Case Me._$listView.Key
+        Case "NagatoTrashBinKey"
+            setNewTrashBin()
+        Default
+            setNewTab()
+    End Select
+    
+End

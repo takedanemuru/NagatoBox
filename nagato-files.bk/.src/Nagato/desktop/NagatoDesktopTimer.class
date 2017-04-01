@@ -1,0 +1,50 @@
+' Gambas class file
+
+'Property Read Ready As Boolean
+Property Read Second As Integer
+
+Private $timer As New Timer As "DesktopTimer"
+Private $ready As Boolean = False
+Private $second As Integer
+Private $switch As Boolean
+
+Event RefreshTiming
+Event SystemTiming
+
+Private Sub raiseTiming()
+    
+    $switch = Not $switch
+    
+    If $switch Then
+        $second = Second(Now())
+        Raise RefreshTiming
+    Else
+        Raise SystemTiming
+    End If
+    
+End
+
+Public Sub Kill()
+    
+    $timer.Enabled = False
+    
+End
+
+Public Sub _new()
+    
+    $timer.Delay = 500
+    $timer.Enabled = True
+    
+End
+
+Public Sub DesktopTimer_Timer()
+    
+    raiseTiming()
+    
+End
+
+Private Function Second_Read() As Integer
+
+    Return $second
+
+End

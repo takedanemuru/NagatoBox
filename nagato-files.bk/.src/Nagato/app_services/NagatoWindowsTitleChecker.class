@@ -1,0 +1,54 @@
+' Gambas class file
+
+Private $observer As Observer
+Private $previousWindows As New Collection
+
+Event Changed
+
+Private Sub setPreviousWindows()
+    
+    Dim yukiWindow As DesktopWindow
+    
+    Try $previousWindows.Clear()
+    
+    For Each yukiWindow In Desktop.Windows
+        If yukiWindow.Name = "" Then Continue
+        If yukiWindow.SkipTaskbar Then Continue
+        $previousWindows.Add(yukiWindow.Name, yukiWindow.Id)
+    Next
+    
+End
+
+Private Sub checkTitle(argWindow As DesktopWindow)
+    
+    If Not $previousWindows.Exist(argWindow.Id) Then Return
+    If $previousWindows[argWindow.Id] <> argWindow.Name Then Raise Changed
+    
+End
+
+Private Sub checkTitles()
+    
+    Dim yukiWindow As DesktopWindow
+    
+    For Each yukiWindow In Desktop.Windows
+        If yukiWindow.SkipTaskbar Then Continue
+        If yukiWindow.Name = "" Then Continue
+        checkTitle(yukiWindow)
+    Next
+    
+End
+
+Public Sub _new()
+    
+    $observer = New Observer(HaruhiDesktop) As "Asakura"
+    
+End
+
+Public Sub Asakura_Timer()
+    
+    Desktop.Windows.Refresh()
+    
+    If $previousWindows.Count > 0 Then checkTitles()
+    setPreviousWindows()
+    
+End

@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Public Sub Load(argForm As Form)
+    
+    argForm.X = Me._$settings["form/x", argForm.X]
+    argForm.Y = Me._$settings["form/y", argForm.Y]
+    argForm.Height = Me._$settings["form/height", argForm.Height]
+    argForm.Width = Me._$settings["form/width", argForm.Width]
+    argForm.Maximized = Me._$settings["form/maximized", argForm.Maximized]
+    
+End
+
+Public Sub Save(argForm As Form)
+    
+    Me._$settings["form/x"] = argForm.X
+    Me._$settings["form/y"] = argForm.Y
+    Me._$settings["form/height"] = argForm.Height
+    Me._$settings["form/width"] = argForm.Width
+    Me._$settings["form/maximized"] = argForm.Maximized
+    
+End

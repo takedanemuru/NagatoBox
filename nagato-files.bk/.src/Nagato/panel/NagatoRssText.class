@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits NagatoDesktopPanelContent
+
+Property Read Text As String
+
+Private $count As Integer
+Private $cursor As String = "_"
+Private $text As String
+Private $titleLength As Integer
+
+Public Sub NewText(argText As String, argTitleLength As Integer)
+    
+    $count = 0
+    $text = argText
+    $titleLength = argTitleLength
+    
+End
+
+Public Function SetCountNext() As Boolean
+    
+    Inc $count
+    $count = Max($titleLength, $count)
+    If $count > String.Len($text) Then $cursor = IIf(Odd(CInt($count / 4)), "", "_")
+    If $count > String.Len($text) + 40 Then Return True
+    
+    Return False
+    
+End
+
+Private Function Text_Read() As String
+
+    Return String.Left($text, $count) & $cursor
+
+End

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property IconTheme As String
+Property Background As String
+
+Private Function IconTheme_Read() As String
+
+    Return Me._$settings["appearance/icon_theme", "Numix-Circle"]
+
+End
+
+Private Sub IconTheme_Write(Value As String)
+
+    Me._ChangeSettings("appearance/icon_theme", Value)
+
+End
+
+Private Function Background_Read() As String
+
+    Dim yukiPath As String = Me._$settings["appearance/background", "pictures/about.png"]
+    Dim yukiPicture As Picture
+    
+    Try yukiPicture = Picture.Load(yukiPath)
+
+    If Error Then Return "pictures/about.png"
+
+    If Exist(yukiPath) Then 
+        Return yukiPath
+    Else
+        Return "pictures/about.png"
+    Endif
+
+End
+
+Private Sub Background_Write(Value As String)
+
+    Me._ChangeSettings("appearance/background", Value)
+
+End

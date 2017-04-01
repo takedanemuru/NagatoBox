@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("PDF")
+        .Picture = MikuruColorChip.Get(NagatoSettingsTileColor.Pdf)
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    If Not Dialog.SelectColor() Then NagatoSettingsTileColor.Pdf = Dialog.Color
+    
+End

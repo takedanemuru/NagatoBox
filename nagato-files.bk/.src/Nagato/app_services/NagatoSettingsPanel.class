@@ -1,0 +1,70 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property ClockFormat As String
+Property Height As Integer
+Property Background As Integer
+Property Foreground As Integer
+Property Highlight As Integer
+
+Private Function ClockFormat_Read() As String
+
+    Return Me._$settings["panel/clock_format", ("d/m/yyyy hh:nn:ss")]
+
+End
+
+Private Sub ClockFormat_Write(Value As String)
+
+    Me._$settings["panel/clock_format"] = Value
+    Me._$settings.Save()
+
+End
+
+Private Function Height_Read() As Integer
+
+    Return Me._$settings["panel/height", 24]
+
+End
+
+Private Sub Height_Write(Value As Integer)
+
+    Me._ChangeSettings("panel/height", Value)
+
+End
+
+Private Function Background_Read() As Integer
+
+    Return Me._$settings["panel/background", 12418293]
+
+End
+
+Private Sub Background_Write(Value As Integer)
+
+    Me._ChangeSettings("panel/background", Value)
+
+End
+
+Private Function Foreground_Read() As Integer
+
+    Return Me._$settings["panel/foreground", 16777215]
+
+End
+
+Private Sub Foreground_Write(Value As Integer)
+
+    Me._ChangeSettings("panel/foreground", Value)
+
+End
+
+Private Function Highlight_Read() As Integer
+
+    Return Me._$settings["panel/highlight", 16776960]
+
+End
+
+Private Sub Highlight_Write(Value As Integer)
+
+    Me._ChangeSettings("panel/highlight", Value)
+
+End

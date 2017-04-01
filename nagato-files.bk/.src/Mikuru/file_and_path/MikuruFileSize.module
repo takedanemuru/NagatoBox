@@ -1,0 +1,47 @@
+' Gambas module file
+
+Private Function getText(argSize As Integer) As String
+    
+    If 1024 > argSize Then 'byte
+        Return Format$(argSize, "##0 Byte")
+    Else If 1024 ^ 2 > argSize Then 'KiB
+        Return Format$(argSize / 1024, "##0.00 KiB")
+    Else If 1024 ^ 3 > argSize Then 'MiB
+        Return Format$(argSize / (1024 ^ 2), "##0.00 MiB")
+    Else If 1024 ^ 4 > argSize Then 'GiB
+        Return Format$(argSize / (1024 ^ 3), "##0.00 GiB")
+    Else If 1024 ^ 5 > argSize Then 'TiB
+        Return Format$(argSize / (1024 ^ 4), "##0.00 TiB")
+    Else
+        Return "What the fuck is this ?"
+    Endif
+    
+End
+
+Public Function GetFileSizeText(argPath As String) As String
+    
+    Dim yukiSize As Long = Stat(argPath).Size 
+    
+    Return getText(yukiSize)
+    
+End
+
+Public Function GetDirectorySize(argDirectory As String) As Integer
+    
+    Dim yukiPath As String
+    Dim yukiSize As Integer
+    
+    For Each yukiPath In Dir(argDirectory)
+        If Not Exist(argDirectory &/ yukiPath) Then Continue
+        Try yukiSize += Stat(argDirectory &/ yukiPath).Size
+    Next
+    
+    Return yukiSize
+    
+End
+
+Public Sub _call(argSize As Integer) As String
+    
+    Return getText(argSize)
+    
+End

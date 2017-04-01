@@ -1,0 +1,95 @@
+' Gambas class file
+
+Create Static
+
+Property Read Count As Integer
+Property Read Size As String
+
+Private $path As New NagatoTrashPath
+
+Private Sub confirm(argPaths As String[]) As Boolean
+    
+    HaruhiDialogDelete.SetMessage(argPaths)
+    If HaruhiDialogDelete.ShowDialog() = HaruhiDialogDelete.ResponseDelete Then Return True
+    
+    Return False
+    
+End
+
+Public Sub Delete(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiPaths As String[] = NagatoXdg.RemoveXdgUserDirs(argPaths)
+    
+    If Not confirm(yukiPaths) Then Return
+    
+    For Each yukiPath In yukiPaths
+        If Not Exist(yukiPath) Then Continue
+        Try Exec ["gvfs-trash", yukiPath] Wait
+    Next
+    
+End
+
+Public Sub Empty()
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In Dir(MikuruTrashPath.Files)
+        yukiPaths.Add(MikuruTrashPath.Files &/ yukiPath)
+    Next
+    
+    Me.DeleteFromTrashBin(yukiPaths)
+    
+End
+
+Public Sub DeleteFromTrashBin(argPaths As String[])
+    
+    If confirm(argPaths) Then deleteFilesFromTrashBin(argPaths)
+    
+End
+
+Private Sub deleteFilesFromTrashBin(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        Try Shell Subst$("rm -rf &1 &2", Quote(yukiPath), $path.GetTrashInfoPath(yukiPath))
+    Next
+    
+End
+
+Public Sub Restore(argPaths As String[])
+    
+    Dim yukiPath As String
+    Dim yukiPathToRestore As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        yukiPathToRestore = $path.GetPathToRestore(yukiPath)
+        Try Copy yukiPath To yukiPathToRestore
+        If Not Error Then deleteFilesFromTrashBin([yukiPath])
+    Next
+    
+End
+
+Public Function GetPreviousPath(argPath As String) As String
+    
+    Return $path.GetPathToRestore(argPath)
+    
+End
+
+Private Function Count_Read() As Integer
+
+    Return Dir(MikuruTrashPath.Files).Count
+
+End
+
+Private Function Size_Read() As String
+
+    Dim yukiSize As Integer = MikuruFileSize.GetDirectorySize(MikuruTrashPath.Files)
+    
+    Return MikuruFileSize(yukiSize)
+
+End

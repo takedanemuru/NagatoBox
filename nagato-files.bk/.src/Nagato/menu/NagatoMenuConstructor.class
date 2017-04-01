@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$rootMenu As Menu
+
+Public Sub _AddContextMenu(argText As String, argTag As Integer, Optional argIcon As Picture)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ContextMenu"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+    End With
+    
+End
+
+Public Sub _AddContextMenu2(argText As String, argTag As Integer, argIcon As String, argEnable As Boolean)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "ContextMenu"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        .Picture = MikuruIcon.Get(argIcon)
+        .Enabled = argEnable
+    End With
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$rootMenu = argRootMenu
+    
+End
+

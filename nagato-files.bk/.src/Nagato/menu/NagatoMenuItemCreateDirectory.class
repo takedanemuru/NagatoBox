@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("Create Directory")
+        .Picture = MikuruIcon.Get("folder")
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    HaruhiNewDirectory.SetPath(Me._$path)
+    HaruhiNewDirectory.ShowDialog()
+    
+End

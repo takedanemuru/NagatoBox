@@ -1,0 +1,29 @@
+' Gambas module file
+
+Public Function GetTimeDifferenceText(argDate As Date) As String
+    
+    If 1 > DateDiff(argDate, Now(), gb.Minute) Then
+        Return "Just now"
+    Else If 1 = DateDiff(argDate, Now(), gb.Minute) Then
+        Return "a minute ago"
+    Else If 1 > DateDiff(argDate, Now(), gb.Hour) Then
+        Return Format$(DateDiff(argDate, Now(), gb.Minute), "### minutes ago")
+    Else If 1 = DateDiff(argDate, Now(), gb.Hour) Then
+        Return "an hour ago"
+    Else If 1 > DateDiff(argDate, Now(), gb.Day) Then
+        Return Format$(DateDiff(argDate, Now(), gb.Hour), "### hours ago")
+    Else If 1 = DateDiff(argDate, Now(), gb.Day) Then
+        Return "yesterday"
+    Else If 1 > DateDiff(argDate, Now(), gb.Month) Then
+        Return Format$(DateDiff(argDate, Now(), gb.Day), "### days ago")
+    Else If 1 = DateDiff(argDate, Now(), gb.Month) Then
+        Return "a month ago"
+    Else If 1 > DateDiff(argDate, Now(), gb.Year) Then
+        Return Format$(DateDiff(argDate, Now(), gb.Month), "### months ago")
+    Else If 1 = DateDiff(argDate, Now(), gb.Year) Then
+        Return "a year ago"
+    Else
+        Return Format$(DateDiff(argDate, Now(), gb.Year), "### years ago")
+    End If
+    
+End

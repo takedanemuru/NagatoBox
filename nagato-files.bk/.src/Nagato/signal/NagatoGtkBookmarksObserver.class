@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoLeftPaneContent
+
+Private $observer As NagatoFileObserver
+
+Event Change
+
+Public Sub _new()
+    
+    Dim yukiFilePaths As New String[]
+    
+    Try yukiFilePaths.Add(User.Home &/ ".gtk-bookmarks")
+    Try yukiFilePaths.Add(Desktop.ConfigDir &/ "gtk-3.0/bookmarks")
+    
+    $observer = New NagatoFileObserver As "FilesObserver"
+    $observer.FilePaths = yukiFilePaths.Copy()
+    
+End
+
+Public Sub FilesObserver_Modefied(argPath As String)
+    
+    Raise Change
+    
+End

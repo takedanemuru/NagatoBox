@@ -1,0 +1,108 @@
+' Gambas class file
+
+Inherits NagatoDB
+
+Create Static
+
+Public Const TableThumbnail As String = "thumbnailer"
+Public Const ColumnId As String = "id"
+Public Const ColumnDirectory As String = "directory"
+Public Const ColumnPath As String = "path"
+Public Const ColumnSize As String = "size"
+Public Const ColumnPicture As String = "picture"
+
+Public _$uniqueName As String = "Thumbnail"
+
+Private Sub checkAndCreateThumbnailTable()
+    
+    Dim yukiTable As Table
+    
+    Try Me._$connection.Open()
+    
+    If Not Me._$connection.Tables.Exist(TableThumbnail) Then
+        yukiTable = Me._$connection.Tables.Add(TableThumbnail)
+        yukiTable.Fields.Add(ColumnId, db.Serial)
+        yukiTable.Fields.Add(ColumnSize, db.Integer)
+        yukiTable.Fields.Add(ColumnDirectory, db.String)
+        yukiTable.Fields.Add(ColumnPath, db.String)
+        yukiTable.Fields.Add(ColumnPicture, db.Blob)
+        yukiTable.PrimaryKey = [ColumnId]
+        yukiTable.Update()
+    Endif
+
+End
+
+Public Function HasThumbnail(argPath As String, argSize As Integer) As Boolean
+    
+    Dim yukiResult As Result = Me._$connection.Find(TableThumbnail, "path = &1 and size = &2", argPath, argSize)
+    
+    Return (yukiResult.Count > 0)
+    
+End
+
+Public Function Get(argPath As String, argSize As Integer) As Picture
+    
+    Dim yukiResult As Result = Me._$connection.Find(TableThumbnail, "path = &1 and size = &2", argPath, argSize)
+    
+    Return MikuruBlob.GetPictureFromBlob(yukiResult[ColumnPicture].Data)
+    
+End
+
+Public Sub Rename(argSourcePath As String, argDestinationPath As String, argSize As Integer)
+    
+    Dim yukiPicture As Picture = Me.Get(argSourcePath, argSize)
+    
+    Me.Push(argDestinationPath, argSize, yukiPicture)
+    Me.Delete(argSourcePath)
+    
+End
+
+Public Sub Delete(argPath As String)
+    
+    Try Me._$connection.Delete(TableThumbnail, "path = &1", argPath)
+    
+End
+
+Public Sub Push(argPath As String, argSize As Integer, argPicture As Picture)
+    
+    Dim yukiResult As Result
+    
+    Me.Delete(argPath)
+    
+    Me._$connection.Begin()
+        yukiResult = Me._$connection.Create(TableThumbnail)
+        yukiResult[ColumnPath] = argPath
+        yukiResult[ColumnDirectory] = File.Dir(argPath)
+        yukiResult[ColumnSize] = argSize
+        yukiResult[ColumnPicture] = MikuruBlob.GetBlobFromPicture(argPicture)
+        yukiResult.Update()
+    Me._$connection.Commit()
+    
+Catch
+    Debug Error.Text
+    Me._$connection.Rollback()
+    
+End
+
+Public Sub CleanUp(argDir As String)
+    
+    Dim yukiResult As Result = Me._$connection.Edit(TableThumbnail, "directory = &1", argDir)
+    
+    For Each yukiResult
+        If Not Dir(argDir).Exist(File.Name(yukiResult[ColumnPath])) Then yukiResult.Delete()
+    Next
+    
+End
+
+Public Sub ForceCleanUp(argDir As String)
+    
+    Me._$connection.Delete(TableThumbnail, "directory = &1", argDir)
+    
+End
+
+Public Sub _new()
+    
+    Me._SetConnection()
+    checkAndCreateThumbnailTable()
+    
+End

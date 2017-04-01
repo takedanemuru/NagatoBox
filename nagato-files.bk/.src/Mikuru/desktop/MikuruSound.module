@@ -1,0 +1,21 @@
+' Gambas module file
+
+Public Sub Notify(argPriority As Integer)
+    
+    Dim yukiSoundPath As String
+    Dim yukiSound As Sound
+    
+    Select Case argPriority
+        Case NagatoNotifyQueue.PriorityHello
+            yukiSoundPath = ("sound/notification2.wav")
+        Case NagatoNotifyQueue.PriorityCritical
+            yukiSoundPath = ("sound/negative-warning.wav")
+        Case Else
+            yukiSoundPath = ("sound/effect-notify.wav")
+    End Select
+    
+    yukiSound = Sound.Load(yukiSoundPath)
+    yukiSound.Volume = 64
+    yukiSound.Play()
+    
+End

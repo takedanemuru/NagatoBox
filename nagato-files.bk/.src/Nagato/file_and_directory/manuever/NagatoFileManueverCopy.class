@@ -1,0 +1,47 @@
+' Gambas class file
+
+Inherits NagatoFileManuever
+
+Private Sub copyDir(argTargetDirectory As String, argSourceDirectory As String)
+    
+    Dim yukiPath As String
+    
+    Mkdir argTargetDirectory
+    
+    For Each yukiPath In Dir(argSourceDirectory)
+        copyPathTo(argSourceDirectory &/ yukiPath, argTargetDirectory &/ yukiPath)
+    Next
+    
+End
+
+Private Sub copyPathTo(argSourcePath As String, argTargetPath As String)
+    
+    If Not IsDir(argSourcePath) Then
+        Try Copy argSourcePath To argTargetPath
+    Else
+        copyDir(argTargetPath, argSourcePath)
+    End If
+    
+End
+
+Public Sub CopyToDirectory(argPaths As String[], argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiTargetPath As String
+    
+    For Each yukiPath In argPaths
+        yukiTargetPath = MikuruSafePath(argDirectory &/ File.Name(yukiPath))
+        copyPathTo(yukiPath, yukiTargetPath)
+    Next
+    
+End
+
+Public Sub CopyTo(argPaths As String[], Optional argDirectory As String = "")
+    
+    Dim yukiDirectory As String = argDirectory
+    
+    If Not Exist(yukiDirectory) Then yukiDirectory = Me._GetTargetDirectory(("Copy To..."), argPaths[0])
+    
+    If yukiDirectory Then Me.CopyToDirectory(argPaths, yukiDirectory)
+
+End

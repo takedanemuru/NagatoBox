@@ -1,0 +1,49 @@
+' Gambas class file
+
+Private Function getTextWidth(argText As String) As Integer
+    
+    Dim yukiBaseWidth As Integer = Me.Font.RichTextWidth(argText) + 2 * MikuruUx.Grid
+    
+    If 30 * MikuruUx.Grid > yukiBaseWidth Then Return 30 * MikuruUx.Grid
+    If yukiBaseWidth > Screen.W / 3 Then Return Screen.W / 3
+    
+    Return yukiBaseWidth
+    
+End
+
+Private Sub setForm(argText As String, argPriority As Integer)
+    
+    Dim yukiTextW As Integer = getTextWidth(argText)
+    Dim yukiTextH As Integer = Max(Me.Font.RichTextHeight(argText, yukiTextW), 10 * MikuruUx.Grid)
+    Dim yukiBaseImage As Image = MikuruBalloonImage.Get(yukiTextH, yukiTextW, argPriority)
+    
+    Paint.Begin(yukiBaseImage)
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.Font = Me.Font
+        Paint.DrawRichText(argText, 2 * MikuruUx.Grid, MikuruUx.Grid, yukiTextW, yukiTextH, Align.Left)
+        Paint.Fill()
+    Paint.End()
+    
+    MikuruWindow.AdjustWindowToImage(Me, yukiBaseImage)
+    
+End
+
+Public Sub SetText(argText As String, Optional argPriority As Integer = NagatoNotifyQueue.PriorityNone)
+    
+    MikuruWindow.EnsureVisible(Me)
+    setForm(argText, argPriority)
+    
+End
+
+Public Sub Form_Open()
+    
+    Me.X = 120
+    Me.Y = 30
+    
+End
+
+Public Sub Form_DblClick()
+    
+    Me.Close()
+    
+End

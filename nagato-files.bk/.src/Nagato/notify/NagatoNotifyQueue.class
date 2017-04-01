@@ -1,0 +1,46 @@
+' Gambas class file
+
+Public Enum PriorityNone = -1, PriorityLow = 0, PriorityNornal = 1, PriorityCritical = 2, PriorityHello = 5
+
+Private $prioQueue As New PrioQueue
+Private $currentMessage As NagatoNotifyMessage
+Private $lock As Boolean = False
+
+Event Dequeued
+
+Private Sub dequeueNotifyMessage()
+    
+    $lock = True
+    
+    $currentMessage = $prioQueue.Dequeue()
+    $currentMessage.Show()
+    
+End
+
+Public Sub CancelMessage()
+    
+    Try $currentMessage.Cancel()
+    
+End
+
+Public Sub EnqueueMessage(argPriority As Integer, argMessage As String[])
+    
+    Dim yukiNotifyMessage As New NagatoNotifyMessage(argPriority, argMessage) As "NotifyMessage"
+    
+    $prioQueue.Enqueue(yukiNotifyMessage, argPriority)
+    If (argPriority = Me.PriorityHello) Or If Not $lock Then dequeueNotifyMessage()
+    
+End
+
+Public Sub NotifyMessage_Dequeued()
+    
+    $lock = False
+    
+    If $prioQueue.IsEmpty Then 
+        HaruhiBalloon.Close()
+        HaruhiPersona.Close()
+    Else
+        dequeueNotifyMessage()
+    End If
+    
+End

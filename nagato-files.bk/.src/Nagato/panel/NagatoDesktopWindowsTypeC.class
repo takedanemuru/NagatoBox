@@ -1,0 +1,46 @@
+' Gambas class file
+
+Inherits NagatoDesktopWindows
+
+Property Read Max As Integer
+
+Private $windows As New DesktopWindow[]
+
+Private Sub clearAndRefresh()
+    
+    $windows.Clear()
+    Desktop.Windows.Refresh()
+    
+End
+
+Private Sub reset()
+    
+    Dim yukiDesktopIndex As Integer
+    Dim yukiWindows As New DesktopWindow[]
+    
+    For yukiDesktopIndex = 0 To Desktop.Count - 1
+        yukiWindows = Me._PushWindow(yukiDesktopIndex, yukiWindows)
+    Next
+    
+    $windows = yukiWindows.Copy()
+    
+End
+
+Public Sub Refresh()
+    
+    clearAndRefresh()
+    reset()
+    
+End
+
+Public Sub _get(argIndex As Integer) As DesktopWindow
+    
+    Return $windows[argIndex]
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $windows.Max
+
+End

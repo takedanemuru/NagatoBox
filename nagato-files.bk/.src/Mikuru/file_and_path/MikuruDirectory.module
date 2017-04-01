@@ -1,0 +1,64 @@
+' Gambas module file
+
+Public Function Ensure(argPath As String)
+    
+    Dim yukiParentDirectory As String = File.Dir(argPath)
+    
+    If Not Exist(yukiParentDirectory) Then Me.Ensure(yukiParentDirectory)
+    
+    If Not Exist(argPath) Then Mkdir argPath
+    
+End
+
+Public Function GetParents(argDirectory As String) As String[]
+    
+    Dim yukiDirectory As String = argDirectory
+    Dim yukiResult As New String[]
+    
+    yukiResult.Add(argDirectory)
+    
+    Do
+        yukiDirectory = File.Dir(yukiDirectory)
+        If yukiDirectory = "/" Then Break
+        yukiResult.Add(yukiDirectory, 0)
+        If yukiDirectory = User.Home Then Break
+    Loop
+    
+    Return yukiResult
+    
+End
+
+Public Sub GetAll(argCurrentDirectory As String) As String[]
+    
+    Dim yukiPattern As String = IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
+    Dim yukiAll As New String[]
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argCurrentDirectory, yukiPattern)
+        yukiAll.Add(argCurrentDirectory &/ yukiPath)
+    Next
+    
+    Return yukiAll
+    
+End
+
+Public Sub GetInverted(argDirectory As String, argSelected As String[]) As String[]
+    
+    Dim yukiInverted As String[] = Me.GetAll(argDirectory)
+    Dim yukiPath As String
+    
+    For Each yukiPath In argSelected
+        Try yukiInverted.Remove(yukiInverted.Find(yukiPath))
+    Next
+    
+    Return yukiInverted
+    
+End
+
+Public Sub HasItem(argDirectory As String) As Integer
+    
+    If NagatoSettings.ShowHidden Then Return (Dir(argDirectory, "*").Count > 0)
+    
+    Return (Dir(argDirectory, "[^.]*").Count > 0)
+    
+End

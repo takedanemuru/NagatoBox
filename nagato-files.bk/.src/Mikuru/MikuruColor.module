@@ -1,0 +1,15 @@
+' Gambas module file
+
+Property Read LightBlue As Integer
+
+Public Function Transparent(argBaseColor As Integer, argTransparency As Integer) As Integer
+    
+    Return argBaseColor + (Color.Transparent * - argTransparency)
+    
+End
+
+Private Function LightBlue_Read() As Integer
+
+    Return Color.Merge(Color.Blue, Color.White, 0.8)
+
+End

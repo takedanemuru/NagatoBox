@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits NagatoPanel2Painter
+
+Public Const Margin As Integer = 22
+
+Public Sub _GetIcon(argDesktopWindow As DesktopWindow) As Picture
+    
+    If argDesktopWindow.Icon Then
+        Return argDesktopWindow.Icon.Stretch(16, 16).Picture
+    Else
+        Return MikuruIcon.Get("question-balloon")
+    Endif
+    
+End
+
+Public Sub _ActivateDesktopWindow(argDesktopWindow As DesktopWindow)
+    
+    Desktop.Current = argDesktopWindow.Desktop
+    Try argDesktopWindow.Activate()
+    
+End
+
+Public Sub _PopUpContextMenu(argDesktopWindow As DesktopWindow)
+    
+    Dim yukiMenu As New NagatoContextMenuPanelTask(HaruhiDesktop, "", argDesktopWindow)
+    
+    yukiMenu.Popup()
+    
+End

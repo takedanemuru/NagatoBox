@@ -24,6 +24,9 @@ Private Sub startDownload(argFeedItem As String[])
     $httpClient.Timeout = 10
     $httpClient.Get(, Me.WorkingDirectory &/ argFeedItem[0] & ".jpg")
     
+Catch
+    Debug Error.Text
+    
 End
 
 Public Sub HasThumbnail(argTitle As String) As Boolean

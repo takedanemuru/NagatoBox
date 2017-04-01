@@ -1,0 +1,972 @@
+* Sat Apr 01 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.8.139
+- repackaging
+
+* Sat Apr 01 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.8.139
+- bugfix
+
+* Fri Mar 31 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.138
+- bugfix
+
+* Thu Mar 30 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.137
+- revive : fortune and context menu for desktop-panel
+
+* Wed Mar 29 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.136
+- mod : heavy code refactoring
+
+* Fri Mar 17 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.135
+- new : new welcome messages
+
+* Fri Mar 10 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.134
+- check out rss and systemmonitor daemon when HaruhiDesktop (root desktop form) closed.
+
+* Fri Feb 24 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.133
+- new : active text button
+
+* Tue Feb 21 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.132
+- drop single selection mode.
+- drop root previledge launching.
+- do not execute nagato-weather -d when it's not needed.
+
+* Fri Feb 10 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.131
+- drop dataovermind-rssfeeder dependency
+
+* Tue Feb 07 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.130
+- new : imply music tile
+
+* Fri Feb 03 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.129
+- new : now can disable file and directory tiles on desktop
+
+* Sat Jan 21 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.128
+- NEW : config menus for tile color
+
+* Tue Jan 17 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.127
+- FIX : DesktopContextMenu "ChangeTHumbnail" works again
+- FIX : DesktopContextMenu "Achive" works again
+- MOD : database files move to Desktop.DataDir &/ "NagatoBox/database"
+
+* Mon Jan 16 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.126
+- bugfix release
+
+* Mon Jan 16 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.126
+- bugfix release
+
+* Mon Jan 16 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.125
+- move working-directories to under the Desktop.CacheDir
+
+* Thu Jan 12 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.124
+- bugfix release.
+
+* Wed Jan 11 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.123
+- bugfix release
+
+* Wed Jan 11 2017 takeda.nemuru <takeda.nemuru@yandex.com> 42.7.122
+- new : desktop panel transparency (experimental)
+
+* Mon Nov 28 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.121
+- new : command line argument for show-desktop
+- fix : back to violet.
+
+* Thu Nov 10 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.119
+- re-package
+
+* Thu Nov 10 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.119
+- new : show desktop menu
+
+* Mon Nov 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.118
+- bugfix release
+
+* Fri Nov 04 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.117
+- fix :  renaming sequence.
+- new : show xdg-user-dir tag
+- fix : count selection on trash bin iconview correctlly
+- new : show not found sub menu on context menu for create form templates.
+
+* Tue Oct 25 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.116
+- bugfix release.
+
+* Mon Oct 17 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.115
+- code refactoring
+
+* Sat Oct 15 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.114
+- code refactoring
+
+* Sat Oct 15 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.112
+- refine rss tile appearance.
+
+* Fri Oct 14 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.111
+- bugfix
+
+* Fri Oct 14 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.110
+- bugfix
+
+* Fri Oct 14 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.109
+- use DBus.Unique property
+
+* Tue Oct 11 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.108
+- bugfix
+
+* Tue Oct 11 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.107
+- code refactoring
+
+* Tue Oct 11 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.105
+- new : refine weather tile.
+
+* Thu Oct 06 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.6.104
+- code refactoring.
+
+* Thu Oct 06 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.103
+- new : redesign symlink tag.
+
+* Fri Sep 23 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.102
+- bugfix release
+
+* Tue Sep 20 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.101
+- new : weather information tile (TESTING)
+
+* Sun Sep 18 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.100
+- fix : notification
+
+* Wed Aug 31 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.99
+- bugfix
+
+* Wed Aug 31 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.98
+- fix : bus name
+
+* Fri Aug 26 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.97
+- bugfix.
+
+* Wed Aug 24 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.96
+- repackaging
+
+* Wed Aug 24 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.96
+- new : New notification mostly done
+
+* Mon Aug 22 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.95
+- new : interim Notification() integration
+- new : sound alert with sdl2.
+
+* Mon Aug 22 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.93
+- fix : date format
+- new : prepare to imply new Notify()
+
+* Thu Aug 18 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.92
+- bugfix
+
+* Mon Aug 15 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.91
+- fix : override mistake on NagatoContextMenuTreeView
+
+* Tue Aug 09 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.90
+- fix : create $config_dir/gtk-3.0/bookmark automatically, when its not existed.
+
+* Tue Aug 09 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.89
+- fix : referrence ~/.config/mimeapps.list instead of deprecated ~/.local/share/applications/mimeapps.list to get/set default applications
+
+* Sun Aug 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.88
+- drop qt4 dependencies (testing)
+
+* Fri Aug 05 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.87
+- fix : adjust balloon size.
+
+* Thu Jul 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.85
+- bugfix (final)
+
+* Thu Jul 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.85
+- bugfix (final ?)
+
+* Thu Jul 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.85
+- bugfix
+
+* Thu Jul 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.85
+- bugfix
+
+* Thu Jul 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.85
+- bugfix
+
+* Thu Jul 07 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.5.84
+- bugfix.
+
+* Sun May 22 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.83
+- bugfix.
+
+* Sun May 22 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.82
+- new : show desktop rediness more correctlly through DBus.
+
+* Mon May 16 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.81
+- new : "open in new tab" menu for directory tree view.
+- new : now caqn call calendar from clock.
+
+* Tue Apr 19 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.80
+- new : scroll over-width music infomation automatically.
+
+* Fri Apr 08 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.79
+- bug : now can show hidden directory name as tabstrip title.
+
+* Sun Apr 03 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.78
+- bugfix release
+
+* Sun Apr 03 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.4.77
+- new : new desktop entry file
+
+* Tue Mar 29 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.76
+- bugfix release
+
+* Thu Mar 10 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.74
+- fix : numbering sequence of MikuruSafePath
+
+* Fri Feb 12 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.73
+- bugfix release
+
+* Wed Feb 03 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.72
+- bugfix release
+
+* Mon Jan 25 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.71
+- bugfix release
+
+* Mon Jan 18 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.69
+- bugfix release.
+
+* Sun Jan 17 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.68
+- bugfix release
+
+* Sun Jan 17 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.67
+- bugfix release
+
+* Sun Jan 17 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.66
+- bugfix release
+
+* Sun Jan 17 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.65
+- bugfix release
+
+* Sun Jan 17 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.64
+- bugfix release
+
+* Wed Jan 13 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.63
+- code refactoring
+
+* Sat Jan 09 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.61
+- bugfix release.
+
+* Sat Jan 09 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.60
+- bugfix release
+
+* Sat Jan 09 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.59
+- bugfix release
+
+* Sat Jan 09 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.58
+- code refactoring
+
+* Fri Jan 08 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.57
+- remove useless codes
+
+* Fri Jan 08 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.56
+- bugfix release
+
+* Tue Jan 05 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.55
+- code refactoring
+
+* Tue Jan 05 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.53
+- merge "NagatoMenuPipe" and "NagatoSignal" into "NagatoObject"
+
+* Tue Jan 05 2016 takeda.nemuru <takeda.nemuru@yandex.com> 42.3.52
+- bugfix release
+
+* Tue Dec 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.51
+- bugfix release
+
+* Tue Dec 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.50
+- new : thermal monitor
+
+* Mon Dec 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.49
+- bugfix release
+
+* Mon Dec 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.48
+- bugfix release
+
+* Tue Dec 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.47
+- fix : solve circular reference on chmod editor.
+
+* Sat Nov 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.46
+- bugfix release
+
+* Sat Nov 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.44
+- bugfix release
+
+* Sat Nov 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.43
+- bugfix release
+
+* Sat Nov 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.42
+- bugfix release
+
+* Sat Nov 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.41
+- TESTING : system-monitor tile
+
+* Thu Nov 05 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.40
+- bugfix release
+
+* Wed Nov 04 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.39
+- bugfix release
+
+* Tue Nov 03 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.38
+- bugfix release
+
+* Tue Nov 03 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.37
+- bugfix release
+
+* Tue Nov 03 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.36
+- bugfix release.
+
+* Mon Nov 02 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.35
+- bugfix release
+
+* Sun Nov 01 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.34
+- bugfix release
+
+* Sun Nov 01 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.33
+- new : now can toggle rss feed tile on desktop
+
+* Sun Nov 01 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.32
+- bugfix release
+
+* Sun Nov 01 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.31
+- bugfix release
+
+* Sun Nov 01 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.30
+- TESTING : RSS feed tile
+
+* Sat Oct 31 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.29
+- new : thumbnail selection dialog
+
+* Fri Oct 30 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.28
+- bugfix release
+
+* Fri Oct 30 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.27
+- new : avoid flickering when desktop-shell is activated.
+
+* Wed Oct 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.25
+- bugfix release
+
+* Sun Oct 25 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.24
+- new : video thumbnailer
+
+* Sat Oct 24 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.23
+- drop avconv dependency. use ffmpeg instead.
+
+* Fri Oct 23 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.21
+- bugfix release
+
+* Fri Oct 16 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.20
+- bugfix release
+
+* Thu Oct 15 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.2.19
+- new : use png iconas priority icon.
+
+* Mon Sep 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.17
+- new : icon theme functionality for fallback.
+
+* Mon Sep 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.16
+- fix for session manager
+
+* Thu Sep 24 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.15
+- bugfix release
+
+* Thu Sep 24 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.14
+- bugfix release.
+
+* Wed Sep 16 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.12
+- code refactoring.
+
+* Thu Sep 10 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.11
+- TESTING : new desktp boot sequence.
+
+* Thu Sep 10 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.10
+- bugfix release
+
+* Thu Sep 10 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.9
+- code refacotring.
+
+* Thu Sep 10 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.8
+- bugfix release
+
+* Tue Sep 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.7
+- bugfix release
+
+* Mon Sep 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.6
+- new : remove trash-cli dependency
+
+* Mon Jul 27 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.5
+- new : new chmod dialog
+
+* Tue Jul 14 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.4
+- bugfix release.
+
+* Tue Jul 14 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.3
+- new : root warning label.
+
+* Wed Jul 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.2
+- bugfix release.
+
+* Wed Jul 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 42.1.1
+- new : config menu for desktop-panel color config
+
+* Sun Jul 05 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.70.1
+- new : new dbus functionality
+
+* Sat Jul 04 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.70.0
+- new : summer has come.
+
+* Thu Jun 18 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.69.1
+- code refactoring (all classes are now under 200 lines of code)
+
+* Wed Jun 17 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.69.0
+- new : context menu for NagatoDesktopPanelNagatoPlayerX
+
+* Sun Jun 14 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.68.5
+- bugfix release
+
+* Sun Jun 14 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.68.4
+- bugfix release.(desktop clock timings are handled by HaruhiDesktop)
+
+* Fri Jun 12 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.68.3
+- bugfix release
+
+* Fri Jun 12 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.68.2
+- bugfix release
+
+* Tue Jun 09 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.68.1
+- bugfix release
+
+* Tue Jun 09 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.68.0
+- new : context menus for desktop panel
+
+* Mon Jun 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.67.1
+- bugfix release
+
+* Mon Jun 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.67.0
+- new : tasks type-b
+
+* Fri May 29 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.66.1
+- bugfix release
+
+* Fri May 29 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.66.0
+- new : icon only taskbar
+
+* Thu May 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.65.1
+- bugfix release
+
+* Thu May 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.65.0
+- new : main content switching for desktop panel.
+
+* Wed May 27 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.64.3
+- bugfix release
+
+* Wed May 27 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.64.2
+- fix : reduce resource usage.
+
+* Wed May 27 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.64.2
+- bugfix release
+
+* Wed May 27 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.64.1
+- TESTING : process manager
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.64.0
+- new : persona
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.63.1
+- bugfix release
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.63.0
+- new : sort tasks by x11 id
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.8
+- bugfix release
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.7
+- for testing
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.6
+- for testing
+
+* Fri May 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.5
+- bugfix release
+
+* Thu May 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.4
+- bugfix release
+
+* Thu May 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.3
+- bugfix release
+
+* Thu May 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.2
+- bugfix release
+
+* Thu May 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.1
+- new : arrange systray
+
+* Thu May 21 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.62.0
+- new : integrate essential panel functionality (TESTING)
+
+* Tue May 12 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.61.2
+- bugfix release
+
+* Tue May 12 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.61.1
+- bugfix release
+
+* Tue May 12 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.61.0
+- new: file completion for pathbar
+
+* Fri May 08 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.60.1
+- bugfix release
+
+* Thu May 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.60.0
+- new: thumbnail for pdf files
+
+* Tue Apr 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.59.0
+- new: renamed label
+- new: do not lost focus when tile renamed
+
+* Thu Apr 09 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.58.0
+- new: HaruhiPictureSelection for changing wallpaper.
+
+* Thu Mar 19 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.57.5
+- bugfix for 3.7
+
+* Mon Feb 09 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.57.4
+- bugfix release
+
+* Mon Feb 09 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.57.3
+- bugfix release
+
+* Tue Feb 03 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.57.2
+- bugfix release
+
+* Thu Jan 29 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.57.1
+- bugfix release
+
+* Wed Jan 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.57.0
+- new : new header-labels "cut" "copied"
+- new : search query lock for keybindings
+
+* Wed Jan 28 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.56.0
+- refine: keybindings
+
+* Thu Jan 22 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.55.0
+- new : appearance menu
+
+* Sun Jan 18 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.54.3
+- bugfix release
+
+* Sun Jan 18 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.54.2
+- bugfix release
+
+* Sun Jan 18 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.54.1
+- bugfix release
+
+* Sun Jan 18 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.54.0
+- new : context menu "open" for trashbin
+- new : application argument "-t" "--trashbin"
+
+* Wed Jan 14 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.53.1
+- bugfix release
+
+* Wed Jan 14 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.53.0
+- new : settings menu for desktop (essential)
+
+* Tue Jan 13 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.52.2
+- bugfix release
+
+* Wed Jan 07 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.52.1
+- bugfix release
+
+* Tue Jan 06 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.52.0
+- new : new ContextMenu for iconview
+
+* Sat Jan 03 2015 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.8
+- bugfix release
+
+* Tue Dec 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.7
+- refactoring: remove useless CoR.
+
+* Mon Dec 29 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.6
+- bugfix release.
+
+* Mon Dec 29 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.5
+- fix: unify context menu for iconview item of filer.
+
+* Mon Dec 29 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.4
+- bugfix release
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.3
+- bugfix release
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.2
+- bugfix release
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.1
+- bugfix release
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.51.0
+- new: create menus for Desktop
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.50.2
+- bugfix release
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.50.1
+- bugfix release
+
+* Sun Dec 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.50.0
+- new: dbus interface (testing)
+
+* Sat Dec 27 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.49.0
+- new: sort menu for root window
+
+* Sat Dec 27 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.48.1
+- bugfix release.
+
+* Sat Dec 27 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.48.0
+- new: context menu for root window
+
+* Fri Dec 26 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.47.4
+- bugfix release
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.47.3
+- testing
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.47.2
+- bugfix release
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.47.1
+- bugfix release
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.47.0
+- new: Drag and Drop functionality for Desktop.
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.10
+- bugfix release
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.9
+- testing
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.8
+- testing
+
+* Thu Dec 25 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.7
+- testing
+
+* Wed Dec 24 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.6
+- bugfix release
+
+* Wed Dec 24 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.5
+- bugfix release
+
+* Wed Dec 24 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.4
+- bugfix release
+
+* Wed Dec 24 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.3
+- bugfix release
+
+* Wed Dec 24 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.2
+- new : more context menu for desktop icon with tons of bug.
+
+* Tue Dec 23 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.1
+- new : add more context menu for desktop icon.
+
+* Tue Dec 23 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.46.0
+- new: desktop(root window) management
+
+* Tue Dec 16 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.45.1
+- bugfix release
+
+* Fri Dec 05 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.45.0
+- new : now can show pdf preview on right pane
+- new : now can show id3 tag on right pane
+
+* Fri Dec 05 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.44.5
+- bugfix release
+
+* Sat Nov 29 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.44.4
+- bugfix release.
+
+* Sat Nov 29 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.44.3
+- bugfix release
+
+* Fri Nov 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.44.2
+- bugfix release
+
+* Fri Nov 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.44.1
+- bugfix release
+
+* Fri Nov 28 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.44.0
+- new: change chmod functionality.
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.6
+- bugfix release
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.5
+- bugfix release
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.4
+- bugfix release
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.3
+- bugfix release
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.2
+- bugfix release
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.1
+- bugfix release
+
+* Mon Nov 10 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.43.0
+- new: create menu for star menu
+
+* Fri Oct 31 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.1
+- bugfix release
+
+* Thu Oct 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takeda.nemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takedanemuru <takeda.nemuru@yandex.com> 0.42.0
+- test
+
+* Thu Oct 30 2014 takedanemuru <takeda.nemuru@yandex.com> 0.42.0
+- repackage
+
+* Thu Oct 30 2014 takedanemuru <takeda.nemuru@yandex.com> 0.42.0
+- repackage
+
+* Thu Oct 30 2014 takedanemuru <takeda.nemuru@yandex.com> 0.42.0
+- new: directory size menu.
+
+* Tue Oct 28 2014 takedanemuru <takeda.nemuru@yandex.com> 0.41.1
+- bugfix release
+
+* Thu Oct 23 2014 takedanemuru <takeda.nemuru@yandex.com> 0.41.0
+- additional desktop entry
+
+* Tue Oct 21 2014 takedanemuru <takeda.nemuru@yandex.com> 0.40.0
+- new: dilter for application select dialog.
+
+* Thu Oct 16 2014 takedanemuru <takeda.nemuru@yandex.com> 0.38.1
+- bugfix release
+
+* Thu Oct 16 2014 takedanemuru <takeda.nemuru@yandex.com> 0.38.0
+- new: xdg-user-dirs configuration.
+
+* Wed Oct 15 2014 takedanemuru <takeda.nemuru@yandex.com> 0.37.2
+- bugfix release
+
+* Sat Sep 27 2014 takedanemuru <takeda.nemuru@yandex.com> 0.37.1
+- code refactoring
+
+* Thu Sep 25 2014 takedanemuru <takeda.nemuru@yandex.com> 0.37.0
+- new: media converter
+
+* Wed Sep 24 2014 takedanemuru <takeda.nemuru@yandex.com> 0.36.2
+- bugfix release
+
+* Wed Sep 24 2014 takedanemuru <takeda.nemuru@yandex.com> 0.36.1
+- bugfix release
+
+* Wed Sep 24 2014 takedanemuru <takeda.nemuru@yandex.com> 0.36.0
+- new: auto filtering by pathbar address.
+
+* Tue Sep 16 2014 takedanemuru <takeda.nemuru@yandex.com> 0.35.0
+- new: context menu for TrashBin on GtkBookmarks
+- hide: DesktopIconFunctionality, it's bad idea.
+
+* Sat Sep 06 2014 takedanemuru <takeda.nemuru@yandex.com> 0.34.1
+- bugfix release
+
+* Thu Sep 04 2014 takedanemuru <takeda.nemuru@yandex.com> 0.34.0
+- new: change default application dialog.
+
+* Tue Aug 05 2014 takedanemuru <takeda.nemuru@gmail.com> 0.33.1
+- bugfix release.
+
+* Tue Jul 22 2014 takedanemuru <takeda.nemuru@gmail.com> 0.33.0
+- new: execute menu for .desktop file.
+
+* Tue Jul 15 2014 takedanemuru <takeda.nemuru@gmail.com> 0.32.0
+- new: pdf page count for property pane.
+
+* Tue Jul 15 2014 takedanemuru <takeda.nemuru@gmail.com> 0.31.1
+- bugfix release
+
+* Sun Jul 13 2014 takedanemuru <takeda.nemuru@gmail.com> 0.31.0
+- new: invert selection
+- new: select all
+
+* Tue Jul 08 2014 takedanemuru <takeda.nemuru@gmail.com> 0.30.0
+- new: desktop icon management (testing, eyes only)
+
+* Tue Jul 08 2014 takedanemuru <takeda.nemuru@gmail.com> 0.29.0
+- new: force reload
+
+* Sat Jun 28 2014 takedanemuru <takeda.nemuru@gmail.com> 0.28.0
+- new: context menu for gtk bookmark(testing)
+
+* Sat Jun 28 2014 takedanemuru <takeda.nemuru@gmail.com> 0.27.0
+- new: read only label
+
+* Fri Jun 27 2014 takedanemuru <takeda.nemuru@gmail.com> 0.26.1
+- bugfix release
+
+* Sat Jun 14 2014 takedanemuru <takeda.nemuru@gmail.com> 0.26.0
+- new: sort menu
+
+* Thu Jun 12 2014 takedanemuru <takeda.nemuru@gmail.com> 0.25.1
+- new: unselect button to trash-view
+
+* Wed Jun 11 2014 takedanemuru <takeda.nemuru@gmail.com> 0.25.0
+- new: now can show trash file property.
+
+* Mon Jun 09 2014 takedanemuru <takeda.nemuru@gmail.com> 0.24.0
+- new: trash handling
+
+* Sun Jun 08 2014 takedanemuru <takeda.nemuru@gmail.com> 0.23.1
+- bugfix and interim backup
+
+* Fri May 16 2014 takedanemuru <takeda.nemuru@gmail.com> 0.23.0
+- new: show image property on left pane
+
+* Tue May 13 2014 takedanemuru <takeda.nemuru@gmail.com> 0.22.0
+- new: reload menu for TreeView
+
+* Thu May 08 2014 takedanemuru <takeda.nemuru@gmail.com> 0.21.0
+- new: reload iconview when null search query is requested.
+- new: add some key bindings (Ctrl+F,Alt+B,Alt+H,Alt+F...)
+- new: respect NagatoDBSymbol.Data on TreeView
+
+* Tue May 06 2014 takedanemuru <takeda.nemuru@gmail.com> 0.20.0
+- new: keyboard controls.
+
+* Tue May 06 2014 takedanemuru <takeda.nemuru@gmail.com> 0.19.0
+- new: SelectionBarActionButtons
+
+* Wed Apr 30 2014 takedanemuru <takeda.nemuru@gmail.com> 0.18.2
+- bugfix release
+
+* Wed Apr 30 2014 takedanemuru <takeda.nemuru@gmail.com> 0.18.1
+- bugfix release
+
+* Tue Apr 29 2014 takedanemuru <takeda.nemuru@gmail.com> 0.18.0
+- new: create archive/clone menu
+- some code refactoring
+
+* Sat Apr 26 2014 takedanemuru <takeda.nemuru@gmail.com> 0.17.0
+- new: global file search preference(testing)
+- new: observe/automatic reload GTK+2/3 bookmarks
+
+* Tue Apr 08 2014 takedanemuru <takeda.nemuru@gmail.com> 0.16.1
+- bugfix release
+
+* Sun Apr 06 2014 takedanemuru <takeda.nemuru@gmail.com> 0.16.0
+- new: treeview now can accept drop file(s).
+
+* Sat Apr 05 2014 takedanemuru <takeda.nemuru@gmail.com> 0.15.0
+- new: global file search
+
+* Thu Mar 27 2014 takedanemuru <takeda.nemuru@gmail.com> 0.14.3
+- bugfix release
+
+* Thu Mar 27 2014 takedanemuru <takeda.nemuru@gmail.com> 0.14.2
+- repackaging
+
+* Tue Mar 25 2014 takedanemuru <takeda.nemuru@gmail.com> 0.14.1
+- repackaging
+
+* Thu Mar 06 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.14.0
+- new: filterbar.
+
+* Thu Mar 06 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.13.0
+- new: toggle button for switch multiple/single selection mode.
+
+* Fri Feb 28 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.12.1
+- bugfix release.
+
+* Fri Feb 28 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.12.0
+- new: add/remove symbol
+
+* Mon Feb 24 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.11.0
+- new: property panel.
+
+* Sat Feb 01 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.10.1
+- bugfix release.
+
+* Sat Jan 25 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.10.0
+- new: essential keyboard shotcut
+
+* Tue Jan 21 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.9.0
+- new: dialog for CreateNewDirectoryMenu
+- some bug fixes.
+
+* Tue Jan 21 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.8.0
+- new: directory tree view.
+
+* Fri Jan 10 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.7.0
+- new: patool integration
+
+* Fri Jan 03 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.6.1
+- bugfix release.
+
+* Fri Jan 03 2014 colonel-in-cheese <takeda.nemuru@gmail.com> 0.6.0
+- new: SelectionBar
+
+* Tue Dec 17 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.5.3
+- bugfix release.
+
+* Thu Nov 28 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.5.2
+- bugfix release.
+
+* Thu Nov 28 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.5.1
+- bugfix release
+
+* Thu Nov 28 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.5.0
+- bugfix release.
+
+* Thu Nov 28 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.5.0
+- new: single file drag and drop actions.
+
+* Wed Nov 27 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.4.0
+- new: thumbnailer database.
+
+* Tue Nov 26 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.3.1
+- bugfix release (avoid useless reloading)
+
+* Mon Nov 25 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.3.0
+- new: new style large thumbnail for all mime-type.
+
+* Mon Nov 25 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.2.3
+- new: now can handle inode/directory as Application argument
+- improve: gtk-bookmark-list
+
+* Mon Nov 25 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.2.2
+- new: gtk-bookmark(gtk+2.0 and gtk+3.0) listview
+- improve: mime-type handling
+
+* Fri Nov 22 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.2.1
+- new: context menu for file(open, open with, copy path, rename and delete)
+
+* Fri Nov 22 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.2.0
+- alpha-release 2
+
+* Wed Nov 20 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.1.0
+- alpha-release 1
+
+* Fri Nov 15 2013 colonel-in-cheese <takeda.nemuru@gmail.com> 0.0.1
+- Initial release
+

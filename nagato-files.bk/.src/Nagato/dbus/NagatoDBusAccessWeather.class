@@ -1,0 +1,88 @@
+' Gambas class file
+
+Property Read Activated As Boolean
+Property Read BackgroundColor As Integer
+Property Read IconPath As String
+Property Read Condition As String
+Property Read Temperature As Float
+Property Read IconId As Integer
+Property Read WindDirection As String
+Property Read WindSpeed As Float
+Property Read Precipitation As Float
+
+Private Const ServiceName As String = "org.gambas.nagato-weather"
+Private Const ObjectPath As String = "/org/nagato/weather"
+Private Const InterfaceName As String = "org.gambas.nagato.weather.nagatointerface"
+
+Private $proxy As DBusProxy
+
+Public Sub Activate()
+    
+    If Not DBus.Session.Applications.Exist(ServiceName) Then Shell "nagato-weather --daemon-mode"
+    
+    If DBus.Session.Applications.Exist(ServiceName) Then 
+        If Not Object.IsValid($proxy) Then $proxy = DBus[ServiceName][ObjectPath, InterfaceName]
+    End If
+    
+End
+
+Private Function Activated_Read() As Boolean
+
+    If Not Object.IsValid($proxy) Then Me.Activate()
+    If Not DBus.Session.Applications.Exist(ServiceName) Then Return False
+    If Not Object.IsValid($proxy) Then Return False 
+    
+    Return $proxy.Ready
+
+End
+
+Private Function BackgroundColor_Read() As Integer
+
+    Return $proxy.BackgroundColor
+
+Catch
+    Return Color.Blue
+
+End
+
+Private Function IconPath_Read() As String
+
+    Return $proxy.IconPath
+
+End
+
+Private Function Condition_Read() As String
+
+    Return $proxy.Condition
+
+End
+
+Private Function Temperature_Read() As Float
+
+    Return $proxy.Temperature
+
+End
+
+Private Function IconId_Read() As Integer
+
+    Return $proxy.IconId
+
+End
+
+Private Function WindDirection_Read() As String
+
+    Return $proxy.WindDirection
+
+End
+
+Private Function WindSpeed_Read() As Float
+
+    Return $proxy.WindSpeed
+
+End
+
+Private Function Precipitation_Read() As Float
+
+    Return $proxy.Precipitation
+
+End

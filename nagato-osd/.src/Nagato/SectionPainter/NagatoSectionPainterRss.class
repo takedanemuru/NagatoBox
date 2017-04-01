@@ -47,6 +47,7 @@ Public Sub _call(argY As Integer) As Integer
     yukiY = $painterHeader(yukiY + 4, "News")
     Paint.Font.Size = NagatoSettingsFonts.SizeContent
     If $proxyRss.Activated Then
+        yukiY = showThumbnail(yukiY, $proxyRss[0, 0])
         yukiY = paintNews(yukiY)
     Else
         yukiY = $painterText(yukiY, "please wait ...")

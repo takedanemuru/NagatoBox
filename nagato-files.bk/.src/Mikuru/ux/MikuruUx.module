@@ -1,0 +1,27 @@
+' Gambas module file
+
+Property Read Grid As Integer
+Property Read LabelHeight As Integer
+Property Read PanelHeight As Integer
+
+Private Function Grid_Read() As Integer
+
+    If Desktop.Resolution >= 100 Then
+        Return 16
+    Else
+        Return 8
+    End If
+    
+End
+
+Private Function LabelHeight_Read() As Integer
+
+    Return Me.Grid * 1.5
+
+End
+
+Private Function PanelHeight_Read() As Integer
+
+    Return Me.Grid * 1.5
+
+End

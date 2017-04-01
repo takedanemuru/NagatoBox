@@ -1,0 +1,29 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,51.4286,45.7143)
+  Arrangement = Arrange.Fill
+  { VBox1 VBox
+    MoveScaled(2,3,53,53)
+    Expand = True
+    { ColorChooser ColorChooser
+      MoveScaled(0,0,44,42)
+      Expand = True
+    }
+    { HBox1 HBox
+      MoveScaled(1,47,51,4)
+      { Panel1 Panel
+        MoveScaled(0,0,22,8)
+        Expand = True
+      }
+      { CancelButton Button
+        MoveScaled(22,0,14,4)
+        Text = ("Cancel")
+      }
+      { ApplyButton Button
+        MoveScaled(37,0,14,4)
+        Text = ("Apply")
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Path As String
+
+Private $buttonBox As NagatoPathBarButtonBox
+Private $fileCompletion As FileCompletion
+
+Public Sub SetPath(argPath As String)
+    
+    If Not Exist(argPath) Then Return
+    
+    Object.Lock($fileCompletion)
+       $buttonBox.SetPathWithNoEvent(argPath)
+    Object.Unlock($fileCompletion)
+    
+End
+
+Public Sub SetUnexistPath(argPath As String)
+    
+    $buttonBox.SetPathWithNoEvent(argPath)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $buttonBox = New NagatoPathBarButtonBox(argContainer) As "TFEI"
+    $fileCompletion = New FileCompletion($buttonBox.Editor) 
+    
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case NagatoObject.ControlChanged
+            $fileCompletion.Open()
+        Default
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $buttonBox.Path
+
+End

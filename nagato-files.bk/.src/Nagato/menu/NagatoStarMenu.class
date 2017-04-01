@@ -1,0 +1,82 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$rootMenu As Menu
+Public _$path As String
+Public _$window As Window
+
+Private Sub initializeRootMenu(argForm As Form, argButton As MenuButton, argUniqueName As String)
+    
+    Me._$rootMenu = New Menu(argForm) As "RootMenu"
+    Me._$rootMenu.Name = argUniqueName
+    argButton.Menu = argUniqueName
+    
+End
+
+Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIcon As Picture, Optional argShortcut As String)  
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argIcon Then .Picture = argIcon
+        If argShortcut Then .Shortcut = argShortcut
+    End With
+    
+End
+
+Private Sub addCreateMenu()
+    
+    Dim yukiCreateMenu As NagatoCreateMenu
+    
+    yukiCreateMenu = New NagatoCreateMenu(Me._$rootMenu) As "TFEI"
+    
+End
+
+Private Sub refreshChildMenus()
+    
+    With NagatoObject
+        Me._AddMenu(("New Tab"), .ViewNewTab)
+        Object.New("NagatoMenuItemShowHidden", [Me._$rootMenu, Me._$path])
+        Me._AddMenu(("Force reload"), .ViewForceReload, MikuruIcon.Get("button-synchronize"))
+            Me._AddMenu("", 0) ' Spacer
+        addCreateMenu()
+            Me._AddMenu("", 0) ' Spacer
+        Object.New("NagatoSortMenu", [Me._$rootMenu])
+            Me._AddMenu("", 0) ' Spacer
+        Me._AddMenu(("Select all"), .ViewSelectAll)
+        Me._AddMenu(("Unselect all"), .ViewUnselectAll)
+        Me._AddMenu(("Invert selection"), .ViewInvertSelection)
+            Me._AddMenu("", 0) ' Spacer
+        'Me._AddMenu(("Open Terminal Here"), .ViewOpenTerminalHere, MikuruIcon("monitor"))
+        Object.New("NagatoSubMenuSettings", [Me._$rootMenu])
+            Me._AddMenu("", 0) ' Spacer
+        Object.New("NagatoMenuItemAbout", [Me._$rootMenu, Me._$path])
+        Object.New("NagatoMenuItemAppQuit", [Me._$rootMenu, Me._$path])
+    End With
+    
+End
+
+Public Sub _new(argForm As Form, argButton As MenuButton, argUniqueName As String, Optional argPath As String)
+    
+    Me._$window = argForm.Window
+    If argPath Then Me._$path = argPath
+    initializeRootMenu(argForm, argButton, argUniqueName)
+    Me._AddMenu("", 0) ' as dummy menu
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    Me._$rootMenu.Children.Clear()
+    refreshChildMenus()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Raise Signal(Last.Tag, Null)
+    
+End

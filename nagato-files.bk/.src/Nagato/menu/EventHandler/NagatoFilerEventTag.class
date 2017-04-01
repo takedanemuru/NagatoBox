@@ -1,0 +1,16 @@
+' Gambas class file
+
+Inherits NagatoFilerEvent
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case NagatoObject.TagAdd
+             If Not NagatoFilerDialogs.Tagging(Me._$userInput.Selection) Then Return
+             Raise Request(NagatoFilerEvent.RequestSurfaceRefresh, [Me._$log.Current])
+        Case NagatoObject.TagRemove
+             NagatoDBSymbol.RemovePaths(Me._$userInput.Selection)
+             Raise Request(NagatoFilerEvent.RequestSurfaceRefresh, [Me._$log.Current])
+    End Select
+    
+End

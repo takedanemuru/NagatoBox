@@ -1,0 +1,74 @@
+' Gambas class file
+
+Property Read WorkingDirectory As String
+
+Private $httpClient As New HttpClient As "HttpClient"
+Private $url As String
+
+Private Sub ensureWorkingDirectory()
+    
+    Dim yukiDirectoryAppCache As String = Desktop.CacheDir &/ Application.Name
+    
+    If Not Exist(yukiDirectoryAppCache) Then Mkdir (yukiDirectoryAppCache) 
+    If Not Exist(Me.WorkingDirectory) Then Mkdir Me.WorkingDirectory
+    
+End
+
+Private Sub startDownload(argFeedItem As String[])
+    
+    If Me.HasThumbnail(argFeedItem[0]) Then Return
+    If $httpClient.Status <> Net.Inactive Then Return
+    
+    $httpClient.URL = argFeedItem[3]
+    $httpClient.Async = True
+    $httpClient.Timeout = 10
+    $httpClient.Get(, Me.WorkingDirectory &/ argFeedItem[0] & ".jpg")
+    
+Catch
+    Debug argFeedItem[0]
+    
+End
+
+Public Sub HasThumbnail(argTitle As String) As Boolean
+    
+    Return Exist(Me.WorkingDirectory &/ argTitle & ".jpg")
+    
+End
+
+Public Sub GetThumbnail(argTitle As String) As Image
+    
+    Dim yukiImage As Image = Image.Load(Me.WorkingDirectory &/ argTitle & ".jpg")
+    
+    Return MikuruTileImage.Justify(yukiImage, NagatoSettingsTile.Size)
+    
+Catch
+    Return MikuruTileBaseImage[Color.Orange, 128]
+    
+End
+
+Public Sub SetUrl(argFeedItem As String[])
+    
+    If $url <> argFeedItem[3] Then
+        $url = argFeedItem[3]
+        If $url Then startDownload(argFeedItem)
+    Endif
+    
+End
+
+Public Sub _new()
+    
+    ensureWorkingDirectory()
+    
+End
+
+Public Sub HttpClient_Finished()
+    
+    'Debug "Finished"
+    
+End
+
+Private Function WorkingDirectory_Read() As String
+
+    Return Desktop.CacheDir &/ Application.Name &/ "rss.thumbnail"
+
+End

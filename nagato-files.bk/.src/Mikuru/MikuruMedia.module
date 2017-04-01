@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Function ConversionRequired(argSourcePath As String, argTargetPath As String) As Boolean
+    
+    If Not MikuruMimeType.IsMediaFile(argSourcePath) Then Return False
+    If File.Ext(argTargetPath) = File.Ext(argSourcePath) Then Return False 
+    
+    Return True
+    
+End
+
+Public Sub ConvertFile(argSourcePath As String, argTargetPath As String)
+    
+    Exec ["ffmpeg", "-i", argSourcePath, Quote$(argTargetPath)]
+    
+End

@@ -1,0 +1,38 @@
+' Gambas class file
+
+Inherits NagatoSort
+
+Public Function _GetPattern() As String
+    
+    Return IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
+    
+End
+
+Public Function _IsLesser(argObject As String, argSubject As String) As Boolean
+    
+    With MikuruSort
+        Select Case NagatoSettings.SortBy
+            Case .ByName
+                Return False
+            Case .BySize
+                Return Not (Stat(argSubject).Size > Stat(argObject).Size)
+            Case .ByLastModefied
+                Return Not (Stat(argSubject).LastModified > Stat(argObject).LastModified)
+            Case .ByExt
+                Return (File.Ext(argSubject) > File.Ext(argObject))
+            Case .ByUser
+                Return (Stat(argSubject).User > Stat(argObject).User)
+        End Select
+    End With
+    
+End
+
+Public Function _GetResult() As String[]
+    
+    If NagatoSettings.SortAscent Then
+        Return Me._$sortedPaths
+    Else
+        Return Me._$sortedPaths.Reverse()
+    Endif
+    
+End

@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _InitializeMenu() 'override
+    
+    Object.New("NagatoMenuItemTileColorDirectory", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemTileColorFile", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemTileColorDesktopEntry", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemTileColorImage", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemTileColorVideo", [Me._$rootMenu, ""])
+    Object.New("NagatoMenuItemTileColorPdf", [Me._$rootMenu, ""])
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Tile Color")
+        .Picture = MikuruIcon.Get("color-palette")
+    End With
+    
+End

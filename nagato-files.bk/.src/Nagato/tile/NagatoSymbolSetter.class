@@ -1,0 +1,83 @@
+' Gambas class file
+
+Private Sub paintTriangle(argColor As Integer)
+    
+    Dim yukiRect As New Rect
+    
+    yukiRect.X = MikuruUxTile.TileSize * -0.5
+    yukiRect.Y = 0
+    yukiRect.W = MikuruUxTile.TileSize
+    yukiRect.H = MikuruUxTile.TileSize * 0.4
+    Paint.Brush = Paint.Color(argColor)
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
+    
+End
+
+Private Sub paintText(argText As String, Optional argColor As Integer = Color.White)
+    
+    Dim yukiRect As New Rect
+    
+    yukiRect.X = MikuruUxTile.TileSize * -0.5
+    yukiRect.Y = MikuruUxTile.TileSize * 0.24
+    yukiRect.W = MikuruUxTile.TileSize
+    yukiRect.H = MikuruUxTile.TileSize * 0.16
+    Paint.Font.Bold = True
+    Paint.Brush = Paint.Color(argColor)
+    Paint.RichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    Paint.Fill()
+    
+End
+
+Private Function getTriangleTaggedTile(argPicture As Picture, argText As String, argColor As Integer) As Picture
+    
+    Dim yukiImage As Image = argPicture.Image
+    
+    Paint.Begin(yukiImage)
+        Paint.Rotate(Rad(45))
+        paintTriangle(argColor)
+        paintText(argText)
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
+
+Private Function getSymlinkTag(argPicture As Picture) As Picture
+    
+    Return getTriangleTaggedTile(argPicture, "symlink", MikuruColor.Transparent(Color.Orange, 128))
+    
+End
+
+Private Function getXdgUserDirTag(argPicture As Picture) As Picture
+    
+    Return getTriangleTaggedTile(argPicture, "xdg-dir", MikuruColor.Transparent(Color.Violet, 128))
+    
+End
+
+Private Function getSymbolizedTile(argPicture As Picture, argSymbol As String) As Picture
+    
+    Dim yukiImage As Image = argPicture.Image
+    
+    Paint.Begin(yukiImage)
+        Paint.DrawImage(MikuruIcon.Get(argSymbol, 32).Image, 8, 8)
+    Paint.End()
+    
+    Return yukiImage.Picture
+    
+End
+
+Public Sub _call(argTile As Picture, argPath As String) As Picture
+    
+    Dim yukiSymbol As String = NagatoDBSymbol.GetSymbolName(argPath)
+    
+    If yukiSymbol <> "" Then argTile = getSymbolizedTile(argTile, yukiSymbol)
+    
+    'If File.Ext(argPath) = "desktop" Then argTile = getApplicationTag(argTile)
+    If Stat(argPath).Link Then argTile = getSymlinkTag(argTile)
+    If NagatoXdg.IsUserDir(argPath) Then argTile = getXdgUserDirTag(argTile)
+    
+    Return argTile
+    
+End
+

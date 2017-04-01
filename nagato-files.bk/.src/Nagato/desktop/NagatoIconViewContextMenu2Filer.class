@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoIconviewContextMenu2
+
+Public Sub _AddFileOpenMenu()
+    
+    Dim yukiMenu As Object
+    
+    If IsDir(Me._$path) Then
+        With NagatoObject
+            Me._AddContextMenu("Open", .MoveOpenDirectory, MikuruIcon.Get("folder"))
+            Me._AddContextMenu("Open in new tab", .MoveOpenDirectoryInNewTab, MikuruIcon.Get("toggle-expand-alt"))
+        End With
+    Else If MikuruMimeType.IsDesktopEntry(Me._$path) Then
+        yukiMenu = New NagatoDefaultActionMenuDesktopEntry(Me._$rootMenu, Me._$path)
+    Else
+        yukiMenu = New NagatoDefaultActionMenuFile(Me._$rootMenu, Me._$path)
+    End If
+    
+End
+
+Public Sub _AddShowPropertyMenu()
+    
+    Object.New("NagatoMenuItemShowPropertyPane", [Me._$rootMenu, Me._$path])
+    
+End

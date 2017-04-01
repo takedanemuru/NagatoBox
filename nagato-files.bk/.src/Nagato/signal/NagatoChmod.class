@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Create Private
+
+Public Const LabelHeight As Integer = 24
+
+Public _$HBox As HBox
+Public _$label As NagatoChmodLabel
+Public _$radioButtons As NagatoChmodRadioButtons
+
+Public Function _GetlabelText() As String ' virtual interface
+    
+    Return ""
+    
+End
+
+Public Function _GetLabelCount() As Integer
+    
+    Return 2
+    
+End
+
+Public Function _GetBackground() As Integer
+    
+    Return Color.White
+    
+End
+
+Public Sub _InitializeHBox(argContainer As Container)
+    
+    Me._$HBox = New HBox(argContainer)
+    
+    With Me._$HBox
+        .H = Me.LabelHeight * Me._GetLabelCount()
+        .Background = Me._GetBackground()
+    End With
+    
+End
+
+Public Sub _SetRadioButton(argTag As String, argText As String)
+    
+    Me._$radioButtons.SetRadioButton(argTag, argText)
+    
+End
+
+Public Sub _SetRadioButtons() ' virtual interface
+    
+    
+    
+End
+
+Public Sub SetPermission(argAuthTag As String)
+    
+    Me._$radioButtons.SetPermission(argAuthTag)
+    
+End
+
+Public Function GetAuthTag() As String
+    
+    Return Me._$radioButtons.GetAuthTag()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._InitializeHBox(argContainer)
+    Me._$label = New NagatoChmodLabel(Me._$HBox, Me._GetlabelText())
+    Me._$radioButtons = New NagatoChmodRadioButtons(Me._$HBox) As "TFEI"
+    Me._SetRadioButtons()
+    
+End

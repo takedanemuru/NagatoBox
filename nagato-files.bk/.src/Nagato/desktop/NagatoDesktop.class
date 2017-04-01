@@ -1,0 +1,47 @@
+' Gambas class file
+
+Private $iconView As NagatoIconViewInitializer
+Private $observer As NagatoDesktopObserverHandler
+Private $wallpaper As NagatoDesktopWallpaperHandler
+Private $icons As NagatoDesktopIconsHandler
+Private $userInput As NagatoDesktopUserInput
+
+Public Sub ReloadDesktopWallpaper()
+    
+    $wallpaper.ReloadDesktopWallpaper()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $iconView = New NagatoIconViewInitializer(argContainer)
+    $wallpaper = New NagatoDesktopWallpaperHandler($iconView.IconView)
+    $icons = New NagatoDesktopIconsHandler($iconView.IconView)
+    $userInput = New NagatoDesktopUserInput($iconView.IconView) As "Handler"
+    $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Observer"
+
+End
+
+Public Sub Handler_Signal(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case NagatoObject.ViewForceReload, NagatoObject.ViewReload
+            $userInput.Clear()
+    End Select
+
+    $icons.Refresh($userInput.Selection)
+    
+End
+
+Public Sub Observer_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case NagatoObject.ObserverDelete
+            $userInput.Delete(Desktop.Path &/ argValues[0])
+        Case NagatoObject.ObserverModefy
+            $userInput.Clear()
+    End Select
+    
+    $icons.Refresh($userInput.Selection)
+
+End

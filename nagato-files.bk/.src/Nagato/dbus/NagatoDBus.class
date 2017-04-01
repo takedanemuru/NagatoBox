@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Static
+
+Property Read Proxy As DBusProxy
+
+Public Const Service As String = "org.gambas.nagato-files"
+Public Const ObjectPath As String = "/org/nagato/files"
+Public Const Interface As String = "org.gambas.nagato.files.nagatointerfacedesktop"
+
+Public Function DesktopActivated() As Boolean
+    
+    Return DBus.Session.Applications.Exist(Service)
+    
+End
+
+Public Function IsUnique() As Boolean
+    
+    Return Not DBus.Session.Applications.Exist(Me.Service)
+    
+End
+
+Public Sub Register()
+    
+    DBus.Name = Service
+    DBus.Unique = True
+    DBus.Session.Register(NagatoInterfaceDesktop, Me.ObjectPath, [Me.Interface])
+    
+End
+
+Public Sub Unregister()
+    
+    DBus.Session.Unregister(NagatoInterfaceDesktop)
+    
+End
+
+Private Function Proxy_Read() As DBusProxy
+
+    Return DBus[Me.Service][Me.ObjectPath, Me.Interface]
+
+End

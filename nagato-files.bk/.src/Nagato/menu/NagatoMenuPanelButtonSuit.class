@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits NagatoMenuPanelWidget
+
+Private $backButton As NagatoActiveTextButtonBack
+Private $homeButton As NagatoActiveTextButtonHome
+Private $upButton As NagatoActiveTextButtonUp
+Private $forwardButton As NagatoActiveTextButtonForward
+
+Public Sub _Initialize()
+    
+    $backButton = New NagatoActiveTextButtonBack(Me._$container) As "TFEI"
+    $homeButton = New NagatoActiveTextButtonHome(Me._$container) As "TFEI"
+    $upButton = New NagatoActiveTextButtonUp(Me._$container) As "TFEI"
+    $forwardButton = New NagatoActiveTextButtonForward(Me._$container) As "TFEI"
+    
+End
+
+Public Sub SetEnable(argBack As Boolean, argHome As Boolean, argUp As Boolean, argForward As Boolean)
+    
+    $backButton.Enabled = argBack
+    $homeButton.Enabled = argHome
+    $upButton.Enabled = argUp
+    $forwardButton.Enabled = argForward
+    
+End

@@ -1,0 +1,22 @@
+' Gambas class file
+
+Inherits NagatoChmod
+
+Public Function _GetlabelText() As String ' virtual interface
+    
+    Return "5"
+    
+End
+
+Public Function _GetBackground() As Integer
+    
+    Return MikuruColor.LightBlue
+    
+End
+
+Public Sub _SetRadioButtons() ' virtual interface
+    
+    Me._SetRadioButton("-", "- : The file group cannot write it.")
+    Me._SetRadioButton("w", "w : The file group can write it.")
+    
+End

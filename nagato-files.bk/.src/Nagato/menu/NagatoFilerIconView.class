@@ -1,0 +1,73 @@
+' Gambas class file
+
+Inherits NagatoIconViewHandler
+
+Private $searchResult As New String[]
+Private $icons As NagatoIconViewIcons
+Private $actions As NagatoIconViewAction
+
+Public Sub ResetIcon(argPath As String, argSelected As Boolean)
+    
+    $icons.ResetIcon(argPath, argSelected)
+    
+End
+
+Public Sub Refresh(argDirectory As String, argSelection As String[], argLastSelected As String)
+    
+    $icons.RefreshIconView(argDirectory, argSelection, argLastSelected)
+    
+End
+
+Public Sub RefreshWithSearchResult(argSearchResult As String[], argSelection As String[])
+    
+    $searchResult = argSearchResult.Copy()
+    $icons.RefreshWithSearchResult(argSearchResult, argSelection)
+    
+End
+
+Public Sub RefreshKeepQuery(argDirectory As String, argSelection As String[], argLastSelected As String)
+    
+    If $searchResult.Count > 0 Then
+        Me.RefreshWithSearchResult($searchResult, argSelection)
+    Else
+        Me.Refresh(argDirectory, argSelection, argLastSelected)
+    End If
+    
+End
+
+Public Sub Ensure(argPath As String)
+    
+    $icons.Ensure(argPath)
+    
+End
+
+Public Sub ClearSelection(argSelection As String[])
+    
+    $icons.ClearSelection(argSelection)
+    
+End
+
+Public Sub ShowLostDirectory()
+    
+    $icons.ShowLostDirectory()
+    
+End
+
+Public Function Delete(argPath As String) As Boolean
+    
+    Return $actions.Delete(argPath)
+    
+End
+
+Public Function Exist(argPath As String) As Boolean
+    
+    Return $actions.Exist(argPath)
+    
+End
+
+Public Sub _OptionalOnInitialize()
+    
+    $icons = New NagatoIconViewIcons(Me._$iconView)
+    $actions = New NagatoIconViewAction(Me._$iconView)
+    
+End

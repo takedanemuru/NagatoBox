@@ -1,0 +1,84 @@
+' Gambas class file
+
+Property Read Current As String
+Property Read HasBack As Boolean
+Property Read HasForward As Boolean
+Property Read Back As String
+Property Read Forward As String
+
+Private $log As New String[]
+Private $level As Integer
+
+Private Sub IsForward(argPath As String) As Boolean
+    
+    If $log.Max = -1 Then Return False
+    If $level <> $log.Max Then Return IIf($log[$level + 1] = argPath, True, False)
+        
+    Return False
+    
+End
+
+Public Function GetMoveTo(argEvent As Integer) As String
+    
+    Select Case argEvent
+        Case NagatoObject.MoveBack
+            If Me.HasBack Then Return (Me.Back)
+        Case NagatoObject.MoveForward
+            If Me.HasForward Then Return (Me.Forward)
+        Case NagatoObject.MoveHome
+            If Me.Current <> User.Home Then Return (User.Home)
+        Case NagatoObject.MoveUp
+            If Me.Current <> "/" Then Return (File.Dir(Me.Current))
+    End Select
+    
+    Return ""
+    
+End
+
+Public Sub Move(argPath As String)
+    
+    If $log.Max <> -1 Then
+        If $log[$level] = argPath Then Return ' do nothing
+    Endif
+     
+    If $level <> 0 And If $log[$level - 1] = argPath Then
+        Dec $level
+    Else If isForward(argPath) Then
+        Inc $level
+    Else
+        If $level <> $log.Max Then $log.Resize($level)
+        $log.Add(argPath)
+        $level = $log.Max
+    Endif
+    
+End
+
+Private Function Current_Read() As String
+
+    Return $log[$level]
+
+End
+
+Private Function HasBack_Read() As Boolean
+
+    Return IIf($level = 0, False, True)
+
+End
+
+Private Function HasForward_Read() As Boolean
+
+    Return IIf($log.Max = $level, False, True)
+
+End
+
+Private Function Back_Read() As String
+
+    Return IIf(Me.HasBack, $log[$level - 1], Null)
+
+End
+
+Private Function Forward_Read() As String
+
+    Return IIf(Me.HasForward, $log[$level + 1], Null)
+
+End

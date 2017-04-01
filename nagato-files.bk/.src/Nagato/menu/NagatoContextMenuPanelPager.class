@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoContextMenu
+
+Public Sub _AddChildMenus()
+    
+    With NagatoObject
+        Object.New("NagatoMenuItemIncreaseDesktop", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemDecreaseDesktop", [Me._$rootMenu, ""])
+    End With
+    
+End

@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoObjectWidget
+
+Private $button As Button
+
+Event Changed
+
+Private Sub initializeButton()
+    
+    $button = New Button(Me._$container) As "Switch"
+    
+    With $button
+        .Expand = False
+        .H = 36
+        .Text = ("Edit CHMOD")
+    End With
+    
+End
+
+Public Sub _InitializeWidgets()
+    
+    initializeButton()
+    
+End
+
+Public Sub Set(argPath As String)
+    
+    $button.Enabled = Access(argPath, gb.Write)
+    Me._$path = argPath
+    
+End
+
+Public Sub Switch_Click()
+    
+    HaruhiDialogChmod.SetPath(Me._$path)
+    HaruhiDialogChmod.ShowDialog()
+    
+End

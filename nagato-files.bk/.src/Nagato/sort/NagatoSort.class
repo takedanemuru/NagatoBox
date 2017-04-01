@@ -1,0 +1,86 @@
+' Gambas class file
+
+Create Static
+
+Public _$sortedPaths As New String[]
+
+Public Function _GetPattern() As String ' Virtual
+    
+    Return ""
+    
+End
+
+Private Function getPattern() As String
+    
+    Return IIf(NagatoSettings.ShowHidden, "*", "[^.]*")
+    
+End
+
+Public Function _IsLesser(argObject As String, argSubject As String) As Boolean
+    
+    Return False
+    
+End
+
+Private Sub orderBy(argPath As String)
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To Me._$sortedPaths.Max
+        If Me._IsLesser(argPath, Me._$sortedPaths[yukiIndex]) Then
+            Me._$sortedPaths.Add(argPath, yukiIndex)
+            Return
+        Endif
+    Next
+    
+    Me._$sortedPaths.Push(argPath)
+    
+End
+
+Private Function ensureFirstItem(argFullPath As String) As Boolean
+    
+    If Me._$sortedPaths.Count = 0 Then
+        Me._$sortedPaths.Add(argFullPath)
+        Return True
+    Else
+        Return False
+    Endif
+    
+End
+
+Public Sub _SortAll(argDirectory As String, argPath As String)
+    
+    Dim yukiFullPath As String = argDirectory &/ argPath
+    
+    If Not Exist(yukiFullPath) Then Return
+    If ensureFirstItem(yukiFullPath) Then Return
+    
+    orderBy(yukiFullPath)
+    
+End
+
+Private Function getPaths(argDirectory As String, argType As Integer) As String[]
+    
+    Return Dir(argDirectory, Me._GetPattern(), argType).Sort(gb.Natural + gb.IgnoreCase)
+    
+End
+
+Public Function _GetResult() As String[]
+    
+    Return Null
+    
+End
+
+Public Sub Get(argDirectory As String, argType As Integer) As String[]
+    
+    Dim yukiPath As String
+
+    Me._$sortedPaths.Clear()
+    
+    For Each yukiPath In getPaths(argDirectory, argType)
+        Me._SortAll(argDirectory, yukiPath)
+    Next
+    
+    Return Me._GetResult()
+    
+End

@@ -1,0 +1,82 @@
+' Gambas class file
+
+Inherits NagatoGtkBookmarksHandler
+
+Private Const SeparatorKey As String = "NagatoSeparatorKey"
+Private Const TrashBinKey As String = "NagatoTrashBinKey"
+
+Private Sub addDroppedDirectory()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Not IsDir(yukiPath) Then Continue
+        If Me._$listView.Exist(yukiPath) Then Continue
+        NagatoBookmarksArray.AddBookmark(yukiPath)
+    Next
+    
+End
+
+Private Sub moveFiles()
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            Try Move yukiPath To MikuruSafePath(Me._$listView.Item.Key &/ File.Name(yukiPath))
+        Endif
+    Next
+    
+End
+
+Private Sub moveDroppedFiles()
+    
+    If Me._$listView.Item.Key = TrashBinKey Then
+        NagatoTrash.Delete(NagatoDrag2.GetPaths(Drag.Data))
+    Else If Not Exist(Me._$listView.Item.Key) Then
+        If Me._$listView.Item.Key Not Begins SeparatorKey Then Me._$listView.Remove(Me._$listView.Item.Key)
+    Else
+        moveFiles()
+    End If
+    
+End
+
+Public Sub Asakura_DragMove()
+    
+    If Not Me._$listView.FindAt(Drag.X, Drag.Y) Then
+        Me._$listView[Me._$listView.Item.Key].Selected = True
+    Else
+        Me._$listView.UnselectAll()
+    End If
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    If Not Me._$listView.FindAt(Drag.X, Drag.Y) Then
+        If Me._$listView.Key Begins SeparatorKey Then
+            addDroppedDirectory()
+        Else
+            moveDroppedFiles()
+        Endif
+    End If
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuGtkBookmarks(HaruhiMain, Me._$listView.Key) As "ContextMenu"
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
+    
+    Dim yukiValues As New Variant[]
+    
+    yukiValues.Add(argValues[0])
+    
+    Raise Signal(argEvent, yukiValues)
+    
+End

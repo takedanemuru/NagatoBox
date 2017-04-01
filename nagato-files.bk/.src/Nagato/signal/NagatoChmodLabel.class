@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $label As Label
+
+Public Sub _new(argContainer As Container, argText As String)
+    
+    $label = New Label(argContainer)
+    
+    With $label
+        .W = 48
+        .Text = argText
+        .Alignment = Align.Center
+    End With
+    
+End

@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoLabelPainter
+
+Public Sub _OnGetLabelColor() As Integer
+    
+    Return MikuruColor.Transparent(Color.Blue, 128)
+    
+End
+
+Public Sub _OnGetIconName() As String
+    
+    Return "exclamation"
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "READ ONLY"
+    
+End

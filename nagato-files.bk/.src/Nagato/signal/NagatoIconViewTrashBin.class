@@ -1,0 +1,88 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $selection As New NagatoSelection
+Private $iconView As NagatoIconViewInitializerTrashBin
+Private $lastSelected As String
+Private $tileSetter As NagatoIconViewTileSetter
+
+Event Selected(argCount As Integer)
+
+Private Sub ensureVisible(argPath As String)
+    
+    If Not $iconView.IconView.Exist(argPath) Then Return
+    
+    $iconView.IconView[argPath].EnsureVisible()
+    
+End
+
+Public Sub Refresh(Optional argLastSelected As String)
+    
+    $tileSetter.Refresh()
+    NagatoDBThumbnailer.CleanUp(MikuruTrashPath.Files)
+    If argLastSelected Then ensureVisible(argLastSelected)
+    If $iconView.IconView.Count > 0 Then Return
+    
+    $iconView.IconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
+    
+End
+
+Public Sub Delete()
+    
+    If $selection.Count > 0 Then NagatoTrash.DeleteFromTrashBin($selection.Paths)
+    
+End
+
+Public Sub Restore()
+    
+    If $selection.Count > 0 Then NagatoTrash.Restore($selection.Paths)
+    
+End
+
+Public Sub UnselectAll()
+    
+    $selection.ClearAll()
+    Me.Refresh()
+    
+End
+
+Public Sub Ensure()
+    
+    If $iconView.IconView.Exist($lastSelected) Then $iconView.IconView[$lastSelected].EnsureVisible()
+    
+End
+
+Public Sub Filter(argQuery As String)
+    
+    $tileSetter.Filter(argQuery)
+    If $iconView.IconView.Count > 0 Then Return
+    $iconView.IconView.Add("NOTFOUND", "", NagatoIconTileWarningVoid.Get(""))
+
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $iconView = New NagatoIconViewInitializerTrashBin(argTabStrip) As "TrashBinIconView"
+    $tileSetter = New NagatoIconViewTileSetter($iconView.IconView, $selection)
+    $tileSetter.Directory = MikuruTrashPath.Files
+    Me.Refresh()
+    
+End
+
+Public Sub TrashBinIconView_MouseDown(argLastKey As String)
+    
+    Dim yukiLastKey As String = argLastKey
+    
+    If $iconView.IconView.FindAt(Mouse.X, Mouse.Y) Then ' NOTE: Returns True when NOT found.
+        Try $iconView.IconView.Current.Selected = False
+        $lastSelected = ""
+    Else
+        $lastSelected = yukiLastKey
+        $selection.Toggle(yukiLastKey)
+        $iconView.IconView[yukiLastKey].Picture = MikuruTile(yukiLastKey, $selection.Exist(yukiLastKey))
+        TFEI.SetTrashProperty(yukiLastKey)
+        Raise Selected($selection.Count)
+    End If
+    
+End

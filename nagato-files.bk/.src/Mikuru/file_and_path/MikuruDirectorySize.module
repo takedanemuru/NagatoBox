@@ -1,0 +1,45 @@
+' Gambas module file
+
+Private $count As Integer
+Private $size As Integer
+
+Private Function checkCount() As Boolean
+    
+    If $count > 9000 Then
+        If Message.Question("YUKI.N > It's over 9000. Continue ?", ("Cancel"), ("Continue")) = 1 Then Return False
+    Endif
+    
+    Return True
+    
+End
+
+Private Sub readDirectory(argDirectory As String)
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In Dir(argDirectory)
+        $size += Stat(argDirectory &/ yukiPath).Size
+        If IsDir(argDirectory &/ yukiPath) Then readDirectory(argDirectory &/ yukiPath)
+    Next
+    
+End
+
+Public Sub Compute(argDirectory As String)
+    
+    $size = 0
+    $count = RDir(argDirectory).Count
+    
+    Select Case $count
+        Case 0
+            Message.Info("YUKI.N > File and directory not found.", ("OK"))
+            Return
+        Case ($count > 9000)
+            If Not checkCount(argDirectory) Then Return
+    End Select
+    
+    readDirectory(argDirectory)
+    
+    Message.Info(Subst$("YUKI.N > &1", MikuruFileSize($size)), ("OK"))
+    
+End
+

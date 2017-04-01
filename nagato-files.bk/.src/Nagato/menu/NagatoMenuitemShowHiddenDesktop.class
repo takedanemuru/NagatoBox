@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = ("Show hidden")
+        .Picture = MikuruIcon.GetCheckButton(NagatoSettingsDesktop.ShowHidden)
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsDesktopTile.ShowHidden = Not NagatoSettingsDesktopTile.ShowHidden
+    
+End

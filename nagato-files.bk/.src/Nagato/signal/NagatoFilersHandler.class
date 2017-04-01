@@ -1,0 +1,63 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $filers As New Variant[]
+
+Public Sub AddFiler(argTabStrip As TabStrip, argPath As String)
+    
+    Dim yukiFiler As New NagatoFiler(argTabStrip, argPath) 
+    
+    $filers.Add(yukiFiler)
+    
+End
+
+Public Sub AddTrashBin(argTabStrip As TabStrip)
+    
+    Dim yukiTrashBin As New NagatoTrashBin(argTabStrip)
+    
+    $filers.Add(yukiTrashBin)
+    
+End
+
+Public Sub SetNewDirectory(argIndex As Integer, argDirectory As String)
+    
+    If Object.Class($filers[argIndex]).Name = "NagatoFiler" Then
+        $filers[argIndex].SetNewDirectory(argDirectory)
+    Else If Object.Class($filers[argIndex]).Name = "NagatoTrashBin"
+        TFEI.AddNewDirectory(argDirectory)
+    Endif
+    
+End
+
+Public Sub SetInitialPath(argTabStrip As TabStrip, argPath As String)
+    
+    Dim yukiFiler As New NagatoFiler(argTabStrip, argPath)
+    
+    $filers.Add(yukiFiler)
+    
+End
+
+Public Sub SearchQuery(argIndex As Integer, argQuery As String, argRecursive As Boolean)
+    
+    $filers[argIndex].SetSearchResult(argQuery, argRecursive)
+    
+End
+
+Public Sub Refresh(argIndex As Integer)
+    
+    $filers[argIndex].SetRefresh()
+    
+End
+
+Public Sub Remove(argIndex As Integer)
+    
+    $filers.Remove(argIndex)
+    
+End
+
+Public Sub EnsureVisible(argIndex As Integer)
+    
+    $filers[argIndex].EnsureVisible()
+    
+End

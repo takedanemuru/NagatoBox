@@ -1,0 +1,16 @@
+' Gambas class file
+
+Create Private
+
+Inherits NagatoLeftPaneContent
+
+Public _$treeView As TreeView
+Public _$observer As Observer
+
+Public Sub _new(argTreeView As TreeView)
+    
+    Me._$treeView = argTreeView
+    Me._$treeView.SetFocus()
+    Me._$observer = New Observer(Me._$treeView) As "Asakura"
+    
+End

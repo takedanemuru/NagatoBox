@@ -1,0 +1,90 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $menuPanel As NagatoMenuPanelTrashBin
+Private $iconView As NagatoIconViewTrashBin
+Private $directoryObserver As NagatoDirectoryObserver
+
+Private Sub initializeDirectoryObserver()
+    
+    $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
+    
+    With $directoryObserver
+        .Directory = MikuruTrashPath.Files
+    End With
+    
+End
+
+Public Sub SetNewDirectory(argDirectory As String)
+    
+    TFEI.SetNewDirectory(argDirectory)
+    
+End
+
+Public Sub SetSearchResult(argQuery As String, argRecursive As Boolean)
+    
+    Debug "ignore";; argRecursive
+    
+    $iconView.Filter(argQuery)
+    
+End
+
+Public Sub EnsureVisible()
+    
+    $iconView.Ensure()
+    
+End
+
+Public Sub SetRefresh()
+    
+    $iconView.Refresh()
+    
+End
+
+Public Sub _new(argTabStrip As TabStrip)
+    
+    $menuPanel = New NagatoMenuPanelTrashBin(argTabStrip) As "MenuPanel"
+    $iconView = New NagatoIconViewTrashBin(argTabStrip) As "IconViewTrashBin"
+    
+    initializeDirectoryObserver()
+    
+End
+
+Public Sub MenuPanel_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Object.Lock($directoryObserver)
+    
+    Select Case argSignal
+        Case MikuruSignal.TrashDelete
+            $iconView.Delete()
+        Case MikuruSignal.TrashRestore
+            $iconView.Restore()
+        Case MikuruSignal.TrashEmpty ' As Unselect All
+            $iconView.UnselectAll()
+            $menuPanel.SetLabel(0)
+    End Select
+    
+    Object.Unlock($directoryObserver)
+    
+End
+
+Public Sub IconViewTrashBin_Selected(argCount As Integer)
+    
+    $menuPanel.SetLabel(argCount)
+    
+End
+
+Public Sub DirectoryObserver_Deleted(argPath As String)
+    
+    $iconView.UnselectAll()
+    $menuPanel.SetLabel(0)
+    
+End
+
+Public Sub DirectoryObserver_Modefied(argPath As String)
+    
+    $iconView.UnselectAll()
+    $menuPanel.SetLabel(0)
+    
+End

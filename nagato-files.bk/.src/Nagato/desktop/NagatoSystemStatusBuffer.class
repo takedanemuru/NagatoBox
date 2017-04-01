@@ -1,0 +1,42 @@
+' Gambas class file
+
+Property Read Inline As String
+Property Read List As String
+
+Private $cpuUsage As String
+Private $memoryUsage As String
+Private $swapUsage As String
+Private $processCount As String
+Private $thermal As String
+
+Public Sub SetStatus(argCpu As Float, argMemory As Float, argSwap As Float, argProcs As Integer, argThermal As Float)
+    
+    $cpuUsage = Format$(argCpu, "##0.00%") 
+    $memoryUsage = Format$(argMemory, "##0.00%") 
+    $swapUsage = Format$(argSwap, "##0.00%") 
+    $processCount = argProcs 
+    $thermal = Format$(argThermal, "##0.00°C")
+    
+End
+
+Private Function Inline_Read() As String
+
+    Dim yukiTemplate As String = "CPU : &1   Memory : &2   Swap : &3   Processes : &4   Thermal : &5"
+
+    Return Subst(yukiTemplate, $cpuUsage, $memoryUsage, $swapUsage, $processCount, $thermal)
+
+End
+
+Private Function List_Read() As String
+
+    Dim yukiText As String
+    
+    yukiText &= $cpuUsage & "<br>"
+    yukiText &= $memoryUsage & "<br>"
+    yukiText &= $swapUsage & "<br>"
+    yukiText &= $processCount & "<br>"
+    yukiText &= $thermal
+    
+    Return yukiText
+
+End

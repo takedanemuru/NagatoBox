@@ -1,0 +1,89 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Property Directory As Integer
+Property File As Integer
+Property DesktopEntry As Integer
+Property Pdf As Integer
+Property Video As Integer
+Property Image As Integer
+
+Private Sub changeTileColor(argKey As String, argColor As Integer)
+    
+    Me._changeSettings(argKey, argColor)
+    TFEI.RefreshAll()
+    
+End
+
+Private Function Directory_Read() As Integer
+
+    Return Me._$settings["tile_color/directory", Color.Blue]
+
+End
+
+Private Sub Directory_Write(Value As Integer)
+
+    changeTileColor("tile_color/directory", Value)
+
+End
+
+Private Function File_Read() As Integer
+
+    Return Me._$settings["tile_color/file", Color.Magenta]
+
+End
+
+Private Sub File_Write(Value As Integer)
+
+    changeTileColor("tile_color/file", Value)
+
+End
+
+Private Function DesktopEntry_Read() As Integer
+
+    Return Me._$settings["tile_color/desktop_entry", Color.Violet]
+
+End
+
+Private Sub DesktopEntry_Write(Value As Integer)
+
+    changeTileColor("tile_color/desktop_entry", Value)
+
+End
+
+Private Function Pdf_Read() As Integer
+
+    Return Me._$settings["tile_color/pdf", Color.Orange]
+
+End
+
+Private Sub Pdf_Write(Value As Integer)
+
+    changeTileColor("tile_color/pdf", Value)
+
+End
+
+Private Function Video_Read() As Integer
+
+    Return Me._$settings["tile_color/video", Color.Gray]
+
+End
+
+Private Sub Video_Write(Value As Integer)
+
+    changeTileColor("tile_color/video", Value)
+
+End
+
+Private Function Image_Read() As Integer
+
+    Return Me._$settings["tile_color/image", Color.Violet]
+
+End
+
+Private Sub Image_Write(Value As Integer)
+
+    changeTileColor("tile_color/image", Value)
+
+End

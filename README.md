@@ -6,7 +6,7 @@ a software suite for Openbox3.
 
 a software suite for openbox3.
 
-![image: screenshot_2017年01月14日_12：42：01](./readme_extra/screenshot_2017年01月14日_12：42：01.png)
+![image: screenshot_2017年04月01日_11：07：04](./readme_extra/screenshot_2017年04月01日_11：07：04.png)
 
 ## Important Notice
 
@@ -53,7 +53,7 @@ all softwares in this repository are licensed under **S.O.S.Licese.**
 
 ## To Do
 
-[TODO](./readme_extra/todo/NagatoBox_42.7_Awakening_The_World.md)
+[TODO](./readme_extra/todo/NagatoBox_42.8_Ultimate_Eyes.md)
 
 ## Applications
 

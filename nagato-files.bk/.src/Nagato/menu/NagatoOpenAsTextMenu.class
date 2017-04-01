@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoOpenWithApplicationMenu
+
+Public Function _GetMimeType() As String
+    
+    Return "text/plain"
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) 'override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Open As Text")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() ' override
+    
+    Dim yukiDesktopFile As String
+    Dim yukiChecker As New String[]
+    Dim yukiMimeTypes As String[] = Me._GetDesktopFilesWithMimeType()
+    Dim yukiDefaultApp As New NagatoDefaultApplication(Me._$path)
+        
+    Object.New("NagatoMenuItemSelectApplication", [Me._$rootMenu, Me._$path])
+    If yukiMimeTypes.Count > 0 Then Object.New("NagatoMenuItemDummy", [Me._$rootMenu, Me._$path])
+    
+    For Each yukiDesktopFile In yukiMimeTypes
+        If Not yukiChecker.Exist(yukiDesktopFile) Then
+            If Not yukiDefaultApp.NotFound Then
+                ' ignore
+            Endif
+            Object.New("NagatoOpenWithDesktopEntryMenu", [Me._$rootMenu, Me._$path, yukiDesktopFile])
+            yukiChecker.Add(yukiDesktopFile)
+        End If
+    Next
+    
+Catch
+    Debug Error.Text
+    Return
+    
+End

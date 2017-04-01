@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoIconTile
+
+Private $descriptionPainter As New NagatoDescriptionPainterPath
+
+Public Sub _OnDrawIcon(argPath As String)
+    
+    Me._PaintIcon(Desktop.GetFileIcon(argPath, MikuruUxTile.IconSize))
+    
+End
+
+Public Sub _OnDrawDescription(argPath As String)
+    
+    $descriptionPainter.Paint(argPath)
+    
+End
+
+Public Sub _OnGetBackgroundColor() As Integer
+    
+    Return MikuruColor.Transparent(NagatoSettingsTileColor.File, 192)
+    
+End

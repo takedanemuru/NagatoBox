@@ -1,0 +1,93 @@
+' Gambas class file
+
+Inherits NagatoIconViewHandler
+
+Private Sub dropFile(argPath As String)
+    
+    Select Case MikuruDrop.GetType(Me._$iconView)
+        Case MikuruDrop.TypeVoid ' Move to current directory
+            Raise Signal(NagatoObject.FileMoveToCurrentDir, [argPath])
+        Case MikuruDrop.TypeFile
+            Debug "ignore"
+        Case MikuruDrop.TypeDirectory
+           Try Move argPath To MikuruSafePath(Me._$iconView.Item.Key &/ File.Name(argPath))
+        Case MikuruDrop.TypeApplication
+            Debug "Try execute app with: " & argPath
+    End Select
+    
+End
+
+Private Sub isVoidArea(argPath As String) As Boolean
+
+    Dim yukiScrollArea As ScrollArea = Me._$iconView.Children[0]
+    Dim yukiX As Integer = (Mouse.ScreenX - Me._$iconView.ScreenX) + yukiScrollArea.ScrollX
+    Dim yukiY As Integer = (Mouse.ScreenY - Me._$iconView.ScreenY)
+    
+    If argPath = "" Then
+        Return True
+    Else If Me._$iconView.FindAt(yukiX, yukiY) Then
+        Return True
+    Else
+        Return False
+    End If
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    Dim yukiPath As String
+    
+    If Drag.Format <> MikuruMimeType.UriList Then Return 
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        'xdg-user-dirs will be ignored. 
+        If NagatoXdg.IsUserDir(yukiPath) Then Continue
+        dropFile(yukiPath)
+    Next
+    
+End
+
+Public Sub Asakura_Activate()
+    
+    If Me._$iconView.Key = "NOTFOUND" Then Return
+    If Me._$iconView.Key = "" Then Return
+    
+    If IsDir(Me._$iconView.Key) Then
+        Raise Signal(NagatoObject.MoveOpenDirectory, [Me._$iconView.Key])
+    Else
+        MikuruFile.Exec(Me._$iconView.Key)
+    End If
+    
+End
+
+Public Sub Asakura_MouseDown()
+    
+    If Me._$iconView.Key = Null Then 
+        Return
+    Else If Me._$iconView.Key = "" Then 
+        Return
+    Else If Me._$iconView.Key = "NOTFOUND" Then
+        Return
+    Else If Me._$iconView.FindAt(Mouse.X, Mouse.Y) Then
+        Me._$iconView.Current.Selected = False
+    Else
+        Raise Signal(NagatoObject.UserInputMouseDown, [Me._$iconView.Key, Mouse.Left])
+    End If
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiPath As String = Me._$iconView.Key
+    Dim yukiContextMenu As Object
+    
+    If yukiPath = "NOTFOUND" Then
+        Return
+    Else If isVoidArea(yukiPath) Then
+        Raise Signal(NagatoObject.ViewContextMenu, Null)
+    Else 
+        yukiContextMenu = New NagatoIconViewContextMenu2Filer(HaruhiMain, yukiPath) As "TFEI"
+        yukiContextMenu.Popup()
+    End If
+    
+End

@@ -1,0 +1,69 @@
+' Gambas class file
+
+Create Static
+
+Private $uriDecoder As New NagatoUriDecoder
+
+Public Function GetPaths(argData As String) As String[]
+    
+    Dim yukiLine As String
+    Dim yukiDecodedUrl As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiLine In Split(argData, "\n", "", True) ' each line of "text/uri-list" ends "\r\n"
+        If yukiLine = "" Then Continue
+        yukiDecodedUrl = $uriDecoder.GetConvertedUri(yukiLine)
+        If Exist(yukiDecodedUrl) Then yukiPaths.Add(yukiDecodedUrl)
+    Next
+    
+    Return yukiPaths
+    
+End
+
+Public Function GetUriList(argPaths As String[]) As String
+    
+    Dim yukiPath As String
+    Dim yukiResult As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+        yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
+        yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Function GetUriListCopy(argPaths As String[]) As String
+    
+    Dim yukiPath As String = "#nagato-files_mode=copy" & gb.CrLf
+    Dim yukiResult As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+        yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
+        yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
+    Next
+    
+    Return yukiResult
+    
+End
+
+Public Function GetUriListCut(argPaths As String[]) As String
+    
+    Dim yukiPath As String = "#nagato-files_mode=cut" & gb.CrLf
+    Dim yukiResult As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        yukiPath = Replace(yukiPath, " ", "NagatoSpaceEncodeFlag")
+        yukiResult &= ("file://" & $uriDecoder.UriEncode(yukiPath) & gb.CrLf)
+        yukiResult = Replace(yukiResult, "NagatoSpaceEncodeFlag", "%20")
+    Next
+    
+    Return yukiResult
+    
+End

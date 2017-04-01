@@ -1,0 +1,44 @@
+' Gambas class file
+
+Public _$drawingArea As DrawingArea
+
+Public Sub _OnInitialize()
+    
+    
+    
+End
+
+Public Sub _OnLeftClick(argX As Integer)
+    
+    
+    
+End
+
+Public Sub _OnRightClick(argX As Integer)
+    
+    
+    
+End
+
+Public Sub Click(argX As Integer, argLeft As Boolean)
+    
+    If argLeft Then
+        Me._OnLeftClick(argX)
+    Else
+        Me._OnRightClick(argX)
+    Endif
+    
+End
+
+Public Sub Paint(Optional argX As Integer) As Integer
+    
+    Return 0 ' dummy, should return right margin. 
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    Me._$drawingArea = argDrawingArea
+    Me._OnInitialize()
+    
+End

@@ -1,0 +1,53 @@
+' Gambas class file
+
+Public Const IconSize As Integer = 128
+Public Const Margin As Integer = 16
+Public Const MarginDouble As Integer = 32
+
+Public _$drawingArea As DrawingArea
+Public _$currentPath As String
+
+Public Function _GetRect(argY As Integer, argTemplate As String) As Rect
+    
+    Dim yukiWidth As Integer = Me._$drawingArea.W - Me.MarginDouble
+    Dim yukiWritableWidth As Integer = Me._$drawingArea.W - Me.MarginDouble
+    Dim yukiHeight As Integer = Me._$drawingArea.Font.RichTextHeight(argTemplate, yukiWritableWidth)
+    Dim yukiRect As New Rect(Me.Margin, argY + Me.Margin, yukiWidth, yukiHeight)
+    
+    Return yukiRect
+    
+End
+
+Public Sub _DrawRichText(argRichText As String, argRect As Rect, argAlign As Integer)
+    
+    Paint.Brush = Paint.Color(Color.White)
+        With argRect
+            Paint.DrawRichText(argRichText, .X, .Y, .W, .H, argAlign)
+        End With
+    Paint.Fill()
+    
+End
+
+Public Function _DrawProperties(argY As Integer, argTemplate As String, argProperties As String) As Integer
+    
+    Dim yukiRect As Rect = Me._GetRect(argY, argTemplate)
+    
+    Me._DrawRichText(argTemplate, yukiRect, Align.Left)
+    Me._DrawRichText(argProperties, yukiRect, Align.Right)
+    
+    Return yukiRect.Y + yukiRect.H
+    
+End
+
+Public Sub _InitializeSubPainters() ' SHOULD be overridden
+    
+    
+    
+End
+
+Public Sub _new(argDrawingArea As DrawingArea)
+    
+    Me._$drawingArea = argDrawingArea
+    Me._InitializeSubPainters()
+    
+End

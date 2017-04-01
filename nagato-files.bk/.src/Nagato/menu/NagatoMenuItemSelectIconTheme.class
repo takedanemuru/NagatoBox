@@ -1,0 +1,20 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _InitializeItem() 'override
+    
+    Dim yukiMenu As New Menu(Me._$parentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = Me._$path
+        .Tag = Me._$path
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    NagatoSettingsAppearance.IconTheme = Last.Tag
+    
+End

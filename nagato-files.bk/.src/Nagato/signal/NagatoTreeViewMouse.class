@@ -1,0 +1,67 @@
+' Gambas class file
+
+Inherits NagatoTreeViewHandler
+
+Event Move(argDirectory As String)
+Event RequestRefresh
+
+Private Sub moveFiles(argDirectory As String)
+    
+    Dim yukiPath As String
+    Dim yukiFlag As Boolean = False
+    
+    For Each yukiPath In NagatoDrag2.GetPaths(Drag.Data)
+        If Exist(yukiPath) Then 
+            Try Move yukiPath To MikuruSafePath(argDirectory &/ File.Name(yukiPath))
+            yukiFlag = True
+        Endif
+    Next
+    
+    If yukiFlag Then Raise Move(argDirectory)
+    
+End
+
+Private Sub moveDroppedFiles()
+    
+    If Not Exist(Me._$treeView.Item.Key) Then
+        Me._$treeView.Remove(Me._$treeView.Item.Key)
+    Else If IsDir(Me._$treeView.Item.Key) Then
+        moveFiles(Me._$treeView.Item.Key)
+    Else
+        moveFiles(File.Dir(Me._$treeView.Item.Key))
+    End If
+    
+End
+
+Public Sub Asakura_DragMove()
+    
+    If Not Me._$treeView.FindAt(Drag.X, Drag.Y) Then
+        Me._$treeView[Me._$treeView.Item.Key].Selected = True
+    Else
+        Me._$treeView.UnselectAll()
+    End If
+    
+End
+
+Public Sub Asakura_Drop()
+    
+    If Drag.Format = "text/uri-list" Then moveDroppedFiles()
+    
+End
+
+Public Sub Asakura_Menu()
+    
+    Dim yukiMenu As New NagatoContextMenuTreeView(HaruhiMain, Me._$treeView.Key) As "ContextMenu"
+    
+    yukiMenu.Popup()
+    
+End
+
+Public Sub ContextMenu_Signal(argEvent As Integer, argValues As Variant[])
+    
+    Select Case argEvent
+        Case MikuruSignal.ContextRefresh
+            Raise RequestRefresh
+    End Select
+    
+End

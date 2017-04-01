@@ -1,0 +1,58 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Private Enum MenuNone = 1000, MenuAscent = 1001, MenuDescent = 1002
+
+Private Sub addMenu(argText As String, argTag As Integer, argChecked As Boolean)
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Text = argText
+        .Tag = argTag
+        If argChecked Then .Picture = MikuruIcon.Get("button-check")
+    End With
+    
+End
+
+Public Sub _InitializeMenu() 'override
+    
+    With MikuruSort
+        addMenu(("By Name"), .ByName, NagatoSettingsDesktop.SortBy = .ByName)
+        addMenu(("By Size"), .BySize, NagatoSettingsDesktop.SortBy = .BySize)
+        addMenu(("By Last Modefied"), .ByLastModefied, NagatoSettingsDesktop.SortBy = .ByLastModefied)
+        addMenu(("By Extension"), .ByExt, NagatoSettingsDesktop.SortBy = .ByExt)
+        addMenu(("By User"), .ByUser, NagatoSettingsDesktop.SortBy = .ByUser)
+            addMenu("", MenuNone, False)
+        addMenu(("Ascent"), MenuAscent, NagatoSettingsDesktop.SortAscent)
+        addMenu(("Descent"), MenuDescent, Not NagatoSettingsDesktop.SortAscent)
+    End With
+    
+End
+
+Public Sub _InitializeParentMenu(argRootMenu As Menu) ' override
+    
+    Me._$rootMenu = New Menu(argRootMenu)
+    
+    With Me._$rootMenu
+        .Text = ("Sort")
+        .Picture = MikuruIcon.Get("chart-bar-down")
+    End With
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Select Case Last.Tag
+        Case MenuAscent
+            NagatoSettingsDesktop.SortAscent = True
+        Case MenuDescent
+            NagatoSettingsDesktop.SortAscent = False
+        Default
+            NagatoSettingsDesktop.SortBy = Last.Tag
+    End Select
+    
+    Raise Signal(NagatoObject.ViewReload, Null)
+    
+End

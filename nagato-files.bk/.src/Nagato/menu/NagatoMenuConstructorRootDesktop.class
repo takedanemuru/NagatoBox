@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoMenuConstructor
+
+Private Sub addSortMenu()
+    
+    Dim yukiMenu As NagatoSortMenuDesktop
+    
+    yukiMenu = New NagatoSortMenuDesktop(Me._$rootMenu) As "TFEI"
+    
+End
+
+Private Sub addFromTemplateMenu()
+    
+    Dim yukiMenu As NagatoCreateFromTemplateMenu
+    
+    yukiMenu = New NagatoCreateFromTemplateMenu(Me._$rootMenu, Desktop.Path)
+    
+End
+
+Private Sub addConfigMenu()
+    
+    Dim yukiMenu As NagatoSubMenuDesktopConfig
+    
+    yukiMenu = New NagatoSubMenuDesktopConfig(Me._$rootMenu, Desktop.Path)
+    
+End
+
+Public Sub _call()
+    
+    Me._$rootMenu.Children.Clear()
+    
+    With NagatoObject
+        Object.New("NagatoMenuItemOpenDesktop", [Me._$rootMenu, ""])
+            Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemChangeWallpaper", [Me._$rootMenu, ""])
+        addFromTemplateMenu()
+        addSortMenu()
+        addConfigMenu()
+            Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemCreateLauncher", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemCreateDirectory", [Me._$rootMenu, Desktop.Path &/ ("New Directory")])
+        Object.New("NagatoMenuItemCreateEmptyText", [Me._$rootMenu, Desktop.Path])
+            Object.New("NagatoMenuItemDummy", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemAbout", [Me._$rootMenu, ""])
+        Object.New("NagatoMenuItemQuitDesktop", [Me._$rootMenu, ""])
+    End With
+    
+End

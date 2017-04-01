@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoLabelPainter
+
+Public Sub _OnGetLabelColor() As Integer
+    
+    Return Color.Red
+    
+End
+
+Public Sub _OnGetIconName() As String
+    
+    Return "button-check"
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "SELECTED"
+    
+End

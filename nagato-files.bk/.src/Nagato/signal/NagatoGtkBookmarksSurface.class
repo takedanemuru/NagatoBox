@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoGtkBookmarksHandler
+
+Private Sub addListItems(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Me._$listView.Exist(yukiPath) Then Continue
+        Me._$listView.Add(yukiPath, File.Name(yukiPath), MikuruIcon.GetDirectory(yukiPath, 32))
+    Next
+    
+End
+
+Public Sub AddBookmarkItems()
+    
+    addListItems([User.Home, NagatoXdg.UserDirs.Desktop])
+    If Not MikuruAccountChecker.IsRoot() Then addListItems(NagatoXdg.UserDirs.All)
+        Me._$listView.Add(NagatoGtkBookmarks.SeparatorKey & "1", "")
+    addListItems(NagatoBookmarksArray.List)
+        Me._$listView.Add(NagatoGtkBookmarks.SeparatorKey & "2", "")
+    Me._$listView.Add(NagatoGtkBookmarks.TrashBinKey, ("Trash bin"), MikuruIcon.Get("bin", 36))
+    
+End
+
+Public Sub Refresh()
+    
+    Me._$listView.Clear()
+    Me.AddBookmarkItems()
+    Me._$listView.Refresh()
+    
+End

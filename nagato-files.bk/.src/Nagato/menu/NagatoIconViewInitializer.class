@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read IconView As IconView
+
+Private $iconView As IconView
+Private $observer As Observer
+
+Public Sub _new(argContainer As Container)
+    
+     $iconView = New IconView(argContainer) As "IconView"
+    
+    With $iconView
+        .Expand = True
+        .Picture = Picture.Load(NagatoSettingsAppearance.Background)
+        .Mode = Select.Single
+        .Drop = True
+        .Orientation = Arrange.Horizontal
+        .Tracking = True
+    End With
+    
+    $observer = New Observer(NagatoSettingsAppearance) As "Asakura"
+    
+End
+
+Private Function IconView_Read() As IconView
+
+    Return $iconView
+
+End
+
+Public Sub Asakura_Changed()
+    
+    $iconView.Picture = Picture.Load(NagatoSettingsAppearance.Background)
+    
+End

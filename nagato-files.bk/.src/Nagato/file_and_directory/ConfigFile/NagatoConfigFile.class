@@ -1,0 +1,91 @@
+' Gambas class file
+
+Private $path As String
+Private $data As New Collection
+Private $quoted As New Collection
+
+Private Sub replaceData(argKey As String, argValue As String)
+    
+    Dim yukiLines As String[] = Split(File.Load($path), "\n", "", True)
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To yukiLines.Count
+        If yukiLines[yukiIndex] Not Begins argKey Then Continue
+        yukiLines[yukiIndex] = Subst$("&1=&2", argKey, IIf($quoted.Exist(argKey), Quote$(argValue), argValue))
+        File.Save($path, yukiLines.Join("\n"))
+        readConfigFile($path)
+        Break
+    Next
+    
+End
+
+Private Function setQuoted(argKey As String, argValue As String) As String
+    
+    Dim yukiValue As String = Trim(argValue)
+
+    ' NOTE : Chr$(34) is ascii code for double quotation.
+    
+    If yukiValue Begins Chr$(34) And If yukiValue Ends Chr$(34) Then
+        $quoted.Add(argValue, argKey)
+        Return UnQuote(argValue)
+    Else
+        Return argValue
+    Endif
+    
+End
+
+Private Sub setData(argLine As String)
+    
+    Dim yukiPosition As String = String.InStr(argLine, "=")
+    Dim yukiHeader As String
+    Dim yukiData As String
+    
+    If yukiPosition = 0 Then Return
+    
+    yukiHeader = String.Left(argLine, yukiPosition - 1)
+    yukiData = setQuoted(yukiHeader, String.Mid(argLine, yukiPosition + 1))
+    
+    $data.Add(yukiData, yukiHeader)
+    
+End
+
+Private Sub readConfigFile(argConfigFilePath As String)
+    
+    Dim yukiStream As Stream
+    Dim yukiLine As String
+    
+    yukiStream = Open argConfigFilePath For Input
+    
+    While Not Eof(yukiStream)
+        Line Input #yukiStream, yukiLine
+        If yukiLine Begins "#" Then Continue
+        setData(yukiLine)
+    Wend
+    
+    Close #yukiStream
+    
+End
+
+Public Sub _get(argKey As String) As String
+    
+    Return $data[argKey]
+    
+End
+
+Public Sub _put(argValue As String, argKey As String)
+    
+    ' This function overrides special method
+    ' USAGE: $nagatoConfigFile[argKey] = argValue
+     
+    If Not $data.Exist(argKey) Then Return
+    
+    replaceData(argKey, argValue)
+    
+End
+
+Public Sub _new(argConfigFilePath As String)
+    
+    $path = argConfigFilePath
+    readConfigFile(argConfigFilePath)
+    
+End
