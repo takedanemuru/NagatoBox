@@ -1,14 +1,14 @@
 # Applications List
 
-## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.7.7)
+## ![image: nagato-ambient.png](../nagato-ambient/nagato-ambient.png) nagato-ambient (v42.8.7)
 
 + Description : play ambient sounds
-+ Last Modefied : 2017-01-25
++ Last Modefied : 2017-04-03
 
-## ![image: nagato-archiver.png](../nagato-archiver/nagato-archiver.png) nagato-archiver (v42.6.8)
+## ![image: nagato-archiver.png](../nagato-archiver/nagato-archiver.png) nagato-archiver (v42.8.8)
 
 + Description : an archiver.
-+ Last Modefied : 2016-11-05
++ Last Modefied : 2017-04-03
 
 ![image: screenshot_001.png](../nagato-archiver/doc/screenshots/screenshot_001.png)
 
@@ -17,10 +17,10 @@
 .tar, .zip, .bz2, .gz, .rar, .lzh, .xz, .tar.gz, .tar.xz, and .tar.bz2 
 
 
-## ![image: nagato-asx-player.png](../nagato-asx-player/nagato-asx-player.png) nagato-asx-player (v42.7.6)
+## ![image: nagato-asx-player.png](../nagato-asx-player/nagato-asx-player.png) nagato-asx-player (v42.8.6)
 
 + Description : asx file player
-+ Last Modefied : 2017-03-01
++ Last Modefied : 2017-04-03
 
 ## ![image: music.png](../nagato-audio-editor/pictures/icons/music.png) nagato-audio-editor (v42.7.6)
 
@@ -68,15 +68,15 @@ CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
 + Description : count lines of Gambas3 source codes.
 + Last Modefied : 2017-01-05
 
-## ![image: nagato-color-picker.png](../nagato-color-picker/nagato-color-picker.png) nagato-color-picker (v42.5.4)
+## ![image: nagato-color-picker.png](../nagato-color-picker/nagato-color-picker.png) nagato-color-picker (v42.8.4)
 
 + Description : pick color number from anywhere.
-+ Last Modefied : 2016-08-09
++ Last Modefied : 2017-04-03
 
-## ![image: commander.jpg](../nagato-commander/commander.jpg) nagato-commander (v42.6.7)
+## ![image: commander.jpg](../nagato-commander/commander.jpg) nagato-commander (v42.8.7)
 
 + Description : a terminal emulator
-+ Last Modefied : 2016-11-20
++ Last Modefied : 2017-04-03
 
 ## ![image: nagato-config-appearance.png](../nagato-config-appearance/nagato-config-appearance.png) nagato-config-appearance (v42.5.7)
 
@@ -88,10 +88,10 @@ CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
 + Description : global shortcut config tool for NagatoBox.
 + Last Modefied : 2016-11-08
 
-## ![image: computer.png](../nagato-dbus-finder/pictures/icons/computer.png) nagato-dbus-finder (v42.5.7)
+## ![image: computer.png](../nagato-dbus-finder/pictures/icons/computer.png) nagato-dbus-finder (v42.8.7)
 
 + Description : dbus explorer
-+ Last Modefied : 2016-08-08
++ Last Modefied : 2017-04-03
 
 ## ![image: shapes.png](../nagato-diagram/Pictures/Icons/shapes.png) nagato-diagram (v42.7.19)
 
@@ -111,15 +111,15 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : English/Japanese dictionary
 + Last Modefied : 2016-08-15
 
-## ![image: nagato-extractor.png](../nagato-extractor/nagato-extractor.png) nagato-extractor (v42.6.4)
+## ![image: nagato-extractor.png](../nagato-extractor/nagato-extractor.png) nagato-extractor (v42.8.4)
 
 + Description : an archived file extracting tool for NagatoBox.
-+ Last Modefied : 2016-10-19
++ Last Modefied : 2017-04-03
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.7.133)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.8.139)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-02-24
++ Last Modefied : 2017-04-01
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -128,15 +128,10 @@ ease to edit .gv files with preview. and export it as an image file.
 Symbols : `~/.local/share/NagatoBox/database/Symbol`
 Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
-## ![image: information-balloon.png](../nagato-files-lite/Pictures/Icons/information-balloon.png) nagato-files-lite (v0.6.3)
-
-+ Description : a light-weight filer
-+ Last Modefied : 2016-11-15
-
-## ![image: icon.png](../nagato-font-view/pictures/icon.png) nagato-font-view (v42.6.5)
+## ![image: icon.png](../nagato-font-view/pictures/icon.png) nagato-font-view (v42.8.5)
 
 + Description : view fonts.
-+ Last Modefied : 2016-11-16
++ Last Modefied : 2017-04-03
 
 ## ![image: document-edit.png](../nagato-fullscreen-editor/Picture/icons/document-edit.png) nagato-fullscreen-editor (v42.7.14)
 
@@ -145,10 +140,10 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
 ![image: screenshot_001.png](../nagato-fullscreen-editor/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-gif-box.png](../nagato-gif-box/nagato-gif-box.png) nagato-gif-box (v42.5.5)
+## ![image: nagato-gif-box.png](../nagato-gif-box/nagato-gif-box.png) nagato-gif-box (v42.8.6)
 
 + Description : a simple movie box for gif animation
-+ Last Modefied : 2016-08-16
++ Last Modefied : 2017-04-03
 
 ## ![image: presentation.png](../nagato-image-view/pictures/nagato_icons/presentation.png) nagato-image-view (v42.6.5)
 
@@ -157,10 +152,10 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
 ![image: screenshot_001.png](../nagato-image-view/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-keycode-checker.png](../nagato-keycode-checker/nagato-keycode-checker.png) nagato-keycode-checker (v42.5.2)
+## ![image: nagato-keycode-checker.png](../nagato-keycode-checker/nagato-keycode-checker.png) nagato-keycode-checker (v42.8.2)
 
 + Description : check keycode.
-+ Last Modefied : 2016-08-10
++ Last Modefied : 2017-04-03
 
 ## ![image: nagato-lookup.png](../nagato-lookup/nagato-lookup.png) nagato-lookup (v42.7.42)
 
@@ -174,15 +169,15 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 + Description : map viewer.
 + Last Modefied : 2017-01-18
 
-## ![image: speaker.png](../nagato-mixer-applet/Pictures/icons/speaker.png) nagato-mixer-applet (v42.7.10)
+## ![image: speaker.png](../nagato-mixer-applet/Pictures/icons/speaker.png) nagato-mixer-applet (v42.7.11)
 
 + Description : simple mixer applet for trayicon
-+ Last Modefied : 2017-02-10
++ Last Modefied : 2017-03-20
 
-## ![image: nagato-movie.png](../nagato-movie/nagato-movie.png) nagato-movie (v42.6.8)
+## ![image: nagato-movie.png](../nagato-movie/nagato-movie.png) nagato-movie (v42.8.8)
 
 + Description : movie player
-+ Last Modefied : 2016-11-15
++ Last Modefied : 2017-04-03
 
 ![image: screenshot_001.png](../nagato-movie/doc/screenshots/screenshot_001.png)
 
@@ -206,10 +201,10 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
-## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.15)
+## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.7.18)
 
 + Description : on screen display for openbox3
-+ Last Modefied : 2017-03-05
++ Last Modefied : 2017-03-17
 
 ![image: screenshot_001.png](../nagato-osd/doc/screenshots/screenshot_001.png)
 
@@ -223,10 +218,10 @@ now under heavy construction.
 + Description : pdf viewer
 + Last Modefied : 2017-01-20
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.79)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.82)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2017-02-08
++ Last Modefied : 2017-03-27
 
 ### Cache Directory
 
@@ -316,19 +311,19 @@ path		|string		|fullpath of each music file
 + Description : manage autostart
 + Last Modefied : 2017-01-14
 
-## ![image: nagato-stock-icon-list.png](../nagato-stock-icon-list/nagato-stock-icon-list.png) nagato-stock-icon-list (v42.6.4)
+## ![image: nagato-stock-icon-list.png](../nagato-stock-icon-list/nagato-stock-icon-list.png) nagato-stock-icon-list (v42.8.4)
 
 + Description : nagato shows you all stock icons for gambas3
-+ Last Modefied : 2016-11-06
++ Last Modefied : 2017-04-03
 
 ![image: screenshot_001.png](../nagato-stock-icon-list/doc/screenshots/screenshot_001.png)
 
 show all of gambas3 and NagatoBox stock icons.
 
-## ![image: nagato-systemmonitor-daemon.png](../nagato-systemmonitor-daemon/nagato-systemmonitor-daemon.png) nagato-systemmonitor-daemon (v42.7.22)
+## ![image: nagato-systemmonitor-daemon.png](../nagato-systemmonitor-daemon/nagato-systemmonitor-daemon.png) nagato-systemmonitor-daemon (v42.7.25)
 
 + Description : system monitoring daemon
-+ Last Modefied : 2017-03-07
++ Last Modefied : 2017-03-09
 
 ## ![image: nagato-taskmanager.png](../nagato-taskmanager/nagato-taskmanager.png) nagato-taskmanager (v42.7.21)
 
@@ -345,37 +340,37 @@ taskmanager for NagatoBox
 + Description : a simple text editor
 + Last Modefied : 2016-11-29
 
-## ![image: nagato-text-converter.png](../nagato-text-converter/nagato-text-converter.png) nagato-text-converter (v42.5.2)
+## ![image: nagato-text-converter.png](../nagato-text-converter/nagato-text-converter.png) nagato-text-converter (v42.8.3)
 
 + Description : charactor code conversion tool
-+ Last Modefied : 2016-08-09
++ Last Modefied : 2017-04-03
 
 ## ![image: nagato-wallpaper.png](../nagato-wallpaper/nagato-wallpaper.png) nagato-wallpaper (v42.7.17)
 
 + Description : a wallpaper setter for *box window managers.
 + Last Modefied : 2017-01-23
 
-## ![image: nagato-wareki.png](../nagato-wareki/nagato-wareki.png) nagato-wareki (v42.5.2)
+## ![image: nagato-wareki.png](../nagato-wareki/nagato-wareki.png) nagato-wareki (v42.8.2)
 
 + Description : Japanese Era List
-+ Last Modefied : 2016-08-16
++ Last Modefied : 2017-04-03
 
-## ![image: nagato-weather.png](../nagato-weather/nagato-weather.png) nagato-weather (v42.6.23)
+## ![image: nagato-weather.png](../nagato-weather/nagato-weather.png) nagato-weather (v42.8.23)
 
 + Description : stand alone weather application for NagatoBox
-+ Last Modefied : 2016-10-14
++ Last Modefied : 2017-04-03
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.55)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.7.56)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2017-03-06
++ Last Modefied : 2017-03-09
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-writer.png](../nagato-writer/nagato-writer.png) nagato-writer (v42.7.45)
+## ![image: nagato-writer.png](../nagato-writer/nagato-writer.png) nagato-writer (v42.7.46)
 
 + Description : a markdown editor
-+ Last Modefied : 2017-01-21
++ Last Modefied : 2017-03-27
 
 ## ![image: television.png](../nagato-youtube-view/pictures/icons/television.png) nagato-youtube-view (v42.7.14)
 

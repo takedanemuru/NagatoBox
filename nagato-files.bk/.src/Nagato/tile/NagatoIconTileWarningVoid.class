@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoIconTileWarning
-
-Public Function _OnGetWarningText() As String
-    
-    Return ("File and Directory not found")
-    
-End
