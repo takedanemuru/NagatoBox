@@ -1,0 +1,32 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.2
+Title=nagato-text-one
+Startup=Kyon
+Icon=Picture/icons/document-edit.png
+Version=42.8.19
+Component=gb.args
+Component=gb.image
+Component=gb.qt5
+Component=gb.form
+Component=gb.desktop.x11
+Component=gb.desktop
+Component=gb.settings
+Description="a dead copy of FocusWriter :)"
+Authors="takeda.nemuru@yandex.com"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=takedanemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=http://takedanemuru.github.io/
+License=S.O.S. License
+PackageName=nagato-text-one-42.8.19
+MimeTypes="text/plain"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Editors"
+Categories=ubuntu:"Nagato;Office;Utility"
+Groups=ubuntu:"editors"
+ExtraDependencies=ubuntu:"nkf\t\t"
+ExtraFiles=ubuntu:"nagato-text-one.png\t/usr/share/pixmaps\nnagato-text-one.desktop\t/usr/share/applications\nnagato-text-one-non-fullscreen.desktop\t/usr/share/applications"

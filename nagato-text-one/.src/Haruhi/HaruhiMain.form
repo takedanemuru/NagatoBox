@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Text = ("nagato-text-one")
+  Icon = Picture["Picture/icons/document-edit.png"]
+  Picture = Picture["bg.png"]
+  Border = False
+  FullScreen = True
+  Padding = 48
+  { TextArea TextArea
+    MoveScaled(3,4,58,39)
+  }
+}

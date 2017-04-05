@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoSettingsCore
+
+Public Sub Load(argForm As Form)
+    
+    With argForm
+        .X = Me._$settings["form/x", .X]
+        .Y = Me._$settings["form/y", .Y]
+        .H = Me._$settings["form/h", 600]
+        .W = Me._$settings["form/w", 800]
+    End With
+    
+End
+
+Public Sub Save(argForm As Form)
+    
+    With argForm
+        Me._$settings["form/x"] = .X
+        Me._$settings["form/y"] = .Y
+        Me._$settings["form/h"] = .H
+        Me._$settings["form/w"] = .W
+    End With
+    
+End

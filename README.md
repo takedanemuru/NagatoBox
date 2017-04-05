@@ -2,10 +2,6 @@
 
 a software suite for Openbox3.
 
-## What is this ?
-
-a software suite for openbox3.
-
 ![image: screenshot_2017年04月01日_11：07：04](./readme_extra/screenshot_2017年04月01日_11：07：04.png)
 
 ## Important Notice

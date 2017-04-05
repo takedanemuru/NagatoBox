@@ -1,0 +1,44 @@
+' Gambas class file
+
+Create Static
+
+Property Read Path As String
+Property Read Convert As Boolean
+Property Read NotFullScreen As Boolean
+
+Private $paths As New String[]
+Private $convert As Boolean = False
+Private $notFullScreen As Boolean = False
+
+Public Sub Parse()
+    
+    Args.Begin("usage : ")
+        $convert = Args.Has("c", "--convert", "convert to UTF-8")
+        $notFullScreen = Args.Has("n", "--not-fullscreen", "resizable window")
+    $paths = Args.End()
+    
+End
+
+Private Function Path_Read() As String
+
+    Dim yukiPath As String
+    
+    For Each yukiPath In $paths
+        If Exist(yukiPath) Then Return yukiPath
+    Next
+
+    Return ""
+
+End
+
+Private Function Convert_Read() As Boolean
+
+    Return $convert
+
+End
+
+Private Function NotFullScreen_Read() As Boolean
+
+    Return $notFullScreen
+
+End

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Static
+
+Private Sub convert(argPath As String)
+    
+    Dim yukiSource As String = File.Load(argPath)
+    Dim yukiOutput As String = Conv$(yukiSource, MikuruCharactorCode.CharactorCode, "UTF-8")
+
+    HaruhiPreview.SetText(yukiOutput)
+    HaruhiPreview.Show()
+    
+End
+
+Private Sub doesExist(argPath As String) As Boolean
+    
+    If Exist(argPath) Then Return True
+    Message.Warning(("YUKI.N > Path not found."))
+
+    Return False
+    
+End
+
+Private Sub isUTF8(argPath As String) As Boolean
+    
+    MikuruCharactorCode.Check(argPath)
+    If MikuruCharactorCode.CharactorCode <> "UTF-8" Then Return False
+    Message.Info(("YUKI.N > This file is written in UTF-8"), ("OK"))
+
+    Return True
+    
+End
+
+Public Sub _call(argPath As String)
+    
+    If Not doesExist(argPath) Then Return
+    If isUTF8(argPath) Then Return
+
+    convert(argPath)
+
+End

@@ -1,0 +1,73 @@
+' Gambas class file
+
+Private $settingsHandler As NagatoSettingsHandler
+Private $fileHandler As NagatoFileHandler2
+Private $keyboardHandler As NagatoKeyboardHandler
+Private $contextMenu As NagatoContextMenu 
+
+Public Sub _new()
+    
+    $settingsHandler = New NagatoSettingsHandler(TextArea)
+    $fileHandler = New NagatoFileHandler2(TextArea)
+    $keyboardHandler = New NagatoKeyboardHandler(TextArea) As "TFEI"
+    $contextMenu = New NagatoContextMenu As "TFEI" 
+    Application.MainWindow = Me
+    
+End
+
+Public Sub ShowNonFullscreenMode()
+    
+    Me.FullScreen = False
+    Me.Border = True
+    NagatoSettingsForm.Load(Me)
+    
+    Me.Show()
+    
+End
+
+Public Sub Form_Close()
+    
+    If $fileHandler.Quit() Then
+        If Not Me.FullScreen Then NagatoSettingsForm.Save(Me)
+        Message("YUKI.N > See you...", ("OK"))
+    Else
+        Stop Event
+    End If
+    
+End
+
+Public Sub Form_Resize()
+
+    With TextArea
+        .X = 30
+        .Y = 30
+        .W = Me.W - 60
+        .H = Me.H - 60
+    End With
+
+End
+
+Public Sub Form_Menu()
+
+    $contextMenu.PopUp()
+
+End
+
+Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileNew
+            $fileHandler.New()
+        Case MikuruSignal.FileSave
+            $fileHandler.Save()
+        Case MikuruSignal.FileOpen
+            $fileHandler.Open()
+        Case MikuruSignal.FileRecent
+            $fileHandler.OpenRecent(argValues[0])
+        Case MikuruSignal.FileSaveAs
+            $fileHandler.SaveAs()
+        Case MikuruSignal.ApplicationQuit
+            Me.Close()
+    End Select
+    
+End

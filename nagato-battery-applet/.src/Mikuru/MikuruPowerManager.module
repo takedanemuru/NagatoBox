@@ -4,8 +4,6 @@ Private $devices As New NagatoDevices
 
 Public Sub GetStatus() As String
     
-    Debug $devices.Percentage
-    
     Return $devices.Percentage
     
 End
@@ -25,4 +23,3 @@ Public Sub Activate()
     
     
 End
-

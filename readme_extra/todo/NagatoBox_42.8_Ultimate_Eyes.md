@@ -1,17 +1,28 @@
 # NagatoBox 42.8 Ultimate Eyes
 
 until end of june (Planning and preparing until 15th March)
+
 check fixed windows
 
 ## Studies
 
 + Polkit Authority scripts (pygi) 
-+ webdav/remoevable media mounting integration.
-+ New Desgn for Config Dialog
++ webdav/removable media mounting integration.
++ New Design for Config Dialog
 
 ![image: screenshot_2017年04月03日_12：24：04](../screenshot_2017年04月03日_12：24：04.png)
 
+## Urgent
+
++ nagato-desktop : solve panel refresh conflict.
++ nagato-map : check web api for weather forecast. now can get per hour weather forecast
++ nagato-player-x : fix album art mode window size.
+
 ## Applications
+
+### nagato-battery-applet
+
++ add menus for quit, about and configs.
 
 ### nagato-color-picker
 
@@ -33,14 +44,35 @@ check fixed windows
 
 + new : about dialog
 
+### nagato-map
+
++ version bump halt
++ IMPORTANT : check weather forecast API. Now can show per hour forecast.
+
 ### nagato-notifications
 
 + icon capabilities.
+
+### nagato-openbox-menu
+
++ file directory menu ?
 
 ### nagato-osd 
 
 + settings for SystemMonitor
 + settings for RSS feeder
+
+### nagato-taskmanager
+
++ more love for network functionalities.
+
+### nagato-trashbin-applet
+
++ new systray applet to handle trashes
+
+## Merge
+
++ ~~merge nagato-text, nagato-text-editor and nagato-text converter into nagato-text-one~~
 
 ## Deprecate
 

@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Sub Main()
+    
+    NagatoArgs.Parse()
+    
+    If NagatoArgs.Convert Then
+        NagatoConverter()
+    Else If NagatoArgs.NotFullScreen Then
+        HaruhiMain.ShowNonFullscreenMode()
+    Else
+        HaruhiMain.Show()
+    Endif
+    
+End
+
