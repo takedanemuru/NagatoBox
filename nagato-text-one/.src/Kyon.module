@@ -1,8 +1,14 @@
 ' Gambas module file
 
-Public Sub Main()
+Private Sub testSequence()
     
-    NagatoArgs.Parse()
+    'NagatoConverter()
+    HaruhiMain.ShowNonFullscreenMode()
+    'HaruhiMain.Show()
+    
+End
+
+Private Sub normalSequence()
     
     If NagatoArgs.Convert Then
         NagatoConverter()
@@ -11,6 +17,14 @@ Public Sub Main()
     Else
         HaruhiMain.Show()
     Endif
+    
+End
+
+Public Sub Main()
+    
+    NagatoArgs.Parse()
+    'testSequence()
+    normalSequence()
     
 End
 

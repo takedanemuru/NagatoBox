@@ -14,8 +14,8 @@ check fixed windows
 
 ## Urgent
 
-+ nagato-desktop : solve panel refresh conflict.
-+ nagato-map : check web api for weather forecast. now can get per hour weather forecast
++ ~~nagato-desktop : solve panel refresh conflict.~~
++ ~~nagato-map : check web api for weather forecast. now can get per hour weather forecast~~ (update api to 1.9)
 + nagato-player-x : fix album art mode window size.
 
 ## Applications
@@ -46,8 +46,8 @@ check fixed windows
 
 ### nagato-map
 
-+ version bump halt
-+ IMPORTANT : check weather forecast API. Now can show per hour forecast.
++ ~~version bump hault~~
++ ~~IMPORTANT : check weather forecast API. Now can show per hour forecast.~~
 
 ### nagato-notifications
 

@@ -1,0 +1,15 @@
+' Gambas class file
+
+Public Sub Form_Open()
+
+    NagatoSearchAndReplacementSignal.RaiseOpened()
+
+End
+
+Public Sub SearchButtons_Click()
+
+    If FindBox.Text = "" Then Return
+
+    NagatoSearchAndReplacementSignal.RaiseQuery(Last.Tag, [FindBox.Text, ReplacementBox.Text])
+
+End

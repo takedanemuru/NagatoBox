@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoTextAreaSearchCore
+
+Private Function getStartFrom(argQuery As String) As Integer
+    
+    Return String.Len(Left$(Me._$widget.Text, Me._$widget.Pos)) - (String.Len(argQuery))
+    
+End
+
+Private Function getCurrentPositionInUTF8Back(argQuery As String) As Integer 
+    
+    Dim yukiPosition As Integer = String.RInStr(Me._$widget.Text, argQuery, getStartFrom(argQuery), gb.IgnoreCase)
+
+    If yukiPosition <> 0 Then 
+        Return yukiPosition - 1
+    Else
+        Return String.RInStr(Me._$widget.Text, argQuery, String.Len(Me._$widget.Text), gb.IgnoreCase) - 1
+    End If
+    
+End
+
+Public Sub _call(argText As String)
+    
+    Dim yukiStartPosition As Integer = getCurrentPositionInUTF8Back(argText)
+    
+    If yukiStartPosition <> -1 Then Me._$widget.Select(yukiStartPosition, String.Len(argText))
+    
+End

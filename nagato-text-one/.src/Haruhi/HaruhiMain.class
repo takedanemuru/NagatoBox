@@ -4,6 +4,7 @@ Private $settingsHandler As NagatoSettingsHandler
 Private $fileHandler As NagatoFileHandler2
 Private $keyboardHandler As NagatoKeyboardHandler
 Private $contextMenu As NagatoContextMenu 
+Private $searchAndReplace As NagatoTextAreaSearchAndReplace
 
 Public Sub _new()
     
@@ -11,6 +12,7 @@ Public Sub _new()
     $fileHandler = New NagatoFileHandler2(TextArea)
     $keyboardHandler = New NagatoKeyboardHandler(TextArea) As "TFEI"
     $contextMenu = New NagatoContextMenu As "TFEI" 
+    $searchAndReplace = New NagatoTextAreaSearchAndReplace(TextArea)
     Application.MainWindow = Me
     
 End
@@ -37,6 +39,8 @@ Public Sub Form_Close()
 End
 
 Public Sub Form_Resize()
+
+    If Me.FullScreen Then Return
 
     With TextArea
         .X = 30
@@ -66,6 +70,8 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
             $fileHandler.OpenRecent(argValues[0])
         Case MikuruSignal.FileSaveAs
             $fileHandler.SaveAs()
+        Case MikuruSignal.EditSearchAndReplace
+            HaruhiReplacement.ShowDialog()
         Case MikuruSignal.ApplicationQuit
             Me.Close()
     End Select

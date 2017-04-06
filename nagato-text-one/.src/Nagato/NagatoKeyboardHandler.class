@@ -15,6 +15,8 @@ Private Sub keyPressWithControl(argKeyCode As Integer)
     If argKeyCode = Key["n"] Then Raise Signal(MikuruSignal.FileNew, Null)
     If argKeyCode = Key["o"] Then Raise Signal(MikuruSignal.FileOpen, Null)
     If argKeyCode = Key["s"] Then Raise Signal(MikuruSignal.FileSave, Null)
+    If argKeyCode = Key["f"] Then Raise Signal(MikuruSignal.EditSearchAndReplace, Null)
+    If argKeyCode = Key["r"] Then Raise Signal(MikuruSignal.EditSearchAndReplace, Null)
     If argKeyCode = Key["h"] Then HaruhiAbout.ShowDialog()
     If argKeyCode = Key["q"] Then Raise Signal(MikuruSignal.ApplicationQuit, Null)
     

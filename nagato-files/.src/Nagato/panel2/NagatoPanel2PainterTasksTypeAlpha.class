@@ -66,6 +66,9 @@ Private Sub paintTask(argWindowIndex As Integer)
     Me._PaintText(yukiDesktopWindow, yukiRect)
     Paint.Fill()
     
+Catch ' to avoid null yukiDesktopWindow
+    Debug Error.Text
+    
 End
 
 Public Sub _OnLeftClick(argX As Integer)
