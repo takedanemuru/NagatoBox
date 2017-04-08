@@ -4,16 +4,20 @@ Inherits NagatoGroup
 
 Private $theme As NagatoContainerComboBoxTheme
 Private $applyButton As NagatoContainerApplyButton
+Private $fontName As NagatoContainerComboBoxFontName
+Private $fontSize As NagatoContainerSliderBoxFontSize
+Private $icon As NagatoContainerComboBoxIcon
+Private $cursor As NagatoContainerComboBoxCursor
 
 Public Sub _OnInitializeContainers(argContainer As Container)
     
     Object.New("NagatoContainerLabelAppearance", [argContainer])
         Object.New("NagatoContainer", [argContainer])
     $theme = New NagatoContainerComboBoxTheme(argContainer) As "Container"
-    Object.New("NagatoContainerComboBoxFontName", [argContainer])
-    Object.New("NagatoContainerSliderBoxFontSize", [argContainer])
-    Object.New("NagatoContainerComboBoxIcon", [argContainer])
-    Object.New("NagatoContainerComboBoxCursor", [argContainer])
+    $fontName = New NagatoContainerComboBoxFontName(argContainer) As "Container"
+    $fontSize = New NagatoContainerSliderBoxFontSize(argContainer) As "Container"
+    $icon = New NagatoContainerComboBoxIcon(argContainer) As "Container"
+    $cursor = New NagatoContainerComboBoxCursor(argContainer) As "Container"
         Object.New("NagatoContainer", [argContainer])
     $applyButton = New NagatoContainerApplyButton(argContainer) As "Container"
     

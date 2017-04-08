@@ -5,7 +5,6 @@ Create Static
 Property Read Status As Integer
 Property Read ThemesList As String[]
 Property Read WidgetTheme As String
-Property Read WidgetThemeMatched As Boolean
 Property Read IsThemeUnified As Boolean
 Property Read IconTheme As String
 Property Read CursorTheme As String
@@ -41,12 +40,6 @@ Private Function WidgetTheme_Read() As String
     
     Return $configGtk.WidgetTheme
     
-End
-
-Private Function WidgetThemeMatched_Read() As Boolean
-
-    Return $configGtk.WidgetThemeMatched
-
 End
 
 Private Function IsThemeUnified_Read() As Boolean

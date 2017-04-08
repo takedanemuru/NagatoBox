@@ -2,14 +2,20 @@
 
 Inherits NagatoContainerSliderBox
 
-Public Sub _OnGetLabelText() As String
+Public Sub _OnChangeProperty()
     
-    Return "Font : Size"
+    NagatoInterimStatus.SetFontSize(Me._$sliderBox.Value)
     
 End
 
 Public Sub _OnGetValue() As Integer
     
     Return Application.Font.Size
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Font : Size"
     
 End

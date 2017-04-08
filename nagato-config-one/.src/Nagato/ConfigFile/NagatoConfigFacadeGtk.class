@@ -1,7 +1,6 @@
 ' Gambas class file
 
 Property Read WidgetTheme As String
-Property Read WidgetThemeMatched As Boolean
 Property Read IconTheme As String
 Property Read CursorTheme As String
 
@@ -13,14 +12,6 @@ Private Sub ensureGtkCssFile()
     Dim yukiPath As String = Desktop.ConfigDir &/ "gtk-3.0" &/ "gtk.css"
     
     If Not Exist(yukiPath) Then File.Save(yukiPath, File.Load("ConfigFiles/gtk.css"))
-    
-End
-
-Private Function isThemesMatched() As Boolean
-    
-    If ($configGtk2["", "gtk-theme-name"] <> $configGtk3["Settings", "gtk-theme-name"]) Then Return False
-
-    Return True
     
 End
 
@@ -73,14 +64,8 @@ Private Function IconTheme_Read() As String
 
 End
 
-Private Function WidgetThemeMatched_Read() As Boolean
-
-    Return isThemesMatched()
-
-End
-
 Private Function WidgetTheme_Read() As String
 
-    Return IIf(isThemesMatched(), $configGtk2["", "gtk-theme-name"], Null)
+    Return $configGtk2["", "gtk-theme-name"] 
 
 End

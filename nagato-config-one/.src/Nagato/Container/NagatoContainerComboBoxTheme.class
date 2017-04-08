@@ -14,7 +14,7 @@ Public Sub _SetList()
     
 End
 
-Public Sub _OnComboBoxClick()
+Public Sub _OnChangeProperty()
     
     NagatoInterimStatus.WidgetTheme = Me._$comboBox.Current.Text
     

@@ -8,9 +8,7 @@ check fixed windows
 
 + Polkit Authority scripts (pygi) 
 + webdav/removable media mounting integration.
-+ New Design for Config Dialog
-
-![image: screenshot_2017年04月03日_12：24：04](../screenshot_2017年04月03日_12：24：04.png)
++ ~~New Design for Config Dialog~~
 
 ## Urgent
 
@@ -29,9 +27,11 @@ check fixed windows
 + add star button
 + about dialog
 
-### nagato-confi-one
+### nagato-config-one
 
 + new app
+
+![image: screenshot_2017年04月08日_19：33：04](../images/screenshot_2017年04月08日_19：33：04.png)
 
 ### nagato-files
 

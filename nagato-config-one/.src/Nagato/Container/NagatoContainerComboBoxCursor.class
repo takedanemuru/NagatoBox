@@ -18,6 +18,12 @@ Public Sub _SetList()
     
 End
 
+Public Sub _OnChangeProperty()
+    
+    NagatoInterimStatus.CursorTheme = Me._$comboBox.Current.Text
+    
+End
+
 Public Sub _OnGetLabelText() As String
     
     Return "Cursor"

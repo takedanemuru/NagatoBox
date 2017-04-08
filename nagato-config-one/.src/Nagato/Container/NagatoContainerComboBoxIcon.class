@@ -18,6 +18,12 @@ Public Sub _SetList()
     
 End
 
+Public Sub _OnChangeProperty()
+    
+    NagatoInterimStatus.IconTheme = Me._$comboBox.Current.Text
+    
+End
+
 Public Function _OnGetBackgroundColor() As Integer
     
     Return Color.White + Color.Transparent * 128

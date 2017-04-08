@@ -56,10 +56,9 @@ Public Sub _put(argValue As String, argGroup As String, argKey As String)
     Dim yukiFlag As Boolean = False
     
     For Each yukiGroup In $groups
-        If yukiGroup.GroupName = argGroup Then
-            yukiGroup[argKey] = argValue
-            yukiFlag = True
-        Endif
+        If yukiGroup.GroupName <> argGroup Then Continue
+        yukiGroup[argKey] = argValue
+        yukiFlag = True
     Next
     
     If yukiFlag Then File.Save($path, getAll())
@@ -69,7 +68,7 @@ End
 Public Sub _new(argPath As String, argUnquote As Boolean)
     
     $path = argPath
-     Me._$unquote = argUnquote
+    Me._$unquote = argUnquote
     
     setGroups()
     
