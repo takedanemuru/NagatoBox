@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoContainerComboBox
+
+Public Sub _SetList() 
+    
+    Dim yukiFontName As String
+    
+    For Each yukiFontName In Fonts
+        Me._$comboBox.Add(yukiFontName)
+        If Not (yukiFontName == Application.Font.Name) Then Continue
+        Me._$comboBox.Index = Me._$comboBox.Count - 1
+    Next
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Font : Name"
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 128
+    
+End

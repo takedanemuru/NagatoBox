@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Public _$comboBox As ComboBox 
+
+Public Sub _SetList()
+    
+    
+    
+End
+
+Public Sub _OnComboBoxClick()
+    
+    
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 192
+    
+End
+
+Public Sub _OnGetForegroundColor() As Integer
+    
+    Return Color.Gray
+    
+End
+
+Public Sub _OptionalOnInitializeValueWidget()
+    
+    Me._$comboBox = New ComboBox(Me._$hbox) As "ComboBox"
+    
+    With Me._$comboBox
+        .Expand = True
+        .ReadOnly = True
+    End With
+    
+    Me._SetList()
+    
+End
+
+Public Sub ComboBox_Click()
+    
+    Raise Signal(MikuruSignal.PropertyChanged, Null)
+    
+    Me._OnComboBoxClick()
+    
+End

@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Public _$sliderBox As SliderBox
+
+Public Sub _OnGetValue() As Integer
+    
+    Return 0
+    
+End
+
+Public Sub _OptionalOnInitializeValueWidget()
+    
+    Me._$sliderBox = New SliderBox(Me._$hbox) As "SliderBox"
+    
+    With Me._$sliderBox
+        .Expand = True
+        .Value = Me._OnGetValue()
+    End With
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 226
+    
+End
+
+Public Sub _OnGetForegroundColor() As Integer
+    
+    Return Color.Gray
+    
+End

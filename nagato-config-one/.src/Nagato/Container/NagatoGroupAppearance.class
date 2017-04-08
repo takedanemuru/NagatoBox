@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoGroup
+
+Private $theme As NagatoContainerComboBoxTheme
+Private $applyButton As NagatoContainerApplyButton
+
+Public Sub _OnInitializeContainers(argContainer As Container)
+    
+    Object.New("NagatoContainerLabelAppearance", [argContainer])
+        Object.New("NagatoContainer", [argContainer])
+    $theme = New NagatoContainerComboBoxTheme(argContainer) As "Container"
+    Object.New("NagatoContainerComboBoxFontName", [argContainer])
+    Object.New("NagatoContainerSliderBoxFontSize", [argContainer])
+    Object.New("NagatoContainerComboBoxIcon", [argContainer])
+    Object.New("NagatoContainerComboBoxCursor", [argContainer])
+        Object.New("NagatoContainer", [argContainer])
+    $applyButton = New NagatoContainerApplyButton(argContainer) As "Container"
+    
+End
+
+Public Sub Container_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.PropertyChanged
+            $applyButton.Enable()
+        Case MikuruSignal.GoToMain
+            NagatoInterimStatus.Reset()
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End

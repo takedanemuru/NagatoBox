@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoContainerLabel
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 192
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Appearance" 
+    
+End

@@ -1,0 +1,16 @@
+' Gambas module file
+
+Property Read Unit As Integer
+Property Read ButtonWidth As Integer
+
+Private Function Unit_Read() As Integer
+
+    Return 50
+
+End
+
+Private Function ButtonWidth_Read() As Integer
+
+    Return 1.5 * Me.Unit
+
+End

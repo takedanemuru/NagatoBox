@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Public _$button As Button
+
+Public Sub _OnButtonClick()
+    
+    
+    
+End
+
+Public Sub _OptionalOnInitializeValueWidget()
+    
+    Me._$button = New Button(Me._$hbox) As "Button"
+    
+    With Me._$button
+        .Text = ("Go")
+        .AutoResize = True
+    End With
+    
+End
+
+Public Sub Button_Click()
+    
+    Me._OnButtonClick()
+    
+End

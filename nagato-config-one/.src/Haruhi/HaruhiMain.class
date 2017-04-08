@@ -1,0 +1,48 @@
+' Gambas class file
+
+Private $group As Object
+
+Public Sub initializeVBox()
+    
+    With VBox1
+        .Background = Color.Transparent 
+        .W = 8 * MikuruUX.Unit
+    End With
+    
+End
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    initializeVBox()
+    $group = New NagatoGroupMain(VBox1) As "Group"
+
+End
+
+Public Sub Form_Resize()
+    
+    With VBox1
+        .X = Max(1 * MikuruUX.Unit, (Me.W - .W) / 2)
+        .Y = Max(1 * MikuruUX.Unit, (Me.H - .H) / 2)
+    End With
+    
+End
+
+Public Sub Form_MouseWheel()
+    
+    VBox1.Y = Min(VBox1.Y + Mouse.Delta * 10, 1 * MikuruUX.Unit)
+    
+End
+
+Public Sub Group_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.GoToMain
+            $group = New NagatoGroupMain(VBox1) As "Group"
+        Case MikuruSignal.GoToAppearance
+            $group = New NagatoGroupAppearance(VBox1) As "Group"
+    End Select
+    
+    Me.Form_Resize()
+    
+End

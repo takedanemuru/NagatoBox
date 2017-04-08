@@ -1,0 +1,9 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Public Sub _OnGetTextAlignment() As Integer
+    
+    Return Align.Center
+    
+End

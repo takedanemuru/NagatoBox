@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoGroup
+
+Private $appearance As NagatoContainerButtonGoToAppearance
+Private $screenLocker As NagatoContainerButtonGoToScreenLocker
+
+Public Sub _OnInitializeContainers(argContainer As Container)
+    
+    Object.New("NagatoContainerLabelMain", [argContainer])
+        Object.New("NagatoContainer", [argContainer])
+    $appearance = New NagatoContainerButtonGoToAppearance(argContainer) As "TFEI"
+    $screenLocker = New NagatoContainerButtonGoToScreenLocker(argContainer) As "TFEI"
+    
+End

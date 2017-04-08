@@ -29,6 +29,10 @@ check fixed windows
 + add star button
 + about dialog
 
+### nagato-confi-one
+
++ new app
+
 ### nagato-files
 
 + show tag symbol in treeview

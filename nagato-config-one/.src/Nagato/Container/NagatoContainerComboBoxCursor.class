@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoContainerComboBox
+
+Private $directories As NagatoDirectoriesCursors
+
+Public Sub _SetList() 
+    
+    Dim yukiPath As String
+    
+    $directories = New NagatoDirectoriesCursors
+    
+    For Each yukiPath In $directories.Directories
+        Me._$comboBox.Add(File.Name(yukiPath))
+        If Not (File.Name(yukiPath) == NagatoConfigFacade.CursorTheme) Then Continue
+        Me._$comboBox.Index = Me._$comboBox.Count - 1
+    Next
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Cursor"
+    
+End

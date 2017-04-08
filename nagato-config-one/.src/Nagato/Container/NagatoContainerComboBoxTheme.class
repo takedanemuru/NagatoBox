@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoContainerComboBox
+
+Public Sub _SetList() 
+    
+    Dim yukiTheme As String
+    
+    For Each yukiTheme In NagatoConfigFacade.ThemesList
+        Me._$comboBox.Add(yukiTheme)
+        If Not (NagatoConfigFacade.WidgetTheme == yukiTheme) Then Continue
+        Me._$comboBox.Index = Me._$comboBox.Count - 1
+    Next
+    
+End
+
+Public Sub _OnComboBoxClick()
+    
+    NagatoInterimStatus.WidgetTheme = Me._$comboBox.Current.Text
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "GTK+2/3 Theme"
+    
+End

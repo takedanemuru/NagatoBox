@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public Sub _OnInitializeContainers(argContainer As Container)
+    
+    
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    argContainer.Children.Clear()
+    Me._OnInitializeContainers(argContainer)
+    argContainer.H = argContainer.Children.Count * MikuruUX.Unit
+    
+End

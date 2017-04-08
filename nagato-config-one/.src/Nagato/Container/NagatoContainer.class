@@ -1,0 +1,81 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$container As Container
+Public _$hbox As HBox
+Public _$textLabel As TextLabel
+
+Event Change(argNewValue As Variant)
+
+Public Sub _AddHBox()
+    
+    Me._$hbox = New HBox(Me._$container)
+    
+    With Me._$hbox
+        .H = 1 * MikuruUX.Unit
+        .Background = Me._OnGetBackgroundColor()
+        .Padding = 8
+    End With
+    
+End
+
+Public Sub _AddTextLabel()
+    
+    Me._$textLabel = New TextLabel(Me._$hbox)
+    
+    With Me._$textLabel
+        .Text = Me._OnGetLabelText()
+        .Expand = True
+        .Foreground = Me._OnGetForegroundColor()
+        .Font.Bold = True
+        .Alignment = Me._OnGetTextAlignment()
+        .Padding = 8
+    End With
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.Transparent 
+    
+End
+
+Public Sub _OnGetForegroundColor() As Integer
+    
+    Return Color.Gray
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "" ' dummy data
+    
+End
+
+Public Sub _OnGetTextAlignment() As Integer
+    
+    Return Align.Left
+    
+End
+
+Public Sub _OptionalOnInitializeValueWidget()
+    
+    
+    
+End
+
+Public Sub _OnInitializeWidgets()
+    
+    Me._AddTextLabel()
+    Me._OptionalOnInitializeValueWidget()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Me._AddHBox()
+    Me._OnInitializeWidgets()
+    
+End

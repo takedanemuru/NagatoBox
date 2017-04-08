@@ -1,0 +1,80 @@
+' Gambas class file
+
+Create Static
+
+Property Read Status As Integer
+Property Read ThemesList As String[]
+Property Read WidgetTheme As String
+Property Read WidgetThemeMatched As Boolean
+Property Read IsThemeUnified As Boolean
+Property Read IconTheme As String
+Property Read CursorTheme As String
+
+Private $themes As NagatoThemes
+Private $configGtk As NagatoConfigFacadeGtk
+Private $configQt As NagatoConfigFile
+
+Public Sub Set()
+    
+    $configGtk.Set()
+    $configQt["Qt", "style"] = "GTK+"
+    
+    Message.Info("YUKI.N > It's done.", ("OK"))
+    
+End
+
+Public Sub _new()
+    
+    $themes = New NagatoThemes
+    $configGtk = New NagatoConfigFacadeGtk
+    $configQt = New NagatoConfigFile(Desktop.ConfigDir &/ "Trolltech.conf", True)
+    
+End
+
+Private Function ThemesList_Read() As String[]
+
+    Return $themes.List
+
+End
+
+Private Function WidgetTheme_Read() As String
+    
+    Return $configGtk.WidgetTheme
+    
+End
+
+Private Function WidgetThemeMatched_Read() As Boolean
+
+    Return $configGtk.WidgetThemeMatched
+
+End
+
+Private Function IsThemeUnified_Read() As Boolean
+
+    Return ($configQt["Qt", "style"] = "GTK+")
+
+End
+
+Private Function Status_Read() As Integer
+
+    If $themes.Count = 0 Then
+        Return MikuruConfig.NotFound
+    Else If $configGtk.WidgetThemeMatched Then
+        Return MikuruConfig.Matched
+    Else
+        Return MikuruConfig.NotMatched
+    Endif
+    
+End
+
+Private Function IconTheme_Read() As String
+
+    Return $configGtk.IconTheme
+
+End
+
+Private Function CursorTheme_Read() As String
+
+    Return $configGtk.CursorTheme
+
+End

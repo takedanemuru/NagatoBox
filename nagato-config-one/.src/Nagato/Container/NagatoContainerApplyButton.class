@@ -1,0 +1,61 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Private $backButton As Button
+Private $applyButton As Button
+
+Private Sub addBackButton()
+    
+    $backButton = New Button(Me._$hbox) As "BackButton"
+    
+    With $backButton
+        .Text = ("Back To Main")
+        .AutoResize = True
+    End With
+    
+End
+
+Private Sub addApplyButton()
+    
+    $applyButton = New Button(Me._$hbox) As "ApplyButton"
+    
+    With $applyButton
+        .Text = ("Apply")
+        .AutoResize = True
+        .Enabled = False
+    End With
+    
+End
+
+Public Sub _OnInitializeWidgets()
+    
+    addBackButton()
+    Me._AddTextLabel()
+    addApplyButton()
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 192
+    
+End
+
+Public Sub Enable()
+    
+    $applyButton.Enabled = True
+    
+End
+
+Public Sub ApplyButton_Click()
+    
+    NagatoConfigFacade.Set()
+    
+End
+
+Public Sub BackButton_Click()
+    
+    Raise Signal(MikuruSignal.GoToMain, Null)
+    
+End

@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoContainerSliderBox
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Font : Size"
+    
+End
+
+Public Sub _OnGetValue() As Integer
+    
+    Return Application.Font.Size
+    
+End
