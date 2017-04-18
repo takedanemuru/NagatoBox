@@ -36,11 +36,19 @@ Private Sub setFontName()
     
 End
 
+Private Sub setCursorTheme()
+    
+    $configGtk2["", "gtk-cursor-theme-name"] = NagatoInterimStatus.CursorTheme
+    $configGtk3["Settings", "gtk-cursor-theme-name"] = NagatoInterimStatus.CursorTheme
+    
+End
+
 Public Sub Set()
     
     If NagatoInterimStatus.WidgetTheme Then setWidgetTheme()
     If NagatoInterimStatus.IconTheme Then setIconTheme()
     If NagatoInterimStatus.FontName Then setFontName()
+    If NagatoInterimStatus.CursorTheme Then setCursorTheme()
     
 End
 

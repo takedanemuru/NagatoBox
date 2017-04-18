@@ -28,6 +28,8 @@ Public Sub Container_Signal(argSignal As Integer, argValues As Variant[])
     Select Case argSignal
         Case MikuruSignal.PropertyChanged
             $applyButton.Enable()
+        Case MikuruSignal.PropertyApplyChanges
+            NagatoConfigFacade.Set()
         Case MikuruSignal.GoToMain
             NagatoInterimStatus.Reset()
             Raise Signal(argSignal, argValues)

@@ -1,0 +1,20 @@
+' Gambas module file
+
+Property Read Keys As String[]
+
+Private Function Keys_Read() As String[]
+
+    Dim yukiKeys As New String[]
+
+    yukiKeys.Add("DESKTOP")
+    yukiKeys.Add("DOCUMENTS")
+    yukiKeys.Add("DOWNLOAD")
+    yukiKeys.Add("MUSIC")
+    yukiKeys.Add("PICTURES")
+    yukiKeys.Add("PUBLICSHARE")
+    yukiKeys.Add("TEMPLATES")
+    yukiKeys.Add("VIDEOS")
+
+    Return yukiKeys
+
+End

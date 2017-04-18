@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $buttonBoxes As New NagatoContainerButtonBoxXdgUserDirs[]
+Private $color1 As Integer = 128
+Private $color2 As Integer = 192
+
+Private Sub getColor() As Integer
+    
+    Swap $color1, $color2
+    
+    Return $color1
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    Dim yukiButtonBox As NagatoContainerButtonBoxXdgUserDirs
+    Dim yukiKey As String
+    
+    For Each yukiKey In MikuruDesktop.Keys
+        yukiButtonBox = New NagatoContainerButtonBoxXdgUserDirs(argContainer, [yukiKey, getColor()]) As "TFEI"
+        $buttonBoxes.Add(yukiButtonBox)
+    Next
+    
+End
+
+Public Sub Apply()
+    
+    Dim yukiButtonBox As NagatoContainerButtonBoxXdgUserDirs
+    
+    For Each yukiButtonBox In $buttonBoxes
+        yukiButtonBox.Apply()
+    Next
+    
+    Message.Info("YUKI.N > It's done.", ("OK"))
+    
+End

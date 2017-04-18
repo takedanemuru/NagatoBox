@@ -8,9 +8,9 @@ Public Sub _OnChangeProperty()
     
 End
 
-Public Sub _OnGetValue() As Integer
+Public Sub _OnGetDefaultValues() As Integer[]
     
-    Return Application.Font.Size
+    Return [Application.Font.Size, 50, 5] ' Current, Max ,Min
     
 End
 

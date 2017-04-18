@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $hBox As HBox
+Private $fileButtons As NagatoButtonsFile
+
+Private Sub initializeHBox(argParentContainer As Container)
+    
+    $hBox = New HBox(argParentContainer)
+    
+    With $hBox
+        .H = 32
+        .Expand = False
+    End With
+    
+End
+
+Public Sub _new(argParentContainer As Container)
+    
+    initializeHBox(argParentContainer)
+    
+    Object.New("NagatoSpacer", [$hBox])
+    $fileButtons = New NagatoButtonsFile($hBox) As "TFEI"
+    Object.New("NagatoSpacer", [$hBox])
+    
+End

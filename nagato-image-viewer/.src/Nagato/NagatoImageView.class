@@ -1,0 +1,59 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $imageView As ImageView
+Private $pathHandler As NagatoPathHandler 
+Private $zoomHandler As NagatoZoomHandler
+
+Private Sub viewSignals(argSignal As Integer)
+    
+    Select Case argSignal
+        Case MikuruSignal.ViewRotateLeft
+            Try $imageView.Image.RotateLeft()
+        Case MikuruSignal.ViewRotateRight
+            Try $imageView.Image.RotateRight()
+    End Select
+    
+    If Not Error Then $imageView.Refresh()
+
+End
+
+Public Sub _OnCallMain(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileNone To MikuruSignal.FileNone + 999
+            $pathHandler(argSignal, argValues)
+        Case MikuruSignal.ViewNone To MikuruSignal.ViewNone + 999
+            viewSignals(argSignal)
+        Case MikuruSignal.ZoomNone To MikuruSignal.ZoomNone + 999
+            $zoomHandler(argSignal, argValues)
+     End Select
+    
+End
+
+Public Sub _new(argParentContainer As Container)
+    
+    $imageView = New ImageView(argParentContainer)
+    
+    With $imageView
+        .Expand = True
+        Try .Image = Image.Load(NagatoArgs.Path)
+    End With
+    
+    $pathHandler = New NagatoPathHandler As "PathHandler"
+    $zoomHandler = New NagatoZoomHandler($imageView)
+    
+End
+
+Public Sub PathHandler_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.FileNew
+            Try $imageView.Update(Image.Load(argValues[0]))
+            If Error Then Return
+            $zoomHandler.TryFitImage()
+            HaruhiMain.Title = Subst("&1 (&2x&3)", File.Name(argValues[0]), $imageView.Image.W, $imageView.Image.H)
+    End Select
+    
+End

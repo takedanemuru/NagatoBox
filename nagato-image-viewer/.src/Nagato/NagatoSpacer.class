@@ -1,0 +1,13 @@
+' Gambas class file
+
+Private $panel As Panel
+
+Public Sub _new(argContainer As Container)
+    
+    $panel = New Panel(argContainer)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End

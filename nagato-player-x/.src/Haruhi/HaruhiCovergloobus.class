@@ -15,7 +15,7 @@ Public Sub Form_Open()
     Me.Title = " "
     Me.Resizable = False
     
-    $painter = New NagatoPainterGloobus(Me)
+    $painter = New NagatoPainterGloobus(DrawingArea1)
     $observer = New Observer(NagatoBroadcast) As "Asakura"
     
     NagatoSettingsForm.LoadGloobusForm(Me)

@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoGroup
+
+Private $xdgUserDirsButtons As NagatoXdgUserDirsButtons
+Private $applyButton As NagatoContainerApplyButton
+
+Public Sub _OnInitializeContainers(argContainer As Container)
+    
+    Object.New("NagatoContainerLabelXdgUserDirs", [argContainer])
+        Object.New("NagatoContainer", [argContainer])
+    $xdgUserDirsButtons = New NagatoXdgUserDirsButtons(argContainer) As "Container"
+        Object.New("NagatoContainer", [argContainer])
+    $applyButton = New NagatoContainerApplyButton(argContainer) As "Container"
+
+End
+
+Public Sub Container_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.PropertyChanged
+            $applyButton.Enable()
+        Case MikuruSignal.PropertyApplyChanges
+            $xdgUserDirsButtons.Apply()
+        Case MikuruSignal.GoToMain
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End

@@ -1,0 +1,42 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Public _$buttonBox As ButtonBox
+
+Public Sub _OnButtonBoxClick()
+    
+    
+    
+End
+
+Public Sub _OnGetIcon() As Picture
+    
+    Return Null ' dummy
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Return "" ' dummy
+    
+End
+
+Public Sub _OptionalOnInitializeValueWidget()
+    
+    Me._$buttonBox = New ButtonBox(Me._$hbox) As "ButtonBox"
+    
+    With Me._$buttonBox
+        .Text = Me._OnGetText()
+        .Picture = Me._OnGetIcon()
+        .Expand = True
+        .ReadOnly = True
+    End With
+    
+End
+
+Public Sub ButtonBox_Click()
+    
+    Me._OnButtonBoxClick()
+    
+End

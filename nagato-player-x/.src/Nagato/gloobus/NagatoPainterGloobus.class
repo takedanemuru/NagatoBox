@@ -1,6 +1,7 @@
 ' Gambas class file
 
 Private $drawingArea As DrawingArea
+Private $observer As Observer
 Private $coverArt As New NagatoPainterGloobusCoverArt
 Private $textMain As New NagatoPainterGloobusTextMain
 Private $widgets As New NagatoPainterGloobusWidgets
@@ -18,11 +19,12 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
     
 End
 
-Public Sub _new(argContainer As Container)
+Public Sub _new(argDrawinArea As DrawingArea)
     
     $coverArt.ResetCoverArt()
-    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    $drawingArea = argDrawinArea
     $drawingArea.Tracking = True
+    $observer = New Observer($drawingArea) As "DrawingArea"
     $mouseTracker = New NagatoGloobusMouseTracker($drawingArea) As "MouseTracker"
     
 End

@@ -50,7 +50,7 @@ End
 
 Public Sub ApplyButton_Click()
     
-    NagatoConfigFacade.Set()
+    Raise Signal(MikuruSignal.PropertyApplyChanges, Null)
     
 End
 

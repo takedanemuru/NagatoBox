@@ -71,6 +71,12 @@ Public Sub _OptionalOnInitializeValueWidget()
     
 End
 
+Public Sub _OnInitializeOptionalValues(argOptionalValues As Variant[])
+    
+    
+    
+End
+
 Public Sub _OnInitializeWidgets()
     
     Me._AddTextLabel()
@@ -78,9 +84,10 @@ Public Sub _OnInitializeWidgets()
     
 End
 
-Public Sub _new(argContainer As Container)
+Public Sub _new(argContainer As Container, Optional argOptionalValues As Variant[])
     
     Me._$container = argContainer
+    If argOptionalValues Then Me._OnInitializeOptionalValues(argOptionalValues)
     Me._AddHBox()
     Me._OnInitializeWidgets()
     

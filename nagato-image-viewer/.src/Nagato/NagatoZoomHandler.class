@@ -1,0 +1,39 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $imageView As ImageView
+Private $fit As Boolean
+
+Public Sub TryFitImage()
+    
+    If Not $fit Then Return
+    $imageView.Zoom = 1
+    If $imageView.H > $imageView.Image.H And If $imageView.W > $imageView.Image.W Then Return
+    
+    If $fit Then $imageView.ZoomFit()
+    
+End
+
+Public Sub _call(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.ZoomFit
+            Try $imageView.ZoomFit()
+        Case MikuruSignal.ZoomNormal
+            Try $imageView.Zoom = 1
+        Case MikuruSignal.ZoomIn
+            Try $imageView.Zoom *= 1.2
+        Case MikuruSignal.ZoomOut
+            Try $imageView.Zoom *= 0.8
+    End Select
+    
+    If Not Error Then $fit = (argSignal = MikuruSignal.ZoomFit)
+    
+End
+
+Public Sub _new(argImageView As ImageView)
+    
+    $imageView = argImageView
+    
+End

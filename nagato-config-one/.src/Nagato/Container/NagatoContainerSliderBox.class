@@ -4,19 +4,23 @@ Inherits NagatoContainer
 
 Public _$sliderBox As SliderBox
 
-Public Sub _OnGetValue() As Integer
+Public Sub _OnGetDefaultValues() As Integer[]
     
-    Return 0
+    Return [0, 0, 0] ' Current, Max ,Min
     
 End
 
 Public Sub _OptionalOnInitializeValueWidget()
     
+    Dim yukiValues As Integer[] = Me._OnGetDefaultValues()
+    
     Me._$sliderBox = New SliderBox(Me._$hbox) As "SliderBox"
     
     With Me._$sliderBox
         .Expand = True
-        .Value = Me._OnGetValue()
+        .Value = yukiValues[0]
+        .MaxValue = yukiValues[1]
+        .MinValue = yukiValues[2]
     End With
     
 End
@@ -24,11 +28,5 @@ End
 Public Function _OnGetBackgroundColor() As Integer
     
     Return Color.White + Color.Transparent * 226
-    
-End
-
-Public Sub _OnGetForegroundColor() As Integer
-    
-    Return Color.Gray
     
 End

@@ -1,0 +1,54 @@
+' Gambas class file
+
+Inherits NagatoContainerButtonBox
+
+Public _$transParency As Integer
+Public _$key As String
+Public _$path As String
+
+Public Sub _OnButtonBoxClick()
+    
+    Dialog.Path = User.Home
+    Dialog.Title = ("Select Directory")
+    If Dialog.SelectDirectory() Then Return
+    If Dialog.Path = Desktop.GetDirectory(Me._$key) Then Return
+    
+    Me._$path = Dialog.Path
+    Me._$buttonBox.Text = Replace(Me._$path, User.Home, "~")
+    
+    Raise Signal(MikuruSignal.PropertyChanged, Null)
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return Me._$key & " : "
+    
+End
+
+Public Sub _OnGetText() As String
+    
+    Return Replace(Desktop.GetDirectory(Me._$key), User.Home, "~")
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * Me._$transParency
+    
+End
+
+Public Sub _OnInitializeOptionalValues(argOptionalValues As Variant[])
+    
+    Me._$key = argOptionalValues[0]
+    Me._$transParency = argOptionalValues[1]
+    
+End
+
+Public Sub Apply()
+    
+    If Me._$path = "" Then Return
+    
+    Exec ["xdg-user-dirs-update", "--set", Me._$key, Me._$path]
+    
+End

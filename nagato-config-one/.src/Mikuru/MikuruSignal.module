@@ -1,4 +1,5 @@
 ' Gambas module file
 
-Public Enum PropertyChanged = 2001
+Public Enum PropertyChanged = 2001, PropertyApplyChanges = 2002
 Public Enum GoToMain = 3001, GoToAppearance = 3002, GoToSceenLocker = 3003
+Public Enum GoToXdgUserDirs = 3004

@@ -1,0 +1,41 @@
+' Gambas class file
+
+Create Static
+
+Property Read Path As String
+
+Private $path As String
+
+Private Sub sanitizePaths(argPaths As String[])
+    
+    Dim yukiPath As String
+    
+    For Each yukiPath In argPaths
+        If Not Exist(yukiPath) Then Continue
+        If DesktopMime.FromFile(yukiPath).Type Not Begins "image" Then Continue
+        $path = yukiPath
+        Return
+    Next
+    
+End
+
+Public Sub Parse()
+    
+    Dim yukiPaths As String[]
+    
+    Args.Begin("Usage : ")
+    
+    yukiPaths = Args.End()
+    
+    If yukiPaths.Count > 0 Then sanitizePaths(yukiPaths)
+    
+End
+
+Private Function Path_Read() As String
+
+    'for testing
+    'Return User.Home &/ "albedo.png" 
+
+    Return $path
+
+End

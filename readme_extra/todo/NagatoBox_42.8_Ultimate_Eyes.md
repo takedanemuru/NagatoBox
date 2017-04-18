@@ -14,7 +14,7 @@ check fixed windows
 
 + ~~nagato-desktop : solve panel refresh conflict.~~
 + ~~nagato-map : check web api for weather forecast. now can get per hour weather forecast~~ (update api to 1.9)
-+ nagato-player-x : fix album art mode window size.
++ ~~nagato-player-x : fix album art mode window size.~~
 
 ## Applications
 
@@ -30,8 +30,12 @@ check fixed windows
 ### nagato-config-one
 
 + new app
++ access to another app config file through Settings.Path. do not integrated into dbus process like dconf or xfconfd.
++ check app instalation with conf file itself. do not check .desktop or any other files.
 
 ![image: screenshot_2017年04月08日_19：33：04](../images/screenshot_2017年04月08日_19：33：04.png)
+
++ ~~new : xdg-usr-dirs configs~~
 
 ### nagato-files
 
@@ -73,6 +77,10 @@ check fixed windows
 ### nagato-trashbin-applet
 
 + new systray applet to handle trashes
+
+### ohana-clock
+
++ ~~check this years bonbori-matsuri date (correct)~~
 
 ## Merge
 
