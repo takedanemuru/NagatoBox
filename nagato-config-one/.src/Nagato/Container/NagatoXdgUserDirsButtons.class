@@ -2,7 +2,7 @@
 
 Inherits NagatoObject
 
-Private $buttonBoxes As New NagatoContainerButtonBoxXdgUserDirs[]
+Private $buttonBoxes As New NagatoButtonBoxXdgUserDirs[]
 Private $color1 As Integer = 128
 Private $color2 As Integer = 192
 
@@ -16,11 +16,11 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    Dim yukiButtonBox As NagatoContainerButtonBoxXdgUserDirs
+    Dim yukiButtonBox As NagatoButtonBoxXdgUserDirs
     Dim yukiKey As String
     
     For Each yukiKey In MikuruDesktop.Keys
-        yukiButtonBox = New NagatoContainerButtonBoxXdgUserDirs(argContainer, [yukiKey, getColor()]) As "TFEI"
+        yukiButtonBox = New NagatoButtonBoxXdgUserDirs(argContainer, [yukiKey, getColor()]) As "TFEI"
         $buttonBoxes.Add(yukiButtonBox)
     Next
     
@@ -28,7 +28,7 @@ End
 
 Public Sub Apply()
     
-    Dim yukiButtonBox As NagatoContainerButtonBoxXdgUserDirs
+    Dim yukiButtonBox As NagatoButtonBoxXdgUserDirs
     
     For Each yukiButtonBox In $buttonBoxes
         yukiButtonBox.Apply()

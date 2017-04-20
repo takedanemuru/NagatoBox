@@ -1,16 +1,20 @@
 ' Gambas module file
 
-Public Sub Main()
+Private Sub startIdling()
     
-    MikuruArgs.Parsing()
+    Dim yukiCommand As String[] = ["xautolock"]
     
-    'For Testing only
-    'NagatoScreenLocker.Show() 
+    yukiCommand.Insert(["-time", NagatoSettings.ScreenSaverIdleMinute])
+    yukiCommand.Insert(["-locker", Quote$(NagatoSettings.LockerCommand)])
+    
+    Try Exec yukiCommand.Count
+    
+End
+
+Private Sub normalSequence()
     
     If MikuruArgs.StartIdle Then
-        With NagatoSettings
-            Try Exec ["xautolock", "-time", .ScreenSaverIdleMinute, "-locker", Quote$(.LockerCommand)]
-        End With
+        startIdling()
     Else If MikuruArgs.Disable Then
         Try Exec ["xautolock", "-disable"]
     Else If MikuruArgs.Enable Then
@@ -20,5 +24,23 @@ Public Sub Main()
     Else 'no options 
         NagatoScreenLocker.Show()
     End If
+    
+End
+
+Private Sub testSequence()
+    
+    'For Testing only
+    'NagatoScreenLocker.Show() 
+    'HaruhiMain.Show()
+    
+End
+
+Public Sub Main()
+    
+    MikuruArgs.Parsing()
+    If Not Exist(NagatoSettings.Path) Then NagatoSettings.ScreenSaverIdle = 300
+    
+    'testSequence()
+    normalSequence()
     
 End

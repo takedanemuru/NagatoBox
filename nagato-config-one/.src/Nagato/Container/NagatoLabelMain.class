@@ -1,6 +1,6 @@
 ' Gambas class file
 
-Inherits NagatoContainerLabel
+Inherits NagatoLabel
 
 Public Function _OnGetBackgroundColor() As Integer
     
@@ -10,6 +10,6 @@ End
 
 Public Sub _OnGetLabelText() As String
     
-    Return "Xdg User Dirs" 
+    Return "Main" 
     
 End

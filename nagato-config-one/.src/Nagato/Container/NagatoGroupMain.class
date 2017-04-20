@@ -2,16 +2,16 @@
 
 Inherits NagatoGroup
 
-Private $appearance As NagatoContainerButtonGoToAppearance
-Private $screenLocker As NagatoContainerButtonGoToScreenLocker
-Private $xdgUserDirs As NagatoContainerButtonGoToXdgUserDirs
+Private $appearance As NagatoButtonGoToAppearance
+Private $screenLocker As NagatoButtonGoToScreenLocker
+Private $xdgUserDirs As NagatoButtonGoToXdgUserDirs
 
 Public Sub _OnInitializeContainers(argContainer As Container)
     
-    Object.New("NagatoContainerLabelMain", [argContainer])
+    Object.New("NagatoLabelMain", [argContainer])
         Object.New("NagatoContainer", [argContainer])
-    $appearance = New NagatoContainerButtonGoToAppearance(argContainer) As "TFEI"
-    $screenLocker = New NagatoContainerButtonGoToScreenLocker(argContainer) As "TFEI"
-    $xdgUserDirs = New NagatoContainerButtonGoToXdgUserDirs(argContainer) As "TFEI"
+    $appearance = New NagatoButtonGoToAppearance(argContainer) As "TFEI"
+    $screenLocker = New NagatoButtonGoToScreenLocker(argContainer) As "TFEI"
+    $xdgUserDirs = New NagatoButtonGoToXdgUserDirs(argContainer) As "TFEI"
     
 End

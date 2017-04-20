@@ -1,0 +1,25 @@
+' Gambas class file
+
+Inherits NagatoButtonGoTo
+
+Public Sub _OnButtonClick()
+    
+    Raise Signal(MikuruSignal.GoToSceenLocker, Null)
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 128
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    If Exist(Desktop.ConfigDir &/ "gambas3/nagato-screenlocker.conf") Then
+        Return "Screen Locker"
+    Else
+        Return "Screen Idling"
+    End If
+    
+End

@@ -7,7 +7,7 @@ Private $applyButton As NagatoContainerApplyButton
 
 Public Sub _OnInitializeContainers(argContainer As Container)
     
-    Object.New("NagatoContainerLabelXdgUserDirs", [argContainer])
+    Object.New("NagatoLabelXdgUserDirs", [argContainer])
         Object.New("NagatoContainer", [argContainer])
     $xdgUserDirsButtons = New NagatoXdgUserDirsButtons(argContainer) As "Container"
         Object.New("NagatoContainer", [argContainer])

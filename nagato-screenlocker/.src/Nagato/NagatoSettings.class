@@ -5,6 +5,7 @@ Create Static
 Property ScreenSaverIdle As Integer
 Property Read ScreenSaverIdleMinute As Integer
 Property LockerCommand As String
+Property Read Path As String
 
 Private $settings As New Settings
 
@@ -35,5 +36,11 @@ End
 Private Sub LockerCommand_Write(Value As String)
 
     $settings["screensaver/locker_command"] = Value
+
+End
+
+Private Function Path_Read() As String
+
+    Return $settings.Path
 
 End

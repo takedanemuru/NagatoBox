@@ -78,15 +78,10 @@ CoverArt : `$XDG_CACHE_HOME/nagato-audio-editor`
 + Description : a terminal emulator
 + Last Modefied : 2017-04-03
 
-## ![image: nagato-config-appearance.png](../nagato-config-appearance/nagato-config-appearance.png) nagato-config-appearance (v42.5.7)
+## ![image: nagato-config-one.png](../nagato-config-one/nagato-config-one.png) nagato-config-one (v42.8.10)
 
-+ Description : appearance configuration tool for NagatoBox
-+ Last Modefied : 2016-09-30
-
-## ![image: equalizer.png](../nagato-config-shortcutkey/pictures/Icons/equalizer.png) nagato-config-shortcutkey (v0.6.2)
-
-+ Description : global shortcut config tool for NagatoBox.
-+ Last Modefied : 2016-11-08
++ Description : configuration tool for NagatoBox
++ Last Modefied : 2017-04-18
 
 ## ![image: computer.png](../nagato-dbus-finder/pictures/icons/computer.png) nagato-dbus-finder (v42.8.7)
 
@@ -116,10 +111,10 @@ ease to edit .gv files with preview. and export it as an image file.
 + Description : an archived file extracting tool for NagatoBox.
 + Last Modefied : 2017-04-03
 
-## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.8.139)
+## ![image: nagato-files.png](../nagato-files/nagato-files.png) nagato-files (v42.8.140)
 
 + Description : a file manager for NagatoBox
-+ Last Modefied : 2017-04-01
++ Last Modefied : 2017-04-06
 
 ![image: screenshot_001.png](../nagato-files/doc/screenshots/screenshot_001.png)
 
@@ -145,6 +140,11 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
 ![image: screenshot_001.png](../nagato-image-view/doc/screenshots/screenshot_001.png)
 
+## ![image: light-bulb.png](../nagato-image-viewer/images/light-bulb.png) nagato-image-viewer (v42.8.4)
+
++ Description : simple image viewer
++ Last Modefied : 2017-04-18
+
 ## ![image: nagato-keycode-checker.png](../nagato-keycode-checker/nagato-keycode-checker.png) nagato-keycode-checker (v42.8.2)
 
 + Description : check keycode.
@@ -157,10 +157,10 @@ Thumbnails : `~/.local/share/NagatoBox/database/Thumbnail`
 
 ![image: screenshot_001.png](../nagato-lookup/doc/screenshots/screenshot_001.png)
 
-## ![image: nagato-map.png](../nagato-map/nagato-map.png) nagato-map (v42.7.15)
+## ![image: nagato-map.png](../nagato-map/nagato-map.png) nagato-map (v42.8.16)
 
 + Description : map viewer.
-+ Last Modefied : 2017-01-18
++ Last Modefied : 2017-04-06
 
 ## ![image: speaker.png](../nagato-mixer-applet/Pictures/icons/speaker.png) nagato-mixer-applet (v42.8.11)
 
@@ -194,6 +194,11 @@ a simple movie player. no more, no less.
 
 ![image: screenshot_001.png](../nagato-openbox-menu/doc/screenshots/screenshot_001.png)
 
+## ![image: equalizer.png](../nagato-openbox-shortcutkeys/pictures/Icons/equalizer.png) nagato-openbox-shortcutkeys (v0.6.3)
+
++ Description : global shortcut config tool for NagatoBox.
++ Last Modefied : 2017-04-20
+
 ## ![image: monitor.png](../nagato-osd/pictures/monitor.png) nagato-osd (v42.8.18)
 
 + Description : on screen display for openbox3
@@ -211,10 +216,10 @@ now under heavy construction.
 + Description : pdf viewer
 + Last Modefied : 2017-04-04
 
-## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.7.82)
+## ![image: nagato-player-x.png](../nagato-player-x/nagato-player-x.png) nagato-player-x (v42.8.83)
 
 + Description : a music player with gstreamer backend.
-+ Last Modefied : 2017-03-27
++ Last Modefied : 2017-04-18
 
 ### Cache Directory
 
@@ -285,10 +290,10 @@ path		|string		|fullpath of each music file
 + Description : desktop ruler
 + Last Modefied : 2017-04-04
 
-## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.7.8)
+## ![image: lock.png](../nagato-screenlocker/Pictures/Icons/lock.png) nagato-screenlocker (v42.8.9)
 
 + Description : a screen saver for NagatoBox
-+ Last Modefied : 2017-01-24
++ Last Modefied : 2017-04-19
 
 ![image: screenshot_001.png](../nagato-screenlocker/doc/screenshots/screenshot_001.png)
 
@@ -328,10 +333,10 @@ show all of gambas3 and NagatoBox stock icons.
 taskmanager for NagatoBox
 
 
-## ![image: document-edit.png](../nagato-text-one/Picture/icons/document-edit.png) nagato-text-one (v42.8.17)
+## ![image: document-edit.png](../nagato-text-one/Picture/icons/document-edit.png) nagato-text-one (v42.8.20)
 
 + Description : a dead copy of FocusWriter :)
-+ Last Modefied : 2017-04-04
++ Last Modefied : 2017-04-06
 
 ![image: screenshot_001.png](../nagato-text-one/doc/screenshots/screenshot_001.png)
 
@@ -350,10 +355,10 @@ taskmanager for NagatoBox
 + Description : stand alone weather application for NagatoBox
 + Last Modefied : 2017-04-03
 
-## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.8.56)
+## ![image: nagato-web.png](../nagato-web/nagato-web.png) nagato-web (v42.8.57)
 
 + Description : a web browser powered by Gambas3
-+ Last Modefied : 2017-04-04
++ Last Modefied : 2017-04-20
 
 ![image: screenshot_001.png](../nagato-web/doc/screenshots/screenshot_001.png)
 

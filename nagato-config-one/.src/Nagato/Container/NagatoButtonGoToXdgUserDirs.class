@@ -1,6 +1,12 @@
 ' Gambas class file
 
-Inherits NagatoContainerLabel
+Inherits NagatoButtonGoTo
+
+Public Sub _OnButtonClick()
+    
+    Raise Signal(MikuruSignal.GoToXdgUserDirs, Null)
+    
+End
 
 Public Function _OnGetBackgroundColor() As Integer
     
@@ -10,6 +16,6 @@ End
 
 Public Sub _OnGetLabelText() As String
     
-    Return "Appearance" 
+    Return "Xdg User Dirs"
     
 End

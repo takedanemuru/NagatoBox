@@ -31,9 +31,17 @@ End
 
 Public Sub QueryBox_Activate()
     
+    Dim yukiApi As String = $api.GetApi($queryBox.Text)
+    Dim yukiTwitterQuery As String = "http://duckduckgo.com/?q=!tw"
+    Dim yukiTwitterLiteQuery As String = "https://mobile.twitter.com/search?q="
+
     If $queryBox.Text = "" Then Return
     
-    Raise Signal(MikuruSignal.WebNew, [$api.GetApi($queryBox.Text)])
+    If WebSettings[WebSettings.JavascriptEnabled] Or If yukiApi Not Begins yukiTwitterQuery Then
+        Raise Signal(MikuruSignal.WebNew, [yukiApi])
+    Else
+        Raise Signal(MikuruSignal.WebNew, [Replace(yukiApi, yukiTwitterQuery, yukiTwitterLiteQuery)])
+    End If
     
 End
 
