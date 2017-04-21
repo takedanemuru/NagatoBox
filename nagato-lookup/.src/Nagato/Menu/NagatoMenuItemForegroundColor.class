@@ -4,7 +4,7 @@ Inherits NagatoMenuItem
 
 Public Sub _AbstractOnInitialize(argParentMenu As Menu)
     
-     Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
     
     With yukiMenu
         .Picture = MikuruColorChip.Get(NagatoSettingsForm.Foreground)
@@ -20,6 +20,7 @@ Public Sub _AbstractOnMenuClicked()
     
     If HaruhiColorChooser.ShowDialog() = HaruhiColorChooser.ResponseApply Then
         HaruhiMain.Background = MikuruDialog.Color
+        NagatoSettingsForm.Foreground = MikuruDialog.Color
     Endif
     
 End

@@ -16,9 +16,9 @@ End
 Public Sub _OnRefreshChildMenus()
     
     Object.New("NagatoMenuItemOnlyActiveWindow", [Me._$parentMenu])
-        MikuruMenuSeparator.Set(Me._$parentMenu)
+        Object.New("NagatoMenuItemDummy", [Me._$parentMenu])
     Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["now", 0]])
-        MikuruMenuSeparator.Set(Me._$parentMenu)
+        Object.New("NagatoMenuItemDummy", [Me._$parentMenu])
     Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["5 seconds later", 5]])
     Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["15 seconds later", 15]])
     Object.New("NagatoMenuItemScreenshot", [Me._$parentMenu, ["30 seconds later", 30]])

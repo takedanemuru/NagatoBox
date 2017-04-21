@@ -26,7 +26,7 @@ End
 Public Sub _OnRefreshChildMenus()
     
     Object.New("NagatoMenuItemRecentApplicationsClear", [Me._$parentMenu])
-        MikuruMenuSeparator.Set(Me._$parentMenu)
+        Object.New("NagatoMenuItemDummy", [Me._$parentMenu])
     addRecentApplicationsMenusMax()
     
 End

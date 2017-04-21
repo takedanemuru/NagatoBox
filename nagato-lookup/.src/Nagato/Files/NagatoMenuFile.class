@@ -53,7 +53,7 @@ Public Sub _SetMenu() 'override
         .Picture = Desktop.GetFileIcon(Me._$path, 24)
     End With
     
-    MikuruMenuDummy($menu)
+    Object.New("NagatoMenuItemDummy", [$menu])
     
 End
  
@@ -62,7 +62,7 @@ Public Sub FileMenu_Show()
     $menu.Children.Clear()
     
     addSelectApplicationMenu()
-        MikuruMenuDummy($menu)
+        Object.New("NagatoMenuItemDummy", [$menu])
     addExecuteMenus()
     
 End

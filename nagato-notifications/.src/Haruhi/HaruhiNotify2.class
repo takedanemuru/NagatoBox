@@ -7,11 +7,11 @@ Private Sub setBackgroundColor()
     
     Select Case NagatoArgs.Urgency
         Case MikuruUrgencyLevel.Critical
-            DrawingArea1.Background = Color.Red
+            DrawingArea1.Background = NagatoSettings.BackgroundUrgent
         Case MikuruUrgencyLevel.Normal
-            DrawingArea1.Background = Color.Violet
+            DrawingArea1.Background = NagatoSettings.BackGroundNormal
         Case MikuruUrgencyLevel.Low
-            DrawingArea1.Background = Color.Blue
+            DrawingArea1.Background = NagatoSettings.BackgroundLow
     End Select
     
 End
@@ -27,7 +27,7 @@ Public Sub Form_Open()
     setBackgroundColor()
     $timer.Enabled = True
     $painter.Reset()
-
+    
     Me.Form_Move()
 
 End

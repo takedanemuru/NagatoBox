@@ -17,7 +17,7 @@ End
 Public Sub _new(argRootMenu As Menu)
     
     Me._OnInitializeParentMenu(argRootMenu)
-    MikuruMenuDummy(Me._$parentMenu)
+    Object.New("NagatoMenuItemDummy", [Me._$parentMenu])
     
 End
 

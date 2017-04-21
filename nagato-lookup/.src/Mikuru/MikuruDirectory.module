@@ -1,0 +1,18 @@
+' Gambas module file
+
+Public Sub _get(argPath As String) As String[]
+    
+    Dim yukiPath As String
+    Dim yukiPaths As New String[]
+    
+    For Each yukiPath In Dir(argPath, "[^.]*", gb.Directory).Sort(gb.Natural)
+        yukiPaths.Add(argPath &/ yukiPath)
+    Next
+    
+    For Each yukiPath In Dir(argPath, "[^.]*", gb.File).Sort(gb.Natural)
+        yukiPaths.Add(argPath &/ yukiPath)
+    Next
+    
+    Return yukiPaths
+    
+End

@@ -1,0 +1,45 @@
+' Gambas class file
+
+Create Static
+
+Property BackgroundLow As Integer
+Property BackGroundNormal As Integer
+Property BackgroundUrgent As Integer
+
+Private $settings As New Settings
+
+Private Function BackgroundLow_Read() As Integer
+
+    Return $settings["backgroung/low", Color.Blue]
+
+End
+
+Private Sub BackgroundLow_Write(Value As Integer)
+
+    $settings["backgroung/low"] = Value
+
+End
+
+Private Function BackGroundNormal_Read() As Integer
+
+    Return $settings["backgroung/normal", Color.Violet]
+
+End
+
+Private Sub BackGroundNormal_Write(Value As Integer)
+
+    $settings["backgroung/normal"] = Value
+
+End
+
+Private Function BackgroundUrgent_Read() As Integer
+
+    Return $settings["backgroung/urgent", Color.Red]
+
+End
+
+Private Sub BackgroundUrgent_Write(Value As Integer)
+
+    $settings["backgroung/urgent"] = Value
+
+End

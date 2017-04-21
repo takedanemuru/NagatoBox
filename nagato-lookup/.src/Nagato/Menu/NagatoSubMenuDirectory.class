@@ -7,15 +7,14 @@ Public Sub _OnInitializeParentMenu(argRootMenu As Menu)
     Me._$parentMenu = New Menu(argRootMenu) As "ParentMenu"
     
     With Me._$parentMenu
-        .Picture = MikuruIcons("color-palette")
-        .Text = ("Appearance")
+        .Text = (User.Name)
+        .Picture = MikuruIcons.Get("folder")
     End With
     
 End
 
 Public Sub _OnRefreshChildMenus()
     
-    Object.New("NagatoMenuitemUseSystemTheme", [Me._$parentMenu])
-    Object.New("NagatoMenuItemForegroundColor", [Me._$parentMenu])
+    Object.New("NagatoDirectoryMenu", [Me._$parentMenu, MikuruDirectory[User.Home]])
     
 End

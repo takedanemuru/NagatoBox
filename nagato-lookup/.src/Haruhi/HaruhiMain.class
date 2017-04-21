@@ -23,7 +23,6 @@ Public Sub Form_Open()
     $netWm = New NagatoNetWm(Me.Id)
     initializeForm()
     $mainContainer = New NagatoMainContainer(MainHBox) As "MainContainer"
-    NagatoNotification.Show()
     
 End
 

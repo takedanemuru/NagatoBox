@@ -2,6 +2,7 @@
 
 Public _$parentMenu As Object
 Public _$path As String
+Public _$startPosition As Integer
 
 Public Sub _SetMenu() ' virtual, MUST be overridden
     
@@ -9,10 +10,11 @@ Public Sub _SetMenu() ' virtual, MUST be overridden
     
 End
  
-Public Sub _new(argParentMenu As Object, argPath As String)
+Public Sub _new(argParentMenu As Object, argPath As String, Optional argStartPosition As Integer = 0)
     
     Me._$parentMenu = argParentMenu
     Me._$path = argPath
+    Me._$startPosition = argStartPosition
     
     Me._SetMenu()
     

@@ -1,0 +1,14 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+    Me._$menu = New Menu(argParentMenu)
+    
+    With Me._$menu
+        .Text = "file and directory not found"
+        .Picture = MikuruIcons("question")
+    End With
+    
+End

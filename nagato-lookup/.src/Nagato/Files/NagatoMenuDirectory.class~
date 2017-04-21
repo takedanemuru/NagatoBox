@@ -4,6 +4,18 @@ Inherits NagatoMenu
 
 Private $menu As Menu
 
+Private Sub setMoreMenu()
+    
+    Dim yukiMenu As New Menu($menu)
+    
+    With yukiMenu
+        .Text = ("...more")
+    End With
+    
+    Object.New("NagatoMenuDirectory", [yukiMenu, Me._$path, Me._$startPosition + 21])
+    
+End
+
 Private Sub setOpenDirectoryMenu()
     
     Dim yukiMenu As New Menu($menu) As "OpenDirectoryMenu"
@@ -15,18 +27,27 @@ Private Sub setOpenDirectoryMenu()
     
 End
 
-Private Sub setChildMenu(argClassName As String, argFilter As Integer)
+Private Sub setChildMenus()
     
-    Dim yukiPath As String
+    Dim yukiIndex As Integer
+    Dim yukiPaths As String[] = MikuruDirectory[Me._$path]
     
-    For Each yukiPath In Dir(Me._$path, "[^.]*", argFilter).Sort(gb.IgnoreCase + gb.Natural)
-        Object.New(argClassName, [$menu, Me._$path &/ yukiPath])
+    For yukiIndex = Me._$startPosition To Me._$startPosition + 20
+        If yukiIndex > yukiPaths.Max Then Return
+        If IsDir(yukiPaths[yukiIndex]) Then 
+            Object.New("NagatoMenuDirectory", [$menu, yukiPaths[yukiIndex]])
+        Else
+            Object.New("NagatoMenuFile", [$menu, yukiPaths[yukiIndex]])
+        Endif
     Next
+    
+    setMoreMenu()
     
 End
 
 Public Sub _SetMenu() 'override
     
+    If Me._$startPosition = 0 Then
     $menu = New Menu(Me._$parentMenu) As "DirectoryMenu"
     
     With $menu
@@ -34,7 +55,11 @@ Public Sub _SetMenu() 'override
         .Picture = MikuruIcons("folder")
     End With
     
-    MikuruMenuDummy($menu)
+    Object.New("NagatoMenuItemDummy", [$menu])
+    Else
+        $menu = Me._$parentMenu
+        DirectoryMenu_Show()
+    End If
     
 End
  
@@ -44,17 +69,14 @@ End
     
     setOpenDirectoryMenu()
         MikuruMenuDummy($menu)
-    setChildMenu("NagatoMenuDirectory", gb.Directory)
-    setChildMenu("NagatoMenuFile", gb.File)
+    setChildMenus()
     
-    If $menu.Children.Count = 2 Then MikuruMenuDummy.SetNotFound($menu)
+    If $menu.Children.Count = 2 Then Object.New("NagatoMenuItemNotFound", [$menu])
     
 End
 
 Public Sub OpenDirectoryMenu_Click()
     
     Try Exec ["nagato-files", Me._$path]
-    
-    'Desktop.Open(Me._$path)
     
 End

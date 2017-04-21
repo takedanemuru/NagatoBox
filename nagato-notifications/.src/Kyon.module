@@ -8,12 +8,10 @@ Private $dbus As New NagatoDBus
 
 Private Sub callNotify()
     
-    If DBus.Session.Applications.Exist(Service) Then
+    If DBus.Session.Applications.Exist(Service) Then ' redirect to nagato-desktop
         With NagatoArgs
             DBus[Service][ObjectPath, Interface].Notify(.App, .Summary, .Body, .Urgency)
         End With
-    Else If "Nagato" == "nagato" Then
-        NagatoNotify(NagatoArgs.App, NagatoArgs.Summary, NagatoArgs.Body, NagatoArgs.Urgency)
     Else
         HaruhiNotify2.Show()
     Endif

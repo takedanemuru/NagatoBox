@@ -6,11 +6,17 @@ Private $menu As Menu
 
 Private Function getDesktopFilesWithMimeType() As String[]
     
+    Dim yukiDefaults As String[] = MikuruApplications.GetDefaultDesktopFiles(Me._$path)
     Dim yukiMimeType As String = DesktopMime.FromFile(Me._$path).Type
+    Dim yukiNonDefaults As String[] = MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, yukiMimeType)
+    Dim yukiApplication As String
     
+    For Each yukiApplication In yukiNonDefaults.Sort(gb.Natural)
+        If yukiDefaults.Exist(yukiApplication) Then Continue
+        yukiDefaults.Add(yukiApplication)
+    Next
     
-    
-    Return MikuruConfFlie(MikuruApplicationDirectory.GlobalMimeList, yukiMimeType).Sort(gb.Natural)
+    Return yukiDefaults
     
 End
 
@@ -25,21 +31,12 @@ Private Sub addSelectApplicationMenu()
     
 End
 
-Private Sub addDefaultApplicationMenu()
-    
-    Dim yukiDefault As String = MikuruApplications.GetDefaultDesktopFiles(Me._$path)[0]
-    
-    Debug yukiDefault
-    
-End
-
 Private Sub addExecuteMenus()
     
     Dim yukiAdditionalDesktopFile As String
     Dim yukiChecker As New String[]
     
     For Each yukiAdditionalDesktopFile In getDesktopFilesWithMimeType()
-        Debug yukiAdditionalDesktopFile
         If yukiChecker.Exist(yukiAdditionalDesktopFile) Then Continue
         Object.New("NagatoOpenWithMenu", [$menu, yukiAdditionalDesktopFile, Me._$path])
         yukiChecker.Add(yukiAdditionalDesktopFile)
@@ -63,8 +60,6 @@ End
 Public Sub FileMenu_Show()
     
     $menu.Children.Clear()
-    
-    addDefaultApplicationMenu()
     
     addSelectApplicationMenu()
         MikuruMenuDummy($menu)
