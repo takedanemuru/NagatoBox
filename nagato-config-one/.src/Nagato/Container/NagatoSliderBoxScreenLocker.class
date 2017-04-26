@@ -1,0 +1,23 @@
+' Gambas class file
+
+Inherits NagatoSliderBox
+
+Public Sub _OnChangeProperty()
+    
+    
+End
+
+Public Sub _OnGetDefaultValues() As Integer[]
+    
+    Dim yukiSettings As Settings = MikuruApplicationConf.GetSettings("nagato-screenlocker")
+    Dim yukiValue As Integer = yukiSettings["screensaver/idle"]
+    
+    Return [yukiValue, 3600, 0] ' Current, Max ,Min
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Idling (Seconds)"
+    
+End

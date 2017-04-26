@@ -35,8 +35,8 @@ Public Sub Empty()
     Dim yukiPath As String
     Dim yukiPaths As New String[]
     
-    For Each yukiPath In Dir(MikuruTrashPath.Files)
-        yukiPaths.Add(MikuruTrashPath.Files &/ yukiPath)
+    For Each yukiPath In Dir(Desktop.DataDir &/ "Trash/files")
+        yukiPaths.Add(Desktop.DataDir &/ "Trash/files" &/ yukiPath)
     Next
     
     Me.DeleteFromTrashBin(yukiPaths)
@@ -82,14 +82,12 @@ End
 
 Private Function Count_Read() As Integer
 
-    Return Dir(MikuruTrashPath.Files).Count
+    Return Dir(Desktop.DataDir &/ "Trash/files").Count
 
 End
 
 Private Function Size_Read() As String
 
-    Dim yukiSize As Integer = MikuruFileSize.GetDirectorySize(MikuruTrashPath.Files)
-    
-    Return MikuruFileSize(yukiSize)
+    Return MikuruFileSize.GetDirectorySizeText(Desktop.DataDir &/ "Trash/files")
 
 End

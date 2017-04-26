@@ -29,7 +29,7 @@ Public Sub _new()
     $observer = New NagatoDirectoryObserver As "DirectoryObserver"
 
     With $observer
-        .Directory = MikuruTrashPath.Files
+        .Directory = Desktop.DataDir &/ "Trash/files"
     End With
     
 End

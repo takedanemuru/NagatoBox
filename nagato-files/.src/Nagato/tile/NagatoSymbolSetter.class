@@ -73,11 +73,13 @@ Public Sub _call(argTile As Picture, argPath As String) As Picture
     
     If yukiSymbol <> "" Then argTile = getSymbolizedTile(argTile, yukiSymbol)
     
-    'If File.Ext(argPath) = "desktop" Then argTile = getApplicationTag(argTile)
     If Stat(argPath).Link Then argTile = getSymlinkTag(argTile)
     If NagatoXdg.IsUserDir(argPath) Then argTile = getXdgUserDirTag(argTile)
     
     Return argTile
+    
+Catch ' for deletation time rag
+    Return Null
     
 End
 

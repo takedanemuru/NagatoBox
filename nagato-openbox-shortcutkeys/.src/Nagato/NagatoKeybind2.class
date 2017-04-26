@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property Read Key As String
+
+Private $key As String
+Private $actions As New NagatoAction[]
+Private $subKeybinds As New NagatoKeybind2[]
+
+Private Sub setActions(argXmlElements As XmlElement[])
+    
+    Dim yukiXmlElement As XmlElement
+    
+    For Each yukiXmlElement In argXmlElements
+        $actions.Add(Object.New("NagatoAction", [yukiXmlElement]))
+    Next
+    
+End
+
+Private Sub setSubKeybinds()
+    
+    
+    
+End
+
+Public Sub _new(argXmlElement As XmlElement)
+    
+    $key = argXmlElement.GetAttribute("key")
+    setActions(argXmlElement.GetChildrenByTagName("action"))
+    setSubKeybinds()
+    
+End
+
+Private Function Key_Read() As String
+
+    Return $key
+
+End

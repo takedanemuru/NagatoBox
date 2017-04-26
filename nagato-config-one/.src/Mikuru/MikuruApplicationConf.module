@@ -1,0 +1,23 @@
+' Gambas module file
+
+Private Function getPath(argApplicationName As String) As String
+    
+    Dim yukiSubPath As String = Subst("gambas3/&1.conf", argApplicationName)
+    
+    Return (Desktop.ConfigDir &/ yukiSubPath) 
+    
+End
+
+Public Function Exist(argApplicationName As String) As Boolean
+    
+    Return Exist(getPath(argApplicationName))
+    
+End
+
+Public Function GetSettings(argApplicationName As String) As Settings
+    
+    Dim yukiSettings As New Settings(getPath(argApplicationName))
+    
+    Return yukiSettings
+    
+End

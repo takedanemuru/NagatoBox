@@ -1,0 +1,21 @@
+' Gambas class file
+
+Create Static
+
+Private $keyBinds As New NagatoKeybind2[]
+Private $xmlDocument As New XmlDocument
+
+Public Sub Ensure()
+    
+    Dim yukiKeyBoardConfig As XmlElement
+    Dim yukiKeyBind As XmlElement
+    
+    $xmlDocument.Open(Desktop.ConfigDir &/ "NagatoBox/nagatobox-rc.xml")
+    
+    yukiKeyBoardConfig = $xmlDocument.GetElementsByTagName("keyboard")[0]
+    
+    For Each yukiKeyBind In yukiKeyBoardConfig.GetChildrenByTagName("keybind")
+        $keyBinds.Add(Object.New("NagatoKeybind2", [yukiKeyBind]))
+    Next
+    
+End

@@ -20,7 +20,7 @@ End
 Public Sub Refresh(Optional argLastSelected As String)
     
     $tileSetter.Refresh()
-    NagatoDBThumbnailer.CleanUp(MikuruTrashPath.Files)
+    NagatoDBThumbnailer.CleanUp(Desktop.DataDir &/ "Trash/files")
     If argLastSelected Then ensureVisible(argLastSelected)
     If $iconView.IconView.Count > 0 Then Return
     
@@ -65,7 +65,7 @@ Public Sub _new(argTabStrip As TabStrip)
     
     $iconView = New NagatoIconViewInitializerTrashBin(argTabStrip) As "TrashBinIconView"
     $tileSetter = New NagatoIconViewTileSetter($iconView.IconView, $selection)
-    $tileSetter.Directory = MikuruTrashPath.Files
+    $tileSetter.Directory = Desktop.DataDir &/ "Trash/files"
     Me.Refresh()
     
 End

@@ -41,6 +41,7 @@ check fixed windows
 
 + show tag symbol in treeview
 + fix : lost iconview background when all filetered icons are removed.
++ ~~use File.FormatSize() instead of proper function.~~
 
 ### nagato-files (nagato-desktop)
 

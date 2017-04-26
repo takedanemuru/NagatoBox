@@ -42,7 +42,7 @@ Public Sub Group_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.GoToAppearance
             $group = New NagatoGroupAppearance(VBox1) As "Group"
         Case MikuruSignal.GoToSceenLocker
-            ' ToDo
+            $group = New NagatoGroupScreenIdling(VBox1) As "Group"
         Case MikuruSignal.GoToXdgUserDirs
             $group = New NagatoGroupXdgUserDirs(VBox1) As "Group"
     End Select

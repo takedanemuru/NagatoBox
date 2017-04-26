@@ -1,0 +1,23 @@
+' Gambas class file
+
+Private $name As String
+Private $options As New XmlElement[]
+
+Private Sub setOptions(argXmlElements As XmlElement[])
+    
+    Dim yukiOption As XmlElement
+    
+    For Each yukiOption In argXmlElements
+        Debug yukiOption.Name
+        Debug yukiOption.Value
+    Next
+    
+End
+
+Public Sub _new(argXmlElement As XmlElement)
+    
+    $name = argXmlElement.GetAttribute("name")
+    Debug $name
+    If argXmlElement.ChildElements.Count > 0 Then setOptions(argXmlElement.ChildElements)
+    
+End

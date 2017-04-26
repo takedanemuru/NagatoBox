@@ -11,7 +11,7 @@ Private Sub initializeDirectoryObserver()
     $directoryObserver = New NagatoDirectoryObserver As "DirectoryObserver"
     
     With $directoryObserver
-        .Directory = MikuruTrashPath.Files
+        .Directory = Desktop.DataDir &/ "Trash/files"
     End With
     
 End

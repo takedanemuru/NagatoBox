@@ -13,8 +13,8 @@ Private Sub setIcons(argType As Integer, Optional argQuery As String)
     Dim yukiPath As String
     Dim yukiFullPath As String
     
-    For Each yukiPath In Dir(MikuruTrashPath.Files, "*", argType).Sort(gb.IgnoreCase)
-        yukiFullPath = MikuruTrashPath.Files &/ yukiPath
+    For Each yukiPath In Dir(Desktop.DataDir &/ "Trash/files", "*", argType).Sort(gb.IgnoreCase)
+        yukiFullPath = Desktop.DataDir &/ "Trash/files" &/ yukiPath
         If Not Exist(yukiFullPath) Then Continue
         If argQuery And If (yukiPath Not Like "*" & argQuery & "*") Then Continue
         $iconView.Add(yukiFullPath, "", MikuruTile(yukiFullPath, $selection.Exist(yukiFullPath)))

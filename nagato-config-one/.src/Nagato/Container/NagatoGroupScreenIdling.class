@@ -1,0 +1,37 @@
+' Gambas class file
+
+Inherits NagatoGroup
+
+Private $sliderBox As NagatoSliderBoxScreenLocker
+Private $applyButton As NagatoContainerApplyButton
+
+Private Sub addScreenLockerConfig(argContainer As Container)
+    
+        Object.New("NagatoContainer", [argContainer])
+    $sliderBox = New NagatoSliderBoxScreenLocker(argContainer)
+    
+End
+
+Public Sub _OnInitializeContainers(argContainer As Container)
+    
+    Object.New("NagatoLabelScreenIdling", [argContainer])
+    If MikuruApplicationConf.Exist("nagato-screenlocker") Then addScreenLockerConfig(argContainer)
+        Object.New("NagatoContainer", [argContainer])
+        MikuruArrayTest(MikuruXset.Get())
+    $applyButton = New NagatoContainerApplyButton(argContainer) As "Container"
+    
+End
+
+Public Sub Container_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.PropertyChanged
+            $applyButton.Enable()
+        Case MikuruSignal.PropertyApplyChanges
+            ' todo
+        Case MikuruSignal.GoToMain
+            ' todo
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End

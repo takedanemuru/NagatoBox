@@ -2,6 +2,8 @@
 
 Inherits NagatoContainer
 
+Property Read Value As Integer
+
 Public _$sliderBox As SliderBox
 
 Public Sub _OnGetDefaultValues() As Integer[]
@@ -29,4 +31,10 @@ Public Function _OnGetBackgroundColor() As Integer
     
     Return Color.White + Color.Transparent * 226
     
+End
+
+Private Function Value_Read() As Integer
+
+    Return Me._$sliderBox.Value
+
 End

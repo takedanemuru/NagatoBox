@@ -1,0 +1,19 @@
+' Gambas class file
+
+Inherits NagatoLabel
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 192
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    If MikuruApplicationConf.Exist("nagato-screenlocker") Then
+        Return "Screen Locker"
+    Else
+        Return "Screen Idling"
+    End If
+    
+End

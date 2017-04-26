@@ -8,7 +8,7 @@ End
 
 Public Function GetTrashInfoPath(argPath As String) As String
     
-    Return Quote(Replace$(argPath, MikuruTrashPath.Files, MikuruTrashPath.Info) & ".trashinfo")
+    Return Quote(Replace$(argPath, "Trash/files", "Trash/info") & ".trashinfo")
     
 End
 
