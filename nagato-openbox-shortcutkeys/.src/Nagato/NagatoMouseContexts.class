@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoNodeIntermediate
+
+Public Sub _OnInitialize(argXmlElement As XmlElement)
+    
+    Me._$text = "Mousebinds"
+    Me._$columnView.Add(Me._$key, ("Context"), MikuruIcon["mouse"])
+    Me._SetChildren(argXmlElement.GetChildrenByTagName("context",, 2))
+    
+    Try Me._$columnView[Me._$key].EnsureVisible()
+    
+End

@@ -1,0 +1,14 @@
+' Gambas module file
+
+Public Sub GetReadableText(argKeybindText As String) As String
+    
+    Dim yukiText As String = Replace(argKeybindText, "W-", "<Super> ")
+    
+    yukiText = Replace(yukiText, "A-", "<Alt> ")
+    yukiText = Replace(yukiText, "C-", "<Ctrl> ")
+    yukiText = Replace(yukiText, "S-", "<Shift> ")
+    
+    Return yukiText
+    
+End
+

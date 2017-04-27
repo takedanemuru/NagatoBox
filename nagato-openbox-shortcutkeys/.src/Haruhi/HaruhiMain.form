@@ -1,10 +1,11 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,73,50)
+  MoveScaled(0,0,89,64)
+  Icon = Picture["pictures/Icons/keyboard.png"]
   Arrangement = Arrange.Fill
-  { MainContainer VBox
-    MoveScaled(3,2,68,46)
+  { VBox1 VBox
+    MoveScaled(1,1,85,44)
     Expand = True
   }
 }

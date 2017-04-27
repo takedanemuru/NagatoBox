@@ -1,0 +1,11 @@
+' Gambas module file
+
+Private $index As Integer = 0
+
+Public Sub _call() As Integer
+    
+    Inc $index
+    
+    Return $index
+    
+End

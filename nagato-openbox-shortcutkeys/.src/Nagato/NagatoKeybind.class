@@ -1,44 +1,24 @@
 ' Gambas class file
 
-Property Read KeyBind As String
-Property Read ActionType As String
-Property Read Command As String
+Inherits NagatoNodeIntermediate
 
-Private $keyBind As String
-Private $actionType As String
-Private $command As String
-
-Private Sub readActionElements(argXmlElement As XmlElement)
+Private Sub setKeyBinds(argXmlElements As XmlElement[])
     
-    $actionType = argXmlElement.Attributes["name"]
-    If $actionType = "Execute" Then
-        $command = argXmlElement.GetChildrenByTagName("command")[0].Value
-    Endif
+    If argXmlElements.Count > 1 Then Me._SetChildren(argXmlElements.Copy(1, argXmlElements.Max))
     
 End
 
-Public Sub _new(argElement As XmlElement)
+Public Sub _OnInitialize(argXmlElement As XmlElement)
     
-    If argElement.GetChildrenByTagName("action").Count = 0 Then Return
-    $keyBind = argElement.Attributes["key"]
-    readActionElements(argElement.GetChildrenByTagName("action")[0])
+    Me._$text = argXmlElement.GetAttribute("key")
+    Me._$columnView.Add(Me._$key, Me.Text, MikuruIcon["keyboard"], Me._$parentKey)
+    setKeyBinds(argXmlElement.GetChildrenByTagName("keybind",, 2))
+    Me._SetChildren(argXmlElement.GetChildrenByTagName("action",, 2))
     
 End
 
-Private Function KeyBind_Read() As String
+Public Sub _OnGetText() As String
 
-    Return $keyBind
-
-End
-
-Private Function ActionType_Read() As String
-
-    Return $actionType
-
-End
-
-Private Function Command_Read() As String
-
-    Return $command
+    Return MikuruKeybindText.GetReadableText(Me._$text)
 
 End

@@ -1,0 +1,13 @@
+' Gambas class file
+
+Inherits NagatoNodeIntermediate
+
+Public Sub _OnInitialize(argXmlElement As XmlElement)
+    
+    Me._$text = argXmlElement.GetAttribute("key")
+    Me._$columnView.Add(Me._$key, ("Keybinds"), MikuruIcon["keyboard"])
+    Me._SetChildren(argXmlElement.GetChildrenByTagName("keybind",, 2))
+    
+    Try Me._$columnView[Me._$key].EnsureVisible()
+    
+End

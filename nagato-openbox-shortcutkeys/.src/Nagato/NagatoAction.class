@@ -1,23 +1,13 @@
 ' Gambas class file
 
-Private $name As String
-Private $options As New XmlElement[]
+Inherits NagatoNodeIntermediate
 
-Private Sub setOptions(argXmlElements As XmlElement[])
+Public Sub _OnInitialize(argXmlElement As XmlElement)
     
-    Dim yukiOption As XmlElement
-    
-    For Each yukiOption In argXmlElements
-        Debug yukiOption.Name
-        Debug yukiOption.Value
-    Next
-    
-End
-
-Public Sub _new(argXmlElement As XmlElement)
-    
-    $name = argXmlElement.GetAttribute("name")
-    Debug $name
-    If argXmlElement.ChildElements.Count > 0 Then setOptions(argXmlElement.ChildElements)
+    Me._$text = argXmlElement.GetAttribute("name")
+    If argXmlElement.Name = "startupnotify" Then Me._$text = "startup notify"
+    If argXmlElement.Name = "position" Then Me._$text = "position"
+    Me._$columnView.Add(Me._$key, Me._$text, MikuruIcon["arrow-right"], Me._$parentKey)
+    Me._SetChildren(Me._$xmlElement.ChildElements)
     
 End
