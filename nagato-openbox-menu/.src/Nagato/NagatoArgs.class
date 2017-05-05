@@ -1,10 +1,14 @@
 ' Gambas class file
 
 Property Read Category As String
+Property Read Directory As String
+Property Read File As String
 Property Read Available As Boolean
 Property Read Start As Boolean
 
 Private $category As String = ""
+Private $directory As String = ""
+Private $file As String = ""
 Private $available As Boolean = False
 Private $start As Boolean = False
 
@@ -12,6 +16,8 @@ Public Sub Parsing()
     
     Args.Begin("Usage:")
         $category = Args.Get("c", "category", "get specified category's root menu", "category name")
+        $directory = Args.Get("d", "directory", "directory", "directory menu")
+        $file = Args.Get("f", "file", "file", "file menu")
         $available = Args.Has("a", "availables", "show all available categories")
         $start = Args.Has("s", "start", "start nagato-openbox-menu as daemon")
     Args.End()
@@ -33,5 +39,19 @@ End
 Private Function Start_Read() As Boolean
 
     Return $start
+
+End
+
+Private Function Directory_Read() As String
+
+    If $directory == "Home" Then Return User.Home
+
+    Return UnQuote($directory)
+
+End
+
+Private Function File_Read() As String
+
+    Return $file
 
 End

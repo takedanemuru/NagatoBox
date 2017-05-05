@@ -28,3 +28,19 @@ Public Sub _SetChildren(argXmlElements As XmlElement[])
     If Me._$children.Count > 0 Then Me._$columnView[Me._$key].Expanded = True
     
 End
+
+Public Sub GetChild(argKey As Integer) As XmlElement
+    
+    Dim yukiChildObject As Object
+    Dim yukiResponse As XmlElement
+    
+    If Me._$key = argKey Then Return Me._$xmlElement
+    
+    For Each yukiChildObject In Me._$children
+        yukiResponse = yukiChildObject.GetChild(argKey)
+        If yukiResponse <> Null Then Return yukiResponse
+    Next
+    
+    Return Null
+    
+End

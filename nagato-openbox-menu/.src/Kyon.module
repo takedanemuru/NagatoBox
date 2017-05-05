@@ -11,10 +11,14 @@ Public Sub Main()
         $dbus.EnsureService()
     Else If $args.Category <> "" Then
         $dbus.PrintCategoryMenu($args.Category)
+    Else If $args.Directory <> "" Then
+        $dbus.PrintDirectoryMenu($args.Directory)
+    Else If $args.File <> "" Then
+        $dbus.PrintFileMenu($args.File)
     Else If $args.Available Then
         MikuruArrayTest(NagatoMenuCache.Categories)
     Endif
-    ' 
-    '$dbus.Test()
+    
+    'Debug NagatoFileCache.Get("/home/takedanemuru/test-rc.xml")
     
 End

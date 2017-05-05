@@ -6,6 +6,18 @@ Create Static
 
 Property Read Ready As String
 
+Public Function GetFileMenu(argFilePath As String) As String
+    
+    Return NagatoFileCache.Get(argFilePath)
+    
+End
+
+Public Function GetDirectoryMenu(argDirectory As String) As String
+    
+    Return NagatoDirectoryCache.Get(argDirectory)
+    
+End
+
 Public Function GetCategoryMenu(argCategory As String) As String
     
     Return NagatoMenuCache.Get(argCategory)

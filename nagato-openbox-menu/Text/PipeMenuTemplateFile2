@@ -1,0 +1,9 @@
+<openbox_pipe_menu>
+      <item label="Open Directory">
+			<action name="Select Application">
+				<execute>select-application &1</execute>
+			</action>
+	</item>
+      <separator/>
+&2
+</openbox_pipe_menu>

@@ -1,0 +1,11 @@
+' Gambas module file
+
+Private $id As Integer 
+
+Public Sub _call() As Integer
+    
+    Inc $id
+    
+    Return $id
+    
+End

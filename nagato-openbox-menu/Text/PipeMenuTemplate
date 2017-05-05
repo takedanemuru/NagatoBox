@@ -1,0 +1,9 @@
+<openbox_pipe_menu>
+      <item label="Open Directory">
+			<action name="Execute">
+				<execute>nagato-files &1</execute>
+			</action>
+	</item>
+      <separator/>
+&2
+</openbox_pipe_menu>

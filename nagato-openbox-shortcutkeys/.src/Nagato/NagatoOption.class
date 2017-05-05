@@ -2,7 +2,7 @@
 
 Inherits NagatoNode
 
-Private $key As String
+Private $propertyKey As String
 Private $value As Variant
 
 Private Sub getIcon() As Picture
@@ -13,10 +13,20 @@ End
 
 Public Sub _OnInitialize(argXmlElement As XmlElement)
     
-    $key = argXmlElement.Name
-    $value = argXmlElement.Value
+    Me._$xmlElement = argXmlElement
     
-    Me._$columnView.Add(Me._$key, $key, getIcon(), Me._$parentKey)
+    $propertyKey = argXmlElement.Name
+    $value = MikuruSanitize.Clean(argXmlElement.Value, [" ", "\t", "\n"])
+    
+    Me._$columnView.Add(Me._$key, $propertyKey, getIcon(), Me._$parentKey)
     Me._$columnView[Me._$key][1] = Space(2) & $value
+    
+End
+
+Public Sub GetChild(argKey As Integer) As XmlElement
+    
+    If argKey = Me._$key Then Return Me._$xmlElement
+    
+    Return Null
     
 End

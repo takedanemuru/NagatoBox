@@ -1,0 +1,16 @@
+' Gambas module file
+
+Public Sub ReplaceEscapes(argSource As String) As String
+    
+    Dim yukiOutput As String = argSource
+    
+    yukiOutput = Replace(argSource, "\"", "&quot;")
+    yukiOutput = Replace(argSource, "'", "&apos;")
+    yukiOutput = Replace(argSource, "<", "&lt;")
+    yukiOutput = Replace(argSource, ">", "&gt;")
+    yukiOutput = Replace(argSource, "&", "&amp;")
+    
+    Return yukiOutput
+    
+End
+

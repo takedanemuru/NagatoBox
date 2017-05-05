@@ -37,3 +37,25 @@ Public Sub PrintCategoryMenu(argCategory As String)
     End If
     
 End
+
+Public Sub PrintDirectoryMenu(argDirectory As String)
+    
+    If DBus.Session.Applications.Exist(Service) Then
+        $proxy = DBus[Service][ObjectPath, Interface]
+        Print $proxy.GetDirectoryMenu(argDirectory)
+    Else
+        Print File.Load("Text/DummyMenuItem")
+    End If
+    
+End
+
+Public Sub PrintFileMenu(argDirectory As String)
+    
+    If DBus.Session.Applications.Exist(Service) Then
+        $proxy = DBus[Service][ObjectPath, Interface]
+        Print $proxy.GetFileMenu(argDirectory)
+    Else
+        Print File.Load("Text/DummyMenuItem")
+    End If
+    
+End
