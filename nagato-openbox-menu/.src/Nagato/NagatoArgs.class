@@ -46,7 +46,7 @@ Private Function Directory_Read() As String
 
     If $directory == "Home" Then Return User.Home
 
-    Return UnQuote($directory)
+    Return $directory
 
 End
 

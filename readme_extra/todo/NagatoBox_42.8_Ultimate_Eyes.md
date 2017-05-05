@@ -64,7 +64,7 @@ check fixed windows
 
 ### nagato-openbox-menu
 
-+ file directory menu ?
++ ~~file directory menu~~ mostly done
 
 ### nagato-osd 
 
