@@ -1,0 +1,32 @@
+' Gambas module file
+
+Private $output As New DesktopFile[]
+
+Private Sub setDesktopFile(argDesktopFile As DesktopFile) 
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $output.Max
+        If String.Upper($output[yukiIndex].Name) > String.Upper(argDesktopFile.Name) Then 
+            $output.Add(argDesktopFile, yukiIndex)
+            Return
+        End If
+    Next
+    
+    $output.Add(argDesktopFile)
+    
+End
+
+Public Sub GetSorted(argFilePath As String) As DesktopFile[]
+    
+    Dim yukiDesktopFile As DesktopFile
+    
+    $output.Clear()
+    
+    For Each yukiDesktopFile In DesktopFile.FromMime(DesktopMime.FromFile(argFilePath).Type)
+        setDesktopFile(yukiDesktopFile)
+    Next
+    
+   Return $output.Copy() 
+    
+End

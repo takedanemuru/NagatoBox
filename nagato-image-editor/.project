@@ -1,0 +1,34 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.2
+Title=nagato-image-editor
+Startup=Kyon
+Icon=pictures/nagato_icons/color-palette.png
+Version=42.8.8
+Component=gb.args
+Component=gb.image
+Component=gb.qt5
+Component=gb.form
+Component=gb.db
+Component=gb.db.sqlite3
+Component=gb.desktop.x11
+Component=gb.desktop
+Component=gb.settings
+Component=gb.image.effect
+Description="a simple image editor."
+Authors="takeda.nemuru<takedanemuru@yandex.com>"
+TabSize=4
+Translate=1
+Language=en
+Maintainer=takedanemuru
+Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=http://takedanemuru.github.io/
+License=S.O.S. License
+PackageName=nagato-image-editor-42.8.8
+MimeTypes="image/jpeg","image/png","image/gif"
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/Viewers"
+Categories=ubuntu:"Graphics;ImageProcessing;Nagato"
+Groups=ubuntu:"x11"
+ExtraFiles=ubuntu:"nagato-image-editor.desktop\t/usr/share/applications\nnagato-image-editor.png\t/usr/share/pixmaps"

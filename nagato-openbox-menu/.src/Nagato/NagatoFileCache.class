@@ -17,7 +17,7 @@ Private Sub getApplications(argFilePath As String) As String
     Dim yukiOutput As String
     Dim yukiDesktopFile As DesktopFile
     
-    For Each yukiDesktopFile In DesktopFile.FindMime(DesktopMime.FromFile(argFilePath).Type)
+    For Each yukiDesktopFile In MikuruDesktopFile.GetSorted(argFilePath)
         yukiOutput &= getExecElement(yukiDesktopFile, argFilePath)
     Next
     

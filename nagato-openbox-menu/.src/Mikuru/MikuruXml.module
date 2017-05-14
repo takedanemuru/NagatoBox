@@ -14,3 +14,13 @@ Public Sub ReplaceEscapes(argSource As String) As String
     
 End
 
+Public Sub GetLabel(argSource As String) As String
+    
+    Dim yukiOutput As String
+    
+    yukiOutput = Me.ReplaceEscapes(argSource)
+    yukiOutput = Replace(yukiOutput, "_", "__")
+    
+    Return yukiOutput
+    
+End

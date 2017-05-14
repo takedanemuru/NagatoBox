@@ -14,11 +14,9 @@ Public Sub Main()
     Else If $args.Directory <> "" Then
         $dbus.PrintDirectoryMenu($args.Directory)
     Else If $args.File <> "" Then
-        $dbus.PrintFileMenu($args.File)
+        Print NagatoFileCache.Get($args.File)
     Else If $args.Available Then
         MikuruArrayTest(NagatoMenuCache.Categories)
     Endif
-    
-    'NagatoFileCache.Get("/home/takedanemuru/動画/茅原実里/茅原実里10thライブ『向かい風に打たれながら』.webm")
     
 End

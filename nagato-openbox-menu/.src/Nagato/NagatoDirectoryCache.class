@@ -7,7 +7,7 @@ Private Sub getDirectoryElement(argDirectory As String, argPath As String) As St
     Dim yukiQuotedPath As String = "&quot;" & MikuruXml.ReplaceEscapes(argDirectory &/ argPath) & "&quot;"
     Dim yukiExecute As String = Quote("nagato-openbox-menu -d " & yukiQuotedPath)
     Dim yukiId As String = Quote("nagato-openbox-menu-directory-" & MikuruUniqueId())
-    Dim yukiLabel As String = Quote(MikuruXml.ReplaceEscapes(argPath))
+    Dim yukiLabel As String = Quote(MikuruXml.GetLabel(argPath))
 
     Return Subst("\t<menu execute=&1 id=&2 label=&3/>\n", yukiExecute, yukiId, yukiLabel)
     
@@ -18,7 +18,7 @@ Private Sub getFileElement(argDirectory As String, argPath As String) As String
     Dim yukiQuotedPath As String = "&quot;" & MikuruXml.ReplaceEscapes(argDirectory &/ argPath) & "&quot;"
     Dim yukiExecute As String = Quote("nagato-openbox-menu -f " & yukiQuotedPath)
     Dim yukiId As String = Quote("nagato-openbox-menu-file-" & MikuruUniqueId())
-    Dim yukiLabel As String = Quote(MikuruXml.ReplaceEscapes(argPath))
+    Dim yukiLabel As String = Quote(MikuruXml.GetLabel(argPath))
     
     Return Subst("\t<menu execute=&1 id=&2 label=&3/>\n", yukiExecute, yukiId, yukiLabel)
     
@@ -29,7 +29,7 @@ Private Sub getDirectories(argDirectory As String) As String
     Dim yukiOutput As String
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.Directory).Sort(gb.Natural)
+    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.Directory).Sort(gb.Natural + gb.IgnoreCase)
         yukiOutput &= getDirectoryElement(argDirectory, yukiPath)
     Next
     
@@ -42,7 +42,7 @@ Private Sub getFiles(argDirectory As String) As String
     Dim yukiOutput As String
     Dim yukiPath As String
     
-    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.File).Sort(gb.Natural)
+    For Each yukiPath In Dir(argDirectory, "[^.]*", gb.File).Sort(gb.Natural + gb.IgnoreCase)
         yukiOutput &= getFileElement(argDirectory, yukiPath)
     Next
     
