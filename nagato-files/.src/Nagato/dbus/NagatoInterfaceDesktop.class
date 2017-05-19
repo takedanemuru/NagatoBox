@@ -6,21 +6,44 @@ Create Static
 
 Property Read Ready As Boolean
 
+Private $formName As String
+
+Public Sub SetType(argType As String)
+    
+    $formName = argType
+    
+End
+
 Public Sub Notify(argApp As String, argSummary As String, argBody As String, argUrgency As Integer)
     
-    HaruhiPersona.Notify(argApp, argSummary, argBody, argUrgency)
-    
+    Select Case $formName
+        Case "HaruhiDesktop"
+            HaruhiDesktop.Notify(argApp, argSummary, argBody, argUrgency)
+        Case "HaruhiDesktopSummerDress"
+            HaruhiDesktopSummerDress.Notify(argApp, argSummary, argBody, argUrgency)
+    End Select
+
 End
 
 Public Sub SetTextToPersona(argText As String) 
     
-    HaruhiPersona.SetText(argText)
+    Select Case $formName
+        Case "HaruhiDesktop"
+            HaruhiDesktop.SetText(argText)
+        Case "HaruhiDesktopSummerDress"
+            HaruhiDesktopSummerDress.SetText(argText)
+    End Select
 
 End
 
 Public Sub Show() As Boolean
     
-    Try HaruhiDesktop.Show()
+    Select Case $formName
+        Case "HaruhiDesktop"
+            Try HaruhiDesktop.Show()
+        Case "HaruhiDesktopSummerDress"
+            Try HaruhiDesktopSummerDress.Show()
+    End Select
     
     If Not Error Then Return True
     
@@ -31,14 +54,27 @@ End
 
 Public Sub ReloadDesktopWallpaper() As Boolean
     
-    HaruhiDesktop.RealodDesktopWallpaper()
+    Select Case $formName
+        Case "HaruhiDesktop"
+            HaruhiDesktop.RealodDesktopWallpaper()
+        Case "HaruhiDesktopSummerDress"
+            HaruhiDesktopSummerDress.RealodDesktopWallpaper()
+    End Select
     
     Return True
+    
+Catch
+    Return False
     
 End
 
 Private Function Ready_Read() As Boolean
 
-    Return HaruhiDesktop.Ready
+    Select Case $formName
+        Case "HaruhiDesktop"
+            Return HaruhiDesktop.Ready
+        Case "HaruhiDesktopSummerDress"
+            Return HaruhiDesktopSummerDress.Ready
+    End Select
 
 End

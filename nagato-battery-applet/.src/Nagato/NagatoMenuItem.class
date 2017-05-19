@@ -1,0 +1,31 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Public _$menuItem As Menu
+
+Public Sub _OnInitializeMenu()
+    
+    
+    
+End
+
+Public Sub _OnClickMenu()
+    
+    ' do somethong
+    
+End
+
+Public Sub _new(argRootMenu As Menu)
+    
+    Me._$menuItem = New Menu(argRootMenu) As "MenuItem"
+    
+    Me._OnInitializeMenu()
+    
+End
+
+Public Sub MenuItem_Click()
+    
+    Me._OnClickMenu()
+    
+End

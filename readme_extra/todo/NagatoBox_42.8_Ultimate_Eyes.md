@@ -18,9 +18,15 @@ check fixed windows
 
 ## Applications
 
+### nagato-audio-editor
+
++ ~~add norm functionality~~
++ export id3-tag and cover-art
++ add trimming functionality
+
 ### nagato-battery-applet
 
-+ add menus for quit, about and configs.
++ ~~add menus for quit, about and configs.~~
 
 ### nagato-color-picker
 

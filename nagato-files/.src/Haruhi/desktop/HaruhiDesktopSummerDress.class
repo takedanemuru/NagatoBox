@@ -1,0 +1,55 @@
+' Gambas class file
+
+Property Read Ready As Boolean
+
+Private $desktop As NagatoDesktopSummerDress
+Private $panel2 As NagatoPanelSummerDress
+
+Private Sub initializeForm()
+    
+    With Me
+        .X = 0
+        .Y = 0
+        .W = Screen.W
+        .H = Screen.H
+        .Arrangement = Arrange.Vertical
+    End With
+    
+End
+
+Public Sub RealodDesktopWallpaper()
+    
+    $desktop.ReloadDesktopWallpaper()
+    $panel2.ReloadDesktopWallpaper()
+    
+End
+
+Public Sub Form_Open()
+
+    Application.MainWindow = Me
+    initializeForm()
+    
+    If MikuruX11.SetAsRoot(Me.Id) Then 
+        NagatoDBus.Register(Me)
+        $desktop = New NagatoDesktopSummerDress(Me)
+        $panel2 = New NagatoPanelSummerDress(Me)
+        MikuruX11.ReservePanelHeightOnScreen(Me.Id)
+        HaruhiPersona.Welcome()
+    Else
+        Message.Error("YUKI.N > Fail to activate nagato-desktop", ("OK"))
+        Me.Close()
+    End If
+
+End
+
+Public Sub Form_Close()
+    
+    NagatoDBus.Unregister()
+    
+End
+
+Private Function Ready_Read() As Boolean
+
+    Return True
+
+End

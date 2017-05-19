@@ -1,13 +1,41 @@
 ' Gambas module file
 
+Private Sub isSummer() As Boolean
+    
+    Select Case Month(Now())
+        Case 5 To 9
+            Return True
+        Default
+            Return False
+    End Select
+    
+End
+
 Private Sub activateDesktop()
     
-    If Not NagatoDBus.DesktopActivated() Then
-        HaruhiDesktop.Show()
-    Else
+    If NagatoDBus.DesktopActivated() Then
         Message(("YUKI.N > nagato-desktop has been activated."), ("OK"))
+    Else If isSummer() Then
+        HaruhiDesktopSummerDress.Show()
+    Else
+        HaruhiDesktop.Show()
     End If
     
+End
+
+Private Sub activateModules()
+    
+    NagatoArguments.Parsing()
+    System.FirstDayOfWeek = gb.Sunday
+
+    If NagatoArguments.DesktopIcons And If isSummer() Then Return
+    
+    ' NOTE : this call activate NagatoDBSymbol, so do not delete.
+    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate nagato-files..." 
+    
+    MikuruIconTheme.Activate()
+    NagatoClipBoard.Activate()
+
 End
 
 Private Sub showDesktop()
@@ -15,7 +43,7 @@ Private Sub showDesktop()
     If Not NagatoDBus.DesktopActivated() Then
         Message(("YUKI.N > nagato-desktop has not been activated."), ("OK"))
     Else
-        HaruhiDesktop.ShowDesktop()
+        MikuruDesktop.ShowDesktop()
     End If
     
 End
@@ -49,14 +77,7 @@ End
 
 Public Sub Main()
 
-    ' NOTE : this call activate NagatoDBSymbol, so do not delete.
-    If NagatoDBSymbol.Ready Then Print "YUKI.N > Now we are going to activate nagato-files..." 
-    
-    NagatoArguments.Parsing()
-    MikuruIconTheme.Activate()
-    
-    NagatoClipBoard.Activate()
-    System.FirstDayOfWeek = gb.Sunday
+    activateModules()
 
     'startTestSequence()
     startNormalSequence()

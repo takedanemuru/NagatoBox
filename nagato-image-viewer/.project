@@ -2,8 +2,8 @@
 # Compiled with Gambas 3.9.2
 Title=nagato-image-viewer
 Startup=Kyon
-Icon=images/light-bulb.png
-Version=42.8.4
+Icon=images/icons/presentation.png
+Version=42.8.6
 Component=gb.args
 Component=gb.image
 Component=gb.gui.qt
@@ -22,10 +22,11 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-image-viewer-42.8.4
+PackageName=nagato-image-viewer-42.8.6
 MimeTypes="image/jpeg","image/png","image/gif"
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Graphics"
 Categories=ubuntu:"Graphics;Nagato"
 Groups=ubuntu:"graphics"
+ExtraFiles=ubuntu:"nagato-image-viewer.desktop\t/usr/share/applications\nnagato-image-viewer.png\t/usr/share/pixmaps"

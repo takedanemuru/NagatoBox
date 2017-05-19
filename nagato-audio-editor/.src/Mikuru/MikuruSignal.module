@@ -4,4 +4,4 @@ Public Enum SourceFileNew = 2001, SourceFilePlay = 2002, SourceFileStop = 2003
 Public Enum TargetFileNew = 3001, TargetFilePlay = 3002, TargetFileStop = 3003, TargetFileSave = 3004
 Public Enum TargetFileReplaceSourceFile = 3005, TargetFileSaveAsSourcFile = 3006
 Public Enum EffectKaraoke = 4001, EffectSilence = 4002, EffectLoudness = 4003
-Public Enum EffectBass = 4004
+Public Enum EffectBass = 4004, EffectNorm = 4005

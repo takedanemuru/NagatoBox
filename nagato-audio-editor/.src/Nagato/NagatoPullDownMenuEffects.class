@@ -8,5 +8,6 @@ Public Sub _OnInitializeChildMenus()
     Object.New("NagatoMenuItemEffectsSilence", [Me._$rootMenu])
     Object.New("NagatoMenuItemEffectsLoudness", [Me._$rootMenu])
     Object.New("NagatoMenuItemEffectsBass", [Me._$rootMenu])
+    Object.New("NagatoMenuItemEffectsNorm", [Me._$rootMenu])
     
 End

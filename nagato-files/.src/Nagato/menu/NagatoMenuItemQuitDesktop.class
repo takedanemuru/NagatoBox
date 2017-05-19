@@ -16,6 +16,7 @@ End
 
 Public Sub MenuItem_Click()
     
-    HaruhiDesktop.Close()
+    If Not HaruhiDesktop.Closed Then HaruhiDesktop.Close()
+    If Not HaruhiDesktopSummerDress.Closed Then HaruhiDesktopSummerDress.Close()
     
 End

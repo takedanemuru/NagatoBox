@@ -65,3 +65,18 @@ Catch
     Return ""
     
 End
+
+Public Sub Normalize(argSourcePath As String) As String
+    
+    Dim yukiOutputPath As String = getOutputPath(argSourcePath)
+    
+    Exec ["sox", argSourcePath, yukiOutputPath, "norm"] Wait
+    
+    Message.Info("YUKI.N > Done.", ("OK"))
+    
+    Return yukiOutputPath
+    
+Catch
+    Return ""
+    
+End

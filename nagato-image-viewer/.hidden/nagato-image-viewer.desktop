@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=nagato-image-viewer
+Comment=a simple image viewer.
+Exec=/usr/bin/nagato-image-viewer
+Icon=/usr/share/pixmaps/nagato-image-viewer.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Graphics;ImageProcessing;Nagato;
+MimeType=image/jpeg;image/png;image/gif

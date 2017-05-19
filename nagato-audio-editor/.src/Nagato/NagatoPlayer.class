@@ -54,6 +54,8 @@ Public Sub SetEffect(argEffectType As Integer)
             $targetPath = MikuruEffects.Silence($inputPath)
         Case MikuruSignal.EffectBass
             $targetPath = MikuruEffects.BassBoost($inputPath)
+        Case MikuruSignal.EffectNorm
+            $targetPath = MikuruEffects.Normalize($inputPath)
     End Select
     
     If Exist($targetPath) Then Raise Signal(MikuruSignal.TargetFileNew, [$targetPath])

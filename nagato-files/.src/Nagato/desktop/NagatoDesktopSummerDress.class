@@ -1,0 +1,28 @@
+' Gambas class file
+
+Private $wallpaper As PictureBox
+
+Private Sub setWallpaper()
+    
+    With $wallpaper
+        .Expand = True
+        Try .Picture = Picture.Load(User.Home &/ ".nagato-wallpaper/NagatoBox/modefied.png")
+        If Error Then .Picture = Picture.Load("pictures/about.png")
+    End With
+    
+End
+
+Public Sub ReloadDesktopWallpaper()
+    
+    Debug "incoming"
+    
+    setWallpaper()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $wallpaper = New PictureBox(argContainer)
+    setWallpaper()
+    
+End

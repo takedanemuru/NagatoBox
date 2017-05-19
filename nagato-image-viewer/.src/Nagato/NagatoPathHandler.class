@@ -13,7 +13,7 @@ Private Sub resetPaths()
     
     $paths.Clear()
 
-    For Each yukiPath In Dir(yukiDirectory)
+    For Each yukiPath In Dir(yukiDirectory).Sort(gb.Natural + gb.IgnoreCase)
         yukiFullPath = yukiDirectory &/ yukiPath
         If DesktopMime.FromFile(yukiFullPath).Type Not Begins "image/" Then Continue
         $paths.Add(yukiFullPath)

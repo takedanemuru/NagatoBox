@@ -20,10 +20,11 @@ Public Function IsUnique() As Boolean
     
 End
 
-Public Sub Register()
+Public Sub Register(argFrom As Form)
     
     DBus.Name = Service
     DBus.Unique = True
+    NagatoInterfaceDesktop.SetType(argFrom.Name)
     DBus.Session.Register(NagatoInterfaceDesktop, Me.ObjectPath, [Me.Interface])
     
 End

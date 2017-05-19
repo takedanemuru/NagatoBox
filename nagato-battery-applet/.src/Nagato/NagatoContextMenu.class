@@ -1,0 +1,27 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $rootMenu As Menu
+Private $quitMenu As NagatoMenuItemQuit
+
+Private Sub addChildren()
+    
+    Object.New("NagatoMenuItemAbout", [$rootMenu])
+    $quitMenu = New NagatoMenuItemQuit($rootMenu) As "TFEI"
+    
+End
+
+Public Sub _new()
+    
+    $rootMenu = New Menu(HaruhiAbout) As "RootMenu"
+    
+    addChildren()
+    
+End
+
+Public Sub PopUp()
+    
+    $rootMenu.Popup
+    
+End

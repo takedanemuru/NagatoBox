@@ -2,16 +2,12 @@
 
 Create Static
 
-' Property Read History As String[]
-' Property Read HasHistory As Boolean
-' Property Read LastCommand As String
-' 
 Private $settings As New Settings
-'Private $commandHistory As New String[]
 
 Public Sub LoadFormSettings(argForm As Form)
     
     With argForm
+        .Maximized = $settings[Subst$("&1/maximized", .Name), .Maximized]
         .X = $settings[Subst$("&1/x", .Name), .X]
         .Y = $settings[Subst$("&1/y", .Name), .Y]
         .W = $settings[Subst$("&1/w", .Name), .W]
@@ -23,6 +19,7 @@ End
 Public Sub SaveFormSettings(argForm As Form)
     
     With argForm
+        $settings[Subst$("&1/maximized", .Name)] = .Maximized
         $settings[Subst$("&1/x", .Name)] = .X
         $settings[Subst$("&1/y", .Name)] = .Y
         $settings[Subst$("&1/w", .Name)] = .W
@@ -32,29 +29,3 @@ Public Sub SaveFormSettings(argForm As Form)
     $settings.Save()
     
 End
-
-' Public Function PushHistory(argCommandLine As String)
-'     
-'     If argCommandLine = "" Then Return
-'     
-'     $commandHistory.Add(argCommandLine)
-'     
-' End
-' 
-' Private Function HasHistory_Read() As Boolean
-' 
-'     Return $commandHistory.Count > 0 
-' 
-' End
-' 
-' Private Function LastCommand_Read() As String
-' 
-'     Return $commandHistory[$commandHistory.Max]
-' 
-' End
-' 
-' Private Function History_Read() As String[]
-' 
-'     Return $commandHistory
-' 
-' End
