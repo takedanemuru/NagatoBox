@@ -11,6 +11,7 @@ Private $systemMonitorLabelPainter As New NagatoLabelPainterSystemMonitor
 Private $rssLabelPainter As New NagatoLabelPainterRss
 Private $weatherPainter As New NagatoLabelPainterWeather
 Private $playerXPainter As New NagatoLabelPainterNagatoPlayerX
+Private $playerXPainterNotActivated As New NagatoLabelPainterPlayerXNotActivated
 
 Public Sub _call(argMode As Integer)
     
@@ -40,6 +41,8 @@ Public Sub Paint(argMode As Integer, Optional argText As String)
                     $weatherPainter.Paint()
                 Case .SpecialPlayerX
                     $playerXPainter.Paint()
+                Case .SpecialPlayerXNotActivated
+                    $playerXPainterNotActivated.Paint()
                 Case .ModeNull
                     ' ignore
             End Select

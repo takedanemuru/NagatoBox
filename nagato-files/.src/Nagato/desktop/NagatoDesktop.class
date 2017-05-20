@@ -3,7 +3,7 @@
 Private $iconView As NagatoIconViewInitializer
 Private $observer As NagatoDesktopObserverHandler
 Private $wallpaper As NagatoDesktopWallpaperHandler
-Private $icons As NagatoDesktopIconsHandler
+Private $icons As NagatoDesktopTilesHandler
 Private $userInput As NagatoDesktopUserInput
 
 Public Sub ReloadDesktopWallpaper()
@@ -16,7 +16,7 @@ Public Sub _new(argContainer As Container)
     
     $iconView = New NagatoIconViewInitializer(argContainer)
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView.IconView)
-    $icons = New NagatoDesktopIconsHandler($iconView.IconView)
+    $icons = New NagatoDesktopTilesHandler($iconView.IconView)
     $userInput = New NagatoDesktopUserInput($iconView.IconView) As "Handler"
     $observer = New NagatoDesktopObserverHandler($iconView.IconView) As "Observer"
 

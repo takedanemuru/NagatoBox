@@ -65,11 +65,3 @@ Public Sub _new(argIconView As IconView)
     refreshTiles([""])
         
 End
-
-Public Sub TileMusic_RequestRefresh()
-    
-    $iconView.Clear()
-    refreshTiles([""])
-    $iconView.Refresh()
-    
-End

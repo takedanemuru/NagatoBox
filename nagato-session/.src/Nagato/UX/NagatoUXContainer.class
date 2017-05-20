@@ -19,15 +19,15 @@ Public Sub _OnInitializeWidgets()
     
 End
 
-Public Sub _OptionalOnSetEnabled(argEnebled As Boolean)
+Public Sub _OptionalOnSetEnabled(argEnabled As Boolean)
     
     
     
 End
 
-Public Sub SetEnebled(argEnebled As Boolean)
+Public Sub SetEnabled(argEnabled As Boolean)
     
-    Me._OptionalOnSetEnabled(argEnebled)
+    Me._OptionalOnSetEnabled(argEnabled)
     
 End
 

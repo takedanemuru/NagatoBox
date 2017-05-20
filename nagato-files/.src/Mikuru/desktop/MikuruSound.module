@@ -3,7 +3,8 @@
 Public Sub Notify(argPriority As Integer)
     
     Dim yukiSoundPath As String
-    Dim yukiSound As Sound
+    Dim yukiPath As String = Temp() & ".wav"
+    Dim yukiOutput As String
     
     Select Case argPriority
         Case NagatoNotifyQueue.PriorityHello
@@ -14,8 +15,8 @@ Public Sub Notify(argPriority As Integer)
             yukiSoundPath = ("sound/effect-notify.wav")
     End Select
     
-    yukiSound = Sound.Load(yukiSoundPath)
-    yukiSound.Volume = 64
-    yukiSound.Play()
+    Copy yukiSoundPath To yukiPath
+    
+    Exec ["play", yukiPath] 
     
 End

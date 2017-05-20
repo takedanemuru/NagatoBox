@@ -5,7 +5,7 @@ Property Read Second As Integer
 
 Private $desktop As NagatoDesktop
 Private $panel2 As NagatoPanel2
-Private $desktopTimer As New NagatoDesktopTimer As "DesktopTimer"
+Private $desktopTimer As NagatoDesktopTimer
 
 Event Timer
 Event SystemTimer

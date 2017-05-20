@@ -26,6 +26,13 @@ Public Sub SetUrl(argUrl As String)
     
 End
 
+Public Sub SetTabs(argTitles As String[], argCurrentIndex As Integer)
+    
+    Debug argTitles.Count
+    Debug argCurrentIndex
+    
+End
+
 Public Sub _new(argContainer As Container)
     
     $container = argContainer

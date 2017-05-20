@@ -1,0 +1,30 @@
+' Gambas module file
+
+Private $sound As Sound
+Private $volume As Integer 
+Private $loop As Integer
+Private $paths As String[]
+
+Private Sub getArgs()
+    
+    Args.Begin("usage:")
+        $volume = Args.GetInteger("v", "volume", "volume",, 65)
+        $loop = Args.GetInteger("l", "loop", "loop",, 0)
+    $paths = Args.End()
+    
+End
+
+Public Sub Main()
+
+    Dim yukiPath As String
+    
+    getArgs()
+    
+    For Each yukiPath In $paths
+        If Not Exist(yukiPath) Then Continue
+        Exec ["play", yukiTempPath] Wait
+    Next
+    
+    Quit 0
+    
+End

@@ -4,24 +4,36 @@ Inherits NagatoDesktopTile2
 
 Private $proxy As NagatoDBusAccessNagatoPlayerX
 Private $descriptionPainter As NagatoDescriptionPainterStandard
-
-Event RequestRefresh
+Private $coverArt As Image
 
 Private Sub getBaseImage() As Image
     
-    Dim yukiBaseImage As Image
+    Dim yukiCoverArtPath As String = $proxy.GetCoverArtPath()
     
-    If Exist($proxy.GetCoverArtPath()) Then
-        yukiBaseImage = Image.Load($proxy.GetCoverArtPath())
-        yukiBaseImage = yukiBaseImage.Stretch(MikuruUxTile.TileSize, MikuruUxTile.TileSize)
-    Else
-        yukiBaseImage = New Image(MikuruUxTile.TileSize, MikuruUxTile.TileSize, Color.Red + 128 * Color.Transparent)
+    If $coverArt = Null And If Exist(yukiCoverArtPath) Then
+        $coverArt = Image.Load(yukiCoverArtPath).Stretch(MikuruUxTile.TileSize, MikuruUxTile.TileSize)
+    Else If Not Exist(yukiCoverArtPath) Then
+        $coverArt = New Image(MikuruUxTile.TileSize, MikuruUxTile.TileSize, Color.Pink + 192 * Color.Transparent)
+    Else If 2 > DateDiff(Stat(yukiCoverArtPath).LastChange, Now(), gb.Second) Then
+        $coverArt = Image.Load(yukiCoverArtPath).Stretch(MikuruUxTile.TileSize, MikuruUxTile.TileSize)
     Endif
     
-    Return yukiBaseImage
+    Return $coverArt.Copy()
     
 Catch
-    yukiBaseImage = New Image(MikuruUxTile.TileSize, MikuruUxTile.TileSize, Color.Transparent)
+    Return getNotActivatedImage()
+    
+End
+
+Private Sub getNotActivatedImage() As Image
+    
+    Dim yukiBaseImage As Image = MikuruTileBaseImage[Color.Red, 192]
+    
+    Paint.Begin(yukiBaseImage)
+        NagatoLabelPainterFacade.Paint(MikuruTileMode.SpecialPlayerXNotActivated)
+        $descriptionPainter.Paint("not activated")
+    Paint.End()
+    
     Return yukiBaseImage
     
 End
@@ -60,14 +72,10 @@ End
 Public Sub _OnTimer() ' override
     
     If Not DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
-        If Not Me._$iconView.Exist(NagatoDesktopKey.Music) Then Return
-        Me._$iconView.Remove(NagatoDesktopKey.Music)
-        Me._$iconView.Refresh()
-    Else If Me._$iconView.Exist(NagatoDesktopKey.Music) Then
-        If Not Object.IsValid($proxy) Then $proxy = New NagatoDBusAccessNagatoPlayerX
-        Me._$iconView[NagatoDesktopKey.Music].Picture = getThumbnail().Picture
-    Else
-        Raise RequestRefresh
+         Try Me._$iconView[NagatoDesktopKey.Music].Picture = getNotActivatedImage().Picture
+   Else
+         If Not Object.IsValid($proxy) Then $proxy = New NagatoDBusAccessNagatoPlayerX
+         Try Me._$iconView[NagatoDesktopKey.Music].Picture = getThumbnail().Picture
     End If
     
 End

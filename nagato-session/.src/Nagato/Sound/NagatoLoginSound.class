@@ -6,15 +6,19 @@ Public Enum None, Choir, Ubuntu, Welcumz, UserDefined
 
 Public Sub PlayDefault()
     
+    Dim yukiPath As String = Temp() & ".wav"
+    
     Select Case NagatoSettingsLoginSound.Mode
         Case Me.None
             Return
         Case Me.Choir
-            Sound.Load("sounds/choir.wav").Play()
+            Copy "sounds/choir.wav" To yukiPath
         Case Me.Welcumz
-            Sound.Load("sounds/welcumz.wav").Play()
+            Copy "sounds/welcumz.wav" To yukiPath
         Case Me.Ubuntu
-            Sound.Load("sounds/ubuntu.wav").Play()
+            Copy "sounds/ubuntu.wav" To yukiPath
     End Select
+
+    Exec ["play", yukiPath]
 
 End
