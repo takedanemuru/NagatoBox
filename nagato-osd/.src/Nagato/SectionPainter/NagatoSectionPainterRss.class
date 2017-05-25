@@ -10,7 +10,7 @@ Private Sub showThumbnail(argY As Integer, argTitle As String) As Integer
     
     Dim yukiY As Integer = argY + 4
     
-    If $thumbnail.HasThumbnail(argTitle) Then
+    If $thumbnail.HasThumbnail(argTitle) And If NagatoSettingsRss.ShowThumbnail Then
         yukiY = $painterImage(yukiY, $thumbnail.GetThumbnailPath(argTitle), 150)
     Endif
     

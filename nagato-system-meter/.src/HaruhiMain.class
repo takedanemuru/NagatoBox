@@ -1,0 +1,24 @@
+' Gambas class file
+
+Private $timer As New Timer As "Timer"
+Private $painter As NagatoPainter
+
+Public Sub Form_Open()
+    
+    Me.Arrangement = Arrange.Fill
+    $painter = New NagatoPainter(Me)
+    $timer.Enabled = True
+    
+End
+
+Public Sub Form_Close()
+    
+    Shell "nagato-systemmonitor-daemon --check-out nagato-system-meter"
+    
+End
+
+Public Sub Timer_Timer()
+    
+    $painter.PaintIt()
+    
+End

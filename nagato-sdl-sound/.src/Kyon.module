@@ -1,6 +1,5 @@
 ' Gambas module file
 
-Private $sound As Sound
 Private $volume As Integer 
 Private $loop As Integer
 Private $paths As String[]
@@ -14,16 +13,39 @@ Private Sub getArgs()
     
 End
 
-Public Sub Main()
-
-    Dim yukiPath As String
+Private Sub playMusic(argPath As String)
     
-    getArgs()
+    Music.Load(argPath)
+    Music.Volume = $volume
+    Music.Play($loop)
+    
+    Do
+        If Music.State = Music.Stopped Then Break
+        Wait 2
+    Loop
+    
+End
+
+Private Sub playPaths()
+    
+    Dim yukiPath As String
     
     For Each yukiPath In $paths
         If Not Exist(yukiPath) Then Continue
-        Exec ["play", yukiTempPath] Wait
+        If File.Ext(yukiPath) <> "wav" Then Continue
+        playMusic(yukiPath)
     Next
+    
+End
+
+Public Sub Main()
+
+    getArgs()
+    
+    'for testing
+    '$paths = ["choir.wav"]
+    
+    playPaths()
     
     Quit 0
     

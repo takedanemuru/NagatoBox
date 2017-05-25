@@ -1,0 +1,17 @@
+' Gambas class file
+
+Inherits NagatoSubMenu
+
+Public Sub _OnParentMenuShow()
+    
+    Object.New("NagatoMenuItemRssShowThumbnail", [Me._$parentMenu])
+    
+End
+
+Public Sub _OnInitialize()
+    
+    With Me._$parentMenu
+        .Text = "RSS"
+    End With
+    
+End

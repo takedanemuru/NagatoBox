@@ -1,0 +1,66 @@
+' Gambas module file
+
+Private Sub getBoolean() As String[]
+    
+    Return ["yes", "no"]
+    
+End
+
+Private Sub getNumbers() As String[]
+    
+    Return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    
+End
+
+Private Sub getDirections() As String[]
+    
+    Return ["current", "next", "previous", "last", "up", "down", "left", "right"]
+    
+End
+
+Private Sub getCombo(...) As String[]
+    
+    Dim yukiIndex As Integer
+    Dim yukiValue As New String[]
+    
+    For yukiIndex = 0 To Param.Max
+        yukiValue.Insert(Param[yukiIndex])
+    Next
+    
+    Return yukiValue
+    
+End
+
+Public Sub _get(argAction As String, argOption As String) As String[]
+    
+    'Debug argAction;; argOption
+    
+    If argAction = "Execute" Then
+        If argOption = "command" Then Return ["TEXT"]
+        If argOption = "prompt" Then Return getBoolean()
+    Else If argAction = "startupnotify" Then
+        If argOption = "enabled" Then Return getBoolean()
+        If argOption = "wmclass" Then Return ["TEXT"]
+        If argOption = "name" Then Return ["TEXT"]
+        If argOption = "icon" Then Return ["TEXT"]
+    Else If argAction = "NextWindow" Or If argAction = "PreviousWindow" Then
+        If argOption = "dialog" Then Return ["list", "icons", "none"]
+        If argOption = "bar" Then Return getBoolean()
+        If argOption = "raise" Then Return getBoolean()
+        If argOption = "allDesktops" Then Return getBoolean()
+        If argOption = "panels" Then Return getBoolean()
+        If argOption = "desktop" Then Return getBoolean()
+        If argOption = "linear" Then Return getBoolean()
+        If argOption = "interactive" Then Return getBoolean()
+    Else If argAction = "GoToDesktop" Or If argAction = "SendToDesktop" Then
+        If argOption = "wrap" Then Return getBoolean()
+        If argOption = "to" Then Return getCombo(getNumbers(), getDirections())
+        If argOption = "follow" Then Return getBoolean()
+    Else If argAction = "AddDesktop" Or If argAction = "RemoveDesktop" Then
+        If argOption = "where" Then Return ["current", "last"]
+    Endif
+    
+    Return [""]
+    
+End
+

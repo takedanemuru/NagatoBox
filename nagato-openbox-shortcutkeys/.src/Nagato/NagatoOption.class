@@ -16,7 +16,7 @@ Public Sub _OnInitialize(argXmlElement As XmlElement)
     Me._$xmlElement = argXmlElement
     
     $propertyKey = argXmlElement.Name
-    $value = MikuruSanitize.Clean(argXmlElement.Value, [" ", "\t", "\n"])
+    $value = MikuruSanitize.GetSanitizedValue(argXmlElement.Value)
     
     Me._$columnView.Add(Me._$key, $propertyKey, getIcon(), Me._$parentKey)
     Me._$columnView[Me._$key][1] = Space(2) & $value

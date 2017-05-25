@@ -1,0 +1,30 @@
+' Gambas class file
+
+Private Sub getRect(argText As String) As Rect
+    
+    Dim yukiRect As New Rect
+    
+    With yukiRect
+        .H = Paint.Font.RichTextHeight(argText, 200)
+        .W = 200
+        .X = 0
+        .Y = 250 - yukiRect.H
+    End With
+    
+    Return yukiRect
+    
+End
+
+Public Sub Paint(argText As String)
+    
+    Dim yukiRect As Rect
+    
+    Paint.Font.Size = 8
+    yukiRect = getRect(argText)
+    Paint.Brush = Paint.Color(Color.White + Color.Transparent * 192)
+    Paint.Rectangle(yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H)
+    Paint.Fill()
+    Paint.Brush = Paint.Color(Color.Violet)
+    Paint.DrawRichText(argText, yukiRect.X, yukiRect.Y, yukiRect.W, yukiRect.H, Align.Center)
+    
+End

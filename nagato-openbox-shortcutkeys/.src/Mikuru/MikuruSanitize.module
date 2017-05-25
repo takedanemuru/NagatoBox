@@ -25,3 +25,14 @@ Public Sub RemoveUselessLines(argSourceString As String) As String
     Return yukiOutput
     
 End
+
+Public Sub GetSanitizedValue(argSource As String) As String
+    
+    Dim yukiValue As String = Me.Clean(argSource, ["\t", "\n"])
+    
+    yukiValue = LTrim(yukiValue)
+    yukiValue = RTrim(yukiValue)
+    
+    Return yukiValue
+    
+End

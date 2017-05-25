@@ -20,7 +20,6 @@ Public Sub Form_Open()
     Me.X = Screen.W - Me.W
     Me.Y = 0
     setAsRoot(Me.Id)
-    Me.Arrangement = Arrange.Fill
     $painter = New NagatoPainter(Me)
     $timer.Enabled = True
     
@@ -42,8 +41,6 @@ Public Sub Form_Close()
     Try Shell "nagato-systemmonitor-daemon --check-out nagato-osd"
     
     NagatoDBus.Unregister()
-    
-    Quit 0
     
 End
 

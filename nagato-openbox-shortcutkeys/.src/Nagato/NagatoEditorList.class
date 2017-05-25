@@ -1,0 +1,55 @@
+' Gambas class file
+
+Private $hbox As HBox
+Private $label As Label
+Private $comboBox As ComboBox
+
+Private Sub initializeHBox(argContainer As Container)
+    
+    $hbox = New HBox(argContainer)
+    
+    With $hbox
+        .Expand = True
+        .Padding = 8
+    End With
+    
+End
+
+Private Sub initializeLabel(argContainer As Container)
+    
+    $label = New Label($hbox)
+    
+    With $label
+        .Text = "READY ?"
+        .Expand = True
+    End With
+    
+End
+
+Private Sub initializeComboBox(argContainer As Container)
+    
+    $comboBox = New ComboBox($hbox) As "ComboBox"
+
+    With $comboBox
+        .List = ["foo", "bar", "baz"]
+        .ReadOnly = True
+        .Expand = True
+    End With
+    
+End
+
+Public Sub Set(argLabel As String, argCurrentValue As String, argList As String[])
+    
+    $label.Text = argLabel
+    $comboBox.List = argList
+    Try $comboBox.Index = $comboBox.List.Find(argCurrentValue)
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeHBox(argContainer)
+    initializeLabel(argContainer)
+    initializeComboBox(argContainer)
+    
+End

@@ -1,0 +1,18 @@
+' Gambas class file
+
+Inherits NagatoSettings
+
+Property ShowThumbnail As Boolean
+
+Private Function ShowThumbnail_Read() As Boolean
+
+    Return Me._$settings["rss/show_thumbnail", True] 
+
+End
+
+Private Sub ShowThumbnail_Write(Value As Boolean)
+
+    Me._$settings["rss/show_thumbnail"] = Value
+    Me._$settings.Save()
+
+End

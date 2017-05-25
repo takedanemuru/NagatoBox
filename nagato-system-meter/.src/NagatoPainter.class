@@ -1,0 +1,87 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $systemMonitor As New NagatoDBusAccessSystemMonitor
+Private $painterImages As New NagatoPainterImages
+Private $painterText As New NagatoPainterText
+
+Private Function getX(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Cos(Rad(argDegree)) * argLength + 100
+    
+End
+
+Private Function getY(argDegree As Integer, argLength As Integer) As Float
+    
+    Return Sin(Rad(argDegree)) * argLength + 100
+    
+End
+
+Private Sub paintHand(argDegree As Integer, argLength As Integer, argWidth As Integer, argColor As Integer)
+    
+    Dim yukiDegree As Integer = argDegree - 225
+    
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 128)
+    Paint.LineWidth = argWidth
+    Paint.LineCap = Paint.LineCapRound
+    Paint.MoveTo(getX(yukiDegree, 15), getY(yukiDegree, 15))
+    Paint.LineTo(getX(yukiDegree, argLength), getY(yukiDegree, argLength))
+    Paint.Stroke()
+    
+End
+
+Private Sub paintPoint(argDegree As Integer, argColor As Integer)
+    
+    Dim yukiDegree As Integer = argDegree - 225
+    
+    Paint.Brush = Paint.Color(argColor + Color.Transparent * 128)
+    Paint.LineWidth = 1
+    Paint.MoveTo(getX(yukiDegree, 85), getY(yukiDegree, 85))
+    Paint.LineTo(getX(yukiDegree, 90), getY(yukiDegree, 90))
+    Paint.Stroke()
+    
+End
+
+Private Sub paintPoints()
+    
+    Dim yukiUnit As Integer
+    Dim yukiColor As Integer
+    
+    For yukiUnit = 1 To 9
+        Select Case yukiUnit
+            Case 4 To 6
+                paintPoint(yukiUnit * 27, Color.White)
+            Case Else
+                paintPoint(yukiUnit * 27, 9093574)
+        End Select
+    Next
+    
+End
+
+Public Sub PaintIt()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $systemMonitor.Activate()
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    If Not $systemMonitor.Activated Then Return
+    
+    Paint.Begin($drawingArea)
+        $painterImages.Paint()
+        paintPoints()
+        paintHand($systemMonitor.SwapUsage * 270, 60, 4, Color.Cyan)
+        paintHand($systemMonitor.MemoryUsage * 270, 70, 4, Color.Violet)
+        paintHand($systemMonitor.CpuUsage * 270, 80, 4, Color.Red)
+        $painterText.Paint($systemMonitor.GetText())
+    Paint.End()
+    
+End

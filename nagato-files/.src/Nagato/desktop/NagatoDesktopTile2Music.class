@@ -19,7 +19,7 @@ Private Sub getBaseImage() As Image
     Endif
     
     Return $coverArt.Copy()
-    
+
 Catch
     Return getNotActivatedImage()
     
@@ -71,11 +71,13 @@ End
 
 Public Sub _OnTimer() ' override
     
-    If Not DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
-         Try Me._$iconView[NagatoDesktopKey.Music].Picture = getNotActivatedImage().Picture
+    If Not Me._$iconView.Exist(NagatoDesktopKey.Music) Then
+        $coverArt = Null
+    Else If Not DBus.Session.Applications.Exist("org.gambas.nagato-player-x") Then
+        Try Me._$iconView[NagatoDesktopKey.Music].Picture = getNotActivatedImage().Picture
    Else
-         If Not Object.IsValid($proxy) Then $proxy = New NagatoDBusAccessNagatoPlayerX
-         Try Me._$iconView[NagatoDesktopKey.Music].Picture = getThumbnail().Picture
+        If Not Object.IsValid($proxy) Then $proxy = New NagatoDBusAccessNagatoPlayerX
+        Try Me._$iconView[NagatoDesktopKey.Music].Picture = getThumbnail().Picture
     End If
     
 End

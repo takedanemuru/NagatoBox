@@ -1,19 +1,55 @@
 ' Gambas class file
 
-Private $panel As Panel
+Private $vbox As VBox
+Private $editorList As NagatoEditorList
+
+Private Sub initializeVBox(argContainer As Container)
+    
+    $vbox = New VBox(argContainer) 
+    
+    With $vbox
+        .Expand = False
+        .H = 0
+        .Background = Color.LightBackground
+    End With
+    
+End
+
+Private Sub getAction(argXmlElement As XmlElement) As String
+    
+    If argXmlElement.Parent.Name = "startupnotify" Then
+        Return "startupnotify"
+    Else If argXmlElement.Name = "position" Then
+        Return ""
+    Else If argXmlElement.Name = "finalactions" Then
+        Return ""
+    Else
+        Return argXmlElement.Parent.GetAttribute("name", 1) 
+    Endif
+    
+End
 
 Public Sub Edit(argXmlElement As XmlElement)
     
-    Try Debug argXmlElement.Parent.GetAttribute("name", 1)
-    Debug argXmlElement.Name
+    Dim yukiAction As String = getAction(argXmlElement)
+    Dim yukiCurrentValue As String
+    Dim yukiList As String[]
+    
+    $vbox.H = IIf(yukiAction, 64, 0)
+    
+    If Not yukiAction Then Return
+    
+    yukiCurrentValue = MikuruSanitize.GetSanitizedValue(argXmlElement.Value)
+    yukiList = MikuruValueList[yukiAction, argXmlElement.Name]
+    
+    $editorList.Set(argXmlElement.Name, yukiCurrentValue, yukiList.Copy())
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    $panel = New Panel(argContainer)
-    $panel.Background = Color.Lighter(Color.Violet)
-    $panel.H = 100
+    initializeVBox(argContainer)
+    
+    $editorList = New NagatoEditorList($vbox)
     
 End
-
