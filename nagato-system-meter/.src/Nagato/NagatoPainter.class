@@ -1,0 +1,33 @@
+' Gambas class file
+
+Private $drawingArea As DrawingArea
+Private $systemMonitor As New NagatoDBusAccessSystemMonitor
+Private $painterImages As New NagatoPainterImages
+Private $painterText As New NagatoPainterText
+Private $painterHands As NagatoPainterHands
+
+Public Sub PaintIt()
+    
+    $drawingArea.Refresh()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $systemMonitor.Activate()
+    $painterHands = New NagatoPainterHands($systemMonitor)
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    If Not $systemMonitor.Activated Then Return
+    
+    Paint.Begin($drawingArea)
+        $painterImages.Paint()
+        $painterHands.Paint()
+        $painterText.Paint($systemMonitor.GetText())
+    Paint.End()
+    
+End

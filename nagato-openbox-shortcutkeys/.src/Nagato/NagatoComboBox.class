@@ -1,0 +1,45 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $comboBox As ComboBox
+Private $xmlElement As XmlElement
+
+Public Sub refreshComboBox()
+    
+    Dim yukiAction As String = MikuruAction.GetAction($xmlElement)
+    Dim yukiCurrentValue As String = MikuruSanitize.GetSanitizedValue($xmlElement.Value)
+    
+    Object.Lock($comboBox)
+        $comboBox.List = MikuruValueList[yukiAction, $xmlElement.Name]
+        Try $comboBox.Index = $comboBox.List.Find(yukiCurrentValue)
+    Object.Unlock($comboBox)
+    
+End
+
+Public Sub Refresh(argXmlElement As XmlElement)
+    
+    $xmlElement = argXmlElement
+    refreshComboBox()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $comboBox = New ComboBox(argContainer) As "ComboBox"
+
+    With $comboBox
+        .List = ["foo", "bar", "baz"]
+        .ReadOnly = True
+        .Expand = True
+    End With
+    
+End
+
+Public Sub ComboBox_Click()
+    
+    Try $xmlElement.Value = $comboBox.Current.Text
+    
+    If Not Error Then Raise Signal(MikuruSignal.ValueChanged, Null)
+    
+End

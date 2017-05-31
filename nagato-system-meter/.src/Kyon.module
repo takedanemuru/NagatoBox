@@ -2,6 +2,11 @@
 
 Public Sub Main()
     
-    HaruhiMain.Show()
+    If NagatoDBus.IsUnique() Then
+        NagatoDBus.Register()
+        HaruhiMain.Show()
+    Else
+        Try NagatoDBus.Proxy.Show()
+    End If
     
 End

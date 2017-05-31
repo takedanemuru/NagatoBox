@@ -33,8 +33,6 @@ End
 
 Public Sub _get(argAction As String, argOption As String) As String[]
     
-    'Debug argAction;; argOption
-    
     If argAction = "Execute" Then
         If argOption = "command" Then Return ["TEXT"]
         If argOption = "prompt" Then Return getBoolean()
@@ -63,4 +61,3 @@ Public Sub _get(argAction As String, argOption As String) As String[]
     Return [""]
     
 End
-

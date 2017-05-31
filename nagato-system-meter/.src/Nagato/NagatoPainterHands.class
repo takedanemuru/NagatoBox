@@ -1,9 +1,6 @@
 ' Gambas class file
 
-Private $drawingArea As DrawingArea
-Private $systemMonitor As New NagatoDBusAccessSystemMonitor
-Private $painterImages As New NagatoPainterImages
-Private $painterText As New NagatoPainterText
+Private $systemMonitor As NagatoDBusAccessSystemMonitor
 
 Private Function getX(argDegree As Integer, argLength As Integer) As Float
     
@@ -58,30 +55,17 @@ Private Sub paintPoints()
     
 End
 
-Public Sub PaintIt()
+Public Sub Paint()
     
-    $drawingArea.Refresh()
-    
-End
-
-Public Sub _new(argContainer As Container)
-    
-    $systemMonitor.Activate()
-    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    paintPoints()
+    paintHand($systemMonitor.SwapUsage * 270, 60, 4, Color.Cyan)
+    paintHand($systemMonitor.MemoryUsage * 270, 70, 4, Color.Violet)
+    paintHand($systemMonitor.CpuUsage * 270, 80, 4, Color.Red)
     
 End
 
-Public Sub DrawingArea_Draw()
+Public Sub _new(argSystemMonitor As NagatoDBusAccessSystemMonitor)
     
-    If Not $systemMonitor.Activated Then Return
-    
-    Paint.Begin($drawingArea)
-        $painterImages.Paint()
-        paintPoints()
-        paintHand($systemMonitor.SwapUsage * 270, 60, 4, Color.Cyan)
-        paintHand($systemMonitor.MemoryUsage * 270, 70, 4, Color.Violet)
-        paintHand($systemMonitor.CpuUsage * 270, 80, 4, Color.Red)
-        $painterText.Paint($systemMonitor.GetText())
-    Paint.End()
+    $systemMonitor = argSystemMonitor
     
 End

@@ -1,55 +1,28 @@
 ' Gambas class file
 
-Private $vbox As VBox
-Private $editorList As NagatoEditorList
+Inherits NagatoObject
 
-Private Sub initializeVBox(argContainer As Container)
-    
-    $vbox = New VBox(argContainer) 
-    
-    With $vbox
-        .Expand = False
-        .H = 0
-        .Background = Color.LightBackground
-    End With
-    
-End
-
-Private Sub getAction(argXmlElement As XmlElement) As String
-    
-    If argXmlElement.Parent.Name = "startupnotify" Then
-        Return "startupnotify"
-    Else If argXmlElement.Name = "position" Then
-        Return ""
-    Else If argXmlElement.Name = "finalactions" Then
-        Return ""
-    Else
-        Return argXmlElement.Parent.GetAttribute("name", 1) 
-    Endif
-    
-End
+Private $hbox As NagatoHBox
+Private $label As NagatoLabel
+Private $comboBox As NagatoComboBox
 
 Public Sub Edit(argXmlElement As XmlElement)
     
-    Dim yukiAction As String = getAction(argXmlElement)
-    Dim yukiCurrentValue As String
-    Dim yukiList As String[]
+    Dim yukiAction As String = MikuruAction.GetAction(argXmlElement)
+
+    $hbox.Refresh(yukiAction)
     
-    $vbox.H = IIf(yukiAction, 64, 0)
-    
-    If Not yukiAction Then Return
-    
-    yukiCurrentValue = MikuruSanitize.GetSanitizedValue(argXmlElement.Value)
-    yukiList = MikuruValueList[yukiAction, argXmlElement.Name]
-    
-    $editorList.Set(argXmlElement.Name, yukiCurrentValue, yukiList.Copy())
+    If $hbox.Container.H = 0 Then Return
+
+    $label.Refresh(argXmlElement.Name)
+    $comboBox.Refresh(argXmlElement)
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    initializeVBox(argContainer)
-    
-    $editorList = New NagatoEditorList($vbox)
+    $hbox = New NagatoHBox(argContainer)
+    $label = New NagatoLabel($hbox.Container)
+    $comboBox = New NagatoComboBox($hbox.Container) As "TFEI"
     
 End

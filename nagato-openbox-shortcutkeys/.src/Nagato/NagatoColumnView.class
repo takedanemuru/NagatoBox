@@ -1,0 +1,62 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $xmlDocument As XmlDocument
+Private $columnView As ColumnView
+Private $keybinds As NagatoKeybinds
+Private $mouseContexts As NagatoMouseContexts
+
+Event Click(argXmlElement As XmlElement)
+
+Private Sub initializeColumnView(argContainer As Container)
+    
+    $columnView = New ColumnView(argContainer) As "ColumnView"
+    
+    With $columnView
+        .AutoResize = True
+        .Expand = True
+        .Columns.Count = 2
+        .Foreground = Color.Gray
+        .Columns[0].Background = Color.Merge(Color.White, Color.Violet, 0.1)
+        .Columns[1].Title = "Option Value"
+    End With
+    
+End
+
+Private Sub refreshColumnView()
+    
+    Dim yukiKey As Integer = MikuruUniqueIndex.Recall()
+    Dim yukiXmlElementKeyboard As XmlElement = $xmlDocument.GetElementsByTagName("keyboard")[0]
+    'Dim yukiXmlElementMouse As XmlElement = $xmlDocument.GetElementsByTagName("mouse")[0]
+    
+    $columnView.Clear()
+    $keybinds = New NagatoKeybinds(yukiKey, yukiXmlElementKeyboard, $columnView) 
+    '$mouseContexts = New NagatoMouseContexts(yukiKey, yukiXmlElementMouse, $columnView)
+    
+End
+
+Public Sub Refresh()
+    
+    Dim yukiCurrentKey As String = $columnView.Key
+    
+    refreshColumnView()
+    Try $columnView.Key = yukiCurrentKey
+    
+End
+
+Public Sub _new(argContainer As Container, argXmlDocument As XmlDocument)
+    
+    $xmlDocument = argXmlDocument
+    
+    initializeColumnView(argContainer)
+    
+End
+
+Public Sub ColumnView_Click()
+    
+    Dim yukiXmlElement As XmlElement = $keybinds.GetChild($columnView.Key)
+    
+    Raise Click(yukiXmlElement)
+    
+End

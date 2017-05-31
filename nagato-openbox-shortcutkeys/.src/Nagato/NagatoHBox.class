@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Property Read Container As Container
+
+Private $hbox As HBox
+
+Public Sub Refresh(argAction As String)
+    
+    $hbox.H = IIf(argAction <> "", 64, 0)
+
+End
+
+Public Sub _new(argContainer As Container)
+    
+    $hbox = New HBox(argContainer)
+    
+    With $hbox
+        .Expand = False
+        .Background = Color.LightBackground
+        .Padding = 8
+        .H = 0
+    End With
+    
+End
+
+Private Function Container_Read() As Container
+
+    Return $hbox
+
+End
