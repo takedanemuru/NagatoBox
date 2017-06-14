@@ -2,8 +2,8 @@
 # Compiled with Gambas 3.9.2
 Title=nagato-openbox-shortcutkeys
 Startup=Kyon
-Icon=pictures/Icons/equalizer.png
-Version=0.6.3
+Icon=pictures/Icons/keyboard.png
+Version=42.8.3
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -17,5 +17,15 @@ Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Translate=1
 Language=ja
+Maintainer=takedanemuru
 Vendor=IntegratedDataThoughtEntities
+Address=takeda.nemuru@yandex.com
+Url=https://takedanemuru.github.io
+License=S.O.S. License
+PackageName=nagato-openbox-shortcutkeys-42.8.3
 Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"Nagato;Settings"
+Groups=ubuntu:"admin"
+ExtraDependencies=ubuntu:"openbox\t\t"

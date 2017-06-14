@@ -2,6 +2,7 @@
 
 Inherits NagatoObject
 
+Private $rcPath As New NagatoRcPath
 Private $xmlDocument As New XmlDocument
 Private $tempPath As String
 
@@ -15,10 +16,18 @@ Public Sub SaveTemp()
     
 End
 
+Public Sub Save()
+    
+    Dim yukiText As String = $xmlDocument.ToString(True)
+    
+    File.Save($rcPath.Path, MikuruSanitize.RemoveUselessLines(yukiText))
+    
+End
+
 Public Sub _new()
     
     $tempPath = Temp() & ".xml"
-    Copy User.Home &/ "test-rc.xml" To $tempPath
+    Copy $rcPath.Path To $tempPath
     $xmlDocument.Open($tempPath)
 
 End

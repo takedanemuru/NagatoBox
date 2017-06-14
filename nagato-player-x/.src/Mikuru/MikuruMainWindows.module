@@ -11,6 +11,7 @@ Private Sub setMainForm(argValue As Integer)
             Application.MainWindow = HaruhiPlayList
             HaruhiPlayer.Close()
             HaruhiCovergloobus.Close()
+            HaruhiPlayList.Show()
         Case NagatoSettingsForm.HCoverArt
             Application.MainWindow = HaruhiCovergloobus
             HaruhiPlayer.Close()

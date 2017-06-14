@@ -3,24 +3,21 @@
 Inherits NagatoObject
 
 Private $comboBox As ComboBox
-Private $xmlElement As XmlElement
 
-Public Sub refreshComboBox()
+Public Sub Hide()
     
-    Dim yukiAction As String = MikuruAction.GetAction($xmlElement)
-    Dim yukiCurrentValue As String = MikuruSanitize.GetSanitizedValue($xmlElement.Value)
-    
-    Object.Lock($comboBox)
-        $comboBox.List = MikuruValueList[yukiAction, $xmlElement.Name]
-        Try $comboBox.Index = $comboBox.List.Find(yukiCurrentValue)
-    Object.Unlock($comboBox)
+    $comboBox.Visible = False
     
 End
 
-Public Sub Refresh(argXmlElement As XmlElement)
+Public Sub Reset(argList As String[], argCurrentValue As String)
     
-    $xmlElement = argXmlElement
-    refreshComboBox()
+    $comboBox.Visible = True
+    
+    Object.Lock($comboBox)
+        $comboBox.List = argList
+        Try $comboBox.Index = $comboBox.List.Find(argCurrentValue)
+    Object.Unlock($comboBox)
     
 End
 
@@ -38,8 +35,6 @@ End
 
 Public Sub ComboBox_Click()
     
-    Try $xmlElement.Value = $comboBox.Current.Text
-    
-    If Not Error Then Raise Signal(MikuruSignal.ValueChanged, Null)
+    Raise Signal(MikuruSignal.ValueChanged, [$comboBox.Text])
     
 End

@@ -1,0 +1,59 @@
+' Gambas class file
+
+Property Read Path As String
+
+Private $proc As Integer
+Private $originalPath As String
+
+Private Sub setProccessNumber()
+    
+    Dim yukiOutput As String
+    
+    Shell "pgrep openbox" To yukiOutput
+    
+    $proc = Replace(yukiOutput, "\n", "")
+    
+Catch
+    $proc = -1
+    
+End
+
+Private Sub getDefault() As String
+    
+    Dim yukiDefaultPath As String = Desktop.ConfigDir &/ "openbox/rc.xml"
+    
+    If Not Exist(yukiDefaultPath) Then Copy "/etc/xdg/openbox/rc.xml" To yukiDefaultPath
+    
+    Return yukiDefaultPath
+    
+End
+
+Public Sub setRcPath()
+    
+    Dim yukiCommandLine As String = File.Load(Subst("/proc/&1/cmdline", $proc))
+    Dim yukiCommands As String[] = Split(yukiCommandLine, "\0", "", True)
+    Dim yukiPosition As Integer = yukiCommands.Find("--config-file") + 1
+    
+    If yukiPosition = 0 Then 
+        $originalPath = getDefault()
+    Else
+        $originalPath = yukiCommands[yukiPosition]
+    Endif
+    
+End
+
+Public Sub _new()
+    
+    setProccessNumber()
+    If $proc > 0 Then setRcPath()
+    
+    'to do
+    If $originalPath = "" Then $originalPath = getDefault()
+    
+End
+
+Private Function Path_Read() As String
+
+    Return $originalPath
+
+End

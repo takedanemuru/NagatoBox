@@ -1,0 +1,12 @@
+' Gambas class file
+
+Inherits NagatoPulldownMenu
+
+Public Sub _OnRefreshChildMenus()
+    
+    Me._AddMenuItem(("Refresh"), 0, "button-rotate-cw")
+        Me._AddMenuItem("", 0)
+    Me._AddMenuItem(("About"), 0, "star")
+    Me._AddMenuItem(("Quit"), 0, "button-power")
+    
+End

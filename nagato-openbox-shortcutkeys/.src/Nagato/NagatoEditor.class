@@ -4,7 +4,7 @@ Inherits NagatoObject
 
 Private $hbox As NagatoHBox
 Private $label As NagatoLabel
-Private $comboBox As NagatoComboBox
+Private $userInput As NagatoUserInput
 
 Public Sub Edit(argXmlElement As XmlElement)
     
@@ -14,8 +14,8 @@ Public Sub Edit(argXmlElement As XmlElement)
     
     If $hbox.Container.H = 0 Then Return
 
+    $userInput.Refresh(argXmlElement)
     $label.Refresh(argXmlElement.Name)
-    $comboBox.Refresh(argXmlElement)
     
 End
 
@@ -23,6 +23,6 @@ Public Sub _new(argContainer As Container)
     
     $hbox = New NagatoHBox(argContainer)
     $label = New NagatoLabel($hbox.Container)
-    $comboBox = New NagatoComboBox($hbox.Container) As "TFEI"
+    $userInput = New NagatoUserInput($hbox.Container) As "TFEI"
     
 End

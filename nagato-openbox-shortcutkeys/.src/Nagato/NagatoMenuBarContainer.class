@@ -1,0 +1,43 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $hbox As HBox
+Private $saveButton As NagatoMenuButtonSave
+Private $panel As Panel
+Private $starButton As NagatoMenuButtonStar
+
+Private Sub initializeContainer(argContainer As Container)
+    
+    $hbox = New HBox(argContainer)
+    
+    With $hbox
+        .H = 32
+    End With
+    
+End
+
+Private Sub initializePanel(argContainer As Container)
+    
+    $panel = New Panel($hbox)
+    
+    With $panel
+        .Expand = True
+    End With
+    
+End
+
+Public Sub ShowSaveButton()
+    
+    $saveButton.Show()
+    
+End
+
+Public Sub _new(argContainer As Container)
+    
+    initializeContainer(argContainer)
+    $saveButton = New NagatoMenuButtonSave($hbox) As "TFEI"
+    initializePanel(argContainer)
+    $starButton = New NagatoMenuButtonStar($hbox) As "TFEI"
+    
+End

@@ -35,7 +35,7 @@ Public Sub _get(argAction As String, argOption As String) As String[]
     
     If argAction = "Execute" Then
         If argOption = "command" Then Return ["TEXT"]
-        If argOption = "prompt" Then Return getBoolean()
+        If argOption = "prompt" Then Return ["TEXT"]
     Else If argAction = "startupnotify" Then
         If argOption = "enabled" Then Return getBoolean()
         If argOption = "wmclass" Then Return ["TEXT"]

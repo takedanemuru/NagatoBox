@@ -29,6 +29,8 @@ Public Sub Form_Open()
     $painter.Reset()
     
     Me.Form_Move()
+    MikuruX11.SetAsDock(Me.Id)
+    MikuruX11.ReservePanelHeightOnScreen(Me.Id, Me.H)
 
 End
 
