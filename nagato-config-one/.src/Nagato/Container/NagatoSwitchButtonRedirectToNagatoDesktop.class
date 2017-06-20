@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits NagatoContainer
+
+Public _$switchButton As SwitchButton
+
+Private $settings As Settings
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "redirect to nagato-desktop if it's possible"
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 192
+    
+End
+
+Public Sub _OnInitializeOptionalValues(argOptionalValues As Variant[])
+    
+    $settings = argOptionalValues[0]
+    
+End
+
+Public Sub _OptionalOnInitializeValueWidget()
+    
+    Me._$switchButton = New SwitchButton(Me._$hbox) As "Button"
+    
+    With Me._$switchButton
+        .Value = $settings["redirect/to_nagato_desktop"]
+        .Animated = True
+        .Expand = False
+        .W = 80
+    End With
+    
+End
+
+Public Sub Apply()
+    
+    $settings["redirect/to_nagato_desktop"] = Me._$switchButton.Value
+    
+End
+
+Public Sub Button_Click()
+    
+    Raise Signal(MikuruSignal.PropertyChanged, Null)
+    
+End

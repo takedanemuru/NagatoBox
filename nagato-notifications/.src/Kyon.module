@@ -8,7 +8,7 @@ Private $dbus As New NagatoDBus
 
 Private Sub callNotify()
     
-    If DBus.Session.Applications.Exist(Service) Then ' redirect to nagato-desktop
+    If DBus.Session.Applications.Exist(Service) And If NagatoSettings.RedirectToNagatoDesktop Then 
         With NagatoArgs
             DBus[Service][ObjectPath, Interface].Notify(.App, .Summary, .Body, .Urgency)
         End With
@@ -21,6 +21,7 @@ End
 Public Sub Main()
     
     NagatoArgs.Parsing()
+    NagatoSettings.EnsureDefault()
     
     If Args.Max = 0 Then
         $dbus.EnsureService()

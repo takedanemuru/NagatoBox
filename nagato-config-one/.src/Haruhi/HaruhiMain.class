@@ -45,6 +45,8 @@ Public Sub Group_Signal(argSignal As Integer, argValues As Variant[])
             $group = New NagatoGroupScreenIdling(VBox1) As "Group"
         Case MikuruSignal.GoToXdgUserDirs
             $group = New NagatoGroupXdgUserDirs(VBox1) As "Group"
+        Case MikuruSignal.GoToNotifications
+            $group = New NagatoGroupNotifications(VBox1) As "Group"
     End Select
     
     Me.Form_Resize()

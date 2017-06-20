@@ -5,8 +5,20 @@ Create Static
 Property BackgroundLow As Integer
 Property BackGroundNormal As Integer
 Property BackgroundUrgent As Integer
+Property RedirectToNagatoDesktop As Boolean
 
 Private $settings As New Settings
+
+Public Sub EnsureDefault()
+    
+    If Exist($settings.Path) Then Return
+    
+    Me.BackgroundLow = Me.BackgroundLow
+    Me.BackGroundNormal = Me.BackGroundNormal
+    Me.BackgroundUrgent = Me.BackgroundUrgent
+    Me.RedirectToNagatoDesktop = Me.RedirectToNagatoDesktop
+    
+End
 
 Private Function BackgroundLow_Read() As Integer
 
@@ -17,6 +29,7 @@ End
 Private Sub BackgroundLow_Write(Value As Integer)
 
     $settings["backgroung/low"] = Value
+    $settings.Save()
 
 End
 
@@ -29,6 +42,7 @@ End
 Private Sub BackGroundNormal_Write(Value As Integer)
 
     $settings["backgroung/normal"] = Value
+    $settings.Save()
 
 End
 
@@ -41,5 +55,19 @@ End
 Private Sub BackgroundUrgent_Write(Value As Integer)
 
     $settings["backgroung/urgent"] = Value
+    $settings.Save()
+
+End
+
+Private Function RedirectToNagatoDesktop_Read() As Boolean
+
+    Return $settings["redirect/to_nagato_desktop", True]
+
+End
+
+Private Sub RedirectToNagatoDesktop_Write(Value As Boolean)
+
+    $settings["redirect/to_nagato_desktop"] = Value
+    $settings.Save()
 
 End

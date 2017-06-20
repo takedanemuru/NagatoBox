@@ -1,0 +1,15 @@
+' Gambas class file
+
+Inherits NagatoColorButtonNotifications
+
+Public Function _OnGetKey() As String
+    
+    Return "backgroung/urgent"
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Urgent Label Color"
+    
+End

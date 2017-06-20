@@ -27,7 +27,7 @@ End
 
 Public Sub ReservePanelHeightOnScreen(argWindowId As Integer, argHeight As Integer) 
     
-    Dim yukiValue As String = Subst$("0,0,0,&1", argHeight) 
+    Dim yukiValue As String = Subst$("0,0,&1,0", argHeight) 
     
     Shell Subst("xprop -id &1 -f &2 32c -set &2 &3", argWindowId, TypeStrut, yukiValue) Wait
     

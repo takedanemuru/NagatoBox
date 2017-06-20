@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoColorButton
+
+Create Private
+
+Public _$settings As Settings
+
+Public Sub _OnGetKey() As String
+    
+    Return "" ' dummy
+    
+End
+
+Public Function _OnGetValue() As Integer
+    
+    Return Me._$settings[Me._OnGetKey()]
+    
+End
+
+Public Sub _OnInitializeOptionalValues(argOptionalValues As Variant[])
+    
+    Me._$settings = argOptionalValues[0]
+    
+End
+
+Public Sub Apply()
+    
+    Me._$settings[Me._OnGetKey()] = Me._$colorButton.Value
+    Me._$settings.Save()
+    
+End

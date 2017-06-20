@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoColorButtonNotifications
+
+Public Function _OnGetKey() As String
+    
+    Return "backgroung/normal"
+    
+End
+
+Public Sub _OnGetLabelText() As String
+    
+    Return "Normal Label Color"
+    
+End
+
+Public Function _OnGetBackgroundColor() As Integer
+    
+    Return Color.White + Color.Transparent * 128
+    
+End

@@ -5,6 +5,7 @@ Inherits NagatoGroup
 Private $appearance As NagatoButtonGoToAppearance
 Private $screenLocker As NagatoButtonGoToScreenLocker
 Private $xdgUserDirs As NagatoButtonGoToXdgUserDirs
+Private $notifications As NagatoButtonGoNotifications
 
 Public Sub _OnInitializeContainers(argContainer As Container)
     
@@ -13,5 +14,8 @@ Public Sub _OnInitializeContainers(argContainer As Container)
     $appearance = New NagatoButtonGoToAppearance(argContainer) As "TFEI"
     $screenLocker = New NagatoButtonGoToScreenLocker(argContainer) As "TFEI"
     $xdgUserDirs = New NagatoButtonGoToXdgUserDirs(argContainer) As "TFEI"
+    If MikuruApplicationConf.Exist("nagato-notifications")
+        $notifications = New NagatoButtonGoNotifications(argContainer) As "TFEI"
+    End If
     
 End

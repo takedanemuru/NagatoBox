@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $settings As Settings
+Private $redirect As NagatoSwitchButtonRedirectToNagatoDesktop
+Private $urgent As NagatoColorButtonNotificationsUrgent
+Private $normal As NagatoColorButtonNotificationsNormal
+Private $low As NagatoColorButtonNotificationsLow
+
+Public Sub _new(argContainer As Container)
+    
+    $settings = MikuruApplicationConf.GetSettings("nagato-notifications")
+    
+    $redirect = New NagatoSwitchButtonRedirectToNagatoDesktop(argContainer, [$settings]) As "TFEI"
+        Object.New("NagatoContainer", [argContainer])
+    $urgent = New NagatoColorButtonNotificationsUrgent(argContainer, [$settings]) As "TFEI"
+    $normal = New NagatoColorButtonNotificationsNormal(argContainer, [$settings]) As "TFEI"
+    $low = New NagatoColorButtonNotificationsLow(argContainer, [$settings]) As "TFEI"
+    
+End
+
+Public Sub Apply()
+    
+    $redirect.Apply()
+    $urgent.Apply()
+    $normal.Apply()
+    $low.Apply()
+    
+    Message.Info("YUKI.N > It's done.", ("OK"))
+    
+End

@@ -1,0 +1,29 @@
+' Gambas class file
+
+Inherits NagatoGroup
+
+Private $valueButtons As NagatoNotificationsButtons
+Private $applyButton As NagatoContainerApplyButton
+
+Public Sub _OnInitializeContainers(argContainer As Container)
+    
+    Object.New("NagatoLabelNotifications", [argContainer])
+        Object.New("NagatoContainer", [argContainer])
+    $valueButtons = New NagatoNotificationsButtons(argContainer) As "Container"
+        Object.New("NagatoContainer", [argContainer])
+    $applyButton = New NagatoContainerApplyButton(argContainer) As "Container"
+
+End
+
+Public Sub Container_Signal(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.PropertyChanged
+            $applyButton.Enable()
+        Case MikuruSignal.PropertyApplyChanges
+            $valueButtons.Apply()
+        Case MikuruSignal.GoToMain
+            Raise Signal(argSignal, argValues)
+    End Select
+    
+End
