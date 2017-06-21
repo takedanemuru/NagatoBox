@@ -10,6 +10,6 @@ End
 
 Public Sub _OnGetLabelText() As String
     
-    Return "Low Label Color"
+    Return ("Label Color : Low")
     
 End

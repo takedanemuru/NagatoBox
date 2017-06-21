@@ -2,13 +2,25 @@
 
 Inherits NagatoObject
 
+Private $targetPath As String
+Private $sourceUrl As String
+Private $status As Integer
+
+Private Sub retryDownloadAsMovie()
+    
+    $status = -2
+    
+    Exec ["youtube-dl", $sourceUrl, "-o", $targetPath] For Read As "YouTubeDL"
+    
+End
+
 Public Sub DownloadAsMovie(argUrl As String)
     
-    Dim yukiDirectory As String = MikuruDialog.GetDirectoryPath("VIDEOS")
-    
-    If yukiDirectory = "" Then Return
+    $status = -1
+    $sourceUrl = argUrl
+    $targetPath = MikuruDialog.GetDirectoryPath("VIDEOS") &/ "%(title)s.%(ext)s"
 
-    Exec ["youtube-dl", "-f", "webm", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
+    Exec ["youtube-dl", "-f", "webm", argUrl, "-o", $targetPath] For Read As "YouTubeDL"
     
     Raise Signal(MikuruSignal.DownloaderStart, Null)
     
@@ -19,6 +31,8 @@ Public Sub DownloadAsMusic(argUrl As String)
     Dim yukiDirectory As String = MikuruDialog.GetDirectoryPath("MUSIC")
     
     If yukiDirectory = "" Then Return
+
+    $status = 0
 
     Exec ["youtube-dl", "-x", "--audio-format", "mp3", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
     
@@ -33,6 +47,7 @@ Public Sub YouTubeDL_Read()
     
     Read #Last, yukiLine, -256
     
+    If yukiLine Begins "[download]" And If 0 > $status Then $status = 1
     If yukiLine Begins "[download]" Then Raise Signal(MikuruSignal.DownloaderOngoing, Null)
     If yukiLine Begins "[ffmpeg]" Then Raise Signal(MikuruSignal.DownloaderEncoding, Null)
     
@@ -40,8 +55,15 @@ End
 
 Public Sub YouTubeDL_Kill()
     
-    Raise Signal(MikuruSignal.DownloaderFinished, Null)
-    
+    If $status >= 0 Then
+        Raise Signal(MikuruSignal.DownloaderFinished, Null)
+        Exec ["notify-send", "-a", "nagato-youtube-view", "download finished"]
+    Else If $status = -1 Then
+        retryDownloadAsMovie()
+    Else
+        Raise Signal(MikuruSignal.DownloaderErrorOccurred, ["Download Failed"])
+    End If
+
 End
 
 Public Sub YouTubeDL_Error(argError As String)

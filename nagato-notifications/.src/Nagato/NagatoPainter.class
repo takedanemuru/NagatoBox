@@ -19,9 +19,11 @@ Private Sub selectPhasePainting()
     
     Select Case $count
         Case 0 To 4
-            paintText("YUKI.N > " & NagatoArgs.Summary)
-        Case 5 To 8
-            paintText("YUKI.N > " & NagatoArgs.Body)
+            If Not NagatoArgs.Summary Then $count = 5
+            If NagatoArgs.Summary Then paintText("YUKI.N > " & NagatoArgs.Summary)
+        Case 5 To 9
+            If Not NagatoArgs.Body Then $count = 10
+            If NagatoArgs.Body Then paintText("YUKI.N > " & NagatoArgs.Body)
         Default
             Raise Finished
     End Select

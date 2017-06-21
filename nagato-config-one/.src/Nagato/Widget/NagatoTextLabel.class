@@ -1,0 +1,18 @@
+' Gambas class file
+
+Private $textLabel As TextLabel
+
+Public Sub _new(argContainer As Container, argAlignment As Integer, argText As String)
+    
+    $textLabel = New TextLabel(argContainer)
+    
+    With $textLabel
+        .Text = argText
+        .Expand = True
+        .Foreground = Color.Gray
+        .Font.Bold = True
+        .Alignment = argAlignment
+        .Padding = 8
+    End With
+    
+End

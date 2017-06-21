@@ -10,7 +10,7 @@ End
 
 Public Sub _OnGetLabelText() As String
     
-    Return "Normal Label Color"
+    Return ("Label Color : Normal")
     
 End
 

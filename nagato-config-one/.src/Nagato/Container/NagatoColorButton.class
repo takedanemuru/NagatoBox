@@ -18,12 +18,6 @@ Public Function _OnGetBackgroundColor() As Integer
     
 End
 
-Public Sub _OnGetForegroundColor() As Integer
-    
-    Return Color.Gray
-    
-End
-
 Public Sub _OptionalOnInitializeValueWidget()
     
     Me._$colorButton = New ColorButton(Me._$hbox) As "ColorButton"
