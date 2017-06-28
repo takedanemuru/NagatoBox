@@ -16,6 +16,8 @@ Private Sub setNewTab()
     
     If Exist(Me._$listView.Key) Then
         TFEI.SetNewDirectory(Me._$listView.Key)
+    Else If Me._$listView.Key Begins "NagatoSeparatorKey" Then
+        Return
     Else
         Message.Warning(("YUKI.N > Directory is not existed."), ("OK"))
     End If
