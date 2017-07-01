@@ -1,9 +1,9 @@
 # Gambas Project File 3.0
 # Compiled with Gambas 3.9.2
-Title=nagato-youtube-view
+Title=nagato-youtube-browser
 Startup=Kyon
 Icon=pictures/icons/television.png
-Version=42.8.17
+Version=42.9.18
 Component=gb.image
 Component=gb.qt5
 Component=gb.form
@@ -13,7 +13,7 @@ Component=gb.desktop.x11
 Component=gb.desktop
 Component=gb.settings
 Component=gb.qt5.webkit
-Description="youtube viewer"
+Description="youtube browser / downloader"
 Authors="takeda.nemuru <takeda.nemuru@yandex.com>"
 TabSize=4
 Language=en
@@ -22,11 +22,12 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=https://takedanemuru.github.io
 License=S.O.S. License
-PackageName=nagato-youtube-view-42.8.17
+PackageName=nagato-youtube-browser-42.9.18
+PackageVersion=2
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/Network/Web Browsing"
 Categories=ubuntu:"Nagato;Network"
 Groups=ubuntu:"net"
 ExtraDependencies=ubuntu:"youtube-dl\t\t\nmpv\t\t"
-ExtraFiles=ubuntu:"nagato-youtube-view.desktop\t/usr/share/applications\nnagato-youtube-view.png\t/usr/share/pixmaps"
+ExtraFiles=ubuntu:"nagato-youtube-browser.desktop\t/usr/share/applications\nnagato-youtube-browser.png\t/usr/share/pixmaps"
