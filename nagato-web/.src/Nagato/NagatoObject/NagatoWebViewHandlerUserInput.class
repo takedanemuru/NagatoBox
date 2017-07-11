@@ -5,11 +5,13 @@ Inherits NagatoObject
 Private $webView As WebView
 Private $observer As Observer
 Private $lastLink As String
+Private $timelock As Date
 
 Public Sub _new(argWebView As WebView)
     
     $webView = argWebView
     $observer = New Observer($webView) As "Asakura"
+    $timelock = Now()
     
 End
 
@@ -30,8 +32,13 @@ End
 
 Public Sub Asakura_KeyPress()
     
+    If 1 > DateDiff($timelock, Now(), gb.Second) Then Return
+    
     If Key.Alt And If Key.Code = Key.Left Then $webView.Back()
     If Key.Alt And If Key.Code = Key.Right Then $webView.Forward()
     If Key.Control And If Key.Code = Key["f"] Then Raise Signal(MikuruSignal.InPageSearchToggle, Null)
+    If Key.Code = Key.F11 Then NagatoSettingsForm.FullScreen = Not NagatoSettingsForm.FullScreen
+    
+    $timelock = Now()
     
 End

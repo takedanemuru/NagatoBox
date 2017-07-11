@@ -35,4 +35,6 @@ Private Sub FullScreen_Write(Value As Boolean)
     Me._$settings["form_fullscreen"] = Value
     Me._$settings.Save()
 
+    HaruhiMain.ToggleFullscreen()
+
 End

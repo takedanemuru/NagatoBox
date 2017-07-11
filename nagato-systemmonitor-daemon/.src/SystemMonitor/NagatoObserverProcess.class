@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoObserver
-
-Public Function _GetUsage() As Float
-    
-    Return Dir("/proc", "[0-9]*", gb.Directory).Count
-    
-End

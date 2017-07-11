@@ -7,6 +7,7 @@ Property Read ActiveIndex As Integer
 
 Private $menubar As NagatoMenuBar
 Private $webs As NagatoWebs
+Private $pageCapture As NagatoPageCapture
 
 Private Sub insertWeb(argIndex As Integer, argUrl As String)
     
@@ -56,6 +57,7 @@ Public Sub _new(argMenubarContainer As Container, argWebsContainer As Container)
     
     $menubar = New NagatoMenuBar(argMenubarContainer) As "UserControl"
     $webs = New NagatoWebs(argWebsContainer) As "UserControl"
+    $pageCapture = New NagatoPageCapture(argWebsContainer)
     
 End
 

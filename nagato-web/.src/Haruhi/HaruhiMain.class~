@@ -27,10 +27,25 @@ Public Sub SetUrl(argUrl As String)
     
 End
 
+Public Sub ToggleFullscreen()
+    
+    Debug "toggle fullscreen"
+    
+    If NagatoSettingsForm.FullScreen Then
+        Me.FullScreen = True
+        PersonaDrawingArea.Visible = False
+    Else
+        Me.FullScreen = False
+        PersonaDrawingArea.Visible = True
+    Endif
+    
+    Debug Me.FullScreen
+    
+End
+
 Public Sub Form_Open()
     
-    Me.FullScreen = True
-    PersonaDrawingArea.Visible = False
+    Me.ToggleFullscreen()
     
     $headerContainer = New NagatoHeaderContainer(PersonaDrawingArea, SearchBoxContainer) As "UX"
     $bodyContainer = New NagatoBodyContainer(MenuHBox, WebsVBox) As "Body"

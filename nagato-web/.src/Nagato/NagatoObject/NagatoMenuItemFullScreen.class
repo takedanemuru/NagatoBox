@@ -14,6 +14,5 @@ End
 Public Sub _OnClickMenuItem()
     
     NagatoSettingsForm.FullScreen = Not NagatoSettingsForm.FullScreen
-    HaruhiMain.ToggleFullscreen()
     
 End
