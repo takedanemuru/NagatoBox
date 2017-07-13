@@ -5,14 +5,22 @@ Inherits NagatoObject
 Private $drawingArea As DrawingArea
 Private $observer As Observer
 
-Private Function setNewY(argUnit As Float) As Integer
+Private Function getNewY(argUnit As Float) As Integer
     
     Dim yukiY As Integer = NagatoSettingsPersona.Y + argUnit * TFEI.UX.Unit
     
     yukiY = Min(0, yukiY)
     yukiY = Max(yukiY, $drawingArea.H - MikuruPersona.Image.H)    
     
-    NagatoSettingsPersona.Y = yukiY
+    Return yukiY
+    
+End
+
+Private Function setNewY(argUnit As Float) As Integer
+    
+    If NagatoSettingsPersona.Lock Then Return
+    
+    NagatoSettingsPersona.Y = getNewY(argUnit)
     $drawingArea.Refresh()
     
 End
@@ -37,6 +45,6 @@ End
 
 Public Sub Asakura_MouseWheel()
     
-    If Not NagatoSettingsPersona.Lock Then setNewY(Mouse.Delta)
+    setNewY(Mouse.Delta)
 
 End

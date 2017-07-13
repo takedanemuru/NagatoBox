@@ -19,7 +19,7 @@ Private Sub addItem(argResult As Result, argCategory As String)
     
 End
 
-Private Sub addBookmarkItems(argCategory As String, Optional argStartPosition As Integer = 0)
+Private Sub addBookmarkItems(argCategory As String)
     
     Dim yukiResult As Result = NagatoDBBookmark.GetBookmarkResultByCategoryName(argCategory)
 

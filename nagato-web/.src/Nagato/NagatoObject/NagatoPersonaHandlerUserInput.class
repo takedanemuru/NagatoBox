@@ -56,6 +56,12 @@ Public Sub Asakura_MouseDown()
     
 End
 
+Public Sub Asakura_Enter()
+    
+    $drawingArea.Focus = True
+    
+End
+
 Public Sub Asakura_MouseMove()
     
     $tabs.SetOnMouseIndex(Mouse.X, Mouse.Y)
@@ -67,6 +73,7 @@ Public Sub Asakura_Leave()
     
     $tabs.ClearOnMouseIndex()
     $drawingArea.Refresh()
+    $drawingArea.Focus = False
     
 End
 

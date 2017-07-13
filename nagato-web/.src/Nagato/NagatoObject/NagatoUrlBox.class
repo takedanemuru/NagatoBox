@@ -21,6 +21,8 @@ End
 
 Public Sub SetUrl(argUrl As String)
     
+    If $urlBox.HasFocus Then Return
+    
     Object.Lock($urlBox)
         $urlBox.Text = argUrl
     Object.Unlock($urlBox)

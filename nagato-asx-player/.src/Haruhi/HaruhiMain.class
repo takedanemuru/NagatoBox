@@ -54,3 +54,13 @@ Public Sub TextLabel1_MouseDown()
     Endif
 
 End
+
+Public Sub Player_State()
+    
+    If $player.State = Media.Playing Then
+         TextLabel1.Tooltip = "Click to pause"
+    Else
+        TextLabel1.Tooltip = "Click to play"
+    Endif
+    
+End

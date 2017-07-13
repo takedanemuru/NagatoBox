@@ -16,6 +16,33 @@ Private Sub setBackground(argEra As String)
     
 End
 
+Private Sub setBackground2()
+    
+    Dim yukiIndex As Integer
+    
+    For yukiIndex = 0 To $grids.Columns.Max
+        $grids[$grids.Rows.Max, yukiIndex].Background = $grigColor.Background
+        $grids[$grids.Rows.Max, yukiIndex].Foreground = $grigColor.Foreground
+    Next
+    
+End
+
+Private Sub setRowsBackground()
+    
+    Dim yukiRowIndex As Integer
+    Dim yukiLastVisibleEra As String = ""
+    
+    For yukiRowIndex = 0 To $grids.Rows.Max
+        If $grids.Rows[yukiRowIndex].H = 0 Then Continue
+        If yukiLastVisibleEra <> $grids[yukiRowIndex, 4].Text Then
+            yukiLastVisibleEra = $grids[yukiRowIndex, 4].Text 
+            $grigColor.Set(yukiLastVisibleEra)
+        Endif
+        setBackground2()
+    Next
+    
+End
+
 Private Sub setRow(argLine As String)
     
     Dim yukiData As String[] = Split(argLine, ",", "", True)
@@ -28,6 +55,7 @@ Private Sub setRow(argLine As String)
         .[.Rows.Max, 2].Text = yukiData[10]
         .[.Rows.Max, 3].Text = yukiData[3]
         .[.Rows.Max, 3].Alignment = Align.Right
+        .[.Rows.Max, 4].Text = yukiData[4]
     End With
     
     setBackground(yukiData[4])
@@ -37,12 +65,14 @@ End
 Private Sub setColumns()
     
     With $grids
-        .Columns.Count = 4
+        .Columns.Count = 6
         .Columns[0].Text = ("Wareki")
         .Columns[0].W = 160
         .Columns[1].W = 32
         .Columns[2].W = 32
         .Columns[3].Text = ("A.D.")
+        .Columns[4].W = 0
+        .Columns[5].W = 0
     End With
     
 End
@@ -63,7 +93,7 @@ Private Sub showAllRows()
     Dim yukiRowIndex As Integer
     
     For yukiRowIndex = 0 To $grids.Rows.Max
-        $grids.Rows[yukiRowIndex].H = 16
+        $grids.Rows[yukiRowIndex].H = 24
     Next
     
 End
@@ -75,8 +105,12 @@ Private Sub filterRows(argKeyword As String)
     For yukiRowIndex = 0 To $grids.Rows.Max
         If $grids[yukiRowIndex, 0].Text Not Like Subst$("*&1*", argKeyword) Then
             $grids.Rows[yukiRowIndex].H = 0
+        Else
+            $grids.Rows[yukiRowIndex].H = 24
         End If
     Next
+    
+    setRowsBackground()
     
 End
 
@@ -94,4 +128,3 @@ Public Sub _new(argGrids As GridView)
     setRows()
     
 End
-
