@@ -9,21 +9,19 @@ Public _$uniqueName As String = "Web"
 Private $tableBookmark As NagatoTableBookmark
 Private $tableCategory As NagatoTableCategory
 
+Event Changed
+
 Private Function getCategoryId(argCategoryName As String) As Integer
     
     Return $tableCategory.GetCategoryId(argCategoryName)
     
 End
 
-Public Function HasBookmarkInCategory(argCategoryName As String) As Boolean
-    
-    Return $tableBookmark.HasBookmarkInCategory(getCategoryId(argCategoryName))
-    
-End
-
 Public Sub DeleteBookmark(argUrl As String)
     
     Try Me._$connection.Delete(Me.Table.Bookmark, "url = &1", argUrl)
+    
+    If Not Error Then Raise Changed
     
 End
 
@@ -34,6 +32,8 @@ Public Sub RenameBookmark(argUrl As String, argNewName As String)
     yukiResult[Me.Column.UserDefinedPageName] = argNewName
     yukiResult.Update()
     
+    Raise Changed
+
 End
 
 Public Sub ChangeBookmarkCategory(argUrl As String, argCategory As String)
@@ -43,12 +43,16 @@ Public Sub ChangeBookmarkCategory(argUrl As String, argCategory As String)
     yukiResult[Me.Column.CategoryId] = getCategoryId(argCategory)
     yukiResult.Update()
     
+    Raise Changed
+
 End
 
 Public Sub DeleteCategory(argCategoryName As String)
     
     Try Me._$connection.Delete(Me.Table.Category, "category = &1", argCategoryName)
     
+    Raise Changed
+
 End
 
 Public Function GetBookmarkResultByCategoryName(argCategoryName As String) As Result
@@ -70,12 +74,16 @@ Public Sub PushBookmark(argUrl As String, argTitle As String, argUserTitle As St
     If $tableBookmark.HasBookmark(argUrl, yukiCategoryId) Then Return
     $tableBookmark.AddBookMark(argUrl, argTitle, argUserTitle, yukiCategoryId)
     
+    Raise Changed
+
 End
 
 Public Sub AddNewCategory(argCategoryName As String)
     
     $tableCategory.AddNewCategory(argCategoryName)
     
+    Raise Changed
+
 End
 
 Public Sub _new()

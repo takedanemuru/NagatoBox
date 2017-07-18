@@ -16,14 +16,12 @@ Private Function getSartupUrl() As String
     
 End
 
-Private Sub showMain()
-    
-    Dim yukiUrl As String = getSartupUrl()
+Private Sub showMain(argUrl As String)
     
     NagatoDBus.Register()
     HaruhiMain.Show()
     MikuruWebSettings.Initialize()
-    If yukiUrl <> "" Then HaruhiMain.SetUrl(yukiUrl)
+    If argUrl <> "" Then HaruhiMain.SetUrl(argUrl)
     Application.MainWindow = HaruhiMain
     
 End
@@ -34,19 +32,27 @@ Private Sub tryOpen()
         NagatoDBus.Proxy.Show()
     Else
         NagatoDBus.Unregister()
-        showMain()
+        showMain("")
     End If
     
 End
 
 Public Sub Main()
     
-    If NagatoDBus.IsUnique() Then
-        showMain()
-    Else If yukiUrl = "" Then
-        tryOpen()
-    Else
-        NagatoDBus.Proxy.SetUrl(yukiUrl)
-    End If
+    ' Dim yukiUrl As String = getSartupUrl()
+    ' 
+    ' If NagatoDBus.IsUnique() Then
+    '     showMain(yukiUrl)
+    ' Else If yukiUrl = "" Then
+    '     tryOpen()
+    ' Else
+    '     NagatoDBus.Proxy.SetUrl(yukiUrl)
+    ' End If
+    
+    Dim yukiCategory As String
+    
+    For Each yukiCategory In NagatoDBBookmark.CategoryNames.Sort(gb.Natural + gb.IgnoreCase)
+        Debug yukiCategory
+    Next
     
 End

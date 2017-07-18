@@ -2,21 +2,24 @@
 
 Inherits NagatoObject
 
-Private $categories As New Collection
-Private $categoryMenus As NagatoSubMenuBookmarkCategories
-Private $pageMenus As NagatoSubMenuBookmarkPages
+Private $rootMenu As Menu
 
 Public Sub Refresh()
     
-    $categories.Clear()
-    $categoryMenus.Refresh()
-    $pageMenus.Refresh()
+    Dim yukiCategory As String
+    Dim yukiMenu As NagatoSubMenuBookmarkCategory
+    
+    For Each yukiCategory In NagatoDBBookmark.CategoryNames.Sort(gb.Natural + gb.IgnoreCase)
+        If String.InStr(yukiCategory, "/", 0) > 0 Then Continue
+        yukiMenu = New NagatoSubMenuBookmarkCategory($rootMenu, yukiCategory) As "TFEI"
+    Next
     
 End
 
 Public Sub _new(argRootMenu As Menu)
     
-    $categoryMenus = New NagatoSubMenuBookmarkCategories(argRootMenu, $categories)
-    $pageMenus = New NagatoSubMenuBookmarkPages(argRootMenu, $categories) As "TFEI"
+    $rootMenu = argRootMenu
+    
+    Me.Refresh()
     
 End

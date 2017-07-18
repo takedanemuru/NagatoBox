@@ -39,17 +39,6 @@ Public Function GetBookmarkResultFoundByUrl(argUrl As String) As Result
     
 End
 
-Public Function HasBookmarkInCategory(argCategoryId As Integer) As Boolean
-    
-    With NagatoDB
-        If Me._$connection.Find(.Table.Bookmark, "category_id = &1", argCategoryId).Count <> 0 Then Return True
-    End With
-    
-Finally
-    Return False
-    
-End
-
 Public Function HasBookmark(argUrl As String, argCategoryId As Integer) As Boolean
     
     With NagatoDB

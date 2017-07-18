@@ -6,7 +6,7 @@ Public Sub _EnsureTable() ' override
     
     Dim yukiTable As Table
     
-    With NagatoDBWeb
+    With NagatoDB
         If Not Me._$connection.Tables.Exist(.Table.Bookmark) Then
             yukiTable = Me._$connection.Tables.Add(.Table.Bookmark)
             yukiTable.Fields.Add(.Column.Id, db.Serial)
@@ -25,7 +25,7 @@ Public Function GetBookmarkResultByCategoryName(argCategoryId As Integer) As Res
     
     Dim yukiQuery As String = "select * from &1 where category_id = &2 order by &3 asc"
     
-    With NagatoDBWeb
+    With NagatoDB
         yukiQuery = Subst$(yukiQuery, .Table.Bookmark, argCategoryId, .Column.UserDefinedPageName)
     End With
     
@@ -41,7 +41,7 @@ End
 
 Public Function HasBookmarkInCategory(argCategoryId As Integer) As Boolean
     
-    With NagatoDBWeb
+    With NagatoDB
         If Me._$connection.Find(.Table.Bookmark, "category_id = &1", argCategoryId).Count <> 0 Then Return True
     End With
     
@@ -52,7 +52,7 @@ End
 
 Public Function HasBookmark(argUrl As String, argCategoryId As Integer) As Boolean
     
-    With NagatoDBWeb
+    With NagatoDB
         If Me._$connection.Find(.Table.Bookmark, "url = &1 and category_id = &2", argUrl, argCategoryId).Count = 0 Then
             Return False
         Else

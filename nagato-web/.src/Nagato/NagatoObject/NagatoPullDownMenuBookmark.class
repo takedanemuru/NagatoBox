@@ -5,18 +5,34 @@ Inherits NagatoPullDownMenu
 Private $categories As NagatoSubMenuBookmark
 Private $bookmarkCurrentPageMenu As NagatoMenuItembookmarkCurrentPage
 Private $editBookmarkMenu As NagatoMenuItemEditBookmark
+Private $observer As Observer
 
-Public Sub _OnShowRootMenu()
+Private Sub constructMenu()
     
     $bookmarkCurrentPageMenu = New NagatoMenuItembookmarkCurrentPage(Me._$rootMenu) As "TFEI"
     $editBookmarkMenu = New NagatoMenuItemEditBookmark(Me._$rootMenu) As "TFEI"
         MikuruMenuSeparator.Set(Me._$rootMenu)
-    $categories.Refresh()
+    $categories = New NagatoSubMenuBookmark(Me._$rootMenu) As "TFEI"
     
 End
 
 Public Sub _OnInitialize()
     
-    $categories = New NagatoSubMenuBookmark(Me._$rootMenu) As "TFEI"
+    constructMenu()
+    $observer = New Observer(NagatoDBBookmark) As "Asakura"
+    
+End
+
+Public Sub RootMenu_Show()
+    
+    ' override and ignore
+    
+End
+
+Public Sub Asakura_Changed()
+    
+    Me._$rootMenu.Children.Clear()
+    
+    constructMenu()
     
 End
