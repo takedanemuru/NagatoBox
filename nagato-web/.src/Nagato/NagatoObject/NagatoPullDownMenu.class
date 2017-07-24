@@ -37,10 +37,11 @@ Public Sub _AddMenu(argText As String, argTag As Integer, Optional argIconName A
     
 End
 
-Public Sub _new(argUniqueName As String)
+Public Sub _new(argUniqueName As String, Optional argConstructOnInitialize As Boolean = False)
     
     initializeRootMenu(argUniqueName)
     Me._OnInitialize()
+    If argConstructOnInitialize Then Me._OnShowRootMenu()
     
 End
 

@@ -50,11 +50,19 @@ End
 
 Public Sub ApplyButton_Click()
     
+    $applyButton.Enabled = False
+    
     Raise Signal(MikuruSignal.PropertyApplyChanges, Null)
     
 End
 
 Public Sub BackButton_Click()
+    
+    Dim yukiMessage As String = "YUKI.N > Your changes are not applied."
+    
+    If $applyButton.Enabled Then
+        If Message.Warning(yukiMessage, ("Cancel"), ("Discard")) = 1 Then Return
+    Endif
     
     Raise Signal(MikuruSignal.GoToMain, Null)
     

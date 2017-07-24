@@ -7,7 +7,7 @@ Private Const UniqueName As String = "PullDownMenuStar"
 Public Sub _InitializeWidget() ' override
     
     Dim yukiButton As New MenuButton(Me._$container) As "Button"
-    Dim yukiMenu As New NagatoPullDownMenuStar(UniqueName) As "TFEI"
+    Dim yukiMenu As New NagatoPullDownMenuStar(UniqueName, True) As "TFEI"
     
     With yukiButton
         .Expand = False

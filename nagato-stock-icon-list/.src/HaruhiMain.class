@@ -14,7 +14,7 @@ Private Sub refreshIconView(argIconSizeIndex As Integer)
         
 End
 
-Private Sub refreshNagatoIconView(argIconSizeIndex As Integer)
+Private Sub refreshNagatoIconView()
     
     Dim yukiName As String
     
@@ -31,7 +31,7 @@ Public Sub Form_Open()
         NagatoSettings.LoadFormSettings(Me)
         NagatoSettings.LoadIconSizeSettings(ComboBox1)
         refreshIconView(ComboBox1.Index)
-        refreshNagatoIconView(ComboBox1.Index)
+        refreshNagatoIconView()
 
 End
 

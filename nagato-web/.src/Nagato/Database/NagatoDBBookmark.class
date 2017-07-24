@@ -10,6 +10,7 @@ Private $tableBookmark As NagatoTableBookmark
 Private $tableCategory As NagatoTableCategory
 
 Event Changed
+Event Signal(argSignal As Integer, argValues As Variant[])
 
 Private Function getCategoryId(argCategoryName As String) As Integer
     
@@ -67,7 +68,7 @@ Public Function GetBookmarkResultByUrl(argUrl As String) As Result
     
 End
 
-Public Sub PushBookmark(argUrl As String, argTitle As String, argUserTitle As String, argCategory As String)
+Public Sub AddNewBookmark(argUrl As String, argTitle As String, argUserTitle As String, argCategory As String)
     
     Dim yukiCategoryId As Integer = getCategoryId(argCategory)
     

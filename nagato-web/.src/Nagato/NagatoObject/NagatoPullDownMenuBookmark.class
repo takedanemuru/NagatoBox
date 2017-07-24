@@ -2,7 +2,7 @@
 
 Inherits NagatoPullDownMenu
 
-Private $categories As NagatoSubMenuBookmark
+Private $bookmarks As NagatoSubMenuBookmark
 Private $bookmarkCurrentPageMenu As NagatoMenuItembookmarkCurrentPage
 Private $editBookmarkMenu As NagatoMenuItemEditBookmark
 Private $observer As Observer
@@ -12,7 +12,7 @@ Private Sub constructMenu()
     $bookmarkCurrentPageMenu = New NagatoMenuItembookmarkCurrentPage(Me._$rootMenu) As "TFEI"
     $editBookmarkMenu = New NagatoMenuItemEditBookmark(Me._$rootMenu) As "TFEI"
         MikuruMenuSeparator.Set(Me._$rootMenu)
-    $categories = New NagatoSubMenuBookmark(Me._$rootMenu) As "TFEI"
+    $bookmarks = New NagatoSubMenuBookmark(Me._$rootMenu) As "TFEI"
     
 End
 
@@ -29,7 +29,7 @@ Public Sub RootMenu_Show()
     
 End
 
-Public Sub Asakura_Changed()
+Public Sub Asakura_Changed() ' To be removed.
     
     Me._$rootMenu.Children.Clear()
     

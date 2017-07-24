@@ -37,6 +37,12 @@ Public Sub Form_Open()
     
 End
 
+Public Sub Form_Close()
+    
+    Me.Children.Clear()
+    
+End
+
 Public Sub NumberButton_Click()
         
     $calc.SendNumber(Last.Tag)
@@ -57,8 +63,7 @@ End
 
 Public Sub MemoryKey_Click()
     
-    If Last.Tag = "MemoryClear" Then
-        Debug "clear memory"
+    If Last.Tag = MikuruSignal.MemoryClear Then
         $lcdHandler.ClearMemory()
         $memoryCalc(Last.Tag, Null)
     Else

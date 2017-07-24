@@ -15,6 +15,12 @@ Private Sub refreshTitle()
     
 End
 
+Public Sub GlobalShortcuts(argSignal As Integer, argValues As Variant[])
+    
+    
+    
+End
+
 Public Sub AddUrl(argUrl As String)
     
     $bodyContainer(MikuruSignal.WebNew, [argUrl])
@@ -29,8 +35,6 @@ End
 
 Public Sub ToggleFullscreen()
     
-    Debug "toggle fullscreen"
-    
     If NagatoSettingsForm.FullScreen Then
         Me.FullScreen = True
         PersonaDrawingArea.Visible = False
@@ -38,8 +42,6 @@ Public Sub ToggleFullscreen()
         Me.FullScreen = False
         PersonaDrawingArea.Visible = True
     Endif
-    
-    Debug Me.FullScreen
     
 End
 

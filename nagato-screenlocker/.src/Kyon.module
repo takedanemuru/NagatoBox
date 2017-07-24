@@ -27,20 +27,11 @@ Private Sub normalSequence()
     
 End
 
-Private Sub testSequence()
-    
-    'For Testing only
-    'NagatoScreenLocker.Show() 
-    'HaruhiMain.Show()
-    
-End
-
 Public Sub Main()
     
     MikuruArgs.Parsing()
     If Not Exist(NagatoSettings.Path) Then NagatoSettings.ScreenSaverIdle = 300
     
-    'testSequence()
     normalSequence()
     
 End

@@ -7,6 +7,7 @@ Public Sub _OnInitializeMenuItem()
     With Me._$menuItem
         .Text = ("Fullscreen")
         .Picture = MikuruIcon.GetCheckButton(NagatoSettingsForm.FullScreen)
+        .Shortcut = "F11"
     End With
     
 End

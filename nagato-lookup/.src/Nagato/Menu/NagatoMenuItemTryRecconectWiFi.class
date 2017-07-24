@@ -1,0 +1,21 @@
+' Gambas class file
+
+Inherits NagatoMenuItem
+
+Public Sub _AbstractOnInitialize(argParentMenu As Menu)
+    
+     Dim yukiMenu As New Menu(argParentMenu) As "MenuItem"
+    
+    With yukiMenu
+        .Picture = MikuruIcons.Get("wireless-router")
+        .Text = ("Try Recconect Wifi")
+    End With
+    
+End
+
+Public Sub _AbstractOnMenuClicked()
+    
+    Exec ["nmcli", "radio", "wifi", "off"] Wait
+    Exec ["nmcli", "radio", "wifi", "on"] Wait
+    
+End

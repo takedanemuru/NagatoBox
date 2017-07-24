@@ -15,6 +15,15 @@ Private Sub refreshTitle()
     
 End
 
+Public Sub GlobalShortcuts(argSignal As Integer, argValues As Variant[])
+    
+    Select Case argSignal
+        Case MikuruSignal.InPageSearchToggle
+            $footerContainer(argSignal, argValues)
+    End Select
+    
+End
+
 Public Sub AddUrl(argUrl As String)
     
     $bodyContainer(MikuruSignal.WebNew, [argUrl])
