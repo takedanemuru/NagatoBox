@@ -2,34 +2,22 @@
 
 Inherits NagatoMenuPipe
 
-Private $container As Container
-
-Private Sub addMapSelectButton(argText As String, argTag As Integer, argValue As Boolean)
+Public Sub _new(argContainer As Container)
     
-    Dim yukiButton As New ToggleButton($container) As "MapSelectButton"
+    Dim yukiComboBox As New ComboBox(argContainer) As "ComboBox"
     
-    With yukiButton
-        .AutoResize = True
-        .Text = argText
-        .Tag = argTag
-        .Value = argValue
-        .Radio = True
+    With yukiComboBox
+        .W = 240
+        .ReadOnly = True
+        .List = ["OpenStreetMap", "Water Color", "Spinal"]
     End With
     
 End
 
-Public Sub _new(argContainer As Container)
+Public Sub ComboBox_Click()
     
-    $container = argContainer
+    MikuruOpenStreetMap.SetIndex(Last.Index)
     
-    addMapSelectButton(("GoogleEarth"), HaruhiMain.GoogleMap, False)
-    addMapSelectButton(("GoogleEarth (with road data)"), HaruhiMain.GoogleMapWithRoad, False)
-    addMapSelectButton(("OpenStreetMap"), HaruhiMain.OpenStreetMap, True)
-    
-End
-
-Public Sub MapSelectButton_Click()
-    
-    Raise Signal(NagatoMenuPipe.MapSelect, [Last.Tag])
+    Raise Signal(NagatoMenuPipe.MapSelect, [Last.Index])
     
 End

@@ -33,7 +33,7 @@ Private Sub initializeChildMenus()
         addMenu(("Extract text"), .MenuExtractText, Null)
             addMenu("", .None) ' menu separator
         addMenu(("About"), .MenuAbout, MikuruIcon.Get("star"))
-        addMenu(("Close"), .MenuClose, MikuruIcon.Get("button-cross"))
+        addMenu(("Close"), .MenuClose, MikuruIcon.Get("button-power"))
     End With
     
 End

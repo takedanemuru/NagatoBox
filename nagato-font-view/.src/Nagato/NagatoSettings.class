@@ -62,7 +62,7 @@ End
 
 Private Function Text_Read() As String
 
-    Return $settings["font/text", False]
+    Return $settings["font/text", "The quick brown fox jumps over the lazy dog"]
 
 End
 

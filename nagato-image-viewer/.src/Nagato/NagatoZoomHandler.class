@@ -3,7 +3,7 @@
 Inherits NagatoObject
 
 Private $imageView As ImageView
-Private $fit As Boolean
+Private $fit As Boolean = True
 
 Public Sub TryFitImage()
     

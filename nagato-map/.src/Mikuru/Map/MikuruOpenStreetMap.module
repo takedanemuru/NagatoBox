@@ -4,6 +4,16 @@ Property Read Name As String
 Property Read Pattern As String
 Property Read Copyright As String
 
+Private Const ApiKey As String = "apikey=4463892bc5c14cc2a5dfedef5ec65c83"
+
+Private $index As Integer = 0
+
+Public Sub SetIndex(argIndex As Integer)
+    
+    $index = argIndex
+    
+End
+
 Private Function Name_Read() As String
 
     Return "OpenStreetMap"
@@ -12,7 +22,25 @@ End
 
 Private Function Pattern_Read() As String
 
+    Select Case $index
+        Case 0
+            Return "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        Case 1
+            Return "http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg"
+        Case 2
+            Return "https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?" & ApiKey
+    End Select
+
+    Return "https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?" & ApiKey
     Return "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    Return "https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?" & ApiKey
+    Return "https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?" & ApiKey
+    Return "http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg"
+    Return "https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?" & ApiKey
+    Return "https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?" & ApiKey
+    Return "https://{s}.tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?" & ApiKey
+    Return "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?" & ApiKey
+    Return "http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
 
 End
 

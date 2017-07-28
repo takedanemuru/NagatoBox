@@ -14,7 +14,10 @@ End
 
 Public Function IsYouTubeVideo(argUrl As String) As Boolean
     
-    Return argUrl Begins "https://www.youtube.com/watch?v="
+    If argUrl Begins "https://www.youtube.com/watch?v=" Then Return True
+    If argUrl Begins "http://www.dailymotion.com/video/" Then Return True
+    
+    Return False
     
 End
 

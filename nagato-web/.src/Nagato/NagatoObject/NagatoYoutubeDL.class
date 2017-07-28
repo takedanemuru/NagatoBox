@@ -20,7 +20,11 @@ Public Sub DownloadAsMovie(argUrl As String)
     
     If yukiDirectory = "" Then Return
     
-    Exec ["youtube-dl", "-f", "webm", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
+    If argUrl Begins "http://www.dailymotion.com/video" Then
+        Exec ["youtube-dl", argUrl, "-o", yukiDirectory &/ File.Name(argUrl) & ".mp4"] For Read As "YouTubeDL"
+    Else
+        Exec ["youtube-dl", "-f", "webm", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
+    End If
     
 End
 

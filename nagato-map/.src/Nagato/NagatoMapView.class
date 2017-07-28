@@ -28,10 +28,10 @@ Public Sub SetMarker(argLatitude As Float, argLongitude As Float)
         
 End
 
-Public Sub ChangeLayer(argType As Integer)
+Public Sub ChangeLayer()
     
-    $mapLayers.SetVisibleLayer(argType)
-    $mapView.Refresh()
+    $mapLayers.ChangeLayer()
+    $mapView.Map.Refresh()
     
 End
 

@@ -10,26 +10,12 @@ Private Sub setMapTile()
         $mapView.Map.AddTile(.Name, .Pattern, Null).Copyright = .Copyright
     End With 
     
-    MikuruGoogleMap.AddTile($mapView)
-    
 End
 
-Public Sub SetVisibleLayer(argMapType As Integer)
+Public Sub ChangeLayer()
     
-    With $mapView
-        If argMapType = HaruhiMain.OpenStreetMap Then
-            .Map[MikuruOpenStreetMap.Name].Visible = True
-            .Map[MikuruGoogleMap.Name].Visible = False
-            .Map[MikuruGoogleMap.NameRoad].Visible = False
-        Else If argMapType = HaruhiMain.GoogleMapWithRoad Then
-            .Map[MikuruOpenStreetMap.Name].Visible = False
-            .Map[MikuruGoogleMap.Name].Visible = True
-            .Map[MikuruGoogleMap.NameRoad].Visible = True
-        Else If argMapType = HaruhiMain.GoogleMap Then
-            .Map[MikuruOpenStreetMap.Name].Visible = False
-            .Map[MikuruGoogleMap.Name].Visible = True
-            .Map[MikuruGoogleMap.NameRoad].Visible = False
-        End If
+    With MikuruOpenStreetMap
+        $mapView.Map.AddTile(.Name, .Pattern, Null)
     End With
     
 End
@@ -39,7 +25,7 @@ Public Sub _new(argMapView As MapView)
     $mapView = argMapView
     
     setMapTile()
-    setVisibleLayer(HaruhiMain.OpenStreetMap)
+    $mapView.Map[MikuruOpenStreetMap.Name].Visible = True
     
 End
 
