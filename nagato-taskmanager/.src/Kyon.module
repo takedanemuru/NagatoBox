@@ -2,6 +2,8 @@
 
 Public Sub Main()
     
+    NagatoAccessPoints.Activate()
+
     HaruhiMain.Show()
     NagatoSettings.LoadFormSettings(HaruhiMain)
     Application.MainWindow = HaruhiMain

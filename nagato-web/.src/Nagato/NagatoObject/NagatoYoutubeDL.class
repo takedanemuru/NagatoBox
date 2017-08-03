@@ -14,6 +14,14 @@ Finally
     
 End
 
+Private Sub getDailyMotionFileName(argDirectory As String) As String
+    
+    Dim yukiTitle As String = Replace(HaruhiMain.Title, "/", "_")
+    
+    Return argDirectory &/ yukiTitle & ".mp4"
+    
+End
+
 Public Sub DownloadAsMovie(argUrl As String)
     
     Dim yukiDirectory As String = getDestinationPath("VIDEOS")
@@ -21,7 +29,7 @@ Public Sub DownloadAsMovie(argUrl As String)
     If yukiDirectory = "" Then Return
     
     If argUrl Begins "http://www.dailymotion.com/video" Then
-        Exec ["youtube-dl", argUrl, "-o", yukiDirectory &/ File.Name(argUrl) & ".mp4"] For Read As "YouTubeDL"
+        Exec ["youtube-dl", argUrl, "-o", getDailyMotionFileName(yukiDirectory)] For Read As "YouTubeDL"
     Else
         Exec ["youtube-dl", "-f", "webm", argUrl, "-o", yukiDirectory &/ "%(title)s.%(ext)s"] For Read As "YouTubeDL"
     End If

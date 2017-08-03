@@ -20,8 +20,11 @@ End
 
 Public Sub MenuBar_Signal(argSignal As Integer, argValues As Variant[])
     
-    Dim yukiResult As Result = NagatoDBMedia.Search(argValues[0], argValues[1])
-    
-    If yukiResult.Count > 0 Then $grids.RefreshWithQuery(yukiResult)
+    Select Case argSignal
+        Case MikuruSignal.LibrarySearch
+            $grids.RefreshWithQuery(argValues)
+        Case MikuruSignal.LibraryEnsure
+            $grids.RefreshLibrary()
+    End Select
     
 End

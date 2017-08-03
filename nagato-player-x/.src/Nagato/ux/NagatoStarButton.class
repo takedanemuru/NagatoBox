@@ -1,5 +1,7 @@
 ' Gambas class file
 
+Inherits NagatoObject
+
 Public _$starButton As MenuButton
 
 Public Sub _OnInitializeStarMenu()

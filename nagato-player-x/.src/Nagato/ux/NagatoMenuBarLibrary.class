@@ -10,10 +10,18 @@ Private Sub addSearchComplex()
     
 End
 
+Private Sub addSartButton()
+    
+    Dim yukiStarButton As NagatoStarButtonLibrary
+    
+    yukiStarButton = New NagatoStarButtonLibrary(Me._$container) As "TFEI"
+    
+End
+
 Public Sub _OnInitialize() 'override
 
         Object.New("NagatoMenuBarSpacer", [Me._$container])
     addSearchComplex()    
-    Object.New("NagatoStarButtonPlaylists", [Me._$container])
+    addSartButton()
     
 End

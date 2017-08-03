@@ -1,0 +1,33 @@
+' Gambas class file
+
+Inherits NagatoStarMenu
+
+Private Sub initializeEnsureLibraryButton()
+    
+    Dim yukiMenu As New Menu(Me._$rootMenu) As "EnsureLibraryMenu"
+    
+    With yukiMenu
+        .Text = ("Reload Library")
+        .Picture = MikuruIcon.Get("button-rotate-cw")
+    End With
+    
+End
+
+Public Function _OnGetMenuName() As String
+    
+    Return "StarMenuLibrary"
+    
+End
+
+Public Sub _OptionalOnInitializeChildMenus()
+    
+    initializeEnsureLibraryButton()
+        Object.New("NagatoMenuItemNull", [Me._$rootMenu])
+    
+End
+
+Public Sub EnsureLibraryMenu_Click()
+    
+    Raise Signal(MikuruSignal.LibraryEnsure, Null)
+    
+End

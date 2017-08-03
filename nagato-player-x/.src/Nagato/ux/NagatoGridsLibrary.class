@@ -32,7 +32,7 @@ Private Sub setRows(argResult As Result)
     
 End
 
-Private Sub ensurelibrary() ' for test only
+Private Sub ensurelibrary()
     
     Dim yukiDirectory As String = Desktop.GetDirectory("MUSIC")
     Dim yukiPath As String
@@ -45,9 +45,18 @@ Private Sub ensurelibrary() ' for test only
     
 End
 
-Public Sub RefreshWithQuery(argResult As Result)
+Public Sub RefreshWithQuery(argValues As Variant[])
     
-    setRows(argResult)
+    Dim yukiResult As Result = NagatoDBMedia.Search(argValues[0], argValues[1])
+    
+    If yukiResult.Count > 0 Then setRows(yukiResult)
+    
+End
+
+Public Sub RefreshLibrary()
+    
+    ensurelibrary()
+    setRows(NagatoDBMedia.GetAllResult())
     
 End
 

@@ -1,0 +1,57 @@
+' Gambas class file
+
+Create Static
+
+Property Read Max As Integer
+
+Private Const ServiceName As String = "System://org.freedesktop.NetworkManager"
+Private Const ObjectPath As String = "/org/freedesktop/NetworkManager"
+Private Const InterfaceName As String = "org.freedesktop.NetworkManager"
+
+Private $mainProxy As DBusProxy
+Private $accessPoints As New NagatoAccessPoint[]
+
+Private Sub checkAccessPoints(argObjectPath As String)
+    
+    Dim yukiProxy As DBusProxy = DBus[ServiceName][argObjectPath, InterfaceName & ".Device.Wireless"]
+    Dim yukiPath As String
+    
+    For Each yukiPath In yukiProxy.GetAllAccessPoints()
+        $accessPoints.Add(Object.New("NagatoAccessPoint", [yukiPath]))
+    Next
+    
+End
+
+Private Sub checkDevices()
+    
+    Dim yukiPath As String
+    Dim yukiProxy As DBusProxy
+    
+    For Each yukiPath In $mainProxy.AllDevices
+        yukiProxy = DBus[ServiceName][yukiPath, InterfaceName & ".Device"]
+        If yukiProxy.DeviceType = 2 Then checkAccessPoints(yukiPath)
+    Next
+    
+End
+
+Public Sub Activate()
+    
+    $mainProxy = DBus[ServiceName][ObjectPath, InterfaceName]
+    
+    checkDevices()
+    
+End
+
+Public Sub _get(argIndex As Integer) As NagatoAccessPoint
+    
+    If argIndex > $accessPoints.Max Then Return Null
+    
+    Return $accessPoints[argIndex]
+    
+End
+
+Private Function Max_Read() As Integer
+
+    Return $accessPoints.Count - 1
+
+End

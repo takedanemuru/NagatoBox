@@ -4,9 +4,10 @@ Private $timer As New Timer As "Timer"
 Private $tabProcesses As NagatoTabProcesses
 Private $tabNetwork As NagatoTabNetwork
 
-Public Sub Form_Open()
+Public Sub _new()
     
     NagatoObserverFacade.Activated = True
+    NagatoNetworkLoad.Start()
     $tabProcesses = New NagatoTabProcesses(ProcessesContainer)
     $tabNetwork = New NagatoTabNetwork(NetworkContainer)
     

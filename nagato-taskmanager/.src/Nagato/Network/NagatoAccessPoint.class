@@ -1,0 +1,83 @@
+' Gambas class file
+
+Property Read WpaFlags As Integer
+Property Read HwAddress As String
+Property Read MaxBitrate As Integer
+Property Read Strength As Integer
+Property Read Mode As String
+
+Private Const Service As String = "org.freedesktop.NetworkManager"
+
+Private $wpaFlags As Integer
+Private $hwAddress As String
+Private $maxBitrate As Integer
+Private $strength As Integer
+Private $mode As Integer
+
+Private Sub setData(argLine As String)
+    
+    Dim yukiData As String = LTrim(Replace(Split(argLine, "=", "", True)[1], ";", ""))
+    
+    Select Case Split(argLine, " ", "", True)[2] 
+        Case "HwAddress"
+            $hwAddress = yukiData
+        Case "Flags"
+            $wpaFlags = yukiData
+        Case "MaxBitrate"
+            $maxBitrate = yukiData
+        Case "Strength"
+            $strength = Val(Replace(yukiData, "0x", "&H"))
+        Case "Mode"
+            $mode = yukiData
+        Default
+            Debug Split(argLine, " ", "", True)[2] 
+            Debug yukiData
+    End Select
+
+End
+
+Public Sub _new(argObjectPath As String)
+    
+    Dim yukiOutput As String
+    Dim yukiLine As String
+    
+    Try Exec ["gdbus", "introspect", "--system", "--dest", Service, "--object-path", argObjectPath, "--only-properties"] To yukiOutput 
+    
+    For Each yukiLine In Split(yukiOutput, "\n", "", True)
+        If InStr(yukiLine, "=") > 0 Then setData(yukiLine)
+    Next
+    
+End
+
+Private Function WpaFlags_Read() As Integer
+
+    Return $wpaFlags
+
+End
+
+Private Function HwAddress_Read() As String
+
+    Return $hwAddress
+
+End
+
+Private Function MaxBitrate_Read() As Integer
+
+    Return $maxBitrate
+
+End
+
+Private Function Mode_Read() As String
+
+    If $mode = 0 Then Return "NM_802_11_MODE_UNKNOWN"
+    If $mode = 1 Then Return "NM_802_11_MODE_ADHOC"
+    If $mode = 2 Then Return "NM_802_11_MODE_INFRA"
+    If $mode = 3 Then Return "NM_802_11_MODE_AP"
+
+End
+
+Private Function Strength_Read() As Integer
+
+    Return $strength
+
+End

@@ -2,6 +2,7 @@
 
 Private $panel As NagatoContainerMenuPanelNetwork
 Private $graph As NagatoGraphNetwork
+Private $gridView As NagatoGridsWifiAccessPoints
 
 Public Sub Tick()
     
@@ -14,5 +15,6 @@ Public Sub _new(argContainer As Container)
     
     $graph = New NagatoGraphNetwork(argContainer)
     $panel = New NagatoContainerMenuPanelNetwork(argContainer)
+    $gridView = New NagatoGridsWifiAccessPoints(argContainer)
     
 End
