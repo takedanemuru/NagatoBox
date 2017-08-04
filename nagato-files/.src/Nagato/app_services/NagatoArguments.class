@@ -4,12 +4,10 @@ Create Static
 
 Property Read StartupPath As String
 Property Read DesktopIcons As Boolean
-Property Read XdgUserDirs As Boolean
 Property Read OpenTrashBin As Boolean
 Property Read ShowDesktop As Boolean
 
 Private $startUpPath As String = ""
-'Private $path As String
 Private $paths As New String[]
 Private $desktop As Boolean
 Private $xdgUserDirs As Boolean
@@ -33,7 +31,6 @@ Public Sub Parsing()
     
     Args.Begin("USAGE: nagato-files OPTION PATH")
         $desktop = Args.Has("d", "desktop", "desktop icons")
-        $xdgUserDirs = Args.Has("u", "xdg-user-dirs", "xdg-user-dirs config")
         $openTrashBin = Args.Has("t", "trashbin", "Open trash bin")
         $showDesktop = Args.Has("s", "show-desktop", "Show desktop if nagato-desktop is running.")
     $paths = Args.End()

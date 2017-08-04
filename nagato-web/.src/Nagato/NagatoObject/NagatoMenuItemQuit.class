@@ -14,6 +14,6 @@ End
 
 Public Sub _OnClickMenuItem()
     
-    If HaruhiQuit.ShowDialog() = HaruhiQuit.ResponseQuit Then HaruhiMain.Close()
+    HaruhiMain.Close()
     
 End

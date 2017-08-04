@@ -50,7 +50,6 @@ Private Sub startTestSequence()
     
     'Only For Testing
     activateDesktop()
-    'HaruhiXdgConfig.ShowDialog()
     
 End
 
@@ -62,8 +61,6 @@ Private Sub startNormalSequence()
         activateDesktop()
     Else If NagatoArguments.ShowDesktop Then
         showDesktop()
-    Else If NagatoArguments.XdgUserDirs Then
-        HaruhiXdgConfig.Show()
     Else If NagatoArguments.OpenTrashBin Then
         HaruhiMain.Show()
         TFEI.SetNewTrashBin()

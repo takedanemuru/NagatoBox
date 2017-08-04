@@ -64,6 +64,8 @@ End
 
 Public Sub Form_Close()
     
+    If HaruhiQuit.ShowDialog() <> HaruhiQuit.ResponseQuit Then Stop Event
+        
     NagatoSettingsForm.Save(Me)
     NagatoDBus.Unregister()
     

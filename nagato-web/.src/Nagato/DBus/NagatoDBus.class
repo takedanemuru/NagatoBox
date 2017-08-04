@@ -24,7 +24,7 @@ End
 
 Public Sub Unregister()
     
-    DBus.Session.Unregister(NagatoInterface)
+    Try DBus.Session.Unregister(NagatoInterface)
     
 End
 

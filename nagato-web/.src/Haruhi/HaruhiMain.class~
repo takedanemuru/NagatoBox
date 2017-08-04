@@ -17,7 +17,10 @@ End
 
 Public Sub GlobalShortcuts(argSignal As Integer, argValues As Variant[])
     
-    
+    Select Case argSignal
+        Case MikuruSignal.InPageSearchToggle
+            $footerContainer(argSignal, argValues)
+    End Select
     
 End
 

@@ -32,4 +32,8 @@ Private Function Proxy_Read() As DBusProxy
 
     Return DBus[Me.BusName][Me.ObjectPath, Me.Interface]
 
+Catch
+    Debug "cannot access"
+    Return Null
+
 End
