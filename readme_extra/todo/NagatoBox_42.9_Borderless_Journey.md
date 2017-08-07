@@ -13,7 +13,7 @@ Fuckin hot, maybe dull quors.
 ### nagato-asx-player
 
 + new : (context) menu for "start from beginning"
-+ new : form context menu
++ new : form context menu.
 
 ### nagato-files
 
