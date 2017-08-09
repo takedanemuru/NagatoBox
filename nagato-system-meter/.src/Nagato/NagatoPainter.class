@@ -1,10 +1,26 @@
 ' Gambas class file
 
 Private $drawingArea As DrawingArea
-Private $systemMonitor As New NagatoDBusAccessSystemMonitor
 Private $painterImages As New NagatoPainterImages
 Private $painterText As New NagatoPainterText
 Private $painterHands As NagatoPainterHands
+
+Private Const Format As String = (" CPU : &1<br>Mem : &2<br>Swap : &3<br>Processes : &4 <br>Thermal : &5")
+
+Private Function getText() As String
+    
+    Dim yukiCpuUsage As String = Format$(NagatoSystemMonitor.CpuUsage, "#0.00%")
+    Dim yukiMemoryUsage As String = Format$(NagatoSystemMonitor.MemoryUsage, "#0.00%")
+    Dim yukiSwapUsage As String = Format$(NagatoSystemMonitor.SwapUsage, "#0.00%")
+    Dim yukiProcessCount As String = NagatoSystemMonitor.ProcessCount
+    Dim yukiThermal As String = NagatoSystemMonitor.Thermal & "℃"
+    
+    Return Subst$(Format, yukiCpuUsage, yukiMemoryUsage, yukiSwapUsage, yukiProcessCount, yukiThermal)
+    
+Catch
+    Return "YUKI.N > Please wait ..."
+    
+End
 
 Public Sub PaintIt()
     
@@ -14,20 +30,19 @@ End
 
 Public Sub _new(argContainer As Container)
     
-    $systemMonitor.Activate()
-    $painterHands = New NagatoPainterHands($systemMonitor)
+    $painterHands = New NagatoPainterHands
     $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
     
 End
 
 Public Sub DrawingArea_Draw()
     
-    If Not $systemMonitor.Activated Then Return
+    If Not NagatoSystemMonitor.Activated Then Return
     
     Paint.Begin($drawingArea)
         $painterImages.Paint()
         $painterHands.Paint()
-        $painterText.Paint($systemMonitor.GetText())
+        $painterText.Paint(getText())
     Paint.End()
     
 End

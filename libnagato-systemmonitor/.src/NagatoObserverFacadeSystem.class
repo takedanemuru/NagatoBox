@@ -1,0 +1,80 @@
+' Gambas class file
+
+Inherits NagatoObserverFacadeCore
+
+Property Read CpuUsage As Float
+Property Read MemoryUsage As Float
+Property Read SwapUsage As Float
+Property Read ProcessCount As Integer
+Property Read CpuHistory As Float[]
+Property Read MemoryHistory As Float[]
+Property Read SwapHistory As Float[]
+Property Read ProcessHistrory As Integer[]
+
+Private $cpu As New NagatoObserverCpu
+Private $memory As New NagatoObserverMemory
+Private $swap As New NagatoObserverSwap
+Private $process As New NagatoObserverProcess
+
+Public Sub Asakura_PrepStep()
+    
+    $cpu.SetPrevData()
+    
+End
+
+Public Sub Asakura_Step()
+    
+    $cpu.GetStep()
+    $memory.GetStep()
+    $swap.GetStep()
+    $process.GetStep()
+    
+End
+
+Private Function CpuUsage_Read() As Float
+
+    Return $cpu.Usage
+
+End
+
+Private Function MemoryUsage_Read() As Float
+
+    Return $memory.Usage
+    
+End
+
+Private Function SwapUsage_Read() As Float
+
+    Return $swap.Usage
+
+End
+
+Private Function ProcessCount_Read() As Integer
+
+    Return $process.Usage
+
+End
+
+Private Function CpuHistory_Read() As Float[]
+
+    Return $cpu.History
+
+End
+
+Private Function MemoryHistory_Read() As Float[]
+
+    Return $memory.History
+
+End
+
+Private Function SwapHistory_Read() As Float[]
+
+    Return $swap.History
+
+End
+
+Private Function ProcessHistrory_Read() As Integer[]
+
+    Return $process.History
+
+End

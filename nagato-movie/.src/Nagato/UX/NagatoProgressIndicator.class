@@ -2,19 +2,64 @@
 
 Inherits NagatoObject
 
-Private $progressSlider As NagatoProgressBar
-Private $progressLabel As NagatoProgressLabel
+Private $drawingArea As DrawingArea
+Private $position As Float
+Private $duration As Float
+Private $lock As Boolean = False
+
+Private Sub getText() As String
+    
+    Return MikuruTimeFormat[CInt($position)] & " / " & MikuruTimeFormat[CInt($duration)]
+    
+End
 
 Public Sub SetWidgetProperty(argPosition As Float, argDuration As Float)
     
-    $progressLabel.SetWidgetProperty(argPosition, argDuration)
-    $progressSlider.SetWidgetProperty(argPosition, argDuration)
+    If $lock Then
+        $lock = False
+    Else
+        $position = argPosition
+        $duration = argDuration
+        $drawingArea.Refresh()
+    Endif
     
 End
 
 Public Sub _new(argContainer As Container)
     
-    $progressSlider = New NagatoProgressBar(argContainer) As "TFEI"
-    $progressLabel = New NagatoProgressLabel(argContainer)
+    $drawingArea = New DrawingArea(argContainer) As "DrawingArea"
+    
+    With $drawingArea
+        .Expand = True
+    End With
+    
+End
+
+Public Sub DrawingArea_Draw()
+    
+    If $duration = 0 Then Return
+    
+    Paint.Begin($drawingArea)
+        Paint.Brush = Paint.Color(Color.Merge(Color.White, Color.Violet, 0.1))
+        Paint.Rectangle(0, 0, $drawingArea.W, $drawingArea.H)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(Color.Merge(Color.White, Color.Violet, 0.3))
+        Paint.Rectangle(0, 0, ($drawingArea.W * ($position / $duration)), $drawingArea.H)
+        Paint.Fill()
+        Paint.Brush = Paint.Color(Color.White)
+        Paint.DrawRichText(getText(), 0, 0, $drawingArea.W, $drawingArea.H, Align.Center)
+    Paint.End()
+    
+End
+
+Public Sub DrawingArea_MouseDown()
+    
+    Dim yukiRate As Float = (Mouse.X / $drawingArea.W)
+    
+    $position = $duration * yukiRate
+    $lock = True
+    $drawingArea.Refresh()
+    
+    Raise Signal(MikuruMenuEvent.MediaProgress, [yukiRate])
     
 End

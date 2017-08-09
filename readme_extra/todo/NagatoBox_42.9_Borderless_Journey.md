@@ -22,7 +22,7 @@ Fuckin hot, maybe dull quors.
 
 ### nagato-image-editor
 
-+ new : trimming functionality
++ ~~fix : bugs on trimming functionality~~
 
 ### nagato-notifications
 
@@ -41,6 +41,12 @@ Fuckin hot, maybe dull quors.
 
 + new : wifi tab (for access points)
 + new : separate star menu for wifi tab
+
+### nagato-terminal (python application)
+
++ New App, a simple terminal emulator coded by python3+gobject
+
+![image: nagato-terminal_001](../images/nagato-terminal_001.png)
 
 ### nagato-web
 

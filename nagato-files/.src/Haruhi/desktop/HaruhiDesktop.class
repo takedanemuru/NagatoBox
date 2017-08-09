@@ -52,7 +52,6 @@ Public Sub Form_Close()
     $desktopTimer.Kill()
     
     Shell "nagato-rss-daemon --check-out nagato-desktop"
-    Shell "nagato-systemmonitor-daemon --check-out nagato-desktop"
     
     NagatoDBus.Unregister()
     

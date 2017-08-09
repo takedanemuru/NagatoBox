@@ -13,9 +13,7 @@ End
 
 Public Sub Form_Close()
     
-    Shell "nagato-systemmonitor-daemon --check-out nagato-system-meter"
     
-    NagatoDBus.Unregister()
     
 End
 

@@ -1,0 +1,11 @@
+' Gambas module file
+
+Public Sub Main()
+
+    Dim yukiTest As NagatoTest
+
+    Print "YUKI.N > Can you see this ?"
+
+    yukiTest = New NagatoTest
+
+End

@@ -38,6 +38,6 @@ End
 
 Public Sub MediaTimer_Timer()
 
-    $menuBar.SetWidgetProperty($player.Position, $player.Duration)
+    If $player.State = 4 Then $menuBar.SetWidgetProperty($player.Position, $player.Duration)
 
 End

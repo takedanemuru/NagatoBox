@@ -13,7 +13,7 @@ End
 Public Sub _new()
 
     $drawingArea = New NagatoDrawingArea(Me)
-    $menuBar = New NagatoMenuBar() As "MenuBar"
+    $menuBar = New NagatoMenuBar(Me) As "MenuBar"
     $player = New NagatoPlayer($drawingArea.DrawingArea) As "Player"
 
 End
@@ -40,16 +40,4 @@ Public Sub MediaTimer_Timer()
 
     $menuBar.SetWidgetProperty($player.Position, $player.Duration)
 
-End
-
-Public Sub Form_Enter()
-    
-    'MenuHBox.Visible = True
-    
-End
-
-Public Sub Form_Leave()
-    
-    'MenuHBox.Visible = False
-    
 End

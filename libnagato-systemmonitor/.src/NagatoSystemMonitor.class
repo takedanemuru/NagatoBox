@@ -1,0 +1,62 @@
+' Gambas class file
+
+Export
+
+Create Static
+
+Property Read Activated As Boolean
+Property Read CpuUsage As Float
+Property Read MemoryUsage As Float
+Property Read SwapUsage As Float
+Property Read ProcessCount As Integer
+Property Read Thermal As Float
+
+Private $systemObserver As New NagatoObserverFacadeSystem
+Private $hardwareObserver As New NagatoObserverFacadeHardware
+
+Public Sub Start(Optional argObservationInterval As Integer = 1)
+    
+    $systemObserver.Start(argObservationInterval)
+    $hardwareObserver.Start(argObservationInterval)
+    
+End
+
+Private Function Activated_Read() As Boolean
+
+    Return $systemObserver.Activated
+
+End
+
+Private Function CpuUsage_Read() As Float
+
+    Return $systemObserver.CpuUsage
+
+End
+
+Private Function MemoryUsage_Read() As Float
+
+    Return $systemObserver.MemoryUsage
+
+End
+
+Private Function SwapUsage_Read() As Float
+
+    Return $systemObserver.SwapUsage
+
+End
+
+Private Function ProcessCount_Read() As Integer
+
+    Return $systemObserver.ProcessCount
+
+End
+
+Private Function Thermal_Read() As Float
+
+    If Not $hardwareObserver.Activated Then Return 0
+
+    If $hardwareObserver.Count = 0 Then Return 0
+
+    Return $hardwareObserver.GetTemperature(0) / 1000
+
+End

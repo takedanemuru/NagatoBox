@@ -44,15 +44,15 @@ Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
     
     Select Case argEffect
         Case MikuruEffect.OilPaint
-            Me._$after.Image = Me._$after.Image.OilPaint(argValues[0])
+            Me._$after.Image = Me._$before.Image.OilPaint(argValues[0])
         Case MikuruEffect.Charcoal
-            Me._$after.Image = Me._$after.Image.Desaturate()
+            Me._$after.Image = Me._$before.Image.Copy().Desaturate()
         Case MikuruEffect.Resize
-            Me._$after.Image = Me._$after.Image.Stretch(argValues[1], argValues[0])
+            Me._$after.Image = Me._$before.Image.Stretch(argValues[1], argValues[0])
         Case MikuruEffect.Balance
             setBalance(argValues)
         Case MikuruEffect.Trimming
-            Me._$after.Image = Me._$after.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
+            Me._$after.Image = Me._$before.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
     End Select
     
 End

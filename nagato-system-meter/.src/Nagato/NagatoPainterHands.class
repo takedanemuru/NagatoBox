@@ -1,7 +1,5 @@
 ' Gambas class file
 
-Private $systemMonitor As NagatoDBusAccessSystemMonitor
-
 Private Function getX(argDegree As Integer, argLength As Integer) As Float
     
     Return Cos(Rad(argDegree)) * argLength + 100
@@ -58,14 +56,8 @@ End
 Public Sub Paint()
     
     paintPoints()
-    paintHand($systemMonitor.SwapUsage * 270, 60, 4, Color.Cyan)
-    paintHand($systemMonitor.MemoryUsage * 270, 70, 4, Color.Violet)
-    paintHand($systemMonitor.CpuUsage * 270, 80, 4, Color.Red)
-    
-End
-
-Public Sub _new(argSystemMonitor As NagatoDBusAccessSystemMonitor)
-    
-    $systemMonitor = argSystemMonitor
+    paintHand(NagatoSystemMonitor.SwapUsage * 270, 60, 4, Color.Cyan)
+    paintHand(NagatoSystemMonitor.MemoryUsage * 270, 70, 4, Color.Violet)
+    paintHand(NagatoSystemMonitor.CpuUsage * 270, 80, 4, Color.Red)
     
 End

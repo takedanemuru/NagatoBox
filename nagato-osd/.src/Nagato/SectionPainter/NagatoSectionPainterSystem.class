@@ -3,22 +3,20 @@
 Private $painterHeader As New NagatoPainterHeader
 Private $painterTextElement As New NagatoPainterTextElement
 Private $painterText As New NagatoPainterText
-Private $proxySystem As New NagatoDBusAccessSystemMonitor
 
 Public Sub _call(argY As Integer) As Integer
     
     Dim yukiY As Integer = argY
     
     yukiY = $painterHeader(yukiY, "System")
-    If $proxySystem.Activated Then
-        yukiY = $painterTextElement(yukiY, "CPU : ", Format($proxySystem.CpuUsage, "#0.00 %"))
-        yukiY = $painterTextElement(yukiY, "Memory : ", Format($proxySystem.MemoryUsage, "#0.00 %"))
-        yukiY = $painterTextElement(yukiY, "Swap : ", Format($proxySystem.SwapUsage, "#0.00 %"))
-        yukiY = $painterTextElement(yukiY, "Processes : ", $proxySystem.ProcessCount)
-        yukiY = $painterTextElement(yukiY, "Thermal : ", $proxySystem.Thermal & " °C")
+    If NagatoSystemMonitor.Activated Then
+        yukiY = $painterTextElement(yukiY, "CPU : ", Format(NagatoSystemMonitor.CpuUsage, "#0.00 %"))
+        yukiY = $painterTextElement(yukiY, "Memory : ", Format(NagatoSystemMonitor.MemoryUsage, "#0.00 %"))
+        yukiY = $painterTextElement(yukiY, "Swap : ", Format(NagatoSystemMonitor.SwapUsage, "#0.00 %"))
+        yukiY = $painterTextElement(yukiY, "Processes : ", NagatoSystemMonitor.ProcessCount)
+        yukiY = $painterTextElement(yukiY, "Thermal : ", NagatoSystemMonitor.Thermal & " °C")
     Else
         yukiY = $painterText(yukiY, "please wait ...")
-        Try $proxySystem.Activate()
     End If
     
     Return yukiY + 8
@@ -27,6 +25,6 @@ End
 
 Public Sub _new()
     
-    $proxySystem.Activate()
+    NagatoSystemMonitor.Start(1)
     
 End

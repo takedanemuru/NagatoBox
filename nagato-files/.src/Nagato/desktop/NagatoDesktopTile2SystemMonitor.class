@@ -4,6 +4,34 @@ Inherits NagatoDesktopTile2
 
 Private $textRectangle As New Rect
 
+Public Sub getStatus() As String
+    
+    Dim yukiText As String
+    
+    yukiText &= Format(NagatoSystemMonitor.CpuUsage, "##0.00%") & "<br>"
+    yukiText &= Format(NagatoSystemMonitor.MemoryUsage, "##0.00%") & "<br>"
+    yukiText &= Format(NagatoSystemMonitor.SwapUsage, "##0.00%") & "<br>"
+    yukiText &= NagatoSystemMonitor.ProcessCount & "<br>"
+    yukiText &= Format$(NagatoSystemMonitor.Thermal, "##0.00°C")
+    
+    Return yukiText
+    
+End
+
+Private Function getLabel() As String
+    
+    Dim yukiText As String
+    
+    yukiText &= "CPU<br>"
+    yukiText &= "Mem.<br>"
+    yukiText &= "Swap<br>"
+    yukiText &= "Proc.<br>"
+    yukiText &= "Temp."
+    
+    Return yukiText
+    
+End
+
 Private Function getBaseImage() As Image
     
     Dim yukiBaseImage As Image = MikuruTileBaseImage[Color.Blue, 192]
@@ -31,11 +59,13 @@ End
 
 Private Sub paintText()
     
-    setTextRectangle(NagatoSystemMonitorFacade.Label)
+    Dim yukiLabel As String = getLabel()
+    
+    setTextRectangle(yukiLabel)
     
     With $textRectangle
-        Paint.DrawRichText(NagatoSystemMonitorFacade.Label, .X, .Y, .W, .H, Align.Left)
-        Paint.DrawRichText(NagatoSystemMonitorFacade.Content, .X, .Y, .W, .H, Align.Right)
+        Paint.DrawRichText(yukiLabel, .X, .Y, .W, .H, Align.Left)
+        Paint.DrawRichText(getStatus(), .X, .Y, .W, .H, Align.Right)
     End With
     
 End
@@ -68,7 +98,6 @@ End
 Public Sub _OnTimer() ' override
     
     If Not Me._$iconView.Exist(NagatoDesktopKey.SystemMonitor) Then Return
-    If Not NagatoSystemMonitorFacade.EnsureActivation("nagato-desktop") Then Return
 
     Try Me._$iconView[NagatoDesktopKey.SystemMonitor].Picture = getIcon()
     

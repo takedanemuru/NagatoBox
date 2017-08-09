@@ -2,6 +2,7 @@
 
 Property Read Position As Float
 Property Read Duration As Float
+Property Read State As Integer
 
 Private $mediaPlayer As MediaPlayer
 Private $mediaControl As MediaControl
@@ -27,7 +28,7 @@ End
 
 Private Sub initializeMediaPlayerAndControl()
     
-    $mediaPlayer = New MediaPlayer As "MediaPlayer"
+    $mediaPlayer = New MediaPlayer As "MediaPlayerX"
     $mediaControl = New MediaControl($mediaPlayer, "ximagesink") As "MediaControl"
     $mediaControl.SetWindow($drawingArea)
     $mediaPlayer.Video.Output = $mediaControl
@@ -50,7 +51,7 @@ Public Sub SignalReceiver(argSignal As Integer, argValues As Variant[])
         Case MikuruMenuEvent.MediaPause
             Try $mediaPlayer.Pause()
         Case MikuruMenuEvent.MediaProgress
-            $mediaPlayer.Position = $mediaPlayer.Duration * (argValues[0] / 100)
+            $mediaPlayer.Position = $mediaPlayer.Duration * argValues[0] 
         Case MikuruMenuEvent.FileOpen
             If MikuruDialog.OpenFile() Then Me.SetPathAndPlay(MikuruDialog.Path)
         Case MikuruMenuEvent.MediaScreenShot
@@ -77,5 +78,11 @@ End
 Private Function Duration_Read() As Float
 
     Return $mediaPlayer.Duration
+
+End
+
+Private Function State_Read() As Integer
+
+    Return $mediaPlayer.State
 
 End

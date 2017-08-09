@@ -14,6 +14,8 @@ End
 
 Public Sub _new(argContainer As Container)
     
+    NagatoSystemMonitor.Start(1)
+    
     $iconView = New NagatoIconViewInitializer(argContainer)
     $wallpaper = New NagatoDesktopWallpaperHandler($iconView.IconView)
     $icons = New NagatoDesktopTilesHandler($iconView.IconView)
