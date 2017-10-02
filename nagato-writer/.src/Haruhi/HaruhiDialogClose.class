@@ -17,7 +17,7 @@ Public Sub MainDrawingArea_Draw()
         Paint.Fill()
         Paint.Brush = Paint.Color(Color.White)
         Paint.Font.Bold = True
-        Paint.RichText("YUKI.N > <br><br>Your changes have been saved.", 20, 170, 260, 110, Align.Center)
+        Paint.RichText("YUKI.N > <br><br>Your changes are not saved.", 20, 170, 260, 110, Align.Center)
         Paint.Fill()
     Paint.End()
     

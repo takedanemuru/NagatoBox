@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private $settingsHandler As NagatoSettingsHandler
-Private $fileHandler As NagatoFileHandler2
+Private $fileHandler As NagatoFile
 Private $keyboardHandler As NagatoKeyboardHandler
 Private $contextMenu As NagatoContextMenu 
 Private $searchAndReplace As NagatoTextAreaSearchAndReplace
@@ -9,7 +9,7 @@ Private $searchAndReplace As NagatoTextAreaSearchAndReplace
 Public Sub _new()
     
     $settingsHandler = New NagatoSettingsHandler(TextArea)
-    $fileHandler = New NagatoFileHandler2(TextArea)
+    $fileHandler = New NagatoFile(TextArea)
     $keyboardHandler = New NagatoKeyboardHandler(TextArea) As "TFEI"
     $contextMenu = New NagatoContextMenu As "TFEI" 
     $searchAndReplace = New NagatoTextAreaSearchAndReplace(TextArea)
@@ -29,7 +29,7 @@ End
 
 Public Sub Form_Close()
     
-    If $fileHandler.Quit() Then
+    If $fileHandler.CanQuitApplication() Then
         If Not Me.FullScreen Then NagatoSettingsForm.Save(Me)
         Message("YUKI.N > See you...", ("OK"))
     Else
@@ -65,9 +65,9 @@ Public Sub TFEI_Signal(argSignal As Integer, argValues As Variant[])
         Case MikuruSignal.FileSave
             $fileHandler.Save()
         Case MikuruSignal.FileOpen
-            $fileHandler.Open()
+            $fileHandler.OpenFromDialog()
         Case MikuruSignal.FileRecent
-            $fileHandler.OpenRecent(argValues[0])
+            $fileHandler.OpenPath(argValues[0])
         Case MikuruSignal.FileSaveAs
             $fileHandler.SaveAs()
         Case MikuruSignal.EditSearchAndReplace

@@ -17,7 +17,10 @@ End
 
 Public Sub SetCoverArt(argIndexes As String[])
     
-    If $coverArtPath Then NagatoQueue.ChangeCoverArtByIndexes(argIndexes, $coverArtPath)
+    If $coverArtPath Then 
+        NagatoQueue.ChangeCoverArtByIndexes(argIndexes, $coverArtPath)
+        NagatoBroadcast(MikuruSignal.BroadcastNewCoverArt, Null)
+    End If
     
 End
 

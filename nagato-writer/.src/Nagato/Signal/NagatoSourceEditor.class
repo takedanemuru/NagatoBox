@@ -21,7 +21,7 @@ End
 
 Public Sub FileEvent(argEvent As Integer, Optional argArgs As Variant[] = Null)
     
-    If argEvent > (MikuruSignal.FileNone + 100) And If Not $fileHandler.EnsureSaved($textArea.Text) Then Return
+    If argEvent > (MikuruSignal.FileNone + 100) And If $fileHandler.IsSaveDialogCancelled($textArea.Text) Then Return
     
     Select Case argEvent
         Case MikuruSignal.FileNewMarkdown
@@ -53,6 +53,12 @@ Public Sub EditEvent(argSignal As Integer, Optional argValues As Variant[])
         Default
             $textArea(argSignal, argValues)
     End Select
+    
+End
+
+Public Sub IsFileClosable() As Boolean
+    
+    Return False
     
 End
 

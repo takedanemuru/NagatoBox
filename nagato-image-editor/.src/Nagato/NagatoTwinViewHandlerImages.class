@@ -53,6 +53,8 @@ Public Sub PreviewEffect(argEffect As Integer, argValues As Variant[])
             setBalance(argValues)
         Case MikuruEffect.Trimming
             Me._$after.Image = Me._$before.Image.Copy(argValues[0], argValues[1], argValues[2], argValues[3])
+        Case MikuruEffect.Replace
+            Me._$after.Image = Me._$before.Image.Copy().Replace(argValues[0], argValues[1], False)
     End Select
     
 End

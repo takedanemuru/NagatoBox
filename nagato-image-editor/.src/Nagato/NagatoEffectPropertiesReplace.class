@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits NagatoEffectProperties
+
+Property Read Values As Variant[]
+
+Private $colorBefore As ColorButton
+Private $colorAfter As ColorButton
+
+Public Sub _new(argContainer As Container)
+    
+    Me._$container = argContainer
+    Try Me._$container.Children.Clear()
+    
+    Me._AddLabel("Old Color")
+    $colorBefore = New ColorButton(Me._$container)
+    $colorBefore.H = 36
+    Me._AddLabel("New Color")
+    $colorAfter = New ColorButton(Me._$container)
+    $colorAfter.H = 36
+    
+End
+
+Private Function Values_Read() As Variant[]
+
+    Return [$colorBefore.Value, $colorAfter.Value]
+
+End

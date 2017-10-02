@@ -11,7 +11,7 @@ Private $mouseTracker As NagatoGloobusMouseTracker
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
     Select argSignal
-        Case MikuruSignal.BroadcastIndexMoved
+        Case MikuruSignal.BroadcastIndexMoved, MikuruSignal.BroadcastNewCoverArt
             $coverArt.ResetCoverArt()
     End Select
     

@@ -27,7 +27,7 @@ Private Sub catchCommand(argDirectory As String) As Boolean ' Return True when B
         Else If .Include(["properties", "property", "prop"]) And If .IsValidIndex($paths.Max) Then
             MikuruFileProperty.Show($paths.CurrentDirectory &/ $paths[.Index])
         Else If .Include(["play", "music", "audio"]) And If .IsValidIndex($paths.Max) Then
-            NagatoPlayMusic.Show($paths.CurrentDirectory &/ $paths[.Index])
+            NagatoPlayMusic.Play2($paths.CurrentDirectory, $paths.All)
         Else If .Include(["text"]) And If .IsValidIndex($paths.Max) Then
             MikuruText.Show($paths.CurrentDirectory &/ $paths[.Index])
         Else If .Has("move") Then

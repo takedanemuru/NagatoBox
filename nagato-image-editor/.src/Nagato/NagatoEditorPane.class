@@ -74,6 +74,8 @@ Public Sub EffectSelector_MenuEvent(argEvent As Integer)
             $effectProperties = New NagatoeffectPropertiesBalance($propertyVBox)
         Case MikuruEffect.Trimming
             $effectProperties = New NagatoEffectPropertiesTrimming($propertyVBox)
+        Case MikuruEffect.Replace
+            $effectProperties = New NagatoEffectPropertiesReplace($propertyVBox)
     End Select
     
 End

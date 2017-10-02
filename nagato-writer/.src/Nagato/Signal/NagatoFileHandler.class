@@ -58,11 +58,12 @@ Public Sub SaveAs(argText As String)
     
 End
 
-Public Function EnsureSaved(argText As String) As Boolean
+Public Function IsSaveDialogCancelled(argText As String) As Boolean
     
-    If argText = $buffer.Text Then Return True
+    If argText = $buffer.Text Then Return False
+    If $appClosure.GetStatus() = $appClosure.ResponseCancel Then Return True
     
-    Return IIf($appClosure.GetStatus() <> HaruhiDialogClose.ResponseCancel, True, False)
+    Return False
     
 End
 

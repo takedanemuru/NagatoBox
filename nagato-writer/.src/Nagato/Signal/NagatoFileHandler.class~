@@ -58,22 +58,21 @@ Public Sub SaveAs(argText As String)
     
 End
 
-Public Function EnsureSaved(argText As String) As Boolean
+Public Function IsSaveDialogCancelled(argText As String) As Boolean
     
-    If argText = $buffer.Text Then Return True
+    If argText = $buffer.Text Then Return False
+    If $appClosure.GetStatus() = $appClosure.ResponseCancel Then Return True
     
-    Return IIf($appClosure.GetStatus() <> HaruhiDialogClose.ResponseCancel, True, False)
+    Return False
     
-    ' Select Case HaruhiDialogClose.ShowDialog()
-    '     Case HaruhiDialogClose.ResponseCancel
-    '         Return False
-    '     Case HaruhiDialogClose.ResponseDiscard
-    '         Return True
-    '     Case HaruhiDialogClose.ResponseSave
-    '         Raise Signal(MikuruSignal.FileSave, Null)
-    '         Return True
-    ' End Select
-    ' 
+End
+
+Public Function EnsureSaved2(argText As String) As Integer
+    
+    If argText = $buffer.Text Then Return $appClosure.ResponseHasBeenSaved
+    
+    Return $appClosure.GetStatus()
+    
 End
 
 Private Function Buffer_Read() As String

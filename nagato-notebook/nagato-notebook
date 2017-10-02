@@ -1,0 +1,6 @@
+
+from libnagatonotebook.HumanoidInterface import NagatoYuki
+
+if __name__ == "__main__":
+    YUKI = NagatoYuki()
+    YUKI.N("> Ready?")

@@ -28,6 +28,7 @@ Public Enum BroadcastIndexMoved = 8001, BroadcastStateChanged = 8002
 Public Enum BroadcastQueueChanged = 8003, BroadcastPlaylistsChanged = 8004
 Public Enum BroadcastId3TagChanged = 8005, BroadcastMessage = 8006
 Public Enum BroadcastTimer = 8007, BroadcastSelectionUp = 8008, BroadcastSelectionDown = 8009
+Public Enum BroadcastNewCoverArt = 8010
 
 Public Enum ApplicationNone = 9000
 Public Enum ApplicationAbout = 9001, ApplicationCloseMainWindow = 9002

@@ -2,18 +2,9 @@
 
 Create Static
 
-Private $player As New MediaPlayer As "MediaPlayer"
-
-Private Function isValidPath(argPath As String) As Boolean
-    
-    Print "YUKI.N > we are going to play..." & argPath
-    
-    If Not Exist(argPath) Then Return False
-    If DesktopMime.FromFile(argPath).Type Not Begins "audio" Then Return False
-    
-    Return True
-    
-End
+Private $player As MediaPlayer 
+Private $paths As New NagatoMusicPaths
+Private $observer As Observer
 
 Private Sub endlessEight()
     
@@ -24,16 +15,20 @@ Private Sub endlessEight()
     
 End
 
-Public Sub Show(argPath As String)
+Public Sub _new()
     
-    If isValidPath(argPath)
-        Try $player.Stop()
-        $player.URL = Media.URL(argPath)
-        $player.Play()
-        endlessEight()
-    Else
-        MikuruDialog.Show("YUKI.N > Path is not valid, Press [ENTER] to continue.")
-    End If
+    $player = New MediaPlayer As "Player"
+    $observer = New Observer($player) As "Asakura"
+    $player.Pause()
+    
+End
+
+Public Sub Next()
+    
+    Print "YUKI.N > Next tune is... " & File.BaseName($paths.NextPath) 
+    If $paths.Count = 0 Then Return
+    $paths.Next()
+    Me.PlayCurrentPath()
     
 End
 
@@ -43,22 +38,26 @@ Public Sub Stop()
     
 End
 
-Public Sub MediaPlayer_Tag(argTagList As MediaTagList)
+Public Sub PlayCurrentPath()
     
-    Dim yukiTagName As String
-    Dim yukiTag As Variant
+    $player.Pause()
+    $player.URL = Media.URL($paths.CurrentPath)
+    Try $player.Play()
+    endlessEight()
+
+End
+
+Public Sub Play2(argCurrentDirectory As String, argPaths As String[])
     
-    For Each yukiTagName In argTagList.Tags
-        yukiTag = argTagList[yukiTagName]
-        If TypeOf(yukiTag) = gb.String Then Print Subst$("&1 : &2", yukiTagName, yukiTag)
-    Next
+    $paths.SetNew(argCurrentDirectory, argPaths)
+    If $paths.Count > 0 Then PlayCurrentPath()
     
 End
 
-Public Sub MediaPlayer_End()
+Public Sub Asakura_End()
     
-    Print ("YUKI.N > Misic ends.")
+    Wait 1
     
-    Try $player.Stop()
+    Me.Next()
     
 End

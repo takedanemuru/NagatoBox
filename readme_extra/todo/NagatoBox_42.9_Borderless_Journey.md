@@ -23,6 +23,7 @@ Fuckin hot, maybe dull quors.
 ### nagato-image-editor
 
 + ~~fix : bugs on trimming functionality~~
++ new : color replacement
 
 ### nagato-notifications
 
@@ -35,7 +36,7 @@ Fuckin hot, maybe dull quors.
 
 ### nagato-project-list
 
-+ new : sort list by date (last modefied) 
++ new : sort list by date (last modified) 
 
 ### nagato-taskmanager
 

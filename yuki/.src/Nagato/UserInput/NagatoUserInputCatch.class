@@ -12,6 +12,8 @@ Private Sub checkGlobalCommand()
         Quit 0
     Else If Me._Includes(["stop"]) Then
         NagatoPlayMusic.Stop()
+    Else If Me._Includes(["next"]) Then
+        NagatoPlayMusic.Next()
     Endif
     
 End

@@ -1,0 +1,75 @@
+' Gambas class file
+
+Property Read CurrentPath As String
+Property Read NextPath As String
+Property Read Count As Integer
+
+Private $paths As New String[]
+Private $index As Integer
+
+Private Function isValidPath(argPath As String, Optional argIgnore As Boolean = False) As Boolean
+    
+    If Not argIgnore Then Print "YUKI.N > we are going to play..." & argPath
+    
+    If Not Exist(argPath) Then Return False
+    If DesktopMime.FromFile(argPath).Type Not Begins "audio" Then Return False
+    
+    Return True
+    
+End
+
+Private Sub setPaths(argCurrentDirectory As String, argSourcePaths As String[]) 
+    
+    Dim yukiIndex As Integer
+    Dim yukiPaths As New String[]
+    Dim yukiPath As String
+    
+    For Each yukiIndex In NagatoUserInput.Numbers
+        yukiPath = argCurrentDirectory &/ argSourcePaths[yukiIndex]
+        If Not isValidPath(yukiPath, True) Then Continue
+        yukiPaths.Add(yukiPath)
+    Next
+    
+    If yukiPaths.Count = 0 Then Return
+    
+    $paths = yukiPaths.Copy()
+    $index = 0
+    
+End
+
+Public Sub SetNew(argCurrentDirectory As String, argPaths As String[])
+    
+    setPaths(argCurrentDirectory, argPaths)
+    
+End
+
+Public Sub Next()
+    
+    If $paths.Count = 0 Then Return
+    If $paths.Count = 1 Then Return
+    Inc $index
+    If $index > $paths.Max Then $index = 0
+    
+End
+
+Private Function CurrentPath_Read() As String
+
+    Return $paths[$index]
+
+End
+
+Private Function Count_Read() As Integer
+
+    Return $paths.Count
+
+End
+
+Private Function NextPath_Read() As String
+
+    Dim yukiIndex As Integer = $index + 1
+
+    If yukiIndex > $paths.Max Then yukiIndex = 0
+
+    Return $paths[yukiIndex]
+
+End
