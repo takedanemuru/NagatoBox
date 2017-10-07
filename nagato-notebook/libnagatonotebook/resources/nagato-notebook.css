@@ -5,6 +5,15 @@ GtkWindow {
     background-image: url("1.jpg");
 }
 
+GtkSourceView {
+    font-size: 14px;
+}
+
+.tooltip {
+    background-image: None;
+    background-color: #000000;
+}
+
 .dialog-label {
     color: #FFFFFF;
     background-color: #FF007F;
