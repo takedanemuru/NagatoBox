@@ -30,12 +30,6 @@ Public Sub TrayIcon_Click()
     
 End
 
-Public Sub TrayIcon_Scroll(argDelta As Float, argOrientation As Integer)
-    
-    NagatoAlsaState.SetVolume(NagatoAlsaState.Volume + CInteger(argDelta * 10))
-    
-End
-
 Public Sub Asakura_Changed(argVolume As Integer)
     
     $trayIcon.Tooltip = NagatoAlsaState.Text

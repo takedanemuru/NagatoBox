@@ -1,7 +1,0 @@
-' Gambas module file
-
-Public Sub _get(argIconName As String, Optional argSize As Integer = 16) As Picture
-    
-    Return Image.Load(Subst("Icons/&1.png", argIconName)).Stretch(argSize, argSize).Picture
-    
-End

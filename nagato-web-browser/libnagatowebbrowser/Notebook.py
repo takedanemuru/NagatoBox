@@ -46,6 +46,7 @@ class NagatoNotebook(Gtk.Notebook, NagatoObject):
         Gtk.Notebook.__init__(self)
         self.set_scrollable(True)
         self.set_property("expand", True)
+        self.set_property("resize-mode", Gtk.ResizeMode.QUEUE)
         self._parent.attach(self, 0, 2, 1, 1)
         self.set_opacity(0.9)
         self.connect("page-added", self._on_order_changed)

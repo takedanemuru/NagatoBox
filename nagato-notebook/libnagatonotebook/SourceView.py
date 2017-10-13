@@ -7,6 +7,8 @@ from gi.repository import GtkSource
 from libnagatonotebook.CoreObject import NagatoObject
 from libnagatonotebook.UserInput import NagatoUserInput
 from libnagatonotebook.File import NagatoFile
+from libnagatonotebook.TabLabel import NagatoTabLabel
+
 
 class NagatoSourceView(GtkSource.View, NagatoObject):
 
@@ -18,11 +20,18 @@ class NagatoSourceView(GtkSource.View, NagatoObject):
         self.set_hexpand(True)
         self.set_vexpand(True)
 
+    def _setup_tab(self):
+        self._tab_label = NagatoTabLabel(self)
+        self._page_index = self._parent.insert_page(self, self._tab_label, -1)
+        self._parent.set_tab_reorderable(self, True)
+        self._parent.set_show_tabs(self._parent.get_n_pages() > 1)
+
     def __init__(self, parent):
         self._parent = parent
         GtkSource.View.__init__(self)
         #NagatoUserInput(self)
         self._file = NagatoFile(self)
         self._set_attributes()
-        self._parent.attach(self, 0, 1, 1, 1)
+        self._setup_tab()
         self.grab_focus()
+        self.set_highlight_current_line(True)

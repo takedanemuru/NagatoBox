@@ -1,9 +1,0 @@
-' Gambas module file
-
-Property Read GridBackground As Integer
-
-Private Function GridBackground_Read() As Integer
-
-    Return Color.Merge(Color.White, Color.Violet, 0.1)
-
-End

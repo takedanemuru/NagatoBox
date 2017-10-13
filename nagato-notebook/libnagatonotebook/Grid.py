@@ -1,8 +1,9 @@
 
 from gi.repository import Gtk
 from libnagatonotebook.CoreObject import NagatoObject
-from libnagatonotebook.SourceView import NagatoSourceView
 from libnagatonotebook.BoxToolbar import NagatoBoxToolbar
+from libnagatonotebook.Notebook import NagatoNotebook
+
 
 class NagatoGrid(Gtk.Grid, NagatoObject):
 
@@ -15,5 +16,5 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
         self.set_hexpand(True)
         self.set_vexpand(True)
         self._toolbar = NagatoBoxToolbar(self)
-        self._source_view = NagatoSourceView(self)
+        self._notebook = NagatoNotebook(self)
         self.show_all()

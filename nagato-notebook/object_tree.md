@@ -1,13 +1,9 @@
-# Now Under Construction
+# Object Tree of nagato-notebook
 
-NagatoWindow
-    + NagatoGrid
-        + NagatoBoxToolBar
-        + NagatoNotebook
-            + NagatoContentContainer *n
-                + NagatoBoxTabBar
-                + NagatoSourceView
-                    + NagatoUserInput
-                        + NagatoGSound
-                    + NagatoFile
-                        + NagatoDialogSaveFile
++ nagato-notebook
+    + NagatoWindow
+        + NagatoGrid
+            + NagatoBoxToolbar
+            + NagatoNotebook
+                + NagatoSourceView *n
+                    + NagatoTabPanel
