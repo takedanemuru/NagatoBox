@@ -24,7 +24,35 @@ Private Function getReadableWeekDay(argYear As Integer, argMonth As Integer, arg
     
     Dim yukiIndex As Integer = WeekDay(Subst$("&2/&3/&1", argYear, argMonth, argDay))
     
+    yukiIndex += 1
+    If yukiIndex >= 7 Then yukiIndex = 0
+    
     Return $weekDay[yukiIndex]
+    
+End
+
+Private Function getLocaleGbDate(argTime As String) As Date
+    
+    Dim yukiYear As Integer = getYear(argTime)
+    Dim yukiMonth As Integer = getMonth(argTime)
+    Dim yukiDay As Integer = getDay(argTime)
+    Dim yukiHour As Integer = Mid$(argTime, 12, 2)
+    Dim yukiDate As Date = Date(yukiYear, yukiMonth, yukiDay, yukiHour)
+    Dim yukiDiff As Integer = NagatoSettingsLocation.UserLongitude / 15
+    
+    Return DateAdd(yukiDate, gb.Hour, yukiDiff)
+    
+End
+
+Public Sub GetLocaleTime(argTime As String) As String
+    
+    Dim yukiDate As Date = getLocaleGbDate(argTime)
+    Dim yukiYear As String = Format(Year(yukiDate), "0#")
+    Dim yukiMonth As String = Format(Month(yukiDate), "0#")
+    Dim yukiDay As String = Format(Day(yukiDate), "0#")
+    Dim yukiHour As String = Format(Hour(yukiDate), "0#")
+    
+    Return Subst$("&1-&2-&3T&4:00:00Z", yukiYear, yukiMonth, yukiDay, yukiHour)
     
 End
 
@@ -35,7 +63,7 @@ Public Sub _call(argTime As String) As String
     Dim yukiDay As Integer = getDay(argTime)
     Dim yukiWeekDay As String = getReadableWeekDay(yukiYear, yukiMonth, yukiDay)
     Dim yukiTime As String = Mid$(argTime, 12, 5)
-       
+    
     Return Subst$("&1/&2 (&3) &4", yukiMonth, yukiDay, yukiWeekDay, yukiTime)
     
 End

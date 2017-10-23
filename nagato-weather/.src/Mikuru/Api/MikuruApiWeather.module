@@ -1,6 +1,5 @@
 ' Gambas module file
 
-'Private Const WeatherApi As String = "http://api.met.no/weatherapi/locationforecastlts/1.2/?lat=&1;lon=&2"
 Private Const WeatherApi As String = "http://api.met.no/weatherapi/locationforecast/1.9/?lat=&1;lon=&2"
 
 Public Sub _get(argLatitude As Float, argLongitude As Float) As String

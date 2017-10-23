@@ -53,7 +53,9 @@ Public Function IsDay() As Boolean
     
     Dim yukiHour As Integer = Hour(getLocationDate())
     
-    If 18 >= yukiHour And If yukiHour >= 6 Then
+    Debug yukiHour
+    
+    If 17 >= yukiHour And If yukiHour >= 6 Then
         Return True
     Else
         Return False

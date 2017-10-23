@@ -3,6 +3,12 @@
 Private $cache As New Collection
 Private $temporaryElement As NagatoWeatherElement
 
+Private Sub getLocalTime(argUTCTime As String) As String
+    
+    Return MikuruReadableTime.GetLocaleTime(argUTCTime)
+    
+End
+
 Private Sub setData(argXmlElement As XmlElement)
     
     If argXmlElement.Attributes["from"] = argXmlElement.Attributes["to"] Then
@@ -10,7 +16,7 @@ Private Sub setData(argXmlElement As XmlElement)
         $temporaryElement.SetEssentialData(argXmlElement)
     Else If Object.IsValid($temporaryElement) And If Not $temporaryElement.HasIcon Then
         $temporaryElement.SetAdditionalData(argXmlElement)
-        $cache.Add($temporaryElement, argXmlElement.Attributes["to"])
+        $cache.Add($temporaryElement, getLocalTime(argXmlElement.Attributes["to"]))
     Endif
     
 End
