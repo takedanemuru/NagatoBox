@@ -2,14 +2,11 @@
 
 Inherits NagatoObject
 
-Private $downloadBar As NagatoWebdownloadsBar
 Private $inPageSearch As NagatoInPageSearch
 
 Public Sub _call(argSignal As Integer, argValues As Variant[])
     
     Select Case argSignal
-        Case MikuruSignal.WebDownload
-            $downloadBar.SetWebDownload(argValues[0])
         Case MikuruSignal.InPageSearchToggle
             $inPageSearch.SetFocus()
     End Select
@@ -18,7 +15,6 @@ End
 
 Public Sub _new(argVBox As Container, argInPageSearchHBox As Container)
     
-    $downloadBar = New NagatoWebdownloadsBar(argVBox) 
     $inPageSearch = New NagatoInPageSearch(argInPageSearchHBox) As "TFEI"
     
 End

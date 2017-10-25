@@ -52,8 +52,12 @@ Public Sub YouTubeDL_Read()
     
     Read #Last, yukiLine, -256
     
-    Debug yukiLine
-    
     Raise Signal(MikuruSignal.PersonaSetText, [yukiLine])
+    
+End
+
+Public Sub YouTubeDL_Kill()
+    
+    Exec ["notify-send", "-a", "nagato-web", "Download finished."]
     
 End

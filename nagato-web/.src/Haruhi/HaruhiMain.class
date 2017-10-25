@@ -78,7 +78,7 @@ Public Sub Body_Signal(argEvent As Integer, argArguments As Variant[])
             refreshTitle()
         Case MikuruSignal.ViewEditBookmark
             LeftPanel.Hidden = False
-        Case MikuruSignal.WebDownload, MikuruSignal.InPageSearchToggle
+        Case MikuruSignal.InPageSearchToggle
             $footerContainer(argEvent, argArguments)
         Case MikuruSignal.PersonaSetText
             $headerContainer.SetText(argArguments[0])

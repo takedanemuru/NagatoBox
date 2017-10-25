@@ -1,0 +1,49 @@
+' Gambas class file
+
+Inherits NagatoObject
+
+Private $webDownload As WebDownload
+Private $destinationPath As String
+Private $timer As New Timer As "Timer"
+
+Private Sub onDownloadFinished()
+    
+    Move $webDownload.Path To $destinationPath
+    $timer.Stop()
+    $webDownload.Delete()
+    
+    Message.Info(Subst("YUKI.N > File successfully saved to &1", $destinationPath), ("OK"))
+    
+End
+
+Private Sub onDownloadError(argErrorText As String)
+    
+    Raise Signal(MikuruSignal.PersonaSetText, [argErrorText])
+    $timer.Stop
+    Message.Warning("YUKI.N > Something wrong is occured.", ("OK"))
+    Try $webDownload.Delete()
+    
+End
+
+Public Sub _new(argWebDownload As WebDownload, argDestinationPath As String)
+    
+    $webDownload = argWebDownload
+    $destinationPath = argDestinationPath
+    
+    $timer.Start()
+    
+End
+
+Public Sub Timer_Timer()
+    
+    Dim yukiText As String = Subst("Download : &1% finished.", CString($webDownload.Progress * 100))
+    
+    Raise Signal(MikuruSignal.PersonaSetText, [yukiText])
+    
+    If $webDownload.Progress = 1 Then onDownloadFinished()
+    
+Catch
+    onDownloadError(Error.Text)
+    Return
+    
+End

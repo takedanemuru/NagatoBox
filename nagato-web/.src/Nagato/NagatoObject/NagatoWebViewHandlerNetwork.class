@@ -35,9 +35,20 @@ Public Sub _new(argWebView As WebView, argUniqueIndex As Integer)
     
 End
 
-Public Sub Asakura_Download(argDownload As WebDownload)
+Public Sub Asakura_Download(argWebDownload As WebDownload)
     
-    Raise Signal(MikuruSignal.WebDownload, [argDownload])
+    Dim yukiDownload As NagatoWebDownload2
+    
+    argWebDownload.Path = Temp$("download_" & File.Name(argWebDownload.Url))
+    
+    Dialog.Title = ("Download")
+    Dialog.Path = MikuruSafePath.Get(NagatoSettings.DownloadDirectory &/ File.Name(argWebDownload.Url))
+    
+    If Not Dialog.SaveFile() Then
+        yukiDownload = New NagatoWebDownload2(argWebDownload, Dialog.Path) As "TFEI"
+    Else
+        argWebDownload.Cancel()
+    Endif
     
 End
 
