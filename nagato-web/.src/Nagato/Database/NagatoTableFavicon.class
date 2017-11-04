@@ -2,6 +2,8 @@
 
 Inherits NagatoTable
 
+Private Const FaviconDirectory As String = "/tmp/nagato-web-favicon"
+
 Private Function getBaseUrl(argUrl As String) As String
     
     Return Split(argUrl, "/", "", True)[1]
@@ -56,8 +58,12 @@ End
 
 Public Function GetFavicon(argUrl As String) As Picture
     
-    Dim yukiResult As Result = Me._$connection.Find(NagatoDB.Table.Favicon, "url = &1", getBaseUrl(argUrl))
+    Dim yukiBaseUrl As String = getBaseUrl(argUrl)
+    Dim yukiResult As Result = Me._$connection.Find(NagatoDB.Table.Favicon, "url = &1", yukiBaseUrl)
     
     Return MikuruBlob.GetPictureFromBlob(yukiResult[NagatoDB.Column.Favicon].Data)
+    
+Catch
+    Return Null
     
 End

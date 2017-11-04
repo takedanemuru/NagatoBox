@@ -16,8 +16,6 @@ End
 
 Public Function Get(argUrl As String) As Picture
     
-    If Not $tableFavicon.HasFavicon(argUrl) Then Return Null
-    
     Return $tableFavicon.GetFavicon(argUrl)
     
 End

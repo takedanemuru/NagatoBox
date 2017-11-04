@@ -4,7 +4,7 @@ Inherits NagatoObject
 
 Private $rootMenu As Menu
 
-Public Sub Refresh()
+Public Sub refresh()
     
     Dim yukiCategory As String
     Dim yukiMenu As NagatoSubMenuBookmarkCategory
@@ -19,7 +19,6 @@ End
 Public Sub _new(argRootMenu As Menu)
     
     $rootMenu = argRootMenu
-    
-    Me.Refresh()
+    refresh()
     
 End
