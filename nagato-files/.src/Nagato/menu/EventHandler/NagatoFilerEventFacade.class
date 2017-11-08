@@ -14,7 +14,7 @@ Public Sub _new(argLog As NagatoDirectoryLog, argUserInput As NagatoFilerUserInp
     $viewEvent = New NagatoFilerEventView(argLog, argUserInput) As "EventHandler"
     $tagEvent = New NagatoFilerEventTag(argLog, argUserInput) As "EventHandler"
     $moveEvent = New NagatoFilerEventMove(argLog, argUserInput) As "EventHandler"
-    $createEvent = New NagatoFilerEventCreate(argLog, argUserInput)
+    $createEvent = New NagatoFilerEventCreate(argLog, argUserInput) As "EventHandler"
     
 End
 

@@ -1,10 +1,12 @@
 ' Gambas module file
 
 Property LastSelectedSymbol As String
+Property LastCreatedPath As String
 
 Public Enum ResponseApply = 1001, ResponseCancel = 1002
 
 Private $lastSelectedSymbl As String = ""
+Private $lastCreatedPath As String = ""
 
 Private Function LastSelectedSymbol_Read() As String
 
@@ -15,5 +17,17 @@ End
 Private Sub LastSelectedSymbol_Write(Value As String)
 
     $lastSelectedSymbl = Value
+
+End
+
+Private Function LastCreatedPath_Read() As String
+
+    Return $lastCreatedPath
+
+End
+
+Private Sub LastCreatedPath_Write(Value As String)
+
+    $lastCreatedPath = Value
 
 End

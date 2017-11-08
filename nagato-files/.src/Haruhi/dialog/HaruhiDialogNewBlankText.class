@@ -1,0 +1,50 @@
+' Gambas class file
+
+Private $parentDirectory As String
+
+Public Sub SetPath(argPath As String)
+    
+    MikuruDialog.LastCreatedPath = ""
+    $parentDirectory = argPath
+    
+    FileNameBox.Text = "untitled.txt"
+    FileNameBox.Select()
+    
+End
+
+Public Sub Form_Show()
+    
+    Dim yukiPicture As Picture = Image.Load("pictures/yukichan_34.jpg").Stretch(Me.W, Me.H).Picture
+
+    Me.Picture = yukiPicture
+    Me.Center()
+    
+End
+
+Public Sub CancelButton_Click()
+
+    Me.Close(Me.ResponseCancel)
+
+End
+
+Public Sub CreateButton_Click()
+
+    If Not Exist($parentDirectory) Then
+        Message.Error(("YUKI.N > This directory has been deleted."), ("OK"))
+    Else If Not Exist($parentDirectory &/ FileNameBox.Text) Then
+        File.Save($parentDirectory &/ FileNameBox.Text, "")
+        MikuruDialog.LastCreatedPath = $parentDirectory &/ FileNameBox.Text
+        Me.Close(MikuruDialog.ResponseApply)
+    Else
+        Message.Error(("YUKI.N > Same name directory or file has been existed"), ("OK"))
+    Endif
+
+End
+
+Public Sub FileNameBox_Activate()
+
+    If FileNameBox.Text = "" Then Return
+    
+    CreateButton_Click()
+
+End

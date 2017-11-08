@@ -97,6 +97,8 @@ End
 
 Public Sub EventHandler_Request(argRequest As Integer, argValues As Variant[])
     
+    If argRequest = NagatoFilerEvent.RequestFocus Then Debug argValues[0]
+    
     Select Case argRequest
         Case NagatoFilerEvent.RequestFiltering
             filtering(argValues[0], argValues[1])
@@ -110,6 +112,8 @@ Public Sub EventHandler_Request(argRequest As Integer, argValues As Variant[])
             move(argValues[0])
         Case NagatoFilerEvent.RequestMouseDown
             $surface.MouseDown(argValues[0], argValues[1])
+        Case NagatoFilerEvent.RequestFocus
+            $surface.Focus(argValues[0])
     End Select
     
 End

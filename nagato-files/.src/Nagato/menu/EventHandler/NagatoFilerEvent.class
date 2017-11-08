@@ -5,7 +5,7 @@ Public _$userInput As NagatoFilerUserInput
 
 Public Enum RequestNewSelection = 1001, RequestFiltering = 1002, RequestRefresh = 1003
 Public Enum RequestSurfaceRefresh = 1004, RequestMove = 1005, RequestMouseDown = 1006
-Public Enum RequestRefreshIcon = 1007
+Public Enum RequestRefreshIcon = 1007, RequestFocus = 1008
 
 Event Request(argRequest As Integer, argValues As Variant[])
 

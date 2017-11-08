@@ -22,7 +22,8 @@ End
 Public Sub BlankText(argCurrentDirectory As String)
     
     If Not Exist(argCurrentDirectory) Then Return
-    File.Save(MikuruSafePath(argCurrentDirectory &/ ("blank.text")), "")
+    HaruhiDialogNewBlankText.SetPath(argCurrentDirectory)
+    HaruhiDialogNewBlankText.ShowDialog()
     
 End
 

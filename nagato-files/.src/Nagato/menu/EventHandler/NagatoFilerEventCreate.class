@@ -9,6 +9,8 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
             MikuruCreate.Archive(Me._$userInput.Selection)
         Case NagatoObject.CreateBlankText
             MikuruCreate.BlankText(Me._$log.Current)
+            If MikuruDialog.LastCreatedPath = "" Then Return
+            Raise Request(NagatoFilerEvent.RequestFocus, [MikuruDialog.LastCreatedPath])
         Case NagatoObject.CreateDirectory
             MikuruCreate.NewDirectory(Me._$log.Current)
         Case NagatoObject.CreateCopyWholeDirectory

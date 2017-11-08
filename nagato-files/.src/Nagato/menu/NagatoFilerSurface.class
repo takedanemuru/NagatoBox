@@ -62,6 +62,12 @@ Public Sub NewSelection(argDirectory As String, argSelection As String[])
     
 End
 
+Public Sub Focus(argPath As String)
+    
+    $iconView.Ensure(argPath)
+    
+End
+
 Public Sub MouseDown(argPath As String, argMouseLeft As Boolean)
     
     $userInput.Push(argPath, argMouseLeft)
