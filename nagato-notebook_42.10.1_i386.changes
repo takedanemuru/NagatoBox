@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Fri, 17 Nov 2017 00:00:00 +0900
+Source: nagato-notebook
+Binary: nagato-notebook
+Architecture: source all
+Version: 42.10.1
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
+Changed-By: takeda.nemuru <takeda.nemuru@yandex.com>
+Description:
+ nagato-notebook - a simple text pad.
+Changes:
+ nagato-notebook (42.10.1) UNRELEASED; urgency=low
+ .
+   * first build.
+Checksums-Sha1:
+ 5ed83d0cefe07fdc5b9cefc76e52f0e0eb6d5e2a 576 nagato-notebook_42.10.1.dsc
+ 4bf2e6a1b03e42fd18c016de086a9da42e9ce97d 86363 nagato-notebook_42.10.1.tar.gz
+ 2b1bcf0a0557676e2dba566a29450684aa7651dc 83542 nagato-notebook_42.10.1_all.deb
+Checksums-Sha256:
+ 5fb0f304a7f2d579f8cd369e28ac45df9f26029b167c2413d168de8022deb2bd 576 nagato-notebook_42.10.1.dsc
+ a0863c62bdc6839e18c5562707df87d23e32194deccee058048b40958f318471 86363 nagato-notebook_42.10.1.tar.gz
+ ac3615f706164882316330ae4a5c348860c9a44983b5ac70b96963e5e13ac64e 83542 nagato-notebook_42.10.1_all.deb
+Files:
+ 961c38634d384efe6b79540f5b62ff5e 576 python optional nagato-notebook_42.10.1.dsc
+ 4e7699ed844c643a3e966a6bb9d3ba1f 86363 python optional nagato-notebook_42.10.1.tar.gz
+ 703f0f033885d60932effd9de23deefc 83542 python optional nagato-notebook_42.10.1_all.deb
