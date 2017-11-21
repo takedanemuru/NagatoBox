@@ -5,5 +5,6 @@
         + NagatoGrid
             + NagatoBoxToolbar
             + NagatoNotebook
-                + NagatoSourceView *n
-                    + NagatoTabPanel
+			+ NagatoScrolledWindow *n
+                		+ NagatoSourceView
+                    		+ NagatoTabPanel

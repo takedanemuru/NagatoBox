@@ -19,7 +19,6 @@ class NagatoWindow(Gtk.Window, NagatoObject):
 
     def _yuki_n_file_save(self):
         pass
-        #self._source_view.save()
 
     def _on_destroy(self, widget, event, user_data=None):
         Gtk.main_quit()

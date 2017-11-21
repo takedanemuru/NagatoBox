@@ -26,7 +26,7 @@ class NagatoDialogSaveFile(object):
 
     def save_file(self):
         yuki_dialog = Gtk.FileChooserDialog(
-            "Save your text file", 
+            "Save your text file",
             NagatoDialogSaveFile._default_window,
             Gtk.FileChooserAction.SAVE,
             self._get_buttons_for_save()
@@ -38,7 +38,7 @@ class NagatoDialogSaveFile(object):
 
     def open_file(self):
         yuki_dialog = Gtk.FileChooserDialog(
-            "Select File to Open", 
+            "Select File to Open",
             NagatoDialogSaveFile._default_window,
             Gtk.FileChooserAction.OPEN,
             self._get_buttons_for_open()

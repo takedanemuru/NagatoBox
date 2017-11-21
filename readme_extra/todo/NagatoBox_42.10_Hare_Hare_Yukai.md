@@ -22,7 +22,7 @@
 
 a multitab text pad
 
-+ integrate gsound to keypress event.
++ ~~integrate gsound to keypress event.~~
 
 ### nagato-notifyd
 

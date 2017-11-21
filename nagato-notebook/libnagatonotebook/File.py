@@ -1,6 +1,4 @@
 
-import os
-from gi.repository import Gtk
 from libnagatonotebook.CoreObject import NagatoObject
 from libnagatonotebook.DialogSaveFile import NagatoDialogSaveFile
 
@@ -10,7 +8,7 @@ class NagatoFile(NagatoObject):
     def _is_file_closable(self):
         if self._saved:
             return True
-        return Ture
+        return False
 
     def _save_file_to(self, path_to_save):
         self._saved = True
@@ -35,7 +33,7 @@ class NagatoFile(NagatoObject):
         if yuki_path is None:
             return False
         self._save_file_to(yuki_path)
-        return self._saved        
+        return self._saved
 
     def set_file(self, path_to_file):
         with open(path_to_file, mode="r") as yuki_file:
