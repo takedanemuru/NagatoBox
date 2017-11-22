@@ -5,8 +5,8 @@ gi.require_version("GtkSource", "3.0")
 
 from gi.repository import GtkSource
 from libnagatonotebook.CoreObject import NagatoObject
-from libnagatonotebook.UserInput import NagatoUserInput
 from libnagatonotebook.File import NagatoFile
+#from libnagatonotebook.UserInput import NagatoUserInput
 
 
 class NagatoSourceView(GtkSource.View, NagatoObject):
@@ -24,19 +24,9 @@ class NagatoSourceView(GtkSource.View, NagatoObject):
         self.set_show_line_numbers(True)
         self.set_highlight_current_line(True)
 
-    def _initialize_source_buffer(self):
-        self._buffer = self.get_buffer()
-        self._buffer.set_highlight_syntax(True)
-        self._style_scheme = self._buffer.get_style_scheme()
-        self._language_manager = GtkSource.LanguageManager.get_default()
-        yuki_language = self._language_manager.get_language("python3")
-        self._buffer.set_language(yuki_language)
-
     def __init__(self, parent, path_to_file=None):
         self._parent = parent
         GtkSource.View.__init__(self)
-        #NagatoUserInput(self)
-        self._initialize_source_buffer()
         self._file = NagatoFile(self)
         self._set_attributes()
         self.grab_focus()

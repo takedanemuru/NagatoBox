@@ -34,7 +34,7 @@ class NagatoDialogSaveFile(object):
         yuki_response = yuki_dialog.run()
         yuki_file_name = Gtk.FileChooser.get_filename(yuki_dialog)
         yuki_dialog.destroy()
-        return yuki_file_name
+        return yuki_file_name, yuki_response
 
     def open_file(self):
         yuki_dialog = Gtk.FileChooserDialog(
