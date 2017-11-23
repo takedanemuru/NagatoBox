@@ -7,11 +7,8 @@ from libnagatonotebook.SourceView import NagatoSourceView
 
 class NagatoScrolledWindow(Gtk.ScrolledWindow, NagatoObject):
 
-    def save(self):
-        self._source_view.save()
-
-    def save_as(self):
-        self._source_view.save_as()
+    def _yuki_n_path_new(self, user_data):
+        self._tab_label.set_title(user_data)
 
     def _setup_page(self):
         self._tab_label = NagatoTabLabel(self)
@@ -22,6 +19,12 @@ class NagatoScrolledWindow(Gtk.ScrolledWindow, NagatoObject):
             )
         self._parent.set_tab_reorderable(self, True)
 
+    def save(self):
+        self._source_view.save()
+
+    def save_as(self):
+        self._source_view.save_as()
+
     def __init__(self, parent, path_to_file=None):
         self._parent = parent
         Gtk.ScrolledWindow.__init__(self)
@@ -29,6 +32,6 @@ class NagatoScrolledWindow(Gtk.ScrolledWindow, NagatoObject):
             Gtk.PolicyType.AUTOMATIC,
             Gtk.PolicyType.AUTOMATIC
             )
+        self._setup_page()
         self._source_view = NagatoSourceView(self, path_to_file)
         self.add(self._source_view)
-        self._setup_page()

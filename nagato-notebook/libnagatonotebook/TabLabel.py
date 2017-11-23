@@ -1,5 +1,6 @@
 
 from gi.repository import Gtk
+from gi.repository import GLib
 from libnagatonotebook.CoreObject import NagatoObject
 
 
@@ -11,7 +12,7 @@ class NagatoTabLabel(Gtk.Box, NagatoObject):
 
     def set_title(self, title):
         if title is not None:
-            self._label.set_text(title)
+            self._label.set_text(GLib.basename(title))
             self.show_all()
 
     def __init__(self, parent):
