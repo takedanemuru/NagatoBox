@@ -2,9 +2,9 @@
 from gi.repository import Gtk
 from libnagatoterminal.Rect import NagatoRect
 from libnagatoterminal.GridAutomata import NagatoGridAutomata
-import itertools
 
-class NagatoGridAutomataExpand(NagatoGridAutomata):
+
+class NagatoGridAutomataVteExpand(NagatoGridAutomata):
 
     def _can_expand_to(self, vte, rect):
         for yuki_column in range(rect.left, rect.right+1):

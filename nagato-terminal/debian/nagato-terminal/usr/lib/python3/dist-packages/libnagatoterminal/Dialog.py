@@ -4,6 +4,12 @@ from gi.repository import Gtk
 
 class NagatoDialog(Gtk.Dialog):
 
+    _default_window = None
+
+    @classmethod
+    def set_default_window(cls, window):
+        NagatoDialog._default_window = window
+
     def _set_buttons(self):
         self.add_button("Cancel", Gtk.ResponseType.CANCEL)
         self.add_button("Close", Gtk.ResponseType.OK)
@@ -22,11 +28,11 @@ class NagatoDialog(Gtk.Dialog):
         self._label.get_style_context().add_class("dialog-label")
         self.get_content_area().add(self._label)
 
-    def __init__(self, parent):
+    def __init__(self):
         Gtk.Dialog.__init__(
             self,
             "dialog: warning",
-            parent,
+            NagatoDialog._default_window,
             Gtk.ResponseType.CANCEL,
             None)
         self.set_default_size(300, 300)

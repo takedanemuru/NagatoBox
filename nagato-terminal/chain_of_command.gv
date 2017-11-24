@@ -1,0 +1,62 @@
+digraph {
+
+    "nagato-terminal" [
+        shape = "doublecircle"
+        color = "BlueViolet"
+    ]
+
+    "nagato-terminal" -> HumanoidInterface
+    
+    HumanoidInterface [
+        shape = "box"
+    ]
+    
+    CssProvider [
+        shape = "box3d"
+    ]
+    
+    HumanoidInterface -> CssProvider[
+        style = "dotted"
+    ]
+    HumanoidInterface -> NagatoArgs
+    HumanoidInterface -> NagatoWindow
+    
+    NagatoWindow -> NagatoGrid2
+    NagatoWindow -> NagatoDialog
+    NagatoWindow -> NagatoAboutDialog2
+    NagatoWindow -> NagatoSettings
+    
+    NagatoGridAttributes,
+    NagatoGridAutomataVteNew, 
+    NagatoGridAutomataVteExpand, 
+    NagatoVteAttributes [
+        style = "filled"
+        shape = "note"
+    ]
+
+    NagatoGrid2 -> NagatoNotebook [ 
+        label = "Multiple"
+        color = "Crimson"
+        ]
+    NagatoGrid2 -> NagatoGridAttributes
+    NagatoGrid2 -> NagatoGridAutomataVteNew
+    NagatoGrid2 -> NagatoGridAutomataVteExpand
+    
+    NagatoNotebook -> NagatoVte2 [ 
+        label = "Multiple"
+        color = "Crimson"
+        ]
+    NagatoNotebook -> NagatoGridPosition
+    
+    NagatoVte2 -> NagatoVteAttributes
+    NagatoVte2 -> NagatoProcessWatcher
+    NagatoVte2 -> NagatoUserInput
+    
+    NoteAlpha [
+        label = "see NagatoUserInput.gv"
+        shape = "underline"
+    ]
+    
+    NagatoUserInput -> NoteAlpha [ arrowhead = "dot" ]
+    
+}

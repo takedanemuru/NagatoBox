@@ -1,7 +1,6 @@
 
 from gi.repository import Gtk
 from libnagatonotebook.CoreObject import NagatoObject
-#from libnagatonotebook.SourceView import NagatoSourceView
 from libnagatonotebook.ScrolledWindow import NagatoScrolledWindow
 from libnagatonotebook.DialogSaveFile import NagatoDialogSaveFile
 
@@ -25,8 +24,8 @@ class NagatoNotebook(Gtk.Notebook, NagatoObject):
 
     def _set_callbacks(self):
         self.connect("page-added", self._on_order_changed)
-        self.connect("page-removed", self._on_page_removed)
         self.connect("page-reordered", self._on_order_changed)
+        self.connect("page-removed", self._on_page_removed)
         self.connect("switch-page", self._on_switch_page)
 
     def _get_active_source_view(self):

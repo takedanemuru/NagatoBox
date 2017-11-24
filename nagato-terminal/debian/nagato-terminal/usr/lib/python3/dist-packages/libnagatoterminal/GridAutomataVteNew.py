@@ -4,7 +4,7 @@ from libnagatoterminal.Rect import NagatoRect
 from libnagatoterminal.GridAutomata import NagatoGridAutomata
 
 
-class NagatoGridAutomataInsert(NagatoGridAutomata):
+class NagatoGridAutomataVteNew(NagatoGridAutomata):
 
     def _exist(self, rect):
         if self._grid.get_child_at(rect.left, rect.top) is None:

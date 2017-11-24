@@ -12,7 +12,7 @@ class NagatoSettings(configparser.ConfigParser):
 
     def _save(self):
         yuki_target_path = os.path.join(Path.get_home(), SETTINGS_PATH)
-        with open(yuki_target_path, 'w') as yuki_file:
+        with open(yuki_target_path, "w") as yuki_file:
             self.write(yuki_file)
 
     def save_window_rect(self, left, top, width, height):
@@ -24,15 +24,12 @@ class NagatoSettings(configparser.ConfigParser):
 
     def load_window_rect(self):
         yuki_rect = NagatoRect(
-            self.getint("window","x"),
-            self.getint("window","y"),
-            self.getint("window","w"),
-            self.getint("window","h")
+            self.getint("window", "x"),
+            self.getint("window", "y"),
+            self.getint("window", "w"),
+            self.getint("window", "h")
             )
-        if 0 >= yuki_rect.width:
-            return None
-        else:
-            return yuki_rect
+        return None if 0 >= yuki_rect.width else yuki_rect
 
     def __init__(self):
         configparser.ConfigParser.__init__(self)

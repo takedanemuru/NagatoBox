@@ -15,13 +15,13 @@ class NagatoRectAutomataAdjust(NagatoRectAutomata):
             self._rect._left += 1
         elif self._at_within(column, self._rect.left, self._rect.right):
             self._rect._width += 1
-        
+
     def _insert_row(self, row):
         if self._rect.top >= row:
             self._rect._top += 1
         elif self._at_within(row, self._rect.top, self._rect.bottom):
             self._rect._height += 1
-        
+
     def adjust(self, gtk_position_type, rect):
         if gtk_position_type == Gtk.PositionType.RIGHT:
             self._insert_column(rect.right)

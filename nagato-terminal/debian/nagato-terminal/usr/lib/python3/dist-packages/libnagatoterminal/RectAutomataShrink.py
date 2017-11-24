@@ -1,6 +1,5 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.Rect import NagatoRect
 from libnagatoterminal.RectAutomata import NagatoRectAutomata
 
 

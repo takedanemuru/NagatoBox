@@ -6,7 +6,8 @@ from libnagatoterminal.util import Direction
 CTRL_SHIFT_BINDS = {
     67: "YUKI.N > copy",
     86: "YUKI.N > paste",
-    81: "YUKI.N > destroy"
+    81: "YUKI.N > destroy",
+    84: "YUKI.N > add new tab"
     }
 
 
@@ -38,8 +39,7 @@ class NagatoKeyBinds(NagatoObject):
             return self._alt(event.keyval)
         elif self._mod_keys.ctrl_with_shift:
             return self._ctrl_with_shift(event.keyval)
-        else:
-            return False
+        return False
 
     def __init__(self, parent, vte):
         self._parent = parent

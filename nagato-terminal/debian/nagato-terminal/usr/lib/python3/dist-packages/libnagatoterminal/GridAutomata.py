@@ -18,13 +18,21 @@ class NagatoGridAutomata(object):
     def _to_else(self, vte, rect, gtk_position_type):
         pass
 
-    def __call__(self, vte, gtk_position_type, rect):
+    def _get_rect(self, vte, gtk_position_type, rect):
         if gtk_position_type == Gtk.PositionType.LEFT:
             return self._to_left(vte, rect)
         elif gtk_position_type == Gtk.PositionType.TOP:
             return self._to_top(vte, rect)
         else:
             return self._to_else(vte, rect, gtk_position_type)
+
+    def __call__(self, user_data):
+        yuki_rect = self._get_rect(
+            user_data[0],
+            user_data[1],
+            user_data[2]
+            )
+        return yuki_rect
 
     def __init__(self, grid):
         self._grid = grid

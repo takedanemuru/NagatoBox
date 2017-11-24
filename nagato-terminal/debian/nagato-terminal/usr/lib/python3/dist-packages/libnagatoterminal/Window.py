@@ -2,8 +2,8 @@
 from gi.repository import Gtk
 from libnagatoterminal.CoreObject import NagatoObject
 from libnagatoterminal import GdkPixbufIcon
+from libnagatoterminal.Grid2 import NagatoGrid
 from libnagatoterminal.Dialog import NagatoDialog
-from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.AboutDialog2 import NagatoAboutDialog2
 from libnagatoterminal.Settings import NagatoSettings
 
@@ -14,23 +14,26 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         if self._grid.can_close_all_chilren:
             return True
         else:
-            yuki_dialog = NagatoDialog(self)
+            yuki_dialog = NagatoDialog()
             yuki_response = yuki_dialog.run()
             yuki_dialog.destroy()
             return (yuki_response == Gtk.ResponseType.OK)
 
+    def _save_window_positions(self):
+        yuki_width, yuki_height = self.get_size()
+        yuki_left, yuki_top = self.get_position()
+        self._settings.save_window_rect(
+            yuki_left,
+            yuki_top,
+            yuki_width,
+            yuki_height
+            )
+
     def _try_quit_application(self):
         if self._can_close():
+            self._save_window_positions()
             Gtk.main_quit()
             print("YUKI.N > また図書館に…")
-            yuki_w, yuki_h = self.get_size()
-            yuki_x, yuki_y = self.get_position()
-            self._settings.save_window_rect(
-                yuki_x,
-                yuki_y,
-                yuki_w,
-                yuki_h
-                )
             return False
         return True
 
@@ -42,7 +45,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
 
     def _yuki_n_about(self):
         yuki_dialog = NagatoAboutDialog2()
-        yuki_response = yuki_dialog.run()
+        yuki_dialog.run()
         yuki_dialog.destroy()
 
     def _initialize_window(self):
@@ -58,6 +61,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
     def __init__(self):
         self._parent = None
         self._settings = NagatoSettings()
+        NagatoDialog.set_default_window(self)
         self._initialize_window()
         self._grid = NagatoGrid(self)
         self.add(self._grid)

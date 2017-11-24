@@ -1,3 +1,4 @@
+
 import gi
 
 gi.require_version("Vte", "2.91")
@@ -9,6 +10,7 @@ from libnagatoterminal.ProcessWatcher import NagatoProcessWatcher
 from libnagatoterminal.VteAttributes import NagatoVteAttributes
 from libnagatoterminal.UserInput import NagatoUserInput
 from libnagatoterminal.util.Args import NagatoArgs
+from libnagatoterminal.TabLabel import NagatoTabLabel
 
 
 class NagatoVte(Vte.Terminal, NagatoObject):
@@ -29,22 +31,27 @@ class NagatoVte(Vte.Terminal, NagatoObject):
     def _initialize_vte(self, is_prime_vte):
         yuki_pid = self._initialize_vte_widget(is_prime_vte)
         self._watcher = NagatoProcessWatcher(yuki_pid)
+        self._tab_label.set_title("PID : {}".format(yuki_pid))
         if is_prime_vte:
             self._send_command(self._args.command)
 
     def _send_command(self, command=None):
-        if command:
+        if command is not None:
             yuki_command = "{} \n".format(command)
             self.feed_child(yuki_command, len(yuki_command))
 
-    def __init__(self, parent, is_prime_vte, rect):
+    def __init__(self, parent, is_prime_vte):
         self._parent = parent
         self._args = NagatoArgs()
+        self._tab_label = NagatoTabLabel(parent)
         self._initialize_vte(is_prime_vte)
         NagatoVteAttributes(self)
         NagatoUserInput(self)
-        self._initialize_ext(rect)
-        parent.attach(self, rect.left, rect.top, 1, 1)
+        parent.insert_page(self, self._tab_label, -1)
+        parent.set_tab_reorderable(self, True)
+        self.show_all()
+        # notebook reject switch page when child is not visible.
+        parent.set_current_page(parent.get_n_pages() - 1)
 
     def _yuki_n_copy(self):
         self.copy_clipboard()
@@ -53,8 +60,9 @@ class NagatoVte(Vte.Terminal, NagatoObject):
         self.paste_clipboard()
 
     def _yuki_n_destroy(self):
-        if self._watcher.can_close:
+        if self._watcher.can_close_with_user_response():
             self.destroy()
+            self._tab_label.destroy()
             self._raise("YUKI.N > child destroyed")
 
     @property

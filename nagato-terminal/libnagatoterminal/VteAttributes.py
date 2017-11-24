@@ -12,4 +12,3 @@ class NagatoVteAttributes(object):
         vte.set_font(PangoFont.get("Ubuntu Mono Regular 14"))
         vte.set_hexpand(True)
         vte.set_vexpand(True)
-        vte.set_opacity(0.7)
