@@ -24,8 +24,8 @@ class NagatoNotebook(NagatoObject, Gtk.Notebook):
         yuki_rect = self._position.get_shrinked_rect(user_data)
         self._raise("YUKI.N > shrink to", (self, user_data, yuki_rect))
 
-    def _yuki_n_add_new_tab(self):
-        NagatoVte(self, False)
+    def _yuki_n_add_new_tab(self, user_data=None):
+        NagatoVte(self, False, user_data)
 
     def _yuki_n_child_destroyed(self):
         if len(self.get_children()) == 0:

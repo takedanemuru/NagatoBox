@@ -30,4 +30,8 @@ Public Sub TimerBasedText_Signal(argSignal As Integer, argValues As Variant[])
             $label.Text = ""
     End Select
     
+Catch
+    'ignore
+    Return
+    
 End

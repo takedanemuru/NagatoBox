@@ -16,9 +16,13 @@ End
 
 Public Sub DownloadAsMovie(argUrl As String)
     
+    Dim yukiDirectory As String = MikuruDialog.GetDirectoryPath("VIDEOS")
+
+    If yukiDirectory = "" Then Return
+    
     $status = -1
     $sourceUrl = argUrl
-    $targetPath = MikuruDialog.GetDirectoryPath("VIDEOS") &/ "%(title)s.%(ext)s"
+    $targetPath = yukiDirectory &/ "%(title)s.%(ext)s"
 
     Exec ["youtube-dl", "-f", "webm", argUrl, "-o", $targetPath] For Read As "YouTubeDL"
     
