@@ -1,9 +1,10 @@
 
+import os
 from gi.repository import Gtk
 from libnagatoterminal.Dialog import NagatoDialog
 
 PATH_TEMPLATE = "/proc/{0}/task/{0}/children"
-
+DIRECTORY_TEMPLATE = "/proc/{0}/cwd"
 
 class NagatoProcessWatcher(object):
 
@@ -13,6 +14,7 @@ class NagatoProcessWatcher(object):
 
     def __init__(self, parent_pid):
         self._path = PATH_TEMPLATE.format(parent_pid)
+        self._directory = DIRECTORY_TEMPLATE.format(parent_pid)
 
     def can_close_with_user_response(self):
         if self.can_close:
@@ -22,6 +24,10 @@ class NagatoProcessWatcher(object):
             yuki_response = yuki_dialog.run()
             yuki_dialog.destroy()
             return (yuki_response == Gtk.ResponseType.OK)
+
+    @property
+    def working_directory(self):
+        return os.readlink(self._directory)
 
     @property
     def child(self):
