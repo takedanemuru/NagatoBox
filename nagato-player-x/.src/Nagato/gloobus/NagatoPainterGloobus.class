@@ -15,8 +15,6 @@ Public Sub _call(argSignal As Integer, argValues As Variant[])
             $coverArt.ResetCoverArt()
     End Select
     
-    HaruhiCovergloobus.SetTitle(NagatoQueue.GetProperty(MikuruProperty.CurrentTitle))
-    
     $drawingArea.Refresh()
     
 End

@@ -2,22 +2,24 @@
 from libnagatoterminal import CssProvider
 from libnagatoterminal.util.Args import NagatoArgs
 from libnagatoterminal.Window import NagatoWindow
-from libnagatoterminal.DBusServiceObject import NagatoDBusServiceObject
+from libnagatoterminal.Unique import NagatoUnique
+from libnagatoterminal.RemoteObject import NagatoRemoteObject
 
 
 class NagatoYuki(object):
 
     def _start_application(self):
-        yuki_dbus = NagatoDBusServiceObject()
-        if yuki_dbus.unique:
+        yuki_unique = NagatoUnique()
+        if yuki_unique.unique:
             CssProvider.set_to_application()
             NagatoWindow()
         else:
-            print("YUKI.N > nagato-terminal has been activated.")
+            yuki_remote_object = NagatoRemoteObject()
+            yuki_remote_object.move_to_current_desktop()
 
     def N(self, message, user_data=None):
         if self._args.show_version:
-            print("42.10.38")
+            print("42.10.39")
         else:
             self._start_application()
             

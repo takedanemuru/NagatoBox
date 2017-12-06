@@ -10,18 +10,6 @@ Public Sub _new()
     
 End
 
-Public Sub SetTitle(argTitle As String)
-    
-    Dim yukiWindow As New DesktopWindow(Desktop.ActiveWindow)
-    
-    If Me.SkipTaskbar And If Desktop.Current = yukiWindow.Desktop Then 
-        Me.Title = " "
-    Else
-        Me.Title = argTitle
-    End If
-    
-End
-
 Public Sub Form_Open()
     
     Me.Title = " "
@@ -44,18 +32,6 @@ End
 Public Sub Form_Menu()
     
     $contextMenu.PopUp()
-    
-End
-
-Public Sub Form_Activate()
-    
-    Me.SkipTaskbar = True
-    
-End
-
-Public Sub Form_Deactivate()
-    
-    Me.SkipTaskbar = False
     
 End
 

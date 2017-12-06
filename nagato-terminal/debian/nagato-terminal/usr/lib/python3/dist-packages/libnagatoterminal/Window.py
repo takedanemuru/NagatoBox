@@ -6,6 +6,8 @@ from libnagatoterminal.Grid2 import NagatoGrid
 from libnagatoterminal.Dialog import NagatoDialog
 from libnagatoterminal.AboutDialog2 import NagatoAboutDialog2
 from libnagatoterminal.Settings import NagatoSettings
+from libnagatoterminal.DBusServiceObject import NagatoDBusServiceObject
+from libnagatoterminal.GdkX11Window import NagatoGdkX11Window
 
 
 class NagatoWindow(Gtk.Window, NagatoObject):
@@ -48,11 +50,15 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         yuki_dialog.run()
         yuki_dialog.destroy()
 
+    def _yuki_n_move_to_current_desktop(self):
+        yuki_gdk_window = NagatoGdkX11Window(self)
+        yuki_gdk_window.move_to_current_desktop()
+
     def _initialize_window(self):
         Gtk.Window.__init__(self)
+        self.connect("delete-event", self._on_close_window)
         self.set_title("YUKI.N > ...")
         self.set_icon(GdkPixbufIcon.get_application_icon())
-        self.connect("delete-event", self._on_close_window)
         yuki_rect = self._settings.load_window_rect()
         if yuki_rect is not None:
             self.move(yuki_rect.left, yuki_rect.top)
@@ -61,8 +67,9 @@ class NagatoWindow(Gtk.Window, NagatoObject):
     def __init__(self):
         self._parent = None
         self._settings = NagatoSettings()
-        NagatoDialog.set_default_window(self)
         self._initialize_window()
+        NagatoDialog.set_default_window(self)
+        self._dbus = NagatoDBusServiceObject(self)
         self._grid = NagatoGrid(self)
         self.add(self._grid)
         self.show_all()

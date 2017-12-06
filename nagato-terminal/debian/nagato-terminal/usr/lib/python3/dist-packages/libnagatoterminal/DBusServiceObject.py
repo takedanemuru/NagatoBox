@@ -3,25 +3,25 @@ import dbus
 import dbus.service as Service
 from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
-from libnagatoterminal.Unique import NagatoUnique
+from libnagatoterminal.CoreObject import NagatoObject
 
 DBusService = "box.nagato.terminal"
 DBusObjectPath = "/box/nagato/terminal"
 DBusInterface = "box.nagato.terminal"
 Property = dbus.PROPERTIES_IFACE
 
-class NagatoDBusServiceObject(Service.Object):
 
-    def __init__(self):
+class NagatoDBusServiceObject(Service.Object, NagatoObject):
+
+    def __init__(self, parent):
+        self._parent = parent
         DBusGMainLoop(set_as_default=True)
-        self._unique = NagatoUnique()
-        if self._unique.unique:
-            yuki_name = Service.BusName(DBusService, dbus.SessionBus())
-            Service.Object.__init__(self, yuki_name, DBusObjectPath)
+        yuki_name = Service.BusName(DBusService, dbus.SessionBus())
+        Service.Object.__init__(self, yuki_name, DBusObjectPath)
 
-    @Service.method(DBusInterface, in_signature="u", out_signature="u")
-    def Test(self, unit):
-        return unit
+    @Service.method(DBusInterface, in_signature="", out_signature="")
+    def MoveToCurrentDesktop(self):
+        self._raise("YUKI.N > move to current desktop")
 
     @Service.method(Property, in_signature='ss', out_signature='v')
     def Get(self, interface_name, property_name):
@@ -47,7 +47,3 @@ class NagatoDBusServiceObject(Service.Object):
             changed_properties,
             indicated_properties):
         print("properties changed.")
-
-    @property
-    def unique(self):
-        return self._unique.unique
