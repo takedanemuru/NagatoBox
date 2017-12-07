@@ -5,6 +5,15 @@ GtkWindow {
     background-image: url("Nagato_Yuki.jpg");
 }
 
+GtkNotebook {
+    opacity: 0.7;
+}
+
+VteTerminal {
+    color: #A76FDE;
+    background-color: #000000;
+}
+
 .dialog-label {
     color: #FFFFFF;
     background-color: #FF007F;

@@ -45,10 +45,10 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
         self._automata_vte_new = NagatoGridAutomataVteNew(self)
         self._automata_vte_expand = NagatoGridAutomataVteExpand(self)
         NagatoNotebook(self, True, NagatoRect(0, 0))
+        self._parent.add(self)
 
-    @property
-    def can_close_all_chilren(self):
-        for yuki_notebook in self.get_children():
-            if not yuki_notebook.can_close_all_chilren:
-                return False
-        return True
+    def get_current_processes(self):
+        yuki_processes = []
+        for yuki_child in self.get_children():
+            yuki_processes += yuki_child.get_current_processes()
+        return yuki_processes

@@ -5,6 +5,7 @@ from libnagatoterminal.Dialog import NagatoDialog
 
 PATH_TEMPLATE = "/proc/{0}/task/{0}/children"
 DIRECTORY_TEMPLATE = "/proc/{0}/cwd"
+COMMAND_TEMPLATE = "/proc/{0}/comm"
 
 class NagatoProcessWatcher(object):
 
@@ -17,7 +18,7 @@ class NagatoProcessWatcher(object):
         self._directory = DIRECTORY_TEMPLATE.format(parent_pid)
 
     def can_close_with_user_response(self):
-        if self.can_close:
+        if self.child is None:
             return True
         else:
             yuki_dialog = NagatoDialog()
@@ -31,10 +32,9 @@ class NagatoProcessWatcher(object):
 
     @property
     def child(self):
-        return self._get_child()
-
-    @property
-    def can_close(self):
-        if self._get_child() == "":
-            return True
-        return False
+        yuki_child_process = self._get_child()
+        if yuki_child_process == "":
+            return None
+        yuki_path = COMMAND_TEMPLATE.format(int(yuki_child_process))
+        yuki_command = open(yuki_path, "r")
+        return yuki_command.read().rstrip()

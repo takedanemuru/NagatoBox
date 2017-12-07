@@ -13,6 +13,7 @@ class NagatoYuki(object):
         if yuki_unique.unique:
             CssProvider.set_to_application()
             NagatoWindow()
+            print("YUKI.N > また図書館に…")
         else:
             yuki_remote_object = NagatoRemoteObject()
             yuki_remote_object.move_to_current_desktop()

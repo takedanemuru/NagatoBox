@@ -6,9 +6,7 @@ from libnagatoterminal.RectAutomata import NagatoRectAutomata
 class NagatoRectAutomataAdjust(NagatoRectAutomata):
 
     def _at_within(self, insert_position, start, end):
-        if end >= insert_position and insert_position > start:
-            return True
-        return False
+        return (end >= insert_position > start)
 
     def _insert_column(self, column):
         if self._rect._left >= column:

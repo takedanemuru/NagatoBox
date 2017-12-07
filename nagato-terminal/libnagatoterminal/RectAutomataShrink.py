@@ -2,6 +2,7 @@
 from gi.repository import Gtk
 from libnagatoterminal.RectAutomata import NagatoRectAutomata
 
+HORIZONTALS = [Gtk.PositionType.RIGHT, Gtk.PositionType.LEFT]
 
 class NagatoRectAutomataShrink(NagatoRectAutomata):
 
@@ -16,11 +17,7 @@ class NagatoRectAutomataShrink(NagatoRectAutomata):
             return self._get_offset_rect(0, 0, -1, 0)
 
     def can_shrink_to(self, gtk_position_type):
-        if gtk_position_type == Gtk.PositionType.RIGHT:
+        if gtk_position_type in HORIZONTALS:
             return (self._rect._width >= 2)
-        elif gtk_position_type == Gtk.PositionType.BOTTOM:
+        else:
             return (self._rect._height >= 2)
-        elif gtk_position_type == Gtk.PositionType.TOP:
-            return (self._rect._height >= 2)
-        elif gtk_position_type == Gtk.PositionType.LEFT:
-            return (self._rect._width >= 2)

@@ -57,7 +57,7 @@ class NagatoVte(Vte.Terminal, NagatoObject):
         parent.insert_page(self, self._tab_label, -1)
         parent.set_tab_reorderable(self, True)
         self.show_all()
-        # notebook reject to switch page when child is not visible.
+        # notebook reject to switch page when children aren't visible.
         parent.set_current_page(parent.get_n_pages() - 1)
 
     def _yuki_n_add_new_tab(self):
@@ -79,5 +79,5 @@ class NagatoVte(Vte.Terminal, NagatoObject):
             self._raise("YUKI.N > child destroyed")
 
     @property
-    def can_close(self):
-        return self._watcher.can_close
+    def child_process(self):
+        return self._watcher.child
