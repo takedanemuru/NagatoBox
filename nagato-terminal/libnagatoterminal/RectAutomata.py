@@ -1,4 +1,5 @@
 
+from gi.repository import Gtk
 from libnagatoterminal.Rect import NagatoRect
 
 
@@ -12,6 +13,16 @@ class NagatoRectAutomata(object):
             self._rect._height + height,
             )
         return yuki_rect
+
+    def __call__(self, gtk_position_type):
+        if gtk_position_type == Gtk.PositionType.RIGHT:
+            return self._get_right()
+        if gtk_position_type == Gtk.PositionType.BOTTOM:
+            return self._get_bottom()
+        if gtk_position_type == Gtk.PositionType.TOP:
+            return self._get_top()
+        if gtk_position_type == Gtk.PositionType.LEFT:
+            return self._get_left()
 
     def __init__(self, rect):
         self._rect = rect

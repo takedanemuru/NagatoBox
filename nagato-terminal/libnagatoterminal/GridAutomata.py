@@ -26,13 +26,14 @@ class NagatoGridAutomata(object):
         else:
             return self._to_else(vte, rect, gtk_position_type)
 
-    def __call__(self, user_data):
-        yuki_rect = self._get_rect(
-            user_data[0],
-            user_data[1],
-            user_data[2]
+    def __call__(self, grid_data):
+        if not self._exists(grid_data.signal_from, grid_data.destination_rect):
+            return grid_data.destination_rect
+        return self._get_rect(
+            grid_data.signal_from, 
+            grid_data.direction,
+            grid_data.destination_rect
             )
-        return yuki_rect
 
     def __init__(self, grid):
         self._grid = grid

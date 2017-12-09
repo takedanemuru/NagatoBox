@@ -12,27 +12,22 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
 
     def _move_to(self, notebook, rect):
         self.remove(notebook)
-        self.attach(
-            notebook,
-            rect.left,
-            rect.top,
-            rect.width,
-            rect.height
-            )
+        self.attach(notebook, rect.left, rect.top, rect.width, rect.height)
         notebook.move_to(rect)
         self.show_all()
 
-    def _yuki_n_new_vte_to(self, user_data):
-        yuki_rect = self._automata_vte_new(user_data)
-        NagatoNotebook(self, False, yuki_rect)
+    def _yuki_n_new_vte_to(self, grid_data):
+        NagatoNotebook(self, False, self._automata_vte_new(grid_data))
         self.show_all()
 
-    def _yuki_n_expand_to(self, user_data):
-        yuki_rect = self._automata_vte_expand(user_data)
-        self._move_to(user_data[0], yuki_rect)
+    def _yuki_n_expand_to(self, grid_data):
+        self._move_to(
+            grid_data.signal_from, 
+            self._automata_vte_expand(grid_data)
+            )
 
-    def _yuki_n_shrink_to(self, user_data):
-        self._move_to(user_data[0], user_data[2])
+    def _yuki_n_shrink_to(self, grid_data):
+        self._move_to(grid_data.signal_from, grid_data.destination_rect)
 
     def _yuki_n_child_destroyed(self):
         if len(self.get_children()) == 0:
