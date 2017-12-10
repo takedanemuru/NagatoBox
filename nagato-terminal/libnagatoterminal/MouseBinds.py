@@ -1,6 +1,6 @@
 from gi.repository import Gdk
 from libnagatoterminal.CoreObject import NagatoObject
-from libnagatoterminal.ContextMenu import NagatoContextMenu
+from libnagatoterminal.menu.context.ForVte import NagatoContextMenu
 
 
 class NagatoMouseBinds(NagatoObject):

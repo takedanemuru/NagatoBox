@@ -1,8 +1,8 @@
 
 from gi.repository import Gtk
 from libnagatoterminal.CoreObject import NagatoObject
-from libnagatoterminal.Vte2 import NagatoVte
-from libnagatoterminal.GridPosition import NagatoGridPosition
+from libnagatoterminal.Vte import NagatoVte
+from libnagatoterminal.NotebookPosition import NagatoNotebookPosition
 from libnagatoterminal.TabVisibility import NagatoTabVisibility
 from libnagatoterminal.UnnullableArray import NagatoUnnullableArray
 
@@ -46,7 +46,7 @@ class NagatoNotebook(NagatoObject, Gtk.Notebook):
 
     def __init__(self, parent, is_prime_vte, rect):
         self._parent = parent
-        self._position = NagatoGridPosition(rect.left, rect.top)
+        self._position = NagatoNotebookPosition(rect.left, rect.top)
         Gtk.Notebook.__init__(self)
         self.set_scrollable(True)
         parent.attach(self, rect.left, rect.top, 1, 1)

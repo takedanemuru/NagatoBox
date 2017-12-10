@@ -1,12 +1,13 @@
 
 from libnagatoterminal import CssProvider
+from libnagatoterminal.CoreObject import NagatoObject
 from libnagatoterminal.util.Args import NagatoArgs
 from libnagatoterminal.Window import NagatoWindow
-from libnagatoterminal.Unique import NagatoUnique
-from libnagatoterminal.RemoteObject import NagatoRemoteObject
+from libnagatoterminal.dbus.Unique import NagatoUnique
+from libnagatoterminal.dbus.RemoteObject import NagatoRemoteObject
 
 
-class NagatoYuki(object):
+class NagatoYuki(NagatoObject):
 
     def _start_application(self):
         yuki_unique = NagatoUnique()
@@ -20,7 +21,7 @@ class NagatoYuki(object):
 
     def N(self, message, user_data=None):
         if self._args.show_version:
-            print("42.10.39")
+            print("42.10.40")
         else:
             self._start_application()
             

@@ -2,7 +2,7 @@
 
 class NagatoObject(object):
 
-    def _decode2(self, message, header):
+    def _decode(self, message, header):
         message = message.replace("YUKI.N > ", header)
         return  message.replace(" ", "_")
 
@@ -15,12 +15,12 @@ class NagatoObject(object):
 
     def _enquiry(self, message, user_data=None):
         if self._parent is not None:
-            message = self._decode2(message, "_inform_")
+            message = self._decode(message, "_inform_")
             return self._parent.N(message, user_data)
 
     def _raise(self, message, user_data=None):
         if self._parent is not None:
-            message = self._decode2(message, "_yuki_n_")
+            message = self._decode(message, "_yuki_n_")
             return self._parent.N(message, user_data)
 
     def _bridge(self, message, user_data=None):

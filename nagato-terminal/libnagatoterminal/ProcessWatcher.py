@@ -1,8 +1,7 @@
 
 import os
 from gi.repository import Gtk
-from libnagatoterminal.Dialog import NagatoDialog
-from libnagatoterminal import DialogFacade
+from libnagatoterminal.dialog import Portal as Dialog
 
 PATH_TEMPLATE = "/proc/{0}/task/{0}/children"
 DIRECTORY_TEMPLATE = "/proc/{0}/cwd"
@@ -25,7 +24,7 @@ class NagatoProcessWatcher(object):
         self._directory = DIRECTORY_TEMPLATE.format(parent_pid)
 
     def can_close_with_user_response(self):
-        return DialogFacade.get_can_close_vte(self._get_child())
+        return Dialog.get_can_close_vte(self._get_child())
 
     @property
     def working_directory(self):
