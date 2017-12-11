@@ -1,13 +1,12 @@
 
-from libnagatoterminal import CssProvider
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagatoterminal.util import CssProvider
 from libnagatoterminal.util.Args import NagatoArgs
 from libnagatoterminal.Window import NagatoWindow
 from libnagatoterminal.dbus.Unique import NagatoUnique
 from libnagatoterminal.dbus.RemoteObject import NagatoRemoteObject
 
 
-class NagatoYuki(NagatoObject):
+class NagatoYuki(object):
 
     def _start_application(self):
         yuki_unique = NagatoUnique()
@@ -24,6 +23,6 @@ class NagatoYuki(NagatoObject):
             print("42.10.40")
         else:
             self._start_application()
-            
+
     def __init__(self):
         self._args = NagatoArgs()

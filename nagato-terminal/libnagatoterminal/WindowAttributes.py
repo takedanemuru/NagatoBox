@@ -1,6 +1,6 @@
 
 from libnagatoterminal.CoreObject import NagatoObject
-from libnagatoterminal import GdkPixbufIcon
+from libnagatoterminal.gdk import PixbufIcon
 from libnagatoterminal.Settings import NagatoSettings
 
 
@@ -24,7 +24,7 @@ class NagatoWindowAttributes(NagatoObject):
         self._parent = parent
         self._settings = NagatoSettings()
         self._parent.set_title("YUKI.N > ...")
-        self._parent.set_icon(GdkPixbufIcon.get_application_icon())
+        self._parent.set_icon(PixbufIcon.get_application_icon())
         yuki_rect = self._settings.load_window_rect()
         if yuki_rect is not None:
             self._set_window_position(yuki_rect)

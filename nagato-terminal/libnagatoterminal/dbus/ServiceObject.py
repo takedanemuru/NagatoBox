@@ -2,7 +2,6 @@
 import dbus
 import dbus.service as Service
 from dbus.mainloop.glib import DBusGMainLoop
-from gi.repository import GLib
 from libnagatoterminal.CoreObject import NagatoObject
 from libnagatoterminal.dbus import Spec
 
@@ -33,15 +32,15 @@ class NagatoServiceObject(Service.Object, NagatoObject):
     @Service.method(Property, in_signature='s', out_signature='a{sv}')
     def GetAll(self, interface_name):
         if interface_name == Spec.Interface:
-            return { "Ready": True,
-                     "Hello": "Hello",
-                   }
+            return {"Ready": True, "Hello": "Hello"}
         else:
             return None
 
     @Service.signal(Property, signature="sa{sv}as")
-    def PropertyChanged(self,
+    def PropertyChanged(
+            self,
             interface_name,
             changed_properties,
-            indicated_properties):
+            indicated_properties
+            ):
         print("properties changed.")

@@ -1,8 +1,8 @@
 
-import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 from libnagatoterminal.dbus import Spec
 from libnagatoterminal.dbus import Interface
+
 
 class NagatoUnique(object):
 

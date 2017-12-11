@@ -1,7 +1,7 @@
 
-import dbus
 from libnagatoterminal.dbus import Spec
 from libnagatoterminal.dbus import Interface
+
 
 class NagatoRemoteObject(object):
 
@@ -11,6 +11,6 @@ class NagatoRemoteObject(object):
     def __init__(self):
         self._interface = Interface.get_session(
             Spec.Service,
-            Spec.ObjectPath, 
+            Spec.ObjectPath,
             Spec.Interface
             )

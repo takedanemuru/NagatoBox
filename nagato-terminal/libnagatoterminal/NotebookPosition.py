@@ -1,18 +1,19 @@
 
 from libnagatoterminal.Rect import NagatoRect
-from libnagatoterminal.RectAutomataAdjust import NagatoRectAutomataAdjust
-from libnagatoterminal.RectAutomataExpand import NagatoRectAutomataExpand
-from libnagatoterminal.RectAutomataShrink import NagatoRectAutomataShrink
-from libnagatoterminal.RectAutomataNew import NagatoRectAutomataNew
+from libnagatoterminal.automata.rect.Adjust import NagatoAdjust
+from libnagatoterminal.automata.rect.Expand import NagatoExpand
+from libnagatoterminal.automata.rect.Shrink import NagatoShrink
+from libnagatoterminal.automata.rect.New import NagatoNew
+
 
 class NagatoNotebookPosition(NagatoRect):
 
     def __init__(self, left, top, width=1, height=1):
         NagatoRect.__init__(self, left, top, width, height)
-        self._automata_adjust = NagatoRectAutomataAdjust(self)
-        self._automata_expand = NagatoRectAutomataExpand(self)
-        self._automata_shrink = NagatoRectAutomataShrink(self)
-        self._automata_new = NagatoRectAutomataNew(self)
+        self._automata_adjust = NagatoAdjust(self)
+        self._automata_expand = NagatoExpand(self)
+        self._automata_shrink = NagatoShrink(self)
+        self._automata_new = NagatoNew(self)
 
     def adjust(self, gtk_position_type, rect):
         self._automata_adjust.adjust(gtk_position_type, rect)

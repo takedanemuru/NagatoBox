@@ -4,7 +4,7 @@ class NagatoObject(object):
 
     def _decode(self, message, header):
         message = message.replace("YUKI.N > ", header)
-        return  message.replace(" ", "_")
+        return message.replace(" ", "_")
 
     def _on_method_found(self, message, user_data=None):
         yuki_method = getattr(self, message)

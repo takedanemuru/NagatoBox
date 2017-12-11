@@ -3,7 +3,7 @@ from gi.repository import Gtk
 from libnagatoterminal.CoreObject import NagatoObject
 from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
-from libnagatoterminal.GdkX11Window import NagatoGdkX11Window
+from libnagatoterminal.gdk.X11Window import NagatoX11Window
 from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
 from libnagatoterminal.dialog import Portal as Dialog
 
@@ -33,7 +33,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         Dialog.show_about()
 
     def _yuki_n_move_to_current_desktop(self):
-        yuki_gdk_window = NagatoGdkX11Window(self)
+        yuki_gdk_window = NagatoX11Window(self)
         yuki_gdk_window.move_to_current_desktop()
 
     def _initialize_window(self):

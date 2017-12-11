@@ -52,9 +52,6 @@ class NagatoVte(Vte.Terminal, NagatoObject):
         NagatoUserInput(self)
         self._initialize_first_page()
 
-    def _yuki_n_add_new_tab(self):
-        self._raise("YUKI.N > add new tab", self._watcher.working_directory)
-
     def _yuki_n_copy(self):
         self.copy_clipboard()
 
@@ -66,6 +63,9 @@ class NagatoVte(Vte.Terminal, NagatoObject):
             self.destroy()
             self._tab_label.destroy()
             self._raise("YUKI.N > child destroyed")
+
+    def _inform_working_directory(self):
+        return self._watcher.working_directory
 
     def _inform_has_selection(self):
         return self.get_has_selection()

@@ -1,10 +1,10 @@
 
 from gi.repository import Gtk
 from libnagatoterminal.CoreObject import NagatoObject
-from libnagatoterminal.MenuItem import NagatoMenuItem
+from libnagatoterminal.menu.Item import NagatoItem
 from libnagatoterminal.menu.group.Clipboard import AsakuraClipboard
 from libnagatoterminal.menu.group.GridActions import AsakuraGridActions
-
+from libnagatoterminal.menu.item.action.AddNewTab import NagatoAddNewTab
 
 class NagatoContextMenu(Gtk.Menu, NagatoObject):
 
@@ -17,11 +17,11 @@ class NagatoContextMenu(Gtk.Menu, NagatoObject):
         self.append(Gtk.SeparatorMenuItem())
         AsakuraGridActions(self)
         self.append(Gtk.SeparatorMenuItem())
-        NagatoMenuItem(self, "Add New Tab", "YUKI.N > add new tab")
-        NagatoMenuItem(self, "Close Current VTE", "YUKI.N > destroy")
+        NagatoAddNewTab(self)
+        NagatoItem(self, "Close Current VTE", "YUKI.N > destroy")
         self.append(Gtk.SeparatorMenuItem())
-        NagatoMenuItem(self, "About", "YUKI.N > about")
-        NagatoMenuItem(self, "Quit", "YUKI.N > quit")
+        NagatoItem(self, "About", "YUKI.N > about")
+        NagatoItem(self, "Quit", "YUKI.N > quit")
 
     def __init__(self, parent):
         self._parent = parent

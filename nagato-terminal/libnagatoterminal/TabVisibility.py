@@ -1,6 +1,5 @@
 
 
-
 class NagatoTabVisibility(object):
 
     def _on_order_changed(self, notebook, child, page_num):
@@ -13,4 +12,4 @@ class NagatoTabVisibility(object):
 
     def __init__(self, parent):
         self._parent = parent
-        self._set_callbacks()        
+        self._set_callbacks()

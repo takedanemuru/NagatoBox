@@ -1,11 +1,11 @@
 
 import os
-from gi.repository import Gtk
 from libnagatoterminal.dialog import Portal as Dialog
 
 PATH_TEMPLATE = "/proc/{0}/task/{0}/children"
 DIRECTORY_TEMPLATE = "/proc/{0}/cwd"
 COMMAND_TEMPLATE = "/proc/{0}/comm"
+
 
 class NagatoProcessWatcher(object):
 

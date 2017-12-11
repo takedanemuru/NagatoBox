@@ -4,8 +4,8 @@ from libnagatoterminal.CoreObject import NagatoObject
 from libnagatoterminal.Rect import NagatoRect
 from libnagatoterminal.GridAttributes import NagatoGridAttributes
 from libnagatoterminal.Notebook import NagatoNotebook
-from libnagatoterminal.GridAutomataNew import NagatoGridAutomataNew
-from libnagatoterminal.GridAutomataExpand import NagatoGridAutomataExpand
+from libnagatoterminal.automata.grid.New import NagatoNew
+from libnagatoterminal.automata.grid.Expand import NagatoExpand
 
 
 class NagatoGrid(Gtk.Grid, NagatoObject):
@@ -34,8 +34,8 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
         self._parent = parent
         Gtk.Grid.__init__(self)
         NagatoGridAttributes(self)
-        self._automata_new = NagatoGridAutomataNew(self)
-        self._automata_expand = NagatoGridAutomataExpand(self)
+        self._automata_new = NagatoNew(self)
+        self._automata_expand = NagatoExpand(self)
         NagatoNotebook(self, True, NagatoRect(0, 0))
         self._parent.add(self)
 
