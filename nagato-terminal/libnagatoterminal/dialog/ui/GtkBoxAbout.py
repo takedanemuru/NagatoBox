@@ -2,8 +2,11 @@
 
 class NagatoGtkBoxAbout(object):
 
-    def get_gtk_image(self, index):
+    def get_gtk_image(self):
         return self._gtk_box.get_children()[0]
+
+    def get_gtk_label(self):
+        return self._gtk_box.get_children()[1]
 
     def __init__(self, content_area):
         self._gtk_box = content_area.get_children()[0]

@@ -37,7 +37,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         yuki_gdk_window.move_to_current_desktop()
 
     def _initialize_window(self):
-        Gtk.Window.__init__(self)
+        Gtk.Window.__init__(self, Gtk.WindowType.TOPLEVEL)
         self.connect("delete-event", self._on_close_window)
         self._attributes = NagatoWindowAttributes(self)
 
