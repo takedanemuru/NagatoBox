@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+
+
+if [ "$1" = "remove" ]; then
+	update-alternatives --remove www-browser /usr/bin/nagato-web-browser
+fi
+

@@ -1,8 +1,11 @@
 
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import Pango
 from libnagatowebbrowser.CoreObject import NagatoObject
-from libnagatowebbrowser.ButtonClose import NagatoButtonClose
+#from libnagatowebbrowser.ButtonClose import NagatoButtonClose
+from libnagatowebbrowser.util.EllipsisedText import NagatoEllipsesedText
+
 
 class NagatoTabLabel(Gtk.Box, NagatoObject):
 
@@ -12,12 +15,13 @@ class NagatoTabLabel(Gtk.Box, NagatoObject):
 
     def set_title(self, title):
         if title is not None:
-            self._label.set_text(title)
+            self._label.set_text(self._ellipsised_text.get(title))
             self.show_all()
 
     def __init__(self, parent):
         self._parent = parent
         Gtk.Box.__init__(self)
         self._initialize_label()
-        NagatoButtonClose(self)
+        #NagatoButtonClose(self)
+        self._ellipsised_text = NagatoEllipsesedText() 
         self.show_all()

@@ -10,8 +10,9 @@ from libnagatowebbrowser import GdkPixbufIcon
 
 class NagatoMainWindow(Gtk.Window, NagatoObject):
 
-    def _yuki_n_current_page_load_finished(self, user_data):
-        self.set_title(user_data[1])
+    def _yuki_n_new_title(self, title=None):
+        if title is not None:
+            self.set_title(title)
 
     def _on_close_window(self, widget, event, user_data=None):
         Gtk.main_quit()
@@ -27,5 +28,6 @@ class NagatoMainWindow(Gtk.Window, NagatoObject):
         CssProvider.set_to_application()
         self._initialize_window()
         NagatoGrid(self)
+        self.get_style_context().add_class("main-window")
         self.show_all()
         Gtk.main()
