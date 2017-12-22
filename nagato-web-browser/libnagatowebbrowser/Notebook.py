@@ -1,5 +1,4 @@
 
-
 from gi.repository import Gtk
 from libnagatowebbrowser.CoreObject import NagatoObject
 from libnagatowebbrowser.WebView import NagatoWebView

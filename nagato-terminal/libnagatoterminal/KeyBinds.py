@@ -1,5 +1,5 @@
 
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.ModKeys import NagatoModKeys
 from libnagatoterminal.util import Direction
 

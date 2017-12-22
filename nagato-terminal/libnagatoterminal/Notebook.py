@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.Vte import NagatoVte
 from libnagatoterminal.NotebookPosition import NagatoNotebookPosition
 from libnagatoterminal.TabVisibility import NagatoTabVisibility

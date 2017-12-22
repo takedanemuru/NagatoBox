@@ -1,5 +1,5 @@
 from gi.repository import Gdk
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.menu.context.ForVte import NagatoContextMenu
 
 
@@ -7,7 +7,7 @@ class NagatoMouseBinds(NagatoObject):
 
     def _on_button_press(self, widget, event):
         if event.button == 3:
-            self._context_menu.pop_up(event)
+            self._context_menu.pop_up()
 
     def __init__(self, parent, vte):
         self._parent = parent

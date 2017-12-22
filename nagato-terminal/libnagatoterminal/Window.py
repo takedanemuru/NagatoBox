@@ -1,18 +1,18 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
 from libnagatoterminal.gdk.X11Window import NagatoX11Window
 from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
-from libnagatoterminal.dialog import Portal as Dialog
+from libnagatoterminal.dialog import Portal
 
 
 class NagatoWindow(Gtk.Window, NagatoObject):
 
     def _can_close(self):
         yuki_processes = self._grid.get_current_processes()
-        return Dialog.get_can_close_window(yuki_processes)
+        return Portal.get_can_close_window(yuki_processes)
 
     def _try_quit_application(self):
         if not self._can_close():
@@ -30,7 +30,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         self._try_quit_application()
 
     def _yuki_n_about(self):
-        Dialog.show_about()
+        Portal.show_about()
 
     def _yuki_n_move_to_current_desktop(self):
         yuki_gdk_window = NagatoX11Window(self)
@@ -46,7 +46,6 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         # has no parent, nowhere to go up.
         self._parent = None
         self._initialize_window()
-        Dialog.set_default_window(self)
         NagatoServiceObject(self)
         self._grid = NagatoGrid(self)
         self.show_all()

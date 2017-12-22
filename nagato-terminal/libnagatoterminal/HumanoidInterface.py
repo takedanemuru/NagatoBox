@@ -2,14 +2,16 @@
 from libnagatoterminal.util import CssProvider
 from libnagatoterminal.util.Args import NagatoArgs
 from libnagatoterminal.Window import NagatoWindow
-from libnagatoterminal.dbus.Unique import NagatoUnique
+from libnagatoterminal.dbus.Unique2 import NagatoUnique
 from libnagatoterminal.dbus.RemoteObject import NagatoRemoteObject
+from libnagatotest.util.PathTest import NagatoPath
 
 
 class NagatoYuki(object):
 
     def _start_application(self):
-        yuki_unique = NagatoUnique()
+        NagatoPath.set_directories(__file__)
+        yuki_unique = NagatoUnique("box.nagato.terminal")
         if yuki_unique.unique:
             CssProvider.set_to_application()
             NagatoWindow()

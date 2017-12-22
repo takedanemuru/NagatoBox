@@ -3,15 +3,9 @@ import os
 
 
 def _get_resource_directory():
-    yuki_base = os.path.dirname(os.path.abspath(__file__))
-    yuki_base = os.path.dirname(yuki_base)
-    return os.path.join(yuki_base, "resources")
-
-
-def get_absolute(relative_path):
-    yuki_base = os.path.dirname(os.path.abspath(__file__))
-    yuki_name = os.path.normpath(os.path.join(yuki_base, relative_path))
-    return yuki_name
+    yuki_util_dir = os.path.dirname(os.path.abspath(__file__))
+    yuki_lib_dir = os.path.dirname(yuki_util_dir)
+    return os.path.join(yuki_lib_dir, "resources")
 
 
 def get_resource(relative_path):

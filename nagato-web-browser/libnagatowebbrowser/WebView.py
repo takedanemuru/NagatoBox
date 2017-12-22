@@ -1,8 +1,12 @@
+
 import gi
 
 gi.require_version('WebKit2','4.0')
+gi.require_version('WebKit2WebExtension', '4.0')
 
+from gi.repository import Gtk
 from gi.repository import WebKit2
+from gi.repository import WebKit2WebExtension
 from libnagatowebbrowser.CoreObject import NagatoObject
 from libnagatowebbrowser.WebKit2Settings import NagatoWebKit2Settings
 from libnagatowebbrowser.TabLabel import NagatoTabLabel

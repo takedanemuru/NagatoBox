@@ -20,8 +20,6 @@ class NagatoForWebView(Gtk.Menu, NagatoObject):
     def pop_up(self, hit_test_result):
         #"this method is NOT GTK+ callback,
         # doesn't have event argument.
-        # yuki_context = hit_test_result.get_context()
-        # print(yuki_context)
         self.show_all()
         self._toggle(hit_test_result)
         yuki_event_time = Gtk.get_current_event_time()

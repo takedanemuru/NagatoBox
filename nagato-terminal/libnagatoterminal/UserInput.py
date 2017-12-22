@@ -1,4 +1,4 @@
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.KeyBinds import NagatoKeyBinds
 from libnagatoterminal.MouseBinds import NagatoMouseBinds
 

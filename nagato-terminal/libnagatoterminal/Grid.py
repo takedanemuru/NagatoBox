@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.Rect import NagatoRect
 from libnagatoterminal.GridAttributes import NagatoGridAttributes
 from libnagatoterminal.Notebook import NagatoNotebook
