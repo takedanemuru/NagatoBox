@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.dialog.About import NagatoAboutDialog
+from libnagatoterminal.dialog.About2 import NagatoAboutDialog
 from libnagatoterminal.dialog.Warning import NagatoWarning
 
 

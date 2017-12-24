@@ -6,7 +6,7 @@ from libnagatoterminal.automata.rect.Shrink import NagatoShrink
 from libnagatoterminal.automata.rect.New import NagatoNew
 
 
-class NagatoNotebookPosition(NagatoRect):
+class NagatoFlexGridPosition(NagatoRect):
 
     def __init__(self, left, top, width=1, height=1):
         NagatoRect.__init__(self, left, top, width, height)

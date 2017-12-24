@@ -21,6 +21,7 @@ class NagatoCore(Gtk.Menu, NagatoObject):
 
     def _initialize_root_menu_item(self):
         Gtk.Menu.__init__(self)
+        self.get_style_context().add_class("context-menu")
         yuki_root_menu_item = Gtk.MenuItem(self._title)
         yuki_root_menu_item.set_submenu(self)
         self._parent.append(yuki_root_menu_item)

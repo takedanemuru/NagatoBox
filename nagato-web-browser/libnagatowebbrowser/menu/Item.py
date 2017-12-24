@@ -10,10 +10,7 @@ class NagatoItem(Gtk.MenuItem, NagatoObject):
 
     def __init__(self, parent, label, message, user_data=None, root_menu=None):
         self._parent = parent
-        if root_menu is None:
-            yuki_root_menu = parent
-        else:
-            yuki_root_menu = root_menu
+        yuki_root_menu = parent if root_menu is None else root_menu
         Gtk.MenuItem.__init__(self, label)
         self.connect("activate", self._on_activate)
         self.get_style_context().add_class("menu-item")

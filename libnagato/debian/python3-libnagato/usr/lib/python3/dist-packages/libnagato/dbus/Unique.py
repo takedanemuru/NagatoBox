@@ -1,6 +1,6 @@
 
 from dbus.mainloop.glib import DBusGMainLoop
-from libnagatoterminal.dbus import Interface
+from libnagato.dbus import Interface
 
 
 class NagatoUnique(object):
@@ -21,5 +21,5 @@ class NagatoUnique(object):
             )
 
     @property
-    def unique(self):
+    def is_unique(self):
         return self._get_unique()

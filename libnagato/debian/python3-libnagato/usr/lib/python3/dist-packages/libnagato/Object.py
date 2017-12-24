@@ -16,18 +16,18 @@ class NagatoObject(object):
     def _enquiry(self, message, user_data=None):
         if self._parent is not None:
             message = self._decode(message, "_inform_")
-            return self._parent.N(message, user_data)
+            return self._parent.data_connect(message, user_data)
 
     def _raise(self, message, user_data=None):
         if self._parent is not None:
             message = self._decode(message, "_yuki_n_")
-            return self._parent.N(message, user_data)
+            return self._parent.data_connect(message, user_data)
 
     def _bridge(self, message, user_data=None):
         if self._parent is not None:
-            return self._parent.N(message, user_data)
+            return self._parent.data_connect(message, user_data)
 
-    def N(self, message, user_data=None):
+    def data_connect(self, message, user_data=None):
         if message in dir(self):
             return self._on_method_found(message, user_data)
         else:

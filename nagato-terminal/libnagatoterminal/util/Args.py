@@ -1,14 +1,9 @@
 
 import argparse
-
-from libnagatoterminal.util import Path
+import os
 
 
 class NagatoArgs(object):
-
-    _directory = ""
-    _command = ""
-    _show_version = False
 
     def _get_directory_option(self):
         self._parser.add_argument(
@@ -40,7 +35,7 @@ class NagatoArgs(object):
     def _get_directory(self, args):
         if args.d is not None:
             return args.d[0]
-        return Path.get_home()
+        return os.environ["HOME"]
 
     def _initialize_variants(self):
         yuki_args = self._parser.parse_args()
@@ -57,7 +52,7 @@ class NagatoArgs(object):
         if is_prime_vte:
             return NagatoArgs._directory
         else:
-            return Path.get_home()
+            return os.environ["HOME"]
 
     @property
     def directory(self):

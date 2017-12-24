@@ -3,15 +3,13 @@ import os
 import shutil
 import configparser
 from libnagatoterminal.Rect import NagatoRect
-from libnagatoterminal.util import Path
-
-SETTINGS_PATH = ".config/NagatoBox/nagato-terminal.config"
+from libnagatoterminal.Resources import NagatoResources
 
 
 class NagatoSettings(configparser.ConfigParser):
 
     def _save(self):
-        yuki_target_path = os.path.join(Path.get_home(), SETTINGS_PATH)
+        yuki_target_path = os.path.join(self._resources.get_config_file())
         with open(yuki_target_path, "w") as yuki_file:
             self.write(yuki_file)
 
@@ -33,8 +31,5 @@ class NagatoSettings(configparser.ConfigParser):
 
     def __init__(self):
         configparser.ConfigParser.__init__(self)
-        yuki_target_path = os.path.join(Path.get_home(), SETTINGS_PATH)
-        if not os.path.exists(yuki_target_path):
-            yuki_source_path = Path.get_resource("nagato-terminal.config")
-            shutil.copy(yuki_source_path, yuki_target_path)
-        self.read(yuki_target_path)
+        self._resources = NagatoResources()
+        self.read(self._resources.get_config_file())

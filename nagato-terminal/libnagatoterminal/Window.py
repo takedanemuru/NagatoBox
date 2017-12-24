@@ -1,11 +1,16 @@
 
+import gi
+
+gi.require_version('Gtk', '3.0')
+
 from gi.repository import Gtk
+from libnagato.gdk.X11Window import NagatoX11Window
 from libnagato.Object import NagatoObject
 from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
-from libnagatoterminal.gdk.X11Window import NagatoX11Window
 from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
 from libnagatoterminal.dialog import Portal
+from libnagatoterminal.input.mouse.ForChrome import NagatoForChrome
 
 
 class NagatoWindow(Gtk.Window, NagatoObject):
@@ -48,5 +53,6 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         self._initialize_window()
         NagatoServiceObject(self)
         self._grid = NagatoGrid(self)
+        NagatoForChrome(self, self)
         self.show_all()
         Gtk.main()

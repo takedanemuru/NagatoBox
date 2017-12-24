@@ -1,19 +1,18 @@
 
 from gi.repository import Gtk
 from libnagatowebbrowser.CoreObject import NagatoObject
-from libnagatowebbrowser.menu.Item import NagatoItem
+from libnagatowebbrowser.menu.Item2 import NagatoItem2
 from libnagatowebbrowser.menu.Separator import NagatoSeparator
 
 
 class NagatoCore(NagatoObject):
 
-    def _add_menu_item(self, title, message):
-        yuki_item = NagatoItem(
+    def _add_menu_item(self, label, message):
+        yuki_item = NagatoItem2(
             self,
-            title,
-            message,
-            None,
-            self._root_menu)
+            label=label,
+            message=message,
+            container=self._root_menu)
         self._menus.append(yuki_item)
 
     def _add_separator(self):

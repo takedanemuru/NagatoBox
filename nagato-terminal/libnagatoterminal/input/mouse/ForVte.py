@@ -1,9 +1,11 @@
 from gi.repository import Gdk
 from libnagato.Object import NagatoObject
-from libnagatoterminal.menu.context.ForVte import NagatoContextMenu
+from libnagatoterminal.menu.context.ForVte import (
+    NagatoForVte as NagatoContextMenu
+    )
 
 
-class NagatoMouseBinds(NagatoObject):
+class NagatoForVte(NagatoObject):
 
     def _on_button_press(self, widget, event):
         if event.button == 3:

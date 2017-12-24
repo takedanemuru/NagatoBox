@@ -15,7 +15,7 @@ Section: python
 Depends:
  python3-gi,
  ${misc:Depends},
- ${python:Depends}
-Description: an application framework libraly.
+ ${python3:Depends}
+Description: an application framework library.
  This software is now under heavy construction.
  This software is licensed under S.O.S. license.

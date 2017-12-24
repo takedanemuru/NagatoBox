@@ -1,7 +1,7 @@
 
 from dbus.mainloop.glib import DBusGMainLoop
-from libnagatoterminal.dbus import Interface
-from libnagatoterminal.dbus import Spec
+from libnagato.dbus import Interface
+
 
 class NagatoUnique(object):
 
@@ -11,10 +11,9 @@ class NagatoUnique(object):
                 return False
         return True
 
-    def __init__(self):
-        print("?")
+    def __init__(self, service_name):
         DBusGMainLoop(set_as_default=True)
-        self._service_name = Spec.Servicetree
+        self._service_name = service_name
         self._interface = Interface.get_session(
             "org.freedesktop.DBus",
             "/",
@@ -22,5 +21,5 @@ class NagatoUnique(object):
             )
 
     @property
-    def unique(self):
+    def is_unique(self):
         return self._get_unique()
