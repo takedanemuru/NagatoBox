@@ -16,7 +16,6 @@ class NagatoItem2(Gtk.MenuItem, NagatoObject):
         self._parent = parent
         Gtk.MenuItem.__init__(self, kwargs["label"])
         self.connect("activate", self._on_activate)
-        self.get_style_context().add_class("menu-item")
         self._message = kwargs["message"]
         if "user_data" in kwargs:
             self._user_data = kwargs["user_data"]

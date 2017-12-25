@@ -1,6 +1,6 @@
 
+from libnagato.dbus import Interface
 from libnagatoterminal.dbus import Spec
-from libnagatoterminal.dbus import Interface
 
 
 class NagatoRemoteObject(object):

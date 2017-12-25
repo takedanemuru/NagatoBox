@@ -4,13 +4,13 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk
-from libnagato.gdk.X11Window import NagatoX11Window
 from libnagato.Object import NagatoObject
+from libnagato.gdk.X11Window import NagatoX11Window
 from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
 from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
-from libnagatoterminal.dialog import Portal
 from libnagatoterminal.input.mouse.ForChrome import NagatoForChrome
+from libnagatoterminal.dialog import Portal
 
 
 class NagatoWindow(Gtk.Window, NagatoObject):
@@ -28,7 +28,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
 
     def _on_close_window(self, widget, event, user_data=None):
         # this method is GTK+ callback
-        # cancels to close window when returns True
+        # cancels to close window when it returns True
         return self._try_quit_application()
 
     def _yuki_n_quit(self):

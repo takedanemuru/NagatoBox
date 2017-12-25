@@ -5,7 +5,7 @@ gi.require_version("Vte", "2.91")
 
 from gi.repository import Vte
 from gi.repository import GLib
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.ProcessWatcher import NagatoProcessWatcher
 from libnagatoterminal.VteAttributes import NagatoVteAttributes
 from libnagatoterminal.UserInput import NagatoUserInput

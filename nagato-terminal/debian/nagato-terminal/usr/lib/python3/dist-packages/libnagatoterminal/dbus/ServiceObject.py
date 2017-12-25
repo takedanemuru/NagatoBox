@@ -2,7 +2,7 @@
 import dbus
 import dbus.service as Service
 from dbus.mainloop.glib import DBusGMainLoop
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatoterminal.dbus import Spec
 
 Property = dbus.PROPERTIES_IFACE

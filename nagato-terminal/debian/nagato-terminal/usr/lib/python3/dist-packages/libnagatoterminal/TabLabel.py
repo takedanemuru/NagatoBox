@@ -1,7 +1,7 @@
 
 from gi.repository import Gtk
 from gi.repository import GLib
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 
 
 class NagatoTabLabel(Gtk.Box, NagatoObject):

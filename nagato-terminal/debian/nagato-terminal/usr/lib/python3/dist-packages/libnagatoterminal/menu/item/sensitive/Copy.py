@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 
 
 class NagatoCopy(Gtk.MenuItem, NagatoObject):

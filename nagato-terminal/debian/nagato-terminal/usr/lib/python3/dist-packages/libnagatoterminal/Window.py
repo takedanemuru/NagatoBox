@@ -1,76 +1,58 @@
 
+import gi
+
+gi.require_version('Gtk', '3.0')
+
 from gi.repository import Gtk
-from libnagatoterminal.CoreObject import NagatoObject
-from libnagatoterminal import GdkPixbufIcon
-from libnagatoterminal.Grid2 import NagatoGrid
-from libnagatoterminal.Dialog import NagatoDialog
-from libnagatoterminal.AboutDialog2 import NagatoAboutDialog2
-from libnagatoterminal.Settings import NagatoSettings
-from libnagatoterminal.DBusServiceObject import NagatoDBusServiceObject
-from libnagatoterminal.GdkX11Window import NagatoGdkX11Window
+from libnagato.Object import NagatoObject
+from libnagato.gdk.X11Window import NagatoX11Window
+from libnagatoterminal.Grid import NagatoGrid
+from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
+from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
+from libnagatoterminal.input.mouse.ForChrome import NagatoForChrome
+from libnagatoterminal.dialog import Portal
 
 
 class NagatoWindow(Gtk.Window, NagatoObject):
 
     def _can_close(self):
-        if self._grid.can_close_all_chilren:
-            return True
-        else:
-            yuki_dialog = NagatoDialog()
-            yuki_response = yuki_dialog.run()
-            yuki_dialog.destroy()
-            return (yuki_response == Gtk.ResponseType.OK)
-
-    def _save_window_positions(self):
-        yuki_width, yuki_height = self.get_size()
-        yuki_left, yuki_top = self.get_position()
-        self._settings.save_window_rect(
-            yuki_left,
-            yuki_top,
-            yuki_width,
-            yuki_height
-            )
+        yuki_processes = self._grid.get_current_processes()
+        return Portal.get_can_close_window(yuki_processes)
 
     def _try_quit_application(self):
-        if self._can_close():
-            self._save_window_positions()
-            Gtk.main_quit()
-            print("YUKI.N > また図書館に…")
-            return False
-        return True
+        if not self._can_close():
+            return True
+        self._attributes.save_window_positions()
+        Gtk.main_quit()
+        return False
 
     def _on_close_window(self, widget, event, user_data=None):
+        # this method is GTK+ callback
+        # cancels to close window when returns True
         return self._try_quit_application()
 
     def _yuki_n_quit(self):
         self._try_quit_application()
 
     def _yuki_n_about(self):
-        yuki_dialog = NagatoAboutDialog2()
-        yuki_dialog.run()
-        yuki_dialog.destroy()
+        Portal.show_about()
 
     def _yuki_n_move_to_current_desktop(self):
-        yuki_gdk_window = NagatoGdkX11Window(self)
+        yuki_gdk_window = NagatoX11Window(self)
         yuki_gdk_window.move_to_current_desktop()
 
     def _initialize_window(self):
-        Gtk.Window.__init__(self)
+        Gtk.Window.__init__(self, Gtk.WindowType.TOPLEVEL)
         self.connect("delete-event", self._on_close_window)
-        self.set_title("YUKI.N > ...")
-        self.set_icon(GdkPixbufIcon.get_application_icon())
-        yuki_rect = self._settings.load_window_rect()
-        if yuki_rect is not None:
-            self.move(yuki_rect.left, yuki_rect.top)
-            self.set_default_size(yuki_rect.width, yuki_rect.height)
+        self._attributes = NagatoWindowAttributes(self)
 
     def __init__(self):
+        # this object is the most top instance of NagatoObjects' CoC.
+        # has no parent, nowhere to go up.
         self._parent = None
-        self._settings = NagatoSettings()
         self._initialize_window()
-        NagatoDialog.set_default_window(self)
-        self._dbus = NagatoDBusServiceObject(self)
+        NagatoServiceObject(self)
         self._grid = NagatoGrid(self)
-        self.add(self._grid)
+        NagatoForChrome(self, self)
         self.show_all()
         Gtk.main()

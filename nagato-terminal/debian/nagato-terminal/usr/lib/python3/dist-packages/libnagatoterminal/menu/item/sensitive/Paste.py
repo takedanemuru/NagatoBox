@@ -1,7 +1,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Gdk
-from libnagatoterminal.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 
 
 class NagatoPaste(Gtk.MenuItem, NagatoObject):

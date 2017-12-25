@@ -20,7 +20,7 @@ class NagatoYuki(object):
 
     def N(self, message, user_data=None):
         if self._args.show_version:
-            self._resources["dbus-service-name"]
+            print(self._resources["version"])
         else:
             self._start_application()
 

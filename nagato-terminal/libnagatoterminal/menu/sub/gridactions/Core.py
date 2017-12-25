@@ -19,12 +19,15 @@ class NagatoCore(Gtk.Menu, NagatoObject):
     def _add_child_menu_item(self, title, gtk_position_type):
         NagatoItem(self, title, MESSAGE, gtk_position_type)
 
+    def _on_map(self, widget):
+        pass
+
     def _initialize_root_menu_item(self):
         Gtk.Menu.__init__(self)
-        self.get_style_context().add_class("context-menu")
-        yuki_root_menu_item = Gtk.MenuItem(self._title)
-        yuki_root_menu_item.set_submenu(self)
-        self._parent.append(yuki_root_menu_item)
+        self._root_menu_item = Gtk.MenuItem(self._title)
+        self._root_menu_item.set_submenu(self)
+        self._root_menu_item.connect("map", self._on_map)
+        self._parent.append(self._root_menu_item)
 
     def _initialize_child_menus(self):
         self._add_child_menu_item("Left", Gtk.PositionType.LEFT)

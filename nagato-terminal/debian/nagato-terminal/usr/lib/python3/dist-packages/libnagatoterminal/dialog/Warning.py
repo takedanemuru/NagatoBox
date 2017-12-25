@@ -23,7 +23,7 @@ class NagatoWarning(Gtk.Dialog):
         Gtk.Dialog.__init__(
             self,
             "dialog: warning",
-            Portal.default_window,
+            Gtk.Window(title="warning"),
             Gtk.ResponseType.CANCEL,
             None
             )

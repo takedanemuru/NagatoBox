@@ -10,22 +10,22 @@
     background-image: url("nagato_yuki_for_context_menu_2.jpg");
 }
 
-.menu-item:hover {
+GtkMenuItem {
+    color: violet;
+    background-color: White;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+GtkMenuItem:hover {
     color: white;
     background-color: violet;
     opacity: 0.9;
 }
 
-.menu-item:insensitive {
+GtkMenuItem:insensitive {
     color: white;
     background-color: white;
     font-size: 11px;
-    opacity: 0.9;
-}
-
-.menu-item {
-    color: violet;
-    background-color: White;
-    font-size: 12px;
     opacity: 0.9;
 }

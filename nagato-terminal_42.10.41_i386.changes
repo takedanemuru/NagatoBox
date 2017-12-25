@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Mon, 25 Dec 2017 00:00:00 +0900
+Source: nagato-terminal
+Binary: nagato-terminal
+Architecture: source all
+Version: 42.10.41
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
+Changed-By: takeda.nemuru <takeda.nemuru@yandex.com>
+Description:
+ nagato-terminal - a multi-grid terminal emulator
+Changes:
+ nagato-terminal (42.10.41) UNRELEASED; urgency=low
+ .
+   * refactoring.
+Checksums-Sha1:
+ d83ae346f0c3f7e88ef47031b2e0e6961b6d9307 587 nagato-terminal_42.10.41.dsc
+ f1bc5bff0dc3789009a6c2ef04f4512e4bc70cee 1749815 nagato-terminal_42.10.41.tar.gz
+ e51b50dc2b94909baea362db5f305dd4f53b174d 96188 nagato-terminal_42.10.41_all.deb
+Checksums-Sha256:
+ df9a24a96f194be15db2626d3e1a1e45b6f5a4275ccf85a799673ca2efb1be9f 587 nagato-terminal_42.10.41.dsc
+ 728ee0c9051eb6d951a524eb40f9c7afa541e25cd2dc5dbcd6ade0c0ee77fabb 1749815 nagato-terminal_42.10.41.tar.gz
+ 2f24497b78dfea9c1aaf3604fed288b211621a3b1c48eaae3e6f565de3f8bd47 96188 nagato-terminal_42.10.41_all.deb
+Files:
+ fdb5a8b7ead89b8abbbd057e42e3edab 587 python optional nagato-terminal_42.10.41.dsc
+ 5140df761adf6950b7e7a7136cf06559 1749815 python optional nagato-terminal_42.10.41.tar.gz
+ 8b23e8b6a8e8e24b02ae227010bc048c 96188 python optional nagato-terminal_42.10.41_all.deb

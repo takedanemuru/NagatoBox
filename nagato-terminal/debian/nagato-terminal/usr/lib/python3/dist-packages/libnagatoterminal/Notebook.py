@@ -1,61 +1,37 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.CoreObject import NagatoObject
-from libnagatoterminal.Vte2 import NagatoVte
-from libnagatoterminal.GridPosition import NagatoGridPosition
+from libnagato.Object import NagatoObject
+from libnagatoterminal.Vte import NagatoVte
+from libnagato.ui.NotebookTabVisibility import NagatoTabVisibility
+from libnagatoterminal.datatype.UnnullableArray import NagatoUnnullableArray
+from libnagatoterminal.FlexGridContainer import NagatoFlexGridContainer
+from libnagatoterminal.FlexGridPosition import NagatoFlexGridPosition
 
 
-class NagatoNotebook(NagatoObject, Gtk.Notebook):
+class NagatoNotebook(NagatoFlexGridContainer, Gtk.Notebook):
 
-    def _on_order_changed(self, notebook, child, page_num):
-        self.set_show_tabs(self.get_n_pages() > 1)
-
-    def _yuki_n_new_vte_to(self, user_data):
-        yuki_rect = self._position.get_new_vte_rect(user_data)
-        self._raise("YUKI.N > new vte to", (self, user_data, yuki_rect))
-
-    def _yuki_n_expand_to(self, user_data):
-        yuki_rect = self._position.get_expanded_rect(user_data)
-        self._raise("YUKI.N > expand to", (self, user_data, yuki_rect))
-
-    def _yuki_n_shrink_to(self, user_data):
-        if not self._position.can_shrink_to(user_data):
-            return
-        yuki_rect = self._position.get_shrinked_rect(user_data)
-        self._raise("YUKI.N > shrink to", (self, user_data, yuki_rect))
-
-    def _yuki_n_add_new_tab(self, user_data=None):
-        NagatoVte(self, False, user_data)
+    def _yuki_n_add_new_tab(self, working_directory_uri=None):
+        NagatoVte(self, False, working_directory_uri)
 
     def _yuki_n_child_destroyed(self):
         if len(self.get_children()) == 0:
             self.destroy()
             self._raise("YUKI.N > child destroyed")
 
-    def _set_callbacks(self):
-        self.connect("page-added", self._on_order_changed)
-        self.connect("page-reordered", self._on_order_changed)
-        self.connect("page-removed", self._on_order_changed)
+    def _inform_notebook_itself(self):
+        return self
 
-    def adjust_position(self, gtk_position_type, rect):
-        self._position.adjust(gtk_position_type, rect)
-
-    def move_to(self, rect):
-        self._position.move_to(rect)
+    def get_current_processes(self):
+        yuki_processes = NagatoUnnullableArray()
+        for yuki_page in self.get_children():
+            yuki_processes.append(yuki_page.child_process)
+        return yuki_processes.data
 
     def __init__(self, parent, is_prime_vte, rect):
         self._parent = parent
-        self._position = NagatoGridPosition(rect.left, rect.top)
+        self._position = NagatoFlexGridPosition(rect.left, rect.top)
         Gtk.Notebook.__init__(self)
-        self.set_opacity(0.7)
         self.set_scrollable(True)
-        parent.attach(self, rect.left, rect.top, 1, 1)
-        self._set_callbacks()
+        NagatoTabVisibility(self)
         NagatoVte(self, is_prime_vte)
-
-    @property
-    def can_close_all_chilren(self):
-        for yuki_page in self.get_children():
-            if not yuki_page.can_close:
-                return False
-        return True
+        parent.attach(self, rect.left, rect.top, 1, 1)

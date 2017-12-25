@@ -1,25 +1,33 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.gdk import PixbufIcon
-from libnagatoterminal.dialog.ui.GtkBoxAbout import NagatoGtkBoxAbout
+from libnagatoterminal.dialog import Portal
+from libnagatoterminal.dialog.ui.LabelAbout import NagatoLabelAbout
 
-class NagatoAboutDialog(Gtk.AboutDialog):
 
-    def _initialize_label(self, label):
-        yuki_message = \
-            "<big><b>nagato-terminal</b></big>\n"\
-            "\n"\
-            "A multi-grid terminal emulator\n"
-        label.set_markup(yuki_message)
-        label.set_justify(Gtk.Justification.CENTER)
-        label.get_style_context().add_class("about-dialog-label")
+class NagatoAboutDialog(Gtk.Dialog):
+
+    def _set_buttons(self):
+        self.add_button("OK", Gtk.ResponseType.OK)
+
+    def _initialize_content_area(self):
+        yuki_content_area = self.get_content_area()
+        yuki_content_area.set_spacing(8)
+        yuki_content_area.set_border_width(8)
+        self._label = NagatoLabelAbout(yuki_content_area)
+
+    def set_processes(self, processes):
+        self._label.set_processes(processes)
 
     def __init__(self):
-        Gtk.AboutDialog.__init__(self)
-        self.set_logo(PixbufIcon.get_application_icon())
-        self.set_license("S.O.S. License")
-        yuki_gtk_box = NagatoGtkBoxAbout(self.get_content_area())
-        yuki_image = yuki_gtk_box.get_gtk_image()
-        yuki_image.set_property("height-request", 100)
-        self._initialize_label(yuki_gtk_box.get_gtk_label())
+        Gtk.Dialog.__init__(
+            self,
+            "dialog: about",
+            Gtk.Window(title="About nagato-terminal"),
+            Gtk.ResponseType.OK,
+            None
+            )
+        self.set_default_size(500, 500)
+        self._initialize_content_area()
+        self._set_buttons()
         self.show_all()
+

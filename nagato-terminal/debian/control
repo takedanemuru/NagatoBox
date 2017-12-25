@@ -15,8 +15,9 @@ Section: python
 Provides: x-terminal-emulator
 Depends:
  python3-gi,
+ python3-libnagato,
  ${misc:Depends},
- ${python:Depends}
+ ${python3:Depends}
 Description: a multi-grid terminal emulator
  This software is now under heavy snow.
  This software is licensed under S.O.S. license.
