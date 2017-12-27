@@ -2,7 +2,7 @@
 import os
 import shutil
 import configparser
-from libnagatoterminal.Rect import NagatoRect
+from libnagato.datatype.Rect import NagatoRect
 from libnagatoterminal.Resources import NagatoResources
 
 

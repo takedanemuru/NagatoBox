@@ -41,18 +41,18 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         yuki_gdk_window = NagatoX11Window(self)
         yuki_gdk_window.move_to_current_desktop()
 
-    def _initialize_window(self):
+    def _on_initialize(self):
         Gtk.Window.__init__(self, Gtk.WindowType.TOPLEVEL)
         self.connect("delete-event", self._on_close_window)
         self._attributes = NagatoWindowAttributes(self)
+        NagatoServiceObject(self)
+        self._grid = NagatoGrid(self)
+        NagatoForChrome(self, self)
 
     def __init__(self):
         # this object is the most top instance of NagatoObjects' CoC.
         # has no parent, nowhere to go up.
         self._parent = None
-        self._initialize_window()
-        NagatoServiceObject(self)
-        self._grid = NagatoGrid(self)
-        NagatoForChrome(self, self)
+        self._on_initialize()
         self.show_all()
         Gtk.main()

@@ -9,7 +9,7 @@ from libnagatoterminal.Resources import NagatoResources
 class NagatoYuki(object):
 
     def _start_application(self):
-        yuki_unique = NagatoUnique(self._resources["dbus-service-name"])
+        yuki_unique = NagatoUnique(self._resources["id"])
         if yuki_unique.is_unique:
             self._resources.set_css_to_application()
             NagatoWindow()

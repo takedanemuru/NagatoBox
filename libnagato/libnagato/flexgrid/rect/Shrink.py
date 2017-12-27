@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.flexgrid.rect.Core import NagatoCore
+from libnagato.flexgrid.rect.Core import NagatoCore
 
 HORIZONTALS = [Gtk.PositionType.RIGHT, Gtk.PositionType.LEFT]
 

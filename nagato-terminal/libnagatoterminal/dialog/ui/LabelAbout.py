@@ -2,11 +2,25 @@
 from gi.repository import Gtk
 from libnagatoterminal.Resources import NagatoResources
 
+TEMPLATE = \
+    "<span size='x-large'>{}</span>\n"\
+    "version: {}\n"\
+    "\n"\
+    "{}"\
+    "\n"\
+    "{}"
+
+
 class NagatoLabelAbout(Gtk.Label):
 
     def _get_message(self):
         yuki_resources = NagatoResources()
-        return yuki_resources["long-description"]
+        return TEMPLATE.format(
+            yuki_resources["name"],
+            yuki_resources["version"],
+            yuki_resources["long-description"],
+            yuki_resources["authers"]
+            )
 
     def __init__(self, content_area):
         Gtk.Label.__init__(self)

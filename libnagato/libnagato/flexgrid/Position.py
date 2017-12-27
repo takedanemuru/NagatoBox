@@ -1,12 +1,12 @@
 
-from libnagatoterminal.Rect import NagatoRect
-from libnagatoterminal.flexgrid.rect.Adjust import NagatoAdjust
-from libnagatoterminal.flexgrid.rect.Expand import NagatoExpand
-from libnagatoterminal.flexgrid.rect.Shrink import NagatoShrink
-from libnagatoterminal.flexgrid.rect.New import NagatoNew
+from libnagato.datatype.Rect import NagatoRect
+from libnagato.flexgrid.rect.Adjust import NagatoAdjust
+from libnagato.flexgrid.rect.Expand import NagatoExpand
+from libnagato.flexgrid.rect.Shrink import NagatoShrink
+from libnagato.flexgrid.rect.New import NagatoNew
 
 
-class NagatoFlexGridPosition(NagatoRect):
+class NagatoPosition(NagatoRect):
 
     def __init__(self, left, top, width=1, height=1):
         NagatoRect.__init__(self, left, top, width, height)

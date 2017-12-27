@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Tue, 27 Dec 2017 00:00:00 +0900
+Source: libnagato
+Binary: python3-libnagato
+Architecture: source all
+Version: 42.10.5
+Distribution: unstable
+Urgency: low
+Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
+Changed-By: takeda.nemuru <takeda.nemuru@yandex.com>
+Description:
+ python3-libnagato - an application framework library.
+Changes:
+ libnagato (42.10.5) unstable; urgency=low
+ .
+   * add more modules.
+Checksums-Sha1:
+ 41d7eda643caad414ede5f684ded63525d2b22b9 554 libnagato_42.10.5.dsc
+ dfcff825218f5ae6fc09dc96ae4a0fd8c90695a0 2865 libnagato_42.10.5.tar.gz
+ bc7456f412aafff645a0c767d1bb65f230d781a5 3870 python3-libnagato_42.10.5_all.deb
+Checksums-Sha256:
+ 391ca22073c9954c70d47b4e0a08663e059d04b7d71380ccf94e0d5e2c32d260 554 libnagato_42.10.5.dsc
+ b1257131e85b6b20a84ea46b5a35f2ea1afc2f255b8ec0b4b152754323c40b76 2865 libnagato_42.10.5.tar.gz
+ a3738cf9e2502ab71657e237612afe2b0e62638ec79b127167a5d5fd8075fea2 3870 python3-libnagato_42.10.5_all.deb
+Files:
+ 07b661563d147e232985f6a764ed77f2 554 python optional libnagato_42.10.5.dsc
+ 4f615f47119e15cbdd30a59d55f87760 2865 python optional libnagato_42.10.5.tar.gz
+ 31e31aa9db4e21a2611e420fe0584984 3870 python optional python3-libnagato_42.10.5_all.deb

@@ -1,6 +1,6 @@
 
-from libnagatoterminal.Rect import NagatoRect
-from libnagatoterminal.flexgrid.rect.Core import NagatoCore
+from libnagato.datatype.Rect import NagatoRect
+from libnagato.flexgrid.rect.Core import NagatoCore
 
 
 class NagatoNew(NagatoCore):

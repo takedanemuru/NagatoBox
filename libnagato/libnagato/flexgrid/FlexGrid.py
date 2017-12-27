@@ -1,10 +1,10 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagatoterminal.Rect import NagatoRect
-from libnagatoterminal.FlexGridAttributes import NagatoFlexGridAttributes
-from libnagatoterminal.flexgrid.adjust.New import NagatoNew
-from libnagatoterminal.flexgrid.adjust.Expand import NagatoExpand
+from libnagato.datatype.Rect import NagatoRect
+from libnagato.flexgrid.Attributes import NagatoAttributes
+from libnagato.flexgrid.adjust.New import NagatoNew
+from libnagato.flexgrid.adjust.Expand import NagatoExpand
 
 
 class NagatoFlexGrid(Gtk.Grid, NagatoObject):
@@ -32,7 +32,7 @@ class NagatoFlexGrid(Gtk.Grid, NagatoObject):
     def __init__(self, parent):
         self._parent = parent
         Gtk.Grid.__init__(self)
-        NagatoFlexGridAttributes(self)
+        NagatoAttributes(self)
         self._automata_new = NagatoNew(self)
         self._automata_expand = NagatoExpand(self)
         self._on_initialize()

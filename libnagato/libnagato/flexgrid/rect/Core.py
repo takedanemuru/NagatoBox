@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.Rect import NagatoRect
+from libnagato.datatype.Rect import NagatoRect
 
 
 class NagatoCore(object):

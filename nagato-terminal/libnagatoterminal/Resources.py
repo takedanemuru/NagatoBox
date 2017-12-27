@@ -6,8 +6,10 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk
-from gi.repository import Gdk
 from gi.repository import GdkPixbuf
+from libnagato.util import CssProvider
+from libnagatoterminal.util import FileManager
+
 
 SETTINGS_PATH = ".config/NagatoBox/{}.config"
 
@@ -29,22 +31,17 @@ class NagatoResources(object):
         return NagatoResources._directory + "/" + yuki_name
 
     def set_css_to_application(self):
-        yuki_css_provider = Gtk.CssProvider()
-        yuki_css_provider.load_from_path(self._get_path_from_prefix(".css"))
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
-            yuki_css_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        )
+        CssProvider.set_to_application(self._get_path_from_prefix(".css"))
 
     def get_config_file(self):
         yuki_target_path = os.path.join(
             os.environ["HOME"],
             SETTINGS_PATH.format(NagatoResources._data["name"])
             )
-        if not os.path.exists(yuki_target_path):
-            yuki_source_path = self._get_path_from_prefix(".config")
-            shutil.copy(yuki_source_path, yuki_target_path)
+        FileManager.ensure(
+            self._get_path_from_prefix(".config"),
+            yuki_target_path
+            )
         return yuki_target_path
 
     def get_application_icon(self):

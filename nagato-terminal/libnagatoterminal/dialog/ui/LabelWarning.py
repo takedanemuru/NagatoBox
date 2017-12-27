@@ -2,7 +2,7 @@
 from gi.repository import Gtk
 
 TEMPLATE = \
-    "<big><u>WARNING !!</u></big>\n"\
+    "<span size='large'><u>WARNING !!</u></span>\n"\
     "\n"\
     "Following {} still running.\n"\
     "Do you really want to close terminal ?\n"\

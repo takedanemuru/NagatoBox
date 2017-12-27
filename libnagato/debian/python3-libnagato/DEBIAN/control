@@ -1,12 +1,12 @@
 Package: python3-libnagato
 Source: libnagato
-Version: 42.10.4
+Version: 42.10.6
 Architecture: all
 Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
-Installed-Size: 25
-Depends: python3-gi
+Installed-Size: 49
+Depends: python3-gi, python3:any (>= 3.3.2-2~)
 Section: python
 Priority: optional
-Description: an application framework libraly.
+Description: an application framework library.
  This software is now under heavy construction.
  This software is licensed under S.O.S. license.

@@ -1,6 +1,6 @@
 
 
-class NagatoGridData(object):
+class NagatoData(object):
 
     def __init__(self, signal_from, direction, destination_rect):
         self._signal_from = signal_from

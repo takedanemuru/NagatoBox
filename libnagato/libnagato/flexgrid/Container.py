@@ -1,9 +1,9 @@
 
 from libnagato.Object import NagatoObject
-from libnagatoterminal.FlexGridPosition import NagatoFlexGridPosition
+from libnagato.flexgrid.Position import NagatoPosition
 
 
-class NagatoFlexGridContainer(NagatoObject):
+class NagatoContainer(NagatoObject):
 
     def _inform_new_vte_rect(self, gtk_position_type):
         return self._position.get_new_vte_rect(gtk_position_type)
@@ -28,3 +28,9 @@ class NagatoFlexGridContainer(NagatoObject):
 
     def move_to(self, rect):
         self._position.move_to(rect)
+
+    def __init__(self, parent, rect, user_data):
+        self._parent = parent
+        self._position = NagatoPosition(rect.left, rect.top)
+        self._on_initialize(rect, user_data)
+        parent.attach(self, rect.left, rect.top, rect.height, rect.width)

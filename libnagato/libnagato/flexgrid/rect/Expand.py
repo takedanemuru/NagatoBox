@@ -1,5 +1,5 @@
 
-from libnagatoterminal.flexgrid.rect.Core import NagatoCore
+from libnagato.flexgrid.rect.Core import NagatoCore
 
 
 class NagatoExpand(NagatoCore):

@@ -2,7 +2,7 @@
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagatoterminal.menu.Item import NagatoItem
-from libnagatoterminal.datatype.GridData import NagatoGridData
+from libnagato.flexgrid.Data import NagatoData
 
 MESSAGE = "YUKI.N > menu clicked"
 
@@ -10,7 +10,7 @@ MESSAGE = "YUKI.N > menu clicked"
 class NagatoCore(Gtk.Menu, NagatoObject):
 
     def _get_data(self, gtk_position_type):
-        return NagatoGridData(
+        return NagatoData(
                 self._enquiry("YUKI.N > notebook itself"),
                 gtk_position_type,
                 self._enquiry(self._data_query, gtk_position_type)

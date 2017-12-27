@@ -1,7 +1,7 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.Rect import NagatoRect
-from libnagatoterminal.flexgrid.adjust.Core import NagatoAdjustCore
+from libnagato.datatype.Rect import NagatoRect
+from libnagato.flexgrid.adjust.Core import NagatoAdjustCore
 
 
 class NagatoNew(NagatoAdjustCore):

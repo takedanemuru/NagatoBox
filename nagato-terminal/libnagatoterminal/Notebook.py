@@ -1,14 +1,13 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagatoterminal.Vte import NagatoVte
 from libnagato.ui.NotebookTabVisibility import NagatoTabVisibility
-from libnagatoterminal.datatype.UnnullableArray import NagatoUnnullableArray
-from libnagatoterminal.FlexGridContainer import NagatoFlexGridContainer
-from libnagatoterminal.FlexGridPosition import NagatoFlexGridPosition
+from libnagato.datatype.UnnullableArray import NagatoUnnullableArray
+from libnagatoterminal.Vte import NagatoVte
+from libnagato.flexgrid.Container import NagatoContainer
 
 
-class NagatoNotebook(NagatoFlexGridContainer, Gtk.Notebook):
+class NagatoNotebook(NagatoContainer, Gtk.Notebook):
 
     def _yuki_n_add_new_tab(self, working_directory_uri=None):
         NagatoVte(self, False, working_directory_uri)
@@ -27,11 +26,8 @@ class NagatoNotebook(NagatoFlexGridContainer, Gtk.Notebook):
             yuki_processes.append(yuki_page.child_process)
         return yuki_processes.data
 
-    def __init__(self, parent, is_prime_vte, rect):
-        self._parent = parent
-        self._position = NagatoFlexGridPosition(rect.left, rect.top)
+    def _on_initialize(self, rect, is_prime_vte):
         Gtk.Notebook.__init__(self)
         self.set_scrollable(True)
         NagatoTabVisibility(self)
         NagatoVte(self, is_prime_vte)
-        parent.attach(self, rect.left, rect.top, 1, 1)

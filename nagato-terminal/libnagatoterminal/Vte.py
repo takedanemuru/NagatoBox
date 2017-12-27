@@ -43,15 +43,6 @@ class NagatoVte(Vte.Terminal, NagatoObject):
         # notebook reject to switch page when children aren't visible.
         self._parent.set_current_page(self._parent.get_n_pages() - 1)
 
-    def __init__(self, parent, is_prime_vte, directory=None):
-        self._parent = parent
-        self._tab_label = NagatoTabLabel(parent)
-        self._options = NagatoVteOptions(is_prime_vte, directory)
-        self._initialize_vte()
-        NagatoVteAttributes(self)
-        NagatoUserInput(self)
-        self._initialize_first_page()
-
     def _yuki_n_copy(self):
         self.copy_clipboard()
 
@@ -69,6 +60,15 @@ class NagatoVte(Vte.Terminal, NagatoObject):
 
     def _inform_has_selection(self):
         return self.get_has_selection()
+
+    def __init__(self, parent, is_prime_vte, directory=None):
+        self._parent = parent
+        self._tab_label = NagatoTabLabel(parent)
+        self._options = NagatoVteOptions(is_prime_vte, directory)
+        self._initialize_vte()
+        NagatoVteAttributes(self)
+        NagatoUserInput(self)
+        self._initialize_first_page()
 
     @property
     def child_process(self):
