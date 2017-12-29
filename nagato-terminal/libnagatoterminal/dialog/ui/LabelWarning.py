@@ -1,5 +1,7 @@
 
 from gi.repository import Gtk
+from libnagato.util import CssProvider
+
 
 TEMPLATE = \
     "<span size='large'><u>WARNING !!</u></span>\n"\

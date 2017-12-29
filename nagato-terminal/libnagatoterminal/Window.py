@@ -6,6 +6,8 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagato.gdk.X11Window import NagatoX11Window
+from libnagato.dialog.About import NagatoAboutDialog
+from libnagatoterminal.Resources import NagatoResources
 from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
 from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
@@ -35,7 +37,9 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         self._try_quit_application()
 
     def _yuki_n_about(self):
-        Portal.show_about()
+        yuki_dialog = NagatoAboutDialog(NagatoResources())
+        yuki_dialog.run()
+        yuki_dialog.destroy()
 
     def _yuki_n_move_to_current_desktop(self):
         yuki_gdk_window = NagatoX11Window(self)
