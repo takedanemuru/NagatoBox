@@ -2,7 +2,6 @@
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from libnagato.util import CssProvider
-from libnagatoterminal.Resources import NagatoResources
 
 
 class NagatoGtkImage(Gtk.Image):
@@ -12,4 +11,3 @@ class NagatoGtkImage(Gtk.Image):
         CssProvider.set_to_widget(self, css)
         self.set_size_request(height, width)
         container.add(self)
-

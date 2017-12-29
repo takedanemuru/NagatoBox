@@ -1,7 +1,7 @@
 
 from libnagato.Object import NagatoObject
-from libnagatoterminal.ModKeys import NagatoModKeys
-from libnagatoterminal.util import Direction
+from libnagatoterminal.keyboard.ModKeys import NagatoModKeys
+from libnagatoterminal.keyboard import Direction
 
 CTRL_SHIFT_BINDS = {
     67: "YUKI.N > copy",
@@ -11,7 +11,7 @@ CTRL_SHIFT_BINDS = {
     }
 
 
-class NagatoKeyBinds(NagatoObject):
+class NagatoBinds(NagatoObject):
 
     def _raise_directional_message(self, message, keyval):
         yuki_gtk_position_type = Direction.get_gtk_position_type(keyval)
@@ -41,7 +41,7 @@ class NagatoKeyBinds(NagatoObject):
             return self._ctrl_with_shift(event.keyval)
         return False
 
-    def __init__(self, parent, vte):
+    def __init__(self, parent):
         self._parent = parent
         self._mod_keys = NagatoModKeys()
-        vte.connect("key-press-event", self._on_key_press)
+        self._parent.connect("key-press-event", self._on_key_press)

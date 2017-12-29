@@ -1,6 +1,6 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.Resources import NagatoResources
+from libnagato.util import CssProvider
 
 TEMPLATE = \
     "<span size='x-large'>{}</span>\n"\
@@ -14,18 +14,18 @@ TEMPLATE = \
 class NagatoLabelAbout(Gtk.Label):
 
     def _get_message(self):
-        yuki_resources = NagatoResources()
         return TEMPLATE.format(
-            yuki_resources["name"],
-            yuki_resources["version"],
-            yuki_resources["long-description"],
-            yuki_resources["authers"]
+            self._resources["name"],
+            self._resources["version"],
+            self._resources["long-description"],
+            self._resources["authers"]
             )
 
-    def __init__(self, content_area):
+    def __init__(self, content_area, resources):
         Gtk.Label.__init__(self)
+        self._resources = resources
         self.set_justify(Gtk.Justification.CENTER)
         self.set_vexpand(True)
-        self.get_style_context().add_class("dialog-label-about")
+        CssProvider.set_to_widget(self, "dialog-label-about") 
         self.set_markup(self._get_message())
         content_area.add(self)

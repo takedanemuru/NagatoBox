@@ -1,9 +1,7 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.dialog import Portal
-from libnagatoterminal.dialog.ui.LabelAbout import NagatoLabelAbout
-from libnagatoterminal.Resources import NagatoResources
-from libnagatoterminal.dialog.ui.GtkImage import NagatoGtkImage
+from libnagato.dialog.ui.LabelAbout import NagatoLabelAbout
+from libnagato.dialog.ui.GtkImage import NagatoGtkImage
 
 
 class NagatoAboutDialog(Gtk.Dialog):
@@ -12,10 +10,9 @@ class NagatoAboutDialog(Gtk.Dialog):
         self.add_button("I see", Gtk.ResponseType.OK)
 
     def _set_icon(self, content_area):
-        yuki_resources = NagatoResources()
         NagatoGtkImage(
             content_area,
-            yuki_resources.get_application_icon(),
+            self._resources.get_application_icon(),
             "dialog-label-about",
             -1,
             120
@@ -26,16 +23,14 @@ class NagatoAboutDialog(Gtk.Dialog):
         yuki_content_area.set_spacing(0)
         yuki_content_area.set_border_width(8)
         self._set_icon(yuki_content_area)
-        self._label = NagatoLabelAbout(yuki_content_area)
+        self._label = NagatoLabelAbout(yuki_content_area, self._resources)
 
-    def set_processes(self, processes):
-        self._label.set_processes(processes)
-
-    def __init__(self):
+    def __init__(self, resources):
+        self._resources = resources
         Gtk.Dialog.__init__(
             self,
-            "dialog: about nagato-terminal",
-            Gtk.Window(title="About nagato-terminal"),
+            "dialog: about {}".format(self._resources["name"]),
+            Gtk.Window(title="About {}".format(self._resources["name"])),
             Gtk.ResponseType.OK,
             None
             )

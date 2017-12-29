@@ -1,6 +1,7 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.dialog.About import NagatoAboutDialog
+from libnagato.dialog.About import NagatoAboutDialog
+from libnagatoterminal.Resources import NagatoResources
 from libnagatoterminal.dialog.Warning import NagatoWarning
 
 
@@ -25,6 +26,6 @@ def get_can_close_window(running_processes):
 
 
 def show_about():
-    yuki_dialog = NagatoAboutDialog()
+    yuki_dialog = NagatoAboutDialog(NagatoResources())
     yuki_dialog.run()
     yuki_dialog.destroy()

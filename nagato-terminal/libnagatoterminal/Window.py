@@ -9,7 +9,7 @@ from libnagato.gdk.X11Window import NagatoX11Window
 from libnagatoterminal.Grid import NagatoGrid
 from libnagatoterminal.dbus.ServiceObject import NagatoServiceObject
 from libnagatoterminal.WindowAttributes import NagatoWindowAttributes
-from libnagatoterminal.input.mouse.ForChrome import NagatoForChrome
+from libnagatoterminal.menu.context.ForChrome import NagatoForChrome
 from libnagatoterminal.dialog import Portal
 
 
@@ -28,7 +28,7 @@ class NagatoWindow(Gtk.Window, NagatoObject):
 
     def _on_close_window(self, widget, event, user_data=None):
         # this method is GTK+ callback
-        # cancels to close window when it returns True
+        # cancels closing window event when it returns True
         return self._try_quit_application()
 
     def _yuki_n_quit(self):
@@ -42,17 +42,17 @@ class NagatoWindow(Gtk.Window, NagatoObject):
         yuki_gdk_window.move_to_current_desktop()
 
     def _on_initialize(self):
-        Gtk.Window.__init__(self, Gtk.WindowType.TOPLEVEL)
-        self.connect("delete-event", self._on_close_window)
         self._attributes = NagatoWindowAttributes(self)
         NagatoServiceObject(self)
         self._grid = NagatoGrid(self)
-        NagatoForChrome(self, self)
+        NagatoForChrome(self)
 
     def __init__(self):
         # this object is the most top instance of NagatoObjects' CoC.
         # has no parent, nowhere to go up.
         self._parent = None
+        Gtk.Window.__init__(self, Gtk.WindowType.TOPLEVEL)
+        self.connect("delete-event", self._on_close_window)
         self._on_initialize()
         self.show_all()
         Gtk.main()

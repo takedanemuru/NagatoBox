@@ -26,5 +26,5 @@ class NagatoLabelWarning(Gtk.Label):
         Gtk.Label.__init__(self)
         self.set_justify(Gtk.Justification.CENTER)
         self.set_vexpand(True)
-        self.get_style_context().add_class("dialog-label")
+        CssProvider.set_to_widget(self, "dialog-label") 
         content_area.add(self)

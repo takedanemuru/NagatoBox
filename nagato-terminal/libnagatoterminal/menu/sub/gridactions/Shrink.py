@@ -1,11 +1,11 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.menu.sub.gridactions.Core import NagatoCore
+from libnagatoterminal.menu.sub.GridActionsCore import NagatoGridActionsCore
 from libnagatoterminal.menu.item.sensitive.Shrink import (
     NagatoShrink as NagatoShrinkMenuItem
     )
 
-class NagatoShrink(NagatoCore):
+class NagatoShrink(NagatoGridActionsCore):
 
     def _yuki_n_menu_clicked(self, gtk_position_type):
         self._raise("YUKI.N > shrink to", self._get_data(gtk_position_type))
