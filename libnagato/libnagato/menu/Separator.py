@@ -2,7 +2,8 @@
 from gi.repository import Gtk
 
 
-class NagatoSeparator(object):
+class NagatoSeparator(Gtk.SeparatorMenuItem):
 
     def __init__(self, parent):
-        parent.append(Gtk.SeparatorMenuItem())
+        Gtk.SeparatorMenuItem.__init__(self)
+        parent.append(self)

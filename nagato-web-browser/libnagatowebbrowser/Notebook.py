@@ -1,8 +1,8 @@
 
 from gi.repository import Gtk
-from libnagatowebbrowser.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
+from libnagato.ui.NotebookTabVisibility import NagatoTabVisibility
 from libnagatowebbrowser.WebView import NagatoWebView
-from libnagatowebbrowser.TabVisibility import NagatoTabVisibility
 
 DEFAULT_HOME_PAGE = "http://www.duckduckgo.com"
 

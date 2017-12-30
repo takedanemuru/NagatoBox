@@ -3,10 +3,10 @@ import gi
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
+from libnagato.Object import NagatoObject
+from libnagato.dialog.About import NagatoAboutDialog
+from libnagatowebbrowser.Resources import NagatoResources
 from libnagatowebbrowser.Grid import NagatoGrid
-from libnagatowebbrowser import CssProvider
-from libnagatowebbrowser.CoreObject import NagatoObject
-from libnagatowebbrowser import GdkPixbufIcon
 
 class NagatoMainWindow(Gtk.Window, NagatoObject):
 
@@ -14,20 +14,22 @@ class NagatoMainWindow(Gtk.Window, NagatoObject):
         if title is not None:
             self.set_title(title)
 
+    def _yuki_n_about(self):
+        yuki_dialog = NagatoAboutDialog(NagatoResources())
+        yuki_dialog.run()
+        yuki_dialog.destroy()
+
     def _on_close_window(self, widget, event, user_data=None):
         Gtk.main_quit()
 
-    def _initialize_window(self):
+    def _on_initialize(self):
         Gtk.Window.__init__(self)
         self.set_default_size(800, 600)
-        self.set_icon(GdkPixbufIcon.get_application_icon())
         self.connect("delete-event", self._on_close_window)
+        NagatoGrid(self)
 
     def __init__(self):
         self._parent = None
-        CssProvider.set_to_application()
-        self._initialize_window()
-        NagatoGrid(self)
-        self.get_style_context().add_class("main-window")
+        self._on_initialize()
         self.show_all()
         Gtk.main()

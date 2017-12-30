@@ -1,16 +1,16 @@
 
-from libnagatowebbrowser.menu.group.Core import NagatoCore
-from libnagatowebbrowser.menu.item.sensitive.GoBack import NagatoGoBack
-from libnagatowebbrowser.menu.item.sensitive.GoForward import NagatoGoForward
-from libnagatowebbrowser.menu.item.sensitive.StopLoading import (
-    NagatoStopLoading
-    )
+from libnagato.menu.Item import NagatoItem
+from libnagato.menu.Separator import NagatoSeparator
+from libnagatowebbrowser.menu.action.GoBack import NagatoGoBack
+from libnagatowebbrowser.menu.action.GoForward import NagatoGoForward
+from libnagatowebbrowser.menu.action.StopLoading import NagatoStopLoading
 
 
-class NagatoNavigations(NagatoCore):
+class AsakuraNavigations(object):
 
-    def _add_menu_items(self):
-        self._menus.append(NagatoGoBack(self,self._root_menu))
-        self._menus.append(NagatoGoForward(self,self._root_menu))
-        self._add_menu_item("Reload", "YUKI.N > reload")
-        self._menus.append(NagatoStopLoading(self,self._root_menu))
+    def __init__(self, parent):
+        NagatoGoBack(parent)
+        NagatoGoForward(parent)
+        NagatoItem(parent, "Reload", "YUKI.N > reload")
+        NagatoStopLoading(parent)     
+        NagatoSeparator(parent)

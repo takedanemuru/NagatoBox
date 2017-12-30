@@ -1,9 +1,9 @@
 Package: nagato-terminal
-Version: 42.10.41
+Version: 42.10.43
 Architecture: all
 Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
-Installed-Size: 198
-Depends: python3-gi, python3:any (>= 3.3.2-2~)
+Installed-Size: 173
+Depends: python3-gi, python3-libnagato, python3:any (>= 3.3.2-2~)
 Provides: x-terminal-emulator
 Section: python
 Priority: optional

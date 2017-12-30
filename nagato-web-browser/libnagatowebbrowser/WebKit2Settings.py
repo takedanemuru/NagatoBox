@@ -1,6 +1,6 @@
 
 from gi.repository import WebKit2
-from libnagatowebbrowser.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 
 USER_AGENT_NAME = "nagato-web-browser"
 

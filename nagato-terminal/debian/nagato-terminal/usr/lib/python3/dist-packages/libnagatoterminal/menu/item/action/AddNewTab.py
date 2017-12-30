@@ -6,10 +6,8 @@ from libnagato.Object import NagatoObject
 class NagatoAddNewTab(Gtk.MenuItem, NagatoObject):
 
     def _on_activate(self, widget):
-        self._raise(
-            "YUKI.N > add new tab",
-            self._enquiry("YUKI.N > working directory")
-            )
+        yuki_sensitive = self._enquiry("YUKI.N > working directory")
+        self._raise("YUKI.N > add new tab", yuki_sensitive)
 
     def __init__(self, parent):
         self._parent = parent

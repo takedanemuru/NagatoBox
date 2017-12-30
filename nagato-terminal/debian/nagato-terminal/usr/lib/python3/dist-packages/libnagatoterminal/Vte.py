@@ -8,9 +8,10 @@ from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagatoterminal.ProcessWatcher import NagatoProcessWatcher
 from libnagatoterminal.VteAttributes import NagatoVteAttributes
-from libnagatoterminal.UserInput import NagatoUserInput
 from libnagatoterminal.TabLabel import NagatoTabLabel
 from libnagatoterminal.VteOptions import NagatoVteOptions
+from libnagatoterminal.keyboard.Binds import NagatoBinds
+from libnagatoterminal.menu.context.ForVte import NagatoForVte
 
 
 class NagatoVte(Vte.Terminal, NagatoObject):
@@ -34,7 +35,8 @@ class NagatoVte(Vte.Terminal, NagatoObject):
         self._watcher = NagatoProcessWatcher(yuki_pid)
         self._tab_label.set_title("PID : {}".format(yuki_pid))
         if self._options.wait_for_command:
-            self.feed_child(self._options.command, self._options.length)
+            yuki_command, yuki_length = self._options.get_command()
+            self.feed_child(yuki_command, yuki_length)
 
     def _initialize_first_page(self):
         self._parent.insert_page(self, self._tab_label, -1)
@@ -42,15 +44,6 @@ class NagatoVte(Vte.Terminal, NagatoObject):
         self.show_all()
         # notebook reject to switch page when children aren't visible.
         self._parent.set_current_page(self._parent.get_n_pages() - 1)
-
-    def __init__(self, parent, is_prime_vte, directory=None):
-        self._parent = parent
-        self._tab_label = NagatoTabLabel(parent)
-        self._options = NagatoVteOptions(is_prime_vte, directory)
-        self._initialize_vte()
-        NagatoVteAttributes(self)
-        NagatoUserInput(self)
-        self._initialize_first_page()
 
     def _yuki_n_copy(self):
         self.copy_clipboard()
@@ -69,6 +62,16 @@ class NagatoVte(Vte.Terminal, NagatoObject):
 
     def _inform_has_selection(self):
         return self.get_has_selection()
+
+    def __init__(self, parent, is_prime_vte, directory=None):
+        self._parent = parent
+        self._tab_label = NagatoTabLabel(parent)
+        self._options = NagatoVteOptions(is_prime_vte, directory)
+        self._initialize_vte()
+        NagatoVteAttributes(self)
+        NagatoBinds(self)
+        NagatoForVte(self)
+        self._initialize_first_page()
 
     @property
     def child_process(self):

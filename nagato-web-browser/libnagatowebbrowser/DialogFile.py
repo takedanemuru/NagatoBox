@@ -1,6 +1,6 @@
 
+import os
 import urllib.request
-from libnagatowebbrowser.util import Path
 from gi.repository import Gtk
 
 
@@ -17,7 +17,7 @@ def save_image_from_uri(uri):
         Gtk.FileChooserAction.SAVE,
         _get_buttons()
         )
-    yuki_dialog.set_current_folder(Path.get_home())
+    yuki_dialog.set_current_folder(os.environ["HOME"])
     yuki_dialog.set_current_name("web_image.png")
     yuki_dialog.set_default_response(Gtk.ResponseType.CANCEL)
     yuki_dialog.set_do_overwrite_confirmation(True)

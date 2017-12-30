@@ -2,8 +2,7 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Pango
-from libnagatowebbrowser.CoreObject import NagatoObject
-#from libnagatowebbrowser.ButtonClose import NagatoButtonClose
+from libnagato.Object import NagatoObject
 from libnagatowebbrowser.util.EllipsisedText import NagatoEllipsesedText
 
 
@@ -22,6 +21,5 @@ class NagatoTabLabel(Gtk.Box, NagatoObject):
         self._parent = parent
         Gtk.Box.__init__(self)
         self._initialize_label()
-        #NagatoButtonClose(self)
         self._ellipsised_text = NagatoEllipsesedText() 
         self.show_all()

@@ -1,28 +1,20 @@
 
-import argparse
 import os
+import argparse
 
 
-class NagatoArgs(object):
+class NagatoArgs(argparse.ArgumentParser):
 
-    def _get_directory_option(self):
-        self._parser.add_argument(
-            "-d",
-            nargs=1,
-            metavar="DIRECTORY",
-            help="set working directory"
+    def _add_argument(self, arg_short, count, metavar_name, help_text):
+        self.add_argument(
+            arg_short,
+            nargs=count,
+            metavar=metavar_name,
+            help=help_text
             )
 
-    def _get_command_option(self):
-        self._parser.add_argument(
-            "-e",
-            nargs=1,
-            metavar="COMMAND",
-            help="execute command"
-            )
-
-    def _get_show_version(self):
-        self._parser.add_argument(
+    def _set_show_version(self):
+        self.add_argument(
             "-v",
             "--version",
             action="store_true",
@@ -32,9 +24,9 @@ class NagatoArgs(object):
             )
 
     def _get_args(self):
-        self._get_directory_option()
-        self._get_command_option()
-        self._get_show_version()
+        self._add_argument("-e", 1, "COMMAND", "execute command")
+        self._add_argument("-d", 1, "DIRECTORY", "set working directory")
+        self._set_show_version()
 
     def _get_directory(self, args):
         if args.d is not None:
@@ -42,32 +34,16 @@ class NagatoArgs(object):
         return os.environ["HOME"]
 
     def _initialize_variants(self):
-        yuki_args = self._parser.parse_args()
-        NagatoArgs._directory = yuki_args.d[0] if yuki_args.d else os.environ["HOME"]
-        NagatoArgs._command = yuki_args.e[0] if yuki_args.e else None
-        NagatoArgs._show_version = yuki_args.show_version
+        yuki_args = self.parse_args()
+        self._args = {}
+        self._args["directory"] = self._get_directory(yuki_args)
+        self._args["command"] = yuki_args.e[0] if yuki_args.e else None
+        self._args["show-version"] = yuki_args.show_version
 
     def __init__(self):
-        if "_command" in NagatoArgs.__dict__.keys():
-            return
-        self._parser = argparse.ArgumentParser()
+        argparse.ArgumentParser.__init__(self)
         self._get_args()
         self._initialize_variants()
 
-    def get_vte_directory(self, is_prime_vte):
-        if is_prime_vte:
-            return NagatoArgs._directory
-        else:
-            return os.environ["HOME"]
-
-    @property
-    def directory(self):
-        return NagatoArgs._directory
-
-    @property
-    def command(self):
-        return NagatoArgs._command
-
-    @property
-    def show_version(self):
-        return NagatoArgs._show_version
+    def __getitem__(self, key):
+        return self._args[key]
