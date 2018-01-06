@@ -3,6 +3,7 @@ from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagato.ui.NotebookTabVisibility import NagatoTabVisibility
 from libnagatowebbrowser.WebView import NagatoWebView
+from libnagatowebbrowser.NotebookTabSize import NagatoNotebookTabSize
 
 DEFAULT_HOME_PAGE = "http://www.duckduckgo.com"
 
@@ -17,6 +18,11 @@ class NagatoNotebook(Gtk.Notebook, NagatoObject):
 
     def _yuki_n_load_finished(self):
         self._raise_new_title(self.get_current_page())
+
+    def _yuki_n_new_tab_size(self, new_tab_size):
+        for yuki_child in self.get_children():
+            yuki_child.set_tab_size(new_tab_size)
+        self.show_all()
 
     def _inform_has_multi_tabs(self):
         return (self.get_n_pages() >= 2)
@@ -35,8 +41,8 @@ class NagatoNotebook(Gtk.Notebook, NagatoObject):
         self.set_scrollable(True)
         self.set_property("expand", True)
         self.set_property("resize-mode", Gtk.ResizeMode.QUEUE)
-        self.set_opacity(0.9)
         NagatoTabVisibility(self)
+        NagatoNotebookTabSize(self)
         self.connect("switch-page", self._on_switch_page)
         NagatoWebView(self, DEFAULT_HOME_PAGE)
         self._parent.attach(self, 0, 2, 1, 1)

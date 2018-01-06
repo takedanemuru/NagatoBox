@@ -3,9 +3,8 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 
 
-def set_to_widget(widget, css):
-    # css must be an ABSOLUTE PATH to css file
-    widget.get_style_context().add_class(css)
+def set_to_widget(widget, css_class):
+    widget.get_style_context().add_class(css_class)
 
 
 def set_to_application(css):

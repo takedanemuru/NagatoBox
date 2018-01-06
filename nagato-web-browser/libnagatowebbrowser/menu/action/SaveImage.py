@@ -11,7 +11,7 @@ class NagatoSaveImage(NagatoActionCore):
     def _on_map(self, widget):
         yuki_hit_test_result = self._enquiry(self._query)
         if yuki_hit_test_result.context_is_image():
-            self._last_url = yuki_hit_test_result.get_image_uri()
+            self._last_uri = yuki_hit_test_result.get_image_uri()
             self.show()
         else:
             self.hide()

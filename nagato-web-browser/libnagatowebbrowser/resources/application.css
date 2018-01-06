@@ -4,6 +4,15 @@ GtkWindow {
     background-image: url("images/main-window.jpg");
 }
 
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0;
+    font-style: italic;
+    font-size: 12px;
+}
+
 GtkMenu {
     background-repeat: repeat;
     background-position: center;
@@ -12,6 +21,10 @@ GtkMenu {
 
 @define-color foreground_color violet;
 @define-color background_color white;
+
+GtkNotebook {
+    opacity: 0.9;
+}
 
 GtkMenuItem {
     color: @foreground_color;
