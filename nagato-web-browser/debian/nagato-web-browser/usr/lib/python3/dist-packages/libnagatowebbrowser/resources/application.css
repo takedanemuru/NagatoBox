@@ -1,0 +1,68 @@
+GtkWindow {
+    background-repeat: repeat;
+    background-position: center;
+    background-image: url("images/main-window.jpg");
+}
+
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0;
+    font-style: italic;
+    font-size: 12px;
+}
+
+GtkMenu {
+    background-repeat: repeat;
+    background-position: center;
+    background-image: url("images/context-menu.jpg");
+}
+
+@define-color foreground_color violet;
+@define-color background_color white;
+
+GtkNotebook {
+    opacity: 0.9;
+}
+
+GtkMenuItem {
+    color: @foreground_color;
+    background-color: @background_color;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+GtkMenuItem:hover {
+    color: @background_color;
+    background-color: @foreground_color;
+    opacity: 0.9;
+}
+
+GtkMenuItem:insensitive {
+    color: @background_color;
+    background-color: @background_color;
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+GtkButton {
+    border-style: none;
+    border-radius: 0;
+    opacity: 0.7;
+}
+
+.dialog-label {
+    color: white;
+    background-color: #FF007F;
+    font-weight: bold;
+    opacity : 0.7;
+}
+
+.dialog-label-about {
+    color: white;
+    background-color: MediumSlateBlue;
+    font-weight: bold;
+    font-size: 11px;
+    opacity : 0.6;
+}

@@ -29,5 +29,6 @@ class NagatoNotebook(NagatoContainer, Gtk.Notebook):
     def _on_initialize(self, rect, is_prime_vte):
         Gtk.Notebook.__init__(self)
         self.set_scrollable(True)
+        self.set_can_focus(False)
         NagatoTabVisibility(self)
         NagatoVte(self, is_prime_vte)

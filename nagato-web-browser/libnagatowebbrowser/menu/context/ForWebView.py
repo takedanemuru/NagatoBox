@@ -1,15 +1,16 @@
 
-from libnagato.menu.Item import NagatoItem
 from libnagato.menu.Separator import NagatoSeparator
+from libnagato.menu.Context import NagatoContextCore
 from libnagatowebbrowser.menu.group.Navigations import AsakuraNavigations
 from libnagatowebbrowser.menu.group.Image import AsakuraImage
 from libnagatowebbrowser.menu.group.Link import AsakuraLink
 from libnagatowebbrowser.menu.group.TabActions import AsakuraTabActions
+from libnagatowebbrowser.menu.group.Selection import AsakuraSelection
 from libnagatowebbrowser.menu.action.FullScreen import NagatoFullScreen
-from libnagatowebbrowser.menu.context.ContextCore import NagatoContextCore
+from libnagatowebbrowser.menu.sub.ScreenShot import NagatoScreenShot
 
 
-class NagatoForWebView(NagatoContextCore):
+class NagatoContextMenu(NagatoContextCore):
 
     def _inform_hit_test_result(self):
         return self._hit_test_result
@@ -27,12 +28,11 @@ class NagatoForWebView(NagatoContextCore):
 
     def _initialize_children(self):
         self._hit_test_result = None
-        AsakuraNavigations(self)
         AsakuraImage(self)
         AsakuraLink(self)
+        AsakuraNavigations(self)
         AsakuraTabActions(self)
         NagatoSeparator(self)
+        AsakuraSelection(self)
         NagatoFullScreen(self)
-        NagatoSeparator(self)
-        NagatoItem(self, "About", "YUKI.N > about")
-        NagatoItem(self, "Quit", "YUKI.N > quit")
+        NagatoScreenShot(self)

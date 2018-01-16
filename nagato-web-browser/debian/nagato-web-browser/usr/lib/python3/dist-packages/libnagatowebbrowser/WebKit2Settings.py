@@ -1,15 +1,17 @@
 
-import gi
-
-gi.require_version('WebKit2','4.0')
-
 from gi.repository import WebKit2
-from libnagatowebbrowser.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 
 USER_AGENT_NAME = "nagato-web-browser"
 
 
 class NagatoWebKit2Settings(WebKit2.Settings, NagatoObject):
+
+    def disable_javascript(self):
+        self.set_enable_javascript(False)
+
+    def enable_javascript(self):
+        self.set_enable_javascript(True)
 
     def __init__(self):
         WebKit2.Settings.__init__(self)
@@ -17,4 +19,5 @@ class NagatoWebKit2Settings(WebKit2.Settings, NagatoObject):
         self.set_enable_javascript(False)
         self.set_enable_plugins(False)
         self.set_enable_plugins(False)
+        self.set_javascript_can_access_clipboard(False)
         self.set_user_agent(USER_AGENT_NAME)

@@ -7,7 +7,7 @@ from libnagatoterminal.menu.group.GridActions import AsakuraGridActions
 from libnagatoterminal.menu.item.action.AddNewTab import NagatoAddNewTab
 
 
-class NagatoForVte(NagatoContextCore):
+class NagatoContextMenu(NagatoContextCore):
 
     def _on_middle_click(self, user_data=None):
         self._raise("YUKI.N > paste")

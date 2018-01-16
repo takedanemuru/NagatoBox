@@ -15,7 +15,7 @@ class NagatoX11Window(object):
         return (yuki_state & STATE_FULLSCREEN == STATE_FULLSCREEN)
 
     def toggle_fullscreen(self):
-        if self.is_fullscreen()
+        if self.is_fullscreen():
             self._gtk_window.unfullscreen()
         else:
             self._gtk_window.fullscreen()

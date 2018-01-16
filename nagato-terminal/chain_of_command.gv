@@ -21,42 +21,40 @@ digraph {
     HumanoidInterface -> NagatoArgs
     HumanoidInterface -> NagatoWindow
     
-    NagatoWindow -> NagatoGrid2
-    NagatoWindow -> NagatoDialog
-    NagatoWindow -> NagatoAboutDialog2
+    NagatoWindow -> NagatoAboutDialog
     NagatoWindow -> NagatoSettings
+    NagatoWindow -> NagatoEventBox_ForGrid
+    
+    NagatoEventBox_ForGrid -> NagatoGrid
+    NagatoEventBox_ForGrid -> NagatoContextMenu_ForGrid
+    NagatoEventBox_ForGrid -> NagatoWarning_Dialog
     
     NagatoGridAttributes,
-    NagatoGridAutomataVteNew, 
-    NagatoGridAutomataVteExpand, 
     NagatoVteAttributes [
         style = "filled"
         shape = "note"
     ]
 
-    NagatoGrid2 -> NagatoNotebook [ 
+    NagatoGrid -> NagatoNotebook [ 
         label = "Multiple"
         color = "Crimson"
         ]
-    NagatoGrid2 -> NagatoGridAttributes
-    NagatoGrid2 -> NagatoGridAutomataVteNew
-    NagatoGrid2 -> NagatoGridAutomataVteExpand
+    NagatoGrid -> NagatoGridAttributes
     
-    NagatoNotebook -> NagatoVte2 [ 
+    
+    NagatoNotebook -> NagatoTabVisibility
+    NagatoNotebook -> NagatoVte [ 
         label = "Multiple"
         color = "Crimson"
         ]
-    NagatoNotebook -> NagatoGridPosition
     
-    NagatoVte2 -> NagatoVteAttributes
-    NagatoVte2 -> NagatoProcessWatcher
-    NagatoVte2 -> NagatoUserInput
+    NagatoVte -> NagatoVteAttributes
+    NagatoVte -> NagatoTabLabel
+    NagatoVte -> NagatoProcessWatcher
+    NagatoVte -> NagatoContextMenu_ForVte
+    NagatoVte -> NagatoBinds
     
-    NoteAlpha [
-        label = "see NagatoUserInput.gv"
-        shape = "underline"
-    ]
-    
-    NagatoUserInput -> NoteAlpha [ arrowhead = "dot" ]
+    NagatoTabLabel -> NagatoContextMenu_ForTabLabel
+    NagatoTabLabel -> NagatoSetTabTitle_Dialog
     
 }

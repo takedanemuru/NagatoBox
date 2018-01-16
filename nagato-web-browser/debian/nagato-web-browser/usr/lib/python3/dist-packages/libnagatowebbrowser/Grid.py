@@ -1,9 +1,10 @@
+
 import gi
 
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk
-from libnagatowebbrowser.CoreObject import NagatoObject
+from libnagato.Object import NagatoObject
 from libnagatowebbrowser.WebView import NagatoWebView
 from libnagatowebbrowser.util.UniqueId import NagatoUniqueId
 from libnagatowebbrowser.Notebook import NagatoNotebook

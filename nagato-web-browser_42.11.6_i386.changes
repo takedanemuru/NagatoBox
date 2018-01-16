@@ -1,0 +1,29 @@
+Format: 1.8
+Date: Wed, 10 Jan 2018 00:00:00 +0900
+Source: nagato-web-browser
+Binary: nagato-web-browser
+Architecture: source all
+Version: 42.11.6
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
+Changed-By: takeda.nemuru <takeda.nemuru@yandex.com>
+Description:
+ nagato-web-browser - a simple web browser.
+Changes:
+ nagato-web-browser (42.11.6) UNRELEASED; urgency=low
+ .
+   * search from context menu.
+   * snapshot menus
+Checksums-Sha1:
+ a84de428dee95e5e073bb32f1e68d596d1fea95b 598 nagato-web-browser_42.11.6.dsc
+ 2c7857c7737d096e4bc75a72406cfc74ac9459d6 552269 nagato-web-browser_42.11.6.tar.gz
+ 094c5c98d9159c345df134abc23eafdc1625f4c6 539558 nagato-web-browser_42.11.6_all.deb
+Checksums-Sha256:
+ de100567c531b25dc46c4e8a8ea4d79fa8bb28061edcf404972d6cc5c7d76a38 598 nagato-web-browser_42.11.6.dsc
+ 2193c35f466d2c4a7df0349edc58463475f0785739bdf00d708a94568ff5e33e 552269 nagato-web-browser_42.11.6.tar.gz
+ 3ff77af0a5a67af355951cb3f97c263d14e4eeb6cd87fdf89aec2bad55538503 539558 nagato-web-browser_42.11.6_all.deb
+Files:
+ 45be02ba9b6a5ab16e5db4691271aa30 598 python optional nagato-web-browser_42.11.6.dsc
+ 834521018f726100b87508c7b37f2de7 552269 python optional nagato-web-browser_42.11.6.tar.gz
+ 79207a29bdd9300ae10bf45229876fa4 539558 python optional nagato-web-browser_42.11.6_all.deb

@@ -6,6 +6,12 @@ from libnagato.dialog.ui.GtkImage import NagatoGtkImage
 
 class NagatoAboutDialog(Gtk.Dialog):
 
+    @classmethod
+    def call(self, resources):
+        yuki_dialog = NagatoAboutDialog(resources)
+        yuki_dialog.run()
+        yuki_dialog.destroy()
+
     def _set_buttons(self):
         self.add_button("I see", Gtk.ResponseType.OK)
 

@@ -11,7 +11,7 @@ from libnagatoterminal.VteAttributes import NagatoVteAttributes
 from libnagatoterminal.TabLabel import NagatoTabLabel
 from libnagatoterminal.VteOptions import NagatoVteOptions
 from libnagatoterminal.keyboard.Binds import NagatoBinds
-from libnagatoterminal.menu.context.ForVte import NagatoForVte
+from libnagatoterminal.menu.context.ForVte import NagatoContextMenu
 
 
 class NagatoVte(Vte.Terminal, NagatoObject):
@@ -65,12 +65,13 @@ class NagatoVte(Vte.Terminal, NagatoObject):
 
     def __init__(self, parent, is_prime_vte, directory=None):
         self._parent = parent
-        self._tab_label = NagatoTabLabel(parent)
+        self._last_row_logged = -1
+        self._tab_label = NagatoTabLabel(self, parent)
         self._options = NagatoVteOptions(is_prime_vte, directory)
         self._initialize_vte()
         NagatoVteAttributes(self)
         NagatoBinds(self)
-        NagatoForVte(self)
+        NagatoContextMenu(self)
         self._initialize_first_page()
 
     @property

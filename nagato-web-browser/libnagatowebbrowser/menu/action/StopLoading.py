@@ -1,9 +1,15 @@
 
 from gi.repository import Gtk
-from libnagatowebbrowser.menu.action.ActionCore import NagatoActionCore
+from libnagato.menu.Action import NagatoActionCore
 
 
 class NagatoStopLoading(NagatoActionCore):
+
+    def _on_map(self, widget):
+        if not self._enquiry(self._query):
+            self.hide()
+        else:
+            self.show()
 
     def _initialize_variables(self):
         self._title = "Stop Loading"
