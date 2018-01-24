@@ -1,0 +1,45 @@
+/APPNAME
+    APPNAME (entry-point)
+    APPNAME.desktop
+    APPNAME.png
+    APPNAME.1
+    README.md
+    /readme_extra (VOID)
+    /debian
+        changelog
+        compat
+        control
+        copyright
+        Install
+        APPNAME.manpages
+        rules
+        COPYING
+        /source
+            format
+    /libAPPNAME
+        __init__.py
+        HumanoidInterface.py
+        Resources.py
+        MainWIndow.py
+        Grid.py
+        Label.py
+        /eventbox
+            __init__.py
+            EventBox.py
+            ForGrid.py
+        /menu
+            __init__.py
+            /context
+                __init__.py
+                ForLabel.py
+                ForGrid.py
+        /resources
+            __init__.py
+            application.config
+            application.css
+            application.png
+            application.yaml
+            /images
+                __init__.py
+                context-menu.png
+                main-window.png

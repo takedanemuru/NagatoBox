@@ -39,12 +39,12 @@ class NagatoMainWindow(Gtk.Window, NagatoObject):
         self.set_default_size(800, 600)
         self.set_icon(NagatoResources().get_application_icon())
         self.connect("delete-event", self._on_close_window)
-        NagatoEventBox(self)
 
     def __init__(self):
         self._parent = None
         self._on_initialize()
-        self.show_all()
+        self._event_box = NagatoEventBox(self)
         # X11 window cannot get x11id before it's shown.
+        self.show_all()
         self._x11_window = NagatoX11Window(self)
         Gtk.main()

@@ -1,0 +1,23 @@
+Source: APPNAME
+Section: python
+Priority: optional
+Maintainer: AUTHERNAME, <auther.name@email.com>
+Build-Depends:
+ debhelper (>= 9),
+ python3 (>= 3.5)
+Standards-Version: 3.9.2
+X-Python-Version: >= 3.5
+
+
+Package: nagato-terminal
+Architecture: all
+Section: python
+Depends:
+ python3-gi,
+ python3-libnagato,
+ ${misc:Depends},
+ ${python3:Depends}
+Description: short description
+ long description line 1.
+ long description line 2.
+ long description line 3.

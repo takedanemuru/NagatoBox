@@ -26,6 +26,10 @@ GtkNotebook {
     opacity: 0.9;
 }
 
+GtkSearchEntry {
+        border-radius: 0;
+}
+
 GtkMenuItem {
     color: @foreground_color;
     background-color: @background_color;

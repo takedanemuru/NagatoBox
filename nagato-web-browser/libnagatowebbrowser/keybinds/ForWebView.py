@@ -13,7 +13,7 @@ MESSAGES_FOR_ALT = {
 }
 
 MESSAGES_FOR_CTRL = {
-    "f": "YUKI.N > inpage search",
+    "f": "YUKI.N > in page search",
     "n": "YUKI.N > add new tab",
     "p": "YUKI.N > snapshot",
     "u": "YUKI.N > dialog url"

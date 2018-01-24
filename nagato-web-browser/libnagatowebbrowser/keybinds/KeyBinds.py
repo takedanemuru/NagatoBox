@@ -13,7 +13,7 @@ class NagatoKeyBinds(NagatoObject):
                 break
 
     def _on_key_press(self, widget, event, user_data=None):
-        if self._time_delta_lock.check_diff(0.1):
+        if self._time_delta_lock.check_diff(0.2):
             self._dispatch(event.state, Gdk.keyval_name(event.keyval))
 
     def _add(self, mask, binds, values):
