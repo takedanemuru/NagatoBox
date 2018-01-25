@@ -2,7 +2,7 @@ GtkWindow {
     background-color: #DEE6B7;
     background-repeat: repeat;
     background-position: center;
-    background-image: url("images/main-window.png");
+    background-image: url("images/main-window.jpg");
 }
 
 GtkNotebook {
@@ -39,7 +39,14 @@ GtkMenuItem:insensitive {
 
 GtkMenu {
     background-position: top;
-    background-image: url("images/context-menu.png");
+    background-image: url("images/context-menu.jpg");
+}
+
+.dummy-label {
+    opacity:0.7;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: white;
 }
 
 .dialog-label {
@@ -54,5 +61,5 @@ GtkMenu {
     background-color: MediumSlateBlue;
     font-weight: bold;
     font-size: 11px;
-    opacity : 0.6;
+    opacity : 0.8;
 }
