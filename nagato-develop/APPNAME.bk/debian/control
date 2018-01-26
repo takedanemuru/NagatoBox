@@ -1,7 +1,7 @@
 Source: APPNAME
 Section: python
 Priority: optional
-Maintainer: AUTHOR_NAME, AUTHOR_EMAIL
+Maintainer: AUTHERNAME, <auther.name@email.com>
 Build-Depends:
  debhelper (>= 9),
  python3 (>= 3.5)
@@ -9,7 +9,7 @@ Standards-Version: 3.9.2
 X-Python-Version: >= 3.5
 
 
-Package: APPNAME
+Package: nagato-terminal
 Architecture: all
 Section: python
 Depends:
@@ -17,7 +17,7 @@ Depends:
  python3-libnagato,
  ${misc:Depends},
  ${python3:Depends}
-Description: SHORT_DESCRIPTION
- LONG_DESCRIPTION
- LONG_DESCRIPTION
- LONG_DESCRIPTION
+Description: short description
+ long description line 1.
+ long description line 2.
+ long description line 3.

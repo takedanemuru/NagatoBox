@@ -1,0 +1,34 @@
+digraph {
+
+    EntryPoint -> HumanoidInterface
+    
+    EntryPoint [
+        shape = "doublecircle"
+        style = "filled"
+        color = "CornflowerBlue"
+        fontcolor = "White"
+    ]
+    
+    HumanoidInterface -> Resources
+    HumanoidInterface -> MainWindow
+
+    MainWindow -> EventBox_ForGrid
+    
+    EventBox_ForGrid -> Grid
+    EventBox_ForGrid -> ContextMenu_ForGrid
+
+    Grid -> EventBox_ForLabel
+    
+    EventBox_ForLabel -> DummyLabel
+    EventBox_ForLabel -> ContextMenu_ForLabel
+
+    WarningQuit [
+        shape = "rectangle"
+        style = "filled"
+        fillcolor = "DeepPink"
+        fontcolor = "White"
+    ]
+
+    WarningQuit -> DialogLabel_ForWarningQuit
+
+}
