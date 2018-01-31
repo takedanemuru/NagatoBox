@@ -13,6 +13,12 @@ class NagatoObject(object):
         else:
             return yuki_method()
 
+    def _inform_itself(self, class_name):
+        if class_name == __class__.__name__:
+            return self
+        else:
+            return self._enquiry("YUKI.N > itself", class_name)
+
     def _enquiry(self, message, user_data=None):
         if self._parent is not None:
             message = self._decode(message, "_inform_")

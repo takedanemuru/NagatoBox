@@ -4,13 +4,13 @@
     APPNAME.png
     APPNAME.1
     README.md
-    /readme_extra (VOID)
+    /readme_extra (Reserved Diorectory for README.md)
     /debian
         changelog
         compat
         control
         copyright
-        Install
+        install
         APPNAME.manpages
         rules
         COPYING
@@ -20,7 +20,7 @@
         __init__.py
         HumanoidInterface.py
         Resources.py
-        MainWIndow.py
+        MainWindow.py
         Grid.py
         Label.py
         /eventbox

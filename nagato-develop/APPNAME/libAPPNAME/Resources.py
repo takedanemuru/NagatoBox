@@ -26,18 +26,18 @@ class NagatoResources(object):
         return os.path.join(os.environ["HOME"], yuki_config_path)
 
     def get_config_file(self):
+        yuki_source_path = self._get_path_from_prefix(".config")
         yuki_target_path = self._get_target_path_for_config_file()
-        FileManager.ensure(
-            self._get_path_from_prefix(".config"),
-            yuki_target_path
-            )
+        FileManager.ensure(yuki_source_path, yuki_target_path)
         return yuki_target_path
 
     def get_application_icon(self):
         yuki_path = self._get_path_from_prefix(".png")
         return GdkPixbuf.Pixbuf.new_from_file(yuki_path)
 
+    def set_css_to_application(self):
+        CssProvider.set_to_application(self._get_path_from_prefix(".css"))
+
     def __init__(self):
         self._directory = os.path.join(os.path.dirname(__file__), "resources")
         self._data = yaml.load(open(self._get_path_from_prefix(".yaml"), "r"))
-        CssProvider.set_to_application(self._get_path_from_prefix(".css"))
