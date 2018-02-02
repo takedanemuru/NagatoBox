@@ -1,15 +1,11 @@
 
+from gi.repository import Gdk
 from libnagatoterminal.menu.context.ContextCore import NagatoContextCore
 
-class NagatoForChrome(NagatoContextCore):
-
-    def _is_mouse_on_chrome(self):
-        yuki_x, yuki_y = self._parent.get_pointer()
-        yuki_w, yuki_h = self._parent.get_size()
-        if (yuki_w-16) > yuki_x > 16 and (yuki_h-16) > yuki_y > 16:
-            return False
-        return True
+class NagatoContextMenu(NagatoContextCore):
 
     def _on_button_press(self, widget, event):
-        if self._is_mouse_on_chrome() and event.button == 3:
+        yuki_gdk_window, yuki_x, yuki_y = Gdk.Window.at_pointer()
+        # widgets have any child, but containers not.
+        if len(yuki_gdk_window.get_children()) > 0:
             self._on_right_click()

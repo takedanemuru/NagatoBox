@@ -15,7 +15,7 @@ class NagatoGrid(NagatoFlexGrid):
 
     def _on_initialize(self):
         NagatoNotebook(self, NagatoRect(0, 0), True)
-    
+
     def get_current_processes(self):
         yuki_processes = []
         for yuki_child in self.get_children():

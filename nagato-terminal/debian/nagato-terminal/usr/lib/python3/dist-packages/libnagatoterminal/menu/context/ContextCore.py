@@ -20,14 +20,18 @@ class NagatoContextCore(Gtk.Menu, NagatoObject):
         if event.button == 3:
             self._on_right_click()
 
+    def _connect_gtk_callbacks(self):
+        self._parent.connect("button-press-event", self._on_button_press)
+
     def _initialize_children(self):
+        # This method should be overridden.
         NagatoItem(self, "About", "YUKI.N > about")
         NagatoItem(self, "Quit", "YUKI.N > quit")
 
     def __init__(self, parent):
         self._parent = parent
         self._parent.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
-        self._parent.connect("button-press-event", self._on_button_press)
+        self._connect_gtk_callbacks()
         Gtk.Menu.__init__(self)
         self._initialize_children()
         self.show_all()

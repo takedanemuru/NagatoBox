@@ -1,6 +1,6 @@
 
 from gi.repository import WebKit2
-from libnagatowebbrowser import DialogFile
+from libnagatowebbrowser.dialog import File as Dialog
 
 
 class NagatoSnapshot(object):
@@ -19,4 +19,4 @@ class NagatoSnapshot(object):
     def _on_get_snapshot_finished(self, webview, result, user_data=None):
         yuki_cairo_surface = self.get_snapshot_finish(result)
         if yuki_cairo_surface is not None:
-            DialogFile.save_image_from_cairo_surface(yuki_cairo_surface)
+            Dialog.save_image_from_cairo_surface(yuki_cairo_surface)

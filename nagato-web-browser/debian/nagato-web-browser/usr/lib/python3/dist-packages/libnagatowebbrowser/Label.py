@@ -2,7 +2,7 @@
 from gi.repository import Gtk
 from gi.repository import Pango
 from libnagato.Object import NagatoObject
-from libnagatowebbrowser.menu.context.ForTabLabel import NagatoForTabLabel
+from libnagatowebbrowser.menu.context.ForTabLabel import NagatoContextMenu
 
 class NagatoLabel(NagatoObject, Gtk.EventBox):
 
@@ -18,4 +18,4 @@ class NagatoLabel(NagatoObject, Gtk.EventBox):
         self._label.set_ellipsize(mode)
         self._label.set_padding(0, 0)
         self.add(self._label)
-        NagatoForTabLabel(self)
+        NagatoContextMenu(self)

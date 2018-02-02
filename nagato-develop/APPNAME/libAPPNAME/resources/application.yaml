@@ -1,12 +1,12 @@
 name: APPNAME
 package-name: APPNAME
-id: id.of.application
+id: APP_ID
 version: 0.0.1
-check-unique: true
+check-unique: false
 short-description: SHORT_DESCRIPTION
 long-description: |
     LONG_DESCRIPTION.
-authers: |
+author(s): |
     copyright (c) COPYRIGHT_YEAR AUTHOR_NAME
 web-site: |
-    https://somewhere.foo.bar/baz
+    APP_WEBSITE

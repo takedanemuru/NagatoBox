@@ -19,12 +19,14 @@ DIRECTORIES = [
     "readme_extra"
     ]
 
-APPNAME = "nagato-gif-viewer"
+APPNAME = "nagato-powered"
 LIBNAME = "lib"+APPNAME.replace("-", "")
-AUTHER_NAME = "takeda.nemuru"
-AUTHER_EMAIL = "<takeda.nemuru@yandex.com>"
+APP_ID = "io.github.takedanemuru.{}".format(APPNAME)
+APP_WEBSITE = "https://takedanemuru.github.io"
+AUTHOR_NAME = "takeda.nemuru"
+AUTHOR_EMAIL = "<takeda.nemuru@yandex.com>"
 WORKING_DIRECTORY = os.path.join(os.environ["HOME"], "working_dir")
-SHORT_DESCRIPTION = "gif viewer"
+SHORT_DESCRIPTION = "powered by nagato"
 COPYRIGHT_YEAR = "2018"
 COPYRIGHT_MONTH = "January"
 
@@ -38,7 +40,8 @@ class NagatoCreate(object):
             yuki_path.mkdir(parents=True)
 
     def _get_target_path(self, source_path):
-        yuki_target = source_path.replace("libAPPNAME", LIBNAME)
+        yuki_target = source_path.replace("APP_ID", APP_ID)
+        yuki_target = yuki_target.replace("libAPPNAME", LIBNAME)
         yuki_target = yuki_target.replace(
             self._template_directory,
             self._target_directory)
@@ -49,8 +52,10 @@ class NagatoCreate(object):
         yuki_text = Path(source_path).read_text()
         yuki_text = yuki_text.replace("libAPPNAME", LIBNAME)
         yuki_text = yuki_text.replace("APPNAME", APPNAME)
-        yuki_text = yuki_text.replace("AUTHOR_NAME", AUTHER_NAME)
-        yuki_text = yuki_text.replace("AUTHOR_EMAIL", AUTHER_EMAIL)
+        yuki_text = yuki_text.replace("APP_ID", APP_ID)
+        yuki_text = yuki_text.replace("APP_WEBSITE", APP_WEBSITE)
+        yuki_text = yuki_text.replace("AUTHOR_NAME", AUTHOR_NAME)
+        yuki_text = yuki_text.replace("AUTHOR_EMAIL", AUTHOR_EMAIL)
         yuki_text = yuki_text.replace("COPYRIGHT_YEAR", COPYRIGHT_YEAR)
         yuki_text = yuki_text.replace("COPYRIGHT_MONTH", COPYRIGHT_MONTH)
         yuki_text = yuki_text.replace("SHORT_DESCRIPTION", SHORT_DESCRIPTION)

@@ -3,13 +3,12 @@ import gi
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
-from gi.repository import Gdk
 from libnagato.Object import NagatoObject
 from libnagato.gdk.X11Window import NagatoX11Window
 from libnagato.dialog.About import NagatoAboutDialog
 from libnagatowebbrowser.Resources import NagatoResources
 from libnagatowebbrowser.Grid import NagatoGrid
-
+from libnagatowebbrowser.EventBoxForGrid import NagatoEventBox
 
 class NagatoMainWindow(Gtk.Window, NagatoObject):
 
@@ -21,9 +20,7 @@ class NagatoMainWindow(Gtk.Window, NagatoObject):
         self._x11_window.toggle_fullscreen()
 
     def _yuki_n_about(self):
-        yuki_dialog = NagatoAboutDialog(NagatoResources())
-        yuki_dialog.run()
-        yuki_dialog.destroy()
+        NagatoAboutDialog.call(NagatoResources())
 
     def _yuki_n_quit(self):
         Gtk.main_quit()
@@ -40,13 +37,14 @@ class NagatoMainWindow(Gtk.Window, NagatoObject):
     def _on_initialize(self):
         Gtk.Window.__init__(self)
         self.set_default_size(800, 600)
+        self.set_icon(NagatoResources().get_application_icon())
         self.connect("delete-event", self._on_close_window)
-        NagatoGrid(self)
 
     def __init__(self):
         self._parent = None
         self._on_initialize()
-        self.show_all()
+        self._event_box = NagatoEventBox(self)
         # X11 window cannot get x11id before it's shown.
+        self.show_all()
         self._x11_window = NagatoX11Window(self)
         Gtk.main()

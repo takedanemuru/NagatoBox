@@ -1,12 +1,12 @@
 
-from libnagatowebbrowser import DialogFile
+from libnagatowebbrowser.dialog import File as Dialog
 from libnagato.menu.Action import NagatoActionCore
 
 
 class NagatoSaveImage(NagatoActionCore):
 
     def _on_activate(self, widget):
-        DialogFile.save_image_from_uri(self._last_uri)
+        Dialog.save_image_from_uri(self._last_uri)
 
     def _on_map(self, widget):
         yuki_hit_test_result = self._enquiry(self._query)

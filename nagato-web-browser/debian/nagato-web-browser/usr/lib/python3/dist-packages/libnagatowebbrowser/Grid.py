@@ -1,8 +1,4 @@
 
-import gi
-
-gi.require_version('Gtk', '3.0')
-
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagatowebbrowser.WebView import NagatoWebView
@@ -23,7 +19,7 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
 
     def __init__(self, parent):
         self._id = NagatoUniqueId()
-        self._initialize_grid()
         self._parent = parent
+        self._initialize_grid()
         self._parent.add(self)
         self._notebook = NagatoNotebook(self)

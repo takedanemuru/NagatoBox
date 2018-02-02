@@ -18,7 +18,7 @@ class NagatoLabelAbout(Gtk.Label):
             self._resources["name"],
             self._resources["version"],
             self._resources["long-description"],
-            self._resources["authers"]
+            self._resources["authors"]
             )
 
     def __init__(self, content_area, resources):
