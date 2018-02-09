@@ -1,0 +1,21 @@
+Source: nagato-develop
+Section: python
+Priority: optional
+Maintainer: takeda.nemuru, <takeda.nemuru@yandex.com>
+Build-Depends:
+ debhelper (>= 9),
+ python3 (>= 3.5)
+Standards-Version: 3.9.2
+X-Python-Version: >= 3.5
+
+
+Package: nagato-develop
+Architecture: all
+Section: python
+Depends:
+ python3-gi,
+ python3-libnagato,
+ ${misc:Depends},
+ ${python3:Depends}
+Description: powered by nagato
+ LONG_DESCRIPTION

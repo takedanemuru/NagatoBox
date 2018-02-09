@@ -3,7 +3,6 @@ import gi
 
 gi.require_version('WebKit2','4.0')
 
-import threading
 from gi.repository import GLib
 from gi.repository import WebKit2
 from libnagato.Object import NagatoObject
@@ -32,9 +31,6 @@ class NagatoWebView(WebKit2.WebView, NagatoObject):
     def _inform_can_stop_loading(self):
         return (self.get_estimated_load_progress() != 1)
 
-    def _target_method(self):
-        GLib.idle_add(self.load_uri, self._uri, priority=GLib.PRIORITY_LOW)
-
     def _on_initialize(self):
         pass
 
@@ -43,9 +39,7 @@ class NagatoWebView(WebKit2.WebView, NagatoObject):
         # Do something in self._on_initialize()
         self._parent = parent
         self._uri = uri
-        self._thread = threading.Thread(target=self._target_method)
-        self._thread.daemon = True
         WebKit2.WebView.__init__(self)
+        GLib.idle_add(self.load_uri, self._uri)
         self._on_initialize()
-        self._thread.start()
         self.show()
