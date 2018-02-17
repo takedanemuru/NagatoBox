@@ -5,6 +5,9 @@ from libnagatodevelop.widget.Button import NagatoButton
 
 class NagatoButtons(NagatoBox):
 
+    def _get_sensitive(self):
+        pass
+
     def _set_left_button(self):
         pass
 
@@ -12,10 +15,10 @@ class NagatoButtons(NagatoBox):
         pass
 
     def _on_initialize(self, user_data=None):
-        self._config = self._raise("YUKI.N > model")
+        self._model = self._enquiry("YUKI.N > model")
         self._set_left_button()
         self._right_button = self._get_right_button()
+        self._right_button.set_sensitive(False)
 
     def check_sensitive(self):
-        pass
-
+        self._right_button.set_sensitive(self._get_sensitive())

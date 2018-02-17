@@ -4,12 +4,10 @@ from libnagatodevelop.widget.Button import NagatoButton
 
 CSS = "button-test"
 KEYS = {
-    "app-directory",
-    "app-name",
-    "app-icon",
-    "app-id",
-    "app-uri"
+    "app-short-description",
+    "app-long-description",
 }
+
 
 class NagatoButtons(TFEI):
 
@@ -20,7 +18,7 @@ class NagatoButtons(TFEI):
         return True
 
     def _set_left_button(self):
-        NagatoButton(self, "Back", "YUKI.N > go to author", CSS)
+        NagatoButton(self, "Back", "YUKI.N > go to application", CSS)
 
     def _get_right_button(self):
-        return NagatoButton(self, "Next", "YUKI.N > go to description", CSS)
+        return NagatoButton(self, "Create","YUKI.N > create", CSS)

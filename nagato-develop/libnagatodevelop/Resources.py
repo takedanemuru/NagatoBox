@@ -35,6 +35,9 @@ class NagatoResources(object):
         yuki_path = self._get_path_from_prefix(".png")
         return GdkPixbuf.Pixbuf.new_from_file(yuki_path)
 
+    def get_prototype_path(self):
+        return os.path.join(self._directory, "PROTOTYPE")
+
     def set_css_to_application(self):
         CssProvider.set_to_application(self._get_path_from_prefix(".css"))
 

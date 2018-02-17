@@ -18,3 +18,6 @@ class NagatoEntry(NagatoWithLabel):
         self._entry.connect("changed", self._on_changed)
         self._addtional_setups()
         self.pack_end(self._entry, False, True, 8)
+
+    def set_text(self, text):
+        self._entry.set_text(text)

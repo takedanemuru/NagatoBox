@@ -1,5 +1,7 @@
 
 import os
+from libnagato.Object import NagatoObject
+from libnagatodevelop.Prototype import NagatoPrototype
 
 APPLICATION_DATA = {
     "user-name": "",
@@ -12,11 +14,12 @@ APPLICATION_DATA = {
     "app-id": "",
     "app-uri": "",
     "app-short-description": "",
-    "app-long-description": ""
+    "app-long-description": "",
+    "lib-name": ""
 }
 
 
-class NagatoApplicationModel(object):
+class NagatoApplicationModel(NagatoObject):
 
     def _set_author_value(self, key, config_key, env_key):
         yuki_value = self._config["author"][config_key]
@@ -30,8 +33,15 @@ class NagatoApplicationModel(object):
             yuki_directory = os.getenv("HOME")
         APPLICATION_DATA["app-directory"] = yuki_directory
 
-    def create(self):
+    def _save_configs(self):
         pass
+
+    def create(self):
+        if "" in APPLICATION_DATA:
+            return
+        yuki_prototype = NagatoPrototype(self)
+        yuki_prototype.create(APPLICATION_DATA)
+        self._save_configs()
 
     def change_data(self, key, value):
         APPLICATION_DATA[key] = value
@@ -41,8 +51,12 @@ class NagatoApplicationModel(object):
 
     def __setitem__(self, key, value):
         APPLICATION_DATA[key] = value
+        if key == "app-name":
+            yuki_safename = APPLICATION_DATA["app-name"].replace("-","")
+            APPLICATION_DATA["lib-name"] = "lib{}".format(yuki_safename)            
 
-    def __init__(self, config):
+    def __init__(self, parent, config):
+        self._parent = parent
         self._config = config
         self._set_author_value("user-name","name", "USER")
         self._set_author_value("user-email","email", "EMAIL")

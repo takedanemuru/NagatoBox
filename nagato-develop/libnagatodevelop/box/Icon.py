@@ -3,6 +3,8 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from libnagato.util import CssProvider
 from libnagatodevelop.box.WithLabel import NagatoWithLabel
+from libnagatodevelop.dialog.IconChooser import NagatoIconChooser
+from libnagatodevelop.IconImage import NagatoIconImage
 
 
 class NagatoIcon(NagatoWithLabel):
@@ -10,32 +12,19 @@ class NagatoIcon(NagatoWithLabel):
     def _get_label_text(self):
         return "Application Icon"
 
+    def _get_key(self):
+        return "app-icon"
+
     def _on_set_css(self):
         CssProvider.set_to_widget(self, "shade-half")
 
-    def _get_buttons(self):
-        yuki_buttons = (
-            "Cancel",
-            Gtk.ResponseType.CANCEL,
-            "Select",
-            Gtk.ResponseType.OK
-            )
-        return yuki_buttons
-
     def _on_button_press(self, widget, event):
-        yuki_dialog = Gtk.FileChooserDialog(
-            "Select Icon",
-            Gtk.Window(title="Select Icon"),
-            Gtk.FileChooserAction.OPEN,
-            self._get_buttons()
-            )
-        yuki_file_filter = Gtk.FileFilter()
-        yuki_file_filter.set_name("images only")
-        yuki_file_filter.add_mime_type("image/*")
-        yuki_dialog.add_filter(yuki_file_filter)
-        yuki_response = yuki_dialog.run()
-        yuki_dialog.destroy()
-        print(yuki_response)
+        yuki_path = NagatoIconChooser.call()
+        if yuki_path is None:
+            return
+        yuki_icon = NagatoIconImage(yuki_path)
+        self._image.set_from_pixbuf(yuki_icon.get_scaled(256))
+        self._model[self._get_key()] = yuki_path
 
     def _set_button_press_event(self):
         self._parent.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)

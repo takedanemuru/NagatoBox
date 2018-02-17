@@ -16,6 +16,9 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
     def _yuki_n_quit(self):
         self.close()
 
+    def _yuki_n_create(self):
+        self._model.create()
+
     def _inform_model(self):
         return self._model
 
@@ -44,7 +47,7 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
         self._args = args
         self._resources = resources
         self._config = NagatoConfig(self._resources.get_config_file())
-        self._model = NagatoApplicationModel(self._config)
+        self._model = NagatoApplicationModel(self, self._config)
         self._initialize_window()
         self._on_initialize()
         self.show_all()

@@ -4,6 +4,7 @@ from libnagato.Object import NagatoObject
 from libnagatodevelop.box.Box import NagatoBox
 from libnagatodevelop.group.Author import NagatoAuthor
 from libnagatodevelop.group.Application import NagatoApplication
+from libnagatodevelop.group.Description import NagatoDescription
 
 GRID_SPACING = 16
 
@@ -16,12 +17,15 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
         self.attach(group, 0, 0, 1, 1)
         self.show_all()
 
-    def _yuki_n_next(self):
+    def _yuki_n_go_to_application(self):
         self._switch(NagatoApplication(self))
  
-    def _yuki_n_back(self):
+    def _yuki_n_go_to_author(self):
         self._switch(NagatoAuthor(self))
  
+    def _yuki_n_go_to_description(self):
+        self._switch(NagatoDescription(self))
+
     def _initialize_grid(self):
         Gtk.Grid.__init__(self)
         self.set_border_width(GRID_SPACING)

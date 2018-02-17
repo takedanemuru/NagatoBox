@@ -9,6 +9,12 @@ from libnagatodevelop.box.buttons.Author import NagatoButtons
 
 class NagatoAuthor(NagatoGroup):
 
+    def _on_entry_changed(self, key):
+        if key == "user-uri":
+            yuki_model = self._enquiry("YUKI.N > model")
+            yuki_model["app-uri"] = yuki_model["user-uri"]
+        self._action_buttons.check_sensitive()
+
     def _set_header_label(self):
         self._label = "AUTHOR"
 

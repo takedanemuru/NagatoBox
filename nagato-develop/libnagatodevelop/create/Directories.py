@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 
 DIRECTORIES = [
-    "", 
     "debian",
     "debian/source",
     "{}",
@@ -19,11 +18,12 @@ DIRECTORIES = [
 
 class NagatoDirectories(object):
 
-    def initialize(self, library_name, project_directory):
-        for yuki_directory in DIRECTORIES:
-            yuki_directory = yuki_directory.format(library_name)
-            yuki_path = Path(os.path.join(project_directory, yuki_directory))
-            yuki_path.mkdir(parents=True)
+    def _get_path_object(self, sub_directory):
+        return Path(os.path.join(self._data["app-directory"], sub_directory))
 
-    def __init__(self):
-        pass
+    def __init__(self, data):
+        self._data = data
+        for yuki_directory in DIRECTORIES:
+            yuki_directory = yuki_directory.format(self._data["lib-name"])
+            yuki_path = self._get_path_object(yuki_directory)
+            yuki_path.mkdir(parents=True)
