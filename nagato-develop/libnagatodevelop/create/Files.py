@@ -3,7 +3,6 @@ import os
 import shutil
 import datetime
 from pathlib import Path
-from libnagatodevelop.IconImage import NagatoIconImage
 
 
 class NagatoFiles(object):
@@ -51,21 +50,7 @@ class NagatoFiles(object):
                 continue
             self._ensure_file(str(yuki_path))
 
-    def _ensure_icon(self):
-        yuki_icon = NagatoIconImage(self._data["app-icon"])
-        yuki_path_for_entry = os.path.join(
-            self._data["app-directory"],
-            "{}.png".format(self._data["app-id"])
-            )
-        yuki_path_for_resources = os.path.join(
-            self._data["app-directory"],
-            "{}/resources/application.png".format(self._data["lib-name"])
-            )
-        yuki_icon.save_to(yuki_path_for_entry)
-        yuki_icon.save_to(yuki_path_for_resources)
-
     def __init__(self, data, prototype_directory):
         self._data = data
         self._prototype_directory = prototype_directory
         self._ensure_files()
-        self._ensure_icon()

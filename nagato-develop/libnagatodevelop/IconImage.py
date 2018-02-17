@@ -7,7 +7,6 @@ INTERP_TYPE = GdkPixbuf.InterpType.NEAREST
 class NagatoIconImage(object):
 
     def save_to(self, path):
-        print(path)
         return self._pixbuf.savev(path, "png", [None], [])
 
     def get_scaled(self, maximum_size):

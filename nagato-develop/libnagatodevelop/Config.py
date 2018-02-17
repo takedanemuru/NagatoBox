@@ -12,6 +12,15 @@ class NagatoConfig(configparser.ConfigParser):
         with open(self._path_to_config, "w") as yuki_file:
             self.write(yuki_file)
 
+    def get_value(self, key, sub_key):
+        return self[key][sub_key]
+
+    def set_value(self, key, sub_key, value):
+        self[key][sub_key] = value
+
+    def save_to_file(self):
+        self._save()
+
     def save_window_position(self, gtk_window):
         yuki_left, yuki_top = gtk_window.get_position()
         yuki_width, yuki_height = gtk_window.get_size()

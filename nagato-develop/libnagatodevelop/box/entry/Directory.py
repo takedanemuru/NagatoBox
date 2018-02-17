@@ -17,6 +17,7 @@ class NagatoDirectory(NagatoEntry):
         return "app-directory"
 
     def _on_press_icon(self, entry, icon_position, event):
+        yuki_current_folder = self._model[self._get_key()]
         yuki_directory = NagatoDirectoryChooser.call()
         if yuki_directory is not None:
             yuki_text = yuki_directory.replace(os.getenv("HOME"), "~")

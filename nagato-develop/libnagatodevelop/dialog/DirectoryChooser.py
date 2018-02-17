@@ -5,8 +5,10 @@ from gi.repository import Gtk
 class NagatoDirectoryChooser(Gtk.FileChooserDialog):
 
     @classmethod
-    def call(self):
+    def call(self, current_folder=None):
         yuki_dialog = NagatoDirectoryChooser()
+        if current_folder is not None:
+            yuki_dialog.set_current_folder(current_folder)
         yuki_response = yuki_dialog.run()
         yuki_path = yuki_dialog.get_filename()
         yuki_dialog.destroy()
