@@ -1,9 +1,12 @@
 ' Gambas module file
 
-Private Const WeatherApi As String = "http://api.met.no/weatherapi/locationforecast/1.9/?lat=&1;lon=&2"
+Private Const WeatherApi As String = "https://api.met.no/weatherapi/locationforecast/1.9/"
+Private Const WeatherArgs As String = "?lat=&1&lon=&2"
 
 Public Sub _get(argLatitude As Float, argLongitude As Float) As String
     
-    Return Subst$(WeatherApi, argLatitude, argLongitude)
+    Dim yukiApi As String = Subst$(WeatherApi & WeatherArgs, argLatitude, argLongitude)
+    
+    Return yukiApi
     
 End
