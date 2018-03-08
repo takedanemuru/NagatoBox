@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoMenuItem
-
-Public Sub _OnGetText() As String
-    
-    Return "Not Found"
-    
-End
