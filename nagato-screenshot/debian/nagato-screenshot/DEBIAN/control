@@ -1,0 +1,10 @@
+Package: nagato-screenshot
+Version: 42.11.1
+Architecture: all
+Maintainer: takedanemuru, takeda.nemuru@yandex.com
+Installed-Size: 264
+Depends: python3-gi, python3-libnagato, python3:any (>= 3.3.2-2~)
+Section: python
+Priority: optional
+Description: take a screenshot
+ screenshot taking tool for NagatoBox
