@@ -27,8 +27,8 @@ class NagatoPIDs(object):
                 yuki_process["ppid"] = int(yuki_data[3])
                 yuki_process["name"] = yuki_data[1]
                 yuki_process["usage"] = yuki_usage
-                yuki_process["vsize"] = float(yuki_data[22])/1024/1024
-                yuki_process["rss"] = float(yuki_data[23])/256
+                yuki_process["vsize"] = float(yuki_data[22])
+                yuki_process["rss"] = float(yuki_data[23])
                 self._processes.append(yuki_process)
         except FileNotFoundError:
             return

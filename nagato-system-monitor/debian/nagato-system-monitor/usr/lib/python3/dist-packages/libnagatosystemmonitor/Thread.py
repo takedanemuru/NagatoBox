@@ -5,7 +5,7 @@ from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagatosystemmonitor.observer.Facade import NagatoFacade
 
-INTERVAL = 2
+INTERVAL = 4
 
 
 class NagatoThread(NagatoObject):
