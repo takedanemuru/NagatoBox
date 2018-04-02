@@ -1,7 +1,0 @@
-' Gambas module file
-
-Public Sub _call(argColor As Integer, argOpacity As Float) As Integer ' argOpacity must be 0 to 1
-    
-    Return argColor + Color.Transparent * CInt(256 * argOpacity)
-    
-End

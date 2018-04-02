@@ -5,7 +5,7 @@ from libnagato.Object import NagatoObject
 from libnagato.util import CssProvider
 
 
-class NagatoDummyLabel(Gtk.Label,NagatoObject):
+class NagatoDummyLabel(Gtk.Label, NagatoObject):
 
     def hello_world(self):
         yuki_real_name = GLib.get_real_name()
