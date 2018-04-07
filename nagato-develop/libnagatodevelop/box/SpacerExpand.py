@@ -12,4 +12,3 @@ class NagatoSpacerExpand(NagatoBox):
 
     def _on_set_css(self):
         self.set_vexpand(True)
-

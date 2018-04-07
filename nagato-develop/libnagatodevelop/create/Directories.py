@@ -16,6 +16,7 @@ DIRECTORIES = [
     "readme_extra"
     ]
 
+
 class NagatoDirectories(object):
 
     def _get_path_object(self, sub_directory):

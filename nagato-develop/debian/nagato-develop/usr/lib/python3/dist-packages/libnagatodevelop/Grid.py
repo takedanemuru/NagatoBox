@@ -1,7 +1,6 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagatodevelop.box.Box import NagatoBox
 from libnagatodevelop.group.Author import NagatoAuthor
 from libnagatodevelop.group.Application import NagatoApplication
 from libnagatodevelop.group.Description import NagatoDescription
@@ -19,10 +18,10 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
 
     def _yuki_n_go_to_application(self):
         self._switch(NagatoApplication(self))
- 
+
     def _yuki_n_go_to_author(self):
         self._switch(NagatoAuthor(self))
- 
+
     def _yuki_n_go_to_description(self):
         self._switch(NagatoDescription(self))
 

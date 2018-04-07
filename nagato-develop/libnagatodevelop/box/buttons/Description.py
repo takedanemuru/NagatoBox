@@ -21,4 +21,4 @@ class NagatoButtons(TFEI):
         NagatoButton(self, "Back", "YUKI.N > go to application", CSS)
 
     def _get_right_button(self):
-        return NagatoButton(self, "Create","YUKI.N > create", CSS)
+        return NagatoButton(self, "Create", "YUKI.N > create", CSS)

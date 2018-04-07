@@ -1,6 +1,5 @@
 
 from gi.repository import Gtk
-from libnagato.util import CssProvider
 from libnagatodevelop.box.DescriptionLabel import NagatoDescriptionLabel
 from libnagatodevelop.group.Group import NagatoGroup
 
@@ -30,7 +29,7 @@ class NagatoLongDescription(NagatoGroup):
         self._scrolled_window.add(self._text_view)
         self.pack_start(NagatoDescriptionLabel(self, LONG), False, False, 0)
         self.pack_start(self._scrolled_window, True, True, 0)
-        
+
     def _on_initialize(self):
         self._model = self._enquiry("YUKI.N > model")
         self._set_contents()

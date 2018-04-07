@@ -40,4 +40,4 @@ class NagatoGroup(NagatoObject, Gtk.Box):
     def __init__(self, parent):
         self._parent = parent
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL)
-        self._on_initialize()        
+        self._on_initialize()

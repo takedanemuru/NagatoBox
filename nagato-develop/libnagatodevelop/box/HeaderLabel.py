@@ -1,7 +1,6 @@
 
 from gi.repository import Gtk
 from libnagatodevelop.box.Box import NagatoBox
-from libnagato.util import CssProvider
 
 
 class NagatoHeaderLabel(NagatoBox):

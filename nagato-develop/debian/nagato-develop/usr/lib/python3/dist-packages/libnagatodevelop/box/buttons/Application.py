@@ -11,6 +11,7 @@ KEYS = {
     "app-uri"
 }
 
+
 class NagatoButtons(TFEI):
 
     def _get_sensitive(self):

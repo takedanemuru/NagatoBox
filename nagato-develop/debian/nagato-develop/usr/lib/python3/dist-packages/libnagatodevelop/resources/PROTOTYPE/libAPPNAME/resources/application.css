@@ -10,9 +10,7 @@ GtkNotebook {
 }
 
 GtkButton {
-    border-style: none;
-    border-radius: 0;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 GtkMenuItem {
@@ -40,6 +38,14 @@ GtkMenuItem:insensitive {
 GtkMenu {
     background-position: top;
     background-image: url("images/context-menu.png");
+}
+
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0.5em;
+    font-style: italic;
 }
 
 .dummy-label {

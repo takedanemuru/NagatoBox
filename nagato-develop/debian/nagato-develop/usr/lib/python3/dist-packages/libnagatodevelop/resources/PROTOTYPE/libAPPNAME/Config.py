@@ -1,9 +1,6 @@
 
-import os
-import shutil
 import configparser
 from gi.repository import Gtk
-from libAPPNAME.Resources import NagatoResources
 
 
 class NagatoConfig(configparser.ConfigParser):

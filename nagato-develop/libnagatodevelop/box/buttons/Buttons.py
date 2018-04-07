@@ -1,6 +1,5 @@
 
 from libnagatodevelop.box.Box import NagatoBox
-from libnagatodevelop.widget.Button import NagatoButton
 
 
 class NagatoButtons(NagatoBox):

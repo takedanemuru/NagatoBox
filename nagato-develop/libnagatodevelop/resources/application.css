@@ -10,9 +10,7 @@ GtkNotebook {
 }
 
 GtkButton {
-    border-style: none;
-    border-radius: 0;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 GtkMenuItem {
@@ -88,7 +86,7 @@ GtkTextView {
     background-color: #FF007F;
     font-weight: bold;
     font-size: 1.2em;
-    opacity : 0.7;
+    opacity : 0.8;
 }
 
 .dialog-label-about {

@@ -9,4 +9,3 @@ class NagatoApplicationName(NagatoEntry):
 
     def _get_key(self):
         return "app-name"
-

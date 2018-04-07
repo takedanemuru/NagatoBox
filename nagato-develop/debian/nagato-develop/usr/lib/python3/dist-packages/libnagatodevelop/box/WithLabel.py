@@ -16,7 +16,7 @@ class NagatoWithLabel(NagatoBox):
         yuki_label.set_text(self._get_label_text())
         yuki_label.set_xalign(0)
         self.pack_start(yuki_label, False, True, 32)
- 
+
     def _set_content(self):
         pass
 

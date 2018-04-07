@@ -1,5 +1,4 @@
 
-from gi.repository import Gtk
 from libnagatodevelop.group.Group import NagatoGroup
 from libnagatodevelop.box.DescriptionLabel import NagatoDescriptionLabel
 from libnagatodevelop.box.buttons.Description import NagatoButtons

@@ -2,7 +2,6 @@
 import os
 from libnagatodevelop.group.Group import NagatoGroup
 from libnagatodevelop.box.entry.Directory import NagatoDirectory
-from libnagatodevelop.box.Icon import NagatoIcon
 from libnagatodevelop.eventbox.ForImage import NagatoEventBox
 from libnagatodevelop.box.entry.ApplicationName import NagatoApplicationName
 from libnagatodevelop.box.entry.ApplicationId import NagatoApplicationId

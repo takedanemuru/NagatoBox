@@ -59,14 +59,14 @@ class NagatoApplicationModel(NagatoObject):
     def __setitem__(self, key, value):
         DATA[key] = value
         if key == "app-name":
-            yuki_safename = DATA["app-name"].replace("-","")
-            DATA["lib-name"] = "lib{}".format(yuki_safename)            
+            yuki_safename = DATA["app-name"].replace("-", "")
+            DATA["lib-name"] = "lib{}".format(yuki_safename)
 
     def __init__(self, parent, config):
         self._parent = parent
         self._config = config
-        self._set_author_value("user-name","name", "USER")
-        self._set_author_value("user-email","email", "EMAIL")
-        self._set_author_value("user-id","id-header")
-        self._set_author_value("user-uri","uri")
+        self._set_author_value("user-name", "name", "USER")
+        self._set_author_value("user-email", "email", "EMAIL")
+        self._set_author_value("user-id", "id-header")
+        self._set_author_value("user-uri", "uri")
         self._set_default_directory()

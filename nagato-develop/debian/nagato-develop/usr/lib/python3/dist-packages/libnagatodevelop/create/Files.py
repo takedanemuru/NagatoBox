@@ -1,5 +1,4 @@
 
-import os
 import shutil
 import datetime
 from pathlib import Path
@@ -32,7 +31,6 @@ class NagatoFiles(object):
             self._data["app-short-description"]
             )
         Path(target_path).write_text(yuki_text)
-
 
     def _ensure_file(self, source_path):
         yuki_source_path = source_path

@@ -1,6 +1,5 @@
 
 from gi.repository import Gtk
-from libnagatodevelop.dialog.label.ForWarningQuit import NagatoDialogLabel
 
 
 class NagatoWarning(Gtk.Dialog):

@@ -3,6 +3,7 @@ from libAPPNAME.eventbox.EventBox import NagatoEventBox as TFEI
 from libAPPNAME.menu.context.ForLabel import NagatoContextMenu
 from libAPPNAME.DummyLabel import NagatoDummyLabel
 
+
 class NagatoEventBox(TFEI):
 
     def _yuki_n_say(self, something):

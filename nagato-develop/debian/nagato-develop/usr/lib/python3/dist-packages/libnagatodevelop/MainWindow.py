@@ -3,9 +3,9 @@ from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagato.dialog.About import NagatoAboutDialog
 from libnagatodevelop.eventbox.ForGrid import NagatoEventBox
-from libnagatodevelop.dialog.WarningQuit import NagatoWarningQuit
 from libnagatodevelop.Config import NagatoConfig
 from libnagatodevelop.ApplicationModel import NagatoApplicationModel
+from libnagatodevelop.WindowCloser import NagatoWindowCloser
 
 
 class NagatoMainWindow(NagatoObject, Gtk.Window):
@@ -13,7 +13,9 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
     def _yuki_n_about(self):
         NagatoAboutDialog.call(self._resources)
 
-    def _yuki_n_quit(self):
+    def _yuki_n_quit(self, force_close=False):
+        if force_close:
+            self._closer.set_force_close()
         self.close()
 
     def _yuki_n_create(self):
@@ -26,7 +28,7 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
         return self._resources
 
     def _on_close_window(self, widget, event, user_data=None):
-        if not NagatoWarningQuit.call():
+        if not self._closer.can_close():
             return True
         self._config.save_window_position(self)
         Gtk.main_quit()
@@ -45,6 +47,7 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
     def __init__(self, args, resources):
         self._parent = None
         self._args = args
+        self._closer = NagatoWindowCloser()
         self._resources = resources
         self._config = NagatoConfig(self._resources.get_config_file())
         self._model = NagatoApplicationModel(self, self._config)

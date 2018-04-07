@@ -4,6 +4,11 @@ from libnagatodevelop.create.Directories import NagatoDirectories
 from libnagatodevelop.create.Files import NagatoFiles
 from libnagatodevelop.create.Icons import NagatoIcons
 from libnagatodevelop.create.LongDescription import NagatoLongDescription
+from libnagatodevelop.dialog.Info import NagatoInfo
+
+MARKUP = \
+    "project successfully created in \n"\
+    "{}"
 
 
 class NagatoPrototype(NagatoObject):
@@ -21,7 +26,8 @@ class NagatoPrototype(NagatoObject):
         self._ensure_files()
         NagatoIcons(self._data)
         NagatoLongDescription(self._data)
-        print("done in : ", self._data["app-directory"])
+        NagatoInfo.call("info", MARKUP.format(self._data["app-directory"]))
+        self._raise("YUKI.N > quit", True)
 
     def __init__(self, parent):
         self._parent = parent

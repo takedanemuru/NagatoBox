@@ -23,4 +23,4 @@ class NagatoButtons(TFEI):
         NagatoButton(self, "Calcel", "YUKI.N > quit", CSS)
 
     def _get_right_button(self):
-        return NagatoButton(self, "Next","YUKI.N > go to application", CSS)
+        return NagatoButton(self, "Next", "YUKI.N > go to application", CSS)

@@ -18,5 +18,5 @@ class NagatoDialogLabel(Gtk.Label):
         self.set_vexpand(True)
         self.set_markup(TEMPLATE)
         self.set_padding(8, 8)
-        CssProvider.set_to_widget(self, "dialog-label") 
+        CssProvider.set_to_widget(self, "dialog-label")
         content_area.add(self)

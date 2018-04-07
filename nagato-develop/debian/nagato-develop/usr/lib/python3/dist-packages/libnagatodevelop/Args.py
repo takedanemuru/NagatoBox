@@ -1,32 +1,32 @@
 
-import os
 import argparse
+from libnagato.Object import NagatoObject
+from libnagatodevelop.option.ShowVersion import NagatoShowVersion
+from libnagatodevelop.option.LinesOfCode import NagatoLinesOfCode
+from libnagatodevelop.option.Find import NagatoFind
 
-
-class NagatoArgs(argparse.ArgumentParser):
-
-    def _set_show_version(self):
-        self.add_argument(
-            "-v",
-            "--version",
-            action="store_true",
-            dest="show_version",
-            default=False,
-            help="show version"
-            )
+class NagatoArgs(argparse.ArgumentParser, NagatoObject):
 
     def _get_args(self):
-        self._set_show_version()
+        NagatoShowVersion(self)
+        NagatoFind(self)
+        NagatoLinesOfCode(self)
 
     def _initialize_variants(self):
         yuki_args = self.parse_args()
-        self._args = {}
+        if yuki_args.find is not None:
+            self._args["find"] = yuki_args.find[0]
+        self._args["lines-of-code"] = yuki_args.lines_of_code
         self._args["show-version"] = yuki_args.show_version
 
     def __init__(self):
         argparse.ArgumentParser.__init__(self)
+        self._args = {}
         self._get_args()
         self._initialize_variants()
 
     def __getitem__(self, key):
-        return self._args[key]
+        if key in self._args:
+            return self._args[key]
+        else:
+            return None
