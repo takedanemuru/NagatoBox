@@ -32,21 +32,21 @@ class NagatoFiles(object):
             )
         Path(target_path).write_text(yuki_text)
 
-    def _ensure_file(self, source_path):
-        yuki_source_path = source_path
-        yuki_target_path = self._get_target_path(yuki_source_path)
-        if yuki_source_path.endswith(".pyc"):
+    def _ensure_file(self, source_path, target_path):
+        if source_path.endswith(".pyc"):
             return
-        if yuki_source_path.endswith(".png"):
-            shutil.copy2(yuki_source_path, yuki_target_path)
+        if source_path.endswith(".png") or source_path.endswith("rules"):
+            shutil.copy2(source_path, target_path)
         else:
-            self._replacing_copy(yuki_source_path, yuki_target_path)
+            self._replacing_copy(source_path, target_path)
 
     def _ensure_files(self):
         for yuki_path in Path(self._prototype_directory).glob("**/*"):
             if yuki_path.is_dir():
                 continue
-            self._ensure_file(str(yuki_path))
+            yuki_source_path = str(yuki_path)
+            yuki_target_path = self._get_target_path(yuki_source_path)
+            self._ensure_file(yuki_source_path, yuki_target_path)
 
     def __init__(self, data, prototype_directory):
         self._data = data

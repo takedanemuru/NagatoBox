@@ -103,3 +103,11 @@ GtkTextView {
     opacity: 1;
     font-size: 1.2em;
 }
+
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0.5em;
+    font-style: italic;
+}

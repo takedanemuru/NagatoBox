@@ -1,12 +1,13 @@
 
 # NOTE for /proc/stat:
-# 
+#
 # 0    1    2    3      4    5      6   7       8     9     10
 # name user nice system idle iowait irq softirq steal guest guest_nice
 
 IDLE = (4, 5)
 NON_IDLE = (1, 2, 3, 6, 7, 8)
 NON_IDLE_GUEST = (9, 10)
+
 
 class NagatoProcStat(object):
 

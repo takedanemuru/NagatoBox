@@ -35,7 +35,7 @@ class NagatoPIDs(object):
 
     def observe(self, cpu_time_diff):
         self._processes.clear()
-        self._cpu_time_diff = max(1,cpu_time_diff)
+        self._cpu_time_diff = max(1, cpu_time_diff)
         for yuki_path in glob.glob("/proc/[0-9]*"):
             self._read_data(yuki_path)
 

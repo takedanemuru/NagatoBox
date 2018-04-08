@@ -16,6 +16,5 @@ class NagatoYuki(object):
             print("YUKI.N > また図書館に…")
 
     def __init__(self):
-        GiVersion.require_version()
         self._args = NagatoArgs()
         self._resources = NagatoResources()

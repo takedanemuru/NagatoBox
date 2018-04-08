@@ -1,12 +1,14 @@
 
 import configparser
 from gi.repository import Gtk
+from pathlib import Path
 
 
 class NagatoConfig(configparser.ConfigParser):
 
     def _save(self):
-        with open(self._path_to_config, "w") as yuki_file:
+        yuki_path = Path(self._path_to_config)
+        with yuki_path.open(mode="w") as yuki_file:
             self.write(yuki_file)
 
     def save_window_position(self, gtk_window):

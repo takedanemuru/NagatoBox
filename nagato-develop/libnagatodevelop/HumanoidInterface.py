@@ -4,7 +4,6 @@ from libnagatodevelop import Find
 from libnagatodevelop.Args import NagatoArgs
 from libnagatodevelop.Resources import NagatoResources
 from libnagatodevelop.MainWindow import NagatoMainWindow
-from libnagatodevelop.dialog.Info import NagatoInfo
 
 
 class NagatoYuki(object):
@@ -22,6 +21,5 @@ class NagatoYuki(object):
             print("YUKI.N > また図書館に…")
 
     def __init__(self):
-        GiRequireVersion.set_version()
         self._args = NagatoArgs()
         self._resources = NagatoResources()

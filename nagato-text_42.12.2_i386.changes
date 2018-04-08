@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sun, 08 Apr 2018 00:00:00 +0900
+Source: nagato-text
+Binary: nagato-text
+Architecture: source all
+Version: 42.12.2
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: takedanemuru, takeda.nemuru@yandex.com
+Changed-By: takedanemuru <takeda.nemuru@yandex.com>
+Description:
+ nagato-text - text pad
+Changes:
+ nagato-text (42.12.2) UNRELEASED; urgency=low
+ .
+   * bug fix.
+Checksums-Sha1:
+ 2c769c382fa455f4fe55969334e87fec356d6648 560 nagato-text_42.12.2.dsc
+ ac9708d2e86b88456d7f13430e14983869aaa424 86912 nagato-text_42.12.2.tar.xz
+ fd7348aec08a841461273781c024916bad663df0 88460 nagato-text_42.12.2_all.deb
+Checksums-Sha256:
+ f547735d00c08594049fded4fe0270d8695314d548ed69b5883a6055bb7be830 560 nagato-text_42.12.2.dsc
+ b72050f53293cee71e505fc5c9d39628f673eda00e7f7fb2d7732054e2974d99 86912 nagato-text_42.12.2.tar.xz
+ 16d1b567a9a9c88e9721a14a299df16cd27b4547251c2a0da13596e597bba4c3 88460 nagato-text_42.12.2_all.deb
+Files:
+ 0e498405ba4d488f4bbb7fcb50f171a3 560 python optional nagato-text_42.12.2.dsc
+ 13041f0665086a704074badae7a8491b 86912 python optional nagato-text_42.12.2.tar.xz
+ 6232c4d5ae367554eab86582d31ffa78 88460 python optional nagato-text_42.12.2_all.deb

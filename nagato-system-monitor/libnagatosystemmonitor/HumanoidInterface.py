@@ -1,4 +1,5 @@
 
+from libnagatosystemmonitor import GiVersion
 from libnagatosystemmonitor.Args import NagatoArgs
 from libnagatosystemmonitor.Resources import NagatoResources
 from libnagatosystemmonitor.MainWindow import NagatoMainWindow

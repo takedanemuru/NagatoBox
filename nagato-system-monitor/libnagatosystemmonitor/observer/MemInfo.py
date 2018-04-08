@@ -1,5 +1,6 @@
 
 from libnagatosystemmonitor.data.History import NagatoHistory
+from pathlib import Path
 
 HISTORY_MAX = 200
 
@@ -24,9 +25,8 @@ class NagatoMemInfo(object):
                 break
 
     def step(self):
-        with open("/proc/meminfo", "r") as lines:
-            self._read_lines(lines)
-            lines.close()
+        with Path("/proc/meminfo").open() as yuki_lines:
+            self._read_lines(yuki_lines)
 
     def __init__(self):
         self._memory = NagatoHistory(HISTORY_MAX)

@@ -1,4 +1,5 @@
 
+from pathlib import Path
 from libnagato.Object import NagatoObject
 from libnagatotext.source.StyleSchemeManager import NagatoStyleSchemeManager
 from libnagatotext.source.LanguageManager import NagatoLanguageManager
@@ -11,15 +12,13 @@ class NagatoBuffer(NagatoObject):
         self._buffer.set_text("")
 
     def _yuki_n_set_text(self, path):
-        with open(path, "r") as yuki_file:
-            self._buffer.set_text(yuki_file.read())
-            yuki_file.close()
+        yuki_path = Path(path)
+        self._buffer.set_text(yuki_path.read_text())
         self._language_manager.guess(path)
 
     def _yuki_n_save_text(self, path):
-        with open(path, "w") as yuki_file:
-            yuki_file.write(self._buffer.get_property("text"))
-            yuki_file.close()
+        yuki_path = Path(path)
+        yuki_path.write_text(self._buffer.get_property("text"))
         self._language_manager.guess(path)
 
     def _yuki_n_language_changed(self, language):

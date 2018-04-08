@@ -13,4 +13,3 @@ class NagatoDialogLabel(Gtk.Label):
         self.set_padding(8, 8)
         CssProvider.set_to_widget(self, "dialog-label-about")
         content_area.add(self)
-

@@ -1,7 +1,8 @@
 
 from gi.repository import Gtk
 from libnagatosystemmonitor.dialog.Warning import NagatoWarning
-from libnagatosystemmonitor.dialog.label.ForWarningQuit import NagatoDialogLabel
+from libnagatosystemmonitor.dialog.label.ForWarningQuit import (
+    NagatoDialogLabel)
 
 
 class NagatoWarningQuit(NagatoWarning):

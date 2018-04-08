@@ -33,6 +33,8 @@ class NagatoFileHandler(NagatoObject):
 
     def _set_first_path(self):
         yuki_path = self._enquiry("YUKI.N > args", "path")
+        if yuki_path is None:
+            return
         if os.path.exists(yuki_path):
             self._path_handler.load_path(yuki_path)
 
