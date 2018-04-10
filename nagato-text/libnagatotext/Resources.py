@@ -1,11 +1,9 @@
 
 import os
 import yaml
+from pathlib import Path
+from gi.repository import GLib
 from gi.repository import GdkPixbuf
-from libnagato.util import CssProvider
-from libnagato.util import FileManager
-
-CONFIG_PATH = ".config/NagatoBox/{}.config"
 
 
 class NagatoResources(object):
@@ -13,26 +11,20 @@ class NagatoResources(object):
     def __getitem__(self, key):
         return self._data[key]
 
-    def _get_path_from_prefix(self, prefix):
-        return os.path.join(self._directory, ("application" + prefix))
+    def _get_path(self, name):
+        yuki_directory = GLib.path_get_dirname(__file__)
+        return os.path.join(yuki_directory, "resources", name)
 
-    def _get_target_path_for_config_file(self):
-        yuki_config_path = CONFIG_PATH.format(self._data["name"])
-        return os.path.join(os.environ["HOME"], yuki_config_path)
-
-    def get_config_file(self):
-        yuki_source_path = self._get_path_from_prefix(".config")
-        yuki_target_path = self._get_target_path_for_config_file()
-        FileManager.ensure(yuki_source_path, yuki_target_path)
-        return yuki_target_path
-
-    def get_application_icon(self):
-        yuki_path = self._get_path_from_prefix(".png")
+    def get_pixbuf(self, name):
+        yuki_path = self._get_path(name)
         return GdkPixbuf.Pixbuf.new_from_file(yuki_path)
 
-    def set_css_to_application(self):
-        CssProvider.set_to_application(self._get_path_from_prefix(".css"))
+    def get_application_icon(self):
+        return self.get_pixbuf("application.png")
+
+    def get_absolute_path(self, name):
+        return self._get_path(name)
 
     def __init__(self):
-        self._directory = os.path.join(os.path.dirname(__file__), "resources")
-        self._data = yaml.load(open(self._get_path_from_prefix(".yaml"), "r"))
+        yuki_path = Path(self._get_path("application.yaml"))
+        self._data = yaml.load(yuki_path.open())

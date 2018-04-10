@@ -45,6 +45,15 @@ GtkMenu {
     background-image: url("images/context-menu.png");
 }
 
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0;
+    font-style: italic;
+    font-size: 12px;
+}
+
 .dummy-label {
     opacity:0.9;
     font-weight: bold;
