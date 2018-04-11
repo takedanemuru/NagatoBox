@@ -8,6 +8,9 @@ from libnagatotext.menu.context.ForSourceView import NagatoContextMenu
 
 class NagatoView(GtkSource.View, NagatoPrime):
 
+    def _yuki_n_to_source_view(self, message):
+        self._prime_object.prime_call("YUKI.N > {}".format(message))
+
     def _yuki_n_clipboard(self, command):
         self._prime_object.clipboard(command)
 
@@ -17,7 +20,6 @@ class NagatoView(GtkSource.View, NagatoPrime):
     def __init__(self, parent):
         self._parent = parent
         GtkSource.View.__init__(self)
-        #self.set_show_line_numbers(True)
         self._prime_object = NagatoBuffer(self)
         NagatoKeyBinds(self)
         NagatoContextMenu(self)

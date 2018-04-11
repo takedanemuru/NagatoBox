@@ -1,6 +1,5 @@
 
 import os
-from pathlib import Path
 from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagato.util import FileManager
@@ -17,7 +16,7 @@ class NagatoDirectories(NagatoObject):
         yuki_target = self._get_target_path(name)
         FileManager.ensure(yuki_source, yuki_target)
         return yuki_target
-        
+
     def __init__(self, parent):
         self._parent = parent
         self._config_path = self._ensure_file("application.config")

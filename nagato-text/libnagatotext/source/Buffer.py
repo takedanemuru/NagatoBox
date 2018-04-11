@@ -26,7 +26,7 @@ class NagatoBuffer(NagatoPrime):
         self._buffer.set_language(language)
 
     def clipboard(self, command):
-        self._clipboard(command)        
+        self._clipboard(command)
 
     def set_scheme(self, scheme):
         self._style_manager.set_scheme(scheme)

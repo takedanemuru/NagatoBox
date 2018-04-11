@@ -8,6 +8,13 @@ from libnagatotext.Config import NagatoConfig
 
 class NagatoMainWindow(NagatoObject, Gtk.Window):
 
+    def _inform_config(self, user_data):
+        yuki_group, yuki_key = user_data
+        return self._config[yuki_group][yuki_key]
+
+    def _yuki_n_config(self, user_data):
+        self._config.set_data(user_data)
+
     def _yuki_n_quit(self):
         self.close()
 

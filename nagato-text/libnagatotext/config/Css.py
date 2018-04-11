@@ -5,6 +5,7 @@ from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagato.util import FileManager
 from libnagato.util import CssProvider
+from libnagatotext.config.CssText import NagatoCssText
 
 
 class NagatoCss(NagatoObject):
@@ -16,15 +17,6 @@ class NagatoCss(NagatoObject):
         self._directory_image = os.path.join(self._directory, "images")
         self._css = os.path.join(self._directory, "application.css")
 
-    def _get_css_text(self):
-        yuki_source = self._enquiry("YUKI.N > resources", "application.css")
-        yuki_text = Path(yuki_source).read_text()
-        return yuki_text
-
-    def _ensure_css(self):
-        yuki_text = self._get_css_text()
-        Path(self._css).write_text(yuki_text)
-
     def _ensure_files(self):
         yuki_directory = self._enquiry("YUKI.N > resources", "images")
         for yuki_path in Path(yuki_directory).glob("*"):
@@ -32,11 +24,16 @@ class NagatoCss(NagatoObject):
             yuki_target = os.path.join(self._directory_image, yuki_path.name)
             FileManager.ensure(yuki_source, yuki_target)
 
-    def set_css_to_application(self):
+    def _reload(self):
+        Path(self._css).write_text(self._css_text.get())
         CssProvider.set_to_application(self._css)
+
+    def reload(self):
+        self._reload()
 
     def __init__(self, parent):
         self._parent = parent
-        self._ensure_path()
+        self._css_text = NagatoCssText(self)
+        self._ensure_paths()
         self._ensure_files()
-        self._ensure_css()
+        self._reload()

@@ -16,8 +16,10 @@ a simple text pad.
 
 + show file name and save state on title bar
 + fix desktopentry file use %u
-+ proper way to load recently used file
++ use proper way to load recently used file
 + fullscreen mode with unique check through dbus
++ ~~fix : Ctrl+S doesn't work~~
++ ~~add : "change background image" menu~~
 
 ## nagato-gif-player
 

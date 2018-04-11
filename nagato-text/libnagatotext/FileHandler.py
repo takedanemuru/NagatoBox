@@ -1,6 +1,5 @@
 
 import os
-from libnagato.Object import NagatoObject
 from libnagatotext.PathHandler import NagatoPathHandler
 from libnagatotext.Prime import NagatoPrime
 
