@@ -1,5 +1,5 @@
 
-import os
+from pathlib import Path
 from libnagatotext.PathHandler import NagatoPathHandler
 from libnagatotext.Prime import NagatoPrime
 
@@ -35,7 +35,7 @@ class NagatoFileHandler(NagatoPrime):
         yuki_path = self._enquiry("YUKI.N > args", "path")
         if yuki_path is None:
             return
-        if os.path.exists(yuki_path):
+        if Path(yuki_path).exists():
             self._path_handler.load_path(yuki_path)
 
     def __init__(self, parent, text_buffer):

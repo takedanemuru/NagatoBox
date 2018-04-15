@@ -8,7 +8,6 @@ CTRL_BINDS = {
     111: "load",
     115: "save"
     }
-MESSAGE = "YUKI.N > to source view"
 
 
 class NagatoKeyBinds(NagatoObject):
@@ -16,7 +15,7 @@ class NagatoKeyBinds(NagatoObject):
     def _on_key_press(self, widget, event, user_data=None):
         if event.state & MASK_COTROL == MASK_COTROL:
             if event.keyval in CTRL_BINDS:
-                self._raise(MESSAGE, CTRL_BINDS[event.keyval])
+                self._raise("YUKI.N > files", CTRL_BINDS[event.keyval])
 
     def __init__(self, parent):
         self._parent = parent

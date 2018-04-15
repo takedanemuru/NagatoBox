@@ -14,6 +14,7 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
 
     def _yuki_n_config(self, user_data):
         self._config.set_data(user_data)
+        self.show_all()
 
     def _yuki_n_quit(self):
         self.close()

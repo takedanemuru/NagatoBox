@@ -17,6 +17,8 @@ GtkButton {
 GtkSourceView {
     opacity: 0.9;
     font-size: 1.2em;
+    /*NAGATO_FONT_FAMILY*/
+    /*NAGATO_FONT_SIZE*/
 }
 
 GtkMenuItem {
@@ -44,6 +46,10 @@ GtkMenuItem:insensitive {
 GtkMenu {
     background-position: top;
     background-image: url("images/context-menu.png");
+}
+
+GtkFileChooser {
+    opacity: 0.9;
 }
 
 *.tooltip {

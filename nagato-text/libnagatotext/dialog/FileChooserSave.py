@@ -1,35 +1,18 @@
 
 from gi.repository import Gtk
+from libnagatotext.dialog.FileChooser import NagatoFileChooser
 
 
-class NagatoFileChooserSave(Gtk.FileChooserDialog):
+class NagatoFileChooserSave(NagatoFileChooser):
 
     @classmethod
     def call(self, current_name="Untitled Document"):
-        yuki_dialog = NagatoFileChooserSave()
-        yuki_dialog.set_current_name(current_name)
-        yuki_response = yuki_dialog.run()
-        yuki_path = yuki_dialog.get_filename()
-        yuki_dialog.destroy()
-        if yuki_response == Gtk.ResponseType.OK:
-            return yuki_path
-        return None
+        cls._dialog = NagatoFileChooserSave()
+        cls._dialog.set_current_name(current_name)
+        cls._dialog.set_do_overwrite_confirmation(True)
+        return cls._get_path()
 
-    def _get_buttons(self):
-        yuki_buttons = (
-            "Cancel",
-            Gtk.ResponseType.CANCEL,
-            "Save",
-            Gtk.ResponseType.OK
-            )
-        return yuki_buttons
-
-    def __init__(self):
-        Gtk.FileChooserDialog.__init__(
-            self,
-            "Save File",
-            Gtk.Window(title="Save File"),
-            Gtk.FileChooserAction.SAVE,
-            self._get_buttons()
-            )
-        self.set_do_overwrite_confirmation(True)
+    def _set_variables(self):
+        self._title = "Save File"
+        self._action = Gtk.FileChooserAction.SAVE
+        self._ok_button_title = "Save"
