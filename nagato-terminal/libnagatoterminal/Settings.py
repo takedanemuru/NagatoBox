@@ -1,6 +1,5 @@
 
 import os
-import shutil
 import configparser
 from libnagato.datatype.Rect import NagatoRect
 from libnagatoterminal.Resources import NagatoResources

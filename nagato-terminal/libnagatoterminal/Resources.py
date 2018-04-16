@@ -1,11 +1,6 @@
 
 import os
 import yaml
-import gi
-
-gi.require_version('Gtk', '3.0')
-
-from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from libnagato.util import CssProvider
 from libnagatoterminal.util import FileManager

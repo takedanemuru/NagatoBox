@@ -6,7 +6,7 @@ from libnagatotext.dialog.FileChooser import NagatoFileChooser
 class NagatoFileChooserSave(NagatoFileChooser):
 
     @classmethod
-    def call(self, current_name="Untitled Document"):
+    def call(cls, current_name="Untitled Document"):
         cls._dialog = NagatoFileChooserSave()
         cls._dialog.set_current_name(current_name)
         cls._dialog.set_do_overwrite_confirmation(True)

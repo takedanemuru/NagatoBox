@@ -13,17 +13,14 @@ class NagatoBuffer(NagatoPrime):
         self._buffer.set_text("")
 
     def _yuki_n_set_text(self, path):
-        yuki_path = Path(path)
-        self._buffer.set_text(yuki_path.read_text())
+        yuki_text = Path(path).read_text()
+        self._buffer.set_text(yuki_text)
         self._language_manager.guess(path)
 
     def _yuki_n_save_text(self, path):
-        yuki_path = Path(path)
-        yuki_path.write_text(self._buffer.get_property("text"))
+        yuki_text = self._buffer.get_property("text")
+        Path(path).write_text(yuki_text)
         self._language_manager.guess(path)
-
-    def _yuki_n_language_changed(self, language):
-        self._buffer.set_language(language)
 
     def clipboard(self, command):
         self._clipboard(command)
@@ -35,6 +32,6 @@ class NagatoBuffer(NagatoPrime):
         self._parent = parent
         self._buffer = self._parent.get_buffer()
         self._clipboard = NagatoClipboard(self._buffer)
-        self._language_manager = NagatoLanguageManager(self)
+        self._language_manager = NagatoLanguageManager(self._buffer)
         self._style_manager = NagatoStyleSchemeManager(self, self._buffer)
         self._prime_object = NagatoFileHandler(self, self._buffer)

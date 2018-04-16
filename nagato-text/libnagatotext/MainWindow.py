@@ -16,6 +16,9 @@ class NagatoMainWindow(NagatoObject, Gtk.Window):
         self._config.set_data(user_data)
         self.show_all()
 
+    def _yuki_n_new_file(self, file_name):
+        print(file_name)
+
     def _yuki_n_quit(self):
         self.close()
 

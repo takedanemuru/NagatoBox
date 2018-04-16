@@ -27,4 +27,3 @@ class NagatoSubCore(Gtk.Menu, NagatoObject):
         self._set_variables()
         self._initialize_root_menu_item()
         self._initialize_child_menus()
-

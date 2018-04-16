@@ -1,4 +1,5 @@
 
+from libnagatoterminal import GiVersion
 from libnagato.dbus.Unique import NagatoUnique
 from libnagatoterminal.util.Args import NagatoArgs
 from libnagatoterminal.Window import NagatoWindow
@@ -20,6 +21,7 @@ class NagatoYuki(object):
             yuki_remote_object.move_to_current_desktop()
 
     def __init__(self):
+        GiVersion.require()
         self._args = NagatoArgs()
         self._resources = NagatoResources()
         self._unique = NagatoUnique(self._resources["id"])
