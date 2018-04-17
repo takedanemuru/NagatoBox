@@ -1,20 +1,24 @@
 
 from libnagatotext import GiVersion
+from libnagato.Object import NagatoObject
 from libnagatotext.Args import NagatoArgs
-from libnagatotext.Resources import NagatoResources
-from libnagatotext.MainWindow import NagatoMainWindow
+from libnagatotext.Application import NagatoApplication
 
 
-class NagatoYuki(object):
+class NagatoYuki(NagatoObject):
+
+    def _inform_args(self, key):
+        return self._args[key]
 
     def N(self, message):
         if self._args["show-version"]:
-            print(self._resources["version"])
+            self._application.show_version()
         else:
-            self._resources.set_css_to_application()
-            NagatoMainWindow(self._args, self._resources)
+            self._application.run()
             print("YUKI.N > また図書館に…")
 
     def __init__(self):
+        GiVersion.require()
+        self._parent = None
         self._args = NagatoArgs()
-        self._resources = NagatoResources()
+        self._application = NagatoApplication(self)

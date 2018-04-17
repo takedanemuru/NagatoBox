@@ -2,18 +2,18 @@
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository.GdkPixbuf import Pixbuf
-from libnagatotext.dialog.FileChooser import NagatoFileChooser
+from libnagato.dialog.chooser.Chooser import NagatoChooser
 
 MIME_TYPE = "text/*"
 FOLDER = GLib.get_home_dir()
 SIZE = 256
 
 
-class NagatoFileChooserLoad(NagatoFileChooser):
+class NagatoLoad(NagatoChooser):
 
     @classmethod
     def call(cls, folder=FOLDER, mime_type=MIME_TYPE):
-        cls._dialog = NagatoFileChooserLoad()
+        cls._dialog = NagatoLoad()
         cls._dialog.set_current_folder(folder)
         cls._dialog.add_filters(mime_type)
         cls._dialog.add_preview_widget()

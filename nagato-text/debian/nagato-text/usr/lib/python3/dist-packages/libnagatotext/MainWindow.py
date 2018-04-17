@@ -1,45 +1,40 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagato.dialog.About import NagatoAboutDialog
 from libnagatotext.eventbox.ForGrid import NagatoEventBox
-from libnagatotext.dialog.WarningQuit import NagatoWarningQuit
-from libnagatotext.Config import NagatoConfig
+from libnagatotext.dialog.Warning2 import NagatoWarning2
+from libnagatotext.dialog import Messages
+from libnagatotext.WindowAttributes import NagatoWindowAttributes
+
+MESSAGE = Messages.QUIT
+BUTTONS = ["Cancel", "Close"]
 
 
 class NagatoMainWindow(NagatoObject, Gtk.Window):
 
-    def _yuki_n_about(self):
-        NagatoAboutDialog.call(self._resources)
+    def _yuki_n_new_file(self, file_name):
+        print(file_name)
 
     def _yuki_n_quit(self):
         self.close()
 
-    def _inform_args(self, key):
-        return self._args[key]
-
     def _on_close_window(self, widget, event, user_data=None):
-        if not NagatoWarningQuit.call():
+        if NagatoWarning2.call(message=MESSAGE, buttons=BUTTONS) == 0:
             return True
-        self._config.save_window_position(self)
+        self._attributes.save_window_position()
         Gtk.main_quit()
         return False
 
     def _initialize_window(self):
         Gtk.Window.__init__(self)
-        self.set_default_size(800, 640)
-        self._config.load_window_position(self)
-        self.set_icon(self._resources.get_application_icon())
+        self._attributes = NagatoWindowAttributes(self)
         self.connect("delete-event", self._on_close_window)
 
     def _on_initialize(self):
         NagatoEventBox(self)
 
-    def __init__(self, args, resources):
-        self._parent = None
-        self._args = args
-        self._resources = resources
-        self._config = NagatoConfig(self._resources.get_config_file())
+    def __init__(self, parent):
+        self._parent = parent
         self._initialize_window()
         self._on_initialize()
         self.show_all()

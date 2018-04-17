@@ -1,7 +1,6 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagato.datatype.Rect import NagatoRect
 from libnagato.flexgrid.Attributes import NagatoAttributes
 from libnagato.flexgrid.adjust.New import NagatoNew
 from libnagato.flexgrid.adjust.Expand import NagatoExpand

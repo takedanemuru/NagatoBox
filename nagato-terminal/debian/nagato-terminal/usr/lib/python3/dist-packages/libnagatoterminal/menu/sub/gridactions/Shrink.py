@@ -5,6 +5,7 @@ from libnagatoterminal.menu.item.sensitive.Shrink import (
     NagatoShrink as NagatoShrinkMenuItem
     )
 
+
 class NagatoShrink(NagatoGridActionsCore):
 
     def _yuki_n_menu_clicked(self, gtk_position_type):

@@ -8,13 +8,16 @@ d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/dataty
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/dbus/__init__.py
 af824a960be4cf513079b71619ccadc6  usr/lib/python3/dist-packages/libnagato/dialog/About.py
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/dialog/__init__.py
-75da6e38096cd372fe9e4000be309541  usr/lib/python3/dist-packages/libnagato/dialog/ui/GtkImage.py
-2e86fc7516dc4401caf182946c05fd9a  usr/lib/python3/dist-packages/libnagato/dialog/ui/LabelAbout.py
+4d9ecff7a331f9d6ff0ebb35b4c27753  usr/lib/python3/dist-packages/libnagato/dialog/chooser/Chooser.py
+cc7b993adc5c3e9cf9ae7307d8ed303b  usr/lib/python3/dist-packages/libnagato/dialog/chooser/Load.py
+dee2a88ee94d32d3675a81ba53167bc7  usr/lib/python3/dist-packages/libnagato/dialog/chooser/Save.py
+4c8ada432f51480e5d41e91df57e696d  usr/lib/python3/dist-packages/libnagato/dialog/ui/GtkImage.py
+944113cc963f94cb2bf51001a9dda0ec  usr/lib/python3/dist-packages/libnagato/dialog/ui/LabelAbout.py
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/dialog/ui/__init__.py
 86d4d8ea73f431612c733ad7d98db361  usr/lib/python3/dist-packages/libnagato/flexgrid/Attributes.py
 2fa4332bb688d472b89365a329f6fb77  usr/lib/python3/dist-packages/libnagato/flexgrid/Container.py
 0128de395b2d3b9894b6ffef46a9def1  usr/lib/python3/dist-packages/libnagato/flexgrid/Data.py
-0c10682ee3388e5b24fca38a32fa9f85  usr/lib/python3/dist-packages/libnagato/flexgrid/FlexGrid.py
+80f4e5726f6a9a47812ee8733df65f67  usr/lib/python3/dist-packages/libnagato/flexgrid/FlexGrid.py
 81bda6839524832caff8b6202eb961ca  usr/lib/python3/dist-packages/libnagato/flexgrid/Position.py
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/flexgrid/__init__.py
 0abaa80e460a1f90e7c59c6407f417ba  usr/lib/python3/dist-packages/libnagato/flexgrid/adjust/Core.py
@@ -34,7 +37,7 @@ d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/key/__
 d315edc01890b195fd0ff0e14658c015  usr/lib/python3/dist-packages/libnagato/menu/Context.py
 316621233924db3b22a03de022097494  usr/lib/python3/dist-packages/libnagato/menu/Item.py
 96d299047486edabc6ca9495497ba42e  usr/lib/python3/dist-packages/libnagato/menu/Separator.py
-cffb88dfdfcde2625063cb16a109e85e  usr/lib/python3/dist-packages/libnagato/menu/Sub.py
+2726a56f0232e3707a4b5747a3597523  usr/lib/python3/dist-packages/libnagato/menu/Sub.py
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/menu/__init__.py
 315804a9e06135e2caac5b7655a45477  usr/lib/python3/dist-packages/libnagato/ui/NotebookTabVisibility.py
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/ui/__init__.py
@@ -42,5 +45,5 @@ a3fc536f5e8a3c5ad5cef2930ba7a97d  usr/lib/python3/dist-packages/libnagato/util/C
 e09244ddbdadabcfb385f5dce0b50539  usr/lib/python3/dist-packages/libnagato/util/FileManager.py
 c6dd37d8c088d2cee2bd136a5de6d79c  usr/lib/python3/dist-packages/libnagato/util/PangoFont.py
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/libnagato/util/__init__.py
-ca6b551e42d7cfaecc6256f6ff419d22  usr/share/doc/python3-libnagato/changelog.gz
+6188bc97e986883ef8082276db0bdd5a  usr/share/doc/python3-libnagato/changelog.gz
 430898e0e5d31885341bbaffef85bc3b  usr/share/doc/python3-libnagato/copyright

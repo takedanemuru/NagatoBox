@@ -1,13 +1,13 @@
 
 from gi.repository import Gtk
-from libnagatotext.dialog.FileChooser import NagatoFileChooser
+from libnagato.dialog.chooser.Chooser import NagatoChooser
 
 
-class NagatoFileChooserSave(NagatoFileChooser):
+class NagatoSave(NagatoChooser):
 
     @classmethod
     def call(cls, current_name="Untitled Document"):
-        cls._dialog = NagatoFileChooserSave()
+        cls._dialog = NagatoSave()
         cls._dialog.set_current_name(current_name)
         cls._dialog.set_do_overwrite_confirmation(True)
         return cls._get_path()

@@ -1,5 +1,4 @@
 
-from gi.repository import Gdk
 from libnagatoterminal.EventBox import NagatoEventBox as TFEI
 from libnagatoterminal.menu.context.ForChrome import NagatoContextMenu
 from libnagatoterminal.Grid import NagatoGrid

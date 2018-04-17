@@ -1,6 +1,6 @@
 
 from pathlib import Path
-from libnagato.menu.Item import NagatoItem
+from libnagatotext.menu.check.StyleScheme import NagatoStyleScheme
 from libnagato.menu.Sub import NagatoSubCore
 from gi.repository import GLib
 
@@ -15,7 +15,7 @@ class NagatoSchems(NagatoSubCore):
             return
         for yuki_scheme in sorted(yuki_path.glob("*.xml")):
             yuki_name = yuki_scheme.stem
-            NagatoItem(self, yuki_name, "YUKI.N > scheme", yuki_name)
+            NagatoStyleScheme(self, yuki_name)
 
     def _initialize_child_menus(self):
         for yuki_directory in GLib.get_system_data_dirs():

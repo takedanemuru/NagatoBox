@@ -5,7 +5,7 @@ CANCEL = Gtk.ResponseType.CANCEL
 OK = Gtk.ResponseType.OK
 
 
-class NagatoFileChooser(Gtk.FileChooserDialog):
+class NagatoChooser(Gtk.FileChooserDialog):
 
     @classmethod
     def _get_path(cls):

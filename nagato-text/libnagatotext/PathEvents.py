@@ -1,14 +1,14 @@
 
 from pathlib import Path
 from libnagato.Object import NagatoObject
-from libnagatotext.dialog.FileChooserSave import NagatoFileChooserSave
+from libnagato.dialog.chooser.Save import NagatoSave
 
 
 class NagatoPathEvents(NagatoObject):
 
     def _ensure(self):
         if self._path is None:
-            self._path = NagatoFileChooserSave.call()
+            self._path = NagatoSave.call()
 
     def new(self):
         self._path = None

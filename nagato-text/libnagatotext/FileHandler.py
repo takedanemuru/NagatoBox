@@ -2,8 +2,8 @@
 from libnagatotext.PathEvents import NagatoPathEvents
 from libnagatotext.Prime import NagatoPrime
 from libnagatotext.source.SaveState import NagatoSaveState
-from libnagatotext.dialog.FileChooserLoad import NagatoFileChooserLoad
-from libnagatotext.dialog.FileChooserSave import NagatoFileChooserSave
+from libnagato.dialog.chooser.Load import NagatoLoad
+from libnagato.dialog.chooser.Save import NagatoSave
 
 
 class NagatoFileHandler(NagatoPrime):
@@ -26,7 +26,7 @@ class NagatoFileHandler(NagatoPrime):
     def _yuki_n_load(self):
         if not self._is_closable():
             return
-        yuki_path = NagatoFileChooserLoad.call()
+        yuki_path = NagatoLoad.call()
         if yuki_path is not None:
             self._path_handler.load(yuki_path)
 
@@ -34,7 +34,7 @@ class NagatoFileHandler(NagatoPrime):
         self._path_handler.save()
 
     def _yuki_n_save_as(self):
-        yuki_path = NagatoFileChooserSave.call()
+        yuki_path = NagatoSave.call()
         if yuki_path is not None:
             self._path_handler.save_as(yuki_path)
 

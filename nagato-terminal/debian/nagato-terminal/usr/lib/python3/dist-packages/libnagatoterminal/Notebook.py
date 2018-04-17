@@ -1,6 +1,5 @@
 
 from gi.repository import Gtk
-from libnagato.Object import NagatoObject
 from libnagato.ui.NotebookTabVisibility import NagatoTabVisibility
 from libnagato.datatype.UnnullableArray import NagatoUnnullableArray
 from libnagatoterminal.Vte import NagatoVte

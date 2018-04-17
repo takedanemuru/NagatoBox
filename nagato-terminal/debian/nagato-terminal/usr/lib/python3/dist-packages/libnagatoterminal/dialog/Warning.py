@@ -1,6 +1,5 @@
 
 from gi.repository import Gtk
-from libnagatoterminal.dialog import Portal
 from libnagatoterminal.dialog.ui.LabelWarning import NagatoLabelWarning
 
 

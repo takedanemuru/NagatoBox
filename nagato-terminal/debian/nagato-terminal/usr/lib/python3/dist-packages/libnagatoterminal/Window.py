@@ -1,8 +1,4 @@
 
-import gi
-
-gi.require_version('Gtk', '3.0')
-
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagato.gdk.X11Window import NagatoX11Window

@@ -3,19 +3,18 @@ GtkWindow {
     background-repeat: repeat;
     background-position: center;
     background-image: url("images/main-window.png");
-}
-
-GtkNotebook {
-    opacity: 0.7;
+    /*NAGATO_BACKGROUND_IMAGE_MAIN_WINDOW*/
 }
 
 GtkButton {
-    opacity: 0.7;
+    opacity: 0.9;
 }
 
 GtkSourceView {
     opacity: 0.9;
     font-size: 1.2em;
+    /*NAGATO_FONT_FAMILY*/
+    /*NAGATO_FONT_SIZE*/
 }
 
 GtkMenuItem {
@@ -43,6 +42,19 @@ GtkMenuItem:insensitive {
 GtkMenu {
     background-position: top;
     background-image: url("images/context-menu.png");
+}
+
+GtkFileChooser {
+    opacity: 0.9;
+}
+
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0;
+    font-style: italic;
+    font-size: 12px;
 }
 
 .dummy-label {
