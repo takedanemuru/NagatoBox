@@ -4,15 +4,16 @@ import yaml
 from pathlib import Path
 from gi.repository import GLib
 from gi.repository import GdkPixbuf
+from libnagato.Object import NagatoObject
 
 
-class NagatoResources(object):
+class NagatoResources(NagatoObject):
 
     def __getitem__(self, key):
         return self._data[key]
 
     def _get_path(self, name):
-        yuki_directory = GLib.path_get_dirname(__file__)
+        yuki_directory = self._enquiry("YUKI.N > library directory")
         return os.path.join(yuki_directory, "resources", name)
 
     def get_pixbuf(self, name):
@@ -25,6 +26,7 @@ class NagatoResources(object):
     def get_absolute_path(self, name):
         return self._get_path(name)
 
-    def __init__(self):
+    def __init__(self, parent):
+        self._parent = parent
         yuki_path = Path(self._get_path("application.yaml"))
         self._data = yaml.load(yuki_path.open())

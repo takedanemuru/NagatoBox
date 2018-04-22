@@ -15,8 +15,9 @@ class NagatoFileHandler(NagatoPrime):
         return self._path_handler.save()
 
     def _yuki_n_path_event(self, user_data):
-        yuki_message, yuki_data = user_data
-        self._raise("YUKI.N > {}".format(yuki_message), yuki_data)
+        yuki_message, yuki_path = user_data
+        self._raise("YUKI.N > {}".format(yuki_message), yuki_path)
+        self._raise("YUKI.N > new file", yuki_path)
         self._save_state.set_state_to_saved()
 
     def _yuki_n_new(self):

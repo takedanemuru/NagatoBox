@@ -1,5 +1,5 @@
 
-from libnagatotext.dialog.Warning2 import NagatoWarning2
+from libnagato.dialog.message.Warning import NagatoWarning
 from libnagatotext.dialog import Messages
 
 MESSAGE = Messages.NOT_SAVED
@@ -12,7 +12,7 @@ class NagatoSaveState(object):
     def get_save_state(self):
         if self._saved:
             return True
-        yuki_response = NagatoWarning2.call(message=MESSAGE, buttons=BUTTONS)
+        yuki_response = NagatoWarning.call(message=MESSAGE, buttons=BUTTONS)
         return RESPONSE[yuki_response]
 
     def set_state_to_saved(self):

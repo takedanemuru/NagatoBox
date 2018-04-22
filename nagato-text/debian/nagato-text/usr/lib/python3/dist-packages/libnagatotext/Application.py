@@ -8,15 +8,8 @@ from libnagatotext.Config import NagatoConfig
 
 class NagatoApplication(NagatoObject):
 
-    def _yuki_n_save_config(self, user_data):
-        self._config.set_data(user_data)
-
     def _yuki_n_config(self, user_data):
         self._config.set_data(user_data)
-        try:
-            self._main_window.show_all()
-        except:
-            pass
 
     def _yuki_n_about(self):
         NagatoAboutDialog.call(self._resources)
@@ -38,7 +31,7 @@ class NagatoApplication(NagatoObject):
         self._resources["version"]
 
     def run(self):
-        self._main_window = NagatoMainWindow(self)
+        NagatoMainWindow(self)
 
     def __init__(self, parent):
         self._parent = parent

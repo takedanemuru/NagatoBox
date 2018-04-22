@@ -1,16 +1,9 @@
 
 from gi.repository import Gtk
-from libnagatotext.dialog.label.Universal import NagatoUniversal
+from libnagato.dialog.ui.Label import NagatoLabel
 
 
-class NagatoWarning2(Gtk.Dialog):
-
-    @classmethod
-    def call(cls, title="warning", message="", pixbuf=None, buttons=["OK"]):
-        yuki_dialog = NagatoWarning2(title, message, pixbuf, buttons)
-        yuki_response = yuki_dialog.run()
-        yuki_dialog.destroy()
-        return yuki_response
+class NagatoMessage(Gtk.Dialog):
 
     def _set_buttons(self, buttons):
         yuki_response_id = 0
@@ -19,7 +12,7 @@ class NagatoWarning2(Gtk.Dialog):
             yuki_response_id += 1
 
     def _set_contents(self, message):
-        NagatoUniversal(self._content_area, message, "dialog-label")
+        pass
 
     def _initialize_content_area(self):
         self._content_area = self.get_content_area()
@@ -29,7 +22,7 @@ class NagatoWarning2(Gtk.Dialog):
     def __init__(self, title, message, pixbuf, buttons):
         Gtk.Dialog.__init__(
             self,
-            "warning: {}".format(title),
+            "dialog: {}".format(title),
             Gtk.Window(),
             0,
             None

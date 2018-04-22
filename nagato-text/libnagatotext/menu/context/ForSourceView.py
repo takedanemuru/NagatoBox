@@ -28,6 +28,8 @@ class NagatoContextMenu(NagatoContextCore):
         NagatoItem(self, "Copy", "YUKI.N > clipboard", "copy")
         NagatoItem(self, "Paste", "YUKI.N > clipboard", "paste")
         NagatoSeparator(self)
+        NagatoItem(self, "Search and Replace", "YUKI.N > search and replace")
+        NagatoSeparator(self)
         NagatoSchems(self)
         NagatoFont(self)
         NagatoShowLineNumbers(self)

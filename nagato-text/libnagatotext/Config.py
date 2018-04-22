@@ -24,6 +24,15 @@ class NagatoConfig(configparser.ConfigParser, NagatoObject):
         if yuki_group == "css":
             self._css.reload()
 
+    def clear_recent_paths(self):
+        pass
+
+    def set_recent_path(self, path):
+        pass
+
+    def get_recent_paths(self):
+        return None
+
     def __init__(self, parent):
         self._parent = parent
         configparser.ConfigParser.__init__(self)

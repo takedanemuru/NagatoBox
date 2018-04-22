@@ -12,9 +12,9 @@ GtkButton {
 
 GtkSourceView {
     opacity: 0.9;
-    font-size: 1.2em;
-    /*NAGATO_FONT_FAMILY*/
-    /*NAGATO_FONT_SIZE*/
+    animation-play-state: paused;
+    font: Ubuntu Mono Regular 14;
+    /*NAGATO_FONT*/
 }
 
 GtkMenuItem {

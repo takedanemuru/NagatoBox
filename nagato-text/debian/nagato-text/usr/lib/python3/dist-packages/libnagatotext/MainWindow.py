@@ -12,8 +12,11 @@ BUTTONS = ["Cancel", "Close"]
 
 class NagatoMainWindow(NagatoObject, Gtk.Window):
 
-    def _yuki_n_new_file(self, file_name):
-        print(file_name)
+    def _yuki_n_new_file(self, file_name=None):
+        if file_name is not None:
+            self.set_title(file_name)
+        else:
+            self.set_title("nagato-text")
 
     def _yuki_n_quit(self):
         self.close()

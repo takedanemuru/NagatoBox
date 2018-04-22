@@ -3,7 +3,7 @@ from gi.repository import Gtk
 from libnagato.util import CssProvider
 
 
-class NagatoUniversal(Gtk.Label):
+class NagatoLabel(Gtk.Label):
 
     def __init__(self, content_area, markup, css):
         Gtk.Label.__init__(self)

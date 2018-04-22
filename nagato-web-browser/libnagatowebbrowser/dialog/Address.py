@@ -37,7 +37,7 @@ class NagatoAddress(Gtk.Dialog):
         Gtk.Dialog.__init__(
             self,
             "dialog: url",
-            Gtk.Window(title="url"),
+            Gtk.Window(),
             Gtk.ResponseType.CANCEL,
             None
             )

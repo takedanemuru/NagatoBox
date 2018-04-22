@@ -12,9 +12,9 @@ GtkButton {
 
 GtkSourceView {
     opacity: 0.9;
-    font-size: 1.2em;
-    /*NAGATO_FONT_FAMILY*/
-    /*NAGATO_FONT_SIZE*/
+    animation-play-state: paused;
+    font: Ubuntu Mono Regular 14;
+    /*NAGATO_FONT*/
 }
 
 GtkMenuItem {
@@ -57,19 +57,20 @@ GtkFileChooser {
     font-size: 12px;
 }
 
-.dummy-label {
-    opacity:0.9;
-    font-weight: bold;
-    font-size: 1.2em;
-    background-color: White;
-}
-
-.dialog-label {
+.dialog-warning {
     color: white;
     background-color: #FF007F;
     font-weight: bold;
     font-size: 1.2em;
     opacity : 0.7;
+}
+
+.dialog-info {
+    color: white;
+    background-color: MediumSlateBlue;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.8;
 }
 
 .dialog-label-about {

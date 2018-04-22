@@ -2,6 +2,7 @@
 from libnagato.menu.Action import NagatoActionCore
 from libnagato.dialog.chooser.Load import NagatoLoad
 
+
 class NagatoBackgroundImage(NagatoActionCore):
 
     def _on_activate(self, widget):

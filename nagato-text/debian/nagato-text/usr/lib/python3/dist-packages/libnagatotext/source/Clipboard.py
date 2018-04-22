@@ -5,13 +5,18 @@ from gi.repository import Gdk
 
 class NagatoClipboard(object):
 
+    def _command_cut(self):
+        self._buffer.cut_clipboard(self._clipboard, True)
+
+    def _command_paste(self):
+        self._buffer.paste_clipboard(self._clipboard, None, True)
+
+    def _command_copy(self):
+        self._buffer.copy_clipboard(self._clipboard)
+
     def __call__(self, command):
-        if command == "cut":
-            self._buffer.cut_clipboard(self._clipboard, True)
-        if command == "copy":
-            self._buffer.copy_clipboard(self._clipboard)
-        if command == "paste":
-            self._buffer.paste_clipboard(self._clipboard, None, True)
+        yuki_method = getattr(self, "_command_{}".format(command))
+        yuki_method()
 
     def __init__(self, parent_buffer):
         self._buffer = parent_buffer

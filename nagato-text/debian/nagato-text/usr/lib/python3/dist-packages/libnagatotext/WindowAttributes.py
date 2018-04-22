@@ -27,9 +27,9 @@ class NagatoWindowAttributes(NagatoObject):
     def save_window_position(self):
         yuki_x, yuki_y = self._parent.get_position()
         yuki_w, yuki_h = self._parent.get_size()
-        yuki_allocation = {"x":yuki_x, "y":yuki_y, "w":yuki_w, "h":yuki_h}
+        yuki_allocation = {"x": yuki_x, "y": yuki_y, "w": yuki_w, "h": yuki_h}
         yuki_data = ("window", "allocation", yuki_allocation)
-        self._raise("YUKI.N > save config", yuki_data)
+        self._raise("YUKI.N > config", yuki_data)
 
     def __init__(self, parent):
         self._parent = parent

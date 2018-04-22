@@ -1,5 +1,5 @@
 
-from gi.repository import GtkSource
+from gi.repository.GtkSource import View
 from libnagatotext.source.Buffer import NagatoBuffer
 from libnagatotext.Prime import NagatoPrime
 from libnagatotext.KeyBinds import NagatoKeyBinds
@@ -7,7 +7,7 @@ from libnagatotext.menu.context.ForSourceView import NagatoContextMenu
 from libnagatotext.source.ViewConfig import NagatoViewConfig
 
 
-class NagatoView(GtkSource.View, NagatoPrime):
+class NagatoView(View, NagatoPrime):
 
     def _yuki_n_files(self, command):
         self._prime_object.prime_call("YUKI.N > {}".format(command))
@@ -24,7 +24,7 @@ class NagatoView(GtkSource.View, NagatoPrime):
 
     def __init__(self, parent):
         self._parent = parent
-        GtkSource.View.__init__(self)
+        View.__init__(self)
         self._config = NagatoViewConfig(self)
         self._prime_object = NagatoBuffer(self)
         NagatoKeyBinds(self)

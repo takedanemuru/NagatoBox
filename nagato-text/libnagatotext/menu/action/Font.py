@@ -1,20 +1,18 @@
 
 from gi.repository import Gtk
-from gi.repository import Pango
 from libnagato.menu.Action import NagatoActionCore
 
 
 class NagatoFont(NagatoActionCore):
 
-    def _on_font_selected(self, font_description):
-        yuki_font_family = font_description.get_family()
-        yuki_font_size = font_description.get_size() / Pango.SCALE
-
     def _on_activate(self, widget):
         yuki_dialog = Gtk.FontChooserDialog(self._title, Gtk.Window())
         yuki_dialog.set_preview_text("YUKI.N > Can you see this ?")
+        yuki_current_font = self._enquiry("YUKI.N > config", ("css", "font"))
+        yuki_dialog.set_font(yuki_current_font)
         if Gtk.ResponseType.OK == yuki_dialog.run():
-            self._on_font_selected(yuki_dialog.get_font_desc())
+            yuki_data = "css", "font", yuki_dialog.get_font()
+            self._raise("YUKI.N > config", yuki_data)
         yuki_dialog.destroy()
 
     def _on_map(self, widget):

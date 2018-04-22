@@ -15,6 +15,13 @@ class NagatoViewConfig(NagatoObject):
         yuki_show_line_numbers = self._get_config("show_line_numbers")
         self._parent.set_show_line_numbers(yuki_show_line_numbers == "yes")
         self._parent.set_wrap_mode(self._get_config("wrap_mode"))
+        self._parent.set_show_right_margin(True)
+        self._parent.set_right_margin_position(80)
+        self._parent.set_auto_indent(True)
+        self._parent.set_indent_width(4)
+        self._parent.set_insert_spaces_instead_of_tabs(True)
+        self._parent.set_smart_backspace(True)
+        self._parent.set_highlight_current_line(True)
 
     def refresh(self):
         self._refresh()
