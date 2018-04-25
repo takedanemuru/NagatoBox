@@ -7,19 +7,16 @@ class NagatoCssReplacement(NagatoObject):
 
     def replace(self, text):
         yuki_replacement = self._get_replacement()
-        if yuki_replacement is None:
-            yuki_url = self._template.format(self._default)
-        else:
-            yuki_url = self._template.format(yuki_replacement)
-        return text.replace(self._target, yuki_url)
+        yuki_new = self._template.format(yuki_replacement)
+        return text.replace(self._target, yuki_new)
 
     def _get_replacement(self):
-        yuki_path = self._enquiry("YUKI.N > config", self._query)
-        if yuki_path == "":
-            return None
-        if self._path_check and not Path(yuki_path).exists():
-            return None
-        return yuki_path
+        yuki_replacement = self._enquiry("YUKI.N > config", self._query)
+        if yuki_replacement == "":
+            return self._default
+        if self._path_check and not Path(yuki_replacement).exists():
+            return self._default
+        return yuki_replacement
 
     def _initialize_variables(self):
         self._query = "", ""

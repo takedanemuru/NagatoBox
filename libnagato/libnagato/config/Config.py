@@ -2,8 +2,8 @@
 import configparser
 from pathlib import Path
 from libnagato.Object import NagatoObject
-from libnagatotext.config.Css import NagatoCss
-from libnagatotext.config.Directories import NagatoDirectories
+from libnagato.config.Directories import NagatoDirectories
+from libnagato.config.RecentPaths import NagatoRecentPaths
 
 
 class NagatoConfig(configparser.ConfigParser, NagatoObject):
@@ -17,25 +17,22 @@ class NagatoConfig(configparser.ConfigParser, NagatoObject):
         yuki_group, yuki_key = user_data
         return self[yuki_group][yuki_key]
 
-    def set_data(self, data):
-        yuki_group, yuki_key, yuki_value = data
-        self[yuki_group][yuki_key] = str(yuki_value)
+    def set_data2(self, group, key, value):
+        self[group][key] = str(value)
         self._save_config()
-        if yuki_group == "css":
-            self._css.reload()
 
     def clear_recent_paths(self):
-        pass
+        self._recent_paths.clear()
 
     def set_recent_path(self, path):
-        pass
+        self._recent_paths.set_path(path)
 
     def get_recent_paths(self):
-        return None
+        return self._recent_paths.get_paths()
 
     def __init__(self, parent):
         self._parent = parent
         configparser.ConfigParser.__init__(self)
         self._directories = NagatoDirectories(self)
         self.read(self._directories.config_path)
-        self._css = NagatoCss(self)
+        self._recent_paths = NagatoRecentPaths(self)

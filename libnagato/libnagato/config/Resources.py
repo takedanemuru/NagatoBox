@@ -1,9 +1,7 @@
 
-import os
 import yaml
 from pathlib import Path
-from gi.repository import GLib
-from gi.repository import GdkPixbuf
+from gi.repository.GdkPixbuf import Pixbuf
 from libnagato.Object import NagatoObject
 
 
@@ -14,11 +12,12 @@ class NagatoResources(NagatoObject):
 
     def _get_path(self, name):
         yuki_directory = self._enquiry("YUKI.N > library directory")
-        return os.path.join(yuki_directory, "resources", name)
+        yuki_path = Path(yuki_directory).joinpath("resources", name)
+        return yuki_path.as_posix()
 
     def get_pixbuf(self, name):
         yuki_path = self._get_path(name)
-        return GdkPixbuf.Pixbuf.new_from_file(yuki_path)
+        return Pixbuf.new_from_file(yuki_path)
 
     def get_application_icon(self):
         return self.get_pixbuf("application.png")

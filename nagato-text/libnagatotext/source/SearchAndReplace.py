@@ -25,7 +25,7 @@ class NagatoSearchAndReplace(object):
             self._buffer.select_range(yuki_match_start, yuki_match_end)
 
     def call(self):
-        if not "_window" in dir(self):
+        if "_window" not in dir(self):
             self._window = NagatoWindow(self)
         self._window.show_all()
 

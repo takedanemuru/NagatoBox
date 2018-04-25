@@ -18,16 +18,13 @@ GtkSourceView {
 }
 
 GtkMenuItem {
-    color: violet;
     color: Orchid;
     background-color: white;
-    font-size: 1.2em;
     opacity: 0.9;
 }
 
 GtkMenuItem:hover {
     color: white;
-    background-color: violet;
     background-color: Orchid;
     opacity: 0.9;
 }
@@ -35,7 +32,6 @@ GtkMenuItem:hover {
 GtkMenuItem:insensitive {
     color: white;
     background-color: white;
-    font-size: 1em;
     opacity: 0.9;
 }
 

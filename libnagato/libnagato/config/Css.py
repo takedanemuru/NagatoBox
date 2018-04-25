@@ -5,7 +5,7 @@ from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagato.util import FileManager
 from libnagato.util import CssProvider
-from libnagatotext.config.CssText import NagatoCssText
+from libnagato.config.CssText import NagatoCssText
 
 
 class NagatoCss(NagatoObject):

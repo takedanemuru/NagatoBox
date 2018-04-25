@@ -8,7 +8,6 @@ class NagatoScrolledWindow(Gtk.ScrolledWindow, NagatoPrime):
 
     def __init__(self, parent):
         self._parent = parent
-        self._lock = False
         Gtk.ScrolledWindow.__init__(self)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         self.set_vexpand(True)

@@ -12,6 +12,9 @@ class NagatoView(View, NagatoPrime):
     def _yuki_n_files(self, command):
         self._prime_object.prime_call("YUKI.N > {}".format(command))
 
+    def _yuki_n_open_file(self, path):
+        self._prime_object.prime_call("YUKI.N > open file", path)
+
     def _yuki_n_clipboard(self, command):
         self._prime_object.clipboard(command)
 

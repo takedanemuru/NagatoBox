@@ -13,7 +13,7 @@ class NagatoAboutDialog(Gtk.Dialog):
         yuki_dialog.destroy()
 
     def _set_buttons(self):
-        self.add_button("I see", Gtk.ResponseType.OK)
+        self.add_button("OK", Gtk.ResponseType.OK)
 
     def _set_icon(self, content_area):
         NagatoGtkImage(
@@ -36,7 +36,7 @@ class NagatoAboutDialog(Gtk.Dialog):
         Gtk.Dialog.__init__(
             self,
             "dialog: about {}".format(self._resources["name"]),
-            Gtk.Window(title="About {}".format(self._resources["name"])),
+            Gtk.Window(),
             Gtk.ResponseType.OK,
             None
             )
