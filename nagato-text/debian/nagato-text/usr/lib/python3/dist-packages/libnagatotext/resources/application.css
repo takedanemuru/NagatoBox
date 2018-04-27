@@ -18,16 +18,13 @@ GtkSourceView {
 }
 
 GtkMenuItem {
-    color: violet;
     color: Orchid;
     background-color: white;
-    font-size: 1.2em;
     opacity: 0.9;
 }
 
 GtkMenuItem:hover {
     color: white;
-    background-color: violet;
     background-color: Orchid;
     opacity: 0.9;
 }
@@ -35,7 +32,6 @@ GtkMenuItem:hover {
 GtkMenuItem:insensitive {
     color: white;
     background-color: white;
-    font-size: 1em;
     opacity: 0.9;
 }
 
@@ -57,19 +53,20 @@ GtkFileChooser {
     font-size: 12px;
 }
 
-.dummy-label {
-    opacity:0.9;
-    font-weight: bold;
-    font-size: 1.2em;
-    background-color: White;
-}
-
-.dialog-label {
+.dialog-warning {
     color: white;
     background-color: #FF007F;
     font-weight: bold;
     font-size: 1.2em;
     opacity : 0.7;
+}
+
+.dialog-info {
+    color: white;
+    background-color: MediumSlateBlue;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.8;
 }
 
 .dialog-label-about {

@@ -24,6 +24,10 @@ class NagatoFileHandler(NagatoPrime):
         if self._is_closable():
             self._path_handler.new()
 
+    def _yuki_n_open_file(self, path):
+        if self._is_closable():
+            self._path_handler.load(path)
+
     def _yuki_n_load(self):
         if not self._is_closable():
             return

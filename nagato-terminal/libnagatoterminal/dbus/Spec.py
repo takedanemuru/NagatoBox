@@ -1,9 +1,4 @@
 
-from libnagatoterminal.Resources import NagatoResources
-
-resources = NagatoResources()
-
-
-Service = resources["id"]
+Service = "io.github.takedanemuru.nagato-terminal"
 ObjectPath = "/box/nagato/terminal"
 Interface = "box.nagato.terminal"

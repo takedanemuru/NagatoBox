@@ -1,5 +1,5 @@
 
-from libnagatotext.config.CssReplacement import NagatoCssReplacement
+from libnagato.config.CssReplacement import NagatoCssReplacement
 
 
 class NagatoCssFont(NagatoCssReplacement):

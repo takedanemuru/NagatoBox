@@ -2,14 +2,14 @@
 from gi.repository import Gtk
 from libnagato.ui.NotebookTabVisibility import NagatoTabVisibility
 from libnagato.datatype.UnnullableArray import NagatoUnnullableArray
-from libnagatoterminal.Vte import NagatoVte
+from libnagatoterminal.vte.Page import NagatoPage
 from libnagato.flexgrid.Container import NagatoContainer
 
 
 class NagatoNotebook(NagatoContainer, Gtk.Notebook):
 
     def _yuki_n_add_new_tab(self, working_directory_uri=None):
-        NagatoVte(self, False, working_directory_uri)
+        NagatoPage(self, False, working_directory_uri)
 
     def _yuki_n_child_destroyed(self):
         if len(self.get_children()) == 0:
@@ -30,4 +30,4 @@ class NagatoNotebook(NagatoContainer, Gtk.Notebook):
         self.set_scrollable(True)
         self.set_can_focus(False)
         NagatoTabVisibility(self)
-        NagatoVte(self, is_prime_vte)
+        NagatoPage(self, is_prime_vte)

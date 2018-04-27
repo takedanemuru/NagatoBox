@@ -1,30 +1,43 @@
 
+from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagatoterminal.Resources import NagatoResources
-from libnagatoterminal.Settings import NagatoSettings
+from libnagato.Ux import Unit
 
 
 class NagatoWindowAttributes(NagatoObject):
 
-    def _set_window_position(self, rect):
-        self._parent.move(rect.left, rect.top)
-        self._parent.set_default_size(rect.width, rect.height)
+    def _move(self, allocation):
+        self._parent.set_default_size(allocation["w"], allocation["h"])
+        self._parent.move(allocation["x"], allocation["y"])
 
-    def save_window_positions(self):
-        yuki_left, yuki_top = self._parent.get_position()
-        yuki_width, yuki_height = self._parent.get_size()
-        self._settings.save_window_rect(
-            yuki_left,
-            yuki_top,
-            yuki_width,
-            yuki_height
-            )
+    def _set_default(self, allocation):
+        yuki_width = Unit(allocation["w"])
+        yuki_height = Unit(allocation["h"])
+        self._parent.set_default_size(yuki_width, yuki_height)
+        self._parent.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
+
+    def _load_window_position(self):
+        yuki_data = "window", "allocation"
+        yuki_config = self._enquiry("YUKI.N > config", yuki_data)
+        yuki_allocation = eval(yuki_config)
+        if isinstance(yuki_allocation["w"], str):
+            self._set_default(yuki_allocation)
+        else:
+            self._move(yuki_allocation)
+        self._parent.unfullscreen()
+
+    def _set_application_icon(self):
+        yuki_icon_pixbuf = self._enquiry("YUKI.N > pixbuf", "application.png")
+        self._parent.set_icon(yuki_icon_pixbuf)
+
+    def save_window_position(self):
+        yuki_x, yuki_y = self._parent.get_position()
+        yuki_w, yuki_h = self._parent.get_size()
+        yuki_allocation = {"x": yuki_x, "y": yuki_y, "w": yuki_w, "h": yuki_h}
+        yuki_data = ("window", "allocation", yuki_allocation)
+        self._raise("YUKI.N > config", yuki_data)
 
     def __init__(self, parent):
         self._parent = parent
-        self._settings = NagatoSettings()
-        self._parent.set_title("YUKI.N > ...")
-        self._parent.set_icon(NagatoResources().get_application_icon())
-        yuki_rect = self._settings.load_window_rect()
-        if yuki_rect is not None:
-            self._set_window_position(yuki_rect)
+        self._load_window_position()
+        self._set_application_icon()

@@ -1,21 +1,27 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
+from libnagato.Ux import Unit
 
 
 class NagatoWindowAttributes(NagatoObject):
 
     def _move(self, allocation):
-        self._parent.move(allocation["x"], allocation["y"])
         self._parent.set_default_size(allocation["w"], allocation["h"])
+        self._parent.move(allocation["x"], allocation["y"])
+
+    def _set_default(self, allocation):
+        yuki_width = Unit(allocation["w"])
+        yuki_height = Unit(allocation["h"])
+        self._parent.set_default_size(yuki_width, yuki_height)
+        self._parent.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
 
     def _load_window_position(self):
-        yuki_data = ("window", "allocation")
+        yuki_data = "window", "allocation"
         yuki_config = self._enquiry("YUKI.N > config", yuki_data)
         yuki_allocation = eval(yuki_config)
-        if 0 >= yuki_allocation["w"]:
-            self._parent.set_default_size(800, 640)
-            self._parent.set_position(Gtk.WindowPosition.CENTER_ALWAYS)
+        if isinstance(yuki_allocation["w"], str):
+            self._set_default(yuki_allocation)
         else:
             self._move(yuki_allocation)
         self._parent.unfullscreen()

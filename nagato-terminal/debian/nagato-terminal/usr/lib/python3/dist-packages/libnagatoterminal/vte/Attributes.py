@@ -2,7 +2,7 @@
 from libnagato.util import PangoFont
 
 
-class NagatoVteAttributes(object):
+class NagatoAttributes(object):
 
     def __init__(self, vte):
         vte.set_allow_bold(False)

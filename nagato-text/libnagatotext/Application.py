@@ -1,8 +1,8 @@
 
 from libnagato.application.Application import NagatoApplication as TFEI
-from libnagatotext.MainWindow import NagatoMainWindow
 from libnagatotext.config.CssMainImage import NagatoCssMainImage
 from libnagatotext.config.CssFont import NagatoCssFont
+from libnagatotext.MainWindow import NagatoMainWindow
 
 
 class NagatoApplication(TFEI):

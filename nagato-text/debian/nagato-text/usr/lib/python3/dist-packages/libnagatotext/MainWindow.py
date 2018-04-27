@@ -1,8 +1,8 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
+from libnagato.dialog.message.Warning import NagatoWarning
 from libnagatotext.eventbox.ForGrid import NagatoEventBox
-from libnagatotext.dialog.Warning2 import NagatoWarning2
 from libnagatotext.dialog import Messages
 from libnagatotext.WindowAttributes import NagatoWindowAttributes
 
@@ -13,17 +13,19 @@ BUTTONS = ["Cancel", "Close"]
 class NagatoMainWindow(NagatoObject, Gtk.Window):
 
     def _yuki_n_new_file(self, file_name=None):
-        if file_name is not None:
-            self.set_title(file_name)
-        else:
-            self.set_title("nagato-text")
+        yuki_title = "nagato-text" if file_name is None else file_name
+        self.set_title(yuki_title)
+        self._raise("YUKI.N > set recent path", file_name)
 
     def _yuki_n_quit(self):
         self.close()
 
     def _on_close_window(self, widget, event, user_data=None):
-        if NagatoWarning2.call(message=MESSAGE, buttons=BUTTONS) == 0:
+        if NagatoWarning.call(message=MESSAGE, buttons=BUTTONS) == 0:
             return True
+        return self._quit_main()
+
+    def _quit_main(self):
         self._attributes.save_window_position()
         Gtk.main_quit()
         return False

@@ -1,5 +1,6 @@
 
 from libnagatotext import GiVersion
+from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagatotext.Args import NagatoArgs
 from libnagatotext.Application import NagatoApplication
@@ -9,6 +10,9 @@ class NagatoYuki(NagatoObject):
 
     def _inform_args(self, key):
         return self._args[key]
+
+    def _inform_library_directory(self):
+        return GLib.path_get_dirname(__file__)
 
     def N(self, message):
         if self._args["show-version"]:
