@@ -5,6 +5,7 @@ from libnagatoterminal.menu.context.ContextCore import NagatoContextCore
 from libnagatoterminal.menu.group.Clipboard import AsakuraClipboard
 from libnagatoterminal.menu.group.GridActions import AsakuraGridActions
 from libnagatoterminal.menu.item.action.AddNewTab import NagatoAddNewTab
+from libnagatoterminal.menu.sub.VteConfig import NagatoVteConfig
 
 
 class NagatoContextMenu(NagatoContextCore):
@@ -19,6 +20,8 @@ class NagatoContextMenu(NagatoContextCore):
         NagatoSeparator(self)
         NagatoAddNewTab(self)
         NagatoItem(self, "Close Current VTE", "YUKI.N > destroy")
+        NagatoSeparator(self)
+        NagatoVteConfig(self)
         NagatoSeparator(self)
         NagatoItem(self, "About", "YUKI.N > about")
         NagatoItem(self, "Quit", "YUKI.N > quit")

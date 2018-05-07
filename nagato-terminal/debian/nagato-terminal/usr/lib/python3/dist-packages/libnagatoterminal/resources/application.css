@@ -8,30 +8,21 @@ GtkWindow {
 
 GtkNotebook {
     opacity: 0.7;
+    /*NAGATO_OPACITY*/
 }
 
 GtkButton {
-    border-style: none;
-    border-radius: 0;
-    opacity: 0.7;
-}
-
-VteTerminal {
-    color: violet;
-    background-color: black;
+    opacity: 0.9;
 }
 
 GtkMenuItem {
-    color: violet;
     color: Orchid;
     background-color: white;
-    font-size: 12px;
     opacity: 0.9;
 }
 
 GtkMenuItem:hover {
     color: white;
-    background-color: violet;
     background-color: Orchid;
     opacity: 0.9;
 }
@@ -39,13 +30,24 @@ GtkMenuItem:hover {
 GtkMenuItem:insensitive {
     color: white;
     background-color: white;
-    font-size: 11px;
     opacity: 0.9;
 }
 
 GtkMenu {
     background-position: top;
     background-image: url("images/context-menu.png");
+}
+
+GtkFileChooser {
+    opacity: 0.9;
+}
+
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0;
+    font-style: italic;
 }
 
 .dialog-label {
@@ -59,6 +61,6 @@ GtkMenu {
     color: white;
     background-color: MediumSlateBlue;
     font-weight: bold;
-    font-size: 11px;
-    opacity : 0.6;
+    font-size: 1.2em;
+    opacity : 0.7;
 }

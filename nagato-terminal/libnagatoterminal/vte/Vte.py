@@ -26,9 +26,12 @@ class NagatoVte(NagatoObject, Vte.Terminal):
         self._options = NagatoOptions(self, is_prime_vte, directory)
         Vte.Terminal.__init__(self)
         self._options.spawn_sync()
-        NagatoAttributes(self)
+        self._attributes = NagatoAttributes(self)
         NagatoBinds(self)
         NagatoContextMenu(self)
+
+    def refresh_attributes(self):
+        self._attributes.refresh()
 
     @property
     def child_process(self):

@@ -19,6 +19,10 @@ class NagatoNotebook(NagatoContainer, Gtk.Notebook):
     def _inform_notebook_itself(self):
         return self
 
+    def refresh_attributes(self):
+        for yuki_vte in self.get_children():
+            yuki_vte.refresh_attributes()        
+
     def get_current_processes(self):
         yuki_processes = NagatoUnnullableArray()
         for yuki_page in self.get_children():

@@ -28,6 +28,7 @@ class NagatoYuki(NagatoObject):
 
     def __init__(self):
         GiVersion.require()
+        self._parent = None
         self._args = NagatoArgs()
         # self._unique = NagatoUnique(self._resources["id"])
         self._application = NagatoApplication(self)
