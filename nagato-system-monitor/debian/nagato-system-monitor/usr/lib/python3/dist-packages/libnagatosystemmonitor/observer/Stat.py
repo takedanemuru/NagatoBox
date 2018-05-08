@@ -1,8 +1,10 @@
 
 from collections import deque
 from libnagatosystemmonitor.data.ProcStat import NagatoProcStat
+from pathlib import Path
 
 HISTORY_MAX = 200
+
 
 class NagatoStat(object):
 
@@ -16,9 +18,8 @@ class NagatoStat(object):
             yuki_usage = 0
         if self._prev_proc_stat is not None:
             yuki_usage = self._get_current_usage(proc_stat)
-        self._current = yuki_usage
-        self._stat_history.append(yuki_usage)
         self._prev_proc_stat = proc_stat
+        self._stat_history.append(yuki_usage)
 
     def _read_lines(self, lines):
         for yuki_line in lines:
@@ -27,19 +28,17 @@ class NagatoStat(object):
             self._set_data(NagatoProcStat(yuki_line))
 
     def step(self):
-        with open("/proc/stat", "r") as lines:
-            self._read_lines(lines)
-        lines.close()
+        with Path("/proc/stat").open() as yuki_lines:
+            self._read_lines(yuki_lines)
 
     def __init__(self):
         self._stat_history = deque(maxlen=HISTORY_MAX)
         self._prev_proc_stat = None
-        self._current = 0
         self._total_diff = 0
 
     @property
     def cpu_usage(self):
-        return self._current
+        return self._stat_history[-1]
 
     @property
     def cpu_history(self):

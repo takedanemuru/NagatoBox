@@ -53,6 +53,14 @@ GtkTreeView {
     background-color: MediumSlateBlue;
 }
 
+.dialog-warning {
+    color: white;
+    background-color: #FF007F;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.7;
+}
+
 .dialog-label {
     color: white;
     background-color: #FF007F;

@@ -1,34 +1,31 @@
 
+from libnagato.Object import NagatoObject
 from libnagatosystemmonitor.data.History import NagatoHistory
-from pathlib import Path
+from libnagatosystemmonitor.reader.ProcMeminfo import NagatoProcMeminfo
 
 HISTORY_MAX = 200
 
 
-class NagatoMemInfo(object):
+class NagatoMemInfo(NagatoObject):
 
-    def _read_line(self, line):
-        if line.startswith("MemTotal:"):
-            self._memory.set_total(int(line.split()[1]))
-        if line.startswith("MemAvailable:"):
-            self._memory.set_free(int(line.split()[1]))
-        if line.startswith("SwapTotal:"):
-            self._swap.set_total(int(line.split()[1]))
-        if line.startswith("SwapFree:"):
-            self._swap.set_free(int(line.split()[1]))
-            return True
-        return False
+    def _yuki_n_memory_total(self, data):
+        self._memory.set_total(data)
 
-    def _read_lines(self, lines):
-        for yuki_line in lines:
-            if self._read_line(yuki_line):
-                break
+    def _yuki_n_memory_free(self, data):
+        self._memory.set_free(data)
+
+    def _yuki_n_swap_total(self, data):
+        self._swap.set_total(data)
+
+    def _yuki_n_swap_free(self, data):
+        self._swap.set_free(data)
 
     def step(self):
-        with Path("/proc/meminfo").open() as yuki_lines:
-            self._read_lines(yuki_lines)
+        self._reader.read()
 
-    def __init__(self):
+    def __init__(self, parent):
+        self._parent = parent
+        self._reader = NagatoProcMeminfo(self)
         self._memory = NagatoHistory(HISTORY_MAX)
         self._swap = NagatoHistory(HISTORY_MAX)
 

@@ -27,15 +27,15 @@ class NagatoPIDs(object):
                 yuki_process["ppid"] = int(yuki_data[3])
                 yuki_process["name"] = yuki_data[1]
                 yuki_process["usage"] = yuki_usage
-                yuki_process["vsize"] = float(yuki_data[22])
-                yuki_process["rss"] = float(yuki_data[23])
+                yuki_process["vsize"] = float(yuki_data[22])/1024/1024
+                yuki_process["rss"] = float(yuki_data[23])/256
                 self._processes.append(yuki_process)
         except FileNotFoundError:
             return
 
     def observe(self, cpu_time_diff):
         self._processes.clear()
-        self._cpu_time_diff = max(1,cpu_time_diff)
+        self._cpu_time_diff = max(1, cpu_time_diff)
         for yuki_path in glob.glob("/proc/[0-9]*"):
             self._read_data(yuki_path)
 

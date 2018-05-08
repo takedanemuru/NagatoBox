@@ -11,26 +11,18 @@ NON_IDLE_GUEST = (9, 10)
 
 class NagatoProcStat(object):
 
-    def _set_stat(self, yuki_index, yuki_stat):
-        if yuki_index == 0:
-            self._name = yuki_stat
-        if yuki_index in IDLE:
-            self._idle += int(yuki_stat)
-        if yuki_index in NON_IDLE_GUEST:
-            self._non_idle -= int(yuki_stat)
-        if yuki_index in NON_IDLE:
-            self._non_idle += int(yuki_stat)
-
-    def _read_data(self, data):
-        yuki_index = 0
-        for yuki_stat in data.strip().split():
-            self._set_stat(yuki_index, yuki_stat)
-            yuki_index += 1
+    def _get_total(self, data, indexes):
+        yuki_total = 0
+        for yuki_index in indexes:
+            yuki_total += int(data[yuki_index])
+        return yuki_total
 
     def __init__(self, data):
-        self._idle = 0
-        self._non_idle = 0
-        self._read_data(data)
+        yuki_data = data.strip().split()
+        self._name = yuki_data[0]
+        self._idle = self._get_total(yuki_data, IDLE)
+        self._non_idle = self._get_total(yuki_data, NON_IDLE)
+        self._non_idle_guest = self._get_total(yuki_data, NON_IDLE_GUEST)
 
     @property
     def cpu_name(self):
@@ -38,7 +30,7 @@ class NagatoProcStat(object):
 
     @property
     def total(self):
-        return self._idle + self._non_idle
+        return self._idle + self._non_idle - self._non_idle_guest
 
     @property
     def idle(self):

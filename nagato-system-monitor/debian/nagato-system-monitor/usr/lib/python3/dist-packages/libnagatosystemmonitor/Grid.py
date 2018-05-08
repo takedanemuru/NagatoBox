@@ -1,12 +1,11 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libnagatosystemmonitor.DummyLabel import NagatoDummyLabel
+from libnagato.Ux import Unit
+from libnagatosystemmonitor.StatusLabel import NagatoStatusLabel
 from libnagatosystemmonitor.Thread import NagatoThread
 from libnagatosystemmonitor.DrawingArea import NagatoDrawingArea
 from libnagatosystemmonitor.ScrolledWindow import NagatoScrolledWindow
-
-GRID_SPACING = 16
 
 
 class NagatoGrid(Gtk.Grid, NagatoObject):
@@ -22,20 +21,22 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
 
     def _initialize_grid(self):
         Gtk.Grid.__init__(self)
-        self.set_border_width(GRID_SPACING)
-        self.set_row_spacing(GRID_SPACING)
-        self.set_column_spacing(GRID_SPACING)
-
-    def __init__(self, parent):
-        self._parent = parent
-        self._prev_proc_stat = None
-        self._initialize_grid()
+        self.set_border_width(Unit("grid-spacing"))
+        self.set_row_spacing(Unit("grid-spacing"))
+        self.set_column_spacing(Unit("grid-spacing"))
         self._parent.add(self)
+
+    def _initialize_widgets(self):
         self._drawing_area = NagatoDrawingArea(self)
         self.attach(self._drawing_area, 0, 0, 1, 1)
-        self._label = NagatoDummyLabel(self)
+        self._label = NagatoStatusLabel(self)
         self.attach(self._label, 0, 2, 1, 1)
         self._scrolled_window = NagatoScrolledWindow(self)
         self.attach(self._scrolled_window, 0, 3, 1, 2)
+
+    def __init__(self, parent):
+        self._parent = parent
+        self._initialize_grid()
+        self._initialize_widgets()
         self._thread = NagatoThread(self)
         self._thread.start()

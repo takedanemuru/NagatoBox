@@ -16,7 +16,7 @@ class NagatoYuki(NagatoObject):
 
     def N(self, message):
         if self._args["show-version"]:
-            print(self._resources["version"])
+            self._application.show_version()
         else:
             self._application.run()
             print("YUKI.N > また図書館に…")

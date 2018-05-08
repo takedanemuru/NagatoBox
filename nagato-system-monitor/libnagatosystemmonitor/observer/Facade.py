@@ -41,6 +41,6 @@ class NagatoFacade(NagatoObject):
     def __init__(self, parent):
         self._parent = parent
         self._stat = NagatoStat()
-        self._mem_info = NagatoMemInfo()
+        self._mem_info = NagatoMemInfo(self)
         self._proc_count = NagatoProcCount()
         self._pids = NagatoPIDs()

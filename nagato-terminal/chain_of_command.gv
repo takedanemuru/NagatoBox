@@ -7,22 +7,11 @@ digraph {
 
     "nagato-terminal" -> HumanoidInterface
     
-    HumanoidInterface [
-        shape = "box"
-    ]
-    
-    CssProvider [
-        shape = "box3d"
-    ]
-    
-    HumanoidInterface -> CssProvider[
-        style = "dotted"
-    ]
     HumanoidInterface -> NagatoArgs
-    HumanoidInterface -> NagatoWindow
+    HumanoidInterface -> NagatoApplication
     
-    NagatoWindow -> NagatoAboutDialog
-    NagatoWindow -> NagatoSettings
+    NagatoApplication -> NagatoWindow
+    
     NagatoWindow -> NagatoEventBox_ForGrid
     
     NagatoEventBox_ForGrid -> NagatoGrid

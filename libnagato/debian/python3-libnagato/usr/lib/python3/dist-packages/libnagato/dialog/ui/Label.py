@@ -1,5 +1,6 @@
 
 from gi.repository import Gtk
+from libnagato.Ux import Unit
 from libnagato.util import CssProvider
 
 
@@ -10,6 +11,6 @@ class NagatoLabel(Gtk.Label):
         self.set_justify(Gtk.Justification.CENTER)
         self.set_vexpand(True)
         self.set_markup(markup)
-        self.set_padding(8, 8)
+        self.set_padding(Unit(1), Unit(1))
         CssProvider.set_to_widget(self, css)
         content_area.add(self)

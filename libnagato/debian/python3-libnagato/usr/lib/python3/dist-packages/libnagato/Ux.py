@@ -3,9 +3,10 @@ from gi.repository import Gdk
 
 BASE_UNIT = int(Gdk.Screen.get_default().get_resolution() / 12)
 NAMES = {
-    "default-window-height": 40,
-    "default-window-width": 60,
-    "grid-spacing": 2
+    "default-window-height": 60,
+    "default-window-width": 90,
+    "grid-spacing": 2,
+    "padding": 1
     }
 
 

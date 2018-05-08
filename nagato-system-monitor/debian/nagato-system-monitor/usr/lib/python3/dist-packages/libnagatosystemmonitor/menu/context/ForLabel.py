@@ -1,5 +1,4 @@
 
-from gi.repository import Gdk
 from libnagato.menu.Item import NagatoItem
 from libnagato.menu.Separator import NagatoSeparator
 from libnagato.menu.Context import NagatoContextCore
