@@ -9,7 +9,7 @@ class NagatoListStoreHandler(object):
             return
         self._list_store.append((
             data["pid"],
-            data["name"],
+            data["comm"],
             "{:.2%}".format(data["usage"]),
             data["usage"],
             "{:.2f}".format(data["vsize"]),
