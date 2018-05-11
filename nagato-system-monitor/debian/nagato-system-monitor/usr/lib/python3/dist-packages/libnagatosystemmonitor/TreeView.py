@@ -1,6 +1,9 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
+from libnagatosystemmonitor.Kill import NagatoKill
+from libnagatosystemmonitor.EnterLock import NagatoEnterLock
+from libnagatosystemmonitor.menu.context.ForTreeView import NagatoContextMenu
 
 
 class NagatoTreeView(NagatoObject, Gtk.TreeView):
@@ -15,27 +18,23 @@ class NagatoTreeView(NagatoObject, Gtk.TreeView):
         yuki_column.set_expand(True)
         self.append_column(yuki_column)
 
-    def _on_enter(self, *args):
-        self._raise("YUKI.N > set lock", True)
-
-    def _on_leave(self, *args):
-        self._raise("YUKI.N > set lock", False)
+    def _yuki_n_kill_process(self, process_id=None):
+        if process_id is not None:
+            self._kill.kill(process_id)
 
     def _set_columns(self):
-        self._set_column("pid", 0, 0, 0)
-        self._set_column("name", 0, 1, 1)
-        self._set_column("usage", 1, 2, 3)
+        self._set_column("PID", 0, 0, 0)
+        self._set_column("Name", 0, 1, 1)
+        self._set_column("CPU usage", 1, 2, 3)
         self._set_column("vsize (MiB)", 1, 4, 5)
         self._set_column("rss (MiB)", 1, 6, 7)
-
-    def _set_signals(self):
-        self.connect("enter-notify-event", self._on_enter)
-        self.connect("leave-notify-event", self._on_leave)
 
     def __init__(self, parent, model):
         self._parent = parent
         Gtk.TreeView.__init__(self)
         self.set_model(model)
-        self._set_signals()
         self._set_columns()
+        NagatoContextMenu(self)
+        NagatoEnterLock(self)
+        self._kill = NagatoKill()
         self._parent.add(self)

@@ -18,7 +18,7 @@ class NagatoProcStat(object):
         return yuki_total
 
     def __init__(self, data):
-        yuki_data  = data.strip().split()
+        yuki_data = data.strip().split()
         self._name = yuki_data[0]
         self._idle = self._get_total(yuki_data, IDLE)
         self._non_idle = self._get_total(yuki_data, NON_IDLE)

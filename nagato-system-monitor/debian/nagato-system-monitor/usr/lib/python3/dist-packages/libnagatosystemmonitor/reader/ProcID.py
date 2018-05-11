@@ -2,10 +2,13 @@
 from pathlib import Path
 from libnagato.Object import NagatoObject
 from libnagatosystemmonitor.data.CpuUsage import NagatoCpuUsage
-from libnagatosystemmonitor import MikuruProcess
 
 
 class NagatoProcID(NagatoObject):
+
+    def _get_command(self, pid):
+        yuki_command = Path("/proc/{}/comm".format(str(pid))).read_text()
+        return yuki_command.replace("\n", "")
 
     def _construct_process_data(self, data):
         yuki_pid = int(data[0])
@@ -16,7 +19,7 @@ class NagatoProcID(NagatoObject):
         yuki_process["usage"] = yuki_usage
         yuki_process["vsize"] = float(data[22])/1024/1024
         yuki_process["rss"] = float(data[23])/256
-        yuki_process["comm"] = MikuruProcess.get_command(yuki_pid)
+        yuki_process["comm"] = self._get_command(yuki_pid)
         self._raise("YUKI.N > process data", yuki_process)
 
     def read(self, directory, cpu_time_diff):

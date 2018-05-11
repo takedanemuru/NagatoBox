@@ -1,48 +1,24 @@
 
 import glob
 from collections import deque
+from libnagato.Object import NagatoObject
+from libnagatosystemmonitor.reader.ProcID import NagatoProcID
 
 
-class NagatoPIDs(object):
+class NagatoPIDs(NagatoObject):
 
-    def _get_usage(self, pid, current_total):
-        if pid in self._time_total_per_pids:
-            yuki_diff = current_total-self._time_total_per_pids[pid]
-            yuki_usage = yuki_diff/self._cpu_time_diff
-        else:
-            yuki_usage = 0
-        self._time_total_per_pids[pid] = current_total
-        return yuki_usage
-
-    def _read_data(self, directory):
-        try:
-            with open(directory+"/stat", "r") as yuki_line:
-                yuki_data = yuki_line.read().split()
-                yuki_line.close()
-                yuki_pid = yuki_data[0]
-                yuki_total = int(yuki_data[13])+int(yuki_data[14])
-                yuki_usage = self._get_usage(yuki_pid, yuki_total)
-                yuki_process = {}
-                yuki_process["pid"] = int(yuki_pid)
-                yuki_process["ppid"] = int(yuki_data[3])
-                yuki_process["name"] = yuki_data[1]
-                yuki_process["usage"] = yuki_usage
-                yuki_process["vsize"] = float(yuki_data[22])/1024/1024
-                yuki_process["rss"] = float(yuki_data[23])/256
-                self._processes.append(yuki_process)
-        except FileNotFoundError:
-            return
+    def _yuki_n_process_data(self, process_data):
+        self._processes.append(process_data)
 
     def observe(self, cpu_time_diff):
         self._processes.clear()
-        self._cpu_time_diff = max(1, cpu_time_diff)
         for yuki_path in glob.glob("/proc/[0-9]*"):
-            self._read_data(yuki_path)
+            self._reader.read(yuki_path, cpu_time_diff)
 
     def __init__(self):
+        self._parent = None
         self._processes = deque()
-        self._cpu_time_diff = 1
-        self._time_total_per_pids = {}
+        self._reader = NagatoProcID(self)
 
     @property
     def active_processes(self):
