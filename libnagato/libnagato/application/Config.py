@@ -2,6 +2,17 @@
 
 class ShamisenConfig(object):
 
+    def _yuki_n_config_changed(self):
+        if "_config_objects" not in dir(self):
+            return
+        for yuki_object in self._config_objects:
+            yuki_object.change_config()
+
+    def _yuki_n_register_config_object(self, config_object):
+        if "_config_objects" not in dir(self):
+            self._config_objects = []
+        self._config_objects.append(config_object)
+
     def _yuki_n_config(self, user_data):
         yuki_group, yuki_key, yuki_value = user_data
         self._config.set_data2(yuki_group, yuki_key, yuki_value)

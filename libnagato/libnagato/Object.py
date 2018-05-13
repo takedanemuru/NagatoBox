@@ -14,6 +14,7 @@ class NagatoObject(object):
             return yuki_method()
 
     def _inform_itself(self, class_name):
+        print("CAUTION: this method is for testing only")
         if class_name == __class__.__name__:
             return self
         else:

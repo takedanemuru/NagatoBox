@@ -8,7 +8,7 @@ from libnagatosystemmonitor import MikuruProcess
 class NagatoKill(object):
 
     def _kill(self, process_id):
-        yuki_command =["kill", str(process_id)]
+        yuki_command = ["kill", str(process_id)]
         if "root" == MikuruProcess.get_ownwer(process_id):
             yuki_command.insert(0, "pkexec")
         subprocess.call(yuki_command)

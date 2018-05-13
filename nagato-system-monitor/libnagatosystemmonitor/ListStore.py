@@ -1,13 +1,13 @@
 
 from gi.repository import Gtk
 
+COLUMNS = (int, str, str, float, str, float, str, float)
 
-class NagatoListStoreHandler(object):
+
+class NagatoListStore(Gtk.ListStore):
 
     def _append_data(self, data):
-        if data["rss"] == 0:
-            return
-        self._list_store.append((
+        self.append((
             data["pid"],
             data["comm"],
             "{:.2%}".format(data["usage"]),
@@ -21,21 +21,14 @@ class NagatoListStoreHandler(object):
     def queue(self, user_data):
         if self._lock:
             return
-        self._list_store.clear()
+        self.clear()
         while len(user_data) > 0:
             self._append_data(user_data.popleft())
 
     def set_lock(self, lock):
         self._lock = lock
 
-    def _get_list_store(self):
-        return Gtk.ListStore(int, str, str, float, str, float, str, float)
-
     def __init__(self, parent):
         self._parent = parent
         self._lock = False
-        self._list_store = self._get_list_store()
-
-    @property
-    def list_store(self):
-        return self._list_store
+        Gtk.ListStore.__init__(self, *COLUMNS)

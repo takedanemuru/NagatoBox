@@ -20,6 +20,7 @@ class NagatoConfig(configparser.ConfigParser, NagatoObject):
     def set_data2(self, group, key, value):
         self[group][key] = str(value)
         self._save_config()
+        self._raise("YUKI.N > config changed")
 
     def clear_recent_paths(self):
         self._recent_paths.clear()
