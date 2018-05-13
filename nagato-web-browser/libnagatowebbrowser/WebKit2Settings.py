@@ -28,6 +28,6 @@ class NagatoWebKit2Settings(WebKit2.Settings, NagatoObject):
         self.set_enable_javascript(False)
         self.set_enable_plugins(False)
         self.set_javascript_can_access_clipboard(False)
-        self.set_enable_smooth_scrolling(True)
+        self.set_enable_smooth_scrolling(False)
         self.set_enable_private_browsing(True)
         self.set_user_agent(USER_AGENT_NAME)
