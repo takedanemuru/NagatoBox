@@ -17,4 +17,4 @@ class ShamisenResources(object):
         return self._resources.get_pixbuf(name)
 
     def show_version(self):
-        self._resources["version"]
+        print(self._resources["version"])

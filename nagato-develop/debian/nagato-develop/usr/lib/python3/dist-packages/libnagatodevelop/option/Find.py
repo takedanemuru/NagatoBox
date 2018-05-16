@@ -18,4 +18,3 @@ class NagatoFind(NagatoObject):
     def __init__(self, parent):
         self._parent = parent
         self._set_option()
-

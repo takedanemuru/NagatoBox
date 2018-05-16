@@ -5,6 +5,7 @@ from libnagatodevelop.option.ShowVersion import NagatoShowVersion
 from libnagatodevelop.option.LinesOfCode import NagatoLinesOfCode
 from libnagatodevelop.option.Find import NagatoFind
 
+
 class NagatoArgs(argparse.ArgumentParser, NagatoObject):
 
     def _get_args(self):

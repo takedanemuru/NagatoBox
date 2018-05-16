@@ -6,13 +6,13 @@ DIRECTORIES = [
     "debian",
     "debian/source",
     "{}",
-    "{}/dialog",
-    "{}/dialog/label",
+    "{}/Mikuru",
     "{}/eventbox",
     "{}/menu",
     "{}/menu/context",
     "{}/resources",
     "{}/resources/images",
+    "{}/ui",
     "readme_extra"
     ]
 

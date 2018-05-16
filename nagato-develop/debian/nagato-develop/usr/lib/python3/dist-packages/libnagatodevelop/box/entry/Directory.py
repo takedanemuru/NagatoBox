@@ -19,10 +19,11 @@ class NagatoDirectory(NagatoEntry):
     def _on_press_icon(self, entry, icon_position, event):
         yuki_current_folder = self._model[self._get_key()]
         yuki_directory = NagatoDirectoryChooser.call(yuki_current_folder)
-        if yuki_directory is not None:
-            yuki_text = yuki_directory.replace(os.getenv("HOME"), "~")
-            self._entry.set_text(yuki_text)
-            self._model[self._get_key()] = yuki_directory
+        if yuki_directory is None:
+            return
+        yuki_text = yuki_directory.replace(os.getenv("HOME"), "~")
+        self._entry.set_text(yuki_text)
+        self._model[self._get_key()] = yuki_directory
 
     def _addtional_setups(self):
         self._entry.set_editable(False)

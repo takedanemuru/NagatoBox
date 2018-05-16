@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Wed, 16 May 2018 00:00:00 +0000
+Source: nagato-develop
+Binary: nagato-develop
+Architecture: source all
+Version: 42.12.5
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: takeda.nemuru, <takeda.nemuru@yandex.com>
+Changed-By: takeda.nemuru <takeda.nemuru@yandex.com>
+Description:
+ nagato-develop - powered by nagato
+Changes:
+ nagato-develop (42.12.5) UNRELEASED; urgency=low
+ .
+   * new PROTOTYPE files
+Checksums-Sha1:
+ 681059c0b32ad7c1736b65114d3f524d54bf324e 584 nagato-develop_42.12.5.dsc
+ cb92a72b8a2c8cae4410f1a0fd9c848f6649daf3 745524 nagato-develop_42.12.5.tar.xz
+ bd138e93923c894bfa4f3b776843d7c665c458e1 688886 nagato-develop_42.12.5_all.deb
+Checksums-Sha256:
+ 07be729cc95a4915b8f95417bdddb92ade0415a82e7708200d9b120be1af5ff5 584 nagato-develop_42.12.5.dsc
+ 923b105850fb719150cbeecfa0c4ea7d4171694373259aa0ead496ca3945c143 745524 nagato-develop_42.12.5.tar.xz
+ 2a478811e4edafd018e2b9e7a41209681f97adbb5a160eec8970c47512ad7455 688886 nagato-develop_42.12.5_all.deb
+Files:
+ bf997570729954748ec95a0f204d0f28 584 python optional nagato-develop_42.12.5.dsc
+ f0c4a7ae6aaf35fa4aca4e2ee84d8227 745524 python optional nagato-develop_42.12.5.tar.xz
+ 46fb7ed204878b9c60d5d9b027a481bb 688886 python optional nagato-develop_42.12.5_all.deb

@@ -1,6 +1,6 @@
 
-from libAPPNAME.eventbox.EventBox import NagatoEventBox as TFEI
-from libAPPNAME.Grid import NagatoGrid
+from libnagato.ui.EventBox import NagatoEventBox as TFEI
+from libAPPNAME.ui.Grid import NagatoGrid
 from libAPPNAME.menu.context.ForChrome import NagatoContextMenu
 
 

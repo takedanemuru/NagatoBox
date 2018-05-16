@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Wed, 16 May 2018 00:00:00 +0900
+Source: libnagato
+Binary: python3-libnagato
+Architecture: source all
+Version: 42.12.33
+Distribution: unstable
+Urgency: low
+Maintainer: takedanemuru, <takeda.nemuru@yandex.com>
+Changed-By: takeda.nemuru <takeda.nemuru@yandex.com>
+Description:
+ python3-libnagato - an application framework library.
+Changes:
+ libnagato (42.12.33) unstable; urgency=low
+ .
+   * fix : show version
+Checksums-Sha1:
+ 0e654550d4c46a28df9b89337f9c95898e198e4d 570 libnagato_42.12.33.dsc
+ a4bd2196807bf3c4bae451ebeee9708accd7b10b 11056 libnagato_42.12.33.tar.xz
+ 862596ddc743de94afb96c878e9043f9b319367f 13722 python3-libnagato_42.12.33_all.deb
+Checksums-Sha256:
+ dd62c70347245a68817fe51459c46a61ebeffddfd0dddc52894abbddd04f75ce 570 libnagato_42.12.33.dsc
+ 9813bdb0ae83f38dfd8f4eb42d5bce9aecee57bc1af7f86d2b00a54282d3138f 11056 libnagato_42.12.33.tar.xz
+ acc63795a3e200933e9de11d77dfdf697caf522191c8410511e94eff247e1629 13722 python3-libnagato_42.12.33_all.deb
+Files:
+ bcd5188c3715bf49856c796298e80cf6 570 python optional libnagato_42.12.33.dsc
+ 1fd74c186dfb76f329a3b28242e1d078 11056 python optional libnagato_42.12.33.tar.xz
+ 93619aeb48f603c72c1d2048f96b6d51 13722 python optional python3-libnagato_42.12.33_all.deb

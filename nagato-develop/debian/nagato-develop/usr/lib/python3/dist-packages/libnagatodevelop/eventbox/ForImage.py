@@ -1,5 +1,5 @@
 
-from libnagatodevelop.eventbox.EventBox import NagatoEventBox as TFEI
+from libnagato.ui.EventBox import NagatoEventBox as TFEI
 from libnagatodevelop.box.Icon import NagatoIcon
 
 

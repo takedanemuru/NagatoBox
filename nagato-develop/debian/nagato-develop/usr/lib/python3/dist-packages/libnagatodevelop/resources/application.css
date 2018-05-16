@@ -89,6 +89,22 @@ GtkTextView {
     opacity : 0.8;
 }
 
+.dialog-warning {
+    color: white;
+    background-color: #FF007F;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.7;
+}
+
+.dialog-info {
+    color: white;
+    background-color: MediumSlateBlue;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.8;
+}
+
 .dialog-label-about {
     color: white;
     background-color: MediumSlateBlue;
@@ -102,4 +118,12 @@ GtkTextView {
     border-radius: 0.5em;
     opacity: 1;
     font-size: 1.2em;
+}
+
+*.tooltip {
+    color: White;
+    background-color: MediumSlateBlue;
+    background-image: none;
+    border-radius: 0.5em;
+    font-style: italic;
 }

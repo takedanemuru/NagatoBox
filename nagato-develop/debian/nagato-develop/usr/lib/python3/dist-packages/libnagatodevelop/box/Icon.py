@@ -2,8 +2,8 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from libnagato.util import CssProvider
+from libnagato.dialog.chooser.Load import NagatoLoad
 from libnagatodevelop.box.WithLabel import NagatoWithLabel
-from libnagatodevelop.dialog.IconChooser import NagatoIconChooser
 from libnagatodevelop.IconImage import NagatoIconImage
 
 
@@ -19,7 +19,7 @@ class NagatoIcon(NagatoWithLabel):
         CssProvider.set_to_widget(self, "shade-half")
 
     def _on_button_press(self, widget, event):
-        yuki_path = NagatoIconChooser.call()
+        yuki_path = NagatoLoad.call(mime_type="image/*")
         if yuki_path is None:
             return
         yuki_icon = NagatoIconImage(yuki_path)
@@ -35,6 +35,6 @@ class NagatoIcon(NagatoWithLabel):
         self._image = Gtk.Image()
         self._image.set_size_request(64, 64)
         self._image.set_alignment(1, 0.5)
-        yuki_resources = self._enquiry("YUKI.N > resources")
-        self._image.set_from_pixbuf(yuki_resources.get_application_icon())
+        yuki_icon = self._enquiry("YUKI.N > pixbuf", "application.png")
+        self._image.set_from_pixbuf(yuki_icon)
         self.pack_start(self._image, False, True, 8)

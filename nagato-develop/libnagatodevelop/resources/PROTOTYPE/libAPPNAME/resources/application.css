@@ -3,10 +3,7 @@ GtkWindow {
     background-repeat: repeat;
     background-position: center;
     background-image: url("images/main-window.png");
-}
-
-GtkNotebook {
-    opacity: 0.7;
+    /*NAGATO_BACKGROUND_IMAGE_MAIN_WINDOW*/
 }
 
 GtkButton {
@@ -40,6 +37,10 @@ GtkMenu {
     background-image: url("images/context-menu.png");
 }
 
+GtkFileChooser {
+    opacity: 0.9;
+}
+
 *.tooltip {
     color: White;
     background-color: MediumSlateBlue;
@@ -61,6 +62,22 @@ GtkMenu {
     font-weight: bold;
     font-size: 1.2em;
     opacity : 0.7;
+}
+
+.dialog-warning {
+    color: white;
+    background-color: #FF007F;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.7;
+}
+
+.dialog-info {
+    color: white;
+    background-color: MediumSlateBlue;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity : 0.8;
 }
 
 .dialog-label-about {

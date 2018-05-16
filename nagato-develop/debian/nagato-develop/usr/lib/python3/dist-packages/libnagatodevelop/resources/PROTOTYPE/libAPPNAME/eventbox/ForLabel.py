@@ -1,7 +1,7 @@
 
-from libAPPNAME.eventbox.EventBox import NagatoEventBox as TFEI
+from libnagato.ui.EventBox import NagatoEventBox as TFEI
 from libAPPNAME.menu.context.ForLabel import NagatoContextMenu
-from libAPPNAME.DummyLabel import NagatoDummyLabel
+from libAPPNAME.ui.DummyLabel import NagatoDummyLabel
 
 
 class NagatoEventBox(TFEI):
