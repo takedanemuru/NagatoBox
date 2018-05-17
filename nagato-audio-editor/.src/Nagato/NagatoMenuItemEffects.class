@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoMenuItem
-
-Public Sub _OnMenuItemClick()
-    
-    NagatoPlayer.SetEffect(Last.Tag)
-    
-End

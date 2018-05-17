@@ -1,7 +1,8 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
-from libAPPNAME.eventbox.ForLabel import NagatoEventBox
+from libnagato.Ux import Unit
+from libnagatofontbook.eventbox.ForLabel import NagatoEventBox
 
 
 class NagatoGrid(Gtk.Grid, NagatoObject):
@@ -16,4 +17,6 @@ class NagatoGrid(Gtk.Grid, NagatoObject):
         self._parent = parent
         self._initialize_grid()
         self._parent.add(self)
-        self.attach(NagatoEventBox(self), 0, 0, 1, 1)
+        yuki_font_chooser_widget = Gtk.FontChooserWidget()
+        yuki_font_chooser_widget.set_preview_text("YUKI.N > 見えてる？")
+        self.attach(yuki_font_chooser_widget, 0, 0, 1, 1)
