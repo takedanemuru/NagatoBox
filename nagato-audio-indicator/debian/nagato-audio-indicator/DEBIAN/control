@@ -1,0 +1,10 @@
+Package: nagato-audio-indicator
+Version: 42.12.2
+Architecture: all
+Maintainer: takedanemuru, takeda.nemuru@yandex.com
+Installed-Size: 135
+Depends: python3-gi, python3-libnagato, python3:any (>= 3.3.2-2~)
+Section: python
+Priority: optional
+Description: audio volume indicator
+ audio volume indicator
