@@ -1,6 +1,0 @@
-' Gambas module file
-
-Public Enum FileNone = 1000, FileOpen = 1001, FileNew = 1002, FileBack = 1003, FileNext = 1004
-Public Enum ViewNone = 2000, ViewRotateLeft = 2001, ViewRotateRight = 2002
-Public Enum ViewMirrorHorizontal = 2003, ViewMirrorVertical = 2004
-Public Enum ZoomNone = 3000, ZoomNormal = 3001, ZoomFit = 3002, ZoomIn = 3003, ZoomOut = 3004
