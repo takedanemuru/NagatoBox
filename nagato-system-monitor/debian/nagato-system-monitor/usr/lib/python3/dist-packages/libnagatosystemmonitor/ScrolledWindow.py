@@ -2,7 +2,7 @@
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
 from libnagatosystemmonitor.TreeView import NagatoTreeView
-from libnagatosystemmonitor.ListStoreHandler import NagatoListStoreHandler
+from libnagatosystemmonitor.ListStore import NagatoListStore
 
 
 class NagatoScrolledWindow(Gtk.ScrolledWindow, NagatoObject):
@@ -19,5 +19,5 @@ class NagatoScrolledWindow(Gtk.ScrolledWindow, NagatoObject):
         Gtk.ScrolledWindow.__init__(self)
         self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.EXTERNAL)
         self.set_vexpand(True)
-        self._list_store = NagatoListStoreHandler(self)
-        self._tree_view = NagatoTreeView(self, self._list_store.list_store)
+        self._list_store = NagatoListStore(self)
+        self._tree_view = NagatoTreeView(self, self._list_store)

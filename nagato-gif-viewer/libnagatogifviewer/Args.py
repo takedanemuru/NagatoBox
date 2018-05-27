@@ -3,6 +3,9 @@ import os
 import argparse
 from libnagatogifviewer import PathSanitizer
 
+MIME = "image/gif"
+
+
 class NagatoArgs(argparse.ArgumentParser):
 
     def _set_show_version(self):
@@ -31,10 +34,7 @@ class NagatoArgs(argparse.ArgumentParser):
         yuki_args = self.parse_args()
         self._args = {}
         self._args["show-version"] = yuki_args.show_version
-        self._args["path"] = PathSanitizer.get_a_path(
-            yuki_args.paths,
-            "image/gif"
-            )
+        self._args["path"] = PathSanitizer.get_a_path(yuki_args.paths, MIME)
 
     def __init__(self):
         argparse.ArgumentParser.__init__(self)

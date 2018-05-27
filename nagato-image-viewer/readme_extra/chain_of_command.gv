@@ -6,7 +6,7 @@ digraph {
         style = "filled"
     ]
 
-    Gi, DailogArgs [
+    Gi, DailogArgs, Options, Rect [
         shape = "box"
         fillcolor = "Orange"
         style = "filled"
@@ -33,9 +33,22 @@ digraph {
     EventBox_ForGrid -> ContextMenu_ForGrid
     EventBox_ForGrid -> Grid
 
-    Grid -> EventBox_ForLabel
-
-    EventBox_ForLabel -> ContextMenu_ForLabel
-    EventBox_ForLabel -> DummyLabel
-
+    Grid -> SequentialFiles
+    Grid -> Toolbar
+    Grid -> ScrolledWindow
+    
+    SequentialFiles -> Paths
+    SequentialFiles -> Index
+    
+    ScrolledWindow -> DrawingArea
+    
+    DrawingArea -> ContextHandler
+    
+    ContextHandler -> PixbufHandler
+    
+    PixbufHandler -> EditHandler
+    
+    EditHandler -> ZoomHandler
+    EditHandler -> RotationHandler
+    
 }

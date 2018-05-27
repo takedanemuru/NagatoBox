@@ -16,4 +16,4 @@ class NagatoEnterLock(NagatoObject):
 
     def __init__(self, parent):
         self._parent = parent
-        self._set_signals()        
+        self._set_signals()

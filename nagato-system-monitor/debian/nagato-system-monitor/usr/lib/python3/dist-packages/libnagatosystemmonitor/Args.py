@@ -1,26 +1,19 @@
 
 import argparse
+from libnagatosystemmonitor.Mikuru import Options
 
 
 class NagatoArgs(argparse.ArgumentParser):
 
-    def _set_show_version(self):
-        self.add_argument(
-            "-v",
-            "--version",
-            action="store_true",
-            dest="show_version",
-            default=False,
-            help="show version"
-            )
-
     def _get_args(self):
-        self._set_show_version()
+        self.add_argument("-v", "--version", **Options.SHOW_VERSION)
+        self.add_argument("-m", "--mini-mode", **Options.MINI_MODE)
 
     def _initialize_variants(self):
         yuki_args = self.parse_args()
         self._args = {}
         self._args["show-version"] = yuki_args.show_version
+        self._args["mini-mode"] = yuki_args.mini_mode
 
     def __init__(self):
         argparse.ArgumentParser.__init__(self)

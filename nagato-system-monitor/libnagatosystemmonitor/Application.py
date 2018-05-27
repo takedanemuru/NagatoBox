@@ -3,6 +3,7 @@ from libnagato.application.Application import NagatoApplication as TFEI
 from libnagato.config.CssMainImage import NagatoCssMainImage
 from libnagato.config.CssFont import NagatoCssFont
 from libnagatosystemmonitor.MainWindow import NagatoMainWindow
+from libnagatosystemmonitor.ui.MiniWindow import NagatoMiniWindow
 
 
 class NagatoApplication(TFEI):
@@ -12,4 +13,7 @@ class NagatoApplication(TFEI):
         self._append_css_replacement(NagatoCssFont(self))
 
     def run(self):
-        NagatoMainWindow(self)
+        if self._enquiry("YUKI.N > args", "mini-mode"):
+            NagatoMiniWindow(self)
+        else:
+            NagatoMainWindow(self)

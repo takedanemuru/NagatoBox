@@ -1,39 +1,31 @@
 
-from pathlib import Path
 import subprocess
 from libnagato.dialog.message.Warning import NagatoWarning
 from libnagatosystemmonitor.Messages import KILL
+from libnagatosystemmonitor import MikuruProcess
+
 
 class NagatoKill(object):
 
-    def _get_ownwer(self, process_id):
-        return Path("/proc/{}/environ".format(process_id)).owner()
-
-    def _get_command(self, process_id):
-        yuki_command = Path("/proc/{}/comm".format(process_id)).read_text()
-        return yuki_command.replace("\n", "")
-
-    def _get_command_array(self, process_id):
-        if "root" == self._get_ownwer(process_id):
-            return ["pkexec", "kill", str(process_id)]
-        else:
-            return ["kill", str(process_id)]
+    def _kill(self, process_id):
+        yuki_command = ["kill", str(process_id)]
+        if "root" == MikuruProcess.get_ownwer(process_id):
+            yuki_command.insert(0, "pkexec")
+        subprocess.call(yuki_command)
 
     def _get_message(self, process_id):
-        yuki_message = KILL.format(
+        return KILL.format(
             process_id,
-            self._get_ownwer(process_id),
-            self._get_command(process_id),
+            MikuruProcess.get_ownwer(process_id),
+            MikuruProcess.get_command_line(process_id),
             )
-        return yuki_message
 
-    def kill(self, process_id):
-        yuki_response = NagatoWarning.call(
+    def _get_user_response(self, process_id):
+        return NagatoWarning.call(
             message=self._get_message(process_id),
             buttons=["Cancel", "Kill"]
             )
-        if yuki_response == 1:
-            subprocess.call(self._get_command_array(process_id))
 
-    def __init__(self):
-        pass
+    def kill(self, process_id):
+        if self._get_user_response(process_id) == 1:
+            self._kill(process_id)
