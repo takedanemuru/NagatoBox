@@ -1,6 +1,5 @@
 
 from collections import deque
-from libnagatosystemmonitor.data.ProcStat import NagatoProcStat
 from libnagatosystemmonitor.data.CpuUsageTotal import NagatoCpuUsageTotal
 from pathlib import Path
 

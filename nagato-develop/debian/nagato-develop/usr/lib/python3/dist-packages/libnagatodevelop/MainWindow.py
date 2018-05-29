@@ -14,6 +14,9 @@ class NagatoMainWindow(TFEI):
     def _yuki_n_create(self):
         self._model.create()
 
+    def _yuki_n_model(self, user_data):
+        pass
+
     def _inform_model(self):
         return self._model
 

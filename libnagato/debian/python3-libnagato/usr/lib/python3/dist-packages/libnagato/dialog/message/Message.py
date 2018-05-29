@@ -29,6 +29,7 @@ class NagatoMessage(Gtk.Dialog):
             None
             )
         self.set_default_size(Unit(40), Unit(40))
+        self.set_default_response(0)
         self._initialize_content_area()
         self._set_contents(message)
         self._set_buttons(buttons)

@@ -15,7 +15,7 @@ class NagatoMiniWindow(Gtk.Window, NagatoObject):
 
     def _on_close_window(self, widget, event, user_data=None):
         if NagatoWarning.call(message=Messages.QUIT, buttons=BUTTONS) == 0:
-             return True
+            return True
         Gtk.main_quit()
 
     def _inform_histories(self):

@@ -10,4 +10,3 @@ MESSAGE_QUIT = \
 BUTTONS_CLOSE = BUTTONS = ["Cancel", "Close"]
 
 QUIT = {"message": MESSAGE_QUIT, "buttons": BUTTONS_CLOSE}
-

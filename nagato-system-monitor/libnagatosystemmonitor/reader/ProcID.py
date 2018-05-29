@@ -1,7 +1,7 @@
 
 from libnagato.Object import NagatoObject
 from libnagatosystemmonitor.data.CpuUsage import NagatoCpuUsage
-from libnagatosystemmonitor import MikuruProcess
+from libnagatosystemmonitor.Mikuru import Process
 
 
 class NagatoProcID(NagatoObject):
@@ -15,7 +15,7 @@ class NagatoProcID(NagatoObject):
         yuki_process["usage"] = yuki_usage
         yuki_process["vsize"] = float(data[22])/1024/1024
         yuki_process["rss"] = float(data[23])/256
-        yuki_process["comm"] = MikuruProcess.get_command(yuki_pid)
+        yuki_process["comm"] = Process.get_command(yuki_pid)
         self._raise("YUKI.N > process data", yuki_process)
 
     def read(self, directory, cpu_time_diff):

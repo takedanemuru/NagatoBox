@@ -6,6 +6,7 @@ from libnagatosystemmonitor.paint.labels.Header import NagatoHeader
 from libnagatosystemmonitor.paint.labels.Status import NagatoStatus
 from libnagatosystemmonitor.paint.Graph import NagatoGraph
 
+
 class NagatoDrawingArea(Gtk.DrawingArea, NagatoObject):
 
     def _on_draw(self, drawing_area, cairo_context):

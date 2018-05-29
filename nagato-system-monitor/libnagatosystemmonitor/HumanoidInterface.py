@@ -1,5 +1,5 @@
 
-from libnagatosystemmonitor import GiVersion
+from libnagatosystemmonitor .Mikuru import Gi
 from gi.repository import GLib
 from libnagato.Object import NagatoObject
 from libnagatosystemmonitor.Args import NagatoArgs
@@ -22,7 +22,7 @@ class NagatoYuki(NagatoObject):
             print("YUKI.N > また図書館に…")
 
     def __init__(self):
-        GiVersion.require()
+        Gi.require_version()
         self._parent = None
         self._args = NagatoArgs()
         self._application = NagatoApplication(self)

@@ -1,6 +1,7 @@
 
 from gi.repository import Gtk
 from libnagato.Object import NagatoObject
+from libnagato.Ux import Unit
 from libAPPNAME.eventbox.ForLabel import NagatoEventBox
 
 

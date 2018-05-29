@@ -22,7 +22,7 @@ class NagatoGraphLines(NagatoObject):
             return
         cairo_context.set_source_rgb(*COLORS[key])
         yuki_x = self._paint_first_data(cairo_context, yuki_history.pop())
-        while len(yuki_history)>0 and yuki_x >= 10:
+        while len(yuki_history) > 0 and yuki_x >= 10:
             yuki_y = self._rect.bottom-yuki_history.pop()*self._rect.height
             cairo_context.line_to(yuki_x, yuki_y)
             yuki_x -= 10

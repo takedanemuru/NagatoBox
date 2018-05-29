@@ -6,6 +6,7 @@ from libnagatodevelop import Find
 from libnagatodevelop.Args import NagatoArgs
 from libnagatodevelop.Application import NagatoApplication
 
+
 class NagatoYuki(NagatoObject):
 
     def _inform_args(self, key):
