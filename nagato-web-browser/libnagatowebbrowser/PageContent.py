@@ -19,7 +19,7 @@ class NagatoPageContent(Gtk.Box, NagatoObject):
             self._raise("YUKI.N > load finished")
 
     def _yuki_n_load_changed(self, progress):
-        print(self.get_title(), progress)
+        # print(self.get_title(), progress)
         self._tab_label.set_progress(progress)
 
     def _setup_tab(self):

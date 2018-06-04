@@ -1,8 +1,0 @@
-#!/usr/bin/env python3
-
-from libnagatoscreenshot.HumanoidInterface import NagatoYuki
-
-
-if __name__ == "__main__":
-    YUKI = NagatoYuki()
-    YUKI.N(">...見えてる？")
