@@ -2,7 +2,6 @@
 
 Create Static
 
-' Private Const NominatimApi As String = "http://nominatim.openstreetmap.org/search?q=&1&format=xml"
 Private Const NominatimApi As String = "https://nominatim.openstreetmap.org/search?q=&1&format=xml"
 
 Private $downloader As New NagatoDownloaderOpenStreetMap As "Downloader"

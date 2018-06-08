@@ -40,19 +40,19 @@ End
 
 Private Function Path_Read() As String
 
-    Return User.Home &/ ".nagato-wallpaper" &/ $desktopType
+    Return User.Home &/ ".config/com.gitlab.nagatobox.nagato-wallpaper" &/ $desktopType
 
 End
 
 Private Function PathOriginalImage_Read() As String
 
-    Return Me.Path &/ "original.png"
+    Return Me.Path &/ "source.png"
 
 End
 
 Private Function PathModefiedImage_Read() As String
 
-    Return Me.Path &/ "modefied.png"
+    Return Me.Path &/ "wallpaper.png"
 
 End
 

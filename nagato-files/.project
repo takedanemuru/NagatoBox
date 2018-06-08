@@ -1,9 +1,8 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.10.0
 Title=nagato-files
 Startup=Kyon
 Icon=folder.png
-Version=42.11.157
+Version=42.12.158
 Component=gb.args
 Component=gb.image
 Component=gb.qt5
@@ -11,8 +10,8 @@ Component=gb.form
 Component=gb.data
 Component=gb.db
 Component=gb.dbus
-Component=gb.desktop.x11
 Component=gb.desktop
+Component=gb.desktop.x11
 Component=gb.settings
 Component=gb.net
 Component=gb.net.curl
@@ -33,12 +32,12 @@ Vendor=IntegratedDataThoughtEntities
 Address=takeda.nemuru@yandex.com
 Url=http://takedanemuru.github.io/
 License=S.O.S. License
-PackageName=nagato-files-42.11.157
+PackageName=nagato-files-42.12.158
 MimeTypes="inode/directory"
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/File Management"
 Categories=ubuntu:"Nagato;System;Utility"
 Groups=ubuntu:"x11"
-ExtraDependencies=ubuntu:"nagato-extractor\t\t\nnagato-archiver\t\t\nnagato-wallpaper\t\t\nfortune-mod\t\t\nffmpeg\t\t\nffmpegthumbnailer\t\t\nnagato-sdl-sound\t\t"
+ExtraDependencies=ubuntu:"nagato-extractor\t\t\nnagato-archiver\t\t\nfortune-mod\t\t\nffmpeg\t\t\nffmpegthumbnailer\t\t\nnagato-sdl-sound\t\t"
 ExtraFiles=ubuntu:"nagato-desktop.desktop\t/usr/share/applications\nnagato-files.png\t/usr/share/pixmaps\nnagato-desktop.png\t/usr/share/pixmaps\nnagato-files.desktop\t/usr/share/applications"
