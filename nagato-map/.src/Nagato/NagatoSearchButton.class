@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoButton
-
-Public Sub _AddButton()
-    
-    Me._InitializeButton(("Search"), NagatoMenuPipe.UxToggleLeftPane, "search")
-    
-End

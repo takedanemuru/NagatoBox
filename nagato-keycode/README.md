@@ -1,3 +1,0 @@
-# nagato-keycode
-
-check keycode

@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-set -e
-
-#DEBHELPER#
-
-if [ "$1" = "configure" ]; then
-	update-alternatives --install /usr/bin/www-browser www-browser /usr/bin/nagato-web-browser 42
-fi
