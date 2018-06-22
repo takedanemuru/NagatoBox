@@ -17,6 +17,6 @@ Public Sub Notify(argPriority As Integer)
     
     Copy yukiSoundPath To yukiPath
     
-    Exec ["nagato-sdl-sound", yukiPath] 
+    Exec ["play", yukiPath] 
     
 End
