@@ -1,9 +1,0 @@
-' Gambas class file
-
-Event Signal(argSignal As Integer, argArguments As Variant[])
-
-Public Sub TFEI_Signal(argSignal As Integer, argArguments As Variant[])
-    
-    Raise Signal(argSignal, argArguments)
-    
-End

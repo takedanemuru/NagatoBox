@@ -1,9 +1,0 @@
-' Gambas class file
-
-Inherits NagatoContextMenu
-
-Public Sub _AddChildMenus()
-    
-    Me._AddContextMenu(("Reload"), MikuruSignal.ContextReload, MikuruIcon["button-synchronize"])
-    
-End
